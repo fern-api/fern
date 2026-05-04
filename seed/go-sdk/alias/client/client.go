@@ -36,12 +36,12 @@ func NewClient(opts ...option.RequestOption) *Client {
 
 func (c *Client) Get(
 	ctx context.Context,
-	typeId fern.TypeId,
+	typeID fern.TypeID,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Get(
 		ctx,
-		typeId,
+		typeID,
 		opts...,
 	)
 	if err != nil {

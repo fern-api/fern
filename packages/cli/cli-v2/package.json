@@ -43,8 +43,9 @@
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/api-workspace-validator": "workspace:*",
     "@fern-api/auth": "workspace:*",
-    "@fern-api/cli-logger": "workspace:*",
+    "@fern-api/casings-generator": "workspace:*",
     "@fern-api/cli-source-resolver": "workspace:*",
+    "@fern-api/cli-telemetry": "workspace:*",
     "@fern-api/config": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/configuration": "workspace:*",
@@ -57,6 +58,7 @@
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/fern-definition-validator": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/generator-cli": "workspace:*",
     "@fern-api/github": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-migrations": "workspace:*",
@@ -86,7 +88,9 @@
     "@types/node": "catalog:",
     "@types/semver": "catalog:",
     "@types/uuid": "^9.0.7",
+    "@types/mime-types": "catalog:",
     "@types/yargs": "^17.0.28",
+    "ansi-escapes": "catalog:",
     "chalk": "catalog:",
     "find-up": "catalog:",
     "get-port": "^7.0.0",
@@ -104,5 +108,9 @@
     "vitest": "catalog:",
     "yaml": "catalog:",
     "yargs": "^17.4.1"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "tmp-promise": "catalog:"
   }
 }

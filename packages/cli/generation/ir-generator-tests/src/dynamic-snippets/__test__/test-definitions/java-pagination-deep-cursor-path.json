@@ -70,6 +70,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "starting_after",
                         "name": {
                             "originalName": "starting_after",
                             "camelCase": {
@@ -88,8 +89,7 @@
                                 "unsafeName": "StartingAfter",
                                 "safeName": "StartingAfter"
                             }
-                        },
-                        "wireValue": "starting_after"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -174,6 +174,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "d",
                         "name": {
                             "originalName": "d",
                             "camelCase": {
@@ -192,8 +193,7 @@
                                 "unsafeName": "D",
                                 "safeName": "D"
                             }
-                        },
-                        "wireValue": "d"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -278,6 +278,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "c",
                         "name": {
                             "originalName": "c",
                             "camelCase": {
@@ -296,8 +297,7 @@
                                 "unsafeName": "C",
                                 "safeName": "C"
                             }
-                        },
-                        "wireValue": "c"
+                        }
                     },
                     "typeReference": {
                         "type": "named",
@@ -379,6 +379,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "b",
                         "name": {
                             "originalName": "b",
                             "camelCase": {
@@ -397,8 +398,7 @@
                                 "unsafeName": "B",
                                 "safeName": "B"
                             }
-                        },
-                        "wireValue": "b"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -483,6 +483,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "starting_after",
                         "name": {
                             "originalName": "starting_after",
                             "camelCase": {
@@ -501,8 +502,7 @@
                                 "unsafeName": "StartingAfter",
                                 "safeName": "StartingAfter"
                             }
-                        },
-                        "wireValue": "starting_after"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -516,6 +516,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "results",
                         "name": {
                             "originalName": "results",
                             "camelCase": {
@@ -534,8 +535,7 @@
                                 "unsafeName": "Results",
                                 "safeName": "Results"
                             }
-                        },
-                        "wireValue": "results"
+                        }
                     },
                     "typeReference": {
                         "type": "list",
@@ -620,6 +620,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "starting_after",
                         "name": {
                             "originalName": "starting_after",
                             "camelCase": {
@@ -638,8 +639,7 @@
                                 "unsafeName": "StartingAfter",
                                 "safeName": "StartingAfter"
                             }
-                        },
-                        "wireValue": "starting_after"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -653,6 +653,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "results",
                         "name": {
                             "originalName": "results",
                             "camelCase": {
@@ -671,8 +672,7 @@
                                 "unsafeName": "Results",
                                 "safeName": "Results"
                             }
-                        },
-                        "wireValue": "results"
+                        }
                     },
                     "typeReference": {
                         "type": "list",
@@ -757,6 +757,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "indirection",
                         "name": {
                             "originalName": "indirection",
                             "camelCase": {
@@ -775,8 +776,7 @@
                                 "unsafeName": "Indirection",
                                 "safeName": "Indirection"
                             }
-                        },
-                        "wireValue": "indirection"
+                        }
                     },
                     "typeReference": {
                         "type": "named",
@@ -858,6 +858,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "starting_after",
                         "name": {
                             "originalName": "starting_after",
                             "camelCase": {
@@ -876,8 +877,7 @@
                                 "unsafeName": "StartingAfter",
                                 "safeName": "StartingAfter"
                             }
-                        },
-                        "wireValue": "starting_after"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -962,6 +962,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "b",
                         "name": {
                             "originalName": "b",
                             "camelCase": {
@@ -980,8 +981,7 @@
                                 "unsafeName": "B",
                                 "safeName": "B"
                             }
-                        },
-                        "wireValue": "b"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -1066,6 +1066,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "c",
                         "name": {
                             "originalName": "c",
                             "camelCase": {
@@ -1084,8 +1085,7 @@
                                 "unsafeName": "C",
                                 "safeName": "C"
                             }
-                        },
-                        "wireValue": "c"
+                        }
                     },
                     "typeReference": {
                         "type": "named",
@@ -1167,6 +1167,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "b",
                         "name": {
                             "originalName": "b",
                             "camelCase": {
@@ -1185,8 +1186,7 @@
                                 "unsafeName": "B",
                                 "safeName": "B"
                             }
-                        },
-                        "wireValue": "b"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",

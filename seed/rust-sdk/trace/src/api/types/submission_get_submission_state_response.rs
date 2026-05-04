@@ -16,7 +16,7 @@ pub struct GetSubmissionStateResponse {
 
 impl GetSubmissionStateResponse {
     pub fn builder() -> GetSubmissionStateResponseBuilder {
-        GetSubmissionStateResponseBuilder::default()
+        <GetSubmissionStateResponseBuilder as Default>::default()
     }
 }
 

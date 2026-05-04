@@ -8,16 +8,18 @@ pub struct SearchResourcesRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub filters: Option<HashMap<String, serde_json::Value>>,
     /// Maximum results to return
+    #[serde(skip_serializing)]
     #[serde(default)]
     pub limit: i64,
     /// Offset for pagination
+    #[serde(skip_serializing)]
     #[serde(default)]
     pub offset: i64,
 }
 
 impl SearchResourcesRequest {
     pub fn builder() -> SearchResourcesRequestBuilder {
-        SearchResourcesRequestBuilder::default()
+        <SearchResourcesRequestBuilder as Default>::default()
     }
 }
 

@@ -1,7 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { PackageId, Reference } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 
 import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema.js";
 
@@ -14,7 +14,7 @@ export declare namespace AbstractGeneratedEndpointTypeSchema {
 }
 
 export abstract class AbstractGeneratedEndpointTypeSchema
-    extends AbstractGeneratedSchema<SdkContext>
+    extends AbstractGeneratedSchema<FileContext>
     implements GeneratedEndpointTypeSchema
 {
     protected packageId: PackageId;
@@ -28,7 +28,7 @@ export abstract class AbstractGeneratedEndpointTypeSchema
         this.endpoint = endpoint;
     }
 
-    protected getReferenceToSchema(context: SdkContext): Reference {
+    protected getReferenceToSchema(context: FileContext): Reference {
         return context.sdkEndpointTypeSchemas.getReferenceToEndpointTypeSchemaExport(
             this.packageId,
             this.endpoint.name,

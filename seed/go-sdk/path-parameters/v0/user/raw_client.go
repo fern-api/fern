@@ -33,8 +33,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) GetUser(
 	ctx context.Context,
-	tenantId string,
-	userId string,
+	tenantID string,
+	userID string,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.User], error) {
 	options := core.NewRequestOptions(opts...)
@@ -45,8 +45,8 @@ func (r *RawClient) GetUser(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v/user/%v",
-		tenantId,
-		userId,
+		tenantID,
+		userID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -78,7 +78,7 @@ func (r *RawClient) GetUser(
 
 func (r *RawClient) CreateUser(
 	ctx context.Context,
-	tenantId string,
+	tenantID string,
 	request *fern.User,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.User], error) {
@@ -90,7 +90,7 @@ func (r *RawClient) CreateUser(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v/user/",
-		tenantId,
+		tenantID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -123,8 +123,8 @@ func (r *RawClient) CreateUser(
 
 func (r *RawClient) UpdateUser(
 	ctx context.Context,
-	tenantId string,
-	userId string,
+	tenantID string,
+	userID string,
 	request *fern.UpdateUserRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.User], error) {
@@ -136,8 +136,8 @@ func (r *RawClient) UpdateUser(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v/user/%v",
-		tenantId,
-		userId,
+		tenantID,
+		userID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -170,8 +170,8 @@ func (r *RawClient) UpdateUser(
 
 func (r *RawClient) SearchUsers(
 	ctx context.Context,
-	tenantId string,
-	userId string,
+	tenantID string,
+	userID string,
 	request *fern.SearchUsersRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.User], error) {
@@ -183,8 +183,8 @@ func (r *RawClient) SearchUsers(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v/user/%v/search",
-		tenantId,
-		userId,
+		tenantID,
+		userID,
 	)
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {
@@ -223,8 +223,8 @@ func (r *RawClient) SearchUsers(
 
 func (r *RawClient) GetUserMetadata(
 	ctx context.Context,
-	tenantId string,
-	userId string,
+	tenantID string,
+	userID string,
 	version int,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.User], error) {
@@ -236,8 +236,8 @@ func (r *RawClient) GetUserMetadata(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v/user/%v/metadata/v%v",
-		tenantId,
-		userId,
+		tenantID,
+		userID,
 		version,
 	)
 	headers := internal.MergeHeaders(
@@ -270,8 +270,8 @@ func (r *RawClient) GetUserMetadata(
 
 func (r *RawClient) GetUserSpecifics(
 	ctx context.Context,
-	tenantId string,
-	userId string,
+	tenantID string,
+	userID string,
 	version int,
 	thought string,
 	opts ...option.RequestOption,
@@ -284,8 +284,8 @@ func (r *RawClient) GetUserSpecifics(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v/user/%v/specifics/%v/%v",
-		tenantId,
-		userId,
+		tenantID,
+		userID,
 		version,
 		thought,
 	)

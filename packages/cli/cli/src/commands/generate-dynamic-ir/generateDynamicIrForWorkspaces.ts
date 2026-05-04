@@ -1,8 +1,8 @@
 import { Audiences, generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
+import { CliError } from "@fern-api/task-context";
 import path from "path";
-
 import { CliContext } from "../../cli-context/CliContext.js";
 import { generateIrForFernWorkspace } from "../generate-ir/generateIrForFernWorkspace.js";
 
@@ -46,7 +46,10 @@ export async function generateDynamicIrForWorkspaces({
                 });
 
                 if (intermediateRepresentation.dynamic == null) {
-                    throw new Error("Internal error; dynamic IR was not generated");
+                    throw new CliError({
+                        message: "Internal error; dynamic IR was not generated",
+                        code: CliError.Code.InternalError
+                    });
                 }
 
                 const irOutputFilePath = path.resolve(irFilepath);

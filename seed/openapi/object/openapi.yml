@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: object
-  version: ''
+  version: 0.0.0
 paths: {}
 components:
   schemas:
@@ -12,44 +12,53 @@ components:
       properties:
         one:
           type: integer
-          example: 1
+          examples:
+            - 1
         two:
           type: number
           format: double
-          example: 2
+          examples:
+            - 2
         three:
           type: string
-          example: three
+          examples:
+            - three
         four:
           type: boolean
-          example: true
+          examples:
+            - true
         five:
           type: integer
           format: int64
-          example: 5
+          examples:
+            - 5
         six:
           type: string
           format: date-time
-          example: '1994-01-01T01:01:01Z'
+          examples:
+            - '1994-01-01T01:01:01Z'
         seven:
           type: string
           format: date
-          example: '1994-01-01'
+          examples:
+            - '1994-01-01'
         eight:
           type: string
           format: uuid
-          example: 7f71f677-e138-4a5c-bb01-e4453a19bfef
+          examples:
+            - 7f71f677-e138-4a5c-bb01-e4453a19bfef
         nine:
           type: string
           format: byte
-          example: TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu
+          examples:
+            - TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu
         ten:
           type: array
           items:
             type: integer
-          example:
-            - 10
-            - 10
+          examples:
+            - - 10
+              - 10
         eleven:
           type: array
           items:
@@ -60,9 +69,10 @@ components:
           additionalProperties:
             type: boolean
         thirteen:
-          type: integer
+          type:
+            - integer
+            - 'null'
           format: int64
-          nullable: true
         fourteen: {}
         fifteen:
           type: array
@@ -79,9 +89,10 @@ components:
         seventeen:
           type: array
           items:
-            type: string
+            type:
+              - string
+              - 'null'
             format: uuid
-            nullable: true
         eighteen:
           type: string
           const: eighteen
@@ -90,27 +101,33 @@ components:
         twenty:
           type: integer
           format: int64
-          example: 20
+          examples:
+            - 20
         twentyone:
           type: integer
           format: int64
-          example: 21
+          examples:
+            - 21
         twentytwo:
           type: integer
           format: float
-          example: 22.22
+          examples:
+            - 22.22
         twentythree:
           type: integer
           format: bigint
-          example: '23'
+          examples:
+            - '23'
         twentyfour:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
         twentyfive:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date
-          nullable: true
       required:
         - one
         - two
@@ -140,10 +157,12 @@ components:
       properties:
         id:
           type: string
-          example: name-sdfg8ajk
+          examples:
+            - name-sdfg8ajk
         value:
           type: string
-          example: name
+          examples:
+            - name
       required:
         - id
         - value

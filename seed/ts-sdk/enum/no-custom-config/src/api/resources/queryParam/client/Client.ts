@@ -47,13 +47,18 @@ export class QueryParamClient {
         const _queryParams: Record<string, unknown> = {
             operand,
             maybeOperand: maybeOperand != null ? maybeOperand : undefined,
-            operandOrColor: typeof operandOrColor === "string" ? operandOrColor : toJson(operandOrColor),
-            maybeOperandOrColor:
-                maybeOperandOrColor != null
-                    ? typeof maybeOperandOrColor === "string"
-                        ? maybeOperandOrColor
-                        : toJson(maybeOperandOrColor)
-                    : undefined,
+            operandOrColor: Array.isArray(operandOrColor)
+                ? operandOrColor.map((item) => (typeof item === "string" ? item : toJson(item)))
+                : typeof operandOrColor === "string"
+                  ? operandOrColor
+                  : toJson(operandOrColor),
+            maybeOperandOrColor: Array.isArray(maybeOperandOrColor)
+                ? maybeOperandOrColor.map((item) => (typeof item === "string" ? item : toJson(item)))
+                : maybeOperandOrColor != null
+                  ? typeof maybeOperandOrColor === "string"
+                      ? maybeOperandOrColor
+                      : toJson(maybeOperandOrColor)
+                  : undefined,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
@@ -64,7 +69,11 @@ export class QueryParamClient {
             ),
             method: "POST",
             headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -139,7 +148,11 @@ export class QueryParamClient {
             ),
             method: "POST",
             headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

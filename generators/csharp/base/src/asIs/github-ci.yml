@@ -47,6 +47,6 @@ jobs:
       - name: Publish to NuGet.org
         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
         env:
-          NUGET_API_KEY: $\{{ secrets.<%= nugetTokenEnvvar%> }}
+          NUGET_API_KEY: ${{ secrets.<%= nugetTokenEnvvar%> }}
         run: dotnet nuget push <%= libraryPath %>/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
 <% } %>

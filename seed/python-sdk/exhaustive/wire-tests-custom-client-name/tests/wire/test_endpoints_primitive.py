@@ -84,11 +84,11 @@ def test_endpoints_primitive_get_and_return_uuid() -> None:
     verify_request_count(test_id, "POST", "/primitive/uuid", None, 1)
 
 
-def test_endpoints_primitive_get_and_return_base_64() -> None:
+def test_endpoints_primitive_get_and_return_base64() -> None:
     """Test getAndReturnBase64 endpoint with WireMock"""
-    test_id = "endpoints.primitive.get_and_return_base_64.0"
+    test_id = "endpoints.primitive.get_and_return_base64.0"
     client = get_client(test_id)
-    client.endpoints.primitive.get_and_return_base_64(
+    client.endpoints.primitive.get_and_return_base64(
         request="SGVsbG8gd29ybGQh",
     )
     verify_request_count(test_id, "POST", "/primitive/base64", None, 1)

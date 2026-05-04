@@ -177,6 +177,7 @@
             },
           },
           "FlexibleValue": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
@@ -268,6 +269,7 @@
             },
           },
           "NullableAnyOf": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,
@@ -293,6 +295,7 @@
           "Pet": {
             "availability": undefined,
             "base-properties": {},
+            "default-variant": undefined,
             "discriminant": {
               "context": "data",
               "value": "petType",
@@ -308,6 +311,7 @@
             },
           },
           "Response": {
+            "base-properties": undefined,
             "discriminated": false,
             "docs": undefined,
             "encoding": undefined,

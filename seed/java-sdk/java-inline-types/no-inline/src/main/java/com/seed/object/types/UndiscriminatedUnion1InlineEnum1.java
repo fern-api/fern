@@ -10,14 +10,14 @@ public final class UndiscriminatedUnion1InlineEnum1 {
     public static final UndiscriminatedUnion1InlineEnum1 SUNNY =
             new UndiscriminatedUnion1InlineEnum1(Value.SUNNY, "SUNNY");
 
+    public static final UndiscriminatedUnion1InlineEnum1 CLOUDY =
+            new UndiscriminatedUnion1InlineEnum1(Value.CLOUDY, "CLOUDY");
+
     public static final UndiscriminatedUnion1InlineEnum1 RAINING =
             new UndiscriminatedUnion1InlineEnum1(Value.RAINING, "RAINING");
 
     public static final UndiscriminatedUnion1InlineEnum1 SNOWING =
             new UndiscriminatedUnion1InlineEnum1(Value.SNOWING, "SNOWING");
-
-    public static final UndiscriminatedUnion1InlineEnum1 CLOUDY =
-            new UndiscriminatedUnion1InlineEnum1(Value.CLOUDY, "CLOUDY");
 
     private final Value value;
 
@@ -54,12 +54,12 @@ public final class UndiscriminatedUnion1InlineEnum1 {
         switch (value) {
             case SUNNY:
                 return visitor.visitSunny();
+            case CLOUDY:
+                return visitor.visitCloudy();
             case RAINING:
                 return visitor.visitRaining();
             case SNOWING:
                 return visitor.visitSnowing();
-            case CLOUDY:
-                return visitor.visitCloudy();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -71,12 +71,12 @@ public final class UndiscriminatedUnion1InlineEnum1 {
         switch (value) {
             case "SUNNY":
                 return SUNNY;
+            case "CLOUDY":
+                return CLOUDY;
             case "RAINING":
                 return RAINING;
             case "SNOWING":
                 return SNOWING;
-            case "CLOUDY":
-                return CLOUDY;
             default:
                 return new UndiscriminatedUnion1InlineEnum1(Value.UNKNOWN, value);
         }

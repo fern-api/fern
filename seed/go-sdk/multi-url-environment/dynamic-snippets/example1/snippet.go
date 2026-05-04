@@ -17,10 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.GetPresignedUrlRequest{
+    request := &fern.GetPresignedURLRequest{
         S3Key: "s3Key",
     }
-    client.S3.GetPresignedUrl(
+    client.S3.GetPresignedURL(
         context.TODO(),
         request,
     )

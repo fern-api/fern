@@ -1,5 +1,5 @@
+import { CliError } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
-
 import { AbstractAsyncAPIParserContext } from "../AbstractAsyncAPIParserContext.js";
 import { WebsocketSessionExampleMessage } from "../getFernExamples.js";
 import { AsyncAPIV2 } from "../v2/index.js";
@@ -14,13 +14,16 @@ export class AsyncAPIV2ParserContext extends AbstractAsyncAPIParserContext<Async
         const components = this.document.components;
 
         if (components == null || components.messages == null || !message.$ref.startsWith(MESSAGE_REFERENCE_PREFIX)) {
-            throw new Error(`Failed to resolve message reference: ${message.$ref} in v2 components`);
+            throw new CliError({
+                message: `Failed to resolve message reference: ${message.$ref} in v2 components`,
+                code: CliError.Code.ReferenceError
+            });
         }
 
         const messageKey = message.$ref.substring(MESSAGE_REFERENCE_PREFIX.length);
         const resolvedMessage = components.messages[messageKey];
         if (resolvedMessage == null) {
-            throw new Error(`${message.$ref} is undefined`);
+            throw new CliError({ message: `${message.$ref} is undefined`, code: CliError.Code.ReferenceError });
         }
         return resolvedMessage as AsyncAPIV2.MessageV2;
     }

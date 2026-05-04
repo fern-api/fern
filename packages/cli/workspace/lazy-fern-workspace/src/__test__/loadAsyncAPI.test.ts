@@ -733,6 +733,150 @@ describe("loadAsyncAPI — external $ref resolution", () => {
         ).rejects.toThrow(/Circular \$ref detected/);
     });
 
+    it("rewrites file-local refs in inlined content via registry", async () => {
+        // Reproduces the Deepgram pattern: a schema file defines messages that
+        // use file-local #/Sibling refs to sibling definitions in the same file.
+        // When the message is inlined into the main doc, those file-local refs
+        // must be rewritten to #/components/schemas/Sibling (via registry).
+        await mkdir(join(tempDir, "schemas"), { recursive: true });
+        await mkdir(join(tempDir, "channels"), { recursive: true });
+
+        // schemas/schemas.listen.yml — message + sibling schemas
+        await writeFile(
+            join(tempDir, "schemas", "schemas.listen.yml"),
+            yaml.dump({
+                EagerEotThreshold: {
+                    type: "number",
+                    description: "Eager EOT threshold"
+                },
+                ListenConfigure: {
+                    name: "ListenConfigure",
+                    payload: {
+                        type: "object",
+                        properties: {
+                            type: { type: "string", const: "Configure" },
+                            threshold: { $ref: "#/EagerEotThreshold" }
+                        }
+                    }
+                }
+            })
+        );
+
+        // channels/listen.yml — references the message from the schemas file
+        await writeFile(
+            join(tempDir, "channels", "listen.yml"),
+            yaml.dump({
+                Listen: {
+                    messages: {
+                        ListenConfigure: {
+                            $ref: "../schemas/schemas.listen.yml#/ListenConfigure"
+                        }
+                    }
+                }
+            })
+        );
+
+        // Main doc — registers EagerEotThreshold in components.schemas and
+        // the channel via external refs
+        const doc = {
+            asyncapi: "3.0.0",
+            info: { title: "Test", version: "1.0.0" },
+            channels: {
+                Listen: { $ref: "./channels/listen.yml#/Listen" }
+            },
+            components: {
+                schemas: {
+                    EagerEotThreshold: {
+                        $ref: "./schemas/schemas.listen.yml#/EagerEotThreshold"
+                    }
+                }
+            }
+        };
+        await writeFile(join(tempDir, "asyncapi.yml"), yaml.dump(doc));
+
+        const result = (await loadAsyncAPI({
+            context,
+            absoluteFilePath: AbsoluteFilePath.of(join(tempDir, "asyncapi.yml")),
+            absoluteFilePathToOverrides: undefined
+        })) as unknown as Record<string, unknown>;
+
+        // The channel message should be inlined, and the file-local
+        // #/EagerEotThreshold ref inside it should be rewritten to the
+        // registry path #/components/schemas/EagerEotThreshold
+        const channels = result["channels"] as Record<string, unknown>;
+        const listen = channels["Listen"] as Record<string, unknown>;
+        const messages = listen["messages"] as Record<string, unknown>;
+        const configure = messages["ListenConfigure"] as Record<string, unknown>;
+        const payload = configure["payload"] as Record<string, unknown>;
+        const properties = payload["properties"] as Record<string, unknown>;
+        const threshold = properties["threshold"] as Record<string, unknown>;
+
+        expect(threshold["$ref"]).toBe("#/components/schemas/EagerEotThreshold");
+    });
+
+    it("inlines file-local refs when target is not in registry", async () => {
+        // When a file-local ref points to a sibling that is NOT registered in
+        // components.schemas (or any other registry section), the bundler should
+        // inline the content from the source file rather than leaving a dangling ref.
+        await mkdir(join(tempDir, "schemas"), { recursive: true });
+
+        await writeFile(
+            join(tempDir, "schemas", "types.yml"),
+            yaml.dump({
+                HelperType: {
+                    type: "string",
+                    description: "A helper type not registered in main doc"
+                },
+                MainType: {
+                    type: "object",
+                    properties: {
+                        helper: { $ref: "#/HelperType" }
+                    }
+                }
+            })
+        );
+
+        const doc = {
+            asyncapi: "2.6.0",
+            info: { title: "Test", version: "1.0.0" },
+            channels: {
+                "/data": {
+                    publish: {
+                        message: {
+                            payload: { $ref: "./schemas/types.yml#/MainType" }
+                        }
+                    }
+                }
+            }
+        };
+        await writeFile(join(tempDir, "asyncapi.yml"), yaml.dump(doc));
+
+        const result = (await loadAsyncAPI({
+            context,
+            absoluteFilePath: AbsoluteFilePath.of(join(tempDir, "asyncapi.yml")),
+            absoluteFilePathToOverrides: undefined
+        })) as unknown as Record<string, unknown>;
+
+        const channels = result["channels"] as Record<string, unknown>;
+        const payload = (
+            ((channels["/data"] as Record<string, unknown>)["publish"] as Record<string, unknown>)["message"] as Record<
+                string,
+                unknown
+            >
+        )["payload"] as Record<string, unknown>;
+
+        // MainType should be inlined
+        expect(payload["$ref"]).toBeUndefined();
+        expect(payload["type"]).toBe("object");
+
+        // The file-local #/HelperType ref should also be fully inlined
+        const properties = payload["properties"] as Record<string, unknown>;
+        const helper = properties["helper"] as Record<string, unknown>;
+        expect(helper["$ref"]).toBeUndefined();
+        expect(helper["type"]).toBe("string");
+        expect(helper["description"]).toBe("A helper type not registered in main doc");
+    });
+
     it("leaves HTTP/HTTPS $ref values untouched for downstream resolution", async () => {
         const doc = {
             asyncapi: "3.0.0",

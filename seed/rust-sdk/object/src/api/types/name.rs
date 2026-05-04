@@ -10,7 +10,7 @@ pub struct Name {
 
 impl Name {
     pub fn builder() -> NameBuilder {
-        NameBuilder::default()
+        <NameBuilder as Default>::default()
     }
 }
 

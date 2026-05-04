@@ -56,6 +56,8 @@ class AuthClient:
 
         client = SeedOauthClientCredentialsMandatoryAuth(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.auth.get_token_with_client_credentials(
             client_id="my_oauth_app_123",
@@ -101,6 +103,8 @@ class AuthClient:
 
         client = SeedOauthClientCredentialsMandatoryAuth(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.auth.refresh_token(
             client_id="my_oauth_app_123",
@@ -166,6 +170,8 @@ class AsyncAuthClient:
 
         client = AsyncSeedOauthClientCredentialsMandatoryAuth(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
@@ -219,6 +225,8 @@ class AsyncAuthClient:
 
         client = AsyncSeedOauthClientCredentialsMandatoryAuth(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 

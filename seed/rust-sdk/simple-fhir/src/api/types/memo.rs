@@ -10,7 +10,7 @@ pub struct Memo {
 
 impl Memo {
     pub fn builder() -> MemoBuilder {
-        MemoBuilder::default()
+        <MemoBuilder as Default>::default()
     }
 }
 

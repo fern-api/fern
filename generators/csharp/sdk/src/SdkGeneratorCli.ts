@@ -1,4 +1,4 @@
-import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { File, GeneratorError, GeneratorNotificationService } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbstractCsharpGeneratorCli, CsharpConfigSchema, TestFileGenerator } from "@fern-api/csharp-base";
 import {
@@ -13,6 +13,7 @@ import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/ser
 import { FernIr } from "@fern-fern/ir-sdk";
 import { fail } from "assert";
 import { writeFile } from "fs/promises";
+import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import { SnippetJsonGenerator } from "./endpoint/snippets/SnippetJsonGenerator.js";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator.js";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator.js";
@@ -70,13 +71,15 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
             baseApiExceptionClassName &&
             baseExceptionClassName === baseApiExceptionClassName
         ) {
-            throw new Error("The 'base-api-exception-class-name' and 'base-exception-class-name' cannot be the same.");
+            throw GeneratorError.internalError(
+                "The 'base-api-exception-class-name' and 'base-exception-class-name' cannot be the same."
+            );
         }
         return customConfig;
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
-        throw new Error("Method not implemented.");
+        throw GeneratorError.internalError("Method not implemented.");
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
@@ -292,17 +295,26 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                     endpointSnippets: snippets.endpoints
                 });
             } catch (e) {
-                throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
+                throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
 
             try {
                 await this.generateReference({ context });
             } catch (e) {
-                throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
+                throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
+            }
+        }
+
+        if (!context.config.whitelabel) {
+            try {
+                this.generateContributing({ context });
+            } catch (e) {
+                throw GeneratorError.internalError(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(e)}`);
             }
         }
         context.logger.debug(`[TIMING] code generation took ${Date.now() - generateStartTime}ms`);
         await context.project.persist();
+        context.formatter.dispose();
     }
 
     private async generateReadme({
@@ -337,6 +349,13 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
         context.project.addRawFiles(
             new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of(otherPath), content)
         );
+    }
+
+    private generateContributing({ context }: { context: SdkGeneratorContext }): void {
+        const contributingGenerator = new ContributingGenerator();
+        const content = contributingGenerator.generate();
+        const otherPath = context.settings.outputPath.other;
+        context.project.addRawFiles(new File("CONTRIBUTING.md", RelativeFilePath.of(otherPath), content));
     }
 
     private async generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {

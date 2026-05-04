@@ -10,8 +10,10 @@ import com.seed.exhaustive.resources.types.object.types.NestedObjectWithRequired
 import com.seed.exhaustive.resources.types.object.types.ObjectWithDatetimeLikeString;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithDocumentedUnknownType;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithMapOfMap;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithMixedRequiredAndOptionalFields;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredNestedObject;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithUnknownField;
 import java.util.List;
 import java.util.Map;
@@ -149,6 +151,51 @@ public class ObjectClient {
             Map<String, Object> request, RequestOptions requestOptions) {
         return this.rawClient
                 .getAndReturnMapOfDocumentedUnknownType(request, requestOptions)
+                .body();
+    }
+
+    /**
+     * Tests that dynamic snippets include all required properties in the
+     * object initializer, even when the example omits some required fields.
+     */
+    public ObjectWithMixedRequiredAndOptionalFields getAndReturnWithMixedRequiredAndOptionalFields(
+            ObjectWithMixedRequiredAndOptionalFields request) {
+        return this.rawClient
+                .getAndReturnWithMixedRequiredAndOptionalFields(request)
+                .body();
+    }
+
+    /**
+     * Tests that dynamic snippets include all required properties in the
+     * object initializer, even when the example omits some required fields.
+     */
+    public ObjectWithMixedRequiredAndOptionalFields getAndReturnWithMixedRequiredAndOptionalFields(
+            ObjectWithMixedRequiredAndOptionalFields request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnWithMixedRequiredAndOptionalFields(request, requestOptions)
+                .body();
+    }
+
+    /**
+     * Tests that dynamic snippets recursively construct default objects for
+     * required properties whose type is a named object. When the example
+     * omits the nested object, the generator should construct a default
+     * initializer with the nested object's required properties filled in.
+     */
+    public ObjectWithRequiredNestedObject getAndReturnWithRequiredNestedObject(ObjectWithRequiredNestedObject request) {
+        return this.rawClient.getAndReturnWithRequiredNestedObject(request).body();
+    }
+
+    /**
+     * Tests that dynamic snippets recursively construct default objects for
+     * required properties whose type is a named object. When the example
+     * omits the nested object, the generator should construct a default
+     * initializer with the nested object's required properties filled in.
+     */
+    public ObjectWithRequiredNestedObject getAndReturnWithRequiredNestedObject(
+            ObjectWithRequiredNestedObject request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnWithRequiredNestedObject(request, requestOptions)
                 .body();
     }
 

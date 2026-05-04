@@ -25,7 +25,7 @@ func do() {
             true,
         ),
     }
-    client.Service.GetUserById(
+    client.Service.GetUserByID(
         context.TODO(),
         "userId",
         request,

@@ -3,7 +3,7 @@ import { createNameAndWireValue } from "@fern-typescript/test-utils";
 import { describe, expect, it } from "vitest";
 import { getLiteralValueForHeader, isLiteralHeader } from "../endpoints/utils/isLiteralHeader.js";
 
-// biome-ignore lint/suspicious/noExplicitAny: test mock for SdkContext
+// biome-ignore lint/suspicious/noExplicitAny: test mock for FileContext
 function createMockContext(resolvedType?: FernIr.ResolvedTypeReference): any {
     return {
         type: {
@@ -24,7 +24,8 @@ function createHeader(valueType?: FernIr.TypeReference): FernIr.HttpHeader {
         env: undefined,
         availability: undefined,
         docs: undefined,
-        v2Examples: undefined
+        v2Examples: undefined,
+        clientDefault: undefined
     };
 }
 

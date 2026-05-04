@@ -17,7 +17,7 @@ class HttpClientBuilder
      * @param int $maxRetries
      * @return RetryDecoratingClient
      */
-    public static function build(?ClientInterface $client = null, int $maxRetries = 2): RetryDecoratingClient
+    public static function build(?ClientInterface $client = null, int $maxRetries = <%= defaultMaxRetries %>): RetryDecoratingClient
     {
         $client = self::baseClient($client);
         return new RetryDecoratingClient($client, $maxRetries);

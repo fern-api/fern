@@ -1,5 +1,6 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath, sep } from "@fern-api/path-utils";
+import { CliError } from "@fern-api/task-context";
 
 export class FernDefinitionDirectory {
     private files: Record<RelativeFilePath, RawSchemas.DefinitionFileSchema> = {};
@@ -41,7 +42,10 @@ export class FernDefinitionDirectory {
         }
         const [directory, ...remainingPath] = pathParts;
         if (directory == null) {
-            throw new Error(`Internal error; cannot add file with path: ${pathParts}`);
+            throw new CliError({
+                message: `Internal error; cannot add file with path: ${pathParts}`,
+                code: CliError.Code.InternalError
+            });
         }
         if (!this.directories[directory]) {
             this.directories[directory] = new FernDefinitionDirectory();

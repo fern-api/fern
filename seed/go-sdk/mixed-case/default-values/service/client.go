@@ -35,12 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) GetResource(
 	ctx context.Context,
-	resourceId string,
+	resourceID string,
 	opts ...option.RequestOption,
 ) (*fern.Resource, error) {
 	response, err := c.WithRawResponse.GetResource(
 		ctx,
-		resourceId,
+		resourceID,
 		opts...,
 	)
 	if err != nil {

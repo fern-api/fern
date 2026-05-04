@@ -10,7 +10,7 @@ pub struct ListUsersBodyCursorPaginationRequest {
 
 impl ListUsersBodyCursorPaginationRequest {
     pub fn builder() -> ListUsersBodyCursorPaginationRequestBuilder {
-        ListUsersBodyCursorPaginationRequestBuilder::default()
+        <ListUsersBodyCursorPaginationRequestBuilder as Default>::default()
     }
 }
 

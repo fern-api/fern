@@ -1008,6 +1008,51 @@ describe("ExampleConverter", () => {
             expect(result.usedProvidedExample).toBe(false);
         });
 
+        it("should validate null example against anyOf with null type variant", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                anyOf: [{ type: "string" }, { type: "null" }]
+            };
+
+            const conv = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example: null
+            });
+
+            const result = conv.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.usedProvidedExample).toBe(true);
+            expect(result.validExample).toBeNull();
+        });
+
+        it("should validate null example in an object property with anyOf string/null", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    name: { type: "string" },
+                    query: {
+                        anyOf: [{ type: "string" }, { type: "null" }]
+                    }
+                },
+                required: ["name", "query"]
+            };
+
+            const conv = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example: { name: "test", query: null }
+            });
+
+            const result = conv.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.usedProvidedExample).toBe(true);
+            expect(result.validExample).toEqual({ name: "test", query: null });
+        });
+
         it("should produce a valid result when no example is provided (auto-generation)", () => {
             const schema: OpenAPIV3_1.SchemaObject = {
                 anyOf: [

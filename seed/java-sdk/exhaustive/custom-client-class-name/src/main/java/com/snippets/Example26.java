@@ -1,8 +1,7 @@
 package com.snippets;
 
 import com.seed.exhaustive.Best;
-import com.seed.exhaustive.resources.types.object.types.ObjectWithDatetimeLikeString;
-import java.time.OffsetDateTime;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithMixedRequiredAndOptionalFields;
 
 public class Example26 {
     public static void main(String[] args) {
@@ -11,9 +10,11 @@ public class Example26 {
 
         client.endpoints()
                 .object()
-                .getAndReturnWithDatetimeLikeString(ObjectWithDatetimeLikeString.builder()
-                        .datetimeLikeString("2023-08-31T14:15:22Z")
-                        .actualDatetime(OffsetDateTime.parse("2023-08-31T14:15:22Z"))
+                .getAndReturnWithMixedRequiredAndOptionalFields(ObjectWithMixedRequiredAndOptionalFields.builder()
+                        .requiredString("hello")
+                        .requiredInteger(0)
+                        .requiredLong(0L)
+                        .optionalString("world")
                         .build());
     }
 }

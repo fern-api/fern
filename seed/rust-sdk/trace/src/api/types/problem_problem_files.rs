@@ -12,7 +12,7 @@ pub struct ProblemFiles {
 
 impl ProblemFiles {
     pub fn builder() -> ProblemFilesBuilder {
-        ProblemFilesBuilder::default()
+        <ProblemFilesBuilder as Default>::default()
     }
 }
 

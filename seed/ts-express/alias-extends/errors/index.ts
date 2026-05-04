@@ -1,1 +1,0 @@
-export { SeedAliasExtendsError } from "./SeedAliasExtendsError";

@@ -16,14 +16,7 @@
 //!     client
 //!         .bulk_update_tasks(
 //!             &BulkUpdateTasksRequest {
-//!                 filter_assigned_to: None,
-//!                 filter_is_complete: None,
-//!                 filter_date: None,
-//!                 fields: None,
-//!                 bulk_update_tasks_request_assigned_to: None,
-//!                 bulk_update_tasks_request_date: None,
-//!                 bulk_update_tasks_request_is_complete: None,
-//!                 text: None,
+//!                 ..Default::default()
 //!             },
 //!             None,
 //!         )

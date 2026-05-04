@@ -9,7 +9,7 @@ pub struct CreatePaymentRequest {
 
 impl CreatePaymentRequest {
     pub fn builder() -> CreatePaymentRequestBuilder {
-        CreatePaymentRequestBuilder::default()
+        <CreatePaymentRequestBuilder as Default>::default()
     }
 }
 

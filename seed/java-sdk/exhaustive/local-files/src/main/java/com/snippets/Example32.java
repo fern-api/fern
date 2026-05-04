@@ -1,8 +1,7 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.endpoints.params.requests.GetWithMultipleQuery;
-import java.util.Arrays;
+import com.fern.sdk.resources.endpoints.pagination.requests.ListItemsRequest;
 
 public class Example32 {
     public static void main(String[] args) {
@@ -12,15 +11,11 @@ public class Example32 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().params().getWithAllowMultipleQuery(
-            GetWithMultipleQuery
+        client.endpoints().pagination().listItems(
+            ListItemsRequest
                 .builder()
-                .query(
-                    Arrays.asList("query")
-                )
-                .number(
-                    Arrays.asList(1)
-                )
+                .cursor("cursor")
+                .limit(1)
                 .build()
         );
     }

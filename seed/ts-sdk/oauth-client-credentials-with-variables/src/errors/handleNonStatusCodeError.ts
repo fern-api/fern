@@ -24,11 +24,15 @@ export function handleNonStatusCodeError(
         case "timeout":
             throw new errors.SeedOauthClientCredentialsWithVariablesTimeoutError(
                 `Timeout exceeded when calling ${method} ${path}.`,
+                {
+                    cause: error.cause,
+                },
             );
         case "unknown":
             throw new errors.SeedOauthClientCredentialsWithVariablesError({
                 message: error.errorMessage,
                 rawResponse: rawResponse,
+                cause: error.cause,
             });
         default:
             throw new errors.SeedOauthClientCredentialsWithVariablesError({

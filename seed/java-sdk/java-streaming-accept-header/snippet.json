@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "b7b58d6",
+            "example_identifier": "9a74d1cd",
             "id": {
                 "method": "POST",
                 "path": "/generate-stream",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "dc039695",
+            "example_identifier": "850eb217",
             "id": {
                 "method": "POST",
                 "path": "/generate-stream",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "dc039695",
+            "example_identifier": "850eb217",
             "id": {
                 "method": "POST",
                 "path": "/generate-stream",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "338838e4",
+            "example_identifier": "27fe136f",
             "id": {
                 "method": "POST",
                 "path": "/generate",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "dc039695",
+            "example_identifier": "850eb217",
             "id": {
                 "method": "POST",
                 "path": "/generate",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "dc039695",
+            "example_identifier": "850eb217",
             "id": {
                 "method": "POST",
                 "path": "/generate",

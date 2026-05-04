@@ -23,7 +23,7 @@ client.nullable().getUsers(
             Arrays.asList(true)
         )
         .tags(
-            Arrays.asList(Optional.of("tags"))
+            Arrays.asList("tags")
         )
         .avatar("avatar")
         .extra(true)

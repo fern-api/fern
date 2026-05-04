@@ -349,23 +349,25 @@ export const is = {
         typeof value.safeName === "string" &&
         typeof value.unsafeName === "string",
     Name: (value: unknown): value is Name =>
-        isObject(value) &&
-        "originalName" in value &&
-        "pascalCase" in value &&
-        "camelCase" in value &&
-        "snakeCase" in value &&
-        "screamingSnakeCase" in value &&
-        typeof value.originalName === "string" &&
-        is.SafeAndUnsafeString(value.pascalCase) &&
-        is.SafeAndUnsafeString(value.camelCase) &&
-        is.SafeAndUnsafeString(value.snakeCase) &&
-        is.SafeAndUnsafeString(value.screamingSnakeCase),
+        typeof value === "string" ||
+        (isObject(value) &&
+            "originalName" in value &&
+            "pascalCase" in value &&
+            "camelCase" in value &&
+            "snakeCase" in value &&
+            "screamingSnakeCase" in value &&
+            typeof value.originalName === "string" &&
+            is.SafeAndUnsafeString(value.pascalCase) &&
+            is.SafeAndUnsafeString(value.camelCase) &&
+            is.SafeAndUnsafeString(value.snakeCase) &&
+            is.SafeAndUnsafeString(value.screamingSnakeCase)),
     NameAndWireValue: (value: unknown): value is NameAndWireValue =>
-        isObject(value) &&
-        "wireValue" in value &&
-        "name" in value &&
-        typeof value.wireValue === "string" &&
-        is.Name(value.name),
+        typeof value === "string" ||
+        (isObject(value) &&
+            "wireValue" in value &&
+            "name" in value &&
+            typeof value.wireValue === "string" &&
+            is.Name(value.name)),
     // Type Declarations
     TypeDeclaration: (value: unknown): value is TypeDeclaration =>
         isObject(value) &&

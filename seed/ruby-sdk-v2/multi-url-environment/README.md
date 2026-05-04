@@ -30,7 +30,7 @@ require "seed"
 
 client = Seed::Client.new(token: "<token>")
 
-client.ec_2.boot_instance(size: "size")
+client.ec2.boot_instance(size: "size")
 ```
 
 ## Environments
@@ -66,7 +66,7 @@ client = Seed::Client.new(
 )
 
 begin
-    result = client.ec_2.boot_instance
+    result = client.ec2.boot_instance
 rescue Seed::Errors::TimeoutError
     puts "API didn't respond before our timeout elapsed"
 rescue Seed::Errors::ServiceUnavailableError
@@ -91,7 +91,12 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (Internal Server Error)
+
+The `retryStatusCodes` configuration controls which [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) status codes are retried:
+
+- `legacy` (default): Retries `408`, `429`, `500`, `502`, `503`, `504`, `521`, `522`, `524`
+- `recommended`: Retries `408`, `429`, `502`, `503`, `504` only (excludes `500 Internal Server Error` to avoid retrying non-idempotent failures)
 
 Use the `max_retries` option to configure this behavior.
 
@@ -111,7 +116,7 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
 ```ruby
 require "seed"
 
-response = client.ec_2.boot_instance(
+response = client.ec2.boot_instance(
     ...,
     timeout: 30  # 30 second timeout
 )
@@ -124,7 +129,7 @@ If you would like to send additional headers as part of the request, use the `ad
 ```ruby
 require "seed"
 
-response = client.ec_2.boot_instance(
+response = client.ec2.boot_instance(
     ...,
     request_options: {
         additional_headers: {
@@ -141,7 +146,7 @@ If you would like to send additional query parameters as part of the request, us
 ```ruby
 require "seed"
 
-response = client.ec_2.boot_instance(
+response = client.ec2.boot_instance(
     ...,
     request_options: {
         additional_query_parameters: {

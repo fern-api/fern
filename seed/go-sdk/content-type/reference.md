@@ -60,7 +60,7 @@ client.Service.Patch(
 </dl>
 </details>
 
-<details><summary><code>client.Service.PatchComplex(Id, request) -> error</code></summary>
+<details><summary><code>client.Service.PatchComplex(ID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -118,7 +118,7 @@ request := &fern.PatchComplexRequest{
         Bio: fern.String(
             "bio",
         ),
-        ProfileImageUrl: fern.String(
+        ProfileImageURL: fern.String(
             "profileImageUrl",
         ),
         Settings: map[string]any{
@@ -219,7 +219,7 @@ client.Service.PatchComplex(
 <dl>
 <dd>
 
-**profileImageUrl:** `*string` 
+**profileImageURL:** `*string` 
     
 </dd>
 </dl>
@@ -239,7 +239,7 @@ client.Service.PatchComplex(
 </dl>
 </details>
 
-<details><summary><code>client.Service.NamedPatchWithMixed(Id, request) -> error</code></summary>
+<details><summary><code>client.Service.NamedPatchWithMixed(ID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -268,7 +268,7 @@ This should trigger the NPE issue when optional fields aren't initialized.
 
 ```go
 request := &fern.NamedMixedPatchRequest{
-        AppId: fern.String(
+        AppID: fern.String(
             "appId",
         ),
         Instructions: fern.String(
@@ -306,7 +306,7 @@ client.Service.NamedPatchWithMixed(
 <dl>
 <dd>
 
-**appId:** `*string` 
+**appID:** `*string` 
     
 </dd>
 </dl>
@@ -442,7 +442,7 @@ client.Service.OptionalMergePatchTest(
 </dl>
 </details>
 
-<details><summary><code>client.Service.RegularPatch(Id, request) -> error</code></summary>
+<details><summary><code>client.Service.RegularPatch(ID, request) -> error</code></summary>
 <dl>
 <dd>
 

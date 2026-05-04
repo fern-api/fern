@@ -9,7 +9,7 @@ pub struct ListQueryRequest {
 
 impl ListQueryRequest {
     pub fn builder() -> ListQueryRequestBuilder {
-        ListQueryRequestBuilder::default()
+        <ListQueryRequestBuilder as Default>::default()
     }
 }
 

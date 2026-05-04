@@ -3,19 +3,19 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 
 export const ErrorDiscriminationByPropertyStrategy: core.serialization.ObjectSchema<
     serializers.ErrorDiscriminationByPropertyStrategy.Raw,
     FernIr.ErrorDiscriminationByPropertyStrategy
 > = core.serialization.objectWithoutOptionalProperties({
-    discriminant: NameAndWireValue,
-    contentProperty: NameAndWireValue,
+    discriminant: NameAndWireValueOrString,
+    contentProperty: NameAndWireValueOrString,
 });
 
 export declare namespace ErrorDiscriminationByPropertyStrategy {
     export interface Raw {
-        discriminant: NameAndWireValue.Raw;
-        contentProperty: NameAndWireValue.Raw;
+        discriminant: NameAndWireValueOrString.Raw;
+        contentProperty: NameAndWireValueOrString.Raw;
     }
 }

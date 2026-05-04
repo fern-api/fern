@@ -65,7 +65,7 @@
     },
     "dependencies": {},
     "devDependencies": {
-        "@biomejs/biome": "2.4.9",
+        "@biomejs/biome": "2.4.10",
         "@types/node": "^18.19.70",
         "msw": "2.11.2",
         "oxfmt": "0.42.0",

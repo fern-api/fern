@@ -34,7 +34,7 @@ pub struct ProblemInfoV22 {
 
 impl ProblemInfoV22 {
     pub fn builder() -> ProblemInfoV22Builder {
-        ProblemInfoV22Builder::default()
+        <ProblemInfoV22Builder as Default>::default()
     }
 }
 

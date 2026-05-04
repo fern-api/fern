@@ -8,7 +8,7 @@ pub struct BadObjectRequestInfo {
 
 impl BadObjectRequestInfo {
     pub fn builder() -> BadObjectRequestInfoBuilder {
-        BadObjectRequestInfoBuilder::default()
+        <BadObjectRequestInfoBuilder as Default>::default()
     }
 }
 

@@ -146,12 +146,12 @@ func (c *Client) GetAndReturnDate(
 	return response.Body, nil
 }
 
-func (c *Client) GetAndReturnUuid(
+func (c *Client) GetAndReturnUUID(
 	ctx context.Context,
 	request uuid.UUID,
 	opts ...option.RequestOption,
 ) (uuid.UUID, error) {
-	response, err := c.WithRawResponse.GetAndReturnUuid(
+	response, err := c.WithRawResponse.GetAndReturnUUID(
 		ctx,
 		request,
 		opts...,

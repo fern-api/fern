@@ -1,0 +1,9 @@
+{
+  "type": "string",
+  "enum": [
+    "prod",
+    "staging",
+    "dev"
+  ],
+  "definitions": {}
+}

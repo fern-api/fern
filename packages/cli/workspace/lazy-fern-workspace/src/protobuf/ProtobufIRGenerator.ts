@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { access, chmod, cp, unlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
@@ -302,7 +302,9 @@ export class ProtobufIRGenerator {
                         await access(bufLockPath);
                     } catch {
                         this.context.failAndThrow(
-                            "Air-gapped mode requires a pre-cached buf.lock file. Please run 'buf dep update' at build time to cache dependencies."
+                            "Air-gapped mode requires a pre-cached buf.lock file. Please run 'buf dep update' at build time to cache dependencies.",
+                            undefined,
+                            { code: CliError.Code.InternalError }
                         );
                     }
                 } else {
@@ -313,7 +315,9 @@ export class ProtobufIRGenerator {
 
             const bufGenerateResult = await buf(["generate"]);
             if (bufGenerateResult.exitCode !== 0) {
-                this.context.failAndThrow(bufGenerateResult.stderr);
+                this.context.failAndThrow(bufGenerateResult.stderr, undefined, {
+                    code: CliError.Code.IrConversionError
+                });
             }
             await unlink(bufYamlPath);
         } catch (error) {
@@ -332,11 +336,15 @@ export class ProtobufIRGenerator {
         try {
             this.resolvedBufCommand = await ensureBufCommand(this.context.logger);
         } catch (error) {
-            this.context.failAndThrow(error instanceof Error ? error.message : String(error));
+            this.context.failAndThrow(error instanceof Error ? error.message : String(error), undefined, {
+                code: CliError.Code.EnvironmentError
+            });
         }
     }
 
     private async generateRemote(): Promise<AbsoluteFilePath> {
-        this.context.failAndThrow("Remote Protobuf generation is unimplemented.");
+        this.context.failAndThrow("Remote Protobuf generation is unimplemented.", undefined, {
+            code: CliError.Code.InternalError
+        });
     }
 }

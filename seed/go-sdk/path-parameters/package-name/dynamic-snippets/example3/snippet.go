@@ -15,8 +15,8 @@ func do() {
         ),
     )
     request := &path.GetUsersRequest{
-        TenantId: "tenant_id",
-        UserId: "user_id",
+        TenantID: "tenant_id",
+        UserID: "user_id",
     }
     client.User.GetUser(
         context.TODO(),

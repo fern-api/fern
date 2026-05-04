@@ -18,7 +18,7 @@ pub struct SendRequest {
 
 impl SendRequest {
     pub fn builder() -> SendRequestBuilder {
-        SendRequestBuilder::default()
+        <SendRequestBuilder as Default>::default()
     }
 }
 

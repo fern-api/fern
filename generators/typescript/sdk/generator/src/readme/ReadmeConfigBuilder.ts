@@ -3,7 +3,7 @@ import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { NpmPackage } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { template } from "lodash-es";
 import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder.js";
 
@@ -42,7 +42,7 @@ export class ReadmeConfigBuilder {
         remote,
         featureConfig
     }: {
-        context: SdkContext;
+        context: FileContext;
         remote: FernGeneratorCli.Remote | undefined;
         featureConfig: FernGeneratorCli.FeatureConfig;
     }): FernGeneratorCli.ReadmeConfig {
@@ -142,7 +142,7 @@ export class ReadmeConfigBuilder {
 }
 
 function getCustomSections(
-    context: SdkContext,
+    context: FileContext,
     generateSubpackageExports: boolean
 ): FernGeneratorCli.CustomSection[] | undefined {
     const irCustomSections = context.ir.readmeConfig?.customSections;

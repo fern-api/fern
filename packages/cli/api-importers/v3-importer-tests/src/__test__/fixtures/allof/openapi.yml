@@ -1,0 +1,178 @@
+openapi: 3.0.3
+info:
+  title: allOf Reproduction
+  version: 1.0.0
+  description: >
+    Reproduces allOf edge cases
+
+servers:
+  - url: https://api.allof.com
+
+paths:
+  /v1/preview/1/rule-types:
+    get:
+      operationId: searchRuleTypes
+      summary: Search for rule types
+      parameters:
+        - name: query
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Paginated list of rule types
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RuleTypeSearchResponse"
+
+  /v1/preview/1/rules:
+    post:
+      operationId: createRule
+      summary: Create a rule
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RuleCreateRequest"
+      responses:
+        "200":
+          description: Created rule
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RuleResponse"
+
+components:
+  schemas:
+    # -----------------------------------------------------------------------
+    # Shared base schemas
+    # -----------------------------------------------------------------------
+    PagingCursors:
+      type: object
+      required:
+        - next
+      properties:
+        next:
+          type: string
+        previous:
+          type: string
+
+    PaginatedResult:
+      type: object
+      required:
+        - paging
+        - results
+      properties:
+        paging:
+          $ref: "#/components/schemas/PagingCursors"
+        results:
+          type: array
+          maxItems: 100
+          description: Current page of results from the requested resource.
+          items: {}
+
+    RuleExecutionContext:
+      type: string
+      description: The execution environment for a rule.
+      enum:
+        - prod
+        - staging
+        - dev
+
+    # -----------------------------------------------------------------------
+    # Case A: Array items narrowing WITHOUT redeclaring type: array
+    #
+    # From the customer's original report (Slack reply #5). The child schema
+    # narrows `results.items` from {} to RuleTypeResponse. The parent declares
+    # `required: [paging, results]`, so `results` should remain required in
+    # the composed type.
+    #
+    # Expected: results is a required list of RuleTypeResponse
+    # Bug: results renders as optional (required not propagated from parent)
+    # -----------------------------------------------------------------------
+    RuleTypeResponse:
+      type: object
+      required:
+        - id
+        - name
+        - status
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum:
+            - active
+            - inactive
+
+    RuleTypeSearchResponse:
+      allOf:
+        - $ref: "#/components/schemas/PaginatedResult"
+        - properties:
+            results:
+              items:
+                $ref: "#/components/schemas/RuleTypeResponse"
+
+    # -----------------------------------------------------------------------
+    # Case B: Property-level allOf combining $ref with inline constraints
+    #
+    # From Evan's report (Slack reply #10). The property `executionContext`
+    # uses allOf to combine a $ref to an enum with an inline string + pattern
+    # constraint. This means the value must be one of the enum values AND
+    # match the pattern (i.e., any value except "prod").
+    #
+    # Expected: executionContext references RuleExecutionContext (the enum)
+    # Bug: renders as an empty object — the non-object allOf element is
+    #      skipped entirely ("Skipping non-object allOf element")
+    # -----------------------------------------------------------------------
+    RuleCreateRequest:
+      type: object
+      required:
+        - name
+        - executionContext
+      properties:
+        name:
+          type: string
+        executionContext:
+          allOf:
+            - $ref: "#/components/schemas/RuleExecutionContext"
+            - type: string
+              pattern: "^(?!prod$)[a-z0-9_-]+$"
+              description: >
+                Execution context for the rule, excluding the prod environment.
+
+    # -----------------------------------------------------------------------
+    # Case C: allOf extending a parent with additional required properties
+    #
+    # The response type composes PaginatedResult (for paging) with additional
+    # rule-specific fields. All properties from the parent should retain their
+    # required/optional status.
+    #
+    # Expected: id, name, status are required; executionContext is required
+    # -----------------------------------------------------------------------
+    RuleResponse:
+      type: object
+      required:
+        - id
+        - name
+        - status
+        - executionContext
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+            - active
+            - inactive
+            - draft
+        executionContext:
+          $ref: "#/components/schemas/RuleExecutionContext"

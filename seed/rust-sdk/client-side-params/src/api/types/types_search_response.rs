@@ -12,7 +12,7 @@ pub struct SearchResponse {
 
 impl SearchResponse {
     pub fn builder() -> SearchResponseBuilder {
-        SearchResponseBuilder::default()
+        <SearchResponseBuilder as Default>::default()
     }
 }
 

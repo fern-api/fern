@@ -70,6 +70,9 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     @JsonProperty("custom-pager-name")
     Optional<String> customPagerName();
 
+    @JsonProperty("offset-semantics")
+    Optional<String> offsetSemantics();
+
     @JsonProperty("default-timeout-in-seconds")
     Optional<Integer> defaultTimeoutInSeconds();
 
@@ -113,6 +116,12 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     @JsonProperty("omit-fern-headers")
     default Boolean omitFernHeaders() {
         return false;
+    }
+
+    @Value.Default
+    @JsonProperty("retry-status-codes")
+    default String retryStatusCodes() {
+        return "legacy";
     }
 
     static ImmutableJavaSdkCustomConfig.Builder builder() {

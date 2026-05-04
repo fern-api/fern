@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
@@ -14,10 +15,12 @@ export declare namespace MultiUrlEnvironmentGenerator {
 }
 
 export class MultiUrlEnvironmentGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+    private readonly case: CaseConverter;
     private multiUrlEnvironments: FernIr.MultipleBaseUrlsEnvironments;
 
     constructor({ context, multiUrlEnvironments }: MultiUrlEnvironmentGenerator.Args) {
         super(context);
+        this.case = context.case;
         this.multiUrlEnvironments = multiUrlEnvironments;
     }
 
@@ -33,14 +36,14 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<PhpFile, SdkCust
             parameters: this.getConstructorParameters(),
             body: php.codeblock((writer) => {
                 for (const baseUrl of this.multiUrlEnvironments.baseUrls) {
-                    const propertyName = this.getBaseUrlPropertyName(baseUrl.name.camelCase.safeName);
+                    const propertyName = this.getBaseUrlPropertyName(this.case.camelSafe(baseUrl.name));
                     writer.writeLine(`$this->${propertyName} = $${propertyName};`);
                 }
             })
         });
 
         for (const baseUrl of this.multiUrlEnvironments.baseUrls) {
-            const propertyName = this.getBaseUrlPropertyName(baseUrl.name.camelCase.safeName);
+            const propertyName = this.getBaseUrlPropertyName(this.case.camelSafe(baseUrl.name));
             class_.addField(
                 php.field({
                     access: "public",
@@ -68,7 +71,7 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<PhpFile, SdkCust
                         writer.indent();
                         writer.newLine();
                         this.multiUrlEnvironments.baseUrls.forEach((baseUrl, index) => {
-                            const propertyName = this.getBaseUrlPropertyName(baseUrl.name.camelCase.safeName);
+                            const propertyName = this.getBaseUrlPropertyName(this.case.camelSafe(baseUrl.name));
                             const url = environment.urls[baseUrl.id];
                             writer.write(`${propertyName}: '${url}'`);
                             if (index < this.multiUrlEnvironments.baseUrls.length - 1) {
@@ -96,7 +99,7 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<PhpFile, SdkCust
                     writer.indent();
                     writer.newLine();
                     this.multiUrlEnvironments.baseUrls.forEach((baseUrl, index) => {
-                        const propertyName = this.getBaseUrlPropertyName(baseUrl.name.camelCase.safeName);
+                        const propertyName = this.getBaseUrlPropertyName(this.case.camelSafe(baseUrl.name));
                         writer.write(`${propertyName}: $${propertyName}`);
                         if (index < this.multiUrlEnvironments.baseUrls.length - 1) {
                             writer.write(",");
@@ -126,11 +129,11 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<PhpFile, SdkCust
 
     private getConstructorParameters(): php.Parameter[] {
         return this.multiUrlEnvironments.baseUrls.map((baseUrl) => {
-            const propertyName = this.getBaseUrlPropertyName(baseUrl.name.camelCase.safeName);
+            const propertyName = this.getBaseUrlPropertyName(this.case.camelSafe(baseUrl.name));
             return php.parameter({
                 name: propertyName,
                 type: php.Type.string(),
-                docs: `The ${baseUrl.name.camelCase.safeName} base URL`
+                docs: `The ${this.case.camelSafe(baseUrl.name)} base URL`
             });
         });
     }

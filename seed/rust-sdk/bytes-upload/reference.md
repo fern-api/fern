@@ -21,10 +21,7 @@ async fn main() {
         ..Default::default()
     };
     let client = BytesUploadClient::new(config).expect("Failed to build client");
-    client
-        .service
-        .upload(&todo!("Invalid bytes value"), None)
-        .await;
+    client.service.upload(&vec![], None).await;
 }
 ```
 </dd>
@@ -60,7 +57,14 @@ async fn main() {
     let client = BytesUploadClient::new(config).expect("Failed to build client");
     client
         .service
-        .upload_with_query_params(&"nova-2".to_string(), &None, &vec![], None)
+        .upload_with_query_params(
+            &UploadWithQueryParamsRequest {
+                model: "nova-2".to_string(),
+                body: vec![],
+                language: None,
+            },
+            None,
+        )
         .await;
 }
 ```

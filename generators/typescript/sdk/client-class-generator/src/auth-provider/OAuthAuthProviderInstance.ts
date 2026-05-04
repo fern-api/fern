@@ -1,4 +1,4 @@
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { AuthProviderInstance } from "./AuthProviderInstance.js";
 
@@ -6,7 +6,7 @@ export class OAuthAuthProviderInstance implements AuthProviderInstance {
     private static readonly CLIENT_ID_FIELD_NAME = "clientId";
     private static readonly CLIENT_SECRET_FIELD_NAME = "clientSecret";
 
-    public instantiate({ context, params }: { context: SdkContext; params: ts.Expression[] }): ts.Expression {
+    public instantiate({ context, params }: { context: FileContext; params: ts.Expression[] }): ts.Expression {
         context.importsManager.addImportFromRoot("auth/OAuthAuthProvider", {
             namedImports: ["OAuthAuthProvider"]
         });
@@ -14,7 +14,7 @@ export class OAuthAuthProviderInstance implements AuthProviderInstance {
         return ts.factory.createNewExpression(ts.factory.createIdentifier("OAuthAuthProvider"), undefined, params);
     }
 
-    public getSnippetProperties(context: SdkContext): ts.ObjectLiteralElementLike[] {
+    public getSnippetProperties(context: FileContext): ts.ObjectLiteralElementLike[] {
         if (!context.generateOAuthClients) {
             return [];
         }

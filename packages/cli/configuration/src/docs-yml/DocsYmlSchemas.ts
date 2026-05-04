@@ -34,23 +34,18 @@ export const ProgrammingLanguage = z.enum([
     "js"
 ]);
 
-export const Language = z.enum([
-    "en",
-    "es",
-    "fr",
-    "de",
-    "it",
-    "pt",
-    "ja",
-    "zh",
-    "ko",
-    "el",
-    "no",
-    "pl",
-    "ru",
-    "sv",
-    "tr"
-]);
+/**
+ * BCP 47 language tag validator for docs localization.
+ * Accepts simple codes like "en", "ja" as well as regional variants
+ * like "ja-JP", "pt-BR", "zh-Hans", "zh-Hans-CN".
+ * See: https://www.rfc-editor.org/rfc/rfc5646
+ */
+export const Language = z
+    .string()
+    .regex(
+        /^[a-zA-Z]{2,8}(-[a-zA-Z0-9]{1,8})*$/,
+        "Language must be a valid BCP 47 language tag (e.g. 'en', 'ja', 'ja-JP', 'pt-BR', 'zh-Hans-CN')"
+    );
 
 export const PageActionOption = z.enum([
     "copy-page",
@@ -97,7 +92,7 @@ export const ContentAlignment = z.enum(["center", "left"]);
 
 export const HeaderPosition = z.enum(["fixed", "static"]);
 
-export const ProductSwitcherThemeConfig = z.enum(["default", "toggle"]);
+export const ProductSwitcherThemeConfig = z.enum(["default", "toggle", "tabs"]);
 
 export const LanguageSwitcherThemeConfig = z.enum(["default", "minimal"]);
 
@@ -236,6 +231,15 @@ export const AIChatWebsiteDatasource = z.object({
 
 export const AIChatDatasource = AIChatWebsiteDatasource;
 
+export const PageDescriptionSource = z.enum(["description", "subtitle"]);
+
+export const AgentsConfig = z.object({
+    "page-directive": z.string().optional(),
+    "page-description-source": PageDescriptionSource.optional(),
+    "llms-txt": z.string().optional(),
+    "llms-full-txt": z.string().optional()
+});
+
 export const AIChatConfig = z.object({
     model: AIChatModel.optional(),
     "system-prompt": z.string().optional(),
@@ -298,7 +302,8 @@ export const LayoutConfig = z.object({
     "header-position": HeaderPosition.optional(),
     "disable-header": z.boolean().optional(),
     "hide-nav-links": z.boolean().optional(),
-    "hide-feedback": z.boolean().optional()
+    "hide-feedback": z.boolean().optional(),
+    "mobile-toc": z.boolean().optional()
 });
 
 // ===== Settings =====
@@ -315,7 +320,8 @@ export const DocsSettingsConfig = z.object({
     "disable-analytics": z.boolean().optional(),
     language: Language.optional(),
     "folder-title-source": TitleSource.optional(),
-    "substitute-env-vars": z.boolean().optional()
+    "substitute-env-vars": z.boolean().optional(),
+    "websocket-oneof-display": z.enum(["flat", "grouped"]).optional()
 });
 
 // ===== Colors =====
@@ -387,9 +393,9 @@ export const EditThisPageConfig = z.object({
 export const DocsInstance = z.object({
     url: z.string(),
     "custom-domain": CustomDomain.optional(),
-    private: z.boolean().optional(),
     "edit-this-page": EditThisPageConfig.optional(),
-    audiences: Audience.optional()
+    audiences: Audience.optional(),
+    "multi-source": z.boolean().optional()
 });
 
 // ===== Logo =====
@@ -549,6 +555,16 @@ export const MetadataConfig = z.object({
     "twitter:site": z.string().optional(),
     "twitter:url": z.string().optional(),
     "twitter:card": TwitterCardSetting.optional(),
+    "og:dynamic": z.boolean().optional(),
+    "og:dynamic:background-image": z.string().optional(),
+    "og:dynamic:text-color": z.string().optional(),
+    "og:dynamic:background-color": z.string().optional(),
+    "og:dynamic:logo-color": z.enum(["dark", "light"]).optional(),
+    "og:dynamic:show-logo": z.boolean().optional(),
+    "og:dynamic:show-section": z.boolean().optional(),
+    "og:dynamic:show-description": z.boolean().optional(),
+    "og:dynamic:show-url": z.boolean().optional(),
+    "og:dynamic:show-gradient": z.boolean().optional(),
     "canonical-host": z.string().optional()
 });
 
@@ -570,7 +586,8 @@ export const CheckRulesConfig = z.object({
     "no-non-component-refs": CheckRuleSeverity.optional(),
     "valid-local-references": CheckRuleSeverity.optional(),
     "no-circular-redirects": CheckRuleSeverity.optional(),
-    "valid-docs-endpoints": CheckRuleSeverity.optional()
+    "valid-docs-endpoints": CheckRuleSeverity.optional(),
+    "missing-redirects": CheckRuleSeverity.optional()
 });
 
 export const CheckConfig = z.object({
@@ -580,7 +597,8 @@ export const CheckConfig = z.object({
 // ===== Integrations =====
 
 export const IntegrationsConfig = z.object({
-    intercom: z.string().optional()
+    intercom: z.string().optional(),
+    context7: z.string().optional()
 });
 
 // ===== Experimental =====
@@ -923,6 +941,25 @@ export const ProductFileConfig = z.object({
     navigation: NavigationConfig
 });
 
+// ===== Translations =====
+
+export const TranslationConfigObject = z.object({
+    lang: Language,
+    default: z.boolean().optional()
+});
+
+export const TranslationConfig = z.union([Language, TranslationConfigObject]);
+
+export function normalizeTranslationConfig(config: z.infer<typeof TranslationConfig>): {
+    lang: string;
+    default?: boolean;
+} {
+    if (typeof config === "string") {
+        return { lang: config };
+    }
+    return config;
+}
+
 // ===== Main DocsConfiguration =====
 
 export const DocsConfiguration = z.object({
@@ -942,10 +979,27 @@ export const DocsConfiguration = z.object({
     "page-actions": PageActionsConfig.optional(),
     experimental: ExperimentalConfig.optional(),
     "default-language": ProgrammingLanguage.optional(),
-    languages: z.array(Language).optional(),
+    languages: z.array(z.string()).optional(),
+    translations: z
+        .array(TranslationConfig)
+        .optional()
+        .superRefine((translations, ctx) => {
+            if (translations == null) {
+                return;
+            }
+            const normalizedTranslations = translations.map(normalizeTranslationConfig);
+            const defaultCount = normalizedTranslations.filter((t) => t.default === true).length;
+            if (defaultCount > 1) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    message: `Only one translation entry can be marked as default, but ${defaultCount} were found`
+                });
+            }
+        }),
     "ai-chat": AIChatConfig.optional(),
     "ai-search": AIChatConfig.optional(),
     "ai-examples": AiExamplesConfig.optional(),
+    agents: AgentsConfig.optional(),
     metadata: MetadataConfig.optional(),
     redirects: z.array(RedirectConfig).optional(),
     check: CheckConfig.optional(),
@@ -957,6 +1011,7 @@ export const DocsConfiguration = z.object({
     layout: LayoutConfig.optional(),
     settings: DocsSettingsConfig.optional(),
     theme: ThemeConfig.optional(),
+    "global-theme": z.string().optional(),
     integrations: IntegrationsConfig.optional(),
     css: CssConfig.optional(),
     js: JsConfig.optional(),

@@ -1,13 +1,34 @@
 import { extractErrorMessage } from "@fern-api/core-utils";
-import { wrapWithHttps } from "@fern-api/docs-resolver";
+import {
+    applyTranslatedFrontmatterToNavTree,
+    applyTranslatedNavigationOverlays,
+    getTranslatedAnnouncement,
+    replaceImagePathsAndUrls,
+    replaceReferencedCode,
+    replaceReferencedMarkdown,
+    stripMdxComments,
+    transformAtPrefixImports,
+    wrapWithHttps
+} from "@fern-api/docs-resolver";
 import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, dirname, doesPathExist, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    dirname,
+    doesPathExist,
+    listFiles,
+    RelativeFilePath,
+    relative,
+    resolve
+} from "@fern-api/fs-utils";
 import { runExeca } from "@fern-api/logging-execa";
 import { Project } from "@fern-api/project-loader";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import chalk from "chalk";
+import { execSync } from "child_process";
 import cors from "cors";
 import express from "express";
+import fs from "fs";
 import { readFile, rm } from "fs/promises";
 import http, { type IncomingMessage } from "http";
 import path from "path";
@@ -17,7 +38,8 @@ import { WebSocket, WebSocketServer } from "ws";
 import { type BunServer, createBunServer } from "./createBunServer.js";
 import { DebugLogger } from "./DebugLogger.js";
 import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle.js";
-import { getPreviewDocsDefinition } from "./previewDocs.js";
+import { writeNodePolyfillScript } from "./nodePolyfills.js";
+import { getPreviewDocsDefinition, type PreviewDocsResult } from "./previewDocs.js";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     pages: {},
@@ -60,6 +82,12 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     id: undefined,
     apiNameToId: {}
 };
+
+// The FDR SDK types config.root as {} via zod inference, but at runtime it is FernNavigation.V1.RootNode.
+// This type guard checks the "type" discriminant to safely narrow the type without a blind cast.
+function isV1RootNode(value: object): value is FernNavigation.V1.RootNode {
+    return "type" in value && (value as { type: unknown }).type === "root";
+}
 
 /**
  * Slug tracking system for navigation changes
@@ -143,11 +171,10 @@ class SlugChangeTracker {
 
         // Extract new slug mappings - use the FernNavigation root structure
         let newSlugMap: Map<string, string>;
-        if (docsDefinition.config.root) {
+        const configRoot = docsDefinition.config.root;
+        if (configRoot && isV1RootNode(configRoot)) {
             // Convert V1 navigation root to latest version
-            const migratedRoot = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(
-                docsDefinition.config.root
-            );
+            const migratedRoot = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(configRoot);
             newSlugMap = this.extractSlugsFromNavigationRoot(migratedRoot);
 
             // If this is the first time we have navigation root, treat all as "new" but don't report changes
@@ -177,11 +204,10 @@ class SlugChangeTracker {
      * Initialize slug mappings from a docs definition
      */
     initialize(docsDefinition: DocsV1Read.DocsDefinition): void {
-        if (docsDefinition.config.root) {
+        const configRoot = docsDefinition.config.root;
+        if (configRoot && isV1RootNode(configRoot)) {
             // Convert V1 navigation root to latest version
-            const migratedRoot = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(
-                docsDefinition.config.root
-            );
+            const migratedRoot = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(configRoot);
             this.pageSlugMap = this.extractSlugsFromNavigationRoot(migratedRoot);
         } else {
             // Initialize empty map, will be populated when navigation is ready during change detection
@@ -362,6 +388,99 @@ class SnippetDependencyTracker {
     }
 }
 
+/**
+ * Resolves the path to the Fern Docs cache directory within the standalone server bundle.
+ * The standalone server runs from `<bundleRoot>/standalone/packages/fern-docs/bundle/server.js`,
+ * so its runtime cache is written to `<bundleRoot>/standalone/packages/fern-docs/bundle/.next/cache/`.
+ */
+function getFernDocsCachePath(bundleRoot: string): string {
+    return path.join(bundleRoot, "standalone/packages/fern-docs/bundle/.next/cache");
+}
+
+/**
+ * Removes the Fern Docs cache directory.
+ */
+async function cleanFernDocsCache(bundleRoot: string, context: TaskContext): Promise<void> {
+    const cachePath = getFernDocsCachePath(bundleRoot);
+    try {
+        const cacheExists = await doesPathExist(AbsoluteFilePath.of(cachePath));
+        if (cacheExists) {
+            context.logger.debug(`Cleaning Fern Docs cache at ${cachePath}`);
+            await rm(cachePath, { recursive: true });
+            context.logger.debug("Fern Docs cache cleaned successfully");
+        } else {
+            context.logger.debug("No Fern Docs cache to clean");
+        }
+    } catch (err) {
+        context.logger.debug(`Failed to clean Fern Docs cache: ${err}`);
+    }
+}
+
+/**
+ * Synchronous version of cleanFernDocsCache for use in signal handlers
+ * where async operations cannot be awaited.
+ */
+function cleanFernDocsCacheSync(bundleRoot: string, context: TaskContext): void {
+    const cachePath = getFernDocsCachePath(bundleRoot);
+    try {
+        if (fs.existsSync(cachePath)) {
+            context.logger.debug(`Cleaning Fern Docs cache at ${cachePath}`);
+            fs.rmSync(cachePath, { recursive: true, maxRetries: 5, retryDelay: 500 });
+            context.logger.debug("Fern Docs cache cleaned successfully");
+        }
+    } catch (err) {
+        context.logger.debug(`Failed to clean Fern Docs cache: ${err}`);
+    }
+}
+
+/**
+ * Finds and kills any processes still listening on the given port.
+ * This is a best-effort fallback to clean up zombie Next.js worker
+ * processes that may survive after the main server process is killed.
+ */
+function killProcessesOnPort(targetPort: number, context: TaskContext): void {
+    context.logger.debug(`Killing any leftover processes on port ${targetPort}`);
+    const isWindows = process.platform === "win32";
+    const command = isWindows
+        ? `netstat -ano | findstr :${targetPort} | findstr LISTENING`
+        : `lsof -ti tcp:${targetPort}`;
+
+    try {
+        const output = execSync(command, { encoding: "utf-8", timeout: 5000 });
+
+        let pids: string[];
+        if (isWindows) {
+            pids = output
+                .trim()
+                .split("\n")
+                .map((line) => line.trim().split(/\s+/).pop() ?? "")
+                .filter((pid) => pid.length > 0 && pid !== String(process.pid));
+            pids = [...new Set(pids)];
+        } else {
+            pids = output
+                .trim()
+                .split("\n")
+                .map((pid) => pid.trim())
+                .filter((pid) => pid.length > 0 && pid !== String(process.pid));
+        }
+
+        for (const pid of pids) {
+            try {
+                context.logger.debug(`Killing leftover process ${pid} on port ${targetPort}`);
+                if (isWindows) {
+                    execSync(`taskkill /F /PID ${pid}`, { timeout: 5000 });
+                } else {
+                    process.kill(Number(pid), "SIGKILL");
+                }
+            } catch {
+                // Process may have already exited
+            }
+        }
+    } catch {
+        // Command returns non-zero when no matches are found — nothing to kill
+    }
+}
+
 export async function runAppPreviewServer({
     initialProject,
     reloadProject,
@@ -395,9 +514,10 @@ export async function runAppPreviewServer({
         try {
             const url = process.env.APP_DOCS_TAR_PREVIEW_BUCKET;
             if (url == null) {
-                throw new Error(
-                    "Failed to connect to the docs preview server. Please contact support@buildwithfern.com"
-                );
+                throw new CliError({
+                    message: "Failed to connect to the docs preview server. Please contact support@buildwithfern.com",
+                    code: CliError.Code.InternalError
+                });
             }
             await downloadBundle({
                 bucketUrl: url,
@@ -416,9 +536,11 @@ export async function runAppPreviewServer({
             try {
                 const url = process.env.APP_DOCS_PREVIEW_BUCKET;
                 if (url == null) {
-                    throw new Error(
-                        "Failed to connect to the docs preview server. Please contact support@buildwithfern.com"
-                    );
+                    throw new CliError({
+                        message:
+                            "Failed to connect to the docs preview server. Please contact support@buildwithfern.com",
+                        code: CliError.Code.InternalError
+                    });
                 }
                 await downloadBundle({
                     bucketUrl: url,
@@ -445,7 +567,10 @@ export async function runAppPreviewServer({
 
     // Initialize the debug logger for metrics collection
     const debugLogger = new DebugLogger();
-    await debugLogger.initialize();
+    await debugLogger.initialize({
+        debug: (msg) => context.logger.debug(msg),
+        info: (msg) => context.logger.info(msg)
+    });
     const debugLogPath = debugLogger.getLogFilePath();
     if (debugLogPath) {
         context.logger.info(chalk.dim(`Debug log: ${debugLogPath}`));
@@ -578,7 +703,9 @@ export async function runAppPreviewServer({
     );
 
     let project = initialProject;
-    let docsDefinition: DocsV1Read.DocsDefinition | undefined;
+    let previewResult: PreviewDocsResult | undefined;
+    // Pre-computed translated definitions for each locale (excluding default)
+    let translatedDefinitions: Map<string, DocsV1Read.DocsDefinition> = new Map();
 
     // Initialize the snippet dependency tracker
     const snippetTracker = new SnippetDependencyTracker(context);
@@ -590,6 +717,154 @@ export async function runAppPreviewServer({
     let reloadTimer: NodeJS.Timeout | null = null;
     let isReloading = false;
     const RELOAD_DEBOUNCE_MS = 1000;
+
+    /**
+     * Computes translated definitions for each locale.
+     * Similar to what publishDocs.ts does for production, but for local preview.
+     */
+    async function computeTranslatedDefinitions(
+        result: PreviewDocsResult
+    ): Promise<Map<string, DocsV1Read.DocsDefinition>> {
+        const translations = new Map<string, DocsV1Read.DocsDefinition>();
+        const { docsDefinition, translationPages, translationNavigationOverlays, collectedFileIds, docsWorkspacePath } =
+            result;
+
+        if (translationPages == null || Object.keys(translationPages).length === 0) {
+            return translations;
+        }
+
+        const defaultLocale = docsDefinition.config.translations?.defaultLocale;
+
+        for (const [locale, localePages] of Object.entries(translationPages)) {
+            // Skip the default locale - we use the base definition for that
+            if (locale === defaultLocale) {
+                continue;
+            }
+
+            try {
+                // Locale-aware file loaders that prefer translated snippets when available
+                const resolveLocalePath = async (filepath: AbsoluteFilePath): Promise<AbsoluteFilePath> => {
+                    const relPath = relative(docsWorkspacePath, filepath);
+                    const translatedPath = resolve(
+                        docsWorkspacePath,
+                        RelativeFilePath.of(`translations/${locale}/${relPath}`)
+                    );
+                    return (await doesPathExist(translatedPath)) ? translatedPath : filepath;
+                };
+
+                const localeAwareMarkdownLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
+                    const pathToRead = await resolveLocalePath(filepath);
+                    const raw = await readFile(pathToRead, "utf-8");
+                    const fmMatch = raw.match(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/);
+                    return fmMatch != null ? raw.slice(fmMatch[0].length) : raw;
+                };
+
+                const localeAwareFileLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
+                    const pathToRead = await resolveLocalePath(filepath);
+                    return readFile(pathToRead, "utf-8");
+                };
+
+                // Build translated pages by merging base pages with locale-specific pages
+                // Start by copying all defined pages from the base definition
+                const translatedPages: Record<string, DocsV1Read.PageContent> = {};
+                for (const [pageId, page] of Object.entries(docsDefinition.pages)) {
+                    if (page != null) {
+                        translatedPages[pageId] = page;
+                    }
+                }
+
+                for (const [pagePath, rawMarkdown] of Object.entries(localePages)) {
+                    try {
+                        const basePage = translatedPages[pagePath];
+                        const absolutePathToMarkdownFile = resolve(docsWorkspacePath, RelativeFilePath.of(pagePath));
+
+                        // Resolve <Markdown src="..."/> snippets (locale-aware)
+                        const { markdown: markdownResolved } = await replaceReferencedMarkdown({
+                            markdown: rawMarkdown,
+                            absolutePathToFernFolder: docsWorkspacePath,
+                            absolutePathToMarkdownFile,
+                            context,
+                            markdownLoader: localeAwareMarkdownLoader
+                        });
+
+                        // Resolve <Code src="..."/> references (locale-aware)
+                        const codeResolved = await replaceReferencedCode({
+                            markdown: markdownResolved,
+                            absolutePathToFernFolder: docsWorkspacePath,
+                            absolutePathToMarkdownFile,
+                            context,
+                            fileLoader: localeAwareFileLoader
+                        });
+
+                        // Transform @/ prefix imports to relative paths
+                        const importsResolved = transformAtPrefixImports({
+                            markdown: codeResolved,
+                            absolutePathToFernFolder: docsWorkspacePath,
+                            absolutePathToMarkdownFile
+                        });
+
+                        // Strip MDX comments
+                        let processedMarkdown = stripMdxComments(importsResolved);
+
+                        // Replace image paths using collected file IDs
+                        processedMarkdown = replaceImagePathsAndUrls(
+                            processedMarkdown,
+                            collectedFileIds,
+                            {}, // markdownFilesToPathName not needed for translations
+                            {
+                                absolutePathToMarkdownFile,
+                                absolutePathToFernFolder: docsWorkspacePath
+                            },
+                            context
+                        );
+
+                        translatedPages[pagePath] = {
+                            markdown: processedMarkdown,
+                            rawMarkdown: processedMarkdown,
+                            editThisPageUrl: basePage?.editThisPageUrl,
+                            editThisPageLaunch: basePage?.editThisPageLaunch
+                        };
+                    } catch (pageError) {
+                        context.logger.warn(
+                            `Failed to process translated page "${pagePath}" for locale "${locale}": ${String(pageError)}. Falling back to base page.`
+                        );
+                    }
+                }
+
+                // Apply translated frontmatter to nav tree
+                let updatedRoot = applyTranslatedFrontmatterToNavTree(
+                    docsDefinition.config.root,
+                    localePages as Record<string, string>,
+                    context
+                );
+
+                // Apply navigation overlay (translated display-names, titles, etc.)
+                const localeNavOverlay = translationNavigationOverlays?.[locale];
+                let translatedAnnouncement = docsDefinition.config.announcement;
+                if (localeNavOverlay != null) {
+                    updatedRoot = applyTranslatedNavigationOverlays(updatedRoot, localeNavOverlay);
+                    translatedAnnouncement = getTranslatedAnnouncement(localeNavOverlay) ?? translatedAnnouncement;
+                }
+
+                const translatedDefinition: DocsV1Read.DocsDefinition = {
+                    ...docsDefinition,
+                    pages: translatedPages,
+                    config: {
+                        ...docsDefinition.config,
+                        root: updatedRoot,
+                        announcement: translatedAnnouncement
+                    }
+                };
+
+                translations.set(locale, translatedDefinition);
+                context.logger.debug(`Computed translated definition for locale "${locale}"`);
+            } catch (error) {
+                context.logger.warn(`Failed to compute translation for locale "${locale}": ${String(error)}`);
+            }
+        }
+
+        return translations;
+    }
 
     const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]) => {
         context.logger.info("Reloading docs...");
@@ -622,12 +897,13 @@ export async function runAppPreviewServer({
                 });
 
             const docsGenStartTime = Date.now();
-            const newDocsDefinition = await getPreviewDocsDefinition({
+            const newPreviewResult = await getPreviewDocsDefinition({
                 domain: `${instance.host}${instance.pathname}`,
                 project,
                 context,
-                previousDocsDefinition: docsDefinition,
-                editedAbsoluteFilepaths
+                previousDocsDefinition: previewResult?.docsDefinition,
+                editedAbsoluteFilepaths,
+                previousPreviewResult: previewResult
             });
             const docsGenTime = Date.now() - docsGenStartTime;
 
@@ -646,7 +922,7 @@ export async function runAppPreviewServer({
             });
             void debugLogger.logCliMemory();
 
-            return newDocsDefinition;
+            return newPreviewResult;
         } catch (err) {
             const totalTime = Date.now() - startTime;
 
@@ -657,7 +933,7 @@ export async function runAppPreviewServer({
             });
             void debugLogger.logCliMemory();
 
-            if (docsDefinition == null) {
+            if (previewResult == null) {
                 context.logger.error("Failed to read docs configuration. Rendering blank page.");
             } else {
                 context.logger.error("Failed to read docs configuration. Rendering last successful configuration.");
@@ -668,20 +944,28 @@ export async function runAppPreviewServer({
                     context.logger.debug(`Stack Trace:\n${err.stack}`);
                 }
             }
-            return docsDefinition;
+            return previewResult;
         }
     };
 
-    docsDefinition = await reloadDocsDefinition();
+    previewResult = await reloadDocsDefinition();
+
+    // Compute translated definitions after loading
+    if (previewResult != null) {
+        translatedDefinitions = await computeTranslatedDefinitions(previewResult);
+        if (translatedDefinitions.size > 0) {
+            context.logger.info(`Computed translations for ${translatedDefinitions.size} locale(s)`);
+        }
+    }
 
     // Initialize slug mappings from the initial docs definition
-    if (docsDefinition) {
-        slugTracker.initialize(docsDefinition);
+    if (previewResult?.docsDefinition) {
+        slugTracker.initialize(previewResult.docsDefinition);
     }
 
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
 
-    // Create watcher but don't attach the event handler yet - we'll do that after restartNextJsServer is defined
+    // Create watcher but don't attach the event handler yet - we'll do that after the Next.js server starts
     const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
         recursive: true,
         ignoreInitial: true,
@@ -691,21 +975,75 @@ export async function runAppPreviewServer({
 
     const editedAbsoluteFilepaths: AbsoluteFilePath[] = [];
 
-    function buildDocsLoadResponse(): DocsV2Read.LoadDocsForUrlResponse {
+    /**
+     * Extracts the locale from a URL or path.
+     * E.g., "/fr/getting-started" -> "fr", "http://localhost:3000/ja/intro" -> "ja"
+     */
+    function extractLocaleFromPath(urlPath: string | undefined): string | undefined {
+        if (urlPath == null) {
+            return undefined;
+        }
+        const defaultLocale = previewResult?.docsDefinition.config.translations?.defaultLocale;
+        const availableLocales = previewResult?.docsDefinition.config.translations?.translations;
+
+        if (availableLocales == null || availableLocales.length === 0) {
+            return undefined;
+        }
+
+        // Parse as URL if it's a full URL, otherwise treat as path
+        let pathname = urlPath;
+        try {
+            pathname = new URL(urlPath).pathname;
+        } catch {
+            // urlPath is already a bare path (e.g. "/fr/getting-started")
+        }
+
+        // Check if path starts with a locale prefix
+        const pathParts = pathname.split("/").filter((p) => p.length > 0);
+        if (pathParts.length > 0) {
+            const firstPart = pathParts[0];
+            if (firstPart != null && availableLocales.includes(firstPart) && firstPart !== defaultLocale) {
+                return firstPart;
+            }
+        }
+        return undefined;
+    }
+
+    function buildDocsLoadResponse(locale?: string): DocsV2Read.LoadDocsForUrlResponse {
         // Fall back to empty definition if the initial load failed
-        const definition = docsDefinition ?? EMPTY_DOCS_DEFINITION;
+        const baseDefinition = previewResult?.docsDefinition ?? EMPTY_DOCS_DEFINITION;
+
+        // Use translated definition if available for the requested locale
+        let definition = baseDefinition;
+        if (locale != null && translatedDefinitions.has(locale)) {
+            definition = translatedDefinitions.get(locale) ?? baseDefinition;
+            context.logger.debug(`Serving translated definition for locale "${locale}"`);
+        }
+
+        const translationsConfig = baseDefinition.config.translations;
         return {
             baseUrl: { domain: instance.host, basePath: instance.pathname },
             definition,
             lightModeEnabled: definition.config.colorsV3?.type !== "dark",
-            orgId: FernNavigation.OrgId(initialProject.config.organization)
+            orgId: FernNavigation.OrgId(initialProject.config.organization),
+            // Include translations config for language switcher support in preview mode
+            defaultLocale: translationsConfig?.defaultLocale,
+            translations: translationsConfig?.translations
         };
     }
 
+    // Parse JSON body middleware for the load-with-url endpoint
+    app.use(express.json());
+
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    app.post("/v2/registry/docs/load-with-url", async (_, res) => {
+    app.post("/v2/registry/docs/load-with-url", async (req, res) => {
         try {
-            res.send(buildDocsLoadResponse());
+            // Extract locale from the request body URL if present
+            const requestBody = req.body as { url?: string } | undefined;
+            const urlPath = requestBody?.url;
+            const locale = extractLocaleFromPath(urlPath);
+
+            res.send(buildDocsLoadResponse(locale));
         } catch (error) {
             context.logger.error("Stack trace:", (error as Error).stack ?? "");
             context.logger.error("Error loading docs", (error as Error).message);
@@ -721,7 +1059,12 @@ export async function runAppPreviewServer({
     //
     // In Bun, http.createServer does not emit the 'upgrade' event that
     // the ws package relies on (re: oven-sh/bun#5951).
-    const bunHandle = createBunServer({ port: backendPort, debugLogger, getDocsLoadResponse: buildDocsLoadResponse });
+    const bunHandle = createBunServer({
+        port: backendPort,
+        debugLogger,
+        getDocsLoadResponse: buildDocsLoadResponse,
+        extractLocaleFromPath
+    });
     if (bunHandle != null) {
         sendData = bunHandle.sendData;
         bunServer = bunHandle;
@@ -735,7 +1078,15 @@ export async function runAppPreviewServer({
         });
     }
 
+    // Clean Fern Docs cache from previous runs before starting the server
+    await cleanFernDocsCache(bundleRoot, context);
+
+    // Write Node.js polyfills for older runtimes (e.g. Node 20) so the
+    // pre-built Next.js bundle can use APIs introduced in Node 22+.
+    const polyfillPath = writeNodePolyfillScript(bundleRoot);
+
     // Now start Next.js after backend is ready
+
     const env = {
         ...process.env,
         PORT: port.toString(),
@@ -747,15 +1098,19 @@ export async function runAppPreviewServer({
         NEXT_DISABLE_CACHE: "1",
         NODE_ENV: "production",
         NODE_PATH: bundleRoot,
-        NODE_OPTIONS: "--max-old-space-size=8096 --enable-source-maps"
+        NODE_OPTIONS: `--max-old-space-size=8096 --enable-source-maps --require ${polyfillPath}`
     };
 
-    // Track the current server process
+    // Track the current server process and the port it actually bound to
     let serverProcess: ReturnType<typeof runExeca> | null = null;
+    let actualPort: number = port;
 
     // Function to start the Next.js server
     const startNextJsServer = (): Promise<void> => {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
+            let settled = false;
+            let fallbackTimer: ReturnType<typeof setTimeout> | undefined;
+
             serverProcess = runExeca(context.logger, "node", [serverPath], {
                 env,
                 doNotPipeOutput: true
@@ -764,7 +1119,17 @@ export async function runAppPreviewServer({
             const checkReady = (data: Buffer) => {
                 const output = data.toString();
                 context.logger.debug(`[Next.js] ${output}`);
-                if (output.includes("Ready in") || output.includes("✓ Ready")) {
+
+                const portMatch = output.match(/localhost:(\d+)/);
+                if (portMatch != null) {
+                    actualPort = Number(portMatch[1]);
+                }
+
+                if (!settled && (output.includes("Ready in") || output.includes("✓ Ready"))) {
+                    settled = true;
+                    if (fallbackTimer != null) {
+                        clearTimeout(fallbackTimer);
+                    }
                     resolve();
                 }
             };
@@ -779,13 +1144,31 @@ export async function runAppPreviewServer({
 
             // eslint-disable-next-line @typescript-eslint/no-floating-promises
             serverProcess.on("error", (err) => {
-                context.logger.debug(`Server process error: ${err.message}`);
+                context.logger.error(`Server process error: ${err.message}`);
+                if (!settled) {
+                    settled = true;
+                    if (fallbackTimer != null) {
+                        clearTimeout(fallbackTimer);
+                    }
+                    reject(new Error(`Server process failed to start: ${err.message}`));
+                }
             });
 
             // eslint-disable-next-line @typescript-eslint/no-floating-promises
             serverProcess.on("exit", (code, signal) => {
-                if (code) {
-                    context.logger.debug(`Server process exited with code: ${code}`);
+                if (code != null && code !== 0) {
+                    context.logger.error(`Server process exited with code: ${code}`);
+                    if (!settled) {
+                        settled = true;
+                        if (fallbackTimer != null) {
+                            clearTimeout(fallbackTimer);
+                        }
+                        reject(
+                            new Error(
+                                `Server process exited with code ${code}. Check the debug logs above for details.`
+                            )
+                        );
+                    }
                 } else if (signal) {
                     context.logger.debug(`Server process killed with signal: ${signal}`);
                 } else {
@@ -794,52 +1177,28 @@ export async function runAppPreviewServer({
             });
 
             // Fallback timeout in case we miss the ready message
-            setTimeout(() => {
-                resolve();
+            fallbackTimer = setTimeout(() => {
+                if (!settled) {
+                    settled = true;
+                    resolve();
+                }
             }, 10000);
         });
     };
 
-    // Function to stop the current Next.js server
-    const stopNextJsServer = (): Promise<void> => {
-        return new Promise((resolve) => {
-            if (serverProcess == null || serverProcess.killed) {
-                resolve();
-                return;
-            }
-
-            context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
-            try {
-                serverProcess.kill();
-                // Give it a moment to clean up
-                setTimeout(() => {
-                    if (serverProcess != null && !serverProcess.killed) {
-                        context.logger.debug(`Force killing server process with PID: ${serverProcess.pid}`);
-                        try {
-                            serverProcess.kill("SIGKILL");
-                        } catch (err) {
-                            context.logger.error(`Failed to force kill server process: ${err}`);
-                        }
-                    }
-                    resolve();
-                }, 1000);
-            } catch (err) {
-                context.logger.error(`Failed to kill server process: ${err}`);
-                resolve();
-            }
-        });
-    };
-
-    // Function to restart the Next.js server
-    const restartNextJsServer = async (): Promise<void> => {
-        await stopNextJsServer();
-        await startNextJsServer();
-    };
-
     // Start the initial server
-    await startNextJsServer();
+    try {
+        await startNextJsServer();
+    } catch (err) {
+        context.failAndThrow(
+            `Docs preview server failed to start: ${extractErrorMessage(err)}. ` +
+                `Run with --log-level debug for more details.`,
+            undefined,
+            { code: CliError.Code.InternalError }
+        );
+    }
 
-    // Now that restartNextJsServer is defined, attach the watcher event handler
+    // Attach the watcher event handler
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
         // Ignore changes to .fern/logs/ directory (contains debug logs)
@@ -878,30 +1237,28 @@ export async function runAppPreviewServer({
                     type: "startReload"
                 });
 
-                const reloadedDocsDefinition = await reloadDocsDefinition(filesToReload);
+                const reloadedPreviewResult = await reloadDocsDefinition(filesToReload);
 
                 editedAbsoluteFilepaths.length = 0;
 
-                // Restart the docs server
-                context.logger.info("Restarting docs server...");
-                await restartNextJsServer();
-
-                // Wait 1 second for the server to be ready
-                await new Promise((resolve) => setTimeout(resolve, 1000));
-
-                context.logger.info("Refreshing page. Please refresh manually if you don't see changes.");
+                isReloading = false;
 
                 sendData({
                     version: 1,
                     type: "finishReload"
                 });
-                isReloading = false;
 
-                if (reloadedDocsDefinition != null) {
+                if (reloadedPreviewResult != null) {
                     // Detect slug changes before updating the docs definition
-                    const slugChanges = slugTracker.updateAndDetectChanges(reloadedDocsDefinition);
+                    const slugChanges = slugTracker.updateAndDetectChanges(reloadedPreviewResult.docsDefinition);
 
-                    docsDefinition = reloadedDocsDefinition;
+                    previewResult = reloadedPreviewResult;
+
+                    // Recompute translated definitions
+                    translatedDefinitions = await computeTranslatedDefinitions(reloadedPreviewResult);
+                    if (translatedDefinitions.size > 0) {
+                        context.logger.debug(`Recomputed translations for ${translatedDefinitions.size} locale(s)`);
+                    }
 
                     // Send navigateToSlug events for any slug changes
                     if (slugChanges.length > 0) {
@@ -921,7 +1278,13 @@ export async function runAppPreviewServer({
         }, RELOAD_DEBOUNCE_MS);
     });
 
+    let cleanedUp = false;
     const cleanup = () => {
+        if (cleanedUp) {
+            return;
+        }
+        cleanedUp = true;
+
         if (serverProcess != null && !serverProcess.killed) {
             context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
             try {
@@ -940,6 +1303,12 @@ export async function runAppPreviewServer({
                 context.logger.error(`Failed to kill server process: ${err}`);
             }
         }
+
+        killProcessesOnPort(actualPort, context);
+
+        // Clean Fern Docs cache on shutdown (sync since cleanup runs in signal handlers)
+        // Uses maxRetries to handle ENOTEMPTY if the server process is still writing
+        cleanFernDocsCacheSync(bundleRoot, context);
 
         context.logger.debug("Cleaning up WebSocket connections...");
         for (const [ws, metadata] of connections) {
@@ -988,7 +1357,7 @@ export async function runAppPreviewServer({
     process.on("beforeExit", cleanup);
 
     // Server is ready after startNextJsServer completes
-    context.logger.info(`Docs preview server ready on http://localhost:${port}`);
+    context.logger.info(`Docs preview server ready on http://localhost:${actualPort}`);
 
     // await infinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function

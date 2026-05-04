@@ -171,7 +171,10 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         await this.writeAsIsFiles({
             filenames: this.context.getRootAsIsFiles(),
             getPackageName: () => this.context.getRootPackageName(),
-            getImportPath: () => this.getRootImportPath()
+            getImportPath: () => this.getRootImportPath(),
+            templateVariables: {
+                DefaultRetryAttempts: String((this.context.customConfig.maxRetries ?? 1) + 1)
+            }
         });
     }
 
@@ -201,6 +204,12 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
             const doubleRegex = new RegExp(`\\{\\{ *\\.${key} *\\}\\}`, "g");
             contents = contents.replace(doubleRegex, value);
         }
+
+        const retryStatusCheck =
+            this.context.customConfig.retryStatusCodes === "recommended"
+                ? "response.StatusCode == http.StatusTooManyRequests ||\n\t\tresponse.StatusCode == http.StatusRequestTimeout ||\n\t\tresponse.StatusCode == http.StatusBadGateway ||\n\t\tresponse.StatusCode == http.StatusServiceUnavailable ||\n\t\tresponse.StatusCode == http.StatusGatewayTimeout"
+                : "response.StatusCode == http.StatusTooManyRequests ||\n\t\tresponse.StatusCode == http.StatusRequestTimeout ||\n\t\tresponse.StatusCode >= http.StatusInternalServerError";
+        contents = contents.replace(/\{\{RETRY_STATUS_CHECK\}\}/g, retryStatusCheck);
 
         return new File(filename.replace(".go_", ".go"), RelativeFilePath.of(""), contents);
     }

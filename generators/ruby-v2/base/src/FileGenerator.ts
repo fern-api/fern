@@ -1,4 +1,4 @@
-import { File } from "@fern-api/base-generator";
+import { CaseConverter, File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 import { AbstractRubyGeneratorContext } from "./context/AbstractRubyGeneratorContext.js";
@@ -8,7 +8,10 @@ export abstract class FileGenerator<
     CustomConfig extends BaseRubyCustomConfigSchema,
     Context extends AbstractRubyGeneratorContext<CustomConfig>
 > {
-    constructor(protected readonly context: Context) {}
+    protected readonly case: CaseConverter;
+    constructor(protected readonly context: Context) {
+        this.case = context.caseConverter;
+    }
 
     public generate(): GeneratedFile {
         this.context.logger.debug(`Generating ${this.getFilepath()}`);

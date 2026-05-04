@@ -1,6 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getPropertyKey, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
-import { GeneratedWebsocketSocketClass, SdkContext } from "@fern-typescript/contexts";
+import { FileContext, GeneratedWebsocketSocketClass } from "@fern-typescript/contexts";
 import { camelCase } from "lodash-es";
 import {
     ClassDeclarationStructure,
@@ -63,7 +63,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         this.skipResponseValidation = skipResponseValidation;
     }
 
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         const serviceModule: ModuleDeclarationStructure = {
             kind: StructureKind.Module,
             name: this.serviceClassName,
@@ -160,7 +160,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         context.sourceFile.addClass(serviceClass);
     }
 
-    private generateSocketArgs(context: SdkContext): InterfaceDeclarationStructure {
+    private generateSocketArgs(context: FileContext): InterfaceDeclarationStructure {
         return {
             kind: StructureKind.Interface,
             name: GeneratedWebsocketSocketClassImpl.ARGS_PROPERTY_NAME,
@@ -174,7 +174,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         };
     }
 
-    private generateSocketResponse(context: SdkContext): TypeAliasDeclarationStructure {
+    private generateSocketResponse(context: FileContext): TypeAliasDeclarationStructure {
         return {
             kind: StructureKind.TypeAlias,
             name: GeneratedWebsocketSocketClassImpl.RESPONSE_PROPERTY_NAME,
@@ -183,7 +183,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         };
     }
 
-    private generateSocketHandlers(context: SdkContext): TypeAliasDeclarationStructure {
+    private generateSocketHandlers(context: FileContext): TypeAliasDeclarationStructure {
         return {
             kind: StructureKind.TypeAlias,
             name: GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_TYPE,
@@ -266,7 +266,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         };
     }
 
-    private generateHandlerRegister(context: SdkContext): MethodDeclarationStructure {
+    private generateHandlerRegister(context: FileContext): MethodDeclarationStructure {
         return {
             kind: StructureKind.Method,
             name: "on",
@@ -308,7 +308,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         };
     }
 
-    private generateSendHelperMethods(context: SdkContext): MethodDeclarationStructure[] {
+    private generateSendHelperMethods(context: FileContext): MethodDeclarationStructure[] {
         return this.getMessagesForOrigin("client").map((message) => {
             const bodyType = message.body.type === "reference" ? message.body.bodyType : undefined;
             const isBytes = bodyType != null && this.isBytesType(context, bodyType);
@@ -320,7 +320,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
     }
 
     private generateSendMessage(
-        context: SdkContext,
+        context: FileContext,
         message: FernIr.WebSocketMessage,
         node: ts.TypeNode,
         isBytes: boolean
@@ -421,7 +421,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         };
     }
 
-    private generateWaitForOpen(context: SdkContext): MethodDeclarationStructure {
+    private generateWaitForOpen(context: FileContext): MethodDeclarationStructure {
         return {
             kind: StructureKind.Method,
             name: "waitForOpen",
@@ -450,7 +450,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         };
     }
 
-    private generateAssertSocketIsOpen(context: SdkContext): MethodDeclarationStructure {
+    private generateAssertSocketIsOpen(context: FileContext): MethodDeclarationStructure {
         return {
             kind: StructureKind.Method,
             name: "assertSocketIsOpen",
@@ -473,7 +473,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         };
     }
 
-    private generateSendJson(context: SdkContext): MethodDeclarationStructure {
+    private generateSendJson(context: FileContext): MethodDeclarationStructure {
         const publishMessageNode = this.getUnionedNodeForOrigin(context, "client");
         return {
             kind: StructureKind.Method,
@@ -498,7 +498,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         };
     }
 
-    private generateSendBinary(context: SdkContext): MethodDeclarationStructure {
+    private generateSendBinary(context: FileContext): MethodDeclarationStructure {
         return {
             kind: StructureKind.Method,
             name: "sendBinary",
@@ -519,7 +519,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         };
     }
 
-    private generateHandleMessage(context: SdkContext): PropertyDeclarationStructure {
+    private generateHandleMessage(context: FileContext): PropertyDeclarationStructure {
         const bodyLines: string[] = [
             `const data = ${getTextOfTsNode(context.jsonContext.getReferenceToFromJson().getTypeNode())}(event.data);`,
             ""
@@ -563,7 +563,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         };
     }
 
-    private generateHandleClose(context: SdkContext): PropertyDeclarationStructure {
+    private generateHandleClose(context: FileContext): PropertyDeclarationStructure {
         return {
             kind: StructureKind.Property,
             name: "handleClose",
@@ -575,7 +575,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         };
     }
 
-    private generateHandleError(context: SdkContext): PropertyDeclarationStructure {
+    private generateHandleError(context: FileContext): PropertyDeclarationStructure {
         return {
             kind: StructureKind.Property,
             name: "handleError",
@@ -591,7 +591,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
     private getSerializedExpression(
         subscribeMessage: FernIr.WebSocketMessageBody.InlinedBody | FernIr.WebSocketMessageBody.Reference,
         requestBodyReference: string,
-        context: SdkContext
+        context: FileContext
     ): ts.Expression {
         const referenceToRequestBody = ts.factory.createIdentifier(requestBodyReference);
         switch (subscribeMessage.type) {
@@ -612,7 +612,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         }
     }
 
-    private getUnionedParseResponse(context: SdkContext): ts.Expression {
+    private getUnionedParseResponse(context: FileContext): ts.Expression {
         const receiveMessages = this.getMessagesForOrigin("server")
             .map((message) => message.body)
             .filter((body) => body.type === "reference");
@@ -625,11 +625,11 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         return this.channel.messages.filter((message) => message.origin === origin);
     }
 
-    private getAllMessageNodesForOrigin(context: SdkContext, origin: "client" | "server"): ts.TypeNode[] {
+    private getAllMessageNodesForOrigin(context: FileContext, origin: "client" | "server"): ts.TypeNode[] {
         return this.getMessagesForOrigin(origin).map((message) => this.getNodeForMessage(context, message));
     }
 
-    private getUnionedNodeForOrigin(context: SdkContext, origin: "client" | "server"): ts.TypeNode {
+    private getUnionedNodeForOrigin(context: FileContext, origin: "client" | "server"): ts.TypeNode {
         const allReturnTypes = this.getAllMessageNodesForOrigin(context, origin);
         if (allReturnTypes.length === 0) {
             context.logger.warn(
@@ -640,7 +640,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         return ts.factory.createUnionTypeNode(allReturnTypes);
     }
 
-    private getNodeForMessage(context: SdkContext, message: FernIr.WebSocketMessage): ts.TypeNode {
+    private getNodeForMessage(context: FileContext, message: FernIr.WebSocketMessage): ts.TypeNode {
         if (message.body.type === "inlinedBody") {
             throw new Error("Websocket inlined schemas are not supported at the moment.");
         }
@@ -648,7 +648,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         return ts.factory.createTypeReferenceNode(getTextOfTsNode(generatedType.typeNode), undefined);
     }
 
-    private isBytesType(context: SdkContext, bodyType: FernIr.TypeReference): boolean {
+    private isBytesType(context: FileContext, bodyType: FernIr.TypeReference): boolean {
         const resolved = context.type.resolveTypeReference(bodyType);
         if (resolved.type !== "primitive") {
             return false;

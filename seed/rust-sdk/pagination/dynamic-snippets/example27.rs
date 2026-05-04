@@ -10,8 +10,11 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_with_global_config(
-            &UsersListWithGlobalConfigQueryRequest { offset: Some(1) },
+        .list_usernames(
+            &UsersListUsernamesQueryRequest {
+                starting_after: Some("starting_after".to_string()),
+                ..Default::default()
+            },
             None,
         )
         .await;

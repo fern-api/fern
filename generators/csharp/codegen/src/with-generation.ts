@@ -14,6 +14,10 @@ export class WithGeneration {
         return this.generation.csharp;
     }
 
+    protected get case() {
+        return this.generation.case;
+    }
+
     /** Provides access to generation settings and configuration */
     protected get settings() {
         return this.generation.settings;

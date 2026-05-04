@@ -7,12 +7,12 @@ import OauthClientCredentialsReference
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "access_token": "access_token",
                   "expires_in": 3600
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = OauthClientCredentialsReferenceClient(
@@ -37,12 +37,12 @@ import OauthClientCredentialsReference
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "access_token": "access_token",
                   "expires_in": 1
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = OauthClientCredentialsReferenceClient(

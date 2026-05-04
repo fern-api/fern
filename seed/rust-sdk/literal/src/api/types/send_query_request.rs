@@ -21,7 +21,7 @@ pub struct SendQueryRequest {
 
 impl SendQueryRequest {
     pub fn builder() -> SendQueryRequestBuilder {
-        SendQueryRequestBuilder::default()
+        <SendQueryRequestBuilder as Default>::default()
     }
 }
 

@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: alias
-  version: ''
+  version: 0.0.0
 paths:
   /{typeId}:
     get:
@@ -16,7 +16,7 @@ paths:
             $ref: '#/components/schemas/TypeId'
       responses:
         '204':
-          description: ''
+          description: No content
 components:
   schemas:
     TypeId:
@@ -32,7 +32,8 @@ components:
           $ref: '#/components/schemas/TypeId'
         name:
           type: string
-          example: foo
+          examples:
+            - foo
       required:
         - id
         - name

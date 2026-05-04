@@ -1,7 +1,7 @@
 require "seed"
 
 client = Seed::Client.new(
-  api_key: "<token>",
+  api_key: "YOUR_API_KEY",
   base_url: "https://api.fern.com"
 )
 

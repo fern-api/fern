@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
@@ -37,7 +37,7 @@ class RawOrganizationsClient:
         HttpResponse[Organization]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/organizations/{jsonable_encoder(organization_id)}/",
+            f"{encode_path_param(tenant_id)}/organizations/{encode_path_param(organization_id)}/",
             method="GET",
             request_options=request_options,
         )
@@ -85,7 +85,7 @@ class RawOrganizationsClient:
         HttpResponse[User]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/organizations/{jsonable_encoder(organization_id)}/users/{jsonable_encoder(user_id)}",
+            f"{encode_path_param(tenant_id)}/organizations/{encode_path_param(organization_id)}/users/{encode_path_param(user_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -133,7 +133,7 @@ class RawOrganizationsClient:
         HttpResponse[typing.List[Organization]]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/organizations/{jsonable_encoder(organization_id)}/search",
+            f"{encode_path_param(tenant_id)}/organizations/{encode_path_param(organization_id)}/search",
             method="GET",
             params={
                 "limit": limit,
@@ -182,7 +182,7 @@ class AsyncRawOrganizationsClient:
         AsyncHttpResponse[Organization]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/organizations/{jsonable_encoder(organization_id)}/",
+            f"{encode_path_param(tenant_id)}/organizations/{encode_path_param(organization_id)}/",
             method="GET",
             request_options=request_options,
         )
@@ -230,7 +230,7 @@ class AsyncRawOrganizationsClient:
         AsyncHttpResponse[User]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/organizations/{jsonable_encoder(organization_id)}/users/{jsonable_encoder(user_id)}",
+            f"{encode_path_param(tenant_id)}/organizations/{encode_path_param(organization_id)}/users/{encode_path_param(user_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -278,7 +278,7 @@ class AsyncRawOrganizationsClient:
         AsyncHttpResponse[typing.List[Organization]]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(tenant_id)}/organizations/{jsonable_encoder(organization_id)}/search",
+            f"{encode_path_param(tenant_id)}/organizations/{encode_path_param(organization_id)}/search",
             method="GET",
             params={
                 "limit": limit,

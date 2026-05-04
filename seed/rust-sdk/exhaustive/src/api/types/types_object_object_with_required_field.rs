@@ -8,7 +8,7 @@ pub struct ObjectWithRequiredField {
 
 impl ObjectWithRequiredField {
     pub fn builder() -> ObjectWithRequiredFieldBuilder {
-        ObjectWithRequiredFieldBuilder::default()
+        <ObjectWithRequiredFieldBuilder as Default>::default()
     }
 }
 

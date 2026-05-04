@@ -33,7 +33,6 @@ export class BasicAuthProvider implements core.AuthProvider {
                 message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_USERNAME,
             });
         }
-
         const accessToken = (await core.Supplier.get(this.options[PASSWORD_PARAM])) ?? process.env?.[ENV_PASSWORD];
         if (accessToken == null) {
             throw new errors.SeedBasicAuthEnvironmentVariablesError({

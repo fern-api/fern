@@ -103,7 +103,7 @@ class JsonDeserializer
         }
         $readableType = Utils::getReadableType($data);
         throw new JsonException(
-            "Cannot deserialize value of type $readableType with any of the union types: " . $type
+            "Cannot deserialize value of type $readableType with any of the union types: $type"
         );
     }
 

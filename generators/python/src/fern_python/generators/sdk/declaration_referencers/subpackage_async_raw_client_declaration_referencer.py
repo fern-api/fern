@@ -1,5 +1,6 @@
 from .sdk_declaration_referencer import SdkDeclarationReferencer
 from fern_python.codegen import Filepath
+from fern_python.utils import resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -14,4 +15,4 @@ class SubpackageAsyncRawClientDeclarationReferencer(SdkDeclarationReferencer[ir_
         )
 
     def get_class_name(self, *, name: ir_types.Subpackage, as_request: bool = False) -> str:
-        return "AsyncRaw" + name.name.pascal_case.unsafe_name + "Client"
+        return "AsyncRaw" + resolve_name(name.name).pascal_case.unsafe_name + "Client"

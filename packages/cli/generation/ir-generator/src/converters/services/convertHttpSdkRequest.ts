@@ -1,7 +1,7 @@
 import { isInlineRequestBody, parseRawBytesType, RawSchemas } from "@fern-api/fern-definition-schema";
 import { SdkRequest, SdkRequestBodyType, SdkRequestShape } from "@fern-api/ir-sdk";
+import { CliError } from "@fern-api/task-context";
 import { size } from "lodash-es";
-
 import { FernFileContext } from "../../FernFileContext.js";
 import { PropertyResolver } from "../../resolvers/PropertyResolver.js";
 import { TypeResolver } from "../../resolvers/TypeResolver.js";
@@ -59,7 +59,7 @@ function convertHttpSdkRequestShape({
 }): SdkRequestShape | undefined {
     const constructWrapper = () => {
         if (typeof request === "string" || request?.name == null) {
-            throw new Error("Name is missing for request wrapper");
+            throw new CliError({ message: "Name is missing for request wrapper", code: CliError.Code.InternalError });
         }
         return SdkRequestShape.wrapper({
             wrapperName: file.casingsGenerator.generateName(request.name),

@@ -1,1 +1,0 @@
-export { SeedVersionError } from "./SeedVersionError";

@@ -1,11 +1,11 @@
 import { createVenusService } from "@fern-api/core";
+import { CliError } from "@fern-api/task-context";
+
 import type { FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { spawn } from "child_process";
 import type { Argv } from "yargs";
-
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { CliError } from "../../../errors/CliError.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
 
@@ -21,7 +21,7 @@ export class ListCommand {
             context.stderr.error(
                 `${Icons.error} Organization tokens cannot list organizations. Unset the FERN_TOKEN environment variable and run 'fern auth login' to list your organizations.`
             );
-            throw CliError.exit();
+            throw new CliError({ code: CliError.Code.AuthError });
         }
 
         const venus = createVenusService({ token: token.value });

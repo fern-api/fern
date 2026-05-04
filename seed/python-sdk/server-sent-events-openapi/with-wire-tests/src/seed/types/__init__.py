@@ -6,12 +6,17 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .completion_full_response import CompletionFullResponse
+    from .completion_full_response_finish_reason import CompletionFullResponseFinishReason
+    from .completion_request import CompletionRequest
+    from .completion_stream_chunk import CompletionStreamChunk
     from .data_context_entity_event import DataContextEntityEvent
     from .data_context_heartbeat import DataContextHeartbeat
     from .entity_event_payload import EntityEventPayload
     from .entity_event_payload_event_type import EntityEventPayloadEventType
     from .event import Event
     from .heartbeat_payload import HeartbeatPayload
+    from .nullable_stream_request import NullableStreamRequest
     from .object_payload_with_event_field import ObjectPayloadWithEventField
     from .protocol_collision_object_event import ProtocolCollisionObjectEvent
     from .protocol_heartbeat import ProtocolHeartbeat
@@ -56,13 +61,41 @@ if typing.TYPE_CHECKING:
         StreamProtocolWithFlatSchemaResponse_Heartbeat,
     )
     from .stream_request import StreamRequest
+    from .stream_x_fern_streaming_union_request import (
+        StreamXFernStreamingUnionRequest,
+        StreamXFernStreamingUnionRequest_Compact,
+        StreamXFernStreamingUnionRequest_Interrupt,
+        StreamXFernStreamingUnionRequest_Message,
+    )
+    from .stream_x_fern_streaming_union_stream_request import (
+        StreamXFernStreamingUnionStreamRequest,
+        StreamXFernStreamingUnionStreamRequest_Compact,
+        StreamXFernStreamingUnionStreamRequest_Interrupt,
+        StreamXFernStreamingUnionStreamRequest_Message,
+    )
+    from .union_stream_compact_variant import UnionStreamCompactVariant
+    from .union_stream_interrupt_variant import UnionStreamInterruptVariant
+    from .union_stream_message_variant import UnionStreamMessageVariant
+    from .union_stream_request import (
+        UnionStreamRequest,
+        UnionStreamRequest_Compact,
+        UnionStreamRequest_Interrupt,
+        UnionStreamRequest_Message,
+    )
+    from .union_stream_request_base import UnionStreamRequestBase
+    from .validate_union_request_response import ValidateUnionRequestResponse
 _dynamic_imports: typing.Dict[str, str] = {
+    "CompletionFullResponse": ".completion_full_response",
+    "CompletionFullResponseFinishReason": ".completion_full_response_finish_reason",
+    "CompletionRequest": ".completion_request",
+    "CompletionStreamChunk": ".completion_stream_chunk",
     "DataContextEntityEvent": ".data_context_entity_event",
     "DataContextHeartbeat": ".data_context_heartbeat",
     "EntityEventPayload": ".entity_event_payload",
     "EntityEventPayloadEventType": ".entity_event_payload_event_type",
     "Event": ".event",
     "HeartbeatPayload": ".heartbeat_payload",
+    "NullableStreamRequest": ".nullable_stream_request",
     "ObjectPayloadWithEventField": ".object_payload_with_event_field",
     "ProtocolCollisionObjectEvent": ".protocol_collision_object_event",
     "ProtocolHeartbeat": ".protocol_heartbeat",
@@ -95,6 +128,23 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StreamProtocolWithFlatSchemaResponse_Entity": ".stream_protocol_with_flat_schema_response",
     "StreamProtocolWithFlatSchemaResponse_Heartbeat": ".stream_protocol_with_flat_schema_response",
     "StreamRequest": ".stream_request",
+    "StreamXFernStreamingUnionRequest": ".stream_x_fern_streaming_union_request",
+    "StreamXFernStreamingUnionRequest_Compact": ".stream_x_fern_streaming_union_request",
+    "StreamXFernStreamingUnionRequest_Interrupt": ".stream_x_fern_streaming_union_request",
+    "StreamXFernStreamingUnionRequest_Message": ".stream_x_fern_streaming_union_request",
+    "StreamXFernStreamingUnionStreamRequest": ".stream_x_fern_streaming_union_stream_request",
+    "StreamXFernStreamingUnionStreamRequest_Compact": ".stream_x_fern_streaming_union_stream_request",
+    "StreamXFernStreamingUnionStreamRequest_Interrupt": ".stream_x_fern_streaming_union_stream_request",
+    "StreamXFernStreamingUnionStreamRequest_Message": ".stream_x_fern_streaming_union_stream_request",
+    "UnionStreamCompactVariant": ".union_stream_compact_variant",
+    "UnionStreamInterruptVariant": ".union_stream_interrupt_variant",
+    "UnionStreamMessageVariant": ".union_stream_message_variant",
+    "UnionStreamRequest": ".union_stream_request",
+    "UnionStreamRequestBase": ".union_stream_request_base",
+    "UnionStreamRequest_Compact": ".union_stream_request",
+    "UnionStreamRequest_Interrupt": ".union_stream_request",
+    "UnionStreamRequest_Message": ".union_stream_request",
+    "ValidateUnionRequestResponse": ".validate_union_request_response",
 }
 
 
@@ -120,12 +170,17 @@ def __dir__():
 
 
 __all__ = [
+    "CompletionFullResponse",
+    "CompletionFullResponseFinishReason",
+    "CompletionRequest",
+    "CompletionStreamChunk",
     "DataContextEntityEvent",
     "DataContextHeartbeat",
     "EntityEventPayload",
     "EntityEventPayloadEventType",
     "Event",
     "HeartbeatPayload",
+    "NullableStreamRequest",
     "ObjectPayloadWithEventField",
     "ProtocolCollisionObjectEvent",
     "ProtocolHeartbeat",
@@ -158,4 +213,21 @@ __all__ = [
     "StreamProtocolWithFlatSchemaResponse_Entity",
     "StreamProtocolWithFlatSchemaResponse_Heartbeat",
     "StreamRequest",
+    "StreamXFernStreamingUnionRequest",
+    "StreamXFernStreamingUnionRequest_Compact",
+    "StreamXFernStreamingUnionRequest_Interrupt",
+    "StreamXFernStreamingUnionRequest_Message",
+    "StreamXFernStreamingUnionStreamRequest",
+    "StreamXFernStreamingUnionStreamRequest_Compact",
+    "StreamXFernStreamingUnionStreamRequest_Interrupt",
+    "StreamXFernStreamingUnionStreamRequest_Message",
+    "UnionStreamCompactVariant",
+    "UnionStreamInterruptVariant",
+    "UnionStreamMessageVariant",
+    "UnionStreamRequest",
+    "UnionStreamRequestBase",
+    "UnionStreamRequest_Compact",
+    "UnionStreamRequest_Interrupt",
+    "UnionStreamRequest_Message",
+    "ValidateUnionRequestResponse",
 ]

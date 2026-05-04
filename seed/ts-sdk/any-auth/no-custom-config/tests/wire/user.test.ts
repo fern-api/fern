@@ -28,16 +28,7 @@ describe("UserClient", () => {
         server.mockEndpoint().post("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.get();
-        expect(response).toEqual([
-            {
-                id: "id",
-                name: "name",
-            },
-            {
-                id: "id",
-                name: "name",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAdmins", async () => {
@@ -63,15 +54,6 @@ describe("UserClient", () => {
         server.mockEndpoint().get("/admins").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getAdmins();
-        expect(response).toEqual([
-            {
-                id: "id",
-                name: "name",
-            },
-            {
-                id: "id",
-                name: "name",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 });

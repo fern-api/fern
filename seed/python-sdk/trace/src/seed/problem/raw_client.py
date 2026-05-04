@@ -10,7 +10,7 @@ from ..commons.types.variable_type import VariableType
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
@@ -160,7 +160,7 @@ class RawProblemClient:
         HttpResponse[UpdateProblemResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"problem-crud/update/{jsonable_encoder(problem_id)}",
+            f"problem-crud/update/{encode_path_param(problem_id)}",
             method="POST",
             json={
                 "problemName": problem_name,
@@ -226,7 +226,7 @@ class RawProblemClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"problem-crud/delete/{jsonable_encoder(problem_id)}",
+            f"problem-crud/delete/{encode_path_param(problem_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -447,7 +447,7 @@ class AsyncRawProblemClient:
         AsyncHttpResponse[UpdateProblemResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"problem-crud/update/{jsonable_encoder(problem_id)}",
+            f"problem-crud/update/{encode_path_param(problem_id)}",
             method="POST",
             json={
                 "problemName": problem_name,
@@ -513,7 +513,7 @@ class AsyncRawProblemClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"problem-crud/delete/{jsonable_encoder(problem_id)}",
+            f"problem-crud/delete/{encode_path_param(problem_id)}",
             method="DELETE",
             request_options=request_options,
         )

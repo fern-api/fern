@@ -86,7 +86,7 @@ func (r *RawClient) Get(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/duplicate-names-c/%v",
-		request.Id,
+		request.ID,
 	)
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {

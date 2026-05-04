@@ -44,7 +44,6 @@
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/ajv": "catalog:",
     "@types/json-schema": "catalog:",
     "@types/lodash": "catalog:",
     "@types/lodash-es": "catalog:",

@@ -35,7 +35,7 @@ func (r *RawClient) CreateMovie(
 	ctx context.Context,
 	request *testPackageName.CreateMovieRequest,
 	opts ...option.RequestOption,
-) (*core.Response[testPackageName.MovieId], error) {
+) (*core.Response[testPackageName.MovieID], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -47,7 +47,7 @@ func (r *RawClient) CreateMovie(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response testPackageName.MovieId
+	var response testPackageName.MovieID
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -65,7 +65,7 @@ func (r *RawClient) CreateMovie(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[testPackageName.MovieId]{
+	return &core.Response[testPackageName.MovieID]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -74,7 +74,7 @@ func (r *RawClient) CreateMovie(
 
 func (r *RawClient) GetMovie(
 	ctx context.Context,
-	movieId testPackageName.MovieId,
+	movieID testPackageName.MovieID,
 	opts ...option.RequestOption,
 ) (*core.Response[*testPackageName.Movie], error) {
 	options := core.NewRequestOptions(opts...)
@@ -85,7 +85,7 @@ func (r *RawClient) GetMovie(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/movies/%v",
-		movieId,
+		movieID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

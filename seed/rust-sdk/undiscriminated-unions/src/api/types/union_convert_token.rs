@@ -11,7 +11,7 @@ pub struct ConvertToken {
 
 impl ConvertToken {
     pub fn builder() -> ConvertTokenBuilder {
-        ConvertTokenBuilder::default()
+        <ConvertTokenBuilder as Default>::default()
     }
 }
 

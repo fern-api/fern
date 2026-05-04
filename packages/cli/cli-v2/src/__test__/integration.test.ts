@@ -80,7 +80,7 @@ describe("SDK Generate Integration", () => {
             const apiDefinition = workspace.apis["api"];
             expect(apiDefinition).toBeDefined();
 
-            const adapter = new LegacyApiSpecAdapter({ context: createTestContext({ cwd }) });
+            const adapter = new LegacyApiSpecAdapter({ context: await createTestContext({ cwd }) });
 
             const v1Specs = adapter.convertAll(apiDefinition?.specs ?? []);
             expect(v1Specs).toHaveLength(1);
@@ -135,7 +135,7 @@ describe("SDK Generate Integration", () => {
             const apiDefinition = workspace.apis["api"];
             expect(apiDefinition).toBeDefined();
 
-            const adapter = new LegacyApiSpecAdapter({ context: createTestContext({ cwd }) });
+            const adapter = new LegacyApiSpecAdapter({ context: await createTestContext({ cwd }) });
 
             const v1Specs = adapter.convertAll(apiDefinition?.specs ?? []);
             const filteredSpecs = v1Specs.filter((spec): spec is OpenAPISpec | ProtobufSpec => {
@@ -184,7 +184,7 @@ describe("SDK Generate Integration", () => {
             const { workspace } = result;
             expect(workspace.apis["api"]).toBeDefined();
 
-            const adapter = new LegacyApiSpecAdapter({ context: createTestContext({ cwd }) });
+            const adapter = new LegacyApiSpecAdapter({ context: await createTestContext({ cwd }) });
 
             const v1Specs = adapter.convertAll(workspace.apis["api"]?.specs ?? []);
             expect(v1Specs).toHaveLength(1);

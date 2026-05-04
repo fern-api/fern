@@ -31,7 +31,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) PostJsonPatchContentType(
+func (r *RawClient) PostJSONPatchContentType(
 	ctx context.Context,
 	request *types.ObjectWithOptionalField,
 	opts ...option.RequestOption,
@@ -70,7 +70,7 @@ func (r *RawClient) PostJsonPatchContentType(
 	}, nil
 }
 
-func (r *RawClient) PostJsonPatchContentWithCharsetType(
+func (r *RawClient) PostJSONPatchContentWithCharsetType(
 	ctx context.Context,
 	request *types.ObjectWithOptionalField,
 	opts ...option.RequestOption,

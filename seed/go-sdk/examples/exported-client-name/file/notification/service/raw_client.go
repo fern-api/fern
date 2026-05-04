@@ -33,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) GetException(
 	ctx context.Context,
-	notificationId string,
+	notificationID string,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.Exception], error) {
 	options := core.NewRequestOptions(opts...)
@@ -44,7 +44,7 @@ func (r *RawClient) GetException(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/file/notification/%v",
-		notificationId,
+		notificationID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

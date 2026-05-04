@@ -2,10 +2,14 @@ import { isLoggedIn, removeToken } from "@fern-api/auth";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import open from "open";
+import { createServer } from "./auth0-login/createServer.js";
 import { AUTH0_CLIENT_ID, AUTH0_DOMAIN } from "./constants.js";
+import { LOGOUT_SUCCESS_PAGE } from "./pages/logout-success-page.js";
+
+const LOGOUT_TIMEOUT_MS = 15_000;
 
 export async function logout(context: TaskContext): Promise<void> {
-    await context.instrumentPostHogEvent({
+    context.instrumentPostHogEvent({
         command: "Logout initiated"
     });
 
@@ -16,35 +20,55 @@ export async function logout(context: TaskContext): Promise<void> {
         return;
     }
 
-    // Remove the local token first
     await removeToken();
 
-    // Open the Auth0 logout URL to clear the Auth0 session
-    const logoutUrl = constructAuth0LogoutUrl();
+    const { server, origin } = await createServer();
+
+    const redirectReceived = new Promise<void>((resolve) => {
+        const timeout = setTimeout(() => {
+            server.close();
+            resolve();
+        }, LOGOUT_TIMEOUT_MS);
+
+        server.addListener("request", (_request, response) => {
+            clearTimeout(timeout);
+            response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+            response.end(LOGOUT_SUCCESS_PAGE, () => {
+                server.close();
+                resolve();
+            });
+        });
+    });
+
+    const logoutUrl = constructAuth0LogoutUrl(origin);
 
     context.logger.info(chalk.blue("Opening browser to complete logout..."));
 
     try {
         await open(logoutUrl);
-        context.logger.info(chalk.green("Successfully logged out! You can close the browser window."));
-    } catch (error) {
+    } catch {
+        server.close();
         context.logger.warn(
             chalk.yellow(
                 "Could not open browser automatically. Please visit this URL to complete logout:\n" + logoutUrl
             )
         );
+        return;
     }
 
-    await context.instrumentPostHogEvent({
+    await redirectReceived;
+
+    context.logger.info(chalk.green("Successfully logged out!"));
+
+    context.instrumentPostHogEvent({
         command: "Logout successful"
     });
 }
 
-function constructAuth0LogoutUrl(): string {
-    // We don't specify a returnTo URL since we don't have a web app to return to
-    // The user will see Auth0's default logout confirmation page
+function constructAuth0LogoutUrl(returnTo: string): string {
     const queryParams = new URLSearchParams({
-        client_id: AUTH0_CLIENT_ID
+        client_id: AUTH0_CLIENT_ID,
+        returnTo
     });
 
     return `https://${AUTH0_DOMAIN}/v2/logout?${queryParams.toString()}`;

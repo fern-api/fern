@@ -70,6 +70,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "id",
                         "name": {
                             "originalName": "id",
                             "camelCase": {
@@ -88,8 +89,7 @@
                                 "unsafeName": "ID",
                                 "safeName": "ID"
                             }
-                        },
-                        "wireValue": "id"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -100,6 +100,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "name",
                         "name": {
                             "originalName": "name",
                             "camelCase": {
@@ -118,8 +119,7 @@
                                 "unsafeName": "Name",
                                 "safeName": "Name"
                             }
-                        },
-                        "wireValue": "name"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -282,6 +282,7 @@
                     "value": [
                         {
                             "name": {
+                                "wireValue": "stream",
                                 "name": {
                                     "originalName": "stream",
                                     "camelCase": {
@@ -300,8 +301,7 @@
                                         "unsafeName": "Stream",
                                         "safeName": "Stream"
                                     }
-                                },
-                                "wireValue": "stream"
+                                }
                             },
                             "typeReference": {
                                 "type": "literal",
@@ -315,6 +315,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "num_events",
                                 "name": {
                                     "originalName": "num_events",
                                     "camelCase": {
@@ -333,8 +334,7 @@
                                         "unsafeName": "NumEvents",
                                         "safeName": "NumEvents"
                                     }
-                                },
-                                "wireValue": "num_events"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",
@@ -499,6 +499,7 @@
                     "value": [
                         {
                             "name": {
+                                "wireValue": "stream",
                                 "name": {
                                     "originalName": "stream",
                                     "camelCase": {
@@ -517,8 +518,7 @@
                                         "unsafeName": "Stream",
                                         "safeName": "Stream"
                                     }
-                                },
-                                "wireValue": "stream"
+                                }
                             },
                             "typeReference": {
                                 "type": "literal",
@@ -532,6 +532,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "num_events",
                                 "name": {
                                     "originalName": "num_events",
                                     "camelCase": {
@@ -550,8 +551,7 @@
                                         "unsafeName": "NumEvents",
                                         "safeName": "NumEvents"
                                     }
-                                },
-                                "wireValue": "num_events"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",

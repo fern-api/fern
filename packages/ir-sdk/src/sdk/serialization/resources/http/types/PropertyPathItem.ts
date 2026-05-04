@@ -3,19 +3,19 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 
 export const PropertyPathItem: core.serialization.ObjectSchema<
     serializers.PropertyPathItem.Raw,
     FernIr.PropertyPathItem
 > = core.serialization.objectWithoutOptionalProperties({
-    name: Name,
+    name: NameOrString,
     type: core.serialization.lazy(() => serializers.TypeReference),
 });
 
 export declare namespace PropertyPathItem {
     export interface Raw {
-        name: Name.Raw;
+        name: NameOrString.Raw;
         type: serializers.TypeReference.Raw;
     }
 }

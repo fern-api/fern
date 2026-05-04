@@ -724,6 +724,7 @@ export function buildOneOfTypeDeclaration({
                 docs: schema.description ?? undefined,
                 availability: schema.availability != null ? convertAvailability(schema.availability) : undefined,
                 union,
+                "default-variant": schema.defaultDiscriminantValue ?? undefined,
                 encoding,
                 source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
             }
@@ -743,10 +744,27 @@ export function buildOneOfTypeDeclaration({
             })
         );
     }
+    const baseProperties: Record<string, RawSchemas.ObjectPropertySchema> | undefined =
+        schema.commonProperties != null && schema.commonProperties.length > 0
+            ? Object.fromEntries(
+                  schema.commonProperties.map((property) => [
+                      property.key,
+                      buildTypeReference({
+                          schema: property.schema,
+                          fileContainingReference: declarationFile,
+                          context,
+                          namespace,
+                          declarationDepth: declarationDepth + 1,
+                          variant
+                      })
+                  ])
+              )
+            : undefined;
     return {
         name: schema.nameOverride ?? schema.generatedName,
         schema: {
             discriminated: false,
+            "base-properties": baseProperties,
             docs: schema.description ?? undefined,
             union,
             encoding,

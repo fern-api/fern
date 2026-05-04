@@ -7,7 +7,7 @@ pub struct LangServerResponse {
 
 impl LangServerResponse {
     pub fn builder() -> LangServerResponseBuilder {
-        LangServerResponseBuilder::default()
+        <LangServerResponseBuilder as Default>::default()
     }
 }
 

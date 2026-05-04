@@ -14,7 +14,7 @@
 
 ```go
 request := &fern.GetTokenRequest{
-        ClientId: "client_id",
+        ClientID: "client_id",
         ClientSecret: "client_secret",
         Scope: fern.String(
             "scope",
@@ -65,7 +65,7 @@ client.Auth.GetTokenWithClientCredentials(
 
 ```go
 request := &fern.RefreshTokenRequest{
-        ClientId: "client_id",
+        ClientID: "client_id",
         ClientSecret: "client_secret",
         RefreshToken: "refresh_token",
         Scope: fern.String(
@@ -103,8 +103,8 @@ client.Auth.RefreshToken(
 </dl>
 </details>
 
-## NestedNoAuth Api
-<details><summary><code>client.NestedNoAuth.Api.GetSomething() -> error</code></summary>
+## NestedNoAuth API
+<details><summary><code>client.NestedNoAuth.API.GetSomething() -> error</code></summary>
 <dl>
 <dd>
 
@@ -117,7 +117,7 @@ client.Auth.RefreshToken(
 <dd>
 
 ```go
-client.NestedNoAuth.Api.GetSomething(
+client.NestedNoAuth.API.GetSomething(
         context.TODO(),
     )
 }
@@ -132,8 +132,8 @@ client.NestedNoAuth.Api.GetSomething(
 </dl>
 </details>
 
-## Nested Api
-<details><summary><code>client.Nested.Api.GetSomething() -> error</code></summary>
+## Nested API
+<details><summary><code>client.Nested.API.GetSomething() -> error</code></summary>
 <dl>
 <dd>
 
@@ -146,7 +146,7 @@ client.NestedNoAuth.Api.GetSomething(
 <dd>
 
 ```go
-client.Nested.Api.GetSomething(
+client.Nested.API.GetSomething(
         context.TODO(),
     )
 }

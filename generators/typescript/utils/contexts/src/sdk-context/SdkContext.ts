@@ -1,52 +1,29 @@
-import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { CaseConverter, GeneratorNotificationService } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { ExportsManager, ImportsManager, NpmPackage } from "@fern-typescript/commons";
-import { ts } from "ts-morph";
+import { ExportsManager, NpmPackage } from "@fern-typescript/commons";
 
-import { BaseContext } from "../base-context/index.js";
-import { AuthProviderContext } from "./auth-provider/index.js";
 import { BaseClientContext } from "./base-client/BaseClientContext.js";
-import { EndpointErrorUnionContext } from "./endpoint-error-union/index.js";
-import { EnvironmentsContext } from "./environments/index.js";
-import { GenericAPISdkErrorContext } from "./generic-api-sdk-error/index.js";
-import { NonStatusCodeErrorHandlerContext } from "./non-status-code-error-handler/index.js";
-import { RequestWrapperContext } from "./request-wrapper/index.js";
-import { SdkClientClassContext } from "./sdk-client-class/index.js";
-import { SdkEndpointTypeSchemasContext } from "./sdk-endpoint-type-schemas/index.js";
-import { SdkErrorContext } from "./sdk-error/index.js";
-import { SdkErrorSchemaContext } from "./sdk-error-schema/index.js";
-import { SdkInlinedRequestBodySchemaContext } from "./sdk-inlined-request-body-schema/index.js";
-import { TimeoutSdkErrorContext } from "./timeout-sdk-error/index.js";
-import { VersionContext } from "./version/index.js";
-import { WebsocketClassContext } from "./websocket-class/index.js";
-import { WebsocketTypeSchemaContext } from "./websocket-type-schema/index.js";
 
-export interface SdkContext extends BaseContext {
+/**
+ * SdkContext — stable, created once per generation run.
+ * Contains IR, config, feature flags, referencers, resolvers, and generators.
+ * Does NOT include per-source-file state (sourceFile, importsManager, sub-contexts).
+ *
+ * @see FileContext for the per-file extension.
+ */
+export interface SdkContext {
+    case: CaseConverter;
     logger: Logger;
     version: string | undefined;
     ir: FernIr.IntermediateRepresentation;
     config: FernGeneratorExec.GeneratorConfig;
     generatorNotificationService: GeneratorNotificationService;
     npmPackage: NpmPackage | undefined;
-    sdkInstanceReferenceForSnippet: ts.Identifier;
     namespaceExport: string;
-    endpointErrorUnion: EndpointErrorUnionContext;
-    environments: EnvironmentsContext;
-    genericAPISdkError: GenericAPISdkErrorContext;
-    sdkEndpointTypeSchemas: SdkEndpointTypeSchemasContext;
-    sdkError: SdkErrorContext;
-    sdkErrorSchema: SdkErrorSchemaContext;
-    sdkInlinedRequestBodySchema: SdkInlinedRequestBodySchemaContext;
-    timeoutSdkError: TimeoutSdkErrorContext;
-    nonStatusCodeErrorHandler: NonStatusCodeErrorHandlerContext;
-    requestWrapper: RequestWrapperContext;
-    sdkClientClass: SdkClientClassContext;
+    exportsManager: ExportsManager;
     baseClient: BaseClientContext;
-    websocket: WebsocketClassContext;
-    websocketTypeSchema: WebsocketTypeSchemaContext;
-    versionContext: VersionContext;
     includeSerdeLayer: boolean;
     retainOriginalCasing: boolean;
     generateOAuthClients: boolean;
@@ -54,7 +31,5 @@ export interface SdkContext extends BaseContext {
     inlineFileProperties: boolean;
     omitUndefined: boolean;
     neverThrowErrors: boolean;
-    importsManager: ImportsManager;
-    exportsManager: ExportsManager;
-    authProvider: AuthProviderContext;
+    flattenRequestParameters: boolean;
 }

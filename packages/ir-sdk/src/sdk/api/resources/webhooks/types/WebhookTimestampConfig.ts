@@ -9,7 +9,7 @@ import type * as FernIr from "../../../index.js";
  */
 export interface WebhookTimestampConfig {
     /** The HTTP header containing the delivery timestamp. */
-    headerName: FernIr.NameAndWireValue;
+    headerName: FernIr.NameAndWireValueOrString;
     format: FernIr.WebhookTimestampFormat;
     /** Allowed clock skew in seconds. Defaults to 300 (5 minutes). */
     tolerance: number | undefined;

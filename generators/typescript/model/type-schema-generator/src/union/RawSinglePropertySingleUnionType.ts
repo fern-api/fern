@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getPropertyKey, getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { GeneratedType, ModelContext } from "@fern-typescript/contexts";
@@ -31,7 +32,7 @@ export class RawSinglePropertySingleUnionType<
         const type = context.typeSchema.getReferenceToRawType(this.singleProperty.type);
         return [
             {
-                name: getPropertyKey(this.singleProperty.name.wireValue),
+                name: getPropertyKey(getWireValue(this.singleProperty.name)),
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                 hasQuestionToken: type.isOptional
             }
@@ -49,7 +50,7 @@ export class RawSinglePropertySingleUnionType<
             {
                 key: {
                     parsed: unionBeingGenerated.getSinglePropertyKey(this.singleProperty),
-                    raw: this.singleProperty.name.wireValue
+                    raw: getWireValue(this.singleProperty.name)
                 },
                 value: context.typeSchema.getSchemaOfTypeReference(this.singleProperty.type)
             }

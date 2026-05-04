@@ -33,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) GetMovie(
 	ctx context.Context,
-	movieId pleaseinhere.MovieId,
+	movieID pleaseinhere.MovieID,
 	opts ...option.RequestOption,
 ) (*core.Response[*pleaseinhere.Movie], error) {
 	options := core.NewRequestOptions(opts...)
@@ -44,7 +44,7 @@ func (r *RawClient) GetMovie(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/movie/%v",
-		movieId,
+		movieID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -78,7 +78,7 @@ func (r *RawClient) CreateMovie(
 	ctx context.Context,
 	request *pleaseinhere.Movie,
 	opts ...option.RequestOption,
-) (*core.Response[pleaseinhere.MovieId], error) {
+) (*core.Response[pleaseinhere.MovieID], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -90,7 +90,7 @@ func (r *RawClient) CreateMovie(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response pleaseinhere.MovieId
+	var response pleaseinhere.MovieID
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -108,7 +108,7 @@ func (r *RawClient) CreateMovie(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[pleaseinhere.MovieId]{
+	return &core.Response[pleaseinhere.MovieID]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -138,7 +138,7 @@ func (r *RawClient) GetMetadata(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("X-API-Version", request.XApiVersion)
+	headers.Add("X-API-Version", request.XAPIVersion)
 	var response *pleaseinhere.Metadata
 	raw, err := r.caller.Call(
 		ctx,

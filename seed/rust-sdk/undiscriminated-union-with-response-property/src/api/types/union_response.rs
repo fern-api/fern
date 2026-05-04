@@ -7,7 +7,7 @@ pub struct UnionResponse {
 
 impl UnionResponse {
     pub fn builder() -> UnionResponseBuilder {
-        UnionResponseBuilder::default()
+        <UnionResponseBuilder as Default>::default()
     }
 }
 

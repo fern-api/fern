@@ -65,6 +65,9 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
                 case "HTTPClient":
                     nameRegistry.registerSourceStaticSymbol(templateId, { type: "class" });
                     break;
+                case "ClientConfig":
+                    nameRegistry.registerSourceStaticSymbol(templateId, { type: "class" });
+                    break;
                 default:
                     assertNever(templateId);
             }
@@ -200,6 +203,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
                     BIG_INTEGER: () => referencer.referenceSwiftType("String"),
                     DATE: () => referencer.referenceAsIsType("CalendarDate"),
                     DATE_TIME: () => referencer.referenceFoundationType("Date"),
+                    DATE_TIME_RFC_2822: () => referencer.referenceFoundationType("Date"),
                     BASE_64: () => referencer.referenceSwiftType("String"),
                     UUID: () => referencer.referenceFoundationType("UUID"),
                     _other: () => referencer.referenceAsIsType("JSONValue")

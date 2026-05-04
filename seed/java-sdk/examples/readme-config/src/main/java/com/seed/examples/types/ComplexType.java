@@ -7,9 +7,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class ComplexType {
-    public static final ComplexType UNION = new ComplexType(Value.UNION, "union");
-
     public static final ComplexType UNKNOWN = new ComplexType(Value.UNKNOWN, "unknown");
+
+    public static final ComplexType UNION = new ComplexType(Value.UNION, "union");
 
     public static final ComplexType OBJECT = new ComplexType(Value.OBJECT, "object");
 
@@ -44,10 +44,10 @@ public final class ComplexType {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case UNION:
-                return visitor.visitUnion();
             case UNKNOWN:
                 return visitor.visitUnknown();
+            case UNION:
+                return visitor.visitUnion();
             case OBJECT:
                 return visitor.visitObject();
             case _UNKNOWN:
@@ -59,10 +59,10 @@ public final class ComplexType {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static ComplexType valueOf(String value) {
         switch (value) {
-            case "union":
-                return UNION;
             case "unknown":
                 return UNKNOWN;
+            case "union":
+                return UNION;
             case "object":
                 return OBJECT;
             default:

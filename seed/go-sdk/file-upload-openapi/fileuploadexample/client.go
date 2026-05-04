@@ -38,7 +38,7 @@ func (c *Client) UploadFile(
 	ctx context.Context,
 	request *fern.UploadFileRequest,
 	opts ...option.RequestOption,
-) (fern.FileId, error) {
+) (fern.FileID, error) {
 	response, err := c.WithRawResponse.UploadFile(
 		ctx,
 		request,

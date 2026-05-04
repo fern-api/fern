@@ -10,7 +10,7 @@ pub struct NextPage {
 
 impl NextPage {
     pub fn builder() -> NextPageBuilder {
-        NextPageBuilder::default()
+        <NextPageBuilder as Default>::default()
     }
 }
 

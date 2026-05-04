@@ -27,7 +27,7 @@ describe("LegacyFernWorkspaceAdapter", () => {
 
         it("adapts Fern spec to FernWorkspace using LazyFernWorkspace", async () => {
             const { cwd, apiDefinition } = await loadApiDefinition("fern-definition");
-            const adapter = createAdapter(cwd);
+            const adapter = await createAdapter(cwd);
 
             const fernWorkspace = await adapter.adapt(apiDefinition);
             expect(fernWorkspace).toBeDefined();
@@ -44,7 +44,7 @@ describe("LegacyFernWorkspaceAdapter", () => {
 
         it("loads types and services from Fern definition files", async () => {
             const { cwd, apiDefinition } = await loadApiDefinition("fern-definition");
-            const adapter = createAdapter(cwd);
+            const adapter = await createAdapter(cwd);
 
             const fernWorkspace = await adapter.adapt(apiDefinition);
             const definitionFiles = fernWorkspace.definition.namedDefinitionFiles;
@@ -82,7 +82,7 @@ describe("LegacyFernWorkspaceAdapter", () => {
                 expect(isOpenApiSpec(firstSpec)).toBe(true);
             }
 
-            const adapter = createAdapter(cwd);
+            const adapter = await createAdapter(cwd);
             const fernWorkspace = await adapter.adapt(apiDefinition);
             expect(fernWorkspace).toBeDefined();
             expect(fernWorkspace.definition).toBeDefined();
@@ -103,7 +103,7 @@ describe("LegacyFernWorkspaceAdapter", () => {
 
         it("adapts Conjure spec to FernWorkspace using ConjureWorkspace", async () => {
             const { cwd, apiDefinition } = await loadApiDefinition("conjure-definition");
-            const adapter = createAdapter(cwd);
+            const adapter = await createAdapter(cwd);
 
             const fernWorkspace = await adapter.adapt(apiDefinition);
             expect(fernWorkspace).toBeDefined();
@@ -120,7 +120,7 @@ describe("LegacyFernWorkspaceAdapter", () => {
                 expect(spec.conjure.toString()).toContain("conjure-definition/conjure");
             }
 
-            const adapter = createAdapter(cwd);
+            const adapter = await createAdapter(cwd);
             const fernWorkspace = await adapter.adapt(apiDefinition);
             expect(fernWorkspace).toBeDefined();
             expect(fernWorkspace.absoluteFilePath.toString()).toBe(cwd.toString());
@@ -130,7 +130,7 @@ describe("LegacyFernWorkspaceAdapter", () => {
     describe("Multiple OpenAPI Specs", () => {
         it("allows multiple OpenAPI specs to be mixed together", async () => {
             const cwd = AbsoluteFilePath.of(join(FIXTURES_DIR, "simple-api"));
-            const adapter = createAdapter(cwd);
+            const adapter = await createAdapter(cwd);
 
             const openApiSpec1: OpenApiSpec = {
                 openapi: AbsoluteFilePath.of(join(FIXTURES_DIR, "simple-api", "openapi.yml"))
@@ -173,7 +173,7 @@ describe("LegacyFernWorkspaceAdapter", () => {
 
         it("override auth scheme", async () => {
             const { cwd, apiDefinition } = await loadApiDefinition("api-config-override");
-            const adapter = createAdapter(cwd);
+            const adapter = await createAdapter(cwd);
 
             const fernWorkspace = await adapter.adapt(apiDefinition);
             expect(fernWorkspace).toBeDefined();
@@ -186,7 +186,7 @@ describe("LegacyFernWorkspaceAdapter", () => {
 
         it("override environments", async () => {
             const { cwd, apiDefinition } = await loadApiDefinition("api-config-override");
-            const adapter = createAdapter(cwd);
+            const adapter = await createAdapter(cwd);
 
             const fernWorkspace = await adapter.adapt(apiDefinition);
             expect(fernWorkspace).toBeDefined();
@@ -207,8 +207,8 @@ describe("LegacyFernWorkspaceAdapter", () => {
 /**
  * Creates an adapter for testing with the given cwd.
  */
-function createAdapter(cwd: AbsoluteFilePath): LegacyFernWorkspaceAdapter {
-    const context = createTestContext({ cwd });
+async function createAdapter(cwd: AbsoluteFilePath): Promise<LegacyFernWorkspaceAdapter> {
+    const context = await createTestContext({ cwd });
     const task = createMockTask();
     return new LegacyFernWorkspaceAdapter({
         context,

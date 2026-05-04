@@ -11,17 +11,17 @@ export const DocsInstance: core.serialization.ObjectSchema<serializers.DocsInsta
     core.serialization.object({
         url: core.serialization.string(),
         customDomain: core.serialization.property("custom-domain", CustomDomain.optional()),
-        private: core.serialization.boolean().optional(),
         editThisPage: core.serialization.property("edit-this-page", EditThisPageConfig.optional()),
         audiences: Audience.optional(),
+        multiSource: core.serialization.property("multi-source", core.serialization.boolean().optional()),
     });
 
 export declare namespace DocsInstance {
     export interface Raw {
         url: string;
         "custom-domain"?: CustomDomain.Raw | null;
-        private?: boolean | null;
         "edit-this-page"?: EditThisPageConfig.Raw | null;
         audiences?: Audience.Raw | null;
+        "multi-source"?: boolean | null;
     }
 }

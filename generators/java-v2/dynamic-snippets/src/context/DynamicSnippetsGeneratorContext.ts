@@ -41,15 +41,17 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     constructor({
         ir,
         config,
-        options
+        options,
+        sharedCustomConfig
     }: {
         ir: FernIr.dynamic.DynamicIntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
         options?: Options;
+        sharedCustomConfig?: BaseJavaCustomConfigSchema;
     }) {
         super({ ir, config, options });
         this.ir = ir;
-        this.customConfig = BaseJavaCustomConfigSchema.parse(config.customConfig ?? {});
+        this.customConfig = sharedCustomConfig ?? BaseJavaCustomConfigSchema.parse(config.customConfig ?? {});
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
         this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
         this.filePropertyMapper = new FilePropertyMapper({ context: this });
@@ -59,7 +61,8 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return new DynamicSnippetsGeneratorContext({
             ir: this.ir,
             config: this.config,
-            options: this.options
+            options: this.options,
+            sharedCustomConfig: this.customConfig
         });
     }
 

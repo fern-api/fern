@@ -1,5 +1,5 @@
 import { fail } from "node:assert";
-import { Arguments } from "@fern-api/base-generator";
+import { Arguments, GeneratorError, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, WithGeneration, Writer } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -157,7 +157,9 @@ export class RawClient extends WithGeneration {
                 };
             case "multipartform": {
                 if (endpoint.requestBody?.type !== "fileUpload") {
-                    throw new Error("Internal error; Multipart form requests are only supported for file uploads");
+                    throw GeneratorError.internalError(
+                        "Internal error; Multipart form requests are only supported for file uploads"
+                    );
                 }
                 const requestBody = endpoint.requestBody;
                 const varName = "multipartFormRequest_";
@@ -224,16 +226,16 @@ export class RawClient extends WithGeneration {
         let encoding: FernIr.FileUploadBodyPropertyEncoding | undefined;
         switch (property.type) {
             case "file":
-                propertyName = property.value.key.name.pascalCase.safeName;
-                partName = property.value.key.wireValue;
+                propertyName = this.case.pascalSafe(property.value.key);
+                partName = getWireValue(property.value.key);
                 contentType = property.value.contentType;
                 csharpType = this.context.csharpTypeMapper.convertFromFileProperty({
                     property: property.value
                 });
                 break;
             case "bodyProperty": {
-                propertyName = property.name.name.pascalCase.safeName;
-                partName = property.name.wireValue;
+                propertyName = this.case.pascalSafe(property.name);
+                partName = getWireValue(property.name);
                 contentType = property.contentType;
                 encoding = property.style;
                 csharpType = this.context.csharpTypeMapper.convert({
@@ -379,7 +381,7 @@ export class RawClient extends WithGeneration {
             writer.write(`{${counter++}}`);
             const reference = pathParameterReferences[part.pathParameter];
             if (reference == null) {
-                throw new Error(
+                throw GeneratorError.internalError(
                     `Failed to find request parameter for the endpoint ${endpoint.id} with path parameter ${part.pathParameter}`
                 );
             }

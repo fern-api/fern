@@ -13,8 +13,8 @@ func do() {
             "https://api.fern.com",
         ),
         option.WithBasicAuth(
-            "<username>",
-            "<password>",
+            "YOUR_USERNAME",
+            "YOUR_PASSWORD",
         ),
     )
     request := map[string]any{

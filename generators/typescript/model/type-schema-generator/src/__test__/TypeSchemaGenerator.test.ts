@@ -1,7 +1,13 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { Zurg } from "@fern-typescript/commons";
 import { GeneratedType } from "@fern-typescript/contexts";
-import { casingsGenerator, createMockReference, createNameAndWireValue } from "@fern-typescript/test-utils";
+import {
+    caseConverter,
+    casingsGenerator,
+    createMockReference,
+    createNameAndWireValue
+} from "@fern-typescript/test-utils";
 import { Project, ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
 
@@ -86,6 +92,8 @@ function createMockContext() {
                 objectWithoutOptionalProperties: (props: Zurg.Property[]) =>
                     createMockZurgObjectSchema("objectWithoutOptionalProperties({})"),
                 enum: (values: string[]) => createMockZurgSchema(`enum_([${values.map((v) => `"${v}"`).join(", ")}])`),
+                forwardCompatibleEnum: (values: string[]) =>
+                    createMockZurgSchema(`forwardCompatibleEnum_([${values.map((v) => `"${v}"`).join(", ")}])`),
                 undiscriminatedUnion: (schemas: Zurg.Schema[]) => createMockZurgSchema("undiscriminatedUnion([...])"),
                 union: (args: Zurg.union.Args) => createMockZurgObjectSchema("union({})"),
                 Schema: {
@@ -266,10 +274,16 @@ describe("TypeSchemaGenerator", () => {
     it("dispatches enum shape to GeneratedEnumTypeSchemaImpl", () => {
         const generator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: false,
-            noOptionalProperties: false
+            noOptionalProperties: false,
+            enableForwardCompatibleEnums: false,
+            caseConverter
         });
 
-        const shape = FernIr.Type.enum({ values: [createEnumValue("Active")], default: undefined });
+        const shape = FernIr.Type.enum({
+            values: [createEnumValue("Active")],
+            default: undefined,
+            forwardCompatible: undefined
+        });
         const schema = generator.generateTypeSchema({
             typeName: "Status",
             shape,
@@ -284,7 +298,9 @@ describe("TypeSchemaGenerator", () => {
     it("dispatches object shape to GeneratedObjectTypeSchemaImpl", () => {
         const generator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: false,
-            noOptionalProperties: false
+            noOptionalProperties: false,
+            enableForwardCompatibleEnums: false,
+            caseConverter
         });
 
         const shape = FernIr.Type.object({
@@ -307,7 +323,9 @@ describe("TypeSchemaGenerator", () => {
     it("dispatches alias shape to GeneratedAliasTypeSchemaImpl", () => {
         const generator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: false,
-            noOptionalProperties: false
+            noOptionalProperties: false,
+            enableForwardCompatibleEnums: false,
+            caseConverter
         });
 
         const shape = FernIr.Type.alias({
@@ -331,7 +349,9 @@ describe("TypeSchemaGenerator", () => {
     it("dispatches union shape to GeneratedUnionTypeSchemaImpl", () => {
         const generator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: false,
-            noOptionalProperties: false
+            noOptionalProperties: false,
+            enableForwardCompatibleEnums: false,
+            caseConverter
         });
 
         const shape = FernIr.Type.union({
@@ -339,6 +359,7 @@ describe("TypeSchemaGenerator", () => {
             extends: [],
             types: [],
             baseProperties: [],
+            default: undefined,
             discriminatorContext: undefined
         });
         const schema = generator.generateTypeSchema({
@@ -355,11 +376,14 @@ describe("TypeSchemaGenerator", () => {
     it("dispatches undiscriminated union shape", () => {
         const generator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: false,
-            noOptionalProperties: false
+            noOptionalProperties: false,
+            enableForwardCompatibleEnums: false,
+            caseConverter
         });
 
         const shape = FernIr.Type.undiscriminatedUnion({
-            members: []
+            members: [],
+            baseProperties: undefined
         });
         const schema = generator.generateTypeSchema({
             typeName: "Value",
@@ -375,7 +399,9 @@ describe("TypeSchemaGenerator", () => {
     it("passes noOptionalProperties to generated schemas", () => {
         const generator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: false,
-            noOptionalProperties: true
+            noOptionalProperties: true,
+            enableForwardCompatibleEnums: false,
+            caseConverter
         });
 
         const shape = FernIr.Type.object({
@@ -402,7 +428,9 @@ describe("TypeSchemaGenerator", () => {
     it("passes includeUtilsOnUnionMembers to union schemas", () => {
         const generator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: true,
-            noOptionalProperties: false
+            noOptionalProperties: false,
+            enableForwardCompatibleEnums: false,
+            caseConverter
         });
 
         const shape = FernIr.Type.union({
@@ -410,6 +438,7 @@ describe("TypeSchemaGenerator", () => {
             extends: [],
             types: [],
             baseProperties: [],
+            default: undefined,
             discriminatorContext: undefined
         });
         const schema = generator.generateTypeSchema({
@@ -430,14 +459,21 @@ describe("TypeSchemaGenerator", () => {
 // ────────────────────────────────────────────────────────────────────────────
 
 describe("GeneratedEnumTypeSchemaImpl", () => {
-    function createEnumSchema(opts: { typeName: string; values: FernIr.EnumValue[]; noOptionalProperties?: boolean }) {
+    function createEnumSchema(opts: {
+        typeName: string;
+        values: FernIr.EnumValue[];
+        noOptionalProperties?: boolean;
+        enableForwardCompatibleEnums?: boolean;
+    }) {
         return new GeneratedEnumTypeSchemaImpl({
             typeName: opts.typeName,
-            shape: { values: opts.values, default: undefined },
+            shape: { values: opts.values, default: undefined, forwardCompatible: undefined },
             getGeneratedType: createMockGeneratedEnumType,
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode(opts.typeName),
             getReferenceToGeneratedTypeSchema: () => createMockReference(`${opts.typeName}Schema`),
-            noOptionalProperties: opts.noOptionalProperties ?? false
+            noOptionalProperties: opts.noOptionalProperties ?? false,
+            enableForwardCompatibleEnums: opts.enableForwardCompatibleEnums ?? false,
+            caseConverter
         });
     }
 
@@ -483,6 +519,18 @@ describe("GeneratedEnumTypeSchemaImpl", () => {
             expect(output).toContain("GREEN");
             expect(output).toMatchSnapshot();
         });
+
+        it("generates forwardCompatibleEnum_ schema when forward-compatible enums enabled", () => {
+            const schema = createEnumSchema({
+                typeName: "Status",
+                values: [createEnumValue("Active", "active"), createEnumValue("Inactive", "inactive")],
+                enableForwardCompatibleEnums: true
+            });
+
+            const output = writeSchemaAndGetText(schema);
+            expect(output).toContain("forwardCompatibleEnum_");
+            expect(output).toMatchSnapshot();
+        });
     });
 });
 
@@ -509,12 +557,13 @@ describe("GeneratedObjectTypeSchemaImpl", () => {
             getGeneratedType: () =>
                 createMockGeneratedObjectType({
                     propertyKeys: Object.fromEntries(
-                        (opts.properties ?? []).map((p) => [p.name.wireValue, p.name.name.camelCase.unsafeName])
+                        (opts.properties ?? []).map((p) => [getWireValue(p.name), caseConverter.camelUnsafe(p.name)])
                     )
                 }),
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode(opts.typeName),
             getReferenceToGeneratedTypeSchema: () => createMockReference(`${opts.typeName}Schema`),
-            noOptionalProperties: opts.noOptionalProperties ?? false
+            noOptionalProperties: opts.noOptionalProperties ?? false,
+            caseConverter
         });
     }
 
@@ -663,7 +712,8 @@ describe("GeneratedAliasTypeSchemaImpl", () => {
             getGeneratedType: () => createMockGeneratedAliasType({ isBranded: opts.isBranded }),
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode(opts.typeName),
             getReferenceToGeneratedTypeSchema: () => createMockReference(`${opts.typeName}Schema`),
-            noOptionalProperties: opts.noOptionalProperties ?? false
+            noOptionalProperties: opts.noOptionalProperties ?? false,
+            caseConverter
         });
     }
 
@@ -766,11 +816,12 @@ describe("GeneratedUndiscriminatedUnionTypeSchemaImpl", () => {
     }) {
         return new GeneratedUndiscriminatedUnionTypeSchemaImpl({
             typeName: opts.typeName,
-            shape: { members: opts.members },
+            shape: { members: opts.members, baseProperties: undefined },
             getGeneratedType: createMockGeneratedUndiscriminatedUnionType,
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode(opts.typeName),
             getReferenceToGeneratedTypeSchema: () => createMockReference(`${opts.typeName}Schema`),
-            noOptionalProperties: opts.noOptionalProperties ?? false
+            noOptionalProperties: opts.noOptionalProperties ?? false,
+            caseConverter
         });
     }
 
@@ -871,13 +922,15 @@ describe("GeneratedUnionTypeSchemaImpl", () => {
                 extends: [],
                 types: opts.types ?? [],
                 baseProperties: opts.baseProperties ?? [],
+                default: undefined,
                 discriminatorContext: undefined
             },
             getGeneratedType: createMockGeneratedUnionType,
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode(opts.typeName),
             getReferenceToGeneratedTypeSchema: () => createMockReference(`${opts.typeName}Schema`),
             noOptionalProperties: opts.noOptionalProperties ?? false,
-            includeUtilsOnUnionMembers: opts.includeUtilsOnUnionMembers ?? false
+            includeUtilsOnUnionMembers: opts.includeUtilsOnUnionMembers ?? false,
+            caseConverter
         });
     }
 

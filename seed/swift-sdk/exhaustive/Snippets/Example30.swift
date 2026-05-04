@@ -7,7 +7,10 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.params.getWithInlinePath(param: "param")
+    _ = try await client.endpoints.object.getAndReturnWithDatetimeLikeString(request: ObjectWithDatetimeLikeString(
+        datetimeLikeString: "2023-08-31T14:15:22Z",
+        actualDatetime: try! Date("2023-08-31T14:15:22Z", strategy: .iso8601)
+    ))
 }
 
 try await main()

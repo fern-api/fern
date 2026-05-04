@@ -12,51 +12,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "BaseUser",
-          "camelCase": {
-            "unsafeName": "baseUser",
-            "safeName": "baseUser"
-          },
-          "snakeCase": {
-            "unsafeName": "base_user",
-            "safeName": "base_user"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "BASE_USER",
-            "safeName": "BASE_USER"
-          },
-          "pascalCase": {
-            "unsafeName": "BaseUser",
-            "safeName": "BaseUser"
-          }
-        }
+        "name": "BaseUser"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "Id",
-                  "safeName": "Id"
-                }
-              },
-              "wireValue": "id"
-            },
+            "name": "id",
             "valueType": {
               "container": {
                 "optional": {
@@ -139,47 +100,8 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "Test extension `x-fern-property-name`",
-    "camelCase": {
-      "unsafeName": "testExtensionXFernPropertyName",
-      "safeName": "testExtensionXFernPropertyName"
-    },
-    "snakeCase": {
-      "unsafeName": "test_extension_x_fern_property_name",
-      "safeName": "test_extension_x_fern_property_name"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "TEST_EXTENSION_X_FERN_PROPERTY_NAME",
-      "safeName": "TEST_EXTENSION_X_FERN_PROPERTY_NAME"
-    },
-    "pascalCase": {
-      "unsafeName": "TestExtensionXFernPropertyName",
-      "safeName": "TestExtensionXFernPropertyName"
-    }
-  },
+  "apiName": "Test extension `x-fern-property-name`",
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   }
 }

@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 import { DeclaredTypeName } from "../../types/types/DeclaredTypeName.js";
 import { InlinedWebSocketMessageBodyProperty } from "./InlinedWebSocketMessageBodyProperty.js";
 
@@ -11,14 +11,14 @@ export const InlinedWebSocketMessageBody: core.serialization.ObjectSchema<
     serializers.InlinedWebSocketMessageBody.Raw,
     FernIr.InlinedWebSocketMessageBody
 > = core.serialization.objectWithoutOptionalProperties({
-    name: Name,
+    name: NameOrString,
     extends: core.serialization.list(DeclaredTypeName),
     properties: core.serialization.list(InlinedWebSocketMessageBodyProperty),
 });
 
 export declare namespace InlinedWebSocketMessageBody {
     export interface Raw {
-        name: Name.Raw;
+        name: NameOrString.Raw;
         extends: DeclaredTypeName.Raw[];
         properties: InlinedWebSocketMessageBodyProperty.Raw[];
     }

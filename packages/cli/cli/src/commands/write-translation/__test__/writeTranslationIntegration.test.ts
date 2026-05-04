@@ -70,7 +70,7 @@ describe("writeTranslationForProject - Integration Tests", () => {
 
         return {
             logger,
-            instrumentPostHogEvent: async () => {
+            instrumentPostHogEvent: () => {
                 // empty block
             },
             runTaskForWorkspace: async (workspace: unknown, fn: (context: unknown) => Promise<void>) => {

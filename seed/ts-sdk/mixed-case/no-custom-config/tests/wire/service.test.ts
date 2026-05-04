@@ -19,16 +19,7 @@ describe("ServiceClient", () => {
         server.mockEndpoint().get("/resource/rsc-xyz").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.service.getResource("rsc-xyz");
-        expect(response).toEqual({
-            resource_type: "user",
-            status: "ACTIVE",
-            userName: "username",
-            metadata_tags: ["tag1", "tag2"],
-            EXTRA_PROPERTIES: {
-                foo: "bar",
-                baz: "qux",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("listResources", async () => {
@@ -51,17 +42,6 @@ describe("ServiceClient", () => {
             page_limit: 10,
             beforeDate: "2023-01-01",
         });
-        expect(response).toEqual([
-            {
-                resource_type: "user",
-                status: "ACTIVE",
-                userName: "username",
-                metadata_tags: ["tag1", "tag2"],
-                EXTRA_PROPERTIES: {
-                    foo: "bar",
-                    baz: "qux",
-                },
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 });

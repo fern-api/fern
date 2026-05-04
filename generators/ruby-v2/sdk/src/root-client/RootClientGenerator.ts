@@ -1,7 +1,11 @@
+import { getWireValue } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { DefaultValueExtractor } from "../DefaultValueExtractor.js";
+import { RawClient } from "../endpoint/http/RawClient.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments.js";
@@ -29,6 +33,22 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             }
             class_.addMethod(this.getSubpackageClientGetter(subpackage, rootModule));
         }
+
+        // Add root service endpoint methods directly on the root client
+        const rootServiceId = this.context.ir.rootPackage.service;
+        if (rootServiceId != null) {
+            const rootService = this.context.getHttpServiceOrThrow(rootServiceId);
+            for (const endpoint of rootService.endpoints) {
+                const generatedMethods = this.context.endpointGenerator.generate({
+                    endpoint,
+                    serviceId: rootServiceId,
+                    rawClientReference: "",
+                    rawClient: new RawClient(this.context)
+                });
+                class_.addStatements(generatedMethods);
+            }
+        }
+
         rootModule.addStatement(class_);
         return new RubyFile({
             node: astNodeToCodeBlockWithComments(rootModule, [Comments.FrozenStringLiteral]),
@@ -76,11 +96,21 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         const authenticationParameters = this.getAuthenticationParameters();
         parameters.push(...authenticationParameters);
 
+        const globalHeaderParameters = this.getGlobalHeaderParameters();
+        parameters.push(...globalHeaderParameters);
+
+        // Sort parameters: required (no initializer) before optional (with initializer)
+        const sortedParameters = [...parameters].sort((a, b) => {
+            const aOptional = a.initializer != null ? 1 : 0;
+            const bOptional = b.initializer != null ? 1 : 0;
+            return aOptional - bOptional;
+        });
+
         const method = ruby.method({
             name: "initialize",
             kind: ruby.MethodKind.Instance,
             parameters: {
-                keyword: parameters
+                keyword: sortedParameters
             },
             returnType: ruby.Type.void()
         });
@@ -102,8 +132,10 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
 
         // Check if basic auth is configured so we can conditionally add the Authorization header
-        const basicAuthScheme = this.context.ir.auth.schemes.find((s) => s.type === "basic");
-        const hasBasicAuth = basicAuthScheme != null && basicAuthScheme.type === "basic";
+        const basicAuthSchemes = this.context.ir.auth.schemes.filter(
+            (s): s is typeof s & { type: "basic" } => s.type === "basic"
+        );
+        const hasBasicAuth = basicAuthSchemes.length > 0;
         const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
 
         method.addStatement(
@@ -113,16 +145,65 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     writer.write(`headers = `);
                     writer.writeNode(this.getRawClientHeaders());
                     writer.newLine();
-                    const usernameName = basicAuthScheme.username.snakeCase.safeName;
-                    const passwordName = basicAuthScheme.password.snakeCase.safeName;
-                    if (isAuthOptional) {
-                        writer.writeLine(
-                            `headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}" if !${usernameName}.nil? && !${passwordName}.nil?`
-                        );
-                    } else {
-                        writer.writeLine(
-                            `headers["Authorization"] = "Basic #{Base64.strict_encode64("#{${usernameName}}:#{${passwordName}}")}"`
-                        );
+                    let isFirstBlock = true;
+                    let emittedAnyBlock = false;
+                    for (let i = 0; i < basicAuthSchemes.length; i++) {
+                        const basicAuthScheme = basicAuthSchemes[i];
+                        if (basicAuthScheme == null) {
+                            continue;
+                        }
+                        const usernameName = this.case.snakeSafe(basicAuthScheme.username);
+                        const passwordName = this.case.snakeSafe(basicAuthScheme.password);
+                        const usernameOmitted = !!basicAuthScheme.usernameOmit;
+                        const passwordOmitted = !!basicAuthScheme.passwordOmit;
+                        // Build the credential string for Base64 encoding.
+                        // Omitted fields become empty (e.g., password omitted → "#{username}:").
+                        let credentialStr: string;
+                        if (usernameOmitted && !passwordOmitted) {
+                            credentialStr = `":#{${passwordName}}"`;
+                        } else if (!usernameOmitted && passwordOmitted) {
+                            credentialStr = `"#{${usernameName}}:"`;
+                        } else {
+                            credentialStr = `"#{${usernameName}}:#{${passwordName}}"`;
+                        }
+                        // Condition: only require non-omitted fields to be present
+                        let condition: string;
+                        if (!usernameOmitted && !passwordOmitted) {
+                            condition = `!${usernameName}.nil? && !${passwordName}.nil?`;
+                        } else if (usernameOmitted && !passwordOmitted) {
+                            condition = `!${passwordName}.nil?`;
+                        } else if (!usernameOmitted && passwordOmitted) {
+                            condition = `!${usernameName}.nil?`;
+                        } else {
+                            // Both fields omitted — skip auth header entirely when auth is non-mandatory
+                            continue;
+                        }
+                        const authHeaderStmt = `headers["Authorization"] = "Basic #{Base64.strict_encode64(${credentialStr})}"`;
+                        if (basicAuthSchemes.length > 1) {
+                            // Multiple basic-auth schemes: emit as an if/elsif chain so
+                            // only one scheme is applied at runtime. Modifier form isn't
+                            // applicable when there are alternative branches.
+                            if (isFirstBlock) {
+                                writer.writeLine(`if ${condition}`);
+                            } else {
+                                writer.writeLine(`elsif ${condition}`);
+                            }
+                            isFirstBlock = false;
+                            emittedAnyBlock = true;
+                            writer.writeLine(`  ${authHeaderStmt}`);
+                        } else if (isAuthOptional) {
+                            // Single optional basic-auth scheme: emit in modifier form so
+                            // rubocop's Style/IfUnlessModifier is satisfied without needing
+                            // a post-emit autocorrect pass.
+                            writer.writeLine(`${authHeaderStmt} if ${condition}`);
+                        } else {
+                            // Mandatory auth: credentials are always present, so emit the
+                            // header unconditionally.
+                            writer.writeLine(authHeaderStmt);
+                        }
+                    }
+                    if (emittedAnyBlock && basicAuthSchemes.length > 1) {
+                        writer.writeLine(`end`);
                     }
                 }
                 writer.write(`@raw_client = `);
@@ -172,7 +253,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         // Get the auth service/endpoint info to determine the auth client class
         const tokenEndpointReference = scheme.tokenEndpoint.endpoint;
         const service = this.context.ir.services[tokenEndpointReference.serviceId];
-        const subpackageId = service?.name.fernFilepath.packagePath[0]?.pascalCase.safeName ?? "Auth";
+        const firstPart = service?.name?.fernFilepath?.packagePath[0];
+        const subpackageId = firstPart != null ? this.case.pascalSafe(firstPart) : "Auth";
 
         // Get the token endpoint to check its baseUrl
         const tokenEndpoint = service?.endpoints.find((e) => e.id === tokenEndpointReference.endpointId);
@@ -312,7 +394,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 }
                 case "header": {
                     const param = ruby.parameters.keyword({
-                        name: scheme.name.name.snakeCase.safeName,
+                        name: this.case.snakeSafe(scheme.name),
                         type: ruby.Type.string(),
                         initializer:
                             scheme.headerEnvVar != null
@@ -326,30 +408,37 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     break;
                 }
                 case "basic": {
-                    const usernameParam = ruby.parameters.keyword({
-                        name: scheme.username.snakeCase.safeName,
-                        type: ruby.Type.string(),
-                        initializer:
-                            scheme.usernameEnvVar != null
-                                ? ruby.codeblock((writer) => {
-                                      writer.write(`ENV.fetch("${scheme.usernameEnvVar}", nil)`);
-                                  })
-                                : undefined,
-                        docs: undefined
-                    });
-                    parameters.push(usernameParam);
-                    const passwordParam = ruby.parameters.keyword({
-                        name: scheme.password.snakeCase.safeName,
-                        type: ruby.Type.string(),
-                        initializer:
-                            scheme.passwordEnvVar != null
-                                ? ruby.codeblock((writer) => {
-                                      writer.write(`ENV.fetch("${scheme.passwordEnvVar}", nil)`);
-                                  })
-                                : undefined,
-                        docs: undefined
-                    });
-                    parameters.push(passwordParam);
+                    // When omit is true, the field is completely removed from the end-user API.
+                    const usernameOmitted = !!scheme.usernameOmit;
+                    const passwordOmitted = !!scheme.passwordOmit;
+                    if (!usernameOmitted) {
+                        const usernameParam = ruby.parameters.keyword({
+                            name: this.case.snakeSafe(scheme.username),
+                            type: ruby.Type.string(),
+                            initializer:
+                                scheme.usernameEnvVar != null
+                                    ? ruby.codeblock((writer) => {
+                                          writer.write(`ENV.fetch("${scheme.usernameEnvVar}", nil)`);
+                                      })
+                                    : undefined,
+                            docs: undefined
+                        });
+                        parameters.push(usernameParam);
+                    }
+                    if (!passwordOmitted) {
+                        const passwordParam = ruby.parameters.keyword({
+                            name: this.case.snakeSafe(scheme.password),
+                            type: ruby.Type.string(),
+                            initializer:
+                                scheme.passwordEnvVar != null
+                                    ? ruby.codeblock((writer) => {
+                                          writer.write(`ENV.fetch("${scheme.passwordEnvVar}", nil)`);
+                                      })
+                                    : undefined,
+                            docs: undefined
+                        });
+                        parameters.push(passwordParam);
+                    }
                     break;
                 }
                 case "inferred": {
@@ -368,6 +457,47 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 default:
                     break;
             }
+        }
+
+        return parameters;
+    }
+
+    /**
+     * Returns constructor keyword parameters for global headers that have a clientDefault.
+     * For headers with env AND clientDefault, precedence is: caller > env var > clientDefault.
+     */
+    private getGlobalHeaderParameters(): ruby.KeywordParameter[] {
+        const parameters: ruby.KeywordParameter[] = [];
+        const defaultExtractor = new DefaultValueExtractor(this.context);
+
+        for (const header of this.context.ir.headers) {
+            // Skip literal-typed headers (they're always sent with the literal value)
+            if (this.maybeLiteral(header.valueType) != null) {
+                continue;
+            }
+
+            const clientDefault = defaultExtractor.extractClientDefault(header.clientDefault);
+            if (clientDefault == null) {
+                continue;
+            }
+
+            const paramName = this.case.snakeSafe(header.name);
+            let initializer: ruby.CodeBlock;
+            if (header.env != null) {
+                // Precedence: caller > env var > clientDefault
+                initializer = ruby.codeblock(`ENV.fetch("${header.env}", ${clientDefault})`);
+            } else {
+                initializer = ruby.codeblock(clientDefault);
+            }
+
+            parameters.push(
+                ruby.parameters.keyword({
+                    name: paramName,
+                    type: ruby.Type.nilable(ruby.Type.string()),
+                    initializer,
+                    docs: undefined
+                })
+            );
         }
 
         return parameters;
@@ -403,7 +533,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     if (literal == null) {
                         // Only add non-literal properties as constructor parameters
                         parameters.push({
-                            snakeName: property.name.name.snakeCase.unsafeName,
+                            snakeName: this.case.snakeUnsafe(property.name),
                             isOptional: this.isOptional(property.valueType)
                         });
                     }
@@ -415,7 +545,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 const literal = this.maybeLiteral(header.valueType);
                 if (literal == null) {
                     parameters.push({
-                        snakeName: header.name.name.snakeCase.unsafeName,
+                        snakeName: this.case.snakeUnsafe(header.name),
                         isOptional: this.isOptional(header.valueType)
                     });
                 }
@@ -464,17 +594,27 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 case "bearer":
                     headers.push({
                         key: ruby.TypeLiteral.string("Authorization"),
-                        value: ruby.TypeLiteral.string(`Bearer #{${TOKEN_PARAMETER_NAME}}`)
+                        value: ruby.TypeLiteral.interpolatedString(`Bearer #{${TOKEN_PARAMETER_NAME}}`)
                     });
                     break;
                 case "header": {
-                    const headerParamName = header.name.name.snakeCase.safeName;
-                    const headerName = header.name.wireValue;
-                    const headerValue =
-                        header.prefix != null ? `${header.prefix} #{${headerParamName}}` : `#{${headerParamName}}`;
+                    const headerParamName = this.case.snakeSafe(header.name);
+                    const headerName = getWireValue(header.name);
+                    let headerValueNode: ruby.AstNode;
+                    if (header.prefix != null) {
+                        // Escape any interpolation markers in the spec-supplied prefix so it
+                        // cannot inject arbitrary Ruby code at SDK init time.
+                        const safePrefix = header.prefix.replace(/#(?=[{$@])/g, "\\#");
+                        headerValueNode = ruby.TypeLiteral.interpolatedString(`${safePrefix} #{${headerParamName}}`);
+                    } else {
+                        // No prefix means the value is a single interpolation. Emit the
+                        // parameter with `.to_s` directly instead of wrapping it in a
+                        // redundant interpolated string.
+                        headerValueNode = ruby.codeblock(`${headerParamName}.to_s`);
+                    }
                     headers.push({
                         key: ruby.TypeLiteral.string(headerName),
-                        value: ruby.TypeLiteral.string(headerValue)
+                        value: headerValueNode
                     });
                     break;
                 }
@@ -482,9 +622,34 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     // Basic auth header is added conditionally in the constructor body
                     // to guard against nil credentials when auth is optional.
                     break;
-                default:
+                case "oauth":
+                case "inferred":
+                    // OAuth and inferred auth schemes attach their Authorization
+                    // headers via their own providers (OAuthProviderGenerator,
+                    // InferredAuthProviderGenerator) rather than the raw client's
+                    // default header hash, so there's nothing to add here.
                     break;
+                default:
+                    assertNever(header);
             }
+        }
+
+        // Add global headers that have clientDefault values
+        const defaultExtractor = new DefaultValueExtractor(this.context);
+        for (const header of this.context.ir.headers) {
+            if (this.maybeLiteral(header.valueType) != null) {
+                continue;
+            }
+            const clientDefault = defaultExtractor.extractClientDefault(header.clientDefault);
+            if (clientDefault == null) {
+                continue;
+            }
+            const paramName = this.case.snakeSafe(header.name);
+            const wireValue = getWireValue(header.name);
+            headers.push({
+                key: ruby.TypeLiteral.string(wireValue),
+                value: ruby.codeblock(`${paramName}.to_s`)
+            });
         }
 
         return ruby.TypeLiteral.hash(headers);
@@ -493,12 +658,12 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {
         const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
         return new ruby.Method({
-            name: subpackage.name.snakeCase.safeName,
+            name: this.case.snakeSafe(subpackage.name),
             kind: ruby.MethodKind.Instance,
             returnType: ruby.Type.class_(
                 ruby.classReference({
                     name: "Client",
-                    modules: [rootModule.name, subpackage.name.pascalCase.safeName],
+                    modules: [rootModule.name, this.case.pascalSafe(subpackage.name)],
                     fullyQualified: true
                 })
             ),
@@ -506,16 +671,16 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 ruby.codeblock((writer) => {
                     if (isMultiUrl) {
                         writer.writeLine(
-                            `@${subpackage.name.snakeCase.safeName} ||= ` +
+                            `@${this.case.snakeSafe(subpackage.name)} ||= ` +
                                 `${rootModule.name}::` +
-                                `${subpackage.name.pascalCase.safeName}::` +
+                                `${this.case.pascalSafe(subpackage.name)}::` +
                                 `Client.new(client: @raw_client, base_url: @base_url, environment: @environment)`
                         );
                     } else {
                         writer.writeLine(
-                            `@${subpackage.name.snakeCase.safeName} ||= ` +
+                            `@${this.case.snakeSafe(subpackage.name)} ||= ` +
                                 `${rootModule.name}::` +
-                                `${subpackage.name.pascalCase.safeName}::` +
+                                `${this.case.pascalSafe(subpackage.name)}::` +
                                 `Client.new(client: @raw_client)`
                         );
                     }

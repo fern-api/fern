@@ -386,6 +386,14 @@ export class DynamicTypeLiteralMapper {
         return this.context.isOptional(typeReference) || this.context.isNullable(typeReference);
     }
 
+    public generatePlaceholderValueForRequiredHeader({
+        typeReference
+    }: {
+        typeReference: FernIr.dynamic.TypeReference;
+    }): php.TypeLiteral {
+        return this.generatePlaceholderValue(typeReference);
+    }
+
     private generatePlaceholderValue(typeReference: FernIr.dynamic.TypeReference): php.TypeLiteral {
         switch (typeReference.type) {
             case "primitive":
@@ -444,6 +452,7 @@ export class DynamicTypeLiteralMapper {
             case "DATE":
                 return php.TypeLiteral.datetime("2024-01-01");
             case "DATE_TIME":
+            case "DATE_TIME_RFC_2822":
                 return php.TypeLiteral.datetime("2024-01-01T00:00:00Z");
             case "UUID":
                 return php.TypeLiteral.string("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
@@ -635,7 +644,8 @@ export class DynamicTypeLiteralMapper {
                 return php.TypeLiteral.boolean(bool);
             }
             case "DATE":
-            case "DATE_TIME": {
+            case "DATE_TIME":
+            case "DATE_TIME_RFC_2822": {
                 const str = this.context.getValueAsString({ value });
                 if (str == null) {
                     return php.TypeLiteral.nop();

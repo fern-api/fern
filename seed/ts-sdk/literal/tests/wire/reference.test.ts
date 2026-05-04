@@ -40,10 +40,6 @@ describe("ReferenceClient", () => {
                 ],
             },
         });
-        expect(response).toEqual({
-            message: "The weather is sunny",
-            status: 200,
-            success: true,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

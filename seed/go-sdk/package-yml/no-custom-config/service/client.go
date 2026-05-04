@@ -35,13 +35,13 @@ func NewClient(options *core.RequestOptions) *Client {
 func (c *Client) Nop(
 	ctx context.Context,
 	id string,
-	nestedId string,
+	nestedID string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Nop(
 		ctx,
 		id,
-		nestedId,
+		nestedID,
 		opts...,
 	)
 	if err != nil {

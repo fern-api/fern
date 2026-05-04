@@ -7,14 +7,14 @@ import HeaderTokenEnvironmentVariable
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 string
-                """.utf8
+                """#.utf8
             )
         )
         let client = HeaderTokenEnvironmentVariableClient(
             baseURL: "https://api.fern.com",
-            headerTokenAuth: "<value>",
+            headerTokenAuth: "YOUR_HEADER_VALUE",
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"

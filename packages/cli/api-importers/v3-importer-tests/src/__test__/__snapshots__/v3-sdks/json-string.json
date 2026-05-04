@@ -12,51 +12,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "User",
-          "camelCase": {
-            "unsafeName": "user",
-            "safeName": "user"
-          },
-          "snakeCase": {
-            "unsafeName": "user",
-            "safeName": "user"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "USER",
-            "safeName": "USER"
-          },
-          "pascalCase": {
-            "unsafeName": "User",
-            "safeName": "User"
-          }
-        }
+        "name": "User"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "Id",
-                  "safeName": "Id"
-                }
-              },
-              "wireValue": "id"
-            },
+            "name": "id",
             "valueType": {
               "container": {
                 "optional": {
@@ -83,28 +44,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "metadata",
-                "camelCase": {
-                  "unsafeName": "metadata",
-                  "safeName": "metadata"
-                },
-                "snakeCase": {
-                  "unsafeName": "metadata",
-                  "safeName": "metadata"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "METADATA",
-                  "safeName": "METADATA"
-                },
-                "pascalCase": {
-                  "unsafeName": "Metadata",
-                  "safeName": "Metadata"
-                }
-              },
-              "wireValue": "metadata"
-            },
+            "name": "metadata",
             "valueType": {
               "container": {
                 "optional": {
@@ -187,47 +127,8 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "Test `json-string` example",
-    "camelCase": {
-      "unsafeName": "testJsonStringExample",
-      "safeName": "testJsonStringExample"
-    },
-    "snakeCase": {
-      "unsafeName": "test_json_string_example",
-      "safeName": "test_json_string_example"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "TEST_JSON_STRING_EXAMPLE",
-      "safeName": "TEST_JSON_STRING_EXAMPLE"
-    },
-    "pascalCase": {
-      "unsafeName": "TestJsonStringExample",
-      "safeName": "TestJsonStringExample"
-    }
-  },
+  "apiName": "Test `json-string` example",
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   }
 }

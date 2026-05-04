@@ -18,7 +18,7 @@ pub struct SendListQueryRequest {
 
 impl SendListQueryRequest {
     pub fn builder() -> SendListQueryRequestBuilder {
-        SendListQueryRequestBuilder::default()
+        <SendListQueryRequestBuilder as Default>::default()
     }
 }
 

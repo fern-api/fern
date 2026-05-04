@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: validation
-  version: ''
+  version: 0.0.0
 paths:
   /create:
     post:
@@ -11,7 +11,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -26,15 +26,13 @@ paths:
                 decimal:
                   type: number
                   format: double
-                  minimum: 1.1
+                  exclusiveMinimum: 1.1
                   maximum: 2.2
-                  exclusiveMinimum: true
                   multipleOf: 1.1
                 even:
                   type: integer
                   minimum: 0
-                  maximum: 100
-                  exclusiveMaximum: true
+                  exclusiveMaximum: 100
                   multipleOf: 2
                 name:
                   type: string
@@ -61,9 +59,8 @@ paths:
           schema:
             type: number
             format: double
-            minimum: 1.1
+            exclusiveMinimum: 1.1
             maximum: 2.2
-            exclusiveMinimum: true
             multipleOf: 1.1
         - name: even
           in: query
@@ -71,8 +68,7 @@ paths:
           schema:
             type: integer
             minimum: 0
-            maximum: 100
-            exclusiveMaximum: true
+            exclusiveMaximum: 100
             multipleOf: 2
         - name: name
           in: query
@@ -85,7 +81,7 @@ paths:
             maxLength: 10
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -95,10 +91,8 @@ components:
     SmallInteger:
       title: SmallInteger
       type: integer
-      minimum: 0
-      maximum: 10
-      exclusiveMinimum: true
-      exclusiveMaximum: true
+      exclusiveMinimum: 0
+      exclusiveMaximum: 10
       multipleOf: 1
     LargeInteger:
       title: LargeInteger
@@ -136,25 +130,26 @@ components:
         decimal:
           type: number
           format: double
-          minimum: 1.1
+          exclusiveMinimum: 1.1
           maximum: 2.2
-          exclusiveMinimum: true
           multipleOf: 1.1
-          example: 1.1
+          examples:
+            - 1.1
         even:
           type: integer
           minimum: 0
-          maximum: 100
-          exclusiveMaximum: true
+          exclusiveMaximum: 100
           multipleOf: 2
-          example: 2
+          examples:
+            - 2
         name:
           type: string
           format: custom
           pattern: ^[a-z]+$
           minLength: 3
           maxLength: 10
-          example: rules
+          examples:
+            - rules
         shape:
           $ref: '#/components/schemas/Shape'
       required:

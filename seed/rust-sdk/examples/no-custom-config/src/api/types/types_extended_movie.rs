@@ -10,7 +10,7 @@ pub struct ExtendedMovie {
 
 impl ExtendedMovie {
     pub fn builder() -> ExtendedMovieBuilder {
-        ExtendedMovieBuilder::default()
+        <ExtendedMovieBuilder as Default>::default()
     }
 }
 

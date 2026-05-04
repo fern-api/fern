@@ -58,7 +58,7 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
     test_id = "endpoints.primitive.get_and_return_long.0"
 
     @client.endpoints.primitive.get_and_return_long(
-      request: 1_000_000,
+      request: 1000000,
       request_options: {
         additional_headers: {
           "X-Test-Id" => "endpoints.primitive.get_and_return_long.0"
@@ -180,14 +180,14 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_primitive_get_and_return_base_64_with_wiremock
-    test_id = "endpoints.primitive.get_and_return_base_64.0"
+  def test_endpoints_primitive_get_and_return_base64_with_wiremock
+    test_id = "endpoints.primitive.get_and_return_base64.0"
 
-    @client.endpoints.primitive.get_and_return_base_64(
+    @client.endpoints.primitive.get_and_return_base64(
       request: "SGVsbG8gd29ybGQh",
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints.primitive.get_and_return_base_64.0"
+          "X-Test-Id" => "endpoints.primitive.get_and_return_base64.0"
         }
       }
     )

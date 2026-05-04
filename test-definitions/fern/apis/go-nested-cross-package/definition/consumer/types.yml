@@ -1,0 +1,8 @@
+imports:
+  foo: ../common/foo/types.yml
+
+types:
+  Result:
+    properties:
+      data: optional<foo.BaseType>
+      label: string

@@ -6,6 +6,18 @@ Unified migration package for all Fern generator configurations.
 
 This package contains migrations for all Fern generators, organized by generator name. When users run `fern generator upgrade`, the CLI automatically downloads this package and applies relevant migrations to transform their `generators.yml` configuration.
 
+## Policy: Breaking Changes in Generators
+
+**Generators must never ship breaking changes to existing users without a migration path.** If a generator silently changes default behavior, autorelease will fail for every customer pinned to the previous major and the team will be paged.
+
+The required workflow is:
+
+1. **Add the new behavior behind a feature flag, and keep the old behavior as the default.** Users opt in explicitly.
+2. **When you are ready to flip the default, bump the generator's major version** and add a migration file in this package under `src/generators/<generator>/migrations/<next-major>.0.0.ts`. The migration uses `??=` to set the old default for any user who had not explicitly configured the field, so their `generators.yml` continues to produce the same output.
+3. **Register the migration** in `src/generators/<generator>/migrations/index.ts` and publish `@fern-api/generator-migrations`. The migration runs automatically when customers run `fern generator upgrade --include-major`.
+
+Reference example: [`src/generators/typescript/migrations/3.0.0.ts`](src/generators/typescript/migrations/3.0.0.ts) switched TypeScript SDK defaults from `yarn`/`jest` to `pnpm`/`vitest` while preserving the old defaults for existing users.
+
 ## Architecture
 
 ### Single Unified Package

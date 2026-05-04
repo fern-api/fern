@@ -9,7 +9,7 @@ pub struct DeployParams {
 
 impl DeployParams {
     pub fn builder() -> DeployParamsBuilder {
-        DeployParamsBuilder::default()
+        <DeployParamsBuilder as Default>::default()
     }
 }
 

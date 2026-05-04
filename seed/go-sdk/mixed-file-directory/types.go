@@ -2,4 +2,4 @@
 
 package mixedfiledirectory
 
-type Id = string
+type ID = string

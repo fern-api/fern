@@ -1,17 +1,23 @@
 import type { OpenAPISpec, OpenRPCSpec } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { LegacyApiSpecAdapter } from "../api/adapter/LegacyApiSpecAdapter.js";
 import type { AsyncApiSpec } from "../api/config/AsyncApiSpec.js";
 import type { OpenApiSpec } from "../api/config/OpenApiSpec.js";
 import type { OpenRpcSpec } from "../api/config/OpenRpcSpec.js";
+import type { Context } from "../context/Context.js";
 import { createTestContext } from "./utils/createTestContext.js";
 
 describe("LegacyApiSpecAdapter", () => {
     const cwd = AbsoluteFilePath.of("/test/path");
-    const context = createTestContext({ cwd });
-    const adapter = new LegacyApiSpecAdapter({ context });
+    let context: Context;
+    let adapter: LegacyApiSpecAdapter;
+
+    beforeEach(async () => {
+        context = await createTestContext({ cwd });
+        adapter = new LegacyApiSpecAdapter({ context });
+    });
 
     describe("convertOpenApiSettings", () => {
         it("returns undefined when settings are not provided", () => {
@@ -65,7 +71,8 @@ describe("LegacyApiSpecAdapter", () => {
                     typeDatesAsStrings: true,
                     preserveSingleSchemaOneof: true,
                     inlineAllOfSchemas: true,
-                    groupMultiApiEnvironments: true
+                    groupMultiApiEnvironments: true,
+                    inferDiscriminatedUnionBaseProperties: true
                 }
             };
 
@@ -83,6 +90,7 @@ describe("LegacyApiSpecAdapter", () => {
             expect(result.settings?.preserveSingleSchemaOneOf).toBe(true);
             expect(result.settings?.inlineAllOfSchemas).toBe(true);
             expect(result.settings?.groupMultiApiEnvironments).toBe(true);
+            expect(result.settings?.shouldInferDiscriminatedUnionBaseProperties).toBe(true);
         });
 
         it("maps filter settings correctly", () => {

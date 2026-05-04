@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: extends
-  version: ''
+  version: 0.0.0
 paths:
   /extends/extended-inline-request-body:
     post:
@@ -11,7 +11,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -33,7 +33,8 @@ components:
       properties:
         name:
           type: string
-          example: Example
+          examples:
+            - Example
       required:
         - name
       allOf:
@@ -44,7 +45,8 @@ components:
       properties:
         name:
           type: string
-          example: NestedExample
+          examples:
+            - NestedExample
       required:
         - name
       allOf:
@@ -55,7 +57,8 @@ components:
       properties:
         docs:
           type: string
-          example: Types extend this type to include a docs property.
+          examples:
+            - Types extend this type to include a docs property.
       required:
         - docs
     JSON:
@@ -64,7 +67,8 @@ components:
       properties:
         raw:
           type: string
-          example: '{"docs": true, "json": true}'
+          examples:
+            - '{"docs": true, "json": true}'
       required:
         - raw
       allOf:

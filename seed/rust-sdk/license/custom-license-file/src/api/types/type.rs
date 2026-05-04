@@ -9,7 +9,7 @@ pub struct Type {
 
 impl Type {
     pub fn builder() -> TypeBuilder {
-        TypeBuilder::default()
+        <TypeBuilder as Default>::default()
     }
 }
 

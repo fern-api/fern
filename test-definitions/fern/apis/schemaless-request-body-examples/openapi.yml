@@ -1,0 +1,105 @@
+openapi: 3.0.3
+info:
+  title: Schemaless Request Body Examples API
+  description: Tests that request body examples are preserved even when no schema is defined.
+  version: 1.0.0
+paths:
+  /plants:
+    post:
+      operationId: createPlant
+      summary: Create a new plant
+      description: Creates a plant with example JSON but no request body schema.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              name: "Venus Flytrap"
+              species: "Dionaea muscipula"
+              care:
+                light: "full sun"
+                water: "distilled only"
+                humidity: "high"
+              tags:
+                - "carnivorous"
+                - "tropical"
+      responses:
+        "200":
+          description: Successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+              example:
+                id: "plant_123"
+                name: "Venus Flytrap"
+  /plants/{plantId}:
+    put:
+      operationId: updatePlant
+      summary: Update an existing plant
+      description: Updates a plant with example JSON but no request body schema.
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              name: "Updated Venus Flytrap"
+              care:
+                light: "partial shade"
+      responses:
+        "200":
+          description: Successfully updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+              example:
+                id: "plant_123"
+                name: "Updated Venus Flytrap"
+  /plants/with-schema:
+    post:
+      operationId: createPlantWithSchema
+      summary: Create a plant with both schema and example
+      description: A control endpoint that has both schema and example defined.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                species:
+                  type: string
+            example:
+              name: "Sundew"
+              species: "Drosera capensis"
+      responses:
+        "200":
+          description: Successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string

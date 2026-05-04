@@ -18,7 +18,7 @@ func do() {
         ),
     )
     request := &fern.Movie{
-        Id: "id",
+        ID: "id",
         Prequel: fern.String(
             "prequel",
         ),

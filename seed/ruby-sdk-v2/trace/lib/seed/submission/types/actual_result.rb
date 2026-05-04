@@ -9,8 +9,10 @@ module Seed
         discriminant :type
 
         member -> { Seed::Commons::Types::VariableValue }, key: "VALUE"
+
         member -> { Seed::Submission::Types::ExceptionInfo }, key: "EXCEPTION"
-        member -> { Seed::Submission::Types::ExceptionV2 }, key: "EXCEPTION_V_2"
+
+        member -> { Seed::Submission::Types::ExceptionV2 }, key: "EXCEPTION_V2"
       end
     end
   end

@@ -1,3 +1,4 @@
+import { GeneratorError, getOriginalName } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { ExampleGenerator } from "@fern-api/fern-csharp-model";
@@ -8,6 +9,7 @@ type HttpEndpoint = FernIr.HttpEndpoint;
 type PathParameter = FernIr.PathParameter;
 type ServiceId = FernIr.ServiceId;
 
+import { DefaultValueExtractor } from "../DefaultValueExtractor.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenerator.js";
 import { EndpointSignatureInfo } from "./EndpointSignatureInfo.js";
@@ -21,11 +23,13 @@ type PagingEndpoint = HttpEndpoint & {
 export abstract class AbstractEndpointGenerator extends WithGeneration {
     private exampleGenerator: ExampleGenerator;
     protected readonly context: SdkGeneratorContext;
+    protected readonly defaultValueExtractor: DefaultValueExtractor;
 
     public constructor({ context }: { context: SdkGeneratorContext }) {
         super(context.generation);
         this.context = context;
         this.exampleGenerator = new ExampleGenerator(context);
+        this.defaultValueExtractor = new DefaultValueExtractor(context);
     }
 
     public getEndpointSignatureInfo({
@@ -109,8 +113,12 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
             default:
                 assertNever(endpointType);
         }
+        const requiredPathParameters = pathParameters.filter((p) => p.initializer == null);
+        const optionalPathParameters = pathParameters.filter((p) => p.initializer != null);
         return {
-            baseParameters: [...pathParameters, requestParameter].filter((p): p is ast.Parameter => p != null),
+            baseParameters: [...requiredPathParameters, requestParameter, ...optionalPathParameters].filter(
+                (p): p is ast.Parameter => p != null
+            ),
             pathParameters,
             pathParameterReferences,
             request,
@@ -130,12 +138,38 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
                 return this.Types.CustomPagerClass(itemType);
             case "uri":
             case "path":
-                throw new Error(
+                throw GeneratorError.internalError(
                     `'${endpoint.pagination.type}' pagination is not supported in C# and should have been skipped.`
                 );
             default:
                 assertNever(endpoint.pagination);
         }
+    }
+
+    /**
+     * Gets the base response type (unwrapped from WithRawResponseTask) for an endpoint.
+     * This is the inner T in WithRawResponseTask<T> or WithRawResponse<T>.
+     */
+    protected getBaseResponseType(endpoint: HttpEndpoint): ast.Type | undefined {
+        if (endpoint.response?.body == null) {
+            if (endpoint.method === FernIr.HttpMethod.Head) {
+                return this.System.Net.Http.HttpResponseHeaders;
+            }
+            return undefined;
+        }
+
+        return endpoint.response.body._visit<ast.Type | undefined>({
+            streaming: () => undefined, // Streaming endpoints don't use WithRawResponseTask
+            streamParameter: () => undefined,
+            fileDownload: () => this.System.IO.Stream.asFullyQualified(),
+            json: (reference) =>
+                this.context.csharpTypeMapper.convert({
+                    reference: reference.responseBodyType
+                }),
+            text: () => this.generation.Primitive.string,
+            bytes: () => undefined,
+            _other: () => undefined
+        });
     }
 
     protected getPaginationItemType(endpoint: HttpEndpoint): ast.Type {
@@ -151,7 +185,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
                         return endpoint.pagination.results.property.valueType;
                     case "uri":
                     case "path":
-                        throw new Error(
+                        throw GeneratorError.internalError(
                             `'${endpoint.pagination.type}' pagination is not supported in C# and should have been skipped.`
                         );
                     default:
@@ -164,8 +198,8 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         if (is.Collection.list(listItemType)) {
             return listItemType.getCollectionItemType();
         }
-        throw new Error(
-            `Pagination result type for endpoint ${endpoint.name.originalName} must be a list, but is ${listItemType.fullyQualifiedName}.`
+        throw GeneratorError.internalError(
+            `Pagination result type for endpoint ${getOriginalName(endpoint.name)} must be a list, but is ${listItemType.fullyQualifiedName}.`
         );
     }
 
@@ -185,18 +219,37 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
                 includePathParametersInEndpointSignature,
                 requestParameter
             });
+            const clientDefault = this.defaultValueExtractor.extractClientDefault(pathParam.clientDefault);
             if (includePathParametersInEndpointSignature) {
-                pathParameters.push(
-                    this.csharp.parameter({
-                        docs: pathParam.docs,
-                        name: parameterName,
-                        type: this.context.csharpTypeMapper.convert({
-                            reference: pathParam.valueType
+                if (clientDefault != null) {
+                    pathParameters.push(
+                        this.csharp.parameter({
+                            docs: pathParam.docs,
+                            name: parameterName,
+                            type: this.context.csharpTypeMapper
+                                .convert({
+                                    reference: pathParam.valueType
+                                })
+                                .asOptional(),
+                            initializer: "null"
                         })
-                    })
-                );
+                    );
+                } else {
+                    pathParameters.push(
+                        this.csharp.parameter({
+                            docs: pathParam.docs,
+                            name: parameterName,
+                            type: this.context.csharpTypeMapper.convert({
+                                reference: pathParam.valueType
+                            })
+                        })
+                    );
+                }
             }
-            pathParameterReferences[pathParam.name.originalName] = parameterName;
+            pathParameterReferences[getOriginalName(pathParam.name)] =
+                clientDefault != null && includePathParametersInEndpointSignature
+                    ? `${parameterName} ?? ${clientDefault.value}`
+                    : parameterName;
         }
         return {
             pathParameters,
@@ -215,7 +268,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         if (this.hasPagination(endpoint)) {
             return;
         }
-        throw new Error(`Endpoint ${endpoint.name.originalName} is not a paginated endpoint`);
+        throw GeneratorError.internalError(`Endpoint ${getOriginalName(endpoint.name)} is not a paginated endpoint`);
     }
 
     protected generateEndpointSnippet({
@@ -236,7 +289,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
     }): ast.MethodInvocation | undefined {
         const service = this.context.ir.services[serviceId];
         if (service == null) {
-            throw new Error(`Unexpected no service with id ${serviceId}`);
+            throw GeneratorError.internalError(`Unexpected no service with id ${serviceId}`);
         }
         const serviceFilePath = service.name.fernFilepath;
 
@@ -252,7 +305,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         const on = this.csharp.codeblock((writer) => {
             writer.write(`${clientVariableName}`);
             for (const path of serviceFilePath.allParts) {
-                writer.write(`.${path.pascalCase.safeName}`);
+                writer.write(`.${this.case.pascalSafe(path)}`);
             }
         });
         for (const endParameter of additionalEndParameters ?? []) {
@@ -361,7 +414,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         parseDatetimes: boolean
     ): ast.CodeBlock {
         if (exampleRequestBody.type === "inlinedRequestBody") {
-            throw new Error("Unexpected inlinedRequestBody"); // should be a wrapped request and already handled
+            throw GeneratorError.internalError("Unexpected inlinedRequestBody"); // should be a wrapped request and already handled
         }
         return this.exampleGenerator.getSnippetForTypeReference({
             exampleTypeReference: exampleRequestBody,
@@ -389,8 +442,8 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         requestParameter?: ast.Parameter;
     }): string {
         if (!includePathParametersInEndpointSignature && requestParameter != null) {
-            return `${requestParameter?.name}.${pathParameter.name.pascalCase.safeName}`;
+            return `${requestParameter?.name}.${this.case.pascalSafe(pathParameter.name)}`;
         }
-        return pathParameter.name.camelCase.safeName;
+        return this.case.camelSafe(pathParameter.name);
     }
 }

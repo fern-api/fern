@@ -11,16 +11,15 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Hash]
+      # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Seed::Users::Types::ListUsersUriPaginationResponse]
-      def list_with_uri_pagination(request_options: {}, **params)
-        Seed::Internal::Types::Utils.normalize_keys(params)
+      # @return [Seed::Users::Types::ListUsersURIPaginationResponse]
+      def list_with_uri_pagination(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -34,7 +33,8 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Users::Types::ListUsersUriPaginationResponse.load(response.body)
+          parsed_response = Seed::Users::Types::ListUsersURIPaginationResponse.load(response.body)
+          [parsed_response, response]
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -42,7 +42,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Hash]
+      # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -50,8 +50,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Users::Types::ListUsersPathPaginationResponse]
-      def list_with_path_pagination(request_options: {}, **params)
-        Seed::Internal::Types::Utils.normalize_keys(params)
+      def list_with_path_pagination(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -65,7 +64,8 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Users::Types::ListUsersPathPaginationResponse.load(response.body)
+          parsed_response = Seed::Users::Types::ListUsersPathPaginationResponse.load(response.body)
+          [parsed_response, response]
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

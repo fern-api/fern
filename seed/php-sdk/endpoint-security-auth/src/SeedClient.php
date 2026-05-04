@@ -46,7 +46,7 @@ class SeedClient
      * @param ?string $token The token to use for authentication.
      * @param ?string $apiKey The apiKey to use for authentication.
      * @param ?string $username The username to use for authentication.
-     * @param ?string $password The username to use for authentication.
+     * @param ?string $password The password to use for authentication.
      * @param ?string $clientId
      * @param ?string $clientSecret
      * @param ?array{

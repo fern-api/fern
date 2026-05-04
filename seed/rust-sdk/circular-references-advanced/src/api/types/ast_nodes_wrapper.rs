@@ -8,7 +8,7 @@ pub struct NodesWrapper {
 
 impl NodesWrapper {
     pub fn builder() -> NodesWrapperBuilder {
-        NodesWrapperBuilder::default()
+        <NodesWrapperBuilder as Default>::default()
     }
 }
 

@@ -1,0 +1,4 @@
+- summary: |
+    [Alpha] Add support for a `translations` block in `docs.yml` to configure multi-language documentation.
+    Each entry specifies a locale (`lang`) and optionally marks it as the default language.
+  type: feat

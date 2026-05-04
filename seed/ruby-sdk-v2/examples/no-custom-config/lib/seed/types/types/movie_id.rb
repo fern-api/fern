@@ -3,8 +3,8 @@
 module Seed
   module Types
     module Types
-      module MovieId
-        # MovieId is an alias for String
+      module MovieID
+        # MovieID is an alias for String
 
         # @option str [String]
         #

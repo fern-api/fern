@@ -5,5 +5,5 @@ import type * as FernIr from "../../../index.js";
 export interface DeclaredErrorName {
     errorId: FernIr.ErrorId;
     fernFilepath: FernIr.FernFilepath;
-    name: FernIr.Name;
+    name: FernIr.NameOrString;
 }

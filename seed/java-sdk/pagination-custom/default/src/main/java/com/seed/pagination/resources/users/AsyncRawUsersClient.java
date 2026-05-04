@@ -11,8 +11,8 @@ import com.seed.pagination.core.SeedPaginationApiException;
 import com.seed.pagination.core.SeedPaginationException;
 import com.seed.pagination.core.SeedPaginationHttpResponse;
 import com.seed.pagination.core.pagination.AsyncFernCustomPaginator;
-import com.seed.pagination.resources.users.requests.ListUsernamesRequestCustom;
-import com.seed.pagination.types.UsernameCursor;
+import com.seed.pagination.resources.users.requests.ListWithCustomPagerRequest;
+import com.seed.pagination.types.UsersListResponse;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
@@ -33,25 +33,29 @@ public class AsyncRawUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncFernCustomPaginator<String>>>>
-            listUsernamesCustom() {
-        return listUsernamesCustom(ListUsernamesRequestCustom.builder().build());
+            listWithCustomPager() {
+        return listWithCustomPager(ListWithCustomPagerRequest.builder().build());
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncFernCustomPaginator<String>>>>
-            listUsernamesCustom(RequestOptions requestOptions) {
-        return listUsernamesCustom(ListUsernamesRequestCustom.builder().build(), requestOptions);
+            listWithCustomPager(RequestOptions requestOptions) {
+        return listWithCustomPager(ListWithCustomPagerRequest.builder().build(), requestOptions);
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncFernCustomPaginator<String>>>>
-            listUsernamesCustom(ListUsernamesRequestCustom request) {
-        return listUsernamesCustom(request, null);
+            listWithCustomPager(ListWithCustomPagerRequest request) {
+        return listWithCustomPager(request, null);
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncFernCustomPaginator<String>>>>
-            listUsernamesCustom(ListUsernamesRequestCustom request, RequestOptions requestOptions) {
+            listWithCustomPager(ListWithCustomPagerRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users");
+        if (request.getLimit().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "limit", request.getLimit().get(), false);
+        }
         if (request.getStartingAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "starting_after", request.getStartingAfter().get(), false);
@@ -79,8 +83,8 @@ public class AsyncRawUsersClient {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                        UsernameCursor parsedResponse =
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UsernameCursor.class);
+                        UsersListResponse parsedResponse =
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UsersListResponse.class);
                         future.complete(new SeedPaginationHttpResponse<>(
                                 AsyncFernCustomPaginator.createAsync(parsedResponse, clientOptions, requestOptions),
                                 response));

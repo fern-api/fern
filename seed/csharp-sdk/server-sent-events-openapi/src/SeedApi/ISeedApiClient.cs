@@ -64,4 +64,103 @@ public partial interface ISeedApiClient
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
+
+    /// <summary>
+    /// Uses x-fern-streaming extension with stream-condition to split into streaming and non-streaming variants based on a request body field. The request body is a $ref to a named schema. The response and response-stream point to different schemas.
+    /// </summary>
+    IAsyncEnumerable<CompletionStreamChunk> StreamXFernStreamingConditionStreamAsync(
+        StreamXFernStreamingConditionStreamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Uses x-fern-streaming extension with stream-condition to split into streaming and non-streaming variants based on a request body field. The request body is a $ref to a named schema. The response and response-stream point to different schemas.
+    /// </summary>
+    WithRawResponseTask<CompletionFullResponse> StreamXFernStreamingConditionAsync(
+        StreamXFernStreamingConditionRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Uses x-fern-streaming with stream-condition. The request body $ref (SharedCompletionRequest) is also referenced by a separate non-streaming endpoint (/validate-completion). This tests that the shared request schema is not excluded from the context during streaming processing.
+    /// </summary>
+    IAsyncEnumerable<CompletionStreamChunk> StreamXFernStreamingSharedSchemaStreamAsync(
+        StreamXFernStreamingSharedSchemaStreamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Uses x-fern-streaming with stream-condition. The request body $ref (SharedCompletionRequest) is also referenced by a separate non-streaming endpoint (/validate-completion). This tests that the shared request schema is not excluded from the context during streaming processing.
+    /// </summary>
+    WithRawResponseTask<CompletionFullResponse> StreamXFernStreamingSharedSchemaAsync(
+        StreamXFernStreamingSharedSchemaRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// A non-streaming endpoint that references the same SharedCompletionRequest schema as endpoint 10. Ensures the shared $ref schema remains available and is not excluded during the streaming endpoint's processing.
+    /// </summary>
+    WithRawResponseTask<CompletionFullResponse> ValidateCompletionAsync(
+        SharedCompletionRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Uses x-fern-streaming with stream-condition where the request body is a discriminated union (oneOf) whose variants inherit the stream condition field (stream_response) from a shared base schema via allOf. Tests that the stream condition property is not duplicated in the generated output when the base schema is expanded into each variant.
+    /// </summary>
+    IAsyncEnumerable<CompletionStreamChunk> StreamXFernStreamingUnionStreamAsync(
+        StreamXFernStreamingUnionStreamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Uses x-fern-streaming with stream-condition where the request body is a discriminated union (oneOf) whose variants inherit the stream condition field (stream_response) from a shared base schema via allOf. Tests that the stream condition property is not duplicated in the generated output when the base schema is expanded into each variant.
+    /// </summary>
+    WithRawResponseTask<CompletionFullResponse> StreamXFernStreamingUnionAsync(
+        StreamXFernStreamingUnionRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// References UnionStreamRequestBase directly, ensuring the base schema cannot be excluded from the context. This endpoint exists to verify that shared base schemas used in discriminated union variants with stream-condition remain available.
+    /// </summary>
+    WithRawResponseTask<ValidateUnionRequestResponse> ValidateUnionRequestAsync(
+        UnionStreamRequestBase request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Uses x-fern-streaming with stream-condition where the stream field is nullable (type: ["boolean", "null"] in OAS 3.1). Previously, the spread order in the importer caused the nullable type array to overwrite the const literal, producing stream?: true | null instead of stream: true. The const/type override must be spread after the original property.
+    /// </summary>
+    IAsyncEnumerable<CompletionStreamChunk> StreamXFernStreamingNullableConditionStreamAsync(
+        StreamXFernStreamingNullableConditionStreamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Uses x-fern-streaming with stream-condition where the stream field is nullable (type: ["boolean", "null"] in OAS 3.1). Previously, the spread order in the importer caused the nullable type array to overwrite the const literal, producing stream?: true | null instead of stream: true. The const/type override must be spread after the original property.
+    /// </summary>
+    WithRawResponseTask<CompletionFullResponse> StreamXFernStreamingNullableConditionAsync(
+        StreamXFernStreamingNullableConditionRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Uses x-fern-streaming with format: sse but no stream-condition. This represents a stream-only endpoint that always returns SSE. There is no non-streaming variant, and the response is always a stream of chunks.
+    /// </summary>
+    IAsyncEnumerable<string> StreamXFernStreamingSseOnlyAsync(
+        StreamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
 }

@@ -21,8 +21,8 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
-	if options.ApiKey == "" {
-		options.ApiKey = os.Getenv("COURIER_API_KEY")
+	if options.APIKey == "" {
+		options.APIKey = os.Getenv("COURIER_API_KEY")
 	}
 	return &Client{
 		Service: service.NewClient(options),

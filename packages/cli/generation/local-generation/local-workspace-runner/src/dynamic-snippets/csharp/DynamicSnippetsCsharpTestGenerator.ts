@@ -11,18 +11,16 @@ import { DynamicSnippetsTestRequest } from "../DynamicSnippetsTestSuite.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
 
-const PROJECT_FILE_CONTENT = `
-<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
-        <LangVersion>12</LangVersion>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\\..\\**\\*.csproj" Exclude="..\\..\\**\\*.DynamicSnippets.csproj;..\\..\\**\\*.Test.csproj" />
-    </ItemGroup>
+const PROJECT_FILE_CONTENT = `<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Snippets</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\\**\\*.csproj" Exclude="..\\**\\*.Test.csproj;..\\Snippets\\*.csproj" />
+  </ItemGroup>
 </Project>`;
 
 export class DynamicSnippetsCsharpTestGenerator {
@@ -72,7 +70,7 @@ export class DynamicSnippetsCsharpTestGenerator {
                 }
                 const response = await this.dynamicSnippetsGenerator.generate(convertedRequest, {
                     config: {
-                        fullStyleClassName: `Example${idx}`
+                        fullStyleMethodName: `Example${idx}`
                     } as Config,
                     style: Style.Full,
                     endpointId
@@ -91,12 +89,9 @@ export class DynamicSnippetsCsharpTestGenerator {
     }
 
     private async initializeProject(outputDir: AbsoluteFilePath): Promise<AbsoluteFilePath> {
-        const absolutePathToOutputDir = join(outputDir, RelativeFilePath.of("src/SeedApi.DynamicSnippets"));
+        const absolutePathToOutputDir = join(outputDir, RelativeFilePath.of("Snippets"));
         await mkdir(absolutePathToOutputDir, { recursive: true });
-        await writeFile(
-            join(absolutePathToOutputDir, RelativeFilePath.of("SeedApi.DynamicSnippets.csproj")),
-            PROJECT_FILE_CONTENT
-        );
+        await writeFile(join(absolutePathToOutputDir, RelativeFilePath.of("Snippets.csproj")), PROJECT_FILE_CONTENT);
 
         return absolutePathToOutputDir;
     }

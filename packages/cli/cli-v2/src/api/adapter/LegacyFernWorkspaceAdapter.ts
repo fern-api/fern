@@ -3,6 +3,7 @@ import type { generatorsYml } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, relativize } from "@fern-api/fs-utils";
 import { ConjureWorkspace, LazyFernWorkspace } from "@fern-api/lazy-fern-workspace";
+import { CliError } from "@fern-api/task-context";
 import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter.js";
 import type { Context } from "../../context/Context.js";
 import type { Task } from "../../ui/Task.js";
@@ -103,7 +104,10 @@ export class LegacyFernWorkspaceAdapter {
         });
 
         if (ossWorkspace == null) {
-            throw new Error("Internal error; failed to build API definitions");
+            throw new CliError({
+                message: "Internal error; failed to build API definitions",
+                code: CliError.Code.InternalError
+            });
         }
 
         return ossWorkspace.toFernWorkspace({ context: this.taskContext });

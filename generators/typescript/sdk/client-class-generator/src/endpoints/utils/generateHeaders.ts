@@ -1,11 +1,12 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 import { GeneratedHeader } from "../../GeneratedHeader.js";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
 import { RequestParameter } from "../../request-parameter/RequestParameter.js";
-import { getLiteralValueForHeader } from "./isLiteralHeader.js";
+import { getClientDefaultValue, getLiteralValueForHeader } from "./isLiteralHeader.js";
 import { REQUEST_OPTIONS_PARAMETER_NAME } from "./requestOptionsParameter.js";
 
 export const HEADERS_VAR_NAME = "_headers";
@@ -21,7 +22,7 @@ export function generateHeaders({
     additionalSpreadHeaders = [],
     headersToMergeAfterClientOptionsHeaders = []
 }: {
-    context: SdkContext;
+    context: FileContext;
     intermediateRepresentation: FernIr.IntermediateRepresentation;
     generatedSdkClientClass: GeneratedSdkClientClassImpl;
     requestParameter: RequestParameter | undefined;
@@ -37,7 +38,7 @@ export function generateHeaders({
     let authProviderHeaders: ts.Expression | undefined;
     if (
         generatedSdkClientClass.hasAuthProvider() &&
-        endpoint.auth &&
+        (endpoint.auth || generatedSdkClientClass.getAlwaysSendAuth()) &&
         context.authProvider.isAuthEndpoint(endpoint) === false
     ) {
         const metadataArg = generatedSdkClientClass.getGenerateEndpointMetadata()
@@ -75,7 +76,7 @@ export function generateHeaders({
 
     for (const header of [...service.headers, ...endpoint.headers]) {
         elements.push({
-            header: header.name.wireValue,
+            header: getWireValue(header.name),
             value: getValueExpressionForHeader({ header, context, requestParameter })
         });
     }
@@ -83,7 +84,7 @@ export function generateHeaders({
     if (endpoint.idempotent) {
         for (const header of idempotencyHeaders) {
             elements.push({
-                header: header.name.wireValue,
+                header: getWireValue(header.name),
                 value: getValueExpressionForIdempotencyHeader({ header, context })
             });
         }
@@ -181,14 +182,16 @@ function getValueExpressionForHeader({
     requestParameter
 }: {
     header: FernIr.HttpHeader;
-    context: SdkContext;
+    context: FileContext;
     requestParameter: RequestParameter | undefined;
 }): ts.Expression {
     const literalValue = getLiteralValueForHeader(header, context);
     if (literalValue != null) {
         return ts.factory.createStringLiteral(literalValue.toString());
     } else if (requestParameter == null) {
-        throw new Error(`Cannot reference header ${header.name.wireValue} because request parameter is not defined.`);
+        throw new Error(
+            `Cannot reference header ${getWireValue(header.name)} because request parameter is not defined.`
+        );
     } else {
         const needsStringify = typeNeedsStringify(header.valueType, context);
         let valueExpression: ts.Expression;
@@ -199,6 +202,26 @@ function getValueExpressionForHeader({
                 requestParameter.getReferenceToNonLiteralHeader(header, context),
                 header.valueType,
                 { includeNullCheckIfOptional: true }
+            );
+        }
+        // If clientDefault is set, add a fallback: value ?? "clientDefault"
+        // Skip when the type is nullable — explicit null means "don't send the header",
+        // and ?? would replace null with the clientDefault, preventing intentional omission.
+        const clientDefaultVal = getClientDefaultValue(header.clientDefault);
+        if (clientDefaultVal != null && !typeContainsNullable(header.valueType, context)) {
+            valueExpression = ts.factory.createBinaryExpression(
+                valueExpression,
+                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                typeof clientDefaultVal === "boolean"
+                    ? ts.factory.createCallExpression(
+                          ts.factory.createPropertyAccessExpression(
+                              clientDefaultVal ? ts.factory.createTrue() : ts.factory.createFalse(),
+                              ts.factory.createIdentifier("toString")
+                          ),
+                          undefined,
+                          []
+                      )
+                    : ts.factory.createStringLiteral(clientDefaultVal.toString())
             );
         }
         // If the header type is nullable, convert null to undefined using ?? undefined.
@@ -220,7 +243,7 @@ function getValueExpressionForIdempotencyHeader({
     context
 }: {
     header: FernIr.HttpHeader;
-    context: SdkContext;
+    context: FileContext;
 }): ts.Expression {
     const literalValue = getLiteralValueForHeader(header, context);
     if (literalValue != null) {
@@ -230,7 +253,7 @@ function getValueExpressionForIdempotencyHeader({
         const reference = ts.factory.createPropertyAccessChain(
             ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-            ts.factory.createIdentifier(header.name.name.camelCase.unsafeName)
+            ts.factory.createIdentifier(context.case.camelUnsafe(header.name))
         );
         let valueExpression: ts.Expression;
         if (!needsStringify) {
@@ -262,7 +285,7 @@ function getOverridableRootHeaders({
     context,
     intermediateRepresentation
 }: {
-    context: SdkContext;
+    context: FileContext;
     intermediateRepresentation: FernIr.IntermediateRepresentation;
 }): GeneratedHeader[] {
     const headers: GeneratedHeader[] = [
@@ -270,7 +293,7 @@ function getOverridableRootHeaders({
             // auth headers are handled separately
             .filter((header) => !isAuthorizationHeader(header))
             .map((header) => {
-                const headerName = getOptionKeyForHeader(header);
+                const headerName = getOptionKeyForHeader(header, context);
                 const literalValue = getLiteralValueForHeader(header, context);
 
                 let value: ts.Expression;
@@ -310,27 +333,61 @@ function getOverridableRootHeaders({
                     const originalExpr = ts.factory.createPropertyAccessChain(
                         ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
                         ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                        getOptionKeyForHeader(header)
+                        getOptionKeyForHeader(header, context)
                     );
 
                     // Add nullish coalescing with this._options.{header}
+                    let fallbackExpr: ts.Expression = ts.factory.createPropertyAccessChain(
+                        ts.factory.createPropertyAccessChain(
+                            ts.factory.createThis(),
+                            undefined,
+                            GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
+                        ),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                        ts.factory.createIdentifier(getOptionKeyForHeader(header, context))
+                    );
+
+                    // If clientDefault is set, chain it as final fallback:
+                    // requestOptions?.header ?? this._options?.header ?? "clientDefault"
+                    // Skip when the type is nullable — explicit null means "don't send the header".
+                    const clientDefaultVal = getClientDefaultValue(header.clientDefault);
+                    if (clientDefaultVal != null && !typeContainsNullable(header.valueType, context)) {
+                        if (typeof clientDefaultVal === "boolean") {
+                            const booleanLiteral = clientDefaultVal
+                                ? ts.factory.createTrue()
+                                : ts.factory.createFalse();
+                            fallbackExpr = ts.factory.createCallExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createParenthesizedExpression(
+                                        ts.factory.createBinaryExpression(
+                                            fallbackExpr,
+                                            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                            booleanLiteral
+                                        )
+                                    ),
+                                    ts.factory.createIdentifier("toString")
+                                ),
+                                undefined,
+                                []
+                            );
+                        } else {
+                            fallbackExpr = ts.factory.createBinaryExpression(
+                                fallbackExpr,
+                                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                ts.factory.createStringLiteral(clientDefaultVal.toString())
+                            );
+                        }
+                    }
+
                     value = ts.factory.createBinaryExpression(
                         originalExpr,
                         ts.SyntaxKind.QuestionQuestionToken,
-                        ts.factory.createPropertyAccessChain(
-                            ts.factory.createPropertyAccessChain(
-                                ts.factory.createThis(),
-                                undefined,
-                                GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
-                            ),
-                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                            ts.factory.createIdentifier(getOptionKeyForHeader(header))
-                        )
+                        fallbackExpr
                     );
                 }
 
                 return {
-                    header: header.name.wireValue,
+                    header: getWireValue(header.name),
                     value
                 };
             })
@@ -339,10 +396,10 @@ function getOverridableRootHeaders({
     const generatedVersion = context.versionContext.getGeneratedVersion();
     if (generatedVersion != null) {
         const header = generatedVersion.getHeader();
-        const headerName = getOptionKeyForHeader(header);
+        const headerName = getOptionKeyForHeader(header, context);
 
         headers.push({
-            header: header.name.wireValue,
+            header: getWireValue(header.name),
             value: ts.factory.createPropertyAccessChain(
                 ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
                 ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
@@ -355,14 +412,15 @@ function getOverridableRootHeaders({
 }
 
 function isAuthorizationHeader(header: FernIr.HttpHeader | FernIr.HeaderAuthScheme): boolean {
-    return header.name.wireValue.toLowerCase() === "authorization";
+    const wireValue = getWireValue(header.name);
+    return wireValue.toLowerCase() === "authorization";
 }
 
-function getOptionKeyForHeader(header: FernIr.HttpHeader): string {
-    return header.name.name.camelCase.unsafeName;
+function getOptionKeyForHeader(header: FernIr.HttpHeader, context: FileContext): string {
+    return context.case.camelUnsafe(header.name);
 }
 
-function typeContainsNullable(type: FernIr.TypeReference, context: SdkContext): boolean {
+export function typeContainsNullable(type: FernIr.TypeReference, context: FileContext): boolean {
     switch (type.type) {
         case "container":
             switch (type.container.type) {
@@ -385,7 +443,7 @@ function typeContainsNullable(type: FernIr.TypeReference, context: SdkContext): 
     }
 }
 
-function typeNeedsStringify(type: FernIr.TypeReference, context: SdkContext): boolean {
+function typeNeedsStringify(type: FernIr.TypeReference, context: FileContext): boolean {
     return type._visit({
         container: (containerType) => {
             return containerType._visit({
@@ -425,7 +483,10 @@ function typeNeedsStringify(type: FernIr.TypeReference, context: SdkContext): bo
                     return false;
                 case "DATE":
                 case "DATE_TIME":
+                case "DATE_TIME_RFC_2822":
                     return true;
+                default:
+                    return false;
             }
         },
         unknown: () => true,

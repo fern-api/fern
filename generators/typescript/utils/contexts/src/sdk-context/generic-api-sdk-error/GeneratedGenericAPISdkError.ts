@@ -1,16 +1,17 @@
 import { ts } from "ts-morph";
 
 import { GeneratedFile } from "../../commons/GeneratedFile.js";
-import { SdkContext } from "../SdkContext.js";
+import { FileContext } from "../file-context/FileContext.js";
 
-export interface GeneratedGenericAPISdkError extends GeneratedFile<SdkContext> {
+export interface GeneratedGenericAPISdkError extends GeneratedFile<FileContext> {
     build: (
-        context: SdkContext,
+        context: FileContext,
         args: {
             message: ts.Expression | undefined;
             statusCode: ts.Expression | undefined;
             responseBody: ts.Expression | undefined;
             rawResponse: ts.Expression | undefined;
+            cause?: ts.Expression | undefined;
         }
     ) => ts.NewExpression;
     buildConstructorArguments: (args: {
@@ -18,5 +19,6 @@ export interface GeneratedGenericAPISdkError extends GeneratedFile<SdkContext> {
         statusCode: ts.Expression | undefined;
         responseBody: ts.Expression | undefined;
         rawResponse: ts.Expression | undefined;
+        cause?: ts.Expression | undefined;
     }) => ts.Expression[];
 }

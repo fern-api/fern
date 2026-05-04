@@ -8,7 +8,7 @@ pub struct PropertyBasedErrorTestBody {
 
 impl PropertyBasedErrorTestBody {
     pub fn builder() -> PropertyBasedErrorTestBodyBuilder {
-        PropertyBasedErrorTestBodyBuilder::default()
+        <PropertyBasedErrorTestBodyBuilder as Default>::default()
     }
 }
 

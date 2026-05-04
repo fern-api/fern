@@ -2,30 +2,10 @@
 
 import type * as GeneratorsYml from "../../../index.js";
 
-export interface GeneratorInvocationSchema {
-    name: string;
-    version: string;
-    output?: GeneratorsYml.GeneratorOutputSchema;
-    github?: GeneratorsYml.GithubConfigurationSchema;
-    config?: unknown;
-    metadata?: GeneratorsYml.GeneratorPublishMetadataSchema;
-    /** Overrides the keywords that require safe name variants. */
-    keywords?: string[];
-    /** Configures snippets for a particular generator. */
-    snippets?: GeneratorsYml.GeneratorSnippetsSchema;
-    /** Overrides the version of the IR used by the generator. */
-    "ir-version"?: string;
-    /** Feature flag used to enable better IR naming. */
-    "smart-casing"?: boolean;
-    /** Override API import settings (this is applied across all specs) */
-    api?: GeneratorsYml.GeneratorApiSettingsSchema;
-    /** Temporary way to unblock example serialization. */
-    "disable-examples"?: boolean;
-    /** Deprecated, use `metadata` on the output block instead. */
-    "publish-metadata"?: GeneratorsYml.GeneratorPublishMetadataSchema;
-    /**
-     * If true, automatically release this SDK when changes are detected.
-     * Overrides the top-level autorelease setting if specified.
-     */
-    autorelease?: boolean;
-}
+/**
+ * A generator invocation. Either uses a well-known generator `name` (default)
+ * or specifies a custom `image` with an optional container registry.
+ */
+export type GeneratorInvocationSchema =
+    | GeneratorsYml.DefaultGeneratorInvocationSchema
+    | GeneratorsYml.CustomGeneratorInvocationSchema;

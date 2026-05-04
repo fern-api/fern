@@ -6,9 +6,9 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .username_cursor import UsernameCursor
-    from .username_page import UsernamePage
-_dynamic_imports: typing.Dict[str, str] = {"UsernameCursor": ".username_cursor", "UsernamePage": ".username_page"}
+    from .link import Link
+    from .users_list_response import UsersListResponse
+_dynamic_imports: typing.Dict[str, str] = {"Link": ".link", "UsersListResponse": ".users_list_response"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -32,4 +32,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["UsernameCursor", "UsernamePage"]
+__all__ = ["Link", "UsersListResponse"]

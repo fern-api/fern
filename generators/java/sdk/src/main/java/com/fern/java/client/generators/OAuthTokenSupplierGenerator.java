@@ -22,6 +22,7 @@ import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.generators.visitors.RequestPropertyToNameVisitor;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -88,18 +89,18 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 clientGeneratorContext.getPoetClassNameFactory().getClientClassName(subpackage);
         OAuthAccessTokenRequestProperties requestProperties =
                 clientCredentials.getTokenEndpoint().getRequestProperties();
-        String clientIdPropertyName = requestProperties
-                .getClientId()
-                .getProperty()
-                .visit(new RequestPropertyToNameVisitor())
-                .getName()
+        String clientIdPropertyName = NameUtils.toName(requestProperties
+                        .getClientId()
+                        .getProperty()
+                        .visit(new RequestPropertyToNameVisitor())
+                        .getName())
                 .getCamelCase()
                 .getUnsafeName();
-        String clientSecretPropertyName = requestProperties
-                .getClientSecret()
-                .getProperty()
-                .visit(new RequestPropertyToNameVisitor())
-                .getName()
+        String clientSecretPropertyName = NameUtils.toName(requestProperties
+                        .getClientSecret()
+                        .getProperty()
+                        .visit(new RequestPropertyToNameVisitor())
+                        .getName())
                 .getCamelCase()
                 .getUnsafeName();
 
@@ -111,10 +112,10 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 if (isLiteralProperty(customProp)) {
                     continue;
                 }
-                String propName = customProp
-                        .getProperty()
-                        .visit(new RequestPropertyToNameVisitor())
-                        .getName()
+                String propName = NameUtils.toName(customProp
+                                .getProperty()
+                                .visit(new RequestPropertyToNameVisitor())
+                                .getName())
                         .getCamelCase()
                         .getUnsafeName();
                 customPropertiesWithNames.add(new AbstractMap.SimpleEntry<>(propName, propName));
@@ -122,7 +123,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         }
 
         for (var header : httpEndpoint.getHeaders()) {
-            String headerName = header.getName().getName().getCamelCase().getUnsafeName();
+            String headerName =
+                    NameUtils.getName(header.getName()).getCamelCase().getUnsafeName();
             customPropertiesWithNames.add(new AbstractMap.SimpleEntry<>(headerName, headerName));
         }
 
@@ -140,10 +142,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .convertToTypeName(true, jsonResponseBody.getResponseBodyType());
         ResponseProperty accessTokenResponseProperty =
                 clientCredentials.getTokenEndpoint().getResponseProperties().getAccessToken();
-        String accessTokenResponsePropertyName = accessTokenResponseProperty
-                .getProperty()
-                .getName()
-                .getName()
+        String accessTokenResponsePropertyName = NameUtils.getName(
+                        accessTokenResponseProperty.getProperty().getName())
                 .getPascalCase()
                 .getUnsafeName();
         boolean isAccessTokenOptional =
@@ -184,10 +184,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         }
         if (refreshRequired) {
             ResponseProperty expiresInProperty = expiryResponseProperty.get();
-            String tokenPropertyName = expiresInProperty
-                    .getProperty()
-                    .getName()
-                    .getName()
+            String tokenPropertyName = NameUtils.getName(
+                            expiresInProperty.getProperty().getName())
                     .getPascalCase()
                     .getUnsafeName();
             TypeReference expiresInType = expiresInProperty.getProperty().getValueType();
@@ -336,7 +334,9 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .addStatement(
                         "return $L.$L($L)",
                         AUTH_CLIENT_NAME,
-                        httpEndpoint.getName().get().getCamelCase().getUnsafeName(),
+                        NameUtils.toName(httpEndpoint.getName().get())
+                                .getCamelCase()
+                                .getUnsafeName(),
                         GET_TOKEN_REQUEST_NAME)
                 .build();
     }

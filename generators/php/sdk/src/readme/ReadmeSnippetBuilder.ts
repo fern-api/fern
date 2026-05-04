@@ -1,10 +1,21 @@
-import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder, CaseConverter, GeneratorError } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+// Auth placeholder fields (e.g. tokenPlaceholder, headerPlaceholder) are available
+// in IR v66.2.0+ at runtime but not in our pinned TypeScript types.
+function hasStringField<K extends string>(obj: object, key: K): obj is Record<K, string> {
+    if (key in obj) {
+        const record = obj as Record<string, unknown>;
+        return typeof record[key] === "string";
+    }
+    return false;
+}
 
 interface EndpointWithFilepath {
     endpoint: FernIr.HttpEndpoint;
@@ -17,6 +28,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
 
     private readonly context: SdkGeneratorContext;
+    private readonly case: CaseConverter;
     private readonly endpoints: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
     private readonly snippets: Record<FernIr.EndpointId, string> = {};
     private readonly defaultEndpointId: FernIr.EndpointId;
@@ -31,9 +43,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }) {
         super({ endpointSnippets });
         this.context = context;
-        this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
+        this.case = context.case;
         this.endpoints = this.buildEndpoints();
         this.snippets = this.buildSnippets(endpointSnippets);
+        this.isPaginationEnabled =
+            (context.config.generatePaginatedClients ?? false) && this.getEndpointWithPagination() != null;
         this.defaultEndpointId =
             this.context.ir.readmeConfig?.defaultEndpoint != null
                 ? this.context.ir.readmeConfig.defaultEndpoint
@@ -178,9 +192,10 @@ ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassN
                 namespace: this.context.getRootNamespace()
             });
 
+            const tokenPlaceholder = this.escapePhpSingleQuote(this.getAuthTokenPlaceholder());
             const clientInstantiation = php.instantiateClass({
                 classReference: clientClassReference,
-                arguments_: [php.codeblock((w) => w.write("'<token>'")), optionsArray],
+                arguments_: [php.codeblock((w) => w.write(`'${tokenPlaceholder}'`)), optionsArray],
                 multiline: true
             });
 
@@ -266,7 +281,8 @@ foreach ($items->getPages() as $page) {
 
     private getEndpointWithPagination(): EndpointWithFilepath | undefined {
         return this.filterEndpoint((endpointWithFilepath) => {
-            if (endpointWithFilepath.endpoint.pagination != null) {
+            const pagination = endpointWithFilepath.endpoint.pagination;
+            if (pagination != null && pagination.type !== "uri" && pagination.type !== "path") {
                 return endpointWithFilepath;
             }
             return undefined;
@@ -308,7 +324,9 @@ foreach ($items->getPages() as $page) {
         const snippets: Record<FernIr.EndpointId, string> = {};
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
-                throw new Error("Internal error; snippets must define the endpoint id to generate README.md");
+                throw GeneratorError.internalError(
+                    "Internal error; snippets must define the endpoint id to generate README.md"
+                );
             }
             if (snippets[endpointSnippet.id.identifierOverride] != null) {
                 continue;
@@ -321,7 +339,7 @@ foreach ($items->getPages() as $page) {
     private getSnippetForEndpointId(endpointId: FernIr.EndpointId): string {
         const snippet = this.snippets[endpointId];
         if (snippet == null) {
-            throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
+            throw GeneratorError.internalError(`Internal error; missing snippet for endpoint ${endpointId}`);
         }
         return snippet;
     }
@@ -339,7 +357,7 @@ foreach ($items->getPages() as $page) {
         return endpointIds.map((endpointId) => {
             const endpoint = this.endpoints[endpointId];
             if (endpoint == null) {
-                throw new Error(`Internal error; missing endpoint ${endpointId}`);
+                throw GeneratorError.internalError(`Internal error; missing endpoint ${endpointId}`);
             }
             return endpoint;
         });
@@ -348,7 +366,9 @@ foreach ($items->getPages() as $page) {
     private getEndpointSnippetString(endpoint: FernGeneratorExec.Endpoint): string {
         // Note: this is a shim since php snippets are not supported yet in FernGeneratorExec
         if (endpoint.snippet.type !== "java") {
-            throw new Error(`Internal error; expected csharp snippet but got: ${endpoint.snippet.type}`);
+            throw GeneratorError.internalError(
+                `Internal error; expected csharp snippet but got: ${endpoint.snippet.type}`
+            );
         }
         return endpoint.snippet.syncClient;
     }
@@ -399,7 +419,7 @@ use ${this.context.getRootNamespace()}\\${this.context.getRootClientClassName()}
 use ${this.context.getRootNamespace()}\\${this.context.getEnvironmentsClassReference().name};
 
 ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(
-    token: '<YOUR_TOKEN>',
+    token: '${this.escapePhpSingleQuote(this.getAuthTokenPlaceholder())}',
     options: [
         'baseUrl' => ${this.context.getEnvironmentsClassReference().name}::Staging->value
     ]
@@ -442,14 +462,14 @@ ${environmentsList}
 
         const baseUrlsList = baseUrls
             .map((baseUrl) => {
-                const propertyName = baseUrl.name.camelCase.safeName;
+                const propertyName = this.case.camelSafe(baseUrl.name);
                 return `  - \`${propertyName}\`: The ${propertyName} base URL`;
             })
             .join("\n");
 
         const customEnvParams = baseUrls
             .map((baseUrl, index) => {
-                const propertyName = baseUrl.name.camelCase.safeName;
+                const propertyName = this.case.camelSafe(baseUrl.name);
                 const indent = index === 0 ? "" : "    ";
                 return `${indent}${propertyName}: 'https://your-${propertyName}-url.com'`;
             })
@@ -471,7 +491,7 @@ use ${this.context.getRootNamespace()}\\${this.context.getRootClientClassName()}
 use ${this.context.getRootNamespace()}\\${this.context.getEnvironmentsClassReference().name};
 
 ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(
-    token: '<YOUR_TOKEN>',
+    token: '${this.escapePhpSingleQuote(this.getAuthTokenPlaceholder())}',
     environment: ${this.context.getEnvironmentsClassReference().name}::Staging()
 );
 \`\`\`
@@ -480,13 +500,42 @@ You can also create a custom environment with your own URLs:
 
 \`\`\`php
 ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(
-    token: '<YOUR_TOKEN>',
+    token: '${this.escapePhpSingleQuote(this.getAuthTokenPlaceholder())}',
     environment: ${this.context.getEnvironmentsClassReference().name}::custom(
         ${customEnvParams}
     )
 );
 \`\`\`
 `);
+    }
+
+    private getAuthTokenPlaceholder(): string {
+        for (const scheme of this.context.ir.auth.schemes) {
+            switch (scheme.type) {
+                case "bearer":
+                    if (hasStringField(scheme, "tokenPlaceholder")) {
+                        return scheme.tokenPlaceholder;
+                    }
+                    break;
+                case "basic":
+                    break;
+                case "header":
+                    if (hasStringField(scheme, "headerPlaceholder")) {
+                        return scheme.headerPlaceholder;
+                    }
+                    break;
+                case "oauth":
+                case "inferred":
+                    break;
+                default:
+                    assertNever(scheme);
+            }
+        }
+        return "<YOUR_TOKEN>";
+    }
+
+    private escapePhpSingleQuote(value: string): string {
+        return value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
     }
 
     private writeCode(s: string): string {

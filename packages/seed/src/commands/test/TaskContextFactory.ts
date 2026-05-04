@@ -50,8 +50,8 @@ export class TaskContextFactory {
                 return;
             },
             shouldBufferLogs: false,
-            instrumentPostHogEvent: async () => {
-                return;
+            instrumentPostHogEvent: () => {
+                // no-op in seed
             },
             logPrefix: prefixWithColor
         });

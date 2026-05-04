@@ -9,11 +9,11 @@ import (
 
 type MovieDoesNotExistError struct {
 	*core.APIError
-	Body MovieId
+	Body MovieID
 }
 
 func (m *MovieDoesNotExistError) UnmarshalJSON(data []byte) error {
-	var body MovieId
+	var body MovieID
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}

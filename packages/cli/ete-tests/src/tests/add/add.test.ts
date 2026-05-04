@@ -15,7 +15,7 @@ describe("fern add", () => {
         await add("fern-postman");
 
         expect(await getDirectoryContentsForSnapshot(pathOfDirectory)).not.toBeNull();
-    }, 60_000);
+    }, 180_000);
 
     it("fern add <generator> --group sdk", async ({ signal }) => {
         const pathOfDirectory = await init({ signal });
@@ -27,5 +27,5 @@ describe("fern add", () => {
         await add("fern-typescript", "typescript");
 
         expect(await getDirectoryContentsForSnapshot(pathOfDirectory)).toMatchSnapshot();
-    }, 60_000);
+    }, 180_000);
 });

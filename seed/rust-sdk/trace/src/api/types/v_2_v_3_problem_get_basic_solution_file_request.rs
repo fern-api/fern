@@ -10,7 +10,7 @@ pub struct GetBasicSolutionFileRequest2 {
 
 impl GetBasicSolutionFileRequest2 {
     pub fn builder() -> GetBasicSolutionFileRequest2Builder {
-        GetBasicSolutionFileRequest2Builder::default()
+        <GetBasicSolutionFileRequest2Builder as Default>::default()
     }
 }
 

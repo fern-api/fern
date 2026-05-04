@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 from ...context.sdk_generator_context import SdkGeneratorContext
 from ..constants import DEFAULT_BODY_PARAMETER_VALUE
@@ -11,6 +11,7 @@ from fern_python.codegen import AST
 from fern_python.codegen.ast.nodes.declarations.function.named_function_parameter import (
     NamedFunctionParameter,
 )
+from fern_python.utils.name_resolver import get_name_from_wire_value, get_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -39,6 +40,9 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                     property.value_type,
                     in_endpoint=True,
                 )
+                maybe_default = self._context.pydantic_generator_context.get_initializer_for_type_reference(
+                    property.value_type
+                )
                 parameters.append(
                     AST.NamedFunctionParameter(
                         name=self._get_property_name(property),
@@ -47,9 +51,13 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                             property.value_type,
                             in_endpoint=True,
                         ),
-                        initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE) if type_hint.is_optional else None,
+                        initializer=maybe_default
+                        if maybe_default is not None
+                        else AST.Expression(DEFAULT_BODY_PARAMETER_VALUE)
+                        if type_hint.is_optional
+                        else None,
                         raw_type=property.value_type,
-                        raw_name=property.name.wire_value,
+                        raw_name=get_wire_value(property.name),
                     ),
                 )
         return parameters
@@ -75,7 +83,7 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                         ),
                         initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE) if type_hint.is_optional else None,
                         raw_type=property.value_type,
-                        raw_name=property.name.wire_value,
+                        raw_name=get_wire_value(property.name),
                     ),
                 )
         return non_param_properties
@@ -106,7 +114,7 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
         return self.get_parameters() + self._get_non_parameter_properties()
 
     def _get_property_name(self, property: ir_types.InlinedRequestBodyProperty) -> str:
-        return property.name.name.snake_case.safe_name
+        return resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name
 
     def get_json_body(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.Expression]:
         return get_json_body_for_inlined_request(
@@ -123,5 +131,5 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
     def get_content(self) -> Optional[AST.Expression]:
         return None
 
-    def get_parameter_name_rewrites(self) -> Dict[ir_types.Name, str]:
+    def get_parameter_name_rewrites(self) -> Dict[Union[str, ir_types.Name], str]:
         return {}

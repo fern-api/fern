@@ -17,7 +17,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Types::Types::MovieId] :movie_id
+      # @option params [Seed::Types::Types::MovieID] :movie_id
       #
       # @return [Seed::Types::Types::Movie]
       def get_movie(request_options: {}, **params)
@@ -67,7 +67,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::MovieId.load(response.body)
+          Seed::Types::Types::MovieID.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -88,11 +88,9 @@ module Seed
       # @return [Seed::Types::Types::Metadata]
       def get_metadata(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[shallow tag]
         query_params = {}
         query_params["shallow"] = params[:shallow] if params.key?(:shallow)
         query_params["tag"] = params[:tag] if params.key?(:tag)
-        params = params.except(*query_param_names)
 
         headers = {}
         headers["X-API-Version"] = params[:x_api_version] if params[:x_api_version]

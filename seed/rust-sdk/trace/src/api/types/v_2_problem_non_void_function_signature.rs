@@ -10,7 +10,7 @@ pub struct NonVoidFunctionSignature {
 
 impl NonVoidFunctionSignature {
     pub fn builder() -> NonVoidFunctionSignatureBuilder {
-        NonVoidFunctionSignatureBuilder::default()
+        <NonVoidFunctionSignatureBuilder as Default>::default()
     }
 }
 

@@ -15,6 +15,7 @@ import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { extractErrorMessage, isNonNullish } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
@@ -26,9 +27,11 @@ import {
     resolveOAuthEndpointReferences
 } from "@fern-api/openapi-to-ir";
 import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import { ErrorCollector } from "@fern-api/v3-importer-commons";
 import { readFile } from "fs/promises";
+import yaml from "js-yaml";
 import { OpenAPIV3_1 } from "openapi-types";
 import { v4 as uuidv4 } from "uuid";
 import { loadOpenRpc } from "./loaders/index.js";
@@ -67,6 +70,17 @@ function collapseSpecBooleanSetting(
     // If at least one spec explicitly defines the setting, treat undefined as neutral.
     // Only return false if a spec explicitly sets it to false.
     return values.every((v) => v == null || v === true);
+}
+
+function toRelativePath(raw: string, field: string): RelativeFilePath {
+    try {
+        return RelativeFilePath.of(raw);
+    } catch {
+        throw new CliError({
+            message: `"${field}: ${raw}" must be a relative path, not an absolute one.`,
+            code: CliError.Code.ConfigError
+        });
+    }
 }
 
 function convertRemoveDiscriminantsFromSchemas(
@@ -148,6 +162,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             })(),
             exampleGeneration: specs[0]?.settings?.exampleGeneration,
             groupEnvironmentsByHost: specs.some((spec) => spec.settings?.groupEnvironmentsByHost),
+            multiServerStrategy: specs.find((spec) => spec.settings?.multiServerStrategy != null)?.settings
+                ?.multiServerStrategy,
             inferDefaultEnvironment: collapseSpecBooleanSetting(specs, (s) => s?.inferDefaultEnvironment),
             defaultIntegerFormat: specs[0]?.settings?.defaultIntegerFormat,
             pathParameterOrder: specs[0]?.settings?.pathParameterOrder,
@@ -295,8 +311,13 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         const specs = await this.getOpenAPISpecsCached({ context });
         const documents = await this.loader.loadDocuments({ context, specs });
 
-        const authOverrides =
+        let authOverrides: RawSchemas.WithAuthSchema | undefined =
             this.generatorsConfiguration?.api?.auth != null ? { ...this.generatorsConfiguration?.api } : undefined;
+
+        // Fallback: read auth/auth-schemes from the spec's overrides file if not in generators.yml
+        if (authOverrides == null) {
+            authOverrides = await getAuthFromOverrideFiles(specs);
+        }
         const environmentOverrides =
             this.generatorsConfiguration?.api?.environments != null
                 ? { ...this.generatorsConfiguration?.api }
@@ -477,7 +498,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         }
 
         if (mergedIr === undefined) {
-            throw new Error("Failed to generate intermediate representation");
+            throw new CliError({
+                message: "Failed to generate intermediate representation",
+                code: CliError.Code.IrConversionError
+            });
         }
 
         // Resolve OAuth endpoint references after all specs have been merged,
@@ -538,7 +562,24 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             return this.createWorkspaceWithSpecsOverride({ context }, specsOverride, settings);
         }
 
-        const definition = await this.getDefinition({ context }, settings);
+        // If auth is not in generators.yml and not in settings, try to read it from the spec's overrides files
+        let effectiveSettings = settings;
+        if (this.generatorsConfiguration?.api?.auth == null && settings?.auth == null) {
+            const specs = await this.getOpenAPISpecsCached({ context });
+            const authFromOverrides = await getAuthFromOverrideFiles(specs);
+            if (authFromOverrides != null) {
+                effectiveSettings = {
+                    ...settings,
+                    auth: authFromOverrides.auth as RawSchemas.ApiAuthSchema,
+                    authSchemes: authFromOverrides["auth-schemes"] as Record<
+                        string,
+                        RawSchemas.AuthSchemeDeclarationSchema
+                    >
+                };
+            }
+        }
+
+        const definition = await this.getDefinition({ context }, effectiveSettings);
         return new FernWorkspace({
             absoluteFilePath: this.absoluteFilePath,
             workspaceName: this.workspaceName,
@@ -596,14 +637,17 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     ): Promise<Spec[]> {
         // Handle conjure schema case
         if (!Array.isArray(specsOverride)) {
-            throw new Error("Conjure specs override is not yet supported");
+            throw new CliError({
+                message: "Conjure specs override is not yet supported",
+                code: CliError.Code.InternalError
+            });
         }
 
         const specs: Spec[] = [];
 
         for (const spec of specsOverride) {
             if (generatorsYml.isOpenApiSpecSchema(spec)) {
-                const absoluteFilepath = join(this.absoluteFilePath, RelativeFilePath.of(spec.openapi));
+                const absoluteFilepath = join(this.absoluteFilePath, toRelativePath(spec.openapi, "openapi"));
                 // Handle both single override path and array of override paths
                 let absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
                 const specOverridePaths: AbsoluteFilePath[] = [];
@@ -613,11 +657,13 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     if (Array.isArray(spec.overrides)) {
                         specOverridePaths.push(
                             ...spec.overrides.map((override) =>
-                                join(this.absoluteFilePath, RelativeFilePath.of(override))
+                                join(this.absoluteFilePath, toRelativePath(override, "overrides"))
                             )
                         );
                     } else {
-                        specOverridePaths.push(join(this.absoluteFilePath, RelativeFilePath.of(spec.overrides)));
+                        specOverridePaths.push(
+                            join(this.absoluteFilePath, toRelativePath(spec.overrides, "overrides"))
+                        );
                     }
                 }
 
@@ -627,7 +673,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         specOverridePaths.length === 1 ? specOverridePaths[0] : specOverridePaths;
                 }
                 const absoluteFilepathToOverlays = spec.overlays
-                    ? join(this.absoluteFilePath, RelativeFilePath.of(spec.overlays))
+                    ? join(this.absoluteFilePath, toRelativePath(spec.overlays, "overlays"))
                     : undefined;
 
                 // Create a minimal OpenAPI spec with default settings
@@ -648,9 +694,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 specs.push(openApiSpec);
             } else {
                 // For now, only support OpenAPI specs override to keep it simple
-                throw new Error(
-                    `Spec type override not yet supported. Only OpenAPI specs are currently supported in specs override.`
-                );
+                throw new CliError({
+                    message: `Spec type override not yet supported. Only OpenAPI specs are currently supported in specs override.`,
+                    code: CliError.Code.InternalError
+                });
             }
         }
 
@@ -700,4 +747,36 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             return acc;
         }, result);
     }
+}
+
+async function getAuthFromOverrideFiles(specs: Spec[]): Promise<RawSchemas.WithAuthSchema | undefined> {
+    for (const spec of specs) {
+        if (spec.type !== "openapi") {
+            continue;
+        }
+        const overridePaths =
+            spec.absoluteFilepathToOverrides == null
+                ? []
+                : Array.isArray(spec.absoluteFilepathToOverrides)
+                  ? spec.absoluteFilepathToOverrides
+                  : [spec.absoluteFilepathToOverrides];
+
+        for (const overridePath of overridePaths) {
+            try {
+                const contents = (await readFile(overridePath)).toString();
+                const parsed = yaml.load(contents) as Record<string, unknown> | null | undefined;
+                if (parsed != null && parsed["auth"] != null) {
+                    return {
+                        auth: parsed["auth"] as RawSchemas.WithAuthSchema["auth"],
+                        ...(parsed["auth-schemes"] != null
+                            ? { "auth-schemes": parsed["auth-schemes"] as RawSchemas.WithAuthSchema["auth-schemes"] }
+                            : {})
+                    };
+                }
+            } catch {
+                // ignore unreadable override files
+            }
+        }
+    }
+    return undefined;
 }

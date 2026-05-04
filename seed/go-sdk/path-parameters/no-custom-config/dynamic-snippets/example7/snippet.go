@@ -15,8 +15,8 @@ func do() {
         ),
     )
     request := &fern.GetUserMetadataRequest{
-        TenantId: "tenant_id",
-        UserId: "user_id",
+        TenantID: "tenant_id",
+        UserID: "user_id",
         Version: 1,
     }
     client.User.GetUserMetadata(

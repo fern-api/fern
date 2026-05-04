@@ -61,6 +61,7 @@
                 "type": "integer",
               },
             },
+            "default-variant": undefined,
             "discriminant": {
               "context": "data",
               "value": "type",

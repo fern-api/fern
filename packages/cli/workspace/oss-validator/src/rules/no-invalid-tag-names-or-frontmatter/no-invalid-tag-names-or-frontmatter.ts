@@ -1,7 +1,6 @@
 import { isOpenAPIV2 } from "@fern-api/api-workspace-commons";
 import { relative } from "@fern-api/fs-utils";
-import { convertOpenAPIV2ToV3, loadOpenAPI } from "@fern-api/lazy-fern-workspace";
-import { readFile } from "fs/promises";
+import { convertOpenAPIV2ToV3 } from "@fern-api/lazy-fern-workspace";
 
 import { Rule } from "../../Rule.js";
 import { ValidationViolation } from "../../ValidationViolation.js";
@@ -21,7 +20,7 @@ const HTTP_METHODS = ["get", "post", "put", "delete", "patch", "options", "head"
  */
 export const NoInvalidTagNamesOrFrontmatterRule: Rule = {
     name: "no-invalid-tag-names-or-frontmatter",
-    run: async ({ workspace, specs, context }) => {
+    run: async ({ workspace, specs, loadedDocuments }) => {
         const violations: ValidationViolation[] = [];
 
         for (const spec of specs) {
@@ -29,18 +28,10 @@ export const NoInvalidTagNamesOrFrontmatterRule: Rule = {
                 continue;
             }
 
-            const contents = (await readFile(spec.absoluteFilepath)).toString();
-
-            if (!contents.includes("openapi") && !contents.includes("swagger")) {
+            const openAPI = loadedDocuments.get(spec.absoluteFilepath);
+            if (openAPI == null) {
                 continue;
             }
-
-            const openAPI = await loadOpenAPI({
-                absolutePathToOpenAPI: spec.absoluteFilepath,
-                context,
-                absolutePathToOpenAPIOverrides: spec.absoluteFilepathToOverrides,
-                absolutePathToOpenAPIOverlays: spec.absoluteFilepathToOverlays
-            });
 
             const apiToValidate = isOpenAPIV2(openAPI) ? await convertOpenAPIV2ToV3(openAPI) : openAPI;
             const relativeFilepath = relative(workspace.absoluteFilePath, spec.source.file);

@@ -10,11 +10,11 @@ import (
 )
 
 func TestSettersTokenRequest(t *testing.T) {
-	t.Run("SetClientId", func(t *testing.T) {
+	t.Run("SetClientID", func(t *testing.T) {
 		obj := &TokenRequest{}
-		var fernTestValueClientId string
-		obj.SetClientId(fernTestValueClientId)
-		assert.Equal(t, fernTestValueClientId, obj.ClientId)
+		var fernTestValueClientID string
+		obj.SetClientID(fernTestValueClientID)
+		assert.Equal(t, fernTestValueClientID, obj.ClientID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -29,14 +29,14 @@ func TestSettersTokenRequest(t *testing.T) {
 }
 
 func TestSettersMarkExplicitTokenRequest(t *testing.T) {
-	t.Run("SetClientId_MarksExplicit", func(t *testing.T) {
+	t.Run("SetClientID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &TokenRequest{}
-		var fernTestValueClientId string
+		var fernTestValueClientID string
 
 		// Act
-		obj.SetClientId(fernTestValueClientId)
+		obj.SetClientID(fernTestValueClientID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -94,25 +94,25 @@ func TestSettersMarkExplicitTokenRequest(t *testing.T) {
 }
 
 func TestSettersGetUserRequest(t *testing.T) {
-	t.Run("SetUserId", func(t *testing.T) {
+	t.Run("SetUserID", func(t *testing.T) {
 		obj := &GetUserRequest{}
-		var fernTestValueUserId string
-		obj.SetUserId(fernTestValueUserId)
-		assert.Equal(t, fernTestValueUserId, obj.UserId)
+		var fernTestValueUserID string
+		obj.SetUserID(fernTestValueUserID)
+		assert.Equal(t, fernTestValueUserID, obj.UserID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 }
 
 func TestSettersMarkExplicitGetUserRequest(t *testing.T) {
-	t.Run("SetUserId_MarksExplicit", func(t *testing.T) {
+	t.Run("SetUserID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetUserRequest{}
-		var fernTestValueUserId string
+		var fernTestValueUserID string
 
 		// Act
-		obj.SetUserId(fernTestValueUserId)
+		obj.SetUserID(fernTestValueUserID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -272,11 +272,11 @@ func TestSettersMarkExplicitTokenResponse(t *testing.T) {
 }
 
 func TestSettersUser(t *testing.T) {
-	t.Run("SetId", func(t *testing.T) {
+	t.Run("SetID", func(t *testing.T) {
 		obj := &User{}
-		var fernTestValueId string
-		obj.SetId(fernTestValueId)
-		assert.Equal(t, fernTestValueId, obj.Id)
+		var fernTestValueID string
+		obj.SetID(fernTestValueID)
+		assert.Equal(t, fernTestValueID, obj.ID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -299,18 +299,18 @@ func TestSettersUser(t *testing.T) {
 }
 
 func TestGettersUser(t *testing.T) {
-	t.Run("GetId", func(t *testing.T) {
+	t.Run("GetID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &User{}
 		var expected string
-		obj.Id = expected
+		obj.ID = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetId(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetID(), "getter should return the property value")
 	})
 
-	t.Run("GetId_NilReceiver", func(t *testing.T) {
+	t.Run("GetID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *User
 		// Should not panic - getters should handle nil receiver gracefully
@@ -319,7 +319,7 @@ func TestGettersUser(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetId() // Should return zero value
+		_ = obj.GetID() // Should return zero value
 	})
 
 	t.Run("GetName", func(t *testing.T) {
@@ -381,14 +381,14 @@ func TestGettersUser(t *testing.T) {
 }
 
 func TestSettersMarkExplicitUser(t *testing.T) {
-	t.Run("SetId_MarksExplicit", func(t *testing.T) {
+	t.Run("SetID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &User{}
-		var fernTestValueId string
+		var fernTestValueID string
 
 		// Act
-		obj.SetId(fernTestValueId)
+		obj.SetID(fernTestValueID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

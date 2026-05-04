@@ -19,6 +19,7 @@ pub enum Vehicle {
         #[non_exhaustive]
         Motorcycle {
             #[serde(default)]
+            #[serde(with = "crate::core::number_serializers")]
             engine_size: f64,
             #[serde(default)]
             has_sidecar: bool,
@@ -31,6 +32,7 @@ pub enum Vehicle {
         #[non_exhaustive]
         Truck {
             #[serde(default)]
+            #[serde(with = "crate::core::number_serializers")]
             payload_capacity: f64,
             #[serde(default)]
             axles: i64,

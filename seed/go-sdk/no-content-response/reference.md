@@ -69,7 +69,7 @@ client.Contacts.Create(
 </dl>
 </details>
 
-<details><summary><code>client.Contacts.Get(Id) -> *fern.Contact</code></summary>
+<details><summary><code>client.Contacts.Get(ID) -> *fern.Contact</code></summary>
 <dl>
 <dd>
 
@@ -97,7 +97,7 @@ Gets a contact by ID. Returns 200 with the contact.
 
 ```go
 request := &fern.GetContactsRequest{
-        Id: "id",
+        ID: "id",
     }
 client.Contacts.Get(
         context.TODO(),

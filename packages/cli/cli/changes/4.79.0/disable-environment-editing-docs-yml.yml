@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a docs.yml setting to disable editing the API reference environment URL.
+    This preserves the default editable behavior while allowing docs sites to lock the
+    displayed base URL when desired.
+  type: feat

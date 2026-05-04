@@ -17,7 +17,7 @@ func do() {
             "<clientSecret>",
         ),
     )
-    client.NestedNoAuth.Api.GetSomething(
+    client.NestedNoAuth.API.GetSomething(
         context.TODO(),
     )
 }

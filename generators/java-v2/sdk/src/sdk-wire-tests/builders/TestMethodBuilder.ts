@@ -1,3 +1,4 @@
+import { GeneratorError } from "@fern-api/base-generator";
 import { java, Writer } from "@fern-api/java-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
@@ -52,12 +53,12 @@ export class TestMethodBuilder {
         testExample: WireTestExample
     ): (writer: Writer) => void {
         return (writer) => {
-            const testMethodName = `test${this.toJavaMethodName(endpoint.name.pascalCase.safeName)}`;
+            const testMethodName = `test${this.toJavaMethodName(this.context.caseConverter.pascalSafe(endpoint.name))}`;
             const methodCall = this.snippetExtractor.extractMethodCall(snippet);
 
             // If we can't extract a method call, this endpoint should have been filtered out upstream
             if (methodCall === null) {
-                throw new Error(
+                throw GeneratorError.internalError(
                     `INTERNAL ERROR: Null method call reached TestMethodBuilder for endpoint ${endpoint.id}. ` +
                         `This should have been caught upstream in SdkWireTestGenerator.`
                 );
@@ -83,12 +84,15 @@ export class TestMethodBuilder {
             const rawResponseJson = testExample.response.body;
             const responseStatusCode = testExample.response.statusCode;
 
-            // Convert RFC 2822 dates to ISO 8601 in the response JSON BEFORE using it for both
-            // the mock response body (served by MockWebServer) and the expected response assertion.
-            // Jackson's JavaTimeModule expects ISO 8601 for OffsetDateTime fields typed as "dateTime";
-            // RFC 2822 dates would cause DateTimeParseException during deserialization.
+            // Normalize dates in the response JSON to match Jackson's round-trip output:
+            // - Convert RFC 2822 dates to ISO 8601 (Jackson expects ISO for OffsetDateTime)
+            // - Append "Z" to timezone-less datetimes (DateTimeDeserializer defaults to UTC)
             const expectedResponseJson = rawResponseJson
-                ? (this.convertRfc2822DatesToIso8601(rawResponseJson) as typeof rawResponseJson)
+                ? (this.transformJsonStrings(rawResponseJson, (s) => {
+                      const converted = this.tryConvertRfc2822Date(s);
+                      // Append Z to timezone-less ISO 8601 datetimes
+                      return converted.replace(/^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?)$/, "$1Z");
+                  }) as typeof rawResponseJson)
                 : rawResponseJson;
 
             const mockResponseBody = expectedResponseJson
@@ -150,6 +154,17 @@ export class TestMethodBuilder {
                 writer.writeLine(
                     'Assertions.assertEquals("Bearer test-token", request.getHeader("Authorization"), ' +
                         '"OAuth Authorization header should contain Bearer token from OAuth flow");'
+                );
+            }
+
+            // For Basic Auth APIs, validate the Authorization header contains the correct encoded credentials
+            const basicAuthHeader = this.getExpectedBasicAuthHeader();
+            if (basicAuthHeader) {
+                writer.writeLine("");
+                writer.writeLine("// Validate Basic Auth Authorization header");
+                writer.writeLine(
+                    `Assertions.assertEquals("Basic ${basicAuthHeader}", request.getHeader("Authorization"), ` +
+                        `"Basic Auth Authorization header should contain correct encoded credentials");`
                 );
             }
 
@@ -309,22 +324,19 @@ export class TestMethodBuilder {
     }
 
     /**
-     * Recursively converts RFC 2822 date strings to ISO 8601 format with Z suffix
-     * in JSON data. This is needed because Jackson's JavaTimeModule serializes
-     * OffsetDateTime as ISO 8601 (e.g. "2015-07-30T20:00:00Z"), but the IR example
-     * data may contain RFC 2822 dates (e.g. "Thu, 30 Jul 2015 20:00:00 +0000").
+     * Recursively applies a string transform to all string values in a JSON structure.
      */
-    private convertRfc2822DatesToIso8601(data: unknown): unknown {
+    private transformJsonStrings(data: unknown, transform: (s: string) => string): unknown {
         if (typeof data === "string") {
-            return this.tryConvertRfc2822Date(data);
+            return transform(data);
         }
         if (Array.isArray(data)) {
-            return data.map((item) => this.convertRfc2822DatesToIso8601(item));
+            return data.map((item) => this.transformJsonStrings(item, transform));
         }
         if (typeof data === "object" && data !== null) {
             const result: Record<string, unknown> = {};
             for (const [key, value] of Object.entries(data)) {
-                result[key] = this.convertRfc2822DatesToIso8601(value);
+                result[key] = this.transformJsonStrings(value, transform);
             }
             return result;
         }
@@ -351,6 +363,34 @@ export class TestMethodBuilder {
         } catch {
             return value;
         }
+    }
+
+    /**
+     * Computes the expected base64-encoded Basic Auth header value based on the auth scheme.
+     * Returns undefined if the API doesn't use basic auth or both fields are omitted.
+     */
+    private getExpectedBasicAuthHeader(): string | undefined {
+        const auth = this.context.ir.auth;
+        if (!auth?.schemes || auth.schemes.length === 0) {
+            return undefined;
+        }
+
+        const basicScheme = auth.schemes.find((scheme) => scheme.type === "basic");
+        if (!basicScheme || basicScheme.type !== "basic") {
+            return undefined;
+        }
+
+        const usernameOmitted = !!basicScheme.usernameOmit;
+        const passwordOmitted = !!basicScheme.passwordOmit;
+
+        if (usernameOmitted && passwordOmitted) {
+            return undefined;
+        }
+
+        const username = usernameOmitted ? "" : "test-username";
+        const password = passwordOmitted ? "" : "test-password";
+        const encoded = Buffer.from(`${username}:${password}`).toString("base64");
+        return encoded;
     }
 
     private isFormUrlEncodedEndpoint(endpoint: FernIr.HttpEndpoint): boolean {

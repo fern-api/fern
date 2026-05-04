@@ -8,8 +8,10 @@ module Seed
 
         discriminant :type
 
-        member -> { Seed::Submission::Types::SubmissionIdNotFound }, key: "SUBMISSION_ID_NOT_FOUND"
+        member -> { Seed::Submission::Types::SubmissionIDNotFound }, key: "SUBMISSION_ID_NOT_FOUND"
+
         member -> { Seed::Submission::Types::CustomTestCasesUnsupported }, key: "CUSTOM_TEST_CASES_UNSUPPORTED"
+
         member -> { Seed::Submission::Types::UnexpectedLanguageError }, key: "UNEXPECTED_LANGUAGE"
       end
     end

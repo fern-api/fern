@@ -1,4 +1,4 @@
-import { replaceEnvVariables } from "@fern-api/core-utils";
+import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import {
     isValidRelativeSlug,
     parseImagePaths,
@@ -8,7 +8,12 @@ import {
     stripMdxComments,
     transformAtPrefixImports
 } from "@fern-api/docs-markdown-utils";
-import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
+import {
+    DocsDefinitionResolver,
+    filterOssWorkspaces,
+    stitchGlobalTheme,
+    type TranslationNavigationOverlay
+} from "@fern-api/docs-resolver";
 import {
     APIV1Read,
     APIV1Write,
@@ -17,15 +22,24 @@ import {
     convertDbDocsConfigToRead,
     convertDocsDefinitionToDb,
     DocsV1Read,
+    DocsV1Write,
     FdrAPI,
     FernNavigation,
     SDKSnippetHolder
 } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, convertToFernHostAbsoluteFilePath, doesPathExist, relative } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    convertToFernHostAbsoluteFilePath,
+    doesPathExist,
+    RelativeFilePath,
+    relative
+} from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { getOriginalName } from "@fern-api/ir-utils";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
 import { v4 as uuidv4 } from "uuid";
@@ -111,23 +125,56 @@ function extractFrontmatterSlug(markdown: string): string | undefined {
     }
 }
 
+/**
+ * Result from getPreviewDocsDefinition that includes both the docs definition
+ * and data needed to compute translated definitions for each locale.
+ */
+export interface PreviewDocsResult {
+    docsDefinition: DocsV1Read.DocsDefinition;
+    /**
+     * Per-locale translated page content from translations/<lang>/ directories.
+     * Key is locale (e.g., "fr", "ja"), value is a map of page path to raw markdown.
+     */
+    translationPages: Record<string, Record<RelativeFilePath, string>> | undefined;
+    /**
+     * Per-locale translated navigation overlays from translations/<lang>/ YAML files.
+     * Key is locale, value is a parsed overlay with translated display-names, titles, etc.
+     */
+    translationNavigationOverlays: Record<string, TranslationNavigationOverlay> | undefined;
+    /**
+     * File IDs collected during docs resolution, needed for image path replacement
+     * in translated pages.
+     */
+    collectedFileIds: ReadonlyMap<AbsoluteFilePath, string>;
+    /**
+     * Absolute path to the fern docs workspace folder.
+     */
+    docsWorkspacePath: AbsoluteFilePath;
+}
+
 export async function getPreviewDocsDefinition({
     domain,
     project,
     context,
     previousDocsDefinition,
-    editedAbsoluteFilepaths
+    editedAbsoluteFilepaths,
+    previousPreviewResult
 }: {
     domain: string;
     project: Project;
     context: TaskContext;
     previousDocsDefinition?: DocsV1Read.DocsDefinition;
     editedAbsoluteFilepaths?: AbsoluteFilePath[];
-}): Promise<DocsV1Read.DocsDefinition> {
+    /**
+     * Previous preview result (for incremental updates).
+     * This is used to preserve translation data during incremental page updates.
+     */
+    previousPreviewResult?: PreviewDocsResult;
+}): Promise<PreviewDocsResult> {
     const docsWorkspace = project.docsWorkspaces;
     const apiWorkspaces = project.apiWorkspaces;
     if (docsWorkspace == null) {
-        throw new Error("No docs workspace found in project");
+        throw new CliError({ message: "No docs workspace found in project", code: CliError.Code.ConfigError });
     }
 
     if (editedAbsoluteFilepaths != null && previousDocsDefinition != null) {
@@ -138,7 +185,7 @@ export async function getPreviewDocsDefinition({
 
         for (const absoluteFilePath of editedAbsoluteFilepaths) {
             const relativePath = relative(docsWorkspace.absoluteFilePath, absoluteFilePath);
-            const pageId = FdrAPI.PageId(relativePath);
+            const pageId = DocsV1Write.PageId(relativePath);
             const previousValue = previousDocsDefinition.pages[pageId];
 
             if (!(await doesPathExist(absoluteFilePath))) {
@@ -199,10 +246,19 @@ export async function getPreviewDocsDefinition({
                 absolutePathToMarkdownFile: absoluteFilePath
             });
 
-            const { markdown: markdownWithAbsPaths, filepaths } = parseImagePaths(markdownReplacedMdAndCode, {
-                absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
-                absolutePathToMarkdownFile: absoluteFilePath
-            });
+            let markdownWithAbsPaths: string;
+            let filepaths: AbsoluteFilePath[];
+            try {
+                ({ markdown: markdownWithAbsPaths, filepaths } = parseImagePaths(markdownReplacedMdAndCode, {
+                    absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                    absolutePathToMarkdownFile: absoluteFilePath
+                }));
+            } catch (error) {
+                throw new CliError({
+                    message: `Failed to parse markdown in ${absoluteFilePath}: ${extractErrorMessage(error)}`,
+                    code: CliError.Code.ParseError
+                });
+            }
 
             if (previousDocsDefinition.filesV2 == null) {
                 previousDocsDefinition.filesV2 = {};
@@ -210,7 +266,7 @@ export async function getPreviewDocsDefinition({
 
             const fileIdsMap = new Map(
                 Object.entries(previousDocsDefinition.filesV2).map(([id, file]) => {
-                    const path = "/" + file.url.replace("/_local/", "");
+                    const path = "/" + (file?.url ?? "").replace("/_local/", "");
                     return [AbsoluteFilePath.of(path), id];
                 })
             );
@@ -240,18 +296,29 @@ export async function getPreviewDocsDefinition({
 
             previousDocsDefinition.pages[pageId] = {
                 markdown: stripMdxComments(finalMarkdown),
-                editThisPageUrl: previousValue.editThisPageUrl,
-                editThisPageLaunch: previousValue.editThisPageLaunch,
+                editThisPageUrl: previousValue?.editThisPageUrl,
+                editThisPageLaunch: previousValue?.editThisPageLaunch,
                 rawMarkdown: stripMdxComments(markdown)
             };
         }
 
-        if (allMarkdownFiles && !navAffectingChange) {
-            return previousDocsDefinition;
+        if (allMarkdownFiles && !navAffectingChange && previousPreviewResult != null) {
+            // Return updated definition with preserved translation data
+            return {
+                docsDefinition: previousDocsDefinition,
+                translationPages: previousPreviewResult.translationPages,
+                translationNavigationOverlays: previousPreviewResult.translationNavigationOverlays,
+                collectedFileIds: previousPreviewResult.collectedFileIds,
+                docsWorkspacePath: previousPreviewResult.docsWorkspacePath
+            };
         }
     }
 
     const ossWorkspaces = await filterOssWorkspaces(project);
+
+    // Apply global theme if configured. Requires FERN_TOKEN env var; warns and proceeds
+    // without the theme if the token is absent (common in local dev without cloud auth).
+    const effectiveWorkspace = await applyGlobalThemeIfNeeded(docsWorkspace, project.config.organization, context);
 
     const apiCollector = new ReferencedAPICollector(context);
     const apiCollectorV2 = new ReferencedAPICollectorV2(context);
@@ -260,7 +327,7 @@ export async function getPreviewDocsDefinition({
 
     const resolver = new DocsDefinitionResolver({
         domain,
-        docsWorkspace,
+        docsWorkspace: effectiveWorkspace,
         ossWorkspaces,
         apiWorkspaces,
         taskContext: context,
@@ -295,7 +362,7 @@ export async function getPreviewDocsDefinition({
     frontmatterSidebarTitleCache.clear();
     frontmatterSlugCache.clear();
     for (const [pageId, page] of Object.entries(dbDocsDefinition.pages)) {
-        if (page.rawMarkdown != null) {
+        if (page != null && page.rawMarkdown != null) {
             const absolutePath = AbsoluteFilePath.of(`${docsWorkspace.absoluteFilePath}/${pageId.replace("api/", "")}`);
             const position = extractFrontmatterPosition(page.rawMarkdown);
             const sidebarTitle = extractFrontmatterSidebarTitle(page.rawMarkdown);
@@ -314,7 +381,7 @@ export async function getPreviewDocsDefinition({
         filesV2,
         pages: dbDocsDefinition.pages,
         jsFiles: dbDocsDefinition.jsFiles,
-        apiNameToId: {},
+        apiNameToId: apiCollector.getApiNameToId(),
         id: undefined
     };
 
@@ -329,13 +396,49 @@ export async function getPreviewDocsDefinition({
         docsDefinition = { ...substitutedDocs, jsFiles };
     }
 
-    return docsDefinition;
+    // Get translation pages, navigation overlays, and collected file IDs for building translated definitions
+    const translationPages = resolver.getTranslationPages();
+    const translationNavigationOverlays = resolver.getTranslationNavigationOverlays();
+    const collectedFileIds = resolver.getCollectedFileIds();
+
+    return {
+        docsDefinition,
+        translationPages,
+        translationNavigationOverlays,
+        collectedFileIds,
+        docsWorkspacePath: docsWorkspace.absoluteFilePath
+    };
+}
+
+async function applyGlobalThemeIfNeeded(
+    docsWorkspace: NonNullable<Project["docsWorkspaces"]>,
+    organization: string,
+    context: TaskContext
+): Promise<NonNullable<Project["docsWorkspaces"]>> {
+    const themeName = docsWorkspace.config.globalTheme;
+    if (themeName == null) {
+        return docsWorkspace;
+    }
+    const token = process.env.FERN_TOKEN;
+    if (token == null) {
+        context.logger.warn(
+            `docs.yml declares global-theme "${themeName}" but FERN_TOKEN is not set — ` +
+                "theme will not be applied in dev mode. Set FERN_TOKEN or run 'fern login' to enable it."
+        );
+        return docsWorkspace;
+    }
+    // FERN_FDR_ORIGIN is checked first because DEFAULT_FDR_ORIGIN is baked into the
+    // prod bundle at build time and cannot be overridden at runtime.
+    const fdrOrigin =
+        process.env.FERN_FDR_ORIGIN ?? process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
+    return stitchGlobalTheme({ docsWorkspace, organization, fdrOrigin, token, taskContext: context });
 }
 
 type APIDefinitionID = string;
 
 class ReferencedAPICollector {
     private readonly apis: Record<APIDefinitionID, APIV1Read.ApiDefinition> = {};
+    private readonly apiNameToId: Record<string, string> = {};
 
     constructor(private readonly context: TaskContext) {}
 
@@ -343,12 +446,14 @@ class ReferencedAPICollector {
         ir,
         snippetsConfig,
         playgroundConfig,
+        apiName,
         graphqlOperations = {},
         graphqlTypes = {}
     }: {
         ir: IntermediateRepresentation;
         snippetsConfig: APIV1Write.SnippetsConfig;
         playgroundConfig?: { oauth?: boolean };
+        apiName?: string;
         graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
         graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
     }): APIDefinitionID {
@@ -362,7 +467,8 @@ class ReferencedAPICollector {
                     playgroundConfig,
                     graphqlOperations,
                     graphqlTypes,
-                    context: this.context
+                    context: this.context,
+                    apiNameOverride: apiName
                 }),
                 FdrAPI.ApiDefinitionId(id),
                 new SDKSnippetHolder({
@@ -377,6 +483,14 @@ class ReferencedAPICollector {
             const readApiDefinition = convertDbAPIDefinitionToRead(dbApiDefinition);
 
             this.apis[id] = readApiDefinition;
+            // Mirror the FDR publish path (registerApi.ts, publishDocs.ts), which registers
+            // each API under `apiName ?? getOriginalName(ir.apiName)`. Without this mapping,
+            // features like type resolution in MDX widgets (MergeSupportedFieldsByIntegrationWidget,
+            // etc.) that look up APIs by user-facing name fail in `fern docs dev`.
+            const resolvedApiName = apiName ?? getOriginalName(ir.apiName);
+            if (resolvedApiName) {
+                this.apiNameToId[resolvedApiName] = id;
+            }
             return id;
         } catch (e) {
             // Print Error
@@ -394,6 +508,13 @@ class ReferencedAPICollector {
 
     public getAPIsForDefinition(): Record<FdrAPI.ApiDefinitionId, APIV1Read.ApiDefinition> {
         return this.apis;
+    }
+
+    public getApiNameToId(): Record<string, DocsV1Read.ApiDefinitionId> {
+        // IDs originate from uuidv4() and are used as-is alongside this.apis (which is keyed by
+        // the same raw uuids). ApiDefinitionId branding is purely a nominal-type marker
+        // and carries no runtime information, so this cast is safe.
+        return this.apiNameToId as Record<string, DocsV1Read.ApiDefinitionId>;
     }
 }
 

@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 import { AsymmetricAlgorithm } from "./AsymmetricAlgorithm.js";
 import { AsymmetricKeySource } from "./AsymmetricKeySource.js";
 import { WebhookSignatureEncoding } from "./WebhookSignatureEncoding.js";
@@ -13,7 +13,7 @@ export const AsymmetricKeySignatureVerification: core.serialization.ObjectSchema
     serializers.AsymmetricKeySignatureVerification.Raw,
     FernIr.AsymmetricKeySignatureVerification
 > = core.serialization.objectWithoutOptionalProperties({
-    signatureHeaderName: NameAndWireValue,
+    signatureHeaderName: NameAndWireValueOrString,
     algorithm: AsymmetricAlgorithm,
     encoding: WebhookSignatureEncoding,
     signaturePrefix: core.serialization.string().optional(),
@@ -23,7 +23,7 @@ export const AsymmetricKeySignatureVerification: core.serialization.ObjectSchema
 
 export declare namespace AsymmetricKeySignatureVerification {
     export interface Raw {
-        signatureHeaderName: NameAndWireValue.Raw;
+        signatureHeaderName: NameAndWireValueOrString.Raw;
         algorithm: AsymmetricAlgorithm.Raw;
         encoding: WebhookSignatureEncoding.Raw;
         signaturePrefix?: string | null;

@@ -3,21 +3,23 @@
 import * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 
 export const ErrorDeclarationDiscriminantValue: core.serialization.Schema<
     serializers.ErrorDeclarationDiscriminantValue.Raw,
     FernIr.ErrorDeclarationDiscriminantValue
 > = core.serialization
     .union("type", {
-        property: NameAndWireValue,
+        property: core.serialization.object({
+            value: NameAndWireValueOrString,
+        }),
         statusCode: core.serialization.object({}),
     })
     .transform<FernIr.ErrorDeclarationDiscriminantValue>({
         transform: (value) => {
             switch (value.type) {
                 case "property":
-                    return FernIr.ErrorDeclarationDiscriminantValue.property(value);
+                    return FernIr.ErrorDeclarationDiscriminantValue.property(value.value);
                 case "statusCode":
                     return FernIr.ErrorDeclarationDiscriminantValue.statusCode();
                 default:
@@ -30,8 +32,9 @@ export const ErrorDeclarationDiscriminantValue: core.serialization.Schema<
 export declare namespace ErrorDeclarationDiscriminantValue {
     export type Raw = ErrorDeclarationDiscriminantValue.Property | ErrorDeclarationDiscriminantValue.StatusCode;
 
-    export interface Property extends NameAndWireValue.Raw {
+    export interface Property {
         type: "property";
+        value: NameAndWireValueOrString.Raw;
     }
 
     export interface StatusCode {

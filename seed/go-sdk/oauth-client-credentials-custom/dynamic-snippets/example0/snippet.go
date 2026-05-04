@@ -22,7 +22,7 @@ func do() {
         Cid: "cid",
         Csr: "csr",
         Scp: "scp",
-        EntityId: "entity_id",
+        EntityID: "entity_id",
         Scope: fern.String(
             "scope",
         ),

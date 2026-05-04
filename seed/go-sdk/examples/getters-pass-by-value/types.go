@@ -339,12 +339,12 @@ func (t *TypeWithSingleCharPropertyEqualToTypeStartingLetter) String() string {
 
 var (
 	actorFieldName = big.NewInt(1 << 0)
-	actorFieldId   = big.NewInt(1 << 1)
+	actorFieldID   = big.NewInt(1 << 1)
 )
 
 type Actor struct {
 	Name string `json:"name" url:"name"`
-	Id   string `json:"id" url:"id"`
+	ID   string `json:"id" url:"id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -360,11 +360,11 @@ func (a *Actor) GetName() string {
 	return a.Name
 }
 
-func (a *Actor) GetId() string {
+func (a *Actor) GetID() string {
 	if a == nil {
 		return ""
 	}
-	return a.Id
+	return a.ID
 }
 
 func (a *Actor) GetExtraProperties() map[string]interface{} {
@@ -388,11 +388,11 @@ func (a *Actor) SetName(name string) {
 	a.require(actorFieldName)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *Actor) SetId(id string) {
-	a.Id = id
-	a.require(actorFieldId)
+func (a *Actor) SetID(id string) {
+	a.ID = id
+	a.require(actorFieldID)
 }
 
 func (a *Actor) UnmarshalJSON(data []byte) error {
@@ -439,12 +439,12 @@ func (a *Actor) String() string {
 
 var (
 	actressFieldName = big.NewInt(1 << 0)
-	actressFieldId   = big.NewInt(1 << 1)
+	actressFieldID   = big.NewInt(1 << 1)
 )
 
 type Actress struct {
 	Name string `json:"name" url:"name"`
-	Id   string `json:"id" url:"id"`
+	ID   string `json:"id" url:"id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -460,11 +460,11 @@ func (a *Actress) GetName() string {
 	return a.Name
 }
 
-func (a *Actress) GetId() string {
+func (a *Actress) GetID() string {
 	if a == nil {
 		return ""
 	}
-	return a.Id
+	return a.ID
 }
 
 func (a *Actress) GetExtraProperties() map[string]interface{} {
@@ -488,11 +488,11 @@ func (a *Actress) SetName(name string) {
 	a.require(actressFieldName)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *Actress) SetId(id string) {
-	a.Id = id
-	a.require(actressFieldId)
+func (a *Actress) SetID(id string) {
+	a.ID = id
+	a.require(actressFieldID)
 }
 
 func (a *Actress) UnmarshalJSON(data []byte) error {
@@ -1437,7 +1437,7 @@ func (e *ExceptionInfo) String() string {
 }
 
 var (
-	extendedMovieFieldId       = big.NewInt(1 << 0)
+	extendedMovieFieldID       = big.NewInt(1 << 0)
 	extendedMovieFieldPrequel  = big.NewInt(1 << 1)
 	extendedMovieFieldTitle    = big.NewInt(1 << 2)
 	extendedMovieFieldFrom     = big.NewInt(1 << 3)
@@ -1450,8 +1450,8 @@ var (
 )
 
 type ExtendedMovie struct {
-	Id      MovieId  `json:"id" url:"id"`
-	Prequel *MovieId `json:"prequel,omitempty" url:"prequel,omitempty"`
+	ID      MovieID  `json:"id" url:"id"`
+	Prequel *MovieID `json:"prequel,omitempty" url:"prequel,omitempty"`
 	Title   string   `json:"title" url:"title"`
 	From    string   `json:"from" url:"from"`
 	// The rating scale is one to five stars
@@ -1470,14 +1470,14 @@ type ExtendedMovie struct {
 	rawJSON         json.RawMessage
 }
 
-func (e *ExtendedMovie) GetId() MovieId {
+func (e *ExtendedMovie) GetID() MovieID {
 	if e == nil {
 		return ""
 	}
-	return e.Id
+	return e.ID
 }
 
-func (e *ExtendedMovie) GetPrequel() MovieId {
+func (e *ExtendedMovie) GetPrequel() MovieID {
 	if e == nil || e.Prequel == nil {
 		return ""
 	}
@@ -1558,16 +1558,16 @@ func (e *ExtendedMovie) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExtendedMovie) SetId(id MovieId) {
-	e.Id = id
-	e.require(extendedMovieFieldId)
+func (e *ExtendedMovie) SetID(id MovieID) {
+	e.ID = id
+	e.require(extendedMovieFieldID)
 }
 
 // SetPrequel sets the Prequel field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExtendedMovie) SetPrequel(prequel *MovieId) {
+func (e *ExtendedMovie) SetPrequel(prequel *MovieID) {
 	e.Prequel = prequel
 	e.require(extendedMovieFieldPrequel)
 }
@@ -1785,7 +1785,7 @@ type Metadata struct {
 	Type     string
 	Extra    map[string]string
 	Tags     []string
-	Html     string
+	HTML     string
 	Markdown string
 }
 
@@ -1810,11 +1810,11 @@ func (m *Metadata) GetTags() []string {
 	return m.Tags
 }
 
-func (m *Metadata) GetHtml() string {
+func (m *Metadata) GetHTML() string {
 	if m == nil {
 		return ""
 	}
-	return m.Html
+	return m.HTML
 }
 
 func (m *Metadata) GetMarkdown() string {
@@ -1842,12 +1842,12 @@ func (m *Metadata) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "html":
 		var valueUnmarshaler struct {
-			Html string `json:"value"`
+			HTML string `json:"value"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		m.Html = valueUnmarshaler.Html
+		m.HTML = valueUnmarshaler.HTML
 	case "markdown":
 		var valueUnmarshaler struct {
 			Markdown string `json:"value"`
@@ -1864,17 +1864,17 @@ func (m Metadata) MarshalJSON() ([]byte, error) {
 	if err := m.validate(); err != nil {
 		return nil, err
 	}
-	if m.Html != "" {
+	if m.HTML != "" {
 		var marshaler = struct {
 			Type  string            `json:"type"`
 			Extra map[string]string `json:"extra"`
 			Tags  []string          `json:"tags"`
-			Html  string            `json:"value"`
+			HTML  string            `json:"value"`
 		}{
 			Type:  "html",
 			Extra: m.Extra,
 			Tags:  m.Tags,
-			Html:  m.Html,
+			HTML:  m.HTML,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -1896,13 +1896,13 @@ func (m Metadata) MarshalJSON() ([]byte, error) {
 }
 
 type MetadataVisitor interface {
-	VisitHtml(string) error
+	VisitHTML(string) error
 	VisitMarkdown(string) error
 }
 
 func (m *Metadata) Accept(visitor MetadataVisitor) error {
-	if m.Html != "" {
-		return visitor.VisitHtml(m.Html)
+	if m.HTML != "" {
+		return visitor.VisitHTML(m.HTML)
 	}
 	if m.Markdown != "" {
 		return visitor.VisitMarkdown(m.Markdown)
@@ -1915,7 +1915,7 @@ func (m *Metadata) validate() error {
 		return fmt.Errorf("type %T is nil", m)
 	}
 	var fields []string
-	if m.Html != "" {
+	if m.HTML != "" {
 		fields = append(fields, "html")
 	}
 	if m.Markdown != "" {
@@ -2072,13 +2072,13 @@ func (m MigrationStatus) Ptr() *MigrationStatus {
 }
 
 var (
-	momentFieldId       = big.NewInt(1 << 0)
+	momentFieldID       = big.NewInt(1 << 0)
 	momentFieldDate     = big.NewInt(1 << 1)
 	momentFieldDatetime = big.NewInt(1 << 2)
 )
 
 type Moment struct {
-	Id       uuid.UUID `json:"id" url:"id"`
+	ID       uuid.UUID `json:"id" url:"id"`
 	Date     time.Time `json:"date" url:"date" format:"date"`
 	Datetime time.Time `json:"datetime" url:"datetime"`
 
@@ -2089,11 +2089,11 @@ type Moment struct {
 	rawJSON         json.RawMessage
 }
 
-func (m *Moment) GetId() uuid.UUID {
+func (m *Moment) GetID() uuid.UUID {
 	if m == nil {
 		return uuid.Nil
 	}
-	return m.Id
+	return m.ID
 }
 
 func (m *Moment) GetDate() time.Time {
@@ -2124,11 +2124,11 @@ func (m *Moment) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *Moment) SetId(id uuid.UUID) {
-	m.Id = id
-	m.require(momentFieldId)
+func (m *Moment) SetID(id uuid.UUID) {
+	m.ID = id
+	m.require(momentFieldID)
 }
 
 // SetDate sets the Date field and marks it as non-optional;
@@ -2200,7 +2200,7 @@ func (m *Moment) String() string {
 }
 
 var (
-	movieFieldId       = big.NewInt(1 << 0)
+	movieFieldID       = big.NewInt(1 << 0)
 	movieFieldPrequel  = big.NewInt(1 << 1)
 	movieFieldTitle    = big.NewInt(1 << 2)
 	movieFieldFrom     = big.NewInt(1 << 3)
@@ -2212,8 +2212,8 @@ var (
 )
 
 type Movie struct {
-	Id      MovieId  `json:"id" url:"id"`
-	Prequel *MovieId `json:"prequel,omitempty" url:"prequel,omitempty"`
+	ID      MovieID  `json:"id" url:"id"`
+	Prequel *MovieID `json:"prequel,omitempty" url:"prequel,omitempty"`
 	Title   string   `json:"title" url:"title"`
 	From    string   `json:"from" url:"from"`
 	// The rating scale is one to five stars
@@ -2231,14 +2231,14 @@ type Movie struct {
 	rawJSON         json.RawMessage
 }
 
-func (m *Movie) GetId() MovieId {
+func (m *Movie) GetID() MovieID {
 	if m == nil {
 		return ""
 	}
-	return m.Id
+	return m.ID
 }
 
-func (m *Movie) GetPrequel() MovieId {
+func (m *Movie) GetPrequel() MovieID {
 	if m == nil || m.Prequel == nil {
 		return ""
 	}
@@ -2312,16 +2312,16 @@ func (m *Movie) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *Movie) SetId(id MovieId) {
-	m.Id = id
-	m.require(movieFieldId)
+func (m *Movie) SetID(id MovieID) {
+	m.ID = id
+	m.require(movieFieldID)
 }
 
 // SetPrequel sets the Prequel field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *Movie) SetPrequel(prequel *MovieId) {
+func (m *Movie) SetPrequel(prequel *MovieID) {
 	m.Prequel = prequel
 	m.require(movieFieldPrequel)
 }
@@ -2428,7 +2428,7 @@ func (m *Movie) String() string {
 	return fmt.Sprintf("%#v", m)
 }
 
-type MovieId = string
+type MovieID = string
 
 var (
 	nodeFieldName  = big.NewInt(1 << 0)
@@ -2547,11 +2547,11 @@ func (n *Node) String() string {
 }
 
 var (
-	refreshTokenRequestFieldTtl = big.NewInt(1 << 0)
+	refreshTokenRequestFieldTTL = big.NewInt(1 << 0)
 )
 
 type RefreshTokenRequest struct {
-	Ttl int `json:"ttl" url:"ttl"`
+	TTL int `json:"ttl" url:"ttl"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2560,11 +2560,11 @@ type RefreshTokenRequest struct {
 	rawJSON         json.RawMessage
 }
 
-func (r *RefreshTokenRequest) GetTtl() int {
+func (r *RefreshTokenRequest) GetTTL() int {
 	if r == nil {
 		return 0
 	}
-	return r.Ttl
+	return r.TTL
 }
 
 func (r *RefreshTokenRequest) GetExtraProperties() map[string]interface{} {
@@ -2581,11 +2581,11 @@ func (r *RefreshTokenRequest) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
-// SetTtl sets the Ttl field and marks it as non-optional;
+// SetTTL sets the TTL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *RefreshTokenRequest) SetTtl(ttl int) {
-	r.Ttl = ttl
-	r.require(refreshTokenRequestFieldTtl)
+func (r *RefreshTokenRequest) SetTTL(ttl int) {
+	r.TTL = ttl
+	r.require(refreshTokenRequestFieldTTL)
 }
 
 func (r *RefreshTokenRequest) UnmarshalJSON(data []byte) error {
@@ -2900,12 +2900,12 @@ func (r *ResponseType) String() string {
 
 var (
 	stuntDoubleFieldName             = big.NewInt(1 << 0)
-	stuntDoubleFieldActorOrActressId = big.NewInt(1 << 1)
+	stuntDoubleFieldActorOrActressID = big.NewInt(1 << 1)
 )
 
 type StuntDouble struct {
 	Name             string `json:"name" url:"name"`
-	ActorOrActressId string `json:"actorOrActressId" url:"actorOrActressId"`
+	ActorOrActressID string `json:"actorOrActressId" url:"actorOrActressId"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2921,11 +2921,11 @@ func (s *StuntDouble) GetName() string {
 	return s.Name
 }
 
-func (s *StuntDouble) GetActorOrActressId() string {
+func (s *StuntDouble) GetActorOrActressID() string {
 	if s == nil {
 		return ""
 	}
-	return s.ActorOrActressId
+	return s.ActorOrActressID
 }
 
 func (s *StuntDouble) GetExtraProperties() map[string]interface{} {
@@ -2949,11 +2949,11 @@ func (s *StuntDouble) SetName(name string) {
 	s.require(stuntDoubleFieldName)
 }
 
-// SetActorOrActressId sets the ActorOrActressId field and marks it as non-optional;
+// SetActorOrActressID sets the ActorOrActressID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *StuntDouble) SetActorOrActressId(actorOrActressId string) {
-	s.ActorOrActressId = actorOrActressId
-	s.require(stuntDoubleFieldActorOrActressId)
+func (s *StuntDouble) SetActorOrActressID(actorOrActressID string) {
+	s.ActorOrActressID = actorOrActressID
+	s.require(stuntDoubleFieldActorOrActressID)
 }
 
 func (s *StuntDouble) UnmarshalJSON(data []byte) error {

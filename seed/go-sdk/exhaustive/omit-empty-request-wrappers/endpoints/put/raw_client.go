@@ -44,7 +44,7 @@ func (r *RawClient) Add(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v",
-		request.Id,
+		request.ID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

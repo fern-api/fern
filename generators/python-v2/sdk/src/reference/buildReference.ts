@@ -1,4 +1,4 @@
-import { ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { getNameFromWireValue, ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -19,7 +19,7 @@ export function buildReference({
     serviceEntries.forEach(([serviceId, service]) => {
         const section = isRootServiceId({ context, serviceId })
             ? builder.addRootSection()
-            : builder.addSection({ title: getSectionTitle({ service }) });
+            : builder.addSection({ title: getSectionTitle({ context, service }) });
         const endpoints = getEndpointReferencesForService({ context, service, endpointSnippets: snippetsByEndpointId });
         for (const endpoint of endpoints) {
             section.addEndpoint(endpoint);
@@ -87,11 +87,11 @@ function getEndpointReference({
     endpoint: FernIr.HttpEndpoint;
     endpointSnippets: Record<string, string>;
 }): FernGeneratorCli.EndpointReference | undefined {
-    const methodName = endpoint.name.snakeCase.unsafeName;
-    const accessPath = getAccessFromRootClient({ service });
-    const parameters = getEndpointParameters({ endpoint });
+    const methodName = context.caseConverter.snakeUnsafe(endpoint.name);
+    const accessPath = getAccessFromRootClient({ context, service });
+    const parameters = getEndpointParameters({ context, endpoint });
     const sourceFilePath = getSourceFilePath({ context, service });
-    const returnTypeStr = getReturnTypeString({ endpoint });
+    const returnTypeStr = getReturnTypeString({ context, endpoint });
 
     // Use prerendered snippet if available, otherwise fallback to abbreviated form
     let snippet = endpointSnippets[endpoint.id] ?? `${accessPath}.${methodName}(${parameters.length > 0 ? "..." : ""})`;
@@ -131,19 +131,31 @@ function getEndpointReference({
     };
 }
 
-function getAccessFromRootClient({ service }: { service: FernIr.HttpService }): string {
+function getAccessFromRootClient({
+    context,
+    service
+}: {
+    context: SdkGeneratorContext;
+    service: FernIr.HttpService;
+}): string {
     const clientVariableName = "client";
-    const servicePath = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+    const servicePath = service.name.fernFilepath.allParts.map((part) => context.caseConverter.snakeSafe(part));
     return servicePath.length > 0 ? `${clientVariableName}.${servicePath.join(".")}` : clientVariableName;
 }
 
-function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }): FernGeneratorCli.ParameterReference[] {
+function getEndpointParameters({
+    context,
+    endpoint
+}: {
+    context: SdkGeneratorContext;
+    endpoint: FernIr.HttpEndpoint;
+}): FernGeneratorCli.ParameterReference[] {
     const parameters: FernGeneratorCli.ParameterReference[] = [];
 
     endpoint.allPathParameters.forEach((pathParam) => {
         parameters.push({
-            name: pathParam.name.snakeCase.unsafeName,
-            type: getTypeString(pathParam.valueType),
+            name: context.caseConverter.snakeUnsafe(pathParam.name),
+            type: getTypeString(context, pathParam.valueType),
             description: pathParam.docs,
             required: !isTypeOptional(pathParam.valueType)
         });
@@ -154,15 +166,15 @@ function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }):
         let type: string;
         if (queryParam.allowMultiple) {
             const baseType = isOptional
-                ? unwrapOptionalType(queryParam.valueType)
-                : getTypeString(queryParam.valueType);
+                ? unwrapOptionalType(context, queryParam.valueType)
+                : getTypeString(context, queryParam.valueType);
             const unionType = `typing.Union[${baseType}, typing.Sequence[${baseType}]]`;
             type = isOptional ? wrapOptional(unionType) : unionType;
         } else {
-            type = getTypeString(queryParam.valueType);
+            type = getTypeString(context, queryParam.valueType);
         }
         parameters.push({
-            name: queryParam.name.name.snakeCase.unsafeName,
+            name: context.caseConverter.snakeUnsafe(getNameFromWireValue(queryParam.name)),
             type,
             description: queryParam.docs,
             required: !isOptional
@@ -171,8 +183,8 @@ function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }):
 
     endpoint.headers.forEach((header) => {
         parameters.push({
-            name: header.name.name.snakeCase.unsafeName,
-            type: getTypeString(header.valueType),
+            name: context.caseConverter.snakeUnsafe(getNameFromWireValue(header.name)),
+            type: getTypeString(context, header.valueType),
             description: header.docs,
             required: !isTypeOptional(header.valueType)
         });
@@ -183,8 +195,8 @@ function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }):
         if (endpoint.requestBody.extendedProperties != null) {
             endpoint.requestBody.extendedProperties.forEach((property) => {
                 parameters.push({
-                    name: property.name.name.snakeCase.unsafeName,
-                    type: getTypeString(property.valueType),
+                    name: context.caseConverter.snakeUnsafe(getNameFromWireValue(property.name)),
+                    type: getTypeString(context, property.valueType),
                     description: property.docs,
                     required: !isTypeOptional(property.valueType)
                 });
@@ -192,8 +204,8 @@ function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }):
         }
         endpoint.requestBody.properties.forEach((property) => {
             parameters.push({
-                name: property.name.name.snakeCase.unsafeName,
-                type: getTypeString(property.valueType),
+                name: context.caseConverter.snakeUnsafe(getNameFromWireValue(property.name)),
+                type: getTypeString(context, property.valueType),
                 description: property.docs,
                 required: !isTypeOptional(property.valueType)
             });
@@ -201,7 +213,7 @@ function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }):
     } else if (endpoint.requestBody != null && endpoint.requestBody.type === "reference") {
         parameters.push({
             name: "request",
-            type: getTypeString(endpoint.requestBody.requestBodyType),
+            type: getTypeString(context, endpoint.requestBody.requestBodyType),
             description: endpoint.requestBody.docs,
             required: !isTypeOptional(endpoint.requestBody.requestBodyType)
         });
@@ -213,15 +225,15 @@ function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }):
                 const fileType = fileProperty.type === "fileArray" ? "typing.List[core.File]" : "core.File";
                 const type = isOptional ? `typing.Optional[${fileType}]` : fileType;
                 parameters.push({
-                    name: fileProperty.key.name.snakeCase.unsafeName,
+                    name: context.caseConverter.snakeUnsafe(getNameFromWireValue(fileProperty.key)),
                     type,
                     description: fileProperty.docs,
                     required: !isOptional
                 });
             } else if (property.type === "bodyProperty") {
                 parameters.push({
-                    name: property.name.name.snakeCase.unsafeName,
-                    type: getTypeString(property.valueType),
+                    name: context.caseConverter.snakeUnsafe(getNameFromWireValue(property.name)),
+                    type: getTypeString(context, property.valueType),
                     description: property.docs,
                     required: !isTypeOptional(property.valueType)
                 });
@@ -252,7 +264,7 @@ function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }):
     return parameters;
 }
 
-function getTypeString(typeReference: FernIr.TypeReference): string {
+function getTypeString(context: SdkGeneratorContext, typeReference: FernIr.TypeReference): string {
     switch (typeReference.type) {
         case "primitive": {
             const primitiveType = typeReference.primitive.v1;
@@ -273,6 +285,7 @@ function getTypeString(typeReference: FernIr.TypeReference): string {
                 case "DATE":
                     return "datetime.date";
                 case "DATE_TIME":
+                case "DATE_TIME_RFC_2822":
                     return "datetime.datetime";
                 case "UUID":
                     return "uuid.UUID";
@@ -286,15 +299,15 @@ function getTypeString(typeReference: FernIr.TypeReference): string {
         case "container": {
             switch (typeReference.container.type) {
                 case "list":
-                    return `typing.List[${getTypeString(typeReference.container.list)}]`;
+                    return `typing.List[${getTypeString(context, typeReference.container.list)}]`;
                 case "set":
-                    return `typing.Set[${getTypeString(typeReference.container.set)}]`;
+                    return `typing.Set[${getTypeString(context, typeReference.container.set)}]`;
                 case "map":
-                    return `typing.Dict[${getTypeString(typeReference.container.keyType)}, ${getTypeString(typeReference.container.valueType)}]`;
+                    return `typing.Dict[${getTypeString(context, typeReference.container.keyType)}, ${getTypeString(context, typeReference.container.valueType)}]`;
                 case "optional":
-                    return wrapOptional(getTypeString(typeReference.container.optional));
+                    return wrapOptional(getTypeString(context, typeReference.container.optional));
                 case "nullable":
-                    return wrapOptional(getTypeString(typeReference.container.nullable));
+                    return wrapOptional(getTypeString(context, typeReference.container.nullable));
                 case "literal":
                     return "typing.Literal";
                 default:
@@ -302,7 +315,7 @@ function getTypeString(typeReference: FernIr.TypeReference): string {
             }
         }
         case "named":
-            return typeReference.name.pascalCase.unsafeName;
+            return context.caseConverter.pascalUnsafe(typeReference.name);
         case "unknown":
             return "typing.Any";
         default:
@@ -318,14 +331,20 @@ function getSourceFilePath({
     service: FernIr.HttpService;
 }): string | undefined {
     const modulePath = context.getModulePath().replace(/-/g, "_");
-    const pathParts = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+    const pathParts = service.name.fernFilepath.allParts.map((part) => context.caseConverter.snakeSafe(part));
     if (pathParts.length === 0) {
         return `src/${modulePath}/client.py`;
     }
     return `src/${modulePath}/${pathParts.join("/")}/client.py`;
 }
 
-function getReturnTypeString({ endpoint }: { endpoint: FernIr.HttpEndpoint }): string | undefined {
+function getReturnTypeString({
+    context,
+    endpoint
+}: {
+    context: SdkGeneratorContext;
+    endpoint: FernIr.HttpEndpoint;
+}): string | undefined {
     const responseBody = endpoint.response?.body;
     if (responseBody == null) {
         return undefined;
@@ -333,7 +352,7 @@ function getReturnTypeString({ endpoint }: { endpoint: FernIr.HttpEndpoint }): s
     switch (responseBody.type) {
         case "json": {
             const responseBodyType = responseBody.value.responseBodyType;
-            return getTypeString(responseBodyType);
+            return getTypeString(context, responseBodyType);
         }
         case "streaming":
             return "typing.Iterator[bytes]";
@@ -358,8 +377,11 @@ function isRootServiceId({
     return context.ir.rootPackage.service === serviceId;
 }
 
-function getSectionTitle({ service }: { service: FernIr.HttpService }): string {
-    return service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ");
+function getSectionTitle({ context, service }: { context: SdkGeneratorContext; service: FernIr.HttpService }): string {
+    return (
+        service.displayName ??
+        service.name.fernFilepath.allParts.map((part) => context.caseConverter.pascalSafe(part)).join(" ")
+    );
 }
 
 function isTypeOptional(typeReference: FernIr.TypeReference): boolean {
@@ -369,16 +391,17 @@ function isTypeOptional(typeReference: FernIr.TypeReference): boolean {
     return false;
 }
 
-function unwrapOptionalType(typeReference: FernIr.TypeReference): string {
-    if (typeReference.type === "container") {
-        if (typeReference.container.type === "optional") {
-            return getTypeString(typeReference.container.optional);
-        }
-        if (typeReference.container.type === "nullable") {
-            return getTypeString(typeReference.container.nullable);
-        }
+function unwrapOptionalType(context: SdkGeneratorContext, typeReference: FernIr.TypeReference): string {
+    if (typeReference.type !== "container") {
+        return getTypeString(context, typeReference);
     }
-    return getTypeString(typeReference);
+    if (typeReference.container.type === "optional") {
+        return getTypeString(context, typeReference.container.optional);
+    }
+    if (typeReference.container.type === "nullable") {
+        return getTypeString(context, typeReference.container.nullable);
+    }
+    return getTypeString(context, typeReference);
 }
 
 function wrapOptional(typeStr: string): string {
@@ -485,28 +508,7 @@ function getEnvironmentInfo({
     const packageName = context.getModulePath();
     const importLine = `from ${packageName}.environment import ${envClassName}`;
 
-    let firstEnvName: string | undefined;
-    if (envConfig.environments.type === "singleBaseUrl") {
-        const defaultEnvId = envConfig.defaultEnvironment;
-        const envs = envConfig.environments.environments;
-        if (defaultEnvId != null) {
-            const defaultEnv = envs.find((e) => e.id === defaultEnvId);
-            firstEnvName = defaultEnv?.name.screamingSnakeCase.unsafeName;
-        }
-        if (firstEnvName == null && envs.length > 0 && envs[0] != null) {
-            firstEnvName = envs[0].name.screamingSnakeCase.unsafeName;
-        }
-    } else if (envConfig.environments.type === "multipleBaseUrls") {
-        const defaultEnvId = envConfig.defaultEnvironment;
-        const envs = envConfig.environments.environments;
-        if (defaultEnvId != null) {
-            const defaultEnv = envs.find((e) => e.id === defaultEnvId);
-            firstEnvName = defaultEnv?.name.screamingSnakeCase.unsafeName;
-        }
-        if (firstEnvName == null && envs.length > 0 && envs[0] != null) {
-            firstEnvName = envs[0].name.screamingSnakeCase.unsafeName;
-        }
-    }
+    const firstEnvName = resolveDefaultEnvironmentName(context, envConfig);
 
     if (firstEnvName == null) {
         return undefined;
@@ -514,6 +516,34 @@ function getEnvironmentInfo({
 
     const constructorArg = `    environment=${envClassName}.${firstEnvName},`;
     return { importLine, constructorArg };
+}
+
+/**
+ * Resolves the default (or first) environment name as SCREAMING_SNAKE_CASE.
+ * Works for both singleBaseUrl and multipleBaseUrls environment types.
+ */
+export function resolveDefaultEnvironmentName(
+    context: SdkGeneratorContext,
+    envConfig: FernIr.EnvironmentsConfig
+): string | undefined {
+    const envs =
+        envConfig.environments.type === "singleBaseUrl" || envConfig.environments.type === "multipleBaseUrls"
+            ? envConfig.environments.environments
+            : undefined;
+    if (envs == null) {
+        return undefined;
+    }
+    const defaultEnvId = envConfig.defaultEnvironment;
+    if (defaultEnvId != null) {
+        const defaultEnv = envs.find((e) => e.id === defaultEnvId);
+        if (defaultEnv?.name != null) {
+            return context.caseConverter.screamingSnakeUnsafe(defaultEnv.name);
+        }
+    }
+    if (envs.length > 0 && envs[0] != null) {
+        return context.caseConverter.screamingSnakeUnsafe(envs[0].name);
+    }
+    return undefined;
 }
 
 function getClientClassName({ context }: { context: SdkGeneratorContext }): string {

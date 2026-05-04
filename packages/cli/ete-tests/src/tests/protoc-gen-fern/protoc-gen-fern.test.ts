@@ -1,5 +1,6 @@
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
+import { ensureBufCommand } from "@fern-api/lazy-fern-workspace";
 import { readFile } from "fs/promises";
 import path from "path";
 
@@ -7,9 +8,11 @@ const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
 describe("fern protoc-gen-fern", () => {
     it("test with buf", async () => {
-        const buf = createLoggingExecutable("buf", {
+        const logger = createEmptyProtobufLogger();
+        const bufCommand = await ensureBufCommand(logger);
+        const buf = createLoggingExecutable(bufCommand, {
             cwd: FIXTURES_DIR,
-            logger: createEmptyProtobufLogger()
+            logger
         });
 
         await buf(["generate"]);

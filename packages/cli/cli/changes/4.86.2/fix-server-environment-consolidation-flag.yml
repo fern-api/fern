@@ -1,0 +1,21 @@
+- summary: |
+    Gate the consolidation of top-level OpenAPI servers into a single multi-URL
+    environment behind a new setting, `multi-server-strategy`, with values
+    `environment-per-server` (default) and `urls-per-environment`. Previously
+    (since 4.71.4) any spec where endpoint-level `servers:` overrides referenced
+    top-level `x-fern-server-name` values would collapse all top-level servers
+    into one environment, silently removing named environment constants
+    (e.g. `Environment.AGENT`) from generated SDKs. The old pre-4.71.4 behavior
+    of emitting one environment per top-level server is now restored by default;
+    customers who want the Box-style "one logical environment with multiple
+    named base URLs" behavior can opt in by setting
+    `multi-server-strategy: urls-per-environment` under
+    `api.specs[].settings`.
+  type: fix
+- summary: |
+    Fix WebSocket base URLs silently overwriting HTTP base URLs when both share
+    the same `x-fern-server-name` (OpenAPI + AsyncAPI) inside a consolidated
+    environment. Colliding WebSocket URLs are now suffixed with their protocol
+    (e.g. `Agent_wss`) so both the HTTP and WSS URLs remain addressable. Only
+    applies when `multi-server-strategy: urls-per-environment` is set.
+  type: fix

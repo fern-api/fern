@@ -7,13 +7,13 @@ import (
 )
 
 var (
-	getMetadataRequestFieldXApiVersion = big.NewInt(1 << 0)
+	getMetadataRequestFieldXAPIVersion = big.NewInt(1 << 0)
 	getMetadataRequestFieldShallow     = big.NewInt(1 << 1)
 	getMetadataRequestFieldTag         = big.NewInt(1 << 2)
 )
 
 type GetMetadataRequest struct {
-	XApiVersion string    `json:"-" url:"-"`
+	XAPIVersion string    `json:"-" url:"-"`
 	Shallow     *bool     `json:"-" url:"shallow,omitempty"`
 	Tag         []*string `json:"-" url:"tag,omitempty"`
 
@@ -28,11 +28,11 @@ func (g *GetMetadataRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetXApiVersion sets the XApiVersion field and marks it as non-optional;
+// SetXAPIVersion sets the XAPIVersion field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetMetadataRequest) SetXApiVersion(xApiVersion string) {
-	g.XApiVersion = xApiVersion
-	g.require(getMetadataRequestFieldXApiVersion)
+func (g *GetMetadataRequest) SetXAPIVersion(xAPIVersion string) {
+	g.XAPIVersion = xAPIVersion
+	g.require(getMetadataRequestFieldXAPIVersion)
 }
 
 // SetShallow sets the Shallow field and marks it as non-optional;

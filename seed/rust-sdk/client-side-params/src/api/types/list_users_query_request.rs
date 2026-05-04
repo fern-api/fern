@@ -31,7 +31,7 @@ pub struct ListUsersQueryRequest {
 
 impl ListUsersQueryRequest {
     pub fn builder() -> ListUsersQueryRequestBuilder {
-        ListUsersQueryRequestBuilder::default()
+        <ListUsersQueryRequestBuilder as Default>::default()
     }
 }
 

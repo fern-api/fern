@@ -1,6 +1,7 @@
-from typing import Optional, Tuple, cast
-import pytest
 from io import BytesIO
+from typing import Optional, Tuple, cast
+
+import pytest
 
 from core_utilities.shared.file import FileContent, with_content_type
 

@@ -26,7 +26,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }): Promise<string> {
         const code = this.buildCodeBlock({ endpoint, snippet: request, options });
         return code.toString({
-            namespace: "Usage",
+            namespace: "Examples",
             generation: this.generation,
             allNamespaceSegments: new Set(),
             allTypeClassReferences: new Map(),
@@ -49,7 +49,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }): string {
         const code = this.buildCodeBlock({ endpoint, snippet: request, options });
         return code.toString({
-            namespace: "Usage",
+            namespace: "Examples",
             generation: this.generation,
             allNamespaceSegments: new Set(),
             allTypeClassReferences: new Map(),
@@ -79,11 +79,13 @@ export class EndpointSnippetGenerator extends WithGeneration {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
         options: Options;
     }): ast.AstNode {
-        // if we're actually passed the examples, we need to
-        // check that the endpoint that we're generating has an example that matches the snippet
+        // If we're passed endpoint examples and the snippet includes an id (i.e. it's an
+        // EndpointExample, not just an EndpointSnippetRequest), verify the id matches one of
+        // the examples. Snippets without an id are user-provided requests and skip this check.
         if (
             endpoint.examples &&
-            !endpoint.examples?.find((each) => is.DynamicIR.EndpointExample(snippet) && each.id === snippet.id)
+            is.DynamicIR.EndpointExample(snippet) &&
+            !endpoint.examples.find((each) => each.id === snippet.id)
         ) {
             // the dsg expects us to just throw when there is nothing to generate.
             throw new Error("Endpoint does not have an example that matches the snippet");
@@ -107,9 +109,12 @@ export class EndpointSnippetGenerator extends WithGeneration {
 
     private buildFullCodeBlock({ body, options }: { body: ast.CodeBlock; options: Options }): ast.AstNode {
         const config = this.getConfig(options);
+        const methodName = config.fullStyleMethodName ?? config.fullStyleClassName ?? "Example";
         const class_ = this.csharp.class_({
-            name: config.fullStyleClassName ?? "Example",
-            namespace: "Usage",
+            name: "Examples",
+            namespace: "Examples",
+            partial: true,
+            skipNamespaceDeclaration: true,
             access: ast.Access.Public
         });
 
@@ -118,7 +123,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
         class_.addNamespaceReference(this.Types.RootClientForSnippets.namespace);
 
         class_.addMethod({
-            name: "Do",
+            name: methodName,
             access: ast.Access.Public,
             isAsync: true,
             parameters: [],
@@ -385,16 +390,24 @@ export class EndpointSnippetGenerator extends WithGeneration {
         auth: FernIr.dynamic.BasicAuth;
         values: FernIr.dynamic.BasicAuthValues;
     }): NamedArgument[] {
-        return [
-            {
+        // usernameOmit/passwordOmit may exist in newer IR versions
+        const authRecord = auth as unknown as Record<string, unknown>;
+        const usernameOmitted = !!authRecord.usernameOmit;
+        const passwordOmitted = !!authRecord.passwordOmit;
+        const args: NamedArgument[] = [];
+        if (!usernameOmitted) {
+            args.push({
                 name: this.context.getParameterName(auth.username),
                 assignment: this.csharp.Literal.string(values.username)
-            },
-            {
+            });
+        }
+        if (!passwordOmitted) {
+            args.push({
                 name: this.context.getParameterName(auth.password),
                 assignment: this.csharp.Literal.string(values.password)
-            }
-        ];
+            });
+        }
+        return args;
     }
 
     private getConstructorBearerAuthArgs({
@@ -620,13 +633,19 @@ export class EndpointSnippetGenerator extends WithGeneration {
         pathParameterFields: ast.ConstructorField[];
         filePropertyInfo: FilePropertyInfo;
     }): ast.Literal {
+        // Create class reference first to enable property-vs-class name collision detection.
+        const classReference = this.csharp.classReference({
+            origin: request.declaration,
+            namespace: this.context.getNamespace(request.declaration.fernFilepath)
+        });
+
         this.context.errors.scope(Scope.QueryParameters);
         const queryParameters = this.context.associateQueryParametersByWireValue({
             parameters: request.queryParameters ?? [],
             values: snippet.queryParameters ?? {}
         });
         const queryParameterFields = queryParameters.map((queryParameter) => ({
-            name: this.context.getPropertyName(queryParameter.name.name),
+            name: this.context.resolvePropertyName(classReference, queryParameter.name.name),
             value: this.context.dynamicLiteralMapper.convert(queryParameter)
         }));
         this.context.errors.unscope();
@@ -637,7 +656,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
             values: snippet.headers ?? {}
         });
         const headerFields = headers.map((header) => ({
-            name: this.context.getPropertyName(header.name.name),
+            name: this.context.resolvePropertyName(classReference, header.name.name),
             value: this.context.dynamicLiteralMapper.convert({
                 ...header,
                 fallbackToDefault: header.name.wireValue
@@ -651,16 +670,14 @@ export class EndpointSnippetGenerator extends WithGeneration {
                 ? this.getInlinedRequestBodyConstructorFields({
                       body: request.body,
                       value: snippet.requestBody,
-                      filePropertyInfo
+                      filePropertyInfo,
+                      classReference
                   })
                 : [];
         this.context.errors.unscope();
 
         return this.csharp.Literal.class_({
-            reference: this.csharp.classReference({
-                origin: request.declaration,
-                namespace: this.context.getNamespace(request.declaration.fernFilepath)
-            }),
+            reference: classReference,
             fields: [...pathParameterFields, ...queryParameterFields, ...headerFields, ...requestBodyFields]
         });
     }
@@ -668,17 +685,23 @@ export class EndpointSnippetGenerator extends WithGeneration {
     private getInlinedRequestBodyConstructorFields({
         body,
         value,
-        filePropertyInfo
+        filePropertyInfo,
+        classReference
     }: {
         body: FernIr.dynamic.InlinedRequestBody;
         value: unknown;
         filePropertyInfo: FilePropertyInfo;
+        classReference: ast.ClassReference;
     }): ast.ConstructorField[] {
         switch (body.type) {
             case "properties":
-                return this.getInlinedRequestBodyPropertyConstructorFields({ parameters: body.value, value });
+                return this.getInlinedRequestBodyPropertyConstructorFields({
+                    parameters: body.value,
+                    value,
+                    classReference
+                });
             case "referenced":
-                return [this.getReferencedRequestBodyPropertyConstructorField({ body, value })];
+                return [this.getReferencedRequestBodyPropertyConstructorField({ body, value, classReference })];
             case "fileUpload":
                 return this.getFileUploadRequestBodyConstructorFields({ filePropertyInfo });
             default:
@@ -688,10 +711,12 @@ export class EndpointSnippetGenerator extends WithGeneration {
 
     private getInlinedRequestBodyPropertyConstructorFields({
         parameters,
-        value
+        value,
+        classReference
     }: {
         parameters: FernIr.dynamic.NamedParameter[];
         value: unknown;
+        classReference: ast.ClassReference;
     }): ast.ConstructorField[] {
         const fields: ast.ConstructorField[] = [];
 
@@ -701,7 +726,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
         });
         for (const parameter of bodyProperties) {
             fields.push({
-                name: this.context.getPropertyName(parameter.name.name),
+                name: this.context.resolvePropertyName(classReference, parameter.name.name),
                 value: this.context.dynamicLiteralMapper.convert({
                     ...parameter,
                     fallbackToDefault: parameter.name.wireValue
@@ -722,13 +747,15 @@ export class EndpointSnippetGenerator extends WithGeneration {
 
     private getReferencedRequestBodyPropertyConstructorField({
         body,
-        value
+        value,
+        classReference
     }: {
         body: FernIr.dynamic.ReferencedRequestBody;
         value: unknown;
+        classReference: ast.ClassReference;
     }): ast.ConstructorField {
         return {
-            name: this.context.getPropertyName(body.bodyKey),
+            name: this.context.resolvePropertyName(classReference, body.bodyKey),
             value: this.getReferencedRequestBodyPropertyLiteral({ body: body.bodyType, value })
         };
     }

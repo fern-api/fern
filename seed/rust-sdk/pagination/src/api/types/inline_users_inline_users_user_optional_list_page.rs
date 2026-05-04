@@ -10,7 +10,7 @@ pub struct UserOptionalListPage {
 
 impl UserOptionalListPage {
     pub fn builder() -> UserOptionalListPageBuilder {
-        UserOptionalListPageBuilder::default()
+        <UserOptionalListPageBuilder as Default>::default()
     }
 }
 

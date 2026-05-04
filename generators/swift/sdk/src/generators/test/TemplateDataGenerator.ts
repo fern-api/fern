@@ -41,6 +41,8 @@ export class TemplateDataGenerator {
                 return this.generateTemplateDataForClientError();
             case "HTTPClient":
                 return this.generateTemplateDataForHTTPClient();
+            case "ClientConfig":
+                return this.generateTemplateDataForClientConfig();
             default:
                 assertNever(templateId);
         }
@@ -57,6 +59,12 @@ export class TemplateDataGenerator {
         const errorEnumSymbol = this.context.project.nameRegistry.getErrorEnumSymbolOrThrow();
         return {
             errorEnumName: errorEnumSymbol.name
+        };
+    }
+
+    private generateTemplateDataForClientConfig() {
+        return {
+            defaultMaxRetries: this.context.customConfig.maxRetries ?? 2
         };
     }
 
@@ -97,9 +105,12 @@ export class TemplateDataGenerator {
         if (!sampleEndpoint || !clientDeclaration || !endpointCallExpression) {
             return null;
         }
+        const defaultMaxRetries = this.context.customConfig.maxRetries ?? 2;
         const { dynamicEndpoint, dynamicEndpointExample } = sampleEndpoint;
         return {
             moduleName: moduleSymbol.name,
+            defaultMaxRetries,
+            maxRetriesExhaustedStubResponses: this.generateMaxRetriesExhaustedStubResponses(defaultMaxRetries),
             clientDeclaration: clientDeclaration.toStringWithIndentation(3),
             endpointCall: swift.Statement.discardAssignment(endpointCallExpression).toStringWithIndentation(4),
             endpointCall400BadRequest:
@@ -163,6 +174,17 @@ export class TemplateDataGenerator {
                 })
             ).toStringWithIndentation(4)
         };
+    }
+
+    private generateMaxRetriesExhaustedStubResponses(defaultMaxRetries: number): string {
+        const stubLine = '            (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),';
+        // Need defaultMaxRetries + 2 stub responses so that there are more responses than
+        // the client will consume (1 initial + defaultMaxRetries retries = defaultMaxRetries + 1 requests).
+        const lines: string[] = [];
+        for (let i = 0; i < defaultMaxRetries + 2; i++) {
+            lines.push(stubLine);
+        }
+        return lines.join("\n");
     }
 
     private generateTemplateDataForHTTPStub() {

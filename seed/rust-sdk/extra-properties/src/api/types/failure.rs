@@ -10,7 +10,7 @@ pub struct Failure {
 
 impl Failure {
     pub fn builder() -> FailureBuilder {
-        FailureBuilder::default()
+        <FailureBuilder as Default>::default()
     }
 }
 

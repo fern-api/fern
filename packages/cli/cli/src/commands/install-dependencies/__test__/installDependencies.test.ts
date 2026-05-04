@@ -1,4 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@fern-api/lazy-fern-workspace", () => ({
@@ -88,7 +89,11 @@ describe("installDependencies", () => {
         await expect(installDependencies({ cliContext: mockCliContext })).rejects.toThrow("Failed to install: buf");
 
         expect(mockContext.logger.error).toHaveBeenCalledWith("Failed to install buf");
-        expect(mockContext.failAndThrow).toHaveBeenCalledWith(expect.stringContaining("Failed to install: buf"));
+        expect(mockContext.failAndThrow).toHaveBeenCalledWith(
+            expect.stringContaining("Failed to install: buf"),
+            undefined,
+            { code: CliError.Code.EnvironmentError }
+        );
     });
 
     it("fails when protoc-gen-openapi resolution returns undefined", async () => {

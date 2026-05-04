@@ -12,6 +12,7 @@ async fn main() {
         .send_optional_typed_body(
             &Some(SendOptionalBodyRequest {
                 message: "message".to_string(),
+                ..Default::default()
             }),
             None,
         )

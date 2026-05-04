@@ -37,7 +37,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Imdb::Types::MovieId.load(response.body)
+          Seed::Imdb::Types::MovieID.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -51,7 +51,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Imdb::Types::MovieId] :movie_id
+      # @option params [Seed::Imdb::Types::MovieID] :movie_id
       #
       # @return [Seed::Imdb::Types::Movie]
       def get_movie(request_options: {}, **params)

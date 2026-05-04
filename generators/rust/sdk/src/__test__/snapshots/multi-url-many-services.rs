@@ -35,6 +35,38 @@ impl Environment {
         Self::Development(urls) => &urls.api,
     }
 }
+
+    pub fn api_url(&self) -> &str {
+    match self {
+        Self::Production(urls) => &urls.api,
+        Self::Staging(urls) => &urls.api,
+        Self::Development(urls) => &urls.api,
+    }
+}
+
+    pub fn auth_url(&self) -> &str {
+    match self {
+        Self::Production(urls) => &urls.auth,
+        Self::Staging(urls) => &urls.auth,
+        Self::Development(urls) => &urls.auth,
+    }
+}
+
+    pub fn storage_url(&self) -> &str {
+    match self {
+        Self::Production(urls) => &urls.storage,
+        Self::Staging(urls) => &urls.storage,
+        Self::Development(urls) => &urls.storage,
+    }
+}
+
+    pub fn analytics_url(&self) -> &str {
+    match self {
+        Self::Production(urls) => &urls.analytics,
+        Self::Staging(urls) => &urls.analytics,
+        Self::Development(urls) => &urls.analytics,
+    }
+}
 }
 impl Default for Environment {
     fn default() -> Self {

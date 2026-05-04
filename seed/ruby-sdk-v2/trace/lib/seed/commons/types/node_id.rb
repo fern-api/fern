@@ -3,8 +3,8 @@
 module Seed
   module Commons
     module Types
-      module NodeId
-        # NodeId is an alias for String
+      module NodeID
+        # NodeID is an alias for String
 
         # @option str [String]
         #

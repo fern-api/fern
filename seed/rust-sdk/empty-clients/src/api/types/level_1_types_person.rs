@@ -9,7 +9,7 @@ pub struct Person2 {
 
 impl Person2 {
     pub fn builder() -> Person2Builder {
-        Person2Builder::default()
+        <Person2Builder as Default>::default()
     }
 }
 

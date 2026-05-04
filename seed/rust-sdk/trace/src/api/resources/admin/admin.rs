@@ -108,7 +108,7 @@ impl AdminClient {
             .await
     }
 
-    pub async fn store_traced_test_case_v_2(
+    pub async fn store_traced_test_case_v2(
         &self,
         submission_id: &SubmissionId,
         test_case_id: &TestCaseId,
@@ -149,7 +149,7 @@ impl AdminClient {
             .await
     }
 
-    pub async fn store_traced_workspace_v_2(
+    pub async fn store_traced_workspace_v2(
         &self,
         submission_id: &SubmissionId,
         request: &Vec<TraceResponseV2>,

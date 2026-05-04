@@ -10,7 +10,7 @@ pub struct GetTokenIdentityRequest {
 
 impl GetTokenIdentityRequest {
     pub fn builder() -> GetTokenIdentityRequestBuilder {
-        GetTokenIdentityRequestBuilder::default()
+        <GetTokenIdentityRequestBuilder as Default>::default()
     }
 }
 

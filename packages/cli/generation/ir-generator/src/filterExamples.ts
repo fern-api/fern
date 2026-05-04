@@ -19,7 +19,8 @@ import {
     ExampleTypeShape,
     FernIr
 } from "@fern-api/ir-sdk";
-import { FilteredIr } from "@fern-api/ir-utils";
+import { FilteredIr, getWireValue } from "@fern-api/ir-utils";
+import { CliError } from "@fern-api/task-context";
 
 function filterExampleSingleUnionTypeProperties({
     filteredIr,
@@ -36,7 +37,9 @@ function filterExampleSingleUnionTypeProperties({
                       object: {
                           ...s.object,
                           properties: s.object.properties
-                              .filter((p) => filteredIr.hasProperty(p.originalTypeDeclaration.typeId, p.name.wireValue))
+                              .filter((p) =>
+                                  filteredIr.hasProperty(p.originalTypeDeclaration.typeId, getWireValue(p.name))
+                              )
                               .map((p) => ({
                                   ...p,
                                   value: filterExampleTypeReference({ filteredIr, exampleTypeReference: p.value })
@@ -57,7 +60,7 @@ function filterExampleSingleUnionTypeProperties({
         },
         noProperties: () => singleUnionTypeProperties,
         _other: () => {
-            throw new Error("Received unknown type for example.");
+            throw new CliError({ message: "Received unknown type for example.", code: CliError.Code.InternalError });
         }
     });
 }
@@ -155,7 +158,10 @@ function filterExampleTypeReference({
                 // This is just a primitive, don't do anything
                 literal: () => exampleTypeReference,
                 _other: () => {
-                    throw new Error("Received unknown type for example.");
+                    throw new CliError({
+                        message: "Received unknown type for example.",
+                        code: CliError.Code.InternalError
+                    });
                 }
             }),
         // If the type is allowed filter it's properties and return
@@ -190,7 +196,7 @@ function filterExampleTypeReference({
                                   ...o,
                                   properties: o.properties
                                       .filter((p) =>
-                                          filteredIr.hasProperty(p.originalTypeDeclaration.typeId, p.name.wireValue)
+                                          filteredIr.hasProperty(p.originalTypeDeclaration.typeId, getWireValue(p.name))
                                       )
                                       .map((p) => ({
                                           ...p,
@@ -240,7 +246,10 @@ function filterExampleTypeReference({
                               : undefined;
                       },
                       _other: () => {
-                          throw new Error("Received unknown type for example.");
+                          throw new CliError({
+                              message: "Received unknown type for example.",
+                              code: CliError.Code.InternalError
+                          });
                       }
                   })
                 : undefined,
@@ -326,7 +335,7 @@ function filterExampleRequestBody({
                 properties: inlined.properties
                     .filter((p) =>
                         p.originalTypeDeclaration
-                            ? filteredIr.hasProperty(p.originalTypeDeclaration.typeId, p.name.wireValue)
+                            ? filteredIr.hasProperty(p.originalTypeDeclaration.typeId, getWireValue(p.name))
                             : true
                     )
                     .map((property) => {
@@ -349,7 +358,7 @@ function filterExampleRequestBody({
             return filteredReference !== undefined ? ExampleRequestBody.reference(filteredReference) : undefined;
         },
         _other: () => {
-            throw new Error("Received unknown type for example.");
+            throw new CliError({ message: "Received unknown type for example.", code: CliError.Code.InternalError });
         }
     });
 }
@@ -397,7 +406,10 @@ function filterExampleResponse({
                         )
                     ),
                 _other: ({ type }) => {
-                    throw new Error(`Received unknown type for OK example: ${type}`);
+                    throw new CliError({
+                        message: `Received unknown type for OK example: ${type}`,
+                        code: CliError.Code.InternalError
+                    });
                 }
             }),
         error: ({ error, body }) =>
@@ -406,7 +418,10 @@ function filterExampleResponse({
                 body: body != null ? filterExampleTypeReference({ filteredIr, exampleTypeReference: body }) : undefined
             }),
         _other: ({ type }) => {
-            throw new Error(`Received unknown type for example: ${type}`);
+            throw new CliError({
+                message: `Received unknown type for example: ${type}`,
+                code: CliError.Code.InternalError
+            });
         }
     });
 }
@@ -460,7 +475,7 @@ export function filterExampleType({
             shape: ExampleTypeShape.object({
                 ...o,
                 properties: o.properties
-                    .filter((p) => filteredIr.hasProperty(p.originalTypeDeclaration.typeId, p.name.wireValue))
+                    .filter((p) => filteredIr.hasProperty(p.originalTypeDeclaration.typeId, getWireValue(p.name)))
                     .map((p) => ({
                         ...p,
                         value: filterExampleTypeReference({ filteredIr, exampleTypeReference: p.value })
@@ -496,7 +511,7 @@ export function filterExampleType({
                 : undefined;
         },
         _other: () => {
-            throw new Error("Received unknown type for example.");
+            throw new CliError({ message: "Received unknown type for example.", code: CliError.Code.InternalError });
         }
     });
 }

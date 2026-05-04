@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: idempotency-headers
-  version: ''
+  version: 0.0.0
 paths:
   /payment:
     post:
@@ -11,14 +11,14 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: string
                 format: uuid
       security:
-        - BearerAuth: []
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -46,9 +46,9 @@ paths:
             type: string
       responses:
         '204':
-          description: ''
+          description: No content
       security:
-        - BearerAuth: []
+        - Bearer: []
 components:
   schemas:
     Currency:
@@ -58,6 +58,6 @@ components:
         - USD
         - YEN
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer

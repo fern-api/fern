@@ -10,7 +10,7 @@ pub struct Child {
 
 impl Child {
     pub fn builder() -> ChildBuilder {
-        ChildBuilder::default()
+        <ChildBuilder as Default>::default()
     }
 }
 

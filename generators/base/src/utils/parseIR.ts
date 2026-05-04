@@ -1,5 +1,6 @@
 import { AbsoluteFilePath, streamObjectFromFile } from "@fern-api/fs-utils";
 import { readFile, stat } from "fs/promises";
+import { GeneratorError } from "../GeneratorError.js";
 
 export declare namespace parseIR {
     export interface Args<IntermediateRepresentation> {
@@ -99,7 +100,7 @@ export async function parseIR<IR>({ absolutePathToIR, parse }: parseIR.Args<IR>)
     if (!parsedIR.ok) {
         // biome-ignore lint/suspicious/noConsole: allow console
         console.log(`Failed to parse ${absolutePathToIR}`);
-        throw new Error(`Failed to parse IR: ${JSON.stringify(parsedIR.errors, null, 4)}`);
+        throw GeneratorError.parseError(`Failed to parse IR: ${JSON.stringify(parsedIR.errors, null, 4)}`);
     }
 
     return parsedIR.value;

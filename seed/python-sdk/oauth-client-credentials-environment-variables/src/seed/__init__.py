@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import auth, nested, nested_no_auth, simple
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .auth import TokenResponse
     from .client import (
         AsyncSeedOauthClientCredentialsEnvironmentVariables,
@@ -15,6 +16,8 @@ if typing.TYPE_CHECKING:
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedOauthClientCredentialsEnvironmentVariables": ".client",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "SeedOauthClientCredentialsEnvironmentVariables": ".client",
     "TokenResponse": ".auth",
     "__version__": ".version",
@@ -48,6 +51,8 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedOauthClientCredentialsEnvironmentVariables",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "SeedOauthClientCredentialsEnvironmentVariables",
     "TokenResponse",
     "__version__",

@@ -3,8 +3,8 @@
 module Seed
   module NullableOptional
     module Types
-      module NullableUserId
-        # NullableUserId is an alias for Object
+      module NullableUserID
+        # NullableUserID is an alias for Object
 
         # @option str [String]
         #

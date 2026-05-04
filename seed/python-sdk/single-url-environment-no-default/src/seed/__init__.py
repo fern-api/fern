@@ -7,11 +7,14 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import dummy
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedSingleUrlEnvironmentNoDefault, SeedSingleUrlEnvironmentNoDefault
     from .environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedSingleUrlEnvironmentNoDefault": ".client",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "SeedSingleUrlEnvironmentNoDefault": ".client",
     "SeedSingleUrlEnvironmentNoDefaultEnvironment": ".environment",
     "__version__": ".version",
@@ -42,6 +45,8 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedSingleUrlEnvironmentNoDefault",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "SeedSingleUrlEnvironmentNoDefault",
     "SeedSingleUrlEnvironmentNoDefaultEnvironment",
     "__version__",

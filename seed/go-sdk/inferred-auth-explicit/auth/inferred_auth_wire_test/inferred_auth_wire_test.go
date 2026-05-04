@@ -84,12 +84,12 @@ func TestInferredAuthTokenAutoFetch(t *testing.T) {
 	c := client.NewClient(
 		option.WithBaseURL("http://localhost:8080"),
 		option.WithHTTPClient(httpClient),
-		option.WithXApiKey("test_xapikey"),
-		option.WithClientId("test_clientid"),
+		option.WithXAPIKey("test_xapikey"),
+		option.WithClientID("test_clientid"),
 		option.WithClientSecret("test_clientsecret"),
 	)
 
-	err := c.NestedNoAuth.Api.GetSomething(context.Background())
+	err := c.NestedNoAuth.API.GetSomething(context.Background())
 	if err != nil {
 		t.Logf("GetSomething returned error (may be expected in test): %v", err)
 	}
@@ -117,17 +117,17 @@ func TestInferredAuthTokenCaching(t *testing.T) {
 	c := client.NewClient(
 		option.WithBaseURL("http://localhost:8080"),
 		option.WithHTTPClient(httpClient),
-		option.WithXApiKey("test_xapikey"),
-		option.WithClientId("test_clientid"),
+		option.WithXAPIKey("test_xapikey"),
+		option.WithClientID("test_clientid"),
 		option.WithClientSecret("test_clientsecret"),
 	)
 
 	// Make two API calls
-	err1 := c.NestedNoAuth.Api.GetSomething(context.Background())
+	err1 := c.NestedNoAuth.API.GetSomething(context.Background())
 	if err1 != nil {
 		t.Logf("GetSomething returned error (may be expected in test): %v", err1)
 	}
-	err2 := c.NestedNoAuth.Api.GetSomething(context.Background())
+	err2 := c.NestedNoAuth.API.GetSomething(context.Background())
 	if err2 != nil {
 		t.Logf("GetSomething returned error (may be expected in test): %v", err2)
 	}
@@ -160,13 +160,13 @@ func TestInferredAuthCustomHeaders(t *testing.T) {
 	c := client.NewClient(
 		option.WithBaseURL("http://localhost:8080"),
 		option.WithHTTPClient(httpClient),
-		option.WithXApiKey("test_xapikey"),
-		option.WithClientId("test_clientid"),
+		option.WithXAPIKey("test_xapikey"),
+		option.WithClientID("test_clientid"),
 		option.WithClientSecret("test_clientsecret"),
 		option.WithHTTPHeader(customHeaders),
 	)
 
-	err := c.NestedNoAuth.Api.GetSomething(context.Background())
+	err := c.NestedNoAuth.API.GetSomething(context.Background())
 	if err != nil {
 		t.Logf("GetSomething returned error (may be expected in test): %v", err)
 	}

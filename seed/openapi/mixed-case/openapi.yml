@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: mixed-case
-  version: ''
+  version: 0.0.0
 paths:
   /resource/{ResourceID}:
     get:
@@ -14,13 +14,12 @@ paths:
           required: true
           schema:
             type: string
-          example: rsc-xyz
           examples:
             Example1:
               value: rsc-xyz
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -48,7 +47,6 @@ paths:
           required: true
           schema:
             type: integer
-          example: 10
           examples:
             One:
               value: 10
@@ -58,13 +56,12 @@ paths:
           schema:
             type: string
             format: date
-          example: '2023-01-01'
           examples:
             One:
               value: '2023-01-01'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -91,7 +88,8 @@ components:
       properties:
         name:
           type: string
-          example: orgName
+          examples:
+            - orgName
       required:
         - name
     User:
@@ -100,14 +98,15 @@ components:
       properties:
         userName:
           type: string
-          example: username
+          examples:
+            - username
         metadata_tags:
           type: array
           items:
             type: string
-          example:
-            - tag1
-            - tag2
+          examples:
+            - - tag1
+              - tag2
         EXTRA_PROPERTIES:
           type: object
           additionalProperties:
@@ -122,7 +121,8 @@ components:
       properties:
         Name:
           type: string
-          example: username
+          examples:
+            - username
         NestedUser:
           $ref: '#/components/schemas/User'
       required:
@@ -143,8 +143,7 @@ components:
               properties:
                 resource_type:
                   type: string
-                  enum:
-                    - user
+                  const: user
             - $ref: '#/components/schemas/User'
           required:
             - resource_type
@@ -154,8 +153,7 @@ components:
               properties:
                 resource_type:
                   type: string
-                  enum:
-                    - Organization
+                  const: Organization
             - $ref: '#/components/schemas/Organization'
           required:
             - resource_type

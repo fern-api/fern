@@ -3,6 +3,6 @@
 import type * as FernIr from "../../../index.js";
 
 export interface ExampleSingleUnionType {
-    wireDiscriminantValue: FernIr.NameAndWireValue;
+    wireDiscriminantValue: FernIr.NameAndWireValueOrString;
     shape: FernIr.ExampleSingleUnionTypeProperties;
 }

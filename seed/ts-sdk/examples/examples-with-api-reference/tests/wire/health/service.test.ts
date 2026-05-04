@@ -33,6 +33,6 @@ describe("ServiceClient", () => {
         server.mockEndpoint().get("/ping").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.health.service.ping();
-        expect(response).toEqual(true);
+        expect(response).toEqual(rawResponseBody);
     });
 });

@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "14995a3a",
+            "example_identifier": "ec3c18c2",
             "id": {
                 "method": "POST",
                 "path": "/payment",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "e8b5cdd9",
+            "example_identifier": "b8386e0e",
             "id": {
                 "method": "DELETE",
                 "path": "/payment/{paymentId}",

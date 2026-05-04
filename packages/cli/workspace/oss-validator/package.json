@@ -38,6 +38,7 @@
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
+    "openapi-types": "^12.1.3",
     "strip-ansi": "catalog:"
   },
   "devDependencies": {

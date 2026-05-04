@@ -6,7 +6,7 @@ import {
     ObjectTypeDeclaration,
     TypeDeclaration
 } from "@fern-api/ir-sdk";
-import { LoggableFernCliError } from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 
 import { getTypeDeclaration } from "../utils/getTypeDeclaration.js";
 
@@ -96,9 +96,7 @@ function getObjectTypeDeclarationFromTypeId(typeId: string, ir: TypesAndServices
         }
     }
 
-    throw new LoggableFernCliError(
-        `Unexpected error: ${typeId} is extended but has shape ${typeDeclaration.shape.type}`
-    );
+    throw CliError.internalError(`Unexpected error: ${typeId} is extended but has shape ${typeDeclaration.shape.type}`);
 }
 
 function getAllPropertiesForObject({

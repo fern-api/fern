@@ -13,6 +13,7 @@ async fn test_endpoints_container_get_and_return_list_of_primitives_with_wiremoc
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -39,6 +40,7 @@ async fn test_endpoints_container_get_and_return_list_of_objects_with_wiremock()
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -48,9 +50,11 @@ async fn test_endpoints_container_get_and_return_list_of_objects_with_wiremock()
             &vec![
                 ObjectWithRequiredField {
                     string: "string".to_string(),
+                    ..Default::default()
                 },
                 ObjectWithRequiredField {
                     string: "string".to_string(),
+                    ..Default::default()
                 },
             ],
             None,
@@ -75,6 +79,7 @@ async fn test_endpoints_container_get_and_return_set_of_primitives_with_wiremock
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -101,6 +106,7 @@ async fn test_endpoints_container_get_and_return_set_of_objects_with_wiremock() 
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -109,6 +115,7 @@ async fn test_endpoints_container_get_and_return_set_of_objects_with_wiremock() 
         .get_and_return_set_of_objects(
             &HashSet::from([ObjectWithRequiredField {
                 string: "string".to_string(),
+                ..Default::default()
             }]),
             None,
         )
@@ -132,6 +139,7 @@ async fn test_endpoints_container_get_and_return_map_prim_to_prim_with_wiremock(
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -161,6 +169,7 @@ async fn test_endpoints_container_get_and_return_map_of_prim_to_object_with_wire
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -171,6 +180,7 @@ async fn test_endpoints_container_get_and_return_map_of_prim_to_object_with_wire
                 "string".to_string(),
                 ObjectWithRequiredField {
                     string: "string".to_string(),
+                    ..Default::default()
                 },
             )]),
             None,
@@ -196,6 +206,7 @@ async fn test_endpoints_container_get_and_return_map_of_prim_to_undiscriminated_
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -225,6 +236,7 @@ async fn test_endpoints_container_get_and_return_optional_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -233,6 +245,7 @@ async fn test_endpoints_container_get_and_return_optional_with_wiremock() {
         .get_and_return_optional(
             &Some(ObjectWithRequiredField {
                 string: "string".to_string(),
+                ..Default::default()
             }),
             None,
         )

@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "properties": {
+    "child_ref": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/common.ChildType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "derived_name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "derived_name"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "common.ChildType": {
+      "type": "object",
+      "properties": {
+        "child_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/common.ChildType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "child_name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "child_name"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,4 +1,5 @@
 from typing import Optional
+
 from .union_utils.types.core.pydantic_utilities import UniversalBaseModel
 
 

@@ -10,13 +10,13 @@ import (
 )
 
 var (
-	orderCompletedPayloadFieldOrderId  = big.NewInt(1 << 0)
+	orderCompletedPayloadFieldOrderID  = big.NewInt(1 << 0)
 	orderCompletedPayloadFieldTotal    = big.NewInt(1 << 1)
 	orderCompletedPayloadFieldCurrency = big.NewInt(1 << 2)
 )
 
 type OrderCompletedPayload struct {
-	OrderId  string  `json:"orderId" url:"orderId"`
+	OrderID  string  `json:"orderId" url:"orderId"`
 	Total    float64 `json:"total" url:"total"`
 	Currency string  `json:"currency" url:"currency"`
 
@@ -27,11 +27,11 @@ type OrderCompletedPayload struct {
 	rawJSON         json.RawMessage
 }
 
-func (o *OrderCompletedPayload) GetOrderId() string {
+func (o *OrderCompletedPayload) GetOrderID() string {
 	if o == nil {
 		return ""
 	}
-	return o.OrderId
+	return o.OrderID
 }
 
 func (o *OrderCompletedPayload) GetTotal() float64 {
@@ -62,11 +62,11 @@ func (o *OrderCompletedPayload) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
-// SetOrderId sets the OrderId field and marks it as non-optional;
+// SetOrderID sets the OrderID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OrderCompletedPayload) SetOrderId(orderId string) {
-	o.OrderId = orderId
-	o.require(orderCompletedPayloadFieldOrderId)
+func (o *OrderCompletedPayload) SetOrderID(orderID string) {
+	o.OrderID = orderID
+	o.require(orderCompletedPayloadFieldOrderID)
 }
 
 // SetTotal sets the Total field and marks it as non-optional;
@@ -126,13 +126,13 @@ func (o *OrderCompletedPayload) String() string {
 }
 
 var (
-	paymentNotificationPayloadFieldPaymentId = big.NewInt(1 << 0)
+	paymentNotificationPayloadFieldPaymentID = big.NewInt(1 << 0)
 	paymentNotificationPayloadFieldAmount    = big.NewInt(1 << 1)
 	paymentNotificationPayloadFieldStatus    = big.NewInt(1 << 2)
 )
 
 type PaymentNotificationPayload struct {
-	PaymentId string  `json:"paymentId" url:"paymentId"`
+	PaymentID string  `json:"paymentId" url:"paymentId"`
 	Amount    float64 `json:"amount" url:"amount"`
 	Status    string  `json:"status" url:"status"`
 
@@ -143,11 +143,11 @@ type PaymentNotificationPayload struct {
 	rawJSON         json.RawMessage
 }
 
-func (p *PaymentNotificationPayload) GetPaymentId() string {
+func (p *PaymentNotificationPayload) GetPaymentID() string {
 	if p == nil {
 		return ""
 	}
-	return p.PaymentId
+	return p.PaymentID
 }
 
 func (p *PaymentNotificationPayload) GetAmount() float64 {
@@ -178,11 +178,11 @@ func (p *PaymentNotificationPayload) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
-// SetPaymentId sets the PaymentId field and marks it as non-optional;
+// SetPaymentID sets the PaymentID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PaymentNotificationPayload) SetPaymentId(paymentId string) {
-	p.PaymentId = paymentId
-	p.require(paymentNotificationPayloadFieldPaymentId)
+func (p *PaymentNotificationPayload) SetPaymentID(paymentID string) {
+	p.PaymentID = paymentID
+	p.require(paymentNotificationPayloadFieldPaymentID)
 }
 
 // SetAmount sets the Amount field and marks it as non-optional;
@@ -242,13 +242,13 @@ func (p *PaymentNotificationPayload) String() string {
 }
 
 var (
-	refundProcessedPayloadFieldRefundId = big.NewInt(1 << 0)
+	refundProcessedPayloadFieldRefundID = big.NewInt(1 << 0)
 	refundProcessedPayloadFieldAmount   = big.NewInt(1 << 1)
 	refundProcessedPayloadFieldReason   = big.NewInt(1 << 2)
 )
 
 type RefundProcessedPayload struct {
-	RefundId string  `json:"refundId" url:"refundId"`
+	RefundID string  `json:"refundId" url:"refundId"`
 	Amount   float64 `json:"amount" url:"amount"`
 	Reason   *string `json:"reason,omitempty" url:"reason,omitempty"`
 
@@ -259,11 +259,11 @@ type RefundProcessedPayload struct {
 	rawJSON         json.RawMessage
 }
 
-func (r *RefundProcessedPayload) GetRefundId() string {
+func (r *RefundProcessedPayload) GetRefundID() string {
 	if r == nil {
 		return ""
 	}
-	return r.RefundId
+	return r.RefundID
 }
 
 func (r *RefundProcessedPayload) GetAmount() float64 {
@@ -294,11 +294,11 @@ func (r *RefundProcessedPayload) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
-// SetRefundId sets the RefundId field and marks it as non-optional;
+// SetRefundID sets the RefundID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *RefundProcessedPayload) SetRefundId(refundId string) {
-	r.RefundId = refundId
-	r.require(refundProcessedPayloadFieldRefundId)
+func (r *RefundProcessedPayload) SetRefundID(refundID string) {
+	r.RefundID = refundID
+	r.require(refundProcessedPayloadFieldRefundID)
 }
 
 // SetAmount sets the Amount field and marks it as non-optional;
@@ -358,13 +358,13 @@ func (r *RefundProcessedPayload) String() string {
 }
 
 var (
-	userCreatedPayloadFieldUserId    = big.NewInt(1 << 0)
+	userCreatedPayloadFieldUserID    = big.NewInt(1 << 0)
 	userCreatedPayloadFieldEmail     = big.NewInt(1 << 1)
 	userCreatedPayloadFieldCreatedAt = big.NewInt(1 << 2)
 )
 
 type UserCreatedPayload struct {
-	UserId    string `json:"userId" url:"userId"`
+	UserID    string `json:"userId" url:"userId"`
 	Email     string `json:"email" url:"email"`
 	CreatedAt string `json:"createdAt" url:"createdAt"`
 
@@ -375,11 +375,11 @@ type UserCreatedPayload struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *UserCreatedPayload) GetUserId() string {
+func (u *UserCreatedPayload) GetUserID() string {
 	if u == nil {
 		return ""
 	}
-	return u.UserId
+	return u.UserID
 }
 
 func (u *UserCreatedPayload) GetEmail() string {
@@ -410,11 +410,11 @@ func (u *UserCreatedPayload) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserCreatedPayload) SetUserId(userId string) {
-	u.UserId = userId
-	u.require(userCreatedPayloadFieldUserId)
+func (u *UserCreatedPayload) SetUserID(userID string) {
+	u.UserID = userID
+	u.require(userCreatedPayloadFieldUserID)
 }
 
 // SetEmail sets the Email field and marks it as non-optional;

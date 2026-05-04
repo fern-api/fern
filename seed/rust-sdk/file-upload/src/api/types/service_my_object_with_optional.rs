@@ -11,7 +11,7 @@ pub struct MyObjectWithOptional {
 
 impl MyObjectWithOptional {
     pub fn builder() -> MyObjectWithOptionalBuilder {
-        MyObjectWithOptionalBuilder::default()
+        <MyObjectWithOptionalBuilder as Default>::default()
     }
 }
 

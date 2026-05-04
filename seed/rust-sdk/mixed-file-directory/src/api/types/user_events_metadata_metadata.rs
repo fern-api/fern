@@ -9,7 +9,7 @@ pub struct Metadata {
 
 impl Metadata {
     pub fn builder() -> MetadataBuilder {
-        MetadataBuilder::default()
+        <MetadataBuilder as Default>::default()
     }
 }
 

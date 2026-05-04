@@ -19,7 +19,7 @@ pub struct GetFooQueryRequest {
 
 impl GetFooQueryRequest {
     pub fn builder() -> GetFooQueryRequestBuilder {
-        GetFooQueryRequestBuilder::default()
+        <GetFooQueryRequestBuilder as Default>::default()
     }
 }
 

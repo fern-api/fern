@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, NpmPackage, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass } from "@fern-typescript/contexts";
@@ -7,6 +8,7 @@ import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl.js";
 
 export declare namespace SdkClientClassGenerator {
     export interface Init {
+        caseConverter: CaseConverter;
         intermediateRepresentation: FernIr.IntermediateRepresentation;
         errorResolver: ErrorResolver;
         packageResolver: PackageResolver;
@@ -31,6 +33,7 @@ export declare namespace SdkClientClassGenerator {
         generateEndpointMetadata: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         offsetSemantics: "item-index" | "page-index";
+        alwaysSendAuth: boolean;
     }
 
     export namespace generateService {
@@ -44,6 +47,7 @@ export declare namespace SdkClientClassGenerator {
 }
 
 export class SdkClientClassGenerator {
+    private readonly case: CaseConverter;
     private readonly intermediateRepresentation: FernIr.IntermediateRepresentation;
     private readonly errorResolver: ErrorResolver;
     private readonly packageResolver: PackageResolver;
@@ -68,8 +72,10 @@ export class SdkClientClassGenerator {
     private readonly generateEndpointMetadata: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly offsetSemantics: "item-index" | "page-index";
+    private readonly alwaysSendAuth: boolean;
 
     constructor({
+        caseConverter,
         intermediateRepresentation,
         errorResolver,
         packageResolver,
@@ -93,8 +99,10 @@ export class SdkClientClassGenerator {
         useDefaultRequestParameterValues,
         generateEndpointMetadata,
         parameterNaming,
-        offsetSemantics
+        offsetSemantics,
+        alwaysSendAuth
     }: SdkClientClassGenerator.Init) {
+        this.case = caseConverter;
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
         this.packageResolver = packageResolver;
@@ -119,6 +127,7 @@ export class SdkClientClassGenerator {
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.parameterNaming = parameterNaming;
         this.offsetSemantics = offsetSemantics;
+        this.alwaysSendAuth = alwaysSendAuth;
     }
 
     public generateService({
@@ -128,6 +137,7 @@ export class SdkClientClassGenerator {
         importsManager
     }: SdkClientClassGenerator.generateService.Args): GeneratedSdkClientClass {
         return new GeneratedSdkClientClassImpl({
+            caseConverter: this.case,
             isRoot,
             importsManager,
             exportsManager: this.exportsManager,
@@ -154,7 +164,8 @@ export class SdkClientClassGenerator {
             useDefaultRequestParameterValues: this.useDefaultRequestParameterValues,
             generateEndpointMetadata: this.generateEndpointMetadata,
             parameterNaming: this.parameterNaming,
-            offsetSemantics: this.offsetSemantics
+            offsetSemantics: this.offsetSemantics,
+            alwaysSendAuth: this.alwaysSendAuth
         });
     }
 }

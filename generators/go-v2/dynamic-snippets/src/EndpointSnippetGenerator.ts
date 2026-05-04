@@ -356,7 +356,7 @@ export class EndpointSnippetGenerator {
         }
         switch (auth.type) {
             case "basic":
-                return values.type === "basic" ? [this.getConstructorBasicAuthArg({ auth, values })] : [];
+                return values.type === "basic" ? this.getConstructorBasicAuthArgs({ auth, values }) : [];
             case "bearer":
                 return values.type === "bearer" ? [this.getConstructorBearerAuthArg({ auth, values })] : [];
             case "header":
@@ -378,27 +378,40 @@ export class EndpointSnippetGenerator {
         this.context.errors.add({ severity: Severity.Warning, message });
     }
 
-    private getConstructorBasicAuthArg({
+    private getConstructorBasicAuthArgs({
         auth,
         values
     }: {
         auth: FernIr.dynamic.BasicAuth;
         values: FernIr.dynamic.BasicAuthValues;
-    }): go.AstNode {
-        return go.codeblock((writer) => {
-            writer.writeNode(
-                go.invokeFunc({
-                    func: go.typeReference({
-                        name: "WithBasicAuth",
-                        importPath: this.context.getOptionImportPath()
-                    }),
-                    arguments_: [
-                        go.TypeInstantiation.string(values.username),
-                        go.TypeInstantiation.string(values.password)
-                    ]
-                })
-            );
-        });
+    }): go.AstNode[] {
+        // usernameOmit/passwordOmit may exist in newer IR versions
+        const authRecord = auth as unknown as Record<string, unknown>;
+        const usernameOmitted = !!authRecord.usernameOmit;
+        const passwordOmitted = !!authRecord.passwordOmit;
+        if (usernameOmitted && passwordOmitted) {
+            return [];
+        }
+        const arguments_: go.AstNode[] = [];
+        if (!usernameOmitted) {
+            arguments_.push(go.TypeInstantiation.string(values.username));
+        }
+        if (!passwordOmitted) {
+            arguments_.push(go.TypeInstantiation.string(values.password));
+        }
+        return [
+            go.codeblock((writer) => {
+                writer.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "WithBasicAuth",
+                            importPath: this.context.getOptionImportPath()
+                        }),
+                        arguments_
+                    })
+                );
+            })
+        ];
     }
 
     private getConstructorBaseUrlArg({

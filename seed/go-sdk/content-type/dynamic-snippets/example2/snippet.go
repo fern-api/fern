@@ -15,7 +15,7 @@ func do() {
         ),
     )
     request := &fern.NamedMixedPatchRequest{
-        AppId: fern.String(
+        AppID: fern.String(
             "appId",
         ),
         Instructions: fern.String(

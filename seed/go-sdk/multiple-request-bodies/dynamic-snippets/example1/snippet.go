@@ -29,7 +29,7 @@ func do() {
             "title",
         ),
     }
-    client.UploadJsonDocument(
+    client.UploadJSONDocument(
         context.TODO(),
         request,
     )

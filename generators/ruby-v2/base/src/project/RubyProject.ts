@@ -3,12 +3,14 @@ import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs
 import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import dedent from "dedent";
+import { Eta } from "eta";
 import { mkdir, readFile, writeFile } from "fs/promises";
-import { template } from "lodash-es";
 import { join as pathJoin } from "path";
 import { AsIsFiles, topologicalCompareAsIsFiles } from "../AsIs.js";
 import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext.js";
 import { RubocopFile } from "./RubocopFile.js";
+
+const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
 
 const GEMFILE_FILENAME = "Gemfile";
 const CUSTOM_GEMFILE_FILENAME = "Gemfile.custom";
@@ -16,6 +18,71 @@ const RAKEFILE_FILENAME = "Rakefile";
 const RUBOCOP_FILENAME = ".rubocop.yml";
 const CUSTOM_TEST_FILENAME = "custom.test.rb";
 const CUSTOM_GEMSPEC_FILENAME = "custom.gemspec.rb";
+
+interface Dependency {
+    name: string;
+    versionConstraint?: string;
+}
+
+function depToGemfileString(dep: Dependency): string {
+    return dep.versionConstraint != null ? `gem "${dep.name}", "${dep.versionConstraint}"` : `gem "${dep.name}"`;
+}
+
+function depToGemspecString(dep: Dependency): string {
+    return dep.versionConstraint != null
+        ? `spec.add_dependency "${dep.name}", "${dep.versionConstraint}"`
+        : `spec.add_dependency "${dep.name}"`;
+}
+
+function sanitizeRubyStringValue(value: string, field: string): string {
+    if (/["\r\n\\]/.test(value)) {
+        throw new Error(
+            `Invalid character in ${field} "${value}": values used in Ruby string ` +
+                `literals cannot contain unescaped quotes, backslashes, or newlines.`
+        );
+    }
+    return value;
+}
+
+function depsFromRecord(record: Record<string, string | undefined> | undefined): Dependency[] {
+    const deps = Object.entries(record ?? {});
+    if (deps == null || deps.length === 0) {
+        return [];
+    }
+
+    return deps.map(([packageName, versionConstraint]) => ({
+        name: sanitizeRubyStringValue(packageName, "package name"),
+        versionConstraint:
+            versionConstraint != null ? sanitizeRubyStringValue(versionConstraint, "version constraint") : undefined
+    }));
+}
+
+function mergedDependencies(baseDeps: Dependency[], overrideDeps: Dependency[]): Dependency[] {
+    const mergedDeps: Record<string, string | undefined> = {};
+    baseDeps.forEach((dep) => {
+        mergedDeps[dep.name] = dep.versionConstraint;
+    });
+    overrideDeps.forEach((dep) => {
+        mergedDeps[dep.name] = dep.versionConstraint;
+    });
+    return depsFromRecord(mergedDeps);
+}
+
+const BASE_DEV_DEPENDENCIES: Dependency[] = [
+    { name: "minitest", versionConstraint: "~> 5.16" },
+    { name: "minitest-rg" },
+    { name: "pry" },
+    { name: "rake", versionConstraint: "~> 13.0" },
+    { name: "rubocop", versionConstraint: "~> 1.21" },
+    { name: "rubocop-minitest" },
+    { name: "webmock" }
+];
+
+function hasBasicAuth(ir: FernIr.IntermediateRepresentation): boolean {
+    return ir.auth.schemes.some((s) => s.type === "basic");
+}
+
+const BASE_DEPENDENCIES: Dependency[] = [];
 
 /**
  * In memory representation of a Ruby project.
@@ -103,7 +170,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         // Use enableWireTests config to conditionally include wire-tests in the test command
         const enableWireTests = this.rubyContext.customConfig.enableWireTests ?? false;
 
-        const githubCiContents = template(githubCiTemplate)({ enableWireTests });
+        const githubCiContents = eta.renderString(githubCiTemplate, { enableWireTests });
         await writeFile(join(githubWorkflowsDir, RelativeFilePath.of("ci.yml")), githubCiContents);
     }
 
@@ -140,7 +207,9 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     gemNamespace: this.rubyContext.getRootModuleName(),
                     rootFolderName: this.rubyContext.getRootFolderName(),
                     customPagerClassName: this.rubyContext.customConfig.customPagerName,
-                    omitFernHeaders: this.rubyContext.customConfig.omitFernHeaders
+                    omitFernHeaders: this.rubyContext.customConfig.omitFernHeaders,
+                    maxRetries: this.rubyContext.customConfig.maxRetries,
+                    retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes
                 })
             );
         }
@@ -151,28 +220,36 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         gemNamespace,
         rootFolderName,
         customPagerClassName,
-        omitFernHeaders
+        omitFernHeaders,
+        maxRetries,
+        retryStatusCodes
     }: {
         filename: string;
         gemNamespace: string;
         rootFolderName: string;
         customPagerClassName?: string;
         omitFernHeaders?: boolean;
+        maxRetries?: number;
+        retryStatusCodes?: string;
     }): Promise<File> {
-        const contents = (await readFile(getAsIsFilepath(filename))).toString();
-        return new File(
-            this.getAsIsOutputFilename(filename),
-            this.getAsIsOutputDirectory(filename),
-            replaceTemplate({
-                contents,
-                variables: getTemplateVariables({
-                    gemNamespace,
-                    rootFolderName,
-                    customPagerClassName,
-                    omitFernHeaders
-                })
+        let rendered = replaceTemplate({
+            contents: (await readFile(getAsIsFilepath(filename))).toString(),
+            variables: getTemplateVariables({
+                gemNamespace,
+                rootFolderName,
+                customPagerClassName,
+                omitFernHeaders,
+                maxRetries
             })
-        );
+        });
+
+        const retryStatusCodesArray =
+            retryStatusCodes === "recommended"
+                ? "[408, 429, 502, 503, 504].freeze"
+                : "[408, 429, 500, 502, 503, 504, 521, 522, 524].freeze";
+        rendered = rendered.replace(/\{\{RETRY_STATUS_CODES_ARRAY\}\}/g, retryStatusCodesArray);
+
+        return new File(this.getAsIsOutputFilename(filename), this.getAsIsOutputDirectory(filename), rendered);
     }
 
     public getAsIsOutputDirectory(templateFileName: string): RelativeFilePath {
@@ -214,19 +291,21 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
 }
 
 function replaceTemplate({ contents, variables }: { contents: string; variables: Record<string, unknown> }): string {
-    return template(contents)(variables);
+    return eta.renderString(contents, variables);
 }
 
 function getTemplateVariables({
     gemNamespace,
     rootFolderName,
     customPagerClassName,
-    omitFernHeaders
+    omitFernHeaders,
+    maxRetries
 }: {
     gemNamespace: string;
     rootFolderName: string;
     customPagerClassName?: string;
     omitFernHeaders?: boolean;
+    maxRetries?: number;
 }): Record<string, unknown> {
     return {
         gem_namespace: gemNamespace,
@@ -235,7 +314,8 @@ function getTemplateVariables({
         // rootFolderName is used for require paths (matches actual file/folder names)
         rootFolderName,
         custom_pager_class_name: customPagerClassName ?? "CustomPager",
-        omitFernHeaders: omitFernHeaders ?? false
+        omitFernHeaders: omitFernHeaders ?? false,
+        defaultMaxRetries: maxRetries ?? 2
     };
 }
 
@@ -252,68 +332,64 @@ declare namespace GemspecFile {
 
 class GemspecFile {
     private context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+    private readonly baseDependencies: Dependency[];
 
     public constructor({ context, project }: GemspecFile.Args) {
         this.context = context;
-    }
-
-    private getExtraDependenciesString(): string {
-        const extraDependencies = this.context.customConfig.extraDependencies;
-        if (extraDependencies == null || Object.keys(extraDependencies).length === 0) {
-            return "";
-        }
-
-        const dependencyLines = Object.entries(extraDependencies).map(
-            ([packageName, versionConstraint]) => `spec.add_dependency "${packageName}", "${versionConstraint}"`
-        );
-
-        return "\n" + dependencyLines.join("\n");
+        this.baseDependencies = hasBasicAuth(context.ir)
+            ? [...BASE_DEPENDENCIES, { name: "base64" }]
+            : BASE_DEPENDENCIES;
     }
 
     public async toString(): Promise<string> {
         const moduleFolderName = this.context.getRootFolderName();
         const moduleName = this.context.getRootModuleName();
         const gemName = this.context.getGemName();
-        const extraDependenciesString = this.getExtraDependenciesString();
 
-        return dedent`
+        const dependencies = mergedDependencies(
+            this.baseDependencies,
+            depsFromRecord(this.context.customConfig.extraDependencies)
+        );
+
+        return (
+            dedent`
             # frozen_string_literal: true
 
             require_relative "lib/${moduleFolderName}/version"
-            require_relative "${CUSTOM_GEMSPEC_FILENAME}"
+            require_relative "${CUSTOM_GEMSPEC_FILENAME.replace(".rb", "")}"
 
-            # Note: A handful of these fields are required as part of the Ruby specification.
+            # NOTE: A handful of these fields are required as part of the Ruby specification.
             #       You can change them here or overwrite them in the custom gemspec file.
             Gem::Specification.new do |spec|
-            spec.name = "${gemName}"
-            spec.authors = ["${moduleName}"] 
-            spec.version = ${moduleName}::VERSION
-            spec.summary = "Ruby client library for the ${moduleName} API"
-            spec.description = "The ${moduleName} Ruby library provides convenient access to the ${moduleName} API from Ruby."
-            spec.required_ruby_version = ">= 3.3.0"
-            spec.metadata["rubygems_mfa_required"] = "true"
-            
-            # Specify which files should be added to the gem when it is released.
-            # The \`git ls-files -z\` loads the files in the RubyGem that have been added into git.
-            gemspec = File.basename(__FILE__)
-            spec.files = IO.popen(%w[git ls-files -z], chdir: __dir__, err: IO::NULL) do |ls|
+              spec.name = "${gemName}"
+              spec.authors = ["${moduleName}"]
+              spec.version = ${moduleName}::VERSION
+              spec.summary = "Ruby client library for the ${moduleName} API"
+              spec.description = "The ${moduleName} Ruby library provides convenient access to the ${moduleName} API from Ruby."
+              spec.required_ruby_version = ">= 3.3.0"
+              spec.metadata["rubygems_mfa_required"] = "true"
+
+              # Specify which files should be added to the gem when it is released.
+              # The \`git ls-files -z\` loads the files in the RubyGem that have been added into git.
+              gemspec = File.basename(__FILE__)
+              spec.files = IO.popen(%w[git ls-files -z], chdir: __dir__, err: IO::NULL) do |ls|
                 ls.readlines("\x0", chomp: true).reject do |f|
-                (f == gemspec) ||
+                  (f == gemspec) ||
                     f.start_with?(*%w[bin/ test/ spec/ features/ .git appveyor Gemfile])
                 end
+              end
+              spec.bindir = "exe"
+              spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
+              spec.require_paths = ["lib"]
+${dependencies.length > 0 ? "              " + dependencies.map(depToGemspecString).join("\n              ") + "\n" : ""}              # For more information and examples about making a new gem, check out our
+              # guide at: https://bundler.io/guides/creating_gem.html
+
+              # Load custom gemspec configuration if it exists
+              custom_gemspec_file = File.join(__dir__, "${CUSTOM_GEMSPEC_FILENAME}")
+              add_custom_gemspec_data(spec) if File.exist?(custom_gemspec_file)
             end
-            spec.bindir = "exe"
-            spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
-            spec.require_paths = ["lib"]
-${extraDependenciesString}
-            # For more information and examples about making a new gem, check out our
-            # guide at: https://bundler.io/guides/creating_gem.html
-            
-            # Load custom gemspec configuration if it exists
-            custom_gemspec_file = File.join(__dir__, "${CUSTOM_GEMSPEC_FILENAME}")
-            add_custom_gemspec_data(spec) if File.exist?(custom_gemspec_file)
-            end
-        `;
+        ` + "\n"
+        );
     }
 }
 
@@ -334,24 +410,26 @@ class CustomGemspecFile {
     public async toString(): Promise<string> {
         const moduleName = this.context.getRootModuleName();
 
-        return dedent`
+        return (
+            dedent`
             # frozen_string_literal: true
 
             # Custom gemspec configuration file
-            # This file is automatically loaded by the main gemspec file. The 'spec' variable is available 
-            # in this context from the main gemspec file. You can modify this file to add custom metadata, 
+            # This file is automatically loaded by the main gemspec file. The 'spec' variable is available
+            # in this context from the main gemspec file. You can modify this file to add custom metadata,
             # dependencies, or other gemspec configurations. If you do make changes to this file, you will
             # need to add it to the .fernignore file to prevent your changes from being overwritten.
 
             def add_custom_gemspec_data(spec)
-                # Example custom configurations (uncomment and modify as needed)
+              # Example custom configurations (uncomment and modify as needed)
 
-                # spec.authors = ["Your name"]
-                # spec.email = ["your.email@example.com"]
-                # spec.homepage = "https://github.com/your-org/${moduleName.toLowerCase()}-ruby"
-                # spec.license = "Your license"
+              # spec.authors = ["Your name"]
+              # spec.email = ["your.email@example.com"]
+              # spec.homepage = "https://github.com/your-org/${moduleName.toLowerCase()}-ruby"
+              # spec.license = "Your license"
             end
-        `;
+        ` + "\n"
+        );
     }
 }
 
@@ -368,48 +446,29 @@ class Gemfile {
         this.context = context;
     }
 
-    private getExtraDevDependenciesString(): string {
-        const extraDevDependencies = this.context.customConfig.extraDevDependencies;
-        if (extraDevDependencies == null || Object.keys(extraDevDependencies).length === 0) {
-            return "";
-        }
-
-        const dependencyLines = Object.entries(extraDevDependencies).map(
-            ([packageName, versionConstraint]) => `gem "${packageName}", "${versionConstraint}"`
+    public async toString(): Promise<string> {
+        const devDependencies = mergedDependencies(
+            BASE_DEV_DEPENDENCIES,
+            depsFromRecord(this.context.customConfig.extraDevDependencies)
         );
 
-        return "\n" + dependencyLines.join("\n");
-    }
-
-    public async toString(): Promise<string> {
-        const extraDevDependenciesString = this.getExtraDevDependenciesString();
-
-        return dedent`
+        return (
+            dedent`
             # frozen_string_literal: true
 
             source "https://rubygems.org"
 
-                gemspec
+            gemspec
 
-                group :test, :development do
-                gem "rake", "~> 13.0"
-
-                gem "minitest", "~> 5.16"
-                gem "minitest-rg"
-
-                gem "rubocop", "~> 1.21"
-                gem "rubocop-minitest"
-
-                gem "pry"
-
-                gem "webmock"
-${extraDevDependenciesString}
+            group :test, :development do
+              ${devDependencies.map(depToGemfileString).join("\n              ")}
             end
 
             # Load custom Gemfile configuration if it exists
             custom_gemfile = File.join(__dir__, "${CUSTOM_GEMFILE_FILENAME}")
             eval_gemfile(custom_gemfile) if File.exist?(custom_gemfile)
-        `;
+        ` + "\n"
+        );
     }
 }
 
@@ -427,7 +486,8 @@ class CustomGemfile {
     }
 
     public async toString(): Promise<string> {
-        return dedent`
+        return (
+            dedent`
             # frozen_string_literal: true
 
             # Custom Gemfile configuration file
@@ -442,7 +502,8 @@ class CustomGemfile {
             # end
 
             # Add your custom gem dependencies here
-        `;
+        ` + "\n"
+        );
     }
 }
 
@@ -460,7 +521,8 @@ class Rakefile {
     }
 
     public async toString(): Promise<string> {
-        return dedent`
+        return (
+            dedent`
             # frozen_string_literal: true
 
             require "bundler/gem_tasks"
@@ -478,10 +540,11 @@ class Rakefile {
 
             # Run only the custom test file
             Minitest::TestTask.create(:customtest) do |t|
-            t.libs << "test"
-            t.test_globs = ["test/${CUSTOM_TEST_FILENAME}"]
+              t.libs << "test"
+              t.test_globs = ["test/${CUSTOM_TEST_FILENAME}"]
             end
-        `;
+        ` + "\n"
+        );
     }
 }
 
@@ -506,25 +569,25 @@ class CustomTestFile {
     }
 
     public toString(): string {
-        return dedent`
+        return (
+            dedent`
             # frozen_string_literal: true
 
-            =begin
-            This is a custom test file, if you wish to add more tests
-            to your SDK.
-            Be sure to mark this file in \`.fernignore\`.
-            
-            If you include example requests/responses in your fern definition,
-            you will have tests automatically generated for you.
-            =end
+            # This is a custom test file, if you wish to add more tests
+            # to your SDK.
+            # Be sure to mark this file in \`.fernignore\`.
+            #
+            # If you include example requests/responses in your fern definition,
+            # you will have tests automatically generated for you.
 
             # This test is run via command line: rake customtest
             describe "Custom Test" do
-                it "Default" do
-                    refute false
-                end
+              it "Default" do
+                refute false
+              end
             end
-        `;
+        ` + "\n"
+        );
     }
 
     public async writeFile(): Promise<void> {
@@ -561,13 +624,15 @@ class VersionFile {
         const seedName = this.context.getRootModuleName();
         const version = this.context.getVersionFromConfig();
 
-        return dedent`
+        return (
+            dedent`
             # frozen_string_literal: true
 
             module ${seedName}
-                VERSION = "${version}"
+              VERSION = "${version}"
             end
-        `;
+        ` + "\n"
+        );
     }
 
     public async writeFile(): Promise<void> {
@@ -669,7 +734,7 @@ class ModuleFile {
             this.baseContents +
             Array.from(relativeImportPaths)
                 .filter((importPath) => importPath.endsWith(".rb"))
-                .map((importPath) => `require_relative '${importPath.replaceAll(".rb", "")}'`)
+                .map((importPath) => `require_relative "${importPath.replaceAll(".rb", "")}"`)
                 .join("\n");
 
         // Add optional user require paths hook at the end (only if configured)
@@ -677,7 +742,9 @@ class ModuleFile {
         const requirePaths = this.context.customConfig?.requirePaths;
         if (requirePaths != null && requirePaths.length > 0) {
             const rootFolder = this.context.getRootFolderName();
-            const pathsArray = requirePaths.map((p) => `"${rootFolder}/${p}"`).join(", ");
+            const pathsArray = requirePaths
+                .map((p) => `"${rootFolder}/${sanitizeRubyStringValue(p, "require path")}"`)
+                .join(", ");
             const requirePathsHook = `
 
 # Load user-defined files if present (e.g., for Sentry integration)
@@ -687,10 +754,10 @@ class ModuleFile {
   require_relative relative_path if File.exist?(absolute_path)
 end`;
 
-            return dedent`${contents}` + requirePathsHook;
+            return dedent`${contents}` + requirePathsHook + "\n";
         }
 
-        return dedent`${contents}`;
+        return dedent`${contents}` + "\n";
     }
 
     public async writeFile(): Promise<void> {

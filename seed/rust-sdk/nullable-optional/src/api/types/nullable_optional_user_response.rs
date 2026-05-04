@@ -25,7 +25,7 @@ pub struct UserResponse {
 
 impl UserResponse {
     pub fn builder() -> UserResponseBuilder {
-        UserResponseBuilder::default()
+        <UserResponseBuilder as Default>::default()
     }
 }
 

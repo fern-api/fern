@@ -7,9 +7,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class PolicyType {
-    public static final PolicyType HEALTH = new PolicyType(Value.HEALTH, "HEALTH");
-
     public static final PolicyType AUTO = new PolicyType(Value.AUTO, "AUTO");
+
+    public static final PolicyType HEALTH = new PolicyType(Value.HEALTH, "HEALTH");
 
     public static final PolicyType HOME = new PolicyType(Value.HOME, "HOME");
 
@@ -46,10 +46,10 @@ public final class PolicyType {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case HEALTH:
-                return visitor.visitHealth();
             case AUTO:
                 return visitor.visitAuto();
+            case HEALTH:
+                return visitor.visitHealth();
             case HOME:
                 return visitor.visitHome();
             case LIFE:
@@ -63,10 +63,10 @@ public final class PolicyType {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static PolicyType valueOf(String value) {
         switch (value) {
-            case "HEALTH":
-                return HEALTH;
             case "AUTO":
                 return AUTO;
+            case "HEALTH":
+                return HEALTH;
             case "HOME":
                 return HOME;
             case "LIFE":

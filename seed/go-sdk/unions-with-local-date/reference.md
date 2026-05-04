@@ -1,6 +1,6 @@
 # Reference
 ## Bigunion
-<details><summary><code>client.Bigunion.Get(Id) -> *fern.BigUnion</code></summary>
+<details><summary><code>client.Bigunion.Get(ID) -> *fern.BigUnion</code></summary>
 <dl>
 <dd>
 
@@ -61,7 +61,7 @@ request := &fern.BigUnion{
         NormalSweet: &fern.NormalSweet{
             Value: "value",
         },
-        Id: "id",
+        ID: "id",
         CreatedAt: fern.MustParseDateTime(
             "2024-01-15T09:30:00Z",
         ),
@@ -120,7 +120,7 @@ request := []*fern.BigUnion{
             NormalSweet: &fern.NormalSweet{
                 Value: "value",
             },
-            Id: "id",
+            ID: "id",
             CreatedAt: fern.MustParseDateTime(
                 "2024-01-15T09:30:00Z",
             ),
@@ -134,7 +134,7 @@ request := []*fern.BigUnion{
             NormalSweet: &fern.NormalSweet{
                 Value: "value",
             },
-            Id: "id",
+            ID: "id",
             CreatedAt: fern.MustParseDateTime(
                 "2024-01-15T09:30:00Z",
             ),
@@ -177,7 +177,7 @@ client.Bigunion.UpdateMany(
 </details>
 
 ## Types
-<details><summary><code>client.Types.Get(Id) -> *fern.UnionWithTime</code></summary>
+<details><summary><code>client.Types.Get(ID) -> *fern.UnionWithTime</code></summary>
 <dl>
 <dd>
 
@@ -267,7 +267,7 @@ client.Types.Update(
 </details>
 
 ## Union
-<details><summary><code>client.Union.Get(Id) -> *fern.Shape</code></summary>
+<details><summary><code>client.Union.Get(ID) -> *fern.Shape</code></summary>
 <dl>
 <dd>
 
@@ -328,7 +328,7 @@ request := &fern.Shape{
         Circle: &fern.Circle{
             Radius: 1.1,
         },
-        Id: "id",
+        ID: "id",
     }
 client.Union.Update(
         context.TODO(),

@@ -29,7 +29,7 @@ impl SubmissionStatusForTestCase {
         Self::Graded { data }
     }
 
-    pub fn graded_v_2(value: TestCaseGrade) -> Self {
+    pub fn graded_v2(value: TestCaseGrade) -> Self {
         Self::GradedV2 { value }
     }
 

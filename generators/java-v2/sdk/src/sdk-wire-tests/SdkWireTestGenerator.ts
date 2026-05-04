@@ -1,4 +1,4 @@
-import { File } from "@fern-api/base-generator";
+import { File, GeneratorError, getOriginalName } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { java } from "@fern-api/java-ast";
@@ -12,6 +12,7 @@ import { TestMethodBuilder } from "./builders/TestMethodBuilder.js";
 import { SnippetExtractor } from "./extractors/SnippetExtractor.js";
 import { WireTestDataExtractor, WireTestExample } from "./extractors/TestDataExtractor.js";
 import { TestResourceWriter } from "./resources/TestResourceWriter.js";
+
 /**
  * Generates wire tests that validate SDK adherence to API specifications.
  */
@@ -142,7 +143,7 @@ export class SdkWireTestGenerator {
         );
 
         if (totalEndpointsProcessed > 0 && totalEndpointsGenerated === 0) {
-            throw new Error(
+            throw GeneratorError.internalError(
                 `Wire test generation failed: 0/${totalEndpointsProcessed} endpoints succeeded. ` +
                     `This indicates a systemic issue with snippet generation or service mapping. ` +
                     `Check logs above for specific endpoint failures.`
@@ -182,14 +183,16 @@ export class SdkWireTestGenerator {
                 if (firstDynamicExample) {
                     try {
                         this.context.logger.debug(
-                            `Generating snippet for endpoint ${endpoint.id} (${endpoint.name.originalName}) with FernIr.dynamic endpoint ${dynamicEndpoint.declaration.name.originalName}`
+                            `Generating snippet for endpoint ${endpoint.id} (${getOriginalName(endpoint.name)}) with FernIr.dynamic endpoint ${getOriginalName(dynamicEndpoint.declaration.name)}`
                         );
 
                         const expectedServiceName = serviceName.toLowerCase();
                         // Use the same fallback strategy as IR service resolution
                         const dynamicServiceName = (
-                            dynamicEndpoint.declaration.fernFilepath?.allParts?.[0]?.originalName ||
-                            dynamicEndpoint.declaration.name.originalName ||
+                            (dynamicEndpoint.declaration.fernFilepath?.allParts?.[0] != null
+                                ? getOriginalName(dynamicEndpoint.declaration.fernFilepath.allParts[0])
+                                : undefined) ||
+                            getOriginalName(dynamicEndpoint.declaration.name) ||
                             "Service"
                         ).toLowerCase();
 
@@ -215,11 +218,11 @@ export class SdkWireTestGenerator {
                         const testMethodCall = snippetExtractor.extractMethodCall(fullSnippet);
                         if (testMethodCall === null) {
                             this.context.logger.debug(
-                                `Skipping endpoint ${endpoint.id} (${endpoint.name.originalName}): Could not extract method call from snippet`
+                                `Skipping endpoint ${endpoint.id} (${getOriginalName(endpoint.name)}): Could not extract method call from snippet`
                             );
                             skippedEndpoints.push({
                                 endpointId: endpoint.id,
-                                endpointName: endpoint.name.originalName,
+                                endpointName: getOriginalName(endpoint.name),
                                 reason: `Could not extract method call from snippet - likely service mismatch or invalid snippet format`
                             });
                             continue;
@@ -241,11 +244,11 @@ export class SdkWireTestGenerator {
                     } catch (error) {
                         const errorMessage = extractErrorMessage(error);
                         this.context.logger.debug(
-                            `Skipping endpoint ${endpoint.id} (${endpoint.name.originalName}): Failed to generate snippet - ${errorMessage}`
+                            `Skipping endpoint ${endpoint.id} (${getOriginalName(endpoint.name)}): Failed to generate snippet - ${errorMessage}`
                         );
                         skippedEndpoints.push({
                             endpointId: endpoint.id,
-                            endpointName: endpoint.name.originalName,
+                            endpointName: getOriginalName(endpoint.name),
                             reason: `Snippet generation failed: ${errorMessage}`
                         });
                     }
@@ -266,11 +269,11 @@ export class SdkWireTestGenerator {
                         const testMethodCall = snippetExtractor.extractMethodCall(fullSnippet);
                         if (testMethodCall === null) {
                             this.context.logger.debug(
-                                `Skipping endpoint ${endpoint.id} (${endpoint.name.originalName}): Could not extract method call from default snippet`
+                                `Skipping endpoint ${endpoint.id} (${getOriginalName(endpoint.name)}): Could not extract method call from default snippet`
                             );
                             skippedEndpoints.push({
                                 endpointId: endpoint.id,
-                                endpointName: endpoint.name.originalName,
+                                endpointName: getOriginalName(endpoint.name),
                                 reason: `Could not extract method call from default snippet - likely service mismatch or invalid snippet format`
                             });
                             continue;
@@ -289,11 +292,11 @@ export class SdkWireTestGenerator {
                     } catch (error) {
                         const errorMessage = extractErrorMessage(error);
                         this.context.logger.debug(
-                            `Skipping endpoint ${endpoint.id} (${endpoint.name.originalName}): Failed to generate default snippet - ${errorMessage}`
+                            `Skipping endpoint ${endpoint.id} (${getOriginalName(endpoint.name)}): Failed to generate default snippet - ${errorMessage}`
                         );
                         skippedEndpoints.push({
                             endpointId: endpoint.id,
-                            endpointName: endpoint.name.originalName,
+                            endpointName: getOriginalName(endpoint.name),
                             reason: `Default snippet generation failed: ${errorMessage}`
                         });
                     }
@@ -347,7 +350,7 @@ export class SdkWireTestGenerator {
         // have endpoints with the same HTTP method and path pattern
         const response = await dynamicSnippetsGenerator.generate(snippetRequest, { endpointId });
         if (!response.snippet) {
-            throw new Error("No snippet generated for example");
+            throw GeneratorError.internalError("No snippet generated for example");
         }
         return response.snippet;
     }
@@ -358,7 +361,7 @@ export class SdkWireTestGenerator {
         testExample: WireTestExample
     ): string {
         const serviceNameLower = serviceName.toLowerCase();
-        const methodName = endpoint.name.camelCase.safeName;
+        const methodName = this.context.caseConverter.camelSafe(endpoint.name);
 
         let pathParamsStr = "";
         if (testExample.request.pathParams && Object.keys(testExample.request.pathParams).length > 0) {
@@ -386,7 +389,9 @@ export class SdkWireTestGenerator {
 
         for (const service of Object.values(this.context.ir.services)) {
             const serviceName =
-                service.name?.fernFilepath?.allParts?.map((part) => part.pascalCase.safeName).join("") || "Service";
+                service.name?.fernFilepath?.allParts
+                    ?.map((part) => this.context.caseConverter.pascalSafe(part))
+                    .join("") || "Service";
 
             endpointsByService.set(serviceName, service.endpoints);
         }
@@ -411,7 +416,7 @@ export class SdkWireTestGenerator {
 
             const dynamicEndpoint = dynamicIr.endpoints[endpoint.id];
             if (!dynamicEndpoint) {
-                throw new Error(
+                throw GeneratorError.internalError(
                     `Dynamic endpoint not found for ${endpoint.id}. This is likely due to a service mapping issue in the FernIr.dynamic IR.`
                 );
             }
@@ -465,7 +470,7 @@ export class SdkWireTestGenerator {
                 return snippet;
             } catch (error) {
                 const errorMessage = extractErrorMessage(error);
-                throw new Error(
+                throw GeneratorError.internalError(
                     `Service mismatch (expected: '${expectedServiceName}', got: '${dynamicServiceName}'). ` +
                         `Correction attempt failed: ${errorMessage}. ` +
                         `This typically occurs with V1 ungrouped endpoints or incorrect FernIr.dynamic IR service mapping.`
@@ -530,7 +535,7 @@ export class SdkWireTestGenerator {
             transformedSnippet = transformedSnippet.replace(/Optional</g, "Iterable<");
         }
 
-        if (endpoint.name.originalName === "listUsernames") {
+        if (getOriginalName(endpoint.name) === "listUsernames") {
             transformedSnippet = transformedSnippet.replace(/\.listWithCursorPagination\(/g, ".listUsernames(");
             transformedSnippet = transformedSnippet.replace(
                 /ListUsersCursorPaginationRequest/g,
@@ -538,7 +543,7 @@ export class SdkWireTestGenerator {
             );
         }
 
-        if (endpoint.name.originalName === "listWithBodyCursorPagination") {
+        if (getOriginalName(endpoint.name) === "listWithBodyCursorPagination") {
             transformedSnippet = transformedSnippet.replace(
                 /\.listWithMixedTypeCursorPagination\(/g,
                 ".listWithBodyCursorPagination("
@@ -558,7 +563,7 @@ export class SdkWireTestGenerator {
             imports.push(`${packageName}.${resourcePath}.WithCursor`);
         }
 
-        if (endpoint.name.originalName === "listWithBodyOffsetPagination") {
+        if (getOriginalName(endpoint.name) === "listWithBodyOffsetPagination") {
             transformedSnippet = transformedSnippet.replace(
                 /\.listWithMixedTypeCursorPagination\(/g,
                 ".listWithBodyOffsetPagination("

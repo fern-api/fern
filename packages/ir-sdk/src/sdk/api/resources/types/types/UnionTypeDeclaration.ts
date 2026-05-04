@@ -3,11 +3,16 @@
 import type * as FernIr from "../../../index.js";
 
 export interface UnionTypeDeclaration {
-    discriminant: FernIr.NameAndWireValue;
+    discriminant: FernIr.NameAndWireValueOrString;
     /** A list of other types to inherit from */
     extends: FernIr.DeclaredTypeName[];
     types: FernIr.SingleUnionType[];
     baseProperties: FernIr.ObjectProperty[];
+    /**
+     * The default union variant to use when the discriminant field is missing from input.
+     * When set, generators should fall back to this variant rather than an unknown/error type.
+     */
+    default: FernIr.SingleUnionType | undefined;
     /**
      * Context for where the discriminator exists. Defaults to "data" for backward compatibility.
      * "data" means discriminator is within the union data itself.

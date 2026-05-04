@@ -8,7 +8,7 @@ pub struct DebugKeyValuePairs {
 
 impl DebugKeyValuePairs {
     pub fn builder() -> DebugKeyValuePairsBuilder {
-        DebugKeyValuePairsBuilder::default()
+        <DebugKeyValuePairsBuilder as Default>::default()
     }
 }
 

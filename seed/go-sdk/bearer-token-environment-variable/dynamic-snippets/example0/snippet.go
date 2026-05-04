@@ -12,8 +12,8 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-        option.WithApiKey(
-            "<token>",
+        option.WithAPIKey(
+            "YOUR_API_KEY",
         ),
     )
     client.Service.GetWithBearerToken(

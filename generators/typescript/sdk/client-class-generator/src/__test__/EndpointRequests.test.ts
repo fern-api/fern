@@ -1,6 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import {
+    caseConverter,
     casingsGenerator,
     createHttpEndpoint,
     createHttpService,
@@ -27,11 +28,11 @@ const OPTIONAL_STRING_TYPE = FernIr.TypeReference.container(FernIr.ContainerType
 const INTEGER_TYPE = FernIr.TypeReference.primitive({ v1: "INTEGER", v2: undefined });
 
 /**
- * Creates a mock SdkContext for endpoint request tests.
+ * Creates a mock FileContext for endpoint request tests.
  * This is more comprehensive than the basic mock contexts because endpoint requests
  * exercise many more context properties (requestWrapper, sdkInlinedRequestBodySchema, etc.).
  */
-// biome-ignore lint/suspicious/noExplicitAny: test mock needs to satisfy complex SdkContext interface
+// biome-ignore lint/suspicious/noExplicitAny: test mock needs to satisfy complex FileContext interface
 function createEndpointRequestMockContext(opts?: { shouldInlinePathParams?: boolean }): any {
     const context = {
         includeSerdeLayer: true,
@@ -196,6 +197,19 @@ function createEndpointRequestMockContext(opts?: { shouldInlinePathParams?: bool
                     }
                 }
             },
+            urlUtils: {
+                queryBuilder: {
+                    _invoke: () =>
+                        ts.factory.createCallExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier("core"), "url"),
+                                "queryBuilder"
+                            ),
+                            undefined,
+                            []
+                        )
+                }
+            },
             auth: {
                 AuthRequest: {
                     _getReferenceToType: () => ts.factory.createTypeReferenceNode("core.AuthRequest")
@@ -237,7 +251,8 @@ function createEndpointRequestMockContext(opts?: { shouldInlinePathParams?: bool
         },
         authProvider: {
             isAuthEndpoint: () => false
-        }
+        },
+        case: caseConverter
     };
     return context;
 }
@@ -269,20 +284,20 @@ function createMockGeneratedRequestWrapper() {
         getAllPathParameters: () => [] as FernIr.PathParameter[],
         getReferencedBodyPropertyName: () => "body",
         getPropertyNameOfQueryParameter: (qp: FernIr.QueryParameter) => ({
-            propertyName: qp.name.name.camelCase.unsafeName,
-            safeName: qp.name.name.camelCase.unsafeName
+            propertyName: caseConverter.camelUnsafe(qp.name),
+            safeName: caseConverter.camelUnsafe(qp.name)
         }),
         getPropertyNameOfPathParameter: (pp: FernIr.PathParameter) => ({
-            propertyName: pp.name.camelCase.unsafeName,
-            safeName: pp.name.camelCase.unsafeName
+            propertyName: caseConverter.camelUnsafe(pp.name),
+            safeName: caseConverter.camelUnsafe(pp.name)
         }),
         getPropertyNameOfNonLiteralHeader: (h: FernIr.HttpHeader) => ({
-            propertyName: h.name.name.camelCase.unsafeName,
-            safeName: h.name.name.camelCase.unsafeName
+            propertyName: caseConverter.camelUnsafe(h.name),
+            safeName: caseConverter.camelUnsafe(h.name)
         }),
         getInlinedRequestBodyPropertyKey: (p: FernIr.InlinedRequestBodyProperty) => ({
-            propertyName: p.name.name.camelCase.unsafeName,
-            safeName: p.name.name.camelCase.unsafeName
+            propertyName: caseConverter.camelUnsafe(p.name),
+            safeName: caseConverter.camelUnsafe(p.name)
         }),
         generateExample: () => undefined,
         withQueryParameter: ({
@@ -405,6 +420,7 @@ function createBytesEndpointRequest(opts?: {
         generatedSdkClientClass: createMockSdkClientClass(),
         retainOriginalCasing: false,
         parameterNaming: "default",
+        caseConverter,
         // biome-ignore lint/suspicious/noExplicitAny: test mock
         exportsManager: {} as any
     });
@@ -424,7 +440,8 @@ describe("GeneratedDefaultEndpointRequest", () => {
                 requestBody: undefined,
                 generatedSdkClientClass: createMockSdkClientClass(),
                 retainOriginalCasing: false,
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             const params = request.getEndpointParameters(context);
@@ -445,7 +462,8 @@ describe("GeneratedDefaultEndpointRequest", () => {
                 requestBody: undefined,
                 generatedSdkClientClass: createMockSdkClientClass(),
                 retainOriginalCasing: false,
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             const params = request.getEndpointParameters(context);
@@ -470,7 +488,8 @@ describe("GeneratedDefaultEndpointRequest", () => {
                 }),
                 generatedSdkClientClass: createMockSdkClientClass(),
                 retainOriginalCasing: false,
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             const params = request.getEndpointParameters(context);
@@ -490,7 +509,8 @@ describe("GeneratedDefaultEndpointRequest", () => {
                 requestBody: FernIr.HttpRequestBody.inlinedRequestBody(createInlinedRequestBody()),
                 generatedSdkClientClass: createMockSdkClientClass(),
                 retainOriginalCasing: false,
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             const params = request.getEndpointParameters(context);
@@ -513,7 +533,8 @@ describe("GeneratedDefaultEndpointRequest", () => {
                 requestBody: undefined,
                 generatedSdkClientClass: createMockSdkClientClass(),
                 retainOriginalCasing: false,
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext({ shouldInlinePathParams: true });
             const params = request.getEndpointParameters(context);
@@ -541,7 +562,8 @@ describe("GeneratedDefaultEndpointRequest", () => {
                 }),
                 generatedSdkClientClass: createMockSdkClientClass(),
                 retainOriginalCasing: false,
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             const params = request.getEndpointParameters(context);
@@ -569,7 +591,8 @@ describe("GeneratedDefaultEndpointRequest", () => {
                 requestBody: FernIr.HttpRequestBody.inlinedRequestBody(inlinedBody),
                 generatedSdkClientClass: createMockSdkClientClass(),
                 retainOriginalCasing: false,
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             // Need to call getBuildRequestStatements first to initialize query params
@@ -596,7 +619,8 @@ describe("GeneratedDefaultEndpointRequest", () => {
                 requestBody: referenceBody,
                 generatedSdkClientClass: createMockSdkClientClass(),
                 retainOriginalCasing: false,
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             request.getBuildRequestStatements(context);
@@ -623,7 +647,8 @@ describe("GeneratedDefaultEndpointRequest", () => {
                 requestBody: httpBody,
                 generatedSdkClientClass: createMockSdkClientClass(),
                 retainOriginalCasing: false,
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             request.getBuildRequestStatements(context);
@@ -641,7 +666,8 @@ describe("GeneratedDefaultEndpointRequest", () => {
                 requestBody: undefined,
                 generatedSdkClientClass: createMockSdkClientClass(),
                 retainOriginalCasing: false,
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             request.getBuildRequestStatements(context);
@@ -661,7 +687,8 @@ describe("GeneratedDefaultEndpointRequest", () => {
                 requestBody: undefined,
                 generatedSdkClientClass: createMockSdkClientClass(),
                 retainOriginalCasing: false,
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             request.getBuildRequestStatements(context);
@@ -682,7 +709,8 @@ describe("GeneratedDefaultEndpointRequest", () => {
                 requestBody: undefined,
                 generatedSdkClientClass: createMockSdkClientClass(),
                 retainOriginalCasing: false,
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             const statements = request.getBuildRequestStatements(context);
@@ -723,7 +751,8 @@ describe("GeneratedDefaultEndpointRequest", () => {
                 requestBody: FernIr.HttpRequestBody.inlinedRequestBody(inlinedBody),
                 generatedSdkClientClass: createMockSdkClientClass(),
                 retainOriginalCasing: false,
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const statements = request.getBuildRequestStatements(context);
             const serialized = serializeStatements(statements);
@@ -742,7 +771,8 @@ describe("GeneratedDefaultEndpointRequest", () => {
                 requestBody: undefined,
                 generatedSdkClientClass: createMockSdkClientClass(),
                 retainOriginalCasing: false,
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             expect(request.getExampleEndpointImports()).toEqual([]);
         });
@@ -759,7 +789,8 @@ describe("GeneratedDefaultEndpointRequest", () => {
                 requestBody: undefined,
                 generatedSdkClientClass: createMockSdkClientClass(),
                 retainOriginalCasing: false,
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             expect(request.getReferenceToRequestBody(context)).toBeUndefined();
@@ -781,7 +812,8 @@ describe("GeneratedDefaultEndpointRequest", () => {
                 }),
                 generatedSdkClientClass: createMockSdkClientClass(),
                 retainOriginalCasing: false,
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             const ref = request.getReferenceToRequestBody(context);
@@ -801,7 +833,8 @@ describe("GeneratedDefaultEndpointRequest", () => {
                 requestBody: undefined,
                 generatedSdkClientClass: createMockSdkClientClass(),
                 retainOriginalCasing: false,
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             expect(() => request.getReferenceToPathParameter("userId", context)).toThrow();
@@ -830,7 +863,8 @@ describe("GeneratedFileUploadEndpointRequest", () => {
                 allowExtraFields: false,
                 omitUndefined: false,
                 formDataSupport: "Node18",
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             const params = request.getEndpointParameters(context);
@@ -858,7 +892,8 @@ describe("GeneratedFileUploadEndpointRequest", () => {
                 allowExtraFields: false,
                 omitUndefined: false,
                 formDataSupport: "Node16",
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             const params = request.getEndpointParameters(context);
@@ -888,7 +923,8 @@ describe("GeneratedFileUploadEndpointRequest", () => {
                 allowExtraFields: false,
                 omitUndefined: false,
                 formDataSupport: "Node18",
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             const params = request.getEndpointParameters(context);
@@ -916,7 +952,8 @@ describe("GeneratedFileUploadEndpointRequest", () => {
                 allowExtraFields: false,
                 omitUndefined: false,
                 formDataSupport: "Node18",
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             const params = request.getEndpointParameters(context);
@@ -949,7 +986,8 @@ describe("GeneratedFileUploadEndpointRequest", () => {
                 allowExtraFields: false,
                 omitUndefined: false,
                 formDataSupport: "Node18",
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             context.inlineFileProperties = true;
@@ -981,7 +1019,8 @@ describe("GeneratedFileUploadEndpointRequest", () => {
                 allowExtraFields: false,
                 omitUndefined: false,
                 formDataSupport: "Node18",
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             const params = request.getEndpointParameters(context);
@@ -1011,7 +1050,8 @@ describe("GeneratedFileUploadEndpointRequest", () => {
                 allowExtraFields: false,
                 omitUndefined: false,
                 formDataSupport: "Node18",
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             request.getBuildRequestStatements(context);
@@ -1040,7 +1080,8 @@ describe("GeneratedFileUploadEndpointRequest", () => {
                 allowExtraFields: false,
                 omitUndefined: false,
                 formDataSupport: "Node18",
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             const statements = request.getBuildRequestStatements(context);
@@ -1071,7 +1112,8 @@ describe("GeneratedFileUploadEndpointRequest", () => {
                 allowExtraFields: false,
                 omitUndefined: false,
                 formDataSupport: "Node18",
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const context = createEndpointRequestMockContext();
             const statements = request.getBuildRequestStatements(context);
@@ -1100,7 +1142,8 @@ describe("GeneratedFileUploadEndpointRequest", () => {
                 allowExtraFields: false,
                 omitUndefined: false,
                 formDataSupport: "Node18",
-                parameterNaming: "default"
+                parameterNaming: "default",
+                caseConverter
             });
             const imports = request.getExampleEndpointImports();
             expect(imports).toHaveLength(1);

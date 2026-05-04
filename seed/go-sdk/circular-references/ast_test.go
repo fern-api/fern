@@ -216,77 +216,77 @@ func TestGettersFieldValue(t *testing.T) {
 
 }
 
-func TestGettersJsonLike(t *testing.T) {
-	t.Run("GetJsonLikeList", func(t *testing.T) {
+func TestGettersJSONLike(t *testing.T) {
+	t.Run("GetJSONLikeList", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JsonLike{}
-		var expected []*JsonLike
-		obj.JsonLikeList = expected
+		obj := &JSONLike{}
+		var expected []*JSONLike
+		obj.JSONLikeList = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetJsonLikeList(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetJSONLikeList(), "getter should return the property value")
 	})
 
-	t.Run("GetJsonLikeList_NilValue", func(t *testing.T) {
+	t.Run("GetJSONLikeList_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JsonLike{}
-		obj.JsonLikeList = nil
+		obj := &JSONLike{}
+		obj.JSONLikeList = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetJsonLikeList(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetJSONLikeList(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetJsonLikeList_NilReceiver", func(t *testing.T) {
+	t.Run("GetJSONLikeList_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *JsonLike
+		var obj *JSONLike
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetJsonLikeList() // Should return zero value
+		_ = obj.GetJSONLikeList() // Should return zero value
 	})
 
-	t.Run("GetStringJsonLikeMap", func(t *testing.T) {
+	t.Run("GetStringJSONLikeMap", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JsonLike{}
-		var expected map[string]*JsonLike
-		obj.StringJsonLikeMap = expected
+		obj := &JSONLike{}
+		var expected map[string]*JSONLike
+		obj.StringJSONLikeMap = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetStringJsonLikeMap(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetStringJSONLikeMap(), "getter should return the property value")
 	})
 
-	t.Run("GetStringJsonLikeMap_NilValue", func(t *testing.T) {
+	t.Run("GetStringJSONLikeMap_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JsonLike{}
-		obj.StringJsonLikeMap = nil
+		obj := &JSONLike{}
+		obj.StringJSONLikeMap = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetStringJsonLikeMap(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetStringJSONLikeMap(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetStringJsonLikeMap_NilReceiver", func(t *testing.T) {
+	t.Run("GetStringJSONLikeMap_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *JsonLike
+		var obj *JSONLike
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetStringJsonLikeMap() // Should return zero value
+		_ = obj.GetStringJSONLikeMap() // Should return zero value
 	})
 
 	t.Run("GetString", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JsonLike{}
+		obj := &JSONLike{}
 		var expected string
 		obj.String = expected
 
@@ -296,7 +296,7 @@ func TestGettersJsonLike(t *testing.T) {
 
 	t.Run("GetString_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *JsonLike
+		var obj *JSONLike
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -309,7 +309,7 @@ func TestGettersJsonLike(t *testing.T) {
 	t.Run("GetInteger", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JsonLike{}
+		obj := &JSONLike{}
 		var expected int
 		obj.Integer = expected
 
@@ -319,7 +319,7 @@ func TestGettersJsonLike(t *testing.T) {
 
 	t.Run("GetInteger_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *JsonLike
+		var obj *JSONLike
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -332,7 +332,7 @@ func TestGettersJsonLike(t *testing.T) {
 	t.Run("GetBoolean", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JsonLike{}
+		obj := &JSONLike{}
 		var expected bool
 		obj.Boolean = expected
 
@@ -342,7 +342,7 @@ func TestGettersJsonLike(t *testing.T) {
 
 	t.Run("GetBoolean_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *JsonLike
+		var obj *JSONLike
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -354,77 +354,77 @@ func TestGettersJsonLike(t *testing.T) {
 
 }
 
-func TestGettersJsonLikeWithNullAndUndefined(t *testing.T) {
-	t.Run("GetJsonLikeWithNullAndUndefinedOptionalList", func(t *testing.T) {
+func TestGettersJSONLikeWithNullAndUndefined(t *testing.T) {
+	t.Run("GetJSONLikeWithNullAndUndefinedOptionalList", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JsonLikeWithNullAndUndefined{}
-		var expected []*JsonLikeWithNullAndUndefined
-		obj.JsonLikeWithNullAndUndefinedOptionalList = expected
+		obj := &JSONLikeWithNullAndUndefined{}
+		var expected []*JSONLikeWithNullAndUndefined
+		obj.JSONLikeWithNullAndUndefinedOptionalList = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetJsonLikeWithNullAndUndefinedOptionalList(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetJSONLikeWithNullAndUndefinedOptionalList(), "getter should return the property value")
 	})
 
-	t.Run("GetJsonLikeWithNullAndUndefinedOptionalList_NilValue", func(t *testing.T) {
+	t.Run("GetJSONLikeWithNullAndUndefinedOptionalList_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JsonLikeWithNullAndUndefined{}
-		obj.JsonLikeWithNullAndUndefinedOptionalList = nil
+		obj := &JSONLikeWithNullAndUndefined{}
+		obj.JSONLikeWithNullAndUndefinedOptionalList = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetJsonLikeWithNullAndUndefinedOptionalList(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetJSONLikeWithNullAndUndefinedOptionalList(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetJsonLikeWithNullAndUndefinedOptionalList_NilReceiver", func(t *testing.T) {
+	t.Run("GetJSONLikeWithNullAndUndefinedOptionalList_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *JsonLikeWithNullAndUndefined
+		var obj *JSONLikeWithNullAndUndefined
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetJsonLikeWithNullAndUndefinedOptionalList() // Should return zero value
+		_ = obj.GetJSONLikeWithNullAndUndefinedOptionalList() // Should return zero value
 	})
 
-	t.Run("GetStringJsonLikeWithNullAndUndefinedOptionalMap", func(t *testing.T) {
+	t.Run("GetStringJSONLikeWithNullAndUndefinedOptionalMap", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JsonLikeWithNullAndUndefined{}
-		var expected map[string]*JsonLikeWithNullAndUndefined
-		obj.StringJsonLikeWithNullAndUndefinedOptionalMap = expected
+		obj := &JSONLikeWithNullAndUndefined{}
+		var expected map[string]*JSONLikeWithNullAndUndefined
+		obj.StringJSONLikeWithNullAndUndefinedOptionalMap = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetStringJsonLikeWithNullAndUndefinedOptionalMap(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetStringJSONLikeWithNullAndUndefinedOptionalMap(), "getter should return the property value")
 	})
 
-	t.Run("GetStringJsonLikeWithNullAndUndefinedOptionalMap_NilValue", func(t *testing.T) {
+	t.Run("GetStringJSONLikeWithNullAndUndefinedOptionalMap_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JsonLikeWithNullAndUndefined{}
-		obj.StringJsonLikeWithNullAndUndefinedOptionalMap = nil
+		obj := &JSONLikeWithNullAndUndefined{}
+		obj.StringJSONLikeWithNullAndUndefinedOptionalMap = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetStringJsonLikeWithNullAndUndefinedOptionalMap(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetStringJSONLikeWithNullAndUndefinedOptionalMap(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetStringJsonLikeWithNullAndUndefinedOptionalMap_NilReceiver", func(t *testing.T) {
+	t.Run("GetStringJSONLikeWithNullAndUndefinedOptionalMap_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *JsonLikeWithNullAndUndefined
+		var obj *JSONLikeWithNullAndUndefined
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetStringJsonLikeWithNullAndUndefinedOptionalMap() // Should return zero value
+		_ = obj.GetStringJSONLikeWithNullAndUndefinedOptionalMap() // Should return zero value
 	})
 
 	t.Run("GetStringOptional", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JsonLikeWithNullAndUndefined{}
+		obj := &JSONLikeWithNullAndUndefined{}
 		var expected *string
 		obj.StringOptional = expected
 
@@ -435,7 +435,7 @@ func TestGettersJsonLikeWithNullAndUndefined(t *testing.T) {
 	t.Run("GetStringOptional_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JsonLikeWithNullAndUndefined{}
+		obj := &JSONLikeWithNullAndUndefined{}
 		obj.StringOptional = nil
 
 		// Act & Assert
@@ -444,7 +444,7 @@ func TestGettersJsonLikeWithNullAndUndefined(t *testing.T) {
 
 	t.Run("GetStringOptional_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *JsonLikeWithNullAndUndefined
+		var obj *JSONLikeWithNullAndUndefined
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -457,7 +457,7 @@ func TestGettersJsonLikeWithNullAndUndefined(t *testing.T) {
 	t.Run("GetIntegerOptional", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JsonLikeWithNullAndUndefined{}
+		obj := &JSONLikeWithNullAndUndefined{}
 		var expected *int
 		obj.IntegerOptional = expected
 
@@ -468,7 +468,7 @@ func TestGettersJsonLikeWithNullAndUndefined(t *testing.T) {
 	t.Run("GetIntegerOptional_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JsonLikeWithNullAndUndefined{}
+		obj := &JSONLikeWithNullAndUndefined{}
 		obj.IntegerOptional = nil
 
 		// Act & Assert
@@ -477,7 +477,7 @@ func TestGettersJsonLikeWithNullAndUndefined(t *testing.T) {
 
 	t.Run("GetIntegerOptional_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *JsonLikeWithNullAndUndefined
+		var obj *JSONLikeWithNullAndUndefined
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -490,7 +490,7 @@ func TestGettersJsonLikeWithNullAndUndefined(t *testing.T) {
 	t.Run("GetBooleanOptional", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JsonLikeWithNullAndUndefined{}
+		obj := &JSONLikeWithNullAndUndefined{}
 		var expected *bool
 		obj.BooleanOptional = expected
 
@@ -501,7 +501,7 @@ func TestGettersJsonLikeWithNullAndUndefined(t *testing.T) {
 	t.Run("GetBooleanOptional_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &JsonLikeWithNullAndUndefined{}
+		obj := &JSONLikeWithNullAndUndefined{}
 		obj.BooleanOptional = nil
 
 		// Act & Assert
@@ -510,7 +510,7 @@ func TestGettersJsonLikeWithNullAndUndefined(t *testing.T) {
 
 	t.Run("GetBooleanOptional_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *JsonLikeWithNullAndUndefined
+		var obj *JSONLikeWithNullAndUndefined
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {

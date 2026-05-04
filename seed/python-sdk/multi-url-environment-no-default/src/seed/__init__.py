@@ -6,17 +6,20 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import ec_2, s_3
+    from . import ec2, s3
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedMultiUrlEnvironmentNoDefault, SeedMultiUrlEnvironmentNoDefault
     from .environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedMultiUrlEnvironmentNoDefault": ".client",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "SeedMultiUrlEnvironmentNoDefault": ".client",
     "SeedMultiUrlEnvironmentNoDefaultEnvironment": ".environment",
     "__version__": ".version",
-    "ec_2": ".ec_2",
-    "s_3": ".s_3",
+    "ec2": ".ec2",
+    "s3": ".s3",
 }
 
 
@@ -43,9 +46,11 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedMultiUrlEnvironmentNoDefault",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "SeedMultiUrlEnvironmentNoDefault",
     "SeedMultiUrlEnvironmentNoDefaultEnvironment",
     "__version__",
-    "ec_2",
-    "s_3",
+    "ec2",
+    "s3",
 ]

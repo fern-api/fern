@@ -58,7 +58,7 @@ class RawClient
     ) {
         $this->client = HttpClientBuilder::build(
             $this->options['client'] ?? null,
-            $this->options['maxRetries'] ?? 2,
+            $this->options['maxRetries'] ?? 5,
         );
         $this->requestFactory = HttpClientBuilder::requestFactory();
         $this->streamFactory = HttpClientBuilder::streamFactory();

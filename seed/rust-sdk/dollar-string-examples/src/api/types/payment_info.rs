@@ -12,7 +12,7 @@ pub struct PaymentInfo {
 
 impl PaymentInfo {
     pub fn builder() -> PaymentInfoBuilder {
-        PaymentInfoBuilder::default()
+        <PaymentInfoBuilder as Default>::default()
     }
 }
 

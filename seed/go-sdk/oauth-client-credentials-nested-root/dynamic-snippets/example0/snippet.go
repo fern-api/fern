@@ -20,7 +20,7 @@ func do() {
         ),
     )
     request := &auth.GetTokenRequest{
-        ClientId: "client_id",
+        ClientID: "client_id",
         ClientSecret: "client_secret",
         Scope: fern.String(
             "scope",

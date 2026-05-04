@@ -271,15 +271,15 @@ func (e *EventInfo) validate() error {
 }
 
 var (
-	metadataFieldId         = big.NewInt(1 << 0)
+	metadataFieldID         = big.NewInt(1 << 0)
 	metadataFieldData       = big.NewInt(1 << 1)
-	metadataFieldJsonString = big.NewInt(1 << 2)
+	metadataFieldJSONString = big.NewInt(1 << 2)
 )
 
 type Metadata struct {
-	Id         string            `json:"id" url:"id"`
+	ID         string            `json:"id" url:"id"`
 	Data       map[string]string `json:"data,omitempty" url:"data,omitempty"`
-	JsonString *string           `json:"jsonString,omitempty" url:"jsonString,omitempty"`
+	JSONString *string           `json:"jsonString,omitempty" url:"jsonString,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -288,11 +288,11 @@ type Metadata struct {
 	rawJSON         json.RawMessage
 }
 
-func (m *Metadata) GetId() string {
+func (m *Metadata) GetID() string {
 	if m == nil {
 		return ""
 	}
-	return m.Id
+	return m.ID
 }
 
 func (m *Metadata) GetData() map[string]string {
@@ -302,11 +302,11 @@ func (m *Metadata) GetData() map[string]string {
 	return m.Data
 }
 
-func (m *Metadata) GetJsonString() string {
-	if m == nil || m.JsonString == nil {
+func (m *Metadata) GetJSONString() string {
+	if m == nil || m.JSONString == nil {
 		return ""
 	}
-	return *m.JsonString
+	return *m.JSONString
 }
 
 func (m *Metadata) GetExtraProperties() map[string]interface{} {
@@ -323,11 +323,11 @@ func (m *Metadata) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *Metadata) SetId(id string) {
-	m.Id = id
-	m.require(metadataFieldId)
+func (m *Metadata) SetID(id string) {
+	m.ID = id
+	m.require(metadataFieldID)
 }
 
 // SetData sets the Data field and marks it as non-optional;
@@ -337,11 +337,11 @@ func (m *Metadata) SetData(data map[string]string) {
 	m.require(metadataFieldData)
 }
 
-// SetJsonString sets the JsonString field and marks it as non-optional;
+// SetJSONString sets the JSONString field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *Metadata) SetJsonString(jsonString *string) {
-	m.JsonString = jsonString
-	m.require(metadataFieldJsonString)
+func (m *Metadata) SetJSONString(jsonString *string) {
+	m.JSONString = jsonString
+	m.require(metadataFieldJSONString)
 }
 
 func (m *Metadata) UnmarshalJSON(data []byte) error {

@@ -146,6 +146,23 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return name.pascalCase.safeName;
     }
 
+    /**
+     * Returns a property name that is safe within the given class reference's scope.
+     * Detects collisions where PascalCase(property) == ClassName and returns the
+     * renamed identifier (e.g., "CatalogV1Id_") to avoid CS0542 / CS0117.
+     */
+    public resolvePropertyName(classReference: ast.ClassReference, name: FernIr.Name): string {
+        const expectedName = name.pascalCase.safeName;
+        const redirected = classReference.scope.getRedirectedFieldName(expectedName);
+        if (redirected) {
+            return redirected;
+        }
+        if (classReference.scope.isField(expectedName)) {
+            return expectedName;
+        }
+        return classReference.registerField(expectedName);
+    }
+
     public getMethodName(name: FernIr.Name): string {
         return `${name.pascalCase.safeName}Async`;
     }
@@ -193,7 +210,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
                 return a[0].length - b[0].length;
             })
             .forEach(([typeId, type]) => {
-                this.dynamicTypeMapper.convertToClassReference(type);
+                this.dynamicTypeMapper.convertToClassReference(type, typeId);
             });
 
         for (const [idx, request] of requests.entries()) {

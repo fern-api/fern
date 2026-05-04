@@ -18,7 +18,7 @@ pub struct Identity {
 
 impl Identity {
     pub fn builder() -> IdentityBuilder {
-        IdentityBuilder::default()
+        <IdentityBuilder as Default>::default()
     }
 }
 

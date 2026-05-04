@@ -1,0 +1,463 @@
+openapi: 3.1.0
+info:
+  title: allOf Composition
+  version: 0.0.0
+paths:
+  /rule-types:
+    get:
+      operationId: searchRuleTypes
+      tags:
+        - ''
+      parameters:
+        - name: query
+          in: query
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+      responses:
+        '200':
+          description: Paginated list of rule types
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuleTypeSearchResponse'
+              examples:
+                Example1:
+                  value:
+                    paging:
+                      next: next
+                      previous: previous
+                    results:
+                      - id: id
+                        name: name
+                        description: description
+      summary: Search rule types with paginated results
+  /rules:
+    post:
+      operationId: createRule
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Created rule
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuleResponse'
+              examples:
+                Example1:
+                  value:
+                    createdBy: createdBy
+                    createdDateTime: '2024-01-15T09:30:00Z'
+                    modifiedBy: modifiedBy
+                    modifiedDateTime: '2024-01-15T09:30:00Z'
+                    id: id
+                    name: name
+                    status: active
+                    executionContext: prod
+      summary: Create a rule with constrained execution context
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  examples:
+                    - name
+                executionContext:
+                  $ref: '#/components/schemas/RuleExecutionContext'
+              required:
+                - name
+                - executionContext
+            examples:
+              Example1:
+                value:
+                  name: name
+                  executionContext: prod
+  /users:
+    get:
+      operationId: listUsers
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Paginated list of users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSearchResponse'
+              examples:
+                Example1:
+                  value:
+                    paging:
+                      next: next
+                      previous: previous
+                    results:
+                      - id: id
+                        email: email
+      summary: List users with paginated results
+  /entities:
+    get:
+      operationId: getEntity
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: An entity with properties from multiple parents
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CombinedEntity'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    name: name
+                    summary: summary
+                    status: active
+      summary: Get an entity that combines multiple parents
+  /organizations:
+    get:
+      operationId: getOrganization
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: An organization whose metadata is merged from two parents
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    metadata:
+                      region: region
+                      domain: domain
+                    name: name
+      summary: Get an organization with merged object-typed properties
+components:
+  schemas:
+    PaginatedResult:
+      title: PaginatedResult
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/PagingCursors'
+        results:
+          type: array
+          items: {}
+          description: Current page of results from the requested resource.
+      required:
+        - paging
+        - results
+    PagingCursors:
+      title: PagingCursors
+      type: object
+      properties:
+        next:
+          type: string
+          description: Cursor for the next page of results.
+        previous:
+          type:
+            - string
+            - 'null'
+          description: Cursor for the previous page of results.
+      required:
+        - next
+    RuleExecutionContext:
+      title: RuleExecutionContext
+      type: string
+      enum:
+        - prod
+        - staging
+        - dev
+      description: Execution environment for a rule.
+    AuditInfo:
+      title: AuditInfo
+      type: object
+      description: Common audit metadata.
+      properties:
+        createdBy:
+          type:
+            - string
+            - 'null'
+          description: The user who created this resource.
+        createdDateTime:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          description: When this resource was created.
+        modifiedBy:
+          type:
+            - string
+            - 'null'
+          description: The user who last modified this resource.
+        modifiedDateTime:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          description: When this resource was last modified.
+    RuleType:
+      title: RuleType
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type:
+            - string
+            - 'null'
+      required:
+        - id
+        - name
+    RuleTypeSearchResponse:
+      title: RuleTypeSearchResponse
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/PagingCursors'
+        results:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/RuleType'
+          description: Current page of results from the requested resource.
+      required:
+        - paging
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+        - id
+        - email
+    UserSearchResponse:
+      title: UserSearchResponse
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/PagingCursors'
+        results:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/User'
+          description: Current page of results from the requested resource.
+      required:
+        - paging
+    RuleResponseStatus:
+      title: RuleResponseStatus
+      type: string
+      enum:
+        - active
+        - inactive
+        - draft
+    RuleResponse:
+      title: RuleResponse
+      type: object
+      properties:
+        createdBy:
+          type:
+            - string
+            - 'null'
+          description: The user who created this resource.
+        createdDateTime:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          description: When this resource was created.
+        modifiedBy:
+          type:
+            - string
+            - 'null'
+          description: The user who last modified this resource.
+        modifiedDateTime:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          description: When this resource was last modified.
+        id:
+          type: string
+          examples:
+            - id
+        name:
+          type: string
+          examples:
+            - name
+        status:
+          $ref: '#/components/schemas/RuleResponseStatus'
+        executionContext:
+          anyOf:
+            - $ref: '#/components/schemas/RuleExecutionContext'
+            - type: 'null'
+      required:
+        - id
+        - name
+        - status
+    Identifiable:
+      title: Identifiable
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+        name:
+          type:
+            - string
+            - 'null'
+          description: Display name from Identifiable.
+      required:
+        - id
+    Describable:
+      title: Describable
+      type: object
+      properties:
+        name:
+          type:
+            - string
+            - 'null'
+          description: Display name from Describable.
+        summary:
+          type:
+            - string
+            - 'null'
+          description: A short summary.
+    CombinedEntityStatus:
+      title: CombinedEntityStatus
+      type: string
+      enum:
+        - active
+        - archived
+    CombinedEntity:
+      title: CombinedEntity
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+          examples:
+            - id
+        name:
+          type:
+            - string
+            - 'null'
+          description: Display name from Describable.
+        summary:
+          type:
+            - string
+            - 'null'
+          description: A short summary.
+        status:
+          $ref: '#/components/schemas/CombinedEntityStatus'
+      required:
+        - id
+        - status
+    BaseOrgMetadata:
+      title: BaseOrgMetadata
+      type: object
+      properties:
+        region:
+          type: string
+          description: Deployment region from BaseOrg.
+        tier:
+          type:
+            - string
+            - 'null'
+          description: Subscription tier.
+      required:
+        - region
+    BaseOrg:
+      title: BaseOrg
+      type: object
+      properties:
+        id:
+          type: string
+        metadata:
+          anyOf:
+            - $ref: '#/components/schemas/BaseOrgMetadata'
+            - type: 'null'
+      required:
+        - id
+    DetailedOrgMetadata:
+      title: DetailedOrgMetadata
+      type: object
+      properties:
+        region:
+          type: string
+          description: Deployment region from DetailedOrg.
+        domain:
+          type:
+            - string
+            - 'null'
+          description: Custom domain name.
+      required:
+        - region
+    DetailedOrg:
+      title: DetailedOrg
+      type: object
+      properties:
+        metadata:
+          anyOf:
+            - $ref: '#/components/schemas/DetailedOrgMetadata'
+            - type: 'null'
+    OrganizationMetadata:
+      title: OrganizationMetadata
+      type: object
+      properties:
+        region:
+          type: string
+          description: Deployment region from DetailedOrg.
+        domain:
+          type:
+            - string
+            - 'null'
+          description: Custom domain name.
+      required:
+        - region
+    Organization:
+      title: Organization
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+            - id
+        metadata:
+          anyOf:
+            - $ref: '#/components/schemas/OrganizationMetadata'
+            - type: 'null'
+        name:
+          type: string
+          examples:
+            - name
+      required:
+        - id
+        - name
+  securitySchemes: {}
+servers:
+  - url: https://api.example.com
+    description: Default

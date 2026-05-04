@@ -1,9 +1,11 @@
+using SeedCsharpNamespaceCollision.ScimConfiguration;
 using SeedCsharpNamespaceCollision.System;
 
 namespace SeedCsharpNamespaceCollision;
 
 public partial interface ISeedCsharpNamespaceCollisionClient
 {
+    public IScimConfigurationClient ScimConfiguration { get; }
     public ISystemClient System { get; }
     WithRawResponseTask<User> CreateUserAsync(
         User request,

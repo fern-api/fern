@@ -148,7 +148,7 @@ impl WithFormEncodedContainersRequest {
 
 impl WithFormEncodedContainersRequest {
     pub fn builder() -> WithFormEncodedContainersRequestBuilder {
-        WithFormEncodedContainersRequestBuilder::default()
+        <WithFormEncodedContainersRequestBuilder as Default>::default()
     }
 }
 

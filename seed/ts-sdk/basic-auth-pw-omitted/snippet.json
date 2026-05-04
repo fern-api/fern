@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/basic-auth",
+                "method": "GET",
+                "identifier_override": "endpoint_basic-auth.getWithBasicAuth"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedBasicAuthPwOmittedClient } from \"@fern/basic-auth-pw-omitted\";\n\nconst client = new SeedBasicAuthPwOmittedClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\" });\nawait client.basicAuth.getWithBasicAuth();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/basic-auth",
+                "method": "POST",
+                "identifier_override": "endpoint_basic-auth.postWithBasicAuth"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedBasicAuthPwOmittedClient } from \"@fern/basic-auth-pw-omitted\";\n\nconst client = new SeedBasicAuthPwOmittedClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\" });\nawait client.basicAuth.postWithBasicAuth({\n    \"key\": \"value\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

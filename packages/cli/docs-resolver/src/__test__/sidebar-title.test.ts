@@ -98,7 +98,7 @@ describe("sidebar-title frontmatter override", () => {
         }
 
         // Extract all page nodes from the navigation tree
-        const pageNodes = findPageNodesInTree(resolvedDocs.config.root);
+        const pageNodes = findPageNodesInTree(resolvedDocs.config.root as FernNavigation.V1.NavigationNode);
 
         // Find the nested page that has sidebar-title override
         const nestedPage = pageNodes.find((node) => node.pageId.includes("nested-page.mdx"));

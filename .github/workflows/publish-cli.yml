@@ -27,7 +27,6 @@ env:
   DO_NOT_TRACK: "1"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
-  TURBO_REMOTE_CACHE_TIMEOUT: 10
   TURBO_NO_UPDATE_NOTIFIER: "1"
   TURBO_DAEMON: "false"
 
@@ -55,6 +54,9 @@ jobs:
   dev:
     needs: [detect-release-bump]
     if: ${{ inputs.version == null && github.repository == 'fern-api/fern' && needs.detect-release-bump.outputs.is_release_bump == 'false' }}
+    concurrency:
+      group: publish-cli-dev
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     env:
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
@@ -80,6 +82,12 @@ jobs:
         run: |
           git_version="$(./scripts/git-version.sh)"
           echo Publishing version: "${git_version}"
+
+      # npm >= 11.5.1 is required for OIDC trusted publishing (pnpm publish
+      # delegates to npm under the hood). Node 22 ships with npm 10.x.
+      # Two-step upgrade works around Node 22.22.2 regression (npm/cli#9151).
+      - name: Update npm for OIDC publishing
+        run: npm install -g npm@10.9.8 && npm install -g npm@11
 
       - name: Publish Dev CLI
         run: |
@@ -112,6 +120,9 @@ jobs:
   prod:
     needs: [live-test, detect-release-bump]
     if: ${{ inputs.version == null && needs.detect-release-bump.outputs.is_release_bump == 'true' }}
+    concurrency:
+      group: publish-cli-release
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     env:
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
@@ -132,6 +143,12 @@ jobs:
       - name: Build Seed
         run: |
           pnpm seed:build
+
+      # npm >= 11.5.1 is required for OIDC trusted publishing (pnpm publish
+      # delegates to npm under the hood). Node 22 ships with npm 10.x.
+      # Two-step upgrade works around Node 22.22.2 regression (npm/cli#9151).
+      - name: Update npm for OIDC publishing
+        run: npm install -g npm@10.9.8 && npm install -g npm@11
 
       - name: Publish + Register CLI
         env:
@@ -159,6 +176,9 @@ jobs:
   manual:
     runs-on: ubuntu-latest
     if: ${{ inputs.version != null }}
+    concurrency:
+      group: publish-cli-release
+      cancel-in-progress: false
     env:
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
@@ -177,6 +197,12 @@ jobs:
       - name: Build Seed
         run: |
           pnpm seed:build
+
+      # npm >= 11.5.1 is required for OIDC trusted publishing (pnpm publish
+      # delegates to npm under the hood). Node 22 ships with npm 10.x.
+      # Two-step upgrade works around Node 22.22.2 regression (npm/cli#9151).
+      - name: Update npm for OIDC publishing
+        run: npm install -g npm@10.9.8 && npm install -g npm@11
 
       - name: Publish Dev CLI
         run: |

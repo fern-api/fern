@@ -31,10 +31,6 @@ describe("IdentityClient", () => {
             username: "username",
             password: "password",
         });
-        expect(response).toEqual({
-            access_token: "access_token",
-            expires_in: 1,
-            refresh_token: "refresh_token",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import commons, folder_a, folder_b, folder_c, folder_d, foo
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedAudiences, SeedAudiences
     from .commons import Imported
     from .environment import SeedAudiencesEnvironment
@@ -14,6 +15,8 @@ if typing.TYPE_CHECKING:
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedAudiences": ".client",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "FilteredType": ".foo",
     "Imported": ".commons",
     "ImportingType": ".foo",
@@ -53,6 +56,8 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedAudiences",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "FilteredType",
     "Imported",
     "ImportingType",

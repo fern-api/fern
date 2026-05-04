@@ -8,7 +8,7 @@ pub struct DataContextHeartbeat {
 
 impl DataContextHeartbeat {
     pub fn builder() -> DataContextHeartbeatBuilder {
-        DataContextHeartbeatBuilder::default()
+        <DataContextHeartbeatBuilder as Default>::default()
     }
 }
 

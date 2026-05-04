@@ -36,12 +36,12 @@ func NewClient(opts ...option.RequestOption) *Client {
 
 func (c *Client) GetAccount(
 	ctx context.Context,
-	accountId string,
+	accountID string,
 	opts ...option.RequestOption,
 ) (*fern.Account, error) {
 	response, err := c.WithRawResponse.GetAccount(
 		ctx,
-		accountId,
+		accountID,
 		opts...,
 	)
 	if err != nil {

@@ -25,11 +25,7 @@ describe("UnionClient", () => {
             likesToWoof: true,
         });
         expect(response).toEqual({
-            body: {
-                animal: "dog",
-                name: "name",
-                likesToWoof: true,
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

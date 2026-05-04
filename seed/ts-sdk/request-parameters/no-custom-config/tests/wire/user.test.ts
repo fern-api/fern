@@ -106,9 +106,6 @@ describe("UserClient", () => {
             longParam: 1000000,
             bigIntParam: "1000000",
         });
-        expect(response).toEqual({
-            name: "name",
-            tags: ["tags", "tags"],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

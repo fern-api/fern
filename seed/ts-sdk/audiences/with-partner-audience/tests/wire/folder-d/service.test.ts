@@ -13,8 +13,6 @@ describe("ServiceClient", () => {
         server.mockEndpoint().get("/partner-path").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.folderD.service.getDirectThread();
-        expect(response).toEqual({
-            foo: "foo",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

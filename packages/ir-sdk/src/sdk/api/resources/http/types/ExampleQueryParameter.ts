@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../index.js";
 
 export interface ExampleQueryParameter {
-    name: FernIr.NameAndWireValue;
+    name: FernIr.NameAndWireValueOrString;
     value: FernIr.ExampleTypeReference;
     shape: FernIr.ExampleQueryParameterShape | undefined;
 }

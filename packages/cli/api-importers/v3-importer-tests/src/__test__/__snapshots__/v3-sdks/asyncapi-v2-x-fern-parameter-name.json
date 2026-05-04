@@ -12,51 +12,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "UsersUserIdMessagesSubscribe",
-          "camelCase": {
-            "unsafeName": "usersUserIdMessagesSubscribe",
-            "safeName": "usersUserIdMessagesSubscribe"
-          },
-          "snakeCase": {
-            "unsafeName": "users_user_id_messages_subscribe",
-            "safeName": "users_user_id_messages_subscribe"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "USERS_USER_ID_MESSAGES_SUBSCRIBE",
-            "safeName": "USERS_USER_ID_MESSAGES_SUBSCRIBE"
-          },
-          "pascalCase": {
-            "unsafeName": "UsersUserIdMessagesSubscribe",
-            "safeName": "UsersUserIdMessagesSubscribe"
-          }
-        }
+        "name": "UsersUserIdMessagesSubscribe"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "content",
-                "camelCase": {
-                  "unsafeName": "content",
-                  "safeName": "content"
-                },
-                "snakeCase": {
-                  "unsafeName": "content",
-                  "safeName": "content"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CONTENT",
-                  "safeName": "CONTENT"
-                },
-                "pascalCase": {
-                  "unsafeName": "Content",
-                  "safeName": "Content"
-                }
-              },
-              "wireValue": "content"
-            },
+            "name": "content",
             "valueType": {
               "container": {
                 "optional": {
@@ -81,28 +42,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "timestamp",
-                "camelCase": {
-                  "unsafeName": "timestamp",
-                  "safeName": "timestamp"
-                },
-                "snakeCase": {
-                  "unsafeName": "timestamp",
-                  "safeName": "timestamp"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TIMESTAMP",
-                  "safeName": "TIMESTAMP"
-                },
-                "pascalCase": {
-                  "unsafeName": "Timestamp",
-                  "safeName": "Timestamp"
-                }
-              },
-              "wireValue": "timestamp"
-            },
+            "name": "timestamp",
             "valueType": {
               "container": {
                 "optional": {
@@ -150,51 +90,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "UsersUserIdMessagesPublish",
-          "camelCase": {
-            "unsafeName": "usersUserIdMessagesPublish",
-            "safeName": "usersUserIdMessagesPublish"
-          },
-          "snakeCase": {
-            "unsafeName": "users_user_id_messages_publish",
-            "safeName": "users_user_id_messages_publish"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "USERS_USER_ID_MESSAGES_PUBLISH",
-            "safeName": "USERS_USER_ID_MESSAGES_PUBLISH"
-          },
-          "pascalCase": {
-            "unsafeName": "UsersUserIdMessagesPublish",
-            "safeName": "UsersUserIdMessagesPublish"
-          }
-        }
+        "name": "UsersUserIdMessagesPublish"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "content",
-                "camelCase": {
-                  "unsafeName": "content",
-                  "safeName": "content"
-                },
-                "snakeCase": {
-                  "unsafeName": "content",
-                  "safeName": "content"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CONTENT",
-                  "safeName": "CONTENT"
-                },
-                "pascalCase": {
-                  "unsafeName": "Content",
-                  "safeName": "Content"
-                }
-              },
-              "wireValue": "content"
-            },
+            "name": "content",
             "valueType": {
               "container": {
                 "optional": {
@@ -241,25 +142,7 @@
   "webhookGroups": {},
   "websocketChannels": {
     "channel_usersUserIdMessages": {
-      "name": {
-        "originalName": "usersUserIdMessages",
-        "camelCase": {
-          "unsafeName": "usersUserIdMessages",
-          "safeName": "usersUserIdMessages"
-        },
-        "snakeCase": {
-          "unsafeName": "users_user_id_messages",
-          "safeName": "users_user_id_messages"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "USERS_USER_ID_MESSAGES",
-          "safeName": "USERS_USER_ID_MESSAGES"
-        },
-        "pascalCase": {
-          "unsafeName": "UsersUserIdMessages",
-          "safeName": "UsersUserIdMessages"
-        }
-      },
+      "name": "usersUserIdMessages",
       "baseUrl": "production",
       "path": {
         "head": "/users/",
@@ -275,25 +158,7 @@
       "queryParameters": [],
       "pathParameters": [
         {
-          "name": {
-            "originalName": "userId",
-            "camelCase": {
-              "unsafeName": "userId",
-              "safeName": "userId"
-            },
-            "snakeCase": {
-              "unsafeName": "user_id",
-              "safeName": "user_id"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "USER_ID",
-              "safeName": "USER_ID"
-            },
-            "pascalCase": {
-              "unsafeName": "UserId",
-              "safeName": "UserId"
-            }
-          },
+          "name": "userId",
           "docs": "The user ID",
           "valueType": {
             "primitive": {
@@ -325,25 +190,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": {
-                "originalName": "UsersUserIdMessagesSubscribe",
-                "camelCase": {
-                  "unsafeName": "usersUserIdMessagesSubscribe",
-                  "safeName": "usersUserIdMessagesSubscribe"
-                },
-                "snakeCase": {
-                  "unsafeName": "users_user_id_messages_subscribe",
-                  "safeName": "users_user_id_messages_subscribe"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "USERS_USER_ID_MESSAGES_SUBSCRIBE",
-                  "safeName": "USERS_USER_ID_MESSAGES_SUBSCRIBE"
-                },
-                "pascalCase": {
-                  "unsafeName": "UsersUserIdMessagesSubscribe",
-                  "safeName": "UsersUserIdMessagesSubscribe"
-                }
-              },
+              "name": "UsersUserIdMessagesSubscribe",
               "typeId": "UsersUserIdMessagesSubscribe",
               "inline": false,
               "type": "named"
@@ -361,25 +208,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": {
-                "originalName": "UsersUserIdMessagesPublish",
-                "camelCase": {
-                  "unsafeName": "usersUserIdMessagesPublish",
-                  "safeName": "usersUserIdMessagesPublish"
-                },
-                "snakeCase": {
-                  "unsafeName": "users_user_id_messages_publish",
-                  "safeName": "users_user_id_messages_publish"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "USERS_USER_ID_MESSAGES_PUBLISH",
-                  "safeName": "USERS_USER_ID_MESSAGES_PUBLISH"
-                },
-                "pascalCase": {
-                  "unsafeName": "UsersUserIdMessagesPublish",
-                  "safeName": "UsersUserIdMessagesPublish"
-                }
-              },
+              "name": "UsersUserIdMessagesPublish",
               "typeId": "UsersUserIdMessagesPublish",
               "inline": false,
               "type": "named"
@@ -392,25 +221,7 @@
         {
           "pathParameters": [
             {
-              "name": {
-                "originalName": "userId",
-                "camelCase": {
-                  "unsafeName": "userId",
-                  "safeName": "userId"
-                },
-                "snakeCase": {
-                  "unsafeName": "user_id",
-                  "safeName": "user_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "USER_ID",
-                  "safeName": "USER_ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "UserId",
-                  "safeName": "UserId"
-                }
-              },
+              "name": "userId",
               "value": {
                 "jsonExample": "userId",
                 "shape": {
@@ -436,53 +247,14 @@
                   "shape": {
                     "properties": [
                       {
-                        "name": {
-                          "name": {
-                            "originalName": "content",
-                            "camelCase": {
-                              "unsafeName": "content",
-                              "safeName": "content"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "content",
-                              "safeName": "content"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "CONTENT",
-                              "safeName": "CONTENT"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "Content",
-                              "safeName": "Content"
-                            }
-                          },
-                          "wireValue": "content"
-                        },
+                        "name": "content",
                         "originalTypeDeclaration": {
                           "typeId": "UsersUserIdMessagesPublish",
                           "fernFilepath": {
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "UsersUserIdMessagesPublish",
-                            "camelCase": {
-                              "unsafeName": "usersUserIdMessagesPublish",
-                              "safeName": "usersUserIdMessagesPublish"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "users_user_id_messages_publish",
-                              "safeName": "users_user_id_messages_publish"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "USERS_USER_ID_MESSAGES_PUBLISH",
-                              "safeName": "USERS_USER_ID_MESSAGES_PUBLISH"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "UsersUserIdMessagesPublish",
-                              "safeName": "UsersUserIdMessagesPublish"
-                            }
-                          }
+                          "name": "UsersUserIdMessagesPublish"
                         },
                         "value": {
                           "shape": {
@@ -512,25 +284,7 @@
                       "allParts": [],
                       "packagePath": []
                     },
-                    "name": {
-                      "originalName": "UsersUserIdMessagesPublish",
-                      "camelCase": {
-                        "unsafeName": "usersUserIdMessagesPublish",
-                        "safeName": "usersUserIdMessagesPublish"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "users_user_id_messages_publish",
-                        "safeName": "users_user_id_messages_publish"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "USERS_USER_ID_MESSAGES_PUBLISH",
-                        "safeName": "USERS_USER_ID_MESSAGES_PUBLISH"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "UsersUserIdMessagesPublish",
-                        "safeName": "UsersUserIdMessagesPublish"
-                      }
-                    }
+                    "name": "UsersUserIdMessagesPublish"
                   },
                   "type": "named"
                 },
@@ -545,53 +299,14 @@
                   "shape": {
                     "properties": [
                       {
-                        "name": {
-                          "name": {
-                            "originalName": "content",
-                            "camelCase": {
-                              "unsafeName": "content",
-                              "safeName": "content"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "content",
-                              "safeName": "content"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "CONTENT",
-                              "safeName": "CONTENT"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "Content",
-                              "safeName": "Content"
-                            }
-                          },
-                          "wireValue": "content"
-                        },
+                        "name": "content",
                         "originalTypeDeclaration": {
                           "typeId": "UsersUserIdMessagesSubscribe",
                           "fernFilepath": {
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "UsersUserIdMessagesSubscribe",
-                            "camelCase": {
-                              "unsafeName": "usersUserIdMessagesSubscribe",
-                              "safeName": "usersUserIdMessagesSubscribe"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "users_user_id_messages_subscribe",
-                              "safeName": "users_user_id_messages_subscribe"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "USERS_USER_ID_MESSAGES_SUBSCRIBE",
-                              "safeName": "USERS_USER_ID_MESSAGES_SUBSCRIBE"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "UsersUserIdMessagesSubscribe",
-                              "safeName": "UsersUserIdMessagesSubscribe"
-                            }
-                          }
+                          "name": "UsersUserIdMessagesSubscribe"
                         },
                         "value": {
                           "shape": {
@@ -613,53 +328,14 @@
                         }
                       },
                       {
-                        "name": {
-                          "name": {
-                            "originalName": "timestamp",
-                            "camelCase": {
-                              "unsafeName": "timestamp",
-                              "safeName": "timestamp"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "timestamp",
-                              "safeName": "timestamp"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "TIMESTAMP",
-                              "safeName": "TIMESTAMP"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "Timestamp",
-                              "safeName": "Timestamp"
-                            }
-                          },
-                          "wireValue": "timestamp"
-                        },
+                        "name": "timestamp",
                         "originalTypeDeclaration": {
                           "typeId": "UsersUserIdMessagesSubscribe",
                           "fernFilepath": {
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "UsersUserIdMessagesSubscribe",
-                            "camelCase": {
-                              "unsafeName": "usersUserIdMessagesSubscribe",
-                              "safeName": "usersUserIdMessagesSubscribe"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "users_user_id_messages_subscribe",
-                              "safeName": "users_user_id_messages_subscribe"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "USERS_USER_ID_MESSAGES_SUBSCRIBE",
-                              "safeName": "USERS_USER_ID_MESSAGES_SUBSCRIBE"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "UsersUserIdMessagesSubscribe",
-                              "safeName": "UsersUserIdMessagesSubscribe"
-                            }
-                          }
+                          "name": "UsersUserIdMessagesSubscribe"
                         },
                         "value": {
                           "shape": {
@@ -689,25 +365,7 @@
                       "allParts": [],
                       "packagePath": []
                     },
-                    "name": {
-                      "originalName": "UsersUserIdMessagesSubscribe",
-                      "camelCase": {
-                        "unsafeName": "usersUserIdMessagesSubscribe",
-                        "safeName": "usersUserIdMessagesSubscribe"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "users_user_id_messages_subscribe",
-                        "safeName": "users_user_id_messages_subscribe"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "USERS_USER_ID_MESSAGES_SUBSCRIBE",
-                        "safeName": "USERS_USER_ID_MESSAGES_SUBSCRIBE"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "UsersUserIdMessagesSubscribe",
-                        "safeName": "UsersUserIdMessagesSubscribe"
-                      }
-                    }
+                    "name": "UsersUserIdMessagesSubscribe"
                   },
                   "type": "named"
                 },
@@ -720,25 +378,7 @@
         {
           "pathParameters": [
             {
-              "name": {
-                "originalName": "userId",
-                "camelCase": {
-                  "unsafeName": "userId",
-                  "safeName": "userId"
-                },
-                "snakeCase": {
-                  "unsafeName": "user_id",
-                  "safeName": "user_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "USER_ID",
-                  "safeName": "USER_ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "UserId",
-                  "safeName": "UserId"
-                }
-              },
+              "name": "userId",
               "value": {
                 "jsonExample": "userId",
                 "shape": {
@@ -764,53 +404,14 @@
                   "shape": {
                     "properties": [
                       {
-                        "name": {
-                          "name": {
-                            "originalName": "content",
-                            "camelCase": {
-                              "unsafeName": "content",
-                              "safeName": "content"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "content",
-                              "safeName": "content"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "CONTENT",
-                              "safeName": "CONTENT"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "Content",
-                              "safeName": "Content"
-                            }
-                          },
-                          "wireValue": "content"
-                        },
+                        "name": "content",
                         "originalTypeDeclaration": {
                           "typeId": "UsersUserIdMessagesPublish",
                           "fernFilepath": {
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "UsersUserIdMessagesPublish",
-                            "camelCase": {
-                              "unsafeName": "usersUserIdMessagesPublish",
-                              "safeName": "usersUserIdMessagesPublish"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "users_user_id_messages_publish",
-                              "safeName": "users_user_id_messages_publish"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "USERS_USER_ID_MESSAGES_PUBLISH",
-                              "safeName": "USERS_USER_ID_MESSAGES_PUBLISH"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "UsersUserIdMessagesPublish",
-                              "safeName": "UsersUserIdMessagesPublish"
-                            }
-                          }
+                          "name": "UsersUserIdMessagesPublish"
                         },
                         "value": {
                           "shape": {
@@ -840,25 +441,7 @@
                       "allParts": [],
                       "packagePath": []
                     },
-                    "name": {
-                      "originalName": "UsersUserIdMessagesPublish",
-                      "camelCase": {
-                        "unsafeName": "usersUserIdMessagesPublish",
-                        "safeName": "usersUserIdMessagesPublish"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "users_user_id_messages_publish",
-                        "safeName": "users_user_id_messages_publish"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "USERS_USER_ID_MESSAGES_PUBLISH",
-                        "safeName": "USERS_USER_ID_MESSAGES_PUBLISH"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "UsersUserIdMessagesPublish",
-                        "safeName": "UsersUserIdMessagesPublish"
-                      }
-                    }
+                    "name": "UsersUserIdMessagesPublish"
                   },
                   "type": "named"
                 },
@@ -873,53 +456,14 @@
                   "shape": {
                     "properties": [
                       {
-                        "name": {
-                          "name": {
-                            "originalName": "content",
-                            "camelCase": {
-                              "unsafeName": "content",
-                              "safeName": "content"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "content",
-                              "safeName": "content"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "CONTENT",
-                              "safeName": "CONTENT"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "Content",
-                              "safeName": "Content"
-                            }
-                          },
-                          "wireValue": "content"
-                        },
+                        "name": "content",
                         "originalTypeDeclaration": {
                           "typeId": "UsersUserIdMessagesSubscribe",
                           "fernFilepath": {
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "UsersUserIdMessagesSubscribe",
-                            "camelCase": {
-                              "unsafeName": "usersUserIdMessagesSubscribe",
-                              "safeName": "usersUserIdMessagesSubscribe"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "users_user_id_messages_subscribe",
-                              "safeName": "users_user_id_messages_subscribe"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "USERS_USER_ID_MESSAGES_SUBSCRIBE",
-                              "safeName": "USERS_USER_ID_MESSAGES_SUBSCRIBE"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "UsersUserIdMessagesSubscribe",
-                              "safeName": "UsersUserIdMessagesSubscribe"
-                            }
-                          }
+                          "name": "UsersUserIdMessagesSubscribe"
                         },
                         "value": {
                           "shape": {
@@ -941,53 +485,14 @@
                         }
                       },
                       {
-                        "name": {
-                          "name": {
-                            "originalName": "timestamp",
-                            "camelCase": {
-                              "unsafeName": "timestamp",
-                              "safeName": "timestamp"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "timestamp",
-                              "safeName": "timestamp"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "TIMESTAMP",
-                              "safeName": "TIMESTAMP"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "Timestamp",
-                              "safeName": "Timestamp"
-                            }
-                          },
-                          "wireValue": "timestamp"
-                        },
+                        "name": "timestamp",
                         "originalTypeDeclaration": {
                           "typeId": "UsersUserIdMessagesSubscribe",
                           "fernFilepath": {
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "UsersUserIdMessagesSubscribe",
-                            "camelCase": {
-                              "unsafeName": "usersUserIdMessagesSubscribe",
-                              "safeName": "usersUserIdMessagesSubscribe"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "users_user_id_messages_subscribe",
-                              "safeName": "users_user_id_messages_subscribe"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "USERS_USER_ID_MESSAGES_SUBSCRIBE",
-                              "safeName": "USERS_USER_ID_MESSAGES_SUBSCRIBE"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "UsersUserIdMessagesSubscribe",
-                              "safeName": "UsersUserIdMessagesSubscribe"
-                            }
-                          }
+                          "name": "UsersUserIdMessagesSubscribe"
                         },
                         "value": {
                           "shape": {
@@ -1017,25 +522,7 @@
                       "allParts": [],
                       "packagePath": []
                     },
-                    "name": {
-                      "originalName": "UsersUserIdMessagesSubscribe",
-                      "camelCase": {
-                        "unsafeName": "usersUserIdMessagesSubscribe",
-                        "safeName": "usersUserIdMessagesSubscribe"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "users_user_id_messages_subscribe",
-                        "safeName": "users_user_id_messages_subscribe"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "USERS_USER_ID_MESSAGES_SUBSCRIBE",
-                        "safeName": "USERS_USER_ID_MESSAGES_SUBSCRIBE"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "UsersUserIdMessagesSubscribe",
-                        "safeName": "UsersUserIdMessagesSubscribe"
-                      }
-                    }
+                    "name": "UsersUserIdMessagesSubscribe"
                   },
                   "type": "named"
                 },
@@ -1069,25 +556,7 @@
       "environments": [
         {
           "id": "production",
-          "name": {
-            "originalName": "production",
-            "camelCase": {
-              "unsafeName": "production",
-              "safeName": "production"
-            },
-            "snakeCase": {
-              "unsafeName": "production",
-              "safeName": "production"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "PRODUCTION",
-              "safeName": "PRODUCTION"
-            },
-            "pascalCase": {
-              "unsafeName": "Production",
-              "safeName": "Production"
-            }
-          },
+          "name": "production",
           "url": "wss://api.example.com"
         }
       ],
@@ -1108,67 +577,13 @@
   },
   "subpackages": {
     "subpackage_usersUserIdMessages": {
-      "name": {
-        "originalName": "usersUserIdMessages",
-        "camelCase": {
-          "unsafeName": "usersUserIdMessages",
-          "safeName": "usersUserIdMessages"
-        },
-        "snakeCase": {
-          "unsafeName": "users_user_id_messages",
-          "safeName": "users_user_id_messages"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "USERS_USER_ID_MESSAGES",
-          "safeName": "USERS_USER_ID_MESSAGES"
-        },
-        "pascalCase": {
-          "unsafeName": "UsersUserIdMessages",
-          "safeName": "UsersUserIdMessages"
-        }
-      },
+      "name": "usersUserIdMessages",
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "usersUserIdMessages",
-            "camelCase": {
-              "unsafeName": "usersUserIdMessages",
-              "safeName": "usersUserIdMessages"
-            },
-            "snakeCase": {
-              "unsafeName": "users_user_id_messages",
-              "safeName": "users_user_id_messages"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "USERS_USER_ID_MESSAGES",
-              "safeName": "USERS_USER_ID_MESSAGES"
-            },
-            "pascalCase": {
-              "unsafeName": "UsersUserIdMessages",
-              "safeName": "UsersUserIdMessages"
-            }
-          }
+          "usersUserIdMessages"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "usersUserIdMessages",
-          "camelCase": {
-            "unsafeName": "usersUserIdMessages",
-            "safeName": "usersUserIdMessages"
-          },
-          "snakeCase": {
-            "unsafeName": "users_user_id_messages",
-            "safeName": "users_user_id_messages"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "USERS_USER_ID_MESSAGES",
-            "safeName": "USERS_USER_ID_MESSAGES"
-          },
-          "pascalCase": {
-            "unsafeName": "UsersUserIdMessages",
-            "safeName": "UsersUserIdMessages"
-          }
-        }
+        "file": "usersUserIdMessages"
       },
       "types": [],
       "errors": [],
@@ -1188,47 +603,8 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "",
-    "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
-    }
-  },
+  "apiName": "",
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   }
 }

@@ -76,14 +76,12 @@ module Seed
       # @return [Array[Seed::Playlist::Types::Playlist]]
       def get_playlists(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[limit other_field multi_line_docs optional_multiple_field multiple_field]
         query_params = {}
         query_params["limit"] = params[:limit] if params.key?(:limit)
         query_params["otherField"] = params[:other_field] if params.key?(:other_field)
         query_params["multiLineDocs"] = params[:multi_line_docs] if params.key?(:multi_line_docs)
         query_params["optionalMultipleField"] = params[:optional_multiple_field] if params.key?(:optional_multiple_field)
         query_params["multipleField"] = params[:multiple_field] if params.key?(:multiple_field)
-        params = params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -114,7 +112,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer] :service_param
-      # @option params [Seed::Playlist::Types::PlaylistId] :playlist_id
+      # @option params [Seed::Playlist::Types::PlaylistID] :playlist_id
       #
       # @return [Seed::Playlist::Types::Playlist]
       def get_playlist(request_options: {}, **params)
@@ -149,7 +147,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer] :service_param
-      # @option params [Seed::Playlist::Types::PlaylistId] :playlist_id
+      # @option params [Seed::Playlist::Types::PlaylistID] :playlist_id
       #
       # @return [Seed::Playlist::Types::Playlist, nil]
       def update_playlist(request_options: {}, **params)
@@ -183,7 +181,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer] :service_param
-      # @option params [Seed::Playlist::Types::PlaylistId] :playlist_id
+      # @option params [Seed::Playlist::Types::PlaylistID] :playlist_id
       #
       # @return [untyped]
       def delete_playlist(request_options: {}, **params)

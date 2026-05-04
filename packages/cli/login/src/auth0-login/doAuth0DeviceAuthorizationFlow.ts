@@ -1,5 +1,5 @@
 import { delay } from "@fern-api/core-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import axios from "axios";
 import boxen from "boxen";
 import open from "open";
@@ -48,7 +48,7 @@ export async function doAuth0DeviceAuthorizationFlow({
     });
 
     if (deviceCodeResponse.status !== 200) {
-        context.failAndThrow("Failed to authenticate", deviceCodeResponse.data);
+        context.failAndThrow("Failed to authenticate", deviceCodeResponse.data, { code: CliError.Code.AuthError });
     }
 
     await open(deviceCodeResponse.data.verification_uri_complete);
@@ -134,6 +134,6 @@ async function pollForToken({
         case "access_denied":
         case "expired_token":
         default:
-            return context.failAndThrow("Failed to authenticate", data);
+            return context.failAndThrow("Failed to authenticate", data, { code: CliError.Code.AuthError });
     }
 }

@@ -1,0 +1,9 @@
+{
+  "type": "string",
+  "enum": [
+    "active",
+    "inactive",
+    "draft"
+  ],
+  "definitions": {}
+}

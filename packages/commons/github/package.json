@@ -45,7 +45,6 @@
     "@fern-api/configs": "workspace:*",
     "@types/node": "catalog:",
     "@types/semver": "^7.5.8",
-    "simple-git": "catalog:",
     "stylelint": "^16.1.0",
     "typescript": "catalog:",
     "vitest": "catalog:"

@@ -8,7 +8,7 @@ pub struct WorkspaceStarterFilesResponse {
 
 impl WorkspaceStarterFilesResponse {
     pub fn builder() -> WorkspaceStarterFilesResponseBuilder {
-        WorkspaceStarterFilesResponseBuilder::default()
+        <WorkspaceStarterFilesResponseBuilder as Default>::default()
     }
 }
 

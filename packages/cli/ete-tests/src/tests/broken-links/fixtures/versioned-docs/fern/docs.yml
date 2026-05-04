@@ -1,0 +1,8 @@
+instances:
+  - url: versioned-test.docs.dev.buildwithfern.com
+
+versions:
+  - display-name: v2
+    path: ./versions/v2.yml
+  - display-name: v1
+    path: ./versions/v1.yml

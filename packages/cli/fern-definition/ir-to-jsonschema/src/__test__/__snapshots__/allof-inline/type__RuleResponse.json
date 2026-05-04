@@ -1,0 +1,90 @@
+{
+  "type": "object",
+  "properties": {
+    "createdBy": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "createdDateTime": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "modifiedBy": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "modifiedDateTime": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/definitions/RuleResponseStatus"
+    },
+    "executionContext": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/RuleExecutionContext"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "status"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "RuleResponseStatus": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "draft"
+      ]
+    },
+    "RuleExecutionContext": {
+      "type": "string",
+      "enum": [
+        "prod",
+        "staging",
+        "dev"
+      ]
+    }
+  }
+}

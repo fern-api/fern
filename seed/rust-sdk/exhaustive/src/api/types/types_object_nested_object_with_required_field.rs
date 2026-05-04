@@ -11,7 +11,7 @@ pub struct NestedObjectWithRequiredField {
 
 impl NestedObjectWithRequiredField {
     pub fn builder() -> NestedObjectWithRequiredFieldBuilder {
-        NestedObjectWithRequiredFieldBuilder::default()
+        <NestedObjectWithRequiredFieldBuilder as Default>::default()
     }
 }
 

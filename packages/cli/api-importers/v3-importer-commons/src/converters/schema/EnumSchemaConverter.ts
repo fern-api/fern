@@ -1,4 +1,5 @@
 import { Type } from "@fern-api/ir-sdk";
+import { getWireValue } from "@fern-api/ir-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter, AbstractConverterContext, FernEnumConfig } from "../../index.js";
@@ -63,7 +64,7 @@ export class EnumSchemaConverter extends AbstractConverter<
         const default_ = this.context.getAsString(this.schema.default);
         return {
             type: Type.enum({
-                default: default_ != null ? values.find((v) => v.name.wireValue === default_) : undefined,
+                default: default_ != null ? values.find((v) => getWireValue(v.name) === default_) : undefined,
                 values,
                 forwardCompatible: this.forwardCompatible || undefined
             })

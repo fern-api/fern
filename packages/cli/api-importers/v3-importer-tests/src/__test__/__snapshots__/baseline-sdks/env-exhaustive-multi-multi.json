@@ -1,24 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
-  },
+  "apiName": "api",
   "apiDisplayName": "Test API",
   "auth": {
     "requirement": "ALL",
@@ -33,46 +15,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "alpha",
-              "camelCase": {
-                "unsafeName": "alpha",
-                "safeName": "alpha"
-              },
-              "snakeCase": {
-                "unsafeName": "alpha",
-                "safeName": "alpha"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "ALPHA",
-                "safeName": "ALPHA"
-              },
-              "pascalCase": {
-                "unsafeName": "Alpha",
-                "safeName": "Alpha"
-              }
-            }
+            "alpha"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "alpha",
-            "camelCase": {
-              "unsafeName": "alpha",
-              "safeName": "alpha"
-            },
-            "snakeCase": {
-              "unsafeName": "alpha",
-              "safeName": "alpha"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "ALPHA",
-              "safeName": "ALPHA"
-            },
-            "pascalCase": {
-              "unsafeName": "Alpha",
-              "safeName": "Alpha"
-            }
-          }
+          "file": "alpha"
         }
       },
       "basePath": {
@@ -90,25 +36,7 @@
       "endpoints": [
         {
           "id": "endpoint_alpha.listPets",
-          "name": {
-            "originalName": "listPets",
-            "camelCase": {
-              "unsafeName": "listPets",
-              "safeName": "listPets"
-            },
-            "snakeCase": {
-              "unsafeName": "list_pets",
-              "safeName": "list_pets"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "LIST_PETS",
-              "safeName": "LIST_PETS"
-            },
-            "pascalCase": {
-              "unsafeName": "ListPets",
-              "safeName": "ListPets"
-            }
-          },
+          "name": "listPets",
           "auth": false,
           "idempotent": false,
           "baseUrl": "Debug",
@@ -156,46 +84,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "beta",
-              "camelCase": {
-                "unsafeName": "beta",
-                "safeName": "beta"
-              },
-              "snakeCase": {
-                "unsafeName": "beta",
-                "safeName": "beta"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "BETA",
-                "safeName": "BETA"
-              },
-              "pascalCase": {
-                "unsafeName": "Beta",
-                "safeName": "Beta"
-              }
-            }
+            "beta"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "beta",
-            "camelCase": {
-              "unsafeName": "beta",
-              "safeName": "beta"
-            },
-            "snakeCase": {
-              "unsafeName": "beta",
-              "safeName": "beta"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "BETA",
-              "safeName": "BETA"
-            },
-            "pascalCase": {
-              "unsafeName": "Beta",
-              "safeName": "Beta"
-            }
-          }
+          "file": "beta"
         }
       },
       "basePath": {
@@ -213,25 +105,7 @@
       "endpoints": [
         {
           "id": "endpoint_beta.listPets",
-          "name": {
-            "originalName": "listPets",
-            "camelCase": {
-              "unsafeName": "listPets",
-              "safeName": "listPets"
-            },
-            "snakeCase": {
-              "unsafeName": "list_pets",
-              "safeName": "list_pets"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "LIST_PETS",
-              "safeName": "LIST_PETS"
-            },
-            "pascalCase": {
-              "unsafeName": "ListPets",
-              "safeName": "ListPets"
-            }
-          },
+          "name": "listPets",
           "auth": false,
           "idempotent": false,
           "baseUrl": "Debug",
@@ -277,28 +151,7 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   },
   "environments": {
     "defaultEnvironment": "Prod",
@@ -306,159 +159,33 @@
       "baseUrls": [
         {
           "id": "Base",
-          "name": {
-            "originalName": "Base",
-            "camelCase": {
-              "unsafeName": "base",
-              "safeName": "base"
-            },
-            "snakeCase": {
-              "unsafeName": "base",
-              "safeName": "base"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "BASE",
-              "safeName": "BASE"
-            },
-            "pascalCase": {
-              "unsafeName": "Base",
-              "safeName": "Base"
-            }
-          }
+          "name": "Base"
         },
         {
           "id": "Debug",
-          "name": {
-            "originalName": "Debug",
-            "camelCase": {
-              "unsafeName": "debug",
-              "safeName": "debug"
-            },
-            "snakeCase": {
-              "unsafeName": "debug",
-              "safeName": "debug"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "DEBUG",
-              "safeName": "DEBUG"
-            },
-            "pascalCase": {
-              "unsafeName": "Debug",
-              "safeName": "Debug"
-            }
-          }
+          "name": "Debug"
         },
         {
           "id": "websocket",
-          "name": {
-            "originalName": "websocket",
-            "camelCase": {
-              "unsafeName": "websocket",
-              "safeName": "websocket"
-            },
-            "snakeCase": {
-              "unsafeName": "websocket",
-              "safeName": "websocket"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "WEBSOCKET",
-              "safeName": "WEBSOCKET"
-            },
-            "pascalCase": {
-              "unsafeName": "Websocket",
-              "safeName": "Websocket"
-            }
-          }
+          "name": "websocket"
         },
         {
           "id": "websocket2",
-          "name": {
-            "originalName": "websocket2",
-            "camelCase": {
-              "unsafeName": "websocket2",
-              "safeName": "websocket2"
-            },
-            "snakeCase": {
-              "unsafeName": "websocket2",
-              "safeName": "websocket2"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "WEBSOCKET2",
-              "safeName": "WEBSOCKET2"
-            },
-            "pascalCase": {
-              "unsafeName": "Websocket2",
-              "safeName": "Websocket2"
-            }
-          }
+          "name": "websocket2"
         },
         {
           "id": "betawebsocket",
-          "name": {
-            "originalName": "betawebsocket",
-            "camelCase": {
-              "unsafeName": "betawebsocket",
-              "safeName": "betawebsocket"
-            },
-            "snakeCase": {
-              "unsafeName": "betawebsocket",
-              "safeName": "betawebsocket"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "BETAWEBSOCKET",
-              "safeName": "BETAWEBSOCKET"
-            },
-            "pascalCase": {
-              "unsafeName": "Betawebsocket",
-              "safeName": "Betawebsocket"
-            }
-          }
+          "name": "betawebsocket"
         },
         {
           "id": "betawebsocket2",
-          "name": {
-            "originalName": "betawebsocket2",
-            "camelCase": {
-              "unsafeName": "betawebsocket2",
-              "safeName": "betawebsocket2"
-            },
-            "snakeCase": {
-              "unsafeName": "betawebsocket2",
-              "safeName": "betawebsocket2"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "BETAWEBSOCKET2",
-              "safeName": "BETAWEBSOCKET2"
-            },
-            "pascalCase": {
-              "unsafeName": "Betawebsocket2",
-              "safeName": "Betawebsocket2"
-            }
-          }
+          "name": "betawebsocket2"
         }
       ],
       "environments": [
         {
           "id": "Prod",
-          "name": {
-            "originalName": "Prod",
-            "camelCase": {
-              "unsafeName": "prod",
-              "safeName": "prod"
-            },
-            "snakeCase": {
-              "unsafeName": "prod",
-              "safeName": "prod"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "PROD",
-              "safeName": "PROD"
-            },
-            "pascalCase": {
-              "unsafeName": "Prod",
-              "safeName": "Prod"
-            }
-          },
+          "name": "Prod",
           "urls": {
             "Base": "http://prod2.api.com",
             "Debug": "http://debug2.api.com",
@@ -470,25 +197,7 @@
         },
         {
           "id": "Dev",
-          "name": {
-            "originalName": "Dev",
-            "camelCase": {
-              "unsafeName": "dev",
-              "safeName": "dev"
-            },
-            "snakeCase": {
-              "unsafeName": "dev",
-              "safeName": "dev"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "DEV",
-              "safeName": "DEV"
-            },
-            "pascalCase": {
-              "unsafeName": "Dev",
-              "safeName": "Dev"
-            }
-          },
+          "name": "Dev",
           "urls": {
             "Base": "http://dev2.api.com",
             "Debug": "http://debug2.api.com",
@@ -520,25 +229,7 @@
       },
       "baseUrl": "websocket",
       "auth": false,
-      "name": {
-        "originalName": "testChannel",
-        "camelCase": {
-          "unsafeName": "testChannel",
-          "safeName": "testChannel"
-        },
-        "snakeCase": {
-          "unsafeName": "test_channel",
-          "safeName": "test_channel"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "TEST_CHANNEL",
-          "safeName": "TEST_CHANNEL"
-        },
-        "pascalCase": {
-          "unsafeName": "TestChannel",
-          "safeName": "TestChannel"
-        }
-      },
+      "name": "testChannel",
       "headers": [],
       "pathParameters": [],
       "queryParameters": [],
@@ -598,25 +289,7 @@
       },
       "baseUrl": "websocket2",
       "auth": false,
-      "name": {
-        "originalName": "testChannel2",
-        "camelCase": {
-          "unsafeName": "testChannel2",
-          "safeName": "testChannel2"
-        },
-        "snakeCase": {
-          "unsafeName": "test_channel2",
-          "safeName": "test_channel2"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "TEST_CHANNEL2",
-          "safeName": "TEST_CHANNEL2"
-        },
-        "pascalCase": {
-          "unsafeName": "TestChannel2",
-          "safeName": "TestChannel2"
-        }
-      },
+      "name": "testChannel2",
       "headers": [],
       "pathParameters": [],
       "queryParameters": [],
@@ -676,25 +349,7 @@
       },
       "baseUrl": "betawebsocket",
       "auth": false,
-      "name": {
-        "originalName": "testChannels",
-        "camelCase": {
-          "unsafeName": "testChannels",
-          "safeName": "testChannels"
-        },
-        "snakeCase": {
-          "unsafeName": "test_channels",
-          "safeName": "test_channels"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "TEST_CHANNELS",
-          "safeName": "TEST_CHANNELS"
-        },
-        "pascalCase": {
-          "unsafeName": "TestChannels",
-          "safeName": "TestChannels"
-        }
-      },
+      "name": "testChannels",
       "headers": [],
       "pathParameters": [],
       "queryParameters": [],
@@ -754,25 +409,7 @@
       },
       "baseUrl": "betawebsocket2",
       "auth": false,
-      "name": {
-        "originalName": "testChannels2",
-        "camelCase": {
-          "unsafeName": "testChannels2",
-          "safeName": "testChannels2"
-        },
-        "snakeCase": {
-          "unsafeName": "test_channels2",
-          "safeName": "test_channels2"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "TEST_CHANNELS2",
-          "safeName": "TEST_CHANNELS2"
-        },
-        "pascalCase": {
-          "unsafeName": "TestChannels2",
-          "safeName": "TestChannels2"
-        }
-      },
+      "name": "testChannels2",
       "headers": [],
       "pathParameters": [],
       "queryParameters": [],
@@ -1193,70 +830,19 @@
     }
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {
     "subpackage_alpha": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "alpha",
-            "camelCase": {
-              "unsafeName": "alpha",
-              "safeName": "alpha"
-            },
-            "snakeCase": {
-              "unsafeName": "alpha",
-              "safeName": "alpha"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "ALPHA",
-              "safeName": "ALPHA"
-            },
-            "pascalCase": {
-              "unsafeName": "Alpha",
-              "safeName": "Alpha"
-            }
-          }
+          "alpha"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "alpha",
-          "camelCase": {
-            "unsafeName": "alpha",
-            "safeName": "alpha"
-          },
-          "snakeCase": {
-            "unsafeName": "alpha",
-            "safeName": "alpha"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ALPHA",
-            "safeName": "ALPHA"
-          },
-          "pascalCase": {
-            "unsafeName": "Alpha",
-            "safeName": "Alpha"
-          }
-        }
+        "file": "alpha"
       },
-      "name": {
-        "originalName": "alpha",
-        "camelCase": {
-          "unsafeName": "alpha",
-          "safeName": "alpha"
-        },
-        "snakeCase": {
-          "unsafeName": "alpha",
-          "safeName": "alpha"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ALPHA",
-          "safeName": "ALPHA"
-        },
-        "pascalCase": {
-          "unsafeName": "Alpha",
-          "safeName": "Alpha"
-        }
-      },
+      "name": "alpha",
       "service": "service_alpha",
       "types": [],
       "errors": [],
@@ -1266,66 +852,12 @@
     "subpackage_beta": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "beta",
-            "camelCase": {
-              "unsafeName": "beta",
-              "safeName": "beta"
-            },
-            "snakeCase": {
-              "unsafeName": "beta",
-              "safeName": "beta"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "BETA",
-              "safeName": "BETA"
-            },
-            "pascalCase": {
-              "unsafeName": "Beta",
-              "safeName": "Beta"
-            }
-          }
+          "beta"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "beta",
-          "camelCase": {
-            "unsafeName": "beta",
-            "safeName": "beta"
-          },
-          "snakeCase": {
-            "unsafeName": "beta",
-            "safeName": "beta"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "BETA",
-            "safeName": "BETA"
-          },
-          "pascalCase": {
-            "unsafeName": "Beta",
-            "safeName": "Beta"
-          }
-        }
+        "file": "beta"
       },
-      "name": {
-        "originalName": "beta",
-        "camelCase": {
-          "unsafeName": "beta",
-          "safeName": "beta"
-        },
-        "snakeCase": {
-          "unsafeName": "beta",
-          "safeName": "beta"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "BETA",
-          "safeName": "BETA"
-        },
-        "pascalCase": {
-          "unsafeName": "Beta",
-          "safeName": "Beta"
-        }
-      },
+      "name": "beta",
       "service": "service_beta",
       "types": [],
       "errors": [],
@@ -1335,66 +867,12 @@
     "subpackage_testChannel": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "testChannel",
-            "camelCase": {
-              "unsafeName": "testChannel",
-              "safeName": "testChannel"
-            },
-            "snakeCase": {
-              "unsafeName": "test_channel",
-              "safeName": "test_channel"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "TEST_CHANNEL",
-              "safeName": "TEST_CHANNEL"
-            },
-            "pascalCase": {
-              "unsafeName": "TestChannel",
-              "safeName": "TestChannel"
-            }
-          }
+          "testChannel"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "testChannel",
-          "camelCase": {
-            "unsafeName": "testChannel",
-            "safeName": "testChannel"
-          },
-          "snakeCase": {
-            "unsafeName": "test_channel",
-            "safeName": "test_channel"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "TEST_CHANNEL",
-            "safeName": "TEST_CHANNEL"
-          },
-          "pascalCase": {
-            "unsafeName": "TestChannel",
-            "safeName": "TestChannel"
-          }
-        }
+        "file": "testChannel"
       },
-      "name": {
-        "originalName": "testChannel",
-        "camelCase": {
-          "unsafeName": "testChannel",
-          "safeName": "testChannel"
-        },
-        "snakeCase": {
-          "unsafeName": "test_channel",
-          "safeName": "test_channel"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "TEST_CHANNEL",
-          "safeName": "TEST_CHANNEL"
-        },
-        "pascalCase": {
-          "unsafeName": "TestChannel",
-          "safeName": "TestChannel"
-        }
-      },
+      "name": "testChannel",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -1404,66 +882,12 @@
     "subpackage_testChannel2": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "testChannel2",
-            "camelCase": {
-              "unsafeName": "testChannel2",
-              "safeName": "testChannel2"
-            },
-            "snakeCase": {
-              "unsafeName": "test_channel2",
-              "safeName": "test_channel2"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "TEST_CHANNEL2",
-              "safeName": "TEST_CHANNEL2"
-            },
-            "pascalCase": {
-              "unsafeName": "TestChannel2",
-              "safeName": "TestChannel2"
-            }
-          }
+          "testChannel2"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "testChannel2",
-          "camelCase": {
-            "unsafeName": "testChannel2",
-            "safeName": "testChannel2"
-          },
-          "snakeCase": {
-            "unsafeName": "test_channel2",
-            "safeName": "test_channel2"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "TEST_CHANNEL2",
-            "safeName": "TEST_CHANNEL2"
-          },
-          "pascalCase": {
-            "unsafeName": "TestChannel2",
-            "safeName": "TestChannel2"
-          }
-        }
+        "file": "testChannel2"
       },
-      "name": {
-        "originalName": "testChannel2",
-        "camelCase": {
-          "unsafeName": "testChannel2",
-          "safeName": "testChannel2"
-        },
-        "snakeCase": {
-          "unsafeName": "test_channel2",
-          "safeName": "test_channel2"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "TEST_CHANNEL2",
-          "safeName": "TEST_CHANNEL2"
-        },
-        "pascalCase": {
-          "unsafeName": "TestChannel2",
-          "safeName": "TestChannel2"
-        }
-      },
+      "name": "testChannel2",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -1473,66 +897,12 @@
     "subpackage_testChannels": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "testChannels",
-            "camelCase": {
-              "unsafeName": "testChannels",
-              "safeName": "testChannels"
-            },
-            "snakeCase": {
-              "unsafeName": "test_channels",
-              "safeName": "test_channels"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "TEST_CHANNELS",
-              "safeName": "TEST_CHANNELS"
-            },
-            "pascalCase": {
-              "unsafeName": "TestChannels",
-              "safeName": "TestChannels"
-            }
-          }
+          "testChannels"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "testChannels",
-          "camelCase": {
-            "unsafeName": "testChannels",
-            "safeName": "testChannels"
-          },
-          "snakeCase": {
-            "unsafeName": "test_channels",
-            "safeName": "test_channels"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "TEST_CHANNELS",
-            "safeName": "TEST_CHANNELS"
-          },
-          "pascalCase": {
-            "unsafeName": "TestChannels",
-            "safeName": "TestChannels"
-          }
-        }
+        "file": "testChannels"
       },
-      "name": {
-        "originalName": "testChannels",
-        "camelCase": {
-          "unsafeName": "testChannels",
-          "safeName": "testChannels"
-        },
-        "snakeCase": {
-          "unsafeName": "test_channels",
-          "safeName": "test_channels"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "TEST_CHANNELS",
-          "safeName": "TEST_CHANNELS"
-        },
-        "pascalCase": {
-          "unsafeName": "TestChannels",
-          "safeName": "TestChannels"
-        }
-      },
+      "name": "testChannels",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -1542,66 +912,12 @@
     "subpackage_testChannels2": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "testChannels2",
-            "camelCase": {
-              "unsafeName": "testChannels2",
-              "safeName": "testChannels2"
-            },
-            "snakeCase": {
-              "unsafeName": "test_channels2",
-              "safeName": "test_channels2"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "TEST_CHANNELS2",
-              "safeName": "TEST_CHANNELS2"
-            },
-            "pascalCase": {
-              "unsafeName": "TestChannels2",
-              "safeName": "TestChannels2"
-            }
-          }
+          "testChannels2"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "testChannels2",
-          "camelCase": {
-            "unsafeName": "testChannels2",
-            "safeName": "testChannels2"
-          },
-          "snakeCase": {
-            "unsafeName": "test_channels2",
-            "safeName": "test_channels2"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "TEST_CHANNELS2",
-            "safeName": "TEST_CHANNELS2"
-          },
-          "pascalCase": {
-            "unsafeName": "TestChannels2",
-            "safeName": "TestChannels2"
-          }
-        }
+        "file": "testChannels2"
       },
-      "name": {
-        "originalName": "testChannels2",
-        "camelCase": {
-          "unsafeName": "testChannels2",
-          "safeName": "testChannels2"
-        },
-        "snakeCase": {
-          "unsafeName": "test_channels2",
-          "safeName": "test_channels2"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "TEST_CHANNELS2",
-          "safeName": "TEST_CHANNELS2"
-        },
-        "pascalCase": {
-          "unsafeName": "TestChannels2",
-          "safeName": "TestChannels2"
-        }
-      },
+      "name": "testChannels2",
       "types": [],
       "errors": [],
       "subpackages": [],

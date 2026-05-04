@@ -1,5 +1,5 @@
 displayName: TypeScript SDK
-irVersion: v65
+irVersion: v66
 image: fernapi/fern-typescript-sdk
 imageAliases: [fernapi/fern-typescript-node-sdk]
 changelogLocation: ../../generators/typescript/sdk/versions.yml
@@ -11,6 +11,11 @@ publish:
     image: fernapi/fern-typescript-sdk
     aliases: [fernapi/fern-typescript-node-sdk]
     context: .
+  sentry:
+    name: fern-typescript-sdk
+    project: typescript-sdk
+    sourceMaps:
+      - dir: generators/typescript/sdk/cli/dist
 test:
   docker:
     image: fernapi/fern-typescript-sdk:latest
@@ -47,6 +52,7 @@ fixtures:
     - outputFolder: branded-string-aliases
       customConfig:
         useBrandedStringAliases: true
+        maxRetries: 5
   streaming:
     - outputFolder: no-custom-config
       customConfig: null
@@ -155,6 +161,9 @@ fixtures:
     - outputFolder: skip-response-validation
       customConfig:
         skipResponseValidation: true
+  union-query-parameters:
+    - outputFolder: no-custom-config
+      customConfig: null
   file-download:
     - outputFolder: no-custom-config
       customConfig: null
@@ -224,6 +233,9 @@ fixtures:
     - outputFolder: flatten-request-parameters
       customConfig:
         flattenRequestParameters: true
+  openapi-request-body-ref:
+    - outputFolder: no-custom-config
+      customConfig: null
   trace:
     - outputFolder: no-custom-config
       customConfig: null
@@ -366,6 +378,9 @@ fixtures:
     - outputFolder: generate-endpoint-metadata
       customConfig:
         generateEndpointMetadata: true
+    - outputFolder: always-send-auth
+      customConfig:
+        alwaysSendAuth: true
   simple-api:
     - outputFolder: use-yarn
       customConfig:
@@ -397,6 +412,7 @@ fixtures:
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: bundle
+      license: MIT
       customConfig:
         bundle: true
         extraDependencies:
@@ -550,8 +566,8 @@ scripts:
           fi
 allowedFailures:
   - cross-package-type-names:serde-layer
-  - enum:forward-compatible-enums-with-serde
   - exhaustive:never-throw-errors
+  - exhaustive:multiple-exports
   - oauth-client-credentials-custom
   - package-yml
   - inferred-auth-implicit-reference

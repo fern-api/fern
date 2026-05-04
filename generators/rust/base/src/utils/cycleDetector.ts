@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 /**
  * Detects illegal recursive type cycles in the IR that cannot be represented in Rust.
@@ -236,10 +237,9 @@ export class RustCycleDetector {
         const prettyPath = cycle
             .map((typeId) => {
                 const typeDeclaration = this.ir.types[typeId];
-                const typeName =
-                    typeDeclaration?.name?.name?.originalName ??
-                    typeDeclaration?.name?.name?.pascalCase?.unsafeName ??
-                    typeId;
+                const typeName = typeDeclaration?.name?.name
+                    ? getOriginalName(typeDeclaration.name.name)
+                    : typeId;
                 return typeName;
             })
             .join(" -> ");

@@ -7,11 +7,11 @@ import Api
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "key": "value"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ApiClient(
@@ -25,9 +25,9 @@ import Api
         )
         let response = try await client.testGroup.testMethodName(
             pathParam: "path_param",
-            request: .init(body: .value(PlainObject(
+            request: .value(PlainObject(
 
-            ))),
+            )),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
@@ -37,11 +37,11 @@ import Api
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "key": "value"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = ApiClient(
@@ -60,10 +60,10 @@ import Api
                 name: "name"
             )),
             queryParamInteger: .value(1),
-            request: .init(body: .value(PlainObject(
+            request: .value(PlainObject(
                 id: "id",
                 name: "name"
-            ))),
+            )),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)

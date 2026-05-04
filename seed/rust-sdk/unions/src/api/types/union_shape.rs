@@ -7,6 +7,7 @@ pub enum Shape {
     #[non_exhaustive]
     Circle {
         #[serde(default)]
+        #[serde(with = "crate::core::number_serializers")]
         radius: f64,
         id: String,
     },
@@ -15,6 +16,7 @@ pub enum Shape {
     #[non_exhaustive]
     Square {
         #[serde(default)]
+        #[serde(with = "crate::core::number_serializers")]
         length: f64,
         id: String,
     },

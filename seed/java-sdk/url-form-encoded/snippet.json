@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "72d524e",
+            "example_identifier": "ba02ea54",
             "id": {
                 "method": "POST",
                 "path": "/submit",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "fcd2e97c",
+            "example_identifier": "68730af7",
             "id": {
                 "method": "POST",
                 "path": "/token",

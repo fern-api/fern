@@ -24,11 +24,6 @@ runs:
           ${{ runner.os }}-turbo-${{ github.job }}-
           ${{ runner.os }}-turbo-
 
-    # Ensure npm 11.5.1 or later is installed
-    - name: ⎔ Update npm
-      shell: bash
-      run: npm install -g npm@latest
-
     - name: 📥 Install dependencies
       shell: bash
       run: |

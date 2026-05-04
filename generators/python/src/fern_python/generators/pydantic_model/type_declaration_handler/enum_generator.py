@@ -9,6 +9,7 @@ from fern_python.generators.pydantic_model.type_declaration_handler.abc.abstract
     AbstractTypeSnippetGenerator,
 )
 from fern_python.snippet import SnippetWriter
+from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -41,7 +42,7 @@ class EnumGenerator(AbstractTypeGenerator):
             # Create a list of string literals for enum values
             enum_literals = []
             for v in self._enum.values:
-                escaped_value = v.name.wire_value.replace("\\", "\\\\").replace('"', '\\"')
+                escaped_value = get_wire_value(v.name).replace("\\", "\\\\").replace('"', '\\"')
                 enum_literals.append(f'"{escaped_value}"')
 
             # Join the literals with commas
@@ -73,10 +74,10 @@ class EnumGenerator(AbstractTypeGenerator):
             self._source_file.add_class_declaration(enum_class)
 
             for value in self._enum.values:
-                escaped_value = value.name.wire_value.replace("\\", "\\\\").replace('"', '\\"')
+                escaped_value = get_wire_value(value.name).replace("\\", "\\\\").replace('"', '\\"')
                 enum_class.add_class_var(
                     AST.VariableDeclaration(
-                        name=_get_class_var_name(value.name.name),
+                        name=_get_class_var_name(resolve_name(get_name_from_wire_value(value.name))),
                         initializer=AST.Expression(f'"{escaped_value}"'),
                         docstring=AST.Docstring(value.docs) if value.docs is not None else None,
                     )
@@ -131,7 +132,7 @@ class EnumGenerator(AbstractTypeGenerator):
                     items=[
                         VisitableItem(
                             parameter_name=self._get_visitor_parameter_name_for_enum_value(value),
-                            expected_value=f"{self._class_name}.{_get_class_var_name(value.name.name)}",
+                            expected_value=f"{self._class_name}.{_get_class_var_name(resolve_name(get_name_from_wire_value(value.name)))}",
                             visitor_argument=None,
                         )
                         for value in self._enum.values
@@ -143,7 +144,7 @@ class EnumGenerator(AbstractTypeGenerator):
             )
 
     def _get_visitor_parameter_name_for_enum_value(self, enum_value: ir_types.EnumValue) -> str:
-        return enum_value.name.name.snake_case.safe_name
+        return resolve_name(get_name_from_wire_value(enum_value.name)).snake_case.safe_name
 
 
 class EnumSnippetGenerator(AbstractTypeSnippetGenerator):
@@ -167,10 +168,10 @@ class EnumSnippetGenerator(AbstractTypeSnippetGenerator):
 
         def write_enum(writer: AST.NodeWriter) -> None:
             if self._use_str_enums:
-                escaped_value = self.example.wire_value.replace("\\", "\\\\").replace('"', '\\"')
+                escaped_value = get_wire_value(self.example).replace("\\", "\\\\").replace('"', '\\"')
                 writer.write(f'"{escaped_value}"')
             else:
-                enum_wire_value = self.example.name
+                enum_wire_value = resolve_name(get_name_from_wire_value(self.example))
                 writer.write_node(AST.Expression(class_reference))
                 writer.write(f".{_get_class_var_name(enum_wire_value)}")
 
@@ -178,4 +179,4 @@ class EnumSnippetGenerator(AbstractTypeSnippetGenerator):
 
 
 def _get_class_var_name(name: ir_types.Name) -> str:
-    return name.screaming_snake_case.safe_name
+    return resolve_name(name).screaming_snake_case.safe_name

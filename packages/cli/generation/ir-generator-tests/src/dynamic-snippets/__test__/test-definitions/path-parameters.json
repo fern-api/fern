@@ -70,6 +70,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "name",
                         "name": {
                             "originalName": "name",
                             "camelCase": {
@@ -88,8 +89,7 @@
                                 "unsafeName": "Name",
                                 "safeName": "Name"
                             }
-                        },
-                        "wireValue": "name"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -100,6 +100,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "tags",
                         "name": {
                             "originalName": "tags",
                             "camelCase": {
@@ -118,8 +119,7 @@
                                 "unsafeName": "Tags",
                                 "safeName": "Tags"
                             }
-                        },
-                        "wireValue": "tags"
+                        }
                     },
                     "typeReference": {
                         "type": "list",
@@ -204,6 +204,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "name",
                         "name": {
                             "originalName": "name",
                             "camelCase": {
@@ -222,8 +223,7 @@
                                 "unsafeName": "Name",
                                 "safeName": "Name"
                             }
-                        },
-                        "wireValue": "name"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -234,6 +234,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "tags",
                         "name": {
                             "originalName": "tags",
                             "camelCase": {
@@ -252,8 +253,7 @@
                                 "unsafeName": "Tags",
                                 "safeName": "Tags"
                             }
-                        },
-                        "wireValue": "tags"
+                        }
                     },
                     "typeReference": {
                         "type": "list",
@@ -765,6 +765,7 @@
                 "queryParameters": [
                     {
                         "name": {
+                            "wireValue": "limit",
                             "name": {
                                 "originalName": "limit",
                                 "camelCase": {
@@ -783,8 +784,7 @@
                                     "unsafeName": "Limit",
                                     "safeName": "Limit"
                                 }
-                            },
-                            "wireValue": "limit"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -1456,6 +1456,7 @@
                 "queryParameters": [
                     {
                         "name": {
+                            "wireValue": "limit",
                             "name": {
                                 "originalName": "limit",
                                 "camelCase": {
@@ -1474,8 +1475,7 @@
                                     "unsafeName": "Limit",
                                     "safeName": "Limit"
                                 }
-                            },
-                            "wireValue": "limit"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",

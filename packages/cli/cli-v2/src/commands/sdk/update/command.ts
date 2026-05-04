@@ -1,4 +1,6 @@
 import { extractErrorMessage } from "@fern-api/core-utils";
+import { CliError } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import inquirer from "inquirer";
 import type { Argv } from "yargs";
@@ -6,7 +8,6 @@ import { FERN_YML_FILENAME } from "../../../config/fern-yml/constants.js";
 import { FernYmlEditor } from "../../../config/fern-yml/FernYmlEditor.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { CliError } from "../../../errors/CliError.js";
 import { SdkChecker } from "../../../sdk/checker/SdkChecker.js";
 import { GeneratorMigrator } from "../../../sdk/updater/GeneratorMigrator.js";
 import { SdkUpdater } from "../../../sdk/updater/SdkUpdater.js";
@@ -35,14 +36,15 @@ export class UpdateCommand {
         const fernYmlPath = workspace.absoluteFilePath;
         if (fernYmlPath == null) {
             throw new CliError({
-                message: `No ${FERN_YML_FILENAME} found. Run 'fern init' to initialize a project.`
+                message: `No ${FERN_YML_FILENAME} found. Run 'fern init' to initialize a project.`,
+                code: CliError.Code.ConfigError
             });
         }
 
         const sdkChecker = new SdkChecker({ context });
         const sdkCheckResult = await sdkChecker.check({ workspace });
         if (sdkCheckResult.errorCount > 0) {
-            throw CliError.exit();
+            throw new CliError({ code: CliError.Code.ValidationError });
         }
 
         const targets = workspace.sdks?.targets;
@@ -62,7 +64,8 @@ export class UpdateCommand {
         // If no target matched the filter, it's an error.
         if (updates.length === 0 && upToDate.length === 0 && args.target != null) {
             throw new CliError({
-                message: `Target '${args.target}' not found in ${FERN_YML_FILENAME}.`
+                message: `Target '${args.target}' not found in ${FERN_YML_FILENAME}.`,
+                code: CliError.Code.ConfigError
             });
         }
 

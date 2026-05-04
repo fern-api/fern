@@ -10,7 +10,7 @@ pub struct MultipleFilterSearchRequest {
 
 impl MultipleFilterSearchRequest {
     pub fn builder() -> MultipleFilterSearchRequestBuilder {
-        MultipleFilterSearchRequestBuilder::default()
+        <MultipleFilterSearchRequestBuilder as Default>::default()
     }
 }
 

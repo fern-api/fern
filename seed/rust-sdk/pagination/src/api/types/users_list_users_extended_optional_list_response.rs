@@ -11,7 +11,7 @@ pub struct ListUsersExtendedOptionalListResponse2 {
 
 impl ListUsersExtendedOptionalListResponse2 {
     pub fn builder() -> ListUsersExtendedOptionalListResponse2Builder {
-        ListUsersExtendedOptionalListResponse2Builder::default()
+        <ListUsersExtendedOptionalListResponse2Builder as Default>::default()
     }
 }
 

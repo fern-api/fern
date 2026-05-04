@@ -3,21 +3,21 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 import { ExampleQueryParameterShape } from "./ExampleQueryParameterShape.js";
 
 export const ExampleQueryParameter: core.serialization.ObjectSchema<
     serializers.ExampleQueryParameter.Raw,
     FernIr.ExampleQueryParameter
 > = core.serialization.objectWithoutOptionalProperties({
-    name: NameAndWireValue,
+    name: NameAndWireValueOrString,
     value: core.serialization.lazyObject(() => serializers.ExampleTypeReference),
     shape: ExampleQueryParameterShape.optional(),
 });
 
 export declare namespace ExampleQueryParameter {
     export interface Raw {
-        name: NameAndWireValue.Raw;
+        name: NameAndWireValueOrString.Raw;
         value: serializers.ExampleTypeReference.Raw;
         shape?: ExampleQueryParameterShape.Raw | null;
     }

@@ -7,6 +7,7 @@ import {
     visitRawTypeDeclaration
 } from "@fern-api/fern-definition-schema";
 import { DeclaredTypeName } from "@fern-api/ir-sdk";
+import { getOriginalName } from "@fern-api/ir-utils";
 
 import { FernFileContext } from "../../FernFileContext.js";
 import { TypeResolver } from "../../resolvers/TypeResolver.js";
@@ -102,13 +103,24 @@ export function getReferencedTypesFromRawDeclaration({
             return types;
         },
         undiscriminatedUnion: (unionDeclaration) => {
-            return Object.values(unionDeclaration.union).reduce<string[]>((types, unionMember) => {
-                const rawType = typeof unionMember === "string" ? unionMember : unionMember.type;
-                if (typeof rawType === "string") {
-                    types.push(rawType);
-                }
-                return types;
-            }, []);
+            const types: string[] = [];
+            if (unionDeclaration["base-properties"] != null) {
+                types.push(
+                    ...Object.values(unionDeclaration["base-properties"]).map((property) =>
+                        typeof property === "string" ? property : property.type
+                    )
+                );
+            }
+            types.push(
+                ...Object.values(unionDeclaration.union).reduce<string[]>((memberTypes, unionMember) => {
+                    const rawType = typeof unionMember === "string" ? unionMember : unionMember.type;
+                    if (typeof rawType === "string") {
+                        memberTypes.push(rawType);
+                    }
+                    return memberTypes;
+                }, [])
+            );
+            return types;
         },
         enum: () => []
     });
@@ -177,7 +189,9 @@ class SeenTypeNamesImpl implements SeenTypeNames {
 
     private computeCacheKey(typeName: DeclaredTypeName): string {
         return (
-            typeName.fernFilepath.allParts.map((part) => part.originalName).join("/") + ":" + typeName.name.originalName
+            typeName.fernFilepath.allParts.map((part) => getOriginalName(part)).join("/") +
+            ":" +
+            getOriginalName(typeName.name)
         );
     }
 }

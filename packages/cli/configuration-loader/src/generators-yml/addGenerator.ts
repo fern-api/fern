@@ -1,5 +1,5 @@
 import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY, generatorsYml } from "@fern-api/configuration";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import semver from "semver";
 
 import { GENERATOR_INVOCATIONS } from "./generatorInvocations.js";
@@ -39,10 +39,15 @@ export async function addGenerator({
             // Check for duplicates using normalized name (handles both shorthand and full names in existing config)
             if (
                 group.generators.some(
-                    (generator) => addDefaultDockerOrgIfNotPresent(generator.name) === normalizedGeneratorName
+                    (generator) =>
+                        addDefaultDockerOrgIfNotPresent(
+                            "image" in generator ? generator.image.name : generator.name
+                        ) === normalizedGeneratorName
                 )
             ) {
-                context.failAndThrow(`${generatorName} is already installed in group ${groupName}.`);
+                context.failAndThrow(`${generatorName} is already installed in group ${groupName}.`, undefined, {
+                    code: CliError.Code.ConfigError
+                });
             }
             const latestVersion = await getLatestGeneratorVersion({
                 cliVersion,

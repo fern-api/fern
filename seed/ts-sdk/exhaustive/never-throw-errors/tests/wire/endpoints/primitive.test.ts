@@ -21,7 +21,7 @@ describe("PrimitiveClient", () => {
 
         const response = await client.endpoints.primitive.getAndReturnString("string");
         expect(response).toEqual({
-            body: "string",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -45,7 +45,7 @@ describe("PrimitiveClient", () => {
 
         const response = await client.endpoints.primitive.getAndReturnInt(1);
         expect(response).toEqual({
-            body: 1,
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -69,7 +69,7 @@ describe("PrimitiveClient", () => {
 
         const response = await client.endpoints.primitive.getAndReturnLong(1000000);
         expect(response).toEqual({
-            body: 1000000,
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -93,7 +93,7 @@ describe("PrimitiveClient", () => {
 
         const response = await client.endpoints.primitive.getAndReturnDouble(1.1);
         expect(response).toEqual({
-            body: 1.1,
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -117,7 +117,7 @@ describe("PrimitiveClient", () => {
 
         const response = await client.endpoints.primitive.getAndReturnBool(true);
         expect(response).toEqual({
-            body: true,
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -141,7 +141,7 @@ describe("PrimitiveClient", () => {
 
         const response = await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z");
         expect(response).toEqual({
-            body: "2024-01-15T09:30:00Z",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -165,7 +165,7 @@ describe("PrimitiveClient", () => {
 
         const response = await client.endpoints.primitive.getAndReturnDate("2023-01-15");
         expect(response).toEqual({
-            body: "2023-01-15",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -189,7 +189,7 @@ describe("PrimitiveClient", () => {
 
         const response = await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
         expect(response).toEqual({
-            body: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -213,7 +213,7 @@ describe("PrimitiveClient", () => {
 
         const response = await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");
         expect(response).toEqual({
-            body: "SGVsbG8gd29ybGQh",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

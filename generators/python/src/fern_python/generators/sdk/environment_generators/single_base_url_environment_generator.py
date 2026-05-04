@@ -1,6 +1,7 @@
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .generated_environment import GeneratedEnvironment
 from fern_python.codegen import AST, SourceFile
+from fern_python.utils import resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -80,7 +81,7 @@ class SingleBaseUrlEnvironmentGenerator:
         return environment.url
 
     def _get_enum_value_name(self, environment: ir_types.SingleBaseUrlEnvironment) -> str:
-        return environment.name.screaming_snake_case.safe_name
+        return resolve_name(environment.name).screaming_snake_case.safe_name
 
     def _get_environment(
         self,

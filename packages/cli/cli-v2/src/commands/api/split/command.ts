@@ -1,5 +1,7 @@
 import { extractErrorMessage, mergeWithOverrides } from "@fern-api/core-utils";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import { execFile } from "child_process";
 import { readFile, writeFile } from "fs/promises";
@@ -10,7 +12,7 @@ import { FERN_YML_FILENAME } from "../../../config/fern-yml/constants.js";
 import { FernYmlEditor } from "../../../config/fern-yml/FernYmlEditor.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { CliError } from "../../../errors/CliError.js";
+import { isStdioMarker, StdioMarkerGuard, writeOutputString } from "../../../io/stdio.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
 import type { SpecEntry } from "../utils/filterSpecs.js";
@@ -46,7 +48,7 @@ export class SplitCommand {
         const workspace = await context.loadWorkspaceOrThrow();
 
         if (Object.keys(workspace.apis).length === 0) {
-            throw new CliError({ message: "No APIs found in workspace." });
+            throw new CliError({ message: "No APIs found in workspace.", code: CliError.Code.ConfigError });
         }
 
         const entries = filterSpecs(workspace, { api: args.api });
@@ -57,10 +59,18 @@ export class SplitCommand {
         }
 
         const format: SplitFormat = normalizeSplitFormat(args.format ?? OVERLAY_NAME);
+
+        const stdio = new StdioMarkerGuard();
+        if (isStdioMarker(args.output)) {
+            stdio.claimStdout("output");
+            return this.handleStdoutPreview(context, entries, format);
+        }
+
         const fernYmlPath = workspace.absoluteFilePath;
         if (fernYmlPath == null) {
             throw new CliError({
-                message: `No ${FERN_YML_FILENAME} found. Run 'fern init' to initialize a project.`
+                message: `No ${FERN_YML_FILENAME} found. Run 'fern init' to initialize a project.`,
+                code: CliError.Code.ConfigError
             });
         }
         const editor = await FernYmlEditor.load({ fernYmlPath });
@@ -97,6 +107,51 @@ export class SplitCommand {
         if (splitCount === 0) {
             context.stderr.info(chalk.dim("No specs had changes to split."));
         }
+    }
+
+    /**
+     * Preview-only mode: when `--output -` is set, write the overlay/overrides
+     * for the matching spec to stdout without modifying any workspace files
+     * (no git restore, no fern.yml updates, no merge with existing files).
+     *
+     * Requires that exactly one spec match `--api`, since multiple stdout
+     * writes would interleave incoherently.
+     */
+    private async handleStdoutPreview(context: Context, entries: SpecEntry[], format: SplitFormat): Promise<void> {
+        if (entries.length > 1) {
+            const names = entries.map((e) => path.basename(e.specFilePath)).join(", ");
+            throw new CliError({
+                message: `--output "-" requires --api to select a single spec, but ${entries.length} matched: ${names}.`,
+                code: CliError.Code.ConfigError
+            });
+        }
+        const entry = entries[0];
+        if (entry == null) {
+            // Defensive: the caller checks for empty entries, but TS needs this.
+            return;
+        }
+
+        const fernYmlPath = entry.specFilePath; // Used only for git repo root resolution.
+        const repoRoot = await this.getRepoRoot(fernYmlPath);
+        const [currentContent, originalRaw] = await Promise.all([
+            loadSpec(entry.specFilePath),
+            this.getFileFromGitHead(repoRoot, entry.specFilePath)
+        ]);
+        const originalContent = parseSpec(originalRaw, entry.specFilePath);
+
+        if (!hasChanges(originalContent, currentContent)) {
+            context.stderr.info(chalk.dim(`${entry.specFilePath}: no changes from git HEAD.`));
+            return;
+        }
+
+        // Always serialize as YAML for stdout — both formats are conventionally YAML.
+        const stdoutFilename = format === OVERLAY_NAME ? "stdout-overlay.yml" : "stdout-overrides.yml";
+        const payload =
+            format === OVERLAY_NAME
+                ? generateOverlay(originalContent, currentContent)
+                : generateOverrides(originalContent, currentContent);
+        const serialized = serializeSpec(payload, stdoutFilename);
+        await writeOutputString("-", serialized);
     }
 
     private async splitAsOverlay(
@@ -240,7 +295,8 @@ export class SplitCommand {
         } catch (error: unknown) {
             const detail = extractErrorMessage(error);
             throw new CliError({
-                message: `Failed to get file from git HEAD: ${absolutePath}. Is the file tracked by git and has at least one commit?\n  Cause: ${detail}`
+                message: `Failed to get file from git HEAD: ${absolutePath}. Is the file tracked by git and has at least one commit?\n  Cause: ${detail}`,
+                code: CliError.Code.ParseError
             });
         }
     }
@@ -257,7 +313,10 @@ export class SplitCommand {
 function resolvePathOrThrow(context: Context, outputPath: string): AbsoluteFilePath {
     const resolved = context.resolveOutputFilePath(outputPath);
     if (resolved == null) {
-        throw new CliError({ message: `Could not resolve output path: ${outputPath}` });
+        throw new CliError({
+            message: `Could not resolve output path: ${outputPath}`,
+            code: CliError.Code.ConfigError
+        });
     }
     return resolved;
 }
@@ -277,7 +336,8 @@ export function addSplitCommand(cli: Argv<GlobalArgs>): void {
                 })
                 .option("output", {
                     type: "string",
-                    description: "Custom output path for the new overlay/override file"
+                    description:
+                        'Custom output path for the new overlay/override file. Use "-" to print the diff to stdout (preview only — does not modify the workspace).'
                 })
                 .option("format", {
                     type: "string",
@@ -286,9 +346,10 @@ export function addSplitCommand(cli: Argv<GlobalArgs>): void {
                 })
                 .coerce("format", (value: string): SplitFormatInput => {
                     if (!(ALL_FORMAT_NAMES as readonly string[]).includes(value)) {
-                        throw new Error(
-                            `Invalid format '${value}'. Expected one of: ${OVERLAY_NAME}, ${OVERRIDES_NAME}`
-                        );
+                        throw new CliError({
+                            message: `Invalid format '${value}'. Expected one of: ${OVERLAY_NAME}, ${OVERRIDES_NAME}`,
+                            code: CliError.Code.ValidationError
+                        });
                     }
                     return value as SplitFormatInput;
                 })

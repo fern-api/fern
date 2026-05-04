@@ -13,7 +13,7 @@ pub struct ListUsersTopLevelBodyCursorPaginationRequest {
 
 impl ListUsersTopLevelBodyCursorPaginationRequest {
     pub fn builder() -> ListUsersTopLevelBodyCursorPaginationRequestBuilder {
-        ListUsersTopLevelBodyCursorPaginationRequestBuilder::default()
+        <ListUsersTopLevelBodyCursorPaginationRequestBuilder as Default>::default()
     }
 }
 

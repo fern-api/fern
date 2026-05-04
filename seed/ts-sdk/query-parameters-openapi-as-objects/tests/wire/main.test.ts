@@ -58,8 +58,6 @@ describe("SeedApiClient", () => {
                 tags: ["tags", "tags"],
             },
         });
-        expect(response).toEqual({
-            results: ["results", "results"],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

@@ -12,7 +12,7 @@ pub struct Error {
 
 impl Error {
     pub fn builder() -> ErrorBuilder {
-        ErrorBuilder::default()
+        <ErrorBuilder as Default>::default()
     }
 }
 

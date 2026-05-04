@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix shell completion triggering upgrade notices and slow network calls.
+    Suppress upgrade messages and skip version redirection when the shell
+    invokes `--get-yargs-completions` so that TAB completions are fast and
+    side-effect-free.
+  type: fix
+
+- summary: |
+    Add shell completion support to CLI v2 with content-aware completions
+    for `--group`, `--api`, and `--instance` flags. The completion reads
+    `fern.yml` to suggest valid values when the user presses TAB.
+  type: feat

@@ -1381,7 +1381,7 @@ request := &fern.ListUsersOffsetStepPaginationRequest{
             1,
         ),
         Limit: fern.Int(
-            1,
+            3,
         ),
         Order: fern.OrderAsc.Ptr(),
     }

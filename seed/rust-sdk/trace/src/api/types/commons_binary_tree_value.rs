@@ -10,7 +10,7 @@ pub struct BinaryTreeValue {
 
 impl BinaryTreeValue {
     pub fn builder() -> BinaryTreeValueBuilder {
-        BinaryTreeValueBuilder::default()
+        <BinaryTreeValueBuilder as Default>::default()
     }
 }
 

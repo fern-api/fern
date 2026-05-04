@@ -1,4 +1,7 @@
+export * from "./BaseGeneratorInvocationSchema.js";
 export * from "./CratesOutputLocationSchema.js";
+export * from "./CustomGeneratorInvocationSchema.js";
+export * from "./DefaultGeneratorInvocationSchema.js";
 export * from "./GeneratorApiSettingsSchema.js";
 export * from "./GeneratorGroupSchema.js";
 export * from "./GeneratorInvocationSchema.js";

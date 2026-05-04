@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: objects-with-imports
-  version: ''
+  version: 0.0.0
 paths:
   /send-optional-body:
     post:
@@ -21,9 +21,9 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              additionalProperties: true
-              nullable: true
+              type:
+                - object
+                - 'null'
   /send-optional-typed-body:
     post:
       operationId: optional_sendOptionalTypedBody
@@ -42,8 +42,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SendOptionalBodyRequest'
-              nullable: true
+              anyOf:
+                - $ref: '#/components/schemas/SendOptionalBodyRequest'
+                - type: 'null'
   /deploy/{actionId}/versions/{id}:
     post:
       description: >-
@@ -67,7 +68,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -77,8 +78,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DeployParams'
-              nullable: true
+              anyOf:
+                - $ref: '#/components/schemas/DeployParams'
+                - type: 'null'
 components:
   schemas:
     SendOptionalBodyRequest:
@@ -94,8 +96,9 @@ components:
       type: object
       properties:
         updateDraft:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
     DeployResponse:
       title: DeployResponse
       type: object

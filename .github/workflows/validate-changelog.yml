@@ -7,16 +7,24 @@ on:
     paths:
       - "packages/seed/src/commands/validate/**/*"
       - "packages/cli/cli/versions.yml"
+      - "packages/cli/cli/changes/**"
       - "packages/generator-cli/versions.yml"
       - "generators/**/versions.yml"
+      - "generators/**/changes/**"
+      - "scripts/validate-all-changelogs.sh"
+      - ".github/workflows/validate-changelog.yml"
   pull_request:
     branches:
       - main
     paths:
       - "packages/seed/src/commands/validate/**/*"
       - "packages/cli/cli/versions.yml"
+      - "packages/cli/cli/changes/**"
       - "packages/generator-cli/versions.yml"
       - "generators/**/versions.yml"
+      - "generators/**/changes/**"
+      - "scripts/validate-all-changelogs.sh"
+      - ".github/workflows/validate-changelog.yml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -26,7 +34,6 @@ env:
   DO_NOT_TRACK: "1"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
-  TURBO_REMOTE_CACHE_TIMEOUT: 10
   TURBO_NO_UPDATE_NOTIFIER: "1"
   TURBO_DAEMON: "false"
 

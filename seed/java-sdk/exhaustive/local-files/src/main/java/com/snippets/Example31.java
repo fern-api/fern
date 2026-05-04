@@ -1,7 +1,8 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.endpoints.params.requests.GetWithQuery;
+import com.fern.sdk.resources.types.object.types.ObjectWithDatetimeLikeString;
+import java.time.OffsetDateTime;
 
 public class Example31 {
     public static void main(String[] args) {
@@ -11,11 +12,11 @@ public class Example31 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().params().getWithQuery(
-            GetWithQuery
+        client.endpoints().object().getAndReturnWithDatetimeLikeString(
+            ObjectWithDatetimeLikeString
                 .builder()
-                .query("query")
-                .number(1)
+                .datetimeLikeString("datetimeLikeString")
+                .actualDatetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                 .build()
         );
     }

@@ -8,7 +8,7 @@ pub struct UserListContainer {
 
 impl UserListContainer {
     pub fn builder() -> UserListContainerBuilder {
-        UserListContainerBuilder::default()
+        <UserListContainerBuilder as Default>::default()
     }
 }
 

@@ -9,7 +9,7 @@ pub struct WorkspaceStarterFilesResponseV2 {
 
 impl WorkspaceStarterFilesResponseV2 {
     pub fn builder() -> WorkspaceStarterFilesResponseV2Builder {
-        WorkspaceStarterFilesResponseV2Builder::default()
+        <WorkspaceStarterFilesResponseV2Builder as Default>::default()
     }
 }
 

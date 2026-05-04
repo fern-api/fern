@@ -43,7 +43,7 @@ impl MultipartFormRequest {
 
 impl MultipartFormRequest {
     pub fn builder() -> MultipartFormRequestBuilder {
-        MultipartFormRequestBuilder::default()
+        <MultipartFormRequestBuilder as Default>::default()
     }
 }
 

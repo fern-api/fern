@@ -26,7 +26,7 @@ func do() {
                 "development",
             ),
         },
-        XApiVersion: "0.0.1",
+        XAPIVersion: "0.0.1",
     }
     client.Service.GetMetadata(
         context.TODO(),

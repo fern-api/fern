@@ -10,9 +10,9 @@ module Seed
         @client = client
       end
 
-      # @return [Seed::Api::Client]
+      # @return [Seed::API::Client]
       def api
-        @api ||= Seed::NestedNoAuth::Api::Client.new(client: @client)
+        @api ||= Seed::NestedNoAuth::API::Client.new(client: @client)
       end
     end
   end

@@ -8,7 +8,7 @@ pub struct StringResponse {
 
 impl StringResponse {
     pub fn builder() -> StringResponseBuilder {
-        StringResponseBuilder::default()
+        <StringResponseBuilder as Default>::default()
     }
 }
 

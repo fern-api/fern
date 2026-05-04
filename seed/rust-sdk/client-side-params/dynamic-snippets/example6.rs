@@ -28,6 +28,7 @@ async fn main() {
                 )])),
                 password: Some("password".to_string()),
                 blocked: Some(true),
+                ..Default::default()
             },
             None,
         )

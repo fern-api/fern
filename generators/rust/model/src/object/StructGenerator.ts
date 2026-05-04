@@ -1,3 +1,4 @@
+import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
@@ -59,7 +60,7 @@ export class StructGenerator {
      */
     private getEffectiveProperties(): FernIr.ObjectProperty[] {
         if (this.context.websocketServerMessageTypeIds.has(this.typeId)) {
-            return this.objectTypeDeclaration.properties.filter((p) => p.name.wireValue !== "type");
+            return this.objectTypeDeclaration.properties.filter((p) => getWireValue(p.name) !== "type");
         }
         return this.objectTypeDeclaration.properties;
     }
@@ -165,7 +166,7 @@ export class StructGenerator {
         // When struct is transparent, skip field-level serde attributes (rename, default, etc.)
         // as they are incompatible with #[serde(transparent)]
         const fieldAttributes = isTransparent ? [] : generateFieldAttributes(property, this.context);
-        const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
+        const fieldName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(property.name));
 
         return rust.field({
             name: fieldName,
@@ -208,7 +209,7 @@ export class StructGenerator {
 
             fields.push(
                 rust.field({
-                    name: `${parentType.name.snakeCase.unsafeName}_fields`,
+                    name: `${this.context.case.snakeUnsafe(parentType.name)}_fields`,
                     type: rust.Type.reference(rust.reference({ name: parentTypeName })),
                     visibility: PUBLIC,
                     attributes: [Attribute.serde.flatten()]
@@ -232,7 +233,7 @@ export class StructGenerator {
                     default: undefined,
                     inline: undefined,
                     fernFilepath: parentType.fernFilepath,
-                    displayName: parentType.name.originalName
+                    displayName: getOriginalName(parentType.name)
                 },
                 this.context
             );
@@ -255,7 +256,7 @@ export class StructGenerator {
                     default: undefined,
                     inline: undefined,
                     fernFilepath: parentType.fernFilepath,
-                    displayName: parentType.name.originalName
+                    displayName: getOriginalName(parentType.name)
                 },
                 this.context
             );

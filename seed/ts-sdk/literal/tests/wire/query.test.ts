@@ -23,10 +23,6 @@ describe("QueryClient", () => {
             alias_optional_stream: false,
             query: "What is the weather today",
         });
-        expect(response).toEqual({
-            message: "The weather is sunny",
-            status: 200,
-            success: true,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

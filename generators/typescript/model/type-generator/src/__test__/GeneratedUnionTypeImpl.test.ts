@@ -1,6 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode, TypeReferenceNode } from "@fern-typescript/commons";
 import {
+    caseConverter,
     casingsGenerator,
     createDeclaredTypeName,
     createNameAndWireValue,
@@ -98,6 +99,7 @@ function createUnionDeclaration(opts: {
         types: opts.types,
         baseProperties: opts.baseProperties ?? [],
         extends: opts.extends ?? [],
+        default: undefined,
         discriminatorContext: undefined
     };
 }
@@ -144,9 +146,9 @@ function createMockBaseContext(opts?: {
                 return primitiveTypeRefNode("string");
             },
             getReferenceToNamedType: (typeName: FernIr.DeclaredTypeName) => ({
-                getTypeNode: () => ts.factory.createTypeReferenceNode(typeName.name.pascalCase.unsafeName),
-                getExpression: () => ts.factory.createIdentifier(typeName.name.pascalCase.unsafeName),
-                getEntityName: () => ts.factory.createIdentifier(typeName.name.pascalCase.unsafeName)
+                getTypeNode: () => ts.factory.createTypeReferenceNode(caseConverter.pascalSafe(typeName.name)),
+                getExpression: () => ts.factory.createIdentifier(caseConverter.pascalSafe(typeName.name)),
+                getEntityName: () => ts.factory.createIdentifier(caseConverter.pascalSafe(typeName.name))
             }),
             getTypeDeclaration: (typeName: FernIr.DeclaredTypeName): FernIr.TypeDeclaration => {
                 return {
@@ -177,7 +179,7 @@ function createMockBaseContext(opts?: {
                     type: "object",
                     generateStatements: () => [],
                     generateForInlineUnion: () => ({
-                        typeNode: ts.factory.createTypeReferenceNode(typeName.name.pascalCase.unsafeName),
+                        typeNode: ts.factory.createTypeReferenceNode(caseConverter.pascalSafe(typeName.name)),
                         requestTypeNode: undefined,
                         responseTypeNode: undefined
                     }),
@@ -256,7 +258,8 @@ function createUnionGenerator(opts: {
         generateReadWriteOnlyTypes: opts.generateReadWriteOnlyTypes ?? false,
         includeUtilsOnUnionMembers: opts.includeUtilsOnUnionMembers ?? false,
         includeOtherInUnionTypes: opts.includeOtherInUnionTypes ?? false,
-        inline: opts.inline ?? false
+        inline: opts.inline ?? false,
+        caseConverter
     });
 }
 

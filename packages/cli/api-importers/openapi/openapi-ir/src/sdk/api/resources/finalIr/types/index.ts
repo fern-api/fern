@@ -84,6 +84,7 @@ export * from "./UriPagination.js";
 export * from "./Webhook.js";
 export * from "./WebhookExampleCall.js";
 export * from "./WebhookHttpMethod.js";
+export * from "./WebhookPayloadBodySort.js";
 export * from "./WebhookPayloadComponent.js";
 export * from "./WebhookPayloadFormat.js";
 export * from "./WebhookSignatureAlgorithm.js";

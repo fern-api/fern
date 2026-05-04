@@ -11,7 +11,7 @@ pub struct InlineUsersInlineUsersListUsernamesQueryRequest {
 
 impl InlineUsersInlineUsersListUsernamesQueryRequest {
     pub fn builder() -> InlineUsersInlineUsersListUsernamesQueryRequestBuilder {
-        InlineUsersInlineUsersListUsernamesQueryRequestBuilder::default()
+        <InlineUsersInlineUsersListUsernamesQueryRequestBuilder as Default>::default()
     }
 }
 

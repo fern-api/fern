@@ -44,7 +44,7 @@ func do() {
         ),
     )
     request := &fern.UploadDocumentRequest{}
-    client.UploadJsonDocument(
+    client.UploadJSONDocument(
         context.TODO(),
         request,
     )
@@ -68,7 +68,7 @@ Structured error types are returned from API calls that return non-success statu
 with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 
 ```go
-response, err := client.UploadJsonDocument(...)
+response, err := client.UploadJSONDocument(...)
 if err != nil {
     var apiError *core.APIError
     if errors.As(err, apiError) {
@@ -102,7 +102,7 @@ client := client.NewClient(
 )
 
 // Specify options for an individual request.
-response, err := client.UploadJsonDocument(
+response, err := client.UploadJSONDocument(
     ...,
     option.WithToken("<YOUR_API_KEY>"),
 )
@@ -117,7 +117,7 @@ when you need to examine the response headers received from the API call. (When 
 the raw HTTP response data will be included automatically in the Page response object.)
 
 ```go
-response, err := client.WithRawResponse.UploadJsonDocument(...)
+response, err := client.WithRawResponse.UploadJSONDocument(...)
 if err != nil {
     return err
 }
@@ -131,11 +131,19 @@ The SDK is instrumented with automatic retries with exponential backoff. A reque
 as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
 retry limit (default: 2).
 
-A request is deemed retryable when any of the following HTTP status codes is returned:
+Which status codes are retried depends on the `retryStatusCodes` generator configuration:
 
+**`legacy`** (current default): retries on
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (All server errors, including 500)
+
+**`recommended`**: retries on
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [502](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502) (Bad Gateway)
+- [503](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503) (Service Unavailable)
+- [504](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504) (Gateway Timeout)
 
 If the `Retry-After` header is present in the response, the SDK will prioritize respecting its value exactly
 over the default exponential backoff.
@@ -147,7 +155,7 @@ client := client.NewClient(
     option.WithMaxAttempts(1),
 )
 
-response, err := client.UploadJsonDocument(
+response, err := client.UploadJSONDocument(
     ...,
     option.WithMaxAttempts(1),
 )
@@ -161,7 +169,7 @@ Setting a timeout for each individual request is as simple as using the standard
 ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
-response, err := client.UploadJsonDocument(ctx, ...)
+response, err := client.UploadJSONDocument(ctx, ...)
 ```
 
 ### Explicit Null
@@ -183,7 +191,7 @@ type ExampleRequest struct {
 request := &ExampleRequest{}
 request.SetName(nil)
 
-response, err := client.UploadJsonDocument(ctx, request, ...)
+response, err := client.UploadJSONDocument(ctx, request, ...)
 ```
 
 ## Contributing

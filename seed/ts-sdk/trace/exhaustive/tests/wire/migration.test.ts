@@ -31,16 +31,7 @@ describe("MigrationClient", () => {
             "admin-key-header": "admin-key-header",
         });
         expect(response).toEqual({
-            body: [
-                {
-                    name: "name",
-                    status: "RUNNING",
-                },
-                {
-                    name: "name",
-                    status: "RUNNING",
-                },
-            ],
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

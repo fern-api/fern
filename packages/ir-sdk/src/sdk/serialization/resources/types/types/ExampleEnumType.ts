@@ -3,15 +3,15 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 
 export const ExampleEnumType: core.serialization.ObjectSchema<serializers.ExampleEnumType.Raw, FernIr.ExampleEnumType> =
     core.serialization.objectWithoutOptionalProperties({
-        value: NameAndWireValue,
+        value: NameAndWireValueOrString,
     });
 
 export declare namespace ExampleEnumType {
     export interface Raw {
-        value: NameAndWireValue.Raw;
+        value: NameAndWireValueOrString.Raw;
     }
 }

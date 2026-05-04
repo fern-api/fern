@@ -1,6 +1,8 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ts } from "ts-morph";
 
+import { caseConverter } from "./caseConverter.js";
+
 /**
  * Creates a mock type context with stringify, getTypeDeclaration, getReferenceToType, and resolveTypeReference.
  * Used by query params, headers, and other components that need to interact with the type system.
@@ -96,7 +98,7 @@ export function createMockGeneratedClientClass() {
         getReferenceToRootPathParameter: (pathParam: FernIr.PathParameter) =>
             ts.factory.createPropertyAccessExpression(
                 ts.factory.createThis(),
-                ts.factory.createIdentifier(pathParam.name.camelCase.unsafeName)
+                ts.factory.createIdentifier(caseConverter.camelUnsafe(pathParam.name))
             )
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;
@@ -108,10 +110,12 @@ export function createMockGeneratedClientClass() {
 export function createMockGeneratedSdkClientClass(opts?: {
     hasAuthProvider?: boolean;
     generateEndpointMetadata?: boolean;
+    alwaysSendAuth?: boolean;
 }) {
     return {
         hasAuthProvider: () => opts?.hasAuthProvider ?? false,
         getGenerateEndpointMetadata: () => opts?.generateEndpointMetadata ?? false,
+        getAlwaysSendAuth: () => opts?.alwaysSendAuth ?? false,
         getReferenceToAuthProviderOrThrow: () => ts.factory.createIdentifier("this._authProvider"),
         getReferenceToMetadataForEndpointSupplier: () => ts.factory.createIdentifier("_metadata")
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
@@ -126,7 +130,7 @@ export function createMockRequestParameter() {
         getReferenceToNonLiteralHeader: (header: FernIr.HttpHeader) => {
             return ts.factory.createPropertyAccessExpression(
                 ts.factory.createIdentifier("request"),
-                ts.factory.createIdentifier(header.name.name.camelCase.unsafeName)
+                ts.factory.createIdentifier(caseConverter.camelUnsafe(header.name))
             );
         }
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
@@ -142,7 +146,8 @@ export function createMockEnvironmentsContext() {
             getReferenceToEnvironmentsEnum: () => ({
                 getExpression: () => ts.factory.createIdentifier("MyEnvironment")
             })
-        }
+        },
+        case: caseConverter
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;
 }

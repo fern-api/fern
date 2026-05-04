@@ -38,7 +38,7 @@ export class DynamicTypeMapper extends WithGeneration {
                 if (named == null) {
                     return this.convertUnknown();
                 }
-                return this.convertNamed({ named });
+                return this.convertNamed({ named, typeId: args.typeReference.value });
             }
             case "optional":
             case "nullable": {
@@ -58,39 +58,36 @@ export class DynamicTypeMapper extends WithGeneration {
         }
     }
 
-    convertToClassReference(named: FernIr.dynamic.NamedType): ast.ClassReference {
+    convertToClassReference(named: FernIr.dynamic.NamedType, typeId?: string): ast.ClassReference {
         return this.csharp.classReference({
             origin: named.declaration,
             namespace: this.context.getNamespace(named.declaration.fernFilepath)
         });
     }
 
-    private convertNamed({ named }: { named: FernIr.dynamic.NamedType }): ast.Type {
+    private convertNamed({ named, typeId }: { named: FernIr.dynamic.NamedType; typeId?: string }): ast.Type {
         switch (named.type) {
             case "alias":
+                if (this.settings.generateLiterals && named.typeReference.type === "literal") {
+                    return this.csharp.classReference({
+                        origin: named.declaration,
+                        namespace: this.context.getNamespace(named.declaration.fernFilepath)
+                    });
+                }
                 return this.convert({ typeReference: named.typeReference });
             case "enum":
             case "object":
-                return this.csharp.classReference({
-                    origin: named.declaration,
-                    namespace: this.context.getNamespace(named.declaration.fernFilepath)
-                });
+                return this.convertToClassReference(named, typeId);
 
             case "discriminatedUnion":
                 if (!this.settings.shouldGeneratedDiscriminatedUnions) {
                     return this.Primitive.object;
                 }
-                return this.csharp.classReference({
-                    origin: named.declaration,
-                    namespace: this.context.getNamespace(named.declaration.fernFilepath)
-                });
+                return this.convertToClassReference(named, typeId);
 
             case "undiscriminatedUnion":
                 if (this.settings.shouldGenerateUndiscriminatedUnions) {
-                    return this.csharp.classReference({
-                        origin: named.declaration,
-                        namespace: this.context.getNamespace(named.declaration.fernFilepath)
-                    });
+                    return this.convertToClassReference(named, typeId);
                 }
                 return this.OneOf.OneOf(
                     named.types.map((typeReference) => {
@@ -136,6 +133,7 @@ export class DynamicTypeMapper extends WithGeneration {
             case "DATE":
                 return this.Value.dateOnly;
             case "DATE_TIME":
+            case "DATE_TIME_RFC_2822":
                 return this.Value.dateTime;
             case "UUID":
                 return this.Primitive.string;

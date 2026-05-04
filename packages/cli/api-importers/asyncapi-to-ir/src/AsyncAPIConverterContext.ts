@@ -98,11 +98,12 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
 
         if (displayNameOverrideSource === "reference_identifier") {
             displayName = displayNameOverride ?? resolvedReference.value.title;
-        } else if (
-            displayNameOverrideSource === "discriminator_key" ||
-            displayNameOverrideSource === "schema_identifier"
-        ) {
+        } else if (displayNameOverrideSource === "discriminator_key") {
             displayName = resolvedReference.value.title ?? displayNameOverride;
+        } else {
+            // No override source - use schema title or fallback to basename of reference
+            const rawSchemaName = reference.$ref.split("/").pop() ?? typeId;
+            displayName = resolvedReference.value.title ?? rawSchemaName;
         }
 
         return {
@@ -143,11 +144,12 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
 
         if (displayNameOverrideSource === "reference_identifier") {
             displayName = displayNameOverride ?? resolvedReference.value.name;
-        } else if (
-            displayNameOverrideSource === "discriminator_key" ||
-            displayNameOverrideSource === "schema_identifier"
-        ) {
+        } else if (displayNameOverrideSource === "discriminator_key") {
             displayName = resolvedReference.value.name ?? displayNameOverride;
+        } else {
+            // No override source - use message name or fallback to basename of reference
+            const rawName = reference.$ref.split("/").pop() ?? typeId;
+            displayName = resolvedReference.value.name ?? rawName;
         }
 
         return {
@@ -185,11 +187,12 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
 
         if (displayNameOverrideSource === "reference_identifier") {
             displayName = displayNameOverride ?? resolvedReference.value.messageId ?? resolvedReference.value.name;
-        } else if (
-            displayNameOverrideSource === "discriminator_key" ||
-            displayNameOverrideSource === "schema_identifier"
-        ) {
+        } else if (displayNameOverrideSource === "discriminator_key") {
             displayName = resolvedReference.value.messageId ?? resolvedReference.value.name ?? displayNameOverride;
+        } else {
+            // No override source - use message identifiers or fallback to basename of reference
+            const rawName = reference.$ref.split("/").pop() ?? typeId;
+            displayName = resolvedReference.value.messageId ?? resolvedReference.value.name ?? rawName;
         }
 
         return {

@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: Query Param Name Conflict API
-  version: ''
+  version: 0.0.0
 paths:
   /task/:
     put:
@@ -13,27 +13,31 @@ paths:
           in: query
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: is_complete
           in: query
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: date
           in: query
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: _fields
           in: query
           description: Comma-separated list of fields to include in the response.
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
           description: Successful response
@@ -54,18 +58,22 @@ paths:
               type: object
               properties:
                 assigned_to:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                 date:
-                  type: string
+                  type:
+                    - string
+                    - 'null'
                   format: date
-                  nullable: true
                 is_complete:
-                  type: boolean
-                  nullable: true
+                  type:
+                    - boolean
+                    - 'null'
                 text:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
             examples:
               Example1:
                 value: {}
@@ -76,6 +84,7 @@ components:
       type: object
       properties:
         updated_count:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
   securitySchemes: {}

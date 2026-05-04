@@ -70,6 +70,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "delta",
                         "name": {
                             "originalName": "delta",
                             "camelCase": {
@@ -88,8 +89,7 @@
                                 "unsafeName": "Delta",
                                 "safeName": "Delta"
                             }
-                        },
-                        "wireValue": "delta"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -100,6 +100,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "tokens",
                         "name": {
                             "originalName": "tokens",
                             "camelCase": {
@@ -118,8 +119,7 @@
                                 "unsafeName": "Tokens",
                                 "safeName": "Tokens"
                             }
-                        },
-                        "wireValue": "tokens"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -204,6 +204,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "content",
                         "name": {
                             "originalName": "content",
                             "camelCase": {
@@ -222,8 +223,7 @@
                                 "unsafeName": "Content",
                                 "safeName": "Content"
                             }
-                        },
-                        "wireValue": "content"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -305,6 +305,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "event",
                         "name": {
                             "originalName": "event",
                             "camelCase": {
@@ -323,8 +324,7 @@
                                 "unsafeName": "Event",
                                 "safeName": "Event"
                             }
-                        },
-                        "wireValue": "event"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -335,6 +335,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "name",
                         "name": {
                             "originalName": "name",
                             "camelCase": {
@@ -353,8 +354,7 @@
                                 "unsafeName": "Name",
                                 "safeName": "Name"
                             }
-                        },
-                        "wireValue": "name"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -436,6 +436,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "error",
                         "name": {
                             "originalName": "error",
                             "camelCase": {
@@ -454,8 +455,7 @@
                                 "unsafeName": "Error",
                                 "safeName": "Error"
                             }
-                        },
-                        "wireValue": "error"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -466,6 +466,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "code",
                         "name": {
                             "originalName": "code",
                             "camelCase": {
@@ -484,8 +485,7 @@
                                 "unsafeName": "Code",
                                 "safeName": "Code"
                             }
-                        },
-                        "wireValue": "code"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -568,6 +568,7 @@
                 }
             },
             "discriminant": {
+                "wireValue": "event",
                 "name": {
                     "originalName": "event",
                     "camelCase": {
@@ -586,14 +587,14 @@
                         "unsafeName": "Event",
                         "safeName": "Event"
                     }
-                },
-                "wireValue": "event"
+                }
             },
             "types": {
                 "completion": {
                     "type": "samePropertiesAsObject",
                     "typeId": "type_completions:CompletionEvent",
                     "discriminantValue": {
+                        "wireValue": "completion",
                         "name": {
                             "originalName": "completion",
                             "camelCase": {
@@ -612,8 +613,7 @@
                                 "unsafeName": "Completion",
                                 "safeName": "Completion"
                             }
-                        },
-                        "wireValue": "completion"
+                        }
                     },
                     "properties": []
                 },
@@ -621,6 +621,7 @@
                     "type": "samePropertiesAsObject",
                     "typeId": "type_completions:ErrorEvent",
                     "discriminantValue": {
+                        "wireValue": "error",
                         "name": {
                             "originalName": "error",
                             "camelCase": {
@@ -639,8 +640,7 @@
                                 "unsafeName": "Error",
                                 "safeName": "Error"
                             }
-                        },
-                        "wireValue": "error"
+                        }
                     },
                     "properties": []
                 },
@@ -648,6 +648,7 @@
                     "type": "samePropertiesAsObject",
                     "typeId": "type_completions:EventEvent",
                     "discriminantValue": {
+                        "wireValue": "event",
                         "name": {
                             "originalName": "event",
                             "camelCase": {
@@ -666,8 +667,414 @@
                                 "unsafeName": "Event",
                                 "safeName": "Event"
                             }
+                        }
+                    },
+                    "properties": []
+                }
+            }
+        },
+        "type_completions:GroupCreatedEvent": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "GroupCreatedEvent",
+                    "camelCase": {
+                        "unsafeName": "groupCreatedEvent",
+                        "safeName": "groupCreatedEvent"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "group_created_event",
+                        "safeName": "group_created_event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GROUP_CREATED_EVENT",
+                        "safeName": "GROUP_CREATED_EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GroupCreatedEvent",
+                        "safeName": "GroupCreatedEvent"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "completions",
+                            "camelCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMPLETIONS",
+                                "safeName": "COMPLETIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Completions",
+                                "safeName": "Completions"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "completions",
+                        "camelCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
                         },
-                        "wireValue": "event"
+                        "snakeCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMPLETIONS",
+                            "safeName": "COMPLETIONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Completions",
+                            "safeName": "Completions"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "offset",
+                        "name": {
+                            "originalName": "offset",
+                            "camelCase": {
+                                "unsafeName": "offset",
+                                "safeName": "offset"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "offset",
+                                "safeName": "offset"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OFFSET",
+                                "safeName": "OFFSET"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Offset",
+                                "safeName": "Offset"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "group_id",
+                        "name": {
+                            "originalName": "group_id",
+                            "camelCase": {
+                                "unsafeName": "groupID",
+                                "safeName": "groupID"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "group_id",
+                                "safeName": "group_id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "GROUP_ID",
+                                "safeName": "GROUP_ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "GroupID",
+                                "safeName": "GroupID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_completions:GroupDeletedEvent": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "GroupDeletedEvent",
+                    "camelCase": {
+                        "unsafeName": "groupDeletedEvent",
+                        "safeName": "groupDeletedEvent"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "group_deleted_event",
+                        "safeName": "group_deleted_event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GROUP_DELETED_EVENT",
+                        "safeName": "GROUP_DELETED_EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GroupDeletedEvent",
+                        "safeName": "GroupDeletedEvent"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "completions",
+                            "camelCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMPLETIONS",
+                                "safeName": "COMPLETIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Completions",
+                                "safeName": "Completions"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "completions",
+                        "camelCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMPLETIONS",
+                            "safeName": "COMPLETIONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Completions",
+                            "safeName": "Completions"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "offset",
+                        "name": {
+                            "originalName": "offset",
+                            "camelCase": {
+                                "unsafeName": "offset",
+                                "safeName": "offset"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "offset",
+                                "safeName": "offset"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OFFSET",
+                                "safeName": "OFFSET"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Offset",
+                                "safeName": "Offset"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "group_id",
+                        "name": {
+                            "originalName": "group_id",
+                            "camelCase": {
+                                "unsafeName": "groupID",
+                                "safeName": "groupID"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "group_id",
+                                "safeName": "group_id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "GROUP_ID",
+                                "safeName": "GROUP_ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "GroupID",
+                                "safeName": "GroupID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_completions:StreamEventDiscriminantInData": {
+            "type": "discriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "StreamEventDiscriminantInData",
+                    "camelCase": {
+                        "unsafeName": "streamEventDiscriminantInData",
+                        "safeName": "streamEventDiscriminantInData"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_event_discriminant_in_data",
+                        "safeName": "stream_event_discriminant_in_data"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_EVENT_DISCRIMINANT_IN_DATA",
+                        "safeName": "STREAM_EVENT_DISCRIMINANT_IN_DATA"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamEventDiscriminantInData",
+                        "safeName": "StreamEventDiscriminantInData"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "completions",
+                            "camelCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMPLETIONS",
+                                "safeName": "COMPLETIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Completions",
+                                "safeName": "Completions"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "completions",
+                        "camelCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMPLETIONS",
+                            "safeName": "COMPLETIONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Completions",
+                            "safeName": "Completions"
+                        }
+                    }
+                }
+            },
+            "discriminant": {
+                "wireValue": "type",
+                "name": {
+                    "originalName": "type",
+                    "camelCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TYPE",
+                        "safeName": "TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Type",
+                        "safeName": "Type"
+                    }
+                }
+            },
+            "types": {
+                "group.created": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_completions:GroupCreatedEvent",
+                    "discriminantValue": {
+                        "wireValue": "group.created",
+                        "name": {
+                            "originalName": "group.created",
+                            "camelCase": {
+                                "unsafeName": "groupCreated",
+                                "safeName": "groupCreated"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "group_created",
+                                "safeName": "group_created"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "GROUP_CREATED",
+                                "safeName": "GROUP_CREATED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "GroupCreated",
+                                "safeName": "GroupCreated"
+                            }
+                        }
+                    },
+                    "properties": []
+                },
+                "group.deleted": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_completions:GroupDeletedEvent",
+                    "discriminantValue": {
+                        "wireValue": "group.deleted",
+                        "name": {
+                            "originalName": "group.deleted",
+                            "camelCase": {
+                                "unsafeName": "groupDeleted",
+                                "safeName": "groupDeleted"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "group_deleted",
+                                "safeName": "group_deleted"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "GROUP_DELETED",
+                                "safeName": "GROUP_DELETED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "GroupDeleted",
+                                "safeName": "GroupDeleted"
+                            }
+                        }
                     },
                     "properties": []
                 }
@@ -740,6 +1147,7 @@
                 }
             },
             "discriminant": {
+                "wireValue": "event",
                 "name": {
                     "originalName": "event",
                     "camelCase": {
@@ -758,14 +1166,14 @@
                         "unsafeName": "Event",
                         "safeName": "Event"
                     }
-                },
-                "wireValue": "event"
+                }
             },
             "types": {
                 "completion": {
                     "type": "samePropertiesAsObject",
                     "typeId": "type_completions:CompletionEvent",
                     "discriminantValue": {
+                        "wireValue": "completion",
                         "name": {
                             "originalName": "completion",
                             "camelCase": {
@@ -784,8 +1192,7 @@
                                 "unsafeName": "Completion",
                                 "safeName": "Completion"
                             }
-                        },
-                        "wireValue": "completion"
+                        }
                     },
                     "properties": []
                 },
@@ -793,6 +1200,7 @@
                     "type": "samePropertiesAsObject",
                     "typeId": "type_completions:ErrorEvent",
                     "discriminantValue": {
+                        "wireValue": "error",
                         "name": {
                             "originalName": "error",
                             "camelCase": {
@@ -811,8 +1219,7 @@
                                 "unsafeName": "Error",
                                 "safeName": "Error"
                             }
-                        },
-                        "wireValue": "error"
+                        }
                     },
                     "properties": []
                 }
@@ -965,6 +1372,7 @@
                     "value": [
                         {
                             "name": {
+                                "wireValue": "query",
                                 "name": {
                                     "originalName": "query",
                                     "camelCase": {
@@ -983,8 +1391,7 @@
                                         "unsafeName": "Query",
                                         "safeName": "Query"
                                     }
-                                },
-                                "wireValue": "query"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",
@@ -1149,6 +1556,7 @@
                     "value": [
                         {
                             "name": {
+                                "wireValue": "query",
                                 "name": {
                                     "originalName": "query",
                                     "camelCase": {
@@ -1167,8 +1575,191 @@
                                         "unsafeName": "Query",
                                         "safeName": "Query"
                                     }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "streaming"
+            },
+            "examples": null
+        },
+        "endpoint_completions.streamEventsDiscriminantInData": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "streamEventsDiscriminantInData",
+                    "camelCase": {
+                        "unsafeName": "streamEventsDiscriminantInData",
+                        "safeName": "streamEventsDiscriminantInData"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_events_discriminant_in_data",
+                        "safeName": "stream_events_discriminant_in_data"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_EVENTS_DISCRIMINANT_IN_DATA",
+                        "safeName": "STREAM_EVENTS_DISCRIMINANT_IN_DATA"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamEventsDiscriminantInData",
+                        "safeName": "StreamEventsDiscriminantInData"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "completions",
+                            "camelCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMPLETIONS",
+                                "safeName": "COMPLETIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Completions",
+                                "safeName": "Completions"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "completions",
+                        "camelCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMPLETIONS",
+                            "safeName": "COMPLETIONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Completions",
+                            "safeName": "Completions"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/stream-events-discriminant-in-data"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "StreamEventsDiscriminantInDataRequest",
+                        "camelCase": {
+                            "unsafeName": "streamEventsDiscriminantInDataRequest",
+                            "safeName": "streamEventsDiscriminantInDataRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "stream_events_discriminant_in_data_request",
+                            "safeName": "stream_events_discriminant_in_data_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STREAM_EVENTS_DISCRIMINANT_IN_DATA_REQUEST",
+                            "safeName": "STREAM_EVENTS_DISCRIMINANT_IN_DATA_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "StreamEventsDiscriminantInDataRequest",
+                            "safeName": "StreamEventsDiscriminantInDataRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "completions",
+                                "camelCase": {
+                                    "unsafeName": "completions",
+                                    "safeName": "completions"
                                 },
-                                "wireValue": "query"
+                                "snakeCase": {
+                                    "unsafeName": "completions",
+                                    "safeName": "completions"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "COMPLETIONS",
+                                    "safeName": "COMPLETIONS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Completions",
+                                    "safeName": "Completions"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "completions",
+                            "camelCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMPLETIONS",
+                                "safeName": "COMPLETIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Completions",
+                                "safeName": "Completions"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "wireValue": "query",
+                                "name": {
+                                    "originalName": "query",
+                                    "camelCase": {
+                                        "unsafeName": "query",
+                                        "safeName": "query"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "query",
+                                        "safeName": "query"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "QUERY",
+                                        "safeName": "QUERY"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Query",
+                                        "safeName": "Query"
+                                    }
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",
@@ -1333,6 +1924,7 @@
                     "value": [
                         {
                             "name": {
+                                "wireValue": "query",
                                 "name": {
                                     "originalName": "query",
                                     "camelCase": {
@@ -1351,8 +1943,7 @@
                                         "unsafeName": "Query",
                                         "safeName": "Query"
                                     }
-                                },
-                                "wireValue": "query"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",

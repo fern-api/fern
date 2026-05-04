@@ -36,6 +36,7 @@ components:
           type: string
       required:
         - prompt
+      x-fern-type-name: CreateCompletionRequest
     Completion:
       type: object
       properties:

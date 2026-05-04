@@ -46,7 +46,7 @@ export class DynamicTypeMapper {
         }
     }
 
-    private mapPrimitive(primitive: FernIr.PrimitiveTypeV1): string {
+    private mapPrimitive(primitive: FernIr.dynamic.PrimitiveTypeV1): string {
         switch (primitive) {
             case "STRING":
             case "BASE_64":
@@ -69,6 +69,7 @@ export class DynamicTypeMapper {
             case "DATE":
                 return "NaiveDate";
             case "DATE_TIME":
+            case "DATE_TIME_RFC_2822":
                 return this.context.getDateTimeType() === "utc" ? "DateTime<Utc>" : "DateTime<FixedOffset>";
             default:
                 return "String";

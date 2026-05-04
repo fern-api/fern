@@ -8,7 +8,7 @@ pub struct Docs {
 
 impl Docs {
     pub fn builder() -> DocsBuilder {
-        DocsBuilder::default()
+        <DocsBuilder as Default>::default()
     }
 }
 

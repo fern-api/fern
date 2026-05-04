@@ -1,6 +1,4 @@
 import { createVenusService } from "@fern-api/core";
-import { FernVenusApi } from "@fern-api/venus-api-sdk";
-
 import { FernUserToken } from "../FernToken";
 
 export type OrganizationCheckResult =
@@ -19,14 +17,14 @@ export async function checkOrganizationMembership({
     const venus = createVenusService({ token: token.value });
 
     // First check if the user is a member of the organization.
-    const isMemberResponse = await venus.organization.isMember(FernVenusApi.OrganizationId(organization));
+    const isMemberResponse = await venus.organization.isMember(organization);
     if (isMemberResponse.ok && isMemberResponse.body) {
         return { type: "member" };
     }
 
     // Either the isMember call failed or the user is not a member.
     // Check whether the org exists at all.
-    const getResponse = await venus.organization.get(FernVenusApi.OrganizationId(organization));
+    const getResponse = await venus.organization.get(organization);
     if (getResponse.ok) {
         // Org exists but user is not a member.
         return { type: "no-access" };

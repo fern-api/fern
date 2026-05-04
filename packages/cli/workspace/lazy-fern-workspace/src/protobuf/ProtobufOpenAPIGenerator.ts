@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
-import { TaskContext } from "@fern-api/task-context";
-import { access, cp, readFile, rename, unlink, writeFile } from "fs/promises";
+import { CliError, TaskContext } from "@fern-api/task-context";
+import { access, copyFile, cp, readFile, unlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 import { resolveProtocGenOpenAPI } from "./ProtocGenOpenAPIDownloader.js";
@@ -76,7 +76,9 @@ export class ProtobufOpenAPIGenerator {
         deps: string[];
     }): Promise<PreparedWorkingDir> {
         if (!local) {
-            this.context.failAndThrow("Remote Protobuf generation is unimplemented.");
+            this.context.failAndThrow("Remote Protobuf generation is unimplemented.", undefined, {
+                code: CliError.Code.InternalError
+            });
         }
 
         // Resolve buf and protoc-gen-openapi binaries once
@@ -116,7 +118,9 @@ export class ProtobufOpenAPIGenerator {
                     await access(bufLockPath);
                 } catch {
                     this.context.failAndThrow(
-                        "Air-gapped mode requires a pre-cached buf.lock file. Please run 'buf dep update' at build time to cache dependencies."
+                        "Air-gapped mode requires a pre-cached buf.lock file. Please run 'buf dep update' at build time to cache dependencies.",
+                        undefined,
+                        { code: CliError.Code.InternalError }
                     );
                 }
             } else {
@@ -165,13 +169,18 @@ export class ProtobufOpenAPIGenerator {
 
         const bufGenerateResult = await buf(["generate", target.toString()]);
         if (bufGenerateResult.exitCode !== 0) {
-            this.context.failAndThrow(bufGenerateResult.stderr);
+            this.context.failAndThrow(bufGenerateResult.stderr, undefined, {
+                code: CliError.Code.IrConversionError
+            });
         }
 
-        // Move output to a unique temp file so the next call doesn't overwrite it
+        // Move output to a unique temp file so the next call doesn't overwrite it.
+        // Use copyFile + unlink instead of rename because rename fails with EPERM
+        // on Windows when the target file already exists (tmp.file creates it).
         const outputPath = join(preparedDir.cwd, RelativeFilePath.of(PROTOBUF_GENERATOR_OUTPUT_FILEPATH));
         const uniqueOutput = AbsoluteFilePath.of((await tmp.file({ postfix: ".yaml" })).path);
-        await rename(outputPath, uniqueOutput);
+        await copyFile(outputPath, uniqueOutput);
+        await unlink(outputPath);
 
         return { absoluteFilepath: uniqueOutput };
     }
@@ -280,7 +289,9 @@ export class ProtobufOpenAPIGenerator {
                         await access(bufLockPath);
                     } catch {
                         this.context.failAndThrow(
-                            "Air-gapped mode requires a pre-cached buf.lock file. Please run 'buf dep update' at build time to cache dependencies."
+                            "Air-gapped mode requires a pre-cached buf.lock file. Please run 'buf dep update' at build time to cache dependencies.",
+                            undefined,
+                            { code: CliError.Code.InternalError }
                         );
                     }
                 } else {
@@ -297,7 +308,9 @@ export class ProtobufOpenAPIGenerator {
 
             const bufGenerateResult = await buf(["generate", target.toString()]);
             if (bufGenerateResult.exitCode !== 0) {
-                this.context.failAndThrow(bufGenerateResult.stderr);
+                this.context.failAndThrow(bufGenerateResult.stderr, undefined, {
+                    code: CliError.Code.IrConversionError
+                });
             }
             if (cleanupBufLock) {
                 await unlink(bufLockPath);
@@ -339,7 +352,9 @@ export class ProtobufOpenAPIGenerator {
                 return;
             } catch {
                 this.context.failAndThrow(
-                    "FERN_USE_LOCAL_PROTOC_GEN_OPENAPI is set but protoc-gen-openapi was not found on PATH."
+                    "FERN_USE_LOCAL_PROTOC_GEN_OPENAPI is set but protoc-gen-openapi was not found on PATH.",
+                    undefined,
+                    { code: CliError.Code.EnvironmentError }
                 );
             }
         }
@@ -374,7 +389,9 @@ export class ProtobufOpenAPIGenerator {
             this.protocGenOpenAPIResolved = true;
         } catch {
             this.context.failAndThrow(
-                "Missing required dependency; please install 'protoc-gen-openapi' to continue (e.g. 'brew install go && go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest')."
+                "Missing required dependency; please install 'protoc-gen-openapi' to continue (e.g. 'brew install go && go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest').",
+                undefined,
+                { code: CliError.Code.EnvironmentError }
             );
         }
     }
@@ -387,7 +404,9 @@ export class ProtobufOpenAPIGenerator {
         try {
             this.resolvedBufCommand = await ensureBufCommand(this.context.logger);
         } catch (error) {
-            this.context.failAndThrow(error instanceof Error ? error.message : String(error));
+            this.context.failAndThrow(error instanceof Error ? error.message : String(error), undefined, {
+                code: CliError.Code.EnvironmentError
+            });
         }
     }
 
@@ -395,7 +414,9 @@ export class ProtobufOpenAPIGenerator {
         absoluteFilepath: AbsoluteFilePath;
         bufLockContents: string | undefined;
     }> {
-        this.context.failAndThrow("Remote Protobuf generation is unimplemented.");
+        this.context.failAndThrow("Remote Protobuf generation is unimplemented.", undefined, {
+            code: CliError.Code.InternalError
+        });
     }
 }
 

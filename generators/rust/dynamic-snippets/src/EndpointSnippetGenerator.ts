@@ -628,20 +628,12 @@ export class EndpointSnippetGenerator {
 
         // SDK generator behavior (from SubClientGenerator.ts):
         // - Referenced body WITHOUT query params → uses inner type directly
-        // - Referenced body WITH query params → creates wrapper type
+        // - Referenced body WITH query params → creates wrapper type (including bytes + query)
         // - Inlined body (properties) → creates wrapper type
-        // - Bytes body WITH query params → individual params for each query param + bytes body
         const body = request.body;
         const isReferencedBodyOnly = body != null && !hasQueryParams && body.type === "referenced";
-        const isBytesWithQueryParams = hasQueryParams && body != null &&
-            body.type === "referenced" && body.bodyType.type === "bytes";
 
-        if (isBytesWithQueryParams) {
-            // Bytes endpoints with query params: SDK generates individual &Option<T> params
-            // for each query parameter, then &Vec<u8> for body (not a struct).
-            // This matches SubClientGenerator's addIndividualQueryParameters behavior.
-            args.push(...this.getBytesEndpointArgs({ request, snippet }));
-        } else if (isReferencedBodyOnly && body.type === "referenced") {
+        if (isReferencedBodyOnly && body.type === "referenced") {
             // Use inner type directly - match SDK generator's behavior for referenced body without query params
             const bodyExpr = this.getReferencedRequestBodyPropertyExpression({
                 body: body.bodyType,
@@ -667,51 +659,6 @@ export class EndpointSnippetGenerator {
         return args;
     }
 
-    private getBytesEndpointArgs({
-        request,
-        snippet
-    }: {
-        request: FernIr.dynamic.InlinedRequest;
-        snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): rust.Expression[] {
-        const args: rust.Expression[] = [];
-
-        // Build a map of provided query parameter values
-        const queryParameters = this.context.associateQueryParametersByWireValue({
-            parameters: request.queryParameters ?? [],
-            values: snippet.queryParameters ?? {}
-        });
-        const providedValues = new Map<string, rust.Expression>();
-        for (const qp of queryParameters) {
-            const fieldName = this.context.getPropertyName(qp.name.name);
-            providedValues.set(fieldName, this.context.dynamicTypeLiteralMapper.convert(qp));
-        }
-
-        // Generate individual &Option<T> arguments for each query parameter
-        // Order matches the SDK's addIndividualQueryParameters (definition order)
-        const allQueryParams = request.queryParameters ?? [];
-        for (const param of allQueryParams) {
-            const fieldName = this.context.getPropertyName(param.name.name);
-            const value = providedValues.get(fieldName);
-            if (value != null) {
-                args.push(rust.Expression.referenceOf(value));
-            } else {
-                args.push(rust.Expression.referenceOf(rust.Expression.raw("None")));
-            }
-        }
-
-        // Add bytes body argument: &vec![] for empty, or &bytes for provided value
-        if (snippet.requestBody != null && typeof snippet.requestBody === "string" && snippet.requestBody !== "") {
-            args.push(rust.Expression.referenceOf(
-                rust.Expression.raw(`"${snippet.requestBody}".as_bytes().to_vec()`)
-            ));
-        } else {
-            args.push(rust.Expression.referenceOf(rust.Expression.raw("vec![]")));
-        }
-
-        return args;
-    }
-
     private getBodyRequestArg({
         body,
         value
@@ -730,6 +677,9 @@ export class EndpointSnippetGenerator {
     }
 
     private getBytesBodyRequestArg({ value }: { value: unknown }): rust.Expression {
+        if (value == null) {
+            return rust.Expression.raw("vec![]");
+        }
         if (typeof value !== "string") {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -798,18 +748,16 @@ export class EndpointSnippetGenerator {
         // Use organized struct construction for better readability
         const structName = this.getCorrectRequestStructName(endpoint, request);
 
-        // For wire tests, we always explicitly provide all fields instead of using ..Default::default()
-        // This is more robust and avoids compilation errors when types don't derive Default.
-        // The model generator only derives Default when ALL properties are optional AND there are no
-        // extended properties, which is a complex condition that's hard to perfectly mirror in dynamic snippets.
-        // By always providing explicit values, we ensure the generated tests always compile.
-        const useDefault = false;
+        // Use ..Default::default() when the request struct derives Default.
+        // This produces cleaner snippets by omitting optional fields that are None.
+        const useDefault = this.context.canRequestUseDefault(request);
 
-        // Always add missing fields with explicit values
+        // Add missing fields - skip optional ones when using Default
         this.addMissingFields({
             request,
             structFields,
-            providedFieldNames
+            providedFieldNames,
+            useDefault
         });
 
         return this.createStructExpression(structName, structFields, useDefault);
@@ -818,24 +766,29 @@ export class EndpointSnippetGenerator {
     private addMissingFields({
         request,
         structFields,
-        providedFieldNames
+        providedFieldNames,
+        useDefault
     }: {
         request: FernIr.dynamic.InlinedRequest;
         structFields: Array<{ name: string; value: rust.Expression }>;
         providedFieldNames: Set<string>;
+        useDefault: boolean;
     }): void {
-        // Add missing query parameters (both optional and required)
+        // Add missing query parameters
         const allQueryParams = request.queryParameters ?? [];
         for (const param of allQueryParams) {
             const fieldName = this.context.getPropertyName(param.name.name);
             if (!providedFieldNames.has(fieldName)) {
                 if (this.context.isOptionalType(param.typeReference)) {
-                    structFields.push({
-                        name: fieldName,
-                        value: rust.Expression.raw("None")
-                    });
+                    // Skip optional fields when using ..Default::default()
+                    if (!useDefault) {
+                        structFields.push({
+                            name: fieldName,
+                            value: rust.Expression.raw("None")
+                        });
+                    }
                 } else {
-                    // Required field is missing - generate a default value
+                    // Required field is missing - always generate a value
                     structFields.push({
                         name: fieldName,
                         value: this.generateDefaultValueForType(param.typeReference)
@@ -844,18 +797,21 @@ export class EndpointSnippetGenerator {
             }
         }
 
-        // Add missing body parameters (both optional and required)
+        // Add missing body parameters
         if (request.body != null && request.body.type === "properties") {
             for (const param of request.body.value) {
                 const fieldName = this.context.getPropertyName(param.name.name);
                 if (!providedFieldNames.has(fieldName)) {
                     if (this.context.isOptionalType(param.typeReference)) {
-                        structFields.push({
-                            name: fieldName,
-                            value: rust.Expression.raw("None")
-                        });
+                        // Skip optional fields when using ..Default::default()
+                        if (!useDefault) {
+                            structFields.push({
+                                name: fieldName,
+                                value: rust.Expression.raw("None")
+                            });
+                        }
                     } else {
-                        // Required field is missing - generate a default value
+                        // Required field is missing - always generate a value
                         structFields.push({
                             name: fieldName,
                             value: this.generateDefaultValueForType(param.typeReference)

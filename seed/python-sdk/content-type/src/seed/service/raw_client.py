@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from pydantic import ValidationError
@@ -118,7 +118,7 @@ class RawServiceClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"complex/{jsonable_encoder(id)}",
+            f"complex/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "name": name,
@@ -181,7 +181,7 @@ class RawServiceClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"named-mixed/{jsonable_encoder(id)}",
+            f"named-mixed/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "appId": app_id,
@@ -273,8 +273,8 @@ class RawServiceClient:
         self,
         id: str,
         *,
-        field_1: typing.Optional[str] = OMIT,
-        field_2: typing.Optional[int] = OMIT,
+        field1: typing.Optional[str] = OMIT,
+        field2: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
         """
@@ -284,9 +284,9 @@ class RawServiceClient:
         ----------
         id : str
 
-        field_1 : typing.Optional[str]
+        field1 : typing.Optional[str]
 
-        field_2 : typing.Optional[int]
+        field2 : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -296,11 +296,11 @@ class RawServiceClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"regular/{jsonable_encoder(id)}",
+            f"regular/{encode_path_param(id)}",
             method="PATCH",
             json={
-                "field1": field_1,
-                "field2": field_2,
+                "field1": field1,
+                "field2": field2,
             },
             request_options=request_options,
             omit=OMIT,
@@ -421,7 +421,7 @@ class AsyncRawServiceClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"complex/{jsonable_encoder(id)}",
+            f"complex/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "name": name,
@@ -484,7 +484,7 @@ class AsyncRawServiceClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"named-mixed/{jsonable_encoder(id)}",
+            f"named-mixed/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "appId": app_id,
@@ -576,8 +576,8 @@ class AsyncRawServiceClient:
         self,
         id: str,
         *,
-        field_1: typing.Optional[str] = OMIT,
-        field_2: typing.Optional[int] = OMIT,
+        field1: typing.Optional[str] = OMIT,
+        field2: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
         """
@@ -587,9 +587,9 @@ class AsyncRawServiceClient:
         ----------
         id : str
 
-        field_1 : typing.Optional[str]
+        field1 : typing.Optional[str]
 
-        field_2 : typing.Optional[int]
+        field2 : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -599,11 +599,11 @@ class AsyncRawServiceClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"regular/{jsonable_encoder(id)}",
+            f"regular/{encode_path_param(id)}",
             method="PATCH",
             json={
-                "field1": field_1,
-                "field2": field_2,
+                "field1": field1,
+                "field2": field2,
             },
             request_options=request_options,
             omit=OMIT,

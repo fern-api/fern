@@ -14,7 +14,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
  * .fernignore resolution logic (throwaway git repo approach).
  */
 
-describe("LocalTaskHandler - .fernignore handling", () => {
+describe("LocalTaskHandler - .fernignore handling", { timeout: 30000 }, () => {
     let localOutputDir: string;
     let tmpOutputDir: string;
 

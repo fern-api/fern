@@ -35,14 +35,14 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) GetOrganization(
 	ctx context.Context,
-	tenantId string,
-	organizationId string,
+	tenantID string,
+	organizationID string,
 	opts ...option.RequestOption,
 ) (*path.Organization, error) {
 	response, err := c.WithRawResponse.GetOrganization(
 		ctx,
-		tenantId,
-		organizationId,
+		tenantID,
+		organizationID,
 		opts...,
 	)
 	if err != nil {
@@ -69,15 +69,15 @@ func (c *Client) GetOrganizationUser(
 
 func (c *Client) SearchOrganizations(
 	ctx context.Context,
-	tenantId string,
-	organizationId string,
+	tenantID string,
+	organizationID string,
 	request *path.SearchOrganizationsRequest,
 	opts ...option.RequestOption,
 ) ([]*path.Organization, error) {
 	response, err := c.WithRawResponse.SearchOrganizations(
 		ctx,
-		tenantId,
-		organizationId,
+		tenantID,
+		organizationID,
 		request,
 		opts...,
 	)

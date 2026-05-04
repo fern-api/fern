@@ -16,7 +16,7 @@ export class RequestWrapperExampleGenerator {
         bodyPropertyName: string;
         example: FernIr.ExampleEndpointCall;
         packageId: PackageId;
-        endpointName: FernIr.Name;
+        endpointName: FernIr.NameOrString;
         requestBody: FernIr.HttpRequestBody | undefined;
         flattenRequestParameters: boolean;
     }): GeneratedRequestWrapperExample {

@@ -17,7 +17,7 @@ pub struct GetUsersQueryRequest {
 
 impl GetUsersQueryRequest {
     pub fn builder() -> GetUsersQueryRequestBuilder {
-        GetUsersQueryRequestBuilder::default()
+        <GetUsersQueryRequestBuilder as Default>::default()
     }
 }
 

@@ -35,14 +35,14 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) GetUser(
 	ctx context.Context,
-	tenantId string,
-	userId string,
+	tenantID string,
+	userID string,
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
 	response, err := c.WithRawResponse.GetUser(
 		ctx,
-		tenantId,
-		userId,
+		tenantID,
+		userID,
 		opts...,
 	)
 	if err != nil {
@@ -53,13 +53,13 @@ func (c *Client) GetUser(
 
 func (c *Client) CreateUser(
 	ctx context.Context,
-	tenantId string,
+	tenantID string,
 	request *fern.User,
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
 	response, err := c.WithRawResponse.CreateUser(
 		ctx,
-		tenantId,
+		tenantID,
 		request,
 		opts...,
 	)
@@ -71,15 +71,15 @@ func (c *Client) CreateUser(
 
 func (c *Client) UpdateUser(
 	ctx context.Context,
-	tenantId string,
-	userId string,
+	tenantID string,
+	userID string,
 	request *fern.UpdateUserRequest,
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
 	response, err := c.WithRawResponse.UpdateUser(
 		ctx,
-		tenantId,
-		userId,
+		tenantID,
+		userID,
 		request,
 		opts...,
 	)
@@ -91,15 +91,15 @@ func (c *Client) UpdateUser(
 
 func (c *Client) SearchUsers(
 	ctx context.Context,
-	tenantId string,
-	userId string,
+	tenantID string,
+	userID string,
 	request *fern.SearchUsersRequest,
 	opts ...option.RequestOption,
 ) ([]*fern.User, error) {
 	response, err := c.WithRawResponse.SearchUsers(
 		ctx,
-		tenantId,
-		userId,
+		tenantID,
+		userID,
 		request,
 		opts...,
 	)
@@ -112,15 +112,15 @@ func (c *Client) SearchUsers(
 // Test endpoint with path parameter that has a text prefix (v{version})
 func (c *Client) GetUserMetadata(
 	ctx context.Context,
-	tenantId string,
-	userId string,
+	tenantID string,
+	userID string,
 	version int,
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
 	response, err := c.WithRawResponse.GetUserMetadata(
 		ctx,
-		tenantId,
-		userId,
+		tenantID,
+		userID,
 		version,
 		opts...,
 	)
@@ -133,16 +133,16 @@ func (c *Client) GetUserMetadata(
 // Test endpoint with path parameters listed in different order than found in path
 func (c *Client) GetUserSpecifics(
 	ctx context.Context,
-	tenantId string,
-	userId string,
+	tenantID string,
+	userID string,
 	version int,
 	thought string,
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
 	response, err := c.WithRawResponse.GetUserSpecifics(
 		ctx,
-		tenantId,
-		userId,
+		tenantID,
+		userID,
 		version,
 		thought,
 		opts...,

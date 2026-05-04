@@ -1,24 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
-  },
+  "apiName": "api",
   "apiDisplayName": "Callbacks Test API",
   "auth": {
     "requirement": "ALL",
@@ -29,25 +11,7 @@
   "types": {
     "type_:SubscribeResponse": {
       "name": {
-        "name": {
-          "originalName": "SubscribeResponse",
-          "camelCase": {
-            "unsafeName": "subscribeResponse",
-            "safeName": "subscribeResponse"
-          },
-          "snakeCase": {
-            "unsafeName": "subscribe_response",
-            "safeName": "subscribe_response"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "SUBSCRIBE_RESPONSE",
-            "safeName": "SUBSCRIBE_RESPONSE"
-          },
-          "pascalCase": {
-            "unsafeName": "SubscribeResponse",
-            "safeName": "SubscribeResponse"
-          }
-        },
+        "name": "SubscribeResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -58,28 +22,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "subscriptionId",
-                "camelCase": {
-                  "unsafeName": "subscriptionID",
-                  "safeName": "subscriptionID"
-                },
-                "snakeCase": {
-                  "unsafeName": "subscription_id",
-                  "safeName": "subscription_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SUBSCRIPTION_ID",
-                  "safeName": "SUBSCRIPTION_ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "SubscriptionID",
-                  "safeName": "SubscriptionID"
-                }
-              },
-              "wireValue": "subscriptionId"
-            },
+            "name": "subscriptionId",
             "valueType": {
               "container": {
                 "optional": {
@@ -138,25 +81,7 @@
         {
           "docs": "Subscribe to receive webhook notifications",
           "id": "endpoint_.subscribe",
-          "name": {
-            "originalName": "subscribe",
-            "camelCase": {
-              "unsafeName": "subscribe",
-              "safeName": "subscribe"
-            },
-            "snakeCase": {
-              "unsafeName": "subscribe",
-              "safeName": "subscribe"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "SUBSCRIBE",
-              "safeName": "SUBSCRIBE"
-            },
-            "pascalCase": {
-              "unsafeName": "Subscribe",
-              "safeName": "Subscribe"
-            }
-          },
+          "name": "subscribe",
           "displayName": "Subscribe to notifications",
           "auth": false,
           "idempotent": false,
@@ -174,52 +99,13 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "SubscribeRequest",
-              "camelCase": {
-                "unsafeName": "subscribeRequest",
-                "safeName": "subscribeRequest"
-              },
-              "snakeCase": {
-                "unsafeName": "subscribe_request",
-                "safeName": "subscribe_request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "SUBSCRIBE_REQUEST",
-                "safeName": "SUBSCRIBE_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "SubscribeRequest",
-                "safeName": "SubscribeRequest"
-              }
-            },
+            "name": "SubscribeRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "URL to receive webhook notifications",
-                "name": {
-                  "name": {
-                    "originalName": "callbackUrl",
-                    "camelCase": {
-                      "unsafeName": "callbackURL",
-                      "safeName": "callbackURL"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "callback_url",
-                      "safeName": "callback_url"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "CALLBACK_URL",
-                      "safeName": "CALLBACK_URL"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "CallbackURL",
-                      "safeName": "CallbackURL"
-                    }
-                  },
-                  "wireValue": "callbackUrl"
-                },
+                "name": "callbackUrl",
                 "valueType": {
                   "primitive": {
                     "v1": "STRING",
@@ -244,92 +130,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "SubscribeRequest",
-                "camelCase": {
-                  "unsafeName": "subscribeRequest",
-                  "safeName": "subscribeRequest"
-                },
-                "snakeCase": {
-                  "unsafeName": "subscribe_request",
-                  "safeName": "subscribe_request"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SUBSCRIBE_REQUEST",
-                  "safeName": "SUBSCRIBE_REQUEST"
-                },
-                "pascalCase": {
-                  "unsafeName": "SubscribeRequest",
-                  "safeName": "SubscribeRequest"
-                }
-              },
-              "bodyKey": {
-                "originalName": "body",
-                "camelCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "snakeCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BODY",
-                  "safeName": "BODY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Body",
-                  "safeName": "Body"
-                }
-              },
+              "wrapperName": "SubscribeRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request",
-              "camelCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "snakeCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REQUEST",
-                "safeName": "REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "Request",
-                "safeName": "Request"
-              }
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Successfully subscribed",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "SubscribeResponse",
-                    "camelCase": {
-                      "unsafeName": "subscribeResponse",
-                      "safeName": "subscribeResponse"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "subscribe_response",
-                      "safeName": "subscribe_response"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "SUBSCRIBE_RESPONSE",
-                      "safeName": "SUBSCRIBE_RESPONSE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "SubscribeResponse",
-                      "safeName": "SubscribeResponse"
-                    }
-                  },
+                  "name": "SubscribeResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -353,28 +167,7 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -423,6 +216,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "subscriptionId",
               "name": {
                 "originalName": "subscriptionId",
                 "camelCase": {
@@ -441,8 +235,7 @@
                   "unsafeName": "SubscriptionID",
                   "safeName": "SubscriptionID"
                 }
-              },
-              "wireValue": "subscriptionId"
+              }
             },
             "typeReference": {
               "value": {
@@ -522,6 +315,7 @@
             "value": [
               {
                 "name": {
+                  "wireValue": "callbackUrl",
                   "name": {
                     "originalName": "callbackUrl",
                     "camelCase": {
@@ -540,8 +334,7 @@
                       "unsafeName": "CallbackURL",
                       "safeName": "CallbackURL"
                     }
-                  },
-                  "wireValue": "callbackUrl"
+                  }
                 },
                 "typeReference": {
                   "value": "STRING",
@@ -566,6 +359,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

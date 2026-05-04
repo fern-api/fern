@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>$client-&gt;users-&gt;listUsernamesCustom($request) -> ?UsernameCursor</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listWithCustomPager($request) -> ?UsersListResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,8 +13,9 @@
 <dd>
 
 ```php
-$client->users->listUsernamesCustom(
-    new ListUsernamesRequestCustom([
+$client->users->listWithCustomPager(
+    new ListWithCustomPagerRequest([
+        'limit' => 1,
         'startingAfter' => 'starting_after',
     ]),
 );
@@ -32,10 +33,15 @@ $client->users->listUsernamesCustom(
 <dl>
 <dd>
 
-**$startingAfter:** `?string` 
+**$limit:** `?int` — The maximum number of results to return.
+    
+</dd>
+</dl>
 
-The cursor used for pagination in order to fetch
-the next page of results.
+<dl>
+<dd>
+
+**$startingAfter:** `?string` — The cursor used for pagination.
     
 </dd>
 </dl>

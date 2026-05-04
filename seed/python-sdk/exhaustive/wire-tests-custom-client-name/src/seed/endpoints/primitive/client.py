@@ -271,7 +271,7 @@ class PrimitiveClient:
         _response = self._raw_client.get_and_return_uuid(request=request, request_options=request_options)
         return _response.data
 
-    def get_and_return_base_64(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
+    def get_and_return_base64(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------
@@ -292,11 +292,11 @@ class PrimitiveClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.endpoints.primitive.get_and_return_base_64(
+        client.endpoints.primitive.get_and_return_base64(
             request="SGVsbG8gd29ybGQh",
         )
         """
-        _response = self._raw_client.get_and_return_base_64(request=request, request_options=request_options)
+        _response = self._raw_client.get_and_return_base64(request=request, request_options=request_options)
         return _response.data
 
 
@@ -626,7 +626,7 @@ class AsyncPrimitiveClient:
         _response = await self._raw_client.get_and_return_uuid(request=request, request_options=request_options)
         return _response.data
 
-    async def get_and_return_base_64(
+    async def get_and_return_base64(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
     ) -> str:
         """
@@ -654,12 +654,12 @@ class AsyncPrimitiveClient:
 
 
         async def main() -> None:
-            await client.endpoints.primitive.get_and_return_base_64(
+            await client.endpoints.primitive.get_and_return_base64(
                 request="SGVsbG8gd29ybGQh",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_base_64(request=request, request_options=request_options)
+        _response = await self._raw_client.get_and_return_base64(request=request, request_options=request_options)
         return _response.data

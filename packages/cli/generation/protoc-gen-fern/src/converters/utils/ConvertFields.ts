@@ -44,6 +44,7 @@ export function convertFields({
                 docs: context.getCommentForPath([...sourceCodeInfoPath, PATH_FIELD_NUMBERS.MESSAGE.FIELD, index]),
                 availability: convertedField.availability,
                 propertyAccess: undefined,
+                defaultValue: undefined,
                 v2Examples: undefined
             };
 

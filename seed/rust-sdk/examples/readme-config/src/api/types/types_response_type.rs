@@ -7,7 +7,7 @@ pub struct ResponseType {
 
 impl ResponseType {
     pub fn builder() -> ResponseTypeBuilder {
-        ResponseTypeBuilder::default()
+        <ResponseTypeBuilder as Default>::default()
     }
 }
 

@@ -11,8 +11,10 @@ import com.fern.sdk.resources.types.object.types.NestedObjectWithRequiredField;
 import com.fern.sdk.resources.types.object.types.ObjectWithDatetimeLikeString;
 import com.fern.sdk.resources.types.object.types.ObjectWithDocumentedUnknownType;
 import com.fern.sdk.resources.types.object.types.ObjectWithMapOfMap;
+import com.fern.sdk.resources.types.object.types.ObjectWithMixedRequiredAndOptionalFields;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
+import com.fern.sdk.resources.types.object.types.ObjectWithRequiredNestedObject;
 import com.fern.sdk.resources.types.object.types.ObjectWithUnknownField;
 import java.lang.Object;
 import java.lang.String;
@@ -143,6 +145,46 @@ public class AsyncObjectClient {
   public CompletableFuture<Map<String, Object>> getAndReturnMapOfDocumentedUnknownType(
       Map<String, Object> request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnMapOfDocumentedUnknownType(request, requestOptions).thenApply(response -> response.body());
+  }
+
+  /**
+   * Tests that dynamic snippets include all required properties in the
+   * object initializer, even when the example omits some required fields.
+   */
+  public CompletableFuture<ObjectWithMixedRequiredAndOptionalFields> getAndReturnWithMixedRequiredAndOptionalFields(
+      ObjectWithMixedRequiredAndOptionalFields request) {
+    return this.rawClient.getAndReturnWithMixedRequiredAndOptionalFields(request).thenApply(response -> response.body());
+  }
+
+  /**
+   * Tests that dynamic snippets include all required properties in the
+   * object initializer, even when the example omits some required fields.
+   */
+  public CompletableFuture<ObjectWithMixedRequiredAndOptionalFields> getAndReturnWithMixedRequiredAndOptionalFields(
+      ObjectWithMixedRequiredAndOptionalFields request, RequestOptions requestOptions) {
+    return this.rawClient.getAndReturnWithMixedRequiredAndOptionalFields(request, requestOptions).thenApply(response -> response.body());
+  }
+
+  /**
+   * Tests that dynamic snippets recursively construct default objects for
+   * required properties whose type is a named object. When the example
+   * omits the nested object, the generator should construct a default
+   * initializer with the nested object's required properties filled in.
+   */
+  public CompletableFuture<ObjectWithRequiredNestedObject> getAndReturnWithRequiredNestedObject(
+      ObjectWithRequiredNestedObject request) {
+    return this.rawClient.getAndReturnWithRequiredNestedObject(request).thenApply(response -> response.body());
+  }
+
+  /**
+   * Tests that dynamic snippets recursively construct default objects for
+   * required properties whose type is a named object. When the example
+   * omits the nested object, the generator should construct a default
+   * initializer with the nested object's required properties filled in.
+   */
+  public CompletableFuture<ObjectWithRequiredNestedObject> getAndReturnWithRequiredNestedObject(
+      ObjectWithRequiredNestedObject request, RequestOptions requestOptions) {
+    return this.rawClient.getAndReturnWithRequiredNestedObject(request, requestOptions).thenApply(response -> response.body());
   }
 
   /**

@@ -7,10 +7,13 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import MyUnion, UnionListResponse, UnionResponse, VariantA, VariantB, VariantC
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedUndiscriminatedUnionWithResponseProperty, SeedUndiscriminatedUnionWithResponseProperty
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedUndiscriminatedUnionWithResponseProperty": ".client",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "MyUnion": ".types",
     "SeedUndiscriminatedUnionWithResponseProperty": ".client",
     "UnionListResponse": ".types",
@@ -45,6 +48,8 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedUndiscriminatedUnionWithResponseProperty",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "MyUnion",
     "SeedUndiscriminatedUnionWithResponseProperty",
     "UnionListResponse",

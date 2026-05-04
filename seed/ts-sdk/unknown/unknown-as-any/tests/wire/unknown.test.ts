@@ -22,14 +22,7 @@ describe("UnknownClient", () => {
         const response = await client.unknown.post({
             key: "value",
         });
-        expect(response).toEqual([
-            {
-                key: "value",
-            },
-            {
-                key: "value",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("postObject", async () => {
@@ -52,13 +45,6 @@ describe("UnknownClient", () => {
                 key: "value",
             },
         });
-        expect(response).toEqual([
-            {
-                key: "value",
-            },
-            {
-                key: "value",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 });

@@ -11,7 +11,7 @@ pub struct TestCaseWithExpectedResult {
 
 impl TestCaseWithExpectedResult {
     pub fn builder() -> TestCaseWithExpectedResultBuilder {
-        TestCaseWithExpectedResultBuilder::default()
+        <TestCaseWithExpectedResultBuilder as Default>::default()
     }
 }
 

@@ -41,17 +41,57 @@ export interface DocsConfiguration {
     navbarLinks?: FernDocsConfig.NavbarLink[];
     footerLinks?: FernDocsConfig.FooterLinksConfig;
     pageActions?: FernDocsConfig.PageActionsConfig;
+    /**
+     * Name of a global theme stored in Fern's cloud to apply to this documentation site.
+     * Theme values override local branding configuration (colors, typography, logo, fonts, JS, CSS, etc.).
+     * Upload a theme first with: fern beta docs theme upload --name <theme-name>
+     */
+    globalTheme?: string;
     experimental?: FernDocsConfig.ExperimentalConfig;
     /**
      * Sets the default language displayed by code snippets in the API Reference.
      * Options include: typescript, python, java, go, ruby, csharp, php, swift, curl
      */
     defaultLanguage?: FernDocsConfig.ProgrammingLanguage;
-    languages?: FernDocsConfig.Language[];
+    languages?: string[];
+    /**
+     * Configuration for multi-language documentation. Each entry defines a locale
+     * that the documentation supports. Use the `translations/` directory alongside
+     * `docs.yml` to provide per-language content.
+     *
+     * Example (object syntax):
+     * ```yaml
+     * translations:
+     *   - lang: en
+     *     default: true
+     *   - lang: ja
+     *   - lang: fr
+     * ```
+     *
+     * Example (simplified syntax):
+     * ```yaml
+     * translations:
+     *   - en
+     *   - ja
+     *   - fr
+     * ```
+     *
+     * You can mix both syntaxes:
+     * ```yaml
+     * translations:
+     *   - lang: en
+     *     default: true
+     *   - ja
+     *   - fr
+     * ```
+     */
+    translations?: FernDocsConfig.TranslationConfig[];
     aiChat?: FernDocsConfig.AiChatConfig;
     aiSearch?: FernDocsConfig.AiChatConfig;
     /** Configure AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples. */
     aiExamples?: FernDocsConfig.AiExamplesConfig;
+    /** Configuration for agent-serving endpoints. */
+    agents?: FernDocsConfig.AgentsConfig;
     metadata?: FernDocsConfig.MetadataConfig;
     redirects?: FernDocsConfig.RedirectConfig[];
     check?: FernDocsConfig.CheckConfig;

@@ -70,6 +70,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "access_token",
                         "name": {
                             "originalName": "access_token",
                             "camelCase": {
@@ -88,8 +89,7 @@
                                 "unsafeName": "AccessToken",
                                 "safeName": "AccessToken"
                             }
-                        },
-                        "wireValue": "access_token"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -100,6 +100,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "token_type",
                         "name": {
                             "originalName": "token_type",
                             "camelCase": {
@@ -118,8 +119,7 @@
                                 "unsafeName": "TokenType",
                                 "safeName": "TokenType"
                             }
-                        },
-                        "wireValue": "token_type"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -130,6 +130,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "expires_in",
                         "name": {
                             "originalName": "expires_in",
                             "camelCase": {
@@ -148,8 +149,7 @@
                                 "unsafeName": "ExpiresIn",
                                 "safeName": "ExpiresIn"
                             }
-                        },
-                        "wireValue": "expires_in"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -160,6 +160,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "scope",
                         "name": {
                             "originalName": "scope",
                             "camelCase": {
@@ -178,8 +179,7 @@
                                 "unsafeName": "Scope",
                                 "safeName": "Scope"
                             }
-                        },
-                        "wireValue": "scope"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -204,6 +204,7 @@
                 "parameters": [
                     {
                         "name": {
+                            "wireValue": "X-Api-Key",
                             "name": {
                                 "originalName": "api_key",
                                 "camelCase": {
@@ -222,8 +223,7 @@
                                     "unsafeName": "APIKey",
                                     "safeName": "APIKey"
                                 }
-                            },
-                            "wireValue": "X-Api-Key"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -373,6 +373,7 @@
                 "headers": [
                     {
                         "name": {
+                            "wireValue": "X-Api-Key",
                             "name": {
                                 "originalName": "api_key",
                                 "camelCase": {
@@ -391,8 +392,7 @@
                                     "unsafeName": "APIKey",
                                     "safeName": "APIKey"
                                 }
-                            },
-                            "wireValue": "X-Api-Key"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -419,6 +419,7 @@
                 "parameters": [
                     {
                         "name": {
+                            "wireValue": "X-Api-Key",
                             "name": {
                                 "originalName": "api_key",
                                 "camelCase": {
@@ -437,8 +438,7 @@
                                     "unsafeName": "APIKey",
                                     "safeName": "APIKey"
                                 }
-                            },
-                            "wireValue": "X-Api-Key"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -572,6 +572,7 @@
                 "parameters": [
                     {
                         "name": {
+                            "wireValue": "X-Api-Key",
                             "name": {
                                 "originalName": "api_key",
                                 "camelCase": {
@@ -590,8 +591,7 @@
                                     "unsafeName": "APIKey",
                                     "safeName": "APIKey"
                                 }
-                            },
-                            "wireValue": "X-Api-Key"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -725,6 +725,7 @@
                 "parameters": [
                     {
                         "name": {
+                            "wireValue": "X-Api-Key",
                             "name": {
                                 "originalName": "api_key",
                                 "camelCase": {
@@ -743,8 +744,7 @@
                                     "unsafeName": "APIKey",
                                     "safeName": "APIKey"
                                 }
-                            },
-                            "wireValue": "X-Api-Key"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",

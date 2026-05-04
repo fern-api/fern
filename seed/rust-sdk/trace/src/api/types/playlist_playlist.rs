@@ -13,7 +13,7 @@ pub struct Playlist {
 
 impl Playlist {
     pub fn builder() -> PlaylistBuilder {
-        PlaylistBuilder::default()
+        <PlaylistBuilder as Default>::default()
     }
 }
 

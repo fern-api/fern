@@ -1,6 +1,7 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { GetReferenceOpts, getPropertyKey, isExpressionUndefined, PackageId } from "@fern-typescript/commons";
-import { GeneratedRequestWrapper, GeneratedRequestWrapperExample, SdkContext } from "@fern-typescript/contexts";
+import { FileContext, GeneratedRequestWrapper, GeneratedRequestWrapperExample } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export declare namespace GeneratedRequestWrapperExampleImpl {
@@ -8,7 +9,7 @@ export declare namespace GeneratedRequestWrapperExampleImpl {
         bodyPropertyName: string;
         example: FernIr.ExampleEndpointCall;
         packageId: PackageId;
-        endpointName: FernIr.Name;
+        endpointName: FernIr.NameOrString;
         requestBody: FernIr.HttpRequestBody | undefined;
         flattenRequestParameters: boolean;
     }
@@ -20,7 +21,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
     private bodyPropertyName: string;
     private example: FernIr.ExampleEndpointCall;
     private packageId: PackageId;
-    private endpointName: FernIr.Name;
+    private endpointName: FernIr.NameOrString;
     private requestBody: FernIr.HttpRequestBody | undefined;
     private flattenRequestParameters: boolean;
 
@@ -40,7 +41,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
         this.flattenRequestParameters = flattenRequestParameters;
     }
 
-    public build(context: SdkContext, opts: GetReferenceOpts): ts.Expression {
+    public build(context: FileContext, opts: GetReferenceOpts): ts.Expression {
         const generatedType = context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpointName);
 
         const properties = [
@@ -54,7 +55,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
         return ts.factory.createObjectLiteralExpression(properties, true);
     }
 
-    private buildFileProperties(context: SdkContext, generatedType: GeneratedRequestWrapper): ts.PropertyAssignment[] {
+    private buildFileProperties(context: FileContext, generatedType: GeneratedRequestWrapper): ts.PropertyAssignment[] {
         if (!context.inlineFileProperties || !this.requestBody || this.requestBody.type !== "fileUpload") {
             return [];
         }
@@ -83,7 +84,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
     }
 
     private buildHeaderProperties(
-        context: SdkContext,
+        context: FileContext,
         generatedType: GeneratedRequestWrapper,
         opts: GetReferenceOpts
     ): ts.PropertyAssignment[] {
@@ -100,7 +101,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
     }
 
     private buildPathParamProperties(
-        context: SdkContext,
+        context: FileContext,
         generatedType: GeneratedRequestWrapper,
         opts: GetReferenceOpts
     ): ts.PropertyAssignment[] {
@@ -119,7 +120,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
     }
 
     private buildQueryParamProperties(
-        context: SdkContext,
+        context: FileContext,
         generatedType: GeneratedRequestWrapper,
         opts: GetReferenceOpts
     ): ts.PropertyAssignment[] {
@@ -132,7 +133,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
     }
 
     private buildBodyProperties(
-        context: SdkContext,
+        context: FileContext,
         generatedType: GeneratedRequestWrapper,
         opts: GetReferenceOpts
     ): ts.PropertyAssignment[] {
@@ -151,7 +152,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
 
     private buildInlinedRequestBodyProperties(
         body: FernIr.ExampleInlinedRequestBody,
-        context: SdkContext,
+        context: FileContext,
         generatedType: GeneratedRequestWrapper,
         opts: GetReferenceOpts
     ): ts.PropertyAssignment[] {
@@ -183,7 +184,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                         }
                         try {
                             const key = originalTypeForProperty.getPropertyKey({
-                                propertyWireKey: property.name.wireValue
+                                propertyWireKey: getWireValue(property.name)
                             });
                             const value = context.type.getGeneratedExample(property.value).build(context, opts);
                             if (isExpressionUndefined(value)) {
@@ -192,7 +193,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                             return ts.factory.createPropertyAssignment(getPropertyKey(key), value);
                         } catch (e) {
                             context.logger.debug(
-                                `Failed to get property key for property with wire value '${property.name.wireValue}' in request example. ` +
+                                `Failed to get property key for property with wire value '${getWireValue(property.name)}' in request example. ` +
                                     `This may indicate a mismatch between the example and the type definition.`
                             );
                             return undefined;
@@ -217,7 +218,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                     if (isExpressionUndefined(value)) {
                         return undefined;
                     }
-                    return ts.factory.createPropertyAssignment(getPropertyKey(extraProperty.name.wireValue), value);
+                    return ts.factory.createPropertyAssignment(getPropertyKey(getWireValue(extraProperty.name)), value);
                 })
                 .filter((property) => property != null)
         ];
@@ -225,7 +226,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
 
     private buildReferencedBodyProperties(
         type: FernIr.ExampleTypeReference,
-        context: SdkContext,
+        context: FileContext,
         opts: GetReferenceOpts
     ): ts.PropertyAssignment[] {
         const generatedExample = context.type.getGeneratedExample(type).build(context, opts);

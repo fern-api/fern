@@ -37,7 +37,7 @@ git clone --filter=blob:none --sparse https://github.com/fern-api/fern.git
 cd fern
 
 # Configure sparse checkout to exclude large directories
-bash ./sparse-checkout.sh
+bash ./scripts/sparse-checkout.sh
 ```
 
 This configuration:

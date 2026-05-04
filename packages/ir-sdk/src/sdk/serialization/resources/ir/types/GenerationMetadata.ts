@@ -3,6 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { InvocationSource } from "./InvocationSource.js";
 
 export const GenerationMetadata: core.serialization.ObjectSchema<
     serializers.GenerationMetadata.Raw,
@@ -13,6 +14,10 @@ export const GenerationMetadata: core.serialization.ObjectSchema<
     generatorVersion: core.serialization.string(),
     generatorConfig: core.serialization.unknown().optional(),
     originGitCommit: core.serialization.string().optional(),
+    originGitCommitIsDirty: core.serialization.boolean().optional(),
+    invokedBy: InvocationSource.optional(),
+    requestedVersion: core.serialization.string().optional(),
+    ciProvider: core.serialization.string().optional(),
 });
 
 export declare namespace GenerationMetadata {
@@ -22,5 +27,9 @@ export declare namespace GenerationMetadata {
         generatorVersion: string;
         generatorConfig?: unknown | null;
         originGitCommit?: string | null;
+        originGitCommitIsDirty?: boolean | null;
+        invokedBy?: InvocationSource.Raw | null;
+        requestedVersion?: string | null;
+        ciProvider?: string | null;
     }
 }

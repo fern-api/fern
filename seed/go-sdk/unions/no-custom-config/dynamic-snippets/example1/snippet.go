@@ -18,7 +18,7 @@ func do() {
         NormalSweet: &fern.NormalSweet{
             Value: "value",
         },
-        Id: "id",
+        ID: "id",
         CreatedAt: fern.MustParseDateTime(
             "2024-01-15T09:30:00Z",
         ),

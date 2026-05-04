@@ -1,9 +1,10 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import type { FernIr } from "@fern-fern/ir-sdk";
 import { getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
-import type { SdkContext } from "@fern-typescript/contexts";
+import type { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-import { getLiteralValueForHeader } from "./endpoints/utils/index.js";
+import { getClientDefaultValue, getLiteralValueForHeader, typeContainsNullable } from "./endpoints/utils/index.js";
 import type { GeneratedHeader } from "./GeneratedHeader.js";
 
 export declare namespace BaseClientTypeGenerator {
@@ -28,7 +29,7 @@ export class BaseClientTypeGenerator {
         this.omitFernHeaders = omitFernHeaders;
     }
 
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         if (this.shouldGenerateAuthCode()) {
             context.importsManager.addImportFromRoot("core/auth", {
                 namedImports: [{ name: "AuthProvider", type: "type" }]
@@ -47,7 +48,7 @@ export class BaseClientTypeGenerator {
         this.generateNormalizeClientOptionsWithAuthFunction(context);
     }
 
-    private generateBaseClientOptionsType(context: SdkContext): void {
+    private generateBaseClientOptionsType(context: FileContext): void {
         const baseInterface = context.baseClient.generateBaseClientOptionsInterface(context);
         const authOptionsTypes = this.getAuthOptionsTypes(context);
 
@@ -55,6 +56,8 @@ export class BaseClientTypeGenerator {
             context.sourceFile.addInterface(baseInterface);
             return;
         }
+
+        const authProviderType = getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType());
 
         const basePropertiesStr = baseInterface.properties
             .map((prop) => {
@@ -66,14 +69,22 @@ export class BaseClientTypeGenerator {
 
         const authOptionsIntersection = authOptionsTypes.join(" & ");
         const typeCode = `
+export type AuthOption =
+    | false
+    | ${authProviderType}["getAuthRequest"]
+    | ${authProviderType}
+    | (${authOptionsIntersection});
+
 export type BaseClientOptions = {
     ${basePropertiesStr}
+    /** Override auth. Pass false to disable, a function returning auth headers, an AuthProvider, or auth options. */
+    auth?: AuthOption;
 } & ${authOptionsIntersection};`;
 
         context.sourceFile.addStatements(typeCode);
     }
 
-    private getAuthOptionsTypes(context: SdkContext): string[] {
+    private getAuthOptionsTypes(context: FileContext): string[] {
         const authOptionsTypes: string[] = [];
         const authRequirement = this.ir.auth.requirement;
 
@@ -114,7 +125,7 @@ export type BaseClientOptions = {
         return authOptionsTypes;
     }
 
-    private getAuthOptionsTypeForScheme(authScheme: FernIr.AuthScheme, context: SdkContext): string | undefined {
+    private getAuthOptionsTypeForScheme(authScheme: FernIr.AuthScheme, context: FileContext): string | undefined {
         switch (authScheme.type) {
             case "bearer":
                 return "BearerAuthProvider.AuthOptions";
@@ -134,7 +145,7 @@ export type BaseClientOptions = {
         }
     }
 
-    private generateNormalizeClientOptionsFunction(context: SdkContext): void {
+    private generateNormalizeClientOptionsFunction(context: FileContext): void {
         const fernHeaderEntries: [string, ts.Expression][] = [];
 
         if (!this.omitFernHeaders) {
@@ -224,7 +235,7 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
         return this.ir.auth.schemes.length > 0;
     }
 
-    private generateNormalizedClientOptionsTypes(context: SdkContext): void {
+    private generateNormalizedClientOptionsTypes(context: FileContext): void {
         const shouldGenerateAuthCode = this.shouldGenerateAuthCode();
 
         const authProviderProperty = shouldGenerateAuthCode
@@ -251,7 +262,7 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions = BaseCl
         return this.ir.auth.schemes.some((scheme) => scheme.type === "oauth");
     }
 
-    private generateNormalizeClientOptionsWithAuthFunction(context: SdkContext): void {
+    private generateNormalizeClientOptionsWithAuthFunction(context: FileContext): void {
         let authProviderCreation = "";
         const authRequirement = this.ir.auth.requirement;
 
@@ -411,11 +422,36 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions = BaseCl
             return;
         }
 
+        const noOpAuthProviderRef = getTextOfTsNode(context.coreUtilities.auth.NoOpAuthProvider._getReferenceTo());
+        const isAuthProviderRef = getTextOfTsNode(context.coreUtilities.auth.isAuthProvider._getReferenceTo());
+
+        const hasAuthOptions = this.getAuthOptionsTypes(context).length > 0;
+        const authBlock = hasAuthOptions
+            ? `
+    if (${OPTIONS_PARAMETER_NAME}.auth === false) {
+        normalized.authProvider = new ${noOpAuthProviderRef}();
+        return normalized;
+    }
+    if (${OPTIONS_PARAMETER_NAME}.auth != null) {
+        if (typeof ${OPTIONS_PARAMETER_NAME}.auth === "function") {
+            normalized.authProvider = { getAuthRequest: ${OPTIONS_PARAMETER_NAME}.auth };
+            return normalized;
+        }
+        if (${isAuthProviderRef}(${OPTIONS_PARAMETER_NAME}.auth)) {
+            normalized.authProvider = ${OPTIONS_PARAMETER_NAME}.auth;
+            return normalized;
+        }
+        Object.assign(normalized, ${OPTIONS_PARAMETER_NAME}.auth);
+    }
+`
+            : "";
+
         const functionCode = `
 export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions>(
     ${OPTIONS_PARAMETER_NAME}: T
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(${OPTIONS_PARAMETER_NAME}) as NormalizedClientOptionsWithAuth<T>;
+${authBlock}
     const normalizedWithNoOpAuthProvider = withNoOpAuthProvider(normalized);
     normalized.authProvider ??= ${authProviderCreation};
     return normalized;
@@ -426,19 +462,19 @@ function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
 ): NormalizedClientOptionsWithAuth<T> {
     return {
         ...options,
-        authProvider: new ${getTextOfTsNode(context.coreUtilities.auth.NoOpAuthProvider._getReferenceTo())}()
+        authProvider: new ${noOpAuthProviderRef}()
     };
 }`;
 
         context.sourceFile.addStatements(functionCode);
     }
 
-    private getRootHeaders(context: SdkContext): GeneratedHeader[] {
+    private getRootHeaders(context: FileContext): GeneratedHeader[] {
         const headers: GeneratedHeader[] = [
             ...this.ir.headers
                 .filter((header) => !this.isAuthorizationHeader(header))
                 .map((header) => {
-                    const headerName = this.getOptionKeyForHeader(header);
+                    const headerName = this.getOptionKeyForHeader(header, context);
                     const literalValue = getLiteralValueForHeader(header, context);
 
                     let value: ts.Expression;
@@ -475,15 +511,52 @@ function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
                             );
                         }
                     } else {
-                        value = ts.factory.createPropertyAccessChain(
-                            ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
-                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                            ts.factory.createIdentifier(this.getOptionKeyForHeader(header))
-                        );
+                        const clientDefaultVal = getClientDefaultValue(header.clientDefault);
+                        if (clientDefaultVal != null && !typeContainsNullable(header.valueType, context)) {
+                            if (typeof clientDefaultVal === "boolean") {
+                                const booleanLiteral = clientDefaultVal
+                                    ? ts.factory.createTrue()
+                                    : ts.factory.createFalse();
+                                value = ts.factory.createCallExpression(
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createParenthesizedExpression(
+                                            ts.factory.createBinaryExpression(
+                                                ts.factory.createPropertyAccessChain(
+                                                    ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
+                                                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                    ts.factory.createIdentifier(headerName)
+                                                ),
+                                                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                                booleanLiteral
+                                            )
+                                        ),
+                                        ts.factory.createIdentifier("toString")
+                                    ),
+                                    undefined,
+                                    []
+                                );
+                            } else {
+                                value = ts.factory.createBinaryExpression(
+                                    ts.factory.createPropertyAccessChain(
+                                        ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
+                                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                        ts.factory.createIdentifier(headerName)
+                                    ),
+                                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                    ts.factory.createStringLiteral(clientDefaultVal.toString())
+                                );
+                            }
+                        } else {
+                            value = ts.factory.createPropertyAccessChain(
+                                ts.factory.createIdentifier(OPTIONS_PARAMETER_NAME),
+                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                ts.factory.createIdentifier(this.getOptionKeyForHeader(header, context))
+                            );
+                        }
                     }
 
                     return {
-                        header: header.name.wireValue,
+                        header: getWireValue(header.name),
                         value
                     };
                 })
@@ -492,7 +565,7 @@ function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
         const generatedVersion = context.versionContext.getGeneratedVersion();
         if (generatedVersion != null) {
             const header = generatedVersion.getHeader();
-            const headerName = this.getOptionKeyForHeader(header);
+            const headerName = this.getOptionKeyForHeader(header, context);
             const defaultVersion = generatedVersion.getDefaultVersion();
 
             let value: ts.Expression;
@@ -513,7 +586,7 @@ function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
                 );
             }
             headers.push({
-                header: header.name.wireValue,
+                header: getWireValue(header.name),
                 value
             });
         }
@@ -521,11 +594,12 @@ function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
         return headers;
     }
 
-    private getOptionKeyForHeader(header: FernIr.HttpHeader): string {
-        return header.name.name.camelCase.unsafeName;
+    private getOptionKeyForHeader(header: FernIr.HttpHeader, context: FileContext): string {
+        return context.case.camelUnsafe(header.name);
     }
 
     private isAuthorizationHeader(header: FernIr.HttpHeader | FernIr.HeaderAuthScheme): boolean {
-        return header.name.wireValue.toLowerCase() === "authorization";
+        const wireValue = getWireValue(header.name);
+        return wireValue.toLowerCase() === "authorization";
     }
 }

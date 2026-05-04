@@ -26,7 +26,7 @@ module <%= gem_namespace %>
           type.is_a?(Proc) ? type.call : type
         end
 
-        def self.coerce(target, value, strict: false) # rubocop:disable Metrics/CyclomaticComplexity
+        def self.coerce(target, value, strict: false)
           type = unwrap_type(target)
 
           case type
@@ -81,10 +81,10 @@ module <%= gem_namespace %>
                }
               return type.coerce(value, strict: strict)
             else
-              value
+              value # rubocop:disable Lint/Void
             end
           else
-            value
+            value # rubocop:disable Lint/Void
           end
 
           raise Errors::TypeError, "cannot coerce value of type `#{value.class}` to `#{target}`" if strict
@@ -113,4 +113,4 @@ module <%= gem_namespace %>
       end
     end
   end
-end   
+end

@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../index.js";
 
 export interface ExampleWebSocketSession extends FernIr.WithDocs {
-    name: FernIr.Name | undefined;
+    name: FernIr.NameOrString | undefined;
     url: string;
     pathParameters: FernIr.ExamplePathParameter[];
     headers: FernIr.ExampleHeader[];

@@ -40,16 +40,11 @@ jobs:
             php
             ruby
             seed
-            postman
             ci
             lint
-            fastapi
-            spring
-            express
             openapi
             deps
             deps-dev
-            fiber
             pydantic
             ai-search
             swift

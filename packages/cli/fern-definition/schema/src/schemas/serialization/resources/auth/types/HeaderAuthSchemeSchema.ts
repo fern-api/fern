@@ -15,6 +15,7 @@ export const HeaderAuthSchemeSchema: core.serialization.ObjectSchema<
         header: core.serialization.string(),
         type: core.serialization.string().optional(),
         prefix: core.serialization.string().optional(),
+        placeholder: core.serialization.string().optional(),
     })
     .extend(WithEnvironmentVariable)
     .extend(WithName)
@@ -25,5 +26,6 @@ export declare namespace HeaderAuthSchemeSchema {
         header: string;
         type?: string | null;
         prefix?: string | null;
+        placeholder?: string | null;
     }
 }

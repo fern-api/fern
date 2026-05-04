@@ -11,7 +11,7 @@ pub struct StdoutResponse {
 
 impl StdoutResponse {
     pub fn builder() -> StdoutResponseBuilder {
-        StdoutResponseBuilder::default()
+        <StdoutResponseBuilder as Default>::default()
     }
 }
 

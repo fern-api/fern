@@ -31,6 +31,7 @@
             },
             "values": [
                 {
+                    "wireValue": ">",
                     "name": {
                         "originalName": "GREATER_THAN",
                         "camelCase": {
@@ -49,10 +50,10 @@
                             "unsafeName": "GreaterThan",
                             "safeName": "GreaterThan"
                         }
-                    },
-                    "wireValue": ">"
+                    }
                 },
                 {
+                    "wireValue": "=",
                     "name": {
                         "originalName": "EQUAL_TO",
                         "camelCase": {
@@ -71,10 +72,10 @@
                             "unsafeName": "EqualTo",
                             "safeName": "EqualTo"
                         }
-                    },
-                    "wireValue": "="
+                    }
                 },
                 {
+                    "wireValue": "less_than",
                     "name": {
                         "originalName": "less_than",
                         "camelCase": {
@@ -93,8 +94,7 @@
                             "unsafeName": "LessThan",
                             "safeName": "LessThan"
                         }
-                    },
-                    "wireValue": "less_than"
+                    }
                 }
             ]
         },
@@ -167,6 +167,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "id",
                         "name": {
                             "originalName": "id",
                             "camelCase": {
@@ -185,8 +186,7 @@
                                 "unsafeName": "ID",
                                 "safeName": "ID"
                             }
-                        },
-                        "wireValue": "id"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -197,6 +197,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "name",
                         "name": {
                             "originalName": "name",
                             "camelCase": {
@@ -215,8 +216,7 @@
                                 "unsafeName": "Name",
                                 "safeName": "Name"
                             }
-                        },
-                        "wireValue": "name"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -227,6 +227,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "age",
                         "name": {
                             "originalName": "age",
                             "camelCase": {
@@ -245,8 +246,7 @@
                                 "unsafeName": "Age",
                                 "safeName": "Age"
                             }
-                        },
-                        "wireValue": "age"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -520,6 +520,7 @@
                     "value": [
                         {
                             "name": {
+                                "wireValue": "name",
                                 "name": {
                                     "originalName": "name",
                                     "camelCase": {
@@ -538,8 +539,7 @@
                                         "unsafeName": "Name",
                                         "safeName": "Name"
                                     }
-                                },
-                                "wireValue": "name"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",
@@ -550,6 +550,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "age",
                                 "name": {
                                     "originalName": "age",
                                     "camelCase": {
@@ -568,8 +569,7 @@
                                         "unsafeName": "Age",
                                         "safeName": "Age"
                                     }
-                                },
-                                "wireValue": "age"
+                                }
                             },
                             "typeReference": {
                                 "type": "optional",

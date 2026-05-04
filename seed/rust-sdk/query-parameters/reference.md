@@ -35,15 +35,18 @@ async fn main() {
                 user: User {
                     name: "name".to_string(),
                     tags: vec!["tags".to_string(), "tags".to_string()],
+                    ..Default::default()
                 },
                 user_list: vec![
                     User {
                         name: "name".to_string(),
                         tags: vec!["tags".to_string(), "tags".to_string()],
+                        ..Default::default()
                     },
                     User {
                         name: "name".to_string(),
                         tags: vec!["tags".to_string(), "tags".to_string()],
+                        ..Default::default()
                     },
                 ],
                 optional_deadline: Some(
@@ -56,15 +59,19 @@ async fn main() {
                     user: User {
                         name: "name".to_string(),
                         tags: vec!["tags".to_string(), "tags".to_string()],
+                        ..Default::default()
                     },
+                    ..Default::default()
                 },
                 optional_user: Some(User {
                     name: "name".to_string(),
                     tags: vec!["tags".to_string(), "tags".to_string()],
+                    ..Default::default()
                 }),
                 exclude_user: vec![User {
                     name: "name".to_string(),
                     tags: vec!["tags".to_string(), "tags".to_string()],
+                    ..Default::default()
                 }],
                 filter: vec!["filter".to_string()],
             },

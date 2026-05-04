@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 import { WithDocs } from "../../commons/types/WithDocs.js";
 import { EnvironmentBaseUrlId } from "./EnvironmentBaseUrlId.js";
 import { EnvironmentId } from "./EnvironmentId.js";
@@ -16,7 +16,7 @@ export const MultipleBaseUrlsEnvironment: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         id: EnvironmentId,
-        name: Name,
+        name: NameOrString,
         urls: core.serialization.record(EnvironmentBaseUrlId, EnvironmentUrl),
         audiences: core.serialization.list(core.serialization.string()).optional(),
         defaultUrls: core.serialization.record(EnvironmentBaseUrlId, core.serialization.string()).optional(),
@@ -30,7 +30,7 @@ export const MultipleBaseUrlsEnvironment: core.serialization.ObjectSchema<
 export declare namespace MultipleBaseUrlsEnvironment {
     export interface Raw extends WithDocs.Raw {
         id: EnvironmentId.Raw;
-        name: Name.Raw;
+        name: NameOrString.Raw;
         urls: Record<EnvironmentBaseUrlId.Raw, EnvironmentUrl.Raw>;
         audiences?: string[] | null;
         defaultUrls?: Record<EnvironmentBaseUrlId.Raw, string> | null;

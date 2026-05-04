@@ -53,7 +53,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Commons::Types::ProblemId] :problem_id
+      # @option params [Seed::Commons::Types::ProblemID] :problem_id
       #
       # @return [Seed::Problem::Types::UpdateProblemResponse]
       def update_problem(request_options: {}, **params)
@@ -88,7 +88,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Commons::Types::ProblemId] :problem_id
+      # @option params [Seed::Commons::Types::ProblemID] :problem_id
       #
       # @return [untyped]
       def delete_problem(request_options: {}, **params)

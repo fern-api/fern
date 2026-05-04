@@ -9,7 +9,7 @@ import { getSuccessReturnType } from "../endpoints/default/endpoint-response/get
 // Mock context
 // ──────────────────────────────────────────────────────────────────────────────
 
-// biome-ignore lint/suspicious/noExplicitAny: test mock for SdkContext
+// biome-ignore lint/suspicious/noExplicitAny: test mock for FileContext
 function createMockContext(opts?: { streamType?: "wrapper" | "web" }): any {
     return {
         type: {

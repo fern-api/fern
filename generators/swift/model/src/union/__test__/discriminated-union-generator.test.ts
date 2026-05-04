@@ -1,4 +1,5 @@
 import { resolve } from "node:path";
+import { getOriginalName } from "@fern-api/base-generator";
 import { swift } from "@fern-api/swift-codegen";
 import { ModelGeneratorContext } from "../../ModelGeneratorContext.js";
 import { createSampleGeneratorContext } from "../../test-utils/createSampleGeneratorContext.js";
@@ -14,7 +15,7 @@ function getUnionTypeDeclarationOrThrow(context: ModelGeneratorContext, name: st
             union: (utd) => utd,
             _other: () => null
         });
-        if (utd && declaration.name.name.originalName === name) {
+        if (utd && getOriginalName(declaration.name.name) === name) {
             return utd;
         }
     }

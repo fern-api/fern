@@ -24,19 +24,7 @@ describe("UsersClient", () => {
             .jsonBody(mockResponseBody)
             .build();
 
-        const expected = {
-            data: [
-                {
-                    name: "name",
-                    id: 1,
-                },
-                {
-                    name: "name",
-                    id: 1,
-                },
-            ],
-            next: "next",
-        };
+        const expected = rawResponseBody;
         const page = await client.users.listWithUriPagination();
 
         expect(expected.data).toEqual(page.data);
@@ -65,19 +53,7 @@ describe("UsersClient", () => {
             .jsonBody(mockResponseBody)
             .build();
 
-        const expected = {
-            data: [
-                {
-                    name: "name",
-                    id: 1,
-                },
-                {
-                    name: "name",
-                    id: 1,
-                },
-            ],
-            next: "next",
-        };
+        const expected = rawResponseBody;
         const page = await client.users.listWithPathPagination();
 
         expect(expected.data).toEqual(page.data);

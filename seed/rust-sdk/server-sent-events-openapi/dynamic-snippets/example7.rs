@@ -11,6 +11,7 @@ async fn main() {
         .stream_no_context(
             &StreamRequest {
                 query: Some("query".to_string()),
+                ..Default::default()
             },
             None,
         )

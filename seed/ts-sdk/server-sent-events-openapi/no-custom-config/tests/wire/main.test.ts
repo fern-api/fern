@@ -8,7 +8,7 @@ describe("SeedApiClient", () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {};
-        const rawResponseBody = "event: \ndata: {}\n\n";
+        const rawResponseBody = "event: heartbeat\ndata: {}\n\n";
 
         server
             .mockEndpoint()
@@ -26,10 +26,7 @@ describe("SeedApiClient", () => {
         }
         expect(events).toEqual([
             {
-                event: "",
-                ...{
-                    event: "heartbeat",
-                },
+                event: "heartbeat",
             },
         ]);
     });
@@ -38,7 +35,7 @@ describe("SeedApiClient", () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {};
-        const rawResponseBody = "event: \ndata: {}\n\n";
+        const rawResponseBody = "event: heartbeat\ndata: {}\n\n";
 
         server
             .mockEndpoint()
@@ -56,10 +53,7 @@ describe("SeedApiClient", () => {
         }
         expect(events).toEqual([
             {
-                event: "",
-                ...{
-                    event: "heartbeat",
-                },
+                event: "heartbeat",
             },
         ]);
     });
@@ -124,7 +118,7 @@ describe("SeedApiClient", () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {};
-        const rawResponseBody = 'event: \ndata: {"timestamp":"2024-01-15T09:30:00Z"}\n\n';
+        const rawResponseBody = 'event: heartbeat\ndata: {"timestamp":"2024-01-15T09:30:00Z"}\n\n';
 
         server
             .mockEndpoint()
@@ -142,11 +136,8 @@ describe("SeedApiClient", () => {
         }
         expect(events).toEqual([
             {
-                event: "",
-                ...{
-                    event: "heartbeat",
-                    timestamp: "2024-01-15T09:30:00Z",
-                },
+                event: "heartbeat",
+                timestamp: "2024-01-15T09:30:00Z",
             },
         ]);
     });
@@ -206,5 +197,159 @@ describe("SeedApiClient", () => {
                 retry: 1,
             },
         ]);
+    });
+
+    test("streamXFernStreamingCondition", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { query: "query", stream: false };
+        const rawResponseBody = { answer: "answer", finishReason: "complete" };
+
+        server
+            .mockEndpoint()
+            .post("/stream/x-fern-streaming-condition")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.streamXFernStreamingCondition({
+            query: "query",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("streamXFernStreamingSharedSchema", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { prompt: "prompt", model: "model", stream: false };
+        const rawResponseBody = { answer: "answer", finishReason: "complete" };
+
+        server
+            .mockEndpoint()
+            .post("/stream/x-fern-streaming-shared-schema")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.streamXFernStreamingSharedSchema({
+            prompt: "prompt",
+            model: "model",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("validateCompletion", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { prompt: "prompt", model: "model" };
+        const rawResponseBody = { answer: "answer", finishReason: "complete" };
+
+        server
+            .mockEndpoint()
+            .post("/validate-completion")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.validateCompletion({
+            prompt: "prompt",
+            model: "model",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("streamXFernStreamingUnion", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { type: "message", stream_response: false, prompt: "prompt", message: "message" };
+        const rawResponseBody = { answer: "answer", finishReason: "complete" };
+
+        server
+            .mockEndpoint()
+            .post("/stream/x-fern-streaming-union")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.streamXFernStreamingUnion({
+            type: "message",
+            prompt: "prompt",
+            message: "message",
+            stream_response: false,
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("validateUnionRequest", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { prompt: "prompt" };
+        const rawResponseBody = { valid: true };
+
+        server
+            .mockEndpoint()
+            .post("/validate-union-request")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.validateUnionRequest({
+            prompt: "prompt",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("streamXFernStreamingNullableCondition", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { query: "query", stream: false };
+        const rawResponseBody = { answer: "answer", finishReason: "complete" };
+
+        server
+            .mockEndpoint()
+            .post("/stream/x-fern-streaming-nullable-condition")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.streamXFernStreamingNullableCondition({
+            query: "query",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("streamXFernStreamingSseOnly", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = {};
+        const rawResponseBody = 'event: \ndata: "string"\n\n';
+
+        server
+            .mockEndpoint()
+            .post("/stream/x-fern-streaming-sse-only")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .sseBody(rawResponseBody)
+            .build();
+
+        const response = await client.streamXFernStreamingSseOnly({});
+        const events: unknown[] = [];
+        for await (const event of response) {
+            events.push(event);
+        }
+        expect(events).toEqual(["string"]);
     });
 });

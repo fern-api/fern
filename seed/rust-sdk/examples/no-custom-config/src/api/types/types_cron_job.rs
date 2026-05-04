@@ -8,7 +8,7 @@ pub struct CronJob {
 
 impl CronJob {
     pub fn builder() -> CronJobBuilder {
-        CronJobBuilder::default()
+        <CronJobBuilder as Default>::default()
     }
 }
 

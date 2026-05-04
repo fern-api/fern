@@ -1,13 +1,14 @@
 import { LogLevel } from "@fern-api/logger";
-import { FernCliError } from "@fern-api/task-context";
+import { CliError, resolveErrorCode, shouldReportToSentry, TaskAbortSignal } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import { KeyringUnavailableError } from "../auth/errors/KeyringUnavailableError.js";
-import { CliError } from "../errors/CliError.js";
 import { SourcedValidationError } from "../errors/SourcedValidationError.js";
 import { ValidationError } from "../errors/ValidationError.js";
 import { Icons } from "../ui/format.js";
 import { Context } from "./Context.js";
 import type { GlobalArgs } from "./GlobalArgs.js";
+import { loadDotenvFile } from "./loadDotenvFile.js";
 
 // It's standard to use 128 as the base exit code for signals.
 // https://en.wikipedia.org/wiki/Signal_(IPC)
@@ -25,30 +26,21 @@ export function withContext<T extends GlobalArgs>(
     handler: (context: Context, args: T) => Promise<void>
 ): (args: T) => Promise<void> {
     return async (args: T) => {
-        const context = createContext(args);
-        const startTime = Date.now();
+        const context = await createContext(args);
         setupSignalHandler(context);
 
         try {
             await handler(context, args);
-            await context.telemetry.sendLifecycleEvent({
+            context.telemetry.sendLifecycleEvent({
                 command: context.info.command,
                 status: "success",
-                durationMs: Date.now() - startTime
+                durationMs: Date.now() - context.createdAt
             });
             await context.telemetry.flush();
             context.finish();
             await exitGracefully(0);
         } catch (error) {
-            if (shouldReportToSentry(error)) {
-                await context.telemetry.captureException(error);
-            }
-            await context.telemetry.sendLifecycleEvent({
-                command: context.info.command,
-                status: "error",
-                durationMs: Date.now() - startTime,
-                errorCode: extractErrorCode(error)
-            });
+            reportError(context, error);
             await context.telemetry.flush();
             handleError(context, error);
             context.finish();
@@ -57,9 +49,14 @@ export function withContext<T extends GlobalArgs>(
     };
 }
 
-function createContext(options: GlobalArgs): Context {
+async function createContext(options: GlobalArgs): Promise<Context> {
     const logLevel = parseLogLevel(options["log-level"] ?? "info");
-    return new Context({
+    const logDebug =
+        logLevel === LogLevel.Debug
+            ? (msg: string) => process.stderr.write(`${chalk.dim("[debug]")} ${msg}\n`)
+            : undefined;
+    loadDotenvFile(options.env, logDebug);
+    return Context.create({
         stdout: process.stdout,
         stderr: process.stderr,
         logLevel
@@ -90,14 +87,12 @@ function handleError(context: Context, error: unknown): void {
         return;
     }
 
-    if (error instanceof FernCliError) {
-        // FernCliError is thrown by failAndThrow() after logging the error
-        // message via the TaskContext logger. No additional output needed.
+    if (error instanceof TaskAbortSignal) {
         return;
     }
 
     if (error instanceof CliError) {
-        if (error.message.length > 0) {
+        if (error.message && error.message.length > 0) {
             process.stderr.write(`${chalk.red(error.message)}\n`);
         }
         return;
@@ -115,45 +110,31 @@ function handleError(context: Context, error: unknown): void {
 }
 
 /**
- * Determines whether an error should be reported to Sentry.
- *
- * Only unexpected/internal errors are reported. User-facing errors
- * (validation, auth, CLI usage) are not bugs and should not be tracked.
- *
- * TODO: FernCliError is currently excluded because it loses context --
- * it's a blank marker error thrown by failAndThrow() after logging.
- * Many FernCliError instances originate from shared packages and represent
- * server-side failures (e.g. API registration, protobuf upload) that
- * *should* be reported. A refactoring is needed to make FernCliError
- * carry its original cause/code so we can distinguish reportable
- * server failures from user config errors.
+ * Reports an error to Sentry (conditionally) and PostHog.
+ * Called from the top-level catch in withContext and from
+ * TaskContextAdapter.failWithoutThrowing.
  */
-function shouldReportToSentry(error: unknown): boolean {
-    if (error instanceof CliError) {
-        return error.code === "INTERNAL_ERROR";
+export function reportError(
+    context: Context,
+    error: unknown,
+    options?: { message?: string; code?: CliError.Code }
+): void {
+    if (error instanceof TaskAbortSignal) {
+        return;
     }
-    if (
-        error instanceof ValidationError ||
-        error instanceof SourcedValidationError ||
-        error instanceof KeyringUnavailableError ||
-        error instanceof FernCliError
-    ) {
-        return false;
+    const code = resolveErrorCode(error, options?.code);
+    const capturable = error ?? new CliError({ message: options?.message ?? "", code });
+    if (shouldReportToSentry(code)) {
+        context.telemetry.captureException(capturable, {
+            errorCode: code
+        });
     }
-    return true;
-}
-
-function extractErrorCode(error: unknown): CliError.Code {
-    if (error instanceof CliError && error.code != null) {
-        return error.code;
-    }
-    if (error instanceof ValidationError || error instanceof SourcedValidationError) {
-        return "VALIDATION_ERROR";
-    }
-    if (error instanceof KeyringUnavailableError) {
-        return "UNAUTHORIZED_ERROR";
-    }
-    return "INTERNAL_ERROR";
+    context.telemetry.sendLifecycleEvent({
+        status: "error",
+        command: context.info.command,
+        durationMs: Date.now() - context.createdAt,
+        errorCode: code
+    });
 }
 
 function setupSignalHandler(context: Context): void {

@@ -3,10 +3,10 @@
 import type * as FernIr from "../../../../api/index.js";
 import type * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 
-export const WebhookName: core.serialization.ObjectSchema<serializers.WebhookName.Raw, FernIr.WebhookName> = Name;
+export const WebhookName: core.serialization.Schema<serializers.WebhookName.Raw, FernIr.WebhookName> = NameOrString;
 
 export declare namespace WebhookName {
-    export type Raw = Name.Raw;
+    export type Raw = NameOrString.Raw;
 }

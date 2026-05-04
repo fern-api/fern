@@ -17,7 +17,7 @@ pub struct PaginatedUserResponse {
 
 impl PaginatedUserResponse {
     pub fn builder() -> PaginatedUserResponseBuilder {
-        PaginatedUserResponseBuilder::default()
+        <PaginatedUserResponseBuilder as Default>::default()
     }
 }
 

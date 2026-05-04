@@ -4,10 +4,13 @@ import { PackageId, Reference } from "@fern-typescript/commons";
 import { GeneratedEndpointErrorUnion } from "./GeneratedEndpointErrorUnion.js";
 
 export interface EndpointErrorUnionContext {
-    getGeneratedEndpointErrorUnion: (packageId: PackageId, endpointName: FernIr.Name) => GeneratedEndpointErrorUnion;
+    getGeneratedEndpointErrorUnion: (
+        packageId: PackageId,
+        endpointName: FernIr.NameOrString
+    ) => GeneratedEndpointErrorUnion;
     getReferenceToEndpointTypeExport: (
         packageId: PackageId,
-        endpointName: FernIr.Name,
+        endpointName: FernIr.NameOrString,
         export_: string | string[]
     ) => Reference;
 }

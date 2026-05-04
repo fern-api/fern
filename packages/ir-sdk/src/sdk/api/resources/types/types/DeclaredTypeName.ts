@@ -5,6 +5,6 @@ import type * as FernIr from "../../../index.js";
 export interface DeclaredTypeName {
     typeId: FernIr.TypeId;
     fernFilepath: FernIr.FernFilepath;
-    name: FernIr.Name;
+    name: FernIr.NameOrString;
     displayName: FernIr.DisplayName | undefined;
 }

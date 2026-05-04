@@ -1,0 +1,6 @@
+- summary: |
+    When using `fern sdk preview --push-diff`, the diff branch now uses the
+    original package name instead of the preview-scoped name. This makes the
+    diff show only real API changes without preview artifacts like package
+    name rewrites.
+  type: feat

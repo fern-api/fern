@@ -116,6 +116,19 @@ export class GoValueFormatter {
                     break;
                 case FernIr.PrimitiveTypeV1.String:
                     break;
+                case FernIr.PrimitiveTypeV1.DateTimeRfc2822:
+                    prefix = undefined;
+                    suffix = go.codeblock((writer) => {
+                        writer.write(".Format(");
+                        writer.writeNode(
+                            go.typeReference({
+                                name: "RFC1123Z",
+                                importPath: "time"
+                            })
+                        );
+                        writer.write(")");
+                    });
+                    break;
                 default:
                     assertNever(primitive);
             }

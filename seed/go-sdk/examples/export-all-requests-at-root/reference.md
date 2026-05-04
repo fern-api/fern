@@ -88,7 +88,7 @@ client.Echo(
 </details>
 
 ## File Notification Service
-<details><summary><code>client.File.Notification.Service.GetException(NotificationId) -> *fern.Exception</code></summary>
+<details><summary><code>client.File.Notification.Service.GetException(NotificationID) -> *fern.Exception</code></summary>
 <dl>
 <dd>
 
@@ -120,7 +120,7 @@ client.File.Notification.Service.GetException(
 <dl>
 <dd>
 
-**notificationId:** `string` 
+**notificationID:** `string` 
     
 </dd>
 </dl>
@@ -161,7 +161,7 @@ This endpoint returns a file by its name.
 
 ```go
 request := &fern.GetFileRequest{
-        XFileApiVersion: "0.0.2",
+        XFileAPIVersion: "0.0.2",
     }
 client.File.Service.GetFile(
         context.TODO(),
@@ -196,7 +196,7 @@ client.File.Service.GetFile(
 </details>
 
 ## Health Service
-<details><summary><code>client.Health.Service.Check(Id) -> error</code></summary>
+<details><summary><code>client.Health.Service.Check(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -297,7 +297,7 @@ client.Health.Service.Ping(
 </details>
 
 ## Service
-<details><summary><code>client.Service.GetMovie(MovieId) -> *fern.Movie</code></summary>
+<details><summary><code>client.Service.GetMovie(MovieID) -> *fern.Movie</code></summary>
 <dl>
 <dd>
 
@@ -329,7 +329,7 @@ client.Service.GetMovie(
 <dl>
 <dd>
 
-**movieId:** `fern.MovieId` 
+**movieID:** `fern.MovieID` 
     
 </dd>
 </dl>
@@ -341,7 +341,7 @@ client.Service.GetMovie(
 </dl>
 </details>
 
-<details><summary><code>client.Service.CreateMovie(request) -> fern.MovieId</code></summary>
+<details><summary><code>client.Service.CreateMovie(request) -> fern.MovieID</code></summary>
 <dl>
 <dd>
 
@@ -355,7 +355,7 @@ client.Service.GetMovie(
 
 ```go
 request := &fern.Movie{
-        Id: "movie-c06a4ad7",
+        ID: "movie-c06a4ad7",
         Prequel: fern.String(
             "movie-cv9b914f",
         ),
@@ -430,7 +430,7 @@ request := &fern.GetMetadataRequest{
                 "development",
             ),
         },
-        XApiVersion: "0.0.1",
+        XAPIVersion: "0.0.1",
     }
 client.Service.GetMetadata(
         context.TODO(),
@@ -467,7 +467,7 @@ client.Service.GetMetadata(
 <dl>
 <dd>
 
-**xApiVersion:** `string` 
+**xAPIVersion:** `string` 
     
 </dd>
 </dl>
@@ -496,7 +496,7 @@ request := &fern.BigEntity{
         CastMember: &fern.CastMember{
             Actor: &fern.Actor{
                 Name: "name",
-                Id: "id",
+                ID: "id",
             },
         },
         ExtendedMovie: &fern.ExtendedMovie{
@@ -504,7 +504,7 @@ request := &fern.BigEntity{
                 "cast",
                 "cast",
             },
-            Id: "id",
+            ID: "id",
             Prequel: fern.String(
                 "prequel",
             ),
@@ -537,21 +537,21 @@ request := &fern.BigEntity{
             },
         },
         CommonMetadata: &commons.Metadata{
-            Id: "id",
+            ID: "id",
             Data: map[string]string{
                 "data": "data",
             },
-            JsonString: fern.String(
+            JSONString: fern.String(
                 "jsonString",
             ),
         },
         EventInfo: &commons.EventInfo{
             Metadata: &commons.Metadata{
-                Id: "id",
+                ID: "id",
                 Data: map[string]string{
                     "data": "data",
                 },
-                JsonString: fern.String(
+                JSONString: fern.String(
                     "jsonString",
                 ),
             },
@@ -700,7 +700,7 @@ request := &fern.BigEntity{
             },
         },
         Moment: &fern.Moment{
-            Id: uuid.MustParse(
+            ID: uuid.MustParse(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
             Date: fern.MustParseDate(

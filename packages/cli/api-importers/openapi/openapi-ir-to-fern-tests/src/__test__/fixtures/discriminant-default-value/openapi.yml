@@ -1,0 +1,70 @@
+openapi: 3.0.0
+info:
+  title: Discriminant Default Value
+  version: 1.0.0
+
+paths:
+  /settings:
+    post:
+      operationId: createSettings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Settings"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Settings"
+
+components:
+  schemas:
+    Settings:
+      type: object
+      properties:
+        provider:
+          $ref: "#/components/schemas/ListenProvider"
+
+    ListenProvider:
+      type: object
+      oneOf:
+        - type: object
+          required:
+            - type
+          properties:
+            type:
+              type: string
+              const: deepgram
+              description: Provider type
+            version:
+              type: string
+              const: v1
+              default: v1
+              description: API version. Defaults to v1 if omitted.
+            model:
+              type: string
+              description: Model name
+            language:
+              type: string
+              default: en-US
+              description: Language code
+        - type: object
+          required:
+            - type
+            - version
+            - model
+          properties:
+            type:
+              type: string
+              const: deepgram
+              description: Provider type
+            version:
+              type: string
+              const: v2
+              description: API version
+            model:
+              type: string
+              description: Model name

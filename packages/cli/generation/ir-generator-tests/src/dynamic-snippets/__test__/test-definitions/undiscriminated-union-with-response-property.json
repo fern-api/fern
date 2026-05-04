@@ -32,6 +32,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "data",
                         "name": {
                             "originalName": "data",
                             "camelCase": {
@@ -50,8 +51,7 @@
                                 "unsafeName": "Data",
                                 "safeName": "Data"
                             }
-                        },
-                        "wireValue": "data"
+                        }
                     },
                     "typeReference": {
                         "type": "named",
@@ -95,6 +95,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "data",
                         "name": {
                             "originalName": "data",
                             "camelCase": {
@@ -113,8 +114,7 @@
                                 "unsafeName": "Data",
                                 "safeName": "Data"
                             }
-                        },
-                        "wireValue": "data"
+                        }
                     },
                     "typeReference": {
                         "type": "list",
@@ -204,6 +204,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "type",
                         "name": {
                             "originalName": "type",
                             "camelCase": {
@@ -222,8 +223,7 @@
                                 "unsafeName": "Type",
                                 "safeName": "Type"
                             }
-                        },
-                        "wireValue": "type"
+                        }
                     },
                     "typeReference": {
                         "type": "literal",
@@ -237,6 +237,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "valueA",
                         "name": {
                             "originalName": "valueA",
                             "camelCase": {
@@ -255,8 +256,7 @@
                                 "unsafeName": "ValueA",
                                 "safeName": "ValueA"
                             }
-                        },
-                        "wireValue": "valueA"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -300,6 +300,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "type",
                         "name": {
                             "originalName": "type",
                             "camelCase": {
@@ -318,8 +319,7 @@
                                 "unsafeName": "Type",
                                 "safeName": "Type"
                             }
-                        },
-                        "wireValue": "type"
+                        }
                     },
                     "typeReference": {
                         "type": "literal",
@@ -333,6 +333,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "valueB",
                         "name": {
                             "originalName": "valueB",
                             "camelCase": {
@@ -351,8 +352,7 @@
                                 "unsafeName": "ValueB",
                                 "safeName": "ValueB"
                             }
-                        },
-                        "wireValue": "valueB"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -396,6 +396,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "type",
                         "name": {
                             "originalName": "type",
                             "camelCase": {
@@ -414,8 +415,7 @@
                                 "unsafeName": "Type",
                                 "safeName": "Type"
                             }
-                        },
-                        "wireValue": "type"
+                        }
                     },
                     "typeReference": {
                         "type": "literal",
@@ -429,6 +429,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "valueC",
                         "name": {
                             "originalName": "valueC",
                             "camelCase": {
@@ -447,8 +448,7 @@
                                 "unsafeName": "ValueC",
                                 "safeName": "ValueC"
                             }
-                        },
-                        "wireValue": "valueC"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",

@@ -1,9 +1,9 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export class GeneratedNonStatusCodeErrorHandlerImpl {
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         const errorType = context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType();
         const rawResponseType = context.coreUtilities.fetcher.RawResponse.RawResponse._getReferenceToType();
 
@@ -106,6 +106,18 @@ export class GeneratedNonStatusCodeErrorHandlerImpl {
                                                 ts.factory.createTemplateTail(".")
                                             )
                                         ]
+                                    ),
+                                    ts.factory.createObjectLiteralExpression(
+                                        [
+                                            ts.factory.createPropertyAssignment(
+                                                context.coreUtilities.fetcher.Fetcher.TimeoutSdkError.cause,
+                                                ts.factory.createPropertyAccessExpression(
+                                                    ts.factory.createIdentifier("error"),
+                                                    context.coreUtilities.fetcher.Fetcher.TimeoutSdkError.cause
+                                                )
+                                            )
+                                        ],
+                                        true
                                     )
                                 ]
                             )
@@ -125,7 +137,11 @@ export class GeneratedNonStatusCodeErrorHandlerImpl {
                                 ),
                                 statusCode: undefined,
                                 responseBody: undefined,
-                                rawResponse: ts.factory.createIdentifier("rawResponse")
+                                rawResponse: ts.factory.createIdentifier("rawResponse"),
+                                cause: ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier("error"),
+                                    context.coreUtilities.fetcher.Fetcher.UnknownError.cause
+                                )
                             })
                         )
                     ]

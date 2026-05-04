@@ -1,0 +1,482 @@
+{
+  "graphqlOperations": {
+    "query_product": {
+      "id": "query_product",
+      "operationType": "QUERY",
+      "name": "product",
+      "description": "Get a product by ID.",
+      "arguments": [
+        {
+          "name": "id",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "Product"
+        }
+      }
+    },
+    "query_productOptions": {
+      "id": "query_productOptions",
+      "operationType": "QUERY",
+      "name": "productOptions",
+      "description": "Get product options.",
+      "arguments": [
+        {
+          "name": "productId",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "list",
+        "itemType": {
+          "type": "id",
+          "value": "ProductOption"
+        }
+      }
+    },
+    "query_node": {
+      "id": "query_node",
+      "operationType": "QUERY",
+      "name": "node",
+      "description": "Fetch a node by ID.",
+      "arguments": [
+        {
+          "name": "id",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "Node"
+        }
+      }
+    },
+    "query_search": {
+      "id": "query_search",
+      "operationType": "QUERY",
+      "name": "search",
+      "description": "Search for items.",
+      "arguments": [
+        {
+          "name": "query",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "list",
+        "itemType": {
+          "type": "id",
+          "value": "SearchResult"
+        }
+      }
+    }
+  },
+  "types": {
+    "ProductOption": {
+      "name": "ProductOption",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "CheckboxOption",
+            "displayName": "CheckboxOption",
+            "type": {
+              "type": "id",
+              "value": "CheckboxOption"
+            },
+            "description": "A checkbox option with checked state."
+          },
+          {
+            "typeName": "MultipleChoiceOption",
+            "displayName": "MultipleChoiceOption",
+            "type": {
+              "type": "id",
+              "value": "MultipleChoiceOption"
+            },
+            "description": "A multiple choice option with selectable values."
+          },
+          {
+            "typeName": "TextFieldOption",
+            "displayName": "TextFieldOption",
+            "type": {
+              "type": "id",
+              "value": "TextFieldOption"
+            },
+            "description": "A text field option for free-form input."
+          }
+        ]
+      },
+      "description": "A product option interface with common fields"
+    },
+    "CheckboxOption": {
+      "name": "CheckboxOption",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "checkedByDefault",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            },
+            "description": "Whether the checkbox is checked by default."
+          },
+          {
+            "key": "label",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "Label of the checkbox."
+          },
+          {
+            "key": "entityId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            },
+            "description": "Unique ID for the option."
+          },
+          {
+            "key": "displayName",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "Display name for the option."
+          },
+          {
+            "key": "isRequired",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            },
+            "description": "Whether the option is required."
+          }
+        ]
+      },
+      "description": "A checkbox option with checked state."
+    },
+    "MultipleChoiceOption": {
+      "name": "MultipleChoiceOption",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "displayStyle",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The display style for this option."
+          },
+          {
+            "key": "values",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "List of available values."
+          },
+          {
+            "key": "entityId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            },
+            "description": "Unique ID for the option."
+          },
+          {
+            "key": "displayName",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "Display name for the option."
+          },
+          {
+            "key": "isRequired",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            },
+            "description": "Whether the option is required."
+          }
+        ]
+      },
+      "description": "A multiple choice option with selectable values."
+    },
+    "TextFieldOption": {
+      "name": "TextFieldOption",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "defaultValue",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The default text value."
+          },
+          {
+            "key": "maxLength",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            },
+            "description": "The maximum length allowed."
+          },
+          {
+            "key": "entityId",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            },
+            "description": "Unique ID for the option."
+          },
+          {
+            "key": "displayName",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "Display name for the option."
+          },
+          {
+            "key": "isRequired",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            },
+            "description": "Whether the option is required."
+          }
+        ]
+      },
+      "description": "A text field option for free-form input."
+    },
+    "Node": {
+      "name": "Node",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "Product",
+            "displayName": "Product",
+            "type": {
+              "type": "id",
+              "value": "Product"
+            },
+            "description": "A product that implements the Node interface."
+          },
+          {
+            "typeName": "Category",
+            "displayName": "Category",
+            "type": {
+              "type": "id",
+              "value": "Category"
+            },
+            "description": "A category that implements the Node interface."
+          }
+        ]
+      },
+      "description": "An object with an ID."
+    },
+    "Product": {
+      "name": "Product",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The id of the object."
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The product name."
+          },
+          {
+            "key": "options",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "ProductOption"
+              }
+            },
+            "description": "The product options."
+          }
+        ]
+      },
+      "description": "A product that implements the Node interface."
+    },
+    "Category": {
+      "name": "Category",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The id of the object."
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The category name."
+          },
+          {
+            "key": "path",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "The category path."
+          }
+        ]
+      },
+      "description": "A category that implements the Node interface."
+    },
+    "SearchResult": {
+      "name": "SearchResult",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "Product",
+            "displayName": "Product",
+            "type": {
+              "type": "id",
+              "value": "Product"
+            },
+            "description": "A product that implements the Node interface."
+          },
+          {
+            "typeName": "Category",
+            "displayName": "Category",
+            "type": {
+              "type": "id",
+              "value": "Category"
+            },
+            "description": "A category that implements the Node interface."
+          }
+        ]
+      },
+      "description": "Search result union type."
+    },
+    "OrphanInterface": {
+      "name": "OrphanInterface",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "value",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "Some field."
+          }
+        ]
+      },
+      "description": "An interface with no implementations."
+    }
+  }
+}

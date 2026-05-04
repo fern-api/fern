@@ -8,7 +8,7 @@ pub struct RootType {
 
 impl RootType {
     pub fn builder() -> RootTypeBuilder {
-        RootTypeBuilder::default()
+        <RootTypeBuilder as Default>::default()
     }
 }
 

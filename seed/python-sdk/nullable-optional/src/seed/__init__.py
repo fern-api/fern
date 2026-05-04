@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import nullable_optional
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedNullableOptional, SeedNullableOptional
     from .nullable_optional import (
         Address,
@@ -41,6 +42,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedNullableOptional": ".client",
     "ComplexProfile": ".nullable_optional",
     "CreateUserRequest": ".nullable_optional",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "DeserializationTestRequest": ".nullable_optional",
     "DeserializationTestResponse": ".nullable_optional",
     "Document": ".nullable_optional",
@@ -95,6 +98,8 @@ __all__ = [
     "AsyncSeedNullableOptional",
     "ComplexProfile",
     "CreateUserRequest",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "DeserializationTestRequest",
     "DeserializationTestResponse",
     "Document",

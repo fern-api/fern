@@ -18,6 +18,7 @@ import com.fern.ir.model.types.PrimitiveType;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -60,8 +61,7 @@ public class PaginationPathUtils {
 
         Optional<TypeReference> maybeFoundExtended = objectDeclaration.getExtendedProperties().stream()
                 .flatMap(List::stream)
-                .filter(prop -> prop.getName()
-                        .getName()
+                .filter(prop -> NameUtils.getName(prop.getName())
                         .getCamelCase()
                         .getSafeName()
                         .equals(desiredPropertyName.getCamelCase().getSafeName()))
@@ -73,8 +73,7 @@ public class PaginationPathUtils {
         }
 
         return objectDeclaration.getProperties().stream()
-                .filter(prop -> prop.getName()
-                        .getName()
+                .filter(prop -> NameUtils.getName(prop.getName())
                         .getCamelCase()
                         .getSafeName()
                         .equals(desiredPropertyName.getCamelCase().getSafeName()))
@@ -393,8 +392,7 @@ public class PaginationPathUtils {
         public Optional<TypeReference> visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
             Optional<TypeReference> maybeFoundExtended = inlinedRequestBody.getExtendedProperties().stream()
                     .flatMap(List::stream)
-                    .filter(prop -> prop.getName()
-                            .getName()
+                    .filter(prop -> NameUtils.getName(prop.getName())
                             .getCamelCase()
                             .getSafeName()
                             .equals(desiredPropertyName.getCamelCase().getSafeName()))
@@ -406,8 +404,7 @@ public class PaginationPathUtils {
             }
 
             return inlinedRequestBody.getProperties().stream()
-                    .filter(prop -> prop.getName()
-                            .getName()
+                    .filter(prop -> NameUtils.getName(prop.getName())
                             .getCamelCase()
                             .getSafeName()
                             .equals(desiredPropertyName.getCamelCase().getSafeName()))
@@ -442,8 +439,7 @@ public class PaginationPathUtils {
 
             Optional<TypeReference> maybeFoundExtended = objectDeclaration.getExtendedProperties().stream()
                     .flatMap(List::stream)
-                    .filter(prop -> prop.getName()
-                            .getName()
+                    .filter(prop -> NameUtils.getName(prop.getName())
                             .getCamelCase()
                             .getSafeName()
                             .equals(desiredPropertyName.getCamelCase().getSafeName()))
@@ -455,8 +451,7 @@ public class PaginationPathUtils {
             }
 
             return objectDeclaration.getProperties().stream()
-                    .filter(prop -> prop.getName()
-                            .getName()
+                    .filter(prop -> NameUtils.getName(prop.getName())
                             .getCamelCase()
                             .getSafeName()
                             .equals(desiredPropertyName.getCamelCase().getSafeName()))

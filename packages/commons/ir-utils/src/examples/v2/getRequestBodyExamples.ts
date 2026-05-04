@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { HttpEndpoint, IntermediateRepresentation, V2HttpEndpointRequest } from "@fern-api/ir-sdk";
 
+import { getOriginalName } from "../../utils/namesUtils.js";
 import { getParameterExamples } from "./getParameterExamples.js";
 import { getFirstExamples, getV2Examples } from "./getV2Examples.js";
 
@@ -109,11 +110,11 @@ function getUrlForExample(endpoint: HttpEndpoint): string {
         const value = userExample ?? autoExample;
         let stringValue: string;
         if (value == null) {
-            stringValue = pathParameter.name.originalName;
+            stringValue = getOriginalName(pathParameter.name);
         } else {
             stringValue = typeof value === "string" ? value : JSON.stringify(value);
         }
-        pathParameters[pathParameter.name.originalName] = stringValue;
+        pathParameters[getOriginalName(pathParameter.name)] = stringValue;
     });
     const url =
         endpoint.fullPath.head +

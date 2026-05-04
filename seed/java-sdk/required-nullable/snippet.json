@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "6e30706c",
+            "example_identifier": "80b43be1",
             "id": {
                 "method": "GET",
                 "path": "/foo",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "5d30f4b0",
+            "example_identifier": "bf58a2e9",
             "id": {
                 "method": "PATCH",
                 "path": "/foo/{id}",

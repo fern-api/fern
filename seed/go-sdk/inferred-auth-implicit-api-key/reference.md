@@ -14,7 +14,7 @@
 
 ```go
 request := &fern.GetTokenRequest{
-        ApiKey: "api_key",
+        APIKey: "api_key",
     }
 client.Auth.GetToken(
         context.TODO(),
@@ -47,8 +47,8 @@ client.Auth.GetToken(
 </dl>
 </details>
 
-## NestedNoAuth Api
-<details><summary><code>client.NestedNoAuth.Api.GetSomething() -> error</code></summary>
+## NestedNoAuth API
+<details><summary><code>client.NestedNoAuth.API.GetSomething() -> error</code></summary>
 <dl>
 <dd>
 
@@ -61,7 +61,7 @@ client.Auth.GetToken(
 <dd>
 
 ```go
-client.NestedNoAuth.Api.GetSomething(
+client.NestedNoAuth.API.GetSomething(
         context.TODO(),
     )
 }
@@ -76,8 +76,8 @@ client.NestedNoAuth.Api.GetSomething(
 </dl>
 </details>
 
-## Nested Api
-<details><summary><code>client.Nested.Api.GetSomething() -> error</code></summary>
+## Nested API
+<details><summary><code>client.Nested.API.GetSomething() -> error</code></summary>
 <dl>
 <dd>
 
@@ -90,7 +90,7 @@ client.NestedNoAuth.Api.GetSomething(
 <dd>
 
 ```go
-client.Nested.Api.GetSomething(
+client.Nested.API.GetSomething(
         context.TODO(),
     )
 }

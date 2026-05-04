@@ -12,7 +12,7 @@ pub struct UploadDocumentRequest {
 
 impl UploadDocumentRequest {
     pub fn builder() -> UploadDocumentRequestBuilder {
-        UploadDocumentRequestBuilder::default()
+        <UploadDocumentRequestBuilder as Default>::default()
     }
 }
 

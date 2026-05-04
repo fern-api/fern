@@ -12,7 +12,7 @@ pub struct UpdateTagsRequest {
 
 impl UpdateTagsRequest {
     pub fn builder() -> UpdateTagsRequestBuilder {
-        UpdateTagsRequestBuilder::default()
+        <UpdateTagsRequestBuilder as Default>::default()
     }
 }
 

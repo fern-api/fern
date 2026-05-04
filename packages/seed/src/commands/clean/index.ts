@@ -1,2 +1,6 @@
-export type { CleanResult, OrphanedFolder } from "./cleanOrphanedSeedFolders.js";
-export { cleanOrphanedSeedFolders, findOrphanedSeedFolders } from "./cleanOrphanedSeedFolders.js";
+export type { CleanResult, EmptyDirectoryResult, OrphanedFolder } from "./cleanOrphanedSeedFolders.js";
+export {
+    cleanEmptySeedDirectories,
+    cleanOrphanedSeedFolders,
+    findOrphanedSeedFolders
+} from "./cleanOrphanedSeedFolders.js";

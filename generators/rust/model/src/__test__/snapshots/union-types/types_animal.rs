@@ -33,6 +33,8 @@ pub enum Animal {
             #[serde(default)]
             can_fly: bool,
             #[serde(skip_serializing_if = "Option::is_none")]
+            #[serde(default)]
+            #[serde(with = "crate::core::number_serializers::option")]
             wing_span: Option<f64>,
         },
 }

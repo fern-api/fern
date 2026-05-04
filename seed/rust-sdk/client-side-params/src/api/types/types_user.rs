@@ -53,7 +53,7 @@ pub struct User {
 
 impl User {
     pub fn builder() -> UserBuilder {
-        UserBuilder::default()
+        <UserBuilder as Default>::default()
     }
 }
 

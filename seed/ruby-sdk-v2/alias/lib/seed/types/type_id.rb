@@ -2,8 +2,8 @@
 
 module Seed
   module Types
-    module TypeId
-      # TypeId is an alias for String
+    module TypeID
+      # TypeID is an alias for String
 
       # @option str [String]
       #

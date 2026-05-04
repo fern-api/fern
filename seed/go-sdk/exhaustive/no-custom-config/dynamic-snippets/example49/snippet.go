@@ -16,7 +16,9 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Urls.WithMixedCase(
+    request := true
+    client.Endpoints.Primitive.GetAndReturnBool(
         context.TODO(),
+        request,
     )
 }

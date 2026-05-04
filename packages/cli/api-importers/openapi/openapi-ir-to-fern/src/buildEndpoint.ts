@@ -3,6 +3,7 @@ import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Endpoint, EndpointExample, Request, RetriesConfiguration, Schema, SchemaId } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
+import { CliError } from "@fern-api/task-context";
 import { buildEndpointExample } from "./buildEndpointExample.js";
 import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition.js";
 import { buildHeader } from "./buildHeader.js";
@@ -283,7 +284,10 @@ export function buildEndpoint({
                 };
             },
             _other: () => {
-                throw new Error("Unrecognized Response type: " + endpoint.response?.type);
+                throw new CliError({
+                    message: "Unrecognized Response type: " + endpoint.response?.type,
+                    code: CliError.Code.InternalError
+                });
             }
         });
     }
@@ -406,8 +410,9 @@ export function buildEndpoint({
 }
 
 /**
- * Returns security array, true, or undefined.
- * Does not return false since false is the default for service and we want to inherit that.
+ * Returns security array, boolean, or undefined.
+ * Returns false for explicit empty security arrays (security: []).
+ * Returns undefined to inherit from service-level auth.
  */
 function convertEndpointAuth({
     endpoint,
@@ -415,7 +420,7 @@ function convertEndpointAuth({
 }: {
     endpoint: Endpoint;
     context: OpenApiIrConverterContext;
-}): true | undefined | RawSchemas.HttpEndpointSecurity {
+}): boolean | undefined | RawSchemas.HttpEndpointSecurity {
     if (endpoint.security == null) {
         if (context.authOverrides?.auth != null) {
             return true;
@@ -431,7 +436,7 @@ function convertEndpointAuth({
     }
     // explicit empty array means no auth
     if (endpoint.security.length === 0) {
-        return undefined;
+        return false;
     }
 
     // deep equality for endpoint and global security

@@ -104,6 +104,7 @@ export class DynamicTypeMapper {
             case "DATE":
                 return go.Type.date();
             case "DATE_TIME":
+            case "DATE_TIME_RFC_2822":
                 return go.Type.dateTime();
             case "UUID":
                 return go.Type.uuid();

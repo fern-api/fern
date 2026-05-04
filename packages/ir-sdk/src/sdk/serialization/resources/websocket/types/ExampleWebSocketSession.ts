@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 import { WithDocs } from "../../commons/types/WithDocs.js";
 import { ExampleHeader } from "../../http/types/ExampleHeader.js";
 import { ExamplePathParameter } from "../../http/types/ExamplePathParameter.js";
@@ -15,7 +15,7 @@ export const ExampleWebSocketSession: core.serialization.ObjectSchema<
     FernIr.ExampleWebSocketSession
 > = core.serialization
     .objectWithoutOptionalProperties({
-        name: Name.optional(),
+        name: NameOrString.optional(),
         url: core.serialization.string(),
         pathParameters: core.serialization.list(ExamplePathParameter),
         headers: core.serialization.list(ExampleHeader),
@@ -26,7 +26,7 @@ export const ExampleWebSocketSession: core.serialization.ObjectSchema<
 
 export declare namespace ExampleWebSocketSession {
     export interface Raw extends WithDocs.Raw {
-        name?: Name.Raw | null;
+        name?: NameOrString.Raw | null;
         url: string;
         pathParameters: ExamplePathParameter.Raw[];
         headers: ExampleHeader.Raw[];

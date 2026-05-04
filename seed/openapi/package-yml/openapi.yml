@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: package-yml
-  version: ''
+  version: 0.0.0
 paths:
   /{id}/:
     post:
@@ -14,13 +14,12 @@ paths:
           required: true
           schema:
             type: string
-          example: id-ksfd9c1
           examples:
             Example1:
               value: id-ksfd9c1
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -50,7 +49,6 @@ paths:
           required: true
           schema:
             type: string
-          example: id-a2ijs82
           examples:
             Example1:
               value: id-a2ijs82
@@ -59,13 +57,12 @@ paths:
           required: true
           schema:
             type: string
-          example: id-219xca8
           examples:
             Example1:
               value: id-219xca8
       responses:
         '204':
-          description: ''
+          description: No content
 components:
   schemas:
     EchoRequest:
@@ -74,10 +71,12 @@ components:
       properties:
         name:
           type: string
-          example: Hello world!
+          examples:
+            - Hello world!
         size:
           type: integer
-          example: 20
+          examples:
+            - 20
       required:
         - name
         - size

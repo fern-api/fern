@@ -44,6 +44,7 @@ if typing.TYPE_CHECKING:
     )
     from .types.types import Actor, Actress, Movie
     from . import commons, file, health, service, types
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedExamples, SeedExamples
     from .environment import SeedExamplesEnvironment
     from .version import __version__
@@ -56,6 +57,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CastMember": ".types",
     "ComplexType": ".types",
     "CronJob": ".types",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "Directory": ".types",
     "Entity": ".types",
     "Exception": ".types",
@@ -127,6 +130,8 @@ __all__ = [
     "CastMember",
     "ComplexType",
     "CronJob",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "Directory",
     "Entity",
     "Exception",

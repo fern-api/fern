@@ -1,6 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import {
+    caseConverter,
     casingsGenerator,
     createHttpEndpoint,
     createMockReference,
@@ -18,7 +19,7 @@ import { SdkInlinedRequestBodySchemaGenerator } from "../SdkInlinedRequestBodySc
 // Helpers
 // ────────────────────────────────────────────────────────────────────────────
 
-function createMockSdkContext() {
+function createMockFileContext() {
     const project = new Project({ useInMemoryFileSystem: true });
     const sourceFile = project.createSourceFile("test.ts", "");
     return {
@@ -79,10 +80,11 @@ function createMockSdkContext() {
             getGeneratedRequestWrapper: () => ({
                 getNonBodyKeys: () => [],
                 getInlinedRequestBodyPropertyKey: (prop: FernIr.InlinedRequestBodyProperty) => ({
-                    propertyName: prop.name.name.camelCase.unsafeName
+                    propertyName: caseConverter.camelUnsafe(prop.name)
                 })
             })
-        }
+        },
+        case: caseConverter
         // biome-ignore lint/suspicious/noExplicitAny: test mock
     } as any;
 }
@@ -242,7 +244,7 @@ describe("GeneratedSdkInlinedRequestBodySchemaImpl", () => {
                 typeName: "EmptyRequest",
                 inlinedRequestBody: createInlinedRequestBody()
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schema.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -263,7 +265,7 @@ describe("GeneratedSdkInlinedRequestBodySchemaImpl", () => {
                     ]
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schema.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -281,7 +283,7 @@ describe("GeneratedSdkInlinedRequestBodySchemaImpl", () => {
                     extends: [createDeclaredTypeName("BaseRequest")]
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schema.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -293,13 +295,13 @@ describe("GeneratedSdkInlinedRequestBodySchemaImpl", () => {
                     extends: [createDeclaredTypeName("AuthMixin"), createDeclaredTypeName("PaginationMixin")]
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schema.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
 
         it("generates raw type with optional properties", () => {
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             let callCount = 0;
             context.typeSchema.getReferenceToRawType = () => {
                 callCount++;
@@ -330,7 +332,7 @@ describe("GeneratedSdkInlinedRequestBodySchemaImpl", () => {
         });
 
         it("filters out literal properties from schema", () => {
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             // Override resolveTypeReference to return literal for first property
             let callCount = 0;
             context.type.resolveTypeReference = () => {
@@ -381,7 +383,7 @@ describe("GeneratedSdkInlinedRequestBodySchemaImpl", () => {
                 }),
                 includeSerdeLayer: true
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schema.writeToFile(context);
             const ref = ts.factory.createIdentifier("request");
             const result = schema.serializeRequest(ref, context);
@@ -394,7 +396,7 @@ describe("GeneratedSdkInlinedRequestBodySchemaImpl", () => {
                 inlinedRequestBody: createInlinedRequestBody(),
                 includeSerdeLayer: false
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const ref = ts.factory.createIdentifier("request");
             const result = schema.serializeRequest(ref, context);
             // Without serde layer, returns the reference unchanged
@@ -408,18 +410,18 @@ describe("GeneratedSdkInlinedRequestBodySchemaImpl", () => {
                 typeName: "SimpleRequest",
                 inlinedRequestBody: createInlinedRequestBody()
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schema.writeToFile(context);
             // The parsed shape should reference the request wrapper
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
 
         it("returns Omit type when there are non-body keys", () => {
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             context.requestWrapper.getGeneratedRequestWrapper = () => ({
                 getNonBodyKeys: () => [{ propertyName: "queryParam" }, { propertyName: "headerParam" }],
                 getInlinedRequestBodyPropertyKey: (prop: FernIr.InlinedRequestBodyProperty) => ({
-                    propertyName: prop.name.name.camelCase.unsafeName
+                    propertyName: caseConverter.camelUnsafe(prop.name)
                 })
             });
 

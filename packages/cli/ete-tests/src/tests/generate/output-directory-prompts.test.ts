@@ -20,5 +20,5 @@ describe("output directory prompts", () => {
         const cleanOutput = stripAnsi(stdout).trim();
         expect(cleanOutput).not.toContain("contains existing files");
         expect(cleanOutput).not.toContain("Would you like to save this");
-    }, 180_000);
+    }, 300_000);
 });

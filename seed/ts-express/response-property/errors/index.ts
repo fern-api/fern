@@ -1,1 +1,0 @@
-export { SeedResponsePropertyError } from "./SeedResponsePropertyError";

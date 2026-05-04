@@ -7,4 +7,5 @@ export interface DiscriminatedUnionSchema extends FernDefinition.BaseTypeDeclara
     extends?: FernDefinition.ObjectExtendsSchema;
     "base-properties"?: Record<string, FernDefinition.TypeReferenceSchema>;
     union: Record<string, FernDefinition.SingleUnionTypeSchema>;
+    "default-variant"?: string;
 }

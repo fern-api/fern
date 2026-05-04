@@ -11,6 +11,7 @@ async fn main() {
         .stream_data_context_with_envelope_schema(
             &StreamRequest {
                 query: Some("query".to_string()),
+                ..Default::default()
             },
             None,
         )

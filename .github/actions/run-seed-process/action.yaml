@@ -34,6 +34,14 @@ inputs:
     description: "Whether to skip the git diff check (used by auto-update-seed where changes are expected)"
     required: false
     default: "false"
+  dockerhub-username:
+    description: Docker Hub username for authenticated pulls (avoids rate limits)
+    required: false
+    default: ""
+  dockerhub-token:
+    description: Docker Hub token for authenticated pulls (avoids rate limits)
+    required: false
+    default: ""
 
 outputs:
   start_time:
@@ -78,6 +86,8 @@ runs:
         fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
         skip-scripts: ${{ inputs.skip-scripts }}
         allow-unexpected-failures: ${{ inputs.allow-unexpected-failures }}
+        dockerhub-username: ${{ inputs.dockerhub-username }}
+        dockerhub-token: ${{ inputs.dockerhub-token }}
 
     - name: Summarize Test Results
       if: always() && !cancelled()

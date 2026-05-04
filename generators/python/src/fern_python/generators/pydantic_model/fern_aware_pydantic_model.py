@@ -13,6 +13,7 @@ from .validators import (
 from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
+from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -152,6 +153,11 @@ class FernAwarePydanticModel:
         # Get the type id we're checking cycles against (either this model's type or the original type for union members)
         type_id_to_reference = self._type_id_for_forward_ref()
 
+        # Types used as base classes (extends) must have their imports at the top of the file.
+        # Python needs the actual class object at class definition time for base classes,
+        # so we must not add deferred ghost references for them.
+        extended_type_ids = {ext.type_id for ext in self._extends}
+
         # Get all types that are in a mutual reference cycle with the field's type
         # This handles complex cycles like A -> Union1 -> Union2 -> B -> A
         types_in_cycle = self._context.get_types_in_cycle_with(type_id)
@@ -161,6 +167,9 @@ class FernAwarePydanticModel:
                 continue
             # Skip if we've already added this as a forward reference
             if dependency in self._forward_referenced_models:
+                continue
+            # Skip base classes — their imports must remain at the top of the file
+            if dependency in extended_type_ids:
                 continue
 
             import dataclasses
@@ -180,8 +189,10 @@ class FernAwarePydanticModel:
         )
         for dependency in self_referencing_dependencies_from_non_union_types:
             if (
-                not self._type_name or self._type_name.type_id != dependency
-            ) and dependency not in self._forward_referenced_models:
+                (not self._type_name or self._type_name.type_id != dependency)
+                and dependency not in self._forward_referenced_models
+                and dependency not in extended_type_ids
+            ):
                 self.add_ghost_reference(dependency)
 
     def add_private_instance_field_unsafe(
@@ -355,8 +366,10 @@ class FernAwarePydanticModel:
         else:
             unique_name = []
             if self._type_name is not None:
-                unique_name = [path.snake_case.unsafe_name for path in self._type_name.fern_filepath.package_path]
-                unique_name.append(self._type_name.name.snake_case.unsafe_name)
+                unique_name = [
+                    resolve_name(path).snake_case.unsafe_name for path in self._type_name.fern_filepath.package_path
+                ]
+                unique_name.append(resolve_name(self._type_name.name).snake_case.unsafe_name)
             return PydanticValidatorsGenerator(
                 model=self._pydantic_model,
                 extended_pydantic_fields=self._get_extended_pydantic_fields(self._extends or []),
@@ -370,10 +383,11 @@ class FernAwarePydanticModel:
             shape_union = extended_declaration.shape.get_as_union()
             if shape_union.type == "object":
                 for property in shape_union.properties:
+                    resolved_prop_name = resolve_name(get_name_from_wire_value(property.name))
                     field = self._create_pydantic_field(
-                        name=property.name.name.snake_case.safe_name,
-                        pascal_case_field_name=property.name.name.pascal_case.safe_name,
-                        json_field_name=property.name.wire_value,
+                        name=resolved_prop_name.snake_case.safe_name,
+                        pascal_case_field_name=resolved_prop_name.pascal_case.safe_name,
+                        json_field_name=get_wire_value(property.name),
                         type_reference=property.value_type,
                         description=property.docs,
                     )

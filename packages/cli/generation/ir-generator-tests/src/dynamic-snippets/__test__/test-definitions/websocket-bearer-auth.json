@@ -70,6 +70,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "text",
                         "name": {
                             "originalName": "text",
                             "camelCase": {
@@ -88,8 +89,7 @@
                                 "unsafeName": "Text",
                                 "safeName": "Text"
                             }
-                        },
-                        "wireValue": "text"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -171,6 +171,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "response",
                         "name": {
                             "originalName": "response",
                             "camelCase": {
@@ -189,8 +190,7 @@
                                 "unsafeName": "Response",
                                 "safeName": "Response"
                             }
-                        },
-                        "wireValue": "response"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -272,6 +272,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "sendText",
                         "name": {
                             "originalName": "sendText",
                             "camelCase": {
@@ -290,8 +291,7 @@
                                 "unsafeName": "SendText",
                                 "safeName": "SendText"
                             }
-                        },
-                        "wireValue": "sendText"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -302,6 +302,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "sendParam",
                         "name": {
                             "originalName": "sendParam",
                             "camelCase": {
@@ -320,8 +321,7 @@
                                 "unsafeName": "SendParam",
                                 "safeName": "SendParam"
                             }
-                        },
-                        "wireValue": "sendParam"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -403,6 +403,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "send_text",
                         "name": {
                             "originalName": "send_text",
                             "camelCase": {
@@ -421,8 +422,7 @@
                                 "unsafeName": "SendText",
                                 "safeName": "SendText"
                             }
-                        },
-                        "wireValue": "send_text"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -433,6 +433,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "send_param",
                         "name": {
                             "originalName": "send_param",
                             "camelCase": {
@@ -451,8 +452,7 @@
                                 "unsafeName": "SendParam",
                                 "safeName": "SendParam"
                             }
-                        },
-                        "wireValue": "send_param"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -534,6 +534,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "alpha",
                         "name": {
                             "originalName": "alpha",
                             "camelCase": {
@@ -552,8 +553,7 @@
                                 "unsafeName": "Alpha",
                                 "safeName": "Alpha"
                             }
-                        },
-                        "wireValue": "alpha"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -564,6 +564,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "beta",
                         "name": {
                             "originalName": "beta",
                             "camelCase": {
@@ -582,8 +583,7 @@
                                 "unsafeName": "Beta",
                                 "safeName": "Beta"
                             }
-                        },
-                        "wireValue": "beta"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -665,6 +665,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "receive_text",
                         "name": {
                             "originalName": "receive_text",
                             "camelCase": {
@@ -683,8 +684,7 @@
                                 "unsafeName": "ReceiveText",
                                 "safeName": "ReceiveText"
                             }
-                        },
-                        "wireValue": "receive_text"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -695,6 +695,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "receive_int",
                         "name": {
                             "originalName": "receive_int",
                             "camelCase": {
@@ -713,8 +714,7 @@
                                 "unsafeName": "ReceiveInt",
                                 "safeName": "ReceiveInt"
                             }
-                        },
-                        "wireValue": "receive_int"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -796,6 +796,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "sendText2",
                         "name": {
                             "originalName": "sendText2",
                             "camelCase": {
@@ -814,8 +815,7 @@
                                 "unsafeName": "SendText2",
                                 "safeName": "SendText2"
                             }
-                        },
-                        "wireValue": "sendText2"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -826,6 +826,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "sendParam2",
                         "name": {
                             "originalName": "sendParam2",
                             "camelCase": {
@@ -844,8 +845,7 @@
                                 "unsafeName": "SendParam2",
                                 "safeName": "SendParam2"
                             }
-                        },
-                        "wireValue": "sendParam2"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -927,6 +927,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "gamma",
                         "name": {
                             "originalName": "gamma",
                             "camelCase": {
@@ -945,8 +946,7 @@
                                 "unsafeName": "Gamma",
                                 "safeName": "Gamma"
                             }
-                        },
-                        "wireValue": "gamma"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -957,6 +957,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "delta",
                         "name": {
                             "originalName": "delta",
                             "camelCase": {
@@ -975,8 +976,7 @@
                                 "unsafeName": "Delta",
                                 "safeName": "Delta"
                             }
-                        },
-                        "wireValue": "delta"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -987,6 +987,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "epsilon",
                         "name": {
                             "originalName": "epsilon",
                             "camelCase": {
@@ -1005,8 +1006,7 @@
                                 "unsafeName": "Epsilon",
                                 "safeName": "Epsilon"
                             }
-                        },
-                        "wireValue": "epsilon"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -1088,6 +1088,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "receiveText3",
                         "name": {
                             "originalName": "receiveText3",
                             "camelCase": {
@@ -1106,8 +1107,7 @@
                                 "unsafeName": "ReceiveText3",
                                 "safeName": "ReceiveText3"
                             }
-                        },
-                        "wireValue": "receiveText3"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",

@@ -51,13 +51,13 @@ func (c *Client) GetUser(
 
 func (c *Client) CreateUser(
 	ctx context.Context,
-	tenantId string,
+	tenantID string,
 	request *path.User,
 	opts ...option.RequestOption,
 ) (*path.User, error) {
 	response, err := c.WithRawResponse.CreateUser(
 		ctx,
-		tenantId,
+		tenantID,
 		request,
 		opts...,
 	)

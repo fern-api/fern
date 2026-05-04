@@ -62,21 +62,27 @@ export class SemVer {
             throw new InvalidSemVerError(`Invalid semver: ${version}`);
         };
 
-        const parts = version.split(".");
+        // Split on "-rc" first to avoid the dot in "rc.0" being treated as a version separator
+        const rcIndex = version.indexOf(SemVer.rcSeparator);
+        const coreVersion = rcIndex >= 0 ? version.slice(0, rcIndex) : version;
+        const prereleaseRaw = rcIndex >= 0 ? version.slice(rcIndex + SemVer.rcSeparator.length) : undefined;
+
+        const parts = coreVersion.split(".");
         if (parts.length !== 3) throwInvalid();
 
-        const [major, minor, patchRaw] = parts as [string, string, string];
-
-        const patchParts = patchRaw.split(SemVer.rcSeparator);
-        if (patchParts.length > 2) throwInvalid();
-
-        const [patch, prerelease] = patchParts as [string, string | undefined];
+        const [major, minor, patch] = parts as [string, string, string];
 
         // Validate all parts are numeric (and non-empty)
         const isInteger = (str: string) => /^\d+$/.test(str);
 
         if (!isInteger(major) || !isInteger(minor) || !isInteger(patch)) {
             throwInvalid();
+        }
+
+        // Support both "rc0" and "rc.0" (valid semver dot-separated pre-release identifiers)
+        let prerelease: string | undefined;
+        if (prereleaseRaw !== undefined) {
+            prerelease = prereleaseRaw.startsWith(".") ? prereleaseRaw.slice(1) : prereleaseRaw;
         }
 
         if (prerelease !== undefined && !isInteger(prerelease)) {

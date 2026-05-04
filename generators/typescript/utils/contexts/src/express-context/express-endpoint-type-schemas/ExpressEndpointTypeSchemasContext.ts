@@ -6,11 +6,11 @@ import { GeneratedExpressEndpointTypeSchemas } from "./GeneratedExpressEndpointT
 export interface ExpressEndpointTypeSchemasContext {
     getGeneratedEndpointTypeSchemas: (
         packageId: PackageId,
-        endpointName: FernIr.Name
+        endpointName: FernIr.NameOrString
     ) => GeneratedExpressEndpointTypeSchemas;
     getReferenceToEndpointTypeSchemaExport: (
         packageId: PackageId,
-        endpointName: FernIr.Name,
+        endpointName: FernIr.NameOrString,
         export_: string | string[]
     ) => Reference;
 }

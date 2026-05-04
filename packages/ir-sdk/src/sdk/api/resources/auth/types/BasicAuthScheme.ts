@@ -3,14 +3,18 @@
 import type * as FernIr from "../../../index.js";
 
 export interface BasicAuthScheme extends FernIr.BaseAuthScheme {
-    username: FernIr.Name;
+    username: FernIr.NameOrString;
     /** The environment variable the SDK should use to read the username. */
     usernameEnvVar: FernIr.EnvironmentVariable | undefined;
     /** If true, the username will be omitted from the SDK. */
     usernameOmit: boolean | undefined;
-    password: FernIr.Name;
+    /** The placeholder value to use in code snippets for the username (e.g., "YOUR_USERNAME"). */
+    usernamePlaceholder: string | undefined;
+    password: FernIr.NameOrString;
     /** The environment variable the SDK should use to read the password. */
     passwordEnvVar: FernIr.EnvironmentVariable | undefined;
     /** If true, the password will be omitted from the SDK. */
     passwordOmit: boolean | undefined;
+    /** The placeholder value to use in code snippets for the password (e.g., "YOUR_PASSWORD"). */
+    passwordPlaceholder: string | undefined;
 }

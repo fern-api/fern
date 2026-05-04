@@ -33,12 +33,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) PostJsonPatchContentType(
+func (c *Client) PostJSONPatchContentType(
 	ctx context.Context,
 	request *types.ObjectWithOptionalField,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.PostJsonPatchContentType(
+	_, err := c.WithRawResponse.PostJSONPatchContentType(
 		ctx,
 		request,
 		opts...,
@@ -49,12 +49,12 @@ func (c *Client) PostJsonPatchContentType(
 	return nil
 }
 
-func (c *Client) PostJsonPatchContentWithCharsetType(
+func (c *Client) PostJSONPatchContentWithCharsetType(
 	ctx context.Context,
 	request *types.ObjectWithOptionalField,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.PostJsonPatchContentWithCharsetType(
+	_, err := c.WithRawResponse.PostJSONPatchContentWithCharsetType(
 		ctx,
 		request,
 		opts...,

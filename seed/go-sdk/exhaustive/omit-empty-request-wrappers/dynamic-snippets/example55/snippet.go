@@ -5,6 +5,7 @@ import (
 
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
+    types "github.com/exhaustive/fern/types"
 )
 
 func do() {
@@ -16,10 +17,13 @@ func do() {
             "<token>",
         ),
     )
-    request := map[string]any{
-        "key": "value",
+    request := &types.Animal{
+        Dog: &types.Dog{
+            Name: "name",
+            LikesToWoof: true,
+        },
     }
-    client.NoAuth.PostWithNoAuth(
+    client.Endpoints.Union.GetAndReturnUnion(
         context.TODO(),
         request,
     )

@@ -1,7 +1,8 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.endpoints.params.requests.GetWithInlinePath;
+import com.fern.sdk.resources.types.object.types.ObjectWithDatetimeLikeString;
+import java.time.OffsetDateTime;
 
 public class Example30 {
     public static void main(String[] args) {
@@ -11,10 +12,11 @@ public class Example30 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().params().getWithInlinePath(
-            GetWithInlinePath
+        client.endpoints().object().getAndReturnWithDatetimeLikeString(
+            ObjectWithDatetimeLikeString
                 .builder()
-                .param("param")
+                .datetimeLikeString("2023-08-31T14:15:22Z")
+                .actualDatetime(OffsetDateTime.parse("2023-08-31T14:15:22Z"))
                 .build()
         );
     }

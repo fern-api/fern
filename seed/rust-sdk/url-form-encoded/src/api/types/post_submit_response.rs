@@ -10,7 +10,7 @@ pub struct PostSubmitResponse {
 
 impl PostSubmitResponse {
     pub fn builder() -> PostSubmitResponseBuilder {
-        PostSubmitResponseBuilder::default()
+        <PostSubmitResponseBuilder as Default>::default()
     }
 }
 

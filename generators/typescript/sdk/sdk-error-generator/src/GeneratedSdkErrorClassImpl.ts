@@ -1,7 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator";
-import { getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedSdkErrorClass, SdkContext } from "@fern-typescript/contexts";
+import { getOriginalName, getTextOfTsNode } from "@fern-typescript/commons";
+import { FileContext, GeneratedSdkErrorClass } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, PropertyDeclarationStructure, ts } from "ts-morph";
 
 export declare namespace GeneratedSdkErrorClassImpl {
@@ -12,7 +12,7 @@ export declare namespace GeneratedSdkErrorClassImpl {
 }
 
 export class GeneratedSdkErrorClassImpl
-    extends AbstractErrorClassGenerator<SdkContext>
+    extends AbstractErrorClassGenerator<FileContext>
     implements GeneratedSdkErrorClass
 {
     public readonly type = "class";
@@ -27,12 +27,12 @@ export class GeneratedSdkErrorClassImpl
         this.errorDeclaration = errorDeclaration;
     }
 
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         super.writeToSourceFile(context);
     }
 
     public build(
-        context: SdkContext,
+        context: FileContext,
         {
             referenceToBody,
             referenceToRawResponse
@@ -63,7 +63,7 @@ export class GeneratedSdkErrorClassImpl
         return [];
     }
 
-    protected getConstructorParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[] {
+    protected getConstructorParameters(context: FileContext): OptionalKind<ParameterDeclarationStructure>[] {
         const parameters: OptionalKind<ParameterDeclarationStructure>[] = [];
         if (this.errorDeclaration.type != null) {
             const referenceToType = context.type.getReferenceToType(this.errorDeclaration.type);
@@ -81,9 +81,9 @@ export class GeneratedSdkErrorClassImpl
         return parameters;
     }
 
-    protected getSuperArguments(context: SdkContext): ts.Expression[] {
+    protected getSuperArguments(context: FileContext): ts.Expression[] {
         return context.genericAPISdkError.getGeneratedGenericAPISdkError().buildConstructorArguments({
-            message: ts.factory.createStringLiteral(this.errorDeclaration.name.name.originalName),
+            message: ts.factory.createStringLiteral(getOriginalName(this.errorDeclaration.name.name)),
             statusCode: ts.factory.createNumericLiteral(this.errorDeclaration.statusCode),
             responseBody:
                 this.errorDeclaration.type != null
@@ -101,7 +101,7 @@ export class GeneratedSdkErrorClassImpl
         return false;
     }
 
-    protected override getBaseClass(context: SdkContext): ts.TypeNode {
+    protected override getBaseClass(context: FileContext): ts.TypeNode {
         return context.genericAPISdkError.getReferenceToGenericAPISdkError().getTypeNode();
     }
 }

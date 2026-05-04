@@ -1,10 +1,18 @@
 import { getOpenAPISettings } from "@fern-api/api-workspace-commons";
 import { TypeReference } from "@fern-api/ir-sdk";
+import { getOriginalName as getOriginalNameFromInput } from "@fern-api/ir-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { describe, expect, it, vi } from "vitest";
 import { AbstractConverterContext } from "../AbstractConverterContext.js";
 import { SchemaConverter } from "../converters/schema/SchemaConverter.js";
 import { ErrorCollector } from "../ErrorCollector.js";
+
+function getOriginalName(name: Parameters<typeof getOriginalNameFromInput>[0] | undefined): string | undefined {
+    if (name == null) {
+        return undefined;
+    }
+    return getOriginalNameFromInput(name);
+}
 
 const mockLogger = {
     debug: vi.fn(),
@@ -144,7 +152,7 @@ describe("Namespace Resolution", () => {
             if (ref.type === "named") {
                 expect(ref.typeId).toBe("entity_manager:Team");
                 // Display name should use raw schema name, not namespaced
-                expect(ref.name.originalName).toBe("Team");
+                expect(getOriginalName(ref.name)).toBe("Team");
             }
         });
 
@@ -154,7 +162,7 @@ describe("Namespace Resolution", () => {
             expect(ref.type).toBe("named");
             if (ref.type === "named") {
                 expect(ref.typeId).toBe("Team");
-                expect(ref.name.originalName).toBe("Team");
+                expect(getOriginalName(ref.name)).toBe("Team");
             }
         });
     });
@@ -172,7 +180,7 @@ describe("Namespace Resolution", () => {
                 if (result.reference.type === "named") {
                     expect(result.reference.typeId).toBe("entity_manager:Team");
                     // Name should be based on raw schema name, not namespaced
-                    expect(result.reference.name.originalName).toBe("Team");
+                    expect(getOriginalName(result.reference.name)).toBe("Team");
                 }
             }
         });
@@ -201,8 +209,8 @@ describe("Namespace Resolution", () => {
                     expect(taskResult.reference.typeId).toBe("task_manager:Team");
 
                     // Display names should be the same (raw schema name)
-                    expect(entityResult.reference.name.originalName).toBe("Team");
-                    expect(taskResult.reference.name.originalName).toBe("Team");
+                    expect(getOriginalName(entityResult.reference.name)).toBe("Team");
+                    expect(getOriginalName(taskResult.reference.name)).toBe("Team");
                 }
             }
         });
@@ -270,7 +278,7 @@ describe("Namespace Resolution", () => {
 
             expect(declaredTypeName).not.toBeUndefined();
             expect(declaredTypeName?.typeId).toBe("entity_manager:Team");
-            expect(declaredTypeName?.name.originalName).toBe("Team");
+            expect(getOriginalName(declaredTypeName?.name)).toBe("Team");
         });
 
         it("returns undefined for non-named type references", () => {

@@ -226,7 +226,11 @@
         "in-development",
         "pre-release",
         "deprecated",
-        "generally-available"
+        "generally-available",
+        "alpha",
+        "beta",
+        "preview",
+        "legacy"
       ]
     },
     "availability.AvailabilitySchema": {
@@ -458,6 +462,23 @@
           "type": "string"
         },
         "default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client-default": {
           "oneOf": [
             {
               "type": [
@@ -956,6 +977,23 @@
             }
           ]
         },
+        "client-default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "encoding": {
           "oneOf": [
             {
@@ -1273,6 +1311,16 @@
           "additionalProperties": {
             "$ref": "#/definitions/types.SingleUnionTypeSchema"
           }
+        },
+        "default-variant": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1413,6 +1461,19 @@
         },
         "discriminated": {
           "const": false
+        },
+        "base-properties": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/types.TypeReferenceSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "union": {
           "type": "array",
@@ -1679,6 +1740,23 @@
             }
           ]
         },
+        "client-default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "encoding": {
           "oneOf": [
             {
@@ -1751,6 +1829,16 @@
               "type": "null"
             }
           ]
+        },
+        "explode": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1775,6 +1863,23 @@
           "type": "string"
         },
         "default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client-default": {
           "oneOf": [
             {
               "type": [
@@ -1920,6 +2025,23 @@
           "type": "string"
         },
         "default": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "client-default": {
           "oneOf": [
             {
               "type": [
@@ -3073,7 +3195,14 @@
           ]
         },
         "auth": {
-          "type": "boolean"
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "url": {
           "oneOf": [
@@ -3152,7 +3281,6 @@
         }
       },
       "required": [
-        "auth",
         "base-path",
         "endpoints"
       ],
@@ -3305,6 +3433,12 @@
         "message-id"
       ]
     },
+    "webhooks.WebhookPayloadBodySortSchema": {
+      "type": "string",
+      "enum": [
+        "alphabetical"
+      ]
+    },
     "webhooks.WebhookPayloadFormatSchema": {
       "type": "object",
       "properties": {
@@ -3318,6 +3452,16 @@
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "body-sort": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/webhooks.WebhookPayloadBodySortSchema"
             },
             {
               "type": "null"

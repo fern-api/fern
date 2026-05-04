@@ -12,6 +12,7 @@ async fn main() {
         .foo_with_examples(
             &FooRequest {
                 bar: "hello".to_string(),
+                ..Default::default()
             },
             None,
         )

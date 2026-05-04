@@ -72,7 +72,7 @@ pub struct ObjectWithDocs {
 
 impl ObjectWithDocs {
     pub fn builder() -> ObjectWithDocsBuilder {
-        ObjectWithDocsBuilder::default()
+        <ObjectWithDocsBuilder as Default>::default()
     }
 }
 

@@ -35,12 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) GetException(
 	ctx context.Context,
-	notificationId string,
+	notificationID string,
 	opts ...option.RequestOption,
 ) (*pleaseinhere.Exception, error) {
 	response, err := c.WithRawResponse.GetException(
 		ctx,
-		notificationId,
+		notificationID,
 		opts...,
 	)
 	if err != nil {

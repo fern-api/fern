@@ -1,9 +1,10 @@
 import type { schemas } from "@fern-api/config";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
+
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
 import { type Document, parseDocument } from "yaml";
-import { CliError } from "../../errors/CliError.js";
 import { FERN_YML_FILENAME, REF_KEY } from "./constants.js";
 
 export interface OverrideEdit {
@@ -79,7 +80,8 @@ export class FernYmlEditor {
 
         if (doc == null || typeof doc !== "object") {
             throw new CliError({
-                message: `Invalid ${FERN_YML_FILENAME}: expected a YAML object; run 'fern init' to initialize a new file.`
+                message: `Invalid ${FERN_YML_FILENAME}: expected a YAML object; run 'fern init' to initialize a new file.`,
+                code: CliError.Code.ParseError
             });
         }
 
@@ -317,7 +319,8 @@ export class FernYmlEditor {
                 const resolvedPath = join(dirname(this.rootFilePath), RelativeFilePath.of(refPath));
                 if (!(await doesPathExist(resolvedPath))) {
                     throw new CliError({
-                        message: `Referenced file '${refPath}' in ${FERN_YML_FILENAME} does not exist.`
+                        message: `Referenced file '${refPath}' in ${FERN_YML_FILENAME} does not exist.`,
+                        code: CliError.Code.ConfigError
                     });
                 }
                 const refContent = await readFile(resolvedPath, "utf-8");
@@ -346,7 +349,8 @@ export class FernYmlEditor {
         const existing = section.document.getIn([...section.basePath, name]);
         if (existing == null) {
             throw new CliError({
-                message: `Target '${name}' not found in SDK configuration.`
+                message: `Target '${name}' not found in SDK configuration.`,
+                code: CliError.Code.ConfigError
             });
         }
     }

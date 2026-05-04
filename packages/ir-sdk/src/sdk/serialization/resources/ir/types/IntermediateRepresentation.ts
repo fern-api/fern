@@ -6,7 +6,7 @@ import type * as serializers from "../../../index.js";
 import { AudienceDefinition } from "../../audience/types/AudienceDefinition.js";
 import { ApiAuth } from "../../auth/types/ApiAuth.js";
 import { ErrorId } from "../../commons/types/ErrorId.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 import { ServiceId } from "../../commons/types/ServiceId.js";
 import { SubpackageId } from "../../commons/types/SubpackageId.js";
 import { TypeId } from "../../commons/types/TypeId.js";
@@ -26,6 +26,7 @@ import { VariableDeclaration } from "../../variables/types/VariableDeclaration.j
 import { WebhookGroup } from "../../webhooks/types/WebhookGroup.js";
 import { WebSocketChannel } from "../../websocket/types/WebSocketChannel.js";
 import { ApiVersionScheme } from "./ApiVersionScheme.js";
+import { CasingsConfig } from "./CasingsConfig.js";
 import { ErrorDiscriminationStrategy } from "./ErrorDiscriminationStrategy.js";
 import { GenerationMetadata } from "./GenerationMetadata.js";
 import { Package } from "./Package.js";
@@ -41,7 +42,7 @@ export const IntermediateRepresentation: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     fdrApiDefinitionId: core.serialization.string().optional(),
     apiVersion: ApiVersionScheme.optional(),
-    apiName: Name,
+    apiName: NameOrString,
     apiDisplayName: core.serialization.string().optional(),
     apiDocs: core.serialization.string().optional(),
     auth: ApiAuth,
@@ -70,13 +71,14 @@ export const IntermediateRepresentation: core.serialization.ObjectSchema<
     audiences: core.serialization.list(AudienceDefinition).optional(),
     generationMetadata: GenerationMetadata.optional(),
     apiPlayground: core.serialization.boolean().optional(),
+    casingsConfig: CasingsConfig.optional(),
 });
 
 export declare namespace IntermediateRepresentation {
     export interface Raw {
         fdrApiDefinitionId?: string | null;
         apiVersion?: ApiVersionScheme.Raw | null;
-        apiName: Name.Raw;
+        apiName: NameOrString.Raw;
         apiDisplayName?: string | null;
         apiDocs?: string | null;
         auth: ApiAuth.Raw;
@@ -105,5 +107,6 @@ export declare namespace IntermediateRepresentation {
         audiences?: AudienceDefinition.Raw[] | null;
         generationMetadata?: GenerationMetadata.Raw | null;
         apiPlayground?: boolean | null;
+        casingsConfig?: CasingsConfig.Raw | null;
     }
 }

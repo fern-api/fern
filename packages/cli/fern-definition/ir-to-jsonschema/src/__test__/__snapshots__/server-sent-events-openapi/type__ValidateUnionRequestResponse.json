@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "valid": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {}
+}

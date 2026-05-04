@@ -8,7 +8,7 @@ pub struct MyObject {
 
 impl MyObject {
     pub fn builder() -> MyObjectBuilder {
-        MyObjectBuilder::default()
+        <MyObjectBuilder as Default>::default()
     }
 }
 

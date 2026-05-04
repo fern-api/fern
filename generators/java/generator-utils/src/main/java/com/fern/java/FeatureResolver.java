@@ -8,6 +8,7 @@ import com.fern.ir.model.auth.AuthSchemeKey;
 import com.fern.ir.model.auth.BearerAuthScheme;
 import com.fern.ir.model.auth.OAuthScheme;
 import com.fern.ir.model.commons.Name;
+import com.fern.ir.model.commons.NameOrString;
 import com.fern.ir.model.commons.SafeAndUnsafeString;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import java.util.List;
@@ -18,7 +19,7 @@ public class FeatureResolver {
 
     public static final AuthScheme DEFAULT_BEARER_AUTH = AuthScheme.bearer(BearerAuthScheme.builder()
             .key(AuthSchemeKey.of("bearer"))
-            .token(Name.builder()
+            .token(NameOrString.of(Name.builder()
                     .originalName("token")
                     .camelCase(SafeAndUnsafeString.builder()
                             .unsafeName("token")
@@ -36,7 +37,7 @@ public class FeatureResolver {
                             .unsafeName("TOKEN")
                             .safeName("TOKEN")
                             .build())
-                    .build())
+                    .build()))
             .build());
     private final IntermediateRepresentation ir;
     private final GeneratorConfig generatorConfig;

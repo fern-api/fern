@@ -1,4 +1,5 @@
 import json
+
 from .union_utils.types.resources.types.shape import Shape
 
 

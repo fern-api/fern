@@ -1,6 +1,4 @@
-import { docsYml } from "@fern-api/configuration";
-
-type Language = docsYml.RawSchemas.Language;
+type Language = string;
 
 /**
  * Adds a language prefix to a URL using subdomain format.

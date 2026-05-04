@@ -1,0 +1,141 @@
+{
+  "mappings": [
+    {
+      "id": "19b28390-baa1-4ec9-87a3-cd8485b994a5",
+      "name": "Search rule types with paginated results - default",
+      "request": {
+        "urlPathTemplate": "/rule-types",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"paging\": {\n    \"next\": \"next\",\n    \"previous\": \"previous\"\n  },\n  \"results\": [\n    {\n      \"id\": \"id\",\n      \"name\": \"name\",\n      \"description\": \"description\"\n    }\n  ]\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "19b28390-baa1-4ec9-87a3-cd8485b994a5",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "1a934299-52ab-4d86-aa31-9f873790df88",
+      "name": "Create a rule with constrained execution context - default",
+      "request": {
+        "urlPathTemplate": "/rules",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"createdBy\": \"createdBy\",\n  \"createdDateTime\": \"2024-01-15T09:30:00Z\",\n  \"modifiedBy\": \"modifiedBy\",\n  \"modifiedDateTime\": \"2024-01-15T09:30:00Z\",\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"status\": \"active\",\n  \"executionContext\": \"prod\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "1a934299-52ab-4d86-aa31-9f873790df88",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "c4083f9d-e8ad-4944-abe5-163125679505",
+      "name": "List users with paginated results - default",
+      "request": {
+        "urlPathTemplate": "/users",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"paging\": {\n    \"next\": \"next\",\n    \"previous\": \"previous\"\n  },\n  \"results\": [\n    {\n      \"id\": \"id\",\n      \"email\": \"email\"\n    }\n  ]\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "c4083f9d-e8ad-4944-abe5-163125679505",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "7461b7cd-2c2b-4dfe-bde6-5152d19378a2",
+      "name": "Get an entity that combines multiple parents - default",
+      "request": {
+        "urlPathTemplate": "/entities",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"name\": \"name\",\n  \"summary\": \"summary\",\n  \"id\": \"id\",\n  \"status\": \"active\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "7461b7cd-2c2b-4dfe-bde6-5152d19378a2",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "1c7f93bf-abf3-4466-99e9-5e2b1de4aac3",
+      "name": "Get an organization with merged object-typed properties - default",
+      "request": {
+        "urlPathTemplate": "/organizations",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"metadata\": {\n    \"region\": \"region\",\n    \"tier\": \"tier\"\n  },\n  \"id\": \"id\",\n  \"name\": \"name\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "1c7f93bf-abf3-4466-99e9-5e2b1de4aac3",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    }
+  ],
+  "meta": {
+    "total": 5
+  }
+}

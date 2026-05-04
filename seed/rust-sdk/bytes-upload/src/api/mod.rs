@@ -6,7 +6,10 @@
 //! ## Modules
 //!
 //! - [`resources`] - Service clients and endpoints
+//! - [`types`] - Request, response, and model types
 
 pub mod resources;
+pub mod types;
 
 pub use resources::{BytesUploadClient, ServiceClient};
+pub use types::*;

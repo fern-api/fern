@@ -1,4 +1,5 @@
 import { ObjectTypeDeclaration } from "@fern-api/ir-sdk";
+import { getWireValue } from "@fern-api/ir-utils";
 import { JSONSchema4 } from "json-schema";
 
 import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext.js";
@@ -19,7 +20,7 @@ export function convertObjectToJsonSchema({ object, context }: convertObjectToJs
     const allProperties = [...(object.extendedProperties ?? []), ...object.properties];
 
     const properties = allProperties.map((property) => {
-        const propertyName = property.name.wireValue;
+        const propertyName = getWireValue(property.name);
         const propertySchema = convertTypeReferenceToJsonSchema({
             typeReference: property.valueType,
             context
@@ -29,7 +30,7 @@ export function convertObjectToJsonSchema({ object, context }: convertObjectToJs
 
     const requiredProperties = allProperties
         .filter((property) => !context.isOptional(property.valueType))
-        .map((property) => property.name.wireValue);
+        .map((property) => getWireValue(property.name));
 
     if (properties.length > 0) {
         schema.properties = Object.fromEntries(properties);

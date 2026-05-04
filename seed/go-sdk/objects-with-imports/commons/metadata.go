@@ -10,12 +10,12 @@ import (
 )
 
 var (
-	metadataFieldId   = big.NewInt(1 << 0)
+	metadataFieldID   = big.NewInt(1 << 0)
 	metadataFieldData = big.NewInt(1 << 1)
 )
 
 type Metadata struct {
-	Id   string            `json:"id" url:"id"`
+	ID   string            `json:"id" url:"id"`
 	Data map[string]string `json:"data,omitempty" url:"data,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -25,11 +25,11 @@ type Metadata struct {
 	rawJSON         json.RawMessage
 }
 
-func (m *Metadata) GetId() string {
+func (m *Metadata) GetID() string {
 	if m == nil {
 		return ""
 	}
-	return m.Id
+	return m.ID
 }
 
 func (m *Metadata) GetData() map[string]string {
@@ -53,11 +53,11 @@ func (m *Metadata) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *Metadata) SetId(id string) {
-	m.Id = id
-	m.require(metadataFieldId)
+func (m *Metadata) SetID(id string) {
+	m.ID = id
+	m.require(metadataFieldID)
 }
 
 // SetData sets the Data field and marks it as non-optional;

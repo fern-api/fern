@@ -71,16 +71,11 @@ const SENSITIVE_QUERY_PARAMS = new Set([
 ]);
 function redactQueryParameters(queryParameters) {
     if (queryParameters == null) {
-        return queryParameters;
+        return undefined;
     }
     const redacted = {};
     for (const [key, value] of Object.entries(queryParameters)) {
-        if (SENSITIVE_QUERY_PARAMS.has(key.toLowerCase())) {
-            redacted[key] = "[REDACTED]";
-        }
-        else {
-            redacted[key] = value;
-        }
+        redacted[key] = SENSITIVE_QUERY_PARAMS.has(key.toLowerCase()) ? "[REDACTED]" : value;
     }
     return redacted;
 }
@@ -182,7 +177,13 @@ function getHeaders(args) {
 export function fetcherImpl(args) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b, _c;
-        const url = createRequestUrl(args.url, args.queryParameters);
+        let url = args.url;
+        if (args.queryString != null && args.queryString.length > 0) {
+            url = `${url}?${args.queryString}`;
+        }
+        else {
+            url = createRequestUrl(args.url, args.queryParameters);
+        }
         const requestBody = yield getRequestBody({
             body: args.body,
             type: (_a = args.requestType) !== null && _a !== void 0 ? _a : "other",
@@ -257,6 +258,7 @@ export function fetcherImpl(args) {
                     error: {
                         reason: "unknown",
                         errorMessage: "The user aborted a request",
+                        cause: error,
                     },
                     rawResponse: abortRawResponse,
                 };
@@ -274,6 +276,7 @@ export function fetcherImpl(args) {
                     ok: false,
                     error: {
                         reason: "timeout",
+                        cause: error,
                     },
                     rawResponse: abortRawResponse,
                 };
@@ -292,6 +295,7 @@ export function fetcherImpl(args) {
                     error: {
                         reason: "unknown",
                         errorMessage: error.message,
+                        cause: error,
                     },
                     rawResponse: unknownRawResponse,
                 };
@@ -309,6 +313,7 @@ export function fetcherImpl(args) {
                 error: {
                     reason: "unknown",
                     errorMessage: toJson(error),
+                    cause: error,
                 },
                 rawResponse: unknownRawResponse,
             };

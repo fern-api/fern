@@ -19,7 +19,7 @@ def test_endpoints_object_get_and_return_with_optional_field() -> None:
         datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         date=datetime.date.fromisoformat("2023-01-15"),
         uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-        base_64="SGVsbG8gd29ybGQh",
+        base64="SGVsbG8gd29ybGQh",
         list_=["list", "list"],
         set_=["set"],
         map_={1: "map"},
@@ -63,7 +63,7 @@ def test_endpoints_object_get_and_return_nested_with_optional_field() -> None:
             datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
             date=datetime.date.fromisoformat("2023-01-15"),
             uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            base_64="SGVsbG8gd29ybGQh",
+            base64="SGVsbG8gd29ybGQh",
             list_=["list", "list"],
             set_=["set"],
             map_={1: "map"},
@@ -89,7 +89,7 @@ def test_endpoints_object_get_and_return_nested_with_required_field() -> None:
             datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
             date=datetime.date.fromisoformat("2023-01-15"),
             uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            base_64="SGVsbG8gd29ybGQh",
+            base64="SGVsbG8gd29ybGQh",
             list_=["list", "list"],
             set_=["set"],
             map_={1: "map"},
@@ -116,7 +116,7 @@ def test_endpoints_object_get_and_return_nested_with_required_field_as_list() ->
                     datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
                     date=datetime.date.fromisoformat("2023-01-15"),
                     uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-                    base_64="SGVsbG8gd29ybGQh",
+                    base64="SGVsbG8gd29ybGQh",
                     list_=["list", "list"],
                     set_=["set"],
                     map_={1: "map"},
@@ -134,7 +134,7 @@ def test_endpoints_object_get_and_return_nested_with_required_field_as_list() ->
                     datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
                     date=datetime.date.fromisoformat("2023-01-15"),
                     uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-                    base_64="SGVsbG8gd29ybGQh",
+                    base64="SGVsbG8gd29ybGQh",
                     list_=["list", "list"],
                     set_=["set"],
                     map_={1: "map"},
@@ -174,6 +174,33 @@ def test_endpoints_object_get_and_return_map_of_documented_unknown_type() -> Non
         request={"string": {"key": "value"}},
     )
     verify_request_count(test_id, "POST", "/object/get-and-return-map-of-documented-unknown-type", None, 1)
+
+
+def test_endpoints_object_get_and_return_with_mixed_required_and_optional_fields() -> None:
+    """Test getAndReturnWithMixedRequiredAndOptionalFields endpoint with WireMock"""
+    test_id = "endpoints.object.get_and_return_with_mixed_required_and_optional_fields.0"
+    client = get_client(test_id)
+    client.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(
+        required_string="hello",
+        required_integer=0,
+        optional_string="world",
+        required_long=0,
+    )
+    verify_request_count(test_id, "POST", "/object/get-and-return-with-mixed-required-and-optional-fields", None, 1)
+
+
+def test_endpoints_object_get_and_return_with_required_nested_object() -> None:
+    """Test getAndReturnWithRequiredNestedObject endpoint with WireMock"""
+    test_id = "endpoints.object.get_and_return_with_required_nested_object.0"
+    client = get_client(test_id)
+    client.endpoints.object.get_and_return_with_required_nested_object(
+        required_string="hello",
+        required_object=NestedObjectWithRequiredField(
+            string="nested",
+            nested_object=ObjectWithOptionalField(),
+        ),
+    )
+    verify_request_count(test_id, "POST", "/object/get-and-return-with-required-nested-object", None, 1)
 
 
 def test_endpoints_object_get_and_return_with_datetime_like_string() -> None:

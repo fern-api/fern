@@ -11,11 +11,11 @@ public record MyOtherRequest
 
     public required FileParameter File { get; set; }
 
-    public required FileParameter FileList { get; set; }
+    public IEnumerable<FileParameter> FileList { get; set; } = new List<FileParameter>();
 
     public FileParameter? MaybeFile { get; set; }
 
-    public FileParameter? MaybeFileList { get; set; }
+    public IEnumerable<FileParameter>? MaybeFileList { get; set; }
 
     public int? MaybeInteger { get; set; }
 

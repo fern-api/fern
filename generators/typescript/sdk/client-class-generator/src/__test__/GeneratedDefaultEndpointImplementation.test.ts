@@ -1,6 +1,11 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { createHttpEndpoint, createNameAndWireValue, serializeStatements } from "@fern-typescript/test-utils";
+import {
+    caseConverter,
+    createHttpEndpoint,
+    createNameAndWireValue,
+    serializeStatements
+} from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { assert, describe, expect, it } from "vitest";
 import type { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest.js";
@@ -103,10 +108,10 @@ function createMockClientClass(opts?: { hasRequestOptions?: boolean }): any {
 }
 
 /**
- * Creates a mock SdkContext for endpoint implementation tests.
+ * Creates a mock FileContext for endpoint implementation tests.
  */
-// biome-ignore lint/suspicious/noExplicitAny: test mock needs to satisfy complex SdkContext interface
-function createMockSdkContext(): any {
+// biome-ignore lint/suspicious/noExplicitAny: test mock needs to satisfy complex FileContext interface
+function createMockFileContext(): any {
     return {
         config: {
             generatePaginatedClients: false
@@ -187,7 +192,8 @@ function createMockSdkContext(): any {
                         )
                 }
             }
-        }
+        },
+        case: caseConverter
     };
 }
 
@@ -229,7 +235,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
     describe("isPaginated", () => {
         it("returns false when no pagination info", () => {
             const impl = createImpl();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             expect(impl.isPaginated(context)).toBe(false);
         });
 
@@ -246,7 +252,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
                     }
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             expect(impl.isPaginated(context)).toBe(true);
         });
     });
@@ -268,7 +274,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
                     returnType: ts.factory.createTypeReferenceNode("User")
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const sig = impl.getSignature(context);
             // endpoint param + requestOptions param
             expect(sig.parameters).toHaveLength(2);
@@ -290,7 +296,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
                     }
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const sig = impl.getSignature(context);
             expect(getTextOfTsNode(sig.returnTypeWithoutPromise)).toMatchSnapshot();
         });
@@ -309,7 +315,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
                     }
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const sig = impl.getSignature(context);
             expect(getTextOfTsNode(sig.returnTypeWithoutPromise)).toMatchSnapshot();
         });
@@ -324,7 +330,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
                     endpointParameters: [{ name: "userId", type: "string", docs: "The user's unique identifier." }]
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const docs = impl.getDocs(context);
             expect(docs).toMatchSnapshot();
         });
@@ -335,7 +341,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
                     thrownExceptions: ["NotFoundError", "UnauthorizedError"]
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const docs = impl.getDocs(context);
             expect(docs).toContain("@throws {@link NotFoundError}");
             expect(docs).toContain("@throws {@link UnauthorizedError}");
@@ -347,7 +353,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
                     endpointParameters: [{ name: "id", type: "number" }]
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const docs = impl.getDocs(context);
             expect(docs).toMatchSnapshot();
         });
@@ -359,7 +365,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
                 message: "Use v2 instead"
             };
             const impl = createImpl({ endpoint });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const docs = impl.getDocs(context);
             expect(docs).toContain("@deprecated");
         });
@@ -368,7 +374,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
             const endpoint = createHttpEndpoint();
             endpoint.idempotent = true;
             const impl = createImpl({ endpoint });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const docs = impl.getDocs(context);
             expect(docs).toContain("IdempotentRequestOptions");
         });
@@ -385,7 +391,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
                     ]
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const docs = impl.getDocs(context);
             expect(docs).toMatchSnapshot();
         });
@@ -394,7 +400,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
     describe("getExample", () => {
         it("returns endpoint invocation example", () => {
             const impl = createImpl();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const example = impl.getExample({
                 context,
                 example: createMinimalExampleEndpointCall(),
@@ -413,7 +419,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
             // Override to return null
             // biome-ignore lint/suspicious/noExplicitAny: test mock override
             (impl as any).request.getExampleEndpointParameters = () => undefined;
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const example = impl.getExample({
                 context,
                 example: createMinimalExampleEndpointCall(),
@@ -446,7 +452,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
                     ]
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const stmts = impl.getStatements(context);
             const output = serializeStatements(stmts);
             expect(output).toMatchSnapshot();
@@ -457,7 +463,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
                 generateEndpointMetadata: true,
                 request: createMockRequest()
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const stmts = impl.getStatements(context);
             const output = serializeStatements(stmts);
             expect(output).toMatchSnapshot();
@@ -491,7 +497,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
                     }
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const stmts = impl.getStatements(context);
             const output = serializeStatements(stmts);
             expect(output).toMatchSnapshot();
@@ -539,7 +545,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
                     }
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const stmts = impl.getStatements(context);
             const output = serializeStatements(stmts);
             expect(output).toMatchSnapshot();
@@ -561,7 +567,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
                     }
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const stmts = impl.getStatements(context);
             const output = serializeStatements(stmts);
             expect(output).toMatchSnapshot();
@@ -602,7 +608,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
                     }
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const stmts = impl.getStatements(context);
             const output = serializeStatements(stmts);
             expect(output).toMatchSnapshot();
@@ -612,7 +618,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
     describe("invokeFetcherAndReturnResponse", () => {
         it("generates fetcher invocation and response handling", () => {
             const impl = createImpl();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const stmts = impl.invokeFetcherAndReturnResponse(context);
             const output = serializeStatements(stmts);
             expect(output).toMatchSnapshot();
@@ -622,7 +628,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
     describe("maybeLeverageInvocation", () => {
         it("returns undefined when endpoint has no pagination", () => {
             const impl = createImpl();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const result = impl.maybeLeverageInvocation({
                 invocation: ts.factory.createIdentifier("result"),
                 context
@@ -634,7 +640,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
             const endpoint = createHttpEndpoint();
             endpoint.pagination = createCursorPagination();
             const impl = createImpl({ endpoint });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             // generatePaginatedClients is false by default
             const result = impl.maybeLeverageInvocation({
                 invocation: ts.factory.createIdentifier("result"),
@@ -647,7 +653,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
             const endpoint = createHttpEndpoint();
             endpoint.pagination = createCursorPagination();
             const impl = createImpl({ endpoint });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             context.config.generatePaginatedClients = true;
             const result = impl.maybeLeverageInvocation({
                 invocation: ts.factory.createIdentifier("result"),
@@ -680,7 +686,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
             const impl = createImpl({
                 includeCredentialsOnCrossOriginRequests: true
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const stmts = impl.getStatements(context);
             const output = serializeStatements(stmts);
             expect(output).toMatchSnapshot();
@@ -697,7 +703,7 @@ describe("GeneratedDefaultEndpointImplementation", () => {
                 docs: undefined
             };
             const impl = createImpl({ endpoint });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const stmts = impl.getStatements(context);
             const output = serializeStatements(stmts);
             expect(output).toMatchSnapshot();

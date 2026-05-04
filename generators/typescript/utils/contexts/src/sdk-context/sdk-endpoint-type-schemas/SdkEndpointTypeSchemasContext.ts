@@ -6,11 +6,11 @@ import { GeneratedSdkEndpointTypeSchemas } from "./GeneratedSdkEndpointTypeSchem
 export interface SdkEndpointTypeSchemasContext {
     getGeneratedEndpointTypeSchemas: (
         packageId: PackageId,
-        endpointName: FernIr.Name
+        endpointName: FernIr.NameOrString
     ) => GeneratedSdkEndpointTypeSchemas;
     getReferenceToEndpointTypeSchemaExport: (
         packageId: PackageId,
-        endpointName: FernIr.Name,
+        endpointName: FernIr.NameOrString,
         export_: string | string[]
     ) => Reference;
 }

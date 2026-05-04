@@ -40,6 +40,7 @@ public abstract class UnionTypeSpecGenerator {
     private final ParameterizedTypeName visitorInterfaceClassName;
     private final boolean deserializable;
     private final String discriminantProperty;
+    private final Optional<ClassName> defaultImplClassName;
 
     public UnionTypeSpecGenerator(
             ClassName unionClassName,
@@ -48,7 +49,8 @@ public abstract class UnionTypeSpecGenerator {
             Constants fernConstants,
             boolean deserializable,
             String discriminantProperty,
-            Set<String> reservedTypeNames) {
+            Set<String> reservedTypeNames,
+            Optional<ClassName> defaultImplClassName) {
         this.unionClassName = unionClassName;
         this.subTypes = subTypes;
         this.unknownSubType = unknownSubType;
@@ -59,6 +61,7 @@ public abstract class UnionTypeSpecGenerator {
                 ParameterizedTypeName.get(unionClassName.nestedClass(visitorName), VISITOR_RETURN_TYPE);
         this.deserializable = deserializable;
         this.discriminantProperty = discriminantProperty;
+        this.defaultImplClassName = defaultImplClassName;
     }
 
     public abstract List<FieldSpec> getAdditionalFieldSpecs();
@@ -214,13 +217,14 @@ public abstract class UnionTypeSpecGenerator {
     }
 
     public final TypeSpec generateValueInterface() {
+        ClassName defaultImpl = defaultImplClassName.orElse(unknownSubType.getUnionSubTypeWrapperClass());
         TypeSpec.Builder valueInterfaceBuilder = TypeSpec.interfaceBuilder(valueInterfaceClassName)
                 .addModifiers(Modifier.PRIVATE)
                 .addAnnotation(AnnotationSpec.builder(JsonTypeInfo.class)
                         .addMember("use", "$T.Id.$L", JsonTypeInfo.class, Id.NAME.name())
                         .addMember("property", "$S", discriminantProperty)
                         .addMember("visible", "$L", true)
-                        .addMember("defaultImpl", "$T.class", unknownSubType.getUnionSubTypeWrapperClass())
+                        .addMember("defaultImpl", "$T.class", defaultImpl)
                         .build());
         if (subTypes.size() > 0) {
             AnnotationSpec.Builder jsonSubTypeAnnotationBuilder = AnnotationSpec.builder(JsonSubTypes.class);

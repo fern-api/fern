@@ -23,6 +23,7 @@ async fn main() {
                             value: "value".to_string(),
                         },
                     ],
+                    ..Default::default()
                 },
                 files: HashMap::from([(
                     Language::Java,
@@ -30,17 +31,21 @@ async fn main() {
                         solution_file: FileInfo {
                             filename: "filename".to_string(),
                             contents: "contents".to_string(),
+                            ..Default::default()
                         },
                         read_only_files: vec![
                             FileInfo {
                                 filename: "filename".to_string(),
                                 contents: "contents".to_string(),
+                                ..Default::default()
                             },
                             FileInfo {
                                 filename: "filename".to_string(),
                                 contents: "contents".to_string(),
+                                ..Default::default()
                             },
                         ],
+                        ..Default::default()
                     },
                 )]),
                 input_params: vec![
@@ -62,6 +67,7 @@ async fn main() {
                                 VariableValue::IntegerValue { value: 0 },
                                 VariableValue::IntegerValue { value: 0 },
                             ],
+                            ..Default::default()
                         },
                         expected_result: VariableValue::IntegerValue { value: 0 },
                     },
@@ -72,6 +78,7 @@ async fn main() {
                                 VariableValue::IntegerValue { value: 0 },
                                 VariableValue::IntegerValue { value: 0 },
                             ],
+                            ..Default::default()
                         },
                         expected_result: VariableValue::IntegerValue { value: 0 },
                     },

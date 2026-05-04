@@ -9,13 +9,13 @@ import (
 )
 
 var (
-	namedMixedPatchRequestFieldAppId        = big.NewInt(1 << 0)
+	namedMixedPatchRequestFieldAppID        = big.NewInt(1 << 0)
 	namedMixedPatchRequestFieldInstructions = big.NewInt(1 << 1)
 	namedMixedPatchRequestFieldActive       = big.NewInt(1 << 2)
 )
 
 type NamedMixedPatchRequest struct {
-	AppId        *string `json:"appId,omitempty" url:"-"`
+	AppID        *string `json:"appId,omitempty" url:"-"`
 	Instructions *string `json:"instructions,omitempty" url:"-"`
 	Active       *bool   `json:"active,omitempty" url:"-"`
 
@@ -30,11 +30,11 @@ func (n *NamedMixedPatchRequest) require(field *big.Int) {
 	n.explicitFields.Or(n.explicitFields, field)
 }
 
-// SetAppId sets the AppId field and marks it as non-optional;
+// SetAppID sets the AppID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (n *NamedMixedPatchRequest) SetAppId(appId *string) {
-	n.AppId = appId
-	n.require(namedMixedPatchRequestFieldAppId)
+func (n *NamedMixedPatchRequest) SetAppID(appID *string) {
+	n.AppID = appID
+	n.require(namedMixedPatchRequestFieldAppID)
 }
 
 // SetInstructions sets the Instructions field and marks it as non-optional;
@@ -218,7 +218,7 @@ var (
 	patchComplexRequestFieldEmail           = big.NewInt(1 << 5)
 	patchComplexRequestFieldNickname        = big.NewInt(1 << 6)
 	patchComplexRequestFieldBio             = big.NewInt(1 << 7)
-	patchComplexRequestFieldProfileImageUrl = big.NewInt(1 << 8)
+	patchComplexRequestFieldProfileImageURL = big.NewInt(1 << 8)
 	patchComplexRequestFieldSettings        = big.NewInt(1 << 9)
 )
 
@@ -231,7 +231,7 @@ type PatchComplexRequest struct {
 	Email           *string        `json:"email,omitempty" url:"-"`
 	Nickname        *string        `json:"nickname,omitempty" url:"-"`
 	Bio             *string        `json:"bio,omitempty" url:"-"`
-	ProfileImageUrl *string        `json:"profileImageUrl,omitempty" url:"-"`
+	ProfileImageURL *string        `json:"profileImageUrl,omitempty" url:"-"`
 	Settings        map[string]any `json:"settings,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -301,11 +301,11 @@ func (p *PatchComplexRequest) SetBio(bio *string) {
 	p.require(patchComplexRequestFieldBio)
 }
 
-// SetProfileImageUrl sets the ProfileImageUrl field and marks it as non-optional;
+// SetProfileImageURL sets the ProfileImageURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PatchComplexRequest) SetProfileImageUrl(profileImageUrl *string) {
-	p.ProfileImageUrl = profileImageUrl
-	p.require(patchComplexRequestFieldProfileImageUrl)
+func (p *PatchComplexRequest) SetProfileImageURL(profileImageURL *string) {
+	p.ProfileImageURL = profileImageURL
+	p.require(patchComplexRequestFieldProfileImageURL)
 }
 
 // SetSettings sets the Settings field and marks it as non-optional;

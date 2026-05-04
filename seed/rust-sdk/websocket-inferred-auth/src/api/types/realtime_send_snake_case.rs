@@ -10,7 +10,7 @@ pub struct SendSnakeCase {
 
 impl SendSnakeCase {
     pub fn builder() -> SendSnakeCaseBuilder {
-        SendSnakeCaseBuilder::default()
+        <SendSnakeCaseBuilder as Default>::default()
     }
 }
 

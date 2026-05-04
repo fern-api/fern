@@ -1,7 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getSchemaOptions, getTextOfTsNode, PackageId, Reference, Zurg } from "@fern-typescript/commons";
-import { GeneratedWebsocketTypeSchema, SdkContext } from "@fern-typescript/contexts";
+import { FileContext, GeneratedWebsocketTypeSchema } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
 export declare namespace GeneratedWebsocketResponseSchemaImpl {
@@ -16,7 +16,7 @@ export declare namespace GeneratedWebsocketResponseSchemaImpl {
 }
 
 export class GeneratedWebsocketResponseSchemaImpl
-    extends AbstractGeneratedSchema<SdkContext>
+    extends AbstractGeneratedSchema<FileContext>
     implements GeneratedWebsocketTypeSchema
 {
     private packageId: PackageId;
@@ -44,11 +44,11 @@ export class GeneratedWebsocketResponseSchemaImpl
         this.skipResponseValidation = skipResponseValidation;
     }
 
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         this.writeSchemaToFile(context);
     }
 
-    public deserializeResponse(referenceToRawResponse: ts.Expression, context: SdkContext): ts.Expression {
+    public deserializeResponse(referenceToRawResponse: ts.Expression, context: FileContext): ts.Expression {
         if (!this.includeSerdeLayer) {
             return referenceToRawResponse;
         }
@@ -61,10 +61,10 @@ export class GeneratedWebsocketResponseSchemaImpl
         });
     }
 
-    protected getReferenceToSchema(context: SdkContext): Reference {
+    protected getReferenceToSchema(context: FileContext): Reference {
         return context.websocketTypeSchema.getReferenceToWebsocketResponseType(this.packageId, this.channel.name);
     }
-    protected generateRawTypeDeclaration(context: SdkContext, module: ModuleDeclaration): void {
+    protected generateRawTypeDeclaration(context: FileContext, module: ModuleDeclaration): void {
         const rawTypes = this.receiveMessages.map((message) =>
             getTextOfTsNode(context.typeSchema.getReferenceToRawType(message.bodyType).typeNode)
         );
@@ -76,7 +76,7 @@ export class GeneratedWebsocketResponseSchemaImpl
         });
     }
 
-    protected getReferenceToParsedShape(context: SdkContext): ts.TypeNode {
+    protected getReferenceToParsedShape(context: FileContext): ts.TypeNode {
         if (this.receiveMessages.length === 0) {
             return ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword);
         }
@@ -85,7 +85,7 @@ export class GeneratedWebsocketResponseSchemaImpl
         );
     }
 
-    protected buildSchema(context: SdkContext): Zurg.Schema {
+    protected buildSchema(context: FileContext): Zurg.Schema {
         if (this.receiveMessages.length === 0) {
             context.logger.warn(
                 `WebSocket channel ${this.channel.name} has no receive messages defined. Generating a never schema.`

@@ -7,12 +7,12 @@ import Trace
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "type": "success",
                   "value": "string"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = TraceClient(
@@ -108,11 +108,11 @@ import Trace
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "problemVersion": 1
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = TraceClient(
@@ -211,7 +211,7 @@ import Trace
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "files": {
                     "JAVA": {
@@ -232,7 +232,7 @@ import Trace
                     }
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = TraceClient(

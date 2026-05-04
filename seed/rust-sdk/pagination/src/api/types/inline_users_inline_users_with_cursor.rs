@@ -8,7 +8,7 @@ pub struct WithCursor {
 
 impl WithCursor {
     pub fn builder() -> WithCursorBuilder {
-        WithCursorBuilder::default()
+        <WithCursorBuilder as Default>::default()
     }
 }
 

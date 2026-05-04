@@ -3,8 +3,8 @@
 module Seed
   module Submission
     module Types
-      module ShareId
-        # ShareId is an alias for String
+      module ShareID
+        # ShareID is an alias for String
 
         # @option str [String]
         #

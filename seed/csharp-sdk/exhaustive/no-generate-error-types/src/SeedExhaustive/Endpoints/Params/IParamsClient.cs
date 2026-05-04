@@ -88,4 +88,22 @@ public partial interface IParamsClient
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
+
+    /// <summary>
+    /// GET with boolean path param
+    /// </summary>
+    WithRawResponseTask<string> GetWithBooleanPathAsync(
+        bool param,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// GET with path param that can throw errors
+    /// </summary>
+    WithRawResponseTask<string> GetWithPathAndErrorsAsync(
+        string param,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
 }

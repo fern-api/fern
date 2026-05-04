@@ -19,17 +19,7 @@ describe("PaginationClient", () => {
             .build();
 
         const expected = {
-            body: {
-                items: [
-                    {
-                        string: "string",
-                    },
-                    {
-                        string: "string",
-                    },
-                ],
-                next: "next",
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

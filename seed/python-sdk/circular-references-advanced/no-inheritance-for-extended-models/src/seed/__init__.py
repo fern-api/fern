@@ -8,6 +8,7 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import ImportingA, RootType
     from . import a, ast
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .a import A
     from .ast import (
         Acai,
@@ -46,6 +47,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ContainerValue": ".ast",
     "ContainerValue_List": ".ast",
     "ContainerValue_Optional": ".ast",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "Dog": ".ast",
     "FieldName": ".ast",
     "FieldValue": ".ast",
@@ -101,6 +104,8 @@ __all__ = [
     "ContainerValue",
     "ContainerValue_List",
     "ContainerValue_Optional",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "Dog",
     "FieldName",
     "FieldValue",

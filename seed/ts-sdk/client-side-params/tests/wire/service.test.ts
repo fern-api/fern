@@ -38,32 +38,7 @@ describe("ServiceClient", () => {
             fields: "fields",
             search: "search",
         });
-        expect(response).toEqual([
-            {
-                id: "id",
-                name: "name",
-                description: "description",
-                created_at: "2024-01-15T09:30:00Z",
-                updated_at: "2024-01-15T09:30:00Z",
-                metadata: {
-                    metadata: {
-                        key: "value",
-                    },
-                },
-            },
-            {
-                id: "id",
-                name: "name",
-                description: "description",
-                created_at: "2024-01-15T09:30:00Z",
-                updated_at: "2024-01-15T09:30:00Z",
-                metadata: {
-                    metadata: {
-                        key: "value",
-                    },
-                },
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getResource", async () => {
@@ -91,18 +66,7 @@ describe("ServiceClient", () => {
             include_metadata: true,
             format: "json",
         });
-        expect(response).toEqual({
-            id: "id",
-            name: "name",
-            description: "description",
-            created_at: "2024-01-15T09:30:00Z",
-            updated_at: "2024-01-15T09:30:00Z",
-            metadata: {
-                metadata: {
-                    key: "value",
-                },
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("searchResources", async () => {
@@ -151,36 +115,7 @@ describe("ServiceClient", () => {
                 },
             },
         });
-        expect(response).toEqual({
-            results: [
-                {
-                    id: "id",
-                    name: "name",
-                    description: "description",
-                    created_at: "2024-01-15T09:30:00Z",
-                    updated_at: "2024-01-15T09:30:00Z",
-                    metadata: {
-                        metadata: {
-                            key: "value",
-                        },
-                    },
-                },
-                {
-                    id: "id",
-                    name: "name",
-                    description: "description",
-                    created_at: "2024-01-15T09:30:00Z",
-                    updated_at: "2024-01-15T09:30:00Z",
-                    metadata: {
-                        metadata: {
-                            key: "value",
-                        },
-                    },
-                },
-            ],
-            total: 1,
-            next_offset: 1,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("listUsers", async () => {
@@ -288,110 +223,7 @@ describe("ServiceClient", () => {
             search_engine: "search_engine",
             fields: "fields",
         });
-        expect(response).toEqual({
-            users: [
-                {
-                    user_id: "user_id",
-                    email: "email",
-                    email_verified: true,
-                    username: "username",
-                    phone_number: "phone_number",
-                    phone_verified: true,
-                    created_at: "2024-01-15T09:30:00Z",
-                    updated_at: "2024-01-15T09:30:00Z",
-                    identities: [
-                        {
-                            connection: "connection",
-                            user_id: "user_id",
-                            provider: "provider",
-                            is_social: true,
-                            access_token: "access_token",
-                            expires_in: 1,
-                        },
-                        {
-                            connection: "connection",
-                            user_id: "user_id",
-                            provider: "provider",
-                            is_social: true,
-                            access_token: "access_token",
-                            expires_in: 1,
-                        },
-                    ],
-                    app_metadata: {
-                        app_metadata: {
-                            key: "value",
-                        },
-                    },
-                    user_metadata: {
-                        user_metadata: {
-                            key: "value",
-                        },
-                    },
-                    picture: "picture",
-                    name: "name",
-                    nickname: "nickname",
-                    multifactor: ["multifactor", "multifactor"],
-                    last_ip: "last_ip",
-                    last_login: "2024-01-15T09:30:00Z",
-                    logins_count: 1,
-                    blocked: true,
-                    given_name: "given_name",
-                    family_name: "family_name",
-                },
-                {
-                    user_id: "user_id",
-                    email: "email",
-                    email_verified: true,
-                    username: "username",
-                    phone_number: "phone_number",
-                    phone_verified: true,
-                    created_at: "2024-01-15T09:30:00Z",
-                    updated_at: "2024-01-15T09:30:00Z",
-                    identities: [
-                        {
-                            connection: "connection",
-                            user_id: "user_id",
-                            provider: "provider",
-                            is_social: true,
-                            access_token: "access_token",
-                            expires_in: 1,
-                        },
-                        {
-                            connection: "connection",
-                            user_id: "user_id",
-                            provider: "provider",
-                            is_social: true,
-                            access_token: "access_token",
-                            expires_in: 1,
-                        },
-                    ],
-                    app_metadata: {
-                        app_metadata: {
-                            key: "value",
-                        },
-                    },
-                    user_metadata: {
-                        user_metadata: {
-                            key: "value",
-                        },
-                    },
-                    picture: "picture",
-                    name: "name",
-                    nickname: "nickname",
-                    multifactor: ["multifactor", "multifactor"],
-                    last_ip: "last_ip",
-                    last_login: "2024-01-15T09:30:00Z",
-                    logins_count: 1,
-                    blocked: true,
-                    given_name: "given_name",
-                    family_name: "family_name",
-                },
-            ],
-            start: 1,
-            limit: 1,
-            length: 1,
-            total: 1,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getUserById", async () => {
@@ -445,54 +277,7 @@ describe("ServiceClient", () => {
             fields: "fields",
             include_fields: true,
         });
-        expect(response).toEqual({
-            user_id: "user_id",
-            email: "email",
-            email_verified: true,
-            username: "username",
-            phone_number: "phone_number",
-            phone_verified: true,
-            created_at: "2024-01-15T09:30:00Z",
-            updated_at: "2024-01-15T09:30:00Z",
-            identities: [
-                {
-                    connection: "connection",
-                    user_id: "user_id",
-                    provider: "provider",
-                    is_social: true,
-                    access_token: "access_token",
-                    expires_in: 1,
-                },
-                {
-                    connection: "connection",
-                    user_id: "user_id",
-                    provider: "provider",
-                    is_social: true,
-                    access_token: "access_token",
-                    expires_in: 1,
-                },
-            ],
-            app_metadata: {
-                app_metadata: {
-                    key: "value",
-                },
-            },
-            user_metadata: {
-                user_metadata: {
-                    key: "value",
-                },
-            },
-            picture: "picture",
-            name: "name",
-            nickname: "nickname",
-            multifactor: ["multifactor", "multifactor"],
-            last_ip: "last_ip",
-            last_login: "2024-01-15T09:30:00Z",
-            logins_count: 1,
-            blocked: true,
-            given_name: "given_name",
-            family_name: "family_name",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("createUser", async () => {
@@ -578,54 +363,7 @@ describe("ServiceClient", () => {
             },
             connection: "connection",
         });
-        expect(response).toEqual({
-            user_id: "user_id",
-            email: "email",
-            email_verified: true,
-            username: "username",
-            phone_number: "phone_number",
-            phone_verified: true,
-            created_at: "2024-01-15T09:30:00Z",
-            updated_at: "2024-01-15T09:30:00Z",
-            identities: [
-                {
-                    connection: "connection",
-                    user_id: "user_id",
-                    provider: "provider",
-                    is_social: true,
-                    access_token: "access_token",
-                    expires_in: 1,
-                },
-                {
-                    connection: "connection",
-                    user_id: "user_id",
-                    provider: "provider",
-                    is_social: true,
-                    access_token: "access_token",
-                    expires_in: 1,
-                },
-            ],
-            app_metadata: {
-                app_metadata: {
-                    key: "value",
-                },
-            },
-            user_metadata: {
-                user_metadata: {
-                    key: "value",
-                },
-            },
-            picture: "picture",
-            name: "name",
-            nickname: "nickname",
-            multifactor: ["multifactor", "multifactor"],
-            last_ip: "last_ip",
-            last_login: "2024-01-15T09:30:00Z",
-            logins_count: 1,
-            blocked: true,
-            given_name: "given_name",
-            family_name: "family_name",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("updateUser", async () => {
@@ -711,54 +449,7 @@ describe("ServiceClient", () => {
             password: "password",
             blocked: true,
         });
-        expect(response).toEqual({
-            user_id: "user_id",
-            email: "email",
-            email_verified: true,
-            username: "username",
-            phone_number: "phone_number",
-            phone_verified: true,
-            created_at: "2024-01-15T09:30:00Z",
-            updated_at: "2024-01-15T09:30:00Z",
-            identities: [
-                {
-                    connection: "connection",
-                    user_id: "user_id",
-                    provider: "provider",
-                    is_social: true,
-                    access_token: "access_token",
-                    expires_in: 1,
-                },
-                {
-                    connection: "connection",
-                    user_id: "user_id",
-                    provider: "provider",
-                    is_social: true,
-                    access_token: "access_token",
-                    expires_in: 1,
-                },
-            ],
-            app_metadata: {
-                app_metadata: {
-                    key: "value",
-                },
-            },
-            user_metadata: {
-                user_metadata: {
-                    key: "value",
-                },
-            },
-            picture: "picture",
-            name: "name",
-            nickname: "nickname",
-            multifactor: ["multifactor", "multifactor"],
-            last_ip: "last_ip",
-            last_login: "2024-01-15T09:30:00Z",
-            logins_count: 1,
-            blocked: true,
-            given_name: "given_name",
-            family_name: "family_name",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("deleteUser", async () => {
@@ -807,46 +498,7 @@ describe("ServiceClient", () => {
             name: "name",
             fields: "fields",
         });
-        expect(response).toEqual([
-            {
-                id: "id",
-                name: "name",
-                display_name: "display_name",
-                strategy: "strategy",
-                options: {
-                    options: {
-                        key: "value",
-                    },
-                },
-                enabled_clients: ["enabled_clients", "enabled_clients"],
-                realms: ["realms", "realms"],
-                is_domain_connection: true,
-                metadata: {
-                    metadata: {
-                        key: "value",
-                    },
-                },
-            },
-            {
-                id: "id",
-                name: "name",
-                display_name: "display_name",
-                strategy: "strategy",
-                options: {
-                    options: {
-                        key: "value",
-                    },
-                },
-                enabled_clients: ["enabled_clients", "enabled_clients"],
-                realms: ["realms", "realms"],
-                is_domain_connection: true,
-                metadata: {
-                    metadata: {
-                        key: "value",
-                    },
-                },
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getConnection", async () => {
@@ -876,25 +528,7 @@ describe("ServiceClient", () => {
         const response = await client.service.getConnection("connectionId", {
             fields: "fields",
         });
-        expect(response).toEqual({
-            id: "id",
-            name: "name",
-            display_name: "display_name",
-            strategy: "strategy",
-            options: {
-                options: {
-                    key: "value",
-                },
-            },
-            enabled_clients: ["enabled_clients", "enabled_clients"],
-            realms: ["realms", "realms"],
-            is_domain_connection: true,
-            metadata: {
-                metadata: {
-                    key: "value",
-                },
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("listClients", async () => {
@@ -986,140 +620,7 @@ describe("ServiceClient", () => {
             is_first_party: true,
             app_type: ["app_type", "app_type"],
         });
-        expect(response).toEqual({
-            start: 1,
-            limit: 1,
-            length: 1,
-            total: 1,
-            clients: [
-                {
-                    client_id: "client_id",
-                    tenant: "tenant",
-                    name: "name",
-                    description: "description",
-                    global: true,
-                    client_secret: "client_secret",
-                    app_type: "app_type",
-                    logo_uri: "logo_uri",
-                    is_first_party: true,
-                    oidc_conformant: true,
-                    callbacks: ["callbacks", "callbacks"],
-                    allowed_origins: ["allowed_origins", "allowed_origins"],
-                    web_origins: ["web_origins", "web_origins"],
-                    grant_types: ["grant_types", "grant_types"],
-                    jwt_configuration: {
-                        jwt_configuration: {
-                            key: "value",
-                        },
-                    },
-                    signing_keys: [
-                        {
-                            signing_keys: {
-                                key: "value",
-                            },
-                        },
-                        {
-                            signing_keys: {
-                                key: "value",
-                            },
-                        },
-                    ],
-                    encryption_key: {
-                        encryption_key: {
-                            key: "value",
-                        },
-                    },
-                    sso: true,
-                    sso_disabled: true,
-                    cross_origin_auth: true,
-                    cross_origin_loc: "cross_origin_loc",
-                    custom_login_page_on: true,
-                    custom_login_page: "custom_login_page",
-                    custom_login_page_preview: "custom_login_page_preview",
-                    form_template: "form_template",
-                    is_heroku_app: true,
-                    addons: {
-                        addons: {
-                            key: "value",
-                        },
-                    },
-                    token_endpoint_auth_method: "token_endpoint_auth_method",
-                    client_metadata: {
-                        client_metadata: {
-                            key: "value",
-                        },
-                    },
-                    mobile: {
-                        mobile: {
-                            key: "value",
-                        },
-                    },
-                },
-                {
-                    client_id: "client_id",
-                    tenant: "tenant",
-                    name: "name",
-                    description: "description",
-                    global: true,
-                    client_secret: "client_secret",
-                    app_type: "app_type",
-                    logo_uri: "logo_uri",
-                    is_first_party: true,
-                    oidc_conformant: true,
-                    callbacks: ["callbacks", "callbacks"],
-                    allowed_origins: ["allowed_origins", "allowed_origins"],
-                    web_origins: ["web_origins", "web_origins"],
-                    grant_types: ["grant_types", "grant_types"],
-                    jwt_configuration: {
-                        jwt_configuration: {
-                            key: "value",
-                        },
-                    },
-                    signing_keys: [
-                        {
-                            signing_keys: {
-                                key: "value",
-                            },
-                        },
-                        {
-                            signing_keys: {
-                                key: "value",
-                            },
-                        },
-                    ],
-                    encryption_key: {
-                        encryption_key: {
-                            key: "value",
-                        },
-                    },
-                    sso: true,
-                    sso_disabled: true,
-                    cross_origin_auth: true,
-                    cross_origin_loc: "cross_origin_loc",
-                    custom_login_page_on: true,
-                    custom_login_page: "custom_login_page",
-                    custom_login_page_preview: "custom_login_page_preview",
-                    form_template: "form_template",
-                    is_heroku_app: true,
-                    addons: {
-                        addons: {
-                            key: "value",
-                        },
-                    },
-                    token_endpoint_auth_method: "token_endpoint_auth_method",
-                    client_metadata: {
-                        client_metadata: {
-                            key: "value",
-                        },
-                    },
-                    mobile: {
-                        mobile: {
-                            key: "value",
-                        },
-                    },
-                },
-            ],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getClient", async () => {
@@ -1171,68 +672,6 @@ describe("ServiceClient", () => {
             fields: "fields",
             include_fields: true,
         });
-        expect(response).toEqual({
-            client_id: "client_id",
-            tenant: "tenant",
-            name: "name",
-            description: "description",
-            global: true,
-            client_secret: "client_secret",
-            app_type: "app_type",
-            logo_uri: "logo_uri",
-            is_first_party: true,
-            oidc_conformant: true,
-            callbacks: ["callbacks", "callbacks"],
-            allowed_origins: ["allowed_origins", "allowed_origins"],
-            web_origins: ["web_origins", "web_origins"],
-            grant_types: ["grant_types", "grant_types"],
-            jwt_configuration: {
-                jwt_configuration: {
-                    key: "value",
-                },
-            },
-            signing_keys: [
-                {
-                    signing_keys: {
-                        key: "value",
-                    },
-                },
-                {
-                    signing_keys: {
-                        key: "value",
-                    },
-                },
-            ],
-            encryption_key: {
-                encryption_key: {
-                    key: "value",
-                },
-            },
-            sso: true,
-            sso_disabled: true,
-            cross_origin_auth: true,
-            cross_origin_loc: "cross_origin_loc",
-            custom_login_page_on: true,
-            custom_login_page: "custom_login_page",
-            custom_login_page_preview: "custom_login_page_preview",
-            form_template: "form_template",
-            is_heroku_app: true,
-            addons: {
-                addons: {
-                    key: "value",
-                },
-            },
-            token_endpoint_auth_method: "token_endpoint_auth_method",
-            client_metadata: {
-                client_metadata: {
-                    key: "value",
-                },
-            },
-            mobile: {
-                mobile: {
-                    key: "value",
-                },
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

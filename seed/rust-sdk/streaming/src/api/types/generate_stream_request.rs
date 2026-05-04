@@ -9,7 +9,7 @@ pub struct GenerateStreamRequest {
 
 impl GenerateStreamRequest {
     pub fn builder() -> GenerateStreamRequestBuilder {
-        GenerateStreamRequestBuilder::default()
+        <GenerateStreamRequestBuilder as Default>::default()
     }
 }
 

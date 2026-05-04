@@ -1,6 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { casingsGenerator, createNameAndWireValue } from "@fern-typescript/test-utils";
+import { caseConverter, casingsGenerator, createNameAndWireValue } from "@fern-typescript/test-utils";
 import { Project, ts } from "ts-morph";
 import { assert, describe, expect, it } from "vitest";
 
@@ -66,7 +66,7 @@ function createEnumGenerator(opts: {
 }): GeneratedEnumTypeImpl<any> {
     return new GeneratedEnumTypeImpl({
         typeName: opts.typeName,
-        shape: { values: opts.values, default: undefined },
+        shape: { values: opts.values, default: undefined, forwardCompatible: undefined },
         examples: opts.examples ?? [],
         docs: opts.docs,
         fernFilepath: createFernFilepath(),
@@ -81,7 +81,8 @@ function createEnumGenerator(opts: {
         enableInlineTypes: false,
         generateReadWriteOnlyTypes: false,
         includeEnumUtils: opts.includeEnumUtils ?? false,
-        enableForwardCompatibleEnums: opts.enableForwardCompatibleEnums ?? false
+        enableForwardCompatibleEnums: opts.enableForwardCompatibleEnums ?? false,
+        caseConverter
     });
 }
 

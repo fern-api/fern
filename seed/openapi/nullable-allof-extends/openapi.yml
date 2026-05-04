@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: Nullable AllOf Extends Test
-  version: ''
+  version: 0.0.0
 paths:
   /test:
     get:
@@ -65,16 +65,18 @@ components:
       description: A standard object with no nullable issues.
       properties:
         normalField:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
     NullableObject:
       title: NullableObject
       type: object
       description: This schema has nullable:true at the top level.
       properties:
         nullableField:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
   securitySchemes: {}
 servers:
   - url: https://api.example.com

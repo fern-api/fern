@@ -18,13 +18,14 @@ export default mergeConfig(
             }
         ],
         test: {
+            exclude: ["**/*.integration.test.ts", "**/node_modules/**"],
             server: {
                 deps: {
                     // @fern-api/ui-core-utils dist/index.js uses extensionless ESM imports
                     // (e.g. "./addPrefixToString" instead of "./addPrefixToString.js"), which
                     // breaks under Node's strict ESM resolution. Inlining the package lets
                     // Vite's bundler resolve those imports correctly.
-                    inline: ["@fern-api/ui-core-utils", "@fern-api/docs-parsers"]
+                    inline: ["@fern-api/ui-core-utils"]
                 }
             }
         }

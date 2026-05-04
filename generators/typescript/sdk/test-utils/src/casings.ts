@@ -1,11 +1,11 @@
-import { constructCasingsGenerator } from "@fern-api/casings-generator";
+import { constructFullCasingsGenerator } from "@fern-api/casings-generator";
 import type { FernIr } from "@fern-fern/ir-sdk";
 
 /**
  * Pre-configured CasingsGenerator instance for use in tests.
  * Uses no language-specific keywords and no smart casing.
  */
-export const casingsGenerator = constructCasingsGenerator({
+export const casingsGenerator = constructFullCasingsGenerator({
     generationLanguage: undefined,
     keywords: undefined,
     smartCasing: false

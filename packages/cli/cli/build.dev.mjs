@@ -11,6 +11,7 @@ buildCli({
         DEFAULT_FDR_ORIGIN: "https://registry-dev2.buildwithfern.com",
         DEFAULT_FDR_LAMBDA_DOCS_ORIGIN: "https://ykq45y6fvnszd35iv5yuuatkze0rpwuz.lambda-url.us-east-1.on.aws",
         VENUS_AUDIENCE: "venus-dev",
+        FERN_DASHBOARD_URL: "https://dashboard-dev.buildwithfern.com",
         LOCAL_STORAGE_FOLDER: ".fern-dev",
         POSTHOG_API_KEY: null,
         SENTRY_DSN: process.env.SENTRY_DSN ?? "",

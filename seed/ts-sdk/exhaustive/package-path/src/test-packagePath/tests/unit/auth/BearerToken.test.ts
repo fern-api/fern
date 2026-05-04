@@ -1,4 +1,4 @@
-import { BearerToken } from "../../../../../src/test-packagePath/core/auth/BearerToken";
+import { BearerToken } from "../../../core/auth/BearerToken";
 
 describe("BearerToken", () => {
     describe("toAuthorizationHeader", () => {

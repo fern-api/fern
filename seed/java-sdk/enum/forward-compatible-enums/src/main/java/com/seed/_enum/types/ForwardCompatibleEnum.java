@@ -7,9 +7,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class ForwardCompatibleEnum {
-    public static final ForwardCompatibleEnum ACTIVE = new ForwardCompatibleEnum(Value.ACTIVE, "active");
-
     public static final ForwardCompatibleEnum INACTIVE = new ForwardCompatibleEnum(Value.INACTIVE, "inactive");
+
+    public static final ForwardCompatibleEnum ACTIVE = new ForwardCompatibleEnum(Value.ACTIVE, "active");
 
     private final Value value;
 
@@ -44,10 +44,10 @@ public final class ForwardCompatibleEnum {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case ACTIVE:
-                return visitor.visitActive();
             case INACTIVE:
                 return visitor.visitInactive();
+            case ACTIVE:
+                return visitor.visitActive();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -57,10 +57,10 @@ public final class ForwardCompatibleEnum {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static ForwardCompatibleEnum valueOf(String value) {
         switch (value) {
-            case "active":
-                return ACTIVE;
             case "inactive":
                 return INACTIVE;
+            case "active":
+                return ACTIVE;
             default:
                 return new ForwardCompatibleEnum(Value.UNKNOWN, value);
         }

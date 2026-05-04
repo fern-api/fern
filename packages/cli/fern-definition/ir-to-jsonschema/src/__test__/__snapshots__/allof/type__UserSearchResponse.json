@@ -1,0 +1,65 @@
+{
+  "type": "object",
+  "properties": {
+    "results": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/User"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "paging": {
+      "$ref": "#/definitions/PagingCursors"
+    }
+  },
+  "required": [
+    "paging"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "email"
+      ],
+      "additionalProperties": false
+    },
+    "PagingCursors": {
+      "type": "object",
+      "properties": {
+        "next": {
+          "type": "string"
+        },
+        "previous": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "next"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

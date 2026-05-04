@@ -310,3 +310,287 @@ func (c *Client) StreamOasSpecNative(
 		},
 	)
 }
+
+// Uses x-fern-streaming extension with stream-condition to split into streaming and non-streaming variants based on a request body field. The request body is a $ref to a named schema. The response and response-stream point to different schemas.
+func (c *Client) StreamXFernStreamingConditionStream(
+	ctx context.Context,
+	request *fern.StreamXFernStreamingConditionStreamRequest,
+	opts ...option.RequestOption,
+) (*core.Stream[fern.CompletionStreamChunk], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/stream/x-fern-streaming-condition"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	headers.Add("Content-Type", "application/json")
+	streamer := internal.NewStreamer[fern.CompletionStreamChunk](c.caller)
+	return streamer.Stream(
+		ctx,
+		&internal.StreamParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			MaxBufSize:      options.MaxBufSize,
+			Request:         request,
+			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
+		},
+	)
+}
+
+// Uses x-fern-streaming extension with stream-condition to split into streaming and non-streaming variants based on a request body field. The request body is a $ref to a named schema. The response and response-stream point to different schemas.
+func (c *Client) StreamXFernStreamingCondition(
+	ctx context.Context,
+	request *fern.StreamXFernStreamingConditionRequest,
+	opts ...option.RequestOption,
+) (*fern.CompletionFullResponse, error) {
+	response, err := c.WithRawResponse.StreamXFernStreamingCondition(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Uses x-fern-streaming with stream-condition. The request body $ref (SharedCompletionRequest) is also referenced by a separate non-streaming endpoint (/validate-completion). This tests that the shared request schema is not excluded from the context during streaming processing.
+func (c *Client) StreamXFernStreamingSharedSchemaStream(
+	ctx context.Context,
+	request *fern.StreamXFernStreamingSharedSchemaStreamRequest,
+	opts ...option.RequestOption,
+) (*core.Stream[fern.CompletionStreamChunk], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/stream/x-fern-streaming-shared-schema"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	headers.Add("Content-Type", "application/json")
+	streamer := internal.NewStreamer[fern.CompletionStreamChunk](c.caller)
+	return streamer.Stream(
+		ctx,
+		&internal.StreamParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			MaxBufSize:      options.MaxBufSize,
+			Request:         request,
+			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
+		},
+	)
+}
+
+// Uses x-fern-streaming with stream-condition. The request body $ref (SharedCompletionRequest) is also referenced by a separate non-streaming endpoint (/validate-completion). This tests that the shared request schema is not excluded from the context during streaming processing.
+func (c *Client) StreamXFernStreamingSharedSchema(
+	ctx context.Context,
+	request *fern.StreamXFernStreamingSharedSchemaRequest,
+	opts ...option.RequestOption,
+) (*fern.CompletionFullResponse, error) {
+	response, err := c.WithRawResponse.StreamXFernStreamingSharedSchema(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// A non-streaming endpoint that references the same SharedCompletionRequest schema as endpoint 10. Ensures the shared $ref schema remains available and is not excluded during the streaming endpoint's processing.
+func (c *Client) ValidateCompletion(
+	ctx context.Context,
+	request *fern.SharedCompletionRequest,
+	opts ...option.RequestOption,
+) (*fern.CompletionFullResponse, error) {
+	response, err := c.WithRawResponse.ValidateCompletion(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Uses x-fern-streaming with stream-condition where the request body is a discriminated union (oneOf) whose variants inherit the stream condition field (stream_response) from a shared base schema via allOf. Tests that the stream condition property is not duplicated in the generated output when the base schema is expanded into each variant.
+func (c *Client) StreamXFernStreamingUnionStream(
+	ctx context.Context,
+	request *fern.StreamXFernStreamingUnionStreamRequest,
+	opts ...option.RequestOption,
+) (*core.Stream[fern.CompletionStreamChunk], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/stream/x-fern-streaming-union"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	streamer := internal.NewStreamer[fern.CompletionStreamChunk](c.caller)
+	return streamer.Stream(
+		ctx,
+		&internal.StreamParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			MaxBufSize:      options.MaxBufSize,
+			Request:         request,
+			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
+		},
+	)
+}
+
+// Uses x-fern-streaming with stream-condition where the request body is a discriminated union (oneOf) whose variants inherit the stream condition field (stream_response) from a shared base schema via allOf. Tests that the stream condition property is not duplicated in the generated output when the base schema is expanded into each variant.
+func (c *Client) StreamXFernStreamingUnion(
+	ctx context.Context,
+	request *fern.StreamXFernStreamingUnionRequest,
+	opts ...option.RequestOption,
+) (*fern.CompletionFullResponse, error) {
+	response, err := c.WithRawResponse.StreamXFernStreamingUnion(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// References UnionStreamRequestBase directly, ensuring the base schema cannot be excluded from the context. This endpoint exists to verify that shared base schemas used in discriminated union variants with stream-condition remain available.
+func (c *Client) ValidateUnionRequest(
+	ctx context.Context,
+	request *fern.UnionStreamRequestBase,
+	opts ...option.RequestOption,
+) (*fern.ValidateUnionRequestResponse, error) {
+	response, err := c.WithRawResponse.ValidateUnionRequest(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Uses x-fern-streaming with stream-condition where the stream field is nullable (type: ["boolean", "null"] in OAS 3.1). Previously, the spread order in the importer caused the nullable type array to overwrite the const literal, producing stream?: true | null instead of stream: true. The const/type override must be spread after the original property.
+func (c *Client) StreamXFernStreamingNullableConditionStream(
+	ctx context.Context,
+	request *fern.StreamXFernStreamingNullableConditionStreamRequest,
+	opts ...option.RequestOption,
+) (*core.Stream[fern.CompletionStreamChunk], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/stream/x-fern-streaming-nullable-condition"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	headers.Add("Content-Type", "application/json")
+	streamer := internal.NewStreamer[fern.CompletionStreamChunk](c.caller)
+	return streamer.Stream(
+		ctx,
+		&internal.StreamParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			MaxBufSize:      options.MaxBufSize,
+			Request:         request,
+			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
+		},
+	)
+}
+
+// Uses x-fern-streaming with stream-condition where the stream field is nullable (type: ["boolean", "null"] in OAS 3.1). Previously, the spread order in the importer caused the nullable type array to overwrite the const literal, producing stream?: true | null instead of stream: true. The const/type override must be spread after the original property.
+func (c *Client) StreamXFernStreamingNullableCondition(
+	ctx context.Context,
+	request *fern.StreamXFernStreamingNullableConditionRequest,
+	opts ...option.RequestOption,
+) (*fern.CompletionFullResponse, error) {
+	response, err := c.WithRawResponse.StreamXFernStreamingNullableCondition(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Uses x-fern-streaming with format: sse but no stream-condition. This represents a stream-only endpoint that always returns SSE. There is no non-streaming variant, and the response is always a stream of chunks.
+func (c *Client) StreamXFernStreamingSseOnly(
+	ctx context.Context,
+	request *fern.StreamRequest,
+	opts ...option.RequestOption,
+) (*core.Stream[string], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/stream/x-fern-streaming-sse-only"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	headers.Add("Accept", "text/event-stream")
+	streamer := internal.NewStreamer[string](c.caller)
+	return streamer.Stream(
+		ctx,
+		&internal.StreamParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			MaxBufSize:      options.MaxBufSize,
+			Prefix:          internal.DefaultSSEDataPrefix,
+			Terminator:      internal.DefaultSSETerminator,
+			Format:          core.StreamFormatSSE,
+			Request:         request,
+			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
+		},
+	)
+}

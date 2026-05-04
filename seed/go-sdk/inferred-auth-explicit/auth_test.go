@@ -10,19 +10,19 @@ import (
 )
 
 func TestSettersGetTokenRequest(t *testing.T) {
-	t.Run("SetXApiKey", func(t *testing.T) {
+	t.Run("SetXAPIKey", func(t *testing.T) {
 		obj := &GetTokenRequest{}
-		var fernTestValueXApiKey string
-		obj.SetXApiKey(fernTestValueXApiKey)
-		assert.Equal(t, fernTestValueXApiKey, obj.XApiKey)
+		var fernTestValueXAPIKey string
+		obj.SetXAPIKey(fernTestValueXAPIKey)
+		assert.Equal(t, fernTestValueXAPIKey, obj.XAPIKey)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetClientId", func(t *testing.T) {
+	t.Run("SetClientID", func(t *testing.T) {
 		obj := &GetTokenRequest{}
-		var fernTestValueClientId string
-		obj.SetClientId(fernTestValueClientId)
-		assert.Equal(t, fernTestValueClientId, obj.ClientId)
+		var fernTestValueClientID string
+		obj.SetClientID(fernTestValueClientID)
+		assert.Equal(t, fernTestValueClientID, obj.ClientID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -45,14 +45,14 @@ func TestSettersGetTokenRequest(t *testing.T) {
 }
 
 func TestSettersMarkExplicitGetTokenRequest(t *testing.T) {
-	t.Run("SetXApiKey_MarksExplicit", func(t *testing.T) {
+	t.Run("SetXAPIKey_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetTokenRequest{}
-		var fernTestValueXApiKey string
+		var fernTestValueXAPIKey string
 
 		// Act
-		obj.SetXApiKey(fernTestValueXApiKey)
+		obj.SetXAPIKey(fernTestValueXAPIKey)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -76,14 +76,14 @@ func TestSettersMarkExplicitGetTokenRequest(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetClientId_MarksExplicit", func(t *testing.T) {
+	t.Run("SetClientID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetTokenRequest{}
-		var fernTestValueClientId string
+		var fernTestValueClientID string
 
 		// Act
-		obj.SetClientId(fernTestValueClientId)
+		obj.SetClientID(fernTestValueClientID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -172,19 +172,19 @@ func TestSettersMarkExplicitGetTokenRequest(t *testing.T) {
 }
 
 func TestSettersRefreshTokenRequest(t *testing.T) {
-	t.Run("SetXApiKey", func(t *testing.T) {
+	t.Run("SetXAPIKey", func(t *testing.T) {
 		obj := &RefreshTokenRequest{}
-		var fernTestValueXApiKey string
-		obj.SetXApiKey(fernTestValueXApiKey)
-		assert.Equal(t, fernTestValueXApiKey, obj.XApiKey)
+		var fernTestValueXAPIKey string
+		obj.SetXAPIKey(fernTestValueXAPIKey)
+		assert.Equal(t, fernTestValueXAPIKey, obj.XAPIKey)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetClientId", func(t *testing.T) {
+	t.Run("SetClientID", func(t *testing.T) {
 		obj := &RefreshTokenRequest{}
-		var fernTestValueClientId string
-		obj.SetClientId(fernTestValueClientId)
-		assert.Equal(t, fernTestValueClientId, obj.ClientId)
+		var fernTestValueClientID string
+		obj.SetClientID(fernTestValueClientID)
+		assert.Equal(t, fernTestValueClientID, obj.ClientID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -215,14 +215,14 @@ func TestSettersRefreshTokenRequest(t *testing.T) {
 }
 
 func TestSettersMarkExplicitRefreshTokenRequest(t *testing.T) {
-	t.Run("SetXApiKey_MarksExplicit", func(t *testing.T) {
+	t.Run("SetXAPIKey_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &RefreshTokenRequest{}
-		var fernTestValueXApiKey string
+		var fernTestValueXAPIKey string
 
 		// Act
-		obj.SetXApiKey(fernTestValueXApiKey)
+		obj.SetXAPIKey(fernTestValueXAPIKey)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -246,14 +246,14 @@ func TestSettersMarkExplicitRefreshTokenRequest(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetClientId_MarksExplicit", func(t *testing.T) {
+	t.Run("SetClientID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &RefreshTokenRequest{}
-		var fernTestValueClientId string
+		var fernTestValueClientID string
 
 		// Act
-		obj.SetClientId(fernTestValueClientId)
+		obj.SetClientID(fernTestValueClientID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

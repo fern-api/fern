@@ -12,11 +12,11 @@ from ..core.unchecked_base_model import construct_type
 from .types.error_event import ErrorEvent
 from .types.flushed_event import FlushedEvent
 from .types.receive_event import ReceiveEvent
-from .types.receive_event_2 import ReceiveEvent2
-from .types.receive_event_3 import ReceiveEvent3
+from .types.receive_event2 import ReceiveEvent2
+from .types.receive_event3 import ReceiveEvent3
 from .types.receive_snake_case import ReceiveSnakeCase
 from .types.send_event import SendEvent
-from .types.send_event_2 import SendEvent2
+from .types.send_event2 import SendEvent2
 from .types.send_snake_case import SendSnakeCase
 from .types.transcript_event import TranscriptEvent
 

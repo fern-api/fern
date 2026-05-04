@@ -5,7 +5,7 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.params.modify_with_path(
-  param: "param",
-  request: "string"
+client.endpoints.params.get_with_query(
+  query: "query",
+  number: 1
 )

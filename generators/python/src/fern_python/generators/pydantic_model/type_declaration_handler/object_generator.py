@@ -1,6 +1,6 @@
 from abc import ABC
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from ...context.pydantic_generator_context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
@@ -14,7 +14,7 @@ import fern.ir.resources as ir_types
 
 @dataclass
 class ObjectProperty:
-    name: ir_types.NameAndWireValue
+    name: Union[str, ir_types.NameAndWireValue]
     value_type: ir_types.TypeReference
     docs: Optional[str]
 

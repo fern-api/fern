@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -77,6 +78,7 @@ export class DefaultValueExtractor {
                         t.default != null ? { value: this.escapeString(t.default), phpType: "string" } : undefined,
                     date: () => undefined,
                     dateTime: () => undefined,
+                    dateTimeRfc2822: () => undefined,
                     uuid: () => undefined,
                     base64: () => undefined,
                     _other: () => undefined
@@ -129,5 +131,43 @@ export class DefaultValueExtractor {
      */
     private isSafeInteger(value: number): boolean {
         return Number.isSafeInteger(value);
+    }
+
+    /**
+     * Extracts a clientDefault literal as a PHP CodeBlock for use as a field initializer.
+     * Always applied regardless of the useDefaultRequestParameterValues flag.
+     */
+    public static extractClientDefaultCodeBlock(clientDefault: FernIr.Literal | undefined): php.CodeBlock | undefined {
+        if (clientDefault == null) {
+            return undefined;
+        }
+        switch (clientDefault.type) {
+            case "string": {
+                const escaped = clientDefault.string.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+                return php.codeblock(`'${escaped}'`);
+            }
+            case "boolean":
+                return php.codeblock(clientDefault.boolean ? "true" : "false");
+            default:
+                assertNever(clientDefault);
+        }
+    }
+
+    /**
+     * Returns the raw string representation of a clientDefault literal suitable for
+     * embedding in PHP string interpolation (e.g., path parameters, header values).
+     */
+    public static getClientDefaultStringValue(clientDefault: FernIr.Literal | undefined): string | undefined {
+        if (clientDefault == null) {
+            return undefined;
+        }
+        switch (clientDefault.type) {
+            case "string":
+                return clientDefault.string;
+            case "boolean":
+                return clientDefault.boolean ? "true" : "false";
+            default:
+                assertNever(clientDefault);
+        }
     }
 }

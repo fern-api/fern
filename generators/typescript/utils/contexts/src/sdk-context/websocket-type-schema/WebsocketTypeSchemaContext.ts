@@ -9,5 +9,5 @@ export interface WebsocketTypeSchemaContext {
         channel: FernIr.WebSocketChannel,
         receiveMessages: FernIr.WebSocketMessageBodyReference[]
     ) => GeneratedWebsocketTypeSchema;
-    getReferenceToWebsocketResponseType: (packageId: PackageId, channelName: FernIr.Name) => Reference;
+    getReferenceToWebsocketResponseType: (packageId: PackageId, channelName: FernIr.NameOrString) => Reference;
 }

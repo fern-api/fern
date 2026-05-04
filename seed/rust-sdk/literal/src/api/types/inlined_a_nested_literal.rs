@@ -8,7 +8,7 @@ pub struct ANestedLiteral {
 
 impl ANestedLiteral {
     pub fn builder() -> ANestedLiteralBuilder {
-        ANestedLiteralBuilder::default()
+        <ANestedLiteralBuilder as Default>::default()
     }
 }
 

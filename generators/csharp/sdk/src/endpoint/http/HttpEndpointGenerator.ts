@@ -1,3 +1,4 @@
+import { GeneratorError, getOriginalName } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, Writer } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -77,7 +78,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 case "uri":
                 case "path":
                     this.context.logger.warn(
-                        `Skipping endpoint '${endpoint.name.originalName}': '${endpoint.pagination.type}' pagination is not yet supported in C#.`
+                        `Skipping endpoint '${getOriginalName(endpoint.name)}': '${endpoint.pagination.type}' pagination is not yet supported in C#.`
                     );
                     return;
                 default:
@@ -353,32 +354,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer.writeTextStatement("));");
     }
 
-    /**
-     * Gets the base response type (unwrapped from WithRawResponseTask) for an endpoint.
-     * This is the inner T in WithRawResponseTask<T> or WithRawResponse<T>.
-     */
-    private getBaseResponseType(endpoint: HttpEndpoint): ast.Type | undefined {
-        if (endpoint.response?.body == null) {
-            if (endpoint.method === FernIr.HttpMethod.Head) {
-                return this.System.Net.Http.HttpResponseHeaders;
-            }
-            return undefined;
-        }
-
-        return endpoint.response.body._visit<ast.Type | undefined>({
-            streaming: () => undefined, // Streaming endpoints don't use WithRawResponseTask
-            streamParameter: () => undefined,
-            fileDownload: () => this.System.IO.Stream.asFullyQualified(),
-            json: (reference) =>
-                this.context.csharpTypeMapper.convert({
-                    reference: reference.responseBodyType
-                }),
-            text: () => this.generation.Primitive.string,
-            bytes: () => undefined,
-            _other: () => undefined
-        });
-    }
-
     private writeWithRawResponseSuccessAndErrorHandling(endpoint: HttpEndpoint, writer: Writer) {
         // Generate success and error handling that returns WithRawResponse<T>
         // This is used inside the local async function for WithRawResponseTask methods
@@ -640,7 +615,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 (baseUrlWithId) => baseUrlWithId.id === endpoint.baseUrl
             );
             if (baseUrl != null) {
-                return this.csharp.codeblock(`_client.Options.Environment.${baseUrl.name.pascalCase.safeName}`);
+                return this.csharp.codeblock(`_client.Options.Environment.${this.case.pascalSafe(baseUrl.name)}`);
             }
         }
         return undefined;
@@ -693,7 +668,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     private writeErrorCase(error: ResponseError, writer: Writer) {
         const fullError = this.context.ir.errors[error.error.errorId];
         if (fullError == null) {
-            throw new Error(`Unexpected no error found for error id: ${error.error.errorId}`);
+            throw GeneratorError.internalError(`Unexpected no error found for error id: ${error.error.errorId}`);
         }
         writer.writeLine(`case ${fullError.statusCode}:`);
         writer.indent();
@@ -1150,7 +1125,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             // because the pager lambdas work with the actual response data, not the task wrapper
             const unpagedEndpointResponseType = this.getBaseResponseType(endpoint);
             if (!unpagedEndpointResponseType) {
-                throw new Error("Internal error; a response type is required for pagination endpoints");
+                throw GeneratorError.internalError(
+                    "Internal error; a response type is required for pagination endpoints"
+                );
             }
 
             switch (endpoint.pagination.type) {
@@ -1193,7 +1170,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     break;
                 case "uri":
                 case "path":
-                    throw new Error(
+                    throw GeneratorError.internalError(
                         `'${endpoint.pagination.type}' pagination is not supported in C# and should have been skipped.`
                     );
                 default:
@@ -1236,7 +1213,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         serviceId: ServiceId;
     }) {
         if (!requestParameter) {
-            throw new Error("Request parameter is required for pagination");
+            throw GeneratorError.validationError("Request parameter is required for pagination");
         }
 
         if (requestParameter.type.isOptional) {
@@ -1304,7 +1281,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.popScope();
                     }),
                     this.csharp.codeblock(
-                        pagination.step
+                        pagination.step && !this.settings.usePageIndexSemantics
                             ? `request => ${this.getPropertyWithDefault(requestParameter.type, "request", pagination.step, 0)}`
                             : "null"
                     ),
@@ -1334,20 +1311,19 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             endpoint,
             requestParameter
         });
-        // For pagination, the pager expects a function that returns Task<T> (the unwrapped response type).
-        // Our unpaged methods return WithRawResponseTask<T>, which has an implicit conversion to Task<T>,
-        // but older .NET frameworks don't handle this well with delegate type inference.
-        // So we wrap the call in a lambda that uses the implicit conversion operator explicitly.
+        // The pager expects a function that returns Task<WithRawResponse<T>> so it can access
+        // both the deserialized response and HTTP metadata (status code, headers).
+        // We call .WithRawResponse() on the WithRawResponseTask<T> to get the full wrapper.
         return this.csharp.codeblock((writer) => {
             writer.write("async (request, options, cancellationToken) => ");
             if (pathParameters.length === 0) {
                 writer.write(
-                    `await ${this.getUnpagedEndpointMethodName(endpoint)}(request, options, cancellationToken)`
+                    `await ${this.getUnpagedEndpointMethodName(endpoint)}(request, options, cancellationToken).WithRawResponse()`
                 );
             } else {
+                writer.write("await ");
                 writer.writeNode(
                     this.csharp.invokeMethod({
-                        async: true,
                         method: this.getUnpagedEndpointMethodName(endpoint),
                         arguments_: [
                             ...pathParameters.map((parameter) => this.csharp.codeblock(parameter.name)),
@@ -1357,6 +1333,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         ]
                     })
                 );
+                writer.write(".WithRawResponse()");
             }
         });
     }
@@ -1385,7 +1362,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         serviceId: ServiceId;
     }) {
         if (!requestParameter) {
-            throw new Error("Request parameter is required for pagination");
+            throw GeneratorError.validationError("Request parameter is required for pagination");
         }
 
         writer.writeLine("if (request is not null)");
@@ -1496,7 +1473,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         // because the pager lambdas work with the actual response data, not the task wrapper
         const unpagedEndpointResponseType = this.getBaseResponseType(endpoint);
         if (!unpagedEndpointResponseType) {
-            throw new Error("Internal error; a response type is required for pagination endpoints");
+            throw GeneratorError.internalError("Internal error; a response type is required for pagination endpoints");
         }
 
         const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
@@ -1776,7 +1753,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const on = this.csharp.codeblock((writer) => {
             writer.write(`${clientVariableName}`);
             for (const path of serviceFilePath.allParts) {
-                writer.write(`.${path.pascalCase.safeName}`);
+                writer.write(`.${this.case.pascalSafe(path)}`);
             }
         });
         for (const endParameter of additionalEndParameters ?? []) {

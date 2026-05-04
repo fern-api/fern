@@ -9,10 +9,10 @@ async fn main() {
     };
     let client = MultiUrlEnvironmentClient::new(config).expect("Failed to build client");
     client
-        .s_3
+        .s3
         .get_presigned_url(
             &GetPresignedUrlRequest {
-                s_3_key: "s3Key".to_string(),
+                s3key: "s3Key".to_string(),
             },
             None,
         )

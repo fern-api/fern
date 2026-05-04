@@ -3,12 +3,13 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct ProtocolNumberEvent {
     #[serde(default)]
+    #[serde(with = "crate::core::number_serializers")]
     pub data: f64,
 }
 
 impl ProtocolNumberEvent {
     pub fn builder() -> ProtocolNumberEventBuilder {
-        ProtocolNumberEventBuilder::default()
+        <ProtocolNumberEventBuilder as Default>::default()
     }
 }
 

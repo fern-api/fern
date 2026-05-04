@@ -9,7 +9,7 @@ pub struct GetMetadataQueryRequest {
 
 impl GetMetadataQueryRequest {
     pub fn builder() -> GetMetadataQueryRequestBuilder {
-        GetMetadataQueryRequestBuilder::default()
+        <GetMetadataQueryRequestBuilder as Default>::default()
     }
 }
 

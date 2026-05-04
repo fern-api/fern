@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listUsernamesCustom</a>({ ...params }) -> core.MyPager&lt;string, SeedPagination.UsernameCursor&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithCustomPager</a>({ ...params }) -> core.MyPager&lt;string, SeedPagination.UsersListResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,8 @@
 <dd>
 
 ```typescript
-const pageableResponse = await client.users.listUsernamesCustom({
+const pageableResponse = await client.users.listWithCustomPager({
+    limit: 1,
     starting_after: "starting_after"
 });
 for await (const item of pageableResponse) {
@@ -21,7 +22,8 @@ for await (const item of pageableResponse) {
 }
 
 // Or you can manually iterate page-by-page
-let page = await client.users.listUsernamesCustom({
+let page = await client.users.listWithCustomPager({
+    limit: 1,
     starting_after: "starting_after"
 });
 while (page.hasNextPage()) {
@@ -45,7 +47,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsernamesRequestCustom` 
+**request:** `SeedPagination.ListWithCustomPagerRequest` 
     
 </dd>
 </dl>

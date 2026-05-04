@@ -179,6 +179,30 @@ export class RustFilenameRegistry {
     }
 
     /**
+     * Register filename for bytes request body types
+     * @param endpointId - Unique endpoint ID from IR
+     * @param baseFilename - Base filename in snake_case (without .rs extension)
+     * @returns The registered unique filename (without .rs extension)
+     */
+    public registerBytesRequestFilename(endpointId: string, baseFilename: string): string {
+        return this.filenameRegistry.registerSymbol(this.getBytesRequestFilenameId(endpointId), [
+            baseFilename,
+            `${baseFilename}_request`,
+            `${baseFilename}_bytes`
+        ]);
+    }
+
+    /**
+     * Register type name for bytes request body
+     * @param endpointId - Unique endpoint ID from IR
+     * @param baseTypeName - Base type name in PascalCase
+     * @returns The registered unique type name
+     */
+    public registerBytesRequestTypeName(endpointId: string, baseTypeName: string): string {
+        return this.typenameRegistry.registerSymbol(this.getBytesRequestTypeNameId(endpointId), [baseTypeName]);
+    }
+
+    /**
      * Register client name for a subpackage or root client
      * @param clientId - Unique identifier for the client (subpackage ID or "root")
      * @param baseClientName - Base client name in PascalCase
@@ -337,6 +361,30 @@ export class RustFilenameRegistry {
         return typename;
     }
 
+    /**
+     * Get registered filename for bytes request body
+     * @param endpointId - Unique endpoint ID from IR
+     * @returns Filename with .rs extension
+     * @throws Error if filename not registered
+     */
+    public getBytesRequestFilenameOrThrow(endpointId: string): string {
+        const filename = this.filenameRegistry.getSymbolNameById(this.getBytesRequestFilenameId(endpointId));
+        assertDefined(filename, `Filename not found for bytes request ${endpointId}`);
+        return `${filename}.rs`;
+    }
+
+    /**
+     * Get registered type name for bytes request body
+     * @param endpointId - Unique endpoint ID from IR
+     * @returns The unique type name
+     * @throws Error if type name not registered
+     */
+    public getBytesRequestTypeNameOrThrow(endpointId: string): string {
+        const typename = this.typenameRegistry.getSymbolNameById(this.getBytesRequestTypeNameId(endpointId));
+        assertDefined(typename, `Type name not found for bytes request ${endpointId}`);
+        return typename;
+    }
+
     // =====================================
     // Private Helper Methods
     // =====================================
@@ -383,5 +431,13 @@ export class RustFilenameRegistry {
 
     private getReferencedRequestWithQueryTypeNameId(endpointId: string): string {
         return `${TYPENAME_ID_PREFIX}referenced_request_with_query_${endpointId}`;
+    }
+
+    private getBytesRequestFilenameId(endpointId: string): string {
+        return `${FILENAME_ID_PREFIX}bytes_request_${endpointId}`;
+    }
+
+    private getBytesRequestTypeNameId(endpointId: string): string {
+        return `${TYPENAME_ID_PREFIX}bytes_request_${endpointId}`;
     }
 }

@@ -300,4 +300,24 @@ impl UsersClient {
             )
             .await
     }
+
+    pub async fn list_with_aliased_data(
+        &self,
+        request: &ListWithAliasedDataQueryRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<ListUsersAliasedDataPaginationResponse, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::GET,
+                "/users/aliased-data",
+                None,
+                QueryBuilder::new()
+                    .int("page", request.page.clone())
+                    .int("per_page", request.per_page.clone())
+                    .string("starting_after", request.starting_after.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
 }

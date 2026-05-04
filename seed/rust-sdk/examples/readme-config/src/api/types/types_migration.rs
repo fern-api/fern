@@ -9,7 +9,7 @@ pub struct Migration {
 
 impl Migration {
     pub fn builder() -> MigrationBuilder {
-        MigrationBuilder::default()
+        <MigrationBuilder as Default>::default()
     }
 }
 

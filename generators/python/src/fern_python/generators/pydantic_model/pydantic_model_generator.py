@@ -17,6 +17,7 @@ from fern_python.codegen import Project
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
 from fern_python.snippet import SnippetRegistry, SnippetWriter
+from fern_python.utils import resolve_name
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.config import GeneratorConfig
@@ -57,7 +58,7 @@ class PydanticModelGenerator(AbstractGenerator):
         cleaned_org_name = self._clean_organization_name(generator_config.organization)
         return (
             cleaned_org_name,
-            ir.api_name.snake_case.safe_name,
+            resolve_name(ir.api_name).snake_case.safe_name,
         )
 
     def run(
@@ -80,7 +81,7 @@ class PydanticModelGenerator(AbstractGenerator):
                 ir=ir,
             ),
             allow_skipping_validation=custom_config.skip_validation,
-            allow_leveraging_defaults=custom_config.use_provided_defaults,
+            allow_leveraging_defaults="parameters" if custom_config.use_provided_defaults else "none",
             use_typeddict_requests=custom_config.use_typeddict_requests,
             use_str_enums=custom_config.use_str_enums,
             skip_formatting=custom_config.skip_formatting,

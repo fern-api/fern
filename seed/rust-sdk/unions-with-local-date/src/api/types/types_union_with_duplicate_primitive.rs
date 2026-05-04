@@ -21,19 +21,19 @@ pub enum UnionWithDuplicatePrimitive {
 }
 
 impl UnionWithDuplicatePrimitive {
-    pub fn integer_1(value: i64) -> Self {
+    pub fn integer1(value: i64) -> Self {
         Self::Integer1 { value }
     }
 
-    pub fn integer_2(value: i64) -> Self {
+    pub fn integer2(value: i64) -> Self {
         Self::Integer2 { value }
     }
 
-    pub fn string_1(value: String) -> Self {
+    pub fn string1(value: String) -> Self {
         Self::String1 { value }
     }
 
-    pub fn string_2(value: String) -> Self {
+    pub fn string2(value: String) -> Self {
         Self::String2 { value }
     }
 }

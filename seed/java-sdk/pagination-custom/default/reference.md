@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.listUsernamesCustom() -> FernCustomPaginator&amp;lt;UsernameCursor&amp;gt;</code></summary>
+<details><summary><code>client.users.listWithCustomPager() -> FernCustomPaginator&amp;lt;UsersListResponse&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,9 +13,10 @@
 <dd>
 
 ```java
-client.users().listUsernamesCustom(
-    ListUsernamesRequestCustom
+client.users().listWithCustomPager(
+    ListWithCustomPagerRequest
         .builder()
+        .limit(1)
         .startingAfter("starting_after")
         .build()
 );
@@ -33,10 +34,15 @@ client.users().listUsernamesCustom(
 <dl>
 <dd>
 
-**startingAfter:** `Optional<String>` 
+**limit:** `Optional<Integer>` — The maximum number of results to return.
+    
+</dd>
+</dl>
 
-The cursor used for pagination in order to fetch
-the next page of results.
+<dl>
+<dd>
+
+**startingAfter:** `Optional<String>` — The cursor used for pagination.
     
 </dd>
 </dl>

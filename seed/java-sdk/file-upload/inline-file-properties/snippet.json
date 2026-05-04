@@ -27,6 +27,19 @@
             }
         },
         {
+            "example_identifier": "7a441b7a",
+            "id": {
+                "method": "POST",
+                "path": "/with-ref-body",
+                "identifier_override": "endpoint_service.withRefBody"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.fileUpload.SeedFileUploadClient;\nimport com.seed.fileUpload.resources.service.requests.WithRefBodyRequest;\nimport com.seed.fileUpload.resources.service.types.MyObject;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedFileUploadClient client = SeedFileUploadClient\n            .builder()\n            .build();\n\n        client.service().withRefBody(\n            WithRefBodyRequest\n                .builder()\n                .request(\n                    MyObject\n                        .builder()\n                        .foo(\"bar\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.fileUpload.SeedFileUploadClient;\nimport com.seed.fileUpload.resources.service.requests.WithRefBodyRequest;\nimport com.seed.fileUpload.resources.service.types.MyObject;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedFileUploadClient client = SeedFileUploadClient\n            .builder()\n            .build();\n\n        client.service().withRefBody(\n            WithRefBodyRequest\n                .builder()\n                .request(\n                    MyObject\n                        .builder()\n                        .foo(\"bar\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "82444d62",
             "id": {
                 "method": "POST",

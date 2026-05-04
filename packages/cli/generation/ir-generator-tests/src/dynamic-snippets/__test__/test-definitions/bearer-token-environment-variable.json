@@ -4,6 +4,7 @@
     "headers": [
         {
             "name": {
+                "wireValue": "X-API-Version",
                 "name": {
                     "originalName": "version",
                     "camelCase": {
@@ -22,8 +23,7 @@
                         "unsafeName": "Version",
                         "safeName": "Version"
                     }
-                },
-                "wireValue": "X-API-Version"
+                }
             },
             "typeReference": {
                 "type": "literal",

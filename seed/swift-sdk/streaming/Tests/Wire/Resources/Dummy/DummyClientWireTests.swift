@@ -7,12 +7,12 @@ import Streaming
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "name": "name"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = StreamingClient(
@@ -24,7 +24,10 @@ import Streaming
             name: Optional("name")
         )
         let response = try await client.dummy.generate(
-            request: .init(numEvents: 5),
+            request: .init(
+                stream: false,
+                numEvents: 5
+            ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
@@ -34,12 +37,12 @@ import Streaming
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "name": "name"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = StreamingClient(
@@ -51,7 +54,10 @@ import Streaming
             name: Optional("name")
         )
         let response = try await client.dummy.generate(
-            request: .init(numEvents: 1),
+            request: .init(
+                stream: false,
+                numEvents: 1
+            ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)

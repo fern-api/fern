@@ -1,24 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
-  },
+  "apiName": "api",
   "apiDisplayName": "Filter Test",
   "auth": {
     "requirement": "ALL",
@@ -30,25 +12,7 @@
     "type_:Company": {
       "docs": "This schema is referenced by the included endpoint and should be kept",
       "name": {
-        "name": {
-          "originalName": "Company",
-          "camelCase": {
-            "unsafeName": "company",
-            "safeName": "company"
-          },
-          "snakeCase": {
-            "unsafeName": "company",
-            "safeName": "company"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "COMPANY",
-            "safeName": "COMPANY"
-          },
-          "pascalCase": {
-            "unsafeName": "Company",
-            "safeName": "Company"
-          }
-        },
+        "name": "Company",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -59,28 +23,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                }
-              },
-              "wireValue": "id"
-            },
+            "name": "id",
             "valueType": {
               "primitive": {
                 "v1": "INTEGER",
@@ -96,28 +39,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "name",
-                "camelCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "snakeCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NAME",
-                  "safeName": "NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Name",
-                  "safeName": "Name"
-                }
-              },
-              "wireValue": "name"
-            },
+            "name": "name",
             "valueType": {
               "primitive": {
                 "v1": "STRING",
@@ -169,25 +91,7 @@
       "endpoints": [
         {
           "id": "endpoint_.createCompany",
-          "name": {
-            "originalName": "createCompany",
-            "camelCase": {
-              "unsafeName": "createCompany",
-              "safeName": "createCompany"
-            },
-            "snakeCase": {
-              "unsafeName": "create_company",
-              "safeName": "create_company"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "CREATE_COMPANY",
-              "safeName": "CREATE_COMPANY"
-            },
-            "pascalCase": {
-              "unsafeName": "CreateCompany",
-              "safeName": "CreateCompany"
-            }
-          },
+          "name": "createCompany",
           "displayName": "Create a company",
           "auth": false,
           "idempotent": false,
@@ -206,25 +110,7 @@
           "headers": [],
           "requestBody": {
             "requestBodyType": {
-              "name": {
-                "originalName": "Company",
-                "camelCase": {
-                  "unsafeName": "company",
-                  "safeName": "company"
-                },
-                "snakeCase": {
-                  "unsafeName": "company",
-                  "safeName": "company"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "COMPANY",
-                  "safeName": "COMPANY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Company",
-                  "safeName": "Company"
-                }
-              },
+              "name": "Company",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -239,25 +125,7 @@
             "shape": {
               "value": {
                 "requestBodyType": {
-                  "name": {
-                    "originalName": "Company",
-                    "camelCase": {
-                      "unsafeName": "company",
-                      "safeName": "company"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "company",
-                      "safeName": "company"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "COMPANY",
-                      "safeName": "COMPANY"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Company",
-                      "safeName": "Company"
-                    }
-                  },
+                  "name": "Company",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -269,50 +137,14 @@
               },
               "type": "justRequestBody"
             },
-            "requestParameterName": {
-              "originalName": "request",
-              "camelCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "snakeCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REQUEST",
-                "safeName": "REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "Request",
-                "safeName": "Request"
-              }
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Created",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Company",
-                    "camelCase": {
-                      "unsafeName": "company",
-                      "safeName": "company"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "company",
-                      "safeName": "company"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "COMPANY",
-                      "safeName": "COMPANY"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Company",
-                      "safeName": "Company"
-                    }
-                  },
+                  "name": "Company",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -336,28 +168,7 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -406,6 +217,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -424,8 +236,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "typeReference": {
               "value": "INTEGER",
@@ -434,6 +245,7 @@
           },
           {
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -452,8 +264,7 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             },
             "typeReference": {
               "value": "STRING",
@@ -517,6 +328,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

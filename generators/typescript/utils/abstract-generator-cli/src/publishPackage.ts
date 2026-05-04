@@ -33,7 +33,8 @@ export async function publishPackage({
         logger,
         dryRun,
         publishInfo: npmPackage.publishInfo,
-        shouldTolerateRepublish
+        shouldTolerateRepublish,
+        version: npmPackage.version
     });
 
     await generatorNotificationService.sendUpdate(FernGeneratorExec.GeneratorUpdate.published(packageCoordinate));

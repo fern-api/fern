@@ -15,7 +15,7 @@ pub struct TokenResponse {
 
 impl TokenResponse {
     pub fn builder() -> TokenResponseBuilder {
-        TokenResponseBuilder::default()
+        <TokenResponseBuilder as Default>::default()
     }
 }
 

@@ -1,6 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 import { AuthProviderGenerator } from "./AuthProviderGenerator.js";
 
@@ -45,7 +45,7 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
         return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`);
     }
 
-    public getAuthOptionsProperties(_context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
+    public getAuthOptionsProperties(_context: FileContext): OptionalKind<PropertySignatureStructure>[] | undefined {
         // AnyAuthProvider's AuthOptions is generic and parameterized by the providers array,
         // so we don't need to return individual properties here
         return undefined;
@@ -55,13 +55,13 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
         return ts.factory.createNewExpression(ts.factory.createIdentifier(CLASS_NAME), undefined, constructorArgs);
     }
 
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         this.addImports(context);
         this.writeClass(context);
         this.writeOptions(context);
     }
 
-    private addImports(context: SdkContext): void {
+    private addImports(context: FileContext): void {
         // Import NormalizedClientOptions type
         context.sourceFile.addImportDeclaration({
             moduleSpecifier: "../BaseClient",
@@ -70,7 +70,7 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
         });
     }
 
-    private writeOptions(context: SdkContext): void {
+    private writeOptions(context: FileContext): void {
         const normalizedClientOptionsType = "NormalizedClientOptions";
 
         // Create namespace with types and createInstance function
@@ -114,7 +114,7 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
         });
     }
 
-    private writeClass(context: SdkContext): void {
+    private writeClass(context: FileContext): void {
         context.sourceFile.addClass({
             name: CLASS_NAME,
             isExported: true,

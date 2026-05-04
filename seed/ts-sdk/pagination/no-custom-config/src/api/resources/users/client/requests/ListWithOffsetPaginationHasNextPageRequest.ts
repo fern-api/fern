@@ -6,7 +6,14 @@ import type * as SeedPagination from "../../../../index.js";
  * @example
  *     {
  *         page: 1,
- *         limit: 1,
+ *         limit: 3,
+ *         order: "asc"
+ *     }
+ *
+ * @example
+ *     {
+ *         page: 1,
+ *         limit: 10,
  *         order: "asc"
  *     }
  */

@@ -1,4 +1,4 @@
-import { APIV1Write, FernNavigation } from "@fern-api/fdr-sdk";
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 import dayjs from "dayjs";
@@ -18,7 +18,7 @@ interface ConvertOptions {
     icon?: string;
     hidden?: boolean;
     slug?: string;
-    viewers?: APIV1Write.RoleId[];
+    viewers?: string[];
     orphaned?: boolean;
     // skipUrlSlug?: boolean;
 }
@@ -82,6 +82,7 @@ export class ChangelogNodeConverter {
             return {
                 id: this.idgen.get(item.pageId),
                 type: "changelogEntry",
+                collapsed: undefined,
                 title: date.format("MMMM D, YYYY"),
                 slug: slug
                     .apply({
@@ -112,6 +113,7 @@ export class ChangelogNodeConverter {
         return {
             id,
             type: "changelog",
+            collapsed: undefined,
             title,
             slug: slug.get(),
             icon: opts.icon,
@@ -149,6 +151,7 @@ export class ChangelogNodeConverter {
                 return {
                     id,
                     type: "changelogYear" as const,
+                    collapsed: undefined,
                     title: year.toString(),
                     year,
                     slug,
@@ -184,6 +187,7 @@ export class ChangelogNodeConverter {
                 return {
                     id: this.idgen.get(`${prefix}/month/${month}`),
                     type: "changelogMonth" as const,
+                    collapsed: undefined,
                     title: date.format("MMMM YYYY"),
                     month,
                     slug: parentSlug.append(month.toString()).get(),

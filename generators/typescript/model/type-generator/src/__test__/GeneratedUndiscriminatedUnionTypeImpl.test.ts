@@ -1,6 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode, TypeReferenceNode } from "@fern-typescript/commons";
 import {
+    caseConverter,
     casingsGenerator,
     createDeclaredTypeName,
     namedTypeRefNode,
@@ -123,7 +124,7 @@ function createGenerator(opts: {
 }): GeneratedUndiscriminatedUnionTypeImpl<any> {
     return new GeneratedUndiscriminatedUnionTypeImpl({
         typeName: opts.typeName,
-        shape: { members: opts.members },
+        shape: { members: opts.members, baseProperties: undefined },
         examples: opts.examples ?? [],
         docs: opts.docs,
         fernFilepath: createFernFilepath(),
@@ -136,7 +137,8 @@ function createGenerator(opts: {
         noOptionalProperties: opts.noOptionalProperties ?? false,
         retainOriginalCasing: opts.retainOriginalCasing ?? false,
         enableInlineTypes: opts.enableInlineTypes ?? false,
-        generateReadWriteOnlyTypes: opts.generateReadWriteOnlyTypes ?? false
+        generateReadWriteOnlyTypes: opts.generateReadWriteOnlyTypes ?? false,
+        caseConverter
     });
 }
 

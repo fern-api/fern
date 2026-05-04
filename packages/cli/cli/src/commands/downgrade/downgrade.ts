@@ -4,9 +4,9 @@ import {
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
+import { CliError } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
 import { produce } from "immer";
-
 import { CliContext } from "../../cli-context/CliContext.js";
 
 function ensureFinalNewline(content: string): string {
@@ -30,12 +30,16 @@ export async function downgrade({
     targetVersion: string | undefined;
 }): Promise<void> {
     if (!targetVersion) {
-        return cliContext.failAndThrow("Please specify a version to downgrade to using --version");
+        return cliContext.failAndThrow("Please specify a version to downgrade to using --version", undefined, {
+            code: CliError.Code.ConfigError
+        });
     }
 
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
-        return cliContext.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
+        return cliContext.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`, undefined, {
+            code: CliError.Code.ConfigError
+        });
     }
 
     const projectConfig = await cliContext.runTask((context) =>

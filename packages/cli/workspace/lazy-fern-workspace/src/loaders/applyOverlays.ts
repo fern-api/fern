@@ -1,6 +1,6 @@
 import { applyOpenAPIOverlay, type OverlayAction } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
@@ -73,7 +73,7 @@ export async function applyOverlays<T extends object>({
     const outputPath = path.join(dir, outputFileName);
 
     await writeFile(outputPath, JSON.stringify(result, null, 2), "utf8");
-    context.logger.info(`Wrote overlaid OpenAPI spec to: ${outputPath}`);
+    context.logger.debug(`Wrote overlaid OpenAPI spec to: ${outputPath}`);
 
     return result;
 }
@@ -86,7 +86,9 @@ async function parseOverlayFile(
     try {
         contents = await readFile(absoluteFilePathToOverlay, "utf8");
     } catch (err) {
-        return context.failAndThrow(`Failed to read overlay file at ${absoluteFilePathToOverlay}: ${err}`);
+        return context.failAndThrow(`Failed to read overlay file at ${absoluteFilePathToOverlay}: ${err}`, undefined, {
+            code: CliError.Code.ConfigError
+        });
     }
 
     try {
@@ -97,7 +99,9 @@ async function parseOverlayFile(
             return yaml.load(contents, { json: true }) as OverlayDocument;
         }
     } catch (err) {
-        return context.failAndThrow(`Failed to parse overlay file at ${absoluteFilePathToOverlay}: ${err}`);
+        return context.failAndThrow(`Failed to parse overlay file at ${absoluteFilePathToOverlay}: ${err}`, undefined, {
+            code: CliError.Code.ParseError
+        });
     }
 }
 

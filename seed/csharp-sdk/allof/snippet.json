@@ -1,0 +1,65 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/rule-types",
+                "method": "GET",
+                "identifier_override": "endpoint_.searchRuleTypes"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.SearchRuleTypesAsync(new SearchRuleTypesRequest());\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/rules",
+                "method": "POST",
+                "identifier_override": "endpoint_.createRule"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.CreateRuleAsync(\n    new RuleCreateRequest { Name = \"name\", ExecutionContext = RuleExecutionContext.Prod }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_.listUsers"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.ListUsersAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/entities",
+                "method": "GET",
+                "identifier_override": "endpoint_.getEntity"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.GetEntityAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/organizations",
+                "method": "GET",
+                "identifier_override": "endpoint_.getOrganization"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.GetOrganizationAsync();\n"
+            }
+        }
+    ]
+}

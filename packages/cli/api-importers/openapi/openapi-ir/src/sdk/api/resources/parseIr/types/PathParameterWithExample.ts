@@ -13,4 +13,10 @@ export interface PathParameterWithExample
     parameterNameOverride: string | undefined;
     /** Whether to explode the parameter. Only set when it differs from the OpenAPI default for the style. */
     explode: boolean | undefined;
+    /**
+     * A client-side default value populated by `x-fern-default` on a parameter object.
+     * When present, the parameter is optional in the SDK and this value is sent when
+     * the user doesn't provide one. Supports string and boolean literals.
+     */
+    clientDefault: unknown | undefined;
 }

@@ -8,7 +8,7 @@ pub struct Cat {
 
 impl Cat {
     pub fn builder() -> CatBuilder {
-        CatBuilder::default()
+        <CatBuilder as Default>::default()
     }
 }
 

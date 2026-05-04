@@ -747,6 +747,77 @@ describe("replaceImagePaths", () => {
     });
 });
 
+describe("cross-platform image path round-trip", () => {
+    it("should produce consistent paths that match fileIdsMap keys", () => {
+        const page = "![image](./assets/images/diagram.png)";
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+
+        // parseImagePaths should produce forward-slash normalized paths
+        expect(parseResult.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/assets/images/diagram.png"]);
+
+        // Build fileIdsMap from the SAME filepaths (simulating the upload flow)
+        const fileIdsMap = new Map(
+            parseResult.filepaths.map((fp) => [AbsoluteFilePath.of(fp), "cross-platform-file-id"])
+        );
+
+        // replaceImagePathsAndUrls should find the file ID via the same normalized path
+        const replaced = replaceImagePathsAndUrls(parseResult.markdown, fileIdsMap, {}, PATHS, CONTEXT);
+        expect(replaced).toContain("file:cross-platform-file-id");
+        expect(replaced).not.toContain("/Volume/git/fern/my/docs/folder/assets/images/diagram.png");
+    });
+
+    it("should handle root-relative paths in round-trip", () => {
+        const page = "![logo](/assets/images/logo.svg)";
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+
+        expect(parseResult.filepaths).toEqual(["/Volume/git/fern/assets/images/logo.svg"]);
+
+        const fileIdsMap = new Map(parseResult.filepaths.map((fp) => [AbsoluteFilePath.of(fp), "logo-file-id"]));
+
+        const replaced = replaceImagePathsAndUrls(parseResult.markdown, fileIdsMap, {}, PATHS, CONTEXT);
+        expect(replaced).toContain("file:logo-file-id");
+    });
+
+    it("should handle mixed image types in round-trip", () => {
+        const page = [
+            "![md-image](./images/photo.png)",
+            "<img src='./images/icon.svg' />",
+            '<Frame><img src="./images/screenshot.webp" /></Frame>'
+        ].join("\n");
+
+        const parseResult = parseImagePaths(page, PATHS, CONTEXT);
+
+        expect(parseResult.filepaths).toHaveLength(3);
+        // All paths should use forward slashes
+        for (const fp of parseResult.filepaths) {
+            expect(fp).not.toContain("\\");
+        }
+
+        const fileIdsMap = new Map(parseResult.filepaths.map((fp, i) => [AbsoluteFilePath.of(fp), `file-id-${i}`]));
+
+        const replaced = replaceImagePathsAndUrls(parseResult.markdown, fileIdsMap, {}, PATHS, CONTEXT);
+        expect(replaced).toContain("file:file-id-0");
+        expect(replaced).toContain("file:file-id-1");
+        expect(replaced).toContain("file:file-id-2");
+    });
+
+    it("should never produce paths with backslashes in resolved filepaths", () => {
+        const pages = [
+            "![a](../other/image.png)",
+            "![b](./local/image.png)",
+            "![c](/root/image.png)",
+            "<img src='deep/nested/path/to/image.png' />"
+        ];
+
+        for (const page of pages) {
+            const result = parseImagePaths(page, PATHS, CONTEXT);
+            for (const filepath of result.filepaths) {
+                expect(filepath).not.toContain("\\");
+            }
+        }
+    });
+});
+
 function testMdxFixture(filename: string) {
     const page = fs.readFileSync(resolve(__dirname, `fixtures/${filename}`), "utf-8");
     const result = parseImagePaths(page, PATHS);

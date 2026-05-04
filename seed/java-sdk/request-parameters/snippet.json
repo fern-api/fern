@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "3cc9c22f",
+            "example_identifier": "5e7d2974",
             "id": {
                 "method": "POST",
                 "path": "/user/username",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "3ac64e3",
+            "example_identifier": "7e9614fe",
             "id": {
                 "method": "POST",
                 "path": "/user/username-referenced",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "eb3b4c34",
+            "example_identifier": "94961a12",
             "id": {
                 "method": "POST",
                 "path": "/user/username-optional",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "99ddae46",
+            "example_identifier": "78f7cd59",
             "id": {
                 "method": "GET",
                 "path": "/user",

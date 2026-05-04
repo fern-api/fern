@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NoOpAuthProvider = exports.BearerToken = exports.BasicAuth = void 0;
+exports.NoOpAuthProvider = exports.BearerToken = exports.BasicAuth = exports.isAuthProvider = void 0;
+var AuthProvider_js_1 = require("./AuthProvider.js");
+Object.defineProperty(exports, "isAuthProvider", { enumerable: true, get: function () { return AuthProvider_js_1.isAuthProvider; } });
 var BasicAuth_js_1 = require("./BasicAuth.js");
 Object.defineProperty(exports, "BasicAuth", { enumerable: true, get: function () { return BasicAuth_js_1.BasicAuth; } });
 var BearerToken_js_1 = require("./BearerToken.js");

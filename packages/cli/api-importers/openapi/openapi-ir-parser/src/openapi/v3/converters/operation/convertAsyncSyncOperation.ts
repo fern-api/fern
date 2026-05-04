@@ -83,7 +83,8 @@ export function convertAsyncSyncOperation({
             parameterNameOverride: undefined,
             env: undefined,
             availability: undefined,
-            source
+            source,
+            clientDefault: undefined
         });
     });
 

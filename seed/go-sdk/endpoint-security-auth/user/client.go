@@ -24,8 +24,8 @@ func NewClient(options *core.RequestOptions) *Client {
 	if options.Token == "" {
 		options.Token = os.Getenv("MY_TOKEN")
 	}
-	if options.ApiKey == "" {
-		options.ApiKey = os.Getenv("MY_API_KEY")
+	if options.APIKey == "" {
+		options.APIKey = os.Getenv("MY_API_KEY")
 	}
 	if options.ClientID == "" {
 		options.ClientID = os.Getenv("MY_CLIENT_ID")
@@ -66,11 +66,11 @@ func (c *Client) GetWithBearer(
 	return response.Body, nil
 }
 
-func (c *Client) GetWithApiKey(
+func (c *Client) GetWithAPIKey(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) ([]*fern.User, error) {
-	response, err := c.WithRawResponse.GetWithApiKey(
+	response, err := c.WithRawResponse.GetWithAPIKey(
 		ctx,
 		opts...,
 	)

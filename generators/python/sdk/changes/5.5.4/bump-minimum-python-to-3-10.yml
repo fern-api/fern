@@ -1,0 +1,6 @@
+- summary: |
+    Clamp the minimum Python version produced by the generator to ^3.10. Python 3.8 reached EOL in Oct 2024 and Python 3.9 in Oct 2025; many popular PyPI packages (e.g. `requests` >=2.33) no longer publish wheels for those versions, which causes dependency resolution to pin older, known-vulnerable releases (GHSA-gc5v-m9x4-r6x2 / CVE-2026-25645). When `pyproject_python_version` specifies a range that allows a version older than 3.10, the generator now logs a warning and emits `python = "^3.10"` in the generated `pyproject.toml`.
+  type: fix
+- summary: |
+    Bump the `requests` / `types-requests` dependencies used by the generated wire test suite from `^2.31.0` to `^2.33.0` to pick up the fix for GHSA-gc5v-m9x4-r6x2 (insecure temp file reuse in `requests.utils.extract_zipped_paths`).
+  type: fix

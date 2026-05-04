@@ -1,8 +1,8 @@
 import { ts } from "ts-morph";
 
 import { GeneratedFile } from "../../commons/GeneratedFile.js";
-import { SdkContext } from "../SdkContext.js";
+import { FileContext } from "../file-context/FileContext.js";
 
-export interface GeneratedSdkErrorSchema extends GeneratedFile<SdkContext> {
-    deserializeBody: (context: SdkContext, args: { referenceToBody: ts.Expression }) => ts.Expression;
+export interface GeneratedSdkErrorSchema extends GeneratedFile<FileContext> {
+    deserializeBody: (context: FileContext, args: { referenceToBody: ts.Expression }) => ts.Expression;
 }

@@ -12,7 +12,7 @@ pub struct CreateUsernameBody {
 
 impl CreateUsernameBody {
     pub fn builder() -> CreateUsernameBodyBuilder {
-        CreateUsernameBodyBuilder::default()
+        <CreateUsernameBodyBuilder as Default>::default()
     }
 }
 

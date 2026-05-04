@@ -41,6 +41,8 @@ class PlantsClient:
 
         client = SeedApi(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.plants.list()
         """
@@ -67,6 +69,8 @@ class PlantsClient:
 
         client = SeedApi(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.plants.get(
             plant_id="plantId",
@@ -111,6 +115,8 @@ class AsyncPlantsClient:
 
         client = AsyncSeedApi(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
@@ -145,6 +151,8 @@ class AsyncPlantsClient:
 
         client = AsyncSeedApi(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 

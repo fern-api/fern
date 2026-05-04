@@ -13,12 +13,7 @@ describe("UnionClient", () => {
         server.mockEndpoint().get("/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.union.get("id");
-        expect(response).toEqual({
-            type: "circle",
-            id: "id",
-            name: "name",
-            radius: 1.1,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("update", async () => {
@@ -42,6 +37,6 @@ describe("UnionClient", () => {
             name: "name",
             radius: 1.1,
         });
-        expect(response).toEqual(true);
+        expect(response).toEqual(rawResponseBody);
     });
 });

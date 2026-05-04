@@ -8,12 +8,16 @@ import { Name } from "../../commons/types/Name.js";
 export const BasicAuth: core.serialization.ObjectSchema<serializers.dynamic.BasicAuth.Raw, FernIr.dynamic.BasicAuth> =
     core.serialization.objectWithoutOptionalProperties({
         username: Name,
+        usernameOmit: core.serialization.boolean().optional(),
         password: Name,
+        passwordOmit: core.serialization.boolean().optional(),
     });
 
 export declare namespace BasicAuth {
     export interface Raw {
         username: Name.Raw;
+        usernameOmit?: boolean | null;
         password: Name.Raw;
+        passwordOmit?: boolean | null;
     }
 }

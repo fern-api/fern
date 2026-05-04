@@ -17,6 +17,11 @@ export const SourceTemplateFileSpecs = {
     HTTPClient: {
         relativePath: "Core/Networking",
         filenameWithoutExtension: () => "HTTPClient"
+    },
+    // Public
+    ClientConfig: {
+        relativePath: "Public",
+        filenameWithoutExtension: () => "ClientConfig"
     }
 } satisfies Record<string, TemplateFileSpec>;
 

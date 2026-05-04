@@ -8,11 +8,14 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .errors import BadRequest, UnauthorizedRequest, UnauthorizedRequestErrorBody
     from . import basic_auth, errors
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedBasicAuthEnvironmentVariables, SeedBasicAuthEnvironmentVariables
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedBasicAuthEnvironmentVariables": ".client",
     "BadRequest": ".errors",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "SeedBasicAuthEnvironmentVariables": ".client",
     "UnauthorizedRequest": ".errors",
     "UnauthorizedRequestErrorBody": ".errors",
@@ -46,6 +49,8 @@ def __dir__():
 __all__ = [
     "AsyncSeedBasicAuthEnvironmentVariables",
     "BadRequest",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "SeedBasicAuthEnvironmentVariables",
     "UnauthorizedRequest",
     "UnauthorizedRequestErrorBody",

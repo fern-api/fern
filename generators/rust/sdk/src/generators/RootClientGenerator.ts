@@ -3,6 +3,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { rust, UseStatement } from "@fern-api/rust-codegen";
 
+import { DEFAULT_URL_METHOD, EnvironmentGenerator } from "../environment/EnvironmentGenerator.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
 import { SubClientGenerator } from "./SubClientGenerator.js";
@@ -13,23 +14,29 @@ export class RootClientGenerator {
     private readonly package: FernIr.Package;
     private readonly projectName: string;
     private readonly clientGeneratorContext: ClientGeneratorContext;
+    private readonly environmentGenerator: EnvironmentGenerator;
     private readonly wsConnectors: Array<{
         connectorName: string;
         fieldName: string;
         clientName: string;
         moduleName: string;
         channel: FernIr.WebSocketChannel;
+        urlMethodName: string;
     }>;
     private readonly rootServiceGenerator: SubClientGenerator | null;
+    private readonly httpFieldNames: Set<string>;
 
     constructor(context: SdkGeneratorContext) {
         this.context = context;
         this.package = context.ir.rootPackage;
-        this.projectName = context.ir.apiName.pascalCase.safeName;
+        this.projectName = this.context.case.pascalSafe(context.ir.apiName);
+        this.environmentGenerator = new EnvironmentGenerator({ context });
         this.clientGeneratorContext = new ClientGeneratorContext({
             packageOrSubpackage: this.package,
             sdkGeneratorContext: context
         });
+
+        this.httpFieldNames = new Set(this.clientGeneratorContext.subClients.map((c) => c.fieldName));
 
         // Gather WebSocket connector info
         const wsGen = new WebSocketChannelGenerator(context);
@@ -76,7 +83,7 @@ export class RootClientGenerator {
             moduleDoc.push("");
             const seenDocNames = new Set<string>();
             subpackages.forEach((subpackage) => {
-                const name = subpackage.name.pascalCase.safeName;
+                const name = this.context.case.pascalSafe(subpackage.name);
                 const displayName = subpackage.displayName ?? name;
 
                 // Try to get service docs if the subpackage has a service
@@ -156,14 +163,14 @@ export class RootClientGenerator {
         const seen = new Set<string>();
         return subpackages
             .filter((subpackage) => {
-                const moduleName = subpackage.name.snakeCase.safeName;
+                const moduleName = this.context.case.snakeSafe(subpackage.name);
                 if (seen.has(moduleName)) {
                     return false;
                 }
                 seen.add(moduleName);
                 return true;
             })
-            .map((subpackage) => `pub mod ${subpackage.name.snakeCase.safeName};`)
+            .map((subpackage) => `pub mod ${this.context.case.snakeSafe(subpackage.name)};`)
             .join("\n");
     }
 
@@ -174,7 +181,7 @@ export class RootClientGenerator {
         return subpackages
             .filter((subpackage) => {
                 const clientName = this.getSubClientName(subpackage);
-                const reExport = `${subpackage.name.snakeCase.safeName}::${clientName}`;
+                const reExport = `${this.context.case.snakeSafe(subpackage.name)}::${clientName}`;
                 if (seen.has(reExport)) {
                     return false;
                 }
@@ -183,7 +190,7 @@ export class RootClientGenerator {
             })
             .map((subpackage) => {
                 const clientName = this.getSubClientName(subpackage);
-                return `pub use ${subpackage.name.snakeCase.safeName}::${clientName};`;
+                return `pub use ${this.context.case.snakeSafe(subpackage.name)}::${clientName};`;
             })
             .join("\n");
     }
@@ -221,8 +228,7 @@ export class RootClientGenerator {
         }
 
         // Import WebSocket connector types from the websocket module
-        const httpFieldNames = new Set(this.clientGeneratorContext.subClients.map((c) => c.fieldName));
-        const uniqueWsConnectors = this.getUniqueWsConnectors(httpFieldNames);
+        const uniqueWsConnectors = this.getUniqueWsConnectors();
         if (uniqueWsConnectors.length > 0) {
             imports.push(
                 new UseStatement({
@@ -252,9 +258,6 @@ export class RootClientGenerator {
     }
 
     private generateFields(subpackages: FernIr.Subpackage[]): rust.Client.Field[] {
-        // Collect HTTP sub-client field names to avoid collisions with WS connectors
-        const httpFieldNames = new Set(this.clientGeneratorContext.subClients.map((c) => c.fieldName));
-
         // Add http_client field if root package has endpoints
         const httpClientField: rust.Client.Field[] = this.rootServiceGenerator
             ? [
@@ -278,7 +281,7 @@ export class RootClientGenerator {
                 type: rust.Type.reference(rust.reference({ name: clientName })).toString(),
                 visibility: "pub" as const
             })),
-            ...this.getUniqueWsConnectors(httpFieldNames).map(({ fieldName, connectorName }) => ({
+            ...this.getUniqueWsConnectors().map(({ fieldName, connectorName }) => ({
                 name: fieldName,
                 type: rust.Type.reference(rust.reference({ name: connectorName })).toString(),
                 visibility: "pub" as const
@@ -287,15 +290,35 @@ export class RootClientGenerator {
     }
 
     /**
+     * Looks up the EnvironmentBaseUrlId for a service by checking its first endpoint's baseUrl.
+     * Returns undefined if the service has no endpoints or no baseUrl.
+     */
+    private getServiceBaseUrlId(serviceId: string): string | undefined {
+        const service = this.context.getHttpServiceOrThrow(serviceId);
+        const firstEndpoint = service.endpoints[0];
+        return firstEndpoint?.baseUrl ?? undefined;
+    }
+
+    /**
      * Returns WebSocket connectors that don't collide with existing HTTP sub-client field names.
      */
-    private getUniqueWsConnectors(httpFieldNames: Set<string>): typeof this.wsConnectors {
-        return this.wsConnectors.filter((c) => !httpFieldNames.has(c.fieldName));
+    private getUniqueWsConnectors(): typeof this.wsConnectors {
+        return this.wsConnectors.filter((c) => !this.httpFieldNames.has(c.fieldName));
+    }
+
+    /**
+     * Generates the Rust expression to resolve a URL from the environment,
+     * falling back to config.base_url when environment is None.
+     */
+    private resolveUrlExpression(urlMethod: string, configVar: string): string {
+        return (
+            `${configVar}.environment.as_ref()\n` +
+            `                    .map_or_else(|| ${configVar}.base_url.clone(), |env| env.${urlMethod}().to_string())`
+        );
     }
 
     private generateConstructor(subpackages: FernIr.Subpackage[]): rust.Client.SimpleMethod {
         const allInits: string[] = [];
-        const httpFieldNames = new Set(this.clientGeneratorContext.subClients.map((c) => c.fieldName));
 
         // HttpClient initialization for root-level endpoints
         if (this.rootServiceGenerator) {
@@ -303,15 +326,49 @@ export class RootClientGenerator {
         }
 
         // HTTP sub-client initializations
-        for (const { fieldName, clientName } of this.clientGeneratorContext.subClients) {
+        const isMultiUrl = this.context.hasMultipleBaseUrls();
+        for (const { fieldName, clientName, serviceId } of this.clientGeneratorContext.subClients) {
+            if (isMultiUrl && serviceId != null) {
+                const baseUrlId = this.getServiceBaseUrlId(serviceId);
+                if (baseUrlId != null) {
+                    const urlMethod = this.environmentGenerator.getUrlMethodNameForBaseUrlId(baseUrlId);
+                    if (urlMethod !== DEFAULT_URL_METHOD) {
+                        allInits.push(
+                            `${fieldName}: {\n` +
+                                `                let mut cfg = config.clone();\n` +
+                                `                cfg.base_url = ${this.resolveUrlExpression(urlMethod, "cfg")};\n` +
+                                `                ${clientName}::new(cfg)?\n` +
+                                `            }`
+                        );
+                        continue;
+                    }
+                }
+            }
             allInits.push(`${fieldName}: ${clientName}::new(config.clone())?`);
         }
 
         // WebSocket connector initializations (only those not colliding with HTTP sub-clients).
-        // Always pass the token so the connector can auto-inject the Authorization header,
-        // matching the TypeScript SDK experience where auth "just works".
-        for (const { fieldName, connectorName } of this.getUniqueWsConnectors(httpFieldNames)) {
-            allInits.push(`${fieldName}: ${connectorName}::new(config.base_url.clone(), config.token.clone())`);
+        // Compute the Authorization header value from api_key (with IR prefix) or token
+        // (Bearer), matching the HTTP client's auth priority: api_key > token.
+        const apiKeyPrefix = this.context.getApiKeyPrefix();
+        const apiKeyValueExpr = apiKeyPrefix
+            ? `format!("${apiKeyPrefix} {}", k)`
+            : "k.to_string()";
+        const wsAuthExpr =
+            `config.api_key.as_ref().map(|k| ${apiKeyValueExpr})` +
+            `.or_else(|| config.token.as_ref().map(|t| format!("Bearer {}", t)))`;
+
+        for (const { fieldName, connectorName, urlMethodName } of this.getUniqueWsConnectors()) {
+            if (isMultiUrl && urlMethodName !== DEFAULT_URL_METHOD) {
+                allInits.push(
+                    `${fieldName}: ${connectorName}::new(\n` +
+                        `                ${this.resolveUrlExpression(urlMethodName, "config")},\n` +
+                        `                ${wsAuthExpr}\n` +
+                        `            )`
+                );
+            } else {
+                allInits.push(`${fieldName}: ${connectorName}::new(config.base_url.clone(), ${wsAuthExpr})`);
+            }
         }
 
         const initStr = allInits.join(",\n            ");
@@ -507,8 +564,9 @@ export class RootClientGenerator {
             return null;
         }
 
-        // Check if this subpackage has subclients (nested structure)
-        const subClientSubpackages = this.context.getSubpackagesOrThrow(targetSubpackage);
+        // Check if this subpackage has subclients (nested structure), excluding websocket-only ones
+        const subClientSubpackages = this.context.getSubpackagesOrThrow(targetSubpackage)
+            .filter(([, sp]) => !this.context.isWebSocketOnlySubpackage(sp));
         const hasSubClients = subClientSubpackages.length > 0;
 
         if (!hasSubClients) {
@@ -544,7 +602,7 @@ export class RootClientGenerator {
         currentPath: string,
         subpackage: FernIr.Subpackage
     ): RustFile {
-        // Generate submodule declarations and re-exports
+        // Generate submodule declarations and re-exports (websocket-only subpackages already excluded)
         const subModuleDeclarations: string[] = [];
         subClientSubpackages.forEach(([, subClientSubpackage]) => {
             // Use the actual directory name, not the full filename

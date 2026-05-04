@@ -15,7 +15,7 @@ groups:
   python-sdk:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 3.0.0
+        version: 2.0.0
         smart-casing: true
         config:
           inline_request_params: false
@@ -39,7 +39,7 @@ groups:
     generators:
       - name: fernapi/fern-python-sdk
         autorelease: false
-        version: 3.0.0
+        version: 2.0.0
         config: {}
       - name: fernapi/fern-java-sdk
         version: 0.0.1

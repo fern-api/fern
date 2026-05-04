@@ -31,10 +31,11 @@ Instantiate and use the client with the following:
 package example
 
 import (
+    context "context"
+
+    fern "github.com/pagination-custom/fern"
     client "github.com/pagination-custom/fern/client"
     option "github.com/pagination-custom/fern/option"
-    fern "github.com/pagination-custom/fern"
-    context "context"
 )
 
 func do() {
@@ -43,12 +44,15 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListUsernamesRequestCustom{
+    request := &fern.ListWithCustomPagerRequest{
+        Limit: fern.Int(
+            1,
+        ),
         StartingAfter: fern.String(
             "starting_after",
         ),
     }
-    client.Users.ListUsernamesCustom(
+    client.Users.ListWithCustomPager(
         context.TODO(),
         request,
     )
@@ -68,12 +72,20 @@ client := client.NewClient(
 
 ## Pagination
 
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items. You can also iterate page-by-page using the `GetNextPage` helper method. If need be you can access the raw response using the `RawResponse` field on the page.
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items.
+You can also iterate page-by-page using the `GetNextPage` helper method.
+
+The `Page.Results` attribute, which contains the relevant list of items returned by the call to the server,
+is the only attribute you will need for most use cases. But if need be, several other attributes are available:
+
+- `Page.Response` contains the full spec-defined response as returned by the server.
+- `Page.StatusCode` and `Page.Header` returns HTTP metadata associated with the call to the server.
+- `Page.RawResponse` returns the pagination object if you need to access its fields (like `Next`).
 
 ```go
 // Loop over the items using the provided iterator.
 ctx := context.TODO()
-page, err := client.Users.ListUsernamesCustom(
+page, err := client.Users.ListWithCustomPager(
     ctx,
     ...
 )
@@ -103,19 +115,24 @@ for page != nil {
     }
 }
 
-// Paginated endpoints return a Page with directly accessible headers, status code, and raw response.
+// Paginated endpoints return a Page with directly accessible headers, status code, and full response
 ctx := context.TODO()
-page, err := client.Users.ListUsernamesCustom(
+page, err := client.Users.ListWithCustomPager(
     ctx,
     ...
 )
 if err != nil {
     return err
 }
+
 // Access response metadata directly from the page
 fmt.Printf("Got headers: %v", page.Header)
 fmt.Printf("Got status code: %d", page.StatusCode)
-// Access the raw response fields
+
+// Access the full spec-defined response object
+fullResponse := page.Response
+
+// Access individual fields from the pagination object
 nextCursor := page.RawResponse.Next
 ```
 
@@ -125,7 +142,7 @@ Structured error types are returned from API calls that return non-success statu
 with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 
 ```go
-response, err := client.Users.ListUsernamesCustom(...)
+response, err := client.Users.ListWithCustomPager(...)
 if err != nil {
     var apiError *core.APIError
     if errors.As(err, apiError) {
@@ -159,7 +176,7 @@ client := client.NewClient(
 )
 
 // Specify options for an individual request.
-response, err := client.Users.ListUsernamesCustom(
+response, err := client.Users.ListWithCustomPager(
     ...,
     option.WithToken("<YOUR_API_KEY>"),
 )
@@ -176,7 +193,7 @@ the raw HTTP response data will be included automatically in the Page response o
 ```go
 // For non-paginated endpoints, use WithRawResponse as described
 // to retrieve the headers and returned status code:
-response, err := client.Users.WithRawResponse.ListUsernamesCustom(...)
+response, err := client.Users.WithRawResponse.ListWithCustomPager(...)
 if err != nil {
     return err
 }
@@ -185,7 +202,7 @@ fmt.Printf("Got status code: %d", response.StatusCode)
 
 // For paginated endpoints, WithRawResponse is unnecessary, as the
 // headers and status code are directly available on the Page object.
-page, err := client.Users.ListUsernamesCustom(...)
+page, err := client.Users.ListWithCustomPager(...)
 if err != nil {
     return err
 }
@@ -199,11 +216,19 @@ The SDK is instrumented with automatic retries with exponential backoff. A reque
 as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
 retry limit (default: 2).
 
-A request is deemed retryable when any of the following HTTP status codes is returned:
+Which status codes are retried depends on the `retryStatusCodes` generator configuration:
 
+**`legacy`** (current default): retries on
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (All server errors, including 500)
+
+**`recommended`**: retries on
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [502](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502) (Bad Gateway)
+- [503](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503) (Service Unavailable)
+- [504](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504) (Gateway Timeout)
 
 If the `Retry-After` header is present in the response, the SDK will prioritize respecting its value exactly
 over the default exponential backoff.
@@ -215,7 +240,7 @@ client := client.NewClient(
     option.WithMaxAttempts(1),
 )
 
-response, err := client.Users.ListUsernamesCustom(
+response, err := client.Users.ListWithCustomPager(
     ...,
     option.WithMaxAttempts(1),
 )
@@ -229,7 +254,7 @@ Setting a timeout for each individual request is as simple as using the standard
 ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
-response, err := client.Users.ListUsernamesCustom(ctx, ...)
+response, err := client.Users.ListWithCustomPager(ctx, ...)
 ```
 
 ### Explicit Null
@@ -251,7 +276,7 @@ type ExampleRequest struct {
 request := &ExampleRequest{}
 request.SetName(nil)
 
-response, err := client.Users.ListUsernamesCustom(ctx, request, ...)
+response, err := client.Users.ListWithCustomPager(ctx, request, ...)
 ```
 
 ## Contributing

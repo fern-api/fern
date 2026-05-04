@@ -8,7 +8,7 @@ pub struct KeyValuePair {
 
 impl KeyValuePair {
     pub fn builder() -> KeyValuePairBuilder {
-        KeyValuePairBuilder::default()
+        <KeyValuePairBuilder as Default>::default()
     }
 }
 

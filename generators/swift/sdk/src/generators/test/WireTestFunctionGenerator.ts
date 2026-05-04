@@ -1,3 +1,4 @@
+import { GeneratorError, getWireValue } from "@fern-api/base-generator";
 import { assertDefined } from "@fern-api/core-utils";
 import { LiteralEnum, Referencer, swift } from "@fern-api/swift-codegen";
 import { EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
@@ -94,8 +95,10 @@ export class WireTestFunctionGenerator {
                                         arguments_: [
                                             swift.functionArgument({
                                                 value: swift.Expression.memberAccess({
-                                                    target: swift.Expression.stringLiteral(
-                                                        `""\n${typeof exampleTypeRef.jsonExample === "string" ? exampleTypeRef.jsonExample : JSON.stringify(exampleTypeRef.jsonExample, null, 2)}\n""`
+                                                    target: swift.Expression.rawMultiLineStringLiteral(
+                                                        typeof exampleTypeRef.jsonExample === "string"
+                                                            ? exampleTypeRef.jsonExample
+                                                            : JSON.stringify(exampleTypeRef.jsonExample, null, 2)
                                                     ),
                                                     memberName: "utf8"
                                                 })
@@ -132,7 +135,7 @@ export class WireTestFunctionGenerator {
                 ];
                 return swift.method({
                     attributes: [{ name: "Test" }],
-                    unsafeName: `${this.endpoint.name.camelCase.unsafeName}${endpointExampleIdx + 1}`,
+                    unsafeName: `${this.sdkGeneratorContext.caseConverter.camelUnsafe(this.endpoint.name)}${endpointExampleIdx + 1}`,
                     async: true,
                     throws: true,
                     returnType: this.referencer.referenceSwiftType("Void"),
@@ -202,8 +205,16 @@ export class WireTestFunctionGenerator {
                         return literalContainer.literal._visit({
                             string: (val) =>
                                 swift.Expression.enumCaseShorthand(LiteralEnum.generateEnumCaseLabel(val.original)),
-                            // Only string literals are supported
-                            boolean: () => swift.Expression.nop(),
+                            boolean: (val) =>
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference("JSONValue"),
+                                    methodName: "bool",
+                                    arguments_: [
+                                        swift.functionArgument({
+                                            value: swift.Expression.boolLiteral(val)
+                                        })
+                                    ]
+                                }),
                             integer: () => swift.Expression.nop(),
                             uint: () => swift.Expression.nop(),
                             uint64: () => swift.Expression.nop(),
@@ -213,6 +224,7 @@ export class WireTestFunctionGenerator {
                             bigInteger: () => swift.Expression.nop(),
                             date: () => swift.Expression.nop(),
                             datetime: () => swift.Expression.nop(),
+                            datetimeRfc2822: () => swift.Expression.nop(),
                             base64: () => swift.Expression.nop(),
                             uuid: () => swift.Expression.nop(),
                             _other: () => swift.Expression.nop()
@@ -297,7 +309,7 @@ export class WireTestFunctionGenerator {
                 }),
             primitive: (examplePrimitive) =>
                 examplePrimitive._visit({
-                    string: (escapedString) => swift.Expression.stringLiteral(escapedString.original),
+                    string: (escapedString) => swift.Expression.escapedStringLiteral(escapedString.original),
                     boolean: (bool) => swift.Expression.boolLiteral(bool),
                     integer: (value) => swift.Expression.numberLiteral(value),
                     uint: (value) => swift.Expression.numberLiteral(value),
@@ -305,20 +317,11 @@ export class WireTestFunctionGenerator {
                     long: (value) => swift.Expression.numberLiteral(value),
                     float: (value) => swift.Expression.numberLiteral(value),
                     double: (value) => swift.Expression.numberLiteral(value),
-                    bigInteger: (value) => swift.Expression.stringLiteral(value),
+                    bigInteger: (value) => swift.Expression.escapedStringLiteral(value),
                     date: (value) => swift.Expression.calendarDateLiteral(value),
-                    datetime: (value) => {
-                        if (value.raw == null) {
-                            return swift.Expression.nop();
-                        }
-                        const timestampMs = new Date(value.raw).getTime();
-                        const timestampSec = Math.round(timestampMs / 1000);
-                        const roundedDateTime = new Date(timestampSec * 1000).toISOString();
-                        // Remove fractional seconds (.000Z -> Z) for Swift compatibility
-                        const dateTimeWithoutFractional = roundedDateTime.replace(/\.\d{3}Z$/, "Z");
-                        return swift.Expression.dateLiteral(dateTimeWithoutFractional);
-                    },
-                    base64: (value) => swift.Expression.stringLiteral(value),
+                    datetime: (value) => this.generateDateTimeLiteral(value.raw),
+                    datetimeRfc2822: (value) => this.generateDateTimeLiteral(value.raw),
+                    base64: (value) => swift.Expression.escapedStringLiteral(value),
                     uuid: (value) => swift.Expression.uuidLiteral(value),
                     _other: () => swift.Expression.nop()
                 }),
@@ -330,7 +333,9 @@ export class WireTestFunctionGenerator {
                         return this.generateExampleResponse(exampleAliasType.value, fromScope);
                     },
                     enum: (exampleEnumType) => {
-                        return swift.Expression.enumCaseShorthand(exampleEnumType.value.name.camelCase.unsafeName);
+                        return swift.Expression.enumCaseShorthand(
+                            this.sdkGeneratorContext.caseConverter.camelUnsafe(exampleEnumType.value)
+                        );
                     },
                     object: (exampleObjectType) => {
                         return swift.Expression.structInitialization({
@@ -346,7 +351,7 @@ export class WireTestFunctionGenerator {
                                     }
                                     const exampleResponse = this.generateExampleResponse(property.value, fromScope);
                                     return swift.functionArgument({
-                                        label: property.name.name.camelCase.unsafeName,
+                                        label: this.sdkGeneratorContext.caseConverter.camelUnsafe(property.name),
                                         value: exampleResponse
                                     });
                                 })
@@ -355,8 +360,9 @@ export class WireTestFunctionGenerator {
                         });
                     },
                     union: (exampleUnionType) => {
-                        const caseName =
-                            exampleUnionType.singleUnionType.wireDiscriminantValue.name.camelCase.unsafeName;
+                        const caseName = this.sdkGeneratorContext.caseConverter.camelUnsafe(
+                            exampleUnionType.singleUnionType.wireDiscriminantValue
+                        );
                         return exampleUnionType.singleUnionType.shape._visit({
                             noProperties: () =>
                                 swift.Expression.memberAccess({
@@ -365,7 +371,7 @@ export class WireTestFunctionGenerator {
                                 }),
                             samePropertiesAsObject: (exampleObjectTypeWithId) => {
                                 const declaredWireNames = new Set(
-                                    exampleObjectTypeWithId.object.properties.map((p) => p.name.wireValue)
+                                    exampleObjectTypeWithId.object.properties.map((p) => getWireValue(p.name))
                                 );
                                 const jsonObj =
                                     exampleTypeRef.jsonExample != null &&
@@ -387,7 +393,7 @@ export class WireTestFunctionGenerator {
                                         }
                                         const exampleResponse = this.generateExampleResponse(property.value, fromScope);
                                         return swift.functionArgument({
-                                            label: property.name.name.camelCase.unsafeName,
+                                            label: this.sdkGeneratorContext.caseConverter.camelUnsafe(property.name),
                                             value: exampleResponse
                                         });
                                     })
@@ -398,7 +404,7 @@ export class WireTestFunctionGenerator {
                                             label: "additionalProperties",
                                             value: swift.Expression.dictionaryLiteral({
                                                 entries: extraEntries.map(([key, value]) => [
-                                                    swift.Expression.stringLiteral(key),
+                                                    swift.Expression.escapedStringLiteral(key),
                                                     this.generateUnknownExampleResponse(value)
                                                 ]),
                                                 multiline: true
@@ -530,6 +536,7 @@ export class WireTestFunctionGenerator {
                     bigInteger: () => this.referencer.referenceSwiftType("String"),
                     date: () => this.referencer.referenceAsIsType("CalendarDate"),
                     datetime: () => this.referencer.referenceFoundationType("Date"),
+                    datetimeRfc2822: () => this.referencer.referenceFoundationType("Date"),
                     base64: () => this.referencer.referenceSwiftType("String"),
                     uuid: () => this.referencer.referenceFoundationType("UUID"),
                     _other: () => this.referencer.referenceAsIsType("JSONValue")
@@ -546,6 +553,18 @@ export class WireTestFunctionGenerator {
         });
     }
 
+    private generateDateTimeLiteral(raw: string | null | undefined): swift.Expression {
+        if (raw == null) {
+            return swift.Expression.nop();
+        }
+        const timestampMs = new Date(raw).getTime();
+        const timestampSec = Math.round(timestampMs / 1000);
+        const roundedDateTime = new Date(timestampSec * 1000).toISOString();
+        // Remove fractional seconds (.000Z -> Z) for Swift compatibility
+        const dateTimeWithoutFractional = roundedDateTime.replace(/\.\d{3}Z$/, "Z");
+        return swift.Expression.dateLiteral(dateTimeWithoutFractional);
+    }
+
     private generateUnknownExampleResponse(val: unknown): swift.Expression {
         if (val === null) {
             return swift.Expression.memberAccess({
@@ -557,7 +576,7 @@ export class WireTestFunctionGenerator {
             return swift.Expression.methodCall({
                 target: swift.Expression.reference("JSONValue"),
                 methodName: "string",
-                arguments_: [swift.functionArgument({ value: swift.Expression.stringLiteral(val) })]
+                arguments_: [swift.functionArgument({ value: swift.Expression.escapedStringLiteral(val) })]
             });
         }
         if (typeof val === "number") {
@@ -596,7 +615,7 @@ export class WireTestFunctionGenerator {
                     swift.functionArgument({
                         value: swift.Expression.dictionaryLiteral({
                             entries: Object.entries(val).map(([key, value]) => [
-                                swift.Expression.stringLiteral(key),
+                                swift.Expression.escapedStringLiteral(key),
                                 this.generateUnknownExampleResponse(value)
                             ]),
                             multiline: true
@@ -606,6 +625,6 @@ export class WireTestFunctionGenerator {
                 multiline: true
             });
         }
-        throw new Error(`Unknown value: ${JSON.stringify(val)}`);
+        throw GeneratorError.internalError(`Unknown value: ${JSON.stringify(val)}`);
     }
 }

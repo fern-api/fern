@@ -1,7 +1,9 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
+import { DefaultValueExtractor } from "../DefaultValueExtractor.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { EndpointSignatureInfo } from "./EndpointSignatureInfo.js";
 import { EndpointRequest } from "./request/EndpointRequest.js";
@@ -54,17 +56,20 @@ export abstract class AbstractEndpointGenerator {
             ...endpoint.pathParameters
         ]) {
             const parameterName = this.context.getParameterName(pathParam.name);
-            pathParameterReferences[pathParam.name.originalName] = this.accessPathParameterValue({
+            pathParameterReferences[getOriginalName(pathParam.name)] = this.accessPathParameterValue({
                 pathParameter: pathParam,
                 sdkRequest: endpoint.sdkRequest,
                 includePathParametersInEndpointSignature: includePathParametersInSignature
             });
             if (includePathParametersInSignature) {
+                const clientDefaultInit = DefaultValueExtractor.extractClientDefaultCodeBlock(pathParam.clientDefault);
+                const type = this.context.phpTypeMapper.convert({ reference: pathParam.valueType });
                 pathParameters.push(
                     php.parameter({
                         docs: pathParam.docs,
                         name: parameterName,
-                        type: this.context.phpTypeMapper.convert({ reference: pathParam.valueType })
+                        type,
+                        initializer: clientDefaultInit
                     })
                 );
             }

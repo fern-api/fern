@@ -69,14 +69,14 @@ func (c *Client) SendOptionalTypedBody(
 // This should not generate wire tests expecting {} when Optional.empty() is passed.
 func (c *Client) SendOptionalNullableWithAllOptionalProperties(
 	ctx context.Context,
-	actionId string,
+	actionID string,
 	id string,
 	request *fern.DeployParams,
 	opts ...option.RequestOption,
 ) (*fern.DeployResponse, error) {
 	response, err := c.WithRawResponse.SendOptionalNullableWithAllOptionalProperties(
 		ctx,
-		actionId,
+		actionID,
 		id,
 		request,
 		opts...,

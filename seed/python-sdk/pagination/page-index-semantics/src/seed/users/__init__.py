@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        ListUsersAliasedDataPaginationResponse,
         ListUsersExtendedOptionalListResponse,
         ListUsersExtendedResponse,
         ListUsersMixedTypePaginationResponse,
@@ -17,6 +18,7 @@ if typing.TYPE_CHECKING:
         Order,
         Page,
         User,
+        UserList,
         UserListContainer,
         UserOptionalListContainer,
         UserOptionalListPage,
@@ -26,6 +28,7 @@ if typing.TYPE_CHECKING:
         WithPage,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "ListUsersAliasedDataPaginationResponse": ".types",
     "ListUsersExtendedOptionalListResponse": ".types",
     "ListUsersExtendedResponse": ".types",
     "ListUsersMixedTypePaginationResponse": ".types",
@@ -36,6 +39,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Order": ".types",
     "Page": ".types",
     "User": ".types",
+    "UserList": ".types",
     "UserListContainer": ".types",
     "UserOptionalListContainer": ".types",
     "UserOptionalListPage": ".types",
@@ -68,6 +72,7 @@ def __dir__():
 
 
 __all__ = [
+    "ListUsersAliasedDataPaginationResponse",
     "ListUsersExtendedOptionalListResponse",
     "ListUsersExtendedResponse",
     "ListUsersMixedTypePaginationResponse",
@@ -78,6 +83,7 @@ __all__ = [
     "Order",
     "Page",
     "User",
+    "UserList",
     "UserListContainer",
     "UserOptionalListContainer",
     "UserOptionalListPage",

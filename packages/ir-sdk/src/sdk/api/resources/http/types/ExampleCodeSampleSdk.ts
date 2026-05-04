@@ -7,7 +7,7 @@ import type * as FernIr from "../../../index.js";
  */
 export interface ExampleCodeSampleSdk extends FernIr.WithDocs {
     /** Override the example name. */
-    name: FernIr.Name | undefined;
+    name: FernIr.NameOrString | undefined;
     sdk: FernIr.SupportedSdkLanguage;
     code: string;
 }

@@ -1,3 +1,4 @@
+using global::System.Net;
 using NUnit.Framework;
 using SystemTask = global::System.Threading.Tasks.Task;
 using <%= namespace%>.Core;
@@ -46,7 +47,7 @@ public class GuidCursorTest
             (_, _, _) =>
             {
                 responses.MoveNext();
-                return SystemTask.FromResult(responses.Current);
+                return SystemTask.FromResult(Wrap(responses.Current));
             },
             (request, cursor) =>
             {
@@ -101,4 +102,15 @@ public class GuidCursorTest
     {
         public required Guid? Next { get; set; }
     }
+
+    private static WithRawResponse<Response> Wrap(Response response) => new()
+    {
+        Data = response,
+        RawResponse = new RawResponse
+        {
+            StatusCode = HttpStatusCode.OK,
+            Url = new Uri("https://localhost"),
+            Headers = default,
+        },
+    };
 }

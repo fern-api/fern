@@ -10,7 +10,7 @@ pub struct NullableObject {
 
 impl NullableObject {
     pub fn builder() -> NullableObjectBuilder {
-        NullableObjectBuilder::default()
+        <NullableObjectBuilder as Default>::default()
     }
 }
 

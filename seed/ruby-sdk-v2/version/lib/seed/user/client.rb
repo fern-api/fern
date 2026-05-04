@@ -17,7 +17,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::User::Types::UserId] :user_id
+      # @option params [Seed::User::Types::UserID] :user_id
       #
       # @return [Seed::User::Types::User]
       def get_user(request_options: {}, **params)

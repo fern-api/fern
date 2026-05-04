@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "370c1ef9",
+            "example_identifier": "3f108be4",
             "id": {
                 "method": "POST",
                 "path": "/staged-builder/simple",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "ec81cb92",
+            "example_identifier": "d9b224cd",
             "id": {
                 "method": "POST",
                 "path": "/staged-builder/medium",
@@ -131,7 +131,7 @@
             }
         },
         {
-            "example_identifier": "241d6c5c",
+            "example_identifier": "e79ec399",
             "id": {
                 "method": "POST",
                 "path": "/staged-builder/complex",
@@ -170,7 +170,7 @@
             }
         },
         {
-            "example_identifier": "cee4b7ee",
+            "example_identifier": "87229ff9",
             "id": {
                 "method": "POST",
                 "path": "/staged-builder/mixed",
@@ -209,7 +209,7 @@
             }
         },
         {
-            "example_identifier": "b2d3dcf3",
+            "example_identifier": "833075b0",
             "id": {
                 "method": "POST",
                 "path": "/staged-builder/parent",

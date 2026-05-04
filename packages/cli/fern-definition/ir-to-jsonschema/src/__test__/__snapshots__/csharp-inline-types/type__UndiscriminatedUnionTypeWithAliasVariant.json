@@ -1,0 +1,39 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/AliasVariant"
+    },
+    {
+      "$ref": "#/definitions/NonAliasVariant"
+    }
+  ],
+  "definitions": {
+    "AliasVariantType": {
+      "type": "object",
+      "properties": {
+        "prop": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "prop"
+      ],
+      "additionalProperties": false
+    },
+    "AliasVariant": {
+      "$ref": "#/definitions/AliasVariantType"
+    },
+    "NonAliasVariant": {
+      "type": "object",
+      "properties": {
+        "prop": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "prop"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

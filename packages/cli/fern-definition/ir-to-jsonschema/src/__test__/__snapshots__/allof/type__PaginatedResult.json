@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "paging": {
+      "$ref": "#/definitions/PagingCursors"
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": [
+          "string",
+          "number",
+          "boolean",
+          "object",
+          "array",
+          "null"
+        ]
+      }
+    }
+  },
+  "required": [
+    "paging",
+    "results"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "PagingCursors": {
+      "type": "object",
+      "properties": {
+        "next": {
+          "type": "string"
+        },
+        "previous": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "next"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -12,7 +12,7 @@ pub struct Plant {
 
 impl Plant {
     pub fn builder() -> PlantBuilder {
-        PlantBuilder::default()
+        <PlantBuilder as Default>::default()
     }
 }
 

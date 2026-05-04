@@ -3,6 +3,7 @@ import { parseEndpointLocator, removeSuffix } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, getFilename, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { APIDefinitionImporter, FernDefinitionBuilderImpl, HttpServiceInfo } from "@fern-api/importer-commons";
+import { CliError } from "@fern-api/task-context";
 
 import { listConjureFiles } from "./utils/listConjureFiles.js";
 import { visitConjureTypeDeclaration } from "./utils/visitConjureTypeDeclaration.js";
@@ -77,7 +78,10 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
             if (definition.services == null || Object.keys(definition.services ?? {}).length === 0) {
                 const fernFilePath = this.conjureFilepathToFernFilepath[filepath];
                 if (fernFilePath == null) {
-                    throw new Error(`Failed to find corresponding fern filepath for conjure file ${filepath}`);
+                    throw new CliError({
+                        message: `Failed to find corresponding fern filepath for conjure file ${filepath}`,
+                        code: CliError.Code.InternalError
+                    });
                 }
 
                 for (const [import_, importedFilepath] of Object.entries(definition.types?.conjureImports ?? {})) {
@@ -151,9 +155,10 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
                         for (const pathParameter of endpointLocator.pathParameters) {
                             const pathParameterType = endpointDeclaration.args[pathParameter];
                             if (pathParameterType == null) {
-                                throw new Error(
-                                    `Failed to find path parameter ${pathParameter} in ${endpointDeclaration.http}`
-                                );
+                                throw new CliError({
+                                    message: `Failed to find path parameter ${pathParameter} in ${endpointDeclaration.http}`,
+                                    code: CliError.Code.InternalError
+                                });
                             }
                             pathParameters[pathParameter] =
                                 typeof pathParameterType === "string"
@@ -338,9 +343,10 @@ export class ConjureImporter extends APIDefinitionImporter<ConjureImporter.Args>
         );
         const correspondingFernFilePath = this.conjureFilepathToFernFilepath[relativeFilePathToImportedFile];
         if (correspondingFernFilePath == null) {
-            throw new Error(
-                `Failed to find corresponding fern filepath for conjure file ${relativeFilePathToImportedFile}`
-            );
+            throw new CliError({
+                message: `Failed to find corresponding fern filepath for conjure file ${relativeFilePathToImportedFile}`,
+                code: CliError.Code.InternalError
+            });
         }
         return correspondingFernFilePath;
     }

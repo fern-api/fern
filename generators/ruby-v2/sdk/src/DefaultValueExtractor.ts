@@ -77,6 +77,7 @@ export class DefaultValueExtractor {
                         t.default != null ? { value: this.escapeString(t.default), rubyType: "String" } : undefined,
                     date: () => undefined,
                     dateTime: () => undefined,
+                    dateTimeRfc2822: () => undefined,
                     uuid: () => undefined,
                     base64: () => undefined,
                     _other: () => undefined
@@ -117,11 +118,14 @@ export class DefaultValueExtractor {
     }
 
     /**
-     * Escapes a string for use as a Ruby single-quoted string literal.
+     * Escapes a string for use as a Ruby double-quoted string literal.
      */
     private escapeString(value: string): string {
-        const escaped = value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
-        return `'${escaped}'`;
+        const escaped = value
+            .replace(/\\/g, "\\\\")
+            .replace(/"/g, '\\"')
+            .replace(/#(?=[{$@])/g, "\\#");
+        return `"${escaped}"`;
     }
 
     /**
@@ -129,5 +133,22 @@ export class DefaultValueExtractor {
      */
     private isSafeInteger(value: number): boolean {
         return Number.isSafeInteger(value);
+    }
+
+    /**
+     * Extracts a Ruby code string from a clientDefault Literal value.
+     * Returns the escaped Ruby representation or undefined if no literal is provided.
+     */
+    public extractClientDefault(literal: FernIr.Literal | undefined): string | undefined {
+        if (literal == null) {
+            return undefined;
+        }
+        return literal._visit<string>({
+            string: (value) => this.escapeString(value),
+            boolean: (value) => (value ? "true" : "false"),
+            _other: () => {
+                throw new Error("Unknown Literal type");
+            }
+        });
     }
 }

@@ -7,6 +7,8 @@ import {
 } from "@fern-api/ir-sdk";
 import { camelCase } from "lodash-es";
 
+import { getOriginalName } from "../../utils/namesUtils.js";
+
 import { getRequestBodyExamples } from "./getRequestBodyExamples.js";
 import { getResponseExamples } from "./getResponseExamples.js";
 
@@ -15,6 +17,7 @@ export declare namespace generateEndpointExample {
         endpoint: HttpEndpoint;
         ir: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">;
         skipOptionalRequestProperties: boolean;
+        logger?: { warn: (...args: string[]) => void };
     }
 
     interface Result {
@@ -93,7 +96,8 @@ function maybeCreateAndStoreExample({
 export function generateEndpointExample({
     endpoint,
     ir,
-    skipOptionalRequestProperties
+    skipOptionalRequestProperties,
+    logger
 }: generateEndpointExample.Args): generateEndpointExample.Result {
     const userResults: Record<string, V2HttpEndpointExample> = {};
     const autoResults: Record<string, V2HttpEndpointExample> = {};
@@ -126,7 +130,8 @@ export function generateEndpointExample({
         firstAutoRequestExample,
         userResults,
         autoResults,
-        exampleStore
+        exampleStore,
+        logger
     });
 
     // Create examples for remaining user-specified requests
@@ -171,7 +176,8 @@ function createExamplesForResponseStatusCodes({
     firstAutoRequestExample,
     userResults,
     autoResults,
-    exampleStore
+    exampleStore,
+    logger
 }: {
     endpoint: HttpEndpoint;
     userRequestExamples: Record<string, V2HttpEndpointRequest>;
@@ -183,6 +189,7 @@ function createExamplesForResponseStatusCodes({
     userResults: Record<string, V2HttpEndpointExample>;
     autoResults: Record<string, V2HttpEndpointExample>;
     exampleStore: Map<string, V2HttpEndpointExample>;
+    logger?: { warn: (...args: string[]) => void };
 }): Set<string> {
     const endpointResponseArray = endpoint.v2Responses?.responses ?? [endpoint.response];
     const requestExamplesUsed: Set<string> = new Set();
@@ -214,6 +221,13 @@ function createExamplesForResponseStatusCodes({
                 requestExampleToUse = firstAutoRequestExample;
                 key = createExampleKey(firstAutoRequestName, name, response?.statusCode);
             } else {
+                if (Object.keys(userRequestExamples).length > 0) {
+                    logger?.warn(
+                        `Response example "${name}" on ${endpoint.method.toUpperCase()} ${endpoint.fullPath.head} has no matching request example with the same summary. ` +
+                            `Falling back to a base request with no body. ` +
+                            `To pair them, set the request and response example summary fields to the same value.`
+                    );
+                }
                 requestExampleToUse = baseRequestExample;
                 key = createExampleKey("base", name, response?.statusCode);
             }
@@ -234,7 +248,7 @@ function createExamplesForResponseStatusCodes({
 
         // Create response example from auto-generated example if no user-specified examples were created
         if (!examplesCreatedForResponse) {
-            const fallbackExampleDisplayName = camelCase(`${endpoint.name.originalName}_example`);
+            const fallbackExampleDisplayName = camelCase(`${getOriginalName(endpoint.name)}_example`);
             if (firstUserRequestName && firstUserRequestExample) {
                 requestExamplesUsed.add(firstUserRequestName);
             }

@@ -6,6 +6,7 @@ pub struct SinglyLinkedListNodeValue {
     #[serde(default)]
     pub node_id: NodeId,
     #[serde(default)]
+    #[serde(with = "crate::core::number_serializers")]
     pub val: f64,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub next: Option<NodeId>,
@@ -13,7 +14,7 @@ pub struct SinglyLinkedListNodeValue {
 
 impl SinglyLinkedListNodeValue {
     pub fn builder() -> SinglyLinkedListNodeValueBuilder {
-        SinglyLinkedListNodeValueBuilder::default()
+        <SinglyLinkedListNodeValueBuilder as Default>::default()
     }
 }
 

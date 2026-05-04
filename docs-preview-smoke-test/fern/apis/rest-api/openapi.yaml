@@ -1,0 +1,61 @@
+openapi: 3.1.0
+info:
+  title: Plant Store API
+  version: 1.0.0
+  description: A simple plant store API for smoke testing.
+servers:
+  - url: https://api.plantstore.dev/v1
+paths:
+  /plant:
+    post:
+      summary: Add a new plant
+      operationId: addPlant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Plant"
+      responses:
+        "200":
+          description: Plant added successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+  /plant/{plantId}:
+    get:
+      summary: Get a plant by ID
+      operationId: getPlantById
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Plant details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+components:
+  schemas:
+    Plant:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        species:
+          type: string
+        status:
+          type: string
+          enum:
+            - available
+            - sold
+            - pending

@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedEmptyClients.Test/SeedEmptyClients.Test.csproj" />
-  <Project Path="src/SeedEmptyClients/SeedEmptyClients.csproj" />
-</Solution>

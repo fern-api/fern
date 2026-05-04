@@ -4,11 +4,11 @@ import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 
-export class TypeScriptGeneratorAgent extends AbstractGeneratorAgent<SdkContext> {
+export class TypeScriptGeneratorAgent extends AbstractGeneratorAgent<FileContext> {
     private readmeConfigBuilder: ReadmeConfigBuilder;
     private publishConfig: FernIr.PublishingConfig | undefined;
 
@@ -28,7 +28,7 @@ export class TypeScriptGeneratorAgent extends AbstractGeneratorAgent<SdkContext>
         this.publishConfig = ir.publishConfig;
     }
 
-    public getReadmeConfig(args: AbstractGeneratorAgent.ReadmeConfigArgs<SdkContext>): FernGeneratorCli.ReadmeConfig {
+    public getReadmeConfig(args: AbstractGeneratorAgent.ReadmeConfigArgs<FileContext>): FernGeneratorCli.ReadmeConfig {
         return this.readmeConfigBuilder.build({
             context: args.context,
             remote: args.remote,
@@ -70,7 +70,7 @@ export class TypeScriptGeneratorAgent extends AbstractGeneratorAgent<SdkContext>
         };
     }
 
-    public getGitHubConfig(args: AbstractGeneratorAgent.GitHubConfigArgs<SdkContext>): RawGithubConfig {
+    public getGitHubConfig(args: AbstractGeneratorAgent.GitHubConfigArgs<FileContext>): RawGithubConfig {
         // TODO: get from env
         const githubConfig = this.publishConfig?.type === "github" ? this.publishConfig : undefined;
         return {

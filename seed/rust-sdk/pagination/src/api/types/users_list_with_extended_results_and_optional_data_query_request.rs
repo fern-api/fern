@@ -9,7 +9,7 @@ pub struct UsersListWithExtendedResultsAndOptionalDataQueryRequest {
 
 impl UsersListWithExtendedResultsAndOptionalDataQueryRequest {
     pub fn builder() -> UsersListWithExtendedResultsAndOptionalDataQueryRequestBuilder {
-        UsersListWithExtendedResultsAndOptionalDataQueryRequestBuilder::default()
+        <UsersListWithExtendedResultsAndOptionalDataQueryRequestBuilder as Default>::default()
     }
 }
 

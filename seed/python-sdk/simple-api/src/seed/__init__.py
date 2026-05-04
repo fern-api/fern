@@ -7,12 +7,15 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import user
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedSimpleApi, SeedSimpleApi
     from .environment import SeedSimpleApiEnvironment
     from .user import User
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedSimpleApi": ".client",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "SeedSimpleApi": ".client",
     "SeedSimpleApiEnvironment": ".environment",
     "User": ".user",
@@ -42,4 +45,13 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AsyncSeedSimpleApi", "SeedSimpleApi", "SeedSimpleApiEnvironment", "User", "__version__", "user"]
+__all__ = [
+    "AsyncSeedSimpleApi",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
+    "SeedSimpleApi",
+    "SeedSimpleApiEnvironment",
+    "User",
+    "__version__",
+    "user",
+]

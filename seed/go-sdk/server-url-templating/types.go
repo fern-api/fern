@@ -10,12 +10,12 @@ import (
 )
 
 var (
-	tokenRequestFieldClientId     = big.NewInt(1 << 0)
+	tokenRequestFieldClientID     = big.NewInt(1 << 0)
 	tokenRequestFieldClientSecret = big.NewInt(1 << 1)
 )
 
 type TokenRequest struct {
-	ClientId     string `json:"client_id" url:"-"`
+	ClientID     string `json:"client_id" url:"-"`
 	ClientSecret string `json:"client_secret" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -29,11 +29,11 @@ func (t *TokenRequest) require(field *big.Int) {
 	t.explicitFields.Or(t.explicitFields, field)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TokenRequest) SetClientId(clientId string) {
-	t.ClientId = clientId
-	t.require(tokenRequestFieldClientId)
+func (t *TokenRequest) SetClientID(clientID string) {
+	t.ClientID = clientID
+	t.require(tokenRequestFieldClientID)
 }
 
 // SetClientSecret sets the ClientSecret field and marks it as non-optional;
@@ -65,11 +65,11 @@ func (t *TokenRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	getUserRequestFieldUserId = big.NewInt(1 << 0)
+	getUserRequestFieldUserID = big.NewInt(1 << 0)
 )
 
 type GetUserRequest struct {
-	UserId string `json:"-" url:"-"`
+	UserID string `json:"-" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -82,11 +82,11 @@ func (g *GetUserRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetUserId sets the UserId field and marks it as non-optional;
+// SetUserID sets the UserID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserRequest) SetUserId(userId string) {
-	g.UserId = userId
-	g.require(getUserRequestFieldUserId)
+func (g *GetUserRequest) SetUserID(userID string) {
+	g.UserID = userID
+	g.require(getUserRequestFieldUserID)
 }
 
 var (
@@ -190,13 +190,13 @@ func (t *TokenResponse) String() string {
 }
 
 var (
-	userFieldId    = big.NewInt(1 << 0)
+	userFieldID    = big.NewInt(1 << 0)
 	userFieldName  = big.NewInt(1 << 1)
 	userFieldEmail = big.NewInt(1 << 2)
 )
 
 type User struct {
-	Id    string  `json:"id" url:"id"`
+	ID    string  `json:"id" url:"id"`
 	Name  string  `json:"name" url:"name"`
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
 
@@ -207,11 +207,11 @@ type User struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *User) GetId() string {
+func (u *User) GetID() string {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *User) GetName() string {
@@ -242,11 +242,11 @@ func (u *User) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *User) SetId(id string) {
-	u.Id = id
-	u.require(userFieldId)
+func (u *User) SetID(id string) {
+	u.ID = id
+	u.require(userFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;

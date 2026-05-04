@@ -11,7 +11,7 @@ pub struct StuntDouble {
 
 impl StuntDouble {
     pub fn builder() -> StuntDoubleBuilder {
-        StuntDoubleBuilder::default()
+        <StuntDoubleBuilder as Default>::default()
     }
 }
 

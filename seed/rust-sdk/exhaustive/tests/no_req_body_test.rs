@@ -13,6 +13,7 @@ async fn test_no_req_body_get_with_no_request_body_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client.no_req_body.get_with_no_request_body(None).await;
@@ -35,6 +36,7 @@ async fn test_no_req_body_post_with_no_request_body_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client.no_req_body.post_with_no_request_body(None).await;

@@ -3,6 +3,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { convertQueryParametersToProperties } from "../utils/structUtils.js";
 import { RequestGenerator } from "./RequestGenerator.js";
 
 export class InlinedRequestBodyGenerator {
@@ -44,28 +45,26 @@ export class InlinedRequestBodyGenerator {
     ): RustFile | null {
         try {
             const filename = this.context.getFilenameForInlinedRequestBody(endpoint.id);
-            // Get the unique type name (may have suffix if there's a collision)
             const uniqueRequestName = this.context.getInlineRequestTypeName(endpoint.id);
 
-            // Combine body properties with query parameters for mixed endpoints
             const allProperties = [...(requestBody.properties || []), ...(requestBody.extendedProperties || [])];
 
-            // Add query parameters as properties for mixed endpoints
+            let queryParamFieldNames = new Set<string>();
             if (endpoint.queryParameters?.length > 0) {
-                const queryProperties = this.convertQueryParametersToProperties(endpoint.queryParameters);
-                allProperties.push(...queryProperties);
+                const result = convertQueryParametersToProperties(endpoint.queryParameters, this.context);
+                allProperties.push(...result.properties);
+                queryParamFieldNames = result.fieldNames;
             }
 
-            // Create RequestGenerator to generate the struct with unique type name
             const objectGenerator = new RequestGenerator({
                 name: uniqueRequestName,
-                properties: allProperties, // Now includes query params
+                properties: allProperties,
                 extendedProperties: [],
                 docsContent: requestBody.docs,
-                context: this.context
+                context: this.context,
+                queryParamFieldNames
             });
 
-            // Generate the file content
             const fileContents = objectGenerator.generateFileContents();
 
             return new RustFile({
@@ -74,29 +73,8 @@ export class InlinedRequestBodyGenerator {
                 fileContents
             });
         } catch (error) {
-            // Log error but don't fail the entire generation
             this.context.logger?.warn(`Failed to generate inlined request body file: ${error}`);
             return null;
         }
-    }
-
-    // Helper method to convert query parameters to object properties
-    private convertQueryParametersToProperties(queryParams: FernIr.QueryParameter[]): FernIr.ObjectProperty[] {
-        return queryParams.map((queryParam) => {
-            // For allow-multiple query params, wrap the type in a list using proper IR constructors
-            let valueType = queryParam.valueType;
-            if (queryParam.allowMultiple) {
-                valueType = FernIr.TypeReference.container(FernIr.ContainerType.list(queryParam.valueType));
-            }
-
-            return {
-                name: queryParam.name,
-                valueType,
-                docs: queryParam.docs,
-                availability: queryParam.availability,
-                propertyAccess: undefined,
-                v2Examples: undefined
-            };
-        });
     }
 }

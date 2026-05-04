@@ -9,7 +9,7 @@ import type * as FernIr from "../../../index.js";
 export interface NamedType {
     typeId: FernIr.TypeId;
     fernFilepath: FernIr.FernFilepath;
-    name: FernIr.Name;
+    name: FernIr.NameOrString;
     displayName: FernIr.DisplayName | undefined;
     default: FernIr.NamedTypeDefault | undefined;
     /** Use the inline property on the TypeDeclaration instead. */

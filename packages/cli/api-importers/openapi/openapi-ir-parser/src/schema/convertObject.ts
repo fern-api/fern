@@ -301,16 +301,7 @@ export function convertObject({
         }
     }
 
-    const filteredPropertiesToConvert = Object.fromEntries(
-        Object.entries(propertiesToConvert).filter(([_, propertySchema]) => {
-            if (!isReferenceObject(propertySchema) && (propertySchema.type as string) === "null") {
-                return false;
-            }
-            return true;
-        })
-    );
-
-    const convertedProperties: ObjectPropertyWithExample[] = Object.entries(filteredPropertiesToConvert).map(
+    const convertedProperties: ObjectPropertyWithExample[] = Object.entries(propertiesToConvert).map(
         ([propertyName, propertySchema]) => {
             const audiences = getExtension<string[]>(propertySchema, FernOpenAPIExtension.AUDIENCES) ?? [];
             const availability = convertAvailability(propertySchema);
@@ -558,7 +549,7 @@ function filterNotProperties(schema: OpenAPIV3.SchemaObject): OpenAPIV3.SchemaOb
     return { ...schema, properties: filteredProperties };
 }
 
-function getAllProperties({
+export function getAllProperties({
     schema,
     context,
     breadcrumbs,

@@ -3,47 +3,14 @@
 import type * as GeneratorsYml from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { GeneratorApiSettingsSchema } from "./GeneratorApiSettingsSchema.js";
-import { GeneratorOutputSchema } from "./GeneratorOutputSchema.js";
-import { GeneratorPublishMetadataSchema } from "./GeneratorPublishMetadataSchema.js";
-import { GeneratorSnippetsSchema } from "./GeneratorSnippetsSchema.js";
-import { GithubConfigurationSchema } from "./GithubConfigurationSchema.js";
+import { CustomGeneratorInvocationSchema } from "./CustomGeneratorInvocationSchema.js";
+import { DefaultGeneratorInvocationSchema } from "./DefaultGeneratorInvocationSchema.js";
 
-export const GeneratorInvocationSchema: core.serialization.ObjectSchema<
+export const GeneratorInvocationSchema: core.serialization.Schema<
     serializers.GeneratorInvocationSchema.Raw,
     GeneratorsYml.GeneratorInvocationSchema
-> = core.serialization.object({
-    name: core.serialization.string(),
-    version: core.serialization.string(),
-    output: GeneratorOutputSchema.optional(),
-    github: GithubConfigurationSchema.optional(),
-    config: core.serialization.unknown().optional(),
-    metadata: GeneratorPublishMetadataSchema.optional(),
-    keywords: core.serialization.list(core.serialization.string()).optional(),
-    snippets: GeneratorSnippetsSchema.optional(),
-    "ir-version": core.serialization.string().optional(),
-    "smart-casing": core.serialization.boolean().optional(),
-    api: GeneratorApiSettingsSchema.optional(),
-    "disable-examples": core.serialization.boolean().optional(),
-    "publish-metadata": GeneratorPublishMetadataSchema.optional(),
-    autorelease: core.serialization.boolean().optional(),
-});
+> = core.serialization.undiscriminatedUnion([DefaultGeneratorInvocationSchema, CustomGeneratorInvocationSchema]);
 
 export declare namespace GeneratorInvocationSchema {
-    export interface Raw {
-        name: string;
-        version: string;
-        output?: GeneratorOutputSchema.Raw | null;
-        github?: GithubConfigurationSchema.Raw | null;
-        config?: unknown | null;
-        metadata?: GeneratorPublishMetadataSchema.Raw | null;
-        keywords?: string[] | null;
-        snippets?: GeneratorSnippetsSchema.Raw | null;
-        "ir-version"?: string | null;
-        "smart-casing"?: boolean | null;
-        api?: GeneratorApiSettingsSchema.Raw | null;
-        "disable-examples"?: boolean | null;
-        "publish-metadata"?: GeneratorPublishMetadataSchema.Raw | null;
-        autorelease?: boolean | null;
-    }
+    export type Raw = DefaultGeneratorInvocationSchema.Raw | CustomGeneratorInvocationSchema.Raw;
 }

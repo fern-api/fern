@@ -15,9 +15,9 @@ func do() {
         ),
     )
     request := &fern.GetOrganizationUserRequest{
-        TenantId: "tenant_id",
-        OrganizationId: "organization_id",
-        UserId: "user_id",
+        TenantID: "tenant_id",
+        OrganizationID: "organization_id",
+        UserID: "user_id",
     }
     client.Organizations.GetOrganizationUser(
         context.TODO(),

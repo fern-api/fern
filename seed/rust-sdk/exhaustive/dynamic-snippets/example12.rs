@@ -14,6 +14,7 @@ async fn main() {
         .test_post(
             &ObjectWithRequiredField {
                 string: "string".to_string(),
+                ..Default::default()
             },
             None,
         )

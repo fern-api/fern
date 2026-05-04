@@ -23,7 +23,7 @@ groups:
         version: 3.49.0
         output:
           location: npm
-          package-name: "@fern-api/dynamic-ir-sdk"
+          package-name: "@fern-api/dynamic-ir-v63-sdk"
           token: ${NPM_TOKEN}
         config:
           noOptionalProperties: false

@@ -15,7 +15,7 @@ func do() {
         ),
     )
     request := &events.GetEventMetadataRequest{
-        Id: "id",
+        ID: "id",
     }
     client.User.Events.Metadata.GetMetadata(
         context.TODO(),

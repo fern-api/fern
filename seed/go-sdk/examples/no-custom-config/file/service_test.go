@@ -10,25 +10,25 @@ import (
 )
 
 func TestSettersGetFileRequest(t *testing.T) {
-	t.Run("SetXFileApiVersion", func(t *testing.T) {
+	t.Run("SetXFileAPIVersion", func(t *testing.T) {
 		obj := &GetFileRequest{}
-		var fernTestValueXFileApiVersion string
-		obj.SetXFileApiVersion(fernTestValueXFileApiVersion)
-		assert.Equal(t, fernTestValueXFileApiVersion, obj.XFileApiVersion)
+		var fernTestValueXFileAPIVersion string
+		obj.SetXFileAPIVersion(fernTestValueXFileAPIVersion)
+		assert.Equal(t, fernTestValueXFileAPIVersion, obj.XFileAPIVersion)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 }
 
 func TestSettersMarkExplicitGetFileRequest(t *testing.T) {
-	t.Run("SetXFileApiVersion_MarksExplicit", func(t *testing.T) {
+	t.Run("SetXFileAPIVersion_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetFileRequest{}
-		var fernTestValueXFileApiVersion string
+		var fernTestValueXFileAPIVersion string
 
 		// Act
-		obj.SetXFileApiVersion(fernTestValueXFileApiVersion)
+		obj.SetXFileAPIVersion(fernTestValueXFileAPIVersion)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

@@ -10,7 +10,7 @@ pub struct ExampleType {
 
 impl ExampleType {
     pub fn builder() -> ExampleTypeBuilder {
-        ExampleTypeBuilder::default()
+        <ExampleTypeBuilder as Default>::default()
     }
 }
 

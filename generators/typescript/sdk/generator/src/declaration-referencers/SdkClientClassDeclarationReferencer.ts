@@ -5,11 +5,15 @@ import { DeclarationReferencer } from "./DeclarationReferencer.js";
 import { SdkRootClientClassDeclarationReferencer } from "./SdkRootClientClassDeclarationReferencer.js";
 import { SdkSubpackageClientClassDeclarationReferencer } from "./SdkSubpackageClientClassDeclarationReferencer.js";
 
+export declare namespace SdkClientClassDeclarationReferencer {
+    export type Init = AbstractSdkClientClassDeclarationReferencer.Init;
+}
+
 export class SdkClientClassDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<PackageId> {
     private rootClientClassDeclarationReferencer: SdkRootClientClassDeclarationReferencer;
     private subpackageClientClassDeclarationReferencer: SdkSubpackageClientClassDeclarationReferencer;
 
-    constructor(superInit: AbstractSdkClientClassDeclarationReferencer.Init) {
+    constructor(superInit: SdkClientClassDeclarationReferencer.Init) {
         super(superInit);
         this.rootClientClassDeclarationReferencer = new SdkRootClientClassDeclarationReferencer(superInit);
         this.subpackageClientClassDeclarationReferencer = new SdkSubpackageClientClassDeclarationReferencer(superInit);

@@ -32,7 +32,7 @@ use seed_header_token_environment_variable::prelude::*;
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        api_key: Some("<value>".to_string()),
+        api_key: Some("YOUR_HEADER_VALUE".to_string()),
         ..Default::default()
     };
     let client = HeaderTokenEnvironmentVariableClient::new(config).expect("Failed to build client");

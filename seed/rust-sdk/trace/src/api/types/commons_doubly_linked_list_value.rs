@@ -10,7 +10,7 @@ pub struct DoublyLinkedListValue {
 
 impl DoublyLinkedListValue {
     pub fn builder() -> DoublyLinkedListValueBuilder {
-        DoublyLinkedListValueBuilder::default()
+        <DoublyLinkedListValueBuilder as Default>::default()
     }
 }
 

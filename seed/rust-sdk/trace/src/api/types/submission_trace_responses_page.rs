@@ -13,7 +13,7 @@ pub struct TraceResponsesPage {
 
 impl TraceResponsesPage {
     pub fn builder() -> TraceResponsesPageBuilder {
-        TraceResponsesPageBuilder::default()
+        <TraceResponsesPageBuilder as Default>::default()
     }
 }
 

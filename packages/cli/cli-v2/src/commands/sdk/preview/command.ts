@@ -1,8 +1,9 @@
+import { CliError } from "@fern-api/task-context";
+
 import type { Argv } from "yargs";
 import { GENERATE_COMMAND_TIMEOUT_MS } from "../../../constants.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { CliError } from "../../../errors/CliError.js";
 import { command } from "../../_internal/command.js";
 import { GenerateCommand } from "../generate/command.js";
 
@@ -30,7 +31,13 @@ export function addPreviewCommand(cli: Argv<GlobalArgs>): void {
         async (context, args) => {
             const timeout = new Promise<never>((_, reject) => {
                 setTimeout(
-                    () => reject(new CliError({ message: "Preview generation timed out after 10 minutes." })),
+                    () =>
+                        reject(
+                            new CliError({
+                                message: "Preview generation timed out after 10 minutes.",
+                                code: CliError.Code.NetworkError
+                            })
+                        ),
                     GENERATE_COMMAND_TIMEOUT_MS
                 ).unref();
             });
@@ -40,7 +47,7 @@ export function addPreviewCommand(cli: Argv<GlobalArgs>): void {
             yargs
                 .option("api", {
                     type: "string",
-                    description: "Path or URL to an API spec file (enables no-config mode)"
+                    description: 'Path or URL to an API spec file, or "-" to read from stdin (enables no-config mode)'
                 })
                 .option("audience", {
                     type: "array",
@@ -96,6 +103,12 @@ export function addPreviewCommand(cli: Argv<GlobalArgs>): void {
                     type: "string",
                     description: "Path to .fernignore file",
                     hidden: true
+                })
+                .option("require-env-vars", {
+                    type: "boolean",
+                    default: true,
+                    description:
+                        "Require all referenced environment variables to be defined (use --no-require-env-vars to substitute empty strings for missing variables)"
                 })
     );
 }

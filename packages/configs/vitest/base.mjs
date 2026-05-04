@@ -15,6 +15,11 @@ export const defaultConfig = {
         reporters: process.env.CI ? [["default", { summary: false }], "github-actions"] : ["default"],
         maxConcurrency: 10,
         passWithNoTests: true,
+        // Work around vitest 4.1.1+ snapshot truncation regression (truncates deep objects
+        // as "[Object]"/"[Array]"). See https://github.com/vitest-dev/vitest/issues/9964.
+        snapshotFormat: {
+            maxOutputLength: Number.MAX_SAFE_INTEGER
+        },
         tags: [
             {
                 name: "slow",

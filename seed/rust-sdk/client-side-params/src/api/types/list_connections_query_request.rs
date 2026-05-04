@@ -16,7 +16,7 @@ pub struct ListConnectionsQueryRequest {
 
 impl ListConnectionsQueryRequest {
     pub fn builder() -> ListConnectionsQueryRequestBuilder {
-        ListConnectionsQueryRequestBuilder::default()
+        <ListConnectionsQueryRequestBuilder as Default>::default()
     }
 }
 

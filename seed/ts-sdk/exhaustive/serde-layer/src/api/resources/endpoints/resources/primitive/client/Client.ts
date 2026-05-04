@@ -54,7 +54,7 @@ export class PrimitiveClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnString.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -123,7 +123,7 @@ export class PrimitiveClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnInt.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -192,7 +192,7 @@ export class PrimitiveClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnLong.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -261,7 +261,7 @@ export class PrimitiveClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnDouble.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -330,7 +330,7 @@ export class PrimitiveClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnBool.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -399,7 +399,7 @@ export class PrimitiveClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnDatetime.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -468,7 +468,7 @@ export class PrimitiveClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnDate.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -537,7 +537,7 @@ export class PrimitiveClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnUuid.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
@@ -606,7 +606,7 @@ export class PrimitiveClient {
             method: "POST",
             headers: _headers,
             contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: serializers.endpoints.primitive.getAndReturnBase64.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",

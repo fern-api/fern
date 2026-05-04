@@ -1,0 +1,3 @@
+- summary: |
+    Add `fern replay` commands to CLI v2: `init`, `resolve`, `status`, and `forget`.
+  type: feat

@@ -53,9 +53,11 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_usernames_custom(
-            &ListUsernamesCustomQueryRequest {
+        .list_with_custom_pager(
+            &ListWithCustomPagerQueryRequest {
+                limit: Some(1),
                 starting_after: Some("starting_after".to_string()),
+                ..Default::default()
             },
             None,
         )
@@ -68,7 +70,7 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-match client.users.list_usernames_custom(None)?.await {
+match client.users.list_with_custom_pager(None)?.await {
     Ok(response) => {
         println!("Success: {:?}", response);
     },
@@ -93,12 +95,17 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (Internal Server Error)
+
+The `retryStatusCodes` configuration controls which [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) status codes are retried:
+
+- `legacy` (default): Retries `408`, `429`, and all `>= 500`
+- `recommended`: Retries `408`, `429`, `502`, `503`, `504` only (excludes `500 Internal Server Error` to avoid retrying non-idempotent failures)
 
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-let response = client.users.list_usernames_custom(
+let response = client.users.list_with_custom_pager(
     Some(RequestOptions::new().max_retries(3))
 )?.await;
 ```
@@ -108,7 +115,7 @@ let response = client.users.list_usernames_custom(
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-let response = client.users.list_usernames_custom(
+let response = client.users.list_with_custom_pager(
     Some(RequestOptions::new().timeout_seconds(30))
 )?.await;
 ```
@@ -118,7 +125,7 @@ let response = client.users.list_usernames_custom(
 You can add custom headers to requests using `RequestOptions`.
 
 ```rust
-let response = client.users.list_usernames_custom(
+let response = client.users.list_with_custom_pager(
     Some(
         RequestOptions::new()
             .additional_header("X-Custom-Header", "custom-value")
@@ -133,7 +140,7 @@ let response = client.users.list_usernames_custom(
 You can add custom query parameters to requests using `RequestOptions`.
 
 ```rust
-let response = client.users.list_usernames_custom(
+let response = client.users.list_with_custom_pager(
     Some(
         RequestOptions::new()
             .additional_query_param("filter", "active")

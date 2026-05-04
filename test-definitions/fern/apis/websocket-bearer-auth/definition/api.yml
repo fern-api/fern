@@ -6,3 +6,4 @@ auth-schemes:
     token:
       name: apiKey
       env: SEED_API_KEY
+      placeholder: YOUR_API_KEY

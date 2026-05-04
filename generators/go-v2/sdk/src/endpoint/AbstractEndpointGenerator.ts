@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -76,7 +77,7 @@ export abstract class AbstractEndpointGenerator {
             ...endpoint.pathParameters
         ]) {
             const parameterName = this.context.getParameterName(pathParam.name);
-            pathParameterReferences[pathParam.name.originalName] = this.accessPathParameterValue({
+            pathParameterReferences[getOriginalName(pathParam.name)] = this.accessPathParameterValue({
                 pathParameter: pathParam,
                 sdkRequest: endpoint.sdkRequest,
                 includePathParametersInEndpointSignature: includePathParametersInSignature
@@ -156,18 +157,20 @@ export abstract class AbstractEndpointGenerator {
     }
 
     private getSingleFileParameter({ fileProperty }: { fileProperty: FernIr.FilePropertySingle }): go.Parameter {
+        const keyName = getOriginalName(fileProperty.key);
         return go.parameter({
             docs: fileProperty.docs,
             type: go.Type.reference(this.context.getIoReaderTypeReference()),
-            name: this.context.getParameterName(fileProperty.key.name)
+            name: this.context.getParameterName(keyName)
         });
     }
 
     private getFileArrayParameter({ fileProperty }: { fileProperty: FernIr.FilePropertyArray }): go.Parameter {
+        const keyName = getOriginalName(fileProperty.key);
         return go.parameter({
             docs: fileProperty.docs,
             type: go.Type.slice(go.Type.reference(this.context.getIoReaderTypeReference())),
-            name: this.context.getParameterName(fileProperty.key.name)
+            name: this.context.getParameterName(keyName)
         });
     }
 

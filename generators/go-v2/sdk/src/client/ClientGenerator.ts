@@ -1,3 +1,4 @@
+import { NameInput } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { FileGenerator, GoFile } from "@fern-api/go-base";
@@ -8,6 +9,7 @@ import {
     getInferredAuthScheme,
     getOAuthClientCredentialsScheme,
     getRequestPropertyFieldName,
+    isPlainStringType,
     isRequestPropertyOptional,
     isTypeReferenceOptional,
     resolveTokenEndpointBodyProperties
@@ -230,14 +232,21 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
 
     private writeHeaderEnvironmentVariables({ writer }: { writer: go.Writer }): void {
         for (const header of this.context.ir.headers) {
-            if (header.env == null) {
-                continue;
+            if (header.env != null) {
+                this.writeEnvConditional({
+                    writer,
+                    propertyReference: this.getOptionsPropertyReference(header.name),
+                    env: header.env
+                });
             }
-            this.writeEnvConditional({
-                writer,
-                propertyReference: this.getOptionsPropertyReference(header.name.name),
-                env: header.env
-            });
+            // After env fallback, apply clientDefault if present and type is plain string
+            if (header.clientDefault != null && isPlainStringType(header.valueType)) {
+                this.writeClientDefaultConditional({
+                    writer,
+                    propertyReference: this.getOptionsPropertyReference(header.name),
+                    clientDefault: header.clientDefault
+                });
+            }
         }
     }
 
@@ -273,14 +282,16 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         writer: go.Writer;
         scheme: FernIr.BasicAuthScheme;
     }): void {
-        if (scheme.usernameEnvVar != null) {
+        const usernameOmitted = !!scheme.usernameOmit;
+        const passwordOmitted = !!scheme.passwordOmit;
+        if (scheme.usernameEnvVar != null && !usernameOmitted) {
             this.writeEnvConditional({
                 writer,
                 propertyReference: this.getOptionsPropertyReference(scheme.username),
                 env: scheme.usernameEnvVar
             });
         }
-        if (scheme.passwordEnvVar != null) {
+        if (scheme.passwordEnvVar != null && !passwordOmitted) {
             this.writeEnvConditional({
                 writer,
                 propertyReference: this.getOptionsPropertyReference(scheme.password),
@@ -315,7 +326,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         if (scheme.headerEnvVar != null) {
             this.writeEnvConditional({
                 writer,
-                propertyReference: this.getOptionsPropertyReference(scheme.name.name),
+                propertyReference: this.getOptionsPropertyReference(scheme.name),
                 env: scheme.headerEnvVar
             });
         }
@@ -719,7 +730,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 let accessTokenField = "AccessToken";
                 const firstAuthHeader = authHeaders[0];
                 if (firstAuthHeader != null && firstAuthHeader.responseProperty != null) {
-                    accessTokenField = this.context.getFieldName(firstAuthHeader.responseProperty.property.name.name);
+                    accessTokenField = this.context.getFieldName(firstAuthHeader.responseProperty.property.name);
                 }
 
                 // Check for empty access token
@@ -742,7 +753,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 // Handle ExpiresIn with fallback to default
                 const expiryProperty = inferredScheme.tokenEndpoint.expiryProperty;
                 if (expiryProperty != null) {
-                    const expiryField = this.context.getFieldName(expiryProperty.property.name.name);
+                    const expiryField = this.context.getFieldName(expiryProperty.property.name);
                     const expiryIsOptional = this.isResponsePropertyOptional(expiryProperty);
 
                     w.writeLine("expiresIn := core.DefaultExpirySeconds");
@@ -816,7 +827,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         const headerEnvVars = new Map<string, string>();
         for (const header of tokenEndpoint.headers) {
             if (header.env != null) {
-                headerEnvVars.set(this.context.getFieldName(header.name.name), header.env);
+                headerEnvVars.set(this.context.getFieldName(header.name), header.env);
             }
         }
 
@@ -867,7 +878,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
      */
     private resolveTokenEndpointBodyProperties(
         tokenEndpoint: FernIr.HttpEndpoint
-    ): Array<{ name: FernIr.NameAndWireValue; valueType: FernIr.TypeReference }> {
+    ): Array<{ name: FernIr.NameAndWireValueOrString; valueType: FernIr.TypeReference }> {
         return resolveTokenEndpointBodyProperties(tokenEndpoint, this.context.ir.types);
     }
 
@@ -892,8 +903,32 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         writer.writeLine("}");
     }
 
-    private getOptionsPropertyReference(name: FernIr.Name): go.Selector {
-        return go.selector({ on: go.codeblock("options"), selector: go.codeblock(this.context.getFieldName(name)) });
+    private writeClientDefaultConditional({
+        writer,
+        propertyReference,
+        clientDefault
+    }: {
+        writer: go.Writer;
+        propertyReference: go.Selector;
+        clientDefault: FernIr.Literal;
+    }): void {
+        writer.write("if ");
+        writer.writeNode(propertyReference);
+        writer.writeLine(' == "" {');
+        writer.indent();
+        writer.writeNode(propertyReference);
+        writer.write(" = ");
+        writer.writeNode(this.context.getLiteralValue(clientDefault));
+        writer.newLine();
+        writer.dedent();
+        writer.writeLine("}");
+    }
+
+    private getOptionsPropertyReference(name: NameInput): go.Selector {
+        return go.selector({
+            on: go.codeblock("options"),
+            selector: go.codeblock(this.context.getFieldName(name))
+        });
     }
 
     private instantiateSubClient({ subpackage }: { subpackage: FernIr.Subpackage }): go.TypeInstantiation {

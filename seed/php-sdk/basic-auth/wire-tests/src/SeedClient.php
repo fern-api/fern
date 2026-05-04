@@ -31,7 +31,7 @@ class SeedClient
 
     /**
      * @param string $username The username to use for authentication.
-     * @param string $password The username to use for authentication.
+     * @param string $password The password to use for authentication.
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,

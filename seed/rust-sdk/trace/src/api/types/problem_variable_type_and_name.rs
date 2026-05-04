@@ -10,7 +10,7 @@ pub struct VariableTypeAndName {
 
 impl VariableTypeAndName {
     pub fn builder() -> VariableTypeAndNameBuilder {
-        VariableTypeAndNameBuilder::default()
+        <VariableTypeAndNameBuilder as Default>::default()
     }
 }
 

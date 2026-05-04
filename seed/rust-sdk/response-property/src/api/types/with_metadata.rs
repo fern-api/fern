@@ -8,7 +8,7 @@ pub struct WithMetadata {
 
 impl WithMetadata {
     pub fn builder() -> WithMetadataBuilder {
-        WithMetadataBuilder::default()
+        <WithMetadataBuilder as Default>::default()
     }
 }
 

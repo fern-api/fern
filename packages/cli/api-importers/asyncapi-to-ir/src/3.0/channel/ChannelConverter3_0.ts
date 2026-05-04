@@ -1,5 +1,6 @@
 import { HttpHeader, PathParameter, QueryParameter, WebSocketMessage, WebSocketMessageBody } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
+import { CliError } from "@fern-api/task-context";
 import { Converters } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter.js";
@@ -38,12 +39,12 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         const queryParameters: QueryParameter[] = [];
         const headers: HttpHeader[] = [];
 
-        const displayNameExtension = new DisplayNameExtension({
+        const channelDisplayNameExtension = new DisplayNameExtension({
             breadcrumbs: this.breadcrumbs,
-            channel: this.channel,
+            node: this.channel,
             context: this.context
         });
-        const displayName = displayNameExtension.convert() ?? this.websocketGroup?.join(".") ?? this.channelPath;
+        const displayName = channelDisplayNameExtension.convert() ?? this.websocketGroup?.join(".") ?? this.channelPath;
 
         if (this.channel.parameters) {
             this.convertChannelParameters({
@@ -70,6 +71,13 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         const messages: WebSocketMessage[] = [];
 
         for (const [operationId, operation] of Object.entries(channelOperations)) {
+            const operationDisplayNameExtension = new DisplayNameExtension({
+                breadcrumbs: [...this.breadcrumbs, operationId],
+                node: operation,
+                context: this.context
+            });
+            const operationDisplayName = operationDisplayNameExtension.convert() ?? operationId;
+
             for (const message of operation.messages) {
                 const resolved = this.context.convertReferenceToTypeReference({ reference: message });
                 if (resolved.ok) {
@@ -79,7 +87,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                     });
                     messages.push({
                         type: operationId,
-                        displayName: operationId,
+                        displayName: operationDisplayName,
                         origin: operation.action === "send" ? "client" : "server",
                         body: messageBody,
                         availability: this.context.getAvailability({
@@ -303,7 +311,10 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
 
     private getChannelPathFromOperation(operation: AsyncAPIV3.Operation): string {
         if (!operation.channel.$ref.startsWith(CHANNEL_REFERENCE_PREFIX)) {
-            throw new Error(`Failed to resolve channel path from operation ${operation.channel.$ref}`);
+            throw new CliError({
+                message: `Failed to resolve channel path from operation ${operation.channel.$ref}`,
+                code: CliError.Code.ReferenceError
+            });
         }
         return operation.channel.$ref.substring(CHANNEL_REFERENCE_PREFIX.length);
     }

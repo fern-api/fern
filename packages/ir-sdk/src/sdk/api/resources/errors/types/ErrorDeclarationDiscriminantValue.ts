@@ -7,8 +7,9 @@ export type ErrorDeclarationDiscriminantValue =
     | FernIr.ErrorDeclarationDiscriminantValue.StatusCode;
 
 export namespace ErrorDeclarationDiscriminantValue {
-    export interface Property extends FernIr.NameAndWireValue, _Utils {
+    export interface Property extends _Utils {
         type: "property";
+        value: FernIr.NameAndWireValueOrString;
     }
 
     export interface StatusCode extends _Utils {
@@ -20,16 +21,16 @@ export namespace ErrorDeclarationDiscriminantValue {
     }
 
     export interface _Visitor<_Result> {
-        property: (value: FernIr.NameAndWireValue) => _Result;
+        property: (value: FernIr.NameAndWireValueOrString) => _Result;
         statusCode: () => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
 
 export const ErrorDeclarationDiscriminantValue = {
-    property: (value: FernIr.NameAndWireValue): FernIr.ErrorDeclarationDiscriminantValue.Property => {
+    property: (value: FernIr.NameAndWireValueOrString): FernIr.ErrorDeclarationDiscriminantValue.Property => {
         return {
-            ...value,
+            value: value,
             type: "property",
             _visit: function <_Result>(
                 this: FernIr.ErrorDeclarationDiscriminantValue.Property,
@@ -58,7 +59,7 @@ export const ErrorDeclarationDiscriminantValue = {
     ): _Result => {
         switch (value.type) {
             case "property":
-                return visitor.property(value);
+                return visitor.property(value.value);
             case "statusCode":
                 return visitor.statusCode();
             default:

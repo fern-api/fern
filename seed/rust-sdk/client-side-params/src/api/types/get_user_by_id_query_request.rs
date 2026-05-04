@@ -13,7 +13,7 @@ pub struct GetUserByIdQueryRequest {
 
 impl GetUserByIdQueryRequest {
     pub fn builder() -> GetUserByIdQueryRequestBuilder {
-        GetUserByIdQueryRequestBuilder::default()
+        <GetUserByIdQueryRequestBuilder as Default>::default()
     }
 }
 

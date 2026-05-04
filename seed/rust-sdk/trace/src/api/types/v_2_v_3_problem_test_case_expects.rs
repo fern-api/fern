@@ -9,7 +9,7 @@ pub struct TestCaseExpects2 {
 
 impl TestCaseExpects2 {
     pub fn builder() -> TestCaseExpects2Builder {
-        TestCaseExpects2Builder::default()
+        <TestCaseExpects2Builder as Default>::default()
     }
 }
 

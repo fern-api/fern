@@ -16,7 +16,7 @@ pub struct UserProfile {
 
 impl UserProfile {
     pub fn builder() -> UserProfileBuilder {
-        UserProfileBuilder::default()
+        <UserProfileBuilder as Default>::default()
     }
 }
 

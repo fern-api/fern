@@ -10,7 +10,7 @@ pub struct FunctionImplementation {
 
 impl FunctionImplementation {
     pub fn builder() -> FunctionImplementationBuilder {
-        FunctionImplementationBuilder::default()
+        <FunctionImplementationBuilder as Default>::default()
     }
 }
 

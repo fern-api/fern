@@ -21,6 +21,7 @@ import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.SafeAndUnsafeString;
 import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.java.utils.KeyWordUtils;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,14 +38,19 @@ public abstract class AbstractModelPoetClassNameFactory extends AbstractPoetClas
     public final ClassName getTypeClassName(DeclaredTypeName declaredTypeName) {
         String packageName = getTypesPackageName(declaredTypeName.getFernFilepath());
         return ClassName.get(
-                packageName, declaredTypeName.getName().getPascalCase().getSafeName());
+                packageName,
+                NameUtils.toName(declaredTypeName.getName()).getPascalCase().getSafeName());
     }
 
     @Override
     public final ClassName getInterfaceClassName(DeclaredTypeName declaredTypeName) {
         String packageName = getTypesPackageName(declaredTypeName.getFernFilepath());
         return ClassName.get(
-                packageName, "I" + declaredTypeName.getName().getPascalCase().getSafeName());
+                packageName,
+                "I"
+                        + NameUtils.toName(declaredTypeName.getName())
+                                .getPascalCase()
+                                .getSafeName());
     }
 
     protected final String getTypesPackageName(FernFilepath fernFilepath) {
@@ -54,6 +60,7 @@ public abstract class AbstractModelPoetClassNameFactory extends AbstractPoetClas
                 // NOTE: We're making it camel-case here on purpose: snake-case is used in the NESTED case for
                 //  historical reasons, but we should unify on this method going forward.
                 tokens.addAll(fernFilepath.getPackagePath().stream()
+                        .map(NameUtils::toName)
                         .map(Name::getCamelCase)
                         .map(SafeAndUnsafeString::getSafeName)
                         .map(String::toLowerCase)
@@ -64,6 +71,7 @@ public abstract class AbstractModelPoetClassNameFactory extends AbstractPoetClas
             default:
                 tokens.add("model");
                 tokens.addAll(fernFilepath.getAllParts().stream()
+                        .map(NameUtils::toName)
                         .map(Name::getSnakeCase)
                         .map(SafeAndUnsafeString::getSafeName)
                         .flatMap(snakeCase -> splitOnNonAlphaNumericChar(snakeCase).stream())

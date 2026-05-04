@@ -29,7 +29,9 @@ export function buildQueryParameter({
     }
 
     let queryParameterType = getTypeFromTypeReference(typeReference.value);
-    const queryParameterDefault = getDefaultFromTypeReference(typeReference.value);
+    const queryParameterDefault =
+        getDefaultFromOpenApiIrSchema(queryParameter.schema, context, namespace) ??
+        getDefaultFromTypeReference(typeReference.value);
 
     // we can assume unknown-typed query parameters are strings by default
     if (queryParameterType === "unknown") {
@@ -42,6 +44,9 @@ export function buildQueryParameter({
         type: queryParameterType
     };
 
+    if (queryParameter.clientDefault != null) {
+        queryParameterSchema["client-default"] = queryParameter.clientDefault;
+    }
     if (queryParameterDefault != null) {
         queryParameterSchema.default = queryParameterDefault;
     }
@@ -74,6 +79,7 @@ export function buildQueryParameter({
 
     if (
         queryParameterSchema.default == null &&
+        queryParameterSchema["client-default"] == null &&
         queryParameterSchema["allow-multiple"] == null &&
         queryParameterSchema.docs == null &&
         queryParameterSchema.name == null &&
@@ -530,6 +536,32 @@ function getQueryParameterTypeReference({
             allowMultiple: false
         };
     }
+}
+
+/**
+ * Walks through optional/nullable/reference wrappers to find a top-level
+ * array schema and returns its `default` value if present. Used so that
+ * OpenAPI `default: ["html"]` on array query parameters is surfaced in the
+ * generated Fern Definition (and from there into the IR/FDR/docs UI).
+ */
+function getDefaultFromOpenApiIrSchema(
+    schema: Schema,
+    context: OpenApiIrConverterContext,
+    namespace: string | undefined
+): unknown | undefined {
+    if (schema.type === "array") {
+        return schema.default ?? undefined;
+    }
+    if (schema.type === "optional" || schema.type === "nullable") {
+        return getDefaultFromOpenApiIrSchema(schema.value, context, namespace);
+    }
+    if (schema.type === "reference") {
+        const resolved = context.getSchema(schema.schema, namespace);
+        if (resolved != null) {
+            return getDefaultFromOpenApiIrSchema(resolved, context, namespace);
+        }
+    }
+    return undefined;
 }
 
 function hasSamePrimitiveValueType({ array, primitive }: { array: Schema; primitive: Schema }): boolean {

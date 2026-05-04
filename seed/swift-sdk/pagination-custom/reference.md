@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listUsernamesCustom</a>(startingAfter: String?, requestOptions: RequestOptions?) -> UsernameCursor</code></summary>
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listWithCustomPager</a>(limit: Int?, startingAfter: String?, requestOptions: RequestOptions?) -> UsersListResponse</code></summary>
 <dl>
 <dd>
 
@@ -19,7 +19,10 @@ import Pagination
 private func main() async throws {
     let client = PaginationClient(token: "<token>")
 
-    _ = try await client.users.listUsernamesCustom(startingAfter: "starting_after")
+    _ = try await client.users.listWithCustomPager(
+        limit: 1,
+        startingAfter: "starting_after"
+    )
 }
 
 try await main()
@@ -37,10 +40,15 @@ try await main()
 <dl>
 <dd>
 
-**startingAfter:** `String?` 
+**limit:** `Int?` — The maximum number of results to return.
+    
+</dd>
+</dl>
 
-The cursor used for pagination in order to fetch
-the next page of results.
+<dl>
+<dd>
+
+**startingAfter:** `String?` — The cursor used for pagination.
     
 </dd>
 </dl>

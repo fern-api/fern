@@ -39,7 +39,7 @@ public record UnionWithDiscriminant
     /// <summary>
     /// Discriminant value
     /// </summary>
-    [JsonPropertyName("type")]
+    [JsonPropertyName("_type")]
     public string Type { get; internal set; }
 
     /// <summary>

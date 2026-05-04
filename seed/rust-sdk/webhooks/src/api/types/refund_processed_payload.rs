@@ -6,6 +6,7 @@ pub struct RefundProcessedPayload {
     #[serde(default)]
     pub refund_id: String,
     #[serde(default)]
+    #[serde(with = "crate::core::number_serializers")]
     pub amount: f64,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub reason: Option<String>,
@@ -13,7 +14,7 @@ pub struct RefundProcessedPayload {
 
 impl RefundProcessedPayload {
     pub fn builder() -> RefundProcessedPayloadBuilder {
-        RefundProcessedPayloadBuilder::default()
+        <RefundProcessedPayloadBuilder as Default>::default()
     }
 }
 

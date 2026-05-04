@@ -27,7 +27,7 @@ client.GetUsers(
 </dl>
 </details>
 
-<details><summary><code>client.GetUser(UserId) -> *fern.User</code></summary>
+<details><summary><code>client.GetUser(UserID) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -41,7 +41,7 @@ client.GetUsers(
 
 ```go
 request := &fern.GetUserRequest{
-        UserId: "userId",
+        UserID: "userId",
     }
 client.GetUser(
         context.TODO(),
@@ -62,7 +62,7 @@ client.GetUser(
 <dl>
 <dd>
 
-**userId:** `string` 
+**userID:** `string` 
     
 </dd>
 </dl>
@@ -88,7 +88,7 @@ client.GetUser(
 
 ```go
 request := &fern.TokenRequest{
-        ClientId: "client_id",
+        ClientID: "client_id",
         ClientSecret: "client_secret",
     }
 client.GetToken(
@@ -110,7 +110,7 @@ client.GetToken(
 <dl>
 <dd>
 
-**clientId:** `string` 
+**clientID:** `string` 
     
 </dd>
 </dl>

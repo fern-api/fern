@@ -7,6 +7,8 @@ import {
     RequestPropertyValue,
     ResponseProperty
 } from "@fern-api/ir-sdk";
+import { getOriginalName } from "@fern-api/ir-utils";
+import { CliError } from "@fern-api/task-context";
 import {
     getNestedObjectPropertyFromObjectSchema,
     getNestedObjectPropertyFromResolvedType,
@@ -61,9 +63,11 @@ export class PropertyResolverImpl implements PropertyResolver {
     }): RequestProperty {
         const resolvedRequestProperty = this.resolveRequestProperty({ file, endpoint, propertyComponents });
         if (resolvedRequestProperty == null) {
-            throw new Error(
-                "Cannot resolve request property from endpoint: " + endpoint + " in file " + file.relativeFilepath
-            );
+            throw new CliError({
+                message:
+                    "Cannot resolve request property from endpoint: " + endpoint + " in file " + file.relativeFilepath,
+                code: CliError.Code.ResolutionError
+            });
         }
         return resolvedRequestProperty;
     }
@@ -125,9 +129,11 @@ export class PropertyResolverImpl implements PropertyResolver {
     }): ResponseProperty {
         const resolvedResponseProperty = this.resolveResponseProperty({ file, endpoint, propertyComponents });
         if (resolvedResponseProperty == null) {
-            throw new Error(
-                "Cannot resolve response property from endpoint: " + endpoint + " in file " + file.relativeFilepath
-            );
+            throw new CliError({
+                message:
+                    "Cannot resolve response property from endpoint: " + endpoint + " in file " + file.relativeFilepath,
+                code: CliError.Code.ResolutionError
+            });
         }
         return resolvedResponseProperty;
     }
@@ -359,9 +365,10 @@ export class PropertyResolverImpl implements PropertyResolver {
                 propertyComponents: breadcrumbs
             });
             if (!currentType) {
-                throw new Error(
-                    `Cannot find property '${breadcrumbs.join(".")}' in inline request body in file ${file.relativeFilepath}`
-                );
+                throw new CliError({
+                    message: `Cannot find property '${breadcrumbs.join(".")}' in inline request body in file ${file.relativeFilepath}`,
+                    code: CliError.Code.InternalError
+                });
             }
             result.push({
                 name: file.casingsGenerator.generateName(component),
@@ -394,7 +401,10 @@ function getNestedObjectPropertyTypeOrThrow({
         propertyName
     });
     if (!nestedPropertyType) {
-        throw new Error(`Cannot find property '${breadcrumbs.join(".")}' in ${rootTypeLabel}`);
+        throw new CliError({
+            message: `Cannot find property '${breadcrumbs.join(".")}' in ${rootTypeLabel}`,
+            code: CliError.Code.InternalError
+        });
     }
     return nestedPropertyType;
 }
@@ -563,7 +573,7 @@ function getTitleForResolvedType(resolvedType: ResolvedType): string {
             }
             break;
         case "named":
-            return resolvedType.name.name.originalName;
+            return getOriginalName(resolvedType.name.name);
         case "primitive":
             return resolvedType.primitive.v1;
         case "unknown":

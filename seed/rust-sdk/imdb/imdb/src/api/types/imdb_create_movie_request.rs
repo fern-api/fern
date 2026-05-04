@@ -5,12 +5,13 @@ pub struct CreateMovieRequest {
     #[serde(default)]
     pub title: String,
     #[serde(default)]
+    #[serde(with = "crate::core::number_serializers")]
     pub rating: f64,
 }
 
 impl CreateMovieRequest {
     pub fn builder() -> CreateMovieRequestBuilder {
-        CreateMovieRequestBuilder::default()
+        <CreateMovieRequestBuilder as Default>::default()
     }
 }
 

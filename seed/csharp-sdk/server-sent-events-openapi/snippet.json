@@ -84,6 +84,138 @@
                 "type": "csharp",
                 "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nvar items = client.StreamOasSpecNativeAsync(new StreamRequest());\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
             }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/stream/x-fern-streaming-condition",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingCondition_stream"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nvar items = client.StreamXFernStreamingConditionStreamAsync(\n    new StreamXFernStreamingConditionStreamRequest { Query = \"query\", Stream = true }\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/stream/x-fern-streaming-condition",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingCondition"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.StreamXFernStreamingConditionAsync(\n    new StreamXFernStreamingConditionRequest { Query = \"query\", Stream = false }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/stream/x-fern-streaming-shared-schema",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingSharedSchema_stream"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nvar items = client.StreamXFernStreamingSharedSchemaStreamAsync(\n    new StreamXFernStreamingSharedSchemaStreamRequest\n    {\n        Prompt = \"prompt\",\n        Model = \"model\",\n        Stream = true,\n    }\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/stream/x-fern-streaming-shared-schema",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingSharedSchema"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.StreamXFernStreamingSharedSchemaAsync(\n    new StreamXFernStreamingSharedSchemaRequest\n    {\n        Prompt = \"prompt\",\n        Model = \"model\",\n        Stream = false,\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/validate-completion",
+                "method": "POST",
+                "identifier_override": "endpoint_.validateCompletion"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.ValidateCompletionAsync(\n    new SharedCompletionRequest { Prompt = \"prompt\", Model = \"model\" }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/stream/x-fern-streaming-union",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingUnion_stream"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nvar items = client.StreamXFernStreamingUnionStreamAsync(\n    new StreamXFernStreamingUnionStreamRequest(\n        new StreamXFernStreamingUnionStreamRequest.Message(\n            new UnionStreamMessageVariant\n            {\n                Prompt = \"prompt\",\n                Message = \"message\",\n                StreamResponse = true,\n            }\n        )\n    )\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/stream/x-fern-streaming-union",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingUnion"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.StreamXFernStreamingUnionAsync(\n    new StreamXFernStreamingUnionRequest(\n        new StreamXFernStreamingUnionRequest.Message(\n            new UnionStreamMessageVariant\n            {\n                Prompt = \"prompt\",\n                Message = \"message\",\n                StreamResponse = false,\n            }\n        )\n    )\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/validate-union-request",
+                "method": "POST",
+                "identifier_override": "endpoint_.validateUnionRequest"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.ValidateUnionRequestAsync(new UnionStreamRequestBase { Prompt = \"prompt\" });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/stream/x-fern-streaming-nullable-condition",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingNullableCondition_stream"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nvar items = client.StreamXFernStreamingNullableConditionStreamAsync(\n    new StreamXFernStreamingNullableConditionStreamRequest { Query = \"query\", Stream = true }\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/stream/x-fern-streaming-nullable-condition",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingNullableCondition"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.StreamXFernStreamingNullableConditionAsync(\n    new StreamXFernStreamingNullableConditionRequest { Query = \"query\", Stream = false }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/stream/x-fern-streaming-sse-only",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingSseOnly"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nvar items = client.StreamXFernStreamingSseOnlyAsync(new StreamRequest());\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
         }
     ]
 }

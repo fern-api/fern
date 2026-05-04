@@ -13,6 +13,7 @@ async fn main() {
             &EchoRequest {
                 name: "name".to_string(),
                 size: 1,
+                ..Default::default()
             },
             None,
         )

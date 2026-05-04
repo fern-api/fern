@@ -39,7 +39,7 @@ public record Resource
     /// <summary>
     /// Discriminant value
     /// </summary>
-    [JsonPropertyName("resourceType")]
+    [JsonPropertyName("resource_type")]
     public string ResourceType { get; internal set; }
 
     /// <summary>

@@ -1,0 +1,19 @@
+service:
+  auth: true
+  base-path: /v1/plants
+  headers:
+    Organization-Id:
+      name: organizationId
+      type: string
+      docs: The organization context for the request.
+  endpoints:
+    list:
+      method: GET
+      path: ""
+      request:
+        name: ListPlantsRequest
+        query-parameters:
+          organization_id:
+            type: string
+            docs: The organization to filter plants by.
+      response: string

@@ -1,8 +1,10 @@
 import { schemas } from "@fern-api/config";
 import { generatorsYml } from "@fern-api/configuration";
+import { removeDefaultDockerOrgIfPresent } from "@fern-api/configuration-loader";
 import { assertNever } from "@fern-api/core-utils";
 import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { parseRepository } from "@fern-api/github";
+import { CliError } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { readFile } from "fs/promises";
 import type { Context } from "../../context/Context.js";
@@ -26,6 +28,9 @@ export class LegacyGeneratorInvocationAdapter {
         return {
             raw: this.buildRaw(target),
             name: target.image,
+            containerImage: target.registry
+                ? `${target.registry}/${removeDefaultDockerOrgIfPresent(target.image)}`
+                : undefined,
             version: target.version,
             config: target.config,
             language: this.mapLanguage(target.lang),
@@ -40,7 +45,13 @@ export class LegacyGeneratorInvocationAdapter {
             irVersionOverride: undefined,
             keywords: undefined,
             publishMetadata: undefined,
-            settings: undefined
+            settings: undefined,
+            automation: {
+                generate: true,
+                upgrade: true,
+                preview: true,
+                verify: true
+            }
         };
     }
 
@@ -303,9 +314,10 @@ export class LegacyGeneratorInvocationAdapter {
         }
         const absolutePath = join(this.context.cwd, RelativeFilePath.of(license));
         if (!(await doesPathExist(absolutePath, "file"))) {
-            throw new Error(
-                `Custom license file "${absolutePath}" does not exist; did you mean to use either MIT or Apache-2.0?`
-            );
+            throw new CliError({
+                message: `Custom license file "${absolutePath}" does not exist; did you mean to use either MIT or Apache-2.0?`,
+                code: CliError.Code.InternalError
+            });
         }
         const contents = await readFile(absolutePath, "utf-8");
         return FernFiddle.GithubLicense.custom({ contents });

@@ -15,7 +15,7 @@ pub struct GetTokenRequest {
 
 impl GetTokenRequest {
     pub fn builder() -> GetTokenRequestBuilder {
-        GetTokenRequestBuilder::default()
+        <GetTokenRequestBuilder as Default>::default()
     }
 }
 

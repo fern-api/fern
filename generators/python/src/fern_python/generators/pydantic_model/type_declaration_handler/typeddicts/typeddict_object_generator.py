@@ -10,6 +10,7 @@ from ..object_generator import (
 from fern_python.codegen import AST, SourceFile
 from fern_python.generators.pydantic_model.typeddict import FernTypedDict
 from fern_python.snippet import SnippetWriter
+from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -52,9 +53,9 @@ class TypeddictObjectGenerator(AbstractObjectGenerator):
         ) as typed_dict:
             for property in self._properties:
                 typed_dict.add_field(
-                    name=property.name.name.snake_case.safe_name,
+                    name=resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name,
                     type_reference=property.value_type,
-                    json_field_name=property.name.wire_value,
+                    json_field_name=get_wire_value(property.name),
                     description=property.docs,
                 )
 

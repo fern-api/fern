@@ -1,6 +1,9 @@
-irVersion: v65
+irVersion: v66
 displayName: C# Model
 image: fernapi/fern-csharp-model
+# This generator is no longer actively supported. The workspace is retained for
+# historical reference but seed tests, publishing, and builds are skipped.
+disabled: true
 changelogLocation: ../../generators/csharp/model/versions.yml
 
 buildScripts:
@@ -22,6 +25,11 @@ publish:
     file: ./generators/csharp/model/Dockerfile
     image: fernapi/fern-csharp-model
     context: .
+  sentry:
+    name: fern-csharp-model
+    project: csharp-sdk
+    sourceMaps:
+      - dir: generators/csharp/model/dist
 test:
   docker:
     image: fernapi/fern-csharp-model:latest
@@ -53,6 +61,10 @@ fixtures:
     - customConfig:
         experimental-enable-forward-compatible-enums: false
       outputFolder: plain-enums
+  csharp-inline-types:
+    - customConfig:
+        enable-inline-types: true
+      outputFolder: inline-types
 scripts:
   - image: fernapi/csharp-seed
     commands:

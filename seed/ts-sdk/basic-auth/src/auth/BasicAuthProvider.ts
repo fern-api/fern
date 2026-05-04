@@ -24,16 +24,11 @@ export class BasicAuthProvider implements core.AuthProvider {
     } = {}): Promise<core.AuthRequest> {
         const username = await core.Supplier.get(this.options[USERNAME_PARAM]);
         if (username == null) {
-            throw new errors.SeedBasicAuthError({
-                message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_USERNAME,
-            });
+            throw new errors.SeedBasicAuthError({ message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_USERNAME });
         }
-
         const password = await core.Supplier.get(this.options[PASSWORD_PARAM]);
         if (password == null) {
-            throw new errors.SeedBasicAuthError({
-                message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD,
-            });
+            throw new errors.SeedBasicAuthError({ message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD });
         }
 
         const authHeader = core.BasicAuth.toAuthorizationHeader({

@@ -42,7 +42,8 @@ client = SeedPagination(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_usernames_custom(
+client.users.list_with_custom_pager(
+    limit=1,
     starting_after="starting_after",
 )
 ```
@@ -63,7 +64,8 @@ client = AsyncSeedPagination(
 
 
 async def main() -> None:
-    await client.users.list_usernames_custom(
+    await client.users.list_with_custom_pager(
+        limit=1,
         starting_after="starting_after",
     )
 
@@ -80,7 +82,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.users.list_usernames_custom(...)
+    client.users.list_with_custom_pager(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -98,14 +100,15 @@ client = SeedPagination(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_usernames_custom(
+client.users.list_with_custom_pager(
+    limit=1,
     starting_after="starting_after",
 )
 ```
 
 ```python
 # You can also iterate through pages and access the typed response per page
-pager = client.users.list_usernames_custom(...)
+pager = client.users.list_with_custom_pager(...)
 for page in pager.iter_pages():
     print(page.response)  # access the typed response for each page
     for item in page:
@@ -125,7 +128,7 @@ from seed import SeedPagination
 client = SeedPagination(
     ...,
 )
-pager = client.users.list_usernames_custom(...)
+pager = client.users.list_with_custom_pager(...)
 print(pager.response)  # access the typed response for the first page
 for item in pager:
     print(item)  # access the underlying object(s)
@@ -141,16 +144,26 @@ The SDK is instrumented with automatic retries with exponential backoff. A reque
 as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
 retry limit (default: 2).
 
-A request is deemed retryable when any of the following HTTP status codes is returned:
+Which status codes are retried depends on the `retryStatusCodes` generator configuration:
 
+**`legacy`** (current default): retries on
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [409](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409) (Conflict)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (All server errors, including 500)
+
+**`recommended`**: retries on
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [409](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409) (Conflict)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [502](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502) (Bad Gateway)
+- [503](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503) (Service Unavailable)
+- [504](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504) (Gateway Timeout)
 
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.users.list_usernames_custom(..., request_options={
+client.users.list_with_custom_pager(..., request_options={
     "max_retries": 1
 })
 ```
@@ -165,7 +178,7 @@ from seed import SeedPagination
 client = SeedPagination(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.users.list_usernames_custom(..., request_options={
+client.users.list_with_custom_pager(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

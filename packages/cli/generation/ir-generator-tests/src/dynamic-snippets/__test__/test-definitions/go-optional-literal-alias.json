@@ -68,6 +68,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "sortField",
                         "name": {
                             "originalName": "sortField",
                             "camelCase": {
@@ -86,8 +87,7 @@
                                 "unsafeName": "SortField",
                                 "safeName": "SortField"
                             }
-                        },
-                        "wireValue": "sortField"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -101,6 +101,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "query",
                         "name": {
                             "originalName": "query",
                             "camelCase": {
@@ -119,8 +120,7 @@
                                 "unsafeName": "Query",
                                 "safeName": "Query"
                             }
-                        },
-                        "wireValue": "query"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -164,6 +164,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "result",
                         "name": {
                             "originalName": "result",
                             "camelCase": {
@@ -182,8 +183,7 @@
                                 "unsafeName": "Result",
                                 "safeName": "Result"
                             }
-                        },
-                        "wireValue": "result"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",

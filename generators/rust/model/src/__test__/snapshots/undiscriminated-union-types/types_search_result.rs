@@ -22,6 +22,7 @@ pub enum SearchResult {
             #[serde(default)]
             title: String,
             #[serde(default)]
+            #[serde(with = "crate::core::number_serializers")]
             price: f64,
             #[serde(default)]
             in_stock: bool,

@@ -56,7 +56,7 @@ pub struct SearchQueryRequest {
 
 impl SearchQueryRequest {
     pub fn builder() -> SearchQueryRequestBuilder {
-        SearchQueryRequestBuilder::default()
+        <SearchQueryRequestBuilder as Default>::default()
     }
 }
 

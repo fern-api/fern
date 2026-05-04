@@ -20,7 +20,7 @@ describe("HomepageClient", () => {
 
         const response = await client.homepage.getHomepageProblems();
         expect(response).toEqual({
-            body: [SeedTrace.ProblemId("string"), SeedTrace.ProblemId("string")],
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

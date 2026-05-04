@@ -1,7 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { replaceEnvVariables } from "@fern-api/core-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import { DocsPublishConflictError, publishDocs } from "./publishDocs.js";
 
@@ -34,7 +34,9 @@ export async function runRemoteGenerationForDocsWorkspace({
     disableTemplates,
     skipUpload,
     cliVersion,
-    ciSource
+    ciSource,
+    deployerAuthor,
+    loginCommand
 }: {
     organization: string;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
@@ -49,6 +51,12 @@ export async function runRemoteGenerationForDocsWorkspace({
     skipUpload: boolean | undefined;
     cliVersion?: string;
     ciSource?: CISource;
+    deployerAuthor?: { username?: string; email?: string };
+    /**
+     * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
+     * 'fern auth login' for CLI v2). Defaults to 'fern login'.
+     */
+    loginCommand?: string;
 }): Promise<string | undefined> {
     // Substitute templated environment variables:
     // If substitute-env-vars is enabled, we'll attempt to read and replace the templated
@@ -64,7 +72,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     docsWorkspace.config = replaceEnvVariables(
         docsWorkspace.config,
         // Wrap in a closure for correct binding of `this` downstream
-        { onError: (e) => context.failAndThrow(e) },
+        { onError: (e) => context.failAndThrow(undefined, e, { code: CliError.Code.EnvironmentError }) },
         { substituteAsEmpty: shouldSubstituteAsEmpty }
     );
 
@@ -73,19 +81,27 @@ export async function runRemoteGenerationForDocsWorkspace({
     const instances = docsWorkspace.config.instances;
 
     if (instances.length === 0) {
-        context.failAndThrow("No instances specified in docs.yml! Cannot register docs.");
+        context.failAndThrow("No instances specified in docs.yml! Cannot register docs.", undefined, {
+            code: CliError.Code.ConfigError
+        });
         return;
     }
 
     if (instances.length > 1 && instanceUrl == null) {
-        context.failAndThrow(`More than one docs instances. Please specify one (e.g. --instance ${instances[0]?.url})`);
+        context.failAndThrow(
+            `More than one docs instances. Please specify one (e.g. --instance ${instances[0]?.url})`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
         return;
     }
 
     const maybeInstance = instances.find((instance) => instance.url === instanceUrl) ?? instances[0];
 
     if (maybeInstance == null) {
-        context.failAndThrow(`No docs instance with url ${instanceUrl}. Failed to register.`);
+        context.failAndThrow(`No docs instance with url ${instanceUrl}. Failed to register.`, undefined, {
+            code: CliError.Code.ConfigError
+        });
         return;
     }
 
@@ -98,6 +114,10 @@ export async function runRemoteGenerationForDocsWorkspace({
         } else if (Array.isArray(maybeInstance.customDomain)) {
             customDomains.push(...maybeInstance.customDomain);
         }
+    }
+
+    if (maybeInstance.multiSource === true) {
+        validateMultiSourceBasepaths(maybeInstance.url, customDomains, context);
     }
 
     context.logger.info(`Starting docs publishing for ${preview ? "preview" : "production"}: ${maybeInstance.url}`);
@@ -121,7 +141,6 @@ export async function runRemoteGenerationForDocsWorkspace({
                 preview,
                 previewId,
                 editThisPage: maybeInstance.editThisPage,
-                isPrivate: maybeInstance.private,
                 disableTemplates,
                 skipUpload,
                 withAiExamples:
@@ -134,7 +153,10 @@ export async function runRemoteGenerationForDocsWorkspace({
                     : undefined,
                 docsUrl: maybeInstance.url,
                 cliVersion,
-                ciSource
+                ciSource,
+                deployerAuthor,
+                loginCommand,
+                multiSource: maybeInstance.multiSource ?? false
             });
 
         for (let attempt = 0; ; attempt++) {
@@ -148,7 +170,9 @@ export async function runRemoteGenerationForDocsWorkspace({
                 ) {
                     if (error instanceof DocsPublishConflictError) {
                         return context.failAndThrow(
-                            "Another docs publish is currently in progress. Please try again once the other publish is complete."
+                            "Another docs publish is currently in progress. Please try again once the other publish is complete.",
+                            undefined,
+                            { code: CliError.Code.NetworkError }
                         );
                     }
                     throw error;
@@ -169,4 +193,28 @@ export async function runRemoteGenerationForDocsWorkspace({
         context.logger.debug(`Docs publishing completed in ${publishTime.toFixed(0)}ms`);
     });
     return publishedUrl;
+}
+
+function getBasepath(domain: string): string {
+    try {
+        const url = domain.startsWith("https://") || domain.startsWith("http://") ? domain : `https://${domain}`;
+        return new URL(url).pathname;
+    } catch {
+        return "/";
+    }
+}
+
+function validateMultiSourceBasepaths(instanceUrl: string, customDomains: string[], context: TaskContext): void {
+    const urlBasepath = getBasepath(instanceUrl);
+    for (const customDomain of customDomains) {
+        const customDomainBasepath = getBasepath(customDomain);
+        if (customDomainBasepath !== "/" && urlBasepath !== customDomainBasepath) {
+            context.failAndThrow(
+                `When multi-source is enabled, the url and custom-domain must share the same basepath. ` +
+                    `Instance url '${instanceUrl}' has basepath '${urlBasepath}' but custom-domain '${customDomain}' has basepath '${customDomainBasepath}'.`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
+    }
 }

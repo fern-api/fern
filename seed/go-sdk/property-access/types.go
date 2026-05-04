@@ -11,7 +11,7 @@ import (
 
 // Admin user object
 var (
-	adminFieldId         = big.NewInt(1 << 0)
+	adminFieldID         = big.NewInt(1 << 0)
 	adminFieldEmail      = big.NewInt(1 << 1)
 	adminFieldPassword   = big.NewInt(1 << 2)
 	adminFieldProfile    = big.NewInt(1 << 3)
@@ -20,7 +20,7 @@ var (
 
 type Admin struct {
 	// The unique identifier for the user.
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 	// The email address of the user.
 	Email string `json:"email" url:"email"`
 	// The password for the user.
@@ -37,11 +37,11 @@ type Admin struct {
 	rawJSON         json.RawMessage
 }
 
-func (a *Admin) GetId() string {
+func (a *Admin) GetID() string {
 	if a == nil {
 		return ""
 	}
-	return a.Id
+	return a.ID
 }
 
 func (a *Admin) GetEmail() string {
@@ -86,11 +86,11 @@ func (a *Admin) require(field *big.Int) {
 	a.explicitFields.Or(a.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *Admin) SetId(id string) {
-	a.Id = id
-	a.require(adminFieldId)
+func (a *Admin) SetID(id string) {
+	a.ID = id
+	a.require(adminFieldID)
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -281,7 +281,7 @@ func (f *Foo) String() string {
 
 // User object
 var (
-	userFieldId       = big.NewInt(1 << 0)
+	userFieldID       = big.NewInt(1 << 0)
 	userFieldEmail    = big.NewInt(1 << 1)
 	userFieldPassword = big.NewInt(1 << 2)
 	userFieldProfile  = big.NewInt(1 << 3)
@@ -289,7 +289,7 @@ var (
 
 type User struct {
 	// The unique identifier for the user.
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 	// The email address of the user.
 	Email string `json:"email" url:"email"`
 	// The password for the user.
@@ -304,11 +304,11 @@ type User struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *User) GetId() string {
+func (u *User) GetID() string {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *User) GetEmail() string {
@@ -346,11 +346,11 @@ func (u *User) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *User) SetId(id string) {
-	u.Id = id
-	u.require(userFieldId)
+func (u *User) SetID(id string) {
+	u.ID = id
+	u.require(userFieldID)
 }
 
 // SetEmail sets the Email field and marks it as non-optional;

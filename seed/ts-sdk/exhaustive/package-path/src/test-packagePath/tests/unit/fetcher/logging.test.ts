@@ -1,4 +1,4 @@
-import { fetcherImpl } from "../../../../../src/test-packagePath/core/fetcher/Fetcher";
+import { fetcherImpl } from "../../../core/fetcher/Fetcher";
 
 function createMockLogger() {
     return {

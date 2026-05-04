@@ -3,6 +3,7 @@
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { AgentsConfig } from "./AgentsConfig.js";
 import { AiChatConfig } from "./AiChatConfig.js";
 import { AiExamplesConfig } from "./AiExamplesConfig.js";
 import { AnalyticsConfig } from "./AnalyticsConfig.js";
@@ -18,7 +19,6 @@ import { ExperimentalConfig } from "./ExperimentalConfig.js";
 import { FooterLinksConfig } from "./FooterLinksConfig.js";
 import { IntegrationsConfig } from "./IntegrationsConfig.js";
 import { JsConfig } from "./JsConfig.js";
-import { Language } from "./Language.js";
 import { LayoutConfig } from "./LayoutConfig.js";
 import { LibraryConfiguration } from "./LibraryConfiguration.js";
 import { LibraryName } from "./LibraryName.js";
@@ -35,6 +35,7 @@ import { RoleId } from "./RoleId.js";
 import { TabConfig } from "./TabConfig.js";
 import { TabId } from "./TabId.js";
 import { ThemeConfig } from "./ThemeConfig.js";
+import { TranslationConfig } from "./TranslationConfig.js";
 import { VersionConfig } from "./VersionConfig.js";
 
 export const DocsConfiguration: core.serialization.ObjectSchema<
@@ -55,12 +56,15 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     navbarLinks: core.serialization.property("navbar-links", core.serialization.list(NavbarLink).optional()),
     footerLinks: core.serialization.property("footer-links", FooterLinksConfig.optional()),
     pageActions: core.serialization.property("page-actions", PageActionsConfig.optional()),
+    globalTheme: core.serialization.property("global-theme", core.serialization.string().optional()),
     experimental: ExperimentalConfig.optional(),
     defaultLanguage: core.serialization.property("default-language", ProgrammingLanguage.optional()),
-    languages: core.serialization.list(Language).optional(),
+    languages: core.serialization.list(core.serialization.string()).optional(),
+    translations: core.serialization.list(TranslationConfig).optional(),
     aiChat: core.serialization.property("ai-chat", AiChatConfig.optional()),
     aiSearch: core.serialization.property("ai-search", AiChatConfig.optional()),
     aiExamples: core.serialization.property("ai-examples", AiExamplesConfig.optional()),
+    agents: AgentsConfig.optional(),
     metadata: MetadataConfig.optional(),
     redirects: core.serialization.list(RedirectConfig).optional(),
     check: CheckConfig.optional(),
@@ -95,12 +99,15 @@ export declare namespace DocsConfiguration {
         "navbar-links"?: NavbarLink.Raw[] | null;
         "footer-links"?: FooterLinksConfig.Raw | null;
         "page-actions"?: PageActionsConfig.Raw | null;
+        "global-theme"?: string | null;
         experimental?: ExperimentalConfig.Raw | null;
         "default-language"?: ProgrammingLanguage.Raw | null;
-        languages?: Language.Raw[] | null;
+        languages?: string[] | null;
+        translations?: TranslationConfig.Raw[] | null;
         "ai-chat"?: AiChatConfig.Raw | null;
         "ai-search"?: AiChatConfig.Raw | null;
         "ai-examples"?: AiExamplesConfig.Raw | null;
+        agents?: AgentsConfig.Raw | null;
         metadata?: MetadataConfig.Raw | null;
         redirects?: RedirectConfig.Raw[] | null;
         check?: CheckConfig.Raw | null;

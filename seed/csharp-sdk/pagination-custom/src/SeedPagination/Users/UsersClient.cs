@@ -12,17 +12,18 @@ public partial class UsersClient : IUsersClient
     }
 
     /// <example><code>
-    /// await client.Users.ListUsernamesCustomAsync(
-    ///     new ListUsernamesRequestCustom { StartingAfter = "starting_after" }
+    /// await client.Users.ListWithCustomPagerAsync(
+    ///     new ListWithCustomPagerRequest { Limit = 1, StartingAfter = "starting_after" }
     /// );
     /// </code></example>
-    public async Task<SeedPaginationPager<string>> ListUsernamesCustomAsync(
-        ListUsernamesRequestCustom request,
+    public async Task<SeedPaginationPager<string>> ListWithCustomPagerAsync(
+        ListWithCustomPagerRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 1)
+        var _queryString = new SeedPagination.Core.QueryStringBuilder.Builder(capacity: 2)
+            .Add("limit", request.Limit)
             .Add("starting_after", request.StartingAfter)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();

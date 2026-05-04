@@ -7,7 +7,7 @@ pub struct GetGeneratedTestCaseTemplateFileRequest {
 
 impl GetGeneratedTestCaseTemplateFileRequest {
     pub fn builder() -> GetGeneratedTestCaseTemplateFileRequestBuilder {
-        GetGeneratedTestCaseTemplateFileRequestBuilder::default()
+        <GetGeneratedTestCaseTemplateFileRequestBuilder as Default>::default()
     }
 }
 

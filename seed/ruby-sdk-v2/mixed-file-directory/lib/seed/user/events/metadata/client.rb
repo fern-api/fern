@@ -21,15 +21,13 @@ module Seed
           # @option request_options [Hash{String => Object}] :additional_query_parameters
           # @option request_options [Hash{String => Object}] :additional_body_parameters
           # @option request_options [Integer] :timeout_in_seconds
-          # @option params [Seed::Types::Id] :id
+          # @option params [Seed::Types::ID] :id
           #
           # @return [Seed::User::Events::Metadata::Types::Metadata]
           def get_metadata(request_options: {}, **params)
             params = Seed::Internal::Types::Utils.normalize_keys(params)
-            query_param_names = %i[id]
             query_params = {}
             query_params["id"] = params[:id] if params.key?(:id)
-            params.except(*query_param_names)
 
             request = Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url],

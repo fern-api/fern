@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "next": {
+      "type": "string"
+    },
+    "previous": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "next"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

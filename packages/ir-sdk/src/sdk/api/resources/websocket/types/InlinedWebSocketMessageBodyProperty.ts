@@ -3,6 +3,6 @@
 import type * as FernIr from "../../../index.js";
 
 export interface InlinedWebSocketMessageBodyProperty extends FernIr.WithDocsAndAvailability {
-    name: FernIr.NameAndWireValue;
+    name: FernIr.NameAndWireValueOrString;
     valueType: FernIr.TypeReference;
 }

@@ -198,4 +198,7 @@ public interface ICustomConfig {
     default OutputDirectory outputDirectory() {
         return OutputDirectory.PROJECT_ROOT;
     }
+
+    @JsonProperty("maxRetries")
+    Optional<Integer> maxRetries();
 }

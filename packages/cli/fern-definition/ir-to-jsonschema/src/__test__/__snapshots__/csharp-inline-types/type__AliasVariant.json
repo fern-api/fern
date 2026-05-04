@@ -1,0 +1,17 @@
+{
+  "$ref": "#/definitions/AliasVariantType",
+  "definitions": {
+    "AliasVariantType": {
+      "type": "object",
+      "properties": {
+        "prop": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "prop"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

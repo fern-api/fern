@@ -7,9 +7,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class Operand {
-    public static final Operand LESS_THAN = new Operand(Value.LESS_THAN, "less_than");
-
     public static final Operand EQUAL_TO = new Operand(Value.EQUAL_TO, "=");
+
+    public static final Operand LESS_THAN = new Operand(Value.LESS_THAN, "less_than");
 
     public static final Operand GREATER_THAN = new Operand(Value.GREATER_THAN, ">");
 
@@ -44,10 +44,10 @@ public final class Operand {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case LESS_THAN:
-                return visitor.visitLessThan();
             case EQUAL_TO:
                 return visitor.visitEqualTo();
+            case LESS_THAN:
+                return visitor.visitLessThan();
             case GREATER_THAN:
                 return visitor.visitGreaterThan();
             case UNKNOWN:
@@ -59,10 +59,10 @@ public final class Operand {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static Operand valueOf(String value) {
         switch (value) {
-            case "less_than":
-                return LESS_THAN;
             case "=":
                 return EQUAL_TO;
+            case "less_than":
+                return LESS_THAN;
             case ">":
                 return GREATER_THAN;
             default:

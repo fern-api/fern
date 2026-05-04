@@ -1,7 +1,8 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
-import java.util.HashMap;
+import com.seed.exhaustive.types.types.Animal;
+import com.seed.exhaustive.types.types.Dog;
 
 public class Example55 {
     public static void main(String[] args) {
@@ -10,10 +11,9 @@ public class Example55 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.noAuth().postWithNoAuth(new HashMap<String, Object>() {
-            {
-                put("key", "value");
-            }
-        });
+        client.endpoints()
+                .union()
+                .getAndReturnUnion(
+                        Animal.dog(Dog.builder().name("name").likesToWoof(true).build()));
     }
 }

@@ -60,12 +60,14 @@ exports[`GeneratedGenericAPISdkErrorImpl > writeToFile > writes error class with
     public readonly statusCode?: number;
     public readonly body?: unknown;
     public readonly rawResponse?: RawResponse;
+    public readonly cause?: unknown;
 
-    constructor({ message, statusCode, body, rawResponse }: {
+    constructor({ message, statusCode, body, rawResponse, cause }: {
             message?: string;
             statusCode?: number;
             body?: unknown;
             rawResponse?: RawResponse;
+            cause?: unknown;
         }) {
         super(buildMessage({ message, statusCode, body }));
         Object.setPrototypeOf(this, new.target.prototype);
@@ -77,6 +79,9 @@ exports[`GeneratedGenericAPISdkErrorImpl > writeToFile > writes error class with
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;
+        if (cause != null) {
+            this.cause = cause;
+        }
     }
 }
 
@@ -108,12 +113,14 @@ exports[`GeneratedGenericAPISdkErrorImpl > writeToFile > writes error class with
     public readonly statusCode?: number;
     public readonly body?: unknown;
     public readonly rawResponse?: RawResponse;
+    public readonly cause?: unknown;
 
-    constructor({ message, statusCode, body, rawResponse }: {
+    constructor({ message, statusCode, body, rawResponse, cause }: {
             message?: string;
             statusCode?: number;
             body?: unknown;
             rawResponse?: RawResponse;
+            cause?: unknown;
         }) {
         super(buildMessage({ message, statusCode, body }));
         Object.setPrototypeOf(this, new.target.prototype);
@@ -125,6 +132,9 @@ exports[`GeneratedGenericAPISdkErrorImpl > writeToFile > writes error class with
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;
+        if (cause != null) {
+            this.cause = cause;
+        }
     }
 }
 
@@ -161,7 +171,9 @@ exports[`GeneratedTimeoutSdkErrorImpl > buildConstructorArguments > wraps messag
 
 exports[`GeneratedTimeoutSdkErrorImpl > writeToFile > writes timeout error class 1`] = `
 "export class TimeoutError extends Error {
-    constructor(message: string) {
+    public readonly cause?: unknown;
+
+    constructor(message: string, opts?: { cause?: unknown }) {
         super(message);
         Object.setPrototypeOf(this, new.target.prototype);
         if (Error.captureStackTrace) {
@@ -169,6 +181,9 @@ exports[`GeneratedTimeoutSdkErrorImpl > writeToFile > writes timeout error class
         }
 
         this.name = this.constructor.name;
+        if (opts?.cause != null) {
+            this.cause = opts.cause;
+        }
     }
 }
 "
@@ -176,7 +191,9 @@ exports[`GeneratedTimeoutSdkErrorImpl > writeToFile > writes timeout error class
 
 exports[`GeneratedTimeoutSdkErrorImpl > writeToFile > writes timeout error class with custom name 1`] = `
 "export class CustomTimeoutError extends Error {
-    constructor(message: string) {
+    public readonly cause?: unknown;
+
+    constructor(message: string, opts?: { cause?: unknown }) {
         super(message);
         Object.setPrototypeOf(this, new.target.prototype);
         if (Error.captureStackTrace) {
@@ -184,6 +201,9 @@ exports[`GeneratedTimeoutSdkErrorImpl > writeToFile > writes timeout error class
         }
 
         this.name = this.constructor.name;
+        if (opts?.cause != null) {
+            this.cause = opts.cause;
+        }
     }
 }
 "

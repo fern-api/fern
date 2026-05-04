@@ -14,7 +14,7 @@ describe("UrlsClient", () => {
 
         const response = await client.endpoints.urls.withMixedCase();
         expect(response).toEqual({
-            body: "string",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -37,7 +37,7 @@ describe("UrlsClient", () => {
 
         const response = await client.endpoints.urls.noEndingSlash();
         expect(response).toEqual({
-            body: "string",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -60,7 +60,7 @@ describe("UrlsClient", () => {
 
         const response = await client.endpoints.urls.withEndingSlash();
         expect(response).toEqual({
-            body: "string",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -83,7 +83,7 @@ describe("UrlsClient", () => {
 
         const response = await client.endpoints.urls.withUnderscores();
         expect(response).toEqual({
-            body: "string",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

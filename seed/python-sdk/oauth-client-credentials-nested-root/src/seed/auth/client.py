@@ -56,6 +56,8 @@ class AuthClient:
 
         client = SeedOauthClientCredentials(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.auth.get_token(
             client_id="client_id",
@@ -116,6 +118,8 @@ class AsyncAuthClient:
 
         client = AsyncSeedOauthClientCredentials(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 

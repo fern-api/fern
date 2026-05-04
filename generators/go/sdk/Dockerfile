@@ -8,7 +8,7 @@ RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github
 COPY generators/go-v2/sdk/dist/ /dist/
 
 # Stage 2: Final Go image
-FROM golang:1.23.8-alpine3.20
+FROM golang:1.26.2-alpine3.23
 
 WORKDIR /workspace
 

@@ -12,6 +12,7 @@ export function validateExampleEndpointCallParameters<T>({
     exampleResolver,
     workspace,
     getRawType,
+    isAllowMultiple,
     breadcrumbs
 }: {
     allDeclarations: Record<string, T> | undefined;
@@ -21,6 +22,7 @@ export function validateExampleEndpointCallParameters<T>({
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
     getRawType: (parameter: T) => { rawType: string; file: FernFileContext } | undefined;
+    isAllowMultiple?: (parameter: T) => boolean;
     breadcrumbs: string[];
 }): RuleViolation[] {
     const violations: RuleViolation[] = [];
@@ -73,20 +75,28 @@ export function validateExampleEndpointCallParameters<T>({
                 // if rawType is not defined, then variable couldn't be de-referenced.
                 // this will be caught by another rule
                 if (rawType != null) {
-                    violations.push(
-                        ...ExampleValidators.validateTypeReferenceExample({
-                            rawTypeReference: rawType.rawType,
-                            example: exampleParameter,
-                            file: rawType.file,
-                            workspace,
-                            typeResolver,
-                            exampleResolver,
-                            breadcrumbs,
-                            depth: 0
-                        }).map((val): RuleViolation => {
-                            return { severity: val.severity ?? "fatal", message: val.message };
-                        })
-                    );
+                    // For allow-multiple parameters with array examples, validate each
+                    // element individually against the item type.
+                    const examplesToValidate =
+                        isAllowMultiple?.(expectedType) && Array.isArray(exampleParameter)
+                            ? exampleParameter
+                            : [exampleParameter];
+                    for (const singleExample of examplesToValidate) {
+                        violations.push(
+                            ...ExampleValidators.validateTypeReferenceExample({
+                                rawTypeReference: rawType.rawType,
+                                example: singleExample,
+                                file: rawType.file,
+                                workspace,
+                                typeResolver,
+                                exampleResolver,
+                                breadcrumbs,
+                                depth: 0
+                            }).map((val): RuleViolation => {
+                                return { severity: val.severity ?? "fatal", message: val.message };
+                            })
+                        );
+                    }
                 }
             }
         }

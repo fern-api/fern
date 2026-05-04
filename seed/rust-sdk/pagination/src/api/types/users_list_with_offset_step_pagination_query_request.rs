@@ -17,7 +17,7 @@ pub struct UsersListWithOffsetStepPaginationQueryRequest {
 
 impl UsersListWithOffsetStepPaginationQueryRequest {
     pub fn builder() -> UsersListWithOffsetStepPaginationQueryRequestBuilder {
-        UsersListWithOffsetStepPaginationQueryRequestBuilder::default()
+        <UsersListWithOffsetStepPaginationQueryRequestBuilder as Default>::default()
     }
 }
 

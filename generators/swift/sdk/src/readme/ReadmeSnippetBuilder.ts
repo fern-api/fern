@@ -1,4 +1,5 @@
-import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder, GeneratorError } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { SwiftFile } from "@fern-api/swift-base";
 import { swift } from "@fern-api/swift-codegen";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -94,17 +95,18 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private getErrorHandlingSnippetForEndpoint(endpointId: string): string {
         const endpoint = this.endpointsById[endpointId];
         if (endpoint == null) {
-            throw new Error(`Internal error; missing endpoint ${endpointId}`);
+            throw GeneratorError.internalError(`Internal error; missing endpoint ${endpointId}`);
         }
         const moduleSymbol = this.context.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
         const rootClientSymbol = this.context.project.nameRegistry.getRootClientSymbolOrThrow();
         const details = this.context.getEndpointMethodDetails(endpoint);
         const errorTypeName = `${moduleSymbol.name}Error`;
 
+        const authArgs = this.getAuthInitString();
         const snippetLines = [
             `import ${moduleSymbol.name}`,
             ``,
-            `let client = ${rootClientSymbol.name}(...)`,
+            `let client = ${rootClientSymbol.name}(${authArgs})`,
             ``,
             `do {`,
             `    let response = try await client.${details.fullyQualifiedMethodName}(...)`,
@@ -164,7 +166,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return this.getEndpointIdsForFeature(ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID).map((endpointId) => {
             const endpoint = this.endpointsById[endpointId];
             if (endpoint == null) {
-                throw new Error(`Internal error; missing endpoint ${endpointId}`);
+                throw GeneratorError.internalError(`Internal error; missing endpoint ${endpointId}`);
             }
             return SwiftFile.getRawContents([
                 swift.Statement.expressionStatement(
@@ -210,7 +212,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             (endpointId) => {
                 const endpoint = this.endpointsById[endpointId];
                 if (endpoint == null) {
-                    throw new Error(`Internal error; missing endpoint ${endpointId}`);
+                    throw GeneratorError.internalError(`Internal error; missing endpoint ${endpointId}`);
                 }
                 return SwiftFile.getRawContents([
                     swift.Statement.expressionStatement(
@@ -261,7 +263,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return this.getEndpointIdsForFeature(FernGeneratorCli.StructuredFeatureId.Timeouts).map((endpointId) => {
             const endpoint = this.endpointsById[endpointId];
             if (endpoint == null) {
-                throw new Error(`Internal error; missing endpoint ${endpointId}`);
+                throw GeneratorError.internalError(`Internal error; missing endpoint ${endpointId}`);
             }
             return SwiftFile.getRawContents([
                 swift.Statement.expressionStatement(
@@ -306,7 +308,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 value: swift.Expression.structInitialization({
                     unsafeName: rootClientSymbol.name,
                     arguments_: [
-                        swift.functionArgument({ value: swift.Expression.rawValue("...") }),
+                        ...this.getAuthInitArguments(),
                         swift.functionArgument({
                             label: "urlSession",
                             value: swift.Expression.rawValue("// Provide your implementation here")
@@ -341,7 +343,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 value: swift.Expression.structInitialization({
                     unsafeName: rootClientSymbol.name,
                     arguments_: [
-                        swift.functionArgument({ value: swift.Expression.rawValue("...") }),
+                        ...this.getAuthInitArguments(),
                         swift.functionArgument({
                             label: "environment",
                             value: swift.Expression.rawValue(`.${defaultEnvName}`)
@@ -361,10 +363,86 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         if (defaultEnvId != null) {
             const defaultEnv = envs.find((e) => e.id === defaultEnvId);
             if (defaultEnv != null) {
-                return defaultEnv.name.camelCase.unsafeName;
+                return this.context.caseConverter.camelUnsafe(defaultEnv.name);
             }
         }
-        return envs[0]?.name.camelCase.unsafeName;
+        const firstName = envs[0]?.name;
+        return firstName != null ? this.context.caseConverter.camelUnsafe(firstName) : undefined;
+    }
+
+    /**
+     * Collects auth params ordered to match the generated convenience initializer:
+     * header → bearer → basic (see RootClientGenerator.getConvenienceInitializerParams).
+     */
+    private getOrderedAuthParams(): {
+        headerArgs: { label: string; placeholder: string }[];
+        bearerArgs: { label: string; placeholder: string }[];
+        basicArgs: { label: string; placeholder: string }[];
+    } {
+        const headerArgs: { label: string; placeholder: string }[] = [];
+        const bearerArgs: { label: string; placeholder: string }[] = [];
+        const basicArgs: { label: string; placeholder: string }[] = [];
+        for (const scheme of this.context.ir.auth.schemes) {
+            switch (scheme.type) {
+                case "bearer": {
+                    const tokenName = this.context.caseConverter.camelUnsafe(scheme.token);
+                    bearerArgs.push({ label: tokenName, placeholder: scheme.tokenPlaceholder ?? "YOUR_API_KEY" });
+                    break;
+                }
+                case "basic": {
+                    if (!scheme.usernameOmit) {
+                        const usernameName = this.context.caseConverter.camelUnsafe(scheme.username);
+                        basicArgs.push({
+                            label: usernameName,
+                            placeholder: scheme.usernamePlaceholder ?? "YOUR_USERNAME"
+                        });
+                    }
+                    if (!scheme.passwordOmit) {
+                        const passwordName = this.context.caseConverter.camelUnsafe(scheme.password);
+                        basicArgs.push({
+                            label: passwordName,
+                            placeholder: scheme.passwordPlaceholder ?? "YOUR_PASSWORD"
+                        });
+                    }
+                    break;
+                }
+                case "header": {
+                    const headerName = this.context.caseConverter.camelUnsafe(scheme.name);
+                    headerArgs.push({ label: headerName, placeholder: scheme.headerPlaceholder ?? "YOUR_API_KEY" });
+                    break;
+                }
+                case "oauth":
+                    break;
+                case "inferred":
+                    break;
+                default:
+                    assertNever(scheme);
+            }
+        }
+        return { headerArgs, bearerArgs, basicArgs };
+    }
+
+    private getAuthInitArguments(): swift.FunctionArgument[] {
+        const { headerArgs, bearerArgs, basicArgs } = this.getOrderedAuthParams();
+        const allArgs = [...headerArgs, ...bearerArgs, ...basicArgs];
+        if (allArgs.length === 0) {
+            return [swift.functionArgument({ value: swift.Expression.rawValue("...") })];
+        }
+        return allArgs.map((arg) =>
+            swift.functionArgument({
+                label: arg.label,
+                value: swift.Expression.stringLiteral(arg.placeholder)
+            })
+        );
+    }
+
+    private getAuthInitString(): string {
+        const { headerArgs, bearerArgs, basicArgs } = this.getOrderedAuthParams();
+        const allArgs = [...headerArgs, ...bearerArgs, ...basicArgs];
+        if (allArgs.length === 0) {
+            return "...";
+        }
+        return allArgs.map((arg) => `${arg.label}: "${arg.placeholder}"`).join(", ");
     }
 
     private getUsageSnippetForEndpoint(endpointId: string) {

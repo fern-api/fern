@@ -10,7 +10,7 @@ pub struct PlainObject {
 
 impl PlainObject {
     pub fn builder() -> PlainObjectBuilder {
-        PlainObjectBuilder::default()
+        <PlainObjectBuilder as Default>::default()
     }
 }
 

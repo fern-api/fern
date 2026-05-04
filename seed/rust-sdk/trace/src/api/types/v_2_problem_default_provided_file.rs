@@ -11,7 +11,7 @@ pub struct DefaultProvidedFile {
 
 impl DefaultProvidedFile {
     pub fn builder() -> DefaultProvidedFileBuilder {
-        DefaultProvidedFileBuilder::default()
+        <DefaultProvidedFileBuilder as Default>::default()
     }
 }
 

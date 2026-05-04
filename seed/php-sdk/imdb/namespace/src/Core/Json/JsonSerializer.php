@@ -98,7 +98,7 @@ class JsonSerializer
         }
         $readableType = Utils::getReadableType($data);
         throw new JsonException(
-            "Cannot serialize value of type $readableType with any of the union types: " . $unionType
+            "Cannot serialize value of type $readableType with any of the union types: $unionType"
         );
     }
 

@@ -1,6 +1,7 @@
+import { getWireValue } from "@fern-api/base-generator";
 import type { FernIr } from "@fern-fern/ir-sdk";
 import { type ExportedFilePath, getPropertyKey, getTextOfTsNode, toCamelCase } from "@fern-typescript/commons";
-import type { SdkContext } from "@fern-typescript/contexts";
+import type { FileContext } from "@fern-typescript/contexts";
 import {
     type OptionalKind,
     type PropertySignatureStructure,
@@ -90,7 +91,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`);
     }
 
-    public getAuthOptionsProperties(context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
+    public getAuthOptionsProperties(context: FileContext): OptionalKind<PropertySignatureStructure>[] | undefined {
         const hasHeaderEnv = this.authScheme.headerEnvVar != null;
         const isHeaderOptional = !this.isAuthMandatory || hasHeaderEnv;
         // When there's an env var fallback, use Supplier<T> | undefined because the supplier itself can be undefined
@@ -109,7 +110,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         return [
             {
                 kind: StructureKind.PropertySignature,
-                name: getPropertyKey(this.authScheme.name.name.camelCase.safeName),
+                name: getPropertyKey(context.case.camelSafe(this.authScheme.name)),
                 hasQuestionToken: isHeaderOptional,
                 type: getTextOfTsNode(propertyType),
                 docs: this.authScheme.docs ? [this.authScheme.docs] : undefined
@@ -125,16 +126,16 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         );
     }
 
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         this.writeConstants(context);
         this.writeClass(context);
         this.writeOptions(context);
     }
 
-    private writeConstants(context: SdkContext): void {
-        const headerFieldName = this.authScheme.name.name.camelCase.safeName;
+    private writeConstants(context: FileContext): void {
+        const headerFieldName = context.case.camelSafe(this.authScheme.name);
         const headerEnvVar = this.authScheme.headerEnvVar;
-        const headerName = this.authScheme.name.wireValue;
+        const headerName = getWireValue(this.authScheme.name);
         const wrapperPropertyName = this.getWrapperPropertyName();
 
         const constants: string[] = [];
@@ -153,7 +154,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         context.sourceFile.addStatements(""); // blank line
     }
 
-    private writeClass(context: SdkContext): void {
+    private writeClass(context: FileContext): void {
         context.sourceFile.addClass({
             name: CLASS_NAME,
             isExported: true,
@@ -233,7 +234,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         return `return options?.${wrapperAccess}[PARAM_KEY] != null${envCheck};`;
     }
 
-    private generateGetAuthRequestStatements(context: SdkContext): string {
+    private generateGetAuthRequestStatements(context: FileContext): string {
         const headerVar = "headerValue"; // Always use 'headerValue' as the variable name
         const headerEnvVar = this.authScheme.headerEnvVar;
 
@@ -304,7 +305,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         }
     }
 
-    private writeOptions(context: SdkContext): void {
+    private writeOptions(context: FileContext): void {
         const authOptionsProperties = this.getAuthOptionsProperties(context) ?? [];
         const authSchemeKey =
             this.ir.auth.schemes.find((scheme) => scheme.type === "header" && scheme === this.authScheme)?.key ??

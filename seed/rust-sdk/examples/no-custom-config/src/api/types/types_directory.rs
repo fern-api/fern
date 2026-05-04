@@ -12,7 +12,7 @@ pub struct Directory {
 
 impl Directory {
     pub fn builder() -> DirectoryBuilder {
-        DirectoryBuilder::default()
+        <DirectoryBuilder as Default>::default()
     }
 }
 

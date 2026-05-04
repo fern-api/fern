@@ -11,7 +11,7 @@ import { SdkErrorSchemaGenerator } from "../SdkErrorSchemaGenerator.js";
 // Helpers
 // ────────────────────────────────────────────────────────────────────────────
 
-function createMockSdkContext() {
+function createMockFileContext() {
     const project = new Project({ useInMemoryFileSystem: true });
     const sourceFile = project.createSourceFile("test.ts", "");
     return {
@@ -209,7 +209,7 @@ describe("GeneratedSdkErrorSchemaImpl", () => {
                 errorName: "BadRequestError",
                 type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schema.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -221,7 +221,7 @@ describe("GeneratedSdkErrorSchemaImpl", () => {
                     FernIr.ContainerType.list(FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))
                 )
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schema.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -238,7 +238,7 @@ describe("GeneratedSdkErrorSchemaImpl", () => {
                     inline: undefined
                 })
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schema.writeToFile(context);
             // Named types don't generate schema — consumers serialize the named type directly
             expect(context.sourceFile.getFullText()).toBe("");
@@ -249,7 +249,7 @@ describe("GeneratedSdkErrorSchemaImpl", () => {
                 errorName: "UnknownError",
                 type: FernIr.TypeReference.unknown()
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schema.writeToFile(context);
             expect(context.sourceFile.getFullText()).toBe("");
         });
@@ -269,7 +269,7 @@ describe("GeneratedSdkErrorSchemaImpl", () => {
                 }),
                 includeSerdeLayer: true
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const body = ts.factory.createIdentifier("rawBody");
             const result = schema.deserializeBody(context, { referenceToBody: body });
             expect(getTextOfTsNode(result)).toMatchSnapshot();
@@ -281,7 +281,7 @@ describe("GeneratedSdkErrorSchemaImpl", () => {
                 type: FernIr.TypeReference.unknown(),
                 includeSerdeLayer: true
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const body = ts.factory.createIdentifier("rawBody");
             const result = schema.deserializeBody(context, { referenceToBody: body });
             // Unknown types just return the body as-is
@@ -294,7 +294,7 @@ describe("GeneratedSdkErrorSchemaImpl", () => {
                 type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                 includeSerdeLayer: true
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schema.writeToFile(context); // Need to write schema first to have reference
             const body = ts.factory.createIdentifier("rawBody");
             const result = schema.deserializeBody(context, { referenceToBody: body });
@@ -309,7 +309,7 @@ describe("GeneratedSdkErrorSchemaImpl", () => {
                 ),
                 includeSerdeLayer: true
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             schema.writeToFile(context);
             const body = ts.factory.createIdentifier("rawBody");
             const result = schema.deserializeBody(context, { referenceToBody: body });
@@ -322,7 +322,7 @@ describe("GeneratedSdkErrorSchemaImpl", () => {
                 type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                 includeSerdeLayer: false
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const body = ts.factory.createIdentifier("rawBody");
             const result = schema.deserializeBody(context, { referenceToBody: body });
             // Without serde layer, casts with `as` expression
@@ -342,7 +342,7 @@ describe("GeneratedSdkErrorSchemaImpl", () => {
                 }),
                 includeSerdeLayer: false
             });
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const body = ts.factory.createIdentifier("rawBody");
             const result = schema.deserializeBody(context, { referenceToBody: body });
             expect(getTextOfTsNode(result)).toMatchSnapshot();

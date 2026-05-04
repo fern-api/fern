@@ -1,8 +1,8 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { GeneratedFile } from "../../commons/GeneratedFile.js";
-import { SdkContext } from "../SdkContext.js";
+import { FileContext } from "../file-context/FileContext.js";
 
-export interface GeneratedVersion extends GeneratedFile<SdkContext> {
+export interface GeneratedVersion extends GeneratedFile<FileContext> {
     getEnumValueUnion: () => string;
     getFirstEnumValue: () => string;
     hasDefaultVersion: () => boolean;

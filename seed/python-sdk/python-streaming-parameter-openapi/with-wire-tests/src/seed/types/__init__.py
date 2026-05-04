@@ -6,9 +6,14 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .chat_request import ChatRequest
     from .chat_response import ChatResponse
     from .chat_stream_event import ChatStreamEvent
-_dynamic_imports: typing.Dict[str, str] = {"ChatResponse": ".chat_response", "ChatStreamEvent": ".chat_stream_event"}
+_dynamic_imports: typing.Dict[str, str] = {
+    "ChatRequest": ".chat_request",
+    "ChatResponse": ".chat_response",
+    "ChatStreamEvent": ".chat_stream_event",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -32,4 +37,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ChatResponse", "ChatStreamEvent"]
+__all__ = ["ChatRequest", "ChatResponse", "ChatStreamEvent"]

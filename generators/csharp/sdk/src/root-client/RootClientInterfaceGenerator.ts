@@ -32,7 +32,7 @@ export class RootClientInterfaceGenerator extends FileGenerator<CSharpFile, SdkG
         for (const subpackage of this.getSubpackages()) {
             if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
                 interface_.addField({
-                    name: subpackage.name.pascalCase.safeName,
+                    name: this.case.pascalSafe(subpackage.name),
                     enclosingType: interface_,
                     access: ast.Access.Public,
                     get: true,

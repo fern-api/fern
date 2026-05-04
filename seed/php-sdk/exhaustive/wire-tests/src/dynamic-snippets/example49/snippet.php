@@ -10,4 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->urls->withMixedCase();
+$client->endpoints->primitive->getAndReturnBool(
+    true,
+);

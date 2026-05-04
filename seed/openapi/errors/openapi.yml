@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: errors
-  version: ''
+  version: 0.0.0
 paths:
   /foo1:
     post:
@@ -11,25 +11,25 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/FooResponse'
         '400':
-          description: ''
+          description: BadRequestError
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
         '404':
-          description: ''
+          description: NotFoundError
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
         '500':
-          description: ''
+          description: InternalServerError
           content:
             application/json:
               schema:
@@ -48,31 +48,31 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/FooResponse'
         '400':
-          description: ''
+          description: BadRequestError
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
         '404':
-          description: ''
+          description: NotFoundError
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
         '429':
-          description: ''
+          description: FooTooMuch
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
         '500':
-          description: ''
+          description: InternalServerError
           content:
             application/json:
               schema:
@@ -91,7 +91,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -101,19 +101,19 @@ paths:
                   value:
                     bar: hello
         '400':
-          description: ''
+          description: BadRequestError
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
         '404':
-          description: ''
+          description: NotFoundError
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
         '429':
-          description: ''
+          description: FooTooMuch
           content:
             application/json:
               schema:
@@ -124,7 +124,7 @@ paths:
                     message: Too much foo
                     code: 1
         '500':
-          description: ''
+          description: InternalServerError
           content:
             application/json:
               schema:
@@ -164,7 +164,8 @@ components:
       properties:
         bar:
           type: string
-          example: hello
+          examples:
+            - hello
       required:
         - bar
     FooResponse:
@@ -173,7 +174,8 @@ components:
       properties:
         bar:
           type: string
-          example: hello
+          examples:
+            - hello
       required:
         - bar
   securitySchemes: {}

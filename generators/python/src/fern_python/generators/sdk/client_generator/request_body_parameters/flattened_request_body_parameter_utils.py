@@ -3,6 +3,7 @@ from typing import List, Optional
 from ...context.sdk_generator_context import SdkGeneratorContext
 from fern_python.codegen import AST
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
+from fern_python.utils.name_resolver import get_name_from_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -10,7 +11,7 @@ _REQUEST_VARIABLE_NAME = "_request"
 
 
 def _get_property_name(property: ir_types.InlinedRequestBodyProperty) -> str:
-    return property.name.name.snake_case.safe_name
+    return resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name
 
 
 def get_json_body_for_inlined_request(

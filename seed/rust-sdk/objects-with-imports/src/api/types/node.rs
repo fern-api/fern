@@ -12,7 +12,7 @@ pub struct Node {
 
 impl Node {
     pub fn builder() -> NodeBuilder {
-        NodeBuilder::default()
+        <NodeBuilder as Default>::default()
     }
 }
 

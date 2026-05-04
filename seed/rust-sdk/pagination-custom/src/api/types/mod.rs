@@ -1,7 +1,7 @@
-pub mod list_usernames_custom_query_request;
-pub mod username_cursor;
-pub mod username_page;
+pub mod link;
+pub mod list_with_custom_pager_query_request;
+pub mod users_list_response;
 
-pub use list_usernames_custom_query_request::ListUsernamesCustomQueryRequest;
-pub use username_cursor::UsernameCursor;
-pub use username_page::UsernamePage;
+pub use link::Link;
+pub use list_with_custom_pager_query_request::ListWithCustomPagerQueryRequest;
+pub use users_list_response::UsersListResponse;

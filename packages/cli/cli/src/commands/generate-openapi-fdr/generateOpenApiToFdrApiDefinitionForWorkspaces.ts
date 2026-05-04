@@ -1,5 +1,5 @@
 import { Audiences } from "@fern-api/configuration";
-import { generateFdrFromOpenApiWorkspace, generateFdrFromOpenApiWorkspaceV3 } from "@fern-api/docs-resolver";
+import { generateFdrFromOpenApiWorkspaceV3 } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import path from "path";
@@ -10,21 +10,17 @@ export async function generateOpenApiToFdrApiDefinitionForWorkspaces({
     project,
     outputFilepath,
     cliContext,
-    directFromOpenapi,
     audiences
 }: {
     project: Project;
     outputFilepath: AbsoluteFilePath;
     cliContext: CliContext;
-    directFromOpenapi: boolean;
     audiences: Audiences;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                const fdrApiDefinition = directFromOpenapi
-                    ? await generateFdrFromOpenApiWorkspaceV3(workspace, context, audiences)
-                    : await generateFdrFromOpenApiWorkspace(workspace, context);
+                const fdrApiDefinition = await generateFdrFromOpenApiWorkspaceV3(workspace, context, audiences);
 
                 const resolvedOutputFilePath = AbsoluteFilePath.of(path.resolve(outputFilepath));
                 await streamObjectToFile(resolvedOutputFilePath, fdrApiDefinition, { pretty: true });

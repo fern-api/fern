@@ -1,5 +1,5 @@
 import { getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
 import { ModuleDeclarationStructure, PropertySignatureStructure, StructureKind, ts } from "ts-morph";
 
@@ -9,7 +9,7 @@ export declare namespace UnknownErrorSingleUnionTypeGenerator {
     }
 }
 
-export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGenerator<SdkContext> {
+export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGenerator<FileContext> {
     private static readonly CONTENT_PROPERTY_NAME = "content";
     private static readonly BUILDER_PARAMETER_NAME = "fetcherError";
 
@@ -19,7 +19,7 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
         this.discriminant = discriminant;
     }
 
-    public generateForInlineUnion(context: SdkContext): {
+    public generateForInlineUnion(context: FileContext): {
         typeNode: ts.TypeNode;
         requestTypeNode: ts.TypeNode | undefined;
         responseTypeNode: ts.TypeNode | undefined;
@@ -60,7 +60,7 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
         return undefined;
     }
 
-    public getNonDiscriminantPropertiesForInterface(context: SdkContext): {
+    public getNonDiscriminantPropertiesForInterface(context: FileContext): {
         property: PropertySignatureStructure;
         requestProperty: PropertySignatureStructure | undefined;
         responseProperty: PropertySignatureStructure | undefined;
@@ -95,11 +95,11 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
         ];
     }
 
-    public getVisitMethodParameterType(context: SdkContext): ts.TypeNode | undefined {
+    public getVisitMethodParameterType(context: FileContext): ts.TypeNode | undefined {
         return context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType();
     }
 
-    public getParametersForBuilder(context: SdkContext): ts.ParameterDeclaration[] {
+    public getParametersForBuilder(context: FileContext): ts.ParameterDeclaration[] {
         return [
             ts.factory.createParameterDeclaration(
                 undefined,

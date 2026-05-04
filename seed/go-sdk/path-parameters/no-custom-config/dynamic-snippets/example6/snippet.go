@@ -15,8 +15,8 @@ func do() {
         ),
     )
     request := &fern.SearchUsersRequest{
-        TenantId: "tenant_id",
-        UserId: "user_id",
+        TenantID: "tenant_id",
+        UserID: "user_id",
         Limit: fern.Int(
             1,
         ),

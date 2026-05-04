@@ -115,7 +115,7 @@ func (r *RawClient) SendOptionalTypedBody(
 
 func (r *RawClient) SendOptionalNullableWithAllOptionalProperties(
 	ctx context.Context,
-	actionId string,
+	actionID string,
 	id string,
 	request *fern.DeployParams,
 	opts ...option.RequestOption,
@@ -128,7 +128,7 @@ func (r *RawClient) SendOptionalNullableWithAllOptionalProperties(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/deploy/%v/versions/%v",
-		actionId,
+		actionID,
 		id,
 	)
 	headers := internal.MergeHeaders(

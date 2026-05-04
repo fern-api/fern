@@ -70,6 +70,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "message",
                         "name": {
                             "originalName": "message",
                             "camelCase": {
@@ -88,8 +89,7 @@
                                 "unsafeName": "Message",
                                 "safeName": "Message"
                             }
-                        },
-                        "wireValue": "message"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -171,6 +171,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "updateDraft",
                         "name": {
                             "originalName": "updateDraft",
                             "camelCase": {
@@ -189,8 +190,7 @@
                                 "unsafeName": "UpdateDraft",
                                 "safeName": "UpdateDraft"
                             }
-                        },
-                        "wireValue": "updateDraft"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -275,6 +275,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "success",
                         "name": {
                             "originalName": "success",
                             "camelCase": {
@@ -293,8 +294,7 @@
                                 "unsafeName": "Success",
                                 "safeName": "Success"
                             }
-                        },
-                        "wireValue": "success"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",

@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: no-content-response
-  version: ''
+  version: 0.0.0
 paths:
   /contacts:
     post:
@@ -18,8 +18,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Contact'
-                nullable: true
+                anyOf:
+                  - $ref: '#/components/schemas/Contact'
+                  - type: 'null'
               examples:
                 Example1:
                   value:
@@ -36,10 +37,12 @@ paths:
               properties:
                 name:
                   type: string
-                  example: name
+                  examples:
+                    - name
                 email:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
               required:
                 - name
             examples:
@@ -58,7 +61,6 @@ paths:
           required: true
           schema:
             type: string
-          example: id
           examples:
             Example1:
               value: id
@@ -84,13 +86,16 @@ components:
       properties:
         id:
           type: string
-          example: id
+          examples:
+            - id
         name:
           type: string
-          example: name
+          examples:
+            - name
         email:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - id
         - name

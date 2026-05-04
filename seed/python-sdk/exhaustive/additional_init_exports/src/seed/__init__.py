@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import endpoints, general_errors, inlined_requests, no_auth, no_req_body, req_with_headers, types
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedExhaustive, SeedExhaustive
     from .client_additions import AnotherCustomClient, myCustomFunction
     from .general_errors import BadObjectRequestInfo, BadRequestBody
@@ -16,6 +17,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedExhaustive": ".client",
     "BadObjectRequestInfo": ".general_errors",
     "BadRequestBody": ".general_errors",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "SeedExhaustive": ".client",
     "__version__": ".version",
     "endpoints": ".endpoints",
@@ -55,6 +58,8 @@ __all__ = [
     "AsyncSeedExhaustive",
     "BadObjectRequestInfo",
     "BadRequestBody",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "SeedExhaustive",
     "__version__",
     "endpoints",

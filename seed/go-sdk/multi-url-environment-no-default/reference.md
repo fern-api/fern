@@ -48,7 +48,7 @@ client.Ec2.BootInstance(
 </details>
 
 ## S3
-<details><summary><code>client.S3.GetPresignedUrl(request) -> string</code></summary>
+<details><summary><code>client.S3.GetPresignedURL(request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -61,10 +61,10 @@ client.Ec2.BootInstance(
 <dd>
 
 ```go
-request := &fern.GetPresignedUrlRequest{
+request := &fern.GetPresignedURLRequest{
         S3Key: "s3Key",
     }
-client.S3.GetPresignedUrl(
+client.S3.GetPresignedURL(
         context.TODO(),
         request,
     )

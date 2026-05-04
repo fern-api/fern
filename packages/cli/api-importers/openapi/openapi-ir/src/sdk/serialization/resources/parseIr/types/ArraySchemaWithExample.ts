@@ -20,6 +20,7 @@ export const ArraySchemaWithExample: core.serialization.ObjectSchema<
         minItems: core.serialization.number().optional(),
         maxItems: core.serialization.number().optional(),
         example: core.serialization.list(core.serialization.unknown()).optional(),
+        default: core.serialization.unknown().optional(),
     })
     .extend(WithSdkGroupName)
     .extend(WithNamespace)
@@ -42,5 +43,6 @@ export declare namespace ArraySchemaWithExample {
         minItems?: number | null;
         maxItems?: number | null;
         example?: unknown[] | null;
+        default?: unknown | null;
     }
 }

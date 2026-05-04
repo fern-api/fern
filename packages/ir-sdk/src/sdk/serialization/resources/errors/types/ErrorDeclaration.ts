@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 import { WithDocs } from "../../commons/types/WithDocs.js";
 import { V2SchemaExamples } from "../../examples/types/V2SchemaExamples.js";
 import { HttpHeader } from "../../http/types/HttpHeader.js";
@@ -17,7 +17,7 @@ export const ErrorDeclaration: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         name: DeclaredErrorName,
         displayName: core.serialization.string().optional(),
-        discriminantValue: NameAndWireValue,
+        discriminantValue: NameAndWireValueOrString,
         type: core.serialization.lazy(() => serializers.TypeReference).optional(),
         statusCode: core.serialization.number(),
         isWildcardStatusCode: core.serialization.boolean().optional(),
@@ -31,7 +31,7 @@ export declare namespace ErrorDeclaration {
     export interface Raw extends WithDocs.Raw {
         name: DeclaredErrorName.Raw;
         displayName?: string | null;
-        discriminantValue: NameAndWireValue.Raw;
+        discriminantValue: NameAndWireValueOrString.Raw;
         type?: serializers.TypeReference.Raw | null;
         statusCode: number;
         isWildcardStatusCode?: boolean | null;

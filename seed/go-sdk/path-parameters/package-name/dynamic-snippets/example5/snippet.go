@@ -15,8 +15,8 @@ func do() {
         ),
     )
     request := &path.UpdateUserRequest{
-        TenantId: "tenant_id",
-        UserId: "user_id",
+        TenantID: "tenant_id",
+        UserID: "user_id",
         Body: &path.User{
             Name: "name",
             Tags: []string{

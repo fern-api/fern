@@ -118,7 +118,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/client-side-params/fern\"\n\tfernclient \"github.com/client-side-params/fern/client\"\n\toption \"github.com/client-side-params/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Service.GetUserById(\n\tcontext.TODO(),\n\t\"userId\",\n\t\u0026fern.GetUserRequest{\n\t\tFields: fern.String(\n\t\t\t\"fields\",\n\t\t),\n\t\tIncludeFields: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/client-side-params/fern\"\n\tfernclient \"github.com/client-side-params/fern/client\"\n\toption \"github.com/client-side-params/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Service.GetUserByID(\n\tcontext.TODO(),\n\t\"userId\",\n\t\u0026fern.GetUserRequest{\n\t\tFields: fern.String(\n\t\t\t\"fields\",\n\t\t),\n\t\tIncludeFields: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t},\n)\n"
             }
         },
         {

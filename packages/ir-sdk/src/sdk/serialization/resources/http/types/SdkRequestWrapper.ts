@@ -3,22 +3,22 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 
 export const SdkRequestWrapper: core.serialization.ObjectSchema<
     serializers.SdkRequestWrapper.Raw,
     FernIr.SdkRequestWrapper
 > = core.serialization.objectWithoutOptionalProperties({
-    wrapperName: Name,
-    bodyKey: Name,
+    wrapperName: NameOrString,
+    bodyKey: NameOrString,
     includePathParameters: core.serialization.boolean().optional(),
     onlyPathParameters: core.serialization.boolean().optional(),
 });
 
 export declare namespace SdkRequestWrapper {
     export interface Raw {
-        wrapperName: Name.Raw;
-        bodyKey: Name.Raw;
+        wrapperName: NameOrString.Raw;
+        bodyKey: NameOrString.Raw;
         includePathParameters?: boolean | null;
         onlyPathParameters?: boolean | null;
     }

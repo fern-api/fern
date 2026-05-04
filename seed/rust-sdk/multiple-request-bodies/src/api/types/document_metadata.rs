@@ -14,7 +14,7 @@ pub struct DocumentMetadata {
 
 impl DocumentMetadata {
     pub fn builder() -> DocumentMetadataBuilder {
-        DocumentMetadataBuilder::default()
+        <DocumentMetadataBuilder as Default>::default()
     }
 }
 

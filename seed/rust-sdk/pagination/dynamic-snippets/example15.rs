@@ -14,7 +14,9 @@ async fn main() {
             &ListUsersBodyCursorPaginationRequest {
                 pagination: Some(WithCursor {
                     cursor: Some("cursor".to_string()),
+                    ..Default::default()
                 }),
+                ..Default::default()
             },
             None,
         )

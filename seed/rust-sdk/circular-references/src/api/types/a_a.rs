@@ -8,7 +8,7 @@ pub struct A {
 
 impl A {
     pub fn builder() -> ABuilder {
-        ABuilder::default()
+        <ABuilder as Default>::default()
     }
 }
 

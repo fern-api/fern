@@ -6,7 +6,7 @@ package com.seed.pagination.resources.users;
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.RequestOptions;
 import com.seed.pagination.core.pagination.AsyncFernCustomPaginator;
-import com.seed.pagination.resources.users.requests.ListUsernamesRequestCustom;
+import com.seed.pagination.resources.users.requests.ListWithCustomPagerRequest;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncUsersClient {
@@ -26,22 +26,22 @@ public class AsyncUsersClient {
         return this.rawClient;
     }
 
-    public CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> listUsernamesCustom() {
-        return this.rawClient.listUsernamesCustom().thenApply(response -> response.body());
+    public CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> listWithCustomPager() {
+        return this.rawClient.listWithCustomPager().thenApply(response -> response.body());
     }
 
-    public CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> listUsernamesCustom(
+    public CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> listWithCustomPager(
             RequestOptions requestOptions) {
-        return this.rawClient.listUsernamesCustom(requestOptions).thenApply(response -> response.body());
+        return this.rawClient.listWithCustomPager(requestOptions).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> listUsernamesCustom(
-            ListUsernamesRequestCustom request) {
-        return this.rawClient.listUsernamesCustom(request).thenApply(response -> response.body());
+    public CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> listWithCustomPager(
+            ListWithCustomPagerRequest request) {
+        return this.rawClient.listWithCustomPager(request).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> listUsernamesCustom(
-            ListUsernamesRequestCustom request, RequestOptions requestOptions) {
-        return this.rawClient.listUsernamesCustom(request, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> listWithCustomPager(
+            ListWithCustomPagerRequest request, RequestOptions requestOptions) {
+        return this.rawClient.listWithCustomPager(request, requestOptions).thenApply(response -> response.body());
     }
 }

@@ -154,7 +154,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
             }
             
         async ConsolidateChangelog(
-        raw_entries: string,version_bump: string,language: string,
+        raw_entries: string,version_bump: string,language: string,previous_version: string,new_version: string,
         __baml_options__?: BamlCallOptions<never>
         ): Promise<types.ConsolidateChangelogResponse> {
           try {
@@ -168,7 +168,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
           // Check if onTick is provided - route through streaming if so
           if (__options__.onTick) {
           const __stream__ = this.stream.ConsolidateChangelog(
-          raw_entries,version_bump,language,
+          raw_entries,version_bump,language,previous_version,new_version,
           __baml_options__
           );
 
@@ -192,7 +192,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
             const __raw__ = await this.runtime.callFunction(
             "ConsolidateChangelog",
             {
-            "raw_entries": raw_entries,"version_bump": version_bump,"language": language
+            "raw_entries": raw_entries,"version_bump": version_bump,"language": language,"previous_version": previous_version,"new_version": new_version
             },
             this.ctxManager.cloneContext(),
             __options__.tb?.__tb(),
@@ -298,7 +298,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
                   }
                   
             ConsolidateChangelog(
-            raw_entries: string,version_bump: string,language: string,
+            raw_entries: string,version_bump: string,language: string,previous_version: string,new_version: string,
             __baml_options__?: BamlCallOptions<never>
             ): BamlStream<partial_types.ConsolidateChangelogResponse, types.ConsolidateChangelogResponse>
               {
@@ -347,7 +347,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
                 const __raw__ = this.runtime.streamFunction(
                 "ConsolidateChangelog",
                 {
-                "raw_entries": raw_entries,"version_bump": version_bump,"language": language
+                "raw_entries": raw_entries,"version_bump": version_bump,"language": language,"previous_version": previous_version,"new_version": new_version
                 },
                 undefined,
                 this.ctxManager.cloneContext(),

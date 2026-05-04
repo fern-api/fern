@@ -8,7 +8,7 @@ pub struct SendOptionalBodyRequest {
 
 impl SendOptionalBodyRequest {
     pub fn builder() -> SendOptionalBodyRequestBuilder {
-        SendOptionalBodyRequestBuilder::default()
+        <SendOptionalBodyRequestBuilder as Default>::default()
     }
 }
 

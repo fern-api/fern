@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getPropertyKey, getTextOfTsNode, Zurg } from "@fern-typescript/commons";
@@ -21,8 +22,10 @@ export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
         const properties = this.shape.properties.map(
             (property): Zurg.Property => ({
                 key: {
-                    raw: property.name.wireValue,
-                    parsed: generatedType.getPropertyKey({ propertyWireKey: property.name.wireValue })
+                    raw: getWireValue(property.name),
+                    parsed: generatedType.getPropertyKey({
+                        propertyWireKey: getWireValue(property.name)
+                    })
                 },
                 value: context.typeSchema.getSchemaOfTypeReference(property.valueType)
             })
@@ -55,7 +58,7 @@ export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
                 ...this.shape.properties.map((property) => {
                     const type = context.typeSchema.getReferenceToRawType(property.valueType);
                     return {
-                        name: getPropertyKey(property.name.wireValue),
+                        name: getPropertyKey(getWireValue(property.name)),
                         type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                         hasQuestionToken: type.isOptional
                     };

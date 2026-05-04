@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.users.requests.ListUsernamesRequestCustom;
+import com.seed.pagination.resources.users.requests.ListWithCustomPagerRequest;
 
 public class Example0 {
     public static void main(String[] args) {
@@ -11,7 +11,8 @@ public class Example0 {
                 .build();
 
         client.users()
-                .listUsernamesCustom(ListUsernamesRequestCustom.builder()
+                .listWithCustomPager(ListWithCustomPagerRequest.builder()
+                        .limit(1)
                         .startingAfter("starting_after")
                         .build());
     }

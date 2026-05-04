@@ -102,8 +102,11 @@ def _copy_directory_to_project(
     path_in_project: str,
     replacements: Optional[Dict[str, str]] = None,
 ) -> None:
-    source = (
-        os.path.join(os.path.dirname(__file__), "../../../../../") if "PYTEST_CURRENT_TEST" in os.environ else "/assets"
+    source = os.environ.get(
+        "FERN_ASSETS_PATH",
+        os.path.join(os.path.dirname(__file__), "../../../../../")
+        if "PYTEST_CURRENT_TEST" in os.environ
+        else "/assets",
     )
 
     for _, _, files in os.walk(os.path.join(source, relative_path_on_disk)):
@@ -130,8 +133,11 @@ def _copy_file_to_project(
     replacements: Optional[Dict[str, str]] = None,
 ) -> None:
     # Project root source, so all from_ requests should be relative to that
-    source = (
-        os.path.join(os.path.dirname(__file__), "../../../../../") if "PYTEST_CURRENT_TEST" in os.environ else "/assets"
+    source = os.environ.get(
+        "FERN_ASSETS_PATH",
+        os.path.join(os.path.dirname(__file__), "../../../../../")
+        if "PYTEST_CURRENT_TEST" in os.environ
+        else "/assets",
     )
     SourceFileFactory.add_source_file_from_disk(
         project=project,

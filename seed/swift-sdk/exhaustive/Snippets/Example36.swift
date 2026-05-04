@@ -7,10 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.params.modifyWithInlinePath(
-        param: "param",
-        request: .init(body: "string")
-    )
+    _ = try await client.endpoints.params.getWithAllowMultipleQuery()
 }
 
 try await main()

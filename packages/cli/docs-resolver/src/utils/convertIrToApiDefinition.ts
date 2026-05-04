@@ -1,4 +1,5 @@
 import {
+    APIV1Db,
     APIV1Read,
     convertAPIDefinitionToDb,
     convertDbAPIDefinitionToRead,
@@ -54,7 +55,7 @@ export function convertIrToApiDefinition({
                 graphqlTypes,
                 context
             }),
-            APIV1Read.ApiDefinitionId(apiDefinitionId),
+            APIV1Db.ApiDefinitionId(apiDefinitionId),
             EMPTY_SNIPPET_HOLDER
         )
     );

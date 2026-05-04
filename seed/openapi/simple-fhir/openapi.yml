@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: api
-  version: ''
+  version: 0.0.0
 paths:
   /account/{account_id}:
     get:
@@ -16,7 +16,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -30,8 +30,9 @@ components:
         description:
           type: string
         account:
-          $ref: '#/components/schemas/Account'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/Account'
+            - type: 'null'
       required:
         - description
     BaseResource:
@@ -67,11 +68,13 @@ components:
         name:
           type: string
         patient:
-          $ref: '#/components/schemas/Patient'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/Patient'
+            - type: 'null'
         practitioner:
-          $ref: '#/components/schemas/Practitioner'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/Practitioner'
+            - type: 'null'
       required:
         - resource_type
         - name

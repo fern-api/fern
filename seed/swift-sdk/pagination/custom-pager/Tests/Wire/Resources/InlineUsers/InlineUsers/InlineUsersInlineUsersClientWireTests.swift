@@ -7,7 +7,7 @@ import Pagination
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "hasNextPage": true,
                   "page": {
@@ -33,7 +33,7 @@ import Pagination
                     ]
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = PaginationClient(
@@ -80,7 +80,7 @@ import Pagination
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "next": "next",
                   "data": {
@@ -96,7 +96,7 @@ import Pagination
                     ]
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = PaginationClient(
@@ -130,7 +130,7 @@ import Pagination
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "hasNextPage": true,
                   "page": {
@@ -156,7 +156,7 @@ import Pagination
                     ]
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = PaginationClient(
@@ -202,7 +202,7 @@ import Pagination
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "hasNextPage": true,
                   "page": {
@@ -228,7 +228,7 @@ import Pagination
                     ]
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = PaginationClient(
@@ -275,7 +275,7 @@ import Pagination
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "hasNextPage": true,
                   "page": {
@@ -301,7 +301,7 @@ import Pagination
                     ]
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = PaginationClient(
@@ -348,7 +348,7 @@ import Pagination
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "hasNextPage": true,
                   "page": {
@@ -374,7 +374,7 @@ import Pagination
                     ]
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = PaginationClient(
@@ -420,7 +420,7 @@ import Pagination
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "hasNextPage": true,
                   "page": {
@@ -446,7 +446,7 @@ import Pagination
                     ]
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = PaginationClient(
@@ -492,7 +492,7 @@ import Pagination
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "hasNextPage": true,
                   "page": {
@@ -518,7 +518,7 @@ import Pagination
                     ]
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = PaginationClient(
@@ -564,7 +564,7 @@ import Pagination
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "total_count": 1,
                   "data": {
@@ -581,7 +581,7 @@ import Pagination
                   },
                   "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = PaginationClient(
@@ -616,7 +616,7 @@ import Pagination
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "total_count": 1,
                   "data": {
@@ -633,7 +633,7 @@ import Pagination
                   },
                   "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = PaginationClient(
@@ -668,7 +668,7 @@ import Pagination
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "cursor": {
                     "after": "after",
@@ -678,7 +678,7 @@ import Pagination
                     ]
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = PaginationClient(
@@ -706,14 +706,14 @@ import Pagination
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "results": [
                     "results",
                     "results"
                   ]
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = PaginationClient(

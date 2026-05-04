@@ -9,7 +9,7 @@ pub struct GetFunctionSignatureResponse {
 
 impl GetFunctionSignatureResponse {
     pub fn builder() -> GetFunctionSignatureResponseBuilder {
-        GetFunctionSignatureResponseBuilder::default()
+        <GetFunctionSignatureResponseBuilder as Default>::default()
     }
 }
 

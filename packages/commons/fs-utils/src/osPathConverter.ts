@@ -16,7 +16,7 @@ export function convertToFernHostRelativeFilePath(path: RelativeFilePath): Relat
 
 function convertToFernHostPath(path: string): string {
     let unixPath = path;
-    if (/^[a-zA-Z]:\\/.test(path)) {
+    if (/^[a-zA-Z]:[/\\]/.test(path)) {
         unixPath = path.substring(2);
     }
 

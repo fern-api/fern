@@ -25,22 +25,28 @@ types:
       - js
 
   Language:
-    enum:
-      - en
-      - es
-      - fr
-      - de
-      - it
-      - pt
-      - ja
-      - zh
-      - ko
-      - el
-      - no
-      - pl
-      - ru
-      - sv
-      - tr
+    docs: |
+      A BCP 47 language tag identifying a docs locale. Common shorthand codes
+      like "en", "es", "ja" are accepted, as well as regional variants such as
+      "ja-JP", "pt-BR", "zh-Hans", and "zh-Hans-CN". See RFC 5646 for the full
+      grammar.
+    type: string
+
+  TranslationConfigObject:
+    properties:
+      lang: Language
+      default:
+        type: optional<boolean>
+        docs: Whether this language is the default. At most one entry should be marked as default.
+
+  TranslationConfig:
+    discriminated: false
+    docs: |
+      Translation configuration can be either a language code string or an object with additional options.
+      When using a string, it's equivalent to `{ lang: <string> }`.
+    union:
+      - Language
+      - TranslationConfigObject
 
   AnalyticsConfig:
     properties:
@@ -145,6 +151,35 @@ types:
         docs: |
           Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
 
+  PageDescriptionSource:
+    enum:
+      - description
+      - subtitle
+
+  AgentsConfig:
+    properties:
+      page-directive:
+        type: optional<string>
+        docs: |
+          Text to prepend to each page when it is served through agent endpoints.
+      page-description-source:
+        type: optional<PageDescriptionSource>
+        docs: |
+          Controls which frontmatter field is preferred for one-line page descriptions
+          in llms.txt. Defaults to "description". If the preferred field is not present
+          in a page's frontmatter, falls back to other fields (description, subtitle,
+          og:description, headline, excerpt).
+      llms-txt:
+        type: optional<string>
+        docs: |
+          Relative filepath to a custom `llms.txt` file that Fern should host at `/llms.txt`,
+          overriding the auto-generated version. The file should follow the llmstxt.org specification.
+      llms-full-txt:
+        type: optional<string>
+        docs: |
+          Relative filepath to a custom `llms-full.txt` file that Fern should host at `/llms-full.txt`,
+          overriding the auto-generated version. The file should contain the full concatenated documentation content.
+
   CheckRuleSeverity:
     enum:
       - warn
@@ -170,6 +205,9 @@ types:
       valid-docs-endpoints:
         type: optional<CheckRuleSeverity>
         docs: Severity for docs endpoint URL validation. Default is warn.
+      missing-redirects:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for detecting previously published URLs that disappeared without an explicit redirect. Default is warn.
 
   CheckConfig:
     docs: |
@@ -226,6 +264,12 @@ types:
       "navbar-links": optional<list<NavbarLink>>
       "footer-links": optional<FooterLinksConfig>
       "page-actions": optional<PageActionsConfig>
+      "global-theme":
+        type: optional<string>
+        docs: |
+          Name of a global theme stored in Fern's cloud to apply to this documentation site.
+          Theme values override local branding configuration (colors, typography, logo, fonts, JS, CSS, etc.).
+          Upload a theme first with: fern beta docs theme upload --name <theme-name>
       experimental: optional<ExperimentalConfig>
       "default-language":
         type: optional<ProgrammingLanguage>
@@ -233,7 +277,40 @@ types:
           Sets the default language displayed by code snippets in the API Reference.
           Options include: typescript, python, java, go, ruby, csharp, php, swift, curl
 
-      languages: optional<list<Language>>
+      languages: optional<list<string>>
+
+      translations:
+        type: optional<list<TranslationConfig>>
+        docs: |
+          Configuration for multi-language documentation. Each entry defines a locale
+          that the documentation supports. Use the `translations/` directory alongside
+          `docs.yml` to provide per-language content.
+
+          Example (object syntax):
+          ```yaml
+          translations:
+            - lang: en
+              default: true
+            - lang: ja
+            - lang: fr
+          ```
+
+          Example (simplified syntax):
+          ```yaml
+          translations:
+            - en
+            - ja
+            - fr
+          ```
+
+          You can mix both syntaxes:
+          ```yaml
+          translations:
+            - lang: en
+              default: true
+            - ja
+            - fr
+          ```
 
       # Deprecated
       "ai-chat": optional<AIChatConfig>
@@ -245,6 +322,11 @@ types:
         type: optional<AiExamplesConfig>
         docs: |
           Configure AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
+
+      agents:
+        type: optional<AgentsConfig>
+        docs: |
+          Configuration for agent-serving endpoints.
 
       # seo
       metadata: optional<MetadataConfig>
@@ -307,6 +389,8 @@ types:
       - chatgpt
       - claude
       - cursor
+      - value: claude-code
+        name: claude_code
       - vscode
 
   PageActionOptions:
@@ -332,21 +416,33 @@ types:
       chatgpt:
         type: optional<boolean>
         docs: |
-          When enabled, displays an "Open in ChatGPT" button that allows users to send the page content to ChatGPT for further exploration and Q&A.
+          Controls the "Open in ChatGPT" button, which sends the page content to ChatGPT for further
+          exploration and Q&A. Set to `false` to hide it.
 
-          @default: false
+          @default: true
       claude:
         type: optional<boolean>
         docs: |
-          When enabled, displays an "Open in Claude" button that allows users to send the page content to Claude for further exploration and Q&A.
+          Controls the "Open in Claude" button, which sends the page content to Claude for further
+          exploration and Q&A. Set to `false` to hide it.
 
-          @default: false
+          @default: true
+      claude-code:
+        type: optional<boolean>
+        docs: |
+          Controls the "Connect to Claude Code" button, which copies a `claude mcp add` command to the
+          clipboard so users can register this docs site's MCP server with Claude Code. The button only
+          renders on docs sites that have Ask AI enabled; set to `false` to hide it on those sites.
+
+          @default: true
       cursor:
         type: optional<boolean>
         docs: |
-          When enabled, displays an "Open in Cursor" button that allows users to open the page content in Cursor IDE with AI-powered code assistance.
+          Controls the "Connect to Cursor" button, which installs this docs site's MCP server in
+          Cursor via a deeplink. The button only renders on docs sites that have Ask AI enabled; set
+          to `false` to hide it on those sites.
 
-          @default: false
+          @default: true
       vscode:
         type: optional<boolean>
         docs: |
@@ -468,10 +564,6 @@ types:
       "custom-domain":
         type: optional<CustomDomain>
         docs: The custom domain where your documentation is hosted. Learn more about setting up a custom domain.
-      private:
-        type: optional<boolean>
-        docs: This config option is no longer used. Please reach out to the Fern Team if you want to enable private docs.
-        availability: deprecated
       "edit-this-page":
         type: optional<EditThisPageConfig>
         docs: |
@@ -482,6 +574,10 @@ types:
         docs: |
           Specify which audiences this instance serves (e.g., internal developers, beta testers, public customers).
           You can use audiences to control which versions and products appear in each documentation instance, enabling you to create separate sites for different user groups. Content is included when its audience tag matches the instance audience. Content without an audience tag is included by default.
+      "multi-source":
+        type: optional<boolean>
+        docs: |
+          When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths. If true, the url and custom-domain must share the same basepath.
 
   CustomDomain:
     discriminated: false
@@ -554,13 +650,22 @@ types:
         value: deprecated
       - name: Beta
         value: beta
+      - name: Alpha
+        value: alpha
+      - name: Preview
+        value: preview
+      - name: Legacy
+        value: legacy
 
   VersionAvailability:
     enum:
-      - deprecated # TODO: should we support `legacy`?
+      - deprecated
+      - legacy
       - ga
       - stable
       - beta
+      - alpha
+      - preview
 
   VersionFileConfig:
     properties:
@@ -790,6 +895,12 @@ types:
         docs: |
           If `hide-feedback` is set to true, the feedback button will not be rendered. This can be overridden for a specific page using the frontmatter.
 
+      mobile-toc:
+        type: optional<boolean>
+        availability: in-development
+        docs: |
+          If `mobile-toc` is set to true, a sticky collapsible table of contents bar will be shown on mobile viewports for guide and overview layout pages.
+
   DocsSettingsConfig:
     properties:
       search-text:
@@ -846,6 +957,15 @@ types:
           When this feature is enabled, your API must have Cross-Origin Resource Sharing (CORS) enabled to allow requests from the documentation domain.
 
           @default: false
+      disable-environment-editing:
+        type: optional<boolean>
+        docs: |
+          If set to true, the base URL (environment) shown in the endpoint header on API reference
+          docs pages will no longer be editable. Users will still be able to switch between configured
+          environments via the dropdown, but will not be able to double-click and type in a custom
+          URL. This does not affect the API Playground.
+
+          @default: false
       disable-analytics: optional<boolean>
       language: optional<Language>
       folder-title-source:
@@ -863,6 +983,14 @@ types:
           Use \$\{VAR\} to escape and output literal ${VAR} without substitution.
 
           @default: false
+      websocket-oneof-display:
+        type: optional<WebSocketOneofDisplay>
+        docs: |
+          Controls how WebSocket messages with oneOf bodies are displayed in the API Reference.
+          - `flat` (default): Each variant in the oneOf is shown as a separate top-level entry.
+          - `grouped`: Messages are shown as a single parent entry with nested variants.
+
+          @default: flat
 
   ThemeConfig:
     properties:
@@ -878,6 +1006,7 @@ types:
     enum:
       - default
       - toggle
+      - tabs
 
   LanguageSwitcherThemeConfig:
     enum:
@@ -1203,6 +1332,11 @@ types:
     enum:
       - frontmatter
       - filename
+
+  WebSocketOneofDisplay:
+    enum:
+      - flat
+      - grouped
 
   CollapsedValue:
     discriminated: false
@@ -1905,9 +2039,33 @@ types:
       "og:dynamic":
         type: optional<boolean>
         docs: When true, enables dynamic OG image generation for pages that don't have a custom og:image set.
-      "og:background-image":
+      "og:dynamic:background-image":
         type: optional<string>
         docs: A custom background image for dynamically generated OG images. Can be a URL or a file path.
+      "og:dynamic:text-color":
+        type: optional<string>
+        docs: Override the text color for dynamically generated OG images. Accepts any valid CSS color value (e.g., "#1a1a1a").
+      "og:dynamic:background-color":
+        type: optional<string>
+        docs: Override the background color for dynamically generated OG images. Accepts any valid CSS color value (e.g., "#ffffff").
+      "og:dynamic:logo-color":
+        type: optional<OgDynamicLogoColor>
+        docs: Choose which logo variant from docs.yml to render in dynamically generated OG images. Defaults to `dark`.
+      "og:dynamic:show-logo":
+        type: optional<boolean>
+        docs: Toggle visibility of the logo in dynamically generated OG images. Defaults to true when og:dynamic is enabled.
+      "og:dynamic:show-section":
+        type: optional<boolean>
+        docs: Toggle visibility of the section title in dynamically generated OG images. Defaults to true when og:dynamic is enabled.
+      "og:dynamic:show-description":
+        type: optional<boolean>
+        docs: Toggle visibility of the page description in dynamically generated OG images. Defaults to true when og:dynamic is enabled.
+      "og:dynamic:show-url":
+        type: optional<boolean>
+        docs: Toggle visibility of the page URL in dynamically generated OG images. Defaults to true when og:dynamic is enabled.
+      "og:dynamic:show-gradient":
+        type: optional<boolean>
+        docs: Toggle visibility of the accent gradient overlay in dynamically generated OG images. Defaults to true when og:dynamic is enabled.
       canonical-host:
         type: optional<string>
         docs: |
@@ -1920,6 +2078,11 @@ types:
       - summary_large_image
       - app
       - player
+
+  OgDynamicLogoColor:
+    enum:
+      - dark
+      - light
 
   RedirectConfig:
     availability: in-development
@@ -1952,6 +2115,11 @@ types:
   IntegrationsConfig:
     properties:
       intercom: optional<string>
+      context7:
+        type: optional<string>
+        docs: |
+          Relative filepath to a `context7.json` file that Fern should host at `/context7.json`.
+          Fern only checks that the file exists and is valid JSON, then passes it through as-is.
 
   ExperimentalConfig:
     properties:
@@ -2005,7 +2173,7 @@ types:
       basepath-aware:
         type: optional<boolean>
         docs: |
-          When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths.
+          Deprecated: Use `multi-source: true` on the instance instead. When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths.
 
   PlaygroundSettings:
     properties:

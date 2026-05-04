@@ -13,6 +13,7 @@ async fn test_file_service_get_file_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExamplesClient::new(config).expect("Failed to build client");
 
     let result = client

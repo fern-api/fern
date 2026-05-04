@@ -1,4 +1,291 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.7.1
+  changelogEntry:
+    - summary: |
+        Upgrade glibc/glibc-common/glibc-minimal-langpack in the Java SDK generator
+        container to address CVE-2026-4046 (iconv() assertion failure when converting
+        IBM1390/IBM1399 inputs; fixed in glibc 2.34-231.amzn2023.0.4).
+      type: chore
+  createdAt: "2026-05-04"
+  irVersion: 66
+- version: 4.7.0
+  changelogEntry:
+    - summary: |
+        Add `retry-status-codes` config with `"legacy"` and `"recommended"` modes. Legacy (default)
+        preserves current behavior (408, 429, >= 500). Recommended retries only transient
+        codes (408, 429, 502, 503, 504), avoiding idempotency issues with 500. A 4.0.0
+        migration auto-pins legacy for upgrading users.
+      type: feat
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 4.6.4
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet generation for multipart/form-data endpoints with file parameters.
+        Previously, when a file value was not provided in the example, the file argument was
+        omitted from the snippet, causing subsequent arguments to shift and produce compile errors
+        (e.g. `incompatible types: <Op>Request cannot be converted to Optional<java.io.File>`).
+        Now emits `null` for missing file arguments to keep positional args aligned.
+      type: fix
+  createdAt: "2026-04-30"
+  irVersion: 66
+- version: 4.6.3
+  changelogEntry:
+    - summary: |
+        Fix Java SDK snippet and wire test generation for `allow-multiple` query
+        parameters when `coerce-optional-schemas-to-nullable: true` is set.
+        Previously, list items wrapped in `optional<...>` and/or `nullable<...>`
+        produced calls like `.strategy(Arrays.asList(Optional.of(...)))`, which
+        failed to compile because the generated builders only expose `List<T>`
+        overloads (no `List<Optional<T>>` or `List<Nullable<T>>`). The snippet
+        generator now strips both `optional` and `nullable` wrappers from list
+        items, so the emitted code matches an existing builder signature.
+      type: fix
+  createdAt: "2026-04-29"
+  irVersion: 66
+- version: 4.6.2
+  changelogEntry:
+    - summary: |
+        Fix Java SDK generation crash when an OpenAPI property name is a Java keyword
+        or literal (e.g. `true`, `false`, `null`, `if`, `new`). `KeyWordUtils` only
+        sanitized 12 of Java's reserved words, so JavaPoet rejected the rest with
+        `IllegalArgumentException: not a valid name`. The reserved-word set now covers
+        the full Java keyword list plus `true`/`false`/`null` literals, so these
+        properties generate as `_<name>` fields with `@JsonProperty("<name>")`
+        preserving the wire format.
+      type: fix
+  createdAt: "2026-04-28"
+  irVersion: 66
+- version: 4.6.1
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union deserializer misclassifying payloads. The generated
+        deserializer now checks that all required wire keys are present in the JSON
+        object before attempting to convert to each variant, preventing the first
+        variant from always winning when Jackson's builder silently accepts missing
+        required fields.
+      type: fix
+    - summary: |
+        Replace switch-on-type WebSocket message dispatch with shape-based trial
+        deserialization. Messages are now matched by checking required-field presence
+        and literal values before attempting Jackson conversion. This correctly handles
+        AsyncAPI channels where multiple message schemas share the same discriminator
+        value (e.g., two "History" variants with disjoint required fields).
+      type: fix
+  createdAt: "2026-04-27"
+  irVersion: 66
+- version: 4.6.0
+  changelogEntry:
+    - summary: |
+        Use auth scheme placeholder values in README snippets when configured via
+        `placeholder` field on auth schemes.
+      type: feat
+  createdAt: "2026-04-25"
+  irVersion: 66
+- version: 4.5.0
+  changelogEntry:
+    - summary: |
+        Support omitting username or password from basic auth when configured via
+        `usernameOmit`/`passwordOmit` in the IR. When a field is omitted, it is
+        removed from the SDK's public API (`credentials()` takes fewer arguments)
+        and an empty string is used internally for the auth header encoding. When
+        both fields are omitted, the `credentials()` call and Authorization header
+        are skipped entirely.
+      type: feat
+  createdAt: "2026-04-24"
+  irVersion: 66
+- version: 4.4.1
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.11. The GitHub pipeline step now creates
+        signed commits via the GitHub REST API (matching fiddle's legacy InMemoryGitRepo
+        push path), restoring verified fern-api[bot] commits on replay-enabled orgs.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.4.0
+  changelogEntry:
+    - summary: |
+        Add `offset-semantics` config option. When set to `"item-index"`, offset pagination increments by the number of items returned each page instead of by 1 (`"page-index"`, the default).
+      type: feat
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.3.1
+  changelogEntry:
+    - summary: |
+        Add crash reporting via Sentry to the generator runtime, and classify
+        thrown errors using the new shared `GeneratorError` taxonomy so user-facing
+        failures (config, validation, auth, network, environment) are kept distinct
+        from internal Fern bugs — only the latter are forwarded to Sentry. No
+        change to generated output.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.3.0
+  changelogEntry:
+    - summary: |
+        Add `clientDefault` support for headers, query parameters, and path
+        parameters. When a parameter has a `clientDefault` value (set via the
+        `x-fern-default` OpenAPI extension), the generated SDK uses that value
+        as a fallback when the caller does not provide one. Parameters with
+        `clientDefault` become optional in the wrapped request and use
+        `.orElse(defaultValue)` to apply the fallback.
+      type: feat
+  createdAt: "2026-04-21"
+  irVersion: 66
+- version: 4.2.3
+  changelogEntry:
+    - summary: |
+        Bump Bouncy Castle jars bundled with the Gradle base image from 1.78.1 to
+        1.84 to address CVE-2026-3505 (unbounded PGP AEAD chunk size in bcpg leading
+        to pre-auth resource exhaustion).
+      type: chore
+  createdAt: "2026-04-20"
+  irVersion: 66
+- version: 4.2.2
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.8. Changelog URLs in generated PRs
+        now use the commit SHA instead of the PR branch name, keeping the link
+        valid after the branch is deleted or squash-merged.
+      type: chore
+  createdAt: "2026-04-16"
+  irVersion: 66
+- version: 4.2.1
+  changelogEntry:
+    - summary: |
+        Propagate the `as: "request"` context through discriminated and undiscriminated
+        union type conversion in the dynamic snippets generator. Literal-typed properties
+        (e.g., `method: literal<"card">`) are now correctly filtered from builder calls
+        inside union variants, matching the Java SDK builder which excludes literal
+        properties from setters. Fixes `cannot find symbol` compilation errors in
+        generated wire tests for types with literal discriminant fields.
+      type: fix
+    - summary: |
+        Fix undiscriminated union deserialization for `String | int` (and similar)
+        unions. Previously, `convertValue(Integer, String.class)` would silently coerce
+        integers to strings, causing the String variant to always win. Primitive
+        `instanceof` checks now run before `convertValue` branches so exact type matches
+        take precedence over lossy coercion.
+      type: fix
+    - summary: |
+        Fix wire test response assertions for several round-trip serialization quirks:
+        (1) allow explicit null fields in expected JSON to match missing fields in actual
+        (Jackson's `@JsonInclude(NON_ABSENT)` drops `Optional.empty()`); (2) normalize
+        timezone-less ISO 8601 datetimes in expected JSON to include the `Z` suffix
+        that Jackson adds on re-serialization. Unified the two recursive JSON
+        normalization passes into a single tree walk.
+      type: fix
+  createdAt: "2026-04-14"
+  irVersion: 66
+- version: 4.2.0
+  changelogEntry:
+    - summary: |
+        Fix 3 high container vulnerabilities: update python3/python3-libs to
+        3.9.25-1.amzn2023.0.4 (ALAS2023-2026-1583) and libnghttp2 to
+        1.59.0-3.amzn2023.0.2 (ALAS2023-2026-1542, CVE-2026-27135).
+      type: chore
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 4.2.0-rc.1
+  changelogEntry:
+    - summary: |
+        Bump IR dependency to v66.1.0 Maven artifact, replacing custom deserializer
+        workarounds with native irV66 types.
+      type: chore
+    - summary: |
+        Support default discriminant values on unions. When a discriminated union variant
+        has a default value on its discriminator field, the Java SDK now falls back to that
+        variant instead of treating missing discriminators as unknown. This fixes deserialization
+        of payloads where the discriminator is omitted and the API expects a default variant.
+      type: feat
+  createdAt: "2026-04-10"
+  irVersion: 66
+- version: 4.2.0-rc.0
+  changelogEntry:
+    - summary: |
+        Upgrade to IR v66 which compresses the IR Name type, reducing IR size and increasing performance.
+      type: feat
+  createdAt: "2026-04-01"
+  irVersion: 66
+
+- version: 4.1.4
+  changelogEntry:
+    - summary: |
+        Update Node.js from 24.13.0 to 24.14.1 in the generator Docker image
+        to fix 7 CVEs (CVE-2026-21710, CVE-2026-21717, CVE-2026-21713,
+        CVE-2026-21714, CVE-2026-21712, CVE-2026-21715, CVE-2026-21716).
+      type: chore
+  createdAt: "2026-04-10"
+  irVersion: 65
+
+- version: 4.1.3
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union variant matching in dynamic snippets selecting
+        incorrect variants when errors are added during conversion. The matcher
+        now checks whether errors were added (via `errors.size() > errorsBefore`)
+        alongside the existing `isNop` check, preventing empty objects from being
+        returned for union fields like `options` in generated code snippets.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 65
+- version: 4.1.2
+  changelogEntry:
+    - summary: |
+        Fix wire test snippets dropping additional properties not declared in the
+        schema. Types with `@JsonAnySetter` now emit `.additionalProperty()` builder
+        calls for extra fields present in example data, so the serialized output
+        matches the expected JSON.
+      type: fix
+  createdAt: "2026-04-08"
+  irVersion: 65
+- version: 4.1.1
+  changelogEntry:
+    - summary: |
+        Fix `custom-dependencies` not being able to override bundled dependency
+        versions (OkHttp, Jackson, etc.). Previously, custom dependencies were
+        appended alongside bundled ones, so Gradle's dependency resolution would
+        pick the higher version. Custom dependencies now replace any bundled
+        dependency with the same group and artifact, allowing users to pin
+        specific versions for CVE remediation or compatibility.
+      type: fix
+  createdAt: "2026-04-02"
+  irVersion: 65
+
+- version: 4.1.0
+  changelogEntry:
+    - summary: |
+        Add `maxRetries` custom config option to override the default maximum
+        number of retries for failed requests. The default remains 2 when not
+        specified.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 65
+
+- version: 4.0.9
+  changelogEntry:
+    - summary: |
+        Fix RetryInterceptor sharing a single ExponentialBackoff instance across
+        all requests. Once the retry budget was exhausted by any request, no further
+        retries were attempted for the lifetime of the client. Each request now gets
+        its own backoff instance.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
+- version: 4.0.8
+  changelogEntry:
+    - summary: |
+        Fix multipart form data string fields being JSON-encoded with
+        `writeValueAsString()`, which wraps values in literal quote characters.
+        String fields, primitives, and enums now use plain string conversion
+        instead of JSON serialization. Complex types (objects, maps) continue
+        to use JSON serialization as before.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
 - version: 4.0.7
   changelogEntry:
     - summary: |

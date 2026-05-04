@@ -1,7 +1,7 @@
 use crate::{join_url, ApiError, ClientConfig, OAuthTokenProvider, RequestOptions};
 use futures::{Stream, StreamExt};
 use reqwest::{
-    header::{HeaderName, HeaderValue},
+    header::{HeaderMap, HeaderName, HeaderValue},
     Client, Method, Request, Response,
 };
 use serde::de::DeserializeOwned;
@@ -12,6 +12,18 @@ use std::{
     sync::Arc,
     task::{Context, Poll},
 };
+
+/// A parsed HTTP response that includes the deserialized body along with
+/// the HTTP status code and response headers.
+#[derive(Debug)]
+pub struct RawResponse<T> {
+    /// The deserialized response body.
+    pub body: T,
+    /// The HTTP status code of the response.
+    pub status_code: u16,
+    /// The HTTP response headers.
+    pub headers: HeaderMap,
+}
 
 /// A streaming byte stream for downloading files efficiently
 pub struct ByteStream {
@@ -144,6 +156,58 @@ impl HttpClient {
         })
     }
 
+    /// Returns the configured base URL.
+    pub fn base_url(&self) -> &str {
+        &self.config.base_url
+    }
+
+    /// Returns a reference to the client configuration.
+    pub fn config(&self) -> &ClientConfig {
+        &self.config
+    }
+
+    /// Execute a request and return the parsed body along with HTTP status code and headers.
+    ///
+    /// Unlike `execute_request`, this method preserves the HTTP metadata from the response,
+    /// which is useful for paginated endpoints where callers need access to status codes
+    /// and headers alongside the deserialized body.
+    pub async fn execute_request_raw<T>(
+        &self,
+        method: Method,
+        path: &str,
+        body: Option<serde_json::Value>,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+    ) -> Result<RawResponse<T>, ApiError>
+    where
+        T: DeserializeOwned,
+    {
+        let url = join_url(&self.config.base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        if let Some(body) = body {
+            request = request.json(&body);
+        }
+
+        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        self.apply_auth_headers(&mut req, &options).await?;
+        self.apply_custom_headers(&mut req, &options)?;
+
+        let response = self.execute_with_retries(req, &options).await?;
+        self.parse_response_raw(response).await
+    }
+
     /// Execute a request with the given method, path, and options
     pub async fn execute_request<T>(
         &self,
@@ -188,6 +252,48 @@ impl HttpClient {
         self.parse_response(response).await
     }
 
+    /// Execute a request with an explicit base URL override.
+    ///
+    /// Used for multi-URL environments where different endpoints
+    /// resolve to different base URLs.
+    pub async fn execute_request_with_base_url<T>(
+        &self,
+        base_url: &str,
+        method: Method,
+        path: &str,
+        body: Option<serde_json::Value>,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+    ) -> Result<T, ApiError>
+    where
+        T: DeserializeOwned,
+    {
+        let url = join_url(base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        if let Some(body) = body {
+            request = request.json(&body);
+        }
+
+        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        self.apply_auth_headers(&mut req, &options).await?;
+        self.apply_custom_headers(&mut req, &options)?;
+
+        let response = self.execute_with_retries(req, &options).await?;
+        self.parse_response(response).await
+    }
+
     async fn apply_auth_headers(
         &self,
         request: &mut Request,
@@ -202,7 +308,11 @@ impl HttpClient {
             .or(self.config.api_key.as_ref());
 
         if let Some(key) = api_key {
-            headers.insert("api_key", key.parse().map_err(|_| ApiError::InvalidHeader)?);
+            let header_value = key.to_string();
+            headers.insert(
+                "api_key",
+                header_value.parse().map_err(|_| ApiError::InvalidHeader)?,
+            );
         }
 
         // Apply bearer token - priority: request options > OAuth > config
@@ -341,6 +451,14 @@ impl HttpClient {
 
             match self.client.execute(cloned_request).await {
                 Ok(response) if response.status().is_success() => return Ok(response),
+                Ok(response)
+                    if attempt < max_retries
+                        && Self::is_retryable_status(response.status().as_u16()) =>
+                {
+                    // Exponential backoff for retryable HTTP status codes
+                    let delay = std::time::Duration::from_millis(100 * 2_u64.pow(attempt));
+                    tokio::time::sleep(delay).await;
+                }
                 Ok(response) => {
                     let status_code = response.status().as_u16();
                     let body = response.text().await.ok();
@@ -359,6 +477,10 @@ impl HttpClient {
         Err(ApiError::Network(last_error.unwrap()))
     }
 
+    fn is_retryable_status(status_code: u16) -> bool {
+        [408, 429].contains(&status_code) || status_code >= 500
+    }
+
     async fn parse_response<T>(&self, response: Response) -> Result<T, ApiError>
     where
         T: DeserializeOwned,
@@ -375,6 +497,29 @@ impl HttpClient {
         }
 
         serde_json::from_str(&text).map_err(ApiError::Serialization)
+    }
+
+    async fn parse_response_raw<T>(&self, response: Response) -> Result<RawResponse<T>, ApiError>
+    where
+        T: DeserializeOwned,
+    {
+        let status_code = response.status().as_u16();
+        let headers = response.headers().clone();
+        let text = response.text().await.map_err(ApiError::Network)?;
+
+        if text.is_empty() {
+            return Err(ApiError::Http {
+                status: status_code,
+                message: String::new(),
+            });
+        }
+
+        let body: T = serde_json::from_str(&text).map_err(ApiError::Serialization)?;
+        Ok(RawResponse {
+            body,
+            status_code,
+            headers,
+        })
     }
 
     /// Execute a request and return a streaming response (for large file downloads)
@@ -471,6 +616,43 @@ impl HttpClient {
         let response = self.execute_with_retries(req, &options).await?;
 
         // Return streaming response
+        Ok(ByteStream::new(response))
+    }
+
+    /// Execute a streaming request with an explicit base URL override.
+    pub async fn execute_stream_request_with_base_url(
+        &self,
+        base_url: &str,
+        method: Method,
+        path: &str,
+        body: Option<serde_json::Value>,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+    ) -> Result<ByteStream, ApiError> {
+        let url = join_url(base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        if let Some(body) = body {
+            request = request.json(&body);
+        }
+
+        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        self.apply_auth_headers(&mut req, &options).await?;
+        self.apply_custom_headers(&mut req, &options)?;
+
+        let response = self.execute_with_retries(req, &options).await?;
+
         Ok(ByteStream::new(response))
     }
 
@@ -571,5 +753,31 @@ impl HttpClient {
 
         // Return SSE stream with per-event timeout
         crate::SseStream::new(response, terminator, timeout).await
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_is_retryable_status() {
+        // Retryable 4xx
+        assert!(HttpClient::is_retryable_status(408));
+        assert!(HttpClient::is_retryable_status(429));
+
+        // Retryable 5xx (>= 500)
+        assert!(HttpClient::is_retryable_status(500));
+        assert!(HttpClient::is_retryable_status(501));
+        assert!(HttpClient::is_retryable_status(502));
+        assert!(HttpClient::is_retryable_status(503));
+        assert!(HttpClient::is_retryable_status(504));
+        assert!(HttpClient::is_retryable_status(599));
+
+        // Success and other 4xx codes are NOT retryable
+        assert!(!HttpClient::is_retryable_status(200));
+        assert!(!HttpClient::is_retryable_status(400));
+        assert!(!HttpClient::is_retryable_status(401));
+        assert!(!HttpClient::is_retryable_status(404));
     }
 }

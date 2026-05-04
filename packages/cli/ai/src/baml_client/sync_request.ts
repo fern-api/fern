@@ -72,7 +72,7 @@ export class HttpRequest {
   }
   
   ConsolidateChangelog(
-      raw_entries: string,version_bump: string,language: string,
+      raw_entries: string,version_bump: string,language: string,previous_version: string,new_version: string,
       __baml_options__?: BamlCallOptions<never>
   ): HTTPRequest {
     try {
@@ -91,7 +91,7 @@ export class HttpRequest {
       return this.runtime.buildRequestSync(
         "ConsolidateChangelog",
         {
-          "raw_entries": raw_entries,"version_bump": version_bump,"language": language
+          "raw_entries": raw_entries,"version_bump": version_bump,"language": language,"previous_version": previous_version,"new_version": new_version
         },
         this.ctxManager.cloneContext(),
         __baml_options__?.tb?.__tb(),
@@ -144,7 +144,7 @@ export class HttpStreamRequest {
   }
   
   ConsolidateChangelog(
-      raw_entries: string,version_bump: string,language: string,
+      raw_entries: string,version_bump: string,language: string,previous_version: string,new_version: string,
       __baml_options__?: BamlCallOptions<never>
   ): HTTPRequest {
     try {
@@ -163,7 +163,7 @@ export class HttpStreamRequest {
       return this.runtime.buildRequestSync(
         "ConsolidateChangelog",
         {
-          "raw_entries": raw_entries,"version_bump": version_bump,"language": language
+          "raw_entries": raw_entries,"version_bump": version_bump,"language": language,"previous_version": previous_version,"new_version": new_version
         },
         this.ctxManager.cloneContext(),
         __baml_options__?.tb?.__tb(),

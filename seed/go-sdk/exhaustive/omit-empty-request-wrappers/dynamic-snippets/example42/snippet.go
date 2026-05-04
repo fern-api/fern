@@ -16,9 +16,8 @@ func do() {
             "<token>",
         ),
     )
-    request := true
-    client.Endpoints.Primitive.GetAndReturnBool(
+    client.Endpoints.Params.GetWithBooleanPath(
         context.TODO(),
-        request,
+        true,
     )
 }

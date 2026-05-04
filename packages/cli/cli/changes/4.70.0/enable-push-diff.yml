@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Enable `--push-diff` flag for `fern sdk preview` to push a preview diff
+    branch to the SDK repo in addition to publishing to the preview registry.
+    Adds `diff_url` to the JSON and text output for use by CI integrations.
+  type: feat

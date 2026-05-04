@@ -57,6 +57,15 @@ export interface DocsSettingsConfig {
      * @default: false
      */
     disableExplorerProxy?: boolean;
+    /**
+     * If set to true, the base URL (environment) shown in the endpoint header on API reference
+     * docs pages will no longer be editable. Users will still be able to switch between configured
+     * environments via the dropdown, but will not be able to double-click and type in a custom
+     * URL. This does not affect the API Playground.
+     *
+     * @default: false
+     */
+    disableEnvironmentEditing?: boolean;
     disableAnalytics?: boolean;
     language?: FernDocsConfig.Language;
     /**
@@ -74,4 +83,12 @@ export interface DocsSettingsConfig {
      * @default: false
      */
     substituteEnvVars?: boolean;
+    /**
+     * Controls how WebSocket messages with oneOf bodies are displayed in the API Reference.
+     * - `flat` (default): Each variant in the oneOf is shown as a separate top-level entry.
+     * - `grouped`: Messages are shown as a single parent entry with nested variants.
+     *
+     * @default: flat
+     */
+    websocketOneofDisplay?: FernDocsConfig.WebSocketOneofDisplay;
 }

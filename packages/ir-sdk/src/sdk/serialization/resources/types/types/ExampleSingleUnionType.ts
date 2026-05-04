@@ -3,19 +3,19 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 
 export const ExampleSingleUnionType: core.serialization.ObjectSchema<
     serializers.ExampleSingleUnionType.Raw,
     FernIr.ExampleSingleUnionType
 > = core.serialization.objectWithoutOptionalProperties({
-    wireDiscriminantValue: NameAndWireValue,
+    wireDiscriminantValue: NameAndWireValueOrString,
     shape: core.serialization.lazy(() => serializers.ExampleSingleUnionTypeProperties),
 });
 
 export declare namespace ExampleSingleUnionType {
     export interface Raw {
-        wireDiscriminantValue: NameAndWireValue.Raw;
+        wireDiscriminantValue: NameAndWireValueOrString.Raw;
         shape: serializers.ExampleSingleUnionTypeProperties.Raw;
     }
 }

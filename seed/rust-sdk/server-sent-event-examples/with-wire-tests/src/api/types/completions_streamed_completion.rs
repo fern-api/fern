@@ -10,7 +10,7 @@ pub struct StreamedCompletion {
 
 impl StreamedCompletion {
     pub fn builder() -> StreamedCompletionBuilder {
-        StreamedCompletionBuilder::default()
+        <StreamedCompletionBuilder as Default>::default()
     }
 }
 

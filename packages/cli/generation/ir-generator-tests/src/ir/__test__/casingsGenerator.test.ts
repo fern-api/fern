@@ -1,8 +1,8 @@
-import { constructCasingsGenerator } from "@fern-api/casings-generator";
+import { constructFullCasingsGenerator } from "@fern-api/casings-generator";
 import { Name } from "@fern-api/ir-sdk";
 
 describe("casingsGenerator", () => {
-    const casingsGenerator = constructCasingsGenerator({
+    const casingsGenerator = constructFullCasingsGenerator({
         generationLanguage: undefined,
         keywords: undefined,
         smartCasing: true

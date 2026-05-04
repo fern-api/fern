@@ -6,4 +6,9 @@ export interface WebhookPayloadFormatSchema {
     components: FernDefinition.WebhookPayloadComponentSchema[];
     /** Defaults to empty string. */
     delimiter?: string;
+    /**
+     * When set, POST body parameters are sorted before being concatenated
+     * into the signing payload. Required by providers like Twilio.
+     */
+    "body-sort"?: FernDefinition.WebhookPayloadBodySortSchema;
 }

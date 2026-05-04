@@ -14,7 +14,7 @@
 
 ```go
 request := &fern.GetTokenRequest{
-        ClientId: "client_id",
+        ClientID: "client_id",
         ClientSecret: "client_secret",
     }
 client.Auth.GetToken(
@@ -36,7 +36,7 @@ client.Auth.GetToken(
 <dl>
 <dd>
 
-**clientId:** `string` 
+**clientID:** `string` 
     
 </dd>
 </dl>

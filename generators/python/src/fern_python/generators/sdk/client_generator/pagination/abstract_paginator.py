@@ -3,6 +3,7 @@ from typing import List, Optional
 
 from fern_python.codegen import AST
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
+from fern_python.utils.name_resolver import get_name_from_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -165,13 +166,13 @@ class Paginator:
             if idx > 0:
                 built_path += "."
                 condition += " and "
-            built_path += f"{property.name.snake_case.safe_name}"
+            built_path += f"{resolve_name(property.name).snake_case.safe_name}"
             condition += f"{built_path} is not None"
         return condition
 
     # Need to do null-safe dereferencing here, with some fallback value
     def _response_property_to_dot_access(self, response_property: ir_types.ResponseProperty) -> str:
         property_path = list(map(lambda path_item: path_item.name, response_property.property_path or []))
-        property_path.append(response_property.property.name.name)
-        path_name = list(map(lambda name: name.snake_case.safe_name, property_path))
-        return ".".join(path_name)
+        name_parts = [resolve_name(name).snake_case.safe_name for name in property_path]
+        name_parts.append(resolve_name(get_name_from_wire_value(response_property.property.name)).snake_case.safe_name)
+        return ".".join(name_parts)

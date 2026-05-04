@@ -537,7 +537,7 @@ func (s *Status) validate() error {
 
 var (
 	userFieldName           = big.NewInt(1 << 0)
-	userFieldId             = big.NewInt(1 << 1)
+	userFieldID             = big.NewInt(1 << 1)
 	userFieldTags           = big.NewInt(1 << 2)
 	userFieldMetadata       = big.NewInt(1 << 3)
 	userFieldEmail          = big.NewInt(1 << 4)
@@ -548,7 +548,7 @@ var (
 
 type User struct {
 	Name           string         `json:"name" url:"name"`
-	Id             UserId         `json:"id" url:"id"`
+	ID             UserID         `json:"id" url:"id"`
 	Tags           []string       `json:"tags,omitempty" url:"tags,omitempty"`
 	Metadata       *Metadata      `json:"metadata,omitempty" url:"metadata,omitempty"`
 	Email          Email          `json:"email,omitempty" url:"email,omitempty"`
@@ -570,11 +570,11 @@ func (u *User) GetName() string {
 	return u.Name
 }
 
-func (u *User) GetId() UserId {
+func (u *User) GetID() UserID {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *User) GetTags() []string {
@@ -640,11 +640,11 @@ func (u *User) SetName(name string) {
 	u.require(userFieldName)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *User) SetId(id UserId) {
-	u.Id = id
-	u.require(userFieldId)
+func (u *User) SetID(id UserID) {
+	u.ID = id
+	u.require(userFieldID)
 }
 
 // SetTags sets the Tags field and marks it as non-optional;
@@ -731,7 +731,7 @@ func (u *User) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
-type UserId = string
+type UserID = string
 
 type WeirdNumber struct {
 	Integer        int

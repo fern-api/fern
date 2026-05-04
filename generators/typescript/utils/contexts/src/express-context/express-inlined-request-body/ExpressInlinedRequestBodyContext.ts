@@ -6,7 +6,7 @@ import { GeneratedExpressInlinedRequestBody } from "./GeneratedExpressInlinedReq
 export interface ExpressInlinedRequestBodyContext {
     getGeneratedInlinedRequestBody: (
         packageId: PackageId,
-        endpointName: FernIr.Name
+        endpointName: FernIr.NameOrString
     ) => GeneratedExpressInlinedRequestBody;
-    getReferenceToInlinedRequestBodyType: (packageId: PackageId, endpointName: FernIr.Name) => Reference;
+    getReferenceToInlinedRequestBodyType: (packageId: PackageId, endpointName: FernIr.NameOrString) => Reference;
 }

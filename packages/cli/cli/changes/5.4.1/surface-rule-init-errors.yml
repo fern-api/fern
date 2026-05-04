@@ -1,0 +1,9 @@
+- summary: |
+    Surface rule initialization errors in `fern check` instead of exiting silently.
+    Previously, when a validation rule (e.g. `valid-markdown-links`) failed to
+    initialize because its docs configuration could not be resolved — for
+    example, a navigation `folder:` entry pointing at a path that does not
+    exist — `fern check` would exit with code 1 and no visible error message.
+    Now the underlying failure (e.g. `Folder not found: …`) is reported as a
+    fatal violation on `docs.yml`.
+  type: fix

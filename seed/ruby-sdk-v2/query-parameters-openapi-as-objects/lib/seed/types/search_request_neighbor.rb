@@ -6,8 +6,11 @@ module Seed
       extend Seed::Internal::Types::Union
 
       member -> { Seed::Types::User }
+
       member -> { Seed::Types::NestedUser }
+
       member -> { String }
+
       member -> { Integer }
     end
   end

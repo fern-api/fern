@@ -14,6 +14,7 @@ async fn main() {
                 username: Some("username".to_string()),
                 password: Some("password".to_string()),
                 name: Some("test".to_string()),
+                ..Default::default()
             }),
             None,
         )

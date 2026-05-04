@@ -27,6 +27,7 @@ async fn main() {
                     serde_json::json!({"key":"value"}),
                 )])),
                 connection: "connection".to_string(),
+                ..Default::default()
             },
             None,
         )

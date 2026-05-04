@@ -7,10 +7,13 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import Docs, ExampleType, Json, NestedType
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedExtends, SeedExtends
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedExtends": ".client",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "Docs": ".types",
     "ExampleType": ".types",
     "Json": ".types",
@@ -41,4 +44,14 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AsyncSeedExtends", "Docs", "ExampleType", "Json", "NestedType", "SeedExtends", "__version__"]
+__all__ = [
+    "AsyncSeedExtends",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
+    "Docs",
+    "ExampleType",
+    "Json",
+    "NestedType",
+    "SeedExtends",
+    "__version__",
+]

@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: file-download
-  version: ''
+  version: 0.0.0
 paths:
   /snippet:
     post:
@@ -11,7 +11,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
   /:
     post:
       operationId: service_downloadFile
@@ -20,7 +20,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
 components:
   schemas: {}
   securitySchemes: {}

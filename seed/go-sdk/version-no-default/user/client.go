@@ -35,12 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) GetUser(
 	ctx context.Context,
-	userId fern.UserId,
+	userID fern.UserID,
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
 	response, err := c.WithRawResponse.GetUser(
 		ctx,
-		userId,
+		userID,
 		opts...,
 	)
 	if err != nil {

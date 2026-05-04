@@ -10,7 +10,7 @@ export interface IntermediateRepresentation {
     fdrApiDefinitionId: string | undefined;
     apiVersion: FernIr.ApiVersionScheme | undefined;
     /** This is the human readable unique id for the API. */
-    apiName: FernIr.Name;
+    apiName: FernIr.NameOrString;
     apiDisplayName: string | undefined;
     apiDocs: string | undefined;
     auth: FernIr.ApiAuth;
@@ -46,4 +46,9 @@ export interface IntermediateRepresentation {
     generationMetadata: FernIr.GenerationMetadata | undefined;
     /** Whether the API playground should be enabled. Defaults to true. */
     apiPlayground: boolean | undefined;
+    /**
+     * Configuration used for generating names. Stored for backwards compatibility so that
+     * IR migrations can reconstruct the correct CasingsGenerator when inflating compressed names.
+     */
+    casingsConfig: FernIr.CasingsConfig | undefined;
 }

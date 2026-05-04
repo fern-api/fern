@@ -34,7 +34,7 @@ describe("SdkChecker", () => {
             const workspace = await loadWorkspace("simple-api");
 
             const checker = new SdkChecker({
-                context: createTestContext({ cwd }),
+                context: await createTestContext({ cwd }),
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
@@ -61,7 +61,7 @@ api:
             const workspace = await loadTempWorkspace(testDir);
 
             const checker = new SdkChecker({
-                context: createTestContext({ cwd: testDir }),
+                context: await createTestContext({ cwd: testDir }),
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
@@ -98,7 +98,7 @@ sdks:
 
             const workspace = await loadTempWorkspace(testDir);
             const checker = new SdkChecker({
-                context: createTestContext({ cwd: testDir }),
+                context: await createTestContext({ cwd: testDir }),
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
@@ -113,7 +113,7 @@ sdks:
             const workspace = await loadWorkspace("simple-api");
 
             const checker = new SdkChecker({
-                context: createTestContext({ cwd }),
+                context: await createTestContext({ cwd }),
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
@@ -146,7 +146,7 @@ sdks:
 
             const workspace = await loadTempWorkspace(testDir);
             const checker = new SdkChecker({
-                context: createTestContext({ cwd: testDir }),
+                context: await createTestContext({ cwd: testDir }),
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
@@ -163,7 +163,7 @@ sdks:
             const workspace = await loadWorkspace("simple-api");
 
             const checker = new SdkChecker({
-                context: createTestContext({ cwd }),
+                context: await createTestContext({ cwd }),
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
@@ -198,7 +198,7 @@ sdks:
 
             const workspace = await loadTempWorkspace(testDir);
             const checker = new SdkChecker({
-                context: createTestContext({ cwd: testDir }),
+                context: await createTestContext({ cwd: testDir }),
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
@@ -213,7 +213,7 @@ sdks:
             const workspace = await loadWorkspace("simple-api");
 
             const checker = new SdkChecker({
-                context: createTestContext({ cwd }),
+                context: await createTestContext({ cwd }),
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
@@ -223,13 +223,82 @@ sdks:
         });
     });
 
+    describe("GraphQL spec validation", () => {
+        it("warns when an SDK target references an API with a GraphQL spec", async () => {
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+api:
+  specs:
+    - graphql: schema.graphql
+sdks:
+  targets:
+    typescript:
+      lang: typescript
+      version: "1.0.0"
+      output:
+        path: ./sdks/typescript
+`
+            );
+            await writeFile(join(testDir, "schema.graphql"), "type Query { hello: String }");
+
+            const workspace = await loadTempWorkspace(testDir);
+            const checker = new SdkChecker({
+                context: await createTestContext({ cwd: testDir }),
+                versionChecker: NOOP_VERSION_CHECKER
+            });
+
+            const result = await checker.check({ workspace });
+
+            expect(result.warningCount).toBe(1);
+            expect(result.errorCount).toBe(0);
+            expect(result.violations.some((v) => v.severity === "warning" && v.message.includes("GraphQL"))).toBe(true);
+            expect(
+                result.violations.some((v) => v.message.includes("graphql specs will be skipped for this target"))
+            ).toBe(true);
+        });
+
+        it("does not warn for an SDK target whose API has no GraphQL spec", async () => {
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+api:
+  specs:
+    - openapi: openapi.yml
+sdks:
+  targets:
+    typescript:
+      lang: typescript
+      version: "1.0.0"
+      output:
+        path: ./sdks/typescript
+`
+            );
+            await writeMinimalOpenApi(testDir);
+
+            const workspace = await loadTempWorkspace(testDir);
+            const checker = new SdkChecker({
+                context: await createTestContext({ cwd: testDir }),
+                versionChecker: NOOP_VERSION_CHECKER
+            });
+
+            const result = await checker.check({ workspace });
+
+            expect(result.violations.every((v) => !v.message.includes("GraphQL"))).toBe(true);
+        });
+    });
+
     describe("registry unreachable", () => {
         it("warns when registry is unreachable", async () => {
             const cwd = AbsoluteFilePath.of(join(FIXTURES_DIR, "simple-api"));
             const workspace = await loadWorkspace("simple-api");
 
             const checker = new SdkChecker({
-                context: createTestContext({ cwd }),
+                context: await createTestContext({ cwd }),
                 versionChecker: async ({ target }) => ({
                     violation: {
                         severity: "warning",

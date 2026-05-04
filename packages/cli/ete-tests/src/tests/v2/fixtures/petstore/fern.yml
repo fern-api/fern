@@ -9,21 +9,21 @@ api:
 sdks:
   targets:
     typescript:
-      version: 3.45.1
+      version: 3.63.3
       output:
         path: ./sdks/typescript
       group:
         - prod
 
     python:
-      version: 4.50.1
+      version: 4.64.1
       output:
         path: ./sdks/python
       group:
         - prod
 
     go:
-      version: 1.30.0
+      version: 1.34.3
       output:
         path: ./sdks/go
       group:

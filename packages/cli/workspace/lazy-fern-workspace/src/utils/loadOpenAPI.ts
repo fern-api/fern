@@ -1,12 +1,14 @@
+import path from "node:path";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernOpenAPIExtension, OpenAPIExtension } from "@fern-api/openapi-ir-parser";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { OpenAPI } from "openapi-types";
 import { applyOverlays } from "../loaders/applyOverlays.js";
 import { mergeWithOverrides } from "../loaders/mergeWithOverrides.js";
 import { parseOpenAPI } from "./parseOpenAPI.js";
+import { resolveDescriptionMarkdownRefs } from "./resolveDescriptionMarkdownRefs.js";
 
 /**
  * Attempts to find a matching OpenAPI path template for a given example path.
@@ -63,8 +65,31 @@ export async function loadOpenAPI({
     absolutePathToOpenAPIOverlays: AbsoluteFilePath | undefined;
     loadAiExamples?: boolean;
 }): Promise<OpenAPI.Document> {
+    // Inline `description: { $ref: "./*.md" }` pointers before Redocly's bundler
+    // sees them — otherwise it tries to YAML-parse the markdown and mangles it.
+    const rawSpecContents = await readFile(absolutePathToOpenAPI, "utf-8");
+    let rawSpec: OpenAPI.Document;
+    try {
+        rawSpec = yaml.load(rawSpecContents) as OpenAPI.Document;
+    } catch (e) {
+        if (!(e instanceof yaml.YAMLException)) {
+            throw e;
+        }
+        const relativePath = path.relative(process.cwd(), absolutePathToOpenAPI);
+        let errorMessage = `Failed to parse ${relativePath}: ${e.reason}`;
+        if (e.mark != null) {
+            errorMessage += `\n  at line ${e.mark.line + 1}, column ${e.mark.column + 1}`;
+            if (e.mark.snippet) {
+                errorMessage += `\n\n${e.mark.snippet}`;
+            }
+        }
+        throw new CliError({ message: errorMessage, code: CliError.Code.ParseError });
+    }
+    await resolveDescriptionMarkdownRefs(rawSpec, dirname(absolutePathToOpenAPI), context);
     const parsed = await parseOpenAPI({
-        absolutePathToOpenAPI
+        absolutePathToOpenAPI,
+        logger: context.logger,
+        parsed: rawSpec
     });
 
     // Normalize overrides to an array for consistent processing
@@ -101,12 +126,17 @@ export async function loadOpenAPI({
             allowNullKeys: OPENAPI_EXAMPLES_KEYS
         });
 
+        // If this override introduced any `description: { $ref: "./*.md" }` pointers,
+        // resolve them against the override file's directory before Redocly runs.
+        await resolveDescriptionMarkdownRefs(result, dirname(overridesFilepath), context);
+
         // Resolve refs after each override is applied, using the current override's path
         // This ensures refs added by this override file are resolved relative to its location
         result = await parseOpenAPI({
             absolutePathToOpenAPI,
             absolutePathToOpenAPIOverrides: overridesFilepath,
-            parsed: result
+            parsed: result,
+            logger: context.logger
         });
     }
 
@@ -187,7 +217,8 @@ export async function loadOpenAPI({
         return await parseOpenAPI({
             absolutePathToOpenAPI,
             absolutePathToOpenAPIOverlays, // Include overlay path for ref resolver
-            parsed: result
+            parsed: result,
+            logger: context.logger
         });
     }
     return result;

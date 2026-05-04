@@ -712,7 +712,7 @@ func (u *Union) validate() error {
 
 type UnionWithBaseProperties struct {
 	Type        string
-	Id          string
+	ID          string
 	Integer     int
 	FieldString string
 	Foo         *Foo
@@ -737,11 +737,11 @@ func (u *UnionWithBaseProperties) GetType() string {
 	return u.Type
 }
 
-func (u *UnionWithBaseProperties) GetId() string {
+func (u *UnionWithBaseProperties) GetID() string {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *UnionWithBaseProperties) GetInteger() int {
@@ -768,13 +768,13 @@ func (u *UnionWithBaseProperties) GetFoo() *Foo {
 func (u *UnionWithBaseProperties) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
-		Id   string `json:"id"`
+		ID   string `json:"id"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
 	u.Type = unmarshaler.Type
-	u.Id = unmarshaler.Id
+	u.ID = unmarshaler.ID
 	if unmarshaler.Type == "" {
 		return fmt.Errorf("%T did not include discriminant type", u)
 	}
@@ -815,22 +815,22 @@ func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
 	case "integer":
 		var marshaler = struct {
 			Type    string `json:"type"`
-			Id      string `json:"id"`
+			ID      string `json:"id"`
 			Integer int    `json:"value"`
 		}{
 			Type:    "integer",
-			Id:      u.Id,
+			ID:      u.ID,
 			Integer: u.Integer,
 		}
 		return json.Marshal(marshaler)
 	case "string":
 		var marshaler = struct {
 			Type        string `json:"type"`
-			Id          string `json:"id"`
+			ID          string `json:"id"`
 			FieldString string `json:"value"`
 		}{
 			Type:        "string",
-			Id:          u.Id,
+			ID:          u.ID,
 			FieldString: u.FieldString,
 		}
 		return json.Marshal(marshaler)

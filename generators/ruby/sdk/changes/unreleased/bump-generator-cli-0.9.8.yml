@@ -1,0 +1,6 @@
+- summary: |
+    Bump @fern-api/generator-cli to 0.9.8. Changelog URLs in generated PRs
+    now use the commit SHA instead of the PR branch name, keeping the link
+    valid after the branch is deleted or squash-merged.
+  type: chore
+

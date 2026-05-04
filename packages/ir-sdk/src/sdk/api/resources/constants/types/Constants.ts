@@ -3,5 +3,5 @@
 import type * as FernIr from "../../../index.js";
 
 export interface Constants {
-    errorInstanceIdKey: FernIr.NameAndWireValue;
+    errorInstanceIdKey: FernIr.NameAndWireValueOrString;
 }

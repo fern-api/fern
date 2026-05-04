@@ -1,3 +1,4 @@
+using global::System.Net;
 using NUnit.Framework;
 using SeedPagination.Core;
 using SystemTask = global::System.Threading.Tasks.Task;
@@ -46,7 +47,7 @@ public class StringCursorTest
             (_, _, _) =>
             {
                 responses.MoveNext();
-                return SystemTask.FromResult(responses.Current);
+                return SystemTask.FromResult(Wrap(responses.Current));
             },
             (request, cursor) =>
             {
@@ -115,7 +116,7 @@ public class StringCursorTest
             (_, _, _) =>
             {
                 responses.MoveNext();
-                return SystemTask.FromResult(responses.Current);
+                return SystemTask.FromResult(Wrap(responses.Current));
             },
             (request, cursor) =>
             {
@@ -164,4 +165,16 @@ public class StringCursorTest
     {
         public required string? Next { get; set; }
     }
+
+    private static WithRawResponse<Response> Wrap(Response response) =>
+        new()
+        {
+            Data = response,
+            RawResponse = new RawResponse
+            {
+                StatusCode = HttpStatusCode.OK,
+                Url = new Uri("https://localhost"),
+                Headers = default,
+            },
+        };
 }

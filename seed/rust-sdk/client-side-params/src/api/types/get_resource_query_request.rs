@@ -13,7 +13,7 @@ pub struct GetResourceQueryRequest {
 
 impl GetResourceQueryRequest {
     pub fn builder() -> GetResourceQueryRequestBuilder {
-        GetResourceQueryRequestBuilder::default()
+        <GetResourceQueryRequestBuilder as Default>::default()
     }
 }
 

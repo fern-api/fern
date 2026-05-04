@@ -2,13 +2,16 @@ import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { BasePhpCustomConfigSchema } from "@fern-api/php-codegen";
+import { Eta } from "eta";
 import { mkdir, readFile, writeFile } from "fs/promises";
-import { cloneDeep, isArray, mergeWith, template } from "lodash-es";
+import { cloneDeep, isArray, mergeWith } from "lodash-es";
 import path from "path";
 
 import { AsIsFiles } from "../AsIs.js";
 import { AbstractPhpGeneratorContext } from "../context/AbstractPhpGeneratorContext.js";
 import { PhpFile } from "./PhpFile.js";
+
+const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
 
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
 const CORE_DIRECTORY_NAME = "Core";
@@ -126,15 +129,22 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
     }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
 
-        return new File(
-            filename.replace(".Template", ""),
-            RelativeFilePath.of(""),
-            this.replaceTemplate({
-                contents,
-                namespace: this.getNestedNamespace({ namespace, filename }),
-                extraTemplateVars
-            })
-        );
+        let rendered = this.replaceTemplate({
+            contents,
+            namespace: this.getNestedNamespace({ namespace, filename }),
+            extraTemplateVars
+        });
+
+        const retryStatusCodesArray =
+            this.context.customConfig.retryStatusCodes === "recommended" ? "[408, 429, 502, 503, 504]" : "[408, 429]";
+        const retryStatusCheck =
+            this.context.customConfig.retryStatusCodes === "recommended"
+                ? "in_array($response->getStatusCode(), self::RETRY_STATUS_CODES)"
+                : "$response->getStatusCode() >= 500 ||\n                in_array($response->getStatusCode(), self::RETRY_STATUS_CODES)";
+        rendered = rendered.replace(/\{\{RETRY_STATUS_CODES_ARRAY\}\}/g, retryStatusCodesArray);
+        rendered = rendered.replace(/\{\{RETRY_STATUS_CHECK\}\}/g, retryStatusCheck);
+
+        return new File(filename.replace(".Template", ""), RelativeFilePath.of(""), rendered);
     }
 
     private async createGitHubWorkflowsDirectory(): Promise<void> {
@@ -247,7 +257,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         namespace: string;
         extraTemplateVars?: Record<string, string>;
     }): string {
-        return template(contents)({
+        return eta.renderString(contents, {
             namespace,
             coreNamespace: this.context.getCoreNamespace(),
             ...extraTemplateVars
@@ -327,7 +337,7 @@ class ComposerJson {
                 "php-http/multipart-stream-builder": "^1.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^9.0",
+                "phpunit/phpunit": "^12.5.22",
                 "friendsofphp/php-cs-fixer": "3.5.0",
                 "phpstan/phpstan": "^1.12",
                 "guzzlehttp/guzzle": "^7.4"

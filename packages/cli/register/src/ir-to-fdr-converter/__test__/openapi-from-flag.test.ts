@@ -14,6 +14,7 @@ import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import assert from "assert";
 
 import { convertIrToFdrApi } from "../convertIrToFdrApi.js";
+import { getOriginalName } from "../nameUtils.js";
 
 const hasBuf = spawnSync("buf", ["--version"], { stdio: "ignore" }).status === 0;
 
@@ -333,7 +334,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
 
         // Check that union type with discriminator was processed (may be discriminated or undiscriminated)
         const eventRequestType = Object.values(intermediateRepresentation.types).find(
-            (type) => type.name.name.originalName === "EventRequest"
+            (type) => getOriginalName(type.name.name) === "EventRequest"
         );
         expect(eventRequestType).toBeDefined();
         // Note: v3 parser may produce "union" or "undiscriminatedUnion" depending on discriminator processing
@@ -697,10 +698,14 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         const specific500 = errorDeclarationsByStatus["500-false"];
         const wildcard500 = errorDeclarationsByStatus["500-true"];
 
-        expect(specific400?.name.name.originalName).toContain("BadRequestError");
-        expect(wildcard400?.name.name.originalName).toContain("ClientRequestError");
-        expect(specific500?.name.name.originalName).toContain("InternalServerError");
-        expect(wildcard500?.name.name.originalName).toContain("ServerError");
+        expect(specific400 != null ? getOriginalName(specific400.name.name) : undefined).toContain("BadRequestError");
+        expect(wildcard400 != null ? getOriginalName(wildcard400.name.name) : undefined).toContain(
+            "ClientRequestError"
+        );
+        expect(specific500 != null ? getOriginalName(specific500.name.name) : undefined).toContain(
+            "InternalServerError"
+        );
+        expect(wildcard500 != null ? getOriginalName(wildcard500.name.name) : undefined).toContain("ServerError");
 
         // Validate FDR now contains all 4 errors properly converted
         expect(fdrApiDefinition.rootPackage).toBeDefined();
@@ -931,6 +936,75 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         // Snapshot the complete output for regression testing
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/auth-name-collision-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/auth-name-collision-ir.snap");
+    });
+
+    it("should preserve user's explicit docs over OpenAPI description", async () => {
+        // Test that when generators.yml has explicit docs for an auth scheme,
+        // it takes priority over the OpenAPI securityScheme description
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/auth-user-docs-priority")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "auth-user-docs-priority"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate auth schemes exist
+        expect(intermediateRepresentation.auth).toBeDefined();
+        expect(intermediateRepresentation.auth.schemes).toBeDefined();
+        const authSchemes = intermediateRepresentation.auth.schemes;
+
+        // Find the apiKeyAuth scheme
+        const apiKeyScheme = authSchemes.find((scheme) => scheme.key === "apiKeyAuth");
+        expect(apiKeyScheme).toBeDefined();
+
+        // Verify the docs field is the user's custom docs, NOT the OpenAPI description
+        expect(apiKeyScheme?.docs).toBe(
+            "User's custom documentation that should take priority over OpenAPI description"
+        );
+
+        // Snapshot for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/auth-user-docs-priority-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/auth-user-docs-priority-ir.snap");
     });
 
     it("should handle OpenAPI auth overrides combined with OpenAPI overrides file", async () => {
@@ -2072,7 +2146,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
 
         // Check that RateTier type exists and has the expected structure
         const rateTierType = Object.values(intermediateRepresentation.types).find(
-            (type) => type.name.name.originalName === "RateTier"
+            (type) => getOriginalName(type.name.name) === "RateTier"
         );
         expect(rateTierType).toBeDefined();
 
@@ -2888,8 +2962,8 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         // Verify that x-fern-basic custom names are correctly flowing through to the IR
         // The OpenAPI spec has x-fern-basic with username.name="project_id" and password.name="api_token"
         // Verify custom names from x-fern-basic are used
-        expect(basicAuthScheme.username.originalName).toBe("project_id");
-        expect(basicAuthScheme.password.originalName).toBe("api_token");
+        expect(getOriginalName(basicAuthScheme.username)).toBe("project_id");
+        expect(getOriginalName(basicAuthScheme.password)).toBe("api_token");
 
         // Verify env vars are also passed through
         expect(basicAuthScheme.usernameEnvVar).toBe("PLANT_STORE_PROJECT_ID");
@@ -2944,7 +3018,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         });
 
         // Verify the IR has the OpenAPI title as apiName
-        expect(intermediateRepresentation.apiName.originalName).toBe("Pet Store API");
+        expect(getOriginalName(intermediateRepresentation.apiName)).toBe("Pet Store API");
 
         // Test 1: Without apiNameOverride, FDR should use the OpenAPI title
         const fdrWithoutOverride = await convertIrToFdrApi({
@@ -3249,5 +3323,47 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         };
 
         await expect(workspaceSnapshot).toMatchFileSnapshot("__snapshots__/graphql-workspace.snap");
+    });
+
+    it("should gracefully handle circular $ref pointers during workspace loading and IR generation", async () => {
+        // This spec has PlantCategory -> PlantCategoryAlias -> PlantCategory (a $ref cycle)
+        // which triggers @redocly/openapi-core's "Self-referencing circular pointer" error.
+        // The fix catches this error, breaks the circular $ref cycles in the unbundled
+        // document, and continues so that both workspace loading and IR generation succeed.
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/circular-ref")),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "circular-ref"
+        });
+
+        // Workspace loading should succeed (not throw) despite circular refs
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        // Fetching the raw definition should succeed — this is the path that previously
+        // threw "Self-referencing circular pointer" from @redocly/openapi-core.
+        const definition = await workspace.workspace.getDefinition({ context });
+        expect(definition).toBeDefined();
+
+        // IR generation must also complete without hanging. Before the fix,
+        // the unbundled document retained circular $ref chains that caused the
+        // OpenAPI3_1Converter to infinite-loop.
+        const ir = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+        expect(ir).toBeDefined();
+        expect(ir.services).toBeDefined();
     });
 });

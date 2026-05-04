@@ -1,6 +1,7 @@
 import { runAppPreviewServer, runPreviewServer } from "@fern-api/docs-preview";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Project } from "@fern-api/project-loader";
+import { CliError } from "@fern-api/task-context";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues.js";
@@ -27,11 +28,16 @@ export async function previewDocsWorkspace({
     const project = await loadProject();
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
+        cliContext.failAndThrow(
+            "No docs.yml found in your Fern project. Add a docs.yml to configure your documentation site.",
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
         return;
     }
 
     if (legacyPreview) {
-        await cliContext.instrumentPostHogEvent({
+        cliContext.instrumentPostHogEvent({
             orgId: project.config.organization,
             command: "fern docs dev --legacy"
         });
@@ -79,7 +85,7 @@ export async function previewDocsWorkspace({
         });
     }
 
-    await cliContext.instrumentPostHogEvent({
+    cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
         command: "fern docs dev --beta"
     });

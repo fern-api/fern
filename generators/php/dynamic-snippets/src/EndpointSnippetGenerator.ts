@@ -211,24 +211,7 @@ export class EndpointSnippetGenerator {
             if (snippet.auth != null) {
                 authArgs.push(...this.getConstructorAuthArgs({ auth: endpoint.auth, values: snippet.auth }));
             } else {
-                // Provide default auth values for endpoints that require authentication
-                if (endpoint.auth.type === "inferred") {
-                    // For inferred auth, provide default test values
-                    const defaultInferredAuthValues: FernIr.dynamic.InferredAuthValues = {
-                        values: undefined
-                    };
-                    authArgs.push(
-                        ...this.getConstructorInferredAuthArgs({
-                            auth: endpoint.auth,
-                            values: defaultInferredAuthValues
-                        })
-                    );
-                } else {
-                    this.context.errors.add({
-                        severity: Severity.Warning,
-                        message: `Auth with ${endpoint.auth.type} configuration is required for this endpoint`
-                    });
-                }
+                authArgs.push(...this.getDefaultAuthArgs({ auth: endpoint.auth }));
             }
         }
 
@@ -251,14 +234,20 @@ export class EndpointSnippetGenerator {
         }
 
         this.context.errors.scope(Scope.Headers);
+        const requiredGlobalHeaderArgs: NamedArgument[] = [];
+        if (this.context.ir.headers != null) {
+            requiredGlobalHeaderArgs.push(
+                ...this.getRequiredGlobalHeaderArgs({ headers: this.context.ir.headers, values: snippet.headers })
+            );
+        }
         if (this.context.ir.headers != null && snippet.headers != null) {
             optionArgs.push(
-                ...this.getConstructorHeaderArgs({ headers: this.context.ir.headers, values: snippet.headers })
+                ...this.getOptionalGlobalHeaderArgs({ headers: this.context.ir.headers, values: snippet.headers })
             );
         }
         this.context.errors.unscope();
 
-        const args: NamedArgument[] = [...authArgs];
+        const args: NamedArgument[] = [...requiredGlobalHeaderArgs, ...authArgs];
 
         if (environmentArg != null) {
             args.push(environmentArg);
@@ -306,6 +295,41 @@ export class EndpointSnippetGenerator {
         }
     }
 
+    private getDefaultAuthArgs({ auth }: { auth: FernIr.dynamic.Auth }): NamedArgument[] {
+        switch (auth.type) {
+            case "bearer":
+                return this.getConstructorBearerAuthArgs({
+                    auth,
+                    values: { token: "YOUR_TOKEN" }
+                });
+            case "oauth":
+                return this.getConstructorOAuthArgs({
+                    auth,
+                    values: { clientId: "YOUR_CLIENT_ID", clientSecret: "YOUR_CLIENT_SECRET" }
+                });
+            case "basic":
+                return this.getConstructorBasicAuthArgs({
+                    auth,
+                    values: {
+                        username: "YOUR_USERNAME",
+                        password: "YOUR_PASSWORD"
+                    }
+                });
+            case "header":
+                return this.getConstructorHeaderAuthArgs({
+                    auth,
+                    values: { value: "YOUR_AUTH_TOKEN" }
+                });
+            case "inferred":
+                return this.getConstructorInferredAuthArgs({
+                    auth,
+                    values: { values: undefined }
+                });
+            default:
+                assertNever(auth);
+        }
+    }
+
     private addError(message: string): void {
         this.context.errors.add({ severity: Severity.Critical, message });
     }
@@ -321,16 +345,20 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.BasicAuth;
         values: FernIr.dynamic.BasicAuthValues;
     }): NamedArgument[] {
-        return [
-            {
+        const args: NamedArgument[] = [];
+        if (!auth.usernameOmit) {
+            args.push({
                 name: this.context.getPropertyName(auth.username),
                 assignment: php.TypeLiteral.string(values.username)
-            },
-            {
+            });
+        }
+        if (!auth.passwordOmit) {
+            args.push({
                 name: this.context.getPropertyName(auth.password),
                 assignment: php.TypeLiteral.string(values.password)
-            }
-        ];
+            });
+        }
+        return args;
     }
 
     private getConstructorEnvironmentArg({
@@ -656,7 +684,71 @@ export class EndpointSnippetGenerator {
         return [];
     }
 
-    private getConstructorHeaderArgs({
+    // NOTE: We intentionally avoid this.context.isOptional here because it treats
+    // named aliases to nullable types as optional, which would misclassify required
+    // headers with nullable alias types (they're still required constructor params).
+    private isHeaderTypeOptional(typeReference: FernIr.dynamic.TypeReference): boolean {
+        switch (typeReference.type) {
+            case "optional":
+                return true;
+            case "nullable":
+                return this.isHeaderTypeOptional(typeReference.value);
+            default:
+                return false;
+        }
+    }
+
+    private getRequiredGlobalHeaderArgs({
+        headers,
+        values
+    }: {
+        headers: FernIr.dynamic.NamedParameter[];
+        values: FernIr.dynamic.Values | undefined;
+    }): NamedArgument[] {
+        const args: NamedArgument[] = [];
+        for (const header of headers) {
+            if (this.isHeaderTypeOptional(header.typeReference)) {
+                continue;
+            }
+            const value = values?.[header.name.wireValue];
+            const arg = this.getRequiredGlobalHeaderValue({ header, value });
+            if (arg != null) {
+                args.push({
+                    name: this.context.getPropertyName(header.name.name),
+                    assignment: arg
+                });
+            }
+        }
+        return args;
+    }
+
+    private getRequiredGlobalHeaderValue({
+        header,
+        value
+    }: {
+        header: FernIr.dynamic.NamedParameter;
+        value: unknown;
+    }): php.TypeLiteral | undefined {
+        if (value !== undefined) {
+            const typeLiteral = this.context.dynamicTypeLiteralMapper.convert({
+                typeReference: header.typeReference,
+                value
+            });
+            if (php.TypeLiteral.isNop(typeLiteral)) {
+                return undefined;
+            }
+            return typeLiteral;
+        }
+        const placeholder = this.context.dynamicTypeLiteralMapper.generatePlaceholderValueForRequiredHeader({
+            typeReference: header.typeReference
+        });
+        if (php.TypeLiteral.isNop(placeholder)) {
+            return undefined;
+        }
+        return placeholder;
+    }
+
+    private getOptionalGlobalHeaderArgs({
         headers,
         values
     }: {
@@ -665,6 +757,9 @@ export class EndpointSnippetGenerator {
     }): php.ConstructorField[] {
         const args: php.ConstructorField[] = [];
         for (const header of headers) {
+            if (!this.isHeaderTypeOptional(header.typeReference)) {
+                continue;
+            }
             const value = values[header.name.wireValue];
             const arg = this.getConstructorHeaderArg({ header, value });
             if (arg != null) {

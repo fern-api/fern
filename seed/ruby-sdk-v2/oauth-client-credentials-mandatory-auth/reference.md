@@ -181,7 +181,7 @@ client.auth.refresh_token(
 </dl>
 </details>
 
-## Nested Api
+## Nested API
 <details><summary><code>client.nested.api.<a href="/lib/seed/nested/api/client.rb">get_something</a>() -> </code></summary>
 <dl>
 <dd>
@@ -210,7 +210,7 @@ client.nested.api.get_something
 <dl>
 <dd>
 
-**request_options:** `Seed::Nested::Api::RequestOptions` 
+**request_options:** `Seed::Nested::API::RequestOptions` 
     
 </dd>
 </dl>

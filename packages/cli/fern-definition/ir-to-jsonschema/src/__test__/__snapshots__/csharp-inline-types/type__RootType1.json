@@ -1,0 +1,157 @@
+{
+  "type": "object",
+  "properties": {
+    "foo": {
+      "type": "string"
+    },
+    "bar": {
+      "$ref": "#/definitions/RootType1InlineType1"
+    },
+    "fooMap": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/RootType1FooMapValue"
+      }
+    },
+    "fooList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/RootType1FooListItem"
+      }
+    },
+    "fooSet": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/RootType1FooSetItem"
+      },
+      "uniqueItems": true
+    },
+    "ref": {
+      "$ref": "#/definitions/ReferenceType"
+    }
+  },
+  "required": [
+    "foo",
+    "bar",
+    "fooMap",
+    "fooList",
+    "fooSet",
+    "ref"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "InlineEnum1": {
+      "type": "string",
+      "enum": [
+        "SUNNY",
+        "CLOUDY",
+        "RAINING",
+        "SNOWING"
+      ]
+    },
+    "ReferenceType": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "additionalProperties": false
+    },
+    "RootType1InlineType1NestedInlineType1": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        },
+        "bar": {
+          "type": "string"
+        },
+        "myEnum": {
+          "$ref": "#/definitions/InlineEnum1"
+        },
+        "ref": {
+          "$ref": "#/definitions/ReferenceType"
+        }
+      },
+      "required": [
+        "foo",
+        "bar",
+        "myEnum",
+        "ref"
+      ],
+      "additionalProperties": false
+    },
+    "RootType1InlineType1": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        },
+        "bar": {
+          "$ref": "#/definitions/RootType1InlineType1NestedInlineType1"
+        },
+        "ref": {
+          "$ref": "#/definitions/ReferenceType"
+        }
+      },
+      "required": [
+        "foo",
+        "bar",
+        "ref"
+      ],
+      "additionalProperties": false
+    },
+    "RootType1FooMapValue": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        },
+        "ref": {
+          "$ref": "#/definitions/ReferenceType"
+        }
+      },
+      "required": [
+        "foo",
+        "ref"
+      ],
+      "additionalProperties": false
+    },
+    "RootType1FooListItem": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        },
+        "ref": {
+          "$ref": "#/definitions/ReferenceType"
+        }
+      },
+      "required": [
+        "foo",
+        "ref"
+      ],
+      "additionalProperties": false
+    },
+    "RootType1FooSetItem": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        },
+        "ref": {
+          "$ref": "#/definitions/ReferenceType"
+        }
+      },
+      "required": [
+        "foo",
+        "ref"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

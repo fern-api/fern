@@ -21,7 +21,7 @@ describe("EnumClient", () => {
 
         const response = await client.endpoints.enum.getAndReturnEnum("SUNNY");
         expect(response).toEqual({
-            body: "SUNNY",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

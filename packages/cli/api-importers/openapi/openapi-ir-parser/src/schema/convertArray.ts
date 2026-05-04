@@ -19,7 +19,8 @@ export function convertArray({
     example,
     source,
     minItems,
-    maxItems
+    maxItems,
+    default: defaultValue
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -37,6 +38,7 @@ export function convertArray({
     source: Source;
     minItems: number | undefined;
     maxItems: number | undefined;
+    default?: unknown;
 }): SchemaWithExample {
     const itemSchema =
         item == null
@@ -64,7 +66,8 @@ export function convertArray({
         availability,
         example,
         minItems,
-        maxItems
+        maxItems,
+        default: defaultValue
     });
 }
 
@@ -81,7 +84,8 @@ export function wrapArray({
     groupName,
     example,
     minItems,
-    maxItems
+    maxItems,
+    default: defaultValue
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -96,6 +100,7 @@ export function wrapArray({
     example: unknown[] | undefined;
     minItems: number | undefined;
     maxItems: number | undefined;
+    default?: unknown;
 }): SchemaWithExample {
     let result: SchemaWithExample = SchemaWithExample.array({
         nameOverride,
@@ -109,7 +114,8 @@ export function wrapArray({
         example,
         inline: undefined,
         minItems,
-        maxItems
+        maxItems,
+        default: defaultValue
     });
     if (wrapAsNullable) {
         result = SchemaWithExample.nullable({

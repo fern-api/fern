@@ -13,6 +13,7 @@ export const Header: core.serialization.ObjectSchema<serializers.Header.Raw, Fer
         schema: core.serialization.lazy(() => serializers.Schema),
         env: core.serialization.string().optional(),
         parameterNameOverride: core.serialization.string().optional(),
+        clientDefault: core.serialization.unknown().optional(),
     })
     .extend(WithDescription)
     .extend(WithAvailability)
@@ -24,5 +25,6 @@ export declare namespace Header {
         schema: serializers.Schema.Raw;
         env?: string | null;
         parameterNameOverride?: string | null;
+        clientDefault?: unknown | null;
     }
 }

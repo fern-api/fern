@@ -205,6 +205,43 @@ export declare class ObjectClient {
     getAndReturnMapOfDocumentedUnknownType(request: SeedExhaustive.types.MapOfDocumentedUnknownType, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.MapOfDocumentedUnknownType>;
     private __getAndReturnMapOfDocumentedUnknownType;
     /**
+     * Tests that dynamic snippets include all required properties in the
+     * object initializer, even when the example omits some required fields.
+     *
+     * @param {SeedExhaustive.types.ObjectWithMixedRequiredAndOptionalFields} request
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields({
+     *         requiredString: "hello",
+     *         requiredInteger: 0,
+     *         optionalString: "world",
+     *         requiredLong: 0
+     *     })
+     */
+    getAndReturnWithMixedRequiredAndOptionalFields(request: SeedExhaustive.types.ObjectWithMixedRequiredAndOptionalFields, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithMixedRequiredAndOptionalFields>;
+    private __getAndReturnWithMixedRequiredAndOptionalFields;
+    /**
+     * Tests that dynamic snippets recursively construct default objects for
+     * required properties whose type is a named object. When the example
+     * omits the nested object, the generator should construct a default
+     * initializer with the nested object's required properties filled in.
+     *
+     * @param {SeedExhaustive.types.ObjectWithRequiredNestedObject} request
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithRequiredNestedObject({
+     *         requiredString: "hello",
+     *         requiredObject: {
+     *             string: "nested",
+     *             NestedObject: {}
+     *         }
+     *     })
+     */
+    getAndReturnWithRequiredNestedObject(request: SeedExhaustive.types.ObjectWithRequiredNestedObject, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredNestedObject>;
+    private __getAndReturnWithRequiredNestedObject;
+    /**
      * Tests that string fields containing datetime-like values are NOT reformatted.
      * The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
      * without being converted to "2023-08-31T14:15:22.000Z".

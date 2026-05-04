@@ -8,7 +8,7 @@ pub struct TestCaseImplementationDescription {
 
 impl TestCaseImplementationDescription {
     pub fn builder() -> TestCaseImplementationDescriptionBuilder {
-        TestCaseImplementationDescriptionBuilder::default()
+        <TestCaseImplementationDescriptionBuilder as Default>::default()
     }
 }
 

@@ -12,51 +12,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "SearchGetParametersFilterSchemaLocationCoordinates",
-          "camelCase": {
-            "unsafeName": "searchGetParametersFilterSchemaLocationCoordinates",
-            "safeName": "searchGetParametersFilterSchemaLocationCoordinates"
-          },
-          "snakeCase": {
-            "unsafeName": "search_get_parameters_filter_schema_location_coordinates",
-            "safeName": "search_get_parameters_filter_schema_location_coordinates"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "SEARCH_GET_PARAMETERS_FILTER_SCHEMA_LOCATION_COORDINATES",
-            "safeName": "SEARCH_GET_PARAMETERS_FILTER_SCHEMA_LOCATION_COORDINATES"
-          },
-          "pascalCase": {
-            "unsafeName": "SearchGetParametersFilterSchemaLocationCoordinates",
-            "safeName": "SearchGetParametersFilterSchemaLocationCoordinates"
-          }
-        }
+        "name": "SearchGetParametersFilterSchemaLocationCoordinates"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "latitude",
-                "camelCase": {
-                  "unsafeName": "latitude",
-                  "safeName": "latitude"
-                },
-                "snakeCase": {
-                  "unsafeName": "latitude",
-                  "safeName": "latitude"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "LATITUDE",
-                  "safeName": "LATITUDE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Latitude",
-                  "safeName": "Latitude"
-                }
-              },
-              "wireValue": "latitude"
-            },
+            "name": "latitude",
             "valueType": {
               "container": {
                 "optional": {
@@ -81,28 +42,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "longitude",
-                "camelCase": {
-                  "unsafeName": "longitude",
-                  "safeName": "longitude"
-                },
-                "snakeCase": {
-                  "unsafeName": "longitude",
-                  "safeName": "longitude"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "LONGITUDE",
-                  "safeName": "LONGITUDE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Longitude",
-                  "safeName": "Longitude"
-                }
-              },
-              "wireValue": "longitude"
-            },
+            "name": "longitude",
             "valueType": {
               "container": {
                 "optional": {
@@ -150,51 +90,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "SearchGetParametersFilterSchemaLocation",
-          "camelCase": {
-            "unsafeName": "searchGetParametersFilterSchemaLocation",
-            "safeName": "searchGetParametersFilterSchemaLocation"
-          },
-          "snakeCase": {
-            "unsafeName": "search_get_parameters_filter_schema_location",
-            "safeName": "search_get_parameters_filter_schema_location"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "SEARCH_GET_PARAMETERS_FILTER_SCHEMA_LOCATION",
-            "safeName": "SEARCH_GET_PARAMETERS_FILTER_SCHEMA_LOCATION"
-          },
-          "pascalCase": {
-            "unsafeName": "SearchGetParametersFilterSchemaLocation",
-            "safeName": "SearchGetParametersFilterSchemaLocation"
-          }
-        }
+        "name": "SearchGetParametersFilterSchemaLocation"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "city",
-                "camelCase": {
-                  "unsafeName": "city",
-                  "safeName": "city"
-                },
-                "snakeCase": {
-                  "unsafeName": "city",
-                  "safeName": "city"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CITY",
-                  "safeName": "CITY"
-                },
-                "pascalCase": {
-                  "unsafeName": "City",
-                  "safeName": "City"
-                }
-              },
-              "wireValue": "city"
-            },
+            "name": "city",
             "valueType": {
               "container": {
                 "optional": {
@@ -219,28 +120,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "country",
-                "camelCase": {
-                  "unsafeName": "country",
-                  "safeName": "country"
-                },
-                "snakeCase": {
-                  "unsafeName": "country",
-                  "safeName": "country"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "COUNTRY",
-                  "safeName": "COUNTRY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Country",
-                  "safeName": "Country"
-                }
-              },
-              "wireValue": "country"
-            },
+            "name": "country",
             "valueType": {
               "container": {
                 "optional": {
@@ -265,28 +145,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "coordinates",
-                "camelCase": {
-                  "unsafeName": "coordinates",
-                  "safeName": "coordinates"
-                },
-                "snakeCase": {
-                  "unsafeName": "coordinates",
-                  "safeName": "coordinates"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "COORDINATES",
-                  "safeName": "COORDINATES"
-                },
-                "pascalCase": {
-                  "unsafeName": "Coordinates",
-                  "safeName": "Coordinates"
-                }
-              },
-              "wireValue": "coordinates"
-            },
+            "name": "coordinates",
             "valueType": {
               "container": {
                 "optional": {
@@ -294,25 +153,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "SearchGetParametersFilterSchemaLocationCoordinates",
-                    "camelCase": {
-                      "unsafeName": "searchGetParametersFilterSchemaLocationCoordinates",
-                      "safeName": "searchGetParametersFilterSchemaLocationCoordinates"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "search_get_parameters_filter_schema_location_coordinates",
-                      "safeName": "search_get_parameters_filter_schema_location_coordinates"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "SEARCH_GET_PARAMETERS_FILTER_SCHEMA_LOCATION_COORDINATES",
-                      "safeName": "SEARCH_GET_PARAMETERS_FILTER_SCHEMA_LOCATION_COORDINATES"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "SearchGetParametersFilterSchemaLocationCoordinates",
-                      "safeName": "SearchGetParametersFilterSchemaLocationCoordinates"
-                    }
-                  },
+                  "name": "SearchGetParametersFilterSchemaLocationCoordinates",
                   "typeId": "SearchGetParametersFilterSchemaLocationCoordinates",
                   "inline": false,
                   "type": "named"
@@ -352,51 +193,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "SearchGetParametersFilter",
-          "camelCase": {
-            "unsafeName": "searchGetParametersFilter",
-            "safeName": "searchGetParametersFilter"
-          },
-          "snakeCase": {
-            "unsafeName": "search_get_parameters_filter",
-            "safeName": "search_get_parameters_filter"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "SEARCH_GET_PARAMETERS_FILTER",
-            "safeName": "SEARCH_GET_PARAMETERS_FILTER"
-          },
-          "pascalCase": {
-            "unsafeName": "SearchGetParametersFilter",
-            "safeName": "SearchGetParametersFilter"
-          }
-        }
+        "name": "SearchGetParametersFilter"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "name",
-                "camelCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "snakeCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NAME",
-                  "safeName": "NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Name",
-                  "safeName": "Name"
-                }
-              },
-              "wireValue": "name"
-            },
+            "name": "name",
             "valueType": {
               "container": {
                 "optional": {
@@ -421,28 +223,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "age",
-                "camelCase": {
-                  "unsafeName": "age",
-                  "safeName": "age"
-                },
-                "snakeCase": {
-                  "unsafeName": "age",
-                  "safeName": "age"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "AGE",
-                  "safeName": "AGE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Age",
-                  "safeName": "Age"
-                }
-              },
-              "wireValue": "age"
-            },
+            "name": "age",
             "valueType": {
               "container": {
                 "optional": {
@@ -467,28 +248,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "location",
-                "camelCase": {
-                  "unsafeName": "location",
-                  "safeName": "location"
-                },
-                "snakeCase": {
-                  "unsafeName": "location",
-                  "safeName": "location"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "LOCATION",
-                  "safeName": "LOCATION"
-                },
-                "pascalCase": {
-                  "unsafeName": "Location",
-                  "safeName": "Location"
-                }
-              },
-              "wireValue": "location"
-            },
+            "name": "location",
             "valueType": {
               "container": {
                 "optional": {
@@ -496,25 +256,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "SearchGetParametersFilterSchemaLocation",
-                    "camelCase": {
-                      "unsafeName": "searchGetParametersFilterSchemaLocation",
-                      "safeName": "searchGetParametersFilterSchemaLocation"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "search_get_parameters_filter_schema_location",
-                      "safeName": "search_get_parameters_filter_schema_location"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "SEARCH_GET_PARAMETERS_FILTER_SCHEMA_LOCATION",
-                      "safeName": "SEARCH_GET_PARAMETERS_FILTER_SCHEMA_LOCATION"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "SearchGetParametersFilterSchemaLocation",
-                      "safeName": "SearchGetParametersFilterSchemaLocation"
-                    }
-                  },
+                  "name": "SearchGetParametersFilterSchemaLocation",
                   "typeId": "SearchGetParametersFilterSchemaLocation",
                   "inline": false,
                   "type": "named"
@@ -554,75 +296,15 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "SearchGetParametersSort",
-          "camelCase": {
-            "unsafeName": "searchGetParametersSort",
-            "safeName": "searchGetParametersSort"
-          },
-          "snakeCase": {
-            "unsafeName": "search_get_parameters_sort",
-            "safeName": "search_get_parameters_sort"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "SEARCH_GET_PARAMETERS_SORT",
-            "safeName": "SEARCH_GET_PARAMETERS_SORT"
-          },
-          "pascalCase": {
-            "unsafeName": "SearchGetParametersSort",
-            "safeName": "SearchGetParametersSort"
-          }
-        }
+        "name": "SearchGetParametersSort"
       },
       "shape": {
         "values": [
           {
-            "name": {
-              "name": {
-                "originalName": "asc",
-                "camelCase": {
-                  "unsafeName": "asc",
-                  "safeName": "asc"
-                },
-                "snakeCase": {
-                  "unsafeName": "asc",
-                  "safeName": "asc"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ASC",
-                  "safeName": "ASC"
-                },
-                "pascalCase": {
-                  "unsafeName": "Asc",
-                  "safeName": "Asc"
-                }
-              },
-              "wireValue": "asc"
-            }
+            "name": "asc"
           },
           {
-            "name": {
-              "name": {
-                "originalName": "desc",
-                "camelCase": {
-                  "unsafeName": "desc",
-                  "safeName": "desc"
-                },
-                "snakeCase": {
-                  "unsafeName": "desc",
-                  "safeName": "desc"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "DESC",
-                  "safeName": "DESC"
-                },
-                "pascalCase": {
-                  "unsafeName": "Desc",
-                  "safeName": "Desc"
-                }
-              },
-              "wireValue": "desc"
-            }
+            "name": "desc"
           }
         ],
         "type": "enum"
@@ -645,51 +327,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "search_Response_200",
-          "camelCase": {
-            "unsafeName": "searchResponse200",
-            "safeName": "searchResponse200"
-          },
-          "snakeCase": {
-            "unsafeName": "search_response_200",
-            "safeName": "search_response_200"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "SEARCH_RESPONSE_200",
-            "safeName": "SEARCH_RESPONSE_200"
-          },
-          "pascalCase": {
-            "unsafeName": "SearchResponse200",
-            "safeName": "SearchResponse200"
-          }
-        }
+        "name": "search_Response_200"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "results",
-                "camelCase": {
-                  "unsafeName": "results",
-                  "safeName": "results"
-                },
-                "snakeCase": {
-                  "unsafeName": "results",
-                  "safeName": "results"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "RESULTS",
-                  "safeName": "RESULTS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Results",
-                  "safeName": "Results"
-                }
-              },
-              "wireValue": "results"
-            },
+            "name": "results",
             "valueType": {
               "container": {
                 "optional": {
@@ -763,28 +406,7 @@
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": {
-                "name": {
-                  "originalName": "filter",
-                  "camelCase": {
-                    "unsafeName": "filter",
-                    "safeName": "filter"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "filter",
-                    "safeName": "filter"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "FILTER",
-                    "safeName": "FILTER"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Filter",
-                    "safeName": "Filter"
-                  }
-                },
-                "wireValue": "filter"
-              },
+              "name": "filter",
               "valueType": {
                 "container": {
                   "optional": {
@@ -792,25 +414,7 @@
                       "allParts": [],
                       "packagePath": []
                     },
-                    "name": {
-                      "originalName": "SearchGetParametersFilter",
-                      "camelCase": {
-                        "unsafeName": "searchGetParametersFilter",
-                        "safeName": "searchGetParametersFilter"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "search_get_parameters_filter",
-                        "safeName": "search_get_parameters_filter"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "SEARCH_GET_PARAMETERS_FILTER",
-                        "safeName": "SEARCH_GET_PARAMETERS_FILTER"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "SearchGetParametersFilter",
-                        "safeName": "SearchGetParametersFilter"
-                      }
-                    },
+                    "name": "SearchGetParametersFilter",
                     "typeId": "SearchGetParametersFilter",
                     "inline": false,
                     "type": "named"
@@ -828,28 +432,7 @@
               }
             },
             {
-              "name": {
-                "name": {
-                  "originalName": "sort",
-                  "camelCase": {
-                    "unsafeName": "sort",
-                    "safeName": "sort"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "sort",
-                    "safeName": "sort"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "SORT",
-                    "safeName": "SORT"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Sort",
-                    "safeName": "Sort"
-                  }
-                },
-                "wireValue": "sort"
-              },
+              "name": "sort",
               "valueType": {
                 "container": {
                   "optional": {
@@ -857,25 +440,7 @@
                       "allParts": [],
                       "packagePath": []
                     },
-                    "name": {
-                      "originalName": "SearchGetParametersSort",
-                      "camelCase": {
-                        "unsafeName": "searchGetParametersSort",
-                        "safeName": "searchGetParametersSort"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "search_get_parameters_sort",
-                        "safeName": "search_get_parameters_sort"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "SEARCH_GET_PARAMETERS_SORT",
-                        "safeName": "SEARCH_GET_PARAMETERS_SORT"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "SearchGetParametersSort",
-                        "safeName": "SearchGetParametersSort"
-                      }
-                    },
+                    "name": "SearchGetParametersSort",
                     "typeId": "SearchGetParametersSort",
                     "inline": false,
                     "type": "named"
@@ -893,28 +458,7 @@
               }
             },
             {
-              "name": {
-                "name": {
-                  "originalName": "limit",
-                  "camelCase": {
-                    "unsafeName": "limit",
-                    "safeName": "limit"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "limit",
-                    "safeName": "limit"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LIMIT",
-                    "safeName": "LIMIT"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Limit",
-                    "safeName": "Limit"
-                  }
-                },
-                "wireValue": "limit"
-              },
+              "name": "limit",
               "valueType": {
                 "container": {
                   "optional": {
@@ -943,28 +487,7 @@
               }
             },
             {
-              "name": {
-                "name": {
-                  "originalName": "tags",
-                  "camelCase": {
-                    "unsafeName": "tags",
-                    "safeName": "tags"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "tags",
-                    "safeName": "tags"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "TAGS",
-                    "safeName": "TAGS"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Tags",
-                    "safeName": "Tags"
-                  }
-                },
-                "wireValue": "tags"
-              },
+              "name": "tags",
               "valueType": {
                 "container": {
                   "optional": {
@@ -1006,7 +529,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "1547aa6",
+                "id": "d12fa78a",
                 "url": "/search",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -1027,53 +550,14 @@
                         "shape": {
                           "properties": [
                             {
-                              "name": {
-                                "name": {
-                                  "originalName": "results",
-                                  "camelCase": {
-                                    "unsafeName": "results",
-                                    "safeName": "results"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "results",
-                                    "safeName": "results"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "RESULTS",
-                                    "safeName": "RESULTS"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "Results",
-                                    "safeName": "Results"
-                                  }
-                                },
-                                "wireValue": "results"
-                              },
+                              "name": "results",
                               "originalTypeDeclaration": {
                                 "typeId": "search_Response_200",
                                 "fernFilepath": {
                                   "allParts": [],
                                   "packagePath": []
                                 },
-                                "name": {
-                                  "originalName": "search_Response_200",
-                                  "camelCase": {
-                                    "unsafeName": "searchResponse200",
-                                    "safeName": "searchResponse200"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "search_response_200",
-                                    "safeName": "search_response_200"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "SEARCH_RESPONSE_200",
-                                    "safeName": "SEARCH_RESPONSE_200"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "SearchResponse200",
-                                    "safeName": "SearchResponse200"
-                                  }
-                                }
+                                "name": "search_Response_200"
                               },
                               "value": {
                                 "jsonExample": [
@@ -1161,25 +645,7 @@
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "search_Response_200",
-                            "camelCase": {
-                              "unsafeName": "searchResponse200",
-                              "safeName": "searchResponse200"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "search_response_200",
-                              "safeName": "search_response_200"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "SEARCH_RESPONSE_200",
-                              "safeName": "SEARCH_RESPONSE_200"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "SearchResponse200",
-                              "safeName": "SearchResponse200"
-                            }
-                          }
+                          "name": "search_Response_200"
                         },
                         "type": "named"
                       }
@@ -1202,25 +668,7 @@
           },
           "audiences": [],
           "id": "endpoint_.search",
-          "name": {
-            "originalName": "search",
-            "camelCase": {
-              "unsafeName": "search",
-              "safeName": "search"
-            },
-            "snakeCase": {
-              "unsafeName": "search",
-              "safeName": "search"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "SEARCH",
-              "safeName": "SEARCH"
-            },
-            "pascalCase": {
-              "unsafeName": "Search",
-              "safeName": "Search"
-            }
-          },
+          "name": "search",
           "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
@@ -1231,25 +679,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "search_Response_200",
-                    "camelCase": {
-                      "unsafeName": "searchResponse200",
-                      "safeName": "searchResponse200"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "search_response_200",
-                      "safeName": "search_response_200"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "SEARCH_RESPONSE_200",
-                      "safeName": "SEARCH_RESPONSE_200"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "SearchResponse200",
-                      "safeName": "SearchResponse200"
-                    }
-                  },
+                  "name": "search_Response_200",
                   "typeId": "search_Response_200",
                   "inline": false,
                   "type": "named"
@@ -1310,25 +740,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "search_Response_200",
-                        "camelCase": {
-                          "unsafeName": "searchResponse200",
-                          "safeName": "searchResponse200"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "search_response_200",
-                          "safeName": "search_response_200"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "SEARCH_RESPONSE_200",
-                          "safeName": "SEARCH_RESPONSE_200"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "SearchResponse200",
-                          "safeName": "SearchResponse200"
-                        }
-                      },
+                      "name": "search_Response_200",
                       "typeId": "search_Response_200",
                       "inline": false,
                       "type": "named"
@@ -1393,47 +805,8 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "Query Parameters API",
-    "camelCase": {
-      "unsafeName": "queryParametersApi",
-      "safeName": "queryParametersApi"
-    },
-    "snakeCase": {
-      "unsafeName": "query_parameters_api",
-      "safeName": "query_parameters_api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "QUERY_PARAMETERS_API",
-      "safeName": "QUERY_PARAMETERS_API"
-    },
-    "pascalCase": {
-      "unsafeName": "QueryParametersApi",
-      "safeName": "QueryParametersApi"
-    }
-  },
+  "apiName": "Query Parameters API",
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   }
 }

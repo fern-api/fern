@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "1593af41",
+            "example_identifier": "4ca68f6",
             "id": {
                 "method": "POST",
                 "path": "/api/users",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "1515ac80",
+            "example_identifier": "db475037",
             "id": {
                 "method": "PUT",
                 "path": "/api/users/{userId}",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "5b6a8e51",
+            "example_identifier": "c3c2cdcd",
             "id": {
                 "method": "POST",
                 "path": "/api/users/with-options",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "5430c960",
+            "example_identifier": "62ef2c5",
             "id": {
                 "method": "POST",
                 "path": "/api/users/required-header",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "67c16f6",
+            "example_identifier": "9691aa15",
             "id": {
                 "method": "POST",
                 "path": "/api/users/required-query",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "231b4aaa",
+            "example_identifier": "44f8f130",
             "id": {
                 "method": "GET",
                 "path": "/api/users",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "ab5b2af2",
+            "example_identifier": "fa282186",
             "id": {
                 "method": "POST",
                 "path": "/api/users/inlined",

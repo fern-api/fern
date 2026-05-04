@@ -1,5 +1,6 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { HttpEndpoint, HttpService, ReadmeConfig, ServiceId } from "@fern-api/ir-sdk";
+import { CliError } from "@fern-api/task-context";
 import urlJoin from "url-join";
 
 export function convertReadmeConfig({
@@ -58,7 +59,10 @@ class ReadmeEndpointCache {
     public getEndpointForReadmeOrThrow(readmeEndpoint: generatorsYml.ReadmeEndpointSchema): HttpEndpoint {
         const endpoint = this.getEndpointForReadme(readmeEndpoint);
         if (endpoint == null) {
-            throw new Error(`Endpoint not found for ${JSON.stringify(readmeEndpoint)}`);
+            throw new CliError({
+                message: `Endpoint not found for ${JSON.stringify(readmeEndpoint)}`,
+                code: CliError.Code.ResolutionError
+            });
         }
         return endpoint;
     }
@@ -117,7 +121,7 @@ function getReadmeEndpointObject({
     if (typeof endpoint === "string") {
         const split = endpoint.split(" ");
         if (split.length !== 2 || split[0] == null || split[1] == null) {
-            throw new Error(`invalid endpoint string: ${endpoint}`);
+            throw new CliError({ message: `invalid endpoint string: ${endpoint}`, code: CliError.Code.ParseError });
         }
         return {
             method: split[0],

@@ -10,7 +10,7 @@ pub struct StreamResponse {
 
 impl StreamResponse {
     pub fn builder() -> StreamResponseBuilder {
-        StreamResponseBuilder::default()
+        <StreamResponseBuilder as Default>::default()
     }
 }
 

@@ -10,7 +10,7 @@ pub struct StartingAfterPaging {
 
 impl StartingAfterPaging {
     pub fn builder() -> StartingAfterPagingBuilder {
-        StartingAfterPagingBuilder::default()
+        <StartingAfterPagingBuilder as Default>::default()
     }
 }
 

@@ -47,7 +47,7 @@ func (r *RawClient) GetToken(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("X-Api-Key", request.ApiKey)
+	headers.Add("X-Api-Key", request.APIKey)
 	var response *fern.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,

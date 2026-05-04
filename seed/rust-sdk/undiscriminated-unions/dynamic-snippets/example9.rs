@@ -9,14 +9,6 @@ async fn main() {
     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
     client
         .union_
-        .test_camel_case_properties(
-            &PaymentRequest {
-                payment_method: PaymentMethodUnion::TokenizeCard(TokenizeCard {
-                    method: "card".to_string(),
-                    card_number: "1234567890123456".to_string(),
-                }),
-            },
-            None,
-        )
+        .nested_object_unions(&OuterNestedUnion::String("string".to_string()), None)
         .await;
 }

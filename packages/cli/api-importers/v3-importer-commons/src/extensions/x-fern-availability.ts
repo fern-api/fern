@@ -32,13 +32,21 @@ export class FernAvailabilityExtension extends AbstractExtension<AvailabilitySta
             case "IN_DEVELOPMENT":
                 return AvailabilityStatus.InDevelopment;
             case "PRE_RELEASE":
-            case "BETA":
                 return AvailabilityStatus.PreRelease;
             case "GENERAL_AVAILABILITY":
             case "GA":
+            case "STABLE":
                 return AvailabilityStatus.GeneralAvailability;
             case "DEPRECATED":
                 return AvailabilityStatus.Deprecated;
+            case "ALPHA":
+                return AvailabilityStatus.Alpha;
+            case "BETA":
+                return AvailabilityStatus.Beta;
+            case "PREVIEW":
+                return AvailabilityStatus.Preview;
+            case "LEGACY":
+                return AvailabilityStatus.Legacy;
             default:
                 return undefined;
         }

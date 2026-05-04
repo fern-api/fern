@@ -613,8 +613,8 @@ client.service.get_metadata(
 ```python
 from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
-from seed.types import Actor, ExtendedMovie, Entity, Migration, Node, Tree, Directory, File, Moment
-from seed.commons.types import Metadata
+from seed.types import Actor, ExtendedMovie, Entity, Metadata_Html, Migration, Exception_Generic, Test_And, Node, Tree, Directory, File, Moment
+from seed.commons.types import Metadata, EventInfo_Metadata, Data_String
 import uuid
 import datetime
 
@@ -650,15 +650,15 @@ client.service.create_big_entity(
         type="primitive",
         name="name",
     ),
-    metadata={
-        "type": "html",
-        "extra": {
+    metadata=Metadata_Html(
+        extra={
             "extra": "extra"
         },
-        "tags": [
+        tags=[
             "tags"
-        ]
-    },
+        ],
+        html=,
+    ),
     common_metadata=Metadata(
         id="id",
         data={
@@ -666,30 +666,28 @@ client.service.create_big_entity(
         },
         json_string="jsonString",
     ),
-    event_info={
-        "type": "metadata",
-        "id": "id",
-        "data": {
+    event_info=EventInfo_Metadata(
+        id="id",
+        data={
             "data": "data"
         },
-        "json_string": "jsonString"
-    },
-    data={
-        "type": "string"
-    },
+        json_string="jsonString",
+    ),
+    data=Data_String(
+        string=,
+    ),
     migration=Migration(
         name="name",
         status="RUNNING",
     ),
-    exception={
-        "type": "generic",
-        "exception_type": "exceptionType",
-        "exception_message": "exceptionMessage",
-        "exception_stacktrace": "exceptionStacktrace"
-    },
-    test={
-        "type": "and"
-    },
+    exception=Exception_Generic(
+        exception_type="exceptionType",
+        exception_message="exceptionMessage",
+        exception_stacktrace="exceptionStacktrace",
+    ),
+    test=Test_And(
+        and_=,
+    ),
     node=Node(
         name="name",
         nodes=[

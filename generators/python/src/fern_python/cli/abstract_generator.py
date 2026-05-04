@@ -10,7 +10,8 @@ from .publisher import Publisher
 from fern_python.codegen.project import Project, ProjectConfig
 from fern_python.external_dependencies.ruff import RUFF_DEPENDENCY
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-from fern_python.version import GithubCIPythonVersionResolver
+from fern_python.utils import configure_smart_casing
+from fern_python.version import GithubCIPythonVersionResolver, PythonVersion, get_minimum_compatible_version
 
 import fern.ir.resources as ir_types
 from fern.generator_exec import (
@@ -35,6 +36,12 @@ class AbstractGenerator(ABC):
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
     ) -> None:
+        # Configure smart-casing from the IR's casingsConfig (driven by the customer's
+        # `smart-casing` flag in generators.yml). Must run before any name resolution
+        # so _smart_snake matches the IR server's pre-computed snake_case values.
+        smart_casing = ir.casings_config.smart_casing if ir.casings_config is not None else True
+        configure_smart_casing(smart_casing)
+
         project_config = generator_config.output.mode.visit(
             download_files=lambda: None,
             publish=lambda publish: ProjectConfig(
@@ -78,6 +85,22 @@ class AbstractGenerator(ABC):
         python_version = "^3.10"
         if generator_config.custom_config is not None and "pyproject_python_version" in generator_config.custom_config:
             python_version = generator_config.custom_config.get("pyproject_python_version")
+
+        # Python 3.8 reached EOL in Oct 2024 and Python 3.9 in Oct 2025. Many
+        # popular PyPI packages (e.g. `requests` >=2.33) no longer publish
+        # wheels compatible with these versions, which causes dependency
+        # resolution to pin to older, known-vulnerable releases. Clamp the
+        # floor of any user-supplied `pyproject_python_version` to 3.10.
+        minimum_supported_version = PythonVersion.PY3_10
+        resolved_minimum = get_minimum_compatible_version(python_version)
+        if resolved_minimum is None or resolved_minimum.spec < minimum_supported_version.spec:
+            print(
+                f"[warn] pyproject_python_version={python_version!r} allows a Python version older than "
+                f"{minimum_supported_version.spec.to_string()}, which is end-of-life. Bumping to "
+                f"^{minimum_supported_version.spec.to_string()} to avoid shipping SDKs pinned to "
+                f"unsupported (and frequently vulnerable) dependency releases."
+            )
+            python_version = f"^{minimum_supported_version.spec.to_string()}"
 
         user_defined_toml = None
         if generator_config.custom_config is not None and "pyproject_toml" in generator_config.custom_config:
@@ -386,6 +409,14 @@ jobs:
       - name: Test
         run: poetry run pytest -rP -n auto .
 """
+        # Add aiohttp extra install and test steps
+        workflow_yaml += """
+      - name: Install aiohttp extra
+        run: poetry install --extras aiohttp
+
+      - name: Test (aiohttp)
+        run: poetry run pytest -rP -n auto -m aiohttp .
+"""
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()
             if publish_info_union.type != "pypi":
@@ -477,6 +508,14 @@ jobs:
             workflow_yaml += """
       - name: Test
         run: poetry run pytest -rP -n auto .
+"""
+        # Add aiohttp extra install and test steps
+        workflow_yaml += """
+      - name: Install aiohttp extra
+        run: poetry install --extras aiohttp
+
+      - name: Test (aiohttp)
+        run: poetry run pytest -rP -n auto -m aiohttp .
 """
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()

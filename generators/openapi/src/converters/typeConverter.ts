@@ -1,3 +1,4 @@
+import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import isEqual from "lodash-es/isEqual";
 import { OpenAPIV3 } from "openapi-types";
@@ -38,7 +39,7 @@ export function convertType(
                     let exampleProperty: FernIr.ExampleObjectProperty | undefined = undefined;
                     if (exampleType != null && exampleType.shape.type === "object") {
                         exampleProperty = exampleType.shape.properties.find((example) => {
-                            return example.name.wireValue === property.name.wireValue;
+                            return getWireValue(example.name) === getWireValue(property.name);
                         });
                     } else if (exampleTypeFromEndpointRequest != null) {
                         if (
@@ -47,7 +48,7 @@ export function convertType(
                             exampleTypeFromEndpointRequest.shape.shape.type === "object"
                         ) {
                             exampleProperty = exampleTypeFromEndpointRequest.shape.shape.properties.find((example) => {
-                                return example.name.wireValue === property.name.wireValue;
+                                return getWireValue(example.name) === getWireValue(property.name);
                             });
                         }
                     } else if (
@@ -60,7 +61,7 @@ export function convertType(
                         ) {
                             exampleProperty = exampleTypeFromEndpointResponse.value.shape.shape.properties.find(
                                 (example) => {
-                                    return example.name.wireValue === property.name.wireValue;
+                                    return getWireValue(example.name) === getWireValue(property.name);
                                 }
                             );
                         }
@@ -114,11 +115,13 @@ export function convertEnum({
     enumTypeDeclaration: FernIr.EnumTypeDeclaration;
     docs: string | undefined;
 }): OpenAPIV3.SchemaObject {
+    const values = enumTypeDeclaration.values.map((enumValue) => getWireValue(enumValue.name));
+    if (values.length === 1) {
+        return { type: "string", const: values[0], description: docs } as unknown as OpenAPIV3.SchemaObject;
+    }
     return {
         type: "string",
-        enum: enumTypeDeclaration.values.map((enumValue) => {
-            return enumValue.name.wireValue;
-        }),
+        enum: values,
         description: docs
     };
 }
@@ -132,24 +135,24 @@ export function convertUnion({
 }): OpenAPIV3.SchemaObject {
     const oneOfTypes: OpenAPIV3.SchemaObject[] = unionTypeDeclaration.types.map((singleUnionType) => {
         const discriminantProperty: OpenAPIV3.BaseSchemaObject["properties"] = {
-            [unionTypeDeclaration.discriminant.wireValue]: {
+            [getWireValue(unionTypeDeclaration.discriminant)]: {
                 type: "string",
-                enum: [singleUnionType.discriminantValue.wireValue]
-            }
+                const: getWireValue(singleUnionType.discriminantValue)
+            } as unknown as OpenAPIV3.SchemaObject
         };
         return FernIr.SingleUnionTypeProperties._visit<OpenAPIV3.SchemaObject>(singleUnionType.shape, {
             noProperties: () => ({
                 type: "object",
                 properties: discriminantProperty,
-                required: [unionTypeDeclaration.discriminant.wireValue]
+                required: [getWireValue(unionTypeDeclaration.discriminant)]
             }),
             singleProperty: (singleProperty) => ({
                 type: "object",
                 properties: {
                     ...discriminantProperty,
-                    [singleProperty.name.wireValue]: convertTypeReference(singleProperty.type)
+                    [getWireValue(singleProperty.name)]: convertTypeReference(singleProperty.type)
                 },
-                required: [unionTypeDeclaration.discriminant.wireValue]
+                required: [getWireValue(unionTypeDeclaration.discriminant)]
             }),
             samePropertiesAsObject: (typeName) => ({
                 type: "object",
@@ -162,7 +165,7 @@ export function convertUnion({
                         $ref: getReferenceFromDeclaredTypeName(typeName)
                     }
                 ],
-                required: [unionTypeDeclaration.discriminant.wireValue]
+                required: [getWireValue(unionTypeDeclaration.discriminant)]
             }),
             _other: () => {
                 throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape.propertiesType);
@@ -179,12 +182,12 @@ export function convertUnion({
         schema.properties = unionTypeDeclaration.baseProperties.reduce<
             Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>
         >((acc, property) => {
-            acc[property.name.wireValue] = {
+            acc[getWireValue(property.name)] = {
                 description: property.docs ?? undefined,
                 ...convertTypeReference(property.valueType)
             };
             if (!(property.valueType.type === "container" && property.valueType.container.type === "optional")) {
-                schema.required = [...(schema.required ?? []), property.name.wireValue];
+                schema.required = [...(schema.required ?? []), getWireValue(property.name)];
             }
             return acc;
         }, {});
@@ -239,6 +242,12 @@ function convertPrimitiveType(primitiveType: FernIr.PrimitiveType): OpenAPIV3.No
                     return { type: "boolean" };
                 },
                 dateTime: () => {
+                    return {
+                        type: "string",
+                        format: "date-time"
+                    };
+                },
+                dateTimeRfc2822: () => {
                     return {
                         type: "string",
                         format: "date-time"
@@ -317,6 +326,12 @@ function convertPrimitiveType(primitiveType: FernIr.PrimitiveType): OpenAPIV3.No
             return { type: "boolean" };
         },
         dateTime: () => {
+            return {
+                type: "string",
+                format: "date-time"
+            };
+        },
+        dateTimeRfc2822: () => {
             return {
                 type: "string",
                 format: "date-time"
@@ -409,21 +424,64 @@ function applyNumericValidation(
     if (rules == null) {
         return;
     }
+    // OAS 3.1 (JSON Schema 2020-12): `exclusiveMinimum`/`exclusiveMaximum` are numbers
+    // (the bound itself), not booleans. When the IR says "exclusive", we promote the value
+    // to `exclusiveMinimum`/`exclusiveMaximum` and omit `minimum`/`maximum`.
     if (rules.min != null) {
-        schema.minimum = rules.min;
+        if (rules.exclusiveMin === true) {
+            (schema as Record<string, unknown>).exclusiveMinimum = rules.min;
+        } else {
+            schema.minimum = rules.min;
+        }
     }
     if (rules.max != null) {
-        schema.maximum = rules.max;
-    }
-    if (rules.exclusiveMin === true) {
-        schema.exclusiveMinimum = rules.exclusiveMin;
-    }
-    if (rules.exclusiveMax === true) {
-        schema.exclusiveMaximum = rules.exclusiveMax;
+        if (rules.exclusiveMax === true) {
+            (schema as Record<string, unknown>).exclusiveMaximum = rules.max;
+        } else {
+            schema.maximum = rules.max;
+        }
     }
     if (rules.multipleOf != null) {
         schema.multipleOf = rules.multipleOf;
     }
+}
+
+/**
+ * Wraps an OpenAPI schema so that `null` is a permitted value, using OpenAPI 3.1 / JSON
+ * Schema 2020-12 conventions. OpenAPI 3.1 removed the `nullable` keyword; null is now
+ * expressed either by including `"null"` in the `type` array or, for `$ref`s, by wrapping
+ * the reference in `anyOf`/`oneOf` alongside `{ "type": "null" }`.
+ *
+ * Cases:
+ *   - schema uses `$ref` → `{ anyOf: [schema, { type: "null" }] }`
+ *   - schema.type is a string → merge `"null"` into a `type` array
+ *   - schema.type is already an array → add `"null"` if missing
+ *   - schema has neither `type` nor `$ref` (e.g., IR `unknown`) → leave untouched;
+ *     a constraint-free schema already admits null.
+ */
+export function makeNullable(schema: OpenApiComponentSchema): OpenApiComponentSchema {
+    if (schemaIsReference(schema)) {
+        // OpenAPI 3.1: `$ref` alone cannot also be null, so wrap in `anyOf` with a null-typed branch.
+        return { anyOf: [schema, { type: "null" }] } as unknown as OpenApiComponentSchema;
+    }
+    // `OpenAPIV3.SchemaObject` in openapi-types v12 types `type` as a single string, but OAS 3.1
+    // allows `type` to be an array including "null". We read it at runtime regardless of the static type.
+    const existingType = (schema as { type?: string | string[] }).type;
+    if (existingType == null) {
+        // Unknown / unconstrained schemas already accept null in JSON Schema 2020-12.
+        return schema;
+    }
+    if (Array.isArray(existingType)) {
+        if (existingType.includes("null")) {
+            return schema;
+        }
+        return { ...schema, type: [...existingType, "null"] } as unknown as OpenApiComponentSchema;
+    }
+    return { ...schema, type: [existingType, "null"] } as unknown as OpenApiComponentSchema;
+}
+
+function schemaIsReference(schema: OpenApiComponentSchema): schema is OpenAPIV3.ReferenceObject {
+    return typeof (schema as OpenAPIV3.ReferenceObject).$ref === "string";
 }
 
 function convertContainerType(containerType: FernIr.ContainerType): OpenApiComponentSchema {
@@ -446,9 +504,10 @@ function convertContainerType(containerType: FernIr.ContainerType): OpenApiCompo
                 mapType.keyType.primitive.v1 === "STRING" &&
                 mapType.valueType.type === "unknown"
             ) {
+                // In OAS 3.1 (JSON Schema 2020-12) additionalProperties defaults to true,
+                // so an unconstrained map is simply `type: "object"`.
                 return {
-                    type: "object",
-                    additionalProperties: true
+                    type: "object"
                 };
             }
             return {
@@ -457,10 +516,7 @@ function convertContainerType(containerType: FernIr.ContainerType): OpenApiCompo
             };
         },
         optional: (optionalType) => {
-            return {
-                ...convertTypeReference(optionalType),
-                nullable: true
-            };
+            return makeNullable(convertTypeReference(optionalType));
         },
         literal: (literalType) => {
             return literalType._visit({
@@ -479,6 +535,9 @@ function convertContainerType(containerType: FernIr.ContainerType): OpenApiCompo
                 _other: () => ({})
             });
         },
+        nullable: (nullableType) => {
+            return makeNullable(convertTypeReference(nullableType));
+        },
         _other: () => {
             throw new Error("Encountered unknown containerType: " + containerType.type);
         }
@@ -491,8 +550,8 @@ export function getReferenceFromDeclaredTypeName(declaredTypeName: FernIr.Declar
 
 export function getNameFromDeclaredTypeName(declaredTypeName: FernIr.DeclaredTypeName): string {
     return [
-        ...declaredTypeName.fernFilepath.packagePath.map((part) => part.originalName),
-        declaredTypeName.name.originalName
+        ...declaredTypeName.fernFilepath.packagePath.map((part) => getOriginalName(part)),
+        getOriginalName(declaredTypeName.name)
     ].join("");
 }
 

@@ -7,9 +7,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class UserStatus {
-    public static final UserStatus ACTIVE = new UserStatus(Value.ACTIVE, "active");
-
     public static final UserStatus INACTIVE = new UserStatus(Value.INACTIVE, "inactive");
+
+    public static final UserStatus ACTIVE = new UserStatus(Value.ACTIVE, "active");
 
     public static final UserStatus DELETED = new UserStatus(Value.DELETED, "deleted");
 
@@ -46,10 +46,10 @@ public final class UserStatus {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case ACTIVE:
-                return visitor.visitActive();
             case INACTIVE:
                 return visitor.visitInactive();
+            case ACTIVE:
+                return visitor.visitActive();
             case DELETED:
                 return visitor.visitDeleted();
             case SUSPENDED:
@@ -63,10 +63,10 @@ public final class UserStatus {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static UserStatus valueOf(String value) {
         switch (value) {
-            case "active":
-                return ACTIVE;
             case "inactive":
                 return INACTIVE;
+            case "active":
+                return ACTIVE;
             case "deleted":
                 return DELETED;
             case "suspended":

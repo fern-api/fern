@@ -7,6 +7,7 @@ import com.fern.ir.model.types.BooleanType;
 import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.DoubleType;
 import com.fern.ir.model.types.IntegerType;
+import com.fern.ir.model.types.Literal;
 import com.fern.ir.model.types.LongType;
 import com.fern.ir.model.types.MapType;
 import com.fern.ir.model.types.NamedType;
@@ -19,7 +20,7 @@ import com.fern.java.client.ClientGeneratorContext;
 import com.squareup.javapoet.CodeBlock;
 import java.util.Optional;
 
-/** Utility class to detect and extract default values from PrimitiveTypeV2 types. */
+/** Utility class to detect and extract default values from PrimitiveTypeV2 types and clientDefault literals. */
 public final class DefaultValueExtractor {
 
     private final ClientGeneratorContext context;
@@ -110,12 +111,114 @@ public final class DefaultValueExtractor {
         });
     }
 
+    /**
+     * Checks whether a parameter has a client default (from x-fern-default). clientDefault is always applied regardless
+     * of the useDefaultRequestParameterValues flag.
+     */
+    public static boolean hasClientDefault(Optional<Literal> clientDefault) {
+        return clientDefault.isPresent();
+    }
+
+    /**
+     * Extracts a CodeBlock for a clientDefault literal value. Returns the string or boolean value as a CodeBlock
+     * suitable for use as a Java default.
+     */
+    public static Optional<CodeBlock> extractClientDefault(Optional<Literal> clientDefault) {
+        return clientDefault.map(literal -> literal.visit(new Literal.Visitor<CodeBlock>() {
+            @Override
+            public CodeBlock visitString(String value) {
+                return CodeBlock.of("$S", value);
+            }
+
+            @Override
+            public CodeBlock visitBoolean(boolean value) {
+                return CodeBlock.of("$L", value);
+            }
+
+            @Override
+            public CodeBlock _visitUnknown(Object unknown) {
+                return CodeBlock.of("$S", unknown.toString());
+            }
+        }));
+    }
+
     public Optional<CodeBlock> extractDefaultValue(TypeReference typeReference) {
         if (!hasDefaultValue(typeReference)) {
             return Optional.empty();
         }
 
         return extractDefaultValueInternal(typeReference);
+    }
+
+    /** Extracts the effective default value for a parameter, preferring clientDefault over type-level defaults. */
+    public Optional<CodeBlock> extractEffectiveDefault(TypeReference typeReference, Optional<Literal> clientDefault) {
+        if (isClientDefaultCompatible(typeReference, clientDefault)) {
+            Optional<CodeBlock> clientDefaultValue = extractClientDefault(clientDefault);
+            if (clientDefaultValue.isPresent()) {
+                return clientDefaultValue;
+            }
+        }
+        return extractDefaultValue(typeReference);
+    }
+
+    /** Checks whether a parameter has any default (clientDefault or type-level). */
+    public boolean hasAnyDefault(TypeReference typeReference, Optional<Literal> clientDefault) {
+        return (hasClientDefault(clientDefault) && isClientDefaultCompatible(typeReference, clientDefault))
+                || hasDefaultValue(typeReference);
+    }
+
+    /**
+     * Checks whether the clientDefault literal type is compatible with the parameter's resolved type. A String literal
+     * is only compatible with string-typed parameters, and a Boolean literal is only compatible with boolean-typed
+     * parameters. For other types (enums, integers, etc.), clientDefault cannot be used directly and must fall through
+     * to type-level defaults.
+     */
+    private boolean isClientDefaultCompatible(TypeReference typeReference, Optional<Literal> clientDefault) {
+        if (!clientDefault.isPresent()) {
+            return false;
+        }
+        TypeReference innerType = resolveToLeafType(typeReference);
+        if (innerType.isPrimitive()) {
+            PrimitiveType primitive = innerType.getPrimitive().get();
+            boolean isString = clientDefault.get().isString()
+                    && primitive.getV1().equals(com.fern.ir.model.types.PrimitiveTypeV1.STRING);
+            boolean isBoolean = clientDefault.get().isBoolean()
+                    && primitive.getV1().equals(com.fern.ir.model.types.PrimitiveTypeV1.BOOLEAN);
+            return isString || isBoolean;
+        }
+        return false;
+    }
+
+    /**
+     * Unwraps optional/nullable containers and resolves named type aliases to get the leaf type reference. This ensures
+     * clientDefault compatibility checks work correctly for aliased String/Boolean types.
+     */
+    private TypeReference resolveToLeafType(TypeReference typeReference) {
+        TypeReference unwrapped = unwrapContainers(typeReference);
+        if (unwrapped.isNamed()) {
+            TypeId typeId = unwrapped.getNamed().get().getTypeId();
+            TypeDeclaration typeDeclaration = context.getTypeDeclarations().get(typeId);
+            if (typeDeclaration != null && typeDeclaration.getShape().isAlias()) {
+                AliasTypeDeclaration alias =
+                        typeDeclaration.getShape().getAlias().get();
+                return resolveToLeafType(alias.getAliasOf());
+            }
+        }
+        return unwrapped;
+    }
+
+    /** Unwraps optional and nullable containers to get the innermost type reference. */
+    private static TypeReference unwrapContainers(TypeReference typeReference) {
+        if (typeReference.isContainer()) {
+            ContainerType container = typeReference.getContainer().get();
+            if (container.isOptional()) {
+                return unwrapContainers(container.getOptional().get());
+            }
+            if (container.isNullable()) {
+                return unwrapContainers(container.getNullable().get());
+            }
+        }
+        return typeReference;
     }
 
     private Optional<CodeBlock> extractDefaultValueInternal(TypeReference typeReference) {

@@ -18,7 +18,7 @@ pub struct LightweightProblemInfoV22 {
 
 impl LightweightProblemInfoV22 {
     pub fn builder() -> LightweightProblemInfoV22Builder {
-        LightweightProblemInfoV22Builder::default()
+        <LightweightProblemInfoV22Builder as Default>::default()
     }
 }
 

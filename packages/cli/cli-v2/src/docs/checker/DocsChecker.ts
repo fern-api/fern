@@ -2,8 +2,9 @@ import { assertNever } from "@fern-api/core-utils";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import type { ValidationViolation } from "@fern-api/docs-validator";
 import { Rules } from "@fern-api/docs-validator";
+import { CliError } from "@fern-api/task-context";
+
 import type { Context } from "../../context/Context.js";
-import { CliError } from "../../errors/CliError.js";
 import type { Task } from "../../ui/Task.js";
 import type { Workspace } from "../../workspace/Workspace.js";
 import { LegacyProjectAdapter } from "../adapter/LegacyProjectAdapter.js";
@@ -82,14 +83,15 @@ export class DocsChecker {
         }
 
         const adapter = new LegacyProjectAdapter({ context: this.context });
-        const project = adapter.adapt(workspace);
+        const project = await adapter.adapt(workspace);
 
         const docsWorkspace = project.docsWorkspaces;
         if (docsWorkspace == null) {
             throw new CliError({
                 message:
                     "No docs configuration found in fern.yml.\n\n" +
-                    "  Add a 'docs:' section to your fern.yml to get started."
+                    "  Add a 'docs:' section to your fern.yml to get started.",
+                code: CliError.Code.ConfigError
             });
         }
 

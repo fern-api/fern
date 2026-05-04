@@ -21,12 +21,15 @@ if typing.TYPE_CHECKING:
         Trader,
         TwoFields,
     )
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedPythonPositionalSingleProperty, SeedPythonPositionalSingleProperty
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedPythonPositionalSingleProperty": ".client",
     "BondSingleLeg": ".types",
     "Cusip": ".types",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "Identifier": ".types",
     "Identifier_Cusip": ".types",
     "Identifier_Isin": ".types",
@@ -68,6 +71,8 @@ __all__ = [
     "AsyncSeedPythonPositionalSingleProperty",
     "BondSingleLeg",
     "Cusip",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "Identifier",
     "Identifier_Cusip",
     "Identifier_Isin",

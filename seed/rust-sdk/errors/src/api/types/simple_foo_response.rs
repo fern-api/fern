@@ -8,7 +8,7 @@ pub struct FooResponse {
 
 impl FooResponse {
     pub fn builder() -> FooResponseBuilder {
-        FooResponseBuilder::default()
+        <FooResponseBuilder as Default>::default()
     }
 }
 

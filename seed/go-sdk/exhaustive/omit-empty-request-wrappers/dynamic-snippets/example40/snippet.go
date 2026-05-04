@@ -4,6 +4,7 @@ import (
     context "context"
 
     client "github.com/exhaustive/fern/client"
+    endpoints "github.com/exhaustive/fern/endpoints"
     option "github.com/exhaustive/fern/option"
 )
 
@@ -16,8 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    request := int64(1000000)
-    client.Endpoints.Primitive.GetAndReturnLong(
+    request := &endpoints.ModifyResourceAtInlinedPath{
+        Param: "param",
+        Body: "string",
+    }
+    client.Endpoints.Params.ModifyWithInlinePath(
         context.TODO(),
         request,
     )

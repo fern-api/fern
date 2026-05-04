@@ -10,11 +10,11 @@ import (
 )
 
 var (
-	getPlantsRequestFieldPlantId = big.NewInt(1 << 0)
+	getPlantsRequestFieldPlantID = big.NewInt(1 << 0)
 )
 
 type GetPlantsRequest struct {
-	PlantId string `json:"-" url:"-"`
+	PlantID string `json:"-" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -27,21 +27,21 @@ func (g *GetPlantsRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetPlantId sets the PlantId field and marks it as non-optional;
+// SetPlantID sets the PlantID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetPlantsRequest) SetPlantId(plantId string) {
-	g.PlantId = plantId
-	g.require(getPlantsRequestFieldPlantId)
+func (g *GetPlantsRequest) SetPlantID(plantID string) {
+	g.PlantID = plantID
+	g.require(getPlantsRequestFieldPlantID)
 }
 
 var (
-	plantFieldId      = big.NewInt(1 << 0)
+	plantFieldID      = big.NewInt(1 << 0)
 	plantFieldName    = big.NewInt(1 << 1)
 	plantFieldSpecies = big.NewInt(1 << 2)
 )
 
 type Plant struct {
-	Id      string  `json:"id" url:"id"`
+	ID      string  `json:"id" url:"id"`
 	Name    string  `json:"name" url:"name"`
 	Species *string `json:"species,omitempty" url:"species,omitempty"`
 
@@ -52,11 +52,11 @@ type Plant struct {
 	rawJSON         json.RawMessage
 }
 
-func (p *Plant) GetId() string {
+func (p *Plant) GetID() string {
 	if p == nil {
 		return ""
 	}
-	return p.Id
+	return p.ID
 }
 
 func (p *Plant) GetName() string {
@@ -87,11 +87,11 @@ func (p *Plant) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *Plant) SetId(id string) {
-	p.Id = id
-	p.require(plantFieldId)
+func (p *Plant) SetID(id string) {
+	p.ID = id
+	p.require(plantFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;

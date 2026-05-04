@@ -1,0 +1,12 @@
+name: basic-auth-pw-omitted
+auth: Basic
+auth-schemes:
+  Basic:
+    scheme: basic
+    username:
+      name: username
+    password:
+      name: password
+      omit: true
+error-discrimination:
+  strategy: status-code

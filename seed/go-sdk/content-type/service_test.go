@@ -10,11 +10,11 @@ import (
 )
 
 func TestSettersNamedMixedPatchRequest(t *testing.T) {
-	t.Run("SetAppId", func(t *testing.T) {
+	t.Run("SetAppID", func(t *testing.T) {
 		obj := &NamedMixedPatchRequest{}
-		var fernTestValueAppId *string
-		obj.SetAppId(fernTestValueAppId)
-		assert.Equal(t, fernTestValueAppId, obj.AppId)
+		var fernTestValueAppID *string
+		obj.SetAppID(fernTestValueAppID)
+		assert.Equal(t, fernTestValueAppID, obj.AppID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -37,14 +37,14 @@ func TestSettersNamedMixedPatchRequest(t *testing.T) {
 }
 
 func TestSettersMarkExplicitNamedMixedPatchRequest(t *testing.T) {
-	t.Run("SetAppId_MarksExplicit", func(t *testing.T) {
+	t.Run("SetAppID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &NamedMixedPatchRequest{}
-		var fernTestValueAppId *string
+		var fernTestValueAppID *string
 
 		// Act
-		obj.SetAppId(fernTestValueAppId)
+		obj.SetAppID(fernTestValueAppID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -482,11 +482,11 @@ func TestSettersPatchComplexRequest(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetProfileImageUrl", func(t *testing.T) {
+	t.Run("SetProfileImageURL", func(t *testing.T) {
 		obj := &PatchComplexRequest{}
-		var fernTestValueProfileImageUrl *string
-		obj.SetProfileImageUrl(fernTestValueProfileImageUrl)
-		assert.Equal(t, fernTestValueProfileImageUrl, obj.ProfileImageUrl)
+		var fernTestValueProfileImageURL *string
+		obj.SetProfileImageURL(fernTestValueProfileImageURL)
+		assert.Equal(t, fernTestValueProfileImageURL, obj.ProfileImageURL)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -749,14 +749,14 @@ func TestSettersMarkExplicitPatchComplexRequest(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetProfileImageUrl_MarksExplicit", func(t *testing.T) {
+	t.Run("SetProfileImageURL_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &PatchComplexRequest{}
-		var fernTestValueProfileImageUrl *string
+		var fernTestValueProfileImageURL *string
 
 		// Act
-		obj.SetProfileImageUrl(fernTestValueProfileImageUrl)
+		obj.SetProfileImageURL(fernTestValueProfileImageURL)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

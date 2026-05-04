@@ -14,6 +14,7 @@ async fn main() {
                 union: Some(MetadataUnion::OptionalMetadata(OptionalMetadata(Some(
                     HashMap::from([("string".to_string(), serde_json::json!({"key":"value"}))]),
                 )))),
+                ..Default::default()
             },
             None,
         )

@@ -10,11 +10,12 @@ async fn main() {
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
         .endpoints
-        .params
-        .get_with_allow_multiple_query(
-            &GetWithAllowMultipleQueryQueryRequest {
-                query: vec!["query".to_string()],
-                number: vec![1],
+        .pagination
+        .list_items(
+            &ListItemsQueryRequest {
+                cursor: Some("cursor".to_string()),
+                limit: Some(1),
+                ..Default::default()
             },
             None,
         )

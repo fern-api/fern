@@ -6,7 +6,7 @@ body:
   - type: dropdown
     id: product
     attributes:
-      label: "Which Fern component?"
+      label: "Component"
       options:
         - "CLI"
         - "SDKs"
@@ -19,7 +19,7 @@ body:
   - type: dropdown
     id: priority
     attributes:
-      label: "How urgent is this?"
+      label: "Priority"
       options:
         - "P0 - Critical (Blocking work)"
         - "P1 - High (Strongly needed)"
@@ -31,7 +31,7 @@ body:
   - type: dropdown
     id: sdk-language
     attributes:
-      label: "Which SDK language(s)?"
+      label: "SDK Language(s)"
       description: "Only if you selected 'SDKs' above. Skip this field otherwise."
       multiple: true
       options:
@@ -50,8 +50,8 @@ body:
   - type: textarea
     id: issue-description
     attributes:
-      label: "What's the issue?"
-      description: "Please provide: \n1. Steps to reproduce\n2. Expected behavior\n3. Actual behavior\n4. Environment details (OS, versions, etc.)"
+      label: "Bug Description"
+      description: "Please describe only the issue here. Component, priority, and language are captured by the fields above — no need to repeat them.\n1. Steps to reproduce\n2. Expected behavior\n3. Actual behavior\n4. Environment details (OS, versions, etc.)"
       placeholder: |
         Steps to reproduce:
         1. First step (e.g., "Initialize Fern project")
@@ -72,8 +72,8 @@ body:
   - type: textarea
     id: versions
     attributes:
-      label: "Fern CLI & Generator Versions"
-      description: "Report your Fern CLI version (from `fern.config.json`) and, if applicable, your SDK Generator versions (from `generators.yml`)."
+      label: "Versions"
+      description: "Report your Fern CLI version (from `fern.config.json`) and, if applicable, your SDK generator versions (from `generators.yml`)."
       placeholder: |
         Fern CLI version: [e.g., v0.55.1]
         SDK Generator versions: 

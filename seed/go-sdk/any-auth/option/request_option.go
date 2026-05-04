@@ -79,10 +79,10 @@ func WithToken(token string) *core.TokenOption {
 	}
 }
 
-// WithApiKey sets the apiKey auth request header.
-func WithApiKey(apiKey string) *core.ApiKeyOption {
-	return &core.ApiKeyOption{
-		ApiKey: apiKey,
+// WithAPIKey sets the apiKey auth request header.
+func WithAPIKey(apiKey string) *core.APIKeyOption {
+	return &core.APIKeyOption{
+		APIKey: apiKey,
 	}
 }
 
@@ -113,12 +113,5 @@ func WithBasicAuth(username, password string) *core.BasicAuthOption {
 	return &core.BasicAuthOption{
 		Username: username,
 		Password: password,
-	}
-}
-
-// WithClientId sets the clientId auth request parameter.
-func WithClientId(clientId string) *core.ClientIdOption {
-	return &core.ClientIdOption{
-		ClientId: clientId,
 	}
 }

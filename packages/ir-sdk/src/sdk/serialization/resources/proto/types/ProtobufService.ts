@@ -3,18 +3,18 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 import { ProtobufFile } from "./ProtobufFile.js";
 
 export const ProtobufService: core.serialization.ObjectSchema<serializers.ProtobufService.Raw, FernIr.ProtobufService> =
     core.serialization.objectWithoutOptionalProperties({
         file: ProtobufFile,
-        name: Name,
+        name: NameOrString,
     });
 
 export declare namespace ProtobufService {
     export interface Raw {
         file: ProtobufFile.Raw;
-        name: Name.Raw;
+        name: NameOrString.Raw;
     }
 }

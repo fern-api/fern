@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 import { WithDocs } from "../../commons/types/WithDocs.js";
 import { ExampleHeader } from "./ExampleHeader.js";
 import { ExamplePathParameter } from "./ExamplePathParameter.js";
@@ -17,7 +17,7 @@ export const ExampleEndpointCall: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         id: core.serialization.string().optional(),
-        name: Name.optional(),
+        name: NameOrString.optional(),
         url: core.serialization.string(),
         rootPathParameters: core.serialization.list(ExamplePathParameter),
         servicePathParameters: core.serialization.list(ExamplePathParameter),
@@ -33,7 +33,7 @@ export const ExampleEndpointCall: core.serialization.ObjectSchema<
 export declare namespace ExampleEndpointCall {
     export interface Raw extends WithDocs.Raw {
         id?: string | null;
-        name?: Name.Raw | null;
+        name?: NameOrString.Raw | null;
         url: string;
         rootPathParameters: ExamplePathParameter.Raw[];
         servicePathParameters: ExamplePathParameter.Raw[];

@@ -1,0 +1,96 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "message",
+        "interrupt",
+        "compact"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "message"
+        },
+        "stream_response": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prompt": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "prompt",
+        "message"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "interrupt"
+        },
+        "stream_response": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prompt": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "prompt"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "compact"
+        },
+        "stream_response": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prompt": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "prompt",
+        "data"
+      ]
+    }
+  ],
+  "definitions": {}
+}

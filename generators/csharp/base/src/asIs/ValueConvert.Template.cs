@@ -29,7 +29,7 @@ public static class ValueConvert
 
     internal static string ToPathParameterString(ulong v) => ToString(v);
     
-    internal static string ToPathParameterString(string v) => ToString(v);
+    internal static string ToPathParameterString(string v) => QueryStringBuilder.EncodePathSegment(v);
 
     internal static string ToPathParameterString(char v) => ToString(v);
 

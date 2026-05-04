@@ -5,7 +5,7 @@ import { camelCase } from "lodash-es";
 import { buildTypeReference } from "./buildTypeReference.js";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
 import { convertAvailability } from "./utils/convertAvailability.js";
-import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference.js";
+import { getDefaultFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference.js";
 
 export function buildHeader({
     header,
@@ -26,6 +26,7 @@ export function buildHeader({
         declarationDepth: 0
     });
     const headerType = getTypeFromTypeReference(typeReference);
+    const headerDefault = getDefaultFromTypeReference(typeReference);
     const headerWithoutXPrefix = header.name.replace(/^x-|^X-/, "");
     const headerVariableName =
         header.parameterNameOverride != null ? header.parameterNameOverride : camelCase(headerWithoutXPrefix);
@@ -33,7 +34,9 @@ export function buildHeader({
         header.description == null &&
         header.name === headerVariableName &&
         header.env == null &&
-        header.availability == null
+        header.availability == null &&
+        header.clientDefault == null &&
+        headerDefault == null
     ) {
         return headerType;
     }
@@ -51,6 +54,12 @@ export function buildHeader({
     }
     if (header.availability != null) {
         headerSchema.availability = convertAvailability(header.availability);
+    }
+    if (header.clientDefault != null) {
+        headerSchema["client-default"] = header.clientDefault;
+    }
+    if (headerDefault != null) {
+        headerSchema.default = headerDefault;
     }
 
     return headerSchema;

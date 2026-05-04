@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "region": {
+      "type": "string"
+    },
+    "domain": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "region"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

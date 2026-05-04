@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: version
-  version: ''
+  version: 0.0.0
 paths:
   /users/{userId}:
     get:
@@ -16,7 +16,7 @@ paths:
             $ref: '#/components/schemas/UserId'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:

@@ -1,0 +1,244 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createSettings": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                  "response": {
+                    "body": {
+                      "provider": {
+                        "language": "language",
+                        "model": "model",
+                        "type": "deepgram",
+                        "version": "v1",
+                      },
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/settings",
+              "request": {
+                "body": "Settings",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "Settings",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "ListenProvider": {
+            "availability": undefined,
+            "base-properties": {},
+            "default-variant": "v1",
+            "discriminant": {
+              "context": "data",
+              "value": "version",
+            },
+            "docs": undefined,
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": {
+              "v1": "ListenProviderV1",
+              "v2": "ListenProviderV2",
+            },
+          },
+          "ListenProviderV1": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "language": {
+                "default": "en-US",
+                "docs": "Language code",
+                "type": "optional<string>",
+              },
+              "model": {
+                "docs": "Model name",
+                "type": "optional<string>",
+              },
+              "type": {
+                "docs": "Provider type",
+                "type": "ListenProviderV1Type",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ListenProviderV1Type": {
+            "docs": "Provider type",
+            "enum": [
+              "deepgram",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ListenProviderV2": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "model": {
+                "docs": "Model name",
+                "type": "string",
+              },
+              "type": {
+                "docs": "Provider type",
+                "type": "ListenProviderV2Type",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ListenProviderV2Type": {
+            "docs": "Provider type",
+            "enum": [
+              "deepgram",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Settings": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "provider": "optional<ListenProvider>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createSettings:
+      path: /settings
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: Settings
+        content-type: application/json
+      response:
+        docs: Success
+        type: Settings
+        status-code: 200
+      examples:
+        - request: {}
+          response:
+            body:
+              provider:
+                type: deepgram
+                model: model
+                language: language
+                version: v1
+  source:
+    openapi: ../openapi.yml
+types:
+  Settings:
+    properties:
+      provider: optional<ListenProvider>
+    source:
+      openapi: ../openapi.yml
+  ListenProviderV1Type:
+    enum:
+      - deepgram
+    docs: Provider type
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  ListenProviderV1:
+    properties:
+      type:
+        type: ListenProviderV1Type
+        docs: Provider type
+      model:
+        type: optional<string>
+        docs: Model name
+      language:
+        type: optional<string>
+        docs: Language code
+        default: en-US
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  ListenProviderV2Type:
+    enum:
+      - deepgram
+    docs: Provider type
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  ListenProviderV2:
+    properties:
+      type:
+        type: ListenProviderV2Type
+        docs: Provider type
+      model:
+        type: string
+        docs: Model name
+    source:
+      openapi: ../openapi.yml
+    inline: true
+  ListenProvider:
+    discriminant:
+      value: version
+      context: data
+    base-properties: {}
+    union:
+      v1: ListenProviderV1
+      v2: ListenProviderV2
+    default-variant: v1
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Discriminant Default Value",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Discriminant Default Value
+",
+  },
+}

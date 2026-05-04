@@ -10,7 +10,7 @@ pub struct PatchProxyRequest {
 
 impl PatchProxyRequest {
     pub fn builder() -> PatchProxyRequestBuilder {
-        PatchProxyRequestBuilder::default()
+        <PatchProxyRequestBuilder as Default>::default()
     }
 }
 

@@ -13,7 +13,7 @@ pub struct TestCaseV2 {
 
 impl TestCaseV2 {
     pub fn builder() -> TestCaseV2Builder {
-        TestCaseV2Builder::default()
+        <TestCaseV2Builder as Default>::default()
     }
 }
 

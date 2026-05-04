@@ -17,7 +17,7 @@ impl Data {
         Self::r#String { value }
     }
 
-    pub fn base_64(value: Vec<u8>) -> Self {
+    pub fn base64(value: Vec<u8>) -> Self {
         Self::Base64 { value }
     }
 }

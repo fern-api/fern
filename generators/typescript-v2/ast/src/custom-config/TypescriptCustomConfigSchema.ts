@@ -87,6 +87,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     customPagerName: z.optional(z.string()),
 
     resolveQueryParameterNameConflicts: z.optional(z.boolean()),
+    alwaysSendAuth: z.optional(z.boolean()),
 
     // beta (not in docs)
     includeContentHeadersOnFileDownloadResponse: z.optional(z.boolean()),
@@ -105,7 +106,9 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     shouldGenerateWebsocketClients: z.optional(z.boolean()),
 
     // internal - license name extracted from custom license file
-    _fernLicenseName: z.optional(z.string())
+    _fernLicenseName: z.optional(z.string()),
+    maxRetries: z.optional(z.number().int().min(0)),
+    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"]))
 });
 
 export type TypescriptCustomConfigSchema = z.infer<typeof TypescriptCustomConfigSchema>;

@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/conversations/outbound-call",
+                "method": "POST",
+                "identifier_override": "endpoint_conversations.outboundCall"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Conversations.OutboundCallAsync(\n    new OutboundCallConversationsRequest { ToPhoneNumber = \"to_phone_number\" }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_users.get"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Users.GetAsync(new GetUsersRequest { Id = \"id\" });\n"
+            }
+        }
+    ]
+}

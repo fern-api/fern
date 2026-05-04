@@ -7,7 +7,7 @@ pub struct Berry {
 
 impl Berry {
     pub fn builder() -> BerryBuilder {
-        BerryBuilder::default()
+        <BerryBuilder as Default>::default()
     }
 }
 

@@ -3,10 +3,9 @@ package example
 import (
     context "context"
 
-    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
-    endpoints "github.com/exhaustive/fern/endpoints"
     option "github.com/exhaustive/fern/option"
+    types "github.com/exhaustive/fern/types"
 )
 
 func do() {
@@ -18,15 +17,14 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.ListItemsRequest{
-        Cursor: fern.String(
-            "cursor",
-        ),
-        Limit: fern.Int(
-            1,
-        ),
+    request := &types.ObjectWithRequiredNestedObject{
+        RequiredString: "hello",
+        RequiredObject: &types.NestedObjectWithRequiredField{
+            FieldString: "nested",
+            NestedObject: &types.ObjectWithOptionalField{},
+        },
     }
-    client.Endpoints.Pagination.ListItems(
+    client.Endpoints.Object.GetAndReturnWithRequiredNestedObject(
         context.TODO(),
         request,
     )

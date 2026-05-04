@@ -10,7 +10,7 @@ pub struct EchoRequest {
 
 impl EchoRequest {
     pub fn builder() -> EchoRequestBuilder {
-        EchoRequestBuilder::default()
+        <EchoRequestBuilder as Default>::default()
     }
 }
 

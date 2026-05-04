@@ -8,7 +8,7 @@ pub struct CompletionEvent {
 
 impl CompletionEvent {
     pub fn builder() -> CompletionEventBuilder {
-        CompletionEventBuilder::default()
+        <CompletionEventBuilder as Default>::default()
     }
 }
 

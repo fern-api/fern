@@ -15,6 +15,7 @@ async fn main() {
             &"id".to_string(),
             &ObjectWithRequiredField {
                 string: "string".to_string(),
+                ..Default::default()
             },
             None,
         )

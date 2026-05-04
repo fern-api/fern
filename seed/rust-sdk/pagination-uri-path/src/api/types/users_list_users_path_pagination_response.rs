@@ -10,7 +10,7 @@ pub struct ListUsersPathPaginationResponse {
 
 impl ListUsersPathPaginationResponse {
     pub fn builder() -> ListUsersPathPaginationResponseBuilder {
-        ListUsersPathPaginationResponseBuilder::default()
+        <ListUsersPathPaginationResponseBuilder as Default>::default()
     }
 }
 

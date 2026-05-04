@@ -3,6 +3,6 @@
 import type * as FernIr from "../../../index.js";
 
 export interface FileUploadRequest extends FernIr.WithDocs, FernIr.WithV2Examples, FernIr.WithContentType {
-    name: FernIr.Name;
+    name: FernIr.NameOrString;
     properties: FernIr.FileUploadRequestProperty[];
 }

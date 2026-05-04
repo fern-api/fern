@@ -6,7 +6,7 @@ import { GeneratedSdkInlinedRequestBodySchema } from "./GeneratedSdkInlinedReque
 export interface SdkInlinedRequestBodySchemaContext {
     getGeneratedInlinedRequestBodySchema: (
         packageId: PackageId,
-        endpointName: FernIr.Name
+        endpointName: FernIr.NameOrString
     ) => GeneratedSdkInlinedRequestBodySchema;
-    getReferenceToInlinedRequestBody: (packageId: PackageId, endpointName: FernIr.Name) => Reference;
+    getReferenceToInlinedRequestBody: (packageId: PackageId, endpointName: FernIr.NameOrString) => Reference;
 }

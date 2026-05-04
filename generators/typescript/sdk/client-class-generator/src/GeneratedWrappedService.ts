@@ -1,7 +1,7 @@
 import { SetRequired } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode, Reference } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { ClassDeclarationStructure, Scope, ts } from "ts-morph";
 
 import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl.js";
@@ -32,7 +32,7 @@ export class GeneratedWrappedService {
     }: {
         isRoot: boolean;
         class_: SetRequired<ClassDeclarationStructure, "properties" | "ctors" | "methods" | "getAccessors">;
-        context: SdkContext;
+        context: FileContext;
     }): void {
         const referenceToWrapped = this.getReferenceToWrappedService(class_, context);
         const generatedWrappedService = context.sdkClientClass.getGeneratedSdkClientClass({
@@ -41,7 +41,7 @@ export class GeneratedWrappedService {
         });
 
         class_.properties.push({
-            name: this.getCachedMemberName(),
+            name: this.getCachedMemberName(context),
             scope: Scope.Protected,
             type: getTextOfTsNode(
                 ts.factory.createUnionTypeNode([
@@ -52,7 +52,7 @@ export class GeneratedWrappedService {
         });
 
         class_.getAccessors.push({
-            name: this.getGetterName(),
+            name: this.getGetterName(context),
             returnType: getTextOfTsNode(referenceToWrapped.getTypeNode()),
             scope: Scope.Public,
             statements: [
@@ -62,7 +62,7 @@ export class GeneratedWrappedService {
                             ts.factory.createBinaryExpression(
                                 ts.factory.createPropertyAccessExpression(
                                     ts.factory.createThis(),
-                                    this.getCachedMemberName()
+                                    this.getCachedMemberName(context)
                                 ),
                                 ts.SyntaxKind.QuestionQuestionEqualsToken,
                                 generatedWrappedService.instantiate({
@@ -77,22 +77,22 @@ export class GeneratedWrappedService {
         });
     }
 
-    private getCachedMemberName(): string {
-        return `_${this.getGetterName()}`;
+    private getCachedMemberName(context: FileContext): string {
+        return `_${this.getGetterName(context)}`;
     }
 
-    private getGetterName(): string {
+    private getGetterName(context: FileContext): string {
         const lastFernFilepathPart =
             this.wrappedSubpackage.fernFilepath.allParts[this.wrappedSubpackage.fernFilepath.allParts.length - 1];
         if (lastFernFilepathPart == null) {
             throw new Error("Cannot generate wrapped service because FernFilepath is empty");
         }
-        return lastFernFilepathPart.camelCase.unsafeName;
+        return context.case.camelUnsafe(lastFernFilepathPart);
     }
 
     private getReferenceToWrappedService(
         serviceClass: SetRequired<ClassDeclarationStructure, "properties" | "ctors" | "methods">,
-        context: SdkContext
+        context: FileContext
     ): Reference {
         const reference = context.sdkClientClass.getReferenceToClientClass({
             isRoot: false,

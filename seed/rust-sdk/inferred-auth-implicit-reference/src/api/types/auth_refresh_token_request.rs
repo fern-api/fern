@@ -17,7 +17,7 @@ pub struct RefreshTokenRequest {
 
 impl RefreshTokenRequest {
     pub fn builder() -> RefreshTokenRequestBuilder {
-        RefreshTokenRequestBuilder::default()
+        <RefreshTokenRequestBuilder as Default>::default()
     }
 }
 

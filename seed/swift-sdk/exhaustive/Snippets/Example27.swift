@@ -7,9 +7,11 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.object.getAndReturnWithDatetimeLikeString(request: ObjectWithDatetimeLikeString(
-        datetimeLikeString: "datetimeLikeString",
-        actualDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)
+    _ = try await client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields(request: ObjectWithMixedRequiredAndOptionalFields(
+        requiredString: "requiredString",
+        requiredInteger: 1,
+        optionalString: "optionalString",
+        requiredLong: 1000000
     ))
 }
 

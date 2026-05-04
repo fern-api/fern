@@ -8,6 +8,7 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import Id
     from . import organization, user
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedMixedFileDirectory, SeedMixedFileDirectory
     from .organization import CreateOrganizationRequest, Organization
     from .user import User
@@ -15,6 +16,8 @@ if typing.TYPE_CHECKING:
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedMixedFileDirectory": ".client",
     "CreateOrganizationRequest": ".organization",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "Id": ".types",
     "Organization": ".organization",
     "SeedMixedFileDirectory": ".client",
@@ -49,6 +52,8 @@ def __dir__():
 __all__ = [
     "AsyncSeedMixedFileDirectory",
     "CreateOrganizationRequest",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "Id",
     "Organization",
     "SeedMixedFileDirectory",

@@ -7,12 +7,13 @@ import (
 	fmt "fmt"
 	internal "github.com/query-parameters-openapi-as-objects/fern/internal"
 	big "math/big"
+	url "net/url"
 	time "time"
 )
 
 var (
 	searchRequestFieldLimit            = big.NewInt(1 << 0)
-	searchRequestFieldId               = big.NewInt(1 << 1)
+	searchRequestFieldID               = big.NewInt(1 << 1)
 	searchRequestFieldDate             = big.NewInt(1 << 2)
 	searchRequestFieldDeadline         = big.NewInt(1 << 3)
 	searchRequestFieldBytes            = big.NewInt(1 << 4)
@@ -33,7 +34,7 @@ var (
 
 type SearchRequest struct {
 	Limit            int               `json:"-" url:"limit"`
-	Id               string            `json:"-" url:"id"`
+	ID               string            `json:"-" url:"id"`
 	Date             time.Time         `json:"-" url:"date" format:"date"`
 	Deadline         time.Time         `json:"-" url:"deadline"`
 	Bytes            string            `json:"-" url:"bytes"`
@@ -71,11 +72,11 @@ func (s *SearchRequest) SetLimit(limit int) {
 	s.require(searchRequestFieldLimit)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchRequest) SetId(id string) {
-	s.Id = id
-	s.require(searchRequestFieldId)
+func (s *SearchRequest) SetID(id string) {
+	s.ID = id
+	s.require(searchRequestFieldID)
 }
 
 // SetDate sets the Date field and marks it as non-optional;
@@ -371,6 +372,29 @@ func (s SearchRequestNeighbor) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", s)
 }
 
+func (s *SearchRequestNeighbor) EncodeQueryValues(key string, values *url.Values) error {
+	if s == nil {
+		return nil
+	}
+	if s.typ == "User" || s.User != nil {
+		values.Add(key, fmt.Sprintf("%v", s.User))
+		return nil
+	}
+	if s.typ == "NestedUser" || s.NestedUser != nil {
+		values.Add(key, fmt.Sprintf("%v", s.NestedUser))
+		return nil
+	}
+	if s.typ == "String" || s.String != "" {
+		values.Add(key, fmt.Sprintf("%v", s.String))
+		return nil
+	}
+	if s.typ == "Integer" || s.Integer != 0 {
+		values.Add(key, fmt.Sprintf("%v", s.Integer))
+		return nil
+	}
+	return nil
+}
+
 type SearchRequestNeighborVisitor interface {
 	VisitUser(*User) error
 	VisitNestedUser(*NestedUser) error
@@ -473,6 +497,29 @@ func (s SearchRequestNeighborRequired) MarshalJSON() ([]byte, error) {
 		return json.Marshal(s.Integer)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", s)
+}
+
+func (s *SearchRequestNeighborRequired) EncodeQueryValues(key string, values *url.Values) error {
+	if s == nil {
+		return nil
+	}
+	if s.typ == "User" || s.User != nil {
+		values.Add(key, fmt.Sprintf("%v", s.User))
+		return nil
+	}
+	if s.typ == "NestedUser" || s.NestedUser != nil {
+		values.Add(key, fmt.Sprintf("%v", s.NestedUser))
+		return nil
+	}
+	if s.typ == "String" || s.String != "" {
+		values.Add(key, fmt.Sprintf("%v", s.String))
+		return nil
+	}
+	if s.typ == "Integer" || s.Integer != 0 {
+		values.Add(key, fmt.Sprintf("%v", s.Integer))
+		return nil
+	}
+	return nil
 }
 
 type SearchRequestNeighborRequiredVisitor interface {

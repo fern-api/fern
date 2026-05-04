@@ -14,6 +14,7 @@ async fn main() {
         .list_usernames(
             &InlineUsersInlineUsersListUsernamesQueryRequest {
                 starting_after: Some("starting_after".to_string()),
+                ..Default::default()
             },
             None,
         )

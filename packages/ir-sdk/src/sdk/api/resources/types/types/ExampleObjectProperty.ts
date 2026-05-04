@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../index.js";
 
 export interface ExampleObjectProperty {
-    name: FernIr.NameAndWireValue;
+    name: FernIr.NameAndWireValueOrString;
     value: FernIr.ExampleTypeReference;
     propertyAccess: FernIr.ObjectPropertyAccess | undefined;
     /**

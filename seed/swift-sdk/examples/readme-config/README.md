@@ -17,6 +17,7 @@ The Seed Swift library provides convenient access to the Seed APIs from Swift.
 - [Override Section](#override-section)
 - [Generator Invocation Custom Section](#generator-invocation-custom-section)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Errors](#errors)
 - [Advanced](#advanced)
   - [Additional Headers](#additional-headers)
@@ -96,6 +97,19 @@ private func main() async throws {
 try await main()
 ```
 
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```swift
+import Examples
+
+let client = ExamplesClient(
+    token: "YOUR_API_KEY",
+    environment: .production
+)
+```
+
 ## Errors
 
 The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
@@ -103,7 +117,7 @@ The SDK throws a single error enum for all failures. Client-side issues encoding
 ```swift
 import Examples
 
-let client = ExamplesClient(...)
+let client = ExamplesClient(token: "YOUR_API_KEY")
 
 do {
     let response = try await client.service.createMovie(...)
@@ -171,7 +185,7 @@ import Foundation
 import Examples
 
 let client = ExamplesClient(
-    ...,
+    token: "YOUR_API_KEY",
     urlSession: // Provide your implementation here
 )
 ```

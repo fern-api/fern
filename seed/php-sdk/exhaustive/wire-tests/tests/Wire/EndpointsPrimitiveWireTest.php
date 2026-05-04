@@ -184,12 +184,12 @@ class EndpointsPrimitiveWireTest extends WireMockTestCase
     /**
      */
     public function testGetAndReturnBase64(): void {
-        $testId = 'endpoints.primitive.get_and_return_base_64.0';
+        $testId = 'endpoints.primitive.get_and_return_base64.0';
         $this->client->endpoints->primitive->getAndReturnBase64(
             'SGVsbG8gd29ybGQh',
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints.primitive.get_and_return_base_64.0',
+                    'X-Test-Id' => 'endpoints.primitive.get_and_return_base64.0',
                 ],
             ],
         );

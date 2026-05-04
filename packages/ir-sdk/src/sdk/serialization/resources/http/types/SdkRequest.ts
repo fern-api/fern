@@ -3,21 +3,21 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 import { RequestProperty } from "./RequestProperty.js";
 import { SdkRequestShape } from "./SdkRequestShape.js";
 
 export const SdkRequest: core.serialization.ObjectSchema<serializers.SdkRequest.Raw, FernIr.SdkRequest> =
     core.serialization.objectWithoutOptionalProperties({
         streamParameter: RequestProperty.optional(),
-        requestParameterName: Name,
+        requestParameterName: NameOrString,
         shape: SdkRequestShape,
     });
 
 export declare namespace SdkRequest {
     export interface Raw {
         streamParameter?: RequestProperty.Raw | null;
-        requestParameterName: Name.Raw;
+        requestParameterName: NameOrString.Raw;
         shape: SdkRequestShape.Raw;
     }
 }

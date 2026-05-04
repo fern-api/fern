@@ -15,4 +15,6 @@ export interface CheckRulesConfig {
     noCircularRedirects?: FernDocsConfig.CheckRuleSeverity;
     /** Severity for docs endpoint URL validation. Default is warn. */
     validDocsEndpoints?: FernDocsConfig.CheckRuleSeverity;
+    /** Severity for detecting previously published URLs that disappeared without an explicit redirect. Default is warn. */
+    missingRedirects?: FernDocsConfig.CheckRuleSeverity;
 }

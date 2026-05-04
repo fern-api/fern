@@ -1,12 +1,13 @@
+import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { GetReferenceOpts } from "@fern-typescript/commons";
-import { GeneratedRequestWrapper, SdkContext } from "@fern-typescript/contexts";
+import { FileContext, GeneratedRequestWrapper } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 import { AbstractRequestParameter } from "./AbstractRequestParameter.js";
 
 export class FileUploadRequestParameter extends AbstractRequestParameter {
-    protected getParameterType(context: SdkContext): {
+    protected getParameterType(context: FileContext): {
         type: ts.TypeNode;
         hasQuestionToken: boolean;
         initializer?: ts.Expression;
@@ -17,7 +18,7 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
         };
     }
 
-    public getType(context: SdkContext): ts.TypeNode {
+    public getType(context: FileContext): ts.TypeNode {
         return context.requestWrapper.getReferenceToRequestWrapper(this.packageId, this.endpoint.name);
     }
 
@@ -34,7 +35,7 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
         example,
         opts
     }: {
-        context: SdkContext;
+        context: FileContext;
         example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression | undefined {
@@ -42,17 +43,17 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
         return requestWrapperExample?.build(context, opts);
     }
 
-    public getAllQueryParameters(context: SdkContext): FernIr.QueryParameter[] {
+    public getAllQueryParameters(context: FileContext): FernIr.QueryParameter[] {
         return this.getGeneratedRequestWrapper(context).getAllQueryParameters();
     }
 
-    public isOptional({ context }: { context: SdkContext }): boolean {
+    public isOptional({ context }: { context: FileContext }): boolean {
         return false;
     }
 
     public withQueryParameter(
         queryParameter: FernIr.QueryParameter,
-        context: SdkContext,
+        context: FileContext,
         queryParamSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[],
         queryParamItemSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[]
     ): ts.Statement[] {
@@ -68,9 +69,9 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
         });
     }
 
-    public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
+    public getReferenceToPathParameter(pathParameterKey: string, context: FileContext): ts.Expression {
         const pathParameter = this.endpoint.allPathParameters.find(
-            (pathParam) => pathParam.name.originalName === pathParameterKey
+            (pathParam) => getOriginalName(pathParam.name) === pathParameterKey
         );
         if (pathParameter == null) {
             throw new Error("Path parameter does not exist: " + pathParameterKey);
@@ -81,9 +82,9 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
         );
     }
 
-    public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
+    public getReferenceToQueryParameter(queryParameterKey: string, context: FileContext): ts.Expression {
         const queryParameter = this.endpoint.queryParameters.find(
-            (queryParam) => queryParam.name.wireValue === queryParameterKey
+            (queryParam) => getWireValue(queryParam.name) === queryParameterKey
         );
         if (queryParameter == null) {
             throw new Error("Query parameter does not exist: " + queryParameterKey);
@@ -94,19 +95,22 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
         );
     }
 
-    public getReferenceToNonLiteralHeader(header: FernIr.HttpHeader, context: SdkContext): ts.Expression {
+    public getReferenceToNonLiteralHeader(header: FernIr.HttpHeader, context: FileContext): ts.Expression {
         return this.getReferenceToProperty(
             this.getGeneratedRequestWrapper(context).getPropertyNameOfNonLiteralHeader(header).propertyName
         );
     }
 
-    public getReferenceToBodyProperty(property: FernIr.InlinedRequestBodyProperty, context: SdkContext): ts.Expression {
+    public getReferenceToBodyProperty(
+        property: FernIr.InlinedRequestBodyProperty,
+        context: FileContext
+    ): ts.Expression {
         return this.getReferenceToProperty(
             this.getGeneratedRequestWrapper(context).getInlinedRequestBodyPropertyKey(property).propertyName
         );
     }
 
-    private getGeneratedRequestWrapper(context: SdkContext): GeneratedRequestWrapper {
+    private getGeneratedRequestWrapper(context: FileContext): GeneratedRequestWrapper {
         return context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpoint.name);
     }
 

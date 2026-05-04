@@ -5,7 +5,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-sdk
-        version: 2.3.2
+        version: 3.63.3
         config: {}
         output:
           location: local-file-system

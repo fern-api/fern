@@ -17,7 +17,11 @@ export function pathParametersEqual({ request, example }: pathParametersEqual.Ar
         ...example.servicePathParameters,
         ...example.endpointPathParameters
     ]) {
-        const requestPathParameter = request.params[examplePathParameter.name.originalName];
+        const originalName =
+            typeof examplePathParameter.name === "string"
+                ? examplePathParameter.name
+                : examplePathParameter.name.originalName;
+        const requestPathParameter = request.params[originalName];
         if (
             !isEqualWith(
                 requestPathParameter,
@@ -28,7 +32,7 @@ export function pathParametersEqual({ request, example }: pathParametersEqual.Ar
         ) {
             return {
                 type: "notEqual",
-                parameter: [examplePathParameter.name.originalName],
+                parameter: [originalName],
                 actualValue: requestPathParameter,
                 expectedValue: examplePathParameter.value.jsonExample,
                 location: "path"

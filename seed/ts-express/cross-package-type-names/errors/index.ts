@@ -1,1 +1,0 @@
-export { SeedCrossPackageTypeNamesError } from "./SeedCrossPackageTypeNamesError";

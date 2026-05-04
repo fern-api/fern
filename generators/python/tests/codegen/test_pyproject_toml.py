@@ -3,14 +3,13 @@
 import tempfile
 from pathlib import Path
 
-import pytest
+from poetry.core.factory import Factory
 
+from fern_python.codegen.pypi_classifier_creator import PyPIClassifierMetadataGenerator
 from fern_python.codegen.pyproject_toml import (
     PyProjectToml,
     PyProjectTomlPackageConfig,
 )
-from fern_python.codegen.pypi_classifier_creator import PyPIClassifierMetadataGenerator
-from poetry.core.factory import Factory
 
 
 class TestPoetryBlock:

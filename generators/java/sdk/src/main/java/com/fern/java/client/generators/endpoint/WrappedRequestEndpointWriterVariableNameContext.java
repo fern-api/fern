@@ -9,6 +9,7 @@ import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.client.generators.visitors.FilePropertyIsOptional;
 import com.fern.java.client.generators.visitors.GetFilePropertyKey;
 import com.fern.java.generators.object.EnrichedObjectProperty;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -34,8 +35,9 @@ public class WrappedRequestEndpointWriterVariableNameContext extends AbstractEnd
         super(clientGeneratorContext, httpService, httpEndpoint);
         this.generatedWrappedRequest = generatedWrappedRequest;
         this.sdkRequest = sdkRequest;
-        this.requestParameterName =
-                sdkRequest.getRequestParameterName().getCamelCase().getSafeName();
+        this.requestParameterName = NameUtils.toName(sdkRequest.getRequestParameterName())
+                .getCamelCase()
+                .getSafeName();
         initializeCollections();
     }
 
@@ -84,15 +86,13 @@ public class WrappedRequestEndpointWriterVariableNameContext extends AbstractEnd
             ClientGeneratorContext clientGeneratorContext, FileProperty fileProperty) {
         if (clientGeneratorContext.getCustomConfig().inlineFileProperties()) {
             return "request.get"
-                    + fileProperty
-                            .visit(new GetFilePropertyKey())
-                            .getName()
+                    + NameUtils.toName(
+                                    fileProperty.visit(new GetFilePropertyKey()).getName())
                             .getPascalCase()
-                            .getSafeName() + "()";
+                            .getSafeName()
+                    + "()";
         } else {
-            return fileProperty
-                    .visit(new GetFilePropertyKey())
-                    .getName()
+            return NameUtils.toName(fileProperty.visit(new GetFilePropertyKey()).getName())
                     .getCamelCase()
                     .getSafeName();
         }

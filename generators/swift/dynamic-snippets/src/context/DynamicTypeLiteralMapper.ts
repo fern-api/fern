@@ -35,7 +35,7 @@ export class DynamicTypeLiteralMapper {
                         LiteralEnum.generateEnumCaseLabel(typeReference.value.value)
                     );
                 } else if (typeReference.value.type === "boolean") {
-                    return swift.Expression.nop();
+                    return swift.Expression.boolLiteral(typeReference.value.value);
                 } else {
                     assertNever(typeReference.value);
                     break;
@@ -437,7 +437,7 @@ export class DynamicTypeLiteralMapper {
                     methodName: "string",
                     arguments_: [
                         swift.functionArgument({
-                            value: swift.Expression.stringLiteral(value)
+                            value: swift.Expression.escapedStringLiteral(value)
                         })
                     ]
                 });
@@ -475,7 +475,7 @@ export class DynamicTypeLiteralMapper {
                         swift.functionArgument({
                             value: swift.Expression.dictionaryLiteral({
                                 entries: Object.entries(value).map(([key, value]) => [
-                                    swift.Expression.stringLiteral(key),
+                                    swift.Expression.escapedStringLiteral(key),
                                     this.convertUnknown(value)
                                 ]),
                                 multiline: true
@@ -523,7 +523,7 @@ export class DynamicTypeLiteralMapper {
                 if (str == null) {
                     return swift.Expression.nop();
                 }
-                return swift.Expression.stringLiteral(str);
+                return swift.Expression.escapedStringLiteral(str);
             }
             case "DATE": {
                 const date = this.context.getValueAsString({ value });
@@ -532,7 +532,8 @@ export class DynamicTypeLiteralMapper {
                 }
                 return swift.Expression.calendarDateLiteral(date);
             }
-            case "DATE_TIME": {
+            case "DATE_TIME":
+            case "DATE_TIME_RFC_2822": {
                 const dateTime = this.context.getValueAsString({ value });
                 if (dateTime == null) {
                     return swift.Expression.nop();
@@ -556,7 +557,7 @@ export class DynamicTypeLiteralMapper {
                 if (base64 == null) {
                     return swift.Expression.nop();
                 }
-                return swift.Expression.stringLiteral(base64);
+                return swift.Expression.escapedStringLiteral(base64);
             }
             case "BIG_INTEGER": {
                 const bigInt = this.context.getValueAsString({ value });

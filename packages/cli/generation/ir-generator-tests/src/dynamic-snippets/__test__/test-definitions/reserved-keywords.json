@@ -70,6 +70,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "name",
                         "name": {
                             "originalName": "name",
                             "camelCase": {
@@ -88,8 +89,7 @@
                                 "unsafeName": "Name",
                                 "safeName": "Name"
                             }
-                        },
-                        "wireValue": "name"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -171,6 +171,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "foo",
                         "name": {
                             "originalName": "foo",
                             "camelCase": {
@@ -189,8 +190,7 @@
                                 "unsafeName": "Foo",
                                 "safeName": "Foo"
                             }
-                        },
-                        "wireValue": "foo"
+                        }
                     },
                     "typeReference": {
                         "type": "map",
@@ -208,6 +208,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "3d",
                         "name": {
                             "originalName": "3d",
                             "camelCase": {
@@ -226,8 +227,7 @@
                                 "unsafeName": "3D",
                                 "safeName": "3D"
                             }
-                        },
-                        "wireValue": "3d"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -383,6 +383,7 @@
                 "queryParameters": [
                     {
                         "name": {
+                            "wireValue": "for",
                             "name": {
                                 "originalName": "for",
                                 "camelCase": {
@@ -401,8 +402,7 @@
                                     "unsafeName": "For",
                                     "safeName": "For"
                                 }
-                            },
-                            "wireValue": "for"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",

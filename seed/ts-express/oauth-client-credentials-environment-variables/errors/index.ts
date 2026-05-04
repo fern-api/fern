@@ -1,1 +1,0 @@
-export { SeedOauthClientCredentialsEnvironmentVariablesError } from "./SeedOauthClientCredentialsEnvironmentVariablesError";

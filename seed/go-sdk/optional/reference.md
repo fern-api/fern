@@ -96,7 +96,7 @@ client.Optional.SendOptionalTypedBody(
 </dl>
 </details>
 
-<details><summary><code>client.Optional.SendOptionalNullableWithAllOptionalProperties(ActionId, Id, request) -> *fern.DeployResponse</code></summary>
+<details><summary><code>client.Optional.SendOptionalNullableWithAllOptionalProperties(ActionID, ID, request) -> *fern.DeployResponse</code></summary>
 <dl>
 <dd>
 
@@ -150,7 +150,7 @@ client.Optional.SendOptionalNullableWithAllOptionalProperties(
 <dl>
 <dd>
 
-**actionId:** `string` 
+**actionID:** `string` 
     
 </dd>
 </dl>

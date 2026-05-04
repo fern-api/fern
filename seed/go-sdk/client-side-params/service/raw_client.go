@@ -80,7 +80,7 @@ func (r *RawClient) ListResources(
 
 func (r *RawClient) GetResource(
 	ctx context.Context,
-	resourceId string,
+	resourceID string,
 	request *fern.GetResourceRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.Resource], error) {
@@ -92,7 +92,7 @@ func (r *RawClient) GetResource(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/resources/%v",
-		resourceId,
+		resourceID,
 	)
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {
@@ -224,9 +224,9 @@ func (r *RawClient) ListUsers(
 	}, nil
 }
 
-func (r *RawClient) GetUserById(
+func (r *RawClient) GetUserByID(
 	ctx context.Context,
-	userId string,
+	userID string,
 	request *fern.GetUserRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.User], error) {
@@ -238,7 +238,7 @@ func (r *RawClient) GetUserById(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/users/%v",
-		userId,
+		userID,
 	)
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {
@@ -318,7 +318,7 @@ func (r *RawClient) CreateUser(
 
 func (r *RawClient) UpdateUser(
 	ctx context.Context,
-	userId string,
+	userID string,
 	request *fern.UpdateUserRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.User], error) {
@@ -330,7 +330,7 @@ func (r *RawClient) UpdateUser(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/users/%v",
-		userId,
+		userID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -363,7 +363,7 @@ func (r *RawClient) UpdateUser(
 
 func (r *RawClient) DeleteUser(
 	ctx context.Context,
-	userId string,
+	userID string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -374,7 +374,7 @@ func (r *RawClient) DeleteUser(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/users/%v",
-		userId,
+		userID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -451,7 +451,7 @@ func (r *RawClient) ListConnections(
 
 func (r *RawClient) GetConnection(
 	ctx context.Context,
-	connectionId string,
+	connectionID string,
 	request *fern.GetConnectionRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.Connection], error) {
@@ -463,7 +463,7 @@ func (r *RawClient) GetConnection(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/connections/%v",
-		connectionId,
+		connectionID,
 	)
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {
@@ -549,7 +549,7 @@ func (r *RawClient) ListClients(
 
 func (r *RawClient) GetClient(
 	ctx context.Context,
-	clientId string,
+	clientID string,
 	request *fern.GetClientRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.Client], error) {
@@ -561,7 +561,7 @@ func (r *RawClient) GetClient(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/clients/%v",
-		clientId,
+		clientID,
 	)
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {

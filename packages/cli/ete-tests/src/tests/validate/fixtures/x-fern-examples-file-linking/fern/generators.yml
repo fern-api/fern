@@ -9,4 +9,4 @@ groups:
         output:
           location: local-file-system
           path: ../sdks/typescript
-        version: 3.28.4
+        version: 3.63.3

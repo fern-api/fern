@@ -265,9 +265,10 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
 
             const headerSchema = resolvedHeader.schema;
             let valueType: TypeReference = AbstractConverter.OPTIONAL_STRING;
+            let resolvedSchema: OpenAPIV3_1.SchemaObject | undefined;
 
             if (headerSchema != null) {
-                const resolvedSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                resolvedSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                     schemaOrReference: headerSchema,
                     breadcrumbs: [...this.breadcrumbs, "headers", headerName, "schema"]
                 });
@@ -305,7 +306,9 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
                 valueType,
                 env: undefined,
                 v2Examples,
-                availability: undefined
+                availability: undefined,
+                clientDefault: undefined,
+                defaultValue: resolvedSchema?.default
             });
         }
 

@@ -10,7 +10,7 @@ pub struct PlaylistCreateRequest {
 
 impl PlaylistCreateRequest {
     pub fn builder() -> PlaylistCreateRequestBuilder {
-        PlaylistCreateRequestBuilder::default()
+        <PlaylistCreateRequestBuilder as Default>::default()
     }
 }
 

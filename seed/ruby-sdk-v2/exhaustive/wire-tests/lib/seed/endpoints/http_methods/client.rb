@@ -2,7 +2,7 @@
 
 module Seed
   module Endpoints
-    module HttpMethods
+    module HTTPMethods
       class Client
         # @param client [Seed::Internal::Http::RawClient]
         #

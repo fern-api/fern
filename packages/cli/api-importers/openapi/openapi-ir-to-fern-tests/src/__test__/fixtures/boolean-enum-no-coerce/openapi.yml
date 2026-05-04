@@ -1,0 +1,81 @@
+openapi: 3.1.0
+info:
+  title: Boolean Enum No Coerce Test
+  version: 1.0.0
+  description: >-
+    Tests that boolean single-value enums are NOT coerced to literals
+    when coerce-enums-to-literals is false, consistent with string enums.
+
+paths:
+  /plants:
+    post:
+      summary: Create a new plant
+      operationId: plants_create
+      tags:
+        - Plants
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePlantRequest"
+      responses:
+        "201":
+          description: Plant created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+
+components:
+  schemas:
+    CreatePlantRequest:
+      type: object
+      required:
+        - name
+        - isIndoor
+        - status
+      properties:
+        name:
+          type: string
+          example: "Fern"
+        isIndoor:
+          type: boolean
+          enum:
+            - true
+        status:
+          type: string
+          enum:
+            - active
+
+    Plant:
+      type: object
+      required:
+        - id
+        - name
+        - isIndoor
+        - isPoisonous
+        - status
+        - isSeedling
+      properties:
+        id:
+          type: integer
+          example: 123
+        name:
+          type: string
+          example: "Fern"
+        isIndoor:
+          type: boolean
+          enum:
+            - true
+        isPoisonous:
+          type: boolean
+          enum:
+            - false
+        status:
+          type: string
+          enum:
+            - active
+        isSeedling:
+          type: boolean
+          const: true

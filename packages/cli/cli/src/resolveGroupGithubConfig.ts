@@ -1,5 +1,6 @@
 import { isGithubSelfhosted } from "@fern-api/configuration-loader";
 import { replaceEnvVariables } from "@fern-api/core-utils";
+import { CliError } from "@fern-api/task-context";
 import { CliContext } from "./cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons.js";
 
@@ -22,23 +23,27 @@ export async function resolveGroupGithubConfig(
 
     const workspace = project.apiWorkspaces[0];
     if (workspace == null) {
-        return cliContext.failAndThrow("No API workspace found.");
+        return cliContext.failAndThrow("No API workspace found.", undefined, { code: CliError.Code.ConfigError });
     }
 
     const generatorsConfig = workspace.generatorsConfiguration;
     if (generatorsConfig == null) {
-        return cliContext.failAndThrow("No generators.yml found in workspace.");
+        return cliContext.failAndThrow("No generators.yml found in workspace.", undefined, {
+            code: CliError.Code.ConfigError
+        });
     }
 
     const group = generatorsConfig.groups.find((g) => g.groupName === groupName);
     if (group == null) {
         const available = generatorsConfig.groups.map((g) => g.groupName).join(", ");
-        return cliContext.failAndThrow(`Group "${groupName}" not found. Available groups: ${available}`);
+        return cliContext.failAndThrow(`Group "${groupName}" not found. Available groups: ${available}`, undefined, {
+            code: CliError.Code.ConfigError
+        });
     }
 
     const resolveEnv = <T>(value: T): T =>
         replaceEnvVariables(value, {
-            onError: (message) => cliContext.failAndThrow(message)
+            onError: (message) => cliContext.failAndThrow(message, undefined, { code: CliError.Code.ConfigError })
         });
 
     // 1. Prefer self-hosted config (has uri + token)
@@ -79,5 +84,7 @@ export async function resolveGroupGithubConfig(
         };
     }
 
-    return cliContext.failAndThrow(`No generator in group "${groupName}" has a github configuration.`);
+    return cliContext.failAndThrow(`No generator in group "${groupName}" has a github configuration.`, undefined, {
+        code: CliError.Code.ConfigError
+    });
 }

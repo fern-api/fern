@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: Server URL Templating API
-  version: ''
+  version: 0.0.0
 paths:
   /users:
     get:
@@ -38,7 +38,6 @@ paths:
           required: true
           schema:
             type: string
-          example: userId
           examples:
             Example1:
               value: userId
@@ -88,10 +87,12 @@ paths:
               properties:
                 client_id:
                   type: string
-                  example: client_id
+                  examples:
+                    - client_id
                 client_secret:
                   type: string
-                  example: client_secret
+                  examples:
+                    - client_secret
               required:
                 - client_id
                 - client_secret
@@ -108,13 +109,16 @@ components:
       properties:
         id:
           type: string
-          example: id
+          examples:
+            - id
         name:
           type: string
-          example: name
+          examples:
+            - name
         email:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - id
         - name
@@ -124,10 +128,12 @@ components:
       properties:
         access_token:
           type: string
-          example: access_token
+          examples:
+            - access_token
         expires_in:
           type: integer
-          example: 1
+          examples:
+            - 1
       required:
         - access_token
         - expires_in

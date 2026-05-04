@@ -48,7 +48,7 @@ export function constructNpmPackage({
                     registryUrl: outputMode.registriesV2.npm.registryUrl,
                     token: outputMode.registriesV2.npm.token
                 },
-                license: undefined,
+                license: licenseFromLicenseConfig(generatorConfig.license),
                 repoUrl: undefined
             };
         case "github":
@@ -63,13 +63,7 @@ export function constructNpmPackage({
                 private: isPackagePrivate,
                 publishInfo: undefined,
                 repoUrl: getRepoUrlFromUrl(outputMode.repoUrl),
-                license: generatorConfig.license?._visit({
-                    basic: (basic) => basic.id,
-                    custom: (custom) => `See ${custom.filename}`,
-                    _other: () => {
-                        return undefined;
-                    }
-                })
+                license: licenseFromLicenseConfig(generatorConfig.license)
             };
         default:
             throw new Error(`Encountered unknown output mode: ${outputMode}`);

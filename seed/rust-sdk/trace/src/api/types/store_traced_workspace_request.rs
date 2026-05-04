@@ -12,7 +12,7 @@ pub struct StoreTracedWorkspaceRequest {
 
 impl StoreTracedWorkspaceRequest {
     pub fn builder() -> StoreTracedWorkspaceRequestBuilder {
-        StoreTracedWorkspaceRequestBuilder::default()
+        <StoreTracedWorkspaceRequestBuilder as Default>::default()
     }
 }
 

@@ -40,6 +40,7 @@
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/ir-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
     "js-yaml": "catalog:",
     "js-yaml-source-map": "catalog:",
     "lodash-es": "catalog:",

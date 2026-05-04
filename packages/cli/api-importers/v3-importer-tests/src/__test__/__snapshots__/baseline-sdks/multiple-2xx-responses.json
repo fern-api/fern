@@ -1,24 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
-  },
+  "apiName": "api",
   "apiDisplayName": "Multiple 2xx Responses API",
   "auth": {
     "requirement": "ALL",
@@ -29,25 +11,7 @@
   "types": {
     "type_:GetStatusResponse": {
       "name": {
-        "name": {
-          "originalName": "GetStatusResponse",
-          "camelCase": {
-            "unsafeName": "getStatusResponse",
-            "safeName": "getStatusResponse"
-          },
-          "snakeCase": {
-            "unsafeName": "get_status_response",
-            "safeName": "get_status_response"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GET_STATUS_RESPONSE",
-            "safeName": "GET_STATUS_RESPONSE"
-          },
-          "pascalCase": {
-            "unsafeName": "GetStatusResponse",
-            "safeName": "GetStatusResponse"
-          }
-        },
+        "name": "GetStatusResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -58,28 +22,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "message",
-                "camelCase": {
-                  "unsafeName": "message",
-                  "safeName": "message"
-                },
-                "snakeCase": {
-                  "unsafeName": "message",
-                  "safeName": "message"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "MESSAGE",
-                  "safeName": "MESSAGE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Message",
-                  "safeName": "Message"
-                }
-              },
-              "wireValue": "message"
-            },
+            "name": "message",
             "valueType": {
               "container": {
                 "optional": {
@@ -137,25 +80,7 @@
       "endpoints": [
         {
           "id": "endpoint_.getStatus",
-          "name": {
-            "originalName": "getStatus",
-            "camelCase": {
-              "unsafeName": "getStatus",
-              "safeName": "getStatus"
-            },
-            "snakeCase": {
-              "unsafeName": "get_status",
-              "safeName": "get_status"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_STATUS",
-              "safeName": "GET_STATUS"
-            },
-            "pascalCase": {
-              "unsafeName": "GetStatus",
-              "safeName": "GetStatus"
-            }
-          },
+          "name": "getStatus",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -176,25 +101,7 @@
               "value": {
                 "docs": "OK response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "GetStatusResponse",
-                    "camelCase": {
-                      "unsafeName": "getStatusResponse",
-                      "safeName": "getStatusResponse"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "get_status_response",
-                      "safeName": "get_status_response"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "GET_STATUS_RESPONSE",
-                      "safeName": "GET_STATUS_RESPONSE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "GetStatusResponse",
-                      "safeName": "GetStatusResponse"
-                    }
-                  },
+                  "name": "GetStatusResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -218,28 +125,7 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -288,6 +174,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "message",
               "name": {
                 "originalName": "message",
                 "camelCase": {
@@ -306,8 +193,7 @@
                   "unsafeName": "Message",
                   "safeName": "Message"
                 }
-              },
-              "wireValue": "message"
+              }
             },
             "typeReference": {
               "value": {
@@ -367,6 +253,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

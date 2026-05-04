@@ -1,54 +1,81 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: pagination
-  version: ''
+  version: 0.0.0
 paths:
   /users:
     get:
-      operationId: users_listUsernamesCustom
+      operationId: users_listWithCustomPager
       tags:
         - Users
       parameters:
-        - name: starting_after
+        - name: limit
           in: query
-          description: |-
-            The cursor used for pagination in order to fetch
-            the next page of results.
+          description: The maximum number of results to return.
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - integer
+              - 'null'
+        - name: starting_after
+          in: query
+          description: The cursor used for pagination.
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UsernameCursor'
+                $ref: '#/components/schemas/UsersListResponse'
 components:
   schemas:
-    UsernameCursor:
-      title: UsernameCursor
+    UsersListResponse:
+      title: UsersListResponse
       type: object
       properties:
-        cursor:
-          $ref: '#/components/schemas/UsernamePage'
-      required:
-        - cursor
-    UsernamePage:
-      title: UsernamePage
-      type: object
-      properties:
-        after:
-          type: string
-          nullable: true
+        limit:
+          type:
+            - integer
+            - 'null'
+        count:
+          type:
+            - integer
+            - 'null'
+        has_more:
+          type:
+            - boolean
+            - 'null'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
         data:
           type: array
           items:
             type: string
       required:
+        - links
         - data
+    Link:
+      title: Link
+      type: object
+      properties:
+        rel:
+          type: string
+        method:
+          type: string
+        href:
+          type: string
+      required:
+        - rel
+        - method
+        - href
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer

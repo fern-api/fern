@@ -1,6 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import {
+    caseConverter,
     createMockCoreUtilities,
     createMockGeneratedClientClass,
     createMockTypeSchemaContext,
@@ -18,7 +19,8 @@ function createMockContext(opts?: { useSerializerPrefix?: boolean }) {
         requestWrapper: {
             shouldInlinePathParameters: () => false
         },
-        typeSchema: createMockTypeSchemaContext({ useSerializerPrefix: opts?.useSerializerPrefix })
+        typeSchema: createMockTypeSchemaContext({ useSerializerPrefix: opts?.useSerializerPrefix }),
+        case: caseConverter
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;
 }
@@ -26,7 +28,7 @@ function createMockContext(opts?: { useSerializerPrefix?: boolean }) {
 const defaultGetReferenceToPathParameterVariableFromRequest = (pathParameter: FernIr.PathParameter) =>
     ts.factory.createPropertyAccessExpression(
         ts.factory.createIdentifier("request"),
-        ts.factory.createIdentifier(pathParameter.name.camelCase.unsafeName)
+        ts.factory.createIdentifier(caseConverter.camelUnsafe(pathParameter.name))
     );
 
 describe("buildUrl", () => {

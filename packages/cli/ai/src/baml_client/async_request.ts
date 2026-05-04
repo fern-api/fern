@@ -76,7 +76,7 @@ env?: Record<string, string | undefined>
       }
       
   async ConsolidateChangelog(
-  raw_entries: string,version_bump: string,language: string,
+  raw_entries: string,version_bump: string,language: string,previous_version: string,new_version: string,
   __baml_options__?: BamlCallOptions<never>
   ): Promise<HTTPRequest> {
     try {
@@ -95,7 +95,7 @@ env?: Record<string, string | undefined>
       return await this.runtime.buildRequest(
       "ConsolidateChangelog",
       {
-      "raw_entries": raw_entries,"version_bump": version_bump,"language": language
+      "raw_entries": raw_entries,"version_bump": version_bump,"language": language,"previous_version": previous_version,"new_version": new_version
       },
       this.ctxManager.cloneContext(),
       __baml_options__?.tb?.__tb(),
@@ -148,7 +148,7 @@ env?: Record<string, string | undefined>
           }
           
       async ConsolidateChangelog(
-      raw_entries: string,version_bump: string,language: string,
+      raw_entries: string,version_bump: string,language: string,previous_version: string,new_version: string,
       __baml_options__?: BamlCallOptions<never>
       ): Promise<HTTPRequest> {
         try {
@@ -167,7 +167,7 @@ env?: Record<string, string | undefined>
           return await this.runtime.buildRequest(
           "ConsolidateChangelog",
           {
-          "raw_entries": raw_entries,"version_bump": version_bump,"language": language
+          "raw_entries": raw_entries,"version_bump": version_bump,"language": language,"previous_version": previous_version,"new_version": new_version
           },
           this.ctxManager.cloneContext(),
           __baml_options__?.tb?.__tb(),

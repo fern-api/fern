@@ -53,7 +53,7 @@ public partial class ClientOptions
 #else
         set;
 #endif
-    } = 2;
+    } = 5;
 
     /// <summary>
     /// The timeout for the request.

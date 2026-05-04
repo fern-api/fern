@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.Imdb.CreateMovie(request) -> please.MovieId</code></summary>
+<details><summary><code>client.Imdb.CreateMovie(request) -> please.MovieID</code></summary>
 <dl>
 <dd>
 
@@ -62,7 +62,7 @@ client.Imdb.CreateMovie(
 </dl>
 </details>
 
-<details><summary><code>client.Imdb.GetMovie(MovieId) -> *please.Movie</code></summary>
+<details><summary><code>client.Imdb.GetMovie(MovieID) -> *please.Movie</code></summary>
 <dl>
 <dd>
 
@@ -94,7 +94,7 @@ client.Imdb.GetMovie(
 <dl>
 <dd>
 
-**movieId:** `please.MovieId` 
+**movieID:** `please.MovieID` 
     
 </dd>
 </dl>

@@ -12,50 +12,14 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "SpeechModel",
-          "camelCase": {
-            "unsafeName": "speechModel",
-            "safeName": "speechModel"
-          },
-          "snakeCase": {
-            "unsafeName": "speech_model",
-            "safeName": "speech_model"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "SPEECH_MODEL",
-            "safeName": "SPEECH_MODEL"
-          },
-          "pascalCase": {
-            "unsafeName": "SpeechModel",
-            "safeName": "SpeechModel"
-          }
-        }
+        "name": "SpeechModel"
       },
       "shape": {
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "Nano",
-                "camelCase": {
-                  "unsafeName": "nano",
-                  "safeName": "nano"
-                },
-                "snakeCase": {
-                  "unsafeName": "nano",
-                  "safeName": "nano"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NANO",
-                  "safeName": "NANO"
-                },
-                "pascalCase": {
-                  "unsafeName": "Nano",
-                  "safeName": "Nano"
-                }
-              },
-              "wireValue": "nano"
+              "wireValue": "nano",
+              "name": "Nano"
             },
             "docs": "The Nano tier is a lightweight model that is optimized for speed and cost."
           }
@@ -114,47 +78,8 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "Test extension `x-fern-enum` for enums",
-    "camelCase": {
-      "unsafeName": "testExtensionXFernEnumForEnums",
-      "safeName": "testExtensionXFernEnumForEnums"
-    },
-    "snakeCase": {
-      "unsafeName": "test_extension_x_fern_enum_for_enums",
-      "safeName": "test_extension_x_fern_enum_for_enums"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "TEST_EXTENSION_X_FERN_ENUM_FOR_ENUMS",
-      "safeName": "TEST_EXTENSION_X_FERN_ENUM_FOR_ENUMS"
-    },
-    "pascalCase": {
-      "unsafeName": "TestExtensionXFernEnumForEnums",
-      "safeName": "TestExtensionXFernEnumForEnums"
-    }
-  },
+  "apiName": "Test extension `x-fern-enum` for enums",
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   }
 }

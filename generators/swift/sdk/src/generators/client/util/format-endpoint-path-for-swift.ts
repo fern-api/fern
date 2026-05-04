@@ -1,8 +1,9 @@
+import { type CaseConverter } from "@fern-api/base-generator";
 import { EndpointPathInput, parseEndpointPath } from "./parse-endpoint-path.js";
 
-export function formatEndpointPathForSwift(endpoint: EndpointPathInput): string {
+export function formatEndpointPathForSwift(endpoint: EndpointPathInput, caseConverter: CaseConverter): string {
     let path = "";
-    const { pathParts } = parseEndpointPath(endpoint);
+    const { pathParts } = parseEndpointPath(endpoint, caseConverter);
     pathParts.forEach((pathPart) => {
         if (pathPart.type === "literal") {
             path += pathPart.value;

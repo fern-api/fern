@@ -225,6 +225,7 @@
                 "queryParameters": [
                     {
                         "name": {
+                            "wireValue": "model",
                             "name": {
                                 "originalName": "model",
                                 "camelCase": {
@@ -243,8 +244,7 @@
                                     "unsafeName": "Model",
                                     "safeName": "Model"
                                 }
-                            },
-                            "wireValue": "model"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -255,6 +255,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "language",
                             "name": {
                                 "originalName": "language",
                                 "camelCase": {
@@ -273,8 +274,7 @@
                                     "unsafeName": "Language",
                                     "safeName": "Language"
                                 }
-                            },
-                            "wireValue": "language"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",

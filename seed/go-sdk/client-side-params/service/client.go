@@ -53,13 +53,13 @@ func (c *Client) ListResources(
 // Get a single resource
 func (c *Client) GetResource(
 	ctx context.Context,
-	resourceId string,
+	resourceID string,
 	request *fern.GetResourceRequest,
 	opts ...option.RequestOption,
 ) (*fern.Resource, error) {
 	response, err := c.WithRawResponse.GetResource(
 		ctx,
-		resourceId,
+		resourceID,
 		request,
 		opts...,
 	)
@@ -104,15 +104,15 @@ func (c *Client) ListUsers(
 }
 
 // Get a user by ID
-func (c *Client) GetUserById(
+func (c *Client) GetUserByID(
 	ctx context.Context,
-	userId string,
+	userID string,
 	request *fern.GetUserRequest,
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
-	response, err := c.WithRawResponse.GetUserById(
+	response, err := c.WithRawResponse.GetUserByID(
 		ctx,
-		userId,
+		userID,
 		request,
 		opts...,
 	)
@@ -142,13 +142,13 @@ func (c *Client) CreateUser(
 // Update a user
 func (c *Client) UpdateUser(
 	ctx context.Context,
-	userId string,
+	userID string,
 	request *fern.UpdateUserRequest,
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
 	response, err := c.WithRawResponse.UpdateUser(
 		ctx,
-		userId,
+		userID,
 		request,
 		opts...,
 	)
@@ -161,12 +161,12 @@ func (c *Client) UpdateUser(
 // Delete a user
 func (c *Client) DeleteUser(
 	ctx context.Context,
-	userId string,
+	userID string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.DeleteUser(
 		ctx,
-		userId,
+		userID,
 		opts...,
 	)
 	if err != nil {
@@ -195,13 +195,13 @@ func (c *Client) ListConnections(
 // Get a connection by ID
 func (c *Client) GetConnection(
 	ctx context.Context,
-	connectionId string,
+	connectionID string,
 	request *fern.GetConnectionRequest,
 	opts ...option.RequestOption,
 ) (*fern.Connection, error) {
 	response, err := c.WithRawResponse.GetConnection(
 		ctx,
-		connectionId,
+		connectionID,
 		request,
 		opts...,
 	)
@@ -231,13 +231,13 @@ func (c *Client) ListClients(
 // Get a client by ID
 func (c *Client) GetClient(
 	ctx context.Context,
-	clientId string,
+	clientID string,
 	request *fern.GetClientRequest,
 	opts ...option.RequestOption,
 ) (*fern.Client, error) {
 	response, err := c.WithRawResponse.GetClient(
 		ctx,
-		clientId,
+		clientID,
 		request,
 		opts...,
 	)

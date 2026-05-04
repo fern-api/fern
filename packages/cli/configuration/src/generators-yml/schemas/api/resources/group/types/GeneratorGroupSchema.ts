@@ -7,4 +7,10 @@ export interface GeneratorGroupSchema {
     generators: GeneratorsYml.GeneratorInvocationSchema[];
     metadata?: GeneratorsYml.OutputMetadataSchema;
     reviewers?: GeneratorsYml.ReviewersSchema;
+    /**
+     * Controls which automation features are enabled for this group.
+     * Overrides root-level automation settings.
+     * Can be further overridden at the generator level.
+     */
+    automation?: GeneratorsYml.AutomationSchema;
 }

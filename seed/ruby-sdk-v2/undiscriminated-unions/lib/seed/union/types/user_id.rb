@@ -3,8 +3,8 @@
 module Seed
   module Union
     module Types
-      module UserId
-        # UserId is an alias for String
+      module UserID
+        # UserID is an alias for String
 
         # @option str [String]
         #

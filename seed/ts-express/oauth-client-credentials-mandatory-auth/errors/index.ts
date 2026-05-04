@@ -1,1 +1,0 @@
-export { SeedOauthClientCredentialsMandatoryAuthError } from "./SeedOauthClientCredentialsMandatoryAuthError";

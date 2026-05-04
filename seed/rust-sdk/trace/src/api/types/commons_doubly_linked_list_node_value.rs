@@ -6,6 +6,7 @@ pub struct DoublyLinkedListNodeValue {
     #[serde(default)]
     pub node_id: NodeId,
     #[serde(default)]
+    #[serde(with = "crate::core::number_serializers")]
     pub val: f64,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub next: Option<NodeId>,
@@ -15,7 +16,7 @@ pub struct DoublyLinkedListNodeValue {
 
 impl DoublyLinkedListNodeValue {
     pub fn builder() -> DoublyLinkedListNodeValueBuilder {
-        DoublyLinkedListNodeValueBuilder::default()
+        <DoublyLinkedListNodeValueBuilder as Default>::default()
     }
 }
 

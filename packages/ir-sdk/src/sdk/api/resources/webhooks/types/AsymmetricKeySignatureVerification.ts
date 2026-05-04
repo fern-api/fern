@@ -4,7 +4,7 @@ import type * as FernIr from "../../../index.js";
 
 export interface AsymmetricKeySignatureVerification {
     /** The HTTP header that contains the webhook signature. */
-    signatureHeaderName: FernIr.NameAndWireValue;
+    signatureHeaderName: FernIr.NameAndWireValueOrString;
     algorithm: FernIr.AsymmetricAlgorithm;
     encoding: FernIr.WebhookSignatureEncoding;
     /**

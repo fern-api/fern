@@ -14,7 +14,7 @@ pub struct Event {
 
 impl Event {
     pub fn builder() -> EventBuilder {
-        EventBuilder::default()
+        <EventBuilder as Default>::default()
     }
 }
 

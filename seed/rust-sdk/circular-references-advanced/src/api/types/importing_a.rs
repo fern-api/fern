@@ -8,7 +8,7 @@ pub struct ImportingA {
 
 impl ImportingA {
     pub fn builder() -> ImportingABuilder {
-        ImportingABuilder::default()
+        <ImportingABuilder as Default>::default()
     }
 }
 

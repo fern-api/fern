@@ -2,6 +2,7 @@ export * from "./auth-provider/index.js";
 export * from "./base-client/index.js";
 export * from "./endpoint-error-union/index.js";
 export * from "./environments/index.js";
+export * from "./file-context/index.js";
 export * from "./generic-api-sdk-error/index.js";
 export * from "./non-status-code-error-handler/index.js";
 export * from "./request-wrapper/index.js";

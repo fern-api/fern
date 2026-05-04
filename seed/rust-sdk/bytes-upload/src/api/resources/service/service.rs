@@ -19,10 +19,10 @@ impl ServiceClient {
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
-            .execute_request(
+            .execute_bytes_request(
                 Method::POST,
                 "upload-content",
-                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                Some(request.to_vec()),
                 None,
                 options,
             )
@@ -31,19 +31,17 @@ impl ServiceClient {
 
     pub async fn upload_with_query_params(
         &self,
-        model: &str,
-        language: &Option<String>,
-        request: &Vec<u8>,
+        request: &UploadWithQueryParamsRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
-            .execute_request(
+            .execute_bytes_request(
                 Method::POST,
                 "upload-content-with-query-params",
-                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                Some(request.body.to_vec()),
                 QueryBuilder::new()
-                    .string("model", model.clone())
-                    .string("language", language.clone())
+                    .string("model", request.model.clone())
+                    .string("language", request.language.clone())
                     .build(),
                 options,
             )

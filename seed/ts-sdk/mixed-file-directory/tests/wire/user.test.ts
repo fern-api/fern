@@ -18,17 +18,6 @@ describe("UserClient", () => {
         const response = await client.user.list({
             limit: 1,
         });
-        expect(response).toEqual([
-            {
-                id: "id",
-                name: "name",
-                age: 1,
-            },
-            {
-                id: "id",
-                name: "name",
-                age: 1,
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 });

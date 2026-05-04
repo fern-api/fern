@@ -1,0 +1,3 @@
+- summary: |
+    Fix an issue where `api:<apiName>:METHOD/path` links worked on published docs sites but did not resolve in `fern docs dev`.
+  type: fix

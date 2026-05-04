@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
     from .file import File, convert_file_dict_to_httpx_tuples, with_content_type
     from .http_client import AsyncHttpClient, HttpClient
     from .http_response import AsyncHttpResponse, HttpResponse
-    from .jsonable_encoder import jsonable_encoder
+    from .jsonable_encoder import encode_path_param, jsonable_encoder
     from .logging import ConsoleLogger, ILogger, LogConfig, LogLevel, Logger, create_logger
     from .parse_error import ParsingError
     from .pydantic_utilities import (
@@ -57,6 +57,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "convert_and_respect_annotation_metadata": ".serialization",
     "convert_file_dict_to_httpx_tuples": ".file",
     "create_logger": ".logging",
+    "encode_path_param": ".jsonable_encoder",
     "encode_query": ".query_encoder",
     "jsonable_encoder": ".jsonable_encoder",
     "parse_obj_as": ".pydantic_utilities",
@@ -119,6 +120,7 @@ __all__ = [
     "convert_and_respect_annotation_metadata",
     "convert_file_dict_to_httpx_tuples",
     "create_logger",
+    "encode_path_param",
     "encode_query",
     "jsonable_encoder",
     "parse_obj_as",

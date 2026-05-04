@@ -9,7 +9,17 @@ async fn main() {
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .no_auth
-        .post_with_no_auth(&serde_json::json!({"key":"value"}), None)
+        .endpoints
+        .union_
+        .get_and_return_union(
+            &Animal::Dog {
+                data: Dog {
+                    name: "name".to_string(),
+                    likes_to_woof: true,
+                    ..Default::default()
+                },
+            },
+            None,
+        )
         .await;
 }

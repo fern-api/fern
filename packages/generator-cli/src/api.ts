@@ -15,18 +15,13 @@ export { type GithubPrParams, githubPr } from "./api/github-pr.js";
 export { type GithubPushParams, githubPush } from "./api/github-push.js";
 export { type GithubReleaseParams, githubRelease } from "./api/github-release.js";
 export {
-    consolePipelineLogger,
-    formatReplayPrBody,
-    type GithubStepConfig,
-    type GithubStepResult,
-    logReplaySummary,
-    type PipelineConfig,
-    type PipelineContext,
-    type PipelineLogger,
-    type PipelineResult,
-    PostGenerationPipeline,
-    type ReplayStepResult
-} from "./pipeline/index.js";
+    type DiffStat,
+    type ForgetOptions,
+    type ForgetResult,
+    type MatchedPatch,
+    type ReplayForgetParams,
+    replayForget
+} from "./replay/replay-forget.js";
 export {
     type BootstrapLogEntry,
     formatBootstrapSummary,
@@ -40,3 +35,17 @@ export {
     replayResolve
 } from "./replay/replay-resolve.js";
 export { type ReplayRunParams, type ReplayRunResult, replayRun } from "./replay/replay-run.js";
+export {
+    type ReplayStatusParams,
+    replayStatus,
+    type StatusGeneration,
+    type StatusPatch,
+    type StatusResult
+} from "./replay/replay-status.js";
+export {
+    parseOwnerRepo,
+    ReplaySubmitError,
+    type SubmitReplayInitParams,
+    type SubmitReplayInitResult,
+    submitReplayInit
+} from "./replay/replay-submit-init.js";

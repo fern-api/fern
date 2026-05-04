@@ -16,6 +16,7 @@ export {
     FernRcCacheSchema,
     FernRcSchema
 } from "./fernrc/index.js";
+export { GeneratorImageObjectSchema, GeneratorImageSchema } from "./GeneratorImageSchema.js";
 export { GitHubOutputModeSchema } from "./GitHubOutputModeSchema.js";
 export { GitHubRepositoryOutputModeSchema } from "./GitHubRepositoryOutputModeSchema.js";
 export { GitHubRepositoryOutputSchema } from "./GitHubRepositoryOutputSchema.js";
@@ -50,6 +51,7 @@ export {
     ExampleGenerationSchema,
     FormParameterEncodingSchema,
     MessageNamingVersionSchema,
+    MultiServerStrategySchema,
     OpenApiExampleGenerationSchema,
     OpenApiFilterSchema,
     OpenApiSettingsSchema,
@@ -64,6 +66,7 @@ export {
     ConjureSpecSchema,
     FernSettingsSchema,
     FernSpecSchema,
+    GraphQlSpecSchema,
     OpenApiSpecSchema,
     OpenRpcSettingsSchema,
     OpenRpcSpecSchema,

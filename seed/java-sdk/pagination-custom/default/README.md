@@ -29,7 +29,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:pagination-custom'
+  implementation 'com.fern:pagination-custom:0.0.1'
 }
 ```
 
@@ -57,7 +57,7 @@ Instantiate and use the client with the following:
 package com.example.usage;
 
 import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.users.requests.ListUsernamesRequestCustom;
+import com.seed.pagination.resources.users.requests.ListWithCustomPagerRequest;
 
 public class Example {
     public static void main(String[] args) {
@@ -66,9 +66,10 @@ public class Example {
             .token("<token>")
             .build();
 
-        client.users().listUsernamesCustom(
-            ListUsernamesRequestCustom
+        client.users().listWithCustomPager(
+            ListWithCustomPagerRequest
                 .builder()
+                .limit(1)
                 .startingAfter("starting_after")
                 .build()
         );
@@ -114,7 +115,7 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 import com.seed.pagination.core.SeedPaginationApiException;
 
 try{
-    client.users().listUsernamesCustom(...);
+    client.users().listWithCustomPager(...);
 } catch (SeedPaginationApiException e){
     // Do something with the API exception...
 }
@@ -147,11 +148,19 @@ retry limit (default: 2). Before defaulting to exponential backoff, the SDK will
 the `Retry-After` header (as either in seconds or as an HTTP date), and then the `X-RateLimit-Reset` header
 (as a Unix timestamp in epoch seconds); failing both of those, it will fall back to exponential backoff.
 
-A request is deemed retryable when any of the following HTTP status codes is returned:
+Which status codes are retried depends on the `retry-status-codes` generator configuration:
 
+**`legacy`** (current default): retries on
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (All server errors, including 500)
+
+**`recommended`**: retries on
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [502](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502) (Bad Gateway)
+- [503](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503) (Service Unavailable)
+- [504](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504) (Gateway Timeout)
 
 Use the `maxRetries` client option to configure this behavior.
 
@@ -178,7 +187,7 @@ SeedPaginationClient client = SeedPaginationClient
     .build();
 
 // Request level
-client.users().listUsernamesCustom(
+client.users().listWithCustomPager(
     ...,
     RequestOptions
         .builder()
@@ -204,7 +213,7 @@ SeedPaginationClient client = SeedPaginationClient
 ;
 
 // Request level
-client.users().listUsernamesCustom(
+client.users().listWithCustomPager(
     ...,
     RequestOptions
         .builder()
@@ -220,7 +229,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedPaginationHttpResponse response = client.users().withRawResponse().listUsernamesCustom(...);
+SeedPaginationHttpResponse response = client.users().withRawResponse().listWithCustomPager(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

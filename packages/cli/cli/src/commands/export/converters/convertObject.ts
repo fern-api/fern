@@ -2,16 +2,16 @@ import {
     DeclaredTypeName,
     ExampleInlinedRequestBodyProperty,
     ExampleObjectProperty,
-    NameAndWireValue,
+    NameAndWireValueOrString,
     TypeReference
 } from "@fern-api/ir-sdk";
+import { getWireValue } from "@fern-api/ir-utils";
 import { OpenAPIV3 } from "openapi-types";
-
 import { convertTypeReference, getReferenceFromDeclaredTypeName, OpenApiComponentSchema } from "./typeConverter.js";
 
 export interface ObjectProperty {
     docs: string | undefined;
-    name: NameAndWireValue;
+    name: NameAndWireValueOrString;
     valueType: TypeReference;
     example?: ExampleObjectProperty | ExampleInlinedRequestBodyProperty;
 }
@@ -42,7 +42,7 @@ export function convertObject({
             example = objectProperty.example.value.jsonExample;
         }
 
-        convertedProperties[objectProperty.name.wireValue] = {
+        convertedProperties[getWireValue(objectProperty.name)] = {
             ...convertedObjectProperty,
             description: objectProperty.docs ?? undefined,
             example
@@ -50,7 +50,7 @@ export function convertObject({
         const isOptionalProperty =
             objectProperty.valueType.type === "container" && objectProperty.valueType.container.type === "optional";
         if (!isOptionalProperty) {
-            required.push(objectProperty.name.wireValue);
+            required.push(getWireValue(objectProperty.name));
         }
     });
     const convertedSchemaObject: OpenAPIV3.SchemaObject = {

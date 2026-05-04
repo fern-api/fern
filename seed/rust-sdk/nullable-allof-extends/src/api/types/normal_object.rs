@@ -10,7 +10,7 @@ pub struct NormalObject {
 
 impl NormalObject {
     pub fn builder() -> NormalObjectBuilder {
-        NormalObjectBuilder::default()
+        <NormalObjectBuilder as Default>::default()
     }
 }
 

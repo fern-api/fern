@@ -13,7 +13,7 @@ pub struct ListItemsQueryRequest {
 
 impl ListItemsQueryRequest {
     pub fn builder() -> ListItemsQueryRequestBuilder {
-        ListItemsQueryRequestBuilder::default()
+        <ListItemsQueryRequestBuilder as Default>::default()
     }
 }
 

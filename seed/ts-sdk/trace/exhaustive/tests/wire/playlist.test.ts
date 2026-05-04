@@ -39,12 +39,7 @@ describe("PlaylistClient", () => {
             },
         });
         expect(response).toEqual({
-            body: {
-                playlist_id: SeedTrace.PlaylistId("playlist_id"),
-                "owner-id": SeedTrace.UserId("owner-id"),
-                name: "name",
-                problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -75,20 +70,7 @@ describe("PlaylistClient", () => {
             multipleField: "multipleField",
         });
         expect(response).toEqual({
-            body: [
-                {
-                    playlist_id: SeedTrace.PlaylistId("playlist_id"),
-                    "owner-id": SeedTrace.UserId("owner-id"),
-                    name: "name",
-                    problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
-                },
-                {
-                    playlist_id: SeedTrace.PlaylistId("playlist_id"),
-                    "owner-id": SeedTrace.UserId("owner-id"),
-                    name: "name",
-                    problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
-                },
-            ],
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -121,12 +103,7 @@ describe("PlaylistClient", () => {
 
         const response = await client.playlist.getPlaylist(1, SeedTrace.PlaylistId("playlistId"));
         expect(response).toEqual({
-            body: {
-                playlist_id: SeedTrace.PlaylistId("playlist_id"),
-                "owner-id": SeedTrace.UserId("owner-id"),
-                name: "name",
-                problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -163,12 +140,7 @@ describe("PlaylistClient", () => {
             problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
         });
         expect(response).toEqual({
-            body: {
-                playlist_id: SeedTrace.PlaylistId("playlist_id"),
-                "owner-id": SeedTrace.UserId("owner-id"),
-                name: "name",
-                problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

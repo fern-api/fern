@@ -10,7 +10,7 @@ pub struct StoreTracedTestCaseRequest {
 
 impl StoreTracedTestCaseRequest {
     pub fn builder() -> StoreTracedTestCaseRequestBuilder {
-        StoreTracedTestCaseRequestBuilder::default()
+        <StoreTracedTestCaseRequestBuilder as Default>::default()
     }
 }
 

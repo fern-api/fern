@@ -12,51 +12,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "V1RealtimeSubscribe",
-          "camelCase": {
-            "unsafeName": "v1RealtimeSubscribe",
-            "safeName": "v1RealtimeSubscribe"
-          },
-          "snakeCase": {
-            "unsafeName": "v_1_realtime_subscribe",
-            "safeName": "v_1_realtime_subscribe"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "V_1_REALTIME_SUBSCRIBE",
-            "safeName": "V_1_REALTIME_SUBSCRIBE"
-          },
-          "pascalCase": {
-            "unsafeName": "V1RealtimeSubscribe",
-            "safeName": "V1RealtimeSubscribe"
-          }
-        }
+        "name": "V1RealtimeSubscribe"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "content",
-                "camelCase": {
-                  "unsafeName": "content",
-                  "safeName": "content"
-                },
-                "snakeCase": {
-                  "unsafeName": "content",
-                  "safeName": "content"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CONTENT",
-                  "safeName": "CONTENT"
-                },
-                "pascalCase": {
-                  "unsafeName": "Content",
-                  "safeName": "Content"
-                }
-              },
-              "wireValue": "content"
-            },
+            "name": "content",
             "valueType": {
               "container": {
                 "optional": {
@@ -81,28 +42,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "timestamp",
-                "camelCase": {
-                  "unsafeName": "timestamp",
-                  "safeName": "timestamp"
-                },
-                "snakeCase": {
-                  "unsafeName": "timestamp",
-                  "safeName": "timestamp"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TIMESTAMP",
-                  "safeName": "TIMESTAMP"
-                },
-                "pascalCase": {
-                  "unsafeName": "Timestamp",
-                  "safeName": "Timestamp"
-                }
-              },
-              "wireValue": "timestamp"
-            },
+            "name": "timestamp",
             "valueType": {
               "container": {
                 "optional": {
@@ -150,51 +90,12 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "V1RealtimePublish",
-          "camelCase": {
-            "unsafeName": "v1RealtimePublish",
-            "safeName": "v1RealtimePublish"
-          },
-          "snakeCase": {
-            "unsafeName": "v_1_realtime_publish",
-            "safeName": "v_1_realtime_publish"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "V_1_REALTIME_PUBLISH",
-            "safeName": "V_1_REALTIME_PUBLISH"
-          },
-          "pascalCase": {
-            "unsafeName": "V1RealtimePublish",
-            "safeName": "V1RealtimePublish"
-          }
-        }
+        "name": "V1RealtimePublish"
       },
       "shape": {
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "content",
-                "camelCase": {
-                  "unsafeName": "content",
-                  "safeName": "content"
-                },
-                "snakeCase": {
-                  "unsafeName": "content",
-                  "safeName": "content"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CONTENT",
-                  "safeName": "CONTENT"
-                },
-                "pascalCase": {
-                  "unsafeName": "Content",
-                  "safeName": "Content"
-                }
-              },
-              "wireValue": "content"
-            },
+            "name": "content",
             "valueType": {
               "container": {
                 "optional": {
@@ -241,25 +142,7 @@
   "webhookGroups": {},
   "websocketChannels": {
     "channel_v1Realtime": {
-      "name": {
-        "originalName": "v1Realtime",
-        "camelCase": {
-          "unsafeName": "v1Realtime",
-          "safeName": "v1Realtime"
-        },
-        "snakeCase": {
-          "unsafeName": "v_1_realtime",
-          "safeName": "v_1_realtime"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "V_1_REALTIME",
-          "safeName": "V_1_REALTIME"
-        },
-        "pascalCase": {
-          "unsafeName": "V1Realtime",
-          "safeName": "V1Realtime"
-        }
-      },
+      "name": "v1Realtime",
       "baseUrl": "production",
       "path": {
         "head": "/v1/realtime",
@@ -280,25 +163,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": {
-                "originalName": "V1RealtimeSubscribe",
-                "camelCase": {
-                  "unsafeName": "v1RealtimeSubscribe",
-                  "safeName": "v1RealtimeSubscribe"
-                },
-                "snakeCase": {
-                  "unsafeName": "v_1_realtime_subscribe",
-                  "safeName": "v_1_realtime_subscribe"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "V_1_REALTIME_SUBSCRIBE",
-                  "safeName": "V_1_REALTIME_SUBSCRIBE"
-                },
-                "pascalCase": {
-                  "unsafeName": "V1RealtimeSubscribe",
-                  "safeName": "V1RealtimeSubscribe"
-                }
-              },
+              "name": "V1RealtimeSubscribe",
               "typeId": "V1RealtimeSubscribe",
               "inline": false,
               "type": "named"
@@ -317,25 +182,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": {
-                "originalName": "V1RealtimePublish",
-                "camelCase": {
-                  "unsafeName": "v1RealtimePublish",
-                  "safeName": "v1RealtimePublish"
-                },
-                "snakeCase": {
-                  "unsafeName": "v_1_realtime_publish",
-                  "safeName": "v_1_realtime_publish"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "V_1_REALTIME_PUBLISH",
-                  "safeName": "V_1_REALTIME_PUBLISH"
-                },
-                "pascalCase": {
-                  "unsafeName": "V1RealtimePublish",
-                  "safeName": "V1RealtimePublish"
-                }
-              },
+              "name": "V1RealtimePublish",
               "typeId": "V1RealtimePublish",
               "inline": false,
               "type": "named"
@@ -359,53 +206,14 @@
                   "shape": {
                     "properties": [
                       {
-                        "name": {
-                          "name": {
-                            "originalName": "content",
-                            "camelCase": {
-                              "unsafeName": "content",
-                              "safeName": "content"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "content",
-                              "safeName": "content"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "CONTENT",
-                              "safeName": "CONTENT"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "Content",
-                              "safeName": "Content"
-                            }
-                          },
-                          "wireValue": "content"
-                        },
+                        "name": "content",
                         "originalTypeDeclaration": {
                           "typeId": "V1RealtimePublish",
                           "fernFilepath": {
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "V1RealtimePublish",
-                            "camelCase": {
-                              "unsafeName": "v1RealtimePublish",
-                              "safeName": "v1RealtimePublish"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "v_1_realtime_publish",
-                              "safeName": "v_1_realtime_publish"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "V_1_REALTIME_PUBLISH",
-                              "safeName": "V_1_REALTIME_PUBLISH"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "V1RealtimePublish",
-                              "safeName": "V1RealtimePublish"
-                            }
-                          }
+                          "name": "V1RealtimePublish"
                         },
                         "value": {
                           "shape": {
@@ -435,25 +243,7 @@
                       "allParts": [],
                       "packagePath": []
                     },
-                    "name": {
-                      "originalName": "V1RealtimePublish",
-                      "camelCase": {
-                        "unsafeName": "v1RealtimePublish",
-                        "safeName": "v1RealtimePublish"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "v_1_realtime_publish",
-                        "safeName": "v_1_realtime_publish"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "V_1_REALTIME_PUBLISH",
-                        "safeName": "V_1_REALTIME_PUBLISH"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "V1RealtimePublish",
-                        "safeName": "V1RealtimePublish"
-                      }
-                    }
+                    "name": "V1RealtimePublish"
                   },
                   "type": "named"
                 },
@@ -468,53 +258,14 @@
                   "shape": {
                     "properties": [
                       {
-                        "name": {
-                          "name": {
-                            "originalName": "content",
-                            "camelCase": {
-                              "unsafeName": "content",
-                              "safeName": "content"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "content",
-                              "safeName": "content"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "CONTENT",
-                              "safeName": "CONTENT"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "Content",
-                              "safeName": "Content"
-                            }
-                          },
-                          "wireValue": "content"
-                        },
+                        "name": "content",
                         "originalTypeDeclaration": {
                           "typeId": "V1RealtimeSubscribe",
                           "fernFilepath": {
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "V1RealtimeSubscribe",
-                            "camelCase": {
-                              "unsafeName": "v1RealtimeSubscribe",
-                              "safeName": "v1RealtimeSubscribe"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "v_1_realtime_subscribe",
-                              "safeName": "v_1_realtime_subscribe"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "V_1_REALTIME_SUBSCRIBE",
-                              "safeName": "V_1_REALTIME_SUBSCRIBE"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "V1RealtimeSubscribe",
-                              "safeName": "V1RealtimeSubscribe"
-                            }
-                          }
+                          "name": "V1RealtimeSubscribe"
                         },
                         "value": {
                           "shape": {
@@ -536,53 +287,14 @@
                         }
                       },
                       {
-                        "name": {
-                          "name": {
-                            "originalName": "timestamp",
-                            "camelCase": {
-                              "unsafeName": "timestamp",
-                              "safeName": "timestamp"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "timestamp",
-                              "safeName": "timestamp"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "TIMESTAMP",
-                              "safeName": "TIMESTAMP"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "Timestamp",
-                              "safeName": "Timestamp"
-                            }
-                          },
-                          "wireValue": "timestamp"
-                        },
+                        "name": "timestamp",
                         "originalTypeDeclaration": {
                           "typeId": "V1RealtimeSubscribe",
                           "fernFilepath": {
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "V1RealtimeSubscribe",
-                            "camelCase": {
-                              "unsafeName": "v1RealtimeSubscribe",
-                              "safeName": "v1RealtimeSubscribe"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "v_1_realtime_subscribe",
-                              "safeName": "v_1_realtime_subscribe"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "V_1_REALTIME_SUBSCRIBE",
-                              "safeName": "V_1_REALTIME_SUBSCRIBE"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "V1RealtimeSubscribe",
-                              "safeName": "V1RealtimeSubscribe"
-                            }
-                          }
+                          "name": "V1RealtimeSubscribe"
                         },
                         "value": {
                           "shape": {
@@ -612,25 +324,7 @@
                       "allParts": [],
                       "packagePath": []
                     },
-                    "name": {
-                      "originalName": "V1RealtimeSubscribe",
-                      "camelCase": {
-                        "unsafeName": "v1RealtimeSubscribe",
-                        "safeName": "v1RealtimeSubscribe"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "v_1_realtime_subscribe",
-                        "safeName": "v_1_realtime_subscribe"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "V_1_REALTIME_SUBSCRIBE",
-                        "safeName": "V_1_REALTIME_SUBSCRIBE"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "V1RealtimeSubscribe",
-                        "safeName": "V1RealtimeSubscribe"
-                      }
-                    }
+                    "name": "V1RealtimeSubscribe"
                   },
                   "type": "named"
                 },
@@ -653,53 +347,14 @@
                   "shape": {
                     "properties": [
                       {
-                        "name": {
-                          "name": {
-                            "originalName": "content",
-                            "camelCase": {
-                              "unsafeName": "content",
-                              "safeName": "content"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "content",
-                              "safeName": "content"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "CONTENT",
-                              "safeName": "CONTENT"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "Content",
-                              "safeName": "Content"
-                            }
-                          },
-                          "wireValue": "content"
-                        },
+                        "name": "content",
                         "originalTypeDeclaration": {
                           "typeId": "V1RealtimePublish",
                           "fernFilepath": {
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "V1RealtimePublish",
-                            "camelCase": {
-                              "unsafeName": "v1RealtimePublish",
-                              "safeName": "v1RealtimePublish"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "v_1_realtime_publish",
-                              "safeName": "v_1_realtime_publish"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "V_1_REALTIME_PUBLISH",
-                              "safeName": "V_1_REALTIME_PUBLISH"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "V1RealtimePublish",
-                              "safeName": "V1RealtimePublish"
-                            }
-                          }
+                          "name": "V1RealtimePublish"
                         },
                         "value": {
                           "shape": {
@@ -729,25 +384,7 @@
                       "allParts": [],
                       "packagePath": []
                     },
-                    "name": {
-                      "originalName": "V1RealtimePublish",
-                      "camelCase": {
-                        "unsafeName": "v1RealtimePublish",
-                        "safeName": "v1RealtimePublish"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "v_1_realtime_publish",
-                        "safeName": "v_1_realtime_publish"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "V_1_REALTIME_PUBLISH",
-                        "safeName": "V_1_REALTIME_PUBLISH"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "V1RealtimePublish",
-                        "safeName": "V1RealtimePublish"
-                      }
-                    }
+                    "name": "V1RealtimePublish"
                   },
                   "type": "named"
                 },
@@ -762,53 +399,14 @@
                   "shape": {
                     "properties": [
                       {
-                        "name": {
-                          "name": {
-                            "originalName": "content",
-                            "camelCase": {
-                              "unsafeName": "content",
-                              "safeName": "content"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "content",
-                              "safeName": "content"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "CONTENT",
-                              "safeName": "CONTENT"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "Content",
-                              "safeName": "Content"
-                            }
-                          },
-                          "wireValue": "content"
-                        },
+                        "name": "content",
                         "originalTypeDeclaration": {
                           "typeId": "V1RealtimeSubscribe",
                           "fernFilepath": {
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "V1RealtimeSubscribe",
-                            "camelCase": {
-                              "unsafeName": "v1RealtimeSubscribe",
-                              "safeName": "v1RealtimeSubscribe"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "v_1_realtime_subscribe",
-                              "safeName": "v_1_realtime_subscribe"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "V_1_REALTIME_SUBSCRIBE",
-                              "safeName": "V_1_REALTIME_SUBSCRIBE"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "V1RealtimeSubscribe",
-                              "safeName": "V1RealtimeSubscribe"
-                            }
-                          }
+                          "name": "V1RealtimeSubscribe"
                         },
                         "value": {
                           "shape": {
@@ -830,53 +428,14 @@
                         }
                       },
                       {
-                        "name": {
-                          "name": {
-                            "originalName": "timestamp",
-                            "camelCase": {
-                              "unsafeName": "timestamp",
-                              "safeName": "timestamp"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "timestamp",
-                              "safeName": "timestamp"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "TIMESTAMP",
-                              "safeName": "TIMESTAMP"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "Timestamp",
-                              "safeName": "Timestamp"
-                            }
-                          },
-                          "wireValue": "timestamp"
-                        },
+                        "name": "timestamp",
                         "originalTypeDeclaration": {
                           "typeId": "V1RealtimeSubscribe",
                           "fernFilepath": {
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "V1RealtimeSubscribe",
-                            "camelCase": {
-                              "unsafeName": "v1RealtimeSubscribe",
-                              "safeName": "v1RealtimeSubscribe"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "v_1_realtime_subscribe",
-                              "safeName": "v_1_realtime_subscribe"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "V_1_REALTIME_SUBSCRIBE",
-                              "safeName": "V_1_REALTIME_SUBSCRIBE"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "V1RealtimeSubscribe",
-                              "safeName": "V1RealtimeSubscribe"
-                            }
-                          }
+                          "name": "V1RealtimeSubscribe"
                         },
                         "value": {
                           "shape": {
@@ -906,25 +465,7 @@
                       "allParts": [],
                       "packagePath": []
                     },
-                    "name": {
-                      "originalName": "V1RealtimeSubscribe",
-                      "camelCase": {
-                        "unsafeName": "v1RealtimeSubscribe",
-                        "safeName": "v1RealtimeSubscribe"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "v_1_realtime_subscribe",
-                        "safeName": "v_1_realtime_subscribe"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "V_1_REALTIME_SUBSCRIBE",
-                        "safeName": "V_1_REALTIME_SUBSCRIBE"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "V1RealtimeSubscribe",
-                        "safeName": "V1RealtimeSubscribe"
-                      }
-                    }
+                    "name": "V1RealtimeSubscribe"
                   },
                   "type": "named"
                 },
@@ -958,25 +499,7 @@
       "environments": [
         {
           "id": "production",
-          "name": {
-            "originalName": "production",
-            "camelCase": {
-              "unsafeName": "production",
-              "safeName": "production"
-            },
-            "snakeCase": {
-              "unsafeName": "production",
-              "safeName": "production"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "PRODUCTION",
-              "safeName": "PRODUCTION"
-            },
-            "pascalCase": {
-              "unsafeName": "Production",
-              "safeName": "Production"
-            }
-          },
+          "name": "production",
           "url": "wss://api.example.com"
         }
       ],
@@ -997,67 +520,13 @@
   },
   "subpackages": {
     "subpackage_v1Realtime": {
-      "name": {
-        "originalName": "v1Realtime",
-        "camelCase": {
-          "unsafeName": "v1Realtime",
-          "safeName": "v1Realtime"
-        },
-        "snakeCase": {
-          "unsafeName": "v_1_realtime",
-          "safeName": "v_1_realtime"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "V_1_REALTIME",
-          "safeName": "V_1_REALTIME"
-        },
-        "pascalCase": {
-          "unsafeName": "V1Realtime",
-          "safeName": "V1Realtime"
-        }
-      },
+      "name": "v1Realtime",
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "v1Realtime",
-            "camelCase": {
-              "unsafeName": "v1Realtime",
-              "safeName": "v1Realtime"
-            },
-            "snakeCase": {
-              "unsafeName": "v_1_realtime",
-              "safeName": "v_1_realtime"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "V_1_REALTIME",
-              "safeName": "V_1_REALTIME"
-            },
-            "pascalCase": {
-              "unsafeName": "V1Realtime",
-              "safeName": "V1Realtime"
-            }
-          }
+          "v1Realtime"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "v1Realtime",
-          "camelCase": {
-            "unsafeName": "v1Realtime",
-            "safeName": "v1Realtime"
-          },
-          "snakeCase": {
-            "unsafeName": "v_1_realtime",
-            "safeName": "v_1_realtime"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "V_1_REALTIME",
-            "safeName": "V_1_REALTIME"
-          },
-          "pascalCase": {
-            "unsafeName": "V1Realtime",
-            "safeName": "V1Realtime"
-          }
-        }
+        "file": "v1Realtime"
       },
       "types": [],
       "errors": [],
@@ -1077,47 +546,8 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "",
-    "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
-    }
-  },
+  "apiName": "",
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   }
 }

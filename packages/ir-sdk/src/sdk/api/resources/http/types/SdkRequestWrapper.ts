@@ -3,8 +3,8 @@
 import type * as FernIr from "../../../index.js";
 
 export interface SdkRequestWrapper {
-    wrapperName: FernIr.Name;
-    bodyKey: FernIr.Name;
+    wrapperName: FernIr.NameOrString;
+    bodyKey: FernIr.NameOrString;
     includePathParameters: boolean | undefined;
     onlyPathParameters: boolean | undefined;
 }

@@ -30,6 +30,10 @@ export class AccessTokenPosthogManager implements PosthogManager {
     }
 
     public async flush(): Promise<void> {
-        await this.posthog.flush();
+        try {
+            await Promise.race([this.posthog.flush(), new Promise<void>((resolve) => setTimeout(resolve, 3000))]);
+        } catch {
+            // Silently swallow – analytics should never block the CLI
+        }
     }
 }

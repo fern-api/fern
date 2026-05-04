@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add support for `x-fern-display-name` on AsyncAPI operations. This allows setting friendly display names on AsyncAPI v2 publish/subscribe operations and v3 operations, which is useful when operation keys need to be normalized (e.g. for versioned endpoints) but you still want readable names in docs.
+  type: feat

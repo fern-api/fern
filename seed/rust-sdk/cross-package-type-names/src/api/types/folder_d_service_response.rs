@@ -8,7 +8,7 @@ pub struct Response2 {
 
 impl Response2 {
     pub fn builder() -> Response2Builder {
-        Response2Builder::default()
+        <Response2Builder as Default>::default()
     }
 }
 

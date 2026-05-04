@@ -7,7 +7,7 @@ import {
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernRegistry } from "@fern-fern/generators-sdk";
 import chalk from "chalk";
 import { readFile, writeFile } from "fs/promises";
@@ -45,20 +45,19 @@ interface SkippedAutoreleaseDisabled {
     version: string;
 }
 
-function getChangelogUrl(generatorName: string): string | undefined {
-    const changelogMap: Record<string, string> = {
-        "fernapi/fern-typescript-sdk": "https://buildwithfern.com/learn/sdks/generators/typescript/changelog",
-        "fernapi/fern-typescript-node-sdk": "https://buildwithfern.com/learn/sdks/generators/typescript/changelog",
-        "fernapi/fern-python-sdk": "https://buildwithfern.com/learn/sdks/generators/python/changelog",
-        "fernapi/fern-go-sdk": "https://buildwithfern.com/learn/sdks/generators/go/changelog",
-        "fernapi/fern-java-sdk": "https://buildwithfern.com/learn/sdks/generators/java/changelog",
-        "fernapi/fern-csharp-sdk": "https://buildwithfern.com/learn/sdks/generators/csharp/changelog",
-        "fernapi/fern-php-sdk": "https://buildwithfern.com/learn/sdks/generators/php/changelog",
-        "fernapi/fern-ruby-sdk": "https://buildwithfern.com/learn/sdks/generators/ruby/changelog",
-        "fernapi/fern-swift-sdk": "https://buildwithfern.com/learn/sdks/generators/swift/changelog"
-    };
+const CHANGELOG_BASE = "https://buildwithfern.com/learn/sdks/generators";
 
-    return changelogMap[generatorName];
+/**
+ * Derives the changelog URL from a generator name.
+ * Generator names follow the pattern "fernapi/fern-<language>-sdk[-variant]",
+ * and changelog pages live at buildwithfern.com/learn/sdks/generators/<language>/changelog.
+ */
+function getChangelogUrl(generatorName: string): string | undefined {
+    const match = generatorName.match(/^fernapi\/fern-([a-z]+)/);
+    if (!match?.[1]) {
+        return undefined;
+    }
+    return `${CHANGELOG_BASE}/${match[1]}/changelog`;
 }
 
 export async function loadAndUpdateGenerators({
@@ -116,7 +115,9 @@ export async function loadAndUpdateGenerators({
         };
     }
     if (!YAML.isMap(generatorGroups)) {
-        context.failAndThrow(`Expected 'groups' to be a map in ${path.relative(process.cwd(), filepath)}`);
+        context.failAndThrow(`Expected 'groups' to be a map in ${path.relative(process.cwd(), filepath)}`, undefined, {
+            code: CliError.Code.ParseError
+        });
         return {
             updatedConfiguration: undefined,
             skippedMajorUpgrades: [],
@@ -141,7 +142,9 @@ export async function loadAndUpdateGenerators({
         const group = groupBlock.value as YAML.YAMLMap<string, YAML.YAMLSeq<YAML.YAMLMap<unknown, unknown>>>;
         if (!YAML.isMap(group)) {
             context.failAndThrow(
-                `Expected group ${groupName} to be a map in ${path.relative(process.cwd(), filepath)}`
+                `Expected group ${groupName} to be a map in ${path.relative(process.cwd(), filepath)}`,
+                undefined,
+                { code: CliError.Code.ConfigError }
             );
             continue;
         }
@@ -155,7 +158,9 @@ export async function loadAndUpdateGenerators({
 
         if (!YAML.isSeq(generators)) {
             context.failAndThrow(
-                `Expected group ${groupName} to have a 'generators' key in ${path.relative(process.cwd(), filepath)}`
+                `Expected group ${groupName} to have a 'generators' key in ${path.relative(process.cwd(), filepath)}`,
+                undefined,
+                { code: CliError.Code.ConfigError }
             );
             continue;
         }
@@ -163,8 +168,21 @@ export async function loadAndUpdateGenerators({
         for (const generator of generators.items) {
             if (!YAML.isMap(generator)) {
                 context.failAndThrow(
-                    `Expected generator in group ${groupName} to be a map in ${path.relative(process.cwd(), filepath)}`
+                    `Expected generator in group ${groupName} to be a map in ${path.relative(process.cwd(), filepath)}`,
+                    undefined,
+                    { code: CliError.Code.VersionError }
                 );
+            }
+            // Custom image generators (using `image` instead of `name`) are user-managed
+            // and cannot be auto-upgraded. Skip them with a warning.
+            if (generator.get("image") != null) {
+                const imageNode = generator.get("image");
+                const imageName = YAML.isMap(imageNode) ? (imageNode.get("name") as string) : "unknown";
+                context.logger.warn(
+                    `Skipping custom image generator "${imageName}" in group ${groupName}: ` +
+                        `generators using a custom image cannot be auto-upgraded.`
+                );
+                continue;
             }
             const generatorName = generator.get("name") as string;
             // Normalize the generator name to add default Docker org prefix if not present

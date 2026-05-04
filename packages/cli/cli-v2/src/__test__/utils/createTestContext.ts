@@ -8,8 +8,8 @@ import { Context } from "../../context/Context.js";
  * This creates a Context instance with streams that discard output,
  * suitable for unit tests where console output is not needed.
  */
-export function createTestContext({ cwd }: { cwd: AbsoluteFilePath }): Context {
-    return new Context({
+export async function createTestContext({ cwd }: { cwd: AbsoluteFilePath }): Promise<Context> {
+    return Context.create({
         stdout: createNullStream(),
         stderr: createNullStream(),
         cwd
@@ -19,15 +19,16 @@ export function createTestContext({ cwd }: { cwd: AbsoluteFilePath }): Context {
 /**
  * Create a Context whose stdout/stderr are captured for assertion.
  */
-export function createTestContextWithCapture({ cwd }: { cwd: AbsoluteFilePath }): {
+export async function createTestContextWithCapture({ cwd }: { cwd: AbsoluteFilePath }): Promise<{
     context: Context;
     getStdout: () => string;
     getStderr: () => string;
-} {
+}> {
     const stdout = createCapturingStream();
     const stderr = createCapturingStream();
+    const context = await Context.create({ stdout: stdout.stream, stderr: stderr.stream, cwd });
     return {
-        context: new Context({ stdout: stdout.stream, stderr: stderr.stream, cwd }),
+        context,
         getStdout: stdout.getOutput,
         getStderr: stderr.getOutput
     };

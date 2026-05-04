@@ -1,11 +1,10 @@
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import inquirer from "inquirer";
 import type { Argv } from "yargs";
-
 import { TokenService } from "../../../auth/TokenService.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { CliError } from "../../../errors/CliError.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
 
@@ -65,7 +64,7 @@ export class LogoutCommand {
 
         if (!context.isTTY) {
             context.stdout.error(`${Icons.error} Use --force to skip confirmation in non-interactive mode`);
-            throw CliError.exit();
+            throw new CliError({ code: CliError.Code.ValidationError });
         }
 
         const { confirmed } = await inquirer.prompt<{ confirmed: boolean }>([
@@ -91,7 +90,9 @@ export class LogoutCommand {
 
         if (!removed) {
             context.stdout.error(`${Icons.error} Account not found: ${user}`);
-            throw CliError.exit();
+            throw new CliError({
+                code: CliError.Code.EnvironmentError
+            });
         }
 
         context.stdout.info(`${Icons.success} Logged out of ${chalk.bold(user)}`);
@@ -106,7 +107,9 @@ export class LogoutCommand {
             context.stdout.error(
                 `${Icons.error} Multiple accounts found. Use --user or --all in non-interactive mode.`
             );
-            throw CliError.exit();
+            throw new CliError({
+                code: CliError.Code.EnvironmentError
+            });
         }
 
         const choices = accounts.map((account) => ({

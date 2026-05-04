@@ -1,3 +1,4 @@
+import { CliError } from "@fern-api/task-context";
 import type { Element, Root } from "hast";
 import { CONTINUE, EXIT, visit } from "unist-util-visit";
 import { z } from "zod";
@@ -10,7 +11,7 @@ export function assertIsNumber(val: unknown): asserts val is number {
 
 export function assertIsDefined<T>(val: T): asserts val is NonNullable<T> {
     if (val === undefined || val == null) {
-        throw new Error("Value is nullable.");
+        throw new CliError({ message: "Value is nullable.", code: CliError.Code.InternalError });
     }
 }
 

@@ -1,3 +1,4 @@
+import { getWireValue, NameInput } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { Attribute, rust } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference.js";
@@ -131,6 +132,7 @@ function hasBigIntInType(typeRef: FernIr.TypeReference): boolean {
             bigInteger: () => true,
             date: () => false,
             dateTime: () => false,
+            dateTimeRfc2822: () => false,
             base64: () => false,
             uuid: () => false,
             _other: () => false
@@ -182,15 +184,10 @@ export function hasFloatingPointSets(properties: (FernIr.ObjectProperty | FernIr
 
 export function getCustomTypesUsedInFields(
     properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[],
+    context: ModelGeneratorContext,
     currentTypeName?: string
-): {
-    snakeCase: { unsafeName: string };
-    pascalCase: { unsafeName: string };
-}[] {
-    const customTypeNames: {
-        snakeCase: { unsafeName: string };
-        pascalCase: { unsafeName: string };
-    }[] = [];
+): NameInput[] {
+    const customTypeNames: NameInput[] = [];
     const visited = new Set<string>();
 
     properties.forEach((property) => {
@@ -198,7 +195,7 @@ export function getCustomTypesUsedInFields(
     });
 
     // Filter out the current type itself to prevent self-imports
-    return customTypeNames.filter((typeName) => typeName.pascalCase.unsafeName !== currentTypeName);
+    return customTypeNames.filter((typeName) => context.case.pascalUnsafe(typeName) !== currentTypeName);
 }
 
 export function generateFieldType(
@@ -218,18 +215,22 @@ export function generateFieldType(
 
 export function generateFieldAttributes(
     property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty,
-    context?: ModelGeneratorContext
+    context: ModelGeneratorContext,
+    options?: { skipSerialization?: boolean }
 ): rust.Attribute[] {
     const attributes: rust.Attribute[] = [];
 
     // Add serde rename if the field name differs from wire name
-    if (property.name.name.snakeCase.unsafeName !== property.name.wireValue) {
-        attributes.push(Attribute.serde.rename(property.name.wireValue));
+    if (context.case.snakeUnsafe(property.name) !== getWireValue(property.name)) {
+        attributes.push(Attribute.serde.rename(getWireValue(property.name)));
     }
 
-    // Add skip_serializing_if for optional fields to omit null values
+    // If the field is entirely skipped during serialization (e.g. query params sent
+    // separately from the request body), use skip_serializing instead of skip_serializing_if.
     const isOptional = isOptionalType(property.valueType);
-    if (isOptional) {
+    if (options?.skipSerialization) {
+        attributes.push(Attribute.serde.skipSerializing());
+    } else if (isOptional) {
         attributes.push(Attribute.serde.skipSerializingIf('"Option::is_none"'));
     }
 
@@ -240,10 +241,10 @@ export function generateFieldAttributes(
         attributes.push(Attribute.serde.default());
     }
 
-    // Add flexible datetime serde attribute - both "offset" (default) and "utc" use flexible parsing
-    // "offset" uses flexible_datetime::offset module (DateTime<FixedOffset>)
-    // "utc" uses flexible_datetime::utc module (DateTime<Utc>)
-    if (context) {
+    // Add custom serde with/format attributes for special types.
+    // Skip when the field is entirely excluded from serialization (e.g. query params or bytes body)
+    // since the with modules may not exist and aren't needed.
+    if (context && !options?.skipSerialization) {
         const dateTimeType = context.getDateTimeType();
         const typeRef = isOptional ? getInnerTypeFromOptional(property.valueType) : property.valueType;
         if (isDateTimeOnlyType(typeRef)) {
@@ -279,6 +280,16 @@ export function generateFieldAttributes(
                 attributes.push(Attribute.serde.with("crate::core::bigint_string"));
             }
         }
+
+        // Add number_serializers serde attribute for f64 fields to strip trailing .0 from whole numbers
+        if (isFloatingPointType(typeRef)) {
+            if (isOptional) {
+                attributes.push(Attribute.serde.default());
+                attributes.push(Attribute.serde.with("crate::core::number_serializers::option"));
+            } else {
+                attributes.push(Attribute.serde.with("crate::core::number_serializers"));
+            }
+        }
     }
 
     return attributes;
@@ -312,11 +323,11 @@ export function writeStructUseStatements(
     context: ModelGeneratorContext,
     currentTypeName?: string
 ): void {
-    const customTypes = getCustomTypesUsedInFields(properties, currentTypeName);
+    const customTypes = getCustomTypesUsedInFields(properties, context, currentTypeName);
     customTypes.forEach((typeName) => {
-        const modulePath = context.getModulePathForType(typeName.snakeCase.unsafeName);
+        const modulePath = context.getModulePathForType(context.case.snakeUnsafe(typeName));
         const moduleNameEscaped = context.escapeRustKeyword(modulePath);
-        writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
+        writer.writeLine(`use crate::${moduleNameEscaped}::${context.case.pascalUnsafe(typeName)};`);
     });
 
     // Add chrono imports based on specific types needed
@@ -368,4 +379,32 @@ export function writeStructUseStatements(
 
     // Add serde imports LAST
     writer.writeLine("use serde::{Deserialize, Serialize};");
+}
+
+/**
+ * Convert query parameters to object properties for inclusion in request structs.
+ * Returns both the properties and the set of field names (after keyword escaping)
+ * so callers can mark them with #[serde(skip_serializing)].
+ */
+export function convertQueryParametersToProperties(
+    queryParams: FernIr.QueryParameter[],
+    context: { escapeRustKeyword: (name: string) => string; case: { snakeUnsafe: (name: NameInput) => string } }
+): { properties: FernIr.ObjectProperty[]; fieldNames: Set<string> } {
+    const fieldNames = new Set<string>();
+    const properties = queryParams.map((queryParam) => {
+        let valueType = queryParam.valueType;
+        if (queryParam.allowMultiple) {
+            valueType = FernIr.TypeReference.container(FernIr.ContainerType.list(queryParam.valueType));
+        }
+        fieldNames.add(context.escapeRustKeyword(context.case.snakeUnsafe(queryParam.name)));
+        return {
+            name: queryParam.name,
+            valueType,
+            docs: queryParam.docs,
+            availability: queryParam.availability,
+            propertyAccess: undefined,
+            v2Examples: undefined
+        };
+    });
+    return { properties, fieldNames };
 }

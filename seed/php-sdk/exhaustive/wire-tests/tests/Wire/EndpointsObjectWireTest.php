@@ -12,6 +12,8 @@ use Seed\Types\Object\Types\NestedObjectWithOptionalField;
 use Seed\Types\Object\Types\NestedObjectWithRequiredField;
 use Seed\Types\Object\Types\ObjectWithUnknownField;
 use Seed\Types\Object\Types\ObjectWithDocumentedUnknownType;
+use Seed\Types\Object\Types\ObjectWithMixedRequiredAndOptionalFields;
+use Seed\Types\Object\Types\ObjectWithRequiredNestedObject;
 use Seed\Types\Object\Types\ObjectWithDatetimeLikeString;
 
 class EndpointsObjectWireTest extends WireMockTestCase
@@ -346,6 +348,59 @@ class EndpointsObjectWireTest extends WireMockTestCase
             $testId,
             "POST",
             "/object/get-and-return-map-of-documented-unknown-type",
+            null,
+            1
+        );
+    }
+
+    /**
+     */
+    public function testGetAndReturnWithMixedRequiredAndOptionalFields(): void {
+        $testId = 'endpoints.object.get_and_return_with_mixed_required_and_optional_fields.0';
+        $this->client->endpoints->object->getAndReturnWithMixedRequiredAndOptionalFields(
+            new ObjectWithMixedRequiredAndOptionalFields([
+                'requiredString' => 'hello',
+                'requiredInteger' => 0,
+                'optionalString' => 'world',
+                'requiredLong' => 0,
+            ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.object.get_and_return_with_mixed_required_and_optional_fields.0',
+                ],
+            ],
+        );
+        $this->verifyRequestCount(
+            $testId,
+            "POST",
+            "/object/get-and-return-with-mixed-required-and-optional-fields",
+            null,
+            1
+        );
+    }
+
+    /**
+     */
+    public function testGetAndReturnWithRequiredNestedObject(): void {
+        $testId = 'endpoints.object.get_and_return_with_required_nested_object.0';
+        $this->client->endpoints->object->getAndReturnWithRequiredNestedObject(
+            new ObjectWithRequiredNestedObject([
+                'requiredString' => 'hello',
+                'requiredObject' => new NestedObjectWithRequiredField([
+                    'string' => 'nested',
+                    'nestedObject' => new ObjectWithOptionalField([]),
+                ]),
+            ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.object.get_and_return_with_required_nested_object.0',
+                ],
+            ],
+        );
+        $this->verifyRequestCount(
+            $testId,
+            "POST",
+            "/object/get-and-return-with-required-nested-object",
             null,
             1
         );

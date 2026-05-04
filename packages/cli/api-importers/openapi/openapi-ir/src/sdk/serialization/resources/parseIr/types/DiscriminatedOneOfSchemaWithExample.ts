@@ -22,6 +22,7 @@ export const DiscriminatedOneOfSchemaWithExample: core.serialization.ObjectSchem
         discriminantProperty: core.serialization.string(),
         discriminantPropertyNameOverride: core.serialization.string().optional(),
         discriminatorContext: DiscriminatorContext.optional(),
+        defaultDiscriminantValue: core.serialization.string().optional(),
         commonProperties: core.serialization.list(
             core.serialization.lazyObject(() => serializers.CommonPropertyWithExample),
         ),
@@ -54,6 +55,7 @@ export declare namespace DiscriminatedOneOfSchemaWithExample {
         discriminantProperty: string;
         discriminantPropertyNameOverride?: string | null;
         discriminatorContext?: DiscriminatorContext.Raw | null;
+        defaultDiscriminantValue?: string | null;
         commonProperties: serializers.CommonPropertyWithExample.Raw[];
         schemas: Record<string, serializers.SchemaWithExample.Raw>;
     }

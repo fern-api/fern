@@ -18,10 +18,12 @@ async fn main() {
                 user: User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 },
                 user_list: vec![Some(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 })],
                 optional_deadline: Some(
                     DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
@@ -36,15 +38,19 @@ async fn main() {
                     user: Some(User {
                         name: Some("name".to_string()),
                         tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                        ..Default::default()
                     }),
+                    ..Default::default()
                 }),
                 optional_user: Some(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 }),
                 exclude_user: vec![Some(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 })],
                 filter: vec![Some("filter".to_string())],
                 tags: vec![Some("tags".to_string())],
@@ -52,10 +58,12 @@ async fn main() {
                 neighbor: Some(SearchRequestNeighbor::User(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 })),
                 neighbor_required: SearchRequestNeighborRequired::User(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 }),
             },
             None,

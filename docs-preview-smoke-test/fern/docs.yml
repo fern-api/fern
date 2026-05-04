@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+instances:
+  - url: smoke-test.docs.buildwithfern.com
+
+title: Plant Store
+
+layout:
+  searchbar-placement: header
+  page-width: full
+
+navigation:
+  - section: Get Started
+    contents:
+      - page: Welcome
+        path: docs/pages/welcome.mdx
+  - api: REST API
+    api-name: rest-api
+
+colors:
+  accentPrimary:
+    dark: "#81C784"
+    light: "#1B5E20"

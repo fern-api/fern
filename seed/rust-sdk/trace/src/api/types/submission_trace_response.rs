@@ -22,7 +22,7 @@ pub struct TraceResponse {
 
 impl TraceResponse {
     pub fn builder() -> TraceResponseBuilder {
-        TraceResponseBuilder::default()
+        <TraceResponseBuilder as Default>::default()
     }
 }
 

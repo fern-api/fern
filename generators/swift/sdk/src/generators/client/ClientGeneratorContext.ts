@@ -35,7 +35,7 @@ export class ClientGeneratorContext {
                 const subClientSymbol =
                     this.sdkGeneratorContext.project.nameRegistry.getSubClientSymbolOrThrow(subpackageId);
                 const property = swift.property({
-                    unsafeName: subpackage.name.camelCase.unsafeName,
+                    unsafeName: this.sdkGeneratorContext.caseConverter.camelUnsafe(subpackage.name),
                     accessLevel: swift.AccessLevel.Public,
                     declarationType: swift.DeclarationType.Let,
                     type: this.referencer.referenceType(subClientSymbol)

@@ -1,5 +1,7 @@
 export * as ai from "./ai/index.js";
 export * from "./ai/types/index.js";
+export * as automation from "./automation/index.js";
+export * from "./automation/types/index.js";
 export * as fernDefinition from "./fernDefinition/index.js";
 export * as generators from "./generators/index.js";
 export * from "./generators/types/index.js";

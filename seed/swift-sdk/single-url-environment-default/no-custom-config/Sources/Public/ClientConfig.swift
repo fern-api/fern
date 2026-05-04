@@ -5,7 +5,7 @@ public final class ClientConfig: Swift.Sendable {
 
     struct Defaults {
         static let timeout: Swift.Int = 60
-        static let maxRetries: Swift.Int = 2
+        static let maxRetries: Swift.Int = 5
     }
 
     struct HeaderAuth {

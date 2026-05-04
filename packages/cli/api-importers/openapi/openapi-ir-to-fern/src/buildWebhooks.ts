@@ -3,6 +3,7 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     AsymmetricAlgorithm,
     Webhook,
+    WebhookPayloadBodySort,
     WebhookPayloadComponent,
     WebhookPayloadFormat,
     WebhookSignatureAlgorithm,
@@ -12,6 +13,7 @@ import {
     WebhookTimestampFormat
 } from "@fern-api/openapi-ir";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
+import { CliError } from "@fern-api/task-context";
 import { camelCase, isEqual } from "lodash-es";
 import { buildHeader } from "./buildHeader.js";
 import { buildTypeReference } from "./buildTypeReference.js";
@@ -141,7 +143,10 @@ export function buildWebhooks(context: OpenApiIrConverterContext): void {
                     };
                 },
                 _other: () => {
-                    throw new Error("Unrecognized Response type: " + webhook.response?.type);
+                    throw new CliError({
+                        message: "Unrecognized Response type: " + webhook.response?.type,
+                        code: CliError.Code.InternalError
+                    });
                 }
             });
         }
@@ -358,8 +363,23 @@ function convertPayloadFormat(
     }
     return {
         components: payloadFormat.components.map(convertPayloadComponent),
-        delimiter: payloadFormat.delimiter
+        delimiter: payloadFormat.delimiter,
+        "body-sort": convertBodySort(payloadFormat.bodySort)
     };
+}
+
+function convertBodySort(
+    bodySort: WebhookPayloadBodySort | undefined
+): RawSchemas.WebhookPayloadBodySortSchema | undefined {
+    if (bodySort == null) {
+        return undefined;
+    }
+    switch (bodySort) {
+        case "alphabetical":
+            return "alphabetical";
+        default:
+            return undefined;
+    }
 }
 
 function convertPayloadComponent(component: WebhookPayloadComponent): RawSchemas.WebhookPayloadComponentSchema {

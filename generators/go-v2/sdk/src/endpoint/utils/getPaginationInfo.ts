@@ -1,3 +1,4 @@
+import { CaseConverter, getWireValue, NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -28,7 +29,11 @@ export function getPaginationInfo({
     const pageType = getPageType({ context, pagination });
     const nextPageType = getNextPageType({ context, pagination });
     const pageRequestType = getPageRequestType({ context, pageType });
-    const requestPagePropertyReference = getPagePropertyReference({ variableName: "request", pagination });
+    const requestPagePropertyReference = getPagePropertyReference({
+        variableName: "request",
+        pagination,
+        caseConverter: context.caseConverter
+    });
     const pagePropertyFormat = getPageValueFormat({ context, pagination });
     const requestPagePropertyFormat = getPageValueFormat({ context, pagination });
     return {
@@ -215,6 +220,8 @@ function instantiatePager({
                 arguments_
             });
         case "custom":
+        case "uri":
+        case "path":
             return go.TypeInstantiation.nop();
         default:
             assertNever(pagination);
@@ -262,6 +269,8 @@ function invokeGetPage({
                 multiline: false
             });
         case "custom":
+        case "uri":
+        case "path":
             return go.TypeInstantiation.nop();
         default:
             assertNever(pagination);
@@ -295,10 +304,13 @@ function getReadPageResponseBody({
             return getReadPageResponseBodyForOffset({
                 context,
                 pagination,
+                offset: pagination,
                 pageType,
                 responseType
             });
         case "custom":
+        case "uri":
+        case "path":
             return go.TypeInstantiation.nop();
         default:
             assertNever(pagination);
@@ -356,16 +368,23 @@ function getReadPageResponseBodyForCursor({
 function getReadPageResponseBodyForOffset({
     context,
     pagination,
+    offset,
     pageType,
     responseType
 }: {
     context: SdkGeneratorContext;
     pagination: FernIr.Pagination;
+    offset: FernIr.OffsetPagination;
     pageType: go.Type;
     responseType: go.Type;
 }): go.AstNode {
     return go.codeblock((writer) => {
-        writer.writeLine("next += 1");
+        const useItemIndex = offset.step != null && context.customConfig.offsetSemantics === "item-index";
+        if (useItemIndex) {
+            writer.writeLine("next += int(len(results))");
+        } else {
+            writer.writeLine("next += 1");
+        }
         writer.writeNode(getNextResultsSetter({ context, results: pagination.results }));
         writer.write("return ");
         writer.writeNode(
@@ -443,7 +462,8 @@ function getResponsePropertySetter({
             writer.writeNode(
                 getPropertyNilCheckCondition({
                     variableName: "response",
-                    propertyPath: responsePropertyPath.map((item) => item.name)
+                    propertyPath: responsePropertyPath.map((item) => item.name),
+                    caseConverter: context.caseConverter
                 })
             );
             writer.writeLine(" {");
@@ -453,8 +473,9 @@ function getResponsePropertySetter({
                 getPropertyReference({
                     variableName: "response",
                     propertyPath: responsePropertyPath.map((item) => item.name),
-                    name: responseProperty.property.name.name,
-                    dereference
+                    name: responseProperty.property.name,
+                    dereference,
+                    caseConverter: context.caseConverter
                 })
             );
             writer.newLine();
@@ -467,7 +488,8 @@ function getResponsePropertySetter({
         writer.writeNode(
             getResponsePropertyReference({
                 results: responseProperty,
-                withGetter: context.customConfig.gettersPassByValue !== true
+                withGetter: context.customConfig.gettersPassByValue !== true,
+                caseConverter: context.caseConverter
             })
         );
         writer.newLine();
@@ -492,7 +514,7 @@ function getPagePropertySetter({
                     writer.indent();
                     writer.writeNode(
                         setQueryParameter({
-                            key: pagination.page.property.name.wireValue,
+                            key: getWireValue(pagination.page.property.name),
                             value: pagePropertyFormat
                         })
                     );
@@ -503,13 +525,15 @@ function getPagePropertySetter({
                 }
                 writer.writeNode(
                     setQueryParameter({
-                        key: pagination.page.property.name.wireValue,
+                        key: getWireValue(pagination.page.property.name),
                         value: pagePropertyFormat
                     })
                 );
                 writer.newLine();
             });
         case "custom":
+        case "uri":
+        case "path":
             return go.TypeInstantiation.nop();
         default:
             assertNever(pagination);
@@ -536,7 +560,7 @@ function getPagePropertyInitializer({
                     writer.write("if ");
                     writer.writeNode(
                         hasQueryParameter({
-                            key: pagination.page.property.name.wireValue
+                            key: getWireValue(pagination.page.property.name)
                         })
                     );
                     writer.writeLine(" {");
@@ -545,7 +569,7 @@ function getPagePropertyInitializer({
                         getPageValueParser({
                             pageType,
                             valueVariable: "next",
-                            queryParameterValue: getQueryParameter({ key: pagination.page.property.name.wireValue })
+                            queryParameterValue: getQueryParameter({ key: getWireValue(pagination.page.property.name) })
                         })
                     );
                     writer.dedent();
@@ -560,6 +584,8 @@ function getPagePropertyInitializer({
         }
         case "cursor":
         case "custom":
+        case "uri":
+        case "path":
             return undefined;
         default:
             assertNever(pagination);
@@ -700,6 +726,8 @@ export function getPageType({
         case "offset":
             return context.goTypeMapper.convert({ reference: pagination.page.property.valueType });
         case "custom":
+        case "uri":
+        case "path":
             return go.Type.any();
         default:
             assertNever(pagination);
@@ -720,6 +748,8 @@ function getNextPageType({
             return context.goTypeMapper.convert({ reference: pagination.page.property.valueType });
         }
         case "custom":
+        case "uri":
+        case "path":
             return undefined;
         default:
             assertNever(pagination);
@@ -789,6 +819,8 @@ function getPageValueFormat({
             return value.formatted;
         }
         case "custom":
+        case "uri":
+        case "path":
             return go.Type.any();
         default:
             assertNever(pagination);
@@ -813,23 +845,28 @@ function getResponseElementType({
 function getPagePropertyReference({
     variableName,
     pagination,
-    withGetter
+    withGetter,
+    caseConverter
 }: {
     variableName: string;
     pagination: FernIr.Pagination;
     withGetter?: boolean;
+    caseConverter: CaseConverter;
 }): go.AstNode {
     switch (pagination.type) {
         case "cursor":
         case "offset": {
             return getPropertyReference({
                 variableName,
-                propertyPath: pagination.page.propertyPath?.map((item) => item.name),
-                name: pagination.page.property.name.name,
-                withGetter
+                propertyPath: pagination.page.propertyPath?.map((item) => item.name) ?? [],
+                name: pagination.page.property.name,
+                withGetter,
+                caseConverter
             });
         }
         case "custom":
+        case "uri":
+        case "path":
             return go.TypeInstantiation.nop();
         default:
             assertNever(pagination);
@@ -838,16 +875,19 @@ function getPagePropertyReference({
 
 function getResponsePropertyReference({
     results,
-    withGetter
+    withGetter,
+    caseConverter
 }: {
     results: FernIr.ResponseProperty;
     withGetter?: boolean;
+    caseConverter: CaseConverter;
 }): go.AstNode {
     return getPropertyReference({
         variableName: "response",
-        propertyPath: results.propertyPath?.map((item) => item.name),
-        name: results.property.name.name,
-        withGetter
+        propertyPath: results.propertyPath?.map((item) => item.name) ?? [],
+        name: results.property.name,
+        withGetter,
+        caseConverter
     });
 }
 
@@ -856,34 +896,40 @@ function getPropertyReference({
     propertyPath,
     name,
     withGetter,
-    dereference
+    dereference,
+    caseConverter
 }: {
     variableName: string;
-    propertyPath: FernIr.Name[] | undefined;
-    name: FernIr.Name;
+    propertyPath: NameInput[] | undefined;
+    name: NameInput;
     withGetter?: boolean;
     dereference?: boolean;
+    caseConverter: CaseConverter;
 }): go.AstNode {
     const fullPath = [...(propertyPath ?? []), name];
     return go.codeblock((writer) => {
         if (dereference) {
             writer.write("*");
         }
-        writer.write(`${variableName}.${fullPath.map((name) => getPropertyAccessor({ name, withGetter })).join(".")}`);
+        writer.write(
+            `${variableName}.${fullPath.map((name) => getPropertyAccessor({ name, withGetter, caseConverter })).join(".")}`
+        );
     });
 }
 
 function getPropertyNilCheckCondition({
     variableName,
-    propertyPath
+    propertyPath,
+    caseConverter
 }: {
     variableName: string;
-    propertyPath: FernIr.Name[];
+    propertyPath: NameInput[];
+    caseConverter: CaseConverter;
 }): go.AstNode {
     const checks = propertyPath.map((_, index) => {
         const pathSegment = propertyPath
             .slice(0, index + 1)
-            .map((name) => getPropertyAccessor({ name }))
+            .map((name) => getPropertyAccessor({ name, caseConverter }))
             .join(".");
         return `${variableName}.${pathSegment} != nil`;
     });
@@ -927,11 +973,19 @@ function encodeQuery({ writer }: { writer: go.Writer }): void {
     writer.writeLine("}");
 }
 
-function getPropertyAccessor({ name, withGetter }: { name: FernIr.Name; withGetter?: boolean }): string {
+function getPropertyAccessor({
+    name,
+    withGetter,
+    caseConverter
+}: {
+    name: NameInput;
+    withGetter?: boolean;
+    caseConverter: CaseConverter;
+}): string {
     if (withGetter) {
-        return `Get${name.pascalCase.unsafeName}()`;
+        return `Get${caseConverter.pascalUnsafe(name)}()`;
     }
-    return name.pascalCase.unsafeName;
+    return caseConverter.pascalUnsafe(name);
 }
 
 function getNextReference({

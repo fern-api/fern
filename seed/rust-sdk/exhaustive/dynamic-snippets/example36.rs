@@ -11,6 +11,12 @@ async fn main() {
     client
         .endpoints
         .params
-        .modify_with_inline_path(&"param".to_string(), &"string".to_string(), None)
+        .get_with_allow_multiple_query(
+            &GetWithAllowMultipleQueryQueryRequest {
+                query: vec!["query".to_string()],
+                number: vec![1],
+            },
+            None,
+        )
         .await;
 }

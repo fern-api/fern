@@ -37,14 +37,18 @@ jobs:
             ];
 
             // --- Component labels ---
-            const componentSection = body.match(/### Which Fern component\?\s*\n\n(.+)/);
+            const componentSection = body.match(/### (?:Component|Which Fern component\?)\s*\n\n(.+)/);
             if (componentSection) {
               const component = componentSection[1].trim();
               const componentMap = {
                 "CLI": "component:cli",
+                "Fern CLI": "component:cli",
                 "SDKs": "component:sdks",
+                "SDK Generator": "component:sdks",
                 "Docs": "component:docs",
+                "Fern Docs": "component:docs",
                 "Dashboard": "component:dashboard",
+                "Fern Editor": "component:dashboard",
                 "Other": "component:other",
               };
               if (componentMap[component]) {
@@ -53,7 +57,7 @@ jobs:
             }
 
             // --- Priority labels ---
-            const prioritySection = body.match(/### How (?:urgent|important) is this\?\s*\n\n(.+)/);
+            const prioritySection = body.match(/### (?:Priority|How (?:urgent|important) is this\?)\s*\n\n(.+)/);
             if (prioritySection) {
               const priority = prioritySection[1].trim();
               const priorityMap = {
@@ -69,7 +73,7 @@ jobs:
 
             // --- SDK language labels ---
             const selectedLangs = [];
-            const langSection = body.match(/### Which SDK language\(s\)\?\s*\n\n([\s\S]*?)(?=\n###|\n*$)/);
+            const langSection = body.match(/### (?:SDK Language\(s\)|Which SDK language\(s\)\?)\s*\n\n([\s\S]*?)(?=\n###|\n*$)/);
             if (langSection) {
               const langText = langSection[1].trim();
               if (langText && langText !== "_No response_") {

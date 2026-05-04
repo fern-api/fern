@@ -1,0 +1,49 @@
+pub use crate::prelude::*;
+
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
+pub struct ChildType {
+    #[serde(flatten)]
+    pub base_type_fields: BaseType,
+    #[serde(default)]
+    pub child_name: String,
+}
+
+impl ChildType {
+    pub fn builder() -> ChildTypeBuilder {
+        <ChildTypeBuilder as Default>::default()
+    }
+}
+
+#[derive(Clone, PartialEq, Default, Debug)]
+#[non_exhaustive]
+pub struct ChildTypeBuilder {
+    base_type_fields: Option<BaseType>,
+    child_name: Option<String>,
+}
+
+impl ChildTypeBuilder {
+    pub fn base_type_fields(mut self, value: BaseType) -> Self {
+        self.base_type_fields = Some(value);
+        self
+    }
+
+    pub fn child_name(mut self, value: impl Into<String>) -> Self {
+        self.child_name = Some(value.into());
+        self
+    }
+
+    /// Consumes the builder and constructs a [`ChildType`].
+    /// This method will fail if any of the following fields are not set:
+    /// - [`base_type_fields`](ChildTypeBuilder::base_type_fields)
+    /// - [`child_name`](ChildTypeBuilder::child_name)
+    pub fn build(self) -> Result<ChildType, BuildError> {
+        Ok(ChildType {
+            base_type_fields: self
+                .base_type_fields
+                .ok_or_else(|| BuildError::missing_field("base_type_fields"))?,
+            child_name: self
+                .child_name
+                .ok_or_else(|| BuildError::missing_field("child_name"))?,
+        })
+    }
+}

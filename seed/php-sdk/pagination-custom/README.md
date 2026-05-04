@@ -38,13 +38,14 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Users\Requests\ListUsernamesRequestCustom;
+use Seed\Users\Requests\ListWithCustomPagerRequest;
 
 $client = new SeedClient(
     token: '<token>',
 );
-$client->users->listUsernamesCustom(
-    new ListUsernamesRequestCustom([
+$client->users->listWithCustomPager(
+    new ListWithCustomPagerRequest([
+        'limit' => 1,
         'startingAfter' => 'starting_after',
     ]),
 );
@@ -60,7 +61,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->users->listUsernamesCustom(...);
+    $response = $client->users->listWithCustomPager(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -77,11 +78,11 @@ List endpoints return a `Pager<T>` which lets you loop over all items and the SD
 use Seed\SeedClient;
 
 $client = new SeedClient(
-    '<token>',
+    '<YOUR_TOKEN>',
     ['baseUrl' => 'https://api.example.com'],
 );
 
-$items = $client->users->listUsernamesCustom(['limit' => 10]);
+$items = $client->users->listWithCustomPager(['limit' => 10]);
 
 foreach ($items as $item) {
     var_dump($item);
@@ -138,12 +139,17 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (Internal Server Error)
+
+The `retryStatusCodes` configuration controls which [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) status codes are retried:
+
+- `legacy` (default): Retries `408`, `429`, and all `>= 500`
+- `recommended`: Retries `408`, `429`, `502`, `503`, `504` only (excludes `500 Internal Server Error` to avoid retrying non-idempotent failures)
 
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->users->listUsernamesCustom(
+$response = $client->users->listWithCustomPager(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -156,7 +162,7 @@ $response = $client->users->listUsernamesCustom(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->users->listUsernamesCustom(
+$response = $client->users->listWithCustomPager(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level

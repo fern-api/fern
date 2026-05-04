@@ -7,14 +7,14 @@ import MixedFileDirectory
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
-                """
+                #"""
                 {
                   "id": "id",
                   "value": {
                     "key": "value"
                   }
                 }
-                """.utf8
+                """#.utf8
             )
         )
         let client = MixedFileDirectoryClient(

@@ -481,8 +481,8 @@ client = SeedContentTypes(
 
 client.service.regular_patch(
     id="id",
-    field_1="field1",
-    field_2=1,
+    field1="field1",
+    field2=1,
 )
 
 ```
@@ -507,7 +507,7 @@ client.service.regular_patch(
 <dl>
 <dd>
 
-**field_1:** `typing.Optional[str]` 
+**field1:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -515,7 +515,7 @@ client.service.regular_patch(
 <dl>
 <dd>
 
-**field_2:** `typing.Optional[int]` 
+**field2:** `typing.Optional[int]` 
     
 </dd>
 </dl>

@@ -1,0 +1,11 @@
+navigation:
+  - page: Overview
+    path: ../pages/overview.mdx
+  - section: Plants
+    contents:
+      - page: Filters
+        path: ../pages/plants/filters.mdx
+      - page: Aesthetic
+        path: ../pages/plants/aesthetic.mdx
+      - page: Embeddings
+        path: ../pages/plants/embeddings.mdx

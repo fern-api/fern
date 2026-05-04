@@ -14,6 +14,8 @@ class RequirementsTxt:
 
         content = ""
         for dep in sorted(dependencies, key=lambda d: d.name):
+            if dep.optional:
+                continue
             version = dep.version
             if version.startswith((">=", "<=", "==", ">", "<")):
                 content += f"{dep.name}{version}\n"

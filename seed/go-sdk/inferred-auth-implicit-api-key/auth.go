@@ -10,11 +10,11 @@ import (
 )
 
 var (
-	getTokenRequestFieldApiKey = big.NewInt(1 << 0)
+	getTokenRequestFieldAPIKey = big.NewInt(1 << 0)
 )
 
 type GetTokenRequest struct {
-	ApiKey string `json:"-" url:"-"`
+	APIKey string `json:"-" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -27,11 +27,11 @@ func (g *GetTokenRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetApiKey sets the ApiKey field and marks it as non-optional;
+// SetAPIKey sets the APIKey field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetTokenRequest) SetApiKey(apiKey string) {
-	g.ApiKey = apiKey
-	g.require(getTokenRequestFieldApiKey)
+func (g *GetTokenRequest) SetAPIKey(apiKey string) {
+	g.APIKey = apiKey
+	g.require(getTokenRequestFieldAPIKey)
 }
 
 // An auth token response.

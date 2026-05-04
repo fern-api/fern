@@ -86,6 +86,7 @@
     "resolveSchemaCollisions": false,
     "inferForwardCompatible": false,
     "coerceConstsTo": "enums-coerceable-to-literals",
-    "respectByteFormat": false
+    "respectByteFormat": false,
+    "shouldInferDiscriminatedUnionBaseProperties": false
   }
 }

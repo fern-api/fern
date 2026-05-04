@@ -10,7 +10,7 @@ pub struct NamedMetadata {
 
 impl NamedMetadata {
     pub fn builder() -> NamedMetadataBuilder {
-        NamedMetadataBuilder::default()
+        <NamedMetadataBuilder as Default>::default()
     }
 }
 

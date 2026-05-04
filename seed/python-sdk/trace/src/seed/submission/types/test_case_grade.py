@@ -8,7 +8,7 @@ import pydantic
 import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from ...core.serialization import FieldMetadata
-from .exception_v_2 import ExceptionV2
+from .exception_v2 import ExceptionV2
 
 
 class TestCaseGrade_Hidden(UniversalBaseModel):

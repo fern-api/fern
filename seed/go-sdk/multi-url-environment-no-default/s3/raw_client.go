@@ -31,9 +31,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) GetPresignedUrl(
+func (r *RawClient) GetPresignedURL(
 	ctx context.Context,
-	request *fern.GetPresignedUrlRequest,
+	request *fern.GetPresignedURLRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[string], error) {
 	options := core.NewRequestOptions(opts...)

@@ -1,4 +1,4 @@
-import { File } from "@fern-api/base-generator";
+import { CaseConverter, File, GeneratorError, getWireValue } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { ruby } from "@fern-api/ruby-ast";
@@ -27,15 +27,17 @@ interface EndpointTestCase {
  */
 export class WireTestGenerator {
     private readonly context: SdkGeneratorContext;
+    private readonly case: CaseConverter;
     private dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation;
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
     private wireMockConfigContent: Record<string, WireMockMapping>;
 
     constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation) {
         this.context = context;
+        this.case = context.caseConverter;
         const dynamicIr = ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate wire tests without FernIr.dynamic IR");
+            throw GeneratorError.internalError("Cannot generate wire tests without FernIr.dynamic IR");
         }
         this.dynamicIr = dynamicIr;
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
@@ -113,8 +115,8 @@ export class WireTestGenerator {
         endpoint: FernIr.HttpEndpoint,
         exampleIndex: number
     ): string {
-        const servicePathParts = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
-        const endpointName = endpoint.name.snakeCase.safeName;
+        const servicePathParts = service.name.fernFilepath.allParts.map((part) => this.case.snakeSafe(part));
+        const endpointName = this.case.snakeSafe(endpoint.name);
 
         const segments: string[] = [];
         if (servicePathParts.length > 0) {
@@ -140,24 +142,29 @@ export class WireTestGenerator {
 
         // Test class inherits from WireMockTestCase which provides helper methods
         lines.push(`class ${this.toPascalCase(serviceName)}WireTest < WireMockTestCase`);
-        lines.push("");
 
         // Setup method that creates the client once (base class handles skip logic)
         lines.push(...this.generateSetupMethod());
-        lines.push("");
 
         // Test methods
+        const testMethods: string[][] = [];
         for (const { snippetAst, endpoint, testId } of endpointTestCases.values()) {
             const testMethod = await this.generateEndpointTestMethod(endpoint, snippetAst, serviceName, testId);
             if (testMethod) {
-                lines.push(...testMethod);
-                lines.push("");
+                testMethods.push(testMethod);
+            }
+        }
+        for (let i = 0; i < testMethods.length; i++) {
+            lines.push("");
+            const method = testMethods[i];
+            if (method != null) {
+                lines.push(...method);
             }
         }
 
         lines.push("end");
 
-        return lines.join("\n");
+        return lines.join("\n") + "\n";
     }
 
     /**
@@ -202,14 +209,18 @@ export class WireTestGenerator {
         for (const scheme of this.context.ir.auth.schemes) {
             switch (scheme.type) {
                 case "bearer":
-                    authParams.push(`${scheme.token.snakeCase.safeName}: "<token>"`);
+                    authParams.push(`${this.case.snakeSafe(scheme.token)}: "<token>"`);
                     break;
                 case "header":
-                    authParams.push(`${scheme.name.name.snakeCase.safeName}: "test-api-key"`);
+                    authParams.push(`${this.case.snakeSafe(scheme.name)}: "test-api-key"`);
                     break;
                 case "basic":
-                    authParams.push(`${scheme.username.snakeCase.safeName}: "test-username"`);
-                    authParams.push(`${scheme.password.snakeCase.safeName}: "test-password"`);
+                    if (!scheme.usernameOmit) {
+                        authParams.push(`${this.case.snakeSafe(scheme.username)}: "test-username"`);
+                    }
+                    if (!scheme.passwordOmit) {
+                        authParams.push(`${this.case.snakeSafe(scheme.password)}: "test-password"`);
+                    }
                     break;
                 case "oauth":
                     authParams.push('client_id: "test-client-id"');
@@ -256,7 +267,7 @@ export class WireTestGenerator {
             for (const property of requestBody.properties) {
                 const literal = this.maybeLiteral(property.valueType);
                 if (literal == null) {
-                    const paramName = property.name.name.snakeCase.safeName;
+                    const paramName = this.case.snakeSafe(property.name);
                     params.push(`${paramName}: "test-${paramName.replace(/_/g, "-")}"`);
                 }
             }
@@ -266,7 +277,7 @@ export class WireTestGenerator {
         for (const header of endpoint.headers) {
             const literal = this.maybeLiteral(header.valueType);
             if (literal == null) {
-                const paramName = header.name.name.snakeCase.safeName;
+                const paramName = this.case.snakeSafe(header.name);
                 params.push(`${paramName}: "test-${paramName.replace(/_/g, "-")}"`);
             }
         }
@@ -319,14 +330,21 @@ export class WireTestGenerator {
             if (isLazyPagination) {
                 // For lazy paginated endpoints, we need to trigger the first HTTP request
                 // by calling .pages.next_page on the returned iterator
-                lines.push(`    result = begin`);
                 const snippetLines = snippetCode.split("\n");
-                for (const line of snippetLines) {
+                for (let i = 0; i < snippetLines.length; i++) {
+                    const line = snippetLines[i] ?? "";
                     if (line.trim()) {
-                        lines.push(`      ${line}`);
+                        // Continuation lines keep the snippet's own 2-space indent and get
+                        // the same 4-space test-method prefix as the `result =` line, so
+                        // multi-line method calls indent one step past the method start
+                        // (matching rubocop's Layout/FirstArgumentIndentation).
+                        if (i === 0) {
+                            lines.push(`    result = ${line}`);
+                        } else {
+                            lines.push(`    ${line}`);
+                        }
                     }
                 }
-                lines.push(`    end`);
                 lines.push(`    result.pages.next_page`);
             } else {
                 const snippetLines = snippetCode.split("\n");
@@ -346,6 +364,19 @@ export class WireTestGenerator {
             lines.push(`      query_params: ${queryParamsCode},`);
             lines.push(`      expected: 1`);
             lines.push(`    )`);
+
+            // Verify Authorization header when basic auth is configured
+            const expectedAuthHeader = this.buildExpectedAuthorizationHeader();
+            if (expectedAuthHeader != null) {
+                lines.push(``);
+                lines.push(`    verify_authorization_header(`);
+                lines.push(`      test_id: test_id,`);
+                lines.push(`      method: "${endpoint.method}",`);
+                lines.push(`      url_path: "${basePath}",`);
+                lines.push(`      expected_value: "${expectedAuthHeader}"`);
+                lines.push(`    )`);
+            }
+
             lines.push("  end");
 
             return lines;
@@ -417,7 +448,7 @@ export class WireTestGenerator {
             const isOptional =
                 queryParam.valueType.type === "container" && queryParam.valueType.container.type === "optional";
             if (!isOptional) {
-                requiredQueryParamNames.add(queryParam.name.wireValue);
+                requiredQueryParamNames.add(getWireValue(queryParam.name));
             }
         }
 
@@ -427,8 +458,13 @@ export class WireTestGenerator {
             // but prioritize required params to avoid verifying optional params
             if (paramValue != null && requiredQueryParamNames.has(paramName)) {
                 const key = JSON.stringify(paramName);
-                const value = JSON.stringify(String(paramValue));
-                queryParamEntries.push(`${key} => ${value}`);
+                if (Array.isArray(paramValue) && paramValue.length > 1) {
+                    const items = paramValue.map((v: unknown) => JSON.stringify(String(v)));
+                    queryParamEntries.push(`${key} => [${items.join(", ")}]`);
+                } else {
+                    const value = JSON.stringify(String(paramValue));
+                    queryParamEntries.push(`${key} => ${value}`);
+                }
             }
         }
 
@@ -440,7 +476,7 @@ export class WireTestGenerator {
     }
 
     private getTestMethodName(endpoint: FernIr.HttpEndpoint, serviceName: string): string {
-        const endpointName = endpoint.name.snakeCase.safeName;
+        const endpointName = this.case.snakeSafe(endpoint.name);
         return `test_${serviceName}_${endpointName}_with_wiremock`;
     }
 
@@ -491,7 +527,7 @@ export class WireTestGenerator {
             // The Ruby SDK doesn't generate methods for root-level endpoints on the main client
             if (!service.name?.fernFilepath?.allParts || service.name.fernFilepath.allParts.length === 0) {
                 this.context.logger.debug(
-                    `Skipping root-level service for wire tests: ${service.name?.fernFilepath?.file?.snakeCase?.safeName ?? "unknown"}`
+                    `Skipping root-level service for wire tests: ${service.name?.fernFilepath?.file != null ? this.case.snakeSafe(service.name.fernFilepath.file) : "unknown"}`
                 );
                 continue;
             }
@@ -504,7 +540,7 @@ export class WireTestGenerator {
     }
 
     private getFormattedServiceName(service: FernIr.HttpService): string {
-        return service.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName).join("_") || "root";
+        return service.name?.fernFilepath?.allParts?.map((part) => this.case.snakeSafe(part)).join("_") || "root";
     }
 
     private wiremockMappingKey({
@@ -528,6 +564,26 @@ export class WireTestGenerator {
             out[key] = mapping;
         }
         return out;
+    }
+
+    /**
+     * Builds the expected Authorization header value for basic auth.
+     * Returns the full header value (e.g., "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk")
+     * or null if no basic auth scheme is configured.
+     */
+    private buildExpectedAuthorizationHeader(): string | null {
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "basic") {
+                if (scheme.usernameOmit && scheme.passwordOmit) {
+                    continue;
+                }
+                const username = scheme.usernameOmit ? "" : "test-username";
+                const password = scheme.passwordOmit ? "" : "test-password";
+                const encoded = Buffer.from(`${username}:${password}`).toString("base64");
+                return `Basic ${encoded}`;
+            }
+        }
+        return null;
     }
 
     private toPascalCase(str: string): string {

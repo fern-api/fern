@@ -9,7 +9,7 @@ pub struct TypeWithOptionalUnion {
 
 impl TypeWithOptionalUnion {
     pub fn builder() -> TypeWithOptionalUnionBuilder {
-        TypeWithOptionalUnionBuilder::default()
+        <TypeWithOptionalUnionBuilder as Default>::default()
     }
 }
 

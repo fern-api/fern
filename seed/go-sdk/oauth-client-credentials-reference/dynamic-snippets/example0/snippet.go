@@ -19,7 +19,7 @@ func do() {
         ),
     )
     request := &fern.GetTokenRequest{
-        ClientId: "client_id",
+        ClientID: "client_id",
         ClientSecret: "client_secret",
     }
     client.Auth.GetToken(

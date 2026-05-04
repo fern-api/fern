@@ -1,6 +1,6 @@
-import { File } from "@fern-api/base-generator";
+import { File, GeneratorError } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
+import { isEqualToMatcher, WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -29,7 +29,9 @@ export class WireTestSetupGenerator {
     }
 
     public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
-        return new WireMock().convertToWireMock(ir);
+        // ir-sdk versions may differ between ruby-v2-sdk and mock-utils;
+        // 66.3.0 is a strict superset (adds optional fields only), so this is safe.
+        return new WireMock().convertToWireMock(ir as Parameters<WireMock["convertToWireMock"]>[0]);
     }
 
     /**
@@ -52,12 +54,11 @@ export class WireTestSetupGenerator {
         for (const mapping of stubMapping.mappings) {
             if (mapping.request.queryParameters) {
                 for (const [, value] of Object.entries(mapping.request.queryParameters)) {
-                    const paramValue = value as { equalTo: string };
-                    if (
-                        paramValue.equalTo != null &&
-                        WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(paramValue.equalTo)
-                    ) {
-                        paramValue.equalTo = paramValue.equalTo.replace(".000", "");
+                    if (!isEqualToMatcher(value)) {
+                        continue;
+                    }
+                    if (WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(value.equalTo)) {
+                        value.equalTo = value.equalTo.replace(".000", "");
                     }
                 }
             }
@@ -88,7 +89,7 @@ export class WireTestSetupGenerator {
         const wireMockConfigFile = new File(
             "wiremock-mappings.json",
             RelativeFilePath.of("wiremock"),
-            JSON.stringify(wireMockConfigContent)
+            JSON.stringify(wireMockConfigContent, null, 2)
         );
         this.context.project.addRawFiles(wireMockConfigFile);
         this.context.logger.debug("Generated wiremock-mappings.json for WireMock");
@@ -177,7 +178,7 @@ export class WireTestSetupGenerator {
         const byte8 = bytes[8];
 
         if (byte6 === undefined || byte8 === undefined) {
-            throw new Error("Invalid byte array: missing required bytes");
+            throw GeneratorError.internalError("Invalid byte array: missing required bytes");
         }
 
         bytes[6] = (byte6 & 0x0f) | 0x40;
@@ -261,14 +262,12 @@ require "${rootFolderName}"
 # This class provides helper methods for verifying requests made to WireMock
 # and manages the test lifecycle for integration tests.
 class WireMockTestCase < Minitest::Test
-  WIREMOCK_BASE_URL = ENV['WIREMOCK_URL'] || 'http://localhost:8080'
-  WIREMOCK_ADMIN_URL = "#{WIREMOCK_BASE_URL}/__admin"
+  WIREMOCK_BASE_URL = (ENV.fetch("WIREMOCK_URL", nil) || "http://localhost:8080").freeze
+  WIREMOCK_ADMIN_URL = "#{WIREMOCK_BASE_URL}/__admin".freeze
 
   def setup
     super
-    unless ENV["RUN_WIRE_TESTS"] == "true"
-      skip "Wire tests are disabled by default. Set RUN_WIRE_TESTS=true to enable them."
-    end
+    skip "Wire tests are disabled by default. Set RUN_WIRE_TESTS=true to enable them." unless ENV["RUN_WIRE_TESTS"] == "true"
   end
 
   # Verifies the number of requests made to WireMock filtered by test ID for concurrency safety.
@@ -278,8 +277,8 @@ class WireMockTestCase < Minitest::Test
   # @param url_path [String] The URL path to match
   # @param query_params [Hash, nil] Query parameters to match
   # @param expected [Integer] Expected number of requests
-  def verify_request_count(test_id:, method:, url_path:, query_params: nil, expected:)
-    admin_url = ENV['WIREMOCK_URL'] ? "#{ENV['WIREMOCK_URL']}/__admin" : WIREMOCK_ADMIN_URL
+  def verify_request_count(test_id:, method:, url_path:, expected:, query_params: nil)
+    admin_url = ENV["WIREMOCK_URL"] ? "#{ENV["WIREMOCK_URL"]}/__admin" : WIREMOCK_ADMIN_URL
     uri = URI("#{admin_url}/requests/find")
     http = Net::HTTP.new(uri.host, uri.port)
     post_request = Net::HTTP::Post.new(uri.path, { "Content-Type" => "application/json" })
@@ -287,7 +286,13 @@ class WireMockTestCase < Minitest::Test
     request_body = { "method" => method, "urlPath" => url_path }
     request_body["headers"] = { "X-Test-Id" => { "equalTo" => test_id } }
     if query_params
-      request_body["queryParameters"] = query_params.transform_values { |v| { "equalTo" => v } }
+      request_body["queryParameters"] = query_params.transform_values do |v|
+        if v.is_a?(Array)
+          { "hasExactly" => v.map { |item| { "equalTo" => item } } }
+        else
+          { "equalTo" => v }
+        end
+      end
     end
 
     post_request.body = request_body.to_json
@@ -296,6 +301,32 @@ class WireMockTestCase < Minitest::Test
     requests = result["requests"] || []
 
     assert_equal expected, requests.length, "Expected #{expected} requests, found #{requests.length}"
+  end
+
+  # Verifies that the Authorization header on captured requests matches the expected value.
+  #
+  # @param test_id [String] The test ID used to filter requests
+  # @param method [String] The HTTP method (GET, POST, etc.)
+  # @param url_path [String] The URL path to match
+  # @param expected_value [String] The expected Authorization header value
+  def verify_authorization_header(test_id:, method:, url_path:, expected_value:)
+    admin_url = ENV["WIREMOCK_URL"] ? "#{ENV["WIREMOCK_URL"]}/__admin" : WIREMOCK_ADMIN_URL
+    uri = URI("#{admin_url}/requests/find")
+    http = Net::HTTP.new(uri.host, uri.port)
+    post_request = Net::HTTP::Post.new(uri.path, { "Content-Type" => "application/json" })
+
+    request_body = { "method" => method, "urlPath" => url_path }
+    request_body["headers"] = { "X-Test-Id" => { "equalTo" => test_id } }
+
+    post_request.body = request_body.to_json
+    response = http.request(post_request)
+    result = JSON.parse(response.body)
+    requests = result["requests"] || []
+
+    refute_empty requests, "No requests found for test_id #{test_id}"
+    actual_header = requests.first.dig("request", "headers", "Authorization")
+
+    assert_equal expected_value, actual_header, "Expected Authorization header '#{expected_value}', got '#{actual_header}'"
   end
 end
 `;
@@ -333,15 +364,13 @@ WIREMOCK_COMPOSE_FILE = File.expand_path("../../wiremock/docker-compose.test.yml
 # Start WireMock container when this file is required
 if ENV["RUN_WIRE_TESTS"] == "true" && File.exist?(WIREMOCK_COMPOSE_FILE) && !ENV["WIREMOCK_URL"]
   puts "Starting WireMock container..."
-  unless system("docker compose -f #{WIREMOCK_COMPOSE_FILE} up -d --wait")
-    warn "Failed to start WireMock container"
-  end
+  warn "Failed to start WireMock container" unless system("docker compose -f #{WIREMOCK_COMPOSE_FILE} up -d --wait")
 
   # Discover the dynamically assigned port and set WIREMOCK_URL
   port_output = \`docker compose -f #{WIREMOCK_COMPOSE_FILE} port wiremock 8080 2>&1\`.strip
   if port_output =~ /:(\\d+)$/
-    ENV["WIREMOCK_URL"] = "http://localhost:#{$1}"
-    puts "WireMock container is ready at #{ENV['WIREMOCK_URL']}"
+    ENV["WIREMOCK_URL"] = "http://localhost:#{Regexp.last_match(1)}"
+    puts "WireMock container is ready at #{ENV.fetch("WIREMOCK_URL", nil)}"
   else
     ENV["WIREMOCK_URL"] = "http://localhost:8080"
     puts "WireMock container is ready (default port 8080)"

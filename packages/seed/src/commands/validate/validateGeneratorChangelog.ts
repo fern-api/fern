@@ -7,6 +7,7 @@ import yaml from "js-yaml";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
 import { validateAngleBracketEscaping } from "./angleBracketValidator.js";
 import { assertValidSemVerChangeOrThrow, assertValidSemVerOrThrow } from "./semVerUtils.js";
+import { validateStagedChanges } from "./validateStagedChanges.js";
 
 const parseReleaseOrThrow = serializers.generators.GeneratorReleaseRequest.parseOrThrow;
 
@@ -90,6 +91,9 @@ async function validateGeneratorChangelog({
             }
         }
     }
+
+    hasErrors = (await validateStagedChanges({ absolutePathToChangelog, context, label: generatorId })) || hasErrors;
+
     if (!hasErrors) {
         context.logger.info(chalk.green("All changelogs are valid"));
     } else {

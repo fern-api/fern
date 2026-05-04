@@ -18,7 +18,7 @@ func do() {
         ),
     )
     request := &fern.GetRequestC{
-        Id: "id",
+        ID: "id",
         Verbose: fern.Bool(
             true,
         ),

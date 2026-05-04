@@ -15,7 +15,7 @@ func do() {
         ),
     )
     request := &fern.GetContactsRequest{
-        Id: "id",
+        ID: "id",
     }
     client.Contacts.Get(
         context.TODO(),

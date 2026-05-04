@@ -11,6 +11,7 @@ The Seed Swift library provides convenient access to the Seed APIs from Swift.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Errors](#errors)
 - [Request Types](#request-types)
 - [Advanced](#advanced)
@@ -67,6 +68,19 @@ private func main() async throws {
 try await main()
 ```
 
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```swift
+import Api
+
+let client = ApiClient(
+    token: "YOUR_API_KEY",
+    environment: .default
+)
+```
+
 ## Errors
 
 The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
@@ -74,7 +88,7 @@ The SDK throws a single error enum for all failures. Client-side issues encoding
 ```swift
 import Api
 
-let client = ApiClient(...)
+let client = ApiClient(token: "YOUR_API_KEY")
 
 do {
     let response = try await client.uploadJsonDocument(...)
@@ -154,7 +168,7 @@ import Foundation
 import Api
 
 let client = ApiClient(
-    ...,
+    token: "YOUR_API_KEY",
     urlSession: // Provide your implementation here
 )
 ```

@@ -1,6 +1,11 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { createMockTypeContext, createMockTypeSchemaContext, createQueryParameter } from "@fern-typescript/test-utils";
+import {
+    caseConverter,
+    createMockTypeContext,
+    createMockTypeSchemaContext,
+    createQueryParameter
+} from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { assert, describe, expect, it } from "vitest";
 
@@ -16,7 +21,8 @@ function createMockContext(opts?: {
         retainOriginalCasing: opts?.retainOriginalCasing ?? false,
         omitUndefined: opts?.omitUndefined ?? false,
         type: createMockTypeContext(),
-        typeSchema: createMockTypeSchemaContext({ useSerializerPrefix: true })
+        typeSchema: createMockTypeSchemaContext({ useSerializerPrefix: true }),
+        case: caseConverter
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;
 }
@@ -499,34 +505,170 @@ describe("GeneratedQueryParams", () => {
             const text = getTextOfTsNode(firstStmt);
             expect(text).toMatchSnapshot();
         });
-    });
 
-    describe("getReferenceTo", () => {
-        it("returns spread with query params when parameters exist", () => {
-            const queryParams = [
-                createQueryParameter("name", FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))
-            ];
+        it("emits Array.isArray ternary for undiscriminated union with allowMultiple: false (no serde)", () => {
+            const namedType = FernIr.TypeReference.named({
+                typeId: "type_EventTypeParam",
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                name: {
+                    originalName: "EventTypeParam",
+                    camelCase: { unsafeName: "eventTypeParam", safeName: "eventTypeParam" },
+                    snakeCase: { unsafeName: "event_type_param", safeName: "event_type_param" },
+                    screamingSnakeCase: { unsafeName: "EVENT_TYPE_PARAM", safeName: "EVENT_TYPE_PARAM" },
+                    pascalCase: { unsafeName: "EventTypeParam", safeName: "EventTypeParam" }
+                },
+                displayName: undefined,
+                default: undefined,
+                inline: undefined
+            });
+            const queryParams = [createQueryParameter("eventType", namedType)];
+            const mockContext = createMockContext({ includeSerdeLayer: false });
+            mockContext.type.getTypeDeclaration = () => ({
+                shape: FernIr.Type.undiscriminatedUnion({
+                    members: [
+                        { type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }), docs: undefined },
+                        {
+                            type: FernIr.TypeReference.container(
+                                FernIr.ContainerType.list(
+                                    FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                                )
+                            ),
+                            docs: undefined
+                        }
+                    ],
+                    baseProperties: undefined
+                })
+            });
 
             const generator = new GeneratedQueryParams({
                 queryParameters: queryParams,
                 referenceToQueryParameterProperty: defaultReferenceToQueryParameterProperty
             });
 
-            const result = generator.getReferenceTo();
-            assert(result != null, "expected getReferenceTo to return an expression when parameters exist");
-            const text = getTextOfTsNode(result);
+            const statements = generator.getBuildStatements(mockContext);
+            expect(statements).toHaveLength(1);
+            const firstStmt = statements[0];
+            assert(firstStmt != null, "expected at least one statement");
+            const text = getTextOfTsNode(firstStmt);
+            expect(text).toContain("Array.isArray");
+            expect(text).toContain(".map");
             expect(text).toMatchSnapshot();
         });
 
-        it("returns only requestOptions queryParams when no parameters", () => {
+        it("emits Array.isArray ternary for optional<undiscriminated union> with allowMultiple: false (serde)", () => {
+            const namedType = FernIr.TypeReference.named({
+                typeId: "type_EventTypeParam",
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                name: {
+                    originalName: "EventTypeParam",
+                    camelCase: { unsafeName: "eventTypeParam", safeName: "eventTypeParam" },
+                    snakeCase: { unsafeName: "event_type_param", safeName: "event_type_param" },
+                    screamingSnakeCase: { unsafeName: "EVENT_TYPE_PARAM", safeName: "EVENT_TYPE_PARAM" },
+                    pascalCase: { unsafeName: "EventTypeParam", safeName: "EventTypeParam" }
+                },
+                displayName: undefined,
+                default: undefined,
+                inline: undefined
+            });
+            const optionalNamedType = FernIr.TypeReference.container(FernIr.ContainerType.optional(namedType));
+            const queryParams = [createQueryParameter("eventType", optionalNamedType)];
+            const mockContext = createMockContext({ includeSerdeLayer: true });
+            mockContext.type.getTypeDeclaration = () => ({
+                shape: FernIr.Type.undiscriminatedUnion({
+                    members: [
+                        { type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }), docs: undefined },
+                        {
+                            type: FernIr.TypeReference.container(
+                                FernIr.ContainerType.list(
+                                    FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                                )
+                            ),
+                            docs: undefined
+                        }
+                    ],
+                    baseProperties: undefined
+                })
+            });
+
             const generator = new GeneratedQueryParams({
-                queryParameters: undefined,
+                queryParameters: queryParams,
                 referenceToQueryParameterProperty: defaultReferenceToQueryParameterProperty
             });
 
-            const result = generator.getReferenceTo();
-            assert(result != null, "expected getReferenceTo to return an expression when no parameters");
-            const text = getTextOfTsNode(result);
+            const statements = generator.getBuildStatements(mockContext);
+            expect(statements).toHaveLength(1);
+            const firstStmt = statements[0];
+            assert(firstStmt != null, "expected at least one statement");
+            const text = getTextOfTsNode(firstStmt);
+            expect(text).toContain("Array.isArray");
+            expect(text).toContain(".map");
+            expect(text).toMatchSnapshot();
+        });
+
+        it("emits Array.isArray ternary for alias resolving to an undiscriminated union", () => {
+            const aliasNamedType = FernIr.TypeReference.named({
+                typeId: "type_EventAlias",
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                name: {
+                    originalName: "EventAlias",
+                    camelCase: { unsafeName: "eventAlias", safeName: "eventAlias" },
+                    snakeCase: { unsafeName: "event_alias", safeName: "event_alias" },
+                    screamingSnakeCase: { unsafeName: "EVENT_ALIAS", safeName: "EVENT_ALIAS" },
+                    pascalCase: { unsafeName: "EventAlias", safeName: "EventAlias" }
+                },
+                displayName: undefined,
+                default: undefined,
+                inline: undefined
+            });
+            const unionNamedType = FernIr.TypeReference.named({
+                typeId: "type_EventTypeParam",
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                name: {
+                    originalName: "EventTypeParam",
+                    camelCase: { unsafeName: "eventTypeParam", safeName: "eventTypeParam" },
+                    snakeCase: { unsafeName: "event_type_param", safeName: "event_type_param" },
+                    screamingSnakeCase: { unsafeName: "EVENT_TYPE_PARAM", safeName: "EVENT_TYPE_PARAM" },
+                    pascalCase: { unsafeName: "EventTypeParam", safeName: "EventTypeParam" }
+                },
+                displayName: undefined,
+                default: undefined,
+                inline: undefined
+            });
+            const queryParams = [createQueryParameter("eventType", aliasNamedType)];
+            const mockContext = createMockContext();
+            mockContext.type.getTypeDeclaration = (typeRef: FernIr.TypeReference) => {
+                if (typeRef.type === "named" && typeRef.typeId === "type_EventAlias") {
+                    return {
+                        shape: FernIr.Type.alias({
+                            aliasOf: unionNamedType,
+                            resolvedType: FernIr.ResolvedTypeReference.named({
+                                name: unionNamedType,
+                                shape: FernIr.ShapeType.UndiscriminatedUnion
+                            })
+                        })
+                    };
+                }
+                return {
+                    shape: FernIr.Type.undiscriminatedUnion({
+                        members: [
+                            { type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }), docs: undefined }
+                        ],
+                        baseProperties: undefined
+                    })
+                };
+            };
+
+            const generator = new GeneratedQueryParams({
+                queryParameters: queryParams,
+                referenceToQueryParameterProperty: defaultReferenceToQueryParameterProperty
+            });
+
+            const statements = generator.getBuildStatements(mockContext);
+            expect(statements).toHaveLength(1);
+            const firstStmt = statements[0];
+            assert(firstStmt != null, "expected at least one statement");
+            const text = getTextOfTsNode(firstStmt);
+            expect(text).toContain("Array.isArray");
             expect(text).toMatchSnapshot();
         });
     });

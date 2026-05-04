@@ -23,10 +23,7 @@ describe("OrganizationsClient", () => {
             .build();
 
         const response = await client.organizations.getOrganization("organization_id");
-        expect(response).toEqual({
-            name: "name",
-            tags: ["tags", "tags"],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getOrganizationUser", async () => {
@@ -48,10 +45,7 @@ describe("OrganizationsClient", () => {
             .build();
 
         const response = await client.organizations.getOrganizationUser("organization_id", "user_id");
-        expect(response).toEqual({
-            name: "name",
-            tags: ["tags", "tags"],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("searchOrganizations", async () => {
@@ -78,15 +72,6 @@ describe("OrganizationsClient", () => {
         const response = await client.organizations.searchOrganizations("organization_id", {
             limit: 1,
         });
-        expect(response).toEqual([
-            {
-                name: "name",
-                tags: ["tags", "tags"],
-            },
-            {
-                name: "name",
-                tags: ["tags", "tags"],
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 });

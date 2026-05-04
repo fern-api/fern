@@ -10,11 +10,11 @@ import (
 )
 
 var (
-	putRequestFieldId = big.NewInt(1 << 0)
+	putRequestFieldID = big.NewInt(1 << 0)
 )
 
 type PutRequest struct {
-	Id string `json:"-" url:"-"`
+	ID string `json:"-" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -27,11 +27,11 @@ func (p *PutRequest) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PutRequest) SetId(id string) {
-	p.Id = id
-	p.require(putRequestFieldId)
+func (p *PutRequest) SetID(id string) {
+	p.ID = id
+	p.require(putRequestFieldID)
 }
 
 var (
@@ -169,7 +169,7 @@ func (e *Error) String() string {
 type ErrorCategory string
 
 const (
-	ErrorCategoryApiError            ErrorCategory = "API_ERROR"
+	ErrorCategoryAPIError            ErrorCategory = "API_ERROR"
 	ErrorCategoryAuthenticationError ErrorCategory = "AUTHENTICATION_ERROR"
 	ErrorCategoryInvalidRequestError ErrorCategory = "INVALID_REQUEST_ERROR"
 )
@@ -177,7 +177,7 @@ const (
 func NewErrorCategoryFromString(s string) (ErrorCategory, error) {
 	switch s {
 	case "API_ERROR":
-		return ErrorCategoryApiError, nil
+		return ErrorCategoryAPIError, nil
 	case "AUTHENTICATION_ERROR":
 		return ErrorCategoryAuthenticationError, nil
 	case "INVALID_REQUEST_ERROR":

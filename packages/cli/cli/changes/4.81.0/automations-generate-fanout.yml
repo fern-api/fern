@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern automations generate` now fans out across every eligible generator when targeting
+    flags are omitted. It continues past per-generator failures, auto-writes a markdown
+    summary to `$GITHUB_STEP_SUMMARY` when running in GitHub Actions, and optionally emits
+    a CI-neutral JSON summary via `--json-file-output <path>`. Generators with
+    `automations.generate: false` are silently skipped during fan-out; explicit targeting
+    of an opted-out generator is now rejected with a clear error. Exit code is non-zero
+    if any generator fails.
+  type: feat

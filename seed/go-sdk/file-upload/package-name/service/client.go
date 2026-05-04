@@ -177,12 +177,28 @@ func (c *Client) WithInlineType(
 	return response.Body, nil
 }
 
-func (c *Client) WithJsonProperty(
+func (c *Client) WithJSONProperty(
 	ctx context.Context,
-	request *upload.WithJsonPropertyRequest,
+	request *upload.WithJSONPropertyRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.WithJsonProperty(
+	response, err := c.WithRawResponse.WithJSONProperty(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
+}
+
+func (c *Client) WithRefBody(
+	ctx context.Context,
+	request *upload.WithRefBodyRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.WithRefBody(
 		ctx,
 		request,
 		opts...,

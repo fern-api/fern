@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.users.listWithGlobalConfig(offset: 1)
+    _ = try await client.users.listUsernames(startingAfter: "starting_after")
 }
 
 try await main()

@@ -24,10 +24,10 @@ pub mod playlist;
 pub mod problem;
 pub mod submission;
 pub mod sysprop;
-pub mod v_2;
+pub mod v2;
 pub struct TraceClient {
     pub config: ClientConfig,
-    pub v_2: V2Client,
+    pub v2: V2Client,
     pub admin: AdminClient,
     pub homepage: HomepageClient,
     pub migration: MigrationClient,
@@ -41,7 +41,7 @@ impl TraceClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            v_2: V2Client::new(config.clone())?,
+            v2: V2Client::new(config.clone())?,
             admin: AdminClient::new(config.clone())?,
             homepage: HomepageClient::new(config.clone())?,
             migration: MigrationClient::new(config.clone())?,
@@ -62,4 +62,4 @@ pub use playlist::PlaylistClient;
 pub use problem::ProblemClient;
 pub use submission::SubmissionClient;
 pub use sysprop::SyspropClient;
-pub use v_2::V2Client;
+pub use v2::V2Client;

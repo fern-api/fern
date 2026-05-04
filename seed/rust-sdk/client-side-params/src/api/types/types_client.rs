@@ -97,7 +97,7 @@ pub struct Client {
 
 impl Client {
     pub fn builder() -> ClientBuilder {
-        ClientBuilder::default()
+        <ClientBuilder as Default>::default()
     }
 }
 

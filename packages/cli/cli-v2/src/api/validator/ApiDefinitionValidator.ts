@@ -1,4 +1,4 @@
-import type { FernWorkspace, OpenAPISpec, ProtobufSpec } from "@fern-api/api-workspace-commons";
+import type { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { ValidationViolation, validateFernWorkspace } from "@fern-api/fern-definition-validator";
 import { AbsoluteFilePath, dirname } from "@fern-api/fs-utils";
 import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
@@ -6,7 +6,7 @@ import { validateOSSWorkspace } from "@fern-api/oss-validator";
 import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter.js";
 import type { Context } from "../../context/Context.js";
 import { Task } from "../../ui/Task.js";
-import { LegacyApiSpecAdapter } from "../adapter/LegacyApiSpecAdapter.js";
+import { LegacyApiSpecAdapter, partitionV1Specs } from "../adapter/LegacyApiSpecAdapter.js";
 import type { ApiDefinition } from "../config/ApiDefinition.js";
 import type { ApiSpec } from "../config/ApiSpec.js";
 import { isConjureSpec } from "../config/ConjureSpec.js";
@@ -131,23 +131,12 @@ export class ApiDefinitionValidator {
 
         const specAdapter = new LegacyApiSpecAdapter({ context: this.context });
         const v1Specs = specAdapter.convertAll(ossSpecs);
+        const { filteredSpecs, allSpecs } = partitionV1Specs(v1Specs);
 
-        const filteredSpecs = v1Specs.filter((spec): spec is OpenAPISpec | ProtobufSpec => {
-            if (spec.type === "openrpc") {
-                return false;
-            }
-            if (spec.type === "protobuf" && !spec.fromOpenAPI) {
-                return false;
-            }
-            return true;
-        });
-
-        const allSpecs = v1Specs.filter((spec) => {
-            if (spec.type === "protobuf" && spec.fromOpenAPI) {
-                return false;
-            }
-            return true;
-        });
+        // GraphQL-only APIs have no IR-generating specs; nothing to validate via OSSWorkspace.
+        if (filteredSpecs.length === 0) {
+            return violations;
+        }
 
         const ossWorkspace = new OSSWorkspace({
             specs: filteredSpecs,

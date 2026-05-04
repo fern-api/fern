@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix 3 high container vulnerabilities: update python3/python3-libs to
+    3.9.25-1.amzn2023.0.4 (ALAS2023-2026-1583) and libnghttp2 to
+    1.59.0-3.amzn2023.0.2 (ALAS2023-2026-1542, CVE-2026-27135).
+  type: chore

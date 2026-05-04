@@ -10,7 +10,7 @@ pub struct RegularResponse {
 
 impl RegularResponse {
     pub fn builder() -> RegularResponseBuilder {
-        RegularResponseBuilder::default()
+        <RegularResponseBuilder as Default>::default()
     }
 }
 

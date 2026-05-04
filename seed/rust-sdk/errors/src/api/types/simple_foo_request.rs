@@ -8,7 +8,7 @@ pub struct FooRequest {
 
 impl FooRequest {
     pub fn builder() -> FooRequestBuilder {
-        FooRequestBuilder::default()
+        <FooRequestBuilder as Default>::default()
     }
 }
 

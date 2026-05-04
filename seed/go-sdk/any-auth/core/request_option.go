@@ -31,12 +31,11 @@ type RequestOptions struct {
 	MaxBufSize      int
 	tokenGetter     TokenGetter
 	Token           string
-	ApiKey          string
+	APIKey          string
 	ClientID        string
 	ClientSecret    string
 	Username        string
 	Password        string
-	ClientId        string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -62,8 +61,8 @@ func (r *RequestOptions) ToHeader() http.Header {
 	if r.Token != "" {
 		header.Set("Authorization", "Bearer "+r.Token)
 	}
-	if r.ApiKey != "" {
-		header.Set("X-API-Key", fmt.Sprintf("%v", r.ApiKey))
+	if r.APIKey != "" {
+		header.Set("X-API-Key", fmt.Sprintf("%v", r.APIKey))
 	}
 	if r.Username != "" || r.Password != "" {
 		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(r.Username+":"+r.Password)))
@@ -157,13 +156,13 @@ func (t *TokenOption) applyRequestOptions(opts *RequestOptions) {
 	opts.Token = t.Token
 }
 
-// ApiKeyOption implements the RequestOption interface.
-type ApiKeyOption struct {
-	ApiKey string
+// APIKeyOption implements the RequestOption interface.
+type APIKeyOption struct {
+	APIKey string
 }
 
-func (a *ApiKeyOption) applyRequestOptions(opts *RequestOptions) {
-	opts.ApiKey = a.ApiKey
+func (a *APIKeyOption) applyRequestOptions(opts *RequestOptions) {
+	opts.APIKey = a.APIKey
 }
 
 // ClientIDOption implements the RequestOption interface.
@@ -210,13 +209,4 @@ type BasicAuthOption struct {
 func (b *BasicAuthOption) applyRequestOptions(opts *RequestOptions) {
 	opts.Username = b.Username
 	opts.Password = b.Password
-}
-
-// ClientIdOption implements the RequestOption interface.
-type ClientIdOption struct {
-	ClientId string
-}
-
-func (c *ClientIdOption) applyRequestOptions(opts *RequestOptions) {
-	opts.ClientId = c.ClientId
 }

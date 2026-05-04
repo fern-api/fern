@@ -94,13 +94,13 @@ func (c *CreateOrganizationRequest) String() string {
 }
 
 var (
-	organizationFieldId    = big.NewInt(1 << 0)
+	organizationFieldID    = big.NewInt(1 << 0)
 	organizationFieldName  = big.NewInt(1 << 1)
 	organizationFieldUsers = big.NewInt(1 << 2)
 )
 
 type Organization struct {
-	Id    Id      `json:"id" url:"id"`
+	ID    ID      `json:"id" url:"id"`
 	Name  string  `json:"name" url:"name"`
 	Users []*User `json:"users" url:"users"`
 
@@ -111,11 +111,11 @@ type Organization struct {
 	rawJSON         json.RawMessage
 }
 
-func (o *Organization) GetId() Id {
+func (o *Organization) GetID() ID {
 	if o == nil {
 		return ""
 	}
-	return o.Id
+	return o.ID
 }
 
 func (o *Organization) GetName() string {
@@ -146,11 +146,11 @@ func (o *Organization) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *Organization) SetId(id Id) {
-	o.Id = id
-	o.require(organizationFieldId)
+func (o *Organization) SetID(id ID) {
+	o.ID = id
+	o.require(organizationFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;

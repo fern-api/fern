@@ -33,7 +33,9 @@
     "test:update": "vitest --run -u"
   },
   "dependencies": {
+    "@fern-api/casings-generator": "workspace:*",
     "@fern-api/cli-source-resolver": "workspace:*",
+    "@fern-api/configuration": "workspace:*",
     "@fern-api/configuration-loader": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
@@ -54,6 +56,8 @@
     "@fern-fern/ir-v61-sdk": "catalog:",
     "@fern-fern/ir-v62-sdk": "catalog:",
     "@fern-fern/ir-v63-sdk": "catalog:",
+    "@fern-fern/ir-v65-sdk": "catalog:",
+    "@fern-fern/ir-v66-sdk": "catalog:",
     "lodash-es": "catalog:"
   },
   "devDependencies": {

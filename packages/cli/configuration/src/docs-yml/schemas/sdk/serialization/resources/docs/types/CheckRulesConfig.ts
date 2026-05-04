@@ -15,6 +15,7 @@ export const CheckRulesConfig: core.serialization.ObjectSchema<
     validLocalReferences: core.serialization.property("valid-local-references", CheckRuleSeverity.optional()),
     noCircularRedirects: core.serialization.property("no-circular-redirects", CheckRuleSeverity.optional()),
     validDocsEndpoints: core.serialization.property("valid-docs-endpoints", CheckRuleSeverity.optional()),
+    missingRedirects: core.serialization.property("missing-redirects", CheckRuleSeverity.optional()),
 });
 
 export declare namespace CheckRulesConfig {
@@ -25,5 +26,6 @@ export declare namespace CheckRulesConfig {
         "valid-local-references"?: CheckRuleSeverity.Raw | null;
         "no-circular-redirects"?: CheckRuleSeverity.Raw | null;
         "valid-docs-endpoints"?: CheckRuleSeverity.Raw | null;
+        "missing-redirects"?: CheckRuleSeverity.Raw | null;
     }
 }

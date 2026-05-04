@@ -10,7 +10,7 @@ pub struct ErrorBody {
 
 impl ErrorBody {
     pub fn builder() -> ErrorBodyBuilder {
-        ErrorBodyBuilder::default()
+        <ErrorBodyBuilder as Default>::default()
     }
 }
 

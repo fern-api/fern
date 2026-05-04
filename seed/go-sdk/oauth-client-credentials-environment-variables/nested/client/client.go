@@ -11,7 +11,7 @@ import (
 )
 
 type Client struct {
-	Api *api.Client
+	API *api.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -26,7 +26,7 @@ func NewClient(options *core.RequestOptions) *Client {
 		options.ClientSecret = os.Getenv("CLIENT_SECRET")
 	}
 	return &Client{
-		Api:     api.NewClient(options),
+		API:     api.NewClient(options),
 		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(

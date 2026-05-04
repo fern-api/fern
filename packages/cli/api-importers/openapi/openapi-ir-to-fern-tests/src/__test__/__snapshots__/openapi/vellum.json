@@ -2283,6 +2283,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "TerminalNodeResultOutput": {
             "availability": undefined,
             "base-properties": {},
+            "default-variant": undefined,
             "discriminant": {
               "context": "data",
               "value": "type",
@@ -2416,6 +2417,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "WorkflowNodeResultData": {
             "availability": undefined,
             "base-properties": {},
+            "default-variant": undefined,
             "discriminant": {
               "context": "data",
               "value": "type",
@@ -2489,6 +2491,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "WorkflowRequestInputRequest": {
             "availability": undefined,
             "base-properties": {},
+            "default-variant": undefined,
             "discriminant": {
               "context": "data",
               "value": "type",
@@ -2561,6 +2564,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "WorkflowResultEventOutputData": {
             "availability": undefined,
             "base-properties": {},
+            "default-variant": undefined,
             "discriminant": {
               "context": "data",
               "value": "type",
@@ -2635,6 +2639,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "WorkflowStreamEvent": {
             "availability": undefined,
             "base-properties": {},
+            "default-variant": undefined,
             "discriminant": {
               "context": "data",
               "value": "type",

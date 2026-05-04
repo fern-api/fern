@@ -45,7 +45,6 @@
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/boxen": "catalog:",
     "@types/inquirer": "catalog:",
     "@types/node": "catalog:",
     "@types/qs": "catalog:",

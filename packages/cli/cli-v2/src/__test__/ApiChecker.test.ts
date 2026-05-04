@@ -26,7 +26,7 @@ describe("ApiChecker", () => {
             }
 
             const checker = new ApiChecker({
-                context: createTestContext({ cwd }),
+                context: await createTestContext({ cwd }),
                 cliVersion: "0.0.0"
             });
 
@@ -53,7 +53,7 @@ describe("ApiChecker", () => {
             }
 
             const checker = new ApiChecker({
-                context: createTestContext({ cwd }),
+                context: await createTestContext({ cwd }),
                 cliVersion: "0.0.0"
             });
 
@@ -71,7 +71,7 @@ describe("ApiChecker", () => {
             const workspace = await loadWorkspace("simple-api");
 
             const checker = new ApiChecker({
-                context: createTestContext({ cwd }),
+                context: await createTestContext({ cwd }),
                 cliVersion: "0.0.0"
             });
 
@@ -89,7 +89,7 @@ describe("ApiChecker", () => {
             const workspace = await loadWorkspace("simple-api");
 
             const checker = new ApiChecker({
-                context: createTestContext({ cwd }),
+                context: await createTestContext({ cwd }),
                 cliVersion: "0.0.0"
             });
 
@@ -110,7 +110,7 @@ describe("ApiChecker", () => {
             const workspace = await loadWorkspace("simple-api");
 
             const checker = new ApiChecker({
-                context: createTestContext({ cwd }),
+                context: await createTestContext({ cwd }),
                 cliVersion: "0.0.0"
             });
 
@@ -128,7 +128,7 @@ describe("ApiChecker", () => {
             const workspace = await loadWorkspace("simple-api");
 
             const checker = new ApiChecker({
-                context: createTestContext({ cwd }),
+                context: await createTestContext({ cwd }),
                 cliVersion: "0.0.0"
             });
 
@@ -146,7 +146,7 @@ describe("ApiChecker", () => {
             const workspace = await loadWorkspace("simple-api");
 
             const checker = new ApiChecker({
-                context: createTestContext({ cwd }),
+                context: await createTestContext({ cwd }),
                 cliVersion: "0.0.0"
             });
 

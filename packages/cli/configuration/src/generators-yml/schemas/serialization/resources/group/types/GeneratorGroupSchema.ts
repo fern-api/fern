@@ -3,6 +3,7 @@
 import type * as GeneratorsYml from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { AutomationSchema } from "../../automation/types/AutomationSchema.js";
 import { OutputMetadataSchema } from "../../generators/types/OutputMetadataSchema.js";
 import { ReviewersSchema } from "../../reviewers/types/ReviewersSchema.js";
 import { GeneratorInvocationSchema } from "./GeneratorInvocationSchema.js";
@@ -15,6 +16,7 @@ export const GeneratorGroupSchema: core.serialization.ObjectSchema<
     generators: core.serialization.list(GeneratorInvocationSchema),
     metadata: OutputMetadataSchema.optional(),
     reviewers: ReviewersSchema.optional(),
+    automation: AutomationSchema.optional(),
 });
 
 export declare namespace GeneratorGroupSchema {
@@ -23,5 +25,6 @@ export declare namespace GeneratorGroupSchema {
         generators: GeneratorInvocationSchema.Raw[];
         metadata?: OutputMetadataSchema.Raw | null;
         reviewers?: ReviewersSchema.Raw | null;
+        automation?: AutomationSchema.Raw | null;
     }
 }

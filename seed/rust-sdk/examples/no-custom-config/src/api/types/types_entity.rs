@@ -9,7 +9,7 @@ pub struct Entity {
 
 impl Entity {
     pub fn builder() -> EntityBuilder {
-        EntityBuilder::default()
+        <EntityBuilder as Default>::default()
     }
 }
 

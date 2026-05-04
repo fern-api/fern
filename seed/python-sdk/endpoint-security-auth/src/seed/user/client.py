@@ -40,6 +40,8 @@ class UserClient:
 
         client = SeedEndpointSecurityAuth(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.user.get_with_bearer()
         """
@@ -63,6 +65,8 @@ class UserClient:
 
         client = SeedEndpointSecurityAuth(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.user.get_with_api_key()
         """
@@ -86,6 +90,8 @@ class UserClient:
 
         client = SeedEndpointSecurityAuth(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.user.get_with_o_auth()
         """
@@ -109,6 +115,8 @@ class UserClient:
 
         client = SeedEndpointSecurityAuth(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.user.get_with_basic()
         """
@@ -132,6 +140,8 @@ class UserClient:
 
         client = SeedEndpointSecurityAuth(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.user.get_with_inferred_auth()
         """
@@ -155,6 +165,8 @@ class UserClient:
 
         client = SeedEndpointSecurityAuth(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.user.get_with_any_auth()
         """
@@ -178,6 +190,8 @@ class UserClient:
 
         client = SeedEndpointSecurityAuth(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.user.get_with_all_auth()
         """
@@ -219,6 +233,8 @@ class AsyncUserClient:
 
         client = AsyncSeedEndpointSecurityAuth(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
@@ -250,6 +266,8 @@ class AsyncUserClient:
 
         client = AsyncSeedEndpointSecurityAuth(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
@@ -281,6 +299,8 @@ class AsyncUserClient:
 
         client = AsyncSeedEndpointSecurityAuth(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
@@ -312,6 +332,8 @@ class AsyncUserClient:
 
         client = AsyncSeedEndpointSecurityAuth(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
@@ -345,6 +367,8 @@ class AsyncUserClient:
 
         client = AsyncSeedEndpointSecurityAuth(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
@@ -376,6 +400,8 @@ class AsyncUserClient:
 
         client = AsyncSeedEndpointSecurityAuth(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
@@ -407,6 +433,8 @@ class AsyncUserClient:
 
         client = AsyncSeedEndpointSecurityAuth(
             base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 

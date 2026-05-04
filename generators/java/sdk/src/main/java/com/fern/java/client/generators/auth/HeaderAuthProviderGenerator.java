@@ -20,6 +20,7 @@ import com.fern.ir.model.auth.HeaderAuthScheme;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -51,7 +52,7 @@ public final class HeaderAuthProviderGenerator extends AbstractFileGenerator {
     }
 
     public String getHeaderName() {
-        return headerAuthScheme.getName().getWireValue();
+        return NameUtils.getWireValue(headerAuthScheme.getName());
     }
 
     @Override
@@ -68,16 +69,20 @@ public final class HeaderAuthProviderGenerator extends AbstractFileGenerator {
                         stringSupplierType, "valueSupplier", Modifier.PRIVATE, Modifier.FINAL)
                 .build();
 
-        String headerName = headerAuthScheme.getName().getWireValue();
+        String headerName = NameUtils.getWireValue(headerAuthScheme.getName());
         String envVar = headerAuthScheme.getHeaderEnvVar().map(ev -> ev.get()).orElse(null);
         String prefix = headerAuthScheme.getPrefix().orElse(null);
 
         String errorMessage = envVar != null
                 ? "Please provide '"
-                        + headerAuthScheme.getName().getName().getCamelCase().getSafeName()
+                        + NameUtils.getName(headerAuthScheme.getName())
+                                .getCamelCase()
+                                .getSafeName()
                         + "' when initializing the client, or set the '" + envVar + "' environment variable"
                 : "Please provide '"
-                        + headerAuthScheme.getName().getName().getCamelCase().getSafeName()
+                        + NameUtils.getName(headerAuthScheme.getName())
+                                .getCamelCase()
+                                .getSafeName()
                         + "' when initializing the client";
 
         TypeSpec.Builder classBuilder = TypeSpec.classBuilder(className)

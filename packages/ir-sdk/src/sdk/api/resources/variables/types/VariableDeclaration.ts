@@ -4,6 +4,6 @@ import type * as FernIr from "../../../index.js";
 
 export interface VariableDeclaration extends FernIr.WithDocs {
     id: FernIr.VariableId;
-    name: FernIr.Name;
+    name: FernIr.NameOrString;
     type: FernIr.TypeReference;
 }

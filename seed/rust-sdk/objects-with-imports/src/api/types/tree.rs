@@ -8,7 +8,7 @@ pub struct Tree {
 
 impl Tree {
     pub fn builder() -> TreeBuilder {
-        TreeBuilder::default()
+        <TreeBuilder as Default>::default()
     }
 }
 

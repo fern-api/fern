@@ -2,10 +2,10 @@
 
 from typing import List, Optional
 
+from fern.generator_exec import BasicLicense, LicenseConfig, LicenseId
+
 from fern_python.codegen.pypi_classifier_creator import PyPIClassifierMetadataGenerator
 from fern_python.version import PythonVersion
-
-from fern.generator_exec import BasicLicense, LicenseConfig, LicenseId
 
 
 def create_license_config(license_id: LicenseId) -> LicenseConfig:

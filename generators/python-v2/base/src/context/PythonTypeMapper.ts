@@ -35,7 +35,13 @@ export class PythonTypeMapper {
         }
     }
 
-    public convertToClassReference({ typeId, name }: { typeId: FernIr.TypeId; name: FernIr.Name }): python.Reference {
+    public convertToClassReference({
+        typeId,
+        name
+    }: {
+        typeId: FernIr.TypeId;
+        name: FernIr.NameOrString;
+    }): python.Reference {
         return new python.Reference({
             name: this.context.getPascalCaseSafeName(name),
             modulePath: [...this.context.getModulePathForId(typeId), this.context.getSnakeCaseSafeName(name)]
@@ -76,6 +82,7 @@ export class PythonTypeMapper {
             string: () => python.Type.str(),
             date: () => python.Type.str(),
             dateTime: () => python.Type.datetime(),
+            dateTimeRfc2822: () => python.Type.datetime(),
             uuid: () => python.Type.uuid(),
             base64: () => python.Type.bytes(),
             bigInteger: () => python.Type.str(),

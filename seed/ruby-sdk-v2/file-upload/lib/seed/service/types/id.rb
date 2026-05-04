@@ -3,8 +3,8 @@
 module Seed
   module Service
     module Types
-      module Id
-        # Id is an alias for String
+      module ID
+        # ID is an alias for String
 
         # @option str [String]
         #

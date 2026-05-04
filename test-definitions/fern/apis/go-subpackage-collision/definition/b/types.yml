@@ -1,0 +1,8 @@
+imports:
+  common: common/types.yml
+
+types:
+  Response:
+    properties:
+      metadata: optional<common.Metadata>
+      tag: string

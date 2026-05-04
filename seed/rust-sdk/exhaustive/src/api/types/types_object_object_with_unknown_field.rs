@@ -9,7 +9,7 @@ pub struct ObjectWithUnknownField {
 
 impl ObjectWithUnknownField {
     pub fn builder() -> ObjectWithUnknownFieldBuilder {
-        ObjectWithUnknownFieldBuilder::default()
+        <ObjectWithUnknownFieldBuilder as Default>::default()
     }
 }
 

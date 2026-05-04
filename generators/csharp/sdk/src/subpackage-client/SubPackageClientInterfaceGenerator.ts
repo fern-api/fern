@@ -1,3 +1,4 @@
+import { GeneratorError } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -44,7 +45,7 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<CSharpFile
         for (const childSubpackage of this.getSubpackages()) {
             if (this.context.subPackageHasEndpointsRecursively(childSubpackage)) {
                 interface_.addField({
-                    name: childSubpackage.name.pascalCase.safeName,
+                    name: this.case.pascalSafe(childSubpackage.name),
                     enclosingType: interface_,
                     access: ast.Access.Public,
                     get: true,
@@ -62,9 +63,9 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<CSharpFile
         return new CSharpFile({
             clazz: interface_,
             directory: RelativeFilePath.of(this.context.getDirectoryForSubpackage(this.subpackage)),
-            allNamespaceSegments: this.registry.allNamespacesOf(this.interfaceReference.namespace),
+            allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.namespaces.root,
+            namespace: this.interfaceReference.namespace,
             generation: this.generation
         });
     }
@@ -72,11 +73,11 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<CSharpFile
     private generateEndpointSignatures(interface_: ast.Interface): void {
         const service = this.service;
         if (!service) {
-            throw new Error("Internal error; Service is not defined");
+            throw GeneratorError.internalError("Internal error; Service is not defined");
         }
         const serviceId = this.serviceId;
         if (!serviceId) {
-            throw new Error("Internal error; ServiceId is not defined");
+            throw GeneratorError.internalError("Internal error; ServiceId is not defined");
         }
         const grpcClientInfo = this.context.getGrpcClientInfoForServiceId(serviceId);
         for (const endpoint of service.endpoints) {

@@ -1,3 +1,4 @@
+import { GeneratorError } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -182,7 +183,7 @@ export abstract class EndpointRequest {
         // if deduping in getUnionTypeParameters results in one type, treat it like just that type
         if (unionTypeParameters.length === 1) {
             if (types[0] == null) {
-                throw new Error("Unexpected empty types");
+                throw GeneratorError.internalError("Unexpected empty types");
             }
             return this.serializeJsonType({ type: types[0], bodyArgument, isOptional });
         }

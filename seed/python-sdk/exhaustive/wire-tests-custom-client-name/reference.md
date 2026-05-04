@@ -526,7 +526,7 @@ client.endpoints.content_type.post_json_patch_content_type(
     datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     date=datetime.date.fromisoformat("2023-01-15"),
     uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    base_64="SGVsbG8gd29ybGQh",
+    base64="SGVsbG8gd29ybGQh",
     list_=[
         "list",
         "list"
@@ -605,7 +605,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
     datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     date=datetime.date.fromisoformat("2023-01-15"),
     uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    base_64="SGVsbG8gd29ybGQh",
+    base64="SGVsbG8gd29ybGQh",
     list_=[
         "list",
         "list"
@@ -928,7 +928,7 @@ client.endpoints.http_methods.test_patch(
     datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     date=datetime.date.fromisoformat("2023-01-15"),
     uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    base_64="SGVsbG8gd29ybGQh",
+    base64="SGVsbG8gd29ybGQh",
     list_=[
         "list",
         "list"
@@ -1074,7 +1074,7 @@ client.endpoints.object.get_and_return_with_optional_field(
     datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     date=datetime.date.fromisoformat("2023-01-15"),
     uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    base_64="SGVsbG8gd29ybGQh",
+    base64="SGVsbG8gd29ybGQh",
     list_=[
         "list",
         "list"
@@ -1276,7 +1276,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
         datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         date=datetime.date.fromisoformat("2023-01-15"),
         uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-        base_64="SGVsbG8gd29ybGQh",
+        base64="SGVsbG8gd29ybGQh",
         list_=[
             "list",
             "list"
@@ -1360,7 +1360,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
         datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         date=datetime.date.fromisoformat("2023-01-15"),
         uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-        base_64="SGVsbG8gd29ybGQh",
+        base64="SGVsbG8gd29ybGQh",
         list_=[
             "list",
             "list"
@@ -1453,7 +1453,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(
                 datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
                 date=datetime.date.fromisoformat("2023-01-15"),
                 uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-                base_64="SGVsbG8gd29ybGQh",
+                base64="SGVsbG8gd29ybGQh",
                 list_=[
                     "list",
                     "list"
@@ -1478,7 +1478,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(
                 datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
                 date=datetime.date.fromisoformat("2023-01-15"),
                 uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-                base_64="SGVsbG8gd29ybGQh",
+                base64="SGVsbG8gd29ybGQh",
                 list_=[
                     "list",
                     "list"
@@ -1686,6 +1686,162 @@ client.endpoints.object.get_and_return_map_of_documented_unknown_type(
 <dd>
 
 **request:** `MapOfDocumentedUnknownType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_mixed_required_and_optional_fields</a>(...) -> ObjectWithMixedRequiredAndOptionalFields</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that dynamic snippets include all required properties in the
+object initializer, even when the example omits some required fields.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import Exhaustive
+
+client = Exhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(
+    required_string="hello",
+    required_integer=0,
+    optional_string="world",
+    required_long=0,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithMixedRequiredAndOptionalFields` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_required_nested_object</a>(...) -> ObjectWithRequiredNestedObject</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that dynamic snippets recursively construct default objects for
+required properties whose type is a named object. When the example
+omits the nested object, the generator should construct a default
+initializer with the nested object's required properties filled in.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import Exhaustive
+from seed.types.object import NestedObjectWithRequiredField, ObjectWithOptionalField
+
+client = Exhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.object.get_and_return_with_required_nested_object(
+    required_string="hello",
+    required_object=NestedObjectWithRequiredField(
+        string="nested",
+        nested_object=ObjectWithOptionalField(),
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithRequiredNestedObject` 
     
 </dd>
 </dl>
@@ -2574,6 +2730,150 @@ client.endpoints.params.upload_with_path(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_boolean_path</a>(...) -> str</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with boolean path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import Exhaustive
+
+client = Exhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.params.get_with_boolean_path(
+    param=True,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_path_and_errors</a>(...) -> str</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path param that can throw errors
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import Exhaustive
+
+client = Exhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.params.get_with_path(
+    param="param",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Primitive
 <details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_string</a>(...) -> str</code></summary>
 <dl>
@@ -3042,7 +3342,7 @@ client.endpoints.primitive.get_and_return_uuid(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_base_64</a>(...) -> str</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_base64</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -3062,7 +3362,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints.primitive.get_and_return_base_64(
+client.endpoints.primitive.get_and_return_base64(
     request="SGVsbG8gd29ybGQh",
 )
 
@@ -3174,6 +3474,7 @@ client.endpoints.put.add(
 
 ```python
 from seed import Exhaustive
+from seed.types.union import Animal_Dog
 
 client = Exhaustive(
     token="<token>",
@@ -3181,11 +3482,10 @@ client = Exhaustive(
 )
 
 client.endpoints.union.get_and_return_union(
-    request={
-        "animal": "dog",
-        "name": "name",
-        "likes_to_woof": True
-    },
+    request=Animal_Dog(
+        name="name",
+        likes_to_woof=True,
+    ),
 )
 
 ```
@@ -3465,7 +3765,7 @@ client.inlined_requests.post_with_object_bodyand_response(
         datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         date=datetime.date.fromisoformat("2023-01-15"),
         uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-        base_64="SGVsbG8gd29ybGQh",
+        base64="SGVsbG8gd29ybGQh",
         list_=[
             "list",
             "list"

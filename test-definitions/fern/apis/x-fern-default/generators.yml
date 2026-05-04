@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  specs:
+    - openapi: ./openapi.yml
+groups:
+  python-sdk:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: latest
+        github:
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/python-sdk-tests
+          branch: x-fern-default
+  ts-sdk:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: latest
+        github:
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/node-sdk-tests
+          branch: x-fern-default
+  java-sdk:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: latest
+        github:
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/java-sdk-tests
+          branch: x-fern-default

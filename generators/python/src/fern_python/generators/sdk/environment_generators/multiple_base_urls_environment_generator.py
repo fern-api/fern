@@ -1,6 +1,7 @@
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .generated_environment import GeneratedEnvironment
 from fern_python.codegen import AST, SourceFile
+from fern_python.utils import resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -97,7 +98,7 @@ class MultipleBaseUrlsEnvironmentGenerator:
         return AST.Expression(AST.CodeWriter(write))
 
     def _get_class_var_name(self, environment: ir_types.MultipleBaseUrlsEnvironment) -> str:
-        return environment.name.screaming_snake_case.safe_name
+        return resolve_name(environment.name).screaming_snake_case.safe_name
 
     def _get_environment(
         self,
@@ -140,7 +141,7 @@ class MultipleBaseUrlsEnvironmentGenerator:
 
 
 def get_base_url_property_name(base_url: ir_types.EnvironmentBaseUrlWithId) -> str:
-    return base_url.name.snake_case.safe_name
+    return resolve_name(base_url.name).snake_case.safe_name
 
 
 def get_base_url(

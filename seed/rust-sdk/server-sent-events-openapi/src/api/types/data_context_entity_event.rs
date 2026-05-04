@@ -8,7 +8,7 @@ pub struct DataContextEntityEvent {
 
 impl DataContextEntityEvent {
     pub fn builder() -> DataContextEntityEventBuilder {
-        DataContextEntityEventBuilder::default()
+        <DataContextEntityEventBuilder as Default>::default()
     }
 }
 

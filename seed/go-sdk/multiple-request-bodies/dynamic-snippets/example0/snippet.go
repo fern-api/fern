@@ -18,7 +18,7 @@ func do() {
         ),
     )
     request := &fern.UploadDocumentRequest{}
-    client.UploadJsonDocument(
+    client.UploadJSONDocument(
         context.TODO(),
         request,
     )

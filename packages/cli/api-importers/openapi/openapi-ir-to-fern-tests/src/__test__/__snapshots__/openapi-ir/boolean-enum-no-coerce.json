@@ -1,0 +1,336 @@
+{
+  "title": "Boolean Enum No Coerce Test",
+  "description": "Tests that boolean single-value enums are NOT coerced to literals when coerce-enums-to-literals is false, consistent with string enums.",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Create a new plant",
+      "audiences": [],
+      "operationId": "plants_create",
+      "tags": [
+        "Plants"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PlantsCreateRequest",
+      "request": {
+        "schema": {
+          "generatedName": "PlantsCreateRequest",
+          "schema": "CreatePlantRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Plant created successfully",
+        "schema": {
+          "generatedName": "PlantsCreateResponse",
+          "schema": "Plant",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 201,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/plants",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "name": {
+                "value": {
+                  "value": "Fern",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "isIndoor": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
+              "status": {
+                "value": "active",
+                "type": "enum"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": 123,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "Fern",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "isIndoor": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                },
+                "isPoisonous": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                },
+                "status": {
+                  "value": "active",
+                  "type": "enum"
+                },
+                "isSeedling": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "CreatePlantRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "createPlantRequestName",
+            "key": "name",
+            "schema": {
+              "schema": {
+                "example": "Fern",
+                "type": "string"
+              },
+              "generatedName": "CreatePlantRequestName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "createPlantRequestIsIndoor",
+            "key": "isIndoor",
+            "schema": {
+              "schema": {
+                "type": "boolean"
+              },
+              "generatedName": "CreatePlantRequestIsIndoor",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "createPlantRequestStatus",
+            "key": "status",
+            "schema": {
+              "generatedName": "CreatePlantRequestStatus",
+              "values": [
+                {
+                  "generatedName": "active",
+                  "value": "active",
+                  "casing": {}
+                }
+              ],
+              "groupName": [],
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "CreatePlantRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Plant": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "plantId",
+            "key": "id",
+            "schema": {
+              "schema": {
+                "example": 123,
+                "type": "int"
+              },
+              "generatedName": "PlantId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "plantName",
+            "key": "name",
+            "schema": {
+              "schema": {
+                "example": "Fern",
+                "type": "string"
+              },
+              "generatedName": "PlantName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "plantIsIndoor",
+            "key": "isIndoor",
+            "schema": {
+              "schema": {
+                "type": "boolean"
+              },
+              "generatedName": "PlantIsIndoor",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "plantIsPoisonous",
+            "key": "isPoisonous",
+            "schema": {
+              "schema": {
+                "type": "boolean"
+              },
+              "generatedName": "PlantIsPoisonous",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "plantStatus",
+            "key": "status",
+            "schema": {
+              "generatedName": "PlantStatus",
+              "values": [
+                {
+                  "generatedName": "active",
+                  "value": "active",
+                  "casing": {}
+                }
+              ],
+              "groupName": [],
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "plantIsSeedling",
+            "key": "isSeedling",
+            "schema": {
+              "schema": {
+                "type": "boolean"
+              },
+              "generatedName": "PlantIsSeedling",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Plant",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

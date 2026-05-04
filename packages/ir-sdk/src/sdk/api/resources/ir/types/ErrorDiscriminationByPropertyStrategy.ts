@@ -3,6 +3,6 @@
 import type * as FernIr from "../../../index.js";
 
 export interface ErrorDiscriminationByPropertyStrategy {
-    discriminant: FernIr.NameAndWireValue;
-    contentProperty: FernIr.NameAndWireValue;
+    discriminant: FernIr.NameAndWireValueOrString;
+    contentProperty: FernIr.NameAndWireValueOrString;
 }

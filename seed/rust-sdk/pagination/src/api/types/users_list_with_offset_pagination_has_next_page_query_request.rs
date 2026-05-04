@@ -17,7 +17,7 @@ pub struct UsersListWithOffsetPaginationHasNextPageQueryRequest {
 
 impl UsersListWithOffsetPaginationHasNextPageQueryRequest {
     pub fn builder() -> UsersListWithOffsetPaginationHasNextPageQueryRequestBuilder {
-        UsersListWithOffsetPaginationHasNextPageQueryRequestBuilder::default()
+        <UsersListWithOffsetPaginationHasNextPageQueryRequestBuilder as Default>::default()
     }
 }
 

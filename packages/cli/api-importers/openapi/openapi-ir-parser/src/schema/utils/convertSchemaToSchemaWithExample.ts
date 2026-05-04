@@ -45,7 +45,8 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 example: undefined,
                 inline: undefined,
                 minItems: schema.minItems,
-                maxItems: schema.maxItems
+                maxItems: schema.maxItems,
+                default: schema.default
             });
         case "enum":
             return SchemaWithExample.enum({
@@ -243,6 +244,7 @@ function convertToOneOf(oneOfSchema: OneOfSchema): OneOfSchemaWithExample {
                 discriminantProperty: oneOfSchema.discriminantProperty,
                 discriminantPropertyNameOverride: oneOfSchema.discriminantPropertyNameOverride,
                 discriminatorContext: oneOfSchema.discriminatorContext,
+                defaultDiscriminantValue: oneOfSchema.defaultDiscriminantValue,
                 generatedName: oneOfSchema.generatedName,
                 nameOverride: oneOfSchema.nameOverride,
                 title: oneOfSchema.title,
@@ -264,6 +266,12 @@ function convertToOneOf(oneOfSchema: OneOfSchema): OneOfSchemaWithExample {
                 generatedName: oneOfSchema.generatedName,
                 nameOverride: oneOfSchema.nameOverride,
                 title: oneOfSchema.title,
+                commonProperties: oneOfSchema.commonProperties?.map((commonProperty) => {
+                    return {
+                        key: commonProperty.key,
+                        schema: convertSchemaToSchemaWithExample(commonProperty.schema)
+                    };
+                }),
                 schemas: oneOfSchema.schemas.map((oneOfSchema) => convertSchemaToSchemaWithExample(oneOfSchema)),
                 namespace: oneOfSchema.namespace,
                 groupName: oneOfSchema.groupName,

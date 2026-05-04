@@ -5,6 +5,55 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.1.0] - 2026-05-01
+
+- Feature: Add optional `defaultValue` field to `HttpHeader`, `QueryParameter`,
+  `ObjectProperty`, and `InlinedRequestBodyProperty`. Populated from the OpenAPI
+  `default` field (or the Fern Definition `default` on a property), and used by
+  docs to render "Defaults to ..." metadata. Unlike `clientDefault`, this supports
+  arbitrary JSON values (e.g. arrays) and does not affect SDK generation.
+
+## [v67.0.0] - 2026-04-27
+
+TDB
+
+## [v66.3.0] - 2026-04-25
+- Feature: Add optional `baseProperties` field to `UndiscriminatedUnionTypeDeclaration`. When present, contains
+  a list of `ObjectProperty` representing sibling properties defined alongside `oneOf`/`anyOf` in OpenAPI specs.
+  Enables generators to render shared fields on undiscriminated union types. Populated by both the V3 Importer
+  and Legacy Importer when sibling properties are detected.
+
+## [v66.2.0] - 2026-04-25
+- Feature: Add optional `placeholder` fields to auth schemes (`tokenPlaceholder` on bearer,
+  `usernamePlaceholder`/`passwordPlaceholder` on basic, `headerPlaceholder` on header).
+  When set, these values are used as example placeholders in dynamic code snippets instead
+  of generic defaults like `<token>` or `<username>`. Configurable via Fern definition YAML
+  and OpenAPI extensions (`x-fern-basic`, `x-fern-bearer`, `x-fern-header`).
+
+## [v66.1.0] - 2026-04-08
+- Feature: Add optional `default` field to `UnionTypeDeclaration`. When set, specifies the default union
+  variant to fall back to when the discriminant field is missing from input. Populated from OpenAPI specs
+  where a variant's discriminant property has a `default` value matching its `const` value.
+
+## [v66.0.0] - 2026-04-02
+- Feature: Add IR Name compression support via new `NameOrString` and `NameAndWireValueOrString` union types.
+  Throughout the IR, fields previously typed as `Name` or `NameAndWireValue` are now typed as `NameOrString` or
+  `NameAndWireValueOrString` respectively, allowing names to be stored as plain strings (compressed) instead of fully
+  expanded casing objects. Affected fields span `FernFilepath`, auth schemes, environments, errors, HTTP types,
+  webhooks, websockets, and type declarations.
+- Feature: Add `CasingsConfig` type to `IntermediateRepresentation`. Stores the casing generator configuration
+  (target language, reserved keywords, smart casing flag) so that IR migrations can reconstruct the correct
+  `CasingsGenerator` when inflating compressed `NameOrString` values back to full `Name` objects.
+- Feature: Add `NameOrString` and `NameAndWireValueOrString` union types to both the main IR and dynamic IR commons,
+  enabling forward-compatible parsing of either string or structured name objects.
+
+## [v65.7.0] - 2026-03-31
+- Feature: Add optional `clientDefault` field to `HttpHeader`, `PathParameter`, and `QueryParameter`.
+  When present, the parameter/header is optional in the generated SDK and the literal value is sent
+  when the caller does not provide one. Populated from the `x-fern-default` OpenAPI extension.
+
+## [v65.6.0] - 2026-03-10
+
 ## [v65.5.0] - 2026-03-10
 - Feature: Add optional `forwardCompatible` field to `EnumTypeDeclaration`. When `true`, the enum is forward-compatible
   (i.e., the API may return values not listed in `values`). This is inferred from OpenAPI specs that express an enum as

@@ -13,8 +13,11 @@ export function resolveRootImportPath({
     customConfig: BaseGoCustomConfigSchema | undefined;
 }): string {
     const suffix = getMajorVersionSuffix({ config });
-    const importPath = getImportPath({ config, customConfig });
-    return suffix != null ? maybeAppendMajorVersionSuffix({ importPath, majorVersion: suffix }) : importPath;
+    const modulePath = getImportPath({ config, customConfig, isModulePath: true });
+    const modulePathWithSuffix =
+        suffix != null ? maybeAppendMajorVersionSuffix({ importPath: modulePath, majorVersion: suffix }) : modulePath;
+    const packagePath = customConfig?.packagePath ?? "";
+    return packagePath ? path.join(modulePathWithSuffix, packagePath) : modulePathWithSuffix;
 }
 
 export function resolveRootModulePath({
@@ -59,11 +62,11 @@ function getMajorVersionSuffix({ config }: { config: FernGeneratorExec.config.Ge
 // prefix, e.g. "v0", "v1", "v2", etc.
 function parseMajorVersion({ config }: { config: FernGeneratorExec.config.GeneratorConfig }): string | undefined {
     const version = getVersion(config);
-    if (version == null) {
+    if (version == null || version === "") {
         return undefined;
     }
     const split = version.split(".");
-    if (split[0] == null) {
+    if (split[0] == null || split[0] === "" || split[0] === "v") {
         return undefined;
     }
     const majorVersion = split[0];

@@ -10,6 +10,7 @@ The Seed PHP library provides convenient access to the Seed APIs from PHP.
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Custom Client](#custom-client)
@@ -50,6 +51,45 @@ $client->getToken(
     ]),
 );
 
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```php
+This API uses multiple base URLs for different services. The SDK defaults to the `RegionalApiServer` environment.
+
+Available environments:
+- `Environments::RegionalApiServer()`
+
+Each environment provides multiple base URLs:
+  - `base`: The base base URL
+  - `auth`: The auth base URL
+
+To use a different environment, pass it to the client constructor:
+
+```php
+use Seed\SeedClient;
+use Seed\Environments;
+
+$client = new SeedClient(
+    token: '<YOUR_TOKEN>',
+    environment: Environments::Staging()
+);
+```
+
+You can also create a custom environment with your own URLs:
+
+```php
+$client = new SeedClient(
+    token: '<YOUR_TOKEN>',
+    environment: Environments::custom(
+        base: 'https://your-base-url.com',
+    auth: 'https://your-auth-url.com'
+    )
+);
+```
 ```
 
 ## Exception Handling
@@ -110,7 +150,12 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (Internal Server Error)
+
+The `retryStatusCodes` configuration controls which [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) status codes are retried:
+
+- `legacy` (default): Retries `408`, `429`, and all `>= 500`
+- `recommended`: Retries `408`, `429`, `502`, `503`, `504` only (excludes `500 Internal Server Error` to avoid retrying non-idempotent failures)
 
 Use the `maxRetries` request option to configure this behavior.
 

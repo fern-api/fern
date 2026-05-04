@@ -18,13 +18,15 @@ func do() {
             "<token>",
         ),
     )
-    request := &types.ObjectWithDatetimeLikeString{
-        DatetimeLikeString: "datetimeLikeString",
-        ActualDatetime: fern.MustParseDateTime(
-            "2024-01-15T09:30:00Z",
+    request := &types.ObjectWithMixedRequiredAndOptionalFields{
+        RequiredString: "requiredString",
+        RequiredInteger: 1,
+        OptionalString: fern.String(
+            "optionalString",
         ),
+        RequiredLong: int64(1000000),
     }
-    client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(
+    client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFields(
         context.TODO(),
         request,
     )

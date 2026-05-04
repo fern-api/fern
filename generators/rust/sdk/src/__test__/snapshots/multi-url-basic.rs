@@ -22,6 +22,20 @@ impl Environment {
         Self::Staging(urls) => &urls.api,
     }
 }
+
+    pub fn api_url(&self) -> &str {
+    match self {
+        Self::Production(urls) => &urls.api,
+        Self::Staging(urls) => &urls.api,
+    }
+}
+
+    pub fn auth_url(&self) -> &str {
+    match self {
+        Self::Production(urls) => &urls.auth,
+        Self::Staging(urls) => &urls.auth,
+    }
+}
 }
 impl Default for Environment {
     fn default() -> Self {

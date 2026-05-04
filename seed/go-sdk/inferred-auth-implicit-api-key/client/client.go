@@ -39,7 +39,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options.SetTokenGetter(func() (string, error) {
 		return inferredAuthProvider.GetOrFetch(func() (string, int, error) {
 			response, err := authClient.GetToken(context.Background(), &fern.GetTokenRequest{
-				ApiKey: options.ApiKey,
+				APIKey: options.APIKey,
 			})
 			if err != nil {
 				return "", 0, err

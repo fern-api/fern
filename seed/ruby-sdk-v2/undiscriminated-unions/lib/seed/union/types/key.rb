@@ -7,6 +7,7 @@ module Seed
         extend Seed::Internal::Types::Union
 
         member -> { Seed::Union::Types::KeyType }
+
         member -> { String }
       end
     end

@@ -23,10 +23,7 @@ describe("SeedApiClient", () => {
             username: "johndoe",
             email: "john@example.com",
         });
-        expect(response).toEqual({
-            status: "success",
-            message: "Data received successfully.",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("get_token", async () => {
@@ -48,9 +45,6 @@ describe("SeedApiClient", () => {
             client_id: "client_id",
             client_secret: "client_secret",
         });
-        expect(response).toEqual({
-            access_token: "access_token",
-            expires_in: 1,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

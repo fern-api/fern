@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
@@ -27,10 +28,12 @@ export declare namespace BaseContextImpl {
         includeSerdeLayer: boolean;
         relativePackagePath: string;
         relativeTestPath: string;
+        case: CaseConverter;
     }
 }
 
 export class BaseContextImpl implements BaseContext {
+    public readonly case: CaseConverter;
     public readonly logger: Logger;
     public readonly sourceFile: SourceFile;
     public readonly externalDependencies: ExternalDependencies;
@@ -54,8 +57,10 @@ export class BaseContextImpl implements BaseContext {
         includeSerdeLayer,
         jsonContext,
         relativePackagePath,
-        relativeTestPath
+        relativeTestPath,
+        case: caseConverter
     }: BaseContextImpl.Init) {
+        this.case = caseConverter;
         this.logger = logger;
         this.sourceFile = sourceFile;
         this.fernConstants = fernConstants;

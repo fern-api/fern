@@ -98,4 +98,10 @@ public partial interface IUsersClient
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
+
+    Task<Pager<User>> ListWithAliasedDataAsync(
+        ListUsersAliasedDataRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
 }

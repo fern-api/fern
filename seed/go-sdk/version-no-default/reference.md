@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.GetUser(UserId) -> *fern.User</code></summary>
+<details><summary><code>client.User.GetUser(UserID) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -32,7 +32,7 @@ client.User.GetUser(
 <dl>
 <dd>
 
-**userId:** `fern.UserId` 
+**userID:** `fern.UserID` 
     
 </dd>
 </dl>

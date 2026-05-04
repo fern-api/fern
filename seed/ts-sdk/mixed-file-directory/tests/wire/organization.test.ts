@@ -29,21 +29,6 @@ describe("OrganizationClient", () => {
         const response = await client.organization.create({
             name: "name",
         });
-        expect(response).toEqual({
-            id: "id",
-            name: "name",
-            users: [
-                {
-                    id: "id",
-                    name: "name",
-                    age: 1,
-                },
-                {
-                    id: "id",
-                    name: "name",
-                    age: 1,
-                },
-            ],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

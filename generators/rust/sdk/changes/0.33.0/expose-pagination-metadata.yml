@@ -1,0 +1,6 @@
+- summary: |
+    Expose HTTP response metadata (status code, headers, and full parsed response body) on paginated results.
+    The `PaginationResult` struct now includes `status_code`, `headers`, and `response` fields, and both
+    `AsyncPaginator` and `SyncPaginator` expose accessor methods for this metadata from the most recent page load.
+    A new `RawResponse<T>` struct and `execute_request_raw` method on `HttpClient` support this functionality.
+  type: feat

@@ -15,6 +15,7 @@ async fn test_endpoints_object_get_and_return_with_optional_field_with_wiremock(
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -30,7 +31,7 @@ async fn test_endpoints_object_get_and_return_with_optional_field_with_wiremock(
                 datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                 date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                 uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                base_64: Some(
+                base64: Some(
                     base64::engine::general_purpose::STANDARD
                         .decode("SGVsbG8gd29ybGQh")
                         .unwrap(),
@@ -39,6 +40,7 @@ async fn test_endpoints_object_get_and_return_with_optional_field_with_wiremock(
                 set: Some(HashSet::from(["set".to_string()])),
                 map: Some(HashMap::from([(1, "map".to_string())])),
                 bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                ..Default::default()
             },
             None,
         )
@@ -67,6 +69,7 @@ async fn test_endpoints_object_get_and_return_with_required_field_with_wiremock(
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -75,6 +78,7 @@ async fn test_endpoints_object_get_and_return_with_required_field_with_wiremock(
         .get_and_return_with_required_field(
             &ObjectWithRequiredField {
                 string: "string".to_string(),
+                ..Default::default()
             },
             None,
         )
@@ -103,6 +107,7 @@ async fn test_endpoints_object_get_and_return_with_map_of_map_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -114,6 +119,7 @@ async fn test_endpoints_object_get_and_return_with_map_of_map_with_wiremock() {
                     "map".to_string(),
                     HashMap::from([("map".to_string(), "map".to_string())]),
                 )]),
+                ..Default::default()
             },
             None,
         )
@@ -142,6 +148,7 @@ async fn test_endpoints_object_get_and_return_nested_with_optional_field_with_wi
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -159,7 +166,7 @@ async fn test_endpoints_object_get_and_return_nested_with_optional_field_with_wi
                     datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                     date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                     uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                    base_64: Some(
+                    base64: Some(
                         base64::engine::general_purpose::STANDARD
                             .decode("SGVsbG8gd29ybGQh")
                             .unwrap(),
@@ -168,7 +175,9 @@ async fn test_endpoints_object_get_and_return_nested_with_optional_field_with_wi
                     set: Some(HashSet::from(["set".to_string()])),
                     map: Some(HashMap::from([(1, "map".to_string())])),
                     bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                    ..Default::default()
                 }),
+                ..Default::default()
             },
             None,
         )
@@ -197,6 +206,7 @@ async fn test_endpoints_object_get_and_return_nested_with_required_field_with_wi
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -215,7 +225,7 @@ async fn test_endpoints_object_get_and_return_nested_with_required_field_with_wi
                     datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                     date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                     uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                    base_64: Some(
+                    base64: Some(
                         base64::engine::general_purpose::STANDARD
                             .decode("SGVsbG8gd29ybGQh")
                             .unwrap(),
@@ -224,7 +234,9 @@ async fn test_endpoints_object_get_and_return_nested_with_required_field_with_wi
                     set: Some(HashSet::from(["set".to_string()])),
                     map: Some(HashMap::from([(1, "map".to_string())])),
                     bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                    ..Default::default()
                 },
+                ..Default::default()
             },
             None,
         )
@@ -253,6 +265,7 @@ async fn test_endpoints_object_get_and_return_nested_with_required_field_as_list
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -275,7 +288,7 @@ async fn test_endpoints_object_get_and_return_nested_with_required_field_as_list
                         uuid: Some(
                             Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                         ),
-                        base_64: Some(
+                        base64: Some(
                             base64::engine::general_purpose::STANDARD
                                 .decode("SGVsbG8gd29ybGQh")
                                 .unwrap(),
@@ -284,7 +297,9 @@ async fn test_endpoints_object_get_and_return_nested_with_required_field_as_list
                         set: Some(HashSet::from(["set".to_string()])),
                         map: Some(HashMap::from([(1, "map".to_string())])),
                         bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                        ..Default::default()
                     },
+                    ..Default::default()
                 },
                 NestedObjectWithRequiredField {
                     string: "string".to_string(),
@@ -301,7 +316,7 @@ async fn test_endpoints_object_get_and_return_nested_with_required_field_as_list
                         uuid: Some(
                             Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                         ),
-                        base_64: Some(
+                        base64: Some(
                             base64::engine::general_purpose::STANDARD
                                 .decode("SGVsbG8gd29ybGQh")
                                 .unwrap(),
@@ -310,7 +325,9 @@ async fn test_endpoints_object_get_and_return_nested_with_required_field_as_list
                         set: Some(HashSet::from(["set".to_string()])),
                         map: Some(HashMap::from([(1, "map".to_string())])),
                         bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                        ..Default::default()
                     },
+                    ..Default::default()
                 },
             ],
             None,
@@ -340,6 +357,7 @@ async fn test_endpoints_object_get_and_return_with_unknown_field_with_wiremock()
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -348,6 +366,7 @@ async fn test_endpoints_object_get_and_return_with_unknown_field_with_wiremock()
         .get_and_return_with_unknown_field(
             &ObjectWithUnknownField {
                 unknown: serde_json::json!({"$ref":"https://example.com/schema"}),
+                ..Default::default()
             },
             None,
         )
@@ -376,6 +395,7 @@ async fn test_endpoints_object_get_and_return_with_documented_unknown_type_with_
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -384,6 +404,7 @@ async fn test_endpoints_object_get_and_return_with_documented_unknown_type_with_
         .get_and_return_with_documented_unknown_type(
             &ObjectWithDocumentedUnknownType {
                 documented_unknown_type: DocumentedUnknownType(serde_json::json!({"key":"value"})),
+                ..Default::default()
             },
             None,
         )
@@ -412,6 +433,7 @@ async fn test_endpoints_object_get_and_return_map_of_documented_unknown_type_wit
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -440,6 +462,93 @@ async fn test_endpoints_object_get_and_return_map_of_documented_unknown_type_wit
 
 #[tokio::test]
 #[allow(unused_variables, unreachable_code)]
+async fn test_endpoints_object_get_and_return_with_mixed_required_and_optional_fields_with_wiremock(
+) {
+    wire_test_utils::reset_wiremock_requests().await.unwrap();
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
+
+    let mut config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+
+    let result = client
+        .endpoints
+        .object
+        .get_and_return_with_mixed_required_and_optional_fields(
+            &ObjectWithMixedRequiredAndOptionalFields {
+                required_string: "hello".to_string(),
+                required_integer: 0,
+                optional_string: Some("world".to_string()),
+                required_long: 0,
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+
+    assert!(result.is_ok(), "Client method call should succeed");
+
+    wire_test_utils::verify_request_count(
+        "POST",
+        "/object/get-and-return-with-mixed-required-and-optional-fields",
+        None,
+        1,
+    )
+    .await
+    .unwrap();
+}
+
+#[tokio::test]
+#[allow(unused_variables, unreachable_code)]
+async fn test_endpoints_object_get_and_return_with_required_nested_object_with_wiremock() {
+    wire_test_utils::reset_wiremock_requests().await.unwrap();
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
+
+    let mut config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+
+    let result = client
+        .endpoints
+        .object
+        .get_and_return_with_required_nested_object(
+            &ObjectWithRequiredNestedObject {
+                required_string: "hello".to_string(),
+                required_object: NestedObjectWithRequiredField {
+                    string: "nested".to_string(),
+                    nested_object: ObjectWithOptionalField {
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                },
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+
+    assert!(result.is_ok(), "Client method call should succeed");
+
+    wire_test_utils::verify_request_count(
+        "POST",
+        "/object/get-and-return-with-required-nested-object",
+        None,
+        1,
+    )
+    .await
+    .unwrap();
+}
+
+#[tokio::test]
+#[allow(unused_variables, unreachable_code)]
 async fn test_endpoints_object_get_and_return_with_datetime_like_string_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
     let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
@@ -449,6 +558,7 @@ async fn test_endpoints_object_get_and_return_with_datetime_like_string_with_wir
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -458,6 +568,7 @@ async fn test_endpoints_object_get_and_return_with_datetime_like_string_with_wir
             &ObjectWithDatetimeLikeString {
                 datetime_like_string: "2023-08-31T14:15:22Z".to_string(),
                 actual_datetime: DateTime::parse_from_rfc3339("2023-08-31T14:15:22Z").unwrap(),
+                ..Default::default()
             },
             None,
         )

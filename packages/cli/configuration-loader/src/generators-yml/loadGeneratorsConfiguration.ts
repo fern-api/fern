@@ -4,7 +4,8 @@ import {
     generatorsYml
 } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
@@ -41,7 +42,10 @@ export async function loadRawGeneratorsConfiguration({
             return parsed.value;
         }
         // TODO: improve error message
-        throw new Error(parsed.errors.map((e) => e.message).join("\n"));
+        throw new CliError({
+            message: parsed.errors.map((e) => e.message).join("\n"),
+            code: CliError.Code.ConfigError
+        });
     } catch (e) {
         if (e instanceof yaml.YAMLException) {
             const relativePath = path.relative(process.cwd(), filepath);
@@ -75,7 +79,7 @@ export async function loadRawGeneratorsConfiguration({
                 }
             }
 
-            context.failAndThrow(errorMessage);
+            context.failAndThrow(errorMessage, undefined, { code: CliError.Code.ConfigError });
         } else {
             throw e;
         }

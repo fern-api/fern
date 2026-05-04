@@ -1,6 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
-import { casingsGenerator, createHttpEndpoint, createHttpService } from "@fern-typescript/test-utils";
+import { caseConverter, casingsGenerator, createHttpEndpoint, createHttpService } from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
 
@@ -99,7 +99,7 @@ function createSdkRequest(name: string): FernIr.SdkRequest {
     };
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: test mock for SdkContext
+// biome-ignore lint/suspicious/noExplicitAny: test mock for FileContext
 function createMockContext(): any {
     return {};
 }
@@ -113,7 +113,8 @@ describe("AbstractRequestParameter", () => {
                 packageId: { isRoot: true } as unknown as PackageId,
                 service: createHttpService(),
                 endpoint: createHttpEndpoint(),
-                sdkRequest: createSdkRequest("request")
+                sdkRequest: createSdkRequest("request"),
+                caseConverter
             });
             expect(param).toBeDefined();
         });
@@ -125,7 +126,8 @@ describe("AbstractRequestParameter", () => {
                 packageId: { isRoot: true } as unknown as PackageId,
                 service: createHttpService(),
                 endpoint: createHttpEndpoint(),
-                sdkRequest: createSdkRequest("myRequest")
+                sdkRequest: createSdkRequest("myRequest"),
+                caseConverter
             });
             const context = createMockContext();
             const decl = param.getParameterDeclaration(context);
@@ -138,7 +140,8 @@ describe("AbstractRequestParameter", () => {
                 service: createHttpService(),
                 endpoint: createHttpEndpoint(),
                 sdkRequest: createSdkRequest("request"),
-                typeNode: ts.factory.createTypeReferenceNode("CustomType")
+                typeNode: ts.factory.createTypeReferenceNode("CustomType"),
+                caseConverter
             });
             const context = createMockContext();
             const decl = param.getParameterDeclaration(context);
@@ -150,7 +153,8 @@ describe("AbstractRequestParameter", () => {
                 packageId: { isRoot: true } as unknown as PackageId,
                 service: createHttpService(),
                 endpoint: createHttpEndpoint(),
-                sdkRequest: createSdkRequest("request")
+                sdkRequest: createSdkRequest("request"),
+                caseConverter
             });
             const context = createMockContext();
             const decl = param.getParameterDeclaration(context);
@@ -163,7 +167,8 @@ describe("AbstractRequestParameter", () => {
                 service: createHttpService(),
                 endpoint: createHttpEndpoint(),
                 sdkRequest: createSdkRequest("request"),
-                hasQuestionToken: true
+                hasQuestionToken: true,
+                caseConverter
             });
             const context = createMockContext();
             const decl = param.getParameterDeclaration(context);
@@ -177,7 +182,8 @@ describe("AbstractRequestParameter", () => {
                 service: createHttpService(),
                 endpoint: createHttpEndpoint(),
                 sdkRequest: createSdkRequest("request"),
-                initializer
+                initializer,
+                caseConverter
             });
             const context = createMockContext();
             const decl = param.getParameterDeclaration(context);
@@ -189,7 +195,8 @@ describe("AbstractRequestParameter", () => {
                 packageId: { isRoot: true } as unknown as PackageId,
                 service: createHttpService(),
                 endpoint: createHttpEndpoint(),
-                sdkRequest: createSdkRequest("request")
+                sdkRequest: createSdkRequest("request"),
+                caseConverter
             });
             const context = createMockContext();
             const decl = param.getParameterDeclaration(context);
@@ -203,7 +210,8 @@ describe("AbstractRequestParameter", () => {
                 packageId: { isRoot: true } as unknown as PackageId,
                 service: createHttpService(),
                 endpoint: createHttpEndpoint(),
-                sdkRequest: createSdkRequest("mySpecialRequest")
+                sdkRequest: createSdkRequest("mySpecialRequest"),
+                caseConverter
             });
             const context = createMockContext();
             const decl = param.getParameterDeclaration(context);

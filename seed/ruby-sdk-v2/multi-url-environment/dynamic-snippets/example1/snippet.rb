@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.s_3.get_presigned_url(s_3_key: "s3Key")
+client.s3.get_presigned_url(s3key: "s3Key")

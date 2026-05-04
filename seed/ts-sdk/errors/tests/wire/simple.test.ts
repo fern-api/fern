@@ -23,9 +23,7 @@ describe("SimpleClient", () => {
         const response = await client.simple.fooWithoutEndpointError({
             bar: "bar",
         });
-        expect(response).toEqual({
-            bar: "bar",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("fooWithoutEndpointError (2)", async () => {
@@ -112,9 +110,7 @@ describe("SimpleClient", () => {
         const response = await client.simple.foo({
             bar: "bar",
         });
-        expect(response).toEqual({
-            bar: "bar",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("foo (2)", async () => {
@@ -223,9 +219,7 @@ describe("SimpleClient", () => {
         const response = await client.simple.fooWithExamples({
             bar: "hello",
         });
-        expect(response).toEqual({
-            bar: "hello",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("fooWithExamples (2)", async () => {

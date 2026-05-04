@@ -20,7 +20,7 @@ describe("PropertyBasedErrorClient", () => {
             .build();
 
         const response = await client.propertyBasedError.throwError();
-        expect(response).toEqual("string");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("ThrowError (2)", async () => {

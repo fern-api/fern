@@ -155,6 +155,16 @@
         }
       ]
     },
+    "global-theme": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "experimental": {
       "oneOf": [
         {
@@ -180,7 +190,20 @@
         {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/docs.Language"
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "translations": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.TranslationConfig"
           }
         },
         {
@@ -212,6 +235,16 @@
       "oneOf": [
         {
           "$ref": "#/definitions/docs.AiExamplesConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "agents": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.AgentsConfig"
         },
         {
           "type": "null"
@@ -501,16 +534,6 @@
             }
           ]
         },
-        "private": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "edit-this-page": {
           "oneOf": [
             {
@@ -525,6 +548,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.Audience"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "multi-source": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -1025,9 +1058,12 @@
       "type": "string",
       "enum": [
         "deprecated",
+        "legacy",
         "ga",
         "stable",
-        "beta"
+        "beta",
+        "alpha",
+        "preview"
       ]
     },
     "docs.VersionConfig": {
@@ -1372,7 +1408,10 @@
         "in-development",
         "pre-release",
         "deprecated",
-        "beta"
+        "beta",
+        "alpha",
+        "preview",
+        "legacy"
       ]
     },
     "docs.PageConfiguration": {
@@ -3939,6 +3978,7 @@
         "chatgpt",
         "claude",
         "cursor",
+        "claude-code",
         "vscode"
       ]
     },
@@ -4032,6 +4072,16 @@
           ]
         },
         "claude": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "claude-code": {
           "oneOf": [
             {
               "type": "boolean"
@@ -4225,23 +4275,38 @@
       ]
     },
     "docs.Language": {
-      "type": "string",
-      "enum": [
-        "en",
-        "es",
-        "fr",
-        "de",
-        "it",
-        "pt",
-        "ja",
-        "zh",
-        "ko",
-        "el",
-        "no",
-        "pl",
-        "ru",
-        "sv",
-        "tr"
+      "type": "string"
+    },
+    "docs.TranslationConfigObject": {
+      "type": "object",
+      "properties": {
+        "lang": {
+          "$ref": "#/definitions/docs.Language"
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "lang"
+      ],
+      "additionalProperties": false
+    },
+    "docs.TranslationConfig": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.Language"
+        },
+        {
+          "$ref": "#/definitions/docs.TranslationConfigObject"
+        }
       ]
     },
     "docs.AIChatModel": {
@@ -4367,6 +4432,59 @@
       },
       "additionalProperties": false
     },
+    "docs.PageDescriptionSource": {
+      "type": "string",
+      "enum": [
+        "description",
+        "subtitle"
+      ]
+    },
+    "docs.AgentsConfig": {
+      "type": "object",
+      "properties": {
+        "page-directive": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "page-description-source": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.PageDescriptionSource"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "llms-txt": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "llms-full-txt": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.TwitterCardSetting": {
       "type": "string",
       "enum": [
@@ -4374,6 +4492,13 @@
         "summary_large_image",
         "app",
         "player"
+      ]
+    },
+    "docs.OgDynamicLogoColor": {
+      "type": "string",
+      "enum": [
+        "dark",
+        "light"
       ]
     },
     "docs.MetadataConfig": {
@@ -4549,10 +4674,90 @@
             }
           ]
         },
-        "og:background-image": {
+        "og:dynamic:background-image": {
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:text-color": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:background-color": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:logo-color": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.OgDynamicLogoColor"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:show-logo": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:show-section": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:show-description": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:show-url": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:dynamic:show-gradient": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -4659,6 +4864,16 @@
           ]
         },
         "valid-docs-endpoints": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "missing-redirects": {
           "oneOf": [
             {
               "$ref": "#/definitions/docs.CheckRuleSeverity"
@@ -5366,6 +5581,16 @@
               "type": "null"
             }
           ]
+        },
+        "mobile-toc": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -5396,6 +5621,13 @@
             "$ref": "#/definitions/docs.HttpSnippetLanguage"
           }
         }
+      ]
+    },
+    "docs.WebSocketOneofDisplay": {
+      "type": "string",
+      "enum": [
+        "flat",
+        "grouped"
       ]
     },
     "docs.DocsSettingsConfig": {
@@ -5481,6 +5713,16 @@
             }
           ]
         },
+        "disable-environment-editing": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "disable-analytics": {
           "oneOf": [
             {
@@ -5515,6 +5757,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "websocket-oneof-display": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.WebSocketOneofDisplay"
             },
             {
               "type": "null"
@@ -5623,7 +5875,8 @@
       "type": "string",
       "enum": [
         "default",
-        "toggle"
+        "toggle",
+        "tabs"
       ]
     },
     "docs.ThemeConfig": {
@@ -5706,6 +5959,16 @@
       "type": "object",
       "properties": {
         "intercom": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "context7": {
           "oneOf": [
             {
               "type": "string"

@@ -1,7 +1,10 @@
 import {
     checkVersionDoesNotAlreadyExist,
     computeSemanticVersion,
-    getOriginGitCommit
+    detectCiProvider,
+    detectInvocationSource,
+    getOriginGitCommit,
+    getOriginGitCommitIsDirty
 } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
@@ -12,10 +15,10 @@ import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { dynamic, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode } from "@fern-api/lazy-fern-workspace";
 import { convertIrToFdrApi } from "@fern-api/register";
-import { InteractiveTaskContext } from "@fern-api/task-context";
-import { FernVenusApi } from "@fern-api/venus-api-sdk";
+import { CliError, InteractiveTaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { createAndStartJob } from "./createAndStartJob.js";
@@ -37,12 +40,19 @@ export async function runRemoteGenerationForGenerator({
     whitelabel,
     irVersionOverride,
     absolutePathToPreview,
+    isPreview: isPreviewOverride,
+    fiddlePreview,
+    pushPreviewBranch,
     readme,
     fernignorePath,
     skipFernignore,
     dynamicIrOnly,
     retryRateLimited,
-    requireEnvVars
+    requireEnvVars,
+    automationMode,
+    autoMerge,
+    skipIfNoDiff,
+    loginCommand
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -56,12 +66,26 @@ export async function runRemoteGenerationForGenerator({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    /** Controls CLI-side behavior (lenient env vars, skip version check). Falls back to absolutePathToPreview != null. */
+    isPreview?: boolean;
+    /** When provided, overrides the `preview` flag sent to Fiddle. When omitted, falls back to isPreview. */
+    fiddlePreview?: boolean;
+    /** When true, tells Fiddle to push a preview branch to the SDK repo. */
+    pushPreviewBranch?: boolean;
     readme: generatorsYml.ReadmeSchema | undefined;
     fernignorePath: string | undefined;
     skipFernignore?: boolean;
     dynamicIrOnly: boolean;
     retryRateLimited: boolean;
     requireEnvVars: boolean;
+    automationMode?: boolean;
+    autoMerge?: boolean;
+    skipIfNoDiff?: boolean;
+    /**
+     * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
+     * 'fern auth login' for CLI v2). Defaults to 'fern login'.
+     */
+    loginCommand?: string;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
 
@@ -71,7 +95,7 @@ export async function runRemoteGenerationForGenerator({
     const packageName = generatorsYml.getPackageName({ generatorInvocation });
 
     /** Sugar to substitute templated env vars in a standard way */
-    const isPreview = absolutePathToPreview != null;
+    const isPreview = isPreviewOverride ?? absolutePathToPreview != null;
 
     const substituteEnvVars = <T>(stringOrObject: T) =>
         replaceEnvVariables(
@@ -79,7 +103,9 @@ export async function runRemoteGenerationForGenerator({
             {
                 onError: (e) => {
                     if (!isPreview && requireEnvVars) {
-                        interactiveTaskContext.failAndThrow(e);
+                        interactiveTaskContext.failAndThrow(undefined, e, {
+                            code: CliError.Code.EnvironmentError
+                        });
                     }
                 }
             },
@@ -136,13 +162,17 @@ export async function runRemoteGenerationForGenerator({
             generatorName: generatorInvocation.name,
             generatorVersion: generatorInvocation.version,
             generatorConfig: generatorInvocation.config,
-            originGitCommit: getOriginGitCommit()
+            originGitCommit: getOriginGitCommit(),
+            originGitCommitIsDirty: getOriginGitCommitIsDirty(),
+            invokedBy: detectInvocationSource(),
+            requestedVersion: version,
+            ciProvider: detectCiProvider()
         }
     });
 
     const venus = createVenusService({ token: token.value });
     if (!isAirGapped) {
-        const orgResponse = await venus.organization.get(FernVenusApi.OrganizationId(projectConfig.organization));
+        const orgResponse = await venus.organization.get(projectConfig.organization);
 
         if (orgResponse.ok) {
             if (orgResponse.body.isWhitelabled) {
@@ -174,26 +204,27 @@ export async function runRemoteGenerationForGenerator({
         },
         context: interactiveTaskContext
     });
-    const response = await fdr.api.v1.register.registerApiDefinition({
-        orgId: FdrAPI.OrgId(organization),
-        apiId: FdrAPI.ApiId(ir.apiName.originalName),
-        definition: apiDefinition,
-        sources: sources.length > 0 ? convertToFdrApiDefinitionSources(sources) : undefined
-    });
-
-    if (response.ok) {
-        fdrApiDefinitionId = response.body.apiDefinitionId;
-        sourceUploads = response.body.sources;
+    try {
+        const response = await fdr.api.register.registerApiDefinition({
+            orgId: FdrAPI.OrgId(organization),
+            apiId: FdrAPI.ApiId(getOriginalName(ir.apiName)),
+            definition: apiDefinition,
+            sources: sources.length > 0 ? convertToFdrApiDefinitionSources(sources) : undefined
+        });
+        fdrApiDefinitionId = response.apiDefinitionId;
+        sourceUploads = response.sources ?? undefined;
+    } catch (error) {
+        const sourceUploader = new SourceUploader(interactiveTaskContext, sources);
+        if (sourceUploader.sourceTypes.has("protobuf")) {
+            interactiveTaskContext.failAndThrow(`Failed to register API definition: ${JSON.stringify(error)}`);
+        }
     }
 
     const sourceUploader = new SourceUploader(interactiveTaskContext, sources);
     if (sourceUploads == null && sourceUploader.sourceTypes.has("protobuf")) {
-        if (!response.ok) {
-            interactiveTaskContext.failAndThrow(
-                `Failed to register API definition: ${JSON.stringify(response.error.content)}`
-            );
-        }
-        interactiveTaskContext.failAndThrow("Did not successfully upload Protobuf source files.");
+        interactiveTaskContext.failAndThrow("Did not successfully upload Protobuf source files.", undefined, {
+            code: CliError.Code.NetworkError
+        });
     }
 
     if (sourceUploads != null) {
@@ -211,17 +242,23 @@ export async function runRemoteGenerationForGenerator({
         );
 
         if (version == null) {
-            interactiveTaskContext.failAndThrow("Version is required for dynamic IR only mode");
+            interactiveTaskContext.failAndThrow("Version is required for dynamic IR only mode", undefined, {
+                code: CliError.Code.ConfigError
+            });
             return undefined;
         }
 
         if (generatorInvocation.language == null) {
-            interactiveTaskContext.failAndThrow("Language is required for dynamic IR only mode");
+            interactiveTaskContext.failAndThrow("Language is required for dynamic IR only mode", undefined, {
+                code: CliError.Code.ConfigError
+            });
             return undefined;
         }
 
         if (packageName == null) {
-            interactiveTaskContext.failAndThrow("Package name is required for dynamic IR only mode");
+            interactiveTaskContext.failAndThrow("Package name is required for dynamic IR only mode", undefined, {
+                code: CliError.Code.ConfigError
+            });
             return undefined;
         }
 
@@ -238,14 +275,21 @@ export async function runRemoteGenerationForGenerator({
                 context: interactiveTaskContext
             });
         } catch (error) {
-            interactiveTaskContext.failAndThrow(`Failed to upload dynamic IR: ${extractErrorMessage(error)}`);
+            interactiveTaskContext.failAndThrow(
+                `Failed to upload dynamic IR: ${extractErrorMessage(error)}`,
+                undefined,
+                { code: CliError.Code.NetworkError }
+            );
         }
 
         // Return a minimal response since no SDK generation occurred
         return {
             createdSnippets: false,
             snippetsS3PreSignedReadUrl: undefined,
-            actualVersion: version
+            actualVersion: version,
+            pullRequestUrl: undefined,
+            noChangesDetected: undefined,
+            publishTarget: undefined
         };
     }
 
@@ -266,15 +310,23 @@ export async function runRemoteGenerationForGenerator({
         whitelabel: whitelabel != null ? substituteEnvVars(whitelabel) : undefined,
         irVersionOverride,
         absolutePathToPreview,
+        fiddlePreview,
+        pushPreviewBranch,
         fernignorePath,
         skipFernignore,
-        retryRateLimited
+        retryRateLimited,
+        automationMode,
+        autoMerge,
+        skipIfNoDiff,
+        loginCommand
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
 
     const taskId = job.taskIds[0];
     if (taskId == null) {
-        interactiveTaskContext.failAndThrow("Did not receive a task ID.");
+        interactiveTaskContext.failAndThrow("Did not receive a task ID.", undefined, {
+            code: CliError.Code.NetworkError
+        });
         return undefined;
     }
     interactiveTaskContext.logger.debug(`Task ID: ${taskId}`);
@@ -287,12 +339,23 @@ export async function runRemoteGenerationForGenerator({
         absolutePathToPreview
     });
 
-    const result = await pollJobAndReportStatus({
+    let result = await pollJobAndReportStatus({
         job,
         taskHandler,
         taskId,
         context: interactiveTaskContext
     });
+
+    // Fall back to the locally-resolved version when Fiddle doesn't echo it back
+    // (e.g. GitHub push modes where no registry publish or release tag occurs).
+    // Skip the fallback when the version is AUTO — Fiddle determines the real version
+    // via AI-based semantic analysis, and resolvedVersion would be the literal "AUTO" string.
+    if (result != null && result.actualVersion == null) {
+        const fallback = resolveVersionFallback(resolvedVersion);
+        if (fallback != null) {
+            result = { ...result, actualVersion: fallback };
+        }
+    }
 
     // use the actual version from the generation result, fallback to pre-computed version
     const actualVersionForUpload = result?.actualVersion ?? resolvedVersion;
@@ -413,21 +476,20 @@ async function uploadDynamicIRForSdkGeneration({
     context.logger.debug(`Uploading dynamic IR for ${language} SDK...`);
 
     // Get presigned upload URLs from FDR
-    const uploadUrlsResponse = await fdr.api.v1.register.getSdkDynamicIrUploadUrls({
-        orgId: FdrAPI.OrgId(organization),
-        version,
-        snippetConfiguration: {
-            [language]: packageName
-        }
-    });
-
-    if (!uploadUrlsResponse.ok) {
+    let uploadUrlsResponse;
+    try {
+        uploadUrlsResponse = await fdr.api.register.getSdkDynamicIrUploadUrls({
+            orgId: FdrAPI.OrgId(organization),
+            apiId: "",
+            irVersions: []
+        });
+    } catch (error) {
         // Log warning but don't fail the generation - dynamic IR upload is optional
-        context.logger.warn(`Failed to get dynamic IR upload URLs: ${uploadUrlsResponse.error.error}`);
+        context.logger.warn(`Failed to get dynamic IR upload URLs: ${error}`);
         return;
     }
 
-    const uploadUrl = uploadUrlsResponse.body.uploadUrls[language]?.uploadUrl;
+    const uploadUrl = uploadUrlsResponse.uploadUrls[language]?.uploadUrl;
     if (uploadUrl == null) {
         context.logger.warn(`No upload URL returned for ${language}`);
         return;
@@ -458,4 +520,19 @@ async function uploadDynamicIRForSdkGeneration({
     } else {
         context.logger.warn(`Failed to upload dynamic IR for ${language}: ${uploadResponse.status}`);
     }
+}
+
+/**
+ * Returns `resolvedVersion` when it is a concrete version string that should be
+ * used as fallback. Returns `undefined` when the version is AUTO (Fiddle owns
+ * the final version) or when no version was provided at all.
+ */
+export function resolveVersionFallback(resolvedVersion: string | undefined): string | undefined {
+    if (resolvedVersion == null) {
+        return undefined;
+    }
+    if (resolvedVersion.toUpperCase() === "AUTO") {
+        return undefined;
+    }
+    return resolvedVersion;
 }

@@ -13,7 +13,7 @@ pub struct Moment {
 
 impl Moment {
     pub fn builder() -> MomentBuilder {
-        MomentBuilder::default()
+        <MomentBuilder as Default>::default()
     }
 }
 

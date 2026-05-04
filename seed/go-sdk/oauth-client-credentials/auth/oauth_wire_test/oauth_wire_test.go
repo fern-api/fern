@@ -68,7 +68,7 @@ func TestOAuthGetTokenFormEncodedBody(t *testing.T) {
 	)
 
 	request := &fern.GetTokenRequest{
-		ClientId:     "test_client_id",
+		ClientID:     "test_client_id",
 		ClientSecret: "test_client_secret",
 	}
 
@@ -117,7 +117,7 @@ func TestOAuthGetTokenCustomHeaders(t *testing.T) {
 	)
 
 	request := &fern.GetTokenRequest{
-		ClientId:     "test_client_id",
+		ClientID:     "test_client_id",
 		ClientSecret: "test_client_secret",
 	}
 

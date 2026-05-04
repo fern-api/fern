@@ -200,4 +200,282 @@ impl ApiClient {
             )
             .await
     }
+
+    /// Uses x-fern-streaming extension with stream-condition to split into streaming and non-streaming variants based on a request body field. The request body is a $ref to a named schema. The response and response-stream point to different schemas.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Complete JSON response (fetched at once, not streaming)
+    pub async fn stream_x_fern_streaming_condition_stream(
+        &self,
+        request: &StreamXFernStreamingConditionStreamRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<CompletionStreamChunk, ApiError> {
+        self.http_client
+            .execute_request::<CompletionStreamChunk>(
+                Method::POST,
+                "stream/x-fern-streaming-condition",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Uses x-fern-streaming extension with stream-condition to split into streaming and non-streaming variants based on a request body field. The request body is a $ref to a named schema. The response and response-stream point to different schemas.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn stream_x_fern_streaming_condition(
+        &self,
+        request: &StreamXFernStreamingConditionRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<CompletionFullResponse, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "stream/x-fern-streaming-condition",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Uses x-fern-streaming with stream-condition. The request body $ref (SharedCompletionRequest) is also referenced by a separate non-streaming endpoint (/validate-completion). This tests that the shared request schema is not excluded from the context during streaming processing.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Complete JSON response (fetched at once, not streaming)
+    pub async fn stream_x_fern_streaming_shared_schema_stream(
+        &self,
+        request: &StreamXFernStreamingSharedSchemaStreamRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<CompletionStreamChunk, ApiError> {
+        self.http_client
+            .execute_request::<CompletionStreamChunk>(
+                Method::POST,
+                "stream/x-fern-streaming-shared-schema",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Uses x-fern-streaming with stream-condition. The request body $ref (SharedCompletionRequest) is also referenced by a separate non-streaming endpoint (/validate-completion). This tests that the shared request schema is not excluded from the context during streaming processing.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn stream_x_fern_streaming_shared_schema(
+        &self,
+        request: &StreamXFernStreamingSharedSchemaRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<CompletionFullResponse, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "stream/x-fern-streaming-shared-schema",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// A non-streaming endpoint that references the same SharedCompletionRequest schema as endpoint 10. Ensures the shared $ref schema remains available and is not excluded during the streaming endpoint's processing.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn validate_completion(
+        &self,
+        request: &SharedCompletionRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<CompletionFullResponse, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "validate-completion",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Uses x-fern-streaming with stream-condition where the request body is a discriminated union (oneOf) whose variants inherit the stream condition field (stream_response) from a shared base schema via allOf. Tests that the stream condition property is not duplicated in the generated output when the base schema is expanded into each variant.
+    ///
+    /// # Arguments
+    ///
+    /// * `request` - A discriminated union request matching the Vectara pattern (FER-9556). Each variant inherits stream_response from UnionStreamRequestBase via allOf. The importer pins stream_response to Literal[True/False] at this union level, but the allOf inheritance re-introduces it as boolean in each variant, causing the type conflict.
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Complete JSON response (fetched at once, not streaming)
+    pub async fn stream_x_fern_streaming_union_stream(
+        &self,
+        request: &StreamXFernStreamingUnionStreamRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<CompletionStreamChunk, ApiError> {
+        self.http_client
+            .execute_request::<CompletionStreamChunk>(
+                Method::POST,
+                "stream/x-fern-streaming-union",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Uses x-fern-streaming with stream-condition where the request body is a discriminated union (oneOf) whose variants inherit the stream condition field (stream_response) from a shared base schema via allOf. Tests that the stream condition property is not duplicated in the generated output when the base schema is expanded into each variant.
+    ///
+    /// # Arguments
+    ///
+    /// * `request` - A discriminated union request matching the Vectara pattern (FER-9556). Each variant inherits stream_response from UnionStreamRequestBase via allOf. The importer pins stream_response to Literal[True/False] at this union level, but the allOf inheritance re-introduces it as boolean in each variant, causing the type conflict.
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn stream_x_fern_streaming_union(
+        &self,
+        request: &StreamXFernStreamingUnionRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<CompletionFullResponse, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "stream/x-fern-streaming-union",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// References UnionStreamRequestBase directly, ensuring the base schema cannot be excluded from the context. This endpoint exists to verify that shared base schemas used in discriminated union variants with stream-condition remain available.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn validate_union_request(
+        &self,
+        request: &UnionStreamRequestBase,
+        options: Option<RequestOptions>,
+    ) -> Result<ValidateUnionRequestResponse, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "validate-union-request",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Uses x-fern-streaming with stream-condition where the stream field is nullable (type: ["boolean", "null"] in OAS 3.1). Previously, the spread order in the importer caused the nullable type array to overwrite the const literal, producing stream?: true | null instead of stream: true. The const/type override must be spread after the original property.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Complete JSON response (fetched at once, not streaming)
+    pub async fn stream_x_fern_streaming_nullable_condition_stream(
+        &self,
+        request: &StreamXFernStreamingNullableConditionStreamRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<CompletionStreamChunk, ApiError> {
+        self.http_client
+            .execute_request::<CompletionStreamChunk>(
+                Method::POST,
+                "stream/x-fern-streaming-nullable-condition",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Uses x-fern-streaming with stream-condition where the stream field is nullable (type: ["boolean", "null"] in OAS 3.1). Previously, the spread order in the importer caused the nullable type array to overwrite the const literal, producing stream?: true | null instead of stream: true. The const/type override must be spread after the original property.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn stream_x_fern_streaming_nullable_condition(
+        &self,
+        request: &StreamXFernStreamingNullableConditionRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<CompletionFullResponse, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "stream/x-fern-streaming-nullable-condition",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Uses x-fern-streaming with format: sse but no stream-condition. This represents a stream-only endpoint that always returns SSE. There is no non-streaming variant, and the response is always a stream of chunks.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    pub async fn stream_x_fern_streaming_sse_only(
+        &self,
+        request: &StreamRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<SseStream<String>, ApiError> {
+        self.http_client
+            .execute_sse_request(
+                Method::POST,
+                "stream/x-fern-streaming-sse-only",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+                None,
+            )
+            .await
+    }
 }

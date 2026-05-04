@@ -12,6 +12,7 @@ import {
 import { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileYamlAst.js";
 import { getAllRules } from "./getAllRules.js";
 import { Rule } from "./Rule.js";
+import { MissingRedirectsRule } from "./rules/missing-redirects/index.js";
 import { NoCircularRedirectsRule } from "./rules/no-circular-redirects/index.js";
 import { NoNonComponentRefsRule } from "./rules/no-non-component-refs/index.js";
 import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints/index.js";
@@ -37,7 +38,8 @@ const CHECK_RULE_CONFIG_TO_RULE_NAME = {
     noNonComponentRefs: NoNonComponentRefsRule.name,
     validLocalReferences: ValidLocalReferencesRule.name,
     noCircularRedirects: NoCircularRedirectsRule.name,
-    validDocsEndpoints: ValidDocsEndpoints.name
+    validDocsEndpoints: ValidDocsEndpoints.name,
+    missingRedirects: MissingRedirectsRule.name
 } satisfies Record<keyof docsYml.RawSchemas.CheckRulesConfig, string>;
 
 function buildSeverityOverrides(
@@ -105,16 +107,47 @@ export async function runRulesOnDocsWorkspace({
     const violations: ValidationViolation[] = [];
 
     const ruleCreationStart = performance.now();
-    const allRulesWithVisitors = await Promise.all(
-        rules.map(
-            async (rule): Promise<RuleWithVisitor> => ({
-                ruleName: rule.name,
-                visitor: await rule.create({ workspace, apiWorkspaces, ossWorkspaces, logger: context.logger })
-            })
-        )
+    const ruleCreationResults = await Promise.all(
+        rules.map(async (rule): Promise<RuleWithVisitor | { ruleName: string; error: unknown }> => {
+            try {
+                const visitor = await rule.create({
+                    workspace,
+                    apiWorkspaces,
+                    ossWorkspaces,
+                    logger: context.logger
+                });
+                return { ruleName: rule.name, visitor };
+            } catch (error) {
+                return { ruleName: rule.name, error };
+            }
+        })
     );
+    const allRulesWithVisitors: RuleWithVisitor[] = [];
+    for (const result of ruleCreationResults) {
+        if ("error" in result) {
+            const message = result.error instanceof Error ? result.error.message : String(result.error);
+            violations.push({
+                name: result.ruleName,
+                severity: "fatal",
+                relativeFilepath: RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME),
+                nodePath: [],
+                message: `Rule "${result.ruleName}" failed to initialize: ${message}`
+            });
+            context.logger.debug(
+                `Rule "${result.ruleName}" failed to initialize: ${
+                    result.error instanceof Error ? (result.error.stack ?? result.error.message) : String(result.error)
+                }`
+            );
+        } else {
+            allRulesWithVisitors.push(result);
+        }
+    }
     const ruleCreationTime = performance.now() - ruleCreationStart;
-    context.logger.debug(`Created ${rules.length} rule visitors in ${ruleCreationTime.toFixed(0)}ms`);
+    context.logger.debug(
+        `Created ${allRulesWithVisitors.length} rule visitors in ${ruleCreationTime.toFixed(0)}ms (${
+            rules.length - allRulesWithVisitors.length
+        } failed to initialize)`
+    );
 
     const astVisitor = createDocsConfigFileAstVisitorForRules({
         relativeFilepath: RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME),

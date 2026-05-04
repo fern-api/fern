@@ -110,6 +110,7 @@
               "encoding": "hex",
               "header": "x-webhook-signature",
               "payload-format": {
+                "body-sort": "alphabetical",
                 "components": [
                   "timestamp",
                   "body",
@@ -204,6 +205,7 @@
               "encoding": "hex",
               "header": "x-webhook-signature",
               "payload-format": {
+                "body-sort": "alphabetical",
                 "components": [
                   "timestamp",
                   "body",
@@ -240,6 +242,7 @@ webhooks:
           - timestamp
           - body
         delimiter: .
+        body-sort: alphabetical
       timestamp:
         header: x-webhook-timestamp
         format: unix-seconds
@@ -264,6 +267,7 @@ webhooks:
           - timestamp
           - body
         delimiter: .
+        body-sort: alphabetical
       timestamp:
         header: x-webhook-timestamp
         format: unix-seconds

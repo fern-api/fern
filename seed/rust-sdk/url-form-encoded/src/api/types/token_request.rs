@@ -12,7 +12,7 @@ pub struct TokenRequest {
 
 impl TokenRequest {
     pub fn builder() -> TokenRequestBuilder {
-        TokenRequestBuilder::default()
+        <TokenRequestBuilder as Default>::default()
     }
 }
 

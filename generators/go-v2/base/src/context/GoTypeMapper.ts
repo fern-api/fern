@@ -1,3 +1,4 @@
+import { NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { BaseGoCustomConfigSchema, go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -33,7 +34,7 @@ export class GoTypeMapper {
         }
     }
 
-    public convertToTypeReference(declaredTypeName: { typeId: FernIr.TypeId; name: FernIr.Name }): go.TypeReference {
+    public convertToTypeReference(declaredTypeName: { typeId: FernIr.TypeId; name: NameInput }): go.TypeReference {
         return go.typeReference({
             name: this.context.getClassName(declaredTypeName.name),
             importPath: this.context.getLocationForTypeId(declaredTypeName.typeId).importPath
@@ -74,6 +75,7 @@ export class GoTypeMapper {
             string: () => go.Type.string(),
             date: () => go.Type.date(),
             dateTime: () => go.Type.dateTime(),
+            dateTimeRfc2822: () => go.Type.dateTime(),
             uuid: () => go.Type.uuid(),
             base64: () => go.Type.bytes(),
             bigInteger: () => go.Type.string(),

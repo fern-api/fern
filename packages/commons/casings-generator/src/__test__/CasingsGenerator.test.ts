@@ -1,8 +1,8 @@
-import { constructCasingsGenerator } from "../CasingsGenerator.js";
+import { constructCasingsGenerator, constructFullCasingsGenerator } from "../CasingsGenerator.js";
 
 describe("CasingsGenerator underscore preservation with preserveUnderscores option", () => {
     describe("without preserveUnderscores (default behavior - underscores stripped by lodash)", () => {
-        const generator = constructCasingsGenerator({
+        const generator = constructFullCasingsGenerator({
             generationLanguage: undefined,
             keywords: undefined,
             smartCasing: false
@@ -29,7 +29,7 @@ describe("CasingsGenerator underscore preservation with preserveUnderscores opti
     });
 
     describe("with preserveUnderscores: true (no smartCasing)", () => {
-        const generator = constructCasingsGenerator({
+        const generator = constructFullCasingsGenerator({
             generationLanguage: undefined,
             keywords: undefined,
             smartCasing: false
@@ -100,7 +100,7 @@ describe("CasingsGenerator underscore preservation with preserveUnderscores opti
     });
 
     describe("with preserveUnderscores: true and smartCasing + Go (initialism capitalization)", () => {
-        const generator = constructCasingsGenerator({
+        const generator = constructFullCasingsGenerator({
             generationLanguage: "go",
             keywords: undefined,
             smartCasing: true
@@ -148,7 +148,7 @@ describe("CasingsGenerator underscore preservation with preserveUnderscores opti
     });
 
     describe("with preserveUnderscores: true and smartCasing + Ruby", () => {
-        const generator = constructCasingsGenerator({
+        const generator = constructFullCasingsGenerator({
             generationLanguage: "ruby",
             keywords: undefined,
             smartCasing: true
@@ -162,7 +162,7 @@ describe("CasingsGenerator underscore preservation with preserveUnderscores opti
     });
 
     describe("with preserveUnderscores: true and smartCasing + undefined language (default)", () => {
-        const generator = constructCasingsGenerator({
+        const generator = constructFullCasingsGenerator({
             generationLanguage: undefined,
             keywords: undefined,
             smartCasing: true
@@ -177,7 +177,7 @@ describe("CasingsGenerator underscore preservation with preserveUnderscores opti
     });
 
     describe("with preserveUnderscores: true and smartCasing + Python (no initialism capitalization)", () => {
-        const generator = constructCasingsGenerator({
+        const generator = constructFullCasingsGenerator({
             generationLanguage: "python",
             keywords: undefined,
             smartCasing: true
@@ -197,13 +197,13 @@ describe("CasingsGenerator underscore preservation with preserveUnderscores opti
     });
 
     describe("backward compatibility - names without underscores unchanged", () => {
-        const generatorNoSmart = constructCasingsGenerator({
+        const generatorNoSmart = constructFullCasingsGenerator({
             generationLanguage: undefined,
             keywords: undefined,
             smartCasing: false
         });
 
-        const generatorSmart = constructCasingsGenerator({
+        const generatorSmart = constructFullCasingsGenerator({
             generationLanguage: "go",
             keywords: undefined,
             smartCasing: true
@@ -229,7 +229,7 @@ describe("CasingsGenerator underscore preservation with preserveUnderscores opti
     });
 
     describe("edge cases", () => {
-        const generator = constructCasingsGenerator({
+        const generator = constructFullCasingsGenerator({
             generationLanguage: undefined,
             keywords: undefined,
             smartCasing: false
@@ -250,6 +250,27 @@ describe("CasingsGenerator underscore preservation with preserveUnderscores opti
         it("preserves originalName exactly as input", () => {
             const result = generator.generateName("_Internal_API_", { preserveUnderscores: true });
             expect(result.originalName).toBe("_Internal_API_");
+        });
+    });
+
+    describe("compression - CasingsGenerator returns strings when no casingOverrides", () => {
+        const generator = constructCasingsGenerator({
+            generationLanguage: undefined,
+            keywords: undefined,
+            smartCasing: false
+        });
+
+        it("returns a plain string when no casingOverrides provided", () => {
+            const result = generator.generateName("myField");
+            expect(result).toBe("myField");
+        });
+
+        it("returns a full Name when casingOverrides are provided", () => {
+            const result = generator.generateName("myField", { casingOverrides: { camel: "myField" } });
+            expect(typeof result).toBe("object");
+            if (typeof result !== "string") {
+                expect(result.originalName).toBe("myField");
+            }
         });
     });
 });

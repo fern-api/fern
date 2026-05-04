@@ -13,7 +13,7 @@ pub struct Parameter2 {
 
 impl Parameter2 {
     pub fn builder() -> Parameter2Builder {
-        Parameter2Builder::default()
+        <Parameter2Builder as Default>::default()
     }
 }
 

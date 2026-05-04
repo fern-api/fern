@@ -566,7 +566,7 @@ export class DynamicTypeLiteralMapper {
             const errorsBefore = this.context.errors.size();
             try {
                 const result = this.convert({ typeReference, value, convertOpts });
-                if (ts.TypeLiteral.isNop(result)) {
+                if (ts.TypeLiteral.isNop(result) || this.context.errors.size() > errorsBefore) {
                     this.context.errors.truncate(errorsBefore);
                     continue;
                 }
@@ -649,7 +649,8 @@ export class DynamicTypeLiteralMapper {
                 }
                 return ts.TypeLiteral.string(str);
             }
-            case "DATE_TIME": {
+            case "DATE_TIME":
+            case "DATE_TIME_RFC_2822": {
                 const str = this.context.getValueAsString({ value });
                 if (str == null) {
                     return ts.TypeLiteral.nop();

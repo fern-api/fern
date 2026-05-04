@@ -1,0 +1,56 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Changelog Entry",
+        "description": "Schema for changelog entries in the unreleased directory",
+    "type": "array",
+    "items": {
+        "$ref": "#/definitions/ChangelogEntry"
+    },
+    "definitions": {
+        "ChangelogEntry": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "summary": {
+                    "type": "string",
+                    "description": "Description of the change. Use multi-line format for longer descriptions."
+                },
+                "type": {
+                    "$ref": "#/definitions/ChangelogType",
+                    "description": "Type of change determines version bump: fix/chore (patch), feat/internal (minor), break (major)"
+                },
+                "pre-release": {
+                    "$ref": "#/definitions/PreReleaseTag",
+                    "description": "Optional pre-release tag. When set, the release version includes this suffix (e.g., 1.2.0-rc.0)."
+                }
+            },
+            "required": [
+                "summary",
+                "type"
+            ],
+            "title": "Changelog"
+        },
+        "ChangelogType": {
+            "type": "string",
+            "enum": [
+                "fix",
+                "chore",
+                "feat",
+                "internal",
+                "break"
+            ],
+            "title": "Changelog Type",
+            "description": "The type of change: fix/chore → patch, feat/internal → minor, break → major"
+        },
+        "PreReleaseTag": {
+            "type": "string",
+            "enum": [
+                "alpha",
+                "beta",
+                "rc"
+            ],
+            "title": "Pre-Release Tag",
+            "description": "Pre-release identifier appended to the version (e.g., rc → 1.2.0-rc.0)"
+        }
+    }
+}

@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 
@@ -41,7 +42,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     public getParameterType(): ast.Type {
-        return this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
+        return this.context.getRequestWrapperReference(this.serviceId, this.wrapper);
     }
 
     public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {
@@ -82,7 +83,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
      * The builder automatically handles null values, so no conditional checks are needed.
      */
     private writeQueryParameterBuilderCallChained(writer: Writer, query: QueryParameter): void {
-        const baseReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
+        const baseReference = `${this.getParameterName()}.${this.case.pascalSafe(query.name)}`;
 
         // When experimental explicit nullable/optional is enabled, Optional<T> types need special handling
         // since QueryStringBuilder doesn't know how to serialize Optional<T> objects directly
@@ -98,9 +99,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const isComplexType = this.isComplexType(query.valueType);
 
         if (isComplexType) {
-            writer.write(`.AddDeepObject("${query.name.wireValue}", ${queryParameterReference})`);
+            writer.write(`.AddDeepObject("${getWireValue(query.name)}", ${queryParameterReference})`);
         } else {
-            writer.write(`.Add("${query.name.wireValue}", ${queryParameterReference})`);
+            writer.write(`.Add("${getWireValue(query.name)}", ${queryParameterReference})`);
         }
     }
 
@@ -193,8 +194,8 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 // The Add method handles null values and serialization automatically
                 for (const header of headers) {
                     writer.writeLine();
-                    const headerReference = `${this.getParameterName()}.${header.name.name.pascalCase.safeName}`;
-                    writer.write(`.Add("${header.name.wireValue}", ${headerReference})`);
+                    const headerReference = `${this.getParameterName()}.${this.case.pascalSafe(header.name)}`;
+                    writer.write(`.Add("${getWireValue(header.name)}", ${headerReference})`);
                 }
 
                 // Add client-level headers (from root client constructor)
@@ -260,7 +261,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         return this.endpoint.requestBody._visit({
             reference: () => {
                 return {
-                    requestBodyReference: `${this.getParameterName()}.${this.wrapper.bodyKey.pascalCase.safeName}`
+                    requestBodyReference: `${this.getParameterName()}.${this.case.pascalSafe(this.wrapper.bodyKey)}`
                 };
             },
             inlinedRequestBody: () => {
@@ -271,7 +272,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
             fileUpload: () => undefined,
             bytes: () => {
                 return {
-                    requestBodyReference: `${this.getParameterName()}.${this.wrapper.bodyKey.pascalCase.safeName}`
+                    requestBodyReference: `${this.getParameterName()}.${this.case.pascalSafe(this.wrapper.bodyKey)}`
                 };
             },
             _other: () => undefined

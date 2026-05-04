@@ -20,5 +20,5 @@ pub use query_parameter_builder::{QueryBuilder, QueryBuilderError, parse_structu
 #[cfg(feature = "sse")]
 pub use sse_stream::SseStream;
 #[cfg(feature = "websocket")]
-pub use websocket::{WebSocketClient, WebSocketOptions, WebSocketState, parse_websocket_message};
+pub use websocket::{WebSocketClient, WebSocketOptions, WebSocketState};
 pub use utils::join_url;

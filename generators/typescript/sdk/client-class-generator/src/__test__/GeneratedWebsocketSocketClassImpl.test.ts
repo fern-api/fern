@@ -60,7 +60,7 @@ function createChannel(opts?: { messages?: FernIr.WebSocketMessage[] }): FernIr.
     };
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: test mock for SdkContext
+// biome-ignore lint/suspicious/noExplicitAny: test mock for FileContext
 function createMockContext(): any {
     const addedModules: unknown[] = [];
     const addedClasses: unknown[] = [];

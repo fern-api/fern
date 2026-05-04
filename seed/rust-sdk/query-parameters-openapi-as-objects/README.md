@@ -61,10 +61,12 @@ async fn main() {
                 user: User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 },
                 user_list: vec![Some(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 })],
                 optional_deadline: Some(
                     DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
@@ -79,15 +81,19 @@ async fn main() {
                     user: Some(User {
                         name: Some("name".to_string()),
                         tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                        ..Default::default()
                     }),
+                    ..Default::default()
                 }),
                 optional_user: Some(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 }),
                 exclude_user: vec![Some(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 })],
                 filter: vec![Some("filter".to_string())],
                 tags: vec![Some("tags".to_string())],
@@ -95,10 +101,12 @@ async fn main() {
                 neighbor: Some(SearchRequestNeighbor::User(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 })),
                 neighbor_required: SearchRequestNeighborRequired::User(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                    ..Default::default()
                 }),
             },
             None,
@@ -137,7 +145,12 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (Internal Server Error)
+
+The `retryStatusCodes` configuration controls which [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) status codes are retried:
+
+- `legacy` (default): Retries `408`, `429`, and all `>= 500`
+- `recommended`: Retries `408`, `429`, `502`, `503`, `504` only (excludes `500 Internal Server Error` to avoid retrying non-idempotent failures)
 
 Use the `max_retries` method to configure this behavior.
 

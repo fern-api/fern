@@ -1,24 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
-  },
+  "apiName": "api",
   "apiDisplayName": "Primitive Array Complex API",
   "auth": {
     "requirement": "ALL",
@@ -51,25 +33,7 @@
       "endpoints": [
         {
           "id": "endpoint_.getSearchWithArrayUnion",
-          "name": {
-            "originalName": "getSearchWithArrayUnion",
-            "camelCase": {
-              "unsafeName": "getSearchWithArrayUnion",
-              "safeName": "getSearchWithArrayUnion"
-            },
-            "snakeCase": {
-              "unsafeName": "get_search_with_array_union",
-              "safeName": "get_search_with_array_union"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_SEARCH_WITH_ARRAY_UNION",
-              "safeName": "GET_SEARCH_WITH_ARRAY_UNION"
-            },
-            "pascalCase": {
-              "unsafeName": "GetSearchWithArrayUnion",
-              "safeName": "GetSearchWithArrayUnion"
-            }
-          },
+          "name": "getSearchWithArrayUnion",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -112,25 +76,7 @@
         },
         {
           "id": "endpoint_.getSearchWithObjectUnion",
-          "name": {
-            "originalName": "getSearchWithObjectUnion",
-            "camelCase": {
-              "unsafeName": "getSearchWithObjectUnion",
-              "safeName": "getSearchWithObjectUnion"
-            },
-            "snakeCase": {
-              "unsafeName": "get_search_with_object_union",
-              "safeName": "get_search_with_object_union"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_SEARCH_WITH_OBJECT_UNION",
-              "safeName": "GET_SEARCH_WITH_OBJECT_UNION"
-            },
-            "pascalCase": {
-              "unsafeName": "GetSearchWithObjectUnion",
-              "safeName": "GetSearchWithObjectUnion"
-            }
-          },
+          "name": "getSearchWithObjectUnion",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -175,28 +121,7 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -296,6 +221,9 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

@@ -15,12 +15,15 @@ async fn main() {
                 query_param_object: Some(PlainObject {
                     id: Some("id".to_string()),
                     name: Some("name".to_string()),
+                    ..Default::default()
                 }),
                 query_param_integer: Some(1),
                 body: Some(PlainObject {
                     id: Some("id".to_string()),
                     name: Some("name".to_string()),
+                    ..Default::default()
                 }),
+                ..Default::default()
             },
             None,
         )

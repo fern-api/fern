@@ -1,4 +1,6 @@
 import { applyOpenAPIOverlay, mergeWithOverrides } from "@fern-api/core-utils";
+import { CliError } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import { unlink, writeFile } from "fs/promises";
 import path from "path";
@@ -7,7 +9,6 @@ import { FERN_YML_FILENAME } from "../../../config/fern-yml/constants.js";
 import { FernYmlEditor } from "../../../config/fern-yml/FernYmlEditor.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { CliError } from "../../../errors/CliError.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
 import { type OverlayDocument, toOverlay } from "../split/diffSpecs.js";
@@ -27,7 +28,7 @@ export class MergeCommand {
         const workspace = await context.loadWorkspaceOrThrow();
 
         if (Object.keys(workspace.apis).length === 0) {
-            throw new CliError({ message: "No APIs found in workspace." });
+            throw new CliError({ message: "No APIs found in workspace.", code: CliError.Code.ConfigError });
         }
 
         const entries = filterSpecs(workspace, { api: args.api });
@@ -42,7 +43,8 @@ export class MergeCommand {
             const fernYmlPath = workspace.absoluteFilePath;
             if (fernYmlPath == null) {
                 throw new CliError({
-                    message: `No ${FERN_YML_FILENAME} found. Run 'fern init' to initialize a project.`
+                    message: `No ${FERN_YML_FILENAME} found. Run 'fern init' to initialize a project.`,
+                    code: CliError.Code.ConfigError
                 });
             }
             editor = await FernYmlEditor.load({ fernYmlPath });

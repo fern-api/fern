@@ -1,7 +1,7 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
 import { IntermediateRepresentation, serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { isVersionAhead } from "@fern-api/semver-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { GENERATOR_MINIMUM_VERSIONS, MINIMUM_SUPPORTED_IR_VERSION } from "./generatorVersionMap.js";
 import { GeneratorNameAndVersion } from "./IrMigrationContext.js";
 import { V54_TO_V53_MIGRATION } from "./migrations/v54-to-v53/migrateFromV54ToV53.js";
@@ -15,6 +15,8 @@ import { V61_TO_V60_MIGRATION } from "./migrations/v61-to-v60/migrateFromV61ToV6
 import { V62_TO_V61_MIGRATION } from "./migrations/v62-to-v61/migrateFromV62ToV61.js";
 import { V63_TO_V62_MIGRATION } from "./migrations/v63-to-v62/migrateFromV63ToV62.js";
 import { V65_TO_V63_MIGRATION } from "./migrations/v65-to-v63/migrateFromV65ToV63.js";
+import { V66_TO_V65_MIGRATION } from "./migrations/v66-to-v65/migrateFromV66ToV65.js";
+import { V67_TO_V66_MIGRATION } from "./migrations/v67-to-v66/migrateFromV67ToV66.js";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "./types/IrMigration.js";
 
 export function getIntermediateRepresentationMigrator(): IntermediateRepresentationMigrator {
@@ -136,17 +138,21 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
             if (targetGenerator != null) {
                 const minVersion = this.getMinimumGeneratorVersion(targetGenerator.name);
                 if (minVersion != null) {
-                    throw new Error(
-                        `${targetGenerator.name}@${targetGenerator.version} is not compatible with CLI v4.x.x+. ` +
-                            `Please upgrade to ${targetGenerator.name}@${minVersion} or later using 'fern generator upgrade --include-major'.`
-                    );
+                    throw new CliError({
+                        message:
+                            `${targetGenerator.name}@${targetGenerator.version} is not compatible with CLI v4.x.x+. ` +
+                            `Please upgrade to ${targetGenerator.name}@${minVersion} or later using 'fern generator upgrade --include-major'.`,
+                        code: CliError.Code.VersionError
+                    });
                 }
             }
 
-            throw new Error(
-                "This generator version is not compatible with CLI v4.x.x+. " +
-                    "Please upgrade your generator using 'fern generator upgrade --include-major'."
-            );
+            throw new CliError({
+                message:
+                    "This generator version is not compatible with CLI v4.x.x+. " +
+                    "Please upgrade your generator using 'fern generator upgrade --include-major'.",
+                code: CliError.Code.VersionError
+            });
         }
     }
 
@@ -190,7 +196,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
 
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (!hasEncounteredMigrationYet) {
-            context.failAndThrow(`IR ${version} does not exist`);
+            context.failAndThrow(`IR ${version} does not exist`, undefined, { code: CliError.Code.VersionError });
         }
 
         return migrated;
@@ -243,21 +249,30 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
             migration.firstGeneratorVersionToConsumeNewIR[targetGenerator.name as GeneratorName];
 
         if (minVersionToExclude == null) {
-            throw new Error(
-                `Cannot migrate intermediate representation. Unrecognized generator: ${targetGenerator.name}. If leveraging a custom generator, ensure you are specifying "ir-version" within the generator configuration.`
-            );
+            throw new CliError({
+                message: `Cannot migrate intermediate representation. Unrecognized generator: ${targetGenerator.name}. If leveraging a custom generator, ensure you are specifying "ir-version" within the generator configuration.`,
+                code: CliError.Code.ConfigError
+            });
         }
 
         switch (minVersionToExclude) {
             case GeneratorWasNeverUpdatedToConsumeNewIR:
                 return true;
             case GeneratorWasNotCreatedYet:
-                throw new Error(
-                    `Cannot migrate intermediate representation. Generator was created after intermediate representation ${migration.laterVersion}.`
-                );
+                throw new CliError({
+                    message: `Cannot migrate intermediate representation. Generator was created after intermediate representation ${migration.laterVersion}.`,
+                    code: CliError.Code.VersionError
+                });
         }
 
-        return isVersionAhead(minVersionToExclude, targetGenerator.version);
+        try {
+            return isVersionAhead(minVersionToExclude, targetGenerator.version);
+        } catch (error) {
+            throw new CliError({
+                message: `Failed to compare versions: ${error instanceof Error ? error.message : String(error)}`,
+                code: CliError.Code.VersionError
+            });
+        }
     }
 
     public getIRVersionForGenerator({
@@ -283,6 +298,8 @@ const IntermediateRepresentationMigrator = {
 
 export const INTERMEDIATE_REPRESENTATION_MIGRATOR = IntermediateRepresentationMigrator.Builder
     // put new migrations here
+    .withMigration(V67_TO_V66_MIGRATION)
+    .withMigration(V66_TO_V65_MIGRATION)
     .withMigration(V65_TO_V63_MIGRATION)
     .withMigration(V63_TO_V62_MIGRATION)
     .withMigration(V62_TO_V61_MIGRATION)

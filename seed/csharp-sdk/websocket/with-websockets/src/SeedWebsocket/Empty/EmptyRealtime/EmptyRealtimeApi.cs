@@ -25,12 +25,6 @@ public partial class EmptyRealtimeApi
     }
 
     /// <summary>
-    /// Event handler for unknown/unrecognized message types.
-    /// Use UnknownMessage.Subscribe(...) to handle messages from newer server versions.
-    /// </summary>
-    public readonly Event<JsonElement> UnknownMessage = new();
-
-    /// <summary>
     /// Default constructor
     /// </summary>
     public EmptyRealtimeApi() { }
@@ -76,6 +70,12 @@ public partial class EmptyRealtimeApi
     /// Event raised when the WebSocket connection is re-established after a disconnect.
     /// </summary>
     public Event<ReconnectionInfo> Reconnecting => _client.Reconnecting;
+
+    /// <summary>
+    /// Event handler for unknown/unrecognized message types.
+    /// Use UnknownMessage.Subscribe(...) to handle messages from newer server versions.
+    /// </summary>
+    public Event<JsonElement> UnknownMessage { get; } = new();
 
     /// <summary>
     /// Disposes of event subscriptions

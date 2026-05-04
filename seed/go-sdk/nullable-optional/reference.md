@@ -1,6 +1,6 @@
 # Reference
 ## NullableOptional
-<details><summary><code>client.NullableOptional.GetUser(UserId) -> *fern.UserResponse</code></summary>
+<details><summary><code>client.NullableOptional.GetUser(UserID) -> *fern.UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -46,7 +46,7 @@ client.NullableOptional.GetUser(
 <dl>
 <dd>
 
-**userId:** `string` 
+**userID:** `string` 
     
 </dd>
 </dl>
@@ -105,10 +105,10 @@ request := &fern.CreateUserRequest{
             Country: fern.String(
                 "country",
             ),
-            BuildingId: fern.String(
+            BuildingID: fern.String(
                 "buildingId",
             ),
-            TenantId: fern.String(
+            TenantID: fern.String(
                 "tenantId",
             ),
         },
@@ -144,7 +144,7 @@ client.NullableOptional.CreateUser(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.UpdateUser(UserId, request) -> *fern.UserResponse</code></summary>
+<details><summary><code>client.NullableOptional.UpdateUser(UserID, request) -> *fern.UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -193,10 +193,10 @@ request := &fern.UpdateUserRequest{
             Country: fern.String(
                 "country",
             ),
-            BuildingId: fern.String(
+            BuildingID: fern.String(
                 "buildingId",
             ),
-            TenantId: fern.String(
+            TenantID: fern.String(
                 "tenantId",
             ),
         },
@@ -221,7 +221,7 @@ client.NullableOptional.UpdateUser(
 <dl>
 <dd>
 
-**userId:** `string` 
+**userID:** `string` 
     
 </dd>
 </dl>
@@ -459,7 +459,7 @@ Create a complex profile to test nullable enums and unions
 
 ```go
 request := &fern.ComplexProfile{
-        Id: "id",
+        ID: "id",
         NullableRole: fern.UserRoleAdmin.Ptr(),
         OptionalRole: fern.UserRoleAdmin.Ptr(),
         OptionalNullableRole: fern.UserRoleAdmin.Ptr(),
@@ -470,7 +470,7 @@ request := &fern.ComplexProfile{
             Email: &fern.EmailNotification{
                 EmailAddress: "emailAddress",
                 Subject: "subject",
-                HtmlContent: fern.String(
+                HTMLContent: fern.String(
                     "htmlContent",
                 ),
             },
@@ -479,7 +479,7 @@ request := &fern.ComplexProfile{
             Email: &fern.EmailNotification{
                 EmailAddress: "emailAddress",
                 Subject: "subject",
-                HtmlContent: fern.String(
+                HTMLContent: fern.String(
                     "htmlContent",
                 ),
             },
@@ -488,14 +488,14 @@ request := &fern.ComplexProfile{
             Email: &fern.EmailNotification{
                 EmailAddress: "emailAddress",
                 Subject: "subject",
-                HtmlContent: fern.String(
+                HTMLContent: fern.String(
                     "htmlContent",
                 ),
             },
         },
         NullableSearchResult: &fern.SearchResult{
             User: &fern.UserResponse{
-                Id: "id",
+                ID: "id",
                 Username: "username",
                 Email: fern.String(
                     "email",
@@ -523,10 +523,10 @@ request := &fern.ComplexProfile{
                     Country: fern.String(
                         "country",
                     ),
-                    BuildingId: fern.String(
+                    BuildingID: fern.String(
                         "buildingId",
                     ),
-                    TenantId: fern.String(
+                    TenantID: fern.String(
                         "tenantId",
                     ),
                 },
@@ -534,7 +534,7 @@ request := &fern.ComplexProfile{
         },
         OptionalSearchResult: &fern.SearchResult{
             User: &fern.UserResponse{
-                Id: "id",
+                ID: "id",
                 Username: "username",
                 Email: fern.String(
                     "email",
@@ -562,10 +562,10 @@ request := &fern.ComplexProfile{
                     Country: fern.String(
                         "country",
                     ),
-                    BuildingId: fern.String(
+                    BuildingID: fern.String(
                         "buildingId",
                     ),
-                    TenantId: fern.String(
+                    TenantID: fern.String(
                         "tenantId",
                     ),
                 },
@@ -604,10 +604,10 @@ request := &fern.ComplexProfile{
                 Country: fern.String(
                     "country",
                 ),
-                BuildingId: fern.String(
+                BuildingID: fern.String(
                     "buildingId",
                 ),
-                TenantId: fern.String(
+                TenantID: fern.String(
                     "tenantId",
                 ),
             },
@@ -617,7 +617,7 @@ request := &fern.ComplexProfile{
                 Email: &fern.EmailNotification{
                     EmailAddress: "emailAddress",
                     Subject: "subject",
-                    HtmlContent: fern.String(
+                    HTMLContent: fern.String(
                         "htmlContent",
                     ),
                 },
@@ -626,7 +626,7 @@ request := &fern.ComplexProfile{
                 Email: &fern.EmailNotification{
                     EmailAddress: "emailAddress",
                     Subject: "subject",
-                    HtmlContent: fern.String(
+                    HTMLContent: fern.String(
                         "htmlContent",
                     ),
                 },
@@ -667,7 +667,7 @@ client.NullableOptional.CreateComplexProfile(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.GetComplexProfile(ProfileId) -> *fern.ComplexProfile</code></summary>
+<details><summary><code>client.NullableOptional.GetComplexProfile(ProfileID) -> *fern.ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -713,7 +713,7 @@ client.NullableOptional.GetComplexProfile(
 <dl>
 <dd>
 
-**profileId:** `string` 
+**profileID:** `string` 
     
 </dd>
 </dl>
@@ -725,7 +725,7 @@ client.NullableOptional.GetComplexProfile(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.UpdateComplexProfile(ProfileId, request) -> *fern.ComplexProfile</code></summary>
+<details><summary><code>client.NullableOptional.UpdateComplexProfile(ProfileID, request) -> *fern.ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -759,14 +759,14 @@ request := &fern.UpdateComplexProfileRequest{
             Email: &fern.EmailNotification{
                 EmailAddress: "emailAddress",
                 Subject: "subject",
-                HtmlContent: fern.String(
+                HTMLContent: fern.String(
                     "htmlContent",
                 ),
             },
         },
         NullableSearchResult: &fern.SearchResult{
             User: &fern.UserResponse{
-                Id: "id",
+                ID: "id",
                 Username: "username",
                 Email: fern.String(
                     "email",
@@ -794,10 +794,10 @@ request := &fern.UpdateComplexProfileRequest{
                     Country: fern.String(
                         "country",
                     ),
-                    BuildingId: fern.String(
+                    BuildingID: fern.String(
                         "buildingId",
                     ),
-                    TenantId: fern.String(
+                    TenantID: fern.String(
                         "tenantId",
                     ),
                 },
@@ -828,7 +828,7 @@ client.NullableOptional.UpdateComplexProfile(
 <dl>
 <dd>
 
-**profileId:** `string` 
+**profileID:** `string` 
     
 </dd>
 </dl>
@@ -924,14 +924,14 @@ request := &fern.DeserializationTestRequest{
             Email: &fern.EmailNotification{
                 EmailAddress: "emailAddress",
                 Subject: "subject",
-                HtmlContent: fern.String(
+                HTMLContent: fern.String(
                     "htmlContent",
                 ),
             },
         },
         OptionalUnion: &fern.SearchResult{
             User: &fern.UserResponse{
-                Id: "id",
+                ID: "id",
                 Username: "username",
                 Email: fern.String(
                     "email",
@@ -959,10 +959,10 @@ request := &fern.DeserializationTestRequest{
                     Country: fern.String(
                         "country",
                     ),
-                    BuildingId: fern.String(
+                    BuildingID: fern.String(
                         "buildingId",
                     ),
-                    TenantId: fern.String(
+                    TenantID: fern.String(
                         "tenantId",
                     ),
                 },
@@ -987,15 +987,15 @@ request := &fern.DeserializationTestRequest{
             Country: fern.String(
                 "country",
             ),
-            BuildingId: fern.String(
+            BuildingID: fern.String(
                 "buildingId",
             ),
-            TenantId: fern.String(
+            TenantID: fern.String(
                 "tenantId",
             ),
         },
         OptionalObject: &fern.Organization{
-            Id: "id",
+            ID: "id",
             Name: "name",
             Domain: fern.String(
                 "domain",
@@ -1115,7 +1115,7 @@ client.NullableOptional.FilterByRole(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.GetNotificationSettings(UserId) -> *fern.NotificationMethod</code></summary>
+<details><summary><code>client.NullableOptional.GetNotificationSettings(UserID) -> *fern.NotificationMethod</code></summary>
 <dl>
 <dd>
 
@@ -1161,7 +1161,7 @@ client.NullableOptional.GetNotificationSettings(
 <dl>
 <dd>
 
-**userId:** `string` 
+**userID:** `string` 
     
 </dd>
 </dl>
@@ -1173,7 +1173,7 @@ client.NullableOptional.GetNotificationSettings(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.UpdateTags(UserId, request) -> []string</code></summary>
+<details><summary><code>client.NullableOptional.UpdateTags(UserID, request) -> []string</code></summary>
 <dl>
 <dd>
 
@@ -1234,7 +1234,7 @@ client.NullableOptional.UpdateTags(
 <dl>
 <dd>
 
-**userId:** `string` 
+**userID:** `string` 
     
 </dd>
 </dl>

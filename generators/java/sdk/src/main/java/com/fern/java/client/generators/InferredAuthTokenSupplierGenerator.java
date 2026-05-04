@@ -23,6 +23,7 @@ import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -241,7 +242,8 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
         List<CredentialProperty> properties = new ArrayList<>();
 
         for (HttpHeader header : httpEndpoint.getHeaders()) {
-            String fieldName = header.getName().getName().getCamelCase().getUnsafeName();
+            String fieldName =
+                    NameUtils.getName(header.getName()).getCamelCase().getUnsafeName();
             Optional<Literal> literal = extractLiteral(header.getValueType());
             boolean isOptional = isOptionalType(header.getValueType());
             properties.add(new CredentialProperty(fieldName, fieldName, literal, isOptional));
@@ -253,7 +255,7 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 public Void visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
                     for (InlinedRequestBodyProperty prop : inlinedRequestBody.getProperties()) {
                         String fieldName =
-                                prop.getName().getName().getCamelCase().getUnsafeName();
+                                NameUtils.getName(prop.getName()).getCamelCase().getUnsafeName();
                         Optional<Literal> literal = extractLiteral(prop.getValueType());
                         boolean isOptional = isOptionalType(prop.getValueType());
                         properties.add(new CredentialProperty(fieldName, fieldName, literal, isOptional));
@@ -317,15 +319,14 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
 
         if (responseProperty.getPropertyPath().isPresent()) {
             for (var pathElement : responseProperty.getPropertyPath().get()) {
-                String pascalName = pathElement.getName().getPascalCase().getUnsafeName();
+                String pascalName =
+                        NameUtils.toName(pathElement.getName()).getPascalCase().getUnsafeName();
                 accessor.append(".get").append(pascalName).append("()");
             }
         }
 
-        String finalPropertyName = responseProperty
-                .getProperty()
-                .getName()
-                .getName()
+        String finalPropertyName = NameUtils.getName(
+                        responseProperty.getProperty().getName())
                 .getPascalCase()
                 .getUnsafeName();
         accessor.append(".get").append(finalPropertyName).append("()");
@@ -359,7 +360,9 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .addStatement(
                         "return $L.$L($L)",
                         AUTH_CLIENT_NAME,
-                        httpEndpoint.getName().get().getCamelCase().getUnsafeName(),
+                        NameUtils.toName(httpEndpoint.getName().get())
+                                .getCamelCase()
+                                .getUnsafeName(),
                         GET_TOKEN_REQUEST_NAME)
                 .build();
     }

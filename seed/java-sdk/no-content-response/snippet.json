@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "e185e07a",
+            "example_identifier": "a181525a",
             "id": {
                 "method": "POST",
                 "path": "/contacts",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "cbfd220",
+            "example_identifier": "8d4684e5",
             "id": {
                 "method": "GET",
                 "path": "/contacts/{id}",

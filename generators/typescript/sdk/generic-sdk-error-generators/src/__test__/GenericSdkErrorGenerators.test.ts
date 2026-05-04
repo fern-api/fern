@@ -11,7 +11,7 @@ import { TimeoutSdkErrorGenerator } from "../timeout-error/TimeoutSdkErrorGenera
 // Helpers
 // ────────────────────────────────────────────────────────────────────────────
 
-function createMockSdkContext() {
+function createMockFileContext() {
     const project = new Project({ useInMemoryFileSystem: true });
     const sourceFile = project.createSourceFile("test.ts", "");
     return {
@@ -62,14 +62,14 @@ describe("GeneratedGenericAPISdkErrorImpl", () => {
     describe("writeToFile", () => {
         it("writes error class with statusCode, body, and rawResponse properties", () => {
             const impl = createImpl();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             impl.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
 
         it("writes error class with custom name", () => {
             const impl = createImpl("CustomApiError");
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             impl.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -78,7 +78,7 @@ describe("GeneratedGenericAPISdkErrorImpl", () => {
     describe("build", () => {
         it("builds new expression with all parameters", () => {
             const impl = createImpl();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const result = impl.build(context, {
                 message: ts.factory.createStringLiteral("something went wrong"),
                 statusCode: ts.factory.createNumericLiteral(500),
@@ -90,7 +90,7 @@ describe("GeneratedGenericAPISdkErrorImpl", () => {
 
         it("builds new expression with only message", () => {
             const impl = createImpl();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const result = impl.build(context, {
                 message: ts.factory.createStringLiteral("error"),
                 statusCode: undefined,
@@ -102,7 +102,7 @@ describe("GeneratedGenericAPISdkErrorImpl", () => {
 
         it("builds new expression with no parameters", () => {
             const impl = createImpl();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const result = impl.build(context, {
                 message: undefined,
                 statusCode: undefined,
@@ -218,14 +218,14 @@ describe("GeneratedTimeoutSdkErrorImpl", () => {
     describe("writeToFile", () => {
         it("writes timeout error class", () => {
             const impl = createImpl();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             impl.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
 
         it("writes timeout error class with custom name", () => {
             const impl = createImpl("CustomTimeoutError");
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             impl.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
@@ -234,7 +234,7 @@ describe("GeneratedTimeoutSdkErrorImpl", () => {
     describe("build", () => {
         it("builds new expression with message", () => {
             const impl = createImpl();
-            const context = createMockSdkContext();
+            const context = createMockFileContext();
             const result = impl.build(context, "Request timed out");
             expect(getTextOfTsNode(result)).toMatchSnapshot();
         });

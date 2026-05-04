@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedPackageYml.Test/SeedPackageYml.Test.csproj" />
-  <Project Path="src/SeedPackageYml/SeedPackageYml.csproj" />
-</Solution>

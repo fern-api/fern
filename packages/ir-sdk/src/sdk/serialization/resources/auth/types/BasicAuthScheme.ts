@@ -3,29 +3,33 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 import { BaseAuthScheme } from "./BaseAuthScheme.js";
 import { EnvironmentVariable } from "./EnvironmentVariable.js";
 
 export const BasicAuthScheme: core.serialization.ObjectSchema<serializers.BasicAuthScheme.Raw, FernIr.BasicAuthScheme> =
     core.serialization
         .objectWithoutOptionalProperties({
-            username: Name,
+            username: NameOrString,
             usernameEnvVar: EnvironmentVariable.optional(),
             usernameOmit: core.serialization.boolean().optional(),
-            password: Name,
+            usernamePlaceholder: core.serialization.string().optional(),
+            password: NameOrString,
             passwordEnvVar: EnvironmentVariable.optional(),
             passwordOmit: core.serialization.boolean().optional(),
+            passwordPlaceholder: core.serialization.string().optional(),
         })
         .extend(BaseAuthScheme);
 
 export declare namespace BasicAuthScheme {
     export interface Raw extends BaseAuthScheme.Raw {
-        username: Name.Raw;
+        username: NameOrString.Raw;
         usernameEnvVar?: EnvironmentVariable.Raw | null;
         usernameOmit?: boolean | null;
-        password: Name.Raw;
+        usernamePlaceholder?: string | null;
+        password: NameOrString.Raw;
         passwordEnvVar?: EnvironmentVariable.Raw | null;
         passwordOmit?: boolean | null;
+        passwordPlaceholder?: string | null;
     }
 }

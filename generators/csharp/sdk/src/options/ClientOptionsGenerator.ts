@@ -107,7 +107,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
 
     private createBaseUrlField(classOrInterface: ast.Interface | ast.Class): ast.Field | undefined {
         const defaultEnvironmentId = this.context.ir.environments?.defaultEnvironment;
-        let defaultEnvironment: FernIr.Name | undefined = undefined;
+        let defaultEnvironment: FernIr.NameOrString | undefined = undefined;
         if (defaultEnvironmentId != null) {
             defaultEnvironment = this.context.ir.environments?.environments._visit({
                 singleBaseUrl: (value) => {
@@ -123,9 +123,12 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                 _other: () => undefined
             });
         }
-        const defaultEnvironmentName = this.settings.pascalCaseEnvironments
-            ? defaultEnvironment?.pascalCase.safeName
-            : defaultEnvironment?.screamingSnakeCase.safeName;
+        const defaultEnvironmentName =
+            defaultEnvironment != null
+                ? this.settings.pascalCaseEnvironments
+                    ? this.case.pascalSafe(defaultEnvironment)
+                    : this.case.screamingSnakeSafe(defaultEnvironment)
+                : undefined;
 
         const hasDefault = defaultEnvironment != null;
         // In unified mode, when there's no default environment, make BaseUrl/Environment
@@ -226,7 +229,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
             if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
                 continue;
             }
-            const name = header.name.name.pascalCase.safeName;
+            const name = this.case.pascalSafe(header.name);
             if (!seenNames.has(name)) {
                 seenNames.add(name);
                 const type = this.context.csharpTypeMapper.convert({ reference: header.valueType });
@@ -268,9 +271,9 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
         if (scheme.type === "bearer") {
             return [
                 {
-                    name: scheme.token.pascalCase.safeName,
+                    name: this.case.pascalSafe(scheme.token),
                     type: this.Primitive.string,
-                    docs: scheme.docs ?? `The ${scheme.token.camelCase.safeName} to use for authentication.`,
+                    docs: scheme.docs ?? `The ${this.case.camelSafe(scheme.token)} to use for authentication.`,
                     isOptional,
                     hasEnvironmentVariable: scheme.tokenEnvVar != null
                 }
@@ -278,16 +281,16 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
         } else if (scheme.type === "basic") {
             return [
                 {
-                    name: scheme.username.pascalCase.safeName,
+                    name: this.case.pascalSafe(scheme.username),
                     type: this.Primitive.string,
-                    docs: scheme.docs ?? `The ${scheme.username.camelCase.safeName} to use for authentication.`,
+                    docs: scheme.docs ?? `The ${this.case.camelSafe(scheme.username)} to use for authentication.`,
                     isOptional,
                     hasEnvironmentVariable: scheme.usernameEnvVar != null
                 },
                 {
-                    name: scheme.password.pascalCase.safeName,
+                    name: this.case.pascalSafe(scheme.password),
                     type: this.Primitive.string,
-                    docs: scheme.docs ?? `The ${scheme.password.camelCase.safeName} to use for authentication.`,
+                    docs: scheme.docs ?? `The ${this.case.camelSafe(scheme.password)} to use for authentication.`,
                     isOptional,
                     hasEnvironmentVariable: scheme.passwordEnvVar != null
                 }
@@ -295,9 +298,9 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
         } else if (scheme.type === "header") {
             return [
                 {
-                    name: scheme.name.name.pascalCase.safeName,
+                    name: this.case.pascalSafe(scheme.name),
                     type: this.context.csharpTypeMapper.convert({ reference: scheme.valueType }),
-                    docs: scheme.docs ?? `The ${scheme.name.name.camelCase.safeName} to use for authentication.`,
+                    docs: scheme.docs ?? `The ${this.case.camelSafe(scheme.name)} to use for authentication.`,
                     isOptional,
                     hasEnvironmentVariable: scheme.headerEnvVar != null
                 }
@@ -333,9 +336,9 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                     continue;
                 }
                 fields.push({
-                    name: customProperty.property.name.name.pascalCase.safeName,
+                    name: this.case.pascalSafe(customProperty.property.name),
                     type: typeRef,
-                    docs: `The ${customProperty.property.name.name.camelCase.safeName} for OAuth authentication.`,
+                    docs: `The ${this.case.camelSafe(customProperty.property.name)} for OAuth authentication.`,
                     isOptional
                 });
             }

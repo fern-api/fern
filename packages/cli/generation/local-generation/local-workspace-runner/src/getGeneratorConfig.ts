@@ -2,18 +2,8 @@ import { GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { isGithubSelfhosted } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { parseRepository } from "@fern-api/github";
-import {
-    CratesOutput,
-    GithubPublishInfo as FiddleGithubPublishInfo,
-    MavenOutput,
-    NpmOutput,
-    NugetOutput,
-    PostmanOutput,
-    PublishOutputMode,
-    PublishOutputModeV2,
-    PypiOutput,
-    RubyGemsOutput
-} from "@fern-fern/fiddle-sdk/api";
+import { CliError } from "@fern-api/task-context";
+import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EnvironmentVariable } from "@fern-fern/generator-exec-sdk/api";
 import * as path from "path";
@@ -93,6 +83,13 @@ export declare namespace getGeneratorConfig {
         generateOauthClients: boolean;
         generatePaginatedClients: boolean;
         whiteLabel?: boolean;
+        /**
+         * When true, publishV2/publish output modes will create a real `publish` output config
+         * so the generator actually publishes to the registry. When false (default), these modes
+         * are converted to a dummy github config to prevent accidental publishing during
+         * `fern generate --local`.
+         */
+        publishToRegistry?: boolean;
         paths: {
             snippetPath: AbsoluteFilePath | undefined;
             snippetTemplatePath: AbsoluteFilePath | undefined;
@@ -103,10 +100,10 @@ export declare namespace getGeneratorConfig {
 }
 
 function getGithubPublishConfig(
-    githubPublishInfo: FiddleGithubPublishInfo | undefined
+    githubPublishInfo: FernFiddle.GithubPublishInfo | undefined
 ): FernGeneratorExec.GithubPublishInfo | undefined {
     return githubPublishInfo != null
-        ? FiddleGithubPublishInfo._visit<FernGeneratorExec.GithubPublishInfo | undefined>(githubPublishInfo, {
+        ? FernFiddle.GithubPublishInfo._visit<FernGeneratorExec.GithubPublishInfo | undefined>(githubPublishInfo, {
               npm: (value) => {
                   const token = (value.token ?? "").trim();
                   const useOidc = token === "<USE_OIDC>" || token === "OIDC";
@@ -188,12 +185,21 @@ export function getGeneratorConfig({
     generateOauthClients,
     generatePaginatedClients,
     whiteLabel,
+    publishToRegistry,
     paths
 }: getGeneratorConfig.Args): FernGeneratorExec.GeneratorConfig {
     const licenseInfo = extractLicenseInfo(generatorInvocation, absolutePathToFernConfig);
     const { snippetPath, snippetTemplatePath, irPath, outputDirectory } = paths;
     const output = generatorInvocation.outputMode._visit<FernGeneratorExec.GeneratorOutputConfig>({
         publish: (value) => {
+            if (publishToRegistry === true) {
+                const publishTarget = getPublishTargetFromPublishMode(value);
+                return {
+                    ...newRealPublishOutputConfig(outputVersion, publishTarget, paths),
+                    snippetFilepath: snippetPath,
+                    publishingMetadata: generatorInvocation.publishMetadata
+                };
+            }
             return {
                 ...newDummyPublishOutputConfig(outputVersion, value, generatorInvocation, paths),
                 snippetFilepath: snippetPath,
@@ -201,6 +207,14 @@ export function getGeneratorConfig({
             };
         },
         publishV2: (value) => {
+            if (publishToRegistry === true) {
+                const publishTarget = getPublishTargetFromPublishModeV2(value);
+                return {
+                    ...newRealPublishOutputConfig(outputVersion, publishTarget, paths),
+                    snippetFilepath: snippetPath,
+                    publishingMetadata: generatorInvocation.publishMetadata
+                };
+            }
             return {
                 ...newDummyPublishOutputConfig(outputVersion, value, generatorInvocation, paths),
                 snippetFilepath: snippetPath,
@@ -241,7 +255,10 @@ export function getGeneratorConfig({
                 push: (value) => `https://github.com/${value.owner}/${value.repo}`,
                 pullRequest: (value) => `https://github.com/${value.owner}/${value.repo}`,
                 _other: () => {
-                    throw new Error("Encountered unknown github mode");
+                    throw new CliError({
+                        message: "Encountered unknown github mode",
+                        code: CliError.Code.InternalError
+                    });
                 }
             });
             const outputConfig: FernGeneratorExec.GeneratorOutputConfig = {
@@ -262,7 +279,10 @@ export function getGeneratorConfig({
             return outputConfig;
         },
         _other: () => {
-            throw new Error("Output type did not match any of the types supported by Fern");
+            throw new CliError({
+                message: "Output type did not match any of the types supported by Fern",
+                code: CliError.Code.InternalError
+            });
         }
     });
     return {
@@ -284,7 +304,7 @@ export function getGeneratorConfig({
 
 function newDummyPublishOutputConfig(
     version: string,
-    multipleOutputMode: PublishOutputMode | PublishOutputModeV2,
+    multipleOutputMode: FernFiddle.PublishOutputMode | FernFiddle.PublishOutputModeV2,
     generatorInvocation: GeneratorInvocation,
     paths: {
         outputDirectory: AbsoluteFilePath;
@@ -292,25 +312,25 @@ function newDummyPublishOutputConfig(
 ): FernGeneratorExec.GeneratorOutputConfig {
     const { outputDirectory } = paths;
     let outputMode:
-        | NpmOutput
-        | MavenOutput
-        | PypiOutput
-        | RubyGemsOutput
-        | PostmanOutput
-        | NugetOutput
-        | CratesOutput
+        | FernFiddle.NpmOutput
+        | FernFiddle.MavenOutput
+        | FernFiddle.PypiOutput
+        | FernFiddle.RubyGemsOutput
+        | FernFiddle.PostmanOutput
+        | FernFiddle.NugetOutput
+        | FernFiddle.CratesOutput
         | undefined;
     if ("registryOverrides" in multipleOutputMode) {
         outputMode = multipleOutputMode.registryOverrides.maven ?? multipleOutputMode.registryOverrides.npm;
     } else if (outputMode != null) {
         outputMode = multipleOutputMode._visit<
-            | NpmOutput
-            | MavenOutput
-            | PypiOutput
-            | RubyGemsOutput
-            | PostmanOutput
-            | NugetOutput
-            | CratesOutput
+            | FernFiddle.NpmOutput
+            | FernFiddle.MavenOutput
+            | FernFiddle.PypiOutput
+            | FernFiddle.RubyGemsOutput
+            | FernFiddle.PostmanOutput
+            | FernFiddle.NugetOutput
+            | FernFiddle.CratesOutput
             | undefined
         >({
             mavenOverride: (value) => value,
@@ -342,3 +362,203 @@ function newDummyPublishOutputConfig(
         path: outputDirectory
     };
 }
+
+function newRealPublishOutputConfig(
+    version: string,
+    publishTarget: FernGeneratorExec.GeneratorPublishTarget | undefined,
+    paths: { outputDirectory: AbsoluteFilePath }
+): FernGeneratorExec.GeneratorOutputConfig {
+    const { outputDirectory } = paths;
+    const { registries, registriesV2 } = buildRegistriesFromPublishTarget(publishTarget);
+    return {
+        mode: FernGeneratorExec.OutputMode.publish({
+            registries,
+            registriesV2,
+            publishTarget,
+            version
+        }),
+        path: outputDirectory
+    };
+}
+
+/**
+ * Populate the deprecated registries/registriesV2 fields from the publishTarget.
+ * Some generators (e.g. TypeScript) read registryUrl/token from registriesV2.npm
+ * instead of publishTarget, so both must be set.
+ */
+function buildRegistriesFromPublishTarget(publishTarget: FernGeneratorExec.GeneratorPublishTarget | undefined): {
+    registries: FernGeneratorExec.GeneratorRegistriesConfig;
+    registriesV2: FernGeneratorExec.GeneratorRegistriesConfigV2;
+} {
+    const registries: FernGeneratorExec.GeneratorRegistriesConfig = structuredClone(emptyRegistriesConfig);
+    const registriesV2: FernGeneratorExec.GeneratorRegistriesConfigV2 = structuredClone(emptyRegistriesConfigV2);
+
+    if (publishTarget == null) {
+        return { registries, registriesV2 };
+    }
+
+    switch (publishTarget.type) {
+        case "npm":
+            registries.npm = { registryUrl: publishTarget.registryUrl, token: publishTarget.token, scope: "" };
+            registriesV2.npm = {
+                registryUrl: publishTarget.registryUrl,
+                token: publishTarget.token,
+                packageName: publishTarget.packageName
+            };
+            break;
+        case "maven":
+            registries.maven = {
+                registryUrl: publishTarget.registryUrl,
+                username: publishTarget.username,
+                password: publishTarget.password,
+                group: "",
+                signature: publishTarget.signature
+            };
+            registriesV2.maven = {
+                registryUrl: publishTarget.registryUrl,
+                username: publishTarget.username,
+                password: publishTarget.password,
+                coordinate: publishTarget.coordinate,
+                signature: publishTarget.signature
+            };
+            break;
+        case "pypi":
+            registriesV2.pypi = {
+                registryUrl: publishTarget.registryUrl,
+                username: publishTarget.username,
+                password: publishTarget.password,
+                packageName: publishTarget.packageName,
+                pypiMetadata: publishTarget.pypiMetadata
+            };
+            break;
+        case "rubygems":
+            registriesV2.rubygems = {
+                registryUrl: publishTarget.registryUrl,
+                apiKey: publishTarget.apiKey,
+                packageName: publishTarget.packageName
+            };
+            break;
+        case "nuget":
+            registriesV2.nuget = {
+                registryUrl: publishTarget.registryUrl,
+                apiKey: publishTarget.apiKey,
+                packageName: publishTarget.packageName
+            };
+            break;
+        case "crates":
+            registriesV2.crates = {
+                registryUrl: publishTarget.registryUrl,
+                token: publishTarget.token,
+                packageName: publishTarget.packageName
+            };
+            break;
+        default:
+            break;
+    }
+
+    return { registries, registriesV2 };
+}
+
+function getPublishTargetFromPublishMode(
+    mode: FernFiddle.PublishOutputMode
+): FernGeneratorExec.GeneratorPublishTarget | undefined {
+    if ("registryOverrides" in mode) {
+        const overrides = mode.registryOverrides;
+        if (overrides.npm != null) {
+            return FernGeneratorExec.GeneratorPublishTarget.npm({
+                registryUrl: overrides.npm.registryUrl,
+                token: overrides.npm.token,
+                packageName: overrides.npm.packageName
+            });
+        }
+        if (overrides.maven != null) {
+            return FernGeneratorExec.GeneratorPublishTarget.maven({
+                registryUrl: overrides.maven.registryUrl,
+                username: overrides.maven.username ?? "",
+                password: overrides.maven.password ?? "",
+                coordinate: overrides.maven.coordinate ?? "",
+                signature: undefined
+            });
+        }
+    }
+    return undefined;
+}
+
+function getPublishTargetFromPublishModeV2(
+    mode: FernFiddle.PublishOutputModeV2
+): FernGeneratorExec.GeneratorPublishTarget | undefined {
+    return mode._visit<FernGeneratorExec.GeneratorPublishTarget | undefined>({
+        npmOverride: (value) =>
+            value != null
+                ? FernGeneratorExec.GeneratorPublishTarget.npm({
+                      registryUrl: value.registryUrl,
+                      token: value.token,
+                      packageName: value.packageName
+                  })
+                : undefined,
+        mavenOverride: (value) =>
+            value != null
+                ? FernGeneratorExec.GeneratorPublishTarget.maven({
+                      registryUrl: value.registryUrl,
+                      username: value.username,
+                      password: value.password,
+                      coordinate: value.coordinate,
+                      signature: value.signature ?? undefined
+                  })
+                : undefined,
+        pypiOverride: (value) =>
+            value != null
+                ? FernGeneratorExec.GeneratorPublishTarget.pypi({
+                      registryUrl: value.registryUrl,
+                      username: value.username,
+                      password: value.password,
+                      packageName: value.coordinate,
+                      pypiMetadata: value.pypiMetadata ?? undefined
+                  })
+                : undefined,
+        rubyGemsOverride: (value) =>
+            value != null
+                ? FernGeneratorExec.GeneratorPublishTarget.rubygems({
+                      registryUrl: value.registryUrl,
+                      apiKey: value.apiKey,
+                      packageName: value.packageName
+                  })
+                : undefined,
+        nugetOverride: (value) =>
+            value != null
+                ? FernGeneratorExec.GeneratorPublishTarget.nuget({
+                      registryUrl: value.registryUrl,
+                      apiKey: value.apiKey,
+                      packageName: value.packageName
+                  })
+                : undefined,
+        cratesOverride: (value) =>
+            value != null
+                ? FernGeneratorExec.GeneratorPublishTarget.crates({
+                      registryUrl: value.registryUrl,
+                      token: value.token,
+                      packageName: value.packageName
+                  })
+                : undefined,
+        postman: (value) =>
+            FernGeneratorExec.GeneratorPublishTarget.postman({
+                apiKey: value.apiKey,
+                workspaceId: value.workspaceId
+            }),
+        _other: () => undefined
+    });
+}
+
+const emptyRegistriesConfig: FernGeneratorExec.GeneratorRegistriesConfig = {
+    maven: { registryUrl: "", username: "", password: "", group: "", signature: undefined },
+    npm: { registryUrl: "", token: "", scope: "" }
+};
+
+const emptyRegistriesConfigV2: FernGeneratorExec.GeneratorRegistriesConfigV2 = {
+    maven: { registryUrl: "", username: "", password: "", coordinate: "", signature: undefined },
+    npm: { registryUrl: "", token: "", packageName: "" },
+    pypi: { registryUrl: "", username: "", password: "", packageName: "", pypiMetadata: undefined },
+    rubygems: { registryUrl: "", apiKey: "", packageName: "" },
+    nuget: { registryUrl: "", apiKey: "", packageName: "" },
+    crates: { registryUrl: "", token: "", packageName: "" }
+};

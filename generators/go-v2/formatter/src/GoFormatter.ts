@@ -1,4 +1,4 @@
-import { AbstractFormatter } from "@fern-api/base-generator";
+import { AbstractFormatter } from "@fern-api/browser-compatible-base-generator";
 import init, { format } from "@wasm-fmt/gofmt";
 
 export class GoFormatter extends AbstractFormatter {

@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "dd901e0b",
+            "example_identifier": "d1180e98",
             "id": {
                 "method": "POST",
                 "path": "/headers",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "7933fc3",
+            "example_identifier": "34f4db73",
             "id": {
                 "method": "POST",
                 "path": "/inlined",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "867f0a89",
+            "example_identifier": "eba43882",
             "id": {
                 "method": "POST",
                 "path": "/path/{operand}/{operandOrColor}",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "28f3663f",
+            "example_identifier": "ac44531b",
             "id": {
                 "method": "POST",
                 "path": "/query",
@@ -92,7 +92,7 @@
             }
         },
         {
-            "example_identifier": "c382d647",
+            "example_identifier": "d8e5419f",
             "id": {
                 "method": "POST",
                 "path": "/query-list",

@@ -32,6 +32,7 @@ import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSche
 import { getGeneratedTypeName } from "../../schema/utils/getSchemaName.js";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject.js";
 import { getSchemas } from "../../utils/getSchemas.js";
+import { sanitizeSecurityScopes } from "../../utils/sanitizeSecurityScopes.js";
 import { createSchemaCollisionTracker } from "../../utils/schemaCollision.js";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext.js";
 import { convertPathItem, convertPathItemToWebhooks } from "./converters/convertPathItem.js";
@@ -67,9 +68,6 @@ export function generateIr({
 }): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
 
-    // Validate tag names for non-ASCII characters and descriptions for frontmatter delimiters
-    validateOpenApiSpecForDocsCompat({ openApi, taskContext });
-
     // Reset title collision tracker for this document processing
     resetTitleCollisionTracker();
 
@@ -94,7 +92,9 @@ export function generateIr({
             })
             .filter((entry): entry is [string, SecurityScheme] => entry !== null)
     );
-    const security: GlobalSecurity | undefined = openApi.security?.filter((requirement) => requirement != null);
+    const security: GlobalSecurity | undefined = sanitizeSecurityScopes(
+        openApi.security?.filter((requirement) => requirement != null)
+    );
     const authHeaders = new Set(
         Object.entries(securitySchemes)
             .map(([_, securityScheme]) => {
@@ -308,7 +308,8 @@ export function generateIr({
                     parameterNameOverride: queryParameter.parameterNameOverride,
                     explode: queryParameter.explode,
                     availability: queryParameter.availability,
-                    source: queryParameter.source
+                    source: queryParameter.source,
+                    clientDefault: queryParameter.clientDefault
                 };
             }),
             pathParameters: endpointWithExample.pathParameters.map((pathParameter) => {
@@ -319,7 +320,8 @@ export function generateIr({
                     parameterNameOverride: pathParameter.parameterNameOverride,
                     variableReference: pathParameter.variableReference,
                     availability: pathParameter.availability,
-                    source: pathParameter.source
+                    source: pathParameter.source,
+                    clientDefault: pathParameter.clientDefault
                 };
             }),
             headers: endpointWithExample.headers.map((header) => {
@@ -330,7 +332,8 @@ export function generateIr({
                     parameterNameOverride: header.parameterNameOverride,
                     env: header.env,
                     availability: header.availability,
-                    source: header.source
+                    source: header.source,
+                    clientDefault: header.clientDefault
                 };
             }),
             examples,
@@ -602,63 +605,6 @@ function getAllParentSchemaIds({
 
 function distinct<T>(array: T[]): T[] {
     return [...new Set(array)];
-}
-
-const NON_ASCII_REGEX = new RegExp("[^\\x00-\\x7F]");
-const FRONTMATTER_DELIMITER_REGEX = /(?:^|\n)\s*---\s*(?:\n|$)/;
-
-/**
- * Validates the OpenAPI spec for docs compatibility issues:
- * - Tag names with non-ASCII characters (emojis) that break HTTP headers
- * - Endpoint descriptions with --- frontmatter delimiters that break YAML parsing
- */
-function validateOpenApiSpecForDocsCompat({
-    openApi,
-    taskContext
-}: {
-    openApi: OpenAPIV3.Document;
-    taskContext: TaskContext;
-}): void {
-    // Validate top-level tags
-    for (const tag of openApi.tags ?? []) {
-        if (NON_ASCII_REGEX.test(tag.name)) {
-            const nonAsciiChars = [...tag.name].filter((c) => NON_ASCII_REGEX.test(c));
-            taskContext.logger.error(
-                `Tag name "${tag.name}" contains non-ASCII characters: ${nonAsciiChars.join(", ")}. ` +
-                    `Non-ASCII characters in tag names will be included in URL paths and HTTP headers, ` +
-                    `which only support ASCII characters. This will cause runtime errors (ERR_INVALID_CHAR). ` +
-                    `Remove non-ASCII characters from the tag name.`
-            );
-        }
-    }
-
-    // Validate operation descriptions
-    for (const [path, pathItem] of Object.entries(openApi.paths ?? {})) {
-        if (pathItem == null) {
-            continue;
-        }
-        for (const method of ["get", "post", "put", "delete", "patch", "options", "head", "trace"] as const) {
-            const operation = pathItem[method];
-            if (operation?.description != null && FRONTMATTER_DELIMITER_REGEX.test(operation.description)) {
-                taskContext.logger.error(
-                    `Description at paths.${path}.${method} contains "---" frontmatter delimiters which will cause ` +
-                        `YAML parsing failures in the generated docs site. Remove the "---" delimiters from the description.`
-                );
-            }
-            // Also validate tags used on operations if no top-level tags defined
-            if (operation?.tags != null && (openApi.tags == null || openApi.tags.length === 0)) {
-                for (const tag of operation.tags) {
-                    if (NON_ASCII_REGEX.test(tag)) {
-                        const nonAsciiChars = [...tag].filter((c) => NON_ASCII_REGEX.test(c));
-                        taskContext.logger.error(
-                            `Tag name "${tag}" at paths.${path}.${method} contains non-ASCII characters: ${nonAsciiChars.join(", ")}. ` +
-                                `Remove non-ASCII characters from the tag name.`
-                        );
-                    }
-                }
-            }
-        }
-    }
 }
 
 function getAudiences({ operation }: { operation: ConvertedOperation }): string[] {

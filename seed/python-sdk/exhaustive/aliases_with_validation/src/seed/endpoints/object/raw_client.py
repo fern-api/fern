@@ -8,7 +8,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
 from ...core.parse_error import ParsingError
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
@@ -19,8 +19,12 @@ from ...types.object.types.nested_object_with_required_field import NestedObject
 from ...types.object.types.object_with_datetime_like_string import ObjectWithDatetimeLikeString
 from ...types.object.types.object_with_documented_unknown_type import ObjectWithDocumentedUnknownType
 from ...types.object.types.object_with_map_of_map import ObjectWithMapOfMap
+from ...types.object.types.object_with_mixed_required_and_optional_fields import (
+    ObjectWithMixedRequiredAndOptionalFields,
+)
 from ...types.object.types.object_with_optional_field import ObjectWithOptionalField
 from ...types.object.types.object_with_required_field import ObjectWithRequiredField
+from ...types.object.types.object_with_required_nested_object import ObjectWithRequiredNestedObject
 from ...types.object.types.object_with_unknown_field import ObjectWithUnknownField
 from pydantic import ValidationError
 
@@ -43,7 +47,7 @@ class RawObjectClient:
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
         uuid_: typing.Optional[uuid.UUID] = OMIT,
-        base_64: typing.Optional[str] = OMIT,
+        base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
         set_: typing.Optional[typing.Set[str]] = OMIT,
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
@@ -70,7 +74,7 @@ class RawObjectClient:
 
         uuid_ : typing.Optional[uuid.UUID]
 
-        base_64 : typing.Optional[str]
+        base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
@@ -99,7 +103,7 @@ class RawObjectClient:
                 "datetime": datetime,
                 "date": date,
                 "uuid": uuid_,
-                "base64": base_64,
+                "base64": base64,
                 "list": list_,
                 "set": set_,
                 "map": map_,
@@ -288,7 +292,7 @@ class RawObjectClient:
         HttpResponse[NestedObjectWithRequiredField]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"object/get-and-return-nested-with-required-field/{jsonable_encoder(string_)}",
+            f"object/get-and-return-nested-with-required-field/{encode_path_param(string_)}",
             method="POST",
             json={
                 "string": string,
@@ -487,6 +491,122 @@ class RawObjectClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def get_and_return_with_mixed_required_and_optional_fields(
+        self,
+        *,
+        required_string: str,
+        required_integer: int,
+        required_long: int,
+        optional_string: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[ObjectWithMixedRequiredAndOptionalFields]:
+        """
+        Tests that dynamic snippets include all required properties in the
+        object initializer, even when the example omits some required fields.
+
+        Parameters
+        ----------
+        required_string : str
+
+        required_integer : int
+
+        required_long : int
+
+        optional_string : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ObjectWithMixedRequiredAndOptionalFields]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "object/get-and-return-with-mixed-required-and-optional-fields",
+            method="POST",
+            json={
+                "requiredString": required_string,
+                "requiredInteger": required_integer,
+                "optionalString": optional_string,
+                "requiredLong": required_long,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ObjectWithMixedRequiredAndOptionalFields,
+                    parse_obj_as(
+                        type_=ObjectWithMixedRequiredAndOptionalFields,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get_and_return_with_required_nested_object(
+        self,
+        *,
+        required_string: str,
+        required_object: NestedObjectWithRequiredField,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[ObjectWithRequiredNestedObject]:
+        """
+        Tests that dynamic snippets recursively construct default objects for
+        required properties whose type is a named object. When the example
+        omits the nested object, the generator should construct a default
+        initializer with the nested object's required properties filled in.
+
+        Parameters
+        ----------
+        required_string : str
+
+        required_object : NestedObjectWithRequiredField
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ObjectWithRequiredNestedObject]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "object/get-and-return-with-required-nested-object",
+            method="POST",
+            json={
+                "requiredString": required_string,
+                "requiredObject": required_object,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ObjectWithRequiredNestedObject,
+                    parse_obj_as(
+                        type_=ObjectWithRequiredNestedObject,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def get_and_return_with_datetime_like_string(
         self,
         *,
@@ -559,7 +679,7 @@ class AsyncRawObjectClient:
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
         uuid_: typing.Optional[uuid.UUID] = OMIT,
-        base_64: typing.Optional[str] = OMIT,
+        base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
         set_: typing.Optional[typing.Set[str]] = OMIT,
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
@@ -586,7 +706,7 @@ class AsyncRawObjectClient:
 
         uuid_ : typing.Optional[uuid.UUID]
 
-        base_64 : typing.Optional[str]
+        base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
@@ -615,7 +735,7 @@ class AsyncRawObjectClient:
                 "datetime": datetime,
                 "date": date,
                 "uuid": uuid_,
-                "base64": base_64,
+                "base64": base64,
                 "list": list_,
                 "set": set_,
                 "map": map_,
@@ -804,7 +924,7 @@ class AsyncRawObjectClient:
         AsyncHttpResponse[NestedObjectWithRequiredField]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"object/get-and-return-nested-with-required-field/{jsonable_encoder(string_)}",
+            f"object/get-and-return-nested-with-required-field/{encode_path_param(string_)}",
             method="POST",
             json={
                 "string": string,
@@ -990,6 +1110,122 @@ class AsyncRawObjectClient:
                     MapOfDocumentedUnknownType,
                     parse_obj_as(
                         type_=MapOfDocumentedUnknownType,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_and_return_with_mixed_required_and_optional_fields(
+        self,
+        *,
+        required_string: str,
+        required_integer: int,
+        required_long: int,
+        optional_string: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[ObjectWithMixedRequiredAndOptionalFields]:
+        """
+        Tests that dynamic snippets include all required properties in the
+        object initializer, even when the example omits some required fields.
+
+        Parameters
+        ----------
+        required_string : str
+
+        required_integer : int
+
+        required_long : int
+
+        optional_string : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ObjectWithMixedRequiredAndOptionalFields]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "object/get-and-return-with-mixed-required-and-optional-fields",
+            method="POST",
+            json={
+                "requiredString": required_string,
+                "requiredInteger": required_integer,
+                "optionalString": optional_string,
+                "requiredLong": required_long,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ObjectWithMixedRequiredAndOptionalFields,
+                    parse_obj_as(
+                        type_=ObjectWithMixedRequiredAndOptionalFields,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_and_return_with_required_nested_object(
+        self,
+        *,
+        required_string: str,
+        required_object: NestedObjectWithRequiredField,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[ObjectWithRequiredNestedObject]:
+        """
+        Tests that dynamic snippets recursively construct default objects for
+        required properties whose type is a named object. When the example
+        omits the nested object, the generator should construct a default
+        initializer with the nested object's required properties filled in.
+
+        Parameters
+        ----------
+        required_string : str
+
+        required_object : NestedObjectWithRequiredField
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ObjectWithRequiredNestedObject]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "object/get-and-return-with-required-nested-object",
+            method="POST",
+            json={
+                "requiredString": required_string,
+                "requiredObject": required_object,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ObjectWithRequiredNestedObject,
+                    parse_obj_as(
+                        type_=ObjectWithRequiredNestedObject,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

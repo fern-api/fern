@@ -5,7 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { ErrorId } from "../../commons/types/ErrorId.js";
 import { FernFilepath } from "../../commons/types/FernFilepath.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 
 export const DeclaredErrorName: core.serialization.ObjectSchema<
     serializers.DeclaredErrorName.Raw,
@@ -13,13 +13,13 @@ export const DeclaredErrorName: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     errorId: ErrorId,
     fernFilepath: FernFilepath,
-    name: Name,
+    name: NameOrString,
 });
 
 export declare namespace DeclaredErrorName {
     export interface Raw {
         errorId: ErrorId.Raw;
         fernFilepath: FernFilepath.Raw;
-        name: Name.Raw;
+        name: NameOrString.Raw;
     }
 }

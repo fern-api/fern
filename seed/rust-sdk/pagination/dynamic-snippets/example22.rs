@@ -13,8 +13,9 @@ async fn main() {
         .list_with_offset_pagination_has_next_page(
             &UsersListWithOffsetPaginationHasNextPageQueryRequest {
                 page: Some(1),
-                limit: Some(1),
+                limit: Some(3),
                 order: Some(Order::Asc),
+                ..Default::default()
             },
             None,
         )

@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 import { EnvironmentBaseUrlId } from "./EnvironmentBaseUrlId.js";
 
 export const EnvironmentBaseUrlWithId: core.serialization.ObjectSchema<
@@ -11,12 +11,12 @@ export const EnvironmentBaseUrlWithId: core.serialization.ObjectSchema<
     FernIr.EnvironmentBaseUrlWithId
 > = core.serialization.objectWithoutOptionalProperties({
     id: EnvironmentBaseUrlId,
-    name: Name,
+    name: NameOrString,
 });
 
 export declare namespace EnvironmentBaseUrlWithId {
     export interface Raw {
         id: EnvironmentBaseUrlId.Raw;
-        name: Name.Raw;
+        name: NameOrString.Raw;
     }
 }

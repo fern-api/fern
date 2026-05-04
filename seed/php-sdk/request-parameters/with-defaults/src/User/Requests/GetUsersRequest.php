@@ -87,7 +87,7 @@ class GetUsersRequest extends JsonSerializableType
     /**
      * @var string $bigIntParam
      */
-    public string $bigIntParam;
+    public string $bigIntParam = '18446744073709551615';
 
     /**
      * @param array{
@@ -103,7 +103,7 @@ class GetUsersRequest extends JsonSerializableType
      *   excludeUser: array<User>,
      *   filter: array<string>,
      *   longParam: int,
-     *   bigIntParam: string,
+     *   bigIntParam?: string,
      *   optionalDeadline?: ?DateTime,
      *   optionalString?: ?string,
      *   optionalUser?: ?User,
@@ -127,6 +127,6 @@ class GetUsersRequest extends JsonSerializableType
         $this->excludeUser = $values['excludeUser'];
         $this->filter = $values['filter'];
         $this->longParam = $values['longParam'];
-        $this->bigIntParam = $values['bigIntParam'];
+        $this->bigIntParam = $values['bigIntParam'] ?? '18446744073709551615';
     }
 }

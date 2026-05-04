@@ -3,19 +3,19 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 
 export const ExampleUnionBaseProperty: core.serialization.ObjectSchema<
     serializers.ExampleUnionBaseProperty.Raw,
     FernIr.ExampleUnionBaseProperty
 > = core.serialization.objectWithoutOptionalProperties({
-    name: NameAndWireValue,
+    name: NameAndWireValueOrString,
     value: core.serialization.lazyObject(() => serializers.ExampleTypeReference),
 });
 
 export declare namespace ExampleUnionBaseProperty {
     export interface Raw {
-        name: NameAndWireValue.Raw;
+        name: NameAndWireValueOrString.Raw;
         value: serializers.ExampleTypeReference.Raw;
     }
 }

@@ -1,8 +1,9 @@
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 from ...context.sdk_generator_context import SdkGeneratorContext
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
 from fern_python.codegen import AST
+from fern_python.utils.name_resolver import resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -37,7 +38,7 @@ class BytesRequestBodyParameters(AbstractRequestBodyParameters):
     def _get_request_parameter_name(self) -> str:
         if self._endpoint.sdk_request is None:
             raise RuntimeError("Request body is referenced by SDKRequestBody is not defined")
-        return self._endpoint.sdk_request.request_parameter_name.snake_case.safe_name
+        return resolve_name(self._endpoint.sdk_request.request_parameter_name).snake_case.safe_name
 
     def get_json_body(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.Expression]:
         return None
@@ -51,5 +52,5 @@ class BytesRequestBodyParameters(AbstractRequestBodyParameters):
     def get_content(self) -> Optional[AST.Expression]:
         return AST.Expression(self._get_request_parameter_name())
 
-    def get_parameter_name_rewrites(self) -> Dict[ir_types.Name, str]:
+    def get_parameter_name_rewrites(self) -> Dict[Union[str, ir_types.Name], str]:
         return {}

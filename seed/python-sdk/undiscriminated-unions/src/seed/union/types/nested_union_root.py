@@ -2,6 +2,6 @@
 
 import typing
 
-from .nested_union_l_1 import NestedUnionL1
+from .nested_union_l1 import NestedUnionL1
 
 NestedUnionRoot = typing.Union[str, typing.List[str], NestedUnionL1]

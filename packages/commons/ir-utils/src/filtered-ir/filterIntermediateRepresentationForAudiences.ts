@@ -8,6 +8,7 @@ import {
 } from "@fern-api/ir-sdk";
 import { mapValues, pickBy } from "lodash-es";
 
+import { getWireValue } from "../utils/namesUtils.js";
 import { FilteredIr } from "./FilteredIr.js";
 import { filterEndpointExample, filterExampleType } from "./filterExamples.js";
 
@@ -28,7 +29,7 @@ export function filterIntermediateRepresentationForAudiences(
                 .filter((ex) => ex !== undefined) as ExampleType[];
             if (typeDeclaration.shape.type === "object") {
                 for (const property of typeDeclaration.shape.properties) {
-                    const hasProperty = filteredIr.hasProperty(typeId, property.name.wireValue);
+                    const hasProperty = filteredIr.hasProperty(typeId, getWireValue(property.name));
                     if (hasProperty) {
                         filteredProperties.push(property);
                     }
@@ -59,7 +60,7 @@ export function filterIntermediateRepresentationForAudiences(
                         webhook.payload = {
                             ...webhook.payload,
                             properties: webhook.payload.properties.filter((property) => {
-                                return filteredIr.hasWebhookPayloadProperty(webhookId, property.name.wireValue);
+                                return filteredIr.hasWebhookPayloadProperty(webhookId, getWireValue(property.name));
                             })
                         };
                     }
@@ -142,7 +143,7 @@ export function filterIntermediateRepresentationForAudiences(
                         });
                         if (httpEndpoint.queryParameters.length > 0) {
                             httpEndpoint.queryParameters = httpEndpoint.queryParameters.filter((queryParameter) => {
-                                return filteredIr.hasQueryParameter(httpEndpoint.id, queryParameter.name.wireValue);
+                                return filteredIr.hasQueryParameter(httpEndpoint.id, getWireValue(queryParameter.name));
                             });
                         }
                         if (httpEndpoint.requestBody?.type === "inlinedRequestBody") {
@@ -151,7 +152,10 @@ export function filterIntermediateRepresentationForAudiences(
                                 requestBody: {
                                     ...httpEndpoint.requestBody,
                                     properties: httpEndpoint.requestBody.properties.filter((property) => {
-                                        return filteredIr.hasRequestProperty(httpEndpoint.id, property.name.wireValue);
+                                        return filteredIr.hasRequestProperty(
+                                            httpEndpoint.id,
+                                            getWireValue(property.name)
+                                        );
                                     })
                                 }
                             };

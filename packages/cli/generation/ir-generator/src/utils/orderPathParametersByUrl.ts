@@ -1,4 +1,5 @@
 import { PathParameter } from "@fern-api/ir-sdk";
+import { getOriginalName } from "@fern-api/ir-utils";
 
 /**
  * Orders path parameters to match the order they appear in the URL path.
@@ -17,7 +18,7 @@ export function orderPathParametersByUrl(urlPath: string, parameters: PathParame
 
     const parameterMap = new Map<string, PathParameter>();
     for (const param of parameters) {
-        parameterMap.set(param.name.originalName, param);
+        parameterMap.set(getOriginalName(param.name), param);
     }
 
     const ordered: PathParameter[] = [];
@@ -32,7 +33,7 @@ export function orderPathParametersByUrl(urlPath: string, parameters: PathParame
     }
 
     for (const param of parameters) {
-        if (!processedNames.has(param.name.originalName)) {
+        if (!processedNames.has(getOriginalName(param.name))) {
             ordered.push(param);
         }
     }

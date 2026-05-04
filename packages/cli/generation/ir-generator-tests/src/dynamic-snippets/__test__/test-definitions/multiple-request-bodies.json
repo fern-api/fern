@@ -32,6 +32,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "author",
                         "name": {
                             "originalName": "author",
                             "camelCase": {
@@ -50,8 +51,7 @@
                                 "unsafeName": "Author",
                                 "safeName": "Author"
                             }
-                        },
-                        "wireValue": "author"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -65,6 +65,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "id",
                         "name": {
                             "originalName": "id",
                             "camelCase": {
@@ -83,8 +84,7 @@
                                 "unsafeName": "ID",
                                 "safeName": "ID"
                             }
-                        },
-                        "wireValue": "id"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -98,6 +98,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "tags",
                         "name": {
                             "originalName": "tags",
                             "camelCase": {
@@ -116,8 +117,7 @@
                                 "unsafeName": "Tags",
                                 "safeName": "Tags"
                             }
-                        },
-                        "wireValue": "tags"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -133,6 +133,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "title",
                         "name": {
                             "originalName": "title",
                             "camelCase": {
@@ -151,8 +152,7 @@
                                 "unsafeName": "Title",
                                 "safeName": "Title"
                             }
-                        },
-                        "wireValue": "title"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -199,6 +199,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "fileId",
                         "name": {
                             "originalName": "fileId",
                             "camelCase": {
@@ -217,8 +218,7 @@
                                 "unsafeName": "FileID",
                                 "safeName": "FileID"
                             }
-                        },
-                        "wireValue": "fileId"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -232,6 +232,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "status",
                         "name": {
                             "originalName": "status",
                             "camelCase": {
@@ -250,8 +251,7 @@
                                 "unsafeName": "Status",
                                 "safeName": "Status"
                             }
-                        },
-                        "wireValue": "status"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -398,6 +398,7 @@
                     "value": [
                         {
                             "name": {
+                                "wireValue": "author",
                                 "name": {
                                     "originalName": "author",
                                     "camelCase": {
@@ -416,8 +417,7 @@
                                         "unsafeName": "Author",
                                         "safeName": "Author"
                                     }
-                                },
-                                "wireValue": "author"
+                                }
                             },
                             "typeReference": {
                                 "type": "optional",
@@ -431,6 +431,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "tags",
                                 "name": {
                                     "originalName": "tags",
                                     "camelCase": {
@@ -449,8 +450,7 @@
                                         "unsafeName": "Tags",
                                         "safeName": "Tags"
                                     }
-                                },
-                                "wireValue": "tags"
+                                }
                             },
                             "typeReference": {
                                 "type": "optional",
@@ -467,6 +467,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "title",
                                 "name": {
                                     "originalName": "title",
                                     "camelCase": {
@@ -485,8 +486,7 @@
                                         "unsafeName": "Title",
                                         "safeName": "Title"
                                     }
-                                },
-                                "wireValue": "title"
+                                }
                             },
                             "typeReference": {
                                 "type": "optional",

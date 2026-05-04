@@ -14,7 +14,7 @@ pub struct ExecutionSessionResponse {
 
 impl ExecutionSessionResponse {
     pub fn builder() -> ExecutionSessionResponseBuilder {
-        ExecutionSessionResponseBuilder::default()
+        <ExecutionSessionResponseBuilder as Default>::default()
     }
 }
 

@@ -34,6 +34,7 @@ import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -494,10 +495,13 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             Optional<String> requestBodyGetterName = getRequestBodyGetterName();
             String bodySource;
             if (requestBodyGetterName.isPresent()) {
-                bodySource = sdkRequest.getRequestParameterName().getCamelCase().getSafeName() + "."
-                        + requestBodyGetterName.get() + "()";
+                bodySource = NameUtils.toName(sdkRequest.getRequestParameterName())
+                                .getCamelCase()
+                                .getSafeName() + "." + requestBodyGetterName.get() + "()";
             } else {
-                bodySource = sdkRequest.getRequestParameterName().getCamelCase().getSafeName();
+                bodySource = NameUtils.toName(sdkRequest.getRequestParameterName())
+                        .getCamelCase()
+                        .getSafeName();
             }
             codeBlock.addStatement(
                     "$T $L = new $T($T.parse($S), $L)",

@@ -63,28 +63,14 @@ public class SendTest : BaseMockServerTest
         var response = await Client.Reference.SendAsync(
             new SendRequest
             {
-                Prompt = "You are a helpful assistant",
                 Query = "query",
-                Stream = false,
-                Ending = "$ending",
-                Context = "You're super wise",
                 MaybeContext = "You're super wise",
                 ContainerObject = new ContainerObject
                 {
                     NestedObjects = new List<NestedObjectWithLiterals>()
                     {
-                        new NestedObjectWithLiterals
-                        {
-                            Literal1 = "literal1",
-                            Literal2 = "literal2",
-                            StrProp = "strProp",
-                        },
-                        new NestedObjectWithLiterals
-                        {
-                            Literal1 = "literal1",
-                            Literal2 = "literal2",
-                            StrProp = "strProp",
-                        },
+                        new NestedObjectWithLiterals { StrProp = "strProp" },
+                        new NestedObjectWithLiterals { StrProp = "strProp" },
                     },
                 },
             }
@@ -139,20 +125,12 @@ public class SendTest : BaseMockServerTest
         var response = await Client.Reference.SendAsync(
             new SendRequest
             {
-                Prompt = "You are a helpful assistant",
-                Stream = false,
-                Context = "You're super wise",
                 Query = "What is the weather today",
                 ContainerObject = new ContainerObject
                 {
                     NestedObjects = new List<NestedObjectWithLiterals>()
                     {
-                        new NestedObjectWithLiterals
-                        {
-                            Literal1 = "literal1",
-                            Literal2 = "literal2",
-                            StrProp = "strProp",
-                        },
+                        new NestedObjectWithLiterals { StrProp = "strProp" },
                     },
                 },
             }

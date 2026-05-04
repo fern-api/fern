@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Display descriptions for discriminated and undiscriminated union variants.
+  type: fix  # Options: fix/chore (patch), feat/internal (minor), break (major)
+  # pre-release: rc  # Optional: alpha, beta, or rc (e.g., produces 1.2.0-rc.0)

@@ -1,3 +1,4 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { assertNever, SetRequired } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
@@ -12,10 +13,10 @@ import {
 } from "@fern-typescript/commons";
 import {
     EndpointSampleCode,
+    FileContext,
     GeneratedEndpointImplementation,
     GeneratedSdkClientClass,
-    GeneratedWebsocketImplementation,
-    SdkContext
+    GeneratedWebsocketImplementation
 } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import {
@@ -47,12 +48,13 @@ import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-
 import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation.js";
 import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation.js";
 import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation.js";
-import { isLiteralHeader } from "./endpoints/utils/isLiteralHeader.js";
+import { getClientDefaultValue, isLiteralHeader } from "./endpoints/utils/isLiteralHeader.js";
 import { GeneratedWrappedService } from "./GeneratedWrappedService.js";
 import { GeneratedDefaultWebsocketImplementation } from "./websocket/GeneratedDefaultWebsocketImplementation.js";
 
 export declare namespace GeneratedSdkClientClassImpl {
     export interface Init {
+        caseConverter: CaseConverter;
         isRoot: boolean;
         importsManager: ImportsManager;
         exportsManager: ExportsManager;
@@ -80,6 +82,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         generateEndpointMetadata: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         offsetSemantics: "item-index" | "page-index";
+        alwaysSendAuth: boolean;
     }
 }
 
@@ -99,6 +102,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public static readonly AUTH_PROVIDER_FIELD_NAME = "authProvider";
     public static readonly LOGGING_FIELD_NAME = "logging";
 
+    private readonly case: CaseConverter;
     private readonly isRoot: boolean;
     private readonly intermediateRepresentation: FernIr.IntermediateRepresentation;
     private readonly serviceClassName: string;
@@ -123,8 +127,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly anyEndpointWithAuth: boolean;
     private readonly generateEndpointMetadata: boolean;
     private readonly offsetSemantics: "item-index" | "page-index";
+    private readonly alwaysSendAuth: boolean;
 
     constructor({
+        caseConverter,
         isRoot,
         intermediateRepresentation,
         serviceClassName,
@@ -149,8 +155,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         formDataSupport,
         generateEndpointMetadata,
         parameterNaming,
-        offsetSemantics
+        offsetSemantics,
+        alwaysSendAuth
     }: GeneratedSdkClientClassImpl.Init) {
+        this.case = caseConverter;
         this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;
         this.serviceClassName = serviceClassName;
@@ -169,6 +177,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.parameterNaming = parameterNaming;
         this.offsetSemantics = offsetSemantics;
+        this.alwaysSendAuth = alwaysSendAuth;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -365,7 +374,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 includeSerdeLayer: this.includeSerdeLayer,
                 retainOriginalCasing: this.retainOriginalCasing,
                 omitUndefined: this.omitUndefined,
-                parameterNaming
+                parameterNaming,
+                caseConverter: this.case,
+                alwaysSendAuth: this.alwaysSendAuth
             });
         } else {
             this.generatedWebsocketImplementation = undefined;
@@ -391,13 +402,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         // Convert any global "authorization" headers into HeaderAuthScheme objects
         const authSchemes: FernIr.AuthScheme[] = [...intermediateRepresentation.auth.schemes];
         for (const header of intermediateRepresentation.headers) {
-            if (header.name.wireValue.toLowerCase() === "authorization") {
+            if (getWireValue(header.name).toLowerCase() === "authorization") {
                 authSchemes.push(
                     FernIr.AuthScheme.header({
                         key: "_GlobalAuthorizationHeader",
                         name: header.name,
                         prefix: undefined,
                         headerEnvVar: header.env,
+                        headerPlaceholder: undefined,
                         valueType: header.valueType,
                         docs: header.docs
                     })
@@ -473,7 +485,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 generatedSdkClientClass: this,
                 retainOriginalCasing: this.retainOriginalCasing,
                 exportsManager: this.exportsManager,
-                parameterNaming: this.parameterNaming
+                parameterNaming: this.parameterNaming,
+                caseConverter: this.case
             });
         }
         if (requestBody?.type === "fileUpload") {
@@ -490,7 +503,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 allowExtraFields: this.allowExtraFields,
                 omitUndefined: this.omitUndefined,
                 formDataSupport: this.formDataSupport,
-                parameterNaming: this.parameterNaming
+                parameterNaming: this.parameterNaming,
+                caseConverter: this.case
             });
         } else {
             return new GeneratedDefaultEndpointRequest({
@@ -502,7 +516,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 requestBody,
                 generatedSdkClientClass: this,
                 retainOriginalCasing: this.retainOriginalCasing,
-                parameterNaming: this.parameterNaming
+                parameterNaming: this.parameterNaming,
+                caseConverter: this.case
             });
         }
     }
@@ -515,7 +530,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     public invokeEndpoint(args: {
-        context: SdkContext;
+        context: FileContext;
         endpointId: string;
         example: FernIr.ExampleEndpointCall;
         clientReference: ts.Identifier;
@@ -531,7 +546,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     public maybeLeverageInvocation(args: {
-        context: SdkContext;
+        context: FileContext;
         endpointId: string;
         example: FernIr.ExampleEndpointCall;
         clientReference: ts.Identifier;
@@ -548,7 +563,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         });
     }
 
-    public getEndpoint(args: { context: SdkContext; endpointId: string }): GeneratedEndpointImplementation | undefined {
+    public getEndpoint(args: {
+        context: FileContext;
+        endpointId: string;
+    }): GeneratedEndpointImplementation | undefined {
         const generatedEndpoint = this.generatedEndpointImplementations.find((generatedEndpoint) => {
             return generatedEndpoint.endpoint.id === args.endpointId;
         });
@@ -559,9 +577,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return this.generateEndpointMetadata;
     }
 
+    public getAlwaysSendAuth(): boolean {
+        return this.alwaysSendAuth;
+    }
+
     public accessFromRootClient(args: { referenceToRootClient: ts.Expression }): ts.Expression {
         return [...this.package_.fernFilepath.allParts].reduce<ts.Expression>(
-            (acc, part) => ts.factory.createPropertyAccessExpression(acc, part.camelCase.unsafeName),
+            (acc, part) => ts.factory.createPropertyAccessExpression(acc, this.case.camelUnsafe(part)),
             args.referenceToRootClient
         );
     }
@@ -576,7 +598,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return ts.factory.createNewExpression(referenceToClient, undefined, [referenceToOptions]);
     }
 
-    public instantiateAsRoot(args: { context: SdkContext; npmPackage: NpmPackage }): ts.Expression {
+    public instantiateAsRoot(args: { context: FileContext; npmPackage: NpmPackage }): ts.Expression {
         const rootSdkClientName = args.context.sdkClientClass.getReferenceToClientClass(this.packageId, {
             npmPackage: args.npmPackage
         });
@@ -588,7 +610,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         );
     }
 
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         const serviceModule: ModuleDeclarationStructure = {
             kind: StructureKind.Module,
             name: this.serviceClassName,
@@ -623,7 +645,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         // Determine the type for _options based on whether auth is required
         const optionsType =
-            this.authProvider && this.anyEndpointWithAuth
+            this.authProvider && (this.anyEndpointWithAuth || this.alwaysSendAuth)
                 ? (() => {
                       // Import NormalizedClientOptionsWithAuth and normalizeClientOptionsWithAuth from BaseClient
                       context.importsManager.addImportFromRoot("BaseClient", {
@@ -670,7 +692,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             isReadonly: true
         });
 
-        if (this.authProvider && this.anyEndpointWithAuth) {
+        if (this.authProvider && (this.anyEndpointWithAuth || this.alwaysSendAuth)) {
             const parameters = [
                 {
                     name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
@@ -724,7 +746,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 isIdempotent = true;
             }
 
-            const publicMethodName = endpoint.endpoint.name.camelCase.unsafeName;
+            const publicMethodName = this.case.camelUnsafe(endpoint.endpoint.name);
             const internalMethodName = `__${publicMethodName}`;
             const publicStatements = [
                 ts.factory.createReturnStatement(
@@ -841,7 +863,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         context.sourceFile.addClass(serviceClass);
     }
 
-    private getCtorOptionsStatements(context: SdkContext): Code {
+    private getCtorOptionsStatements(context: FileContext): Code {
         context.importsManager.addImportFromRoot("BaseClient", {
             namedImports: ["normalizeClientOptions"]
         });
@@ -849,7 +871,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return code`this._options = normalizeClientOptions(options);`;
     }
 
-    private getCtorOptionsStatementsWithAuth(context: SdkContext): Code {
+    private getCtorOptionsStatementsWithAuth(context: FileContext): Code {
         context.importsManager.addImportFromRoot("BaseClient", {
             namedImports: ["normalizeClientOptionsWithAuth"]
         });
@@ -862,10 +884,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         context
     }: {
         serviceClass: SetRequired<ClassDeclarationStructure, "properties" | "ctors" | "methods" | "getAccessors">;
-        context: SdkContext;
+        context: FileContext;
     }): void {
         // Build the auth headers getter expression
-        const hasAuth = this.authProvider && this.anyEndpointWithAuth;
+        const hasAuth = this.authProvider && (this.anyEndpointWithAuth || this.alwaysSendAuth);
         let getAuthHeadersCode: string;
         if (hasAuth) {
             getAuthHeadersCode =
@@ -906,7 +928,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             if (targetBaseUrl == null) {
                 throw new Error("Multi-URL environment has no base URLs defined");
             }
-            const baseUrlName = targetBaseUrl.name.camelCase.unsafeName;
+            const baseUrlName = this.case.camelUnsafe(targetBaseUrl.name);
 
             // Get the default environment reference (e.g. environments.SdkEnvironment.Production) if one exists.
             // This mirrors getEnvironment() which does: this._options.environment ?? defaultEnvironment
@@ -961,7 +983,7 @@ return core.makePassthroughRequest(input, init, {
         serviceClass.methods.push(fetchMethod);
     }
 
-    public getBaseUrl(endpoint: FernIr.HttpEndpoint, context: SdkContext): ts.Expression {
+    public getBaseUrl(endpoint: FernIr.HttpEndpoint, context: FileContext): ts.Expression {
         const referenceToBaseUrl = this.getReferenceToBaseUrl(context);
 
         const environment = this.getEnvironment(endpoint, context);
@@ -973,7 +995,7 @@ return core.makePassthroughRequest(input, init, {
         );
     }
 
-    public getEnvironment(endpoint: FernIr.HttpEndpoint, context: SdkContext): ts.Expression {
+    public getEnvironment(endpoint: FernIr.HttpEndpoint, context: FileContext): ts.Expression {
         let referenceToEnvironmentValue = this.getReferenceToEnvironment(context);
 
         const defaultEnvironment = context.environments
@@ -1011,7 +1033,7 @@ return core.makePassthroughRequest(input, init, {
             : `${this.serviceClassName}.${GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME}`;
     }
 
-    private generateRequestOptionsInterface(context: SdkContext): InterfaceDeclarationStructure {
+    private generateRequestOptionsInterface(context: FileContext): InterfaceDeclarationStructure {
         return {
             kind: StructureKind.Interface,
             name: GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME,
@@ -1025,7 +1047,7 @@ return core.makePassthroughRequest(input, init, {
      * IDEMPOTENT REQUEST OPTIONS *
      ******************************/
 
-    private generateIdempotentRequestOptionsInterface(context: SdkContext): InterfaceDeclarationStructure {
+    private generateIdempotentRequestOptionsInterface(context: FileContext): InterfaceDeclarationStructure {
         return {
             kind: StructureKind.Interface,
             name: GeneratedSdkClientClassImpl.IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME,
@@ -1041,7 +1063,7 @@ return core.makePassthroughRequest(input, init, {
      * OPTIONS *
      ***********/
 
-    public getOptionsPropertiesForSnippet(context: SdkContext): ts.ObjectLiteralElementLike[] {
+    public getOptionsPropertiesForSnippet(context: FileContext): ts.ObjectLiteralElementLike[] {
         const properties: ts.ObjectLiteralElementLike[] = [];
 
         if (!this.requireDefaultEnvironment && context.ir.environments?.defaultEnvironment == null) {
@@ -1065,10 +1087,15 @@ return core.makePassthroughRequest(input, init, {
 
         for (const header of this.intermediateRepresentation.headers) {
             if (!isLiteralHeader(header, context)) {
+                const clientDefaultVal = getClientDefaultValue(header.clientDefault);
+                const snippetValue =
+                    clientDefaultVal != null
+                        ? ts.factory.createStringLiteral(clientDefaultVal.toString())
+                        : ts.factory.createStringLiteral(`YOUR_${this.case.screamingSnakeUnsafe(header.name)}`);
                 properties.push(
                     ts.factory.createPropertyAssignment(
                         getPropertyKey(this.getOptionKeyForHeader(header)),
-                        ts.factory.createStringLiteral(`YOUR_${header.name.name.screamingSnakeCase.unsafeName}`)
+                        snippetValue
                     )
                 );
             }
@@ -1081,7 +1108,7 @@ return core.makePassthroughRequest(input, init, {
             properties.push(
                 ts.factory.createPropertyAssignment(
                     getPropertyKey(this.getOptionNameForVariable(variable)),
-                    ts.factory.createStringLiteral(`YOUR_${variable.name.screamingSnakeCase.unsafeName}`)
+                    ts.factory.createStringLiteral(`YOUR_${this.case.screamingSnakeUnsafe(variable.name)}`)
                 )
             );
         }
@@ -1100,7 +1127,7 @@ return core.makePassthroughRequest(input, init, {
         return properties;
     }
 
-    private generateOptionsInterface(context: SdkContext): TypeAliasDeclarationStructure {
+    private generateOptionsInterface(context: FileContext): TypeAliasDeclarationStructure {
         // Use type alias instead of interface because BaseClientOptions may include union types
         // (e.g., AtLeastOneOf pattern for AnyAuthProvider.AuthOptions)
         // TypeScript interfaces can only extend object types with statically known members
@@ -1112,13 +1139,13 @@ return core.makePassthroughRequest(input, init, {
         };
     }
 
-    private getReferenceToEnvironment(context: SdkContext): ts.Expression {
+    private getReferenceToEnvironment(context: FileContext): ts.Expression {
         return context.coreUtilities.fetcher.Supplier.get(
             this.getReferenceToOption(GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME)
         );
     }
 
-    private getReferenceToBaseUrl(context: SdkContext): ts.Expression {
+    private getReferenceToBaseUrl(context: FileContext): ts.Expression {
         return context.coreUtilities.fetcher.Supplier.get(
             this.getReferenceToOption(GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME)
         );
@@ -1215,7 +1242,7 @@ return core.makePassthroughRequest(input, init, {
         );
     }
 
-    public getReferenceToLogger(_context: SdkContext): ts.Expression {
+    public getReferenceToLogger(_context: FileContext): ts.Expression {
         return this.getReferenceToOption(GeneratedSdkClientClassImpl.LOGGING_FIELD_NAME);
     }
 
@@ -1226,7 +1253,7 @@ return core.makePassthroughRequest(input, init, {
         );
     }
 
-    public getReferenceToFetcher(context: SdkContext): ts.Expression {
+    public getReferenceToFetcher(context: FileContext): ts.Expression {
         if (this.allowCustomFetcher) {
             return ts.factory.createBinaryExpression(
                 this.getReferenceToOption(GeneratedSdkClientClassImpl.CUSTOM_FETCHER_PROPERTY_NAME),
@@ -1267,7 +1294,7 @@ return core.makePassthroughRequest(input, init, {
     }
 
     private getOptionKeyForHeader(header: FernIr.HttpHeader): string {
-        return header.name.name.camelCase.unsafeName;
+        return this.case.camelUnsafe(header.name);
     }
 
     public getReferenceToMetadataForEndpointSupplier(): ts.Expression {
@@ -1279,7 +1306,8 @@ return core.makePassthroughRequest(input, init, {
             getParameterNameForRootPathParameter({
                 pathParameter,
                 retainOriginalCasing: this.retainOriginalCasing,
-                parameterNaming: this.parameterNaming
+                parameterNaming: this.parameterNaming,
+                caseConverter: this.case
             })
         );
     }
@@ -1293,7 +1321,7 @@ return core.makePassthroughRequest(input, init, {
     }
 
     private getOptionNameForVariable(variable: FernIr.VariableDeclaration): string {
-        return variable.name.camelCase.unsafeName;
+        return this.case.camelUnsafe(variable.name);
     }
 
     public hasAnyEndpointsWithAuth(): boolean {

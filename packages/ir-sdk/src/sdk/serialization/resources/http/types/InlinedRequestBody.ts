@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 import { WithContentType } from "../../commons/types/WithContentType.js";
 import { WithDocs } from "../../commons/types/WithDocs.js";
 import { WithV2Examples } from "../../examples/types/WithV2Examples.js";
@@ -16,7 +16,7 @@ export const InlinedRequestBody: core.serialization.ObjectSchema<
     FernIr.InlinedRequestBody
 > = core.serialization
     .objectWithoutOptionalProperties({
-        name: Name,
+        name: NameOrString,
         extends: core.serialization.list(DeclaredTypeName),
         properties: core.serialization.list(InlinedRequestBodyProperty),
         extendedProperties: core.serialization.list(ObjectProperty).optional(),
@@ -28,7 +28,7 @@ export const InlinedRequestBody: core.serialization.ObjectSchema<
 
 export declare namespace InlinedRequestBody {
     export interface Raw extends WithDocs.Raw, WithV2Examples.Raw, WithContentType.Raw {
-        name: Name.Raw;
+        name: NameOrString.Raw;
         extends: DeclaredTypeName.Raw[];
         properties: InlinedRequestBodyProperty.Raw[];
         extendedProperties?: ObjectProperty.Raw[] | null;

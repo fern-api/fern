@@ -1,4 +1,4 @@
-import { File } from "@fern-api/base-generator";
+import { CaseConverter, File } from "@fern-api/base-generator";
 import { ast, Generation } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -29,7 +29,7 @@ export declare namespace CSharpFile {
 }
 
 export class CSharpFile extends File {
-    private clazz: ast.Class | ast.Enum | ast.Interface;
+    private _clazz: ast.Class | ast.Enum | ast.Interface;
     private allNamespaceSegments: Set<string>;
     private allTypeClassReferences: Map<string, Set<Namespace>>;
     private generation: Generation;
@@ -45,7 +45,7 @@ export class CSharpFile extends File {
         fileHeader
     }: CSharpFile.Args) {
         super(`${clazz.name}.cs`, directory, "");
-        this.clazz = clazz;
+        this._clazz = clazz;
         this.allNamespaceSegments = allNamespaceSegments;
         this.allTypeClassReferences = allTypeClassReferences;
         this.generation = generation;
@@ -59,8 +59,8 @@ export class CSharpFile extends File {
         if (this.resolved) {
             return;
         }
-        let fileContents = this.clazz.toString({
-            namespace: this.clazz.namespace,
+        let fileContents = this._clazz.toString({
+            namespace: this._clazz.namespace,
             allNamespaceSegments: this.allNamespaceSegments,
             allTypeClassReferences: this.allTypeClassReferences,
             generation: this.generation
@@ -81,7 +81,15 @@ export class CSharpFile extends File {
         await this.write(directoryPrefix);
     }
 
-    public static getFilePathFromFernFilePath(fernFilePath: FernFilepath): RelativeFilePath {
-        return RelativeFilePath.of(path.join(...fernFilePath.allParts.map((part) => part.pascalCase.safeName)));
+    /** Returns the underlying AST class/enum/interface node. */
+    public get clazz(): ast.Class | ast.Enum | ast.Interface {
+        return this._clazz;
+    }
+
+    public static getFilePathFromFernFilePath(
+        fernFilePath: FernFilepath,
+        caseConverter: CaseConverter
+    ): RelativeFilePath {
+        return RelativeFilePath.of(path.join(...fernFilePath.allParts.map((part) => caseConverter.pascalSafe(part))));
     }
 }
