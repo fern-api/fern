@@ -26,7 +26,6 @@ const BASE_INPUT = {
     generatorVersion: "2.6.3",
     cliVersion: "0.30.0",
     repoUri: "acme/sdk-typescript",
-    runId: undefined,
     automationMode: false,
     autoMerge: false,
     skipIfNoDiff: false,
@@ -231,16 +230,6 @@ describe("buildReplayTelemetryProps", () => {
         });
         expect(props.conflicts_other).toBe(2);
         expect(props.conflicts_same_line_edit).toBe(0);
-    });
-
-    it("preserves runId verbatim (UUIDs are bounded-shape, no truncation)", () => {
-        const fullUuid = "22d932de-baeb-41cd-b530-fe5a402a1234";
-        const props = buildReplayTelemetryProps({
-            ...BASE_INPUT,
-            runId: fullUuid,
-            pipelineResult: makePipelineResult(makeReplayResult())
-        });
-        expect(props.run_id).toBe(fullUuid);
     });
 
     it("treats first-generation as success without conflict noise", () => {

@@ -467,7 +467,6 @@ export async function runLocalGenerationForWorkspace({
                                     generatorVersion: generatorInvocation.version,
                                     cliVersion: workspace.cliVersion,
                                     repoUri: selfhostedGithubConfig.uri,
-                                    runId: process.env.FERN_RUN_ID,
                                     automationMode: automationMode === true,
                                     autoMerge: autoMerge === true,
                                     skipIfNoDiff: skipIfNoDiff === true,

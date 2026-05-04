@@ -39,7 +39,6 @@ export function buildReplayTelemetryProps(input: {
     generatorVersion: string;
     cliVersion?: string;
     repoUri: string;
-    runId?: string;
     automationMode: boolean;
     autoMerge: boolean;
     skipIfNoDiff: boolean;
@@ -58,7 +57,6 @@ export function buildReplayTelemetryProps(input: {
         generatorVersion,
         cliVersion,
         repoUri,
-        runId,
         automationMode,
         autoMerge,
         skipIfNoDiff,
@@ -117,7 +115,6 @@ export function buildReplayTelemetryProps(input: {
         generator_version: generatorVersion,
         cli_version: cliVersion ?? null,
         repo_uri_hash: hashRepoUri(repoUri),
-        run_id: runId ?? null,
         automation_mode: automationMode,
         auto_merge_requested: autoMerge,
         auto_merge_enabled: github?.autoMergeEnabled === true,
