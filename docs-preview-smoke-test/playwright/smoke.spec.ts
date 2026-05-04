@@ -84,8 +84,7 @@ test.describe("Image rendering validation", () => {
             const url = response.url();
             const contentType = response.headers()["content-type"] ?? "";
             const isImageRequest =
-                contentType.includes("image") ||
-                /\.(png|jpe?g|gif|svg|webp|ico|bmp|avif)(\?|$)/i.test(url);
+                contentType.includes("image") || /\.(png|jpe?g|gif|svg|webp|ico|bmp|avif)(\?|$)/i.test(url);
             if (isImageRequest && response.status() >= 400) {
                 failedImageRequests.push({ url, status: response.status() });
             }
