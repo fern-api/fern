@@ -6236,6 +6236,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../../commons/core-utils
+      '@fern-api/docs-markdown-utils':
+        specifier: workspace:*
+        version: link:../../../docs-markdown-utils
       '@fern-api/docs-resolver':
         specifier: workspace:*
         version: link:../../../docs-resolver

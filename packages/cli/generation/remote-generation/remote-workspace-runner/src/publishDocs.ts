@@ -8,14 +8,16 @@ import {
     applyTranslatedNavigationOverlays,
     DocsDefinitionResolver,
     getTranslatedAnnouncement,
+    UploadedFile,
+    wrapWithHttps
+} from "@fern-api/docs-resolver";
+import {
     replaceImagePathsAndUrls,
     replaceReferencedCode,
     replaceReferencedMarkdown,
     stripMdxComments,
-    transformAtPrefixImports,
-    UploadedFile,
-    wrapWithHttps
-} from "@fern-api/docs-resolver";
+    transformAtPrefixImports
+} from "@fern-api/docs-markdown-utils";
 import { APIV1Write, FdrAPI as CjsFdrSdk, DocsV1Write, DocsV2Write, FdrClient } from "@fern-api/fdr-sdk";
 
 type DynamicIr = APIV1Write.DynamicIr;
@@ -47,6 +49,13 @@ import * as mime from "mime-types";
 import terminalLink from "terminal-link";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { measureImageSizes } from "./measureImageSizes.js";
+import {
+    getHttpEndpointKeys,
+    type RegisteredApiConfig,
+    type RegisterApiDefinitionOptions,
+    registerTranslatedApiOverrides,
+    replaceApiDefinitionIdsInObject
+} from "./translatedApiOverrides.js";
 import { asyncPool } from "./utils/asyncPool.js";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
@@ -257,6 +266,151 @@ export async function publishDocs({
             taskContext: context
         });
 
+        const registeredApiIdsByName = new Map<string, string>();
+        const registeredApiConfigsByName = new Map<string, RegisteredApiConfig>();
+        const registerApiDefinition = async ({
+            ir,
+            snippetsConfig,
+            playgroundConfig,
+            apiName,
+            workspace,
+            graphqlOperations,
+            graphqlTypes,
+            trackAsBaseApi = true
+        }: RegisterApiDefinitionOptions): Promise<string> => {
+            const apiId = apiName ?? getOriginalName(ir.apiName);
+            // Use apiName from docs.yml (folder name) as the API identifier for FDR.
+            // This ensures users can reference APIs by their folder name in docs components.
+            let apiDefinition = convertIrToFdrApi({
+                ir,
+                snippetsConfig,
+                playgroundConfig,
+                graphqlOperations,
+                graphqlTypes,
+                context,
+                apiNameOverride: apiName
+            });
+
+            const aiEnhancerConfig = getAIEnhancerConfig(
+                withAiExamples,
+                docsWorkspace.config.aiExamples?.style ?? docsWorkspace.config.experimental?.aiExampleStyleInstructions
+            );
+            if (aiEnhancerConfig) {
+                const sources = workspace?.getSources();
+                const openApiSources = sources
+                    ?.filter((source) => source.type === "openapi")
+                    .map((source) => ({
+                        absoluteFilePath: source.absoluteFilePath,
+                        absoluteFilePathToOverrides: source.absoluteFilePathToOverrides
+                    }));
+
+                if (openApiSources == null || openApiSources.length === 0) {
+                    context.logger.debug("Skipping AI example enhancement: no OpenAPI source file paths available");
+                } else {
+                    apiDefinition = await enhanceExamplesWithAI(
+                        apiDefinition,
+                        aiEnhancerConfig,
+                        context,
+                        token,
+                        organization,
+                        openApiSources
+                    );
+                }
+            }
+
+            let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
+            let languagesWithExistingSdkDynamicIr: Set<string> = new Set();
+            if (Object.keys(snippetsConfig).length === 0) {
+                context.logger.debug(`No snippets configuration defined, skipping snippet generation...`);
+            } else if (!disableDynamicSnippets) {
+                const existingSdkDynamicIrs = await checkAndDownloadExistingSdkDynamicIRs({
+                    fdr,
+                    workspace,
+                    organization,
+                    context,
+                    snippetsConfig
+                });
+
+                if (existingSdkDynamicIrs && Object.keys(existingSdkDynamicIrs).length > 0) {
+                    dynamicIRsByLanguage = existingSdkDynamicIrs;
+                    languagesWithExistingSdkDynamicIr = new Set(Object.keys(existingSdkDynamicIrs));
+                    context.logger.debug(
+                        `Using existing SDK dynamic IRs for: ${Object.keys(existingSdkDynamicIrs).join(", ")}`
+                    );
+                }
+
+                const generatedDynamicIRs = await generateLanguageSpecificDynamicIRs({
+                    workspace,
+                    organization,
+                    context,
+                    snippetsConfig,
+                    skipLanguages: languagesWithExistingSdkDynamicIr
+                });
+
+                if (generatedDynamicIRs) {
+                    dynamicIRsByLanguage = {
+                        ...dynamicIRsByLanguage,
+                        ...generatedDynamicIRs
+                    };
+                }
+            }
+
+            let response;
+            try {
+                response = await fdr.api.register.registerApiDefinition({
+                    orgId: CjsFdrSdk.OrgId(organization),
+                    apiId: CjsFdrSdk.ApiId(apiId),
+                    definition: apiDefinition,
+                    dynamicIRs: dynamicIRsByLanguage
+                });
+            } catch (error) {
+                const errorDetails = extractErrorDetails(error);
+                context.logger.error(
+                    `FDR registerApiDefinition failed. Error details:\n${JSON.stringify(errorDetails, undefined, 2)}`
+                );
+                if (apiName != null) {
+                    return context.failAndThrow(
+                        `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com`,
+                        errorDetails,
+                        { code: CliError.Code.NetworkError }
+                    );
+                }
+                return context.failAndThrow(
+                    `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com`,
+                    errorDetails,
+                    { code: CliError.Code.NetworkError }
+                );
+            }
+
+            context.logger.debug(`Registered API Definition ${apiId}: ${response.apiDefinitionId}`);
+
+            if (response.dynamicIRs && dynamicIRsByLanguage) {
+                if (skipUpload) {
+                    context.logger.debug("Skip-upload mode: skipping dynamic IR uploads");
+                } else {
+                    await uploadDynamicIRs({
+                        dynamicIRs: dynamicIRsByLanguage,
+                        dynamicIRUploadUrls: response.dynamicIRs,
+                        context,
+                        apiId: response.apiDefinitionId
+                    });
+                }
+            }
+
+            if (trackAsBaseApi) {
+                registeredApiIdsByName.set(apiId, response.apiDefinitionId);
+                registeredApiConfigsByName.set(apiId, {
+                    snippetsConfig,
+                    playgroundConfig,
+                    graphqlOperations,
+                    graphqlTypes,
+                    endpointKeys: getHttpEndpointKeys(ir)
+                });
+            }
+
+            return response.apiDefinitionId;
+        };
+
         const resolver = new DocsDefinitionResolver({
             domain,
             docsWorkspace: effectiveWorkspace,
@@ -457,140 +611,7 @@ export async function publishDocs({
                     );
                 }
             },
-            registerApi: async ({
-                ir,
-                snippetsConfig,
-                playgroundConfig,
-                apiName,
-                workspace,
-                graphqlOperations,
-                graphqlTypes
-            }) => {
-                // Use apiName from docs.yml (folder name) as the API identifier for FDR
-                // This ensures users can reference APIs by their folder name in docs components
-                let apiDefinition = convertIrToFdrApi({
-                    ir,
-                    snippetsConfig,
-                    playgroundConfig,
-                    graphqlOperations,
-                    graphqlTypes,
-                    context,
-                    apiNameOverride: apiName
-                });
-
-                const aiEnhancerConfig = getAIEnhancerConfig(
-                    withAiExamples,
-                    docsWorkspace.config.aiExamples?.style ??
-                        docsWorkspace.config.experimental?.aiExampleStyleInstructions
-                );
-                if (aiEnhancerConfig) {
-                    const sources = workspace?.getSources();
-                    const openApiSources = sources
-                        ?.filter((source) => source.type === "openapi")
-                        .map((source) => ({
-                            absoluteFilePath: source.absoluteFilePath,
-                            absoluteFilePathToOverrides: source.absoluteFilePathToOverrides
-                        }));
-
-                    if (openApiSources == null || openApiSources.length === 0) {
-                        context.logger.debug("Skipping AI example enhancement: no OpenAPI source file paths available");
-                    } else {
-                        apiDefinition = await enhanceExamplesWithAI(
-                            apiDefinition,
-                            aiEnhancerConfig,
-                            context,
-                            token,
-                            organization,
-                            openApiSources
-                        );
-                    }
-                }
-
-                // create dynamic IR + metadata for each generator language
-                let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
-                let languagesWithExistingSdkDynamicIr: Set<string> = new Set();
-                if (Object.keys(snippetsConfig).length === 0) {
-                    context.logger.debug(`No snippets configuration defined, skipping snippet generation...`);
-                } else if (!disableDynamicSnippets) {
-                    // Check for existing SDK dynamic IRs before generating
-                    const existingSdkDynamicIrs = await checkAndDownloadExistingSdkDynamicIRs({
-                        fdr,
-                        workspace,
-                        organization,
-                        context,
-                        snippetsConfig
-                    });
-
-                    if (existingSdkDynamicIrs && Object.keys(existingSdkDynamicIrs).length > 0) {
-                        dynamicIRsByLanguage = existingSdkDynamicIrs;
-                        languagesWithExistingSdkDynamicIr = new Set(Object.keys(existingSdkDynamicIrs));
-                        context.logger.debug(
-                            `Using existing SDK dynamic IRs for: ${Object.keys(existingSdkDynamicIrs).join(", ")}`
-                        );
-                    }
-
-                    // Generate dynamic IRs for languages that don't have existing SDK dynamic IRs
-                    const generatedDynamicIRs = await generateLanguageSpecificDynamicIRs({
-                        workspace,
-                        organization,
-                        context,
-                        snippetsConfig,
-                        skipLanguages: languagesWithExistingSdkDynamicIr
-                    });
-
-                    if (generatedDynamicIRs) {
-                        dynamicIRsByLanguage = {
-                            ...dynamicIRsByLanguage,
-                            ...generatedDynamicIRs
-                        };
-                    }
-                }
-
-                let response;
-                try {
-                    response = await fdr.api.register.registerApiDefinition({
-                        orgId: CjsFdrSdk.OrgId(organization),
-                        apiId: CjsFdrSdk.ApiId(apiName ?? getOriginalName(ir.apiName)),
-                        definition: apiDefinition,
-                        dynamicIRs: dynamicIRsByLanguage
-                    });
-                } catch (error) {
-                    const errorDetails = extractErrorDetails(error);
-                    context.logger.error(
-                        `FDR registerApiDefinition failed. Error details:\n${JSON.stringify(errorDetails, undefined, 2)}`
-                    );
-                    if (apiName != null) {
-                        return context.failAndThrow(
-                            `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com`,
-                            errorDetails,
-                            { code: CliError.Code.NetworkError }
-                        );
-                    } else {
-                        return context.failAndThrow(
-                            `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com`,
-                            errorDetails,
-                            { code: CliError.Code.NetworkError }
-                        );
-                    }
-                }
-
-                context.logger.debug(`Registered API Definition ${apiName}: ${response.apiDefinitionId}`);
-
-                if (response.dynamicIRs && dynamicIRsByLanguage) {
-                    if (skipUpload) {
-                        context.logger.debug("Skip-upload mode: skipping dynamic IR uploads");
-                    } else {
-                        await uploadDynamicIRs({
-                            dynamicIRs: dynamicIRsByLanguage,
-                            dynamicIRUploadUrls: response.dynamicIRs,
-                            context,
-                            apiId: response.apiDefinitionId
-                        });
-                    }
-                }
-
-                return response.apiDefinitionId;
-            },
+            registerApi: registerApiDefinition,
             targetAudiences
         });
 
@@ -652,6 +673,14 @@ export async function publishDocs({
         const translationPages = resolver.getTranslationPages();
         const translationNavigationOverlays = resolver.getTranslationNavigationOverlays();
         const translationDomain = preview ? urlToOutput : domain;
+        const translatedApiDefinitionIdsByLocale = await registerTranslatedApiOverrides({
+            docsWorkspace: effectiveWorkspace,
+            cliVersion,
+            context,
+            registeredApiIdsByName,
+            registeredApiConfigsByName,
+            registerApiDefinition
+        });
         if (translationPages != null && Object.keys(translationPages).length > 0) {
             context.logger.info(`Registering translations for ${Object.keys(translationPages).length} locale(s)...`);
             await Promise.all(
@@ -796,9 +825,18 @@ export async function publishDocs({
                             updatedRoot = applyTranslatedNavigationOverlays(updatedRoot, localeNavOverlay);
                             translatedAnnouncement =
                                 getTranslatedAnnouncement(localeNavOverlay) ?? translatedAnnouncement;
-                            if (localeNavOverlay.navbarLinks != null) {
-                                translatedNavbarLinks = localeNavOverlay.navbarLinks;
+                            const localeNavbarLinks = (
+                                localeNavOverlay as typeof localeNavOverlay & {
+                                    navbarLinks?: typeof translatedNavbarLinks;
+                                }
+                            ).navbarLinks;
+                            if (localeNavbarLinks != null) {
+                                translatedNavbarLinks = localeNavbarLinks;
                             }
+                        }
+                        const translatedApiDefinitionIds = translatedApiDefinitionIdsByLocale.get(locale);
+                        if (translatedApiDefinitionIds != null && translatedApiDefinitionIds.size > 0) {
+                            updatedRoot = replaceApiDefinitionIdsInObject(updatedRoot, translatedApiDefinitionIds);
                         }
 
                         const translatedDefinition: DocsDefinition = {

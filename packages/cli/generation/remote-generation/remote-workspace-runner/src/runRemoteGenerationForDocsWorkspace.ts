@@ -104,6 +104,7 @@ export async function runRemoteGenerationForDocsWorkspace({
         });
         return;
     }
+    const multiSource = (maybeInstance as typeof maybeInstance & { multiSource?: boolean }).multiSource ?? false;
 
     // TODO: validate custom domains
     const customDomains: string[] = [];
@@ -116,7 +117,7 @@ export async function runRemoteGenerationForDocsWorkspace({
         }
     }
 
-    if (maybeInstance.multiSource === true) {
+    if (multiSource) {
         validateMultiSourceBasepaths(maybeInstance.url, customDomains, context);
     }
 
@@ -156,7 +157,7 @@ export async function runRemoteGenerationForDocsWorkspace({
                 ciSource,
                 deployerAuthor,
                 loginCommand,
-                multiSource: maybeInstance.multiSource ?? false
+                multiSource
             });
 
         for (let attempt = 0; ; attempt++) {
