@@ -221,6 +221,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     public subPackageHasEndpoints(subpackage: FernIr.Subpackage): boolean {
         return (
             subpackage.hasEndpointsInTree ||
+            subpackage.service != null ||
             subpackage.subpackages.some((pkg) => this.subPackageHasEndpoints(this.getSubpackageOrThrow(pkg)))
         );
     }
