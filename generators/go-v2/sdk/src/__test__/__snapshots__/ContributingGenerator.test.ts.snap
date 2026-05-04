@@ -10,6 +10,7 @@ Thanks for your interest in contributing to this SDK! This document provides gui
 ### Prerequisites
 
 - Go 1.21+
+- Docker (only required to run wire tests; see [Wire Tests](#wire-tests))
 
 ### Installation
 
@@ -34,6 +35,21 @@ Run the test suite:
 \`\`\`bash
 go test ./...
 \`\`\`
+
+#### Wire Tests
+
+If this SDK includes a \`wiremock/\` directory, the test suite contains wire tests that exercise the client against a [WireMock](https://wiremock.org/) server. The \`go test\` command above expects \`WIREMOCK_URL\` to point at a running WireMock instance.
+
+Start WireMock, run the tests, then tear it down:
+
+\`\`\`bash
+docker compose -f wiremock/docker-compose.test.yml up -d
+export WIREMOCK_URL=http://localhost:$(docker compose -f wiremock/docker-compose.test.yml port wiremock 8080 | cut -d: -f2)
+go test ./...
+docker compose -f wiremock/docker-compose.test.yml down
+\`\`\`
+
+The compose file maps WireMock's container port \`8080\` to a random host port, which is why \`WIREMOCK_URL\` is derived from \`docker compose ... port\` rather than hardcoded.
 
 ### Formatting
 
