@@ -8,7 +8,6 @@ import { generateModels, generateTraits } from "@fern-api/php-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import { WrappedEndpointRequestGenerator } from "./endpoint/request/WrappedEndpointRequestGenerator.js";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator.js";
 import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator.js";
@@ -71,14 +70,6 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         this.generateOauthTokenProvider(context);
         this.generateInferredAuthProvider(context);
         await this.generateWireTestFiles(context);
-
-        if (!context.config.whitelabel) {
-            try {
-                this.generateContributing({ context });
-            } catch (e) {
-                throw GeneratorError.internalError(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(e)}`);
-            }
-        }
 
         if (context.config.output.snippetFilepath != null) {
             const snippets = await this.generateSnippets({ context });
@@ -251,12 +242,6 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         context.project.addRawFiles(
             new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)
         );
-    }
-
-    private generateContributing({ context }: { context: SdkGeneratorContext }): void {
-        const contributingGenerator = new ContributingGenerator();
-        const content = contributingGenerator.generate();
-        context.project.addRawFiles(new File("CONTRIBUTING.md", RelativeFilePath.of("."), content));
     }
 
     private async generateSnippets({ context }: { context: SdkGeneratorContext }): Promise<Endpoint[]> {

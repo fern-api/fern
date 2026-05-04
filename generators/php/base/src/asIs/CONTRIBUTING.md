@@ -1,6 +1,4 @@
-export class ContributingGenerator {
-    public generate(): string {
-        return `# Contributing
+# Contributing
 
 Thanks for your interest in contributing to this SDK! This document provides guidelines for contributing to the project.
 
@@ -15,39 +13,39 @@ Thanks for your interest in contributing to this SDK! This document provides gui
 
 Install the project dependencies:
 
-\`\`\`bash
+```bash
 composer install
-\`\`\`
+```
 
 ### Testing
 
 Run the test suite:
 
-\`\`\`bash
+```bash
 composer test
-\`\`\`
+```
 
 Or run PHPUnit directly:
 
-\`\`\`bash
+```bash
 ./vendor/bin/phpunit
-\`\`\`
+```
 
 ### Linting & Formatting
 
 Fix code style issues:
 
-\`\`\`bash
+```bash
 ./vendor/bin/php-cs-fixer fix
-\`\`\`
+```
 
 ### Static Analysis
 
 Run static analysis:
 
-\`\`\`bash
+```bash
 ./vendor/bin/phpstan analyse
-\`\`\`
+```
 
 ## About Generated Code
 
@@ -56,22 +54,22 @@ Run static analysis:
 ### Generated Files
 
 The following directories contain generated code:
-- \`src/\` - API client classes and types
+- `src/` - API client classes and types
 - Most PHP files in the project
 
 ### How to Customize
 
 If you need to customize the SDK, you have two options:
 
-#### Option 1: Use \`.fernignore\`
+#### Option 1: Use `.fernignore`
 
 For custom code that should persist across SDK regenerations:
 
-1. Create a \`.fernignore\` file in the project root
-2. Add file patterns for files you want to preserve (similar to \`.gitignore\` syntax)
+1. Create a `.fernignore` file in the project root
+2. Add file patterns for files you want to preserve (similar to `.gitignore` syntax)
 3. Add your custom code to those files
 
-Files listed in \`.fernignore\` will not be overwritten when the SDK is regenerated.
+Files listed in `.fernignore` will not be overwritten when the SDK is regenerated.
 
 For more information, see the [Fern documentation on custom code](https://buildwithfern.com/learn/sdks/overview/custom-code).
 
@@ -80,7 +78,7 @@ For more information, see the [Fern documentation on custom code](https://buildw
 If you want to change how code is generated for all users of this SDK:
 
 1. The PHP SDK generator lives in the [Fern repository](https://github.com/fern-api/fern)
-2. Generator code is located at \`generators/php/\`
+2. Generator code is located at `generators/php/`
 3. Follow the [Fern contributing guidelines](https://github.com/fern-api/fern/blob/main/CONTRIBUTING.md)
 4. Submit a pull request with your changes to the generator
 
@@ -95,9 +93,9 @@ This approach is best for:
 
 1. Create a new branch for your changes
 2. Make your modifications
-3. Run tests to ensure nothing breaks: \`composer test\`
-4. Run formatting: \`./vendor/bin/php-cs-fixer fix\`
-5. Run static analysis: \`./vendor/bin/phpstan analyse\`
+3. Run tests to ensure nothing breaks: `composer test`
+4. Run formatting: `./vendor/bin/php-cs-fixer fix`
+5. Run static analysis: `./vendor/bin/phpstan analyse`
 6. Commit your changes with a clear commit message
 7. Push your branch and create a pull request
 
@@ -107,7 +105,7 @@ Write clear, descriptive commit messages that explain what changed and why.
 
 ### Code Style
 
-This project uses PHP CS Fixer for automated code formatting. Run \`./vendor/bin/php-cs-fixer fix\` before committing to ensure your code meets the project's style guidelines.
+This project uses PHP CS Fixer for automated code formatting. Run `./vendor/bin/php-cs-fixer fix` before committing to ensure your code meets the project's style guidelines.
 
 ## Questions or Issues?
 
@@ -120,6 +118,3 @@ If you have questions or run into issues:
 ## License
 
 By contributing to this project, you agree that your contributions will be licensed under the same license as the project.
-`;
-    }
-}
