@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.7.1
+  changelogEntry:
+    - summary: |
+        Upgrade glibc/glibc-common/glibc-minimal-langpack in the Java SDK generator
+        container to address CVE-2026-4046 (iconv() assertion failure when converting
+        IBM1390/IBM1399 inputs; fixed in glibc 2.34-231.amzn2023.0.4).
+      type: chore
+  createdAt: "2026-05-04"
+  irVersion: 66
 - version: 4.7.0
   changelogEntry:
     - summary: |
