@@ -305,7 +305,16 @@ export class ReplayPrepareError extends Error {
     constructor(reason: string, cause: unknown) {
         // ES2022 Error.cause — Sentry's linkedErrorsIntegration chains automatically.
         super(`Replay prepare failed: ${reason}`, { cause });
-        this.name = "ReplayPrepareError";
+        // Restore the prototype chain — `extends Error` is broken by ES5 transpile
+        // (TS targets node18 here, so it's defensive but matches the codebase
+        // pattern in `generators/base/src/GeneratorError.ts`).
+        Object.setPrototypeOf(this, new.target.prototype);
+        // V8-specific: omit this constructor frame from the captured stack so the
+        // trace points to the throw site, not the Error class.
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+        this.name = this.constructor.name;
         this.reason = reason;
     }
 }
