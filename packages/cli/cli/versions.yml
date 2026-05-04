@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.8.2
+  changelogEntry:
+    - summary: |
+        Remove `break` from the supported changelog types so the automated release flow
+        cannot produce a major version bump. Major releases must now be made by editing
+        the relevant `versions.yml` directly so the breaking change is explicitly
+        acknowledged in review. Validation rejects `type: break` in `unreleased/`.
+      type: chore
+  createdAt: "2026-05-04"
+  irVersion: 66
 - version: 5.8.1
   changelogEntry:
     - summary: |
