@@ -165,6 +165,10 @@ export async function collectFilesFromDocsConfig({
         filepaths.add(parsedDocsConfig.llmsFullTxtFile);
     }
 
+    if (parsedDocsConfig.robotsTxtFile != null) {
+        filepaths.add(parsedDocsConfig.robotsTxtFile);
+    }
+
     /* custom page action icons */
     if (parsedDocsConfig.pageActions?.options?.custom != null) {
         await Promise.all(

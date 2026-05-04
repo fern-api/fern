@@ -42,6 +42,7 @@ function createResolverWithTranslations(
         libraries: undefined,
         llmsFullTxtFile: undefined,
         llmsTxtFile: undefined,
+        robotsTxtFile: undefined,
         logo: undefined,
         metadata: undefined,
         navbarLinks: undefined,

@@ -210,6 +210,15 @@ export async function visitDocsConfigFileYamlAst({
                     willBeUploaded: true
                 });
             }
+            if (agents?.robotsTxt != null) {
+                await visitFilepath({
+                    absoluteFilepathToConfiguration,
+                    rawUnresolvedFilepath: agents.robotsTxt,
+                    visitor,
+                    nodePath: ["agents", "robots-txt"],
+                    willBeUploaded: true
+                });
+            }
             if (agents?.llmsFullTxt != null) {
                 await visitFilepath({
                     absoluteFilepathToConfiguration,
