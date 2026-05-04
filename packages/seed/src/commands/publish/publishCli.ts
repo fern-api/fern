@@ -4,6 +4,7 @@ import path from "path";
 
 import { PublishCommand } from "../../config/api/index.js";
 import { loadCliWorkspace } from "../../loadGeneratorWorkspaces.js";
+import { getPublishType } from "../../utils/publishRouting.js";
 import { runCommands, subVersion } from "../../utils/publishUtilities.js";
 import { getNewCliVersion, VersionFilePair } from "../../utils/versionUtilities.js";
 
@@ -46,16 +47,23 @@ export async function publishCli({
 
     context.logger.info(`Publishing CLI@${publishVersion}...`);
 
+    const publishType = getPublishType({ version: publishVersion, isDevRelease });
+
     let publishConfig: PublishCommand;
-    if (isDevRelease) {
-        context.logger.info(`Publishing CLI@${publishVersion} as a dev release...`);
-        publishConfig = cliWorkspace.workspaceConfig.publishDev;
-    } else if (publishVersion.includes("rc")) {
-        context.logger.info(`Publishing CLI@${publishVersion} as a pre-release...`);
-        publishConfig = cliWorkspace.workspaceConfig.publishRc;
-    } else {
-        context.logger.info(`Publishing CLI@${publishVersion} as a production release...`);
-        publishConfig = cliWorkspace.workspaceConfig.publishGa;
+    switch (publishType) {
+        case "dev":
+            context.logger.info(`Publishing CLI@${publishVersion} as a dev release...`);
+            publishConfig = cliWorkspace.workspaceConfig.publishDev;
+            break;
+        case "prerelease":
+            context.logger.info(`Publishing CLI@${publishVersion} as a pre-release...`);
+            // publishRc is named for historical reasons; it handles all prerelease identifiers.
+            publishConfig = cliWorkspace.workspaceConfig.publishRc;
+            break;
+        case "ga":
+            context.logger.info(`Publishing CLI@${publishVersion} as a production release...`);
+            publishConfig = cliWorkspace.workspaceConfig.publishGa;
+            break;
     }
 
     // Instance of PublishCommand configuration, leverage these commands outright
