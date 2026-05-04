@@ -59,6 +59,8 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
         // cargo fmt when those files are conditionally excluded (cargo fmt doesn't evaluate #[cfg]).
         files = files.filter((file) => file !== AsIsFiles.CoreMod);
         files = files.filter((file) => file.filename !== "client.rs");
+        // Exclude CONTRIBUTING.md — it's added conditionally (gated behind whitelabel) in SdkGeneratorCli.
+        files = files.filter((file) => file !== AsIsFiles.ContributingMd);
         // Only include sse_stream.rs when there are streaming endpoints
         if (!this.hasStreamingEndpoints()) {
             files = files.filter((file) => file.filename !== "sse_stream.rs");
