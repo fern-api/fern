@@ -819,7 +819,7 @@ class EndpointResponseCodeWriter:
         union_decl: ir_types.UnionTypeDeclaration = shape_union
         if union_decl.discriminator_context is None or union_decl.discriminator_context.value != "protocol":
             return None
-        return [(variant.discriminant_value.wire_value, variant) for variant in union_decl.types]
+        return [(get_wire_value(variant.discriminant_value), variant) for variant in union_decl.types]
 
     def _get_variant_type_hint(self, variant: ir_types.SingleUnionType) -> AST.TypeHint:
         """Get the type hint for a single union variant's data shape."""

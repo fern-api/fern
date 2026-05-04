@@ -17,6 +17,8 @@ from .errors.bad_request_error import BadRequestError
 from .types.completion_event import CompletionEvent
 from .types.error_event import ErrorEvent
 from .types.event_event import EventEvent
+from .types.group_created_event import GroupCreatedEvent
+from .types.group_deleted_event import GroupDeletedEvent
 from .types.stream_event import StreamEvent
 from .types.stream_event_context_protocol import StreamEventContextProtocol
 from .types.stream_event_discriminant_in_data import StreamEventDiscriminantInData
@@ -234,24 +236,28 @@ class RawCompletionsClient:
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == None:
                                     return
-                                try:
-                                    yield typing.cast(
-                                        StreamEventDiscriminantInData,
-                                        parse_sse_obj(
-                                            sse=_sse,
-                                            type_=StreamEventDiscriminantInData,  # type: ignore
-                                        ),
-                                    )
-                                except JSONDecodeError as e:
-                                    warning(f"Skipping SSE event with invalid JSON: {e}, sse: {_sse!r}")
-                                except (TypeError, ValueError, KeyError, AttributeError) as e:
-                                    warning(
-                                        f"Skipping SSE event due to model construction error: {type(e).__name__}: {e}, sse: {_sse!r}"
-                                    )
-                                except Exception as e:
-                                    error(
-                                        f"Unexpected error processing SSE event: {type(e).__name__}: {e}, sse: {_sse!r}"
-                                    )
+                                if _sse.event == "group.created":
+                                    try:
+                                        yield typing.cast(
+                                            GroupCreatedEvent,
+                                            parse_obj_as(
+                                                type_=GroupCreatedEvent,  # type: ignore
+                                                object_=json.loads(_sse.data),
+                                            ),
+                                        )
+                                    except Exception as e:
+                                        warning(f"Failed to parse SSE event 'group.created': {e}, sse: {_sse!r}")
+                                elif _sse.event == "group.deleted":
+                                    try:
+                                        yield typing.cast(
+                                            GroupDeletedEvent,
+                                            parse_obj_as(
+                                                type_=GroupDeletedEvent,  # type: ignore
+                                                object_=json.loads(_sse.data),
+                                            ),
+                                        )
+                                    except Exception as e:
+                                        warning(f"Failed to parse SSE event 'group.deleted': {e}, sse: {_sse!r}")
                             return
 
                         return HttpResponse(response=_response, data=_iter())
@@ -590,24 +596,28 @@ class AsyncRawCompletionsClient:
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == None:
                                     return
-                                try:
-                                    yield typing.cast(
-                                        StreamEventDiscriminantInData,
-                                        parse_sse_obj(
-                                            sse=_sse,
-                                            type_=StreamEventDiscriminantInData,  # type: ignore
-                                        ),
-                                    )
-                                except JSONDecodeError as e:
-                                    warning(f"Skipping SSE event with invalid JSON: {e}, sse: {_sse!r}")
-                                except (TypeError, ValueError, KeyError, AttributeError) as e:
-                                    warning(
-                                        f"Skipping SSE event due to model construction error: {type(e).__name__}: {e}, sse: {_sse!r}"
-                                    )
-                                except Exception as e:
-                                    error(
-                                        f"Unexpected error processing SSE event: {type(e).__name__}: {e}, sse: {_sse!r}"
-                                    )
+                                if _sse.event == "group.created":
+                                    try:
+                                        yield typing.cast(
+                                            GroupCreatedEvent,
+                                            parse_obj_as(
+                                                type_=GroupCreatedEvent,  # type: ignore
+                                                object_=json.loads(_sse.data),
+                                            ),
+                                        )
+                                    except Exception as e:
+                                        warning(f"Failed to parse SSE event 'group.created': {e}, sse: {_sse!r}")
+                                elif _sse.event == "group.deleted":
+                                    try:
+                                        yield typing.cast(
+                                            GroupDeletedEvent,
+                                            parse_obj_as(
+                                                type_=GroupDeletedEvent,  # type: ignore
+                                                object_=json.loads(_sse.data),
+                                            ),
+                                        )
+                                    except Exception as e:
+                                        warning(f"Failed to parse SSE event 'group.deleted': {e}, sse: {_sse!r}")
                             return
 
                         return AsyncHttpResponse(response=_response, data=_iter())
