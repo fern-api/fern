@@ -63,6 +63,14 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
+        with:
+          sparse-checkout: |
+            /*
+            !seed
+            !seed-remote-local
+            packages/seed/**
+            docker/seed/**
+          sparse-checkout-cone-mode: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -77,6 +85,14 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
+        with:
+          sparse-checkout: |
+            /*
+            !seed
+            !seed-remote-local
+            packages/seed/**
+            docker/seed/**
+          sparse-checkout-cone-mode: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -91,6 +107,14 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
+        with:
+          sparse-checkout: |
+            /*
+            !seed
+            !seed-remote-local
+            packages/seed/**
+            docker/seed/**
+          sparse-checkout-cone-mode: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -105,6 +129,14 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
+        with:
+          sparse-checkout: |
+            /*
+            !seed
+            !seed-remote-local
+            packages/seed/**
+            docker/seed/**
+          sparse-checkout-cone-mode: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -119,6 +151,14 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
+        with:
+          sparse-checkout: |
+            /*
+            !seed
+            !seed-remote-local
+            packages/seed/**
+            docker/seed/**
+          sparse-checkout-cone-mode: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -147,6 +187,14 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
+        with:
+          sparse-checkout: |
+            /*
+            !seed
+            !seed-remote-local
+            packages/seed/**
+            docker/seed/**
+          sparse-checkout-cone-mode: false
 
       - name: Install
         uses: ./.github/actions/install
