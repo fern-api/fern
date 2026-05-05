@@ -3,13 +3,16 @@ import { CliError } from "@fern-api/task-context";
 
 const RATE_LIMIT_INITIAL_RETRY_DELAY_MS = 2_000;
 const RATE_LIMIT_MAX_RETRY_DELAY_MS = 120_000;
-const RATE_LIMIT_MAX_RETRIES = 3;
-const RATE_LIMIT_JITTER_FACTOR = 0.2;
+const RATE_LIMIT_MAX_RETRIES = 5;
+const RATE_LIMIT_JITTER_FACTOR = 0.5;
 
 export class TooManyRequestsError extends Error {
-    constructor() {
+    readonly retryAfterSeconds: number | undefined;
+
+    constructor(retryAfterSeconds?: number) {
         super("Received 429 Too Many Requests");
         Object.setPrototypeOf(this, TooManyRequestsError.prototype);
+        this.retryAfterSeconds = retryAfterSeconds;
     }
 }
 
@@ -19,8 +22,10 @@ export class TooManyRequestsError extends Error {
  * When `retryRateLimited` is false and a TooManyRequestsError is thrown, it calls `onRateLimitedWithoutRetry`
  * to let the caller handle it (e.g. show a helpful message suggesting --retry-rate-limited).
  *
- * When `retryRateLimited` is true, retries up to RATE_LIMIT_MAX_RETRIES times with
- * exponential backoff and jitter (2s initial, 120s max).
+ * When `retryRateLimited` is true, retries up to RATE_LIMIT_MAX_RETRIES times.
+ * If the server provides a retryAfter hint, that value (in seconds) is used as the
+ * minimum delay. Otherwise, exponential backoff with jitter is applied
+ * (2s initial, 120s max, 0.5 jitter factor).
  */
 export async function retryWithRateLimit<T>({
     fn,
@@ -55,8 +60,12 @@ export async function retryWithRateLimit<T>({
                     RATE_LIMIT_INITIAL_RETRY_DELAY_MS * 2 ** attempt,
                     RATE_LIMIT_MAX_RETRY_DELAY_MS
                 );
+                const serverHintMs = error.retryAfterSeconds != null ? error.retryAfterSeconds * 1000 : undefined;
+                const effectiveBase = serverHintMs != null ? Math.max(baseDelay, serverHintMs) : baseDelay;
                 const jitter = 1 + (Math.random() - 0.5) * RATE_LIMIT_JITTER_FACTOR;
-                const delay = Math.round(baseDelay * jitter);
+                const delay = Math.round(
+                    Math.min(Math.max(effectiveBase * jitter, serverHintMs ?? 0), RATE_LIMIT_MAX_RETRY_DELAY_MS)
+                );
                 logger.warn(
                     `Received 429 Too Many Requests. Retrying in ${(delay / 1000).toFixed(1)}s (attempt ${attempt + 1}/${RATE_LIMIT_MAX_RETRIES})...`
                 );
