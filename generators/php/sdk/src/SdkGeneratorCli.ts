@@ -23,6 +23,7 @@ import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientG
 import { SubPackageClientInterfaceGenerator } from "./subpackage-client/SubPackageClientInterfaceGenerator.js";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "./utils/convertIr.js";
+import { selectExamplesForSnippets } from "./utils/selectExamplesForSnippets.js";
 import { WireTestGenerator } from "./wire-tests/index.js";
 
 export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
@@ -261,7 +262,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
             const method = endpoint.location.method;
             const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
 
-            for (const endpointExample of endpoint.examples ?? []) {
+            for (const endpointExample of selectExamplesForSnippets(endpoint.examples)) {
                 const generatedSnippet = await dynamicSnippetsGenerator.generate(
                     convertDynamicEndpointSnippetRequest(endpointExample)
                 );

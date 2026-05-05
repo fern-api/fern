@@ -12,6 +12,7 @@ export const EndpointExample: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         id: core.serialization.string(),
         name: core.serialization.string().optional(),
+        isUserSpecified: core.serialization.boolean().optional(),
     })
     .extend(EndpointSnippetRequest);
 
@@ -19,5 +20,6 @@ export declare namespace EndpointExample {
     export interface Raw extends EndpointSnippetRequest.Raw {
         id: string;
         name?: string | null;
+        isUserSpecified?: boolean | null;
     }
 }

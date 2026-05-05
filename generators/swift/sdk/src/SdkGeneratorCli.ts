@@ -29,6 +29,7 @@ import { SdkCustomConfigSchema, SdkCustomConfigSchemaDefaults } from "./SdkCusto
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "./utils/convertIr.js";
+import { selectExamplesForSnippets } from "./utils/selectExamplesForSnippets.js";
 
 export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     private static readonly defaultCustomConfig: SdkCustomConfigSchema = {
@@ -152,7 +153,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
             const method = endpoint.location.method;
             const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
-            for (const endpointExample of endpoint.examples ?? []) {
+            for (const endpointExample of selectExamplesForSnippets(endpoint.examples)) {
                 const generatedSnippet = snippetsGenerator.generateSync(
                     convertDynamicEndpointSnippetRequest(endpointExample)
                 );
