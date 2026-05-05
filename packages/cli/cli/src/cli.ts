@@ -3375,7 +3375,7 @@ function addReplayResolveCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                                 cliContext.failAndThrow(
                                     `Resolve failed: ${result.reason ?? "unknown error"}`,
                                     undefined,
-                                    { code: CliError.Code.InternalError }
+                                    { code: CliError.Code.UserError }
                                 );
                             }
                         }

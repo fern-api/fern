@@ -1,5 +1,6 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { existsSync } from "fs";
 import { readdir, readFile, stat, writeFile } from "fs/promises";
 import { extname, join } from "path";
@@ -856,10 +857,17 @@ export class AutoVersioningService {
             command = `find "${workingDirectory}" -type f -not -path "*/.git/*" -exec sed -i '' '${sedCommand}' {} +`;
         }
 
-        await loggingExeca(this.logger, "bash", ["-c", command], {
-            cwd: workingDirectory,
-            doNotPipeOutput: true
-        });
+        try {
+            await loggingExeca(this.logger, "bash", ["-c", command], {
+                cwd: workingDirectory,
+                doNotPipeOutput: true
+            });
+        } catch (error) {
+            throw new CliError({
+                message: `Failed to replace placeholder version in generated files: ${extractErrorMessage(error)}`,
+                code: CliError.Code.UserError
+            });
+        }
 
         this.logger.debug("Placeholder version replaced successfully");
     }

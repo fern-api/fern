@@ -1,6 +1,6 @@
 import { docsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 
 import { writeFile } from "fs/promises";
@@ -331,11 +331,15 @@ export async function stitchGlobalTheme({
         if (res.status === 404) {
             taskContext.failAndThrow(
                 `Global theme "${themeName}" not found for org "${organization}". ` +
-                    `Upload it first with: fern beta docs theme upload --name ${themeName}`
+                    `Upload it first with: fern beta docs theme upload --name ${themeName}`,
+                undefined,
+                { code: CliError.Code.ConfigError }
             );
         }
         if (!res.ok) {
-            taskContext.failAndThrow(`Failed to fetch global theme "${themeName}": HTTP ${res.status}`);
+            taskContext.failAndThrow(`Failed to fetch global theme "${themeName}": HTTP ${res.status}`, undefined, {
+                code: CliError.Code.ConfigError
+            });
         }
 
         let parsed: unknown;
@@ -344,7 +348,9 @@ export async function stitchGlobalTheme({
         } catch {
             taskContext.failAndThrow(
                 `Failed to fetch global theme "${themeName}": unexpected response from server` +
-                    (rawText.length > 0 ? ` — ${rawText.slice(0, 200)}` : " (empty body)")
+                    (rawText.length > 0 ? ` — ${rawText.slice(0, 200)}` : " (empty body)"),
+                undefined,
+                { code: CliError.Code.NetworkError }
             );
         }
 
@@ -357,23 +363,33 @@ export async function stitchGlobalTheme({
             if (body.error.code === "NOT_FOUND") {
                 taskContext.failAndThrow(
                     `Global theme "${themeName}" not found for org "${organization}". ` +
-                        `Upload it first with: fern beta docs theme upload --name ${themeName}`
+                        `Upload it first with: fern beta docs theme upload --name ${themeName}`,
+                    undefined,
+                    { code: CliError.Code.ConfigError }
                 );
             }
             taskContext.failAndThrow(
-                `Failed to fetch global theme "${themeName}": ${body.error.message ?? body.error.code ?? "unknown error"}`
+                `Failed to fetch global theme "${themeName}": ${body.error.message ?? body.error.code ?? "unknown error"}`,
+                undefined,
+                { code: CliError.Code.ConfigError }
             );
         }
 
         if (body.config == null) {
-            taskContext.failAndThrow(`Failed to fetch global theme "${themeName}": response missing "config" field`);
+            taskContext.failAndThrow(
+                `Failed to fetch global theme "${themeName}": response missing "config" field`,
+                undefined,
+                { code: CliError.Code.NetworkError }
+            );
             return docsWorkspace; // unreachable — TS needs this for definite-assignment of themeConfig
         }
 
         themeConfig = body.config;
     } catch (err) {
         if (err instanceof Error && err.message.includes("fetch failed")) {
-            taskContext.failAndThrow(`Could not reach FDR at ${fdrOrigin} to fetch global theme "${themeName}"`);
+            taskContext.failAndThrow(`Could not reach FDR at ${fdrOrigin} to fetch global theme "${themeName}"`, err, {
+                code: CliError.Code.NetworkError
+            });
         }
         throw err;
     }
@@ -387,7 +403,9 @@ export async function stitchGlobalTheme({
         resolvedConfig = await resolveThemeFileUrls(themeConfig, tmpDirPath);
     } catch (err) {
         const detail = err instanceof Error ? `: ${err.message}` : "";
-        taskContext.failAndThrow(`Failed to download assets for global theme "${themeName}"${detail}`);
+        taskContext.failAndThrow(`Failed to download assets for global theme "${themeName}"${detail}`, err, {
+            code: CliError.Code.NetworkError
+        });
         return docsWorkspace; // unreachable — TS needs this for definite-assignment of resolvedConfig
     }
 

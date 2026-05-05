@@ -279,9 +279,15 @@ export async function loadMigrationModule(params: {
             return undefined;
         }
 
-        // Any other error indicates a problem loading migrations that should halt the upgrade
-        const userFriendlyError = new Error(
-            `Failed to load generator migrations for ${generatorName}.\n\n` +
+        if (error instanceof CliError) {
+            throw error;
+        }
+
+        // Any other error indicates a local/npm/cache problem loading migrations that should halt the upgrade.
+        const userFriendlyError = new CliError({
+            code: CliError.Code.EnvironmentError,
+            message:
+                `Failed to load generator migrations for ${generatorName}.\n\n` +
                 `Reason: ${errorMessage}\n\n` +
                 `This error occurred while trying to install the migration package (${MIGRATION_PACKAGE_NAME}). ` +
                 `Please check your internet connection and npm configuration, then try again.\n\n` +
@@ -289,7 +295,7 @@ export async function loadMigrationModule(params: {
                 `  1. Check if npm is working: npm --version\n` +
                 `  2. Clear the migration cache: rm -rf ~/.fern/migration-cache\n` +
                 `  3. Try the upgrade again: fern generator upgrade`
-        );
+        });
         throw userFriendlyError;
     }
 }
