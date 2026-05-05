@@ -186,6 +186,16 @@ export interface ReplayStepResult extends StepResult {
     patchesRepointed?: number;
     patchesContentRebased?: number;
     patchesKeptAsUserOwned?: number;
+    /** Patches we detected but explicitly skipped applying (binary file, base mismatch, file rename, etc.). */
+    patchesSkipped?: number;
+    /** Patches that applied to some files but conflicted on others. */
+    patchesPartiallyApplied?: number;
+    /** Patches that were conflicting in a prior generation and have now been resolved by the customer. */
+    patchesConflictResolved?: number;
+    /** Patches reverted via `fern replay forget` (or equivalent). */
+    patchesReverted?: number;
+    /** Patches whose stored content was refreshed to match the current generation (no semantic change). */
+    patchesRefreshed?: number;
     previousGenerationSha?: string;
     currentGenerationSha?: string;
     baseBranchHead?: string;

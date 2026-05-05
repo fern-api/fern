@@ -397,6 +397,9 @@ fixtures:
           union_naming: v1
         use_inheritance_for_extended_models: false
       outputFolder: union-naming-v1-wire-tests
+    - customConfig:
+        flatten_union_request_bodies: true
+      outputFolder: flatten-union-request-bodies
   websocket:
     - outputFolder: websocket-base
     - customConfig:

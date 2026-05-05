@@ -34,7 +34,9 @@ export class UserPosthogManager implements PosthogManager {
     }
 
     public async sendEvent(event: PosthogEvent): Promise<void> {
-        const userEmail = await this.getUserEmail();
+        // Resolve email + primary org in parallel — both are venus calls that
+        // happen at most once per CLI process (cached after first miss).
+        const [userEmail, orgId] = await Promise.all([this.getUserEmail(), this.getPrimaryOrgId()]);
         this.posthog.capture({
             distinctId: this.userId ?? (await this.getPersistedDistinctId()),
             event: "CLI",
@@ -43,7 +45,8 @@ export class UserPosthogManager implements PosthogManager {
                 ...event,
                 ...event.properties,
                 usingAccessToken: false,
-                ...(userEmail != null ? { userEmail } : {})
+                ...(userEmail != null ? { userEmail } : {}),
+                ...(orgId != null ? { org_id: orgId } : {})
             }
         });
     }
@@ -78,6 +81,44 @@ export class UserPosthogManager implements PosthogManager {
             // Silently fail - email is optional for analytics
         }
         this.userEmail = null;
+        return undefined;
+    }
+
+    /**
+     * Cached primary `OrganizationId` for the current user. `null` is the
+     * "tried and gave up" sentinel — distinct from `undefined` (not yet tried)
+     * so subsequent `sendEvent` calls don't repeatedly hit venus when the user
+     * has no orgs or the call failed.
+     *
+     * Picks the first org returned by `getOrgIdsFromToken`. Multi-org users
+     * appear under their first org for adoption metrics — accurate enough for
+     * dashboards, and matches autopilot's distinct-id pattern.
+     */
+    private orgId: string | undefined | null;
+    private async getPrimaryOrgId(): Promise<string | undefined> {
+        if (this.orgId === null) {
+            return undefined;
+        }
+        if (this.orgId != null) {
+            return this.orgId;
+        }
+        if (this.token == null) {
+            this.orgId = null;
+            return undefined;
+        }
+        try {
+            const response = await createVenusService({ token: this.token.value }).organization.getOrgIdsFromToken();
+            if (response.ok && response.body.length > 0) {
+                const first = response.body[0];
+                if (first != null) {
+                    this.orgId = first;
+                    return this.orgId;
+                }
+            }
+        } catch {
+            // Silently fail — org tagging is optional for analytics.
+        }
+        this.orgId = null;
         return undefined;
     }
 

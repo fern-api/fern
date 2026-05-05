@@ -250,6 +250,35 @@ export class DynamicTypeLiteralMapper {
         );
     }
 
+    public convertDiscriminatedUnionToFlatKwargs({
+        discriminatedUnion,
+        value
+    }: {
+        discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType;
+        value: unknown;
+    }): python.NamedValue[] | undefined {
+        const discriminatedUnionTypeInstance = this.context.resolveDiscriminatedUnionTypeInstance({
+            discriminatedUnion,
+            value
+        });
+        if (discriminatedUnionTypeInstance == null) {
+            return undefined;
+        }
+        const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
+        const unionProperties = this.convertDiscriminatedUnionProperties({
+            discriminatedUnionTypeInstance,
+            unionVariant
+        });
+        if (unionProperties == null) {
+            return undefined;
+        }
+        const discriminantEntry: python.NamedValue = {
+            name: this.context.getPropertyName(discriminatedUnion.discriminant.name),
+            value: python.TypeInstantiation.str(discriminatedUnionTypeInstance.discriminantValue.wireValue)
+        };
+        return [...unionProperties, discriminantEntry];
+    }
+
     private convertDiscriminatedUnionProperties({
         discriminatedUnionTypeInstance,
         unionVariant

@@ -217,7 +217,8 @@ async function createJob({
         // biome-ignore lint/suspicious/noExplicitAny: the error shape from the SDK is not well-typed
         const rawError = createResponse.error as any;
         if (rawError?.content?.reason === "status-code" && rawError.content.statusCode === 429) {
-            throw new TooManyRequestsError();
+            const retryAfter = extractRetryAfterSeconds(rawError);
+            throw new TooManyRequestsError(retryAfter);
         }
 
         // GithubAppNotInstalled is not in the SDK's error union for createJobV3, so
@@ -475,6 +476,17 @@ function extractGithubAppNotInstalledMessage(error: any): string | undefined {
         `The Fern GitHub App is not installed on ${repo}. ` +
         "Please install it (https://github.com/apps/fern-api) and try again."
     );
+}
+
+/**
+ * Extracts the retryAfter value (in seconds) from a 429 response body.
+ * Fiddle returns { body: { content: { retryAfter: <seconds> } } } inside
+ * the SDK's status-code error wrapper.
+ */
+// biome-ignore lint/suspicious/noExplicitAny: the error shape from the SDK is not well-typed
+function extractRetryAfterSeconds(rawError: any): number | undefined {
+    const retryAfter = rawError?.content?.body?.content?.retryAfter;
+    return typeof retryAfter === "number" && retryAfter > 0 ? retryAfter : undefined;
 }
 
 // Fiddle's ErrorBody serializes as { error: "<ErrorType>", content: <TypedBody> }.

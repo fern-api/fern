@@ -94,9 +94,10 @@ export async function executeAutomationsGenerate({
                         noReplay: false,
                         // Automation runs are unattended; transient 429s should be retried
                         // automatically rather than failing the run and asking a human to
-                        // re-trigger with a flag. The retry policy is bounded (3 attempts,
-                        // 2s→120s exponential backoff with jitter) so a real outage still
-                        // surfaces as a failure rather than a hang.
+                        // re-trigger with a flag. The retry policy is bounded (5 attempts,
+                        // 2s→120s exponential backoff with jitter, respecting server
+                        // retryAfter hints) so a real outage still surfaces as a failure
+                        // rather than a hang.
                         retryRateLimited: true,
                         requireEnvVars: false,
                         automationMode: true,

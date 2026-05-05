@@ -47,6 +47,8 @@ export async function runRemoteGenerationForAPIWorkspace({
     automationMode,
     autoMerge,
     skipIfNoDiff,
+    noReplay,
+    disableTelemetry,
     automation,
     occurrenceTracker,
     loginCommand
@@ -83,6 +85,10 @@ export async function runRemoteGenerationForAPIWorkspace({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    /** `--no-replay` CLI flag. Cloud doesn't honor it yet (FER-10343), plumbed for telemetry parity. */
+    noReplay?: boolean;
+    /** Suppresses replay PostHog event when true. Honors FERN_DISABLE_TELEMETRY. */
+    disableTelemetry?: boolean;
     /**
      * When provided, per-generator failures are captured via {@link AutomationRunOptions.recorder}
      * and siblings continue running instead of aborting the group. When absent, a single failure
@@ -150,6 +156,8 @@ export async function runRemoteGenerationForAPIWorkspace({
                     automationMode,
                     autoMerge,
                     skipIfNoDiff,
+                    noReplay,
+                    disableTelemetry,
                     automation,
                     generatorsYmlAbsolutePath,
                     occurrenceTracker: effectiveOccurrenceTracker,
@@ -204,6 +212,8 @@ async function generateOne({
     automationMode,
     autoMerge,
     skipIfNoDiff,
+    noReplay,
+    disableTelemetry,
     automation,
     generatorsYmlAbsolutePath,
     occurrenceTracker,
@@ -236,6 +246,8 @@ async function generateOne({
     automationMode: boolean | undefined;
     autoMerge: boolean | undefined;
     skipIfNoDiff: boolean | undefined;
+    noReplay: boolean | undefined;
+    disableTelemetry: boolean | undefined;
     automation: AutomationRunOptions | undefined;
     generatorsYmlAbsolutePath: AbsoluteFilePath | undefined;
     occurrenceTracker: GeneratorOccurrenceTracker;
@@ -320,6 +332,8 @@ async function generateOne({
             automationMode,
             autoMerge,
             skipIfNoDiff,
+            noReplay,
+            disableTelemetry,
             loginCommand
         });
 

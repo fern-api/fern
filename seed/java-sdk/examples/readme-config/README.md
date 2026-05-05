@@ -80,6 +80,8 @@ package com.example.usage;
 
 import com.seed.examples.SeedExamplesClient;
 import com.seed.examples.resources.types.types.Movie;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Example {
@@ -92,16 +94,19 @@ public class Example {
         client.service().createMovie(
             Movie
                 .builder()
-                .id("id")
-                .title("title")
-                .from("from")
-                .rating(1.1)
-                .tag("tag")
+                .id("movie-c06a4ad7")
+                .title("The Boy and the Heron")
+                .from("Hayao Miyazaki")
+                .rating(8.0)
+                .tag("tag-wf9as23d")
                 .revenue(1000000L)
                 .metadata(
                     new HashMap<String, Object>() {{
-                        put("metadata", new 
-                        HashMap<String, Object>() {{put("key", "value");
+                        put("actors", new ArrayList<Object>(Arrays.asList("Christian Bale", "Florence Pugh", "Willem Dafoe")));
+                        put("releaseDate", "2023-12-08");
+                        put("ratings", new 
+                        HashMap<String, Object>() {{put("rottenTomatoes", 97);
+                            put("imdb", 7.6);
                         }});
                     }}
                 )

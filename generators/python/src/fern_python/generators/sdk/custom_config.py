@@ -83,6 +83,13 @@ class SDKCustomConfig(pydantic.BaseModel):
     # parameters in function signatures where possible.
     inline_request_params: bool = True
 
+    # When True, endpoints whose referenced request body is a discriminated
+    # union are inlined as flat kwargs (variants' fields merged, discriminator
+    # collapsed to a Literal of all values, conflicting field types unioned),
+    # rather than emitting a single `request: Union[...]` parameter. Off by
+    # default — existing SDK output is unchanged unless this is opted in.
+    flatten_union_request_bodies: bool = False
+
     # Wire test configuration
     wire_tests: Optional[WireTestsConfig] = None
 

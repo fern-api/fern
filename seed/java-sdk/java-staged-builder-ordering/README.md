@@ -67,9 +67,9 @@ public class Example {
         client.service().createSimple(
             SimpleStaged
                 .builder()
-                .first("first")
-                .second("second")
-                .third("third")
+                .first("a")
+                .second("b")
+                .third("c")
                 .build()
         );
     }

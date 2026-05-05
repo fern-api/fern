@@ -4449,12 +4449,6 @@ importers:
       '@sentry/node':
         specifier: ^10.45.0
         version: 10.49.0
-      '@types/cli-progress':
-        specifier: 'catalog:'
-        version: 3.11.6
-      '@types/is-ci':
-        specifier: 'catalog:'
-        version: 3.0.4
       '@types/js-yaml':
         specifier: 'catalog:'
         version: 4.0.9
@@ -4494,9 +4488,6 @@ importers:
       chalk:
         specifier: 'catalog:'
         version: 5.6.2
-      cli-progress:
-        specifier: 'catalog:'
-        version: 3.12.0
       get-port:
         specifier: ^7.1.0
         version: 7.2.0
@@ -4509,9 +4500,6 @@ importers:
       immer:
         specifier: ^10.1.1
         version: 10.2.0
-      is-ci:
-        specifier: 'catalog:'
-        version: 3.0.1
       js-yaml:
         specifier: 'catalog:'
         version: 4.1.1
@@ -5827,9 +5815,6 @@ importers:
       '@types/url-join':
         specifier: 4.0.1
         version: 4.0.1
-      '@types/uuid':
-        specifier: ^9.0.8
-        version: 9.0.8
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
@@ -5839,9 +5824,6 @@ importers:
       url-join:
         specifier: ^4.0.1
         version: 4.0.1
-      uuid:
-        specifier: 'catalog:'
-        version: 14.0.0
       vitest:
         specifier: 'catalog:'
         version: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@22.19.17)(@vitest/coverage-v8@4.1.4)(vite@7.3.2(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
@@ -6248,6 +6230,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../../commons/fs-utils
+      '@fern-api/generator-cli':
+        specifier: workspace:*
+        version: link:../../../../generator-cli
       '@fern-api/ir-generator':
         specifier: workspace:*
         version: link:../../ir-generator

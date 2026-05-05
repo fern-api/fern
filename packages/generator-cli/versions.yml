@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Share `buildReplayTelemetryProps` and propagate five additional `ReplayReport` counters through `ReplayStep`.
+      type: feat
+  createdAt: "2026-05-05"
+  version: 0.9.23
+
+- changelogEntry:
+    - summary: |
         Bump `@fern-api/replay` from 0.14.0 to 0.14.1. Picks up fix for
         consolidating duplicate-content patches to prevent next-regen
         corruption.
