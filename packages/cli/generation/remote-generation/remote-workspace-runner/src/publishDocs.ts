@@ -278,23 +278,20 @@ export async function publishDocs({
             workspace,
             graphqlOperations,
             graphqlTypes,
-            precomputedApiDefinition,
             trackAsBaseApi = true
         }: RegisterApiDefinitionOptions): Promise<string> => {
             const apiId = apiName ?? getOriginalName(ir.apiName);
             // Use apiName from docs.yml (folder name) as the API identifier for FDR.
             // This ensures users can reference APIs by their folder name in docs components.
-            let apiDefinition =
-                precomputedApiDefinition ??
-                convertIrToFdrApi({
-                    ir,
-                    snippetsConfig,
-                    playgroundConfig,
-                    graphqlOperations,
-                    graphqlTypes,
-                    context,
-                    apiNameOverride: apiName
-                });
+            let apiDefinition = convertIrToFdrApi({
+                ir,
+                snippetsConfig,
+                playgroundConfig,
+                graphqlOperations,
+                graphqlTypes,
+                context,
+                apiNameOverride: apiName
+            });
 
             const aiEnhancerConfig = getAIEnhancerConfig(
                 withAiExamples,

@@ -4,9 +4,8 @@ import { replaceEnvVariables } from "@fern-api/core-utils";
 import { APIV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import type { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import type { HttpPath, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { convertIrToFdrApi } from "@fern-api/register";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import {
     DocsWorkspace,
@@ -23,7 +22,6 @@ export type RegisterApiDefinitionOptions = {
     workspace?: FernWorkspace;
     graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
     graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
-    precomputedApiDefinition?: ReturnType<typeof convertIrToFdrApi>;
     trackAsBaseApi?: boolean;
 };
 
@@ -63,9 +61,23 @@ export async function registerTranslatedApiOverrides({
         return translatedApiDefinitionIdsByLocale;
     }
 
-    for (const locale of locales) {
-        const apiIdOverrides = new Map<string, string>();
-        for (const [apiName, baseApiDefinitionId] of registeredApiIdsByName.entries()) {
+    type RegistrationResult = {
+        locale: string;
+        baseApiDefinitionId: string;
+        translatedApiDefinitionId: string;
+        navigationTitleOverrides: ApiNavigationTitleOverrides | undefined;
+    };
+
+    const workItems = locales.flatMap((locale) =>
+        Array.from(registeredApiIdsByName.entries()).map(([apiName, baseApiDefinitionId]) => ({
+            locale,
+            apiName,
+            baseApiDefinitionId
+        }))
+    );
+
+    const results = await Promise.all(
+        workItems.map(async ({ locale, apiName, baseApiDefinitionId }): Promise<RegistrationResult | undefined> => {
             const translatedWorkspacePath = await getTranslatedApiWorkspacePath({
                 docsWorkspace,
                 locale,
@@ -73,7 +85,7 @@ export async function registerTranslatedApiOverrides({
                 allowDefaultApiOverride: registeredApiIdsByName.size === 1
             });
             if (translatedWorkspacePath == null) {
-                continue;
+                return undefined;
             }
 
             context.logger.info(`Registering translated API "${apiName}" for locale "${locale}"...`);
@@ -93,15 +105,7 @@ export async function registerTranslatedApiOverrides({
                 locale,
                 context
             });
-            const precomputedApiDefinition = addTranslatedApiNavigationTitleOverrides({
-                translatedApiNavigationTitleOverridesByLocale,
-                locale,
-                baseApiDefinitionId,
-                ir,
-                apiName,
-                baseConfig,
-                context
-            });
+            const navigationTitleOverrides = getApiNavigationTitleOverrides(ir);
             const translatedApiDefinitionId = await registerApiDefinition({
                 ir,
                 apiName,
@@ -109,18 +113,37 @@ export async function registerTranslatedApiOverrides({
                 playgroundConfig: baseConfig?.playgroundConfig,
                 graphqlOperations: baseConfig?.graphqlOperations,
                 graphqlTypes: baseConfig?.graphqlTypes,
-                precomputedApiDefinition,
                 workspace,
                 trackAsBaseApi: false
             });
-            apiIdOverrides.set(baseApiDefinitionId, translatedApiDefinitionId);
             context.logger.debug(
                 `Registered translated API "${apiName}" for locale "${locale}": ${translatedApiDefinitionId}`
             );
-        }
+            return {
+                locale,
+                baseApiDefinitionId,
+                translatedApiDefinitionId,
+                navigationTitleOverrides:
+                    navigationTitleOverrides.endpointTitlesById.size > 0 ? navigationTitleOverrides : undefined
+            };
+        })
+    );
 
-        if (apiIdOverrides.size > 0) {
-            translatedApiDefinitionIdsByLocale.set(locale, apiIdOverrides);
+    // Aggregate results sequentially to avoid concurrent writes to the shared maps.
+    for (const result of results) {
+        if (result == null) {
+            continue;
+        }
+        const apiIdOverrides = translatedApiDefinitionIdsByLocale.get(result.locale) ?? new Map<string, string>();
+        apiIdOverrides.set(result.baseApiDefinitionId, result.translatedApiDefinitionId);
+        translatedApiDefinitionIdsByLocale.set(result.locale, apiIdOverrides);
+
+        if (result.navigationTitleOverrides != null && translatedApiNavigationTitleOverridesByLocale != null) {
+            const localeOverrides =
+                translatedApiNavigationTitleOverridesByLocale.get(result.locale) ??
+                new Map<string, ApiNavigationTitleOverrides>();
+            localeOverrides.set(result.baseApiDefinitionId, result.navigationTitleOverrides);
+            translatedApiNavigationTitleOverridesByLocale.set(result.locale, localeOverrides);
         }
     }
 
@@ -241,8 +264,12 @@ async function loadTranslatedApiWorkspace({
                 }
             );
         } catch (error) {
+            context.logger.warn(
+                `Could not convert translated API workspace for "${apiName}" (locale "${locale}") to a Fern workspace; dynamic snippets will be unavailable for this translation: ${String(error)}`
+            );
             context.logger.debug(
-                `Could not load translated workspace for ${locale}/${apiName}: ${String(error)}. Dynamic snippets may be unavailable.`
+                `toFernWorkspace error for translated workspace ${locale}/${apiName}:`,
+                error instanceof Error ? error.stack ?? error.message : String(error)
             );
         }
         return { ir, workspace: fernWorkspace };
@@ -364,73 +391,22 @@ export function getMissingEndpointKeys({
     return baseEndpointKeys.filter((endpointKey) => !translatedEndpointKeySet.has(endpointKey));
 }
 
-function addTranslatedApiNavigationTitleOverrides({
-    translatedApiNavigationTitleOverridesByLocale,
-    locale,
-    baseApiDefinitionId,
-    ir,
-    apiName,
-    baseConfig,
-    context
-}: {
-    translatedApiNavigationTitleOverridesByLocale: TranslatedApiNavigationTitleOverridesByLocale | undefined;
-    locale: string;
-    baseApiDefinitionId: string;
-    ir: IntermediateRepresentation;
-    apiName: string;
-    baseConfig: RegisteredApiConfig | undefined;
-    context: TaskContext;
-}): ReturnType<typeof convertIrToFdrApi> | undefined {
-    if (translatedApiNavigationTitleOverridesByLocale == null) {
-        return undefined;
-    }
-    const apiDefinition = convertIrToFdrApi({
-        ir,
-        snippetsConfig: baseConfig?.snippetsConfig ?? {},
-        playgroundConfig: baseConfig?.playgroundConfig,
-        graphqlOperations: baseConfig?.graphqlOperations,
-        graphqlTypes: baseConfig?.graphqlTypes,
-        context,
-        apiNameOverride: apiName
-    });
-    const titleOverrides = getApiNavigationTitleOverrides(apiDefinition);
-    if (titleOverrides.endpointTitlesById.size === 0) {
-        return apiDefinition;
-    }
-    const localeOverrides = translatedApiNavigationTitleOverridesByLocale.get(locale) ?? new Map();
-    localeOverrides.set(baseApiDefinitionId, titleOverrides);
-    translatedApiNavigationTitleOverridesByLocale.set(locale, localeOverrides);
-    return apiDefinition;
-}
-
-function getApiNavigationTitleOverrides(
-    apiDefinition: ReturnType<typeof convertIrToFdrApi>
-): ApiNavigationTitleOverrides {
+// Collects translated endpoint titles keyed by the IR endpoint id. Only endpoints whose
+// translated spec actually provided a title (i.e. an OpenAPI summary / Fern display-name)
+// are included — falling back to the FDR endpoint name would re-introduce the auto-generated
+// English `startCase(operationId)` and clobber any custom layout titles in the translated locale.
+// The IR endpoint id matches the FDR `originalEndpointId`, which is what FernNavigation uses
+// when building endpoint nav ids for IR-derived APIs.
+function getApiNavigationTitleOverrides(ir: IntermediateRepresentation): ApiNavigationTitleOverrides {
     const endpointTitlesById = new Map<string, string>();
-    addEndpointNavigationTitleOverrides(endpointTitlesById, apiDefinition.rootPackage, ROOT_PACKAGE_ID);
-    for (const [subpackageId, subpackage] of Object.entries(apiDefinition.subpackages)) {
-        addEndpointNavigationTitleOverrides(endpointTitlesById, subpackage, subpackageId);
-    }
-    return { endpointTitlesById };
-}
-
-function addEndpointNavigationTitleOverrides(
-    endpointTitlesById: Map<string, string>,
-    pkg: ReturnType<typeof convertIrToFdrApi>["rootPackage"],
-    subpackageId: string
-): void {
-    for (const endpoint of pkg.endpoints) {
-        if (endpoint.name != null) {
-            endpointTitlesById.set(getEndpointNavigationId(endpoint, subpackageId), endpoint.name);
+    for (const service of Object.values(ir.services)) {
+        for (const endpoint of service.endpoints) {
+            if (endpoint.displayName != null) {
+                endpointTitlesById.set(endpoint.id, endpoint.displayName);
+            }
         }
     }
-}
-
-function getEndpointNavigationId(
-    endpoint: ReturnType<typeof convertIrToFdrApi>["rootPackage"]["endpoints"][number],
-    subpackageId: string
-): string {
-    return endpoint.originalEndpointId ?? `${subpackageId}.${endpoint.id}`;
+    return { endpointTitlesById };
 }
 
 function warnIfTranslatedApiIsMissingEndpoints({
@@ -459,11 +435,6 @@ function warnIfTranslatedApiIsMissingEndpoints({
     );
 }
 
-function stringifyHttpPath(path: IntermediateRepresentation["basePath"]): string {
-    if (path == null) {
-        return "";
-    }
+function stringifyHttpPath(path: HttpPath): string {
     return `${path.head}${path.parts.map((part) => `{${part.pathParameter}}${part.tail}`).join("")}`;
 }
-
-const ROOT_PACKAGE_ID = "__package__";
