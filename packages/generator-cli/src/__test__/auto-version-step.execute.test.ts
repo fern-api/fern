@@ -12,13 +12,16 @@ const mockConsolidateChangelog = vi.fn();
 const mockConfigureBamlClient = vi.fn(() => ({}));
 
 vi.mock("@fern-api/cli-ai", () => ({
-    b: {
-        withOptions: () => ({
-            AnalyzeSdkDiff: mockAnalyzeSdkDiff,
-            ConsolidateChangelog: mockConsolidateChangelog
-        })
-    },
-    configureBamlClient: mockConfigureBamlClient,
+    loadBamlDependencies: vi.fn().mockResolvedValue({
+        BamlClient: {
+            withOptions: () => ({
+                AnalyzeSdkDiff: mockAnalyzeSdkDiff,
+                ConsolidateChangelog: mockConsolidateChangelog
+            })
+        },
+        configureBamlClient: mockConfigureBamlClient,
+        ClientRegistry: class ClientRegistry {}
+    }),
     VersionBump: { MAJOR: "MAJOR", MINOR: "MINOR", PATCH: "PATCH", NO_CHANGE: "NO_CHANGE" }
 }));
 
