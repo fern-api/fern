@@ -1,0 +1,4 @@
+- summary: |
+    Remove the `fern write-translation` command. Translation directories under `translations/<lang>/`
+    are still respected when loading docs, but the CLI no longer ships a command to generate them.
+  type: internal

@@ -2139,7 +2139,7 @@ async function loadTranslationNavigationOverlays({
  *
  * Prefers `translations/<lang>/docs.yml` (the canonical location) and falls
  * back to `translations/<lang>/fern/docs.yml` for backwards compatibility with
- * translation directories produced by older versions of `fern write-translation`.
+ * translation directories produced by older versions of Fern's translation tooling.
  *
  * Returns `undefined` if neither path exists.
  */
