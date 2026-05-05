@@ -483,12 +483,17 @@ export async function runLocalGenerationForWorkspace({
                                     previewMode: selfhostedGithubConfig.previewMode === true,
                                     durationMs: pipelineDurationMs
                                 });
+                                // `surface: "cli"` mirrors the cloud emitter's `surface: "fiddle"`
+                                // so dashboards can split between CLI-local and Fiddle paths
+                                // without coalescing NULLs. Set as a final overlay so the local
+                                // helper itself stays surface-agnostic.
+                                const propsWithSurface = { ...replayTelemetryProps, surface: "cli" as const };
                                 interactiveTaskContext.instrumentPostHogEvent({
                                     command: "replay",
-                                    properties: replayTelemetryProps
+                                    properties: propsWithSurface
                                 });
                                 interactiveTaskContext.logger.debug(
-                                    `[telemetry] replay event sent: ${JSON.stringify(replayTelemetryProps)}`
+                                    `[telemetry] replay event sent: ${JSON.stringify(propsWithSurface)}`
                                 );
                             } catch (error) {
                                 interactiveTaskContext.logger.debug(

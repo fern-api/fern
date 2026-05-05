@@ -99,6 +99,15 @@ export class RemoteTaskHandler {
     private lengthOfLastLogs = 0;
     private cachedReplayResult: ReplayStepResult | undefined;
     private replayEventEmitted = false;
+    /**
+     * Wall-clock ms at handler construction — used as a proxy for cloud-job
+     * duration in the `replay` PostHog event. Fiddle doesn't echo wall-clock
+     * structurally, so we measure CLI-observed time from "job dispatched"
+     * (right after `createJobV3` returns) to "finished status observed". This
+     * over-counts vs. the replay step itself by polling overhead and Fiddle
+     * queue wait, but is the best signal available without a Fiddle change.
+     */
+    private readonly taskStartedAtMs: number = Date.now();
 
     constructor({
         interactiveTaskContext,
@@ -299,11 +308,13 @@ export class RemoteTaskHandler {
                 noReplayFlag: this.telemetryContext.noReplayFlag,
                 githubMode: extractGithubModeFromGenerator(this.generatorInvocation),
                 previewMode: this.absolutePathToPreview != null,
-                // Cloud runs don't have an in-process duration we can measure here —
-                // Fiddle's task wall-clock isn't echoed structurally. Send 0 rather
-                // than fabricate a number; dashboards should split duration panels
-                // by `surface` and exclude `fiddle`.
-                durationMs: 0
+                // CLI-observed cloud-job duration: wall-clock from handler
+                // construction (right after `createJobV3` returns) to first
+                // `finished` status observed. Includes Fiddle queue wait,
+                // generator compute, replay+github pipeline, and poll overhead
+                // (~2s granularity). For replay-step-only duration, see G2 in
+                // the dashboard plan — would require structural change.
+                durationMs: Date.now() - this.taskStartedAtMs
             });
 
             this.context.instrumentPostHogEvent({
