@@ -5,12 +5,26 @@ import path from "path";
 import tsup from "tsup";
 import { fileURLToPath } from "url";
 import { promisify } from "util";
+import { parse as parseYaml } from "yaml";
 import packageJson from "./package.json" with { type: "json" };
 
 const execAsync = promisify(exec);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "../../..");
+
+/** Lazily loaded pnpm catalog map (package name → version range). */
+let _catalogCache = null;
+async function loadCatalog() {
+    if (_catalogCache) {
+        return _catalogCache;
+    }
+    const wsPath = path.join(REPO_ROOT, "pnpm-workspace.yaml");
+    const raw = await readFile(wsPath, "utf8");
+    const ws = parseYaml(raw);
+    _catalogCache = ws.catalog ?? {};
+    return _catalogCache;
+}
 
 /**
  * Rewrite every .map file in absOutDir so each entry in `sources` is a clean
@@ -57,6 +71,22 @@ function getDependencyVersion(packageName) {
         packageJson.devDependencies?.[packageName] ??
         packageJson.optionalDependencies?.[packageName]
     );
+}
+
+/**
+ * Resolve a version string, replacing the pnpm `catalog:` protocol with the
+ * actual version range from pnpm-workspace.yaml.
+ */
+async function resolveVersion(packageName, version) {
+    if (version === "catalog:" || version === "catalog:default") {
+        const catalog = await loadCatalog();
+        const resolved = catalog[packageName];
+        if (!resolved) {
+            throw new Error(`Could not resolve catalog version for ${packageName}`);
+        }
+        return resolved;
+    }
+    return version;
 }
 
 /**
@@ -146,7 +176,7 @@ export async function buildCli(config) {
     for (const dep of runtimeDependencies) {
         const version = getDependencyVersion(dep);
         if (version) {
-            dependencies[dep] = version;
+            dependencies[dep] = await resolveVersion(dep, version);
         }
     }
 
@@ -164,7 +194,7 @@ export async function buildCli(config) {
     for (const dep of optionalRuntimeDependencies) {
         const version = getDependencyVersion(dep);
         if (version) {
-            optionalDependencies[dep] = version;
+            optionalDependencies[dep] = await resolveVersion(dep, version);
         }
     }
 
