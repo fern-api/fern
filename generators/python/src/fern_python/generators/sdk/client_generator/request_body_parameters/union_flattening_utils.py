@@ -11,11 +11,11 @@ the generated JSON body).
 """
 
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Set
+from typing import Dict, List, Optional, Set, Union
 
 from ...context.sdk_generator_context import SdkGeneratorContext
 from fern_python.codegen import AST
-from fern_python.utils.name_resolver import get_name_from_wire_value, get_wire_value, resolve_name
+from fern_python.utils.name_resolver import get_wire_value, resolve_wire_name
 
 import fern.ir.resources as ir_types
 
@@ -25,12 +25,15 @@ class _AccumulatedField:
     """One synthesized field, tracked during the merge before being emitted."""
 
     name: str
-    inner_type_hints: List[AST.TypeHint] = field(default_factory=list)
-    inner_type_hint_keys: List[str] = field(default_factory=list)
+    # Dedups hints when the same IR type appears in multiple variants; dict
+    # keys preserve first-seen order so emission is stable across runs.
+    inner_type_hints: Dict[str, AST.TypeHint] = field(default_factory=dict)
     raw_type: Optional[ir_types.TypeReference] = None
+    # The key under which ``raw_type`` was first recorded — used to detect a
+    # type conflict from a later variant without re-serializing IR.
+    raw_type_key: Optional[str] = None
     raw_name: str = ""
     docs: Optional[str] = None
-    raw_type_dropped: bool = False
 
 
 def build_flattened_union_parameters(
@@ -93,43 +96,30 @@ def _accumulate(
     if existing is None:
         accumulator[wire] = _AccumulatedField(
             name=param_name,
-            inner_type_hints=[inner_hint],
-            inner_type_hint_keys=[inner_hint_key],
+            inner_type_hints={inner_hint_key: inner_hint},
             raw_type=raw_type,
+            raw_type_key=inner_hint_key if raw_type is not None else None,
             raw_name=wire,
             docs=docs,
         )
         return
 
-    if (
-        existing.raw_type is not None
-        and raw_type is not None
-        and not existing.raw_type_dropped
-        and _type_references_equal(existing.raw_type, raw_type)
-    ):
-        # Same wire field, same source type — first-write wins, no merge needed.
-        return
-
-    if inner_hint_key not in existing.inner_type_hint_keys:
-        existing.inner_type_hints.append(inner_hint)
-        existing.inner_type_hint_keys.append(inner_hint_key)
+    existing.inner_type_hints.setdefault(inner_hint_key, inner_hint)
 
     if (
         existing.raw_type is not None
         and raw_type is not None
-        and not _type_references_equal(existing.raw_type, raw_type)
+        and existing.raw_type_key != inner_hint_key
     ):
         # Conflicting source types — drop raw_type so the JSON-body emitter
         # falls back to plain interpolation rather than a per-type coercion.
         existing.raw_type = None
-        existing.raw_type_dropped = True
+        existing.raw_type_key = None
 
 
 def _emit(acc: _AccumulatedField) -> AST.NamedFunctionParameter:
-    if len(acc.inner_type_hints) == 1:
-        inner = acc.inner_type_hints[0]
-    else:
-        inner = AST.TypeHint.union(*acc.inner_type_hints)
+    hints = list(acc.inner_type_hints.values())
+    inner = hints[0] if len(hints) == 1 else AST.TypeHint.union(*hints)
     type_hint = inner if inner.is_optional else AST.TypeHint.optional(inner)
     return AST.NamedFunctionParameter(
         name=acc.name,
@@ -197,8 +187,8 @@ def _add_single_property(
     )
 
 
-def _python_name(wire_or_name, deconflict: Set[str]) -> str:  # type: ignore[no-untyped-def]
-    resolved = resolve_name(get_name_from_wire_value(wire_or_name)).snake_case.safe_name
+def _python_name(wire_or_name: Union[str, ir_types.NameAndWireValue], deconflict: Set[str]) -> str:
+    resolved = resolve_wire_name(wire_or_name).snake_case.safe_name
     if resolved in deconflict:
         return f"request_{resolved}"
     return resolved
@@ -211,7 +201,3 @@ def _build_literal_union_type_hint(values: List[str]) -> AST.TypeHint:
     if len(values) == 1:
         return AST.TypeHint.literal(AST.Expression(f'"{values[0]}"'))
     return AST.TypeHint.union(*[AST.TypeHint.literal(AST.Expression(f'"{v}"')) for v in values])
-
-
-def _type_references_equal(a: ir_types.TypeReference, b: ir_types.TypeReference) -> bool:
-    return a.json() == b.json()

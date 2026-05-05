@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional, Tuple, Union
 
 from ...context.sdk_generator_context import SdkGeneratorContext
 from ..constants import DEFAULT_BODY_PARAMETER_VALUE
@@ -25,8 +25,9 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
         self._endpoint = endpoint
         self._request_body = request_body
         self._context = context
-        self._type_id = self._get_type_id_from_type_reference(self._request_body.request_body_type)
-        self._is_union_request_body = self._type_id is not None and self._is_union_type(self._type_id)
+        resolved = self._resolve_type_reference(self._request_body.request_body_type)
+        self._type_id: Optional[ir_types.TypeId] = resolved[0] if resolved else None
+        self._is_union_request_body: bool = resolved[1] if resolved else False
 
         self.should_inline_request_parameters = (
             context.custom_config.inline_request_params and self._type_id is not None
@@ -34,40 +35,29 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
         self._are_any_properties_optional = self.should_inline_request_parameters
         self.parameter_name_rewrites: Dict[Union[str, ir_types.Name], str] = {}
 
-    def _get_type_id_from_type_reference(self, type_reference: ir_types.TypeReference) -> Optional[ir_types.TypeId]:
+    def _resolve_type_reference(
+        self, type_reference: ir_types.TypeReference
+    ) -> Optional[Tuple[ir_types.TypeId, bool]]:
+        """Resolve to ``(type_id, is_union)`` if the body inlines into kwargs, else ``None``.
+
+        Walks aliases and only reports a type_id for shapes we know how to inline:
+        ``object`` always, ``union`` only when ``flatten_union_request_bodies`` is on.
+        """
         return type_reference.visit(
             container=lambda _: None,
-            named=lambda t: self._get_type_id_from_type(t.type_id),
+            named=lambda t: self._resolve_type_id(t.type_id),
             primitive=lambda _: None,
             unknown=lambda: None,
         )
 
-    def _get_type_id_from_type(self, type_id: ir_types.TypeId) -> Optional[ir_types.TypeId]:
+    def _resolve_type_id(self, type_id: ir_types.TypeId) -> Optional[Tuple[ir_types.TypeId, bool]]:
         declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(type_id)
         return declaration.shape.visit(
-            alias=lambda atd: self._get_type_id_from_type_reference(atd.alias_of),
+            alias=lambda atd: self._resolve_type_reference(atd.alias_of),
             enum=lambda _: None,
-            object=lambda o: type_id,
+            object=lambda _: (type_id, False),
             undiscriminated_union=lambda _: None,
-            union=lambda _: type_id if self._context.custom_config.flatten_union_request_bodies else None,
-        )
-
-    def _is_union_type(self, type_id: ir_types.TypeId) -> bool:
-        declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(type_id)
-        return declaration.shape.visit(
-            alias=lambda atd: self._is_union_type_via_type_reference(atd.alias_of),
-            enum=lambda _: False,
-            object=lambda _: False,
-            undiscriminated_union=lambda _: False,
-            union=lambda _: True,
-        )
-
-    def _is_union_type_via_type_reference(self, type_reference: ir_types.TypeReference) -> bool:
-        return type_reference.visit(
-            container=lambda _: False,
-            named=lambda t: self._is_union_type(t.type_id),
-            primitive=lambda _: False,
-            unknown=lambda: False,
+            union=lambda _: (type_id, True) if self._context.custom_config.flatten_union_request_bodies else None,
         )
 
     def get_parameters(self, names_to_deconflict: Optional[List[str]] = None) -> List[AST.NamedFunctionParameter]:
