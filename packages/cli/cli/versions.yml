@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.13.2
+  changelogEntry:
+    - summary: |
+        Improve 429 rate-limit retry logic for remote generation: increase max retries
+        from 3 to 5, respect the server's retryAfter hint as a minimum delay, and widen
+        jitter (0.2 → 0.5) to reduce thundering-herd retries when many generators run
+        concurrently across multiple API groups.
+      type: fix
+  createdAt: "2026-05-05"
+  irVersion: 66
 - version: 5.13.1
   changelogEntry:
     - summary: |
