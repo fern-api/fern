@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    cli-v2: `fern check` now prints rich, Rust-style errors for MDX/Markdown
+    parse failures. Each error includes a stable error code (e.g. `E0301`),
+    a `--> path:line:col` location, two surrounding source lines with a
+    caret pointer, an inline `fix:` suggestion when one is available, and
+    a `see:` link to documentation for that error code.
+  type: feat

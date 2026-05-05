@@ -38,7 +38,8 @@ export class CheckCommand {
         const totalErrors =
             (apiCheckResult.invalidApis.size > 0 ? apiCheckResult.errorCount : 0) +
             sdkCheckResult.errorCount +
-            docsCheckResult.errorCount;
+            docsCheckResult.errorCount +
+            docsCheckResult.mdxParseErrors.length;
         const totalWarnings = apiCheckResult.warningCount + sdkCheckResult.warningCount + docsCheckResult.warningCount;
         const hasErrors = totalErrors > 0 || (args.strict && totalWarnings > 0);
 
@@ -91,14 +92,30 @@ export class CheckCommand {
         const docsCheckResult = await docsChecker.check({ workspace, strict: args.strict });
 
         if (!args.json) {
+            // When a page fails MDX parsing, downstream rules that depend on
+            // the parsed tree (e.g. `valid-markdown-links`) will surface a
+            // generic "failed to initialize" violation against the same file.
+            // Hide those duplicates — the rich MDX error already explains the
+            // root cause far better.
+            const filesWithMdxParseErrors = new Set(
+                docsCheckResult.mdxParseErrors.map((e) => e.displayRelativeFilepath)
+            );
+            const filteredDocsViolations = docsCheckResult.violations.filter(
+                (v) => !(filesWithMdxParseErrors.size > 0 && isMdxParseSymptom(v, filesWithMdxParseErrors))
+            );
+
             const violations: (
                 | ApiChecker.ResolvedViolation
                 | SdkChecker.ResolvedViolation
                 | DocsChecker.ResolvedViolation
-            )[] = [...apiCheckResult.violations, ...sdkCheckResult.violations, ...docsCheckResult.violations];
+            )[] = [...apiCheckResult.violations, ...sdkCheckResult.violations, ...filteredDocsViolations];
 
             if (violations.length > 0) {
                 this.displayViolations(violations);
+            }
+
+            if (docsCheckResult.mdxParseErrors.length > 0) {
+                this.displayMdxParseErrors(docsCheckResult.mdxParseErrors);
             }
         }
 
@@ -117,6 +134,14 @@ export class CheckCommand {
         for (const v of violations) {
             const color = v.severity === "warning" ? chalk.yellow : chalk.red;
             process.stderr.write(`${color(`${v.displayRelativeFilepath}:${v.line}:${v.column}: ${v.message}`)}\n`);
+        }
+    }
+
+    private displayMdxParseErrors(errors: DocsChecker.Result["mdxParseErrors"]): void {
+        for (const error of errors) {
+            // The rich, multi-line Rust-style render lives on `toString`.
+            // Surround each error with blank lines so they're visually distinct.
+            process.stderr.write(`\n${error.toString()}\n\n`);
         }
     }
 
@@ -144,8 +169,18 @@ export class CheckCommand {
             results.sdks = sdkCheckResult.violations.map((v) => toJsonViolation(v));
         }
 
-        if (docsCheckResult.violations.length > 0) {
-            results.docs = docsCheckResult.violations.map((v) => toJsonViolation(v));
+        if (docsCheckResult.violations.length > 0 || docsCheckResult.mdxParseErrors.length > 0) {
+            results.docs = [
+                ...docsCheckResult.violations.map((v) => toJsonViolation(v)),
+                ...docsCheckResult.mdxParseErrors.map((e) => ({
+                    severity: "error",
+                    rule: e.code.code,
+                    filepath: e.displayRelativeFilepath,
+                    ...(e.line != null ? { line: e.line } : {}),
+                    ...(e.column != null ? { column: e.column } : {}),
+                    message: `[${e.code.code}] ${e.code.title}: ${e.rawMessage}`
+                }))
+            ];
         }
 
         return {
@@ -164,6 +199,34 @@ export class CheckCommand {
             });
         }
     }
+}
+
+/**
+ * Returns true if a docs violation is a downstream symptom of an MDX parse
+ * failure that we have already surfaced via {@link MdxParseError}. We match
+ * on the well-known "Failed to parse markdown" substring that rules emit
+ * when their `markdownPage` visitor blows up, plus the page's basename.
+ */
+function isMdxParseSymptom(
+    violation: DocsChecker.ResolvedViolation,
+    filesWithMdxParseErrors: Set<string>
+): boolean {
+    if (!/failed to parse markdown|failed to initialize/i.test(violation.message)) {
+        return false;
+    }
+    for (const filepath of filesWithMdxParseErrors) {
+        if (violation.message.includes(filepath)) {
+            return true;
+        }
+        // Fall back to basename matching since `displayRelativeFilepath` is
+        // cwd-relative but rule violation messages typically print
+        // fern-folder-relative paths.
+        const basename = filepath.split("/").pop();
+        if (basename != null && violation.message.includes(basename)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 export function addCheckCommand(cli: Argv<GlobalArgs>): void {
