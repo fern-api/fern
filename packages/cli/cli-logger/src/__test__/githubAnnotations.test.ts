@@ -136,6 +136,15 @@ describe("renderGithubAnnotation", () => {
         expect(renderGithubAnnotation("error", "line one\nline two")).toBe("::error::line one%0Aline two\n");
     });
 
+    it("escapes a literal '%' in the body to '%25' before encoding newlines", () => {
+        // If we didn't escape `%` first, a body containing the literal text `%0A` (e.g. a URL-
+        // encoded string the user logged) would round-trip through the runner as a real newline
+        // and split the annotation visually. Escaping `%` first preserves the literal text.
+        expect(renderGithubAnnotation("error", "value%0Ainjected")).toBe("::error::value%250Ainjected\n");
+        // Real newlines still encode correctly after the % pre-escape.
+        expect(renderGithubAnnotation("error", "100% done\nthen failed")).toBe("::error::100%25 done%0Athen failed\n");
+    });
+
     it("trims trailing newlines from the body before encoding", () => {
         expect(renderGithubAnnotation("error", "boom\n\n")).toBe("::error::boom\n");
     });

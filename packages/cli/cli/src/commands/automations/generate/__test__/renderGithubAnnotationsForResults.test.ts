@@ -159,7 +159,7 @@ describe("renderGithubAnnotationsForResults", () => {
             buildResult({ generatorName: `gen-${i}`, errorMessage: `error ${i}` })
         );
         const out = renderGithubAnnotationsForResults(results);
-        expect(out.split("\n").filter((l) => l.startsWith("::error "))).toHaveLength(5);
+        expect(out.split("\n").filter((l) => l.startsWith("::error::") || l.startsWith("::error "))).toHaveLength(5);
         expect(out).not.toContain("::warning");
     });
 
@@ -170,7 +170,7 @@ describe("renderGithubAnnotationsForResults", () => {
             buildResult({ generatorName: `gen-${i}`, errorMessage: `error ${i}` })
         );
         const out = renderGithubAnnotationsForResults(results);
-        expect(out.split("\n").filter((l) => l.startsWith("::error "))).toHaveLength(10);
+        expect(out.split("\n").filter((l) => l.startsWith("::error::") || l.startsWith("::error "))).toHaveLength(10);
         expect(out).not.toContain("::warning");
     });
 
@@ -180,7 +180,7 @@ describe("renderGithubAnnotationsForResults", () => {
             buildResult({ generatorName: `gen-${i}`, errorMessage: `error ${i}` })
         );
         const out = renderGithubAnnotationsForResults(results);
-        expect(out.split("\n").filter((l) => l.startsWith("::error "))).toHaveLength(11);
+        expect(out.split("\n").filter((l) => l.startsWith("::error::") || l.startsWith("::error "))).toHaveLength(11);
         expect(out).toContain(
             "::warning title=11 generators failed (showing first 10)::1 additional generator failure was hidden by GitHub's per-step annotation cap. See the step summary table for the full list.\n"
         );
@@ -191,7 +191,7 @@ describe("renderGithubAnnotationsForResults", () => {
             buildResult({ generatorName: `gen-${i}`, errorMessage: `error ${i}` })
         );
         const out = renderGithubAnnotationsForResults(results);
-        expect(out.split("\n").filter((l) => l.startsWith("::error "))).toHaveLength(15);
+        expect(out.split("\n").filter((l) => l.startsWith("::error::") || l.startsWith("::error "))).toHaveLength(15);
         expect(out).toContain(
             "::warning title=15 generators failed (showing first 10)::5 additional generator failures were hidden by GitHub's per-step annotation cap. See the step summary table for the full list.\n"
         );
@@ -204,8 +204,11 @@ describe("renderGithubAnnotationsForResults", () => {
             buildResult({ generatorName: `gen-${i}`, errorMessage: `error ${i}` })
         );
         const out = renderGithubAnnotationsForResults(results);
-        const lastErrorIndex = out.lastIndexOf("::error ");
-        const warningIndex = out.indexOf("::warning ");
+        // Use a regex so the test matches both `::error::body` and `::error <props>::body` forms,
+        // and isn't brittle to whether annotations carry properties in the future.
+        const errorIndices = [...out.matchAll(/::error[: ]/g)].map((m) => m.index ?? -1);
+        const warningIndex = out.search(/::warning[: ]/);
+        const lastErrorIndex = errorIndices.length > 0 ? Math.max(...errorIndices) : -1;
         expect(warningIndex).toBeGreaterThan(lastErrorIndex);
     });
 });

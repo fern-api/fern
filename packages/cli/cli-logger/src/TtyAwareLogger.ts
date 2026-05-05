@@ -136,7 +136,7 @@ export class TtyAwareLogger {
             // otherwise have to scroll the raw log to find. Gated purely on `GITHUB_ACTIONS=true`
             // (not on `isTTY`) so it also works if someone forces the env var locally for testing.
             // Commands that emit their own structured annotations (e.g. `fern automations
-            // generate`) suppress this hook to avoid duplicates — see `setLoggerAnnotationsSuppressed`.
+            // generate`) suppress this hook to avoid duplicates — see `withSuppressedLoggerAnnotations`.
             if (emitAnnotations) {
                 const annotation = renderGithubAnnotationFromLog(log);
                 if (annotation != null) {

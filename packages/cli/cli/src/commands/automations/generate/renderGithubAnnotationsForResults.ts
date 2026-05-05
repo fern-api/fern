@@ -3,10 +3,10 @@ import { renderGithubAnnotation, shouldEmitGithubAnnotations } from "@fern-api/c
 import { GeneratorRunResult } from "./GeneratorRunResult.js";
 
 /**
- * GitHub Actions silently drops annotations once a step exceeds 10 of any given level (error,
- * warning, notice). When more than this many generators fail in one run, the overflow disappears
- * from the UI without any signal that it was truncated — a reviewer reading the PR sees ten red
- * markers and assumes that's all of them.
+ * GitHub Actions caps annotations at 10 per level per step (error and warning are independent
+ * caps, as is notice though we don't emit those). When more than 10 generators fail in one run
+ * the overflow is silently dropped — a reviewer reading the PR sees ten red markers and assumes
+ * that's all of them.
  *
  * We can't lift the cap (it's the runner's), but we can emit a single trailing `::warning::` that
  * tells the reader exactly how many failures didn't make it onto the file view, pointing them at

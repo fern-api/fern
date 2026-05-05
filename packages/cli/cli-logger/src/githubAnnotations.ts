@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { LogLevel } from "@fern-api/logger";
 
 import { Log } from "./Log.js";
@@ -49,7 +50,12 @@ export async function withSuppressedLoggerAnnotations<T>(fn: () => Promise<T>): 
     }
 }
 
-/** Internal hook for the logger to consult before emitting an annotation. Not exported as public API. */
+/**
+ * Internal hook for the logger to consult before emitting an annotation. Exported from this module
+ * so the logger and tests can read the suppression state, but intentionally **not** re-exported
+ * from the package index — outside callers should drive suppression via
+ * {@link withSuppressedLoggerAnnotations} instead of polling the flag.
+ */
 export function areLoggerAnnotationsSuppressed(): boolean {
     return loggerAnnotationsSuppressed;
 }
@@ -111,6 +117,8 @@ function logLevelToAnnotationLevel(level: LogLevel): GithubAnnotationLevel | und
         case LogLevel.Debug:
         case LogLevel.Trace:
             return undefined;
+        default:
+            assertNever(level);
     }
 }
 
@@ -127,12 +135,20 @@ function extractTitleFromPrefix(prefix: string): string | undefined {
 /**
  * Prepares an error/warn message for inclusion in a `::error::` / `::warning::` workflow command:
  * - Strips ANSI escapes (chalk colors) — they render as literal noise in GitHub's UI.
+ * - Escapes literal `%` to `%25` *first* so a body that already contains `%0A` (e.g. a logged
+ *   URL-encoded string) doesn't get decoded by the runner into an unintended newline. This
+ *   matches `@actions/core`'s `escapeData` and the GHA workflow command spec.
  * - Trims trailing newlines added by the logger.
  * - Encodes embedded newlines as `%0A` so a multi-line message becomes a single-line workflow
  *   command that GitHub renders as a multi-line annotation.
  */
 function sanitizeForAnnotationBody(content: string): string {
-    return stripAnsi(content).replace(/\r\n/g, "\n").replace(/\r/g, "").replace(/\n+$/g, "").replace(/\n/g, "%0A");
+    return stripAnsi(content)
+        .replace(/%/g, "%25")
+        .replace(/\r\n/g, "\n")
+        .replace(/\r/g, "")
+        .replace(/\n+$/g, "")
+        .replace(/\n/g, "%0A");
 }
 
 /**
@@ -156,8 +172,10 @@ function formatProperties(properties: GithubAnnotationProperties): string {
 }
 
 /**
- * Property values cannot contain raw `,`, `:`, `\r`, or `\n` — they'd break out of the property
- * list or the command itself. GHA's documented escapes use `%XX` for these.
+ * Property values cannot contain raw `%`, `,`, `:`, `\r`, or `\n` — `,` and `:` are property-list
+ * delimiters, `\r` / `\n` would terminate the workflow command, and `%` must be escaped first to
+ * keep a literal `%XX` in the input from round-tripping through the runner's percent-decoder as a
+ * different character. GHA's documented escape is `%XX` for all of these.
  */
 function escapeProperty(value: string): string {
     return stripAnsi(value)
