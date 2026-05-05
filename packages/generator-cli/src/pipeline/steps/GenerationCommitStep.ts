@@ -1,5 +1,5 @@
 import { execFileSync } from "child_process";
-import { ReplayPrepareError, replayPrepare } from "../../replay/replay-run";
+import { ReplayPrepareError, type ReplayPrepareState, replayPrepare } from "../../replay/replay-run";
 import type { PipelineLogger } from "../PipelineLogger";
 import type { GenerationCommitStepConfig, GenerationCommitStepResult, PipelineContext } from "../types";
 import { BaseStep } from "./BaseStep";
@@ -38,16 +38,23 @@ export class GenerationCommitStep extends BaseStep {
         // and create the [fern-generated] commit before throwing).
         const headBeforePrepare = tryRevParse(this.outputDir, "HEAD");
 
+        // Out-param so the bootstrapAttempted signal survives even when
+        // replayPrepare returns null (bootstrap couldn't anchor / threw).
+        const prepareState: ReplayPrepareState = { bootstrapAttempted: false };
+
         let prepared: Awaited<ReturnType<typeof replayPrepare>>;
         try {
-            prepared = await replayPrepare({
-                outputDir: this.outputDir,
-                cliVersion: this.cliVersion,
-                generatorVersions: this.generatorVersions,
-                generatorName: this.generatorName,
-                skipApplication: this.config.skipApplication,
-                logger: this.logger
-            });
+            prepared = await replayPrepare(
+                {
+                    outputDir: this.outputDir,
+                    cliVersion: this.cliVersion,
+                    generatorVersions: this.generatorVersions,
+                    generatorName: this.generatorName,
+                    skipApplication: this.config.skipApplication,
+                    logger: this.logger
+                },
+                prepareState
+            );
         } catch (error) {
             const reason = error instanceof ReplayPrepareError ? error.reason : String(error);
             // Best-effort rollback: prepare may have committed [fern-generated]
@@ -73,7 +80,8 @@ export class GenerationCommitStep extends BaseStep {
                 executed: true,
                 success: true,
                 errorMessage: reason,
-                preparedReplay: null
+                preparedReplay: null,
+                bootstrapAttempted: prepareState.bootstrapAttempted
             };
         }
 
@@ -81,7 +89,8 @@ export class GenerationCommitStep extends BaseStep {
             return {
                 executed: true,
                 success: true,
-                preparedReplay: null
+                preparedReplay: null,
+                bootstrapAttempted: prepareState.bootstrapAttempted
             };
         }
 
@@ -92,7 +101,8 @@ export class GenerationCommitStep extends BaseStep {
             previousGenerationSha: prepared.previousGenerationSha ?? undefined,
             currentGenerationSha: prepared.currentGenerationSha,
             baseBranchHead: prepared.baseBranchHead ?? undefined,
-            flow: prepared.flow
+            flow: prepared.flow,
+            bootstrapAttempted: prepareState.bootstrapAttempted
         };
     }
 }
