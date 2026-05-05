@@ -5,12 +5,14 @@ import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
+    type ApiNavigationTitleOverrides,
     applyTranslatedApiNavigationTitlesInObject,
     getMissingEndpointKeys,
     getNonDefaultTranslationLocales,
     getTranslatedApiWorkspacePath,
     registerTranslatedApiOverrides,
-    replaceApiDefinitionIdsInObject
+    replaceApiDefinitionIdsInObject,
+    type TranslatedApiNavigationTitleOverridesByLocale
 } from "../translatedApiOverrides.js";
 
 describe("translated API overrides", () => {
@@ -215,6 +217,117 @@ describe("translated API overrides", () => {
             snippetsConfig: {},
             trackAsBaseApi: false
         });
+    });
+
+    it("does not register navigation title overrides when translated endpoints have no summary", async () => {
+        const root = await mkdtemp(join(tmpdir(), "fern-translated-api-no-summary-"));
+        tmpDirs.push(root);
+
+        const translatedApi = join(root, "translations", "zh", "apis", "Plant Store API");
+        await mkdir(translatedApi, { recursive: true });
+        await writeFile(join(translatedApi, "generators.yml"), "api:\n  specs:\n    - openapi: openapi.yaml\n");
+        // Translated OpenAPI intentionally has no summary on the endpoint — the base
+        // navigation title should not be clobbered with an auto-generated English title.
+        await writeFile(
+            join(translatedApi, "openapi.yaml"),
+            [
+                "openapi: 3.1.0",
+                "info:",
+                "  title: Translated Plant Store API",
+                "  version: 1.0.0",
+                "paths:",
+                "  /plants:",
+                "    get:",
+                "      operationId: listPlants",
+                "      responses:",
+                "        '200':",
+                "          description: OK"
+            ].join("\n")
+        );
+
+        const translatedApiNavigationTitleOverridesByLocale: TranslatedApiNavigationTitleOverridesByLocale = new Map();
+        await registerTranslatedApiOverrides({
+            docsWorkspace: {
+                type: "docs",
+                workspaceName: undefined,
+                absoluteFilePath: AbsoluteFilePath.of(root),
+                absoluteFilepathToDocsConfig: AbsoluteFilePath.of(join(root, "docs.yml")),
+                config: {
+                    instances: [],
+                    navigation: [],
+                    translations: ["en", "zh"]
+                }
+            },
+            cliVersion: "*",
+            context: createMockTaskContext(),
+            registeredApiIdsByName: new Map([["Plant Store API", "base-api-definition-id"]]),
+            registeredApiConfigsByName: new Map([["Plant Store API", { snippetsConfig: {} }]]),
+            registerApiDefinition: async () => "translated-api-definition-id",
+            translatedApiNavigationTitleOverridesByLocale
+        });
+
+        expect(translatedApiNavigationTitleOverridesByLocale.get("zh")).toBeUndefined();
+    });
+
+    it("registers navigation title overrides only for translated endpoints that provided a summary", async () => {
+        const root = await mkdtemp(join(tmpdir(), "fern-translated-api-partial-summary-"));
+        tmpDirs.push(root);
+
+        const translatedApi = join(root, "translations", "zh", "apis", "Plant Store API");
+        await mkdir(translatedApi, { recursive: true });
+        await writeFile(join(translatedApi, "generators.yml"), "api:\n  specs:\n    - openapi: openapi.yaml\n");
+        // Mixed: listPlants has a summary, addPlant does not. Only listPlants
+        // should receive a title override.
+        await writeFile(
+            join(translatedApi, "openapi.yaml"),
+            [
+                "openapi: 3.1.0",
+                "info:",
+                "  title: Translated Plant Store API",
+                "  version: 1.0.0",
+                "paths:",
+                "  /plants:",
+                "    get:",
+                "      operationId: listPlants",
+                "      summary: 列出植物",
+                "      responses:",
+                "        '200':",
+                "          description: OK",
+                "    post:",
+                "      operationId: addPlant",
+                "      responses:",
+                "        '200':",
+                "          description: OK"
+            ].join("\n")
+        );
+
+        const translatedApiNavigationTitleOverridesByLocale: TranslatedApiNavigationTitleOverridesByLocale = new Map();
+        await registerTranslatedApiOverrides({
+            docsWorkspace: {
+                type: "docs",
+                workspaceName: undefined,
+                absoluteFilePath: AbsoluteFilePath.of(root),
+                absoluteFilepathToDocsConfig: AbsoluteFilePath.of(join(root, "docs.yml")),
+                config: {
+                    instances: [],
+                    navigation: [],
+                    translations: ["en", "zh"]
+                }
+            },
+            cliVersion: "*",
+            context: createMockTaskContext(),
+            registeredApiIdsByName: new Map([["Plant Store API", "base-api-definition-id"]]),
+            registeredApiConfigsByName: new Map([["Plant Store API", { snippetsConfig: {} }]]),
+            registerApiDefinition: async () => "translated-api-definition-id",
+            translatedApiNavigationTitleOverridesByLocale
+        });
+
+        const zhOverrides: ApiNavigationTitleOverrides | undefined = translatedApiNavigationTitleOverridesByLocale
+            .get("zh")
+            ?.get("base-api-definition-id");
+        expect(zhOverrides).toBeDefined();
+        const titles = Array.from(zhOverrides?.endpointTitlesById.values() ?? []);
+        expect(titles).toEqual(["列出植物"]);
     });
 
     it("warns when a translated OpenAPI workspace is missing default API endpoints", async () => {

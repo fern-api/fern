@@ -269,7 +269,7 @@ async function loadTranslatedApiWorkspace({
             );
             context.logger.debug(
                 `toFernWorkspace error for translated workspace ${locale}/${apiName}:`,
-                error instanceof Error ? error.stack ?? error.message : String(error)
+                error instanceof Error ? (error.stack ?? error.message) : String(error)
             );
         }
         return { ir, workspace: fernWorkspace };
