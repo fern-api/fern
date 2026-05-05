@@ -35,9 +35,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
         self._are_any_properties_optional = self.should_inline_request_parameters
         self.parameter_name_rewrites: Dict[Union[str, ir_types.Name], str] = {}
 
-    def _resolve_type_reference(
-        self, type_reference: ir_types.TypeReference
-    ) -> Optional[Tuple[ir_types.TypeId, bool]]:
+    def _resolve_type_reference(self, type_reference: ir_types.TypeReference) -> Optional[Tuple[ir_types.TypeId, bool]]:
         """Resolve to ``(type_id, is_union)`` if the body inlines into kwargs, else ``None``.
 
         Walks aliases and only reports a type_id for shapes we know how to inline:

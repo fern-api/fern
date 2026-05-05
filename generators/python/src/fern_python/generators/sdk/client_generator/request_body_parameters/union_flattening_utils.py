@@ -30,7 +30,7 @@ class _AccumulatedField:
     inner_type_hints: Dict[str, AST.TypeHint] = field(default_factory=dict)
     raw_type: Optional[ir_types.TypeReference] = None
     # The key under which ``raw_type`` was first recorded — used to detect a
-    # type conflict from a later variant without re-serializing IR.
+    # conflicting source from a later variant without re-serializing IR.
     raw_type_key: Optional[str] = None
     raw_name: str = ""
     docs: Optional[str] = None
@@ -106,11 +106,7 @@ def _accumulate(
 
     existing.inner_type_hints.setdefault(inner_hint_key, inner_hint)
 
-    if (
-        existing.raw_type is not None
-        and raw_type is not None
-        and existing.raw_type_key != inner_hint_key
-    ):
+    if existing.raw_type is not None and raw_type is not None and existing.raw_type_key != inner_hint_key:
         # Conflicting source types — drop raw_type so the JSON-body emitter
         # falls back to plain interpolation rather than a per-type coercion.
         existing.raw_type = None
