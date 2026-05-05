@@ -52,7 +52,11 @@ async function rewriteSourceMapSources(absOutDir) {
  * This ensures we don't miss runtime dependencies regardless of where they're declared.
  */
 function getDependencyVersion(packageName) {
-    return packageJson.dependencies?.[packageName] ?? packageJson.devDependencies?.[packageName] ?? packageJson.optionalDependencies?.[packageName];
+    return (
+        packageJson.dependencies?.[packageName] ??
+        packageJson.devDependencies?.[packageName] ??
+        packageJson.optionalDependencies?.[packageName]
+    );
 }
 
 /**
