@@ -175,9 +175,7 @@ async function createJob({
         publishMetadata: generatorInvocation.publishMetadata
     };
 
-    // Const-typed payload ducks the TS excess-property check; `replay` isn't on
-    // fiddle-sdk's CreateJobRequestV2 yet (FER-10343).
-    const createJobRequest = {
+    const createResponse = await remoteGenerationService.remoteGen.createJobV3({
         apiName: workspace.definition.rootApiFile.contents.name,
         version,
         organizationName: organization,
@@ -207,8 +205,7 @@ async function createJob({
         //   runId: process.env.FERN_RUN_ID
         // Fiddle will use these for separate PRs, automerge, run_id correlation,
         // and breaking change handling. (skipIfNoDiff is forwarded above — see fern-api/fiddle#708.)
-    };
-    const createResponse = await remoteGenerationService.remoteGen.createJobV3(createJobRequest);
+    });
 
     if (!createResponse.ok) {
         // Check for 429 Too Many Requests before processing the error through the visitor.
