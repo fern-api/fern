@@ -253,8 +253,8 @@ catalogs:
       specifier: ^5.0.0
       version: 5.0.0
     axios:
-      specifier: ^1.15.0
-      version: 1.15.0
+      specifier: ^1.15.1
+      version: 1.16.0
     boxen:
       specifier: ^7.1.1
       version: 7.1.1
@@ -4489,7 +4489,7 @@ importers:
         version: 17.0.35
       axios:
         specifier: 'catalog:'
-        version: 1.15.0
+        version: 1.16.0
       boxen:
         specifier: 'catalog:'
         version: 7.1.1
@@ -6286,7 +6286,7 @@ importers:
         version: 1.0.1
       axios:
         specifier: 'catalog:'
-        version: 1.15.0
+        version: 1.16.0
       chalk:
         specifier: 'catalog:'
         version: 5.6.2
@@ -6414,7 +6414,7 @@ importers:
         version: link:../task-context
       axios:
         specifier: 'catalog:'
-        version: 1.15.0
+        version: 1.16.0
       chalk:
         specifier: 'catalog:'
         version: 5.6.2
@@ -6516,7 +6516,7 @@ importers:
         version: link:../task-context
       axios:
         specifier: 'catalog:'
-        version: 1.15.0
+        version: 1.16.0
       boxen:
         specifier: 'catalog:'
         version: 7.1.1
@@ -7029,7 +7029,7 @@ importers:
         version: 9.0.8
       axios:
         specifier: 'catalog:'
-        version: 1.15.0
+        version: 1.16.0
       chalk:
         specifier: 'catalog:'
         version: 5.6.2
@@ -11257,8 +11257,8 @@ packages:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
 
-  axios@1.15.0:
-    resolution: {integrity: sha512-wWyJDlAatxk30ZJer+GeCWS209sA42X+N5jU2jy6oHTp7ufw8uzUTVFBX9+wTfAlhiJXGS0Bq7X6efruWjuK9Q==}
+  axios@1.16.0:
+    resolution: {integrity: sha512-6hp5CwvTPlN2A31g5dxnwAX0orzM7pmCRDLnZSX772mv8WDqICwFjowHuPs04Mc8deIld1+ejhtaMn5vp6b+1w==}
 
   b4a@1.8.0:
     resolution: {integrity: sha512-qRuSmNSkGQaHwNbM7J78Wwy+ghLEYF1zNrSeMxj4Kgw6y33O3mXcQ6Ie9fRvfU/YnxWkOchPXbaLb73TkIsfdg==}
@@ -18315,7 +18315,7 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.1.0
 
-  axios@1.15.0:
+  axios@1.16.0:
     dependencies:
       follow-redirects: 1.16.0
       form-data: 4.0.5
