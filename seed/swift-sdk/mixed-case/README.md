@@ -53,7 +53,7 @@ import MixedCase
 private func main() async throws {
     let client = MixedCaseClient()
 
-    _ = try await client.service.getResource(resourceId: "ResourceID")
+    _ = try await client.service.getResource(resourceId: "rsc-xyz")
 }
 
 try await main()

@@ -55,8 +55,7 @@ private func main() async throws {
     let client = ApiClient()
 
     _ = try await client.createTest(request: RootObject(
-        normalField: "normalField",
-        nullableField: "nullableField"
+
     ))
 }
 

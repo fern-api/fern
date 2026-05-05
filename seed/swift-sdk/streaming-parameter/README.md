@@ -55,8 +55,8 @@ private func main() async throws {
     let client = StreamingClient()
 
     _ = try await client.dummy.generate(request: .init(
-        stream: true,
-        numEvents: 1
+        stream: false,
+        numEvents: 5
     ))
 }
 
