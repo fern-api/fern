@@ -45,8 +45,10 @@ import { readFile } from "fs/promises";
 import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
+import { getDocsDeployMode } from "./docsDeployMode.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { measureImageSizes } from "./measureImageSizes.js";
+import { publishDocsViaLedger } from "./publishDocsLedger.js";
 import { asyncPool } from "./utils/asyncPool.js";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
@@ -201,6 +203,11 @@ export async function publishDocs({
     if (deployerAuthor?.email != null) {
         headers["X-Deployer-Author-Email"] = deployerAuthor.email;
     }
+    const deployMode = getDocsDeployMode();
+    if (deployMode !== "legacy") {
+        context.logger.info(`Docs deploy mode: ${deployMode}`);
+    }
+
     const fdr = createFdrService({
         token: token.value,
         ...(Object.keys(headers).length > 0 && { headers })
@@ -621,30 +628,60 @@ export async function publishDocs({
             `Memory after resolve: RSS=${(resolveMemory.rss / 1024 / 1024).toFixed(2)}MB, Heap=${(resolveMemory.heapUsed / 1024 / 1024).toFixed(2)}MB`
         );
 
-        if (docsRegistrationId == null) {
+        if (docsRegistrationId == null && deployMode !== "ledger") {
             doUnlock();
             return context.failAndThrow("Failed to publish docs.", "Docs registration ID is missing.", {
                 code: CliError.Code.InternalError
             });
         }
 
-        context.logger.info("Publishing docs to FDR...");
-        const publishStart = performance.now();
-        try {
-            await fdr.docs.v2.write.finishDocsRegister({
-                docsRegistrationId,
-                docsDefinition,
-                excludeApis,
-                ...(isBasepathAware && !preview && { basepathAware: true })
-            });
-        } catch (error) {
-            return context.failAndThrow("Failed to publish docs to " + domain, error, {
-                code: CliError.Code.NetworkError
-            });
+        // ── Legacy publish path ──────────────────────────────────────
+        if (deployMode !== "ledger") {
+            context.logger.info("Publishing docs to FDR...");
+            const publishStart = performance.now();
+            try {
+                await fdr.docs.v2.write.finishDocsRegister({
+                    docsRegistrationId: docsRegistrationId!,
+                    docsDefinition,
+                    excludeApis,
+                    ...(isBasepathAware && !preview && { basepathAware: true })
+                });
+            } catch (error) {
+                return context.failAndThrow("Failed to publish docs to " + domain, error, {
+                    code: CliError.Code.NetworkError
+                });
+            }
+            const publishTime = performance.now() - publishStart;
+            context.logger.debug(`Docs published to FDR in ${publishTime.toFixed(0)}ms`);
         }
 
-        const publishTime = performance.now() - publishStart;
-        context.logger.debug(`Docs published to FDR in ${publishTime.toFixed(0)}ms`);
+        // ── Ledger publish path (dual-write or ledger-only) ──────────
+        if (deployMode === "dual" || deployMode === "ledger") {
+            try {
+                const ledgerResult = await publishDocsViaLedger({
+                    docsDefinition,
+                    organization,
+                    domain,
+                    basepath: basePath,
+                    previewId,
+                    token: token.value,
+                    fdrOrigin,
+                    headers,
+                    context
+                });
+                context.logger.info(
+                    `[ledger] Deployment ${ledgerResult.reusedDeployment ? "reused" : "created"}: ${ledgerResult.deploymentId}`
+                );
+            } catch (error) {
+                if (deployMode === "ledger") {
+                    return context.failAndThrow("Failed to publish docs via ledger to " + domain, error, {
+                        code: CliError.Code.NetworkError
+                    });
+                }
+                // In dual-write mode, ledger failure is non-fatal — legacy already succeeded.
+                context.logger.warn(`[ledger] Dual-write failed (non-fatal): ${String(error)}`);
+            }
+        }
 
         // Register translated page content for each configured locale.
         // In preview mode, register translations against the preview URL (not the production domain)

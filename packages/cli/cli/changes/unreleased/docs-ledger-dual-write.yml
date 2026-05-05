@@ -1,0 +1,6 @@
+- summary: |
+    Add docs deployment ledger support with dual-write capability.
+    Set FERN_DOCS_DEPLOY_MODE=dual to enable writing to both the legacy
+    and new ledger backends. The new ledger path uses content-addressed
+    storage for incremental deploys.
+  type: feat
