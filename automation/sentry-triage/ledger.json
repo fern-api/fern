@@ -1,0 +1,954 @@
+{
+  "schemaVersion": 3,
+  "project": "buildwithfern/cli",
+  "updatedAt": "2026-05-04",
+  "issues": {
+    "CLI-2W": {
+      "title": "59:2: Unexpected character `!` before name",
+      "disposition": "shipped",
+      "rationale": "User-authored MDX/acorn parse error surfaced as InternalError; should be ParseError at parseImagePaths call sites.",
+      "fixSummary": "Wrap parseImagePaths in DocsDefinitionResolver and previewDocs with CliError(ParseError).",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15484",
+      "lastAnalyzed": "2026-04-28",
+      "problemSignature": "Docs or preview path: MDX/acorn parse error (often bad `!` or JSX) while resolving doc image paths; showed as InternalError."
+    },
+    "CLI-2V": {
+      "title": "MDX / docs image path parse failure",
+      "disposition": "duplicate",
+      "rationale": "Same fix narrative as CLI-2W; one PR covered both.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15484",
+      "lastAnalyzed": "2026-04-28",
+      "duplicateOf": "CLI-2W",
+      "problemSignature": "Docs or preview path: MDX/acorn parse error (often bad `!` or JSX) while resolving doc image paths; showed as InternalError."
+    },
+    "CLI-2X": {
+      "title": "Filesystem / errno false positive",
+      "disposition": "shipped",
+      "rationale": "User/env errno (e.g. ENOENT) misclassified as InternalError.",
+      "fixSummary": "ErrnoException mapping in resolveErrorCode; USER_ENVIRONMENT_ERRNOS / NETWORK_ERRNOS.",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "problemSignature": "Filesystem or syscall errno from user environment (e.g. missing file, permission) surfaced as InternalError instead of environment-style CLI error."
+    },
+    "CLI-1X": {
+      "title": "Filesystem / errno false positive",
+      "disposition": "duplicate",
+      "rationale": "Same fix narrative as CLI-2X; one PR covered both.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "duplicateOf": "CLI-2X",
+      "problemSignature": "Filesystem or syscall errno from user environment (e.g. missing file, permission) surfaced as InternalError instead of environment-style CLI error."
+    },
+    "CLI-2F": {
+      "title": "Filesystem / errno false positive",
+      "disposition": "duplicate",
+      "rationale": "Same fix narrative as CLI-2X; one PR covered both.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "duplicateOf": "CLI-2X",
+      "problemSignature": "Filesystem or syscall errno from user environment (e.g. missing file, permission) surfaced as InternalError instead of environment-style CLI error."
+    },
+    "CLI-1S": {
+      "title": "Filesystem / errno false positive",
+      "disposition": "duplicate",
+      "rationale": "Same fix narrative as CLI-2X; one PR covered both.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "duplicateOf": "CLI-2X",
+      "problemSignature": "Filesystem or syscall errno from user environment (e.g. missing file, permission) surfaced as InternalError instead of environment-style CLI error."
+    },
+    "CLI-2C": {
+      "title": "Filesystem / errno false positive",
+      "disposition": "duplicate",
+      "rationale": "Same fix narrative as CLI-2X; one PR covered both.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "duplicateOf": "CLI-2X",
+      "problemSignature": "Filesystem or syscall errno from user environment (e.g. missing file, permission) surfaced as InternalError instead of environment-style CLI error."
+    },
+    "CLI-1J": {
+      "title": "Filesystem / errno false positive",
+      "disposition": "duplicate",
+      "rationale": "Same fix narrative as CLI-2X; one PR covered both.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "duplicateOf": "CLI-2X",
+      "problemSignature": "Filesystem or syscall errno from user environment (e.g. missing file, permission) surfaced as InternalError instead of environment-style CLI error."
+    },
+    "CLI-1V": {
+      "title": "Filesystem / errno false positive",
+      "disposition": "duplicate",
+      "rationale": "Same fix narrative as CLI-2X; one PR covered both.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "duplicateOf": "CLI-2X",
+      "problemSignature": "Filesystem or syscall errno from user environment (e.g. missing file, permission) surfaced as InternalError instead of environment-style CLI error."
+    },
+    "CLI-1W": {
+      "title": "Filesystem / errno / EPIPE-style false positive",
+      "disposition": "shipped",
+      "rationale": "User/env or pipe closure; EPIPE listener on TtyAwareLogger plus errno mapping.",
+      "fixSummary": "PR 15283: process.stdout/stderr error listener + errno mapping.",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "problemSignature": "EPIPE or broken pipe when user pipes CLI stdout/stderr to tools like head/jq; errno-style noise reaching error reporter."
+    },
+    "CLI-2E": {
+      "title": "YAML parse in OpenAPI load",
+      "disposition": "shipped",
+      "rationale": "YAMLException from user spec misclassified as InternalError.",
+      "fixSummary": "Wrap yaml.load in loadOpenAPI; CliError(ParseError) with file/line/column.",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "problemSignature": "Invalid YAML while loading a user OpenAPI spec (yaml.load path); parser exception treated as InternalError."
+    },
+    "CLI-2A": {
+      "title": "YAML parse in OpenAPI load",
+      "disposition": "shipped",
+      "rationale": "Docs/workspace YAML parse failure was still able to bubble as InternalError from the docs.yml boundary.",
+      "fixSummary": "Wrap docs.yml yaml.load in loadRawDocsConfiguration as CliError(ParseError).",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-04-21",
+      "problemSignature": "Invalid YAML while loading a user OpenAPI spec (yaml.load path); parser exception treated as InternalError."
+    },
+    "CLI-24": {
+      "title": "YAML parse in OpenAPI load",
+      "disposition": "duplicate",
+      "rationale": "Same fix narrative as CLI-2E; one PR covered both.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "duplicateOf": "CLI-2E",
+      "problemSignature": "Invalid YAML while loading a user OpenAPI spec (yaml.load path); parser exception treated as InternalError."
+    },
+    "CLI-1F": {
+      "title": "YAML parse in OpenAPI load",
+      "disposition": "duplicate",
+      "rationale": "Same fix narrative as CLI-2E; one PR covered both.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "duplicateOf": "CLI-2E",
+      "problemSignature": "Invalid YAML while loading a user OpenAPI spec (yaml.load path); parser exception treated as InternalError."
+    },
+    "CLI-13": {
+      "title": "swagger2openapi conversion failure",
+      "disposition": "shipped",
+      "rationale": "User OpenAPI v2 spec conversion failure should be ParseError.",
+      "fixSummary": "convertOpenAPIV2ToV3 wraps swagger2openapi as CliError(ParseError).",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "problemSignature": "User OpenAPI v2 document fails swagger2openapi conversion to v3; conversion error treated as InternalError."
+    },
+    "CLI-10": {
+      "title": "Container aggregate / sdk generate",
+      "disposition": "shipped",
+      "rationale": "ContainerError + aggregate InternalError double-report; use TaskAbortSignal.",
+      "fixSummary": "ContainerError non-reportable; sdk generate uses TaskAbortSignal instead of aggregate CliError.",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "problemSignature": "sdk generate or docs publish with Docker/container tasks: task failures double-reported as aggregate InternalError / ContainerError noise."
+    },
+    "CLI-19": {
+      "title": "Container aggregate / docs publish",
+      "disposition": "duplicate",
+      "rationale": "Same fix narrative as CLI-10; one PR covered both.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "duplicateOf": "CLI-10",
+      "problemSignature": "sdk generate or docs publish with Docker/container tasks: task failures double-reported as aggregate InternalError / ContainerError noise."
+    },
+    "CLI-2G": {
+      "title": "Container / task failure reporting",
+      "disposition": "duplicate",
+      "rationale": "Same fix narrative as CLI-10; one PR covered both.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "duplicateOf": "CLI-10",
+      "problemSignature": "sdk generate or docs publish with Docker/container tasks: task failures double-reported as aggregate InternalError / ContainerError noise."
+    },
+    "CLI-26": {
+      "title": "Container / task failure reporting",
+      "disposition": "duplicate",
+      "rationale": "Same fix narrative as CLI-10; one PR covered both.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "duplicateOf": "CLI-10",
+      "problemSignature": "sdk generate or docs publish with Docker/container tasks: task failures double-reported as aggregate InternalError / ContainerError noise."
+    },
+    "CLI-20": {
+      "title": "Container / task failure reporting",
+      "disposition": "duplicate",
+      "rationale": "Same fix narrative as CLI-10; one PR covered both.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "duplicateOf": "CLI-10",
+      "problemSignature": "sdk generate or docs publish with Docker/container tasks: task failures double-reported as aggregate InternalError / ContainerError noise."
+    },
+    "CLI-11": {
+      "title": "Generator not found (generators.yml)",
+      "disposition": "shipped",
+      "rationale": "User references unknown generator image; should be ConfigError not InternalError.",
+      "fixSummary": "Upgrade helper reclassifies to ConfigError.",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "problemSignature": "generators.yml references a generator image or version that is not found in FDR/registry; surfaced as InternalError instead of config error."
+    },
+    "CLI-1H": {
+      "title": "Organization create validation / network",
+      "disposition": "shipped",
+      "rationale": "ValidationError/NetworkError passed explicitly instead of InternalError.",
+      "fixSummary": "createOrganizationIfDoesNotExist explicit codes.",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "problemSignature": "Organization create flow: validation or network failures bubbled up as InternalError instead of explicit validation/network CLI errors."
+    },
+    "CLI-J": {
+      "title": "Rerun CLI at version failure",
+      "disposition": "shipped",
+      "rationale": "Spurious InternalError on rerun failure; TaskAbortSignal.",
+      "fixSummary": "rerunFernCliAtVersion uses TaskAbortSignal.",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "problemSignature": "CLI rerun-at-version path failed and reported misleading InternalError instead of controlled task abort."
+    },
+    "CLI-2Z": {
+      "title": "Schema validation / minified class names",
+      "disposition": "shipped",
+      "rationale": "isSchemaValidationError could not match minified constructor names.",
+      "fixSummary": "Set this.name on JsonError, ParseError, GeneratorError constructors.",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "problemSignature": "Schema validation path: minified build broke constructor-name-based detection so parse/schema errors looked like InternalError."
+    },
+    "CLI-E": {
+      "title": "Schema validation / minified class names",
+      "disposition": "duplicate",
+      "rationale": "Same fix narrative as CLI-2Z; one PR covered both.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "duplicateOf": "CLI-2Z",
+      "problemSignature": "Schema validation path: minified build broke constructor-name-based detection so parse/schema errors looked like InternalError."
+    },
+    "CLI-2H": {
+      "title": "Local + GitHub project config resolution",
+      "disposition": "shipped",
+      "rationale": "User config / workspace path edge case misclassified as InternalError.",
+      "fixSummary": "Workspace / project config resolution and path handling (see PR #15283 changelog and follow-up #15484 if refined).",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-04-21",
+      "problemSignature": "Project load with local vs remote (e.g. GitHub) workspace or config paths: user path/config edge misclassified as InternalError."
+    },
+    "CLI-3Q": {
+      "title": "ENOENT loading docs page",
+      "disposition": "duplicate",
+      "rationale": "Same user/environment errno classification as CLI-2X; current code maps ENOENT to EnvironmentError.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2X",
+      "problemSignature": "Filesystem or syscall errno from user environment (e.g. missing file, permission) surfaced as InternalError instead of environment-style CLI error."
+    },
+    "CLI-3A": {
+      "title": "EINTR interrupted syscall in uv_cwd",
+      "disposition": "shipped",
+      "rationale": "EINTR is a clear errno-style environment signal, not a Fern product bug.",
+      "fixSummary": "Add EINTR to USER_ENVIRONMENT_ERRNOS so resolveErrorCode maps it to EnvironmentError.",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Filesystem or syscall errno from user environment (EINTR interrupted syscall) surfaced as InternalError instead of environment-style CLI error."
+    },
+    "CLI-H": {
+      "title": "ExitPromptError after SIGINT",
+      "disposition": "keep_sentry",
+      "rationale": "Prompt SIGINT is a user abort, but this path still needs prompt-boundary handling; do not suppress it centrally via resolveErrorCode.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until prompt boundary handles ExitPromptError",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Interactive prompt cancellation via SIGINT surfaced as Sentry InternalError instead of a non-reportable user abort."
+    },
+    "CLI-3P": {
+      "title": "Global theme fetch returned HTTP 403",
+      "disposition": "shipped",
+      "rationale": "Global theme lookup failures are auth/config/network conditions, not internal CLI defects.",
+      "fixSummary": "Pass ConfigError/NetworkError codes from stitchGlobalTheme failAndThrow sites.",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Docs global-theme fetch or asset download failure reported through failAndThrow without a non-reportable config/network code."
+    },
+    "CLI-31": {
+      "title": "Failed to parse version: 0.x",
+      "disposition": "shipped",
+      "rationale": "Invalid version strings should be reported with explicit VersionError codes at callers/boundaries, not central name-based classification.",
+      "fixSummary": "Wrap dependency CLI version parsing with VersionError; existing generator-version callers already wrap invalid versions explicitly.",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Invalid generator or CLI version string (e.g. 0.x, 1.x, *) reached Sentry as plain Error instead of VersionError."
+    },
+    "CLI-2P": {
+      "title": "Failed to parse version: 1.x",
+      "disposition": "duplicate",
+      "rationale": "Same invalid-version classification as CLI-31.",
+      "fixSummary": "—",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-31",
+      "problemSignature": "Invalid generator or CLI version string (e.g. 0.x, 1.x, *) reached Sentry as plain Error instead of VersionError."
+    },
+    "CLI-2B": {
+      "title": "Failed to compare versions: Failed to parse version: 0.x",
+      "disposition": "duplicate",
+      "rationale": "Same invalid-version classification as CLI-31.",
+      "fixSummary": "—",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-31",
+      "problemSignature": "Invalid generator or CLI version string (e.g. 0.x, 1.x, *) reached Sentry as plain Error instead of VersionError."
+    },
+    "CLI-1Z": {
+      "title": "Failed to parse version: *",
+      "disposition": "duplicate",
+      "rationale": "Same invalid-version classification as CLI-31.",
+      "fixSummary": "—",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-31",
+      "problemSignature": "Invalid generator or CLI version string (e.g. 0.x, 1.x, *) reached Sentry as plain Error instead of VersionError."
+    },
+    "CLI-14": {
+      "title": "Generator version incompatible with CLI v4",
+      "disposition": "duplicate",
+      "rationale": "Same version/config family as CLI-31; current migration code throws VersionError for this path.",
+      "fixSummary": "—",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-31",
+      "problemSignature": "Invalid or incompatible generator version reached Sentry instead of VersionError/config guidance."
+    },
+    "CLI-2M": {
+      "title": "listen EADDRINUSE :::3001",
+      "disposition": "duplicate",
+      "rationale": "EADDRINUSE is already covered by the errno environment mapping.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2X",
+      "problemSignature": "Filesystem or syscall errno from user environment (e.g. missing file, permission, port in use) surfaced as InternalError instead of environment-style CLI error."
+    },
+    "CLI-2S": {
+      "title": "listen EADDRINUSE :::3003",
+      "disposition": "duplicate",
+      "rationale": "EADDRINUSE is already covered by the errno environment mapping.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2X",
+      "problemSignature": "Filesystem or syscall errno from user environment (e.g. missing file, permission, port in use) surfaced as InternalError instead of environment-style CLI error."
+    },
+    "CLI-Z": {
+      "title": "ENOSPC no space left on device",
+      "disposition": "duplicate",
+      "rationale": "ENOSPC is already covered by the errno environment mapping.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2X",
+      "problemSignature": "Filesystem or syscall errno from user environment (e.g. missing file, permission, disk full) surfaced as InternalError instead of environment-style CLI error."
+    },
+    "CLI-3N": {
+      "title": "MDX unexpected backslash",
+      "disposition": "duplicate",
+      "rationale": "Same docs MDX/acorn parse family as CLI-2W.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15484",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2W",
+      "problemSignature": "Docs or preview path: MDX/acorn parse error while resolving user-authored docs content; showed as InternalError."
+    },
+    "CLI-3M": {
+      "title": "MDX acorn parse expression",
+      "disposition": "duplicate",
+      "rationale": "Same docs MDX/acorn parse family as CLI-2W.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15484",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2W",
+      "problemSignature": "Docs or preview path: MDX/acorn parse error while resolving user-authored docs content; showed as InternalError."
+    },
+    "CLI-3K": {
+      "title": "MDX acorn parse expression",
+      "disposition": "duplicate",
+      "rationale": "Same docs MDX/acorn parse family as CLI-2W.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15484",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2W",
+      "problemSignature": "Docs or preview path: MDX/acorn parse error while resolving user-authored docs content; showed as InternalError."
+    },
+    "CLI-3H": {
+      "title": "MDX unexpected quote in attribute name",
+      "disposition": "duplicate",
+      "rationale": "Same docs MDX/acorn parse family as CLI-2W.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15484",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2W",
+      "problemSignature": "Docs or preview path: MDX/acorn parse error while resolving user-authored docs content; showed as InternalError."
+    },
+    "CLI-37": {
+      "title": "MDX expected closing Tab tag",
+      "disposition": "duplicate",
+      "rationale": "Same docs MDX/acorn parse family as CLI-2W.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15484",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2W",
+      "problemSignature": "Docs or preview path: MDX/acorn parse error while resolving user-authored docs content; showed as InternalError."
+    },
+    "CLI-38": {
+      "title": "MDX acorn parse expression",
+      "disposition": "duplicate",
+      "rationale": "Same docs MDX/acorn parse family as CLI-2W.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15484",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2W",
+      "problemSignature": "Docs or preview path: MDX/acorn parse error while resolving user-authored docs content; showed as InternalError."
+    },
+    "CLI-35": {
+      "title": "MDX unexpected closing slash",
+      "disposition": "duplicate",
+      "rationale": "Same docs MDX/acorn parse family as CLI-2W.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15484",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2W",
+      "problemSignature": "Docs or preview path: MDX/acorn parse error while resolving user-authored docs content; showed as InternalError."
+    },
+    "CLI-33": {
+      "title": "MDX unexpected asterisk",
+      "disposition": "duplicate",
+      "rationale": "Same docs MDX/acorn parse family as CLI-2W.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15484",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2W",
+      "problemSignature": "Docs or preview path: MDX/acorn parse error while resolving user-authored docs content; showed as InternalError."
+    },
+    "CLI-32": {
+      "title": "MDX expected closing br tag",
+      "disposition": "duplicate",
+      "rationale": "Same docs MDX/acorn parse family as CLI-2W.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15484",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2W",
+      "problemSignature": "Docs or preview path: MDX/acorn parse error while resolving user-authored docs content; showed as InternalError."
+    },
+    "CLI-2R": {
+      "title": "MDX import/export parse failure",
+      "disposition": "duplicate",
+      "rationale": "Same docs MDX/acorn parse family as CLI-2W.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15484",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2W",
+      "problemSignature": "Docs or preview path: MDX/acorn parse error while resolving user-authored docs content; showed as InternalError."
+    },
+    "CLI-2Q": {
+      "title": "MDX acorn parse expression",
+      "disposition": "duplicate",
+      "rationale": "Same docs MDX/acorn parse family as CLI-2W.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15484",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2W",
+      "problemSignature": "Docs or preview path: MDX/acorn parse error while resolving user-authored docs content; showed as InternalError."
+    },
+    "CLI-2N": {
+      "title": "MDX unexpected exclamation",
+      "disposition": "duplicate",
+      "rationale": "Same docs MDX/acorn parse family as CLI-2W.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15484",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2W",
+      "problemSignature": "Docs or preview path: MDX/acorn parse error while resolving user-authored docs content; showed as InternalError."
+    },
+    "CLI-29": {
+      "title": "MDX unexpected exclamation",
+      "disposition": "duplicate",
+      "rationale": "Same docs MDX/acorn parse family as CLI-2W.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15484",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2W",
+      "problemSignature": "Docs or preview path: MDX/acorn parse error while resolving user-authored docs content; showed as InternalError."
+    },
+    "CLI-28": {
+      "title": "MDX unexpected number",
+      "disposition": "duplicate",
+      "rationale": "Same docs MDX/acorn parse family as CLI-2W.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15484",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2W",
+      "problemSignature": "Docs or preview path: MDX/acorn parse error while resolving user-authored docs content; showed as InternalError."
+    },
+    "CLI-23": {
+      "title": "MDX unexpected exclamation",
+      "disposition": "duplicate",
+      "rationale": "Same docs MDX/acorn parse family as CLI-2W.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15484",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2W",
+      "problemSignature": "Docs or preview path: MDX/acorn parse error while resolving user-authored docs content; showed as InternalError."
+    },
+    "CLI-30": {
+      "title": "YAML multiline key parse failure",
+      "disposition": "shipped",
+      "rationale": "Docs/workspace YAML parse failure was still able to bubble as InternalError from the docs.yml boundary.",
+      "fixSummary": "Wrap docs.yml yaml.load in loadRawDocsConfiguration as CliError(ParseError).",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Invalid YAML while loading user-authored config or OpenAPI spec; parser exception treated as InternalError."
+    },
+    "CLI-3G": {
+      "title": "YAML duplicated mapping key",
+      "disposition": "shipped",
+      "rationale": "Docs/workspace YAML parse failure was still able to bubble as InternalError from the docs.yml boundary.",
+      "fixSummary": "Wrap docs.yml yaml.load in loadRawDocsConfiguration as CliError(ParseError).",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Invalid YAML while loading user-authored config or OpenAPI spec; parser exception treated as InternalError."
+    },
+    "CLI-Q": {
+      "title": "YAML duplicated mapping key",
+      "disposition": "shipped",
+      "rationale": "Docs/workspace YAML parse failure was still able to bubble as InternalError from the docs.yml boundary.",
+      "fixSummary": "Wrap docs.yml yaml.load in loadRawDocsConfiguration as CliError(ParseError).",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Invalid YAML while loading user-authored config or OpenAPI spec; parser exception treated as InternalError."
+    },
+    "CLI-1T": {
+      "title": "YAML duplicated mapping key",
+      "disposition": "shipped",
+      "rationale": "Docs/workspace YAML parse failure was still able to bubble as InternalError from the docs.yml boundary.",
+      "fixSummary": "Wrap docs.yml yaml.load in loadRawDocsConfiguration as CliError(ParseError).",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Invalid YAML while loading user-authored config or OpenAPI spec; parser exception treated as InternalError."
+    },
+    "CLI-1E": {
+      "title": "YAML duplicated mapping key",
+      "disposition": "duplicate",
+      "rationale": "Same invalid user YAML parse family as CLI-2E.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2E",
+      "problemSignature": "Invalid YAML while loading user-authored config or OpenAPI spec; parser exception treated as InternalError."
+    },
+    "CLI-G": {
+      "title": "YAML bad indentation",
+      "disposition": "shipped",
+      "rationale": "Docs/workspace YAML parse failure was still able to bubble as InternalError from the docs.yml boundary.",
+      "fixSummary": "Wrap docs.yml yaml.load in loadRawDocsConfiguration as CliError(ParseError).",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Invalid YAML while loading user-authored config or OpenAPI spec; parser exception treated as InternalError."
+    },
+    "CLI-P": {
+      "title": "YAML bad indentation",
+      "disposition": "shipped",
+      "rationale": "Docs/workspace YAML parse failure was still able to bubble as InternalError from the docs.yml boundary.",
+      "fixSummary": "Wrap docs.yml yaml.load in loadRawDocsConfiguration as CliError(ParseError).",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Invalid YAML while loading user-authored config or OpenAPI spec; parser exception treated as InternalError."
+    },
+    "CLI-N": {
+      "title": "YAML bad sequence indentation",
+      "disposition": "shipped",
+      "rationale": "Docs/workspace YAML parse failure was still able to bubble as InternalError from the docs.yml boundary.",
+      "fixSummary": "Wrap docs.yml yaml.load in loadRawDocsConfiguration as CliError(ParseError).",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Invalid YAML while loading user-authored config or OpenAPI spec; parser exception treated as InternalError."
+    },
+    "CLI-12": {
+      "title": "swagger2openapi unresolved reference",
+      "disposition": "duplicate",
+      "rationale": "Same OpenAPI v2 conversion failure family as CLI-13.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-13",
+      "problemSignature": "User OpenAPI v2 document fails swagger2openapi conversion to v3; conversion error treated as InternalError."
+    },
+    "CLI-36": {
+      "title": "docs navigation schema validation failure",
+      "disposition": "duplicate",
+      "rationale": "Same schema validation/minified error-name family as CLI-2Z.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2Z",
+      "problemSignature": "Schema or configuration validation path for user-authored docs/config looked like InternalError instead of validation/config error."
+    },
+    "CLI-F": {
+      "title": "Unexpected key package-name",
+      "disposition": "duplicate",
+      "rationale": "Same schema validation/minified error-name family as CLI-2Z.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2Z",
+      "problemSignature": "Schema or configuration validation path for user-authored docs/config looked like InternalError instead of validation/config error."
+    },
+    "CLI-8": {
+      "title": "docs.yml navbar-links schema validation failure",
+      "disposition": "duplicate",
+      "rationale": "Same schema validation/minified error-name family as CLI-2Z.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2Z",
+      "problemSignature": "Schema or configuration validation path for user-authored docs/config looked like InternalError instead of validation/config error."
+    },
+    "CLI-25": {
+      "title": "Invalid fern.config.json JSON",
+      "disposition": "duplicate",
+      "rationale": "Current loadProjectConfig wraps JSON.parse as ParseError; same non-reportable parse/config class as CLI-2Z.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2Z",
+      "problemSignature": "Schema or configuration parse path for user-authored fern.config.json looked like InternalError instead of parse/config error."
+    },
+    "CLI-17": {
+      "title": "Expected list received object",
+      "disposition": "shipped",
+      "rationale": "IR SDK schema errors lacked stable names, so schema validation failures could still look like InternalError after minification/bundling.",
+      "fixSummary": "Set stable ParseError/JsonError names in IR SDK schema errors.",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Schema or configuration validation path for user-authored docs/config looked like InternalError instead of validation/config error."
+    },
+    "CLI-1G": {
+      "title": "Expected list received object",
+      "disposition": "shipped",
+      "rationale": "IR SDK schema errors lacked stable names, so schema validation failures could still look like InternalError after minification/bundling.",
+      "fixSummary": "Set stable ParseError/JsonError names in IR SDK schema errors.",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Schema or configuration validation path for user-authored docs/config looked like InternalError instead of validation/config error."
+    },
+    "CLI-15": {
+      "title": "Expected list received object",
+      "disposition": "shipped",
+      "rationale": "IR SDK schema errors lacked stable names, so schema validation failures could still look like InternalError after minification/bundling.",
+      "fixSummary": "Set stable ParseError/JsonError names in IR SDK schema errors.",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Schema or configuration validation path for user-authored docs/config looked like InternalError instead of validation/config error."
+    },
+    "CLI-1D": {
+      "title": "Expected list received object",
+      "disposition": "shipped",
+      "rationale": "IR SDK schema errors lacked stable names, so schema validation failures could still look like InternalError after minification/bundling.",
+      "fixSummary": "Set stable ParseError/JsonError names in IR SDK schema errors.",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Schema or configuration validation path for user-authored docs/config looked like InternalError instead of validation/config error."
+    },
+    "CLI-1C": {
+      "title": "Expected list received object",
+      "disposition": "shipped",
+      "rationale": "IR SDK schema errors lacked stable names, so schema validation failures could still look like InternalError after minification/bundling.",
+      "fixSummary": "Set stable ParseError/JsonError names in IR SDK schema errors.",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Schema or configuration validation path for user-authored docs/config looked like InternalError instead of validation/config error."
+    },
+    "CLI-1B": {
+      "title": "Expected list received object",
+      "disposition": "shipped",
+      "rationale": "IR SDK schema errors lacked stable names, so schema validation failures could still look like InternalError after minification/bundling.",
+      "fixSummary": "Set stable ParseError/JsonError names in IR SDK schema errors.",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Schema or configuration validation path for user-authored docs/config looked like InternalError instead of validation/config error."
+    },
+    "CLI-1A": {
+      "title": "Expected list received object",
+      "disposition": "shipped",
+      "rationale": "IR SDK schema errors lacked stable names, so schema validation failures could still look like InternalError after minification/bundling.",
+      "fixSummary": "Set stable ParseError/JsonError names in IR SDK schema errors.",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Schema or configuration validation path for user-authored docs/config looked like InternalError instead of validation/config error."
+    },
+    "CLI-2Y": {
+      "title": "No fern directory found with --id",
+      "disposition": "shipped",
+      "rationale": "Current delete preview flow passes ValidationError for this user invocation problem.",
+      "fixSummary": "Existing deleteDocsPreview path uses CliError.Code.ValidationError.",
+      "prOrIssue": "Already on main",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Docs preview delete --id outside a Fern project failed as InternalError instead of ValidationError guidance."
+    },
+    "CLI-2K": {
+      "title": "No fern directory found with --id",
+      "disposition": "duplicate",
+      "rationale": "Same validation path as CLI-2Y.",
+      "fixSummary": "—",
+      "prOrIssue": "Already on main",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-2Y",
+      "problemSignature": "Docs preview delete --id outside a Fern project failed as InternalError instead of ValidationError guidance."
+    },
+    "CLI-1R": {
+      "title": "Container execution failed code 1",
+      "disposition": "duplicate",
+      "rationale": "Same container/task double-reporting family as CLI-10.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-10",
+      "problemSignature": "sdk generate or docs publish with Docker/container tasks: task failures double-reported as aggregate InternalError / ContainerError noise."
+    },
+    "CLI-1P": {
+      "title": "Container execution failed code 1",
+      "disposition": "duplicate",
+      "rationale": "Same container/task double-reporting family as CLI-10.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-10",
+      "problemSignature": "sdk generate or docs publish with Docker/container tasks: task failures double-reported as aggregate InternalError / ContainerError noise."
+    },
+    "CLI-1N": {
+      "title": "Container execution failed code 1",
+      "disposition": "duplicate",
+      "rationale": "Same container/task double-reporting family as CLI-10.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-05-04",
+      "duplicateOf": "CLI-10",
+      "problemSignature": "sdk generate or docs publish with Docker/container tasks: task failures double-reported as aggregate InternalError / ContainerError noise."
+    },
+    "CLI-3E": {
+      "title": "Internal response property conversion error",
+      "disposition": "keep_sentry",
+      "rationale": "IR conversion invariant failure in getObjectPropertyFromResolvedType; this looks like a product bug rather than false-positive noise.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "IR conversion invariant failure while resolving response object properties; true product defect until converter behavior is fixed."
+    },
+    "CLI-3F": {
+      "title": "Failed to locate type",
+      "disposition": "keep_sentry",
+      "rationale": "Type resolution failed inside IR generation; needs product-level investigation instead of suppression.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "IR generation failed to locate a referenced Fern type; possible reference/resolution product bug until validated."
+    },
+    "CLI-3D": {
+      "title": "Mintlify import navigation is not iterable",
+      "disposition": "keep_sentry",
+      "rationale": "Importer TypeError indicates missing validation or compatibility handling in Mintlify import code.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Mintlify docs import TypeError while reading navigation; true importer robustness bug until fixed."
+    },
+    "CLI-3B": {
+      "title": "Null overlay in applyOverlays",
+      "disposition": "keep_sentry",
+      "rationale": "Null overlay TypeError indicates missing validation in workspace overlay handling.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Workspace overlay loading TypeError on null overlay; true validation/product bug until fixed."
+    },
+    "CLI-1Q": {
+      "title": "formatDocs replace is not a function",
+      "disposition": "keep_sentry",
+      "rationale": "formatDocs expected a string and received another shape; needs product validation or conversion fix.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "IR docs formatting TypeError because docs value was not a string; true product/data-shape bug until fixed."
+    },
+    "CLI-27": {
+      "title": "Invalid URL in app preview server",
+      "disposition": "keep_sentry",
+      "rationale": "Preview server should validate or normalize the URL source; leave reportable until fixed.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Docs app preview server TypeError Invalid URL; possible product/config boundary bug until fixed."
+    },
+    "CLI-Y": {
+      "title": "Generic empty Error in development",
+      "disposition": "ignored",
+      "rationale": "Only visible event is development environment with empty Error value grouped at telemetry reporter; no product signature to fix or suppress safely.",
+      "fixSummary": "—",
+      "prOrIssue": "Ignored after event-level review",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Development-only empty Error grouped at reportError/capture path with no actionable product signature."
+    },
+    "CLI-1Y": {
+      "title": "Missing translations directory validation",
+      "disposition": "shipped",
+      "rationale": "Missing translations directory is user docs configuration and was reported without a non-reportable code.",
+      "fixSummary": "Pass ValidationError when translation locale directories are missing.",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Docs translations configuration references a locale whose translations directory is missing; should be validation/config semantics, not InternalError."
+    },
+    "CLI-3C": {
+      "title": "Replay resolve failed no-lockfile",
+      "disposition": "shipped",
+      "rationale": "Replay resolve no-lockfile is user/worktree state, not an internal CLI defect.",
+      "fixSummary": "Map fallback replay resolve failures to UserError in both CLI implementations.",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Replay resolve failed with no-lockfile or other user/worktree state and was explicitly reported as InternalError."
+    },
+    "CLI-39": {
+      "title": "Failed to parse GitHub repository",
+      "disposition": "shipped",
+      "rationale": "Invalid GitHub repository strings in generators.yml are configuration errors and should be wrapped where generators.yml is converted.",
+      "fixSummary": "Wrap parseRepository failures in convertGeneratorsConfiguration as CliError(ConfigError); parseRepository still throws a plain Error.",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Invalid GitHub repository config string (missing owner/repo or empty path part) surfaced as InternalError instead of ConfigError."
+    },
+    "CLI-1K": {
+      "title": "GitHub pull request base branch invalid",
+      "disposition": "keep_sentry",
+      "rationale": "GitHub PR creation got a 422 invalid base response; leave reportable until GitHub output validation/error mapping is fixed.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "GitHub output PR creation failed because the configured base branch was invalid; needs config/error mapping product fix."
+    },
+    "CLI-3J": {
+      "title": "Windows temp OpenAPI filepath is not relative",
+      "disposition": "keep_sentry",
+      "rationale": "Absolute/Windows path reached a relative-path invariant; needs path normalization or boundary validation fix.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "OpenAPI or workspace path conversion received an absolute path where a relative path was required; path boundary bug until fixed."
+    },
+    "CLI-18": {
+      "title": "Absolute OpenAPI filepath is not relative",
+      "disposition": "keep_sentry",
+      "rationale": "Absolute path reached a relative-path invariant; needs path normalization or boundary validation fix.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "OpenAPI or workspace path conversion received an absolute path where a relative path was required; path boundary bug until fixed."
+    },
+    "CLI-34": {
+      "title": "Python package path not found",
+      "disposition": "keep_sentry",
+      "rationale": "Generator/library package path validation should be handled as user config, but this path still reports through task failure; needs product mapping.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Python generator package path missing or not a Python package; user config problem still reported through CLI task failure."
+    },
+    "CLI-2J": {
+      "title": "Failed to load generator migrations",
+      "disposition": "keep_sentry",
+      "rationale": "Generator migration loading failed for a specific generator; leave reportable until migration-loading error mapping/root cause is fixed.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Generator migrations failed to load for a configured generator; product/config boundary needs investigation."
+    },
+    "CLI-2D": {
+      "title": "git rm -rf command failed",
+      "disposition": "keep_sentry",
+      "rationale": "Subprocess failure in Git output cleanup should be controlled or classified at the boundary; not fixed in this run.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Git subprocess failure during generated output cleanup reported as InternalError; subprocess boundary needs controlled failure."
+    },
+    "CLI-22": {
+      "title": "Auth0 SSO connection returned HTTP 400",
+      "disposition": "keep_sentry",
+      "rationale": "Auth/network 400 should likely be mapped to auth or network semantics, but root cause needs login-flow handling.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "Auth0 login/SSO request returned HTTP 400 and surfaced as AxiosError; auth/network boundary needs mapping."
+    },
+    "CLI-D": {
+      "title": "Invalid BAML provider bedrock",
+      "disposition": "keep_sentry",
+      "rationale": "AI/BAML provider configuration error should be mapped at the AI config boundary; not fixed in this run.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "AI configuration selected an unsupported BAML provider and surfaced as InternalError; config boundary needs mapping."
+    },
+    "CLI-21": {
+      "title": "User post-generation sed command failed",
+      "disposition": "keep_sentry",
+      "rationale": "User/tool subprocess failure should be controlled or classified at the subprocess boundary; not fixed in this run.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "User-configured subprocess or post-generation command failed and was reported as InternalError instead of controlled task failure."
+    },
+    "CLI-1M": {
+      "title": "buf generate command failed",
+      "disposition": "keep_sentry",
+      "rationale": "Protobuf/buf subprocess failure should be controlled or classified at the subprocess boundary; not fixed in this run.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "buf/protobuf subprocess failed during generation and was reported as InternalError instead of controlled task failure."
+    },
+    "CLI-K": {
+      "title": "Package fern-api could not be found",
+      "disposition": "keep_sentry",
+      "rationale": "Package manager bootstrap failure needs environment/package-boundary handling; not enough evidence for a safe suppression.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "CLI package lookup/bootstrap failed because package could not be found; environment/package boundary needs investigation."
+    },
+    "CLI-C": {
+      "title": "stream-json parser expected comma",
+      "disposition": "keep_sentry",
+      "rationale": "Streaming JSON parser failure lacks enough user-input boundary context; keep reportable until the parser source is identified and mapped.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-04",
+      "problemSignature": "stream-json parser failed on malformed JSON input; source boundary needs investigation before suppression."
+    }
+  }
+}
