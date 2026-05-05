@@ -1,4 +1,28 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.10.0
+  changelogEntry:
+    - summary: |
+        Fix self-hosted GitHub clone failing with "Invalid username or token" when
+        the user's `${GITHUB_TOKEN}` is an OAuth user token (gho_*) or personal
+        access token (ghp_*, github_pat_*). The clone URL hardcoded the
+        `x-access-token:` username, which is the format reserved for GitHub App
+        installation tokens (ghs_*). Now selects the format based on the token
+        prefix, so both auth modes work.
+      type: fix
+    - summary: |
+        Capture PostHog telemetry for replay outcomes during `fern generate`. Emits a
+        single `replay` event with `action: pipeline_run` carrying patch counts, conflict
+        reason buckets, generator/repo context, and pipeline duration. Honors
+        FERN_DISABLE_TELEMETRY (v1) and FERN_TELEMETRY_DISABLED / ~/.fernrc (v2). Adds a
+        structured `[replay]` info log line and per-bucket conflict debug counts so the
+        same data is visible in stdout. No file paths, patch IDs, or commit messages
+        are emitted; the SDK repo URI is hashed (sha256, 16-char prefix). Wires the
+        previously-no-op v2 TaskContextAdapter.instrumentPostHogEvent so v2-driven
+        generates feed the same event stream as v1. Distinguishes genuine replay
+        crashes from `flow: first-generation` to keep success-rate dashboards honest.
+      type: internal
+  createdAt: "2026-05-05"
+  irVersion: 66
 - version: 5.9.0
   changelogEntry:
     - summary: |
