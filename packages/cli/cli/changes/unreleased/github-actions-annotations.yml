@@ -1,0 +1,13 @@
+- summary: |
+    Surface CLI errors and warnings as GitHub Actions annotations when running under GHA.
+
+    `fern automations generate` now emits a structured `::error::` workflow command for every
+    failed generator, anchored on the exact line in `generators.yml` so the annotation appears
+    inline on the file in the PR's Files-changed view, with the API / group / generator name
+    in the title and the failure reason in the body.
+
+    All other commands (e.g. `fern generate`, `fern check`) emit annotations from any
+    `logger.error` / `logger.warn` call, providing baseline coverage for failures that don't
+    flow through the per-generator collector. Status-only logs (`omitOnTTY`) are filtered out
+    so they don't burn through GitHub's per-step annotation cap.
+  type: feat
