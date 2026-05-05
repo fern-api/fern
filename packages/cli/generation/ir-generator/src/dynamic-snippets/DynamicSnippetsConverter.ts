@@ -1049,9 +1049,6 @@ export class DynamicSnippetsConverter {
                 ...(example.example?.endpointPathParameters ?? [])
             ].filter((param) => !variableReferencedParams.has(getOriginalName(param.name)));
 
-            // Deterministic fallback id keeps FDR snippet rows stable across regenerations.
-            // Random uuids previously caused row-key drift, accumulating orphan rows that
-            // surfaced non-deterministically through the /snippets API.
             const fallbackId = `${endpoint.id}-${isUserSpecified ? "user" : "auto"}-${index}`;
             requests.push({
                 id: example?.example?.id ?? fallbackId,
