@@ -1,11 +1,16 @@
 import { CliError } from "@fern-api/task-context";
 
 import chalk from "chalk";
+import inquirer from "inquirer";
+import path from "path";
 import type { Argv } from "yargs";
 import { ApiChecker } from "../../api/checker/ApiChecker.js";
 import type { Context } from "../../context/Context.js";
 import type { GlobalArgs } from "../../context/GlobalArgs.js";
+import { isClaudeCodeSession } from "../../context/isClaudeCodeSession.js";
 import { DocsChecker } from "../../docs/checker/DocsChecker.js";
+import type { MdxParseError } from "../../docs/errors/MdxParseError.js";
+import { MdxFixer } from "../../docs/fixer/MdxFixer.js";
 import { SdkChecker } from "../../sdk/checker/SdkChecker.js";
 import { Icons } from "../../ui/format.js";
 import type { Workspace } from "../../workspace/Workspace.js";
@@ -35,21 +40,62 @@ export class CheckCommand {
             args
         });
 
+        // When a page fails MDX parsing, downstream rules that depend on
+        // the parsed tree (e.g. `valid-markdown-links`) will surface a
+        // generic "failed to initialize" violation against the same file.
+        // Hide those duplicates — the rich MDX error already explains the
+        // root cause far better. Apply this in both JSON and text paths for
+        // consistency.
+        const filesWithMdxParseErrors = new Set(docsCheckResult.mdxParseErrors.map((e) => e.displayRelativeFilepath));
+        const mdxRawMessages = new Set(docsCheckResult.mdxParseErrors.map((e) => e.rawMessage));
+        const filteredDocsViolations = docsCheckResult.violations.filter(
+            (v) => !(filesWithMdxParseErrors.size > 0 && isMdxParseSymptom(v, filesWithMdxParseErrors, mdxRawMessages))
+        );
+
+        // docsCheckResult.errorCount already includes mdxParseErrors.length
+        // (computed in DocsChecker as counts.errorCount + mdxResult.errors.length).
         const totalErrors =
             (apiCheckResult.invalidApis.size > 0 ? apiCheckResult.errorCount : 0) +
             sdkCheckResult.errorCount +
-            docsCheckResult.errorCount +
-            docsCheckResult.mdxParseErrors.length;
+            docsCheckResult.errorCount;
         const totalWarnings = apiCheckResult.warningCount + sdkCheckResult.warningCount + docsCheckResult.warningCount;
         const hasErrors = totalErrors > 0 || (args.strict && totalWarnings > 0);
 
         if (args.json) {
-            const response = this.buildJsonResponse({ apiCheckResult, sdkCheckResult, docsCheckResult, hasErrors });
+            const response = this.buildJsonResponse({
+                apiCheckResult,
+                sdkCheckResult,
+                docsCheckResult,
+                filteredDocsViolations,
+                hasErrors
+            });
             context.stdout.info(JSON.stringify(response, null, 2));
             if (hasErrors) {
                 throw new CliError({ code: CliError.Code.ValidationError });
             }
             return;
+        }
+
+        const violations: (
+            | ApiChecker.ResolvedViolation
+            | SdkChecker.ResolvedViolation
+            | DocsChecker.ResolvedViolation
+        )[] = [...apiCheckResult.violations, ...sdkCheckResult.violations, ...filteredDocsViolations];
+
+        if (violations.length > 0) {
+            this.displayViolations(violations);
+        }
+
+        if (docsCheckResult.mdxParseErrors.length > 0) {
+            this.displayMdxParseErrors(context, docsCheckResult.mdxParseErrors);
+
+            // Offer AI-assisted fixes when running interactively.
+            // Skip when: non-TTY (CI), JSON mode, or inside a Claude Code session
+            // (the AI is already in the IDE, so prompting here is redundant).
+            const isTTY = process.stdout.isTTY === true;
+            if (isTTY && !isClaudeCodeSession()) {
+                await this.offerAiFixes(context, docsCheckResult.mdxParseErrors);
+            }
         }
 
         // Fail if there are errors, or if strict mode and there are warnings.
@@ -91,34 +137,6 @@ export class CheckCommand {
         const docsChecker = new DocsChecker({ context });
         const docsCheckResult = await docsChecker.check({ workspace, strict: args.strict });
 
-        if (!args.json) {
-            // When a page fails MDX parsing, downstream rules that depend on
-            // the parsed tree (e.g. `valid-markdown-links`) will surface a
-            // generic "failed to initialize" violation against the same file.
-            // Hide those duplicates — the rich MDX error already explains the
-            // root cause far better.
-            const filesWithMdxParseErrors = new Set(
-                docsCheckResult.mdxParseErrors.map((e) => e.displayRelativeFilepath)
-            );
-            const filteredDocsViolations = docsCheckResult.violations.filter(
-                (v) => !(filesWithMdxParseErrors.size > 0 && isMdxParseSymptom(v, filesWithMdxParseErrors))
-            );
-
-            const violations: (
-                | ApiChecker.ResolvedViolation
-                | SdkChecker.ResolvedViolation
-                | DocsChecker.ResolvedViolation
-            )[] = [...apiCheckResult.violations, ...sdkCheckResult.violations, ...filteredDocsViolations];
-
-            if (violations.length > 0) {
-                this.displayViolations(violations);
-            }
-
-            if (docsCheckResult.mdxParseErrors.length > 0) {
-                this.displayMdxParseErrors(docsCheckResult.mdxParseErrors);
-            }
-        }
-
         return { apiCheckResult, sdkCheckResult, docsCheckResult };
     }
 
@@ -137,11 +155,76 @@ export class CheckCommand {
         }
     }
 
-    private displayMdxParseErrors(errors: DocsChecker.Result["mdxParseErrors"]): void {
+    private displayMdxParseErrors(context: Context, errors: DocsChecker.Result["mdxParseErrors"]): void {
         for (const error of errors) {
             // The rich, multi-line Rust-style render lives on `toString`.
             // Surround each error with blank lines so they're visually distinct.
-            process.stderr.write(`\n${error.toString()}\n\n`);
+            context.stderr.info(`\n${error.toString()}\n`);
+        }
+    }
+
+    /**
+     * For each MDX parse error, offer to apply an AI-assisted (or deterministic)
+     * fix. Prompts the user with three choices: yes / no / show me the diff first.
+     */
+    private async offerAiFixes(context: Context, errors: MdxParseError[]): Promise<void> {
+        const fixer = new MdxFixer();
+
+        for (const error of errors) {
+            const absoluteFilepath = path.resolve(context.cwd, error.displayRelativeFilepath);
+
+            // Show the prompt header for this error.
+            process.stderr.write(
+                `\n${chalk.magenta("◆")} ${chalk.bold("fix with AI?")} ${chalk.dim("·")} fern will patch ${chalk.cyan(error.displayRelativeFilepath)}\n`
+            );
+
+            type Choice = "yes" | "no" | "diff";
+            const { action } = await inquirer.prompt<{ action: Choice }>([
+                {
+                    type: "list",
+                    name: "action",
+                    message: "",
+                    choices: [
+                        { name: "yes", value: "yes" },
+                        { name: "no", value: "no" },
+                        { name: "show me the diff first", value: "diff" }
+                    ]
+                }
+            ]);
+
+            if (action === "no") {
+                continue;
+            }
+
+            if (action === "diff") {
+                const preview = await fixer.previewFix({ error, absoluteFilepath });
+                if (preview == null) {
+                    process.stderr.write(chalk.dim("  No deterministic diff available — AI would generate a patch.\n"));
+                } else {
+                    process.stderr.write(`\n${preview}\n`);
+                }
+
+                // After showing the diff, ask again.
+                const { confirm } = await inquirer.prompt<{ confirm: boolean }>([
+                    {
+                        type: "confirm",
+                        name: "confirm",
+                        message: "Apply this fix?",
+                        default: true
+                    }
+                ]);
+                if (!confirm) {
+                    continue;
+                }
+            }
+
+            // Apply the fix.
+            const result = await fixer.applyFix({ error, absoluteFilepath });
+            if (result.applied) {
+                process.stderr.write(`${Icons.success} ${chalk.green("Fixed")} ${result.summary}\n`);
+            } else {
+                process.stderr.write(`${Icons.error} ${chalk.red("Could not fix:")} ${result.summary}\n`);
+            }
         }
     }
 
@@ -149,11 +232,13 @@ export class CheckCommand {
         apiCheckResult,
         sdkCheckResult,
         docsCheckResult,
+        filteredDocsViolations,
         hasErrors
     }: {
         apiCheckResult: ApiChecker.Result;
         sdkCheckResult: SdkChecker.Result;
         docsCheckResult: DocsChecker.Result;
+        filteredDocsViolations: DocsChecker.ResolvedViolation[];
         hasErrors: boolean;
     }): JsonOutput.Response {
         const results: JsonOutput.Results = {};
@@ -169,9 +254,9 @@ export class CheckCommand {
             results.sdks = sdkCheckResult.violations.map((v) => toJsonViolation(v));
         }
 
-        if (docsCheckResult.violations.length > 0 || docsCheckResult.mdxParseErrors.length > 0) {
+        if (filteredDocsViolations.length > 0 || docsCheckResult.mdxParseErrors.length > 0) {
             results.docs = [
-                ...docsCheckResult.violations.map((v) => toJsonViolation(v)),
+                ...filteredDocsViolations.map((v) => toJsonViolation(v)),
                 ...docsCheckResult.mdxParseErrors.map((e) => ({
                     severity: "error",
                     rule: e.code.code,
@@ -203,24 +288,58 @@ export class CheckCommand {
 
 /**
  * Returns true if a docs violation is a downstream symptom of an MDX parse
- * failure that we have already surfaced via {@link MdxParseError}. We match
- * on the well-known "Failed to parse markdown" substring that rules emit
- * when their `markdownPage` visitor blows up, plus the page's basename.
+ * failure that we have already surfaced via {@link MdxParseError}.
+ *
+ * Two matching strategies:
+ * 1. Path-based: the violation message contains the failing file's path/suffix
+ *    (e.g. `valid-markdown` rule: "Markdown failed to parse: ... user.mdx").
+ * 2. Raw-message-based: the violation message contains the raw parser error
+ *    verbatim (e.g. `valid-markdown-links` "failed to initialize" violations
+ *    embed the parse error but not the filepath).
  */
-function isMdxParseSymptom(violation: DocsChecker.ResolvedViolation, filesWithMdxParseErrors: Set<string>): boolean {
-    if (!/failed to parse markdown|failed to initialize/i.test(violation.message)) {
+function isMdxParseSymptom(
+    violation: DocsChecker.ResolvedViolation,
+    filesWithMdxParseErrors: Set<string>,
+    mdxRawMessages: Set<string>
+): boolean {
+    // Matches both "Markdown failed to parse: ..." (valid-markdown rule),
+    // "Rule X failed to initialize: ..." (valid-markdown-links rule), and
+    // other downstream "failed to parse" / "failed to initialize" variants.
+    if (!/failed to parse|failed to initialize/i.test(violation.message)) {
         return false;
     }
+
+    // Strategy 1: the violation message contains the raw MDX parse error.
+    // This covers rules like valid-markdown-links that embed the error message
+    // but not the filepath.
+    for (const rawMessage of mdxRawMessages) {
+        if (rawMessage.length > 0 && violation.message.includes(rawMessage)) {
+            return true;
+        }
+    }
+
+    // Strategy 2: the violation message contains the failing file's path or a
+    // suffix of it (cwd-relative vs fern-folder-relative paths may differ).
     for (const filepath of filesWithMdxParseErrors) {
         if (violation.message.includes(filepath)) {
             return true;
         }
-        // Fall back to basename matching since `displayRelativeFilepath` is
-        // cwd-relative but rule violation messages typically print
-        // fern-folder-relative paths.
-        const basename = filepath.split("/").pop();
-        if (basename != null && violation.message.includes(basename)) {
-            return true;
+        // Use at least two path segments to avoid false matches between files
+        // that share only a basename (e.g. api/intro.mdx vs sdk/intro.mdx).
+        const parts = filepath.split("/").filter(Boolean);
+        for (let len = parts.length; len >= 2; len--) {
+            const suffix = parts.slice(parts.length - len).join("/");
+            if (violation.message.includes(suffix)) {
+                return true;
+            }
+        }
+        // Only fall back to single-segment (basename) matching when there is
+        // no directory component to disambiguate.
+        if (parts.length === 1) {
+            const basename = parts[0];
+            if (basename != null && violation.message.includes(basename)) {
+                return true;
+            }
         }
     }
     return false;

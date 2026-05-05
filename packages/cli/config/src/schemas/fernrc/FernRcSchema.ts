@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { FernRcAiSchema } from "./FernRcAiSchema.js";
 import { FernRcAuthSchema } from "./FernRcAuthSchema.js";
 import { FernRcCacheSchema } from "./FernRcCacheSchema.js";
 import { FernRcTelemetrySchema } from "./FernRcTelemetrySchema.js";
@@ -11,7 +12,9 @@ export const FernRcSchema = z.object({
     /** Cache settings */
     cache: FernRcCacheSchema.optional(),
     /** Telemetry settings */
-    telemetry: FernRcTelemetrySchema.optional()
+    telemetry: FernRcTelemetrySchema.optional(),
+    /** AI settings (e.g. API keys for AI-powered fix suggestions) */
+    ai: FernRcAiSchema.optional()
 });
 
 export type FernRcSchema = z.infer<typeof FernRcSchema>;

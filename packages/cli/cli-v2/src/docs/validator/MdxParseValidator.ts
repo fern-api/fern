@@ -3,7 +3,6 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { DocsWorkspace } from "@fern-api/workspace-loader";
 
 import { readFile } from "fs/promises";
-import grayMatter from "gray-matter";
 import path from "path";
 
 import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter.js";
@@ -71,19 +70,22 @@ export class MdxParseValidator {
         // A page can appear multiple times in the navigation tree; we still
         // only want to validate it once.
         const filesToCheck = Array.from(new Set(allPages));
-        const errors: MdxParseError[] = [];
 
         // Lazy-load the parser so we don't pay the cost when there are no docs.
         const { parseMarkdownToTree } = await import("@fern-api/docs-markdown-utils");
 
-        for (const filepath of filesToCheck) {
-            const content = await readFile(filepath, "utf-8");
-            try {
-                parseMarkdownToTree(content);
-            } catch (error) {
-                errors.push(this.buildMdxParseError({ filepath, content, error }));
-            }
-        }
+        const errorOrNulls = await Promise.all(
+            filesToCheck.map(async (filepath) => {
+                const content = await readFile(filepath, "utf-8");
+                try {
+                    parseMarkdownToTree(content);
+                    return null;
+                } catch (error) {
+                    return this.buildMdxParseError({ filepath, content, error });
+                }
+            })
+        );
+        const errors = errorOrNulls.filter((e): e is MdxParseError => e != null);
 
         return {
             errors,
@@ -107,10 +109,12 @@ export class MdxParseValidator {
         // The parser strips frontmatter before reporting line numbers, so we
         // need to add the frontmatter offset back to map errors to user-visible
         // line numbers in the source file.
-        const { content: contentWithoutFrontmatter } = grayMatter(content);
-        const totalLines = content.split("\n").length;
-        const contentLines = contentWithoutFrontmatter.split("\n").length;
-        const frontmatterLineCount = totalLines - contentLines;
+        //
+        // We derive the offset by scanning the original content for the closing
+        // "---" delimiter rather than subtracting line counts, because gray-matter
+        // may strip leading blank lines from the returned body which would make
+        // a line-count subtraction incorrect.
+        const frontmatterLineCount = countFrontmatterLines(content);
 
         const { line, column } = extractLineColumn(error, frontmatterLineCount);
 
@@ -171,6 +175,32 @@ function extractLineColumn(error: unknown, frontmatterLineCount: number): Extrac
         };
     }
     return { line: undefined, column: undefined };
+}
+
+/**
+ * Count the number of lines occupied by YAML frontmatter (including both
+ * delimiter lines). Returns 0 when no frontmatter is present.
+ *
+ * We scan the raw content directly rather than relying on the line-count
+ * difference between the original string and the gray-matter output, because
+ * gray-matter may strip leading blank lines from the returned body, causing
+ * that subtraction to be off by one or more.
+ */
+function countFrontmatterLines(content: string): number {
+    if (!content.startsWith("---")) {
+        return 0;
+    }
+    const lines = content.split("\n");
+    // lines[0] is the opening "---"; scan from line index 1 for the closing "---"
+    for (let i = 1; i < lines.length; i++) {
+        const trimmed = lines[i]?.trimEnd();
+        if (trimmed === "---") {
+            // Frontmatter occupies lines 0..i (inclusive), which is i+1 lines.
+            return i + 1;
+        }
+    }
+    // Opening delimiter found but no closing delimiter — treat as no frontmatter.
+    return 0;
 }
 
 /**

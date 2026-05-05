@@ -132,6 +132,9 @@ export class FernRcSchemaLoader {
         if (config.telemetry != null) {
             toSerialize.telemetry = config.telemetry;
         }
+        if (config.ai != null) {
+            toSerialize.ai = config.ai;
+        }
         const yamlContent = yaml.dump(toSerialize, {
             indent: 2,
             lineWidth: 120,

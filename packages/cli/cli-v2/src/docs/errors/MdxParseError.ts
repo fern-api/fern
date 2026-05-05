@@ -92,11 +92,18 @@ export class MdxParseError {
         }
         lines.push(emptyGutter);
 
+        if (this.code.description != null) {
+            lines.push(`${chalk.dim("note:")} ${this.code.description}`);
+        }
+
         if (this.fix != null) {
             lines.push("");
             lines.push(this.formatFixLine(this.fix));
         }
-        lines.push(`${chalk.dim("see:")} ${chalk.blue.underline(this.code.learnUrl)}`);
+
+        if (this.code.learnUrl != null) {
+            lines.push(`${chalk.dim("see:")} ${chalk.blue.underline(this.code.learnUrl)}`);
+        }
 
         return lines.join("\n");
     }

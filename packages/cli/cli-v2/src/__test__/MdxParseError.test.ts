@@ -4,8 +4,11 @@ import { describe, expect, it } from "vitest";
 import {
     classifyMdxError,
     E0301_JSX_ATTRIBUTE_NEEDS_BRACES,
+    E0302_UNTERMINATED_STRING_LITERAL,
     E0303_MISMATCHED_CLOSING_TAG,
+    E0304_UNCLOSED_JSX_ELEMENT,
     E0305_INVALID_JS_EXPRESSION,
+    type MdxErrorCode,
     UNKNOWN_MDX_ERROR
 } from "../docs/errors/MdxErrorCode.js";
 import { MdxParseError, type SourceLine } from "../docs/errors/MdxParseError.js";
@@ -25,6 +28,18 @@ describe("classifyMdxError", () => {
             "Unexpected closing tag `</Bar>`, expected the corresponding closing tag for `<Foo>`"
         );
         expect(result.code).toBe("E0303");
+    });
+
+    it("classifies unterminated string literal errors as E0302", () => {
+        const result = classifyMdxError("Unexpected end of file in attribute value");
+        expect(result.code).toBe("E0302");
+        expect(result).toBe(E0302_UNTERMINATED_STRING_LITERAL);
+    });
+
+    it("classifies unclosed JSX element errors as E0304", () => {
+        const result = classifyMdxError("Unexpected end of file in tag");
+        expect(result.code).toBe("E0304");
+        expect(result).toBe(E0304_UNCLOSED_JSX_ELEMENT);
     });
 
     it("classifies bad JS expressions as E0305", () => {
@@ -158,6 +173,44 @@ describe("MdxParseError.toString()", () => {
             const out = stripAnsi(err.toString());
             // The tab should have been visually expanded to 4 spaces.
             expect(out).toContain("    icon=<X/>");
+        } finally {
+            chalk.level = ORIGINAL_CHALK_LEVEL;
+        }
+    });
+
+    it("renders note: line when code has a description", () => {
+        chalk.level = 0;
+        try {
+            const out = stripAnsi(buildError().toString());
+            // E0301 has a description — it should appear as a "note:" line.
+            expect(out).toContain("note:");
+            expect(out).toContain(E0301_JSX_ATTRIBUTE_NEEDS_BRACES.description ?? "");
+        } finally {
+            chalk.level = ORIGINAL_CHALK_LEVEL;
+        }
+    });
+
+    it("omits note: line when code has no description", () => {
+        chalk.level = 0;
+        try {
+            const codeWithoutDescription: MdxErrorCode = {
+                code: "E0300",
+                title: "Could not parse markdown",
+                matches: () => true
+                // learnUrl and description intentionally omitted
+            };
+            const err = new MdxParseError({
+                code: codeWithoutDescription,
+                displayRelativeFilepath: "docs/pages/unknown.mdx",
+                line: 1,
+                column: undefined,
+                rawMessage: "some unknown error",
+                sourceLines: [],
+                fix: undefined
+            });
+            const out = stripAnsi(err.toString());
+            expect(out).not.toContain("note:");
+            expect(out).not.toContain("see:");
         } finally {
             chalk.level = ORIGINAL_CHALK_LEVEL;
         }

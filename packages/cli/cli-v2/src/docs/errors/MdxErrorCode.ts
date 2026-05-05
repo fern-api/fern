@@ -20,8 +20,11 @@ export interface MdxErrorCode {
     /** Optional longer description appended below the source snippet. */
     readonly description?: string;
 
-    /** Public URL with extended documentation on this error. */
-    readonly learnUrl: string;
+    /**
+     * Optional public URL with extended documentation on this error.
+     * Omit when the docs page does not yet exist — no link is better than a 404.
+     */
+    readonly learnUrl?: string;
 
     /**
      * Returns true if this code matches the upstream parser's raw error message.
@@ -61,7 +64,11 @@ export const E0301_JSX_ATTRIBUTE_NEEDS_BRACES: MdxErrorCode = {
         // Generic shapes for the same problem.
         (/unexpected character.*(?:in (?:attribute|jsx)|before attribute value)/i.test(raw) && /</.test(raw)),
     suggestFix({ errorLineContent }) {
-        // Match `name=<Component ... />` (self-closing or block) and wrap it in {}.
+        // Match `name=<Component ... />` (self-closing) and wrap the value in {}.
+        // Note: the pattern stops at the first `>`, so it will not produce a
+        // suggestion for JSX attribute values that contain nested `>` characters
+        // (e.g. `icon=<Icon onClick={() => {}} />`). Those cases return undefined
+        // and the fix line is simply omitted.
         const match = errorLineContent.match(/([A-Za-z_$][\w$-]*)=(<[^>]+\/?>)/);
         if (match == null) {
             return undefined;
