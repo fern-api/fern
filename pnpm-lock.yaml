@@ -253,7 +253,7 @@ catalogs:
       specifier: ^5.0.0
       version: 5.0.0
     axios:
-      specifier: ^1.15.1
+      specifier: ^1.16.0
       version: 1.16.0
     boxen:
       specifier: ^7.1.1
