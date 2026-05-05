@@ -1190,6 +1190,7 @@ async function checkAndDownloadExistingSdkDynamicIRs({
             ])
         );
         // @ts-expect-error -- SDK types will be updated once fern-platform#10550 publishes new @fern-api/fdr-sdk
+        // biome-ignore format: single line required for @ts-expect-error suppression
         const response = await fdr.api.register.checkSdkDynamicIrExists({ orgId: CjsFdrSdk.OrgId(organization), snippetConfiguration: snippetConfig });
 
         const existingDynamicIrs = response.existingDynamicIrs ?? {};
