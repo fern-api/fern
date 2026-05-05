@@ -22,4 +22,10 @@ export interface AgentsConfig {
      * overriding the auto-generated version. The file should contain the full concatenated documentation content.
      */
     llmsFullTxt?: string;
+    /**
+     * Relative filepath to a custom `robots.txt` file that Fern should host at `/robots.txt`,
+     * overriding the auto-generated version. Fern automatically appends a rule to disallow
+     * its internal `/api/fern-docs/` routes so they are excluded from crawler indexing.
+     */
+    robotsTxt?: string;
 }

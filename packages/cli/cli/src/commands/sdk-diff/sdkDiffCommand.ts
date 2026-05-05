@@ -6,8 +6,8 @@
  * - A version bump recommendation (major/minor/patch)
  */
 
-import { ClientRegistry } from "@boundaryml/baml";
-import { AnalyzeCommitDiffResponse, b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
+import type { AnalyzeCommitDiffResponse, BamlClientInstance, ClientRegistryInstance } from "@fern-api/cli-ai";
+import { loadBamlDependencies, VersionBump } from "@fern-api/cli-ai";
 import { loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
@@ -28,7 +28,7 @@ import { CliContext } from "../../cli-context/CliContext.js";
 
 const execAsync = promisify(exec);
 
-async function getClientRegistry(context: CliContext, project: Project): Promise<ClientRegistry> {
+async function getClientRegistry(context: CliContext, project: Project): Promise<ClientRegistryInstance> {
     // Get the first API workspace (or we could make this configurable)
     const workspace = project.apiWorkspaces[0];
     if (workspace == null) {
@@ -60,6 +60,7 @@ async function getClientRegistry(context: CliContext, project: Project): Promise
     }
 
     context.logger.debug(`Using AI service: ${generatorsConfig.ai.provider} with model ${generatorsConfig.ai.model}`);
+    const { configureBamlClient } = await loadBamlDependencies();
     return configureBamlClient(generatorsConfig.ai);
 }
 
@@ -96,6 +97,7 @@ export async function sdkDiffCommand({
         throw new TaskAbortSignal();
     }
 
+    const { BamlClient } = await loadBamlDependencies();
     const clientRegistry = await getClientRegistry(context, project);
 
     // Generate git diff between the two directories
@@ -144,7 +146,7 @@ export async function sdkDiffCommand({
     // Analyze the diff using LLM with the configured client
     context.logger.info("Analyzing diff with LLM...");
     try {
-        const bamlClient = BamlClient.withOptions({ clientRegistry });
+        const bamlClient: BamlClientInstance = BamlClient.withOptions({ clientRegistry });
 
         if (cappedChunks.length <= 1) {
             // Single chunk — standard path

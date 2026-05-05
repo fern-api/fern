@@ -11,6 +11,7 @@ export const AgentsConfig: core.serialization.ObjectSchema<serializers.AgentsCon
         pageDescriptionSource: core.serialization.property("page-description-source", PageDescriptionSource.optional()),
         llmsTxt: core.serialization.property("llms-txt", core.serialization.string().optional()),
         llmsFullTxt: core.serialization.property("llms-full-txt", core.serialization.string().optional()),
+        robotsTxt: core.serialization.property("robots-txt", core.serialization.string().optional()),
     });
 
 export declare namespace AgentsConfig {
@@ -19,5 +20,6 @@ export declare namespace AgentsConfig {
         "page-description-source"?: PageDescriptionSource.Raw | null;
         "llms-txt"?: string | null;
         "llms-full-txt"?: string | null;
+        "robots-txt"?: string | null;
     }
 }

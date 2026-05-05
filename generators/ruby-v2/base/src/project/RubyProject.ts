@@ -722,9 +722,17 @@ class ModuleFile {
         });
 
         rubyFilePaths.forEach((filePath) => {
-            // Filter out test files from requires - they should not be loaded in the main lib file
+            // Filter out test and infrastructure files — they must not be loaded
+            // in the main lib barrel file to avoid circular requires.
+            // The barrel lives in lib/, so test paths resolve to ../test/wire/…
             const relativePath = relative(this.filePath, filePath);
-            if (relativePath.includes("/test/") || relativePath.startsWith("test/")) {
+            if (
+                relativePath.startsWith("spec/") ||
+                relativePath.startsWith("test/") ||
+                relativePath.startsWith("../test/") ||
+                relativePath.startsWith("../wiremock/") ||
+                relativePath.includes("/wire-tests/")
+            ) {
                 return;
             }
             relativeImportPaths.add(relativePath);

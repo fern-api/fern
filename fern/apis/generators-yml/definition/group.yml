@@ -164,6 +164,9 @@ types:
   GithubCommitAndReleaseSchema:
     properties:
       repository: string
+      branch:
+        type: optional<string>
+        docs: If specified, commits and tags the release on this branch instead of the default branch. The branch must exist.
       license: optional<license.GithubLicenseSchema>
       mode: optional<GithubCommitAndReleaseMode>
       # Add properties for commit and release configuration

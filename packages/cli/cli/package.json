@@ -46,8 +46,10 @@
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
+  "optionalDependencies": {
+    "@boundaryml/baml": "catalog:"
+  },
   "devDependencies": {
-    "@boundaryml/baml": "catalog:",
     "@bufbuild/protobuf": "catalog:",
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/api-workspace-validator": "workspace:*",
@@ -107,8 +109,6 @@
     "@inquirer/prompts": "catalog:",
     "@sentry/cli": "catalog:",
     "@sentry/node": "^10.45.0",
-    "@types/cli-progress": "catalog:",
-    "@types/is-ci": "catalog:",
     "@types/js-yaml": "catalog:",
     "@types/lodash-es": "catalog:",
     "@types/mime-types": "catalog:",
@@ -122,12 +122,10 @@
     "axios": "catalog:",
     "boxen": "catalog:",
     "chalk": "catalog:",
-    "cli-progress": "catalog:",
     "get-port": "^7.1.0",
     "graphql": "catalog:",
     "gray-matter": "catalog:",
     "immer": "^10.1.1",
-    "is-ci": "catalog:",
     "js-yaml": "catalog:",
     "latest-version": "catalog:",
     "mime-types": "catalog:",

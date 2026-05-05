@@ -51,7 +51,15 @@ function newRepositoryReference({
         repoUrl,
         cloneUrl,
         getAuthedCloneUrl: (installationToken: string) => {
-            return cloneUrl.replace("https://", `https://x-access-token:${installationToken}@`);
+            // GitHub App installation tokens (`ghs_*`) and user-to-server tokens
+            // issued by GitHub Apps (`ghu_*`) authenticate as the special
+            // `x-access-token` user. OAuth user tokens (`gho_*`), classic PATs
+            // (`ghp_*`), fine-grained PATs (`github_pat_*`), and legacy 40-char
+            // hex PATs (pre-2021, no prefix) authenticate as the token itself —
+            // using `x-access-token` for those returns "Invalid username or token".
+            const isInstallationToken = installationToken.startsWith("ghs_") || installationToken.startsWith("ghu_");
+            const userPrefix = isInstallationToken ? "x-access-token:" : "";
+            return cloneUrl.replace("https://", `https://${userPrefix}${installationToken}@`);
         }
     };
 }

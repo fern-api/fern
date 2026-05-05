@@ -20,7 +20,7 @@ export interface ReplayRunParams {
 }
 
 export interface ReplayRunResult {
-    /** null if replay wasn't initialized (no lockfile) */
+    /** null if replay wasn't initialized (no lockfile) OR if prepare/apply crashed (see failureReason) */
     report: ReplayReport | null;
     /** Whether .fernignore was updated */
     fernignoreUpdated: boolean;
@@ -30,6 +30,12 @@ export interface ReplayRunResult {
     currentGenerationSha: string | null;
     /** SHA of main's HEAD before replay ran. Always on main's lineage, stable after squash merges. */
     baseBranchHead: string | null;
+    /**
+     * Set when prepare or apply crashed (e.g. corrupted lockfile, git failure, library bug).
+     * Distinguishes a real failure from "no replay initialized" (lockfile missing → null report, no failureReason).
+     * Generation never fails on replay errors — callers should surface this for telemetry/logging only.
+     */
+    failureReason?: string;
 }
 
 /**
@@ -138,12 +144,22 @@ export async function replayPrepare(params: ReplayRunParams): Promise<PreparedRe
                         `The tag likely points at an unmerged generation (PR closed without merge).`
                 );
             } else {
-                const syncService = new ReplayService(outputDir, { enabled: true });
-                await syncService.syncFromDivergentMerge(tagSha, {
-                    cliVersion,
-                    generatorVersions,
-                    baseBranchHead: baseBranchHead ?? undefined
-                });
+                try {
+                    const syncService = new ReplayService(outputDir, { enabled: true });
+                    await syncService.syncFromDivergentMerge(tagSha, {
+                        cliVersion,
+                        generatorVersions,
+                        baseBranchHead: baseBranchHead ?? undefined
+                    });
+                } catch (error) {
+                    // syncFromDivergentMerge can throw on git rewrite failures.
+                    // Wrap as ReplayPrepareError so callers (replayRun,
+                    // GenerationCommitStep) catch a single typed error and don't
+                    // forward raw String(error) (which can carry paths/SHAs) into
+                    // telemetry/logs.
+                    logger?.warn("Replay divergent-merge sync failed, continuing without sync: " + String(error));
+                    throw new ReplayPrepareError(String(error), error);
+                }
 
                 try {
                     const freshLockManager = new LockfileManager(outputDir);
@@ -171,8 +187,11 @@ export async function replayPrepare(params: ReplayRunParams): Promise<PreparedRe
         // Mirror the pre-split contract: replay failures never fail generation.
         // Corrupted lockfiles, unreachable base generations, etc. are logged and
         // the caller proceeds as if replay were disabled for this run.
-        logger?.warn("Replay failed, continuing without replay: " + String(error));
-        return null;
+        // Throwing distinguishes a real crash from "no lockfile" (which still
+        // returns null above); callers (replayRun, GenerationCommitStep) catch
+        // and record failureReason so telemetry/logs don't mislabel as success.
+        logger?.warn("Replay prepare failed, continuing without replay: " + String(error));
+        throw new ReplayPrepareError(String(error), error);
     }
 
     return {
@@ -203,13 +222,14 @@ export async function replayApply(prepared: PreparedReplay, params: ReplayApplyP
     try {
         report = await prepared._service.applyPreparedReplay(prepared._preparation, { stageOnly });
     } catch (error) {
-        logger?.warn("Replay failed, continuing without replay: " + String(error));
+        logger?.warn("Replay apply failed, continuing without replay: " + String(error));
         return {
             report: null,
             fernignoreUpdated: false,
             previousGenerationSha: prepared.previousGenerationSha,
             currentGenerationSha: prepared.currentGenerationSha,
-            baseBranchHead: prepared.baseBranchHead
+            baseBranchHead: prepared.baseBranchHead,
+            failureReason: String(error)
         };
     }
 
@@ -246,7 +266,22 @@ export async function replayApply(prepared: PreparedReplay, params: ReplayApplyP
  * `replayApply` with byte-identical behavior for existing callers.
  */
 export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResult> {
-    const prepared = await replayPrepare(params);
+    let prepared: PreparedReplay | null;
+    try {
+        prepared = await replayPrepare(params);
+    } catch (error) {
+        // Prepare crashed (already warned by replayPrepare). Surface the failure
+        // so downstream telemetry/logging records success: false rather than
+        // silently mislabeling as first-generation.
+        return {
+            report: null,
+            fernignoreUpdated: false,
+            previousGenerationSha: null,
+            currentGenerationSha: null,
+            baseBranchHead: null,
+            failureReason: error instanceof ReplayPrepareError ? error.reason : String(error)
+        };
+    }
     if (prepared == null) {
         return {
             report: null,
@@ -257,6 +292,31 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
         };
     }
     return replayApply(prepared, { stageOnly: params.stageOnly, logger: params.logger });
+}
+
+/**
+ * Thrown by `replayPrepare` when the underlying replay service crashes (corrupted
+ * lockfile, git failure, library bug). Callers must catch this and decide how to
+ * surface the failure — generation MUST NOT abort on replay errors.
+ */
+export class ReplayPrepareError extends Error {
+    public readonly reason: string;
+
+    constructor(reason: string, cause: unknown) {
+        // ES2022 Error.cause — Sentry's linkedErrorsIntegration chains automatically.
+        super(`Replay prepare failed: ${reason}`, { cause });
+        // Restore the prototype chain — `extends Error` is broken by ES5 transpile
+        // (TS targets node18 here, so it's defensive but matches the codebase
+        // pattern in `generators/base/src/GeneratorError.ts`).
+        Object.setPrototypeOf(this, new.target.prototype);
+        // V8-specific: omit this constructor frame from the captured stack so the
+        // trace points to the throw site, not the Error class.
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+        this.name = this.constructor.name;
+        this.reason = reason;
+    }
 }
 
 /**

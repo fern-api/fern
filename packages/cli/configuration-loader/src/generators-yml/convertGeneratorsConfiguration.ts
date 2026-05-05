@@ -831,16 +831,19 @@ async function convertOutputMode({
         const mode = generator.github.mode ?? "release";
         switch (mode) {
             case "commit":
-            case "release":
+            case "release": {
+                const releaseConfig = generator.github as generatorsYml.GithubCommitAndReleaseSchema;
                 return FernFiddle.OutputMode.githubV2(
                     FernFiddle.GithubOutputModeV2.commitAndRelease({
                         owner,
                         repo,
+                        branch: releaseConfig.branch,
                         license,
                         publishInfo,
                         downloadSnippets
                     })
                 );
+            }
             case "pull-request": {
                 const pullRequestConfig = generator.github as generatorsYml.GithubPullRequestSchema;
                 const reviewers = _getReviewers({

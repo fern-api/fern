@@ -75,11 +75,11 @@ function applyChildOverlays(
             }
             const productOverlay = findProductOverlay(childObj, overlay.products ?? [], index);
             if (productOverlay != null) {
-                // Create a scoped overlay with product-specific tabs/navigation
+                // Create a scoped overlay with product-specific tabs/navigation/versions
                 const scopedOverlay: docsYml.TranslationNavigationOverlay = {
                     tabs: productOverlay.tabs ?? overlay.tabs,
                     products: undefined,
-                    versions: overlay.versions,
+                    versions: productOverlay.versions ?? overlay.versions,
                     announcement: productOverlay.announcement ?? overlay.announcement,
                     navigation: productOverlay.navigation ?? overlay.navigation,
                     navbarLinks: overlay.navbarLinks
@@ -99,24 +99,40 @@ function applyChildOverlays(
                 return walkAndApply(child, overlay);
             }
             const versionOverlay = findVersionOverlay(childObj, overlay.versions ?? [], index);
-            const walked = walkAndApply(child, overlay) as Record<string, unknown>;
             if (versionOverlay != null) {
+                // Create a scoped overlay with version-specific tabs/navigation
+                const scopedOverlay: docsYml.TranslationNavigationOverlay = {
+                    tabs: versionOverlay.tabs ?? overlay.tabs,
+                    products: undefined,
+                    versions: undefined,
+                    announcement: overlay.announcement,
+                    navigation: versionOverlay.navigation ?? overlay.navigation,
+                    navbarLinks: overlay.navbarLinks
+                };
+                const walked = walkAndApply(child, scopedOverlay) as Record<string, unknown>;
                 return applyVersionOverlayToNode(walked, versionOverlay);
             }
-            return walked;
+            return walkAndApply(child, overlay);
         });
     }
 
-    // Tabbed children → match tabs with overlay.tabs and overlay.navigation
+    // Tabbed children → match tabs with overlay.tabs and overlay.navigation.
+    // Track tab position among siblings so we can fall back to positional
+    // matching when slug-based matching fails (e.g. skip-slug tabs that
+    // collapse into the parent slug and therefore all share the same slug).
     if (parentType === "tabbed") {
+        const orderedTabIds = collectOrderedTabIds(overlay);
+        let tabIndex = 0;
         return children.map((child) => {
             const childObj = child as Record<string, unknown> | null;
             if (childObj == null || typeof childObj !== "object") {
                 return walkAndApply(child, overlay);
             }
             if (childObj["type"] === "tab") {
+                const positionalTabId = orderedTabIds[tabIndex];
+                tabIndex++;
                 const walked = walkAndApply(child, overlay) as Record<string, unknown>;
-                return applyTabOverlayToNode(walked, overlay);
+                return applyTabOverlayToNode(walked, overlay, positionalTabId);
             }
             return walkAndApply(child, overlay);
         });
@@ -240,10 +256,18 @@ function applyVersionOverlayToNode(
     return node;
 }
 
-function applyTabOverlayToNode(node: Record<string, unknown>, overlay: docsYml.TranslationNavigationOverlay): unknown {
+function applyTabOverlayToNode(
+    node: Record<string, unknown>,
+    overlay: docsYml.TranslationNavigationOverlay,
+    positionalTabId?: string
+): unknown {
     const tabSlug = extractLastSlugSegment(node["slug"] as string | undefined);
 
-    // Look up tab display-name override from overlay.tabs
+    // Look up tab display-name override from overlay.tabs.
+    // Match precedence: slug-based match → positional fallback (covers
+    // skip-slug tabs that collapse into the parent slug and therefore can't
+    // be disambiguated by slug alone).
+    let appliedTabId: string | undefined;
     if (overlay.tabs != null && tabSlug != null) {
         for (const [tabId, tabOverlay] of Object.entries(overlay.tabs)) {
             // Match by tab ID (YAML key) against nav tree slug segment, or
@@ -254,17 +278,25 @@ function applyTabOverlayToNode(node: Record<string, unknown>, overlay: docsYml.T
                 (tabOverlay.slug != null && tabOverlay.slug === tabSlug);
             if (isMatch && tabOverlay.displayName != null) {
                 node["title"] = tabOverlay.displayName;
+                appliedTabId = tabId;
                 break;
             }
         }
     }
+    if (appliedTabId == null && positionalTabId != null && overlay.tabs != null) {
+        const tabOverlayEntry = overlay.tabs[positionalTabId];
+        if (tabOverlayEntry?.displayName != null) {
+            node["title"] = tabOverlayEntry.displayName;
+            appliedTabId = positionalTabId;
+        }
+    }
 
     // Find matching tab navigation overlay for child overrides
-    const tabNavOverlay = findTabNavOverlay(tabSlug, overlay);
+    const tabNavOverlay = findTabNavOverlay(tabSlug, overlay, positionalTabId);
 
     if (tabNavOverlay != null) {
         // Apply tab title override from the tabs map if not already applied
-        if (overlay.tabs != null) {
+        if (overlay.tabs != null && appliedTabId == null) {
             const tabOverlayEntry = overlay.tabs[tabNavOverlay.tabId];
             if (tabOverlayEntry?.displayName != null) {
                 node["title"] = tabOverlayEntry.displayName;
@@ -301,7 +333,8 @@ function applyTabOverlayToNode(node: Record<string, unknown>, overlay: docsYml.T
 
 function findTabNavOverlay(
     tabSlug: string | undefined,
-    overlay: docsYml.TranslationNavigationOverlay
+    overlay: docsYml.TranslationNavigationOverlay,
+    positionalTabId?: string
 ): docsYml.NavigationItemOverlay.Tab | undefined {
     if (overlay.navigation == null) {
         return undefined;
@@ -324,7 +357,39 @@ function findTabNavOverlay(
         }
     }
 
+    // Positional fallback: when slug-based matching fails, use the tab's
+    // position among siblings (passed in by `applyChildOverlays`) to find
+    // the corresponding entry in overlay.navigation by tabId.
+    if (positionalTabId != null) {
+        for (const navItem of overlay.navigation) {
+            if (navItem.type === "tab" && navItem.tabId === positionalTabId) {
+                return navItem;
+            }
+        }
+    }
+
     return undefined;
+}
+
+/**
+ * Returns the ordered list of tab IDs from the overlay, preferring the order
+ * declared in `overlay.navigation` (which mirrors the source navigation
+ * ordering). Falls back to the insertion order of `overlay.tabs` if no
+ * navigation is defined.
+ */
+function collectOrderedTabIds(overlay: docsYml.TranslationNavigationOverlay): string[] {
+    if (overlay.navigation != null) {
+        const fromNavigation = overlay.navigation
+            .filter((item): item is docsYml.NavigationItemOverlay.Tab => item.type === "tab")
+            .map((item) => item.tabId);
+        if (fromNavigation.length > 0) {
+            return fromNavigation;
+        }
+    }
+    if (overlay.tabs != null) {
+        return Object.keys(overlay.tabs);
+    }
+    return [];
 }
 
 /**

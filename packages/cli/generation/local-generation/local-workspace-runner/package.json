@@ -33,7 +33,6 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
-    "@boundaryml/baml": "catalog:",
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/api-workspace-validator": "workspace:*",
     "@fern-api/auth": "workspace:*",

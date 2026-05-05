@@ -1,7 +1,7 @@
 import { File, GeneratorError, GeneratorNotificationService, getWireValue } from "@fern-api/base-generator";
 import { assertNever, entries, extractErrorMessage, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractSwiftGeneratorCli, SourceTemplateFiles, TestTemplateFiles } from "@fern-api/swift-base";
+import { AbstractSwiftGeneratorCli, RootAsIsFiles, SourceTemplateFiles, TestTemplateFiles } from "@fern-api/swift-base";
 import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/swift-dynamic-snippets";
 import {
@@ -88,7 +88,8 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
         await Promise.all([
             this.generateReadme(context, dynamicIr, sharedSnippetsGenerator),
-            this.generateReference(context, sharedSnippetsGenerator)
+            this.generateReference(context, sharedSnippetsGenerator),
+            this.generateRootAsIsFiles(context)
         ]);
     }
 
@@ -131,6 +132,15 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             context.project.addRootFiles(new File("reference.md", RelativeFilePath.of(""), content));
         } catch (e) {
             throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
+        }
+    }
+
+    private async generateRootAsIsFiles(context: SdkGeneratorContext): Promise<void> {
+        if (!context.config.whitelabel) {
+            const content = await RootAsIsFiles.Contributing.loadContents();
+            context.project.addRootFiles(
+                new File(RootAsIsFiles.Contributing.filename, RelativeFilePath.of(""), content)
+            );
         }
     }
 

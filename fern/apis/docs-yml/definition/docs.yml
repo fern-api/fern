@@ -179,6 +179,12 @@ types:
         docs: |
           Relative filepath to a custom `llms-full.txt` file that Fern should host at `/llms-full.txt`,
           overriding the auto-generated version. The file should contain the full concatenated documentation content.
+      robots-txt:
+        type: optional<string>
+        docs: |
+          Relative filepath to a custom `robots.txt` file that Fern should host at `/robots.txt`,
+          overriding the auto-generated version. Fern automatically appends a rule to disallow
+          its internal `/api/fern-docs/` routes so they are excluded from crawler indexing.
 
   CheckRuleSeverity:
     enum:
@@ -208,6 +214,9 @@ types:
       missing-redirects:
         type: optional<CheckRuleSeverity>
         docs: Severity for detecting previously published URLs that disappeared without an explicit redirect. Default is warn.
+      valid-changelog-slug:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for validating that each changelog's effective URL slug is one of the allowlisted values served as an RSS/Atom/JSON feed. Default is error.
 
   CheckConfig:
     docs: |

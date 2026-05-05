@@ -2186,17 +2186,52 @@ class EndpointFunctionSnippetGenerator:
         is_optional: bool,
         request_parameter_names: Dict[Union[str, ir_types.Name], str],
     ) -> List[AST.Expression]:
-        if self.context.custom_config.inline_request_params and not is_optional:
+        flatten_union = self.context.custom_config.flatten_union_request_bodies
+        flatten_object = self.context.custom_config.inline_request_params and not is_optional
+        if flatten_union or flatten_object:
             union = example_type_reference.shape.get_as_union()
             if union.type == "named":
                 shape = union.shape.get_as_union()
                 if shape.type == "alias":
                     return self._get_snippet_for_request_reference(shape.value, is_optional, request_parameter_names)
-                if shape.type == "object":
+                if flatten_union and shape.type == "union":
+                    return self._get_snippet_for_request_reference_flattened_union(shape, request_parameter_names)
+                if flatten_object and shape.type == "object":
                     return self._get_snippet_for_request_reference_flattened(shape, request_parameter_names)
-            return self._get_snippet_for_request_reference_default(example_type_reference)
-        else:
-            return self._get_snippet_for_request_reference_default(example_type_reference)
+        return self._get_snippet_for_request_reference_default(example_type_reference)
+
+    def _get_snippet_for_request_reference_flattened_union(
+        self,
+        example_union: ir_types.ExampleUnionType,
+        request_parameter_names: Dict[Union[str, ir_types.Name], str],
+    ) -> List[AST.Expression]:
+        sut = example_union.single_union_type
+        discriminator_param = (
+            request_parameter_names.get(get_name_from_wire_value(example_union.discriminant))
+            or resolve_name(get_name_from_wire_value(example_union.discriminant)).snake_case.safe_name
+        )
+        discriminator_arg = self.snippet_writer.get_snippet_for_named_parameter(
+            parameter_name=discriminator_param,
+            value=AST.Expression(f'"{get_wire_value(sut.wire_discriminant_value)}"'),
+        )
+
+        # single_property variants need the field name from the union type declaration,
+        # which isn't available on the example alone — emit only the discriminator until
+        # we plumb the declaration in. Customers using single_property unions still get a
+        # callable example, just without the variant payload.
+        variant_args: List[AST.Expression] = sut.shape.visit(
+            same_properties_as_object=lambda example_object: self.snippet_writer.get_snippet_for_object_properties(
+                example_object.object,
+                request_parameter_names,
+                as_request=True,
+                use_typeddict_request=self.context.custom_config.pydantic_config.use_typeddict_requests,
+                in_typeddict=False,
+            ),
+            single_property=lambda _example_type_reference: [],
+            no_properties=lambda: [],
+        )
+
+        return [*variant_args, discriminator_arg]
 
     def _get_request_parameter_name(self) -> str:
         if self.endpoint.sdk_request is None:

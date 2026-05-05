@@ -32,6 +32,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     shouldLogS3Url,
     token,
     whitelabel,
+    replay,
     absolutePathToPreview,
     isPreview,
     fiddlePreview,
@@ -59,6 +60,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     shouldLogS3Url: boolean;
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
+    replay: generatorsYml.ReplayConfigSchema | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     /** Controls CLI-side behavior (lenient env vars, skip version check). Falls back to absolutePathToPreview != null. */
     isPreview?: boolean;
@@ -133,6 +135,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                     shouldLogS3Url,
                     token,
                     whitelabel,
+                    replay,
                     absolutePathToPreview,
                     isPreview,
                     fiddlePreview,
@@ -186,6 +189,7 @@ async function generateOne({
     shouldLogS3Url,
     token,
     whitelabel,
+    replay,
     absolutePathToPreview,
     isPreview,
     fiddlePreview,
@@ -217,6 +221,7 @@ async function generateOne({
     shouldLogS3Url: boolean;
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
+    replay: generatorsYml.ReplayConfigSchema | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     isPreview: boolean | undefined;
     fiddlePreview: boolean | undefined;
@@ -300,6 +305,7 @@ async function generateOne({
             shouldLogS3Url,
             token,
             whitelabel,
+            replay,
             readme: generatorInvocation.readme,
             irVersionOverride: generatorInvocation.irVersionOverride,
             absolutePathToPreview,

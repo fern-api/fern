@@ -38,6 +38,7 @@ export async function runRemoteGenerationForGenerator({
     shouldLogS3Url,
     token,
     whitelabel,
+    replay,
     irVersionOverride,
     absolutePathToPreview,
     isPreview: isPreviewOverride,
@@ -64,6 +65,7 @@ export async function runRemoteGenerationForGenerator({
     shouldLogS3Url: boolean;
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
+    replay: generatorsYml.ReplayConfigSchema | undefined;
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     /** Controls CLI-side behavior (lenient env vars, skip version check). Falls back to absolutePathToPreview != null. */
@@ -308,6 +310,7 @@ export async function runRemoteGenerationForGenerator({
         shouldLogS3Url,
         token,
         whitelabel: whitelabel != null ? substituteEnvVars(whitelabel) : undefined,
+        replay,
         irVersionOverride,
         absolutePathToPreview,
         fiddlePreview,

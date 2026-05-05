@@ -1,4 +1,184 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.13.0
+  changelogEntry:
+    - summary: |
+        Remove the `fern write-translation` command. Translation directories under `translations/<lang>/`
+        are still respected when loading docs, but the CLI no longer ships a command to generate them.
+      type: internal
+  createdAt: "2026-05-05"
+  irVersion: 66
+- version: 5.12.0
+  changelogEntry:
+    - summary: |
+        `fern automations generate` now automatically retries 429 Too Many Requests responses with
+        exponential backoff (2s → 120s, up to 3 attempts, jittered). Automation runs are unattended,
+        so transient rate limiting should not fail the run and ask a human to re-trigger with a flag.
+        Real outages still surface as failures after retries exhaust.
+      type: feat
+    - summary: |
+        Bump `@fern-fern/fiddle-sdk` catalog pin to `1.0.2`. The new SDK exposes
+        `replay` on `CreateJobRequestV2`, so the field added to `createJobV3` in
+        PR #15690 stops being silently stripped by the SDK serializer and now
+        actually reaches Fiddle. With this in place, customers setting
+        `replay.enabled: false` in `generators.yml` get the legacy GitHub push/PR
+        path on cloud generation. Final activation step for FER-10343.
+      type: chore
+    - summary: |
+        Surface CLI errors and warnings as GitHub Actions annotations when running under GHA.
+
+        `fern automations generate` now emits a structured `::error::` workflow command for every
+        failed generator, anchored on the exact line in `generators.yml` so the annotation appears
+        inline on the file in the PR's Files-changed view, with the API / group / generator name
+        in the title and the failure reason in the body.
+
+        All other commands (e.g. `fern generate`, `fern check`) emit annotations from any
+        `logger.error` / `logger.warn` call, providing baseline coverage for failures that don't
+        flow through the per-generator collector. Status-only logs (`omitOnTTY`) are filtered out
+        so they don't burn through GitHub's per-step annotation cap.
+      type: feat
+  createdAt: "2026-05-05"
+  irVersion: 66
+- version: 5.11.0
+  changelogEntry:
+    - summary: |
+        Forward the top-level `replay` block from `generators.yml` to Fiddle's
+        `createJobV3` call so cloud generation honors `replay.enabled: false` and
+        skips the replay pipeline when a customer opts out. Activates once the
+        `@fern-fern/fiddle-sdk` catalog pin advances to a version that exposes
+        `replay` on `CreateJobRequestV2` (schema landed in fern-api/fiddle#729).
+      type: feat
+    - summary: |
+        Fix `fern check --api <name>` failing when broken-links validation is enabled
+        and `docs.yml` references multiple APIs. The docs validator now always sees
+        the full set of API workspaces (so the `valid-markdown-links` rule can resolve
+        every API referenced from the docs navigation), while the `--api` filter is
+        still applied to API-level validation only.
+      type: fix
+    - summary: |
+        Make @boundaryml/baml an optional dependency. The CLI no longer requires BAML
+        to be installed unless AI features (auto-versioning, sdk-diff) are used.
+        Users who invoke AI features without BAML installed will see a clear error
+        message with installation instructions.
+      type: chore
+  createdAt: "2026-05-05"
+  irVersion: 66
+- version: 5.10.3
+  changelogEntry:
+    - summary: |
+        Apply per-locale `navbar-links` overlays in the default `fern docs dev` app
+        preview server (the legacy preview and production publish already did this,
+        so dev was the odd one out and showed English CTAs on `/<lang>/` URLs).
+        Also matches translation overrides for skip-slug sibling tabs positionally
+        when slug-based matching can't disambiguate them — without this, only the
+        one tab whose slug retained its own segment got translated.
+      type: fix
+  createdAt: "2026-05-05"
+  irVersion: 66
+- version: 5.10.2
+  changelogEntry:
+    - summary: |
+        Bump axios to ^1.15.1 to address CVE-2026-42037 (CRLF injection in
+        multipart/form-data body via unsanitized blob.type). Narrow the type of
+        the response Content-Type header in init's OpenAPI URL loader to satisfy
+        axios 1.16's stricter `AxiosResponseHeaders` typings.
+      type: chore
+  createdAt: "2026-05-05"
+  irVersion: 66
+- version: 5.10.1
+  changelogEntry:
+    - summary: |
+        Plumb the top-level `replay` block from `generators.yml` through the remote
+        generation runner to the createJobV3 wire boundary, so cloud generation can
+        honor `replay.enabled` once Fiddle exposes the field.
+      type: chore
+  createdAt: "2026-05-05"
+  irVersion: 66
+- version: 5.10.0
+  changelogEntry:
+    - summary: |
+        Fix self-hosted GitHub clone failing with "Invalid username or token" when
+        the user's `${GITHUB_TOKEN}` is an OAuth user token (gho_*) or personal
+        access token (ghp_*, github_pat_*). The clone URL hardcoded the
+        `x-access-token:` username, which is the format reserved for GitHub App
+        installation tokens (ghs_*). Now selects the format based on the token
+        prefix, so both auth modes work.
+      type: fix
+    - summary: |
+        Capture PostHog telemetry for replay outcomes during `fern generate`. Emits a
+        single `replay` event with `action: pipeline_run` carrying patch counts, conflict
+        reason buckets, generator/repo context, and pipeline duration. Honors
+        FERN_DISABLE_TELEMETRY (v1) and FERN_TELEMETRY_DISABLED / ~/.fernrc (v2). Adds a
+        structured `[replay]` info log line and per-bucket conflict debug counts so the
+        same data is visible in stdout. No file paths, patch IDs, or commit messages
+        are emitted; the SDK repo URI is hashed (sha256, 16-char prefix). Wires the
+        previously-no-op v2 TaskContextAdapter.instrumentPostHogEvent so v2-driven
+        generates feed the same event stream as v1. Distinguishes genuine replay
+        crashes from `flow: first-generation` to keep success-rate dashboards honest.
+      type: internal
+  createdAt: "2026-05-05"
+  irVersion: 66
+- version: 5.9.0
+  changelogEntry:
+    - summary: |
+        Accept `branch` under `github` when `mode` is `release` in `generators.yml`. This
+        allows users to configure a non-default branch for release mode in preparation for
+        wiring the field through to the remote generation service.
+      type: feat
+  createdAt: "2026-05-05"
+  irVersion: 66
+- version: 5.8.2
+  changelogEntry:
+    - summary: |
+        Remove `break` from the supported changelog types so the automated release flow
+        cannot produce a major version bump. Major releases must now be made by editing
+        the relevant `versions.yml` directly so the breaking change is explicitly
+        acknowledged in review. Validation rejects `type: break` in `unreleased/`.
+      type: chore
+  createdAt: "2026-05-04"
+  irVersion: 66
+- version: 5.8.1
+  changelogEntry:
+    - summary: |
+        Add a `valid-changelog-slug` rule to `fern check` that errors when a changelog's
+        effective URL slug is not one of the values served as an RSS/Atom/JSON feed by
+        the docs platform (`changelog`, `changelogs`, `release-notes`, `releasenotes`,
+        `whats-new`, `whatsnew`). Severity defaults to `error` and can be overridden
+        via `check.rules.valid-changelog-slug` in `docs.yml`.
+      type: fix
+  createdAt: "2026-05-04"
+  irVersion: 66
+- version: 5.8.0
+  changelogEntry:
+    - summary: |
+        Add support for a custom `robots.txt` file in `docs.yml`. Set `agents.robots-txt` to a relative
+        filepath and Fern will host the file at `/robots.txt` on your docs site, overriding the
+        auto-generated default.
+      type: feat
+    - summary: |
+        Show a clear, actionable error when the Fern GitHub App is not installed on
+        the target repository instead of the generic "Failed to create job" message.
+      type: fix
+  createdAt: "2026-05-04"
+  irVersion: 66
+- version: 5.7.10
+  changelogEntry:
+    - summary: |
+        Fix the OpenAPI 3.1 -> IR converter to respect endpoint-level `security: []` opt-outs when `auth` is configured in `generators.yml`. Previously, declaring an `auth` scheme at the workspace level would silently override every endpoint-level `security` field — including explicit empty-array opt-outs — so endpoints that intentionally opted out of auth (e.g. an OAuth token endpoint, or a public endpoint) ended up rendered in docs and SDKs as if they required the global auth scheme.
+      type: fix
+  createdAt: "2026-05-04"
+  irVersion: 66
+- version: 5.7.9
+  changelogEntry:
+    - summary: |
+        `fern docs dev` now fails with a clear error when no `docs.yml` is present, instead of exiting silently.
+      type: fix
+    - summary: |
+        Fix section landing pages with `skip-slug: true` ignoring frontmatter `slug` declarations.
+        Sections now compute separate slugs for the overview page (honors frontmatter) and for
+        children (respects skip-slug), so both features work correctly together.
+      type: fix
+  createdAt: "2026-05-04"
+  irVersion: 66
 - version: 5.7.8
   changelogEntry:
     - summary: |

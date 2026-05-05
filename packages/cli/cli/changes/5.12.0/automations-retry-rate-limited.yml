@@ -1,0 +1,6 @@
+- summary: |
+    `fern automations generate` now automatically retries 429 Too Many Requests responses with
+    exponential backoff (2s → 120s, up to 3 attempts, jittered). Automation runs are unattended,
+    so transient rate limiting should not fail the run and ask a human to re-trigger with a flag.
+    Real outages still surface as failures after retries exhaust.
+  type: feat

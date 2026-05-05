@@ -32,6 +32,7 @@ export async function createAndStartJob({
     shouldLogS3Url,
     token,
     whitelabel,
+    replay,
     irVersionOverride,
     absolutePathToPreview,
     fiddlePreview,
@@ -54,6 +55,7 @@ export async function createAndStartJob({
     shouldLogS3Url: boolean;
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
+    replay: generatorsYml.ReplayConfigSchema | undefined;
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     /** When provided, overrides the `preview` flag sent to Fiddle. When omitted, falls back to absolutePathToPreview != null. */
@@ -101,6 +103,7 @@ export async function createAndStartJob({
                 shouldLogS3Url,
                 token,
                 whitelabel,
+                replay,
                 absolutePathToPreview,
                 fiddlePreview,
                 pushPreviewBranch,
@@ -133,6 +136,7 @@ async function createJob({
     shouldLogS3Url,
     token,
     whitelabel,
+    replay,
     absolutePathToPreview,
     fiddlePreview,
     pushPreviewBranch,
@@ -149,6 +153,7 @@ async function createJob({
     shouldLogS3Url: boolean;
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
+    replay: generatorsYml.ReplayConfigSchema | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     /** When provided, overrides the `preview` flag sent to Fiddle. When omitted, falls back to absolutePathToPreview != null. */
     fiddlePreview?: boolean;
@@ -170,7 +175,9 @@ async function createJob({
         publishMetadata: generatorInvocation.publishMetadata
     };
 
-    const createResponse = await remoteGenerationService.remoteGen.createJobV3({
+    // Const-typed payload ducks the TS excess-property check; `replay` isn't on
+    // fiddle-sdk's CreateJobRequestV2 yet (FER-10343).
+    const createJobRequest = {
         apiName: workspace.definition.rootApiFile.contents.name,
         version,
         organizationName: organization,
@@ -182,6 +189,7 @@ async function createJob({
             shouldLogS3Url
         }),
         whitelabel,
+        replay: replay != null ? { enabled: replay.enabled } : undefined,
         // fiddlePreview overrides what we send to Fiddle as `preview`.
         // For sdk preview: fiddlePreview=false so Fiddle doesn't set dryRun=true
         //   (Fiddle uses `dryRun = generatePreview`, so preview=false → actual publish).
@@ -199,7 +207,8 @@ async function createJob({
         //   runId: process.env.FERN_RUN_ID
         // Fiddle will use these for separate PRs, automerge, run_id correlation,
         // and breaking change handling. (skipIfNoDiff is forwarded above — see fern-api/fiddle#708.)
-    });
+    };
+    const createResponse = await remoteGenerationService.remoteGen.createJobV3(createJobRequest);
 
     if (!createResponse.ok) {
         // Check for 429 Too Many Requests before processing the error through the visitor.
@@ -210,6 +219,17 @@ async function createJob({
         if (rawError?.content?.reason === "status-code" && rawError.content.statusCode === 429) {
             throw new TooManyRequestsError();
         }
+
+        // GithubAppNotInstalled is not in the SDK's error union for createJobV3, so
+        // handle it before the visitor. Fiddle returns this when the Fern GitHub App
+        // is not installed on the target repository.
+        const githubAppNotInstalledMessage = extractGithubAppNotInstalledMessage(rawError);
+        if (githubAppNotInstalledMessage != null) {
+            return context.failAndThrow(githubAppNotInstalledMessage, undefined, {
+                code: CliError.Code.ConfigError
+            });
+        }
+
         return convertCreateJobError(rawError)._visit({
             illegalApiNameError: () => {
                 return context.failAndThrow(
@@ -432,6 +452,29 @@ export function extractErrorMessage(error: any): string | undefined {
         return body.message;
     }
     return undefined;
+}
+
+/**
+ * Checks whether a raw SDK error is a GithubAppNotInstalled response from Fiddle.
+ * The error body shape is: { error: "GithubAppNotInstalled", content: { message, repositoryName } }.
+ * Returns a user-friendly message if matched, undefined otherwise.
+ */
+// biome-ignore lint/suspicious/noExplicitAny: the error shape from the SDK is not well-typed
+function extractGithubAppNotInstalledMessage(error: any): string | undefined {
+    // biome-ignore lint/suspicious/noExplicitAny: intentional dynamic navigation
+    const body: any = error?.content?.reason === "status-code" ? error.content.body : undefined;
+    if (body?.error !== "GithubAppNotInstalled") {
+        return undefined;
+    }
+    if (typeof body?.content?.message === "string") {
+        return body.content.message;
+    }
+    const repo =
+        typeof body?.content?.repositoryName === "string" ? body.content.repositoryName : "the target repository";
+    return (
+        `The Fern GitHub App is not installed on ${repo}. ` +
+        "Please install it (https://github.com/apps/fern-api) and try again."
+    );
 }
 
 // Fiddle's ErrorBody serializes as { error: "<ErrorType>", content: <TypedBody> }.

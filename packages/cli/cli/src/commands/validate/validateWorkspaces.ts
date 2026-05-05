@@ -17,7 +17,8 @@ export async function validateWorkspaces({
     brokenLinks,
     errorOnBrokenLinks,
     isLocal,
-    directFromOpenapi
+    directFromOpenapi,
+    commandLineApiWorkspace
 }: {
     project: Project;
     cliContext: CliContext;
@@ -26,10 +27,22 @@ export async function validateWorkspaces({
     errorOnBrokenLinks: boolean;
     isLocal?: boolean;
     directFromOpenapi?: boolean;
+    /**
+     * Optional `--api` filter. When provided, only the named API workspace is validated
+     * for API-level rules. Docs validation always runs against the full set of API
+     * workspaces because `docs.yml` may reference any/all APIs in the project (e.g. the
+     * `valid-markdown-links` rule resolves an API definition for every `apiSection`).
+     */
+    commandLineApiWorkspace?: string;
 }): Promise<void> {
     const apiResults: ApiValidationResult[] = [];
     let docsResult: DocsValidationResult | undefined;
     let hasAnyErrors = false;
+
+    const apiWorkspacesToValidate =
+        commandLineApiWorkspace != null
+            ? project.apiWorkspaces.filter((workspace) => workspace.workspaceName === commandLineApiWorkspace)
+            : project.apiWorkspaces;
 
     // Collect docs violations first (using runTaskForWorkspace to preserve [docs]: prefix for fatal errors)
     const docsWorkspace = project.docsWorkspaces;
@@ -63,7 +76,7 @@ export async function validateWorkspaces({
 
     // Collect API violations (using runTaskForWorkspace to preserve [api]: prefix for fatal errors)
     await Promise.all(
-        project.apiWorkspaces.map(async (workspace) => {
+        apiWorkspacesToValidate.map(async (workspace) => {
             if (workspace.generatorsConfiguration?.groups.length === 0 && workspace.type !== "fern") {
                 return;
             }

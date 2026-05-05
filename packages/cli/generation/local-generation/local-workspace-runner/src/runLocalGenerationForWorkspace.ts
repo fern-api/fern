@@ -32,6 +32,7 @@ import * as fs from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
+import { buildReplayTelemetryProps } from "./buildReplayTelemetryProps.js";
 import { getGeneratorOutputSubfolder } from "./getGeneratorOutputSubfolder.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 
@@ -434,16 +435,63 @@ export async function runLocalGenerationForWorkspace({
                         pipelineLogger
                     );
 
+                    const pipelineStart = Date.now();
                     const pipelineResult = await pipeline.run();
+                    const pipelineDurationMs = Date.now() - pipelineStart;
 
                     // Log replay summary
                     if (pipelineResult.steps.replay != null) {
                         logReplaySummary(pipelineResult.steps.replay, {
                             debug: (msg) => interactiveTaskContext.logger.debug(msg),
-                            info: (msg) => interactiveTaskContext.logger.info(chalk.cyan(msg)),
+                            info: (msg) => {
+                                // Don't ANSI-color structured machine-parseable lines
+                                // ("[replay] ..." emitted by replay-summary). Customer-friendly
+                                // status messages stay cyan for terminal readability.
+                                const isStructured = msg.startsWith("[replay] ") || msg.startsWith("[telemetry] ");
+                                interactiveTaskContext.logger.info(isStructured ? msg : chalk.cyan(msg));
+                            },
                             warn: (msg) => interactiveTaskContext.logger.warn(chalk.yellow(msg)),
                             error: (msg) => interactiveTaskContext.logger.error(chalk.red(msg))
                         });
+
+                        // Telemetry: emit a single `replay` event with `action: pipeline_run`.
+                        // Wrapped in try/catch — a telemetry exception must never fail generation.
+                        // The `disableTelemetry` gate honors FERN_DISABLE_TELEMETRY (v1) and v2's
+                        // FERN_TELEMETRY_DISABLED / ~/.fernrc (which short-circuit inside the
+                        // TelemetryClient regardless).
+                        if (!disableTelemetry) {
+                            try {
+                                const replayTelemetryProps = buildReplayTelemetryProps({
+                                    pipelineResult,
+                                    generatorName: generatorInvocation.name,
+                                    generatorVersion: generatorInvocation.version,
+                                    cliVersion: workspace.cliVersion,
+                                    repoUri: selfhostedGithubConfig.uri,
+                                    automationMode: automationMode === true,
+                                    autoMerge: autoMerge === true,
+                                    skipIfNoDiff: skipIfNoDiff === true,
+                                    hasBreakingChanges,
+                                    versionArg: version == null ? "none" : isAutoVersion(version) ? "auto" : "explicit",
+                                    versionBump: autoVersioningVersionBump,
+                                    replayConfigEnabled: replay?.enabled === true,
+                                    noReplayFlag: noReplay === true,
+                                    githubMode: selfhostedGithubConfig.mode ?? "push",
+                                    previewMode: selfhostedGithubConfig.previewMode === true,
+                                    durationMs: pipelineDurationMs
+                                });
+                                interactiveTaskContext.instrumentPostHogEvent({
+                                    command: "replay",
+                                    properties: replayTelemetryProps
+                                });
+                                interactiveTaskContext.logger.debug(
+                                    `[telemetry] replay event sent: ${JSON.stringify(replayTelemetryProps)}`
+                                );
+                            } catch (error) {
+                                interactiveTaskContext.logger.debug(
+                                    `[telemetry] failed to send replay event: ${String(error)}`
+                                );
+                            }
+                        }
                     }
 
                     if (pipelineResult.steps.github?.skippedNoDiff) {

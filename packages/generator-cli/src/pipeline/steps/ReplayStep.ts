@@ -31,9 +31,26 @@ export class ReplayStep extends BaseStep {
         const generationCommit = context.previousStepResults.generationCommit;
         const prepared = generationCommit?.preparedReplay;
 
+        if (generationCommit != null && generationCommit.errorMessage != null && prepared == null) {
+            // Prepare crashed in the prior step (errorMessage is set; prepared is
+            // null). Surface as a replay failure but keep step.success === true so
+            // the orchestrator does NOT propagate to pipelineResult.success = false
+            // (which would abort generation). Telemetry and logs read replayCrashed.
+            return {
+                executed: true,
+                success: true,
+                replayCrashed: true,
+                errorMessage: generationCommit.errorMessage,
+                flow: "normal-regeneration",
+                patchesDetected: 0,
+                patchesApplied: 0,
+                patchesWithConflicts: 0
+            };
+        }
+
         if (generationCommit != null && prepared == null) {
-            // GenerationCommitStep ran but replay isn't initialized (no lockfile) or
-            // prepare failed. Mirror what replayRun would have returned in that case.
+            // GenerationCommitStep ran successfully but replay isn't initialized
+            // (no lockfile). Legitimate first-generation flow.
             return {
                 executed: true,
                 success: true,
@@ -59,6 +76,25 @@ export class ReplayStep extends BaseStep {
                       skipApplication: this.config.skipApplication,
                       logger: this.logger
                   });
+
+        if (result.failureReason != null) {
+            // Prepare or apply crashed at runtime — surface via replayCrashed so
+            // telemetry/logs reflect reality, but keep step.success === true so
+            // the orchestrator does NOT abort generation on replay errors.
+            return {
+                executed: true,
+                success: true,
+                replayCrashed: true,
+                errorMessage: result.failureReason,
+                previousGenerationSha: result.previousGenerationSha ?? undefined,
+                currentGenerationSha: result.currentGenerationSha ?? undefined,
+                baseBranchHead: result.baseBranchHead ?? undefined,
+                flow: "normal-regeneration",
+                patchesDetected: 0,
+                patchesApplied: 0,
+                patchesWithConflicts: 0
+            };
+        }
 
         if (result.report == null) {
             return {
