@@ -32,7 +32,7 @@
     "test:update": "vitest --run -u"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "1.2.0-1d73d2e141",
+    "@fern-api/fdr-sdk": "1.2.4-f661387fb2",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "estree-walker": "catalog:",
