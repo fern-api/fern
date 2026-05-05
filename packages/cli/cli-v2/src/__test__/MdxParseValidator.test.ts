@@ -9,8 +9,8 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 import { loadFernYml } from "../config/fern-yml/loadFernYml.js";
 import { DocsChecker } from "../docs/checker/DocsChecker.js";
-import { WorkspaceLoader } from "../workspace/WorkspaceLoader.js";
 import type { Workspace } from "../workspace/Workspace.js";
+import { WorkspaceLoader } from "../workspace/WorkspaceLoader.js";
 import { createTestContext } from "./utils/createTestContext.js";
 
 describe("MdxParseValidator (via DocsChecker)", () => {

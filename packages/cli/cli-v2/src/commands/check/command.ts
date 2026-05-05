@@ -207,10 +207,7 @@ export class CheckCommand {
  * on the well-known "Failed to parse markdown" substring that rules emit
  * when their `markdownPage` visitor blows up, plus the page's basename.
  */
-function isMdxParseSymptom(
-    violation: DocsChecker.ResolvedViolation,
-    filesWithMdxParseErrors: Set<string>
-): boolean {
+function isMdxParseSymptom(violation: DocsChecker.ResolvedViolation, filesWithMdxParseErrors: Set<string>): boolean {
     if (!/failed to parse markdown|failed to initialize/i.test(violation.message)) {
         return false;
     }
