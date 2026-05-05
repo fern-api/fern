@@ -82,6 +82,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         "You can also pass a pre-configured Logger instance."
     )
 
+    MAX_RETRIES_CONSTRUCTOR_PARAMETER_NAME = "max_retries"
+
     _RESERVED_CONSTRUCTOR_PARAM_NAMES = {
         "base_url",
         "environment",
@@ -96,6 +98,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         "_token_getter_override",
         "async_token",
         "logging",
+        "max_retries",
+        "_max_retries",
     }
 
     def _get_wrapper_bearer_token_kwarg_name(self, *, client_wrapper_generator: ClientWrapperGenerator) -> str:
@@ -136,6 +140,9 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             self._root_client_constructor_params.append(base_url_constructor_parameter)
 
         self._timeout_constructor_parameter_name = self._get_timeout_constructor_parameter_name(
+            [param.constructor_parameter_name for param in self._root_client_constructor_params]
+        )
+        self._max_retries_constructor_parameter_name = self._get_max_retries_constructor_parameter_name(
             [param.constructor_parameter_name for param in self._root_client_constructor_params]
         )
 
@@ -268,6 +275,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             "client_id",
             "client_secret",
             self._timeout_constructor_parameter_name,
+            self._max_retries_constructor_parameter_name,
             RootClientGenerator.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME,
             RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME,
         ]
@@ -284,6 +292,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
             RootClientGenerator.TOKEN_PARAMETER_NAME,
             self._timeout_constructor_parameter_name,
+            self._max_retries_constructor_parameter_name,
             RootClientGenerator.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME,
             RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME,
         ]
@@ -717,6 +726,18 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
         parameters.append(
             RootClientConstructorParameter(
+                constructor_parameter_name=self._max_retries_constructor_parameter_name,
+                type_hint=AST.TypeHint.optional(AST.TypeHint.int_()),
+                docs=(
+                    f"The default maximum number of retries for failed requests. "
+                    f"Defaults to {self._context.custom_config.default_max_retries}. "
+                    f"Per-request `max_retries` in `request_options` takes precedence over this value."
+                ),
+            )
+        )
+
+        parameters.append(
+            RootClientConstructorParameter(
                 constructor_parameter_name=self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME,
                 type_hint=AST.TypeHint.optional(AST.TypeHint.bool_()),
                 docs="Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.",
@@ -962,6 +983,18 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 ),
             )
 
+            max_retries_local_variable = "_defaulted_max_retries"
+            writer.write(f"{max_retries_local_variable} = ")
+            writer.write_node(
+                AST.Expression(
+                    AST.ConditionalExpression(
+                        left=AST.Expression(f"{self._max_retries_constructor_parameter_name}"),
+                        right=AST.Expression(str(self._context.custom_config.default_max_retries)),
+                        test=AST.Expression(f"{self._max_retries_constructor_parameter_name} is not None"),
+                    ),
+                ),
+            )
+
             constructor_parameters = self._get_constructor_parameters(is_async=is_async)
             for param in constructor_parameters:
                 if param.validation_check is not None:
@@ -988,6 +1021,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     writer=writer,
                     client_wrapper_generator=client_wrapper_generator,
                     timeout_local_variable=timeout_local_variable,
+                    max_retries_local_variable=max_retries_local_variable,
                     is_async=is_async,
                     constructor_parameters=constructor_parameters,
                     transport_variable_name=transport_var_name,
@@ -998,6 +1032,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     client_wrapper_generator=client_wrapper_generator,
                     environments_config=self._environments_config,
                     timeout_local_variable=timeout_local_variable,
+                    max_retries_local_variable=max_retries_local_variable,
                     is_async=is_async,
                     ignore_httpx_constructor_parameter=True,
                     exclude_auth=True,
@@ -1040,6 +1075,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     client_wrapper_generator=client_wrapper_generator,
                     environments_config=self._environments_config,
                     timeout_local_variable=timeout_local_variable,
+                    max_retries_local_variable=max_retries_local_variable,
                     is_async=is_async,
                     use_oauth_token_provider=use_oauth_token_provider,
                     transport_variable_name=transport_var_name,
@@ -1060,6 +1096,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     client_wrapper_generator=client_wrapper_generator,
                     environments_config=self._environments_config,
                     timeout_local_variable=timeout_local_variable,
+                    max_retries_local_variable=max_retries_local_variable,
                     is_async=is_async,
                     use_oauth_token_provider=use_oauth_token_provider,
                     transport_variable_name=transport_var_name,
@@ -1069,6 +1106,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         client_wrapper_generator=client_wrapper_generator,
                         environments_config=self._environments_config,
                         timeout_local_variable=timeout_local_variable,
+                        max_retries_local_variable=max_retries_local_variable,
                         is_async=is_async,
                         exclude_auth=True,
                         transport_variable_name=transport_var_name,
@@ -1196,6 +1234,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         writer: AST.NodeWriter,
         client_wrapper_generator: ClientWrapperGenerator,
         timeout_local_variable: str,
+        max_retries_local_variable: str,
         is_async: bool,
         constructor_parameters: List[RootClientConstructorParameter],
         transport_variable_name: Optional[str] = None,
@@ -1217,6 +1256,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 client_wrapper_generator=client_wrapper_generator,
                 environments_config=self._environments_config,
                 timeout_local_variable=timeout_local_variable,
+                max_retries_local_variable=max_retries_local_variable,
                 is_async=is_async,
                 exclude_auth=True,
                 transport_variable_name=transport_variable_name,
@@ -1250,6 +1290,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 client_wrapper_generator=client_wrapper_generator,
                 environments_config=self._environments_config,
                 timeout_local_variable=timeout_local_variable,
+                max_retries_local_variable=max_retries_local_variable,
                 is_async=is_async,
                 ignore_httpx_constructor_parameter=True,
                 exclude_auth=True,
@@ -1293,6 +1334,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 client_wrapper_generator=client_wrapper_generator,
                 environments_config=self._environments_config,
                 timeout_local_variable=timeout_local_variable,
+                max_retries_local_variable=max_retries_local_variable,
                 is_async=is_async,
                 use_oauth_token_provider=True,
                 transport_variable_name=transport_variable_name,
@@ -1317,6 +1359,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     client_wrapper_generator=client_wrapper_generator,
                     environments_config=self._environments_config,
                     timeout_local_variable=timeout_local_variable,
+                    max_retries_local_variable=max_retries_local_variable,
                     is_async=is_async,
                     exclude_auth=True,
                     transport_variable_name=transport_variable_name,
@@ -1347,6 +1390,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         client_wrapper_generator: ClientWrapperGenerator,
         environments_config: Optional[ir_types.EnvironmentsConfig],
         timeout_local_variable: str,
+        max_retries_local_variable: str,
         is_async: bool,
         exclude_auth: Optional[bool] = False,
         ignore_httpx_constructor_parameter: bool = False,
@@ -1521,6 +1565,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
         client_wrapper_constructor_kwargs.append(
             (
+                ClientWrapperGenerator.MAX_RETRIES_PARAMETER_NAME,
+                AST.Expression(max_retries_local_variable),
+            )
+        )
+
+        client_wrapper_constructor_kwargs.append(
+            (
                 ClientWrapperGenerator.LOGGING_PARAMETER_NAME,
                 AST.Expression(RootClientGenerator.LOGGING_CONSTRUCTOR_PARAMETER_NAME),
             )
@@ -1586,6 +1637,12 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             if param == "timeout":
                 return "_timeout"
         return "timeout"
+
+    def _get_max_retries_constructor_parameter_name(self, params: typing.List[str]) -> str:
+        for param in params:
+            if param == "max_retries":
+                return "_max_retries"
+        return "max_retries"
 
     def _get_server_variables(self) -> typing.List[ir_types.ServerVariable]:
         environments_config = self._environments_config
