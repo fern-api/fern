@@ -1185,8 +1185,8 @@ async function checkAndDownloadExistingSdkDynamicIRs({
     try {
         const response = await fdr.api.register.checkSdkDynamicIrExists({
             orgId: CjsFdrSdk.OrgId(organization),
-            apiId: "",
-            irVersions: []
+            apiId: workspace.definition.rootApiFile.contents.name,
+            irVersions: Object.keys(snippetConfigWithVersions)
         });
 
         const existingDynamicIrs = response.existingDynamicIrs ?? {};
