@@ -1,5 +1,5 @@
-import type { PipelineResult, ReplayStepResult } from "@fern-api/generator-cli/pipeline";
 import { createHash } from "crypto";
+import type { PipelineResult, ReplayStepResult } from "./types.js";
 
 /**
  * Tags type matches @fern-api/cli-v2's Tags shape: PostHog rejects nested
@@ -25,8 +25,9 @@ function isKnownConflictReason(reason: string | undefined): reason is KnownConfl
  * `PipelineResult` and surrounding generation context.
  *
  * Pure / synchronous — no I/O, no PostHog client, no logger. Called from
- * `runLocalGenerationForWorkspace` after `pipeline.run()` returns and the result
- * is mapped into a flat tag bag.
+ * `runLocalGenerationForWorkspace` after `pipeline.run()` returns and from
+ * `RemoteTaskHandler` when a cloud job finishes (using the replay result parsed
+ * from Fiddle's debug log line).
  *
  * PII handling: file paths, patch IDs, commit messages, and SHAs are NEVER
  * emitted. Repo URI is hashed (sha256, 16-char prefix) so per-repo dashboards

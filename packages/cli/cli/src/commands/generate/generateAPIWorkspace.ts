@@ -193,7 +193,9 @@ export async function generateWorkspace({
                         autoMerge,
                         automation,
                         occurrenceTracker,
-                        skipIfNoDiff
+                        skipIfNoDiff,
+                        noReplay,
+                        disableTelemetry: isTelemetryDisabled()
                     });
                 }
             })

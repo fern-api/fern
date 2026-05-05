@@ -1,6 +1,6 @@
-import type { PipelineResult, ReplayStepResult } from "@fern-api/generator-cli/pipeline";
 import { describe, expect, it } from "vitest";
-import { buildReplayTelemetryProps } from "../buildReplayTelemetryProps.js";
+import { buildReplayTelemetryProps } from "../pipeline/buildReplayTelemetryProps.js";
+import type { PipelineResult, ReplayStepResult } from "../pipeline/index.js";
 
 const PII_FORBIDDEN_KEYS = [
     "patch_id",

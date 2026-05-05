@@ -1,6 +1,11 @@
 import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration";
 import { noop } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import {
+    buildReplayTelemetryProps,
+    type PipelineResult,
+    type ReplayStepResult
+} from "@fern-api/generator-cli/pipeline";
 import { LogLevel } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { CliError, InteractiveTaskContext } from "@fern-api/task-context";
@@ -17,6 +22,23 @@ import yauzl from "yauzl";
 
 import { extractPublishTarget, PublishTarget } from "./publishTarget.js";
 
+/**
+ * Fiddle's `GithubFiddleTask` writes the full `PipelineResult` (the JSON
+ * `generator-cli pipeline run` writes to stdout) into its task log stream as a
+ * DEBUG entry with the format below. `AbstractFiddleTask` includes every
+ * task log (regardless of level) in the response, so the line lands in
+ * `remoteTask.logs` for the CLI to scrape.
+ *
+ * Source of truth: fiddle-coordinator/src/main/java/com/fern/fiddle/coordinator/task/GithubFiddleTask.java#974
+ *
+ *   debugLog("Pipeline: raw result (" + stdout.length() + " bytes): " + stdout);
+ *
+ * If Fiddle ever changes that prefix string, this regex stops matching and
+ * `command=replay surface=fiddle` events stop firing — the snapshot test on
+ * this constant in `__test__/RemoteTaskHandler.test.ts` is the canary.
+ */
+export const FIDDLE_PIPELINE_RESULT_LOG_REGEX = /^Pipeline: raw result \(\d+ bytes\): (\{.*\})$/;
+
 export declare namespace RemoteTaskHandler {
     export interface Init {
         job: FernFiddle.remoteGen.CreateJobResponse;
@@ -24,6 +46,25 @@ export declare namespace RemoteTaskHandler {
         interactiveTaskContext: InteractiveTaskContext;
         generatorInvocation: generatorsYml.GeneratorInvocation;
         absolutePathToPreview: AbsoluteFilePath | undefined;
+        /**
+         * Surrounding context required to construct the `replay` PostHog event when
+         * Fiddle's pipeline-result log line is present in the task stream. All
+         * fields are required — the local path's `runLocalGenerationForWorkspace`
+         * is the schema reference (see `buildReplayTelemetryProps` for prop list).
+         */
+        telemetryContext: ReplayTelemetryContext;
+    }
+    export interface ReplayTelemetryContext {
+        cliVersion: string | undefined;
+        automationMode: boolean;
+        autoMerge: boolean;
+        skipIfNoDiff: boolean;
+        versionArg: "auto" | "explicit" | "none";
+        versionBump: string | undefined;
+        replayConfigEnabled: boolean;
+        /** True when the user passed `--no-replay`. Cloud doesn't currently honor it (FER-10343), but plumb the flag for parity. */
+        noReplayFlag: boolean;
+        disableTelemetry: boolean;
     }
     export interface Response {
         createdSnippets: boolean;
@@ -54,12 +95,21 @@ export class RemoteTaskHandler {
     private context: InteractiveTaskContext;
     private generatorInvocation: generatorsYml.GeneratorInvocation;
     private absolutePathToPreview: AbsoluteFilePath | undefined;
+    private telemetryContext: RemoteTaskHandler.ReplayTelemetryContext;
     private lengthOfLastLogs = 0;
+    private cachedReplayResult: ReplayStepResult | undefined;
+    private replayEventEmitted = false;
 
-    constructor({ interactiveTaskContext, generatorInvocation, absolutePathToPreview }: RemoteTaskHandler.Init) {
+    constructor({
+        interactiveTaskContext,
+        generatorInvocation,
+        absolutePathToPreview,
+        telemetryContext
+    }: RemoteTaskHandler.Init) {
         this.context = interactiveTaskContext;
         this.generatorInvocation = generatorInvocation;
         this.absolutePathToPreview = absolutePathToPreview;
+        this.telemetryContext = telemetryContext;
     }
 
     public async processUpdate(
@@ -122,6 +172,13 @@ export class RemoteTaskHandler {
             if (this.#actualVersion == null) {
                 this.#actualVersion = extractVersionFromLogMessage(newLog.message) ?? this.#actualVersion;
             }
+
+            // Scrape Fiddle's pipeline-result debug line for the structured replay
+            // outcome. Used to emit the `replay` PostHog event (action=pipeline_run,
+            // surface=fiddle) on cloud runs without requiring any Fiddle change.
+            if (this.cachedReplayResult == null) {
+                this.cachedReplayResult = tryParseReplayResult(newLog.message);
+            }
         }
         this.lengthOfLastLogs = remoteTask.logs.length;
 
@@ -168,6 +225,8 @@ export class RemoteTaskHandler {
                 if (finishedStatus.actualVersion != null) {
                     this.#actualVersion = finishedStatus.actualVersion;
                 }
+
+                this.emitReplayTelemetryIfReady();
             },
             _other: () => {
                 this.context.logger.warn("Received unknown update type: " + remoteTask.status.type);
@@ -190,6 +249,72 @@ export class RemoteTaskHandler {
         return this.absolutePathToPreview != null
             ? join(this.absolutePathToPreview, RelativeFilePath.of(path.basename(this.generatorInvocation.name)))
             : this.generatorInvocation.absolutePathToLocalOutput;
+    }
+
+    /**
+     * Emits one `replay` PostHog event per cloud generation, mirroring the local
+     * path's hook in `runLocalGenerationForWorkspace`. Idempotent: a second call
+     * after the first successful emit is a no-op so retries / late polls don't
+     * double-count.
+     *
+     * Honors `disableTelemetry` (FERN_DISABLE_TELEMETRY). Wrapped in try/catch —
+     * a telemetry failure must never fail generation.
+     */
+    private emitReplayTelemetryIfReady(): void {
+        if (this.replayEventEmitted) {
+            return;
+        }
+        if (this.cachedReplayResult == null) {
+            return;
+        }
+        if (this.telemetryContext.disableTelemetry) {
+            return;
+        }
+
+        try {
+            // Synthesize a minimal PipelineResult — buildReplayTelemetryProps only
+            // reads `steps.replay`, `steps.github`, `success`, and `warnings`. The
+            // GitHub step result isn't recoverable from log scrape (Fiddle handles
+            // PR creation differently from the in-process pipeline), so it stays
+            // undefined and the github_* properties default appropriately.
+            const pipelineResult: PipelineResult = {
+                success: true,
+                steps: { replay: this.cachedReplayResult },
+                warnings: []
+            };
+
+            const props = buildReplayTelemetryProps({
+                pipelineResult,
+                generatorName: this.generatorInvocation.name,
+                generatorVersion: this.generatorInvocation.version,
+                cliVersion: this.telemetryContext.cliVersion,
+                repoUri: extractRepoUriFromGenerator(this.generatorInvocation),
+                automationMode: this.telemetryContext.automationMode,
+                autoMerge: this.telemetryContext.autoMerge,
+                skipIfNoDiff: this.telemetryContext.skipIfNoDiff,
+                hasBreakingChanges: false,
+                versionArg: this.telemetryContext.versionArg,
+                versionBump: this.telemetryContext.versionBump,
+                replayConfigEnabled: this.telemetryContext.replayConfigEnabled,
+                noReplayFlag: this.telemetryContext.noReplayFlag,
+                githubMode: extractGithubModeFromGenerator(this.generatorInvocation),
+                previewMode: this.absolutePathToPreview != null,
+                // Cloud runs don't have an in-process duration we can measure here —
+                // Fiddle's task wall-clock isn't echoed structurally. Send 0 rather
+                // than fabricate a number; dashboards should split duration panels
+                // by `surface` and exclude `fiddle`.
+                durationMs: 0
+            });
+
+            this.context.instrumentPostHogEvent({
+                command: "replay",
+                properties: { ...props, surface: "fiddle" }
+            });
+            this.context.logger.debug(`[telemetry] replay event sent: ${JSON.stringify({ ...props, surface: "fiddle" })}`);
+            this.replayEventEmitted = true;
+        } catch (error) {
+            this.context.logger.debug(`[telemetry] failed to send replay event: ${String(error)}`);
+        }
     }
 
     #isFinished = false;
@@ -241,6 +366,58 @@ export function extractVersionFromLogMessage(message: string): string | undefine
         return undefined;
     }
     return match[1].replace(/^v/, "");
+}
+
+/**
+ * Parses Fiddle's pipeline-result debug log line and returns the replay step
+ * result, or `undefined` when the line doesn't match or the embedded JSON is
+ * malformed. Exported for testing.
+ */
+export function tryParseReplayResult(logMessage: string): ReplayStepResult | undefined {
+    const match = logMessage.match(FIDDLE_PIPELINE_RESULT_LOG_REGEX);
+    if (match?.[1] == null) {
+        return undefined;
+    }
+    try {
+        const parsed = JSON.parse(match[1]) as PipelineResult;
+        return parsed?.steps?.replay;
+    } catch {
+        return undefined;
+    }
+}
+
+/**
+ * Returns the configured GitHub repository identifier (cloud `repository:` or
+ * self-hosted `uri:`) so it can be hashed into `repo_uri_hash` for telemetry.
+ * Empty string when no GitHub config is present — the hash is then a stable
+ * zero-input digest, signaling "GitHub-less mode" without leaking PII.
+ */
+function extractRepoUriFromGenerator(generatorInvocation: generatorsYml.GeneratorInvocation): string {
+    const github = generatorInvocation.raw?.github;
+    if (github == null) {
+        return "";
+    }
+    if ("uri" in github && typeof github.uri === "string") {
+        return github.uri;
+    }
+    if ("repository" in github && typeof github.repository === "string") {
+        return github.repository;
+    }
+    return "";
+}
+
+/**
+ * Returns whether the configured GitHub mode opens a PR or pushes directly.
+ * Defaults to `"push"` to match generator-cli's GithubStep default.
+ */
+function extractGithubModeFromGenerator(
+    generatorInvocation: generatorsYml.GeneratorInvocation
+): "pull-request" | "push" {
+    const github = generatorInvocation.raw?.github;
+    if (github != null && "mode" in github && github.mode === "pull-request") {
+        return "pull-request";
+    }
+    return "push";
 }
 
 async function downloadFilesForTask({

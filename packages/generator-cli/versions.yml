@@ -1,6 +1,15 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Re-export `buildReplayTelemetryProps` from `@fern-api/generator-cli/pipeline`.
+        Pure refactor — the helper used to live in `local-workspace-runner`. Both the
+        local-CLI and remote-CLI replay telemetry hooks now share the same builder.
+      type: internal
+  createdAt: "2026-05-05"
+  version: 0.9.23
+
+- changelogEntry:
+    - summary: |
         Bump `@fern-api/replay` from 0.14.0 to 0.14.1. Picks up fix for
         consolidating duplicate-content patches to prevent next-regen
         corruption.

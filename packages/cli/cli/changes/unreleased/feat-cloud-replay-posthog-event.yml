@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Emit the `replay` PostHog event from cloud generation. The CLI now scrapes
+    Fiddle's pipeline-result log line out of `remoteTask.logs` in
+    `RemoteTaskHandler` and emits one `command=replay surface=fiddle` event per
+    cloud generation, mirroring the local-path hook. Honors
+    `FERN_DISABLE_TELEMETRY`. No Fiddle change required.
+  type: feat
