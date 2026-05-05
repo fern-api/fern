@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.10.2
+  changelogEntry:
+    - summary: |
+        Bump axios to ^1.15.1 to address CVE-2026-42037 (CRLF injection in
+        multipart/form-data body via unsanitized blob.type). Narrow the type of
+        the response Content-Type header in init's OpenAPI URL loader to satisfy
+        axios 1.16's stricter `AxiosResponseHeaders` typings.
+      type: chore
+  createdAt: "2026-05-05"
+  irVersion: 66
 - version: 5.10.1
   changelogEntry:
     - summary: |
