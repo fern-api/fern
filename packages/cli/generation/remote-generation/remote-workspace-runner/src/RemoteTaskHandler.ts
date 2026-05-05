@@ -56,6 +56,7 @@ export declare namespace RemoteTaskHandler {
     }
     export interface ReplayTelemetryContext {
         cliVersion: string | undefined;
+        orgId: string;
         automationMode: boolean;
         autoMerge: boolean;
         skipIfNoDiff: boolean;
@@ -317,13 +318,16 @@ export class RemoteTaskHandler {
                 durationMs: Date.now() - this.taskStartedAtMs
             });
 
+            const propsWithOverlay = {
+                ...props,
+                surface: "fiddle" as const,
+                org_id: this.telemetryContext.orgId
+            };
             this.context.instrumentPostHogEvent({
                 command: "replay",
-                properties: { ...props, surface: "fiddle" }
+                properties: propsWithOverlay
             });
-            this.context.logger.debug(
-                `[telemetry] replay event sent: ${JSON.stringify({ ...props, surface: "fiddle" })}`
-            );
+            this.context.logger.debug(`[telemetry] replay event sent: ${JSON.stringify(propsWithOverlay)}`);
             this.replayEventEmitted = true;
         } catch (error) {
             this.context.logger.debug(`[telemetry] failed to send replay event: ${String(error)}`);
