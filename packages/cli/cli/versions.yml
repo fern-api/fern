@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.13.1
+  changelogEntry:
+    - summary: |
+        Fix dynamic IR upload URLs request passing empty apiId and irVersions parameters, which caused 500 errors from FDR during SDK generation.
+      type: fix
+  createdAt: "2026-05-05"
+  irVersion: 66
 - version: 5.13.0
   changelogEntry:
     - summary: |
