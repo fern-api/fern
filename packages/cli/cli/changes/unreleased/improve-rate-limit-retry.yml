@@ -1,0 +1,6 @@
+- summary: |
+    Improve 429 rate-limit retry logic for remote generation: increase max retries
+    from 3 to 5, respect the server's retryAfter hint as a minimum delay, and widen
+    jitter (0.2 → 0.5) to reduce thundering-herd retries when many generators run
+    concurrently across multiple API groups.
+  type: fix
