@@ -1,0 +1,12 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "local",
+  "generatorConfig": {
+    "flatten_union_request_bodies": true
+  },
+  "originGitCommit": "DUMMY",
+  "invokedBy": "manual",
+  "requestedVersion": "0.0.1",
+  "sdkVersion": "0.0.1"
+}

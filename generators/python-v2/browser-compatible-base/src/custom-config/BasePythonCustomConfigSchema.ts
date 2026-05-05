@@ -35,6 +35,7 @@ export const BasePythonCustomConfigSchema = z.object({
     flat_layout: z.boolean().optional(),
     include_legacy_wire_tests: z.boolean().optional(),
     inline_request_params: z.boolean().optional(),
+    flatten_union_request_bodies: z.boolean().optional(),
     use_api_name_in_package: z.boolean().optional()
 });
 

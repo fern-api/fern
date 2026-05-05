@@ -633,8 +633,23 @@ export class EndpointSnippetGenerator {
         switch (named.type) {
             case "alias":
                 return this.getBodyRequestArgsForTypeReference({ typeReference: named.typeReference, value });
-            case "enum":
             case "discriminatedUnion":
+                if (this.context.customConfig.flatten_union_request_bodies === true) {
+                    const flatKwargs = this.context.dynamicTypeLiteralMapper.convertDiscriminatedUnionToFlatKwargs({
+                        discriminatedUnion: named,
+                        value
+                    });
+                    if (flatKwargs != null) {
+                        return flatKwargs;
+                    }
+                }
+                return [
+                    {
+                        name: REQUEST_BODY_ARG_NAME,
+                        value: this.context.dynamicTypeLiteralMapper.convert({ typeReference, value })
+                    }
+                ];
+            case "enum":
             case "undiscriminatedUnion":
                 return [
                     {
