@@ -12,6 +12,7 @@ describe("loadBamlDependencies", () => {
             "@boundaryml/baml is required for AI features (auto-versioning, sdk-diff)."
         );
         await expect(loadBamlDependencies()).rejects.toThrow("pnpm add @boundaryml/baml");
+        await expect(loadBamlDependencies()).rejects.toThrow("Original error:");
 
         vi.doUnmock("@boundaryml/baml");
     });

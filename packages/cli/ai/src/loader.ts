@@ -56,7 +56,8 @@ export async function loadBamlDependencies(): Promise<BamlDependencies> {
             BamlClient: bamlClient.b as BamlClientInstance,
             configureBamlClient: config.configureBamlClient
         };
-    } catch {
-        throw new Error(INSTALL_MESSAGE);
+    } catch (error) {
+        const original = error instanceof Error ? error.message : String(error);
+        throw new Error(`${INSTALL_MESSAGE}\n\nOriginal error: ${original}`);
     }
 }
