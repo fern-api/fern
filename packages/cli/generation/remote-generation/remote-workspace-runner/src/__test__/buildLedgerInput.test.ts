@@ -96,7 +96,7 @@ describe("buildLedgerInput", () => {
         expect(input.previewId).toBe("pr-42");
     });
 
-    it("defaults basepath to empty string and previewId to null", () => {
+    it("defaults basepath to empty string, previewId to null, and locale to en", () => {
         const { input } = buildLedgerInput({
             docsDefinition: makeDocsDefinition(),
             organization: "acme",
@@ -107,6 +107,7 @@ describe("buildLedgerInput", () => {
 
         expect(input.basepath).toBe("");
         expect(input.previewId).toBeNull();
+        expect(input.locale).toBe("en");
     });
 
     it("uses config.root for the root field", () => {
