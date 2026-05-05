@@ -55,8 +55,6 @@ private func main() async throws {
     let client = ApiClient()
 
     _ = try await client.getFoo(
-        optionalBaz: "optional_baz",
-        optionalNullableBaz: .value("optional_nullable_baz"),
         requiredBaz: "required_baz",
         requiredNullableBaz: .value("required_nullable_baz")
     )

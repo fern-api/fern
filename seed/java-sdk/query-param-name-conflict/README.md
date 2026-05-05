@@ -67,14 +67,6 @@ public class Example {
         client.bulkUpdateTasks(
             BulkUpdateTasksRequest
                 .builder()
-                .filterAssignedTo("filter_assigned_to")
-                .filterIsComplete("filter_is_complete")
-                .filterDate("filter_date")
-                .fields("_fields")
-                .bulkUpdateTasksRequestAssignedTo("assigned_to")
-                .bulkUpdateTasksRequestDate("2023-01-15")
-                .bulkUpdateTasksRequestIsComplete(true)
-                .text("text")
                 .build()
         );
     }

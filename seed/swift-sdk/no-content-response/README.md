@@ -54,10 +54,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client.contacts.create(request: .init(
-        name: "name",
-        email: "email"
-    ))
+    _ = try await client.contacts.create(request: .init(name: "name"))
 }
 
 try await main()

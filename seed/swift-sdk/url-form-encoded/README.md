@@ -55,8 +55,8 @@ private func main() async throws {
     let client = ApiClient()
 
     _ = try await client.submitFormData(request: .init(
-        username: "username",
-        email: "email"
+        username: "johndoe",
+        email: "john@example.com"
     ))
 }
 

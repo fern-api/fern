@@ -68,8 +68,6 @@ public class Example {
         client.createTest(
             RootObject
                 .builder()
-                .normalField("normalField")
-                .nullableField("nullableField")
                 .build()
         );
     }
