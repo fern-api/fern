@@ -481,11 +481,8 @@ async function uploadDynamicIRForSdkGeneration({
     // Get presigned upload URLs from FDR
     let uploadUrlsResponse;
     try {
-        uploadUrlsResponse = await fdr.api.register.getSdkDynamicIrUploadUrls({
-            orgId: FdrAPI.OrgId(organization),
-            version,
-            snippetConfiguration: { [language]: packageName }
-        });
+        // @ts-expect-error -- SDK types will be updated once fern-platform#10550 publishes new @fern-api/fdr-sdk
+        uploadUrlsResponse = await fdr.api.register.getSdkDynamicIrUploadUrls({ orgId: FdrAPI.OrgId(organization), version, snippetConfiguration: { [language]: packageName } });
     } catch (error) {
         context.logger.warn(
             `Failed to get dynamic IR upload URLs (non-fatal, dynamic snippets may be stale): ${error}`

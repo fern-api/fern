@@ -1183,15 +1183,14 @@ async function checkAndDownloadExistingSdkDynamicIRs({
     }
 
     try {
-        const response = await fdr.api.register.checkSdkDynamicIrExists({
-            orgId: CjsFdrSdk.OrgId(organization),
-            snippetConfiguration: Object.fromEntries(
-                Object.entries(snippetConfigWithVersions).map(([lang, info]) => [
-                    lang,
-                    { packageName: info.packageName, version: info.version }
-                ])
-            )
-        });
+        const snippetConfig = Object.fromEntries(
+            Object.entries(snippetConfigWithVersions).map(([lang, info]) => [
+                lang,
+                { packageName: info.packageName, version: info.version }
+            ])
+        );
+        // @ts-expect-error -- SDK types will be updated once fern-platform#10550 publishes new @fern-api/fdr-sdk
+        const response = await fdr.api.register.checkSdkDynamicIrExists({ orgId: CjsFdrSdk.OrgId(organization), snippetConfiguration: snippetConfig });
 
         const existingDynamicIrs = response.existingDynamicIrs ?? {};
 
