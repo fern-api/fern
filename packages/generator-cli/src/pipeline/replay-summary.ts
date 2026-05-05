@@ -36,10 +36,25 @@ export function logReplaySummary(result: ReplayStepResult, logger: PipelineLogge
     const applied = result.patchesApplied ?? 0;
     const absorbed = result.patchesAbsorbed ?? 0;
     const unresolvedCount = result.unresolvedPatches?.length ?? 0;
+    const unresolvedFiles = (result.unresolvedPatches ?? []).reduce(
+        (sum, patch) => sum + patch.conflictDetails.length,
+        0
+    );
     const preserved = applied - absorbed;
 
-    logger.debug(
-        `Replay: flow=${result.flow}, detected=${result.patchesDetected ?? 0}, applied=${applied}, absorbed=${absorbed}, unresolved=${unresolvedCount}`
+    // Operator-friendly structured INFO line. Grep-keyed on "[replay]" so customers
+    // and on-call can pull metrics out of pipeline logs without a parser.
+    // `success=` reflects whether the replay logic itself succeeded (NOT step.success,
+    // which stays true on replay crashes so the orchestrator doesn't abort generation).
+    const replayLogicSucceeded = result.replayCrashed !== true;
+    logger.info(
+        `[replay] flow=${result.flow ?? "unknown"} detected=${result.patchesDetected ?? 0} ` +
+            `applied=${applied} conflicts=${result.patchesWithConflicts ?? 0} ` +
+            `absorbed=${absorbed} repointed=${result.patchesRepointed ?? 0} ` +
+            `content_rebased=${result.patchesContentRebased ?? 0} ` +
+            `kept_as_user_owned=${result.patchesKeptAsUserOwned ?? 0} ` +
+            `unresolved=${unresolvedCount} unresolved_files=${unresolvedFiles} ` +
+            `warnings=${result.warnings?.length ?? 0} success=${replayLogicSucceeded}`
     );
 
     if (preserved > 0) {
@@ -50,12 +65,38 @@ export function logReplaySummary(result: ReplayStepResult, logger: PipelineLogge
     }
 
     if (unresolvedCount > 0) {
-        const totalFiles = (result.unresolvedPatches ?? []).reduce(
-            (sum, patch) => sum + patch.conflictDetails.length,
-            0
+        // Per-conflict-reason bucket counts at DEBUG. Surfaced before the per-file
+        // WARN block so debug runs see the categorical breakdown first.
+        const buckets = { sameLineEdit: 0, newFileBoth: 0, baseGenerationMismatch: 0, patchApplyFailed: 0, other: 0 };
+        for (const patch of result.unresolvedPatches ?? []) {
+            for (const file of patch.conflictDetails) {
+                switch (file.conflictReason) {
+                    case "same-line-edit":
+                        buckets.sameLineEdit += 1;
+                        break;
+                    case "new-file-both":
+                        buckets.newFileBoth += 1;
+                        break;
+                    case "base-generation-mismatch":
+                        buckets.baseGenerationMismatch += 1;
+                        break;
+                    case "patch-apply-failed":
+                        buckets.patchApplyFailed += 1;
+                        break;
+                    default:
+                        buckets.other += 1;
+                }
+            }
+        }
+        logger.debug(
+            `[replay] conflict_buckets same_line_edit=${buckets.sameLineEdit} ` +
+                `new_file_both=${buckets.newFileBoth} ` +
+                `base_generation_mismatch=${buckets.baseGenerationMismatch} ` +
+                `patch_apply_failed=${buckets.patchApplyFailed} other=${buckets.other}`
         );
+
         logger.warn(
-            `Replay: ${plural(totalFiles, "file")} ${totalFiles === 1 ? "has" : "have"} unresolved conflicts — resolve via \`fern replay resolve\``
+            `Replay: ${plural(unresolvedFiles, "file")} ${unresolvedFiles === 1 ? "has" : "have"} unresolved conflicts — resolve via \`fern replay resolve\``
         );
         for (const patch of result.unresolvedPatches ?? []) {
             logger.warn(`  "${patchDescription(patch)}":`);
@@ -63,6 +104,12 @@ export function logReplaySummary(result: ReplayStepResult, logger: PipelineLogge
                 logger.warn(`    ${file.file} — ${formatConflictReason(file.conflictReason)}`);
             }
         }
+    }
+
+    if (result.replayCrashed === true && result.errorMessage != null) {
+        // Replay crashed — surface the reason so debug logs explain what
+        // `success=false` in the structured line means.
+        logger.warn(`Replay: ${result.errorMessage}`);
     }
 
     for (const warning of result.warnings ?? []) {

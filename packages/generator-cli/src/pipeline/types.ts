@@ -152,6 +152,13 @@ export interface PipelineResult {
 }
 
 export interface ReplayStepResult extends StepResult {
+    /**
+     * True when replay prepare or apply crashed (corrupted lockfile, git failure,
+     * library bug). Distinct from `success`: the step itself always succeeds
+     * (generation must continue on replay errors), but telemetry and logs read
+     * this field to report the underlying replay failure honestly.
+     */
+    replayCrashed?: boolean;
     flow?: "first-generation" | "no-patches" | "normal-regeneration" | "skip-application";
     patchesDetected?: number;
     patchesApplied?: number;

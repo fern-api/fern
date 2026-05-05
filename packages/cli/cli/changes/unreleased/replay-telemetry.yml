@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Capture PostHog telemetry for replay outcomes during `fern generate`. Emits a
+    single `replay` event with `action: pipeline_run` carrying patch counts, conflict
+    reason buckets, generator/repo context, and pipeline duration. Honors
+    FERN_DISABLE_TELEMETRY (v1) and FERN_TELEMETRY_DISABLED / ~/.fernrc (v2). Adds a
+    structured `[replay]` info log line and per-bucket conflict debug counts so the
+    same data is visible in stdout. No file paths, patch IDs, or commit messages
+    are emitted; the SDK repo URI is hashed (sha256, 16-char prefix). Wires the
+    previously-no-op v2 TaskContextAdapter.instrumentPostHogEvent so v2-driven
+    generates feed the same event stream as v1. Distinguishes genuine replay
+    crashes from `flow: first-generation` to keep success-rate dashboards honest.
+  type: internal
