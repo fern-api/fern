@@ -33,8 +33,10 @@
     "test:update": "vitest --run -u"
   },
   "dependencies": {
-    "@boundaryml/baml": "catalog:",
     "@fern-api/configuration": "workspace:*"
+  },
+  "optionalDependencies": {
+    "@boundaryml/baml": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",

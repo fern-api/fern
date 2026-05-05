@@ -15,7 +15,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
  * This ensures we don't miss runtime dependencies regardless of where they're declared.
  */
 function getDependencyVersion(packageName) {
-    return packageJson.dependencies?.[packageName] ?? packageJson.devDependencies?.[packageName];
+    return packageJson.dependencies?.[packageName] ?? packageJson.devDependencies?.[packageName] ?? packageJson.optionalDependencies?.[packageName];
 }
 
 /**

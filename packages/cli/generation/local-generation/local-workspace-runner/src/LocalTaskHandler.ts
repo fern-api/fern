@@ -1,5 +1,5 @@
-import { ClientRegistry } from "@boundaryml/baml";
-import { b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
+import type { BamlClientInstance, ClientRegistryInstance } from "@fern-api/cli-ai";
+import { loadBamlDependencies, VersionBump } from "@fern-api/cli-ai";
 import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -426,6 +426,7 @@ export class LocalTaskHandler {
                                     previousVersion,
                                     bestBump as VersionBump
                                 );
+                                const { BamlClient } = await loadBamlDependencies();
                                 const rollup = await BamlClient.withOptions({
                                     clientRegistry: await this.getClientRegistry()
                                 }).ConsolidateChangelog(
@@ -565,7 +566,8 @@ export class LocalTaskHandler {
     ): Promise<CachedAnalysis | null> {
         const doAnalysis = async (): Promise<CachedAnalysis | null> => {
             const clientRegistry = await this.getClientRegistry();
-            const bamlClient = BamlClient.withOptions({ clientRegistry });
+            const { BamlClient } = await loadBamlDependencies();
+            const bamlClient: BamlClientInstance = BamlClient.withOptions({ clientRegistry });
             const analysis = await bamlClient.AnalyzeSdkDiff(
                 cleanedDiff,
                 language,
@@ -707,7 +709,7 @@ export class LocalTaskHandler {
      * Gets the BAML client registry for AI analysis.
      * This method is adapted from sdkDiffCommand.ts but needs project configuration.
      */
-    private async getClientRegistry(): Promise<ClientRegistry> {
+    private async getClientRegistry(): Promise<ClientRegistryInstance> {
         if (this.ai == null) {
             throw new CliError({
                 message:
@@ -718,6 +720,7 @@ export class LocalTaskHandler {
         }
 
         this.context.logger.debug(`Using AI service: ${this.ai.provider} with model ${this.ai.model}`);
+        const { configureBamlClient } = await loadBamlDependencies();
         return configureBamlClient(this.ai);
     }
 

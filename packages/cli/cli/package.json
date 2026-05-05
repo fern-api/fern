@@ -46,8 +46,10 @@
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
+  "optionalDependencies": {
+    "@boundaryml/baml": "catalog:"
+  },
   "devDependencies": {
-    "@boundaryml/baml": "catalog:",
     "@bufbuild/protobuf": "catalog:",
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/api-workspace-validator": "workspace:*",

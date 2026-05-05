@@ -52,7 +52,7 @@ async function rewriteSourceMapSources(absOutDir) {
  * This ensures we don't miss runtime dependencies regardless of where they're declared.
  */
 function getDependencyVersion(packageName) {
-    return packageJson.dependencies?.[packageName] ?? packageJson.devDependencies?.[packageName];
+    return packageJson.dependencies?.[packageName] ?? packageJson.devDependencies?.[packageName] ?? packageJson.optionalDependencies?.[packageName];
 }
 
 /**
@@ -91,6 +91,7 @@ export const PRODUCTION_TSUP_OVERRIDES = {
  * @param {boolean} config.minify - Whether to minify the output
  * @param {Object} config.env - Environment variables to inject
  * @param {string[]} [config.runtimeDependencies] - List of runtime dependencies to include in package.json
+ * @param {string[]} [config.optionalRuntimeDependencies] - List of optional runtime dependencies to include in package.json
  * @param {Object} [config.packageJsonOverrides] - Overrides for the generated package.json
  * @param {Object} [config.tsupOverrides] - Additional tsup configuration options
  */
@@ -99,7 +100,8 @@ export async function buildCli(config) {
         outDir,
         minify,
         env,
-        runtimeDependencies = ["@boundaryml/baml"],
+        runtimeDependencies = [],
+        optionalRuntimeDependencies = ["@boundaryml/baml"],
         packageJsonOverrides = {},
         tsupOverrides = {}
     } = config;
@@ -153,12 +155,22 @@ export async function buildCli(config) {
         );
     }
 
+    // Collect optional runtime dependencies
+    const optionalDependencies = {};
+    for (const dep of optionalRuntimeDependencies) {
+        const version = getDependencyVersion(dep);
+        if (version) {
+            optionalDependencies[dep] = version;
+        }
+    }
+
     // Write package.json
     const outputPackageJson = {
         version,
         repository: packageJson.repository,
         files: ["cli.cjs"],
-        dependencies,
+        ...(Object.keys(dependencies).length > 0 && { dependencies }),
+        ...(Object.keys(optionalDependencies).length > 0 && { optionalDependencies }),
         ...packageJsonOverrides
     };
 
