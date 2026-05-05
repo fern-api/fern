@@ -108,6 +108,8 @@ export function buildReplayTelemetryProps(input: {
         executed: replay?.executed ?? false,
         flow: replay?.flow ?? null,
         replay_crashed: replay?.replayCrashed === true,
+        auto_bootstrapped: replay?.autoBootstrapped === true,
+        bootstrap_attempted: replay?.bootstrapAttempted === true,
         pipeline_success: pipelineResult.success,
         pipeline_warnings_count: pipelineResult.warnings?.length ?? 0,
         replay_warnings_count: replay?.warnings?.length ?? 0,

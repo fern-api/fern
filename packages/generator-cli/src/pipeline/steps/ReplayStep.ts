@@ -41,6 +41,8 @@ export class ReplayStep extends BaseStep {
                 success: true,
                 replayCrashed: true,
                 errorMessage: generationCommit.errorMessage,
+                autoBootstrapped: false,
+                bootstrapAttempted: generationCommit.bootstrapAttempted === true,
                 flow: "normal-regeneration",
                 patchesDetected: 0,
                 patchesApplied: 0,
@@ -50,10 +52,13 @@ export class ReplayStep extends BaseStep {
 
         if (generationCommit != null && prepared == null) {
             // GenerationCommitStep ran successfully but replay isn't initialized
-            // (no lockfile). Legitimate first-generation flow.
+            // (no lockfile and bootstrap couldn't anchor on a prior generation).
+            // Legitimate first-generation flow.
             return {
                 executed: true,
                 success: true,
+                autoBootstrapped: false,
+                bootstrapAttempted: generationCommit.bootstrapAttempted === true,
                 flow: "first-generation",
                 patchesDetected: 0,
                 patchesApplied: 0,
@@ -89,6 +94,8 @@ export class ReplayStep extends BaseStep {
                 previousGenerationSha: result.previousGenerationSha ?? undefined,
                 currentGenerationSha: result.currentGenerationSha ?? undefined,
                 baseBranchHead: result.baseBranchHead ?? undefined,
+                autoBootstrapped: result.autoBootstrapped,
+                bootstrapAttempted: result.bootstrapAttempted,
                 flow: "normal-regeneration",
                 patchesDetected: 0,
                 patchesApplied: 0,
@@ -103,6 +110,8 @@ export class ReplayStep extends BaseStep {
                 previousGenerationSha: result.previousGenerationSha ?? undefined,
                 currentGenerationSha: result.currentGenerationSha ?? undefined,
                 baseBranchHead: result.baseBranchHead ?? undefined,
+                autoBootstrapped: result.autoBootstrapped,
+                bootstrapAttempted: result.bootstrapAttempted,
                 flow: "first-generation",
                 patchesDetected: 0,
                 patchesApplied: 0,
@@ -117,6 +126,8 @@ export class ReplayStep extends BaseStep {
             previousGenerationSha: result.previousGenerationSha ?? undefined,
             currentGenerationSha: result.currentGenerationSha ?? undefined,
             baseBranchHead: result.baseBranchHead ?? undefined,
+            autoBootstrapped: result.autoBootstrapped,
+            bootstrapAttempted: result.bootstrapAttempted,
             flow: report.flow,
             patchesDetected: report.patchesDetected,
             patchesApplied: report.patchesApplied,

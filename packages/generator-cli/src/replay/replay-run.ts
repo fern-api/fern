@@ -1,6 +1,6 @@
-import { LockfileManager, type ReplayPreparation, type ReplayReport, ReplayService } from "@fern-api/replay";
+import { bootstrap, LockfileManager, type ReplayPreparation, type ReplayReport, ReplayService } from "@fern-api/replay";
 import { execFileSync } from "child_process";
-import { existsSync } from "fs";
+import { existsSync, unlinkSync } from "fs";
 import { join } from "path";
 import type { PipelineLogger } from "../pipeline/PipelineLogger";
 import { ensureGitattributesEntries, ensureReplayFernignoreEntries } from "./fernignore";
@@ -30,6 +30,14 @@ export interface ReplayRunResult {
     currentGenerationSha: string | null;
     /** SHA of main's HEAD before replay ran. Always on main's lineage, stable after squash merges. */
     baseBranchHead: string | null;
+    /** True when this run inlined `bootstrap()` to create the lockfile (auto-init from `fern generate`). */
+    autoBootstrapped: boolean;
+    /**
+     * True when the lockfile-missing branch was entered, regardless of bootstrap outcome.
+     * Distinct from `autoBootstrapped` (true only on success) — together they let telemetry
+     * distinguish "tried but no anchor / threw" from "lockfile already existed".
+     */
+    bootstrapAttempted: boolean;
     /**
      * Set when prepare or apply crashed (e.g. corrupted lockfile, git failure, library bug).
      * Distinguishes a real failure from "no replay initialized" (lockfile missing → null report, no failureReason).
@@ -65,6 +73,10 @@ export interface PreparedReplay {
     currentGenerationSha: string;
     /** SHA of main's HEAD captured before prepare mutated anything. */
     baseBranchHead: string | null;
+    /** True when this run inlined `bootstrap()` to create the lockfile (auto-init from `fern generate`). */
+    autoBootstrapped: boolean;
+    /** True when the lockfile-missing branch was entered, regardless of bootstrap outcome. */
+    bootstrapAttempted: boolean;
 }
 
 export interface ReplayApplyParams {
@@ -75,15 +87,33 @@ export interface ReplayApplyParams {
 }
 
 /**
+ * Out-parameter that lets callers observe what `replayPrepare` did even when it
+ * returns `null` (bootstrap couldn't anchor, or threw). Without this, the
+ * `bootstrapAttempted` signal would be lost on the null-prepared paths through
+ * `replayRun` and `GenerationCommitStep` — both of which forward to telemetry.
+ */
+export interface ReplayPrepareState {
+    /** True when the lockfile-missing branch was entered (kill switch off + no lockfile). */
+    bootstrapAttempted: boolean;
+}
+
+/**
  * Phase 1 of the split replay flow. Reads the lockfile, syncs divergent merges if a
  * `fern-generation-base` tag indicates a squash-merged PR, and invokes the replay
  * service's `prepareReplay`. Leaves HEAD at the new `[fern-generated]` commit.
  *
- * Returns `null` when replay isn't initialized (no lockfile). Callers that also need
- * to skip the entire flow in that case should check for `null` before wiring into
- * `replayApply`.
+ * If no lockfile exists, runs `bootstrap()` inline to auto-initialize replay — this
+ * bakes `fern replay init` into `fern generate` so customers no longer need a
+ * separate init step. Returns `null` when (a) the repo has no prior `[fern-generated]`
+ * commit to anchor on, or (b) bootstrap throws (logged + cleaned up). Case (a) self-heals
+ * once a baseline commit exists; case (b) requires the underlying issue (disk full,
+ * permissions) to be resolved before the next run can succeed. The auto-bootstrap
+ * branch can be disabled via `FERN_DISABLE_AUTO_BOOTSTRAP=true`.
  */
-export async function replayPrepare(params: ReplayRunParams): Promise<PreparedReplay | null> {
+export async function replayPrepare(
+    params: ReplayRunParams,
+    state?: ReplayPrepareState
+): Promise<PreparedReplay | null> {
     const {
         outputDir,
         cliVersion,
@@ -94,9 +124,53 @@ export async function replayPrepare(params: ReplayRunParams): Promise<PreparedRe
         logger
     } = params;
     const lockfilePath = join(outputDir, ".fern", "replay.lock");
+    let autoBootstrapped = false;
+    let bootstrapAttempted = false;
 
     if (!existsSync(lockfilePath)) {
-        return null;
+        // Kill switch: customers can disable auto-bootstrap if a regression slips
+        // through. Standalone `fern replay init` continues to work unaffected.
+        if (process.env.FERN_DISABLE_AUTO_BOOTSTRAP === "true" || process.env.FERN_DISABLE_AUTO_BOOTSTRAP === "1") {
+            return null;
+        }
+
+        // Auto-bootstrap so customers don't need to run `fern replay init` separately.
+        // bootstrap() writes the lockfile, .fernignore entries, and .gitattributes;
+        // the subsequent prepareReplay commit captures them via `git add -A`.
+        // Brand-new repos with no prior `[fern-generated]` commit skip replay this
+        // run — next generate establishes the baseline. `importHistory: false` is
+        // load-bearing: scanning past patches inline would blow the generate-time
+        // budget, and "track future edits only" is the safe default for opt-out.
+        bootstrapAttempted = true;
+        if (state) {
+            state.bootstrapAttempted = true;
+        }
+        try {
+            const bootstrapResult = await bootstrap(outputDir, {
+                fernignoreAction: "skip",
+                force: false,
+                importHistory: false
+            });
+            if (bootstrapResult.generationCommit == null) {
+                return null;
+            }
+            autoBootstrapped = true;
+        } catch (error) {
+            logger?.warn("Replay auto-bootstrap failed, continuing without replay: " + String(error));
+            // Bootstrap is not transactional — it may have written the lockfile
+            // before throwing on .fernignore or .gitattributes. Clean up to prevent
+            // a half-initialized state from corrupting the next run (the lockfile
+            // would be anchored on pre-generation HEAD instead of a [fern-generated]
+            // commit, and the next run would skip bootstrap and read the broken anchor).
+            try {
+                if (existsSync(lockfilePath)) {
+                    unlinkSync(lockfilePath);
+                }
+            } catch {
+                // best-effort; corrupt-lockfile resilience handles next run
+            }
+            return null;
+        }
     }
 
     const baseBranchHead = gitRevParse(outputDir, "HEAD");
@@ -201,7 +275,9 @@ export async function replayPrepare(params: ReplayRunParams): Promise<PreparedRe
         flow: preparation.flow,
         previousGenerationSha,
         currentGenerationSha: preparation.currentGenerationSha,
-        baseBranchHead
+        baseBranchHead,
+        autoBootstrapped,
+        bootstrapAttempted
     };
 }
 
@@ -229,6 +305,8 @@ export async function replayApply(prepared: PreparedReplay, params: ReplayApplyP
             previousGenerationSha: prepared.previousGenerationSha,
             currentGenerationSha: prepared.currentGenerationSha,
             baseBranchHead: prepared.baseBranchHead,
+            autoBootstrapped: prepared.autoBootstrapped,
+            bootstrapAttempted: prepared.bootstrapAttempted,
             failureReason: String(error)
         };
     }
@@ -257,7 +335,9 @@ export async function replayApply(prepared: PreparedReplay, params: ReplayApplyP
         fernignoreUpdated,
         previousGenerationSha: prepared.previousGenerationSha,
         currentGenerationSha: prepared.currentGenerationSha,
-        baseBranchHead: resolvedBaseBranchHead
+        baseBranchHead: resolvedBaseBranchHead,
+        autoBootstrapped: prepared.autoBootstrapped,
+        bootstrapAttempted: prepared.bootstrapAttempted
     };
 }
 
@@ -266,9 +346,10 @@ export async function replayApply(prepared: PreparedReplay, params: ReplayApplyP
  * `replayApply` with byte-identical behavior for existing callers.
  */
 export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResult> {
+    const prepareState: ReplayPrepareState = { bootstrapAttempted: false };
     let prepared: PreparedReplay | null;
     try {
-        prepared = await replayPrepare(params);
+        prepared = await replayPrepare(params, prepareState);
     } catch (error) {
         // Prepare crashed (already warned by replayPrepare). Surface the failure
         // so downstream telemetry/logging records success: false rather than
@@ -279,6 +360,8 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
             previousGenerationSha: null,
             currentGenerationSha: null,
             baseBranchHead: null,
+            autoBootstrapped: false,
+            bootstrapAttempted: prepareState.bootstrapAttempted,
             failureReason: error instanceof ReplayPrepareError ? error.reason : String(error)
         };
     }
@@ -288,7 +371,9 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
             fernignoreUpdated: false,
             previousGenerationSha: null,
             currentGenerationSha: null,
-            baseBranchHead: null
+            baseBranchHead: null,
+            autoBootstrapped: false,
+            bootstrapAttempted: prepareState.bootstrapAttempted
         };
     }
     return replayApply(prepared, { stageOnly: params.stageOnly, logger: params.logger });

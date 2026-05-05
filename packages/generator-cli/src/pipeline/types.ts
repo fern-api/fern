@@ -44,6 +44,12 @@ export interface GenerationCommitStepResult extends StepResult {
     baseBranchHead?: string;
     /** Flow selected by the replay service during prepare. */
     flow?: "first-generation" | "no-patches" | "normal-regeneration" | "skip-application";
+    /**
+     * True when replayPrepare entered the lockfile-missing branch and tried to
+     * bootstrap (regardless of outcome). Plumbed so ReplayStep can preserve the
+     * signal even when `preparedReplay` is null.
+     */
+    bootstrapAttempted?: boolean;
 }
 
 export interface ReplayStepConfig {
@@ -159,6 +165,19 @@ export interface ReplayStepResult extends StepResult {
      * this field to report the underlying replay failure honestly.
      */
     replayCrashed?: boolean;
+    /**
+     * True when replay was auto-initialized inline by `fern generate` (no
+     * separate `fern replay init` step). Used by telemetry to track adoption
+     * of the bake-into-generate path vs. the legacy explicit-init path.
+     */
+    autoBootstrapped?: boolean;
+    /**
+     * True when the lockfile-missing branch was entered, regardless of bootstrap
+     * outcome. Distinct from `autoBootstrapped` (true only on success): together
+     * they let dashboards distinguish "tried but failed/no-anchor" from
+     * "lockfile already existed".
+     */
+    bootstrapAttempted?: boolean;
     flow?: "first-generation" | "no-patches" | "normal-regeneration" | "skip-application";
     patchesDetected?: number;
     patchesApplied?: number;
