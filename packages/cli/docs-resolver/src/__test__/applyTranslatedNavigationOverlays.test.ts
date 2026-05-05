@@ -267,6 +267,62 @@ describe("applyTranslatedNavigationOverlays", () => {
         expect(tabs[1]?.title).toBe("APIリファレンス");
     });
 
+    it("applies tab overrides positionally when skip-slug tabs share the same slug", () => {
+        // When tabs use skip-slug:true, they all collapse into the parent's
+        // slug, so slug-based matching can't disambiguate them. The overlay
+        // navigation order is the source of truth — match positionally.
+        const root = {
+            type: "root",
+            child: {
+                type: "unversioned",
+                child: {
+                    type: "tabbed",
+                    children: [
+                        {
+                            type: "tab",
+                            title: "Home",
+                            slug: "platform/v4",
+                            child: { type: "sidebarRoot", children: [] }
+                        },
+                        {
+                            type: "tab",
+                            title: "API Reference",
+                            slug: "platform/v4",
+                            child: { type: "sidebarRoot", children: [] }
+                        },
+                        {
+                            type: "tab",
+                            title: "Changelog",
+                            slug: "platform/v4",
+                            child: { type: "sidebarRoot", children: [] }
+                        }
+                    ]
+                }
+            }
+        };
+        const overlay: docsYml.TranslationNavigationOverlay = {
+            ...emptyOverlay(),
+            tabs: {
+                home: { displayName: "ホーム", slug: undefined },
+                api: { displayName: "API リファレンス", slug: undefined },
+                changelog: { displayName: "チェンジログ", slug: undefined }
+            },
+            navigation: [
+                { type: "tab", tabId: "home", layout: undefined, variants: undefined },
+                { type: "tab", tabId: "api", layout: undefined, variants: undefined },
+                { type: "tab", tabId: "changelog", layout: undefined, variants: undefined }
+            ]
+        };
+
+        const result = applyTranslatedNavigationOverlays(asRoot(root), overlay);
+        const unversioned = (result as unknown as Record<string, unknown>).child as Record<string, unknown>;
+        const tabbed = unversioned.child as Record<string, unknown>;
+        const tabs = tabbed.children as Array<Record<string, unknown>>;
+        expect(tabs[0]?.title).toBe("ホーム");
+        expect(tabs[1]?.title).toBe("API リファレンス");
+        expect(tabs[2]?.title).toBe("チェンジログ");
+    });
+
     it("applies section and page title overrides from navigation overlay", () => {
         const root = {
             type: "root",
