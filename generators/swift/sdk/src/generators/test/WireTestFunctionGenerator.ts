@@ -344,7 +344,7 @@ export class WireTestFunctionGenerator {
                                     if (
                                         property.value.shape.type === "container" &&
                                         property.value.shape.container.type === "optional" &&
-                                        property.value.jsonExample === undefined
+                                        property.value.shape.container.optional == null
                                     ) {
                                         return null;
                                     }
@@ -386,7 +386,7 @@ export class WireTestFunctionGenerator {
                                         if (
                                             property.value.shape.type === "container" &&
                                             property.value.shape.container.type === "optional" &&
-                                            property.value.jsonExample === undefined
+                                            property.value.shape.container.optional == null
                                         ) {
                                             return null;
                                         }
