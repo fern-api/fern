@@ -1,21 +1,51 @@
 import { exec } from "child_process";
-import { writeFile } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
 import path from "path";
 import tsup from "tsup";
 import { fileURLToPath } from "url";
 import { promisify } from "util";
+import { parse as parseYaml } from "yaml";
 import packageJson from "./package.json" with { type: "json" };
 
 const execAsync = promisify(exec);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const REPO_ROOT = path.resolve(__dirname, "../../..");
+
+let _catalogCache = null;
+async function loadCatalog() {
+    if (_catalogCache) {
+        return _catalogCache;
+    }
+    const wsPath = path.join(REPO_ROOT, "pnpm-workspace.yaml");
+    const raw = await readFile(wsPath, "utf8");
+    const ws = parseYaml(raw);
+    _catalogCache = ws.catalog ?? {};
+    return _catalogCache;
+}
 
 /**
  * Get a dependency version from package.json, preferring dependencies over devDependencies.
  * This ensures we don't miss runtime dependencies regardless of where they're declared.
  */
 function getDependencyVersion(packageName) {
-    return packageJson.dependencies?.[packageName] ?? packageJson.devDependencies?.[packageName];
+    return (
+        packageJson.dependencies?.[packageName] ??
+        packageJson.devDependencies?.[packageName] ??
+        packageJson.optionalDependencies?.[packageName]
+    );
+}
+
+async function resolveVersion(packageName, version) {
+    if (version === "catalog:" || version === "catalog:default") {
+        const catalog = await loadCatalog();
+        const resolved = catalog[packageName];
+        if (!resolved) {
+            throw new Error(`Could not resolve catalog version for ${packageName}`);
+        }
+        return resolved;
+    }
+    return version;
 }
 
 /**
@@ -91,7 +121,7 @@ export async function buildCli(config) {
     for (const dep of runtimeDependencies) {
         const version = getDependencyVersion(dep);
         if (version) {
-            dependencies[dep] = version;
+            dependencies[dep] = await resolveVersion(dep, version);
         }
     }
 

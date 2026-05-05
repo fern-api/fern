@@ -3667,9 +3667,6 @@ importers:
 
   packages/cli/ai:
     dependencies:
-      '@boundaryml/baml':
-        specifier: 'catalog:'
-        version: 0.219.0
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../configuration
@@ -3686,6 +3683,10 @@ importers:
       vitest:
         specifier: 'catalog:'
         version: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@22.19.17)(@vitest/coverage-v8@4.1.4)(vite@7.3.2(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
+    optionalDependencies:
+      '@boundaryml/baml':
+        specifier: 'catalog:'
+        version: 0.219.0
 
   packages/cli/api-importers/asyncapi-to-ir:
     dependencies:
@@ -4271,9 +4272,6 @@ importers:
 
   packages/cli/cli:
     devDependencies:
-      '@boundaryml/baml':
-        specifier: 'catalog:'
-        version: 0.219.0
       '@bufbuild/protobuf':
         specifier: 2.2.5
         version: 2.2.5
@@ -4571,6 +4569,10 @@ importers:
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
+    optionalDependencies:
+      '@boundaryml/baml':
+        specifier: 'catalog:'
+        version: 0.219.0
 
   packages/cli/cli-logger:
     dependencies:
@@ -4737,9 +4739,6 @@ importers:
         specifier: 'catalog:'
         version: 3.0.3
     devDependencies:
-      '@boundaryml/baml':
-        specifier: 'catalog:'
-        version: 0.219.0
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../../commons/api-workspace-commons
@@ -4944,6 +4943,10 @@ importers:
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
+    optionalDependencies:
+      '@boundaryml/baml':
+        specifier: 'catalog:'
+        version: 0.219.0
 
   packages/cli/config:
     devDependencies:
@@ -6019,9 +6022,6 @@ importers:
 
   packages/cli/generation/local-generation/local-workspace-runner:
     dependencies:
-      '@boundaryml/baml':
-        specifier: 'catalog:'
-        version: 0.219.0
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../../../../commons/api-workspace-commons
