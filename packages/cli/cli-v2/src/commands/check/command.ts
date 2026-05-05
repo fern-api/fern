@@ -1,16 +1,13 @@
 import { CliError } from "@fern-api/task-context";
 
 import chalk from "chalk";
-import inquirer from "inquirer";
-import path from "path";
 import type { Argv } from "yargs";
 import { ApiChecker } from "../../api/checker/ApiChecker.js";
 import type { Context } from "../../context/Context.js";
 import type { GlobalArgs } from "../../context/GlobalArgs.js";
 import { isClaudeCodeSession } from "../../context/isClaudeCodeSession.js";
 import { DocsChecker } from "../../docs/checker/DocsChecker.js";
-import type { MdxParseError } from "../../docs/errors/MdxParseError.js";
-import { MdxFixer } from "../../docs/fixer/MdxFixer.js";
+import { offerAiFixes } from "../../docs/fixer/offerAiFixes.js";
 import { SdkChecker } from "../../sdk/checker/SdkChecker.js";
 import { Icons } from "../../ui/format.js";
 import type { Workspace } from "../../workspace/Workspace.js";
@@ -94,7 +91,7 @@ export class CheckCommand {
             // (the AI is already in the IDE, so prompting here is redundant).
             const isTTY = process.stdout.isTTY === true;
             if (isTTY && !isClaudeCodeSession()) {
-                await this.offerAiFixes(context, docsCheckResult.mdxParseErrors);
+                await offerAiFixes(context, docsCheckResult.mdxParseErrors);
             }
         }
 
@@ -160,71 +157,6 @@ export class CheckCommand {
             // The rich, multi-line Rust-style render lives on `toString`.
             // Surround each error with blank lines so they're visually distinct.
             context.stderr.info(`\n${error.toString()}\n`);
-        }
-    }
-
-    /**
-     * For each MDX parse error, offer to apply an AI-assisted (or deterministic)
-     * fix. Prompts the user with three choices: yes / no / show me the diff first.
-     */
-    private async offerAiFixes(context: Context, errors: MdxParseError[]): Promise<void> {
-        const fixer = new MdxFixer();
-
-        for (const error of errors) {
-            const absoluteFilepath = path.resolve(context.cwd, error.displayRelativeFilepath);
-
-            // Show the prompt header for this error.
-            process.stderr.write(
-                `\n${chalk.magenta("◆")} ${chalk.bold("fix with AI?")} ${chalk.dim("·")} fern will patch ${chalk.cyan(error.displayRelativeFilepath)}\n`
-            );
-
-            type Choice = "yes" | "no" | "diff";
-            const { action } = await inquirer.prompt<{ action: Choice }>([
-                {
-                    type: "list",
-                    name: "action",
-                    message: "",
-                    choices: [
-                        { name: "yes", value: "yes" },
-                        { name: "no", value: "no" },
-                        { name: "show me the diff first", value: "diff" }
-                    ]
-                }
-            ]);
-
-            if (action === "no") {
-                continue;
-            }
-
-            if (action === "diff") {
-                const preview = await fixer.previewFix({ error, absoluteFilepath });
-                if (preview == null) {
-                    process.stderr.write(chalk.dim("  No deterministic diff available — AI would generate a patch.\n"));
-                } else {
-                    process.stderr.write(`\n${preview}\n`);
-                }
-
-                // After showing the diff, ask again.
-                const { confirm } = await inquirer.prompt<{ confirm: boolean }>([
-                    {
-                        type: "confirm",
-                        name: "confirm",
-                        message: "Apply this fix?",
-                        default: true
-                    }
-                ]);
-                if (!confirm) {
-                    continue;
-                }
-            }
-
-            // Apply the fix.
-            const result = await fixer.applyFix({ error, absoluteFilepath });
-            if (result.applied) {
-                process.stderr.write(`${Icons.success} ${chalk.green("Fixed")} ${result.summary}\n`);
-            } else {
-                process.stderr.write(`${Icons.error} ${chalk.red("Could not fix:")} ${result.summary}\n`);
-            }
         }
     }
 

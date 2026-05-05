@@ -126,6 +126,8 @@ describe("MdxFixer.previewFix", () => {
     });
 
     it("returns undefined when fix text is not found in the file", async () => {
+        // The fix `before` text is absent from the file, so the deterministic
+        // path returns undefined. With error.fix set we never fall back to AI.
         await writeFile(tmpPath, "# Nothing here\n", "utf-8");
 
         const fixer = new MdxFixer();
@@ -134,14 +136,29 @@ describe("MdxFixer.previewFix", () => {
         expect(diff).toBeUndefined();
     });
 
-    it("returns undefined when error has no fix suggestion", async () => {
+    it("returns undefined when error has no fix suggestion and no AI provider configured", async () => {
         await writeFile(tmpPath, "<Foo></Bar>\n", "utf-8");
 
         const error = makeError({ fix: undefined });
         const fixer = new MdxFixer();
-        const diff = await fixer.previewFix({ error, absoluteFilepath: tmpPath });
 
-        expect(diff).toBeUndefined();
+        // With no `fix` hint we'd fall back to the AI provider. Disabling all
+        // provider keys forces previewFix to return undefined.
+        const savedAnthropic = process.env["ANTHROPIC_API_KEY"];
+        const savedOpenAi = process.env["OPENAI_API_KEY"];
+        delete process.env["ANTHROPIC_API_KEY"];
+        delete process.env["OPENAI_API_KEY"];
+        try {
+            const diff = await fixer.previewFix({ error, absoluteFilepath: tmpPath });
+            expect(diff).toBeUndefined();
+        } finally {
+            if (savedAnthropic != null) {
+                process.env["ANTHROPIC_API_KEY"] = savedAnthropic;
+            }
+            if (savedOpenAi != null) {
+                process.env["OPENAI_API_KEY"] = savedOpenAi;
+            }
+        }
     });
 });
 

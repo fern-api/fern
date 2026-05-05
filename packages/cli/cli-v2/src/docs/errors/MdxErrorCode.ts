@@ -45,7 +45,10 @@ export interface MdxFix {
     after: string;
 }
 
-const DOCS_BASE_URL = "https://buildwithfern.com/learn/docs/errors";
+// Doc URLs are intentionally omitted while the per-code reference pages on
+// `buildwithfern.com/learn/docs/errors/*` do not yet exist — shipping a `see:`
+// link to a 404 is worse than no link at all. Add a `learnUrl` per code as the
+// docs go live.
 
 /**
  * `<MyComponent prop=<Icon /> />` — a JSX element used as a bare attribute
@@ -55,7 +58,6 @@ export const E0301_JSX_ATTRIBUTE_NEEDS_BRACES: MdxErrorCode = {
     code: "E0301",
     title: "JSX element is not valid as an attribute value",
     description: "Wrap the value in curly braces (`{}`) so it is parsed as a JSX expression.",
-    learnUrl: `${DOCS_BASE_URL}/E0301`,
     matches: (raw) =>
         // Common micromark-mdx hint when a JSX element is used as a bare
         // attribute value: "to use an element or fragment as a prop value in
@@ -91,7 +93,6 @@ export const E0302_UNTERMINATED_STRING_LITERAL: MdxErrorCode = {
     code: "E0302",
     title: "Unterminated string literal in JSX attribute",
     description: "Make sure every quoted attribute value has a matching closing quote.",
-    learnUrl: `${DOCS_BASE_URL}/E0302`,
     matches: (raw) =>
         /unexpected (?:end of file|line ending).*(?:attribute value|string)/i.test(raw) ||
         /missing closing.*quote/i.test(raw)
@@ -104,7 +105,6 @@ export const E0303_MISMATCHED_CLOSING_TAG: MdxErrorCode = {
     code: "E0303",
     title: "Mismatched JSX closing tag",
     description: "Make sure every JSX element is closed with a matching tag (or is self-closing).",
-    learnUrl: `${DOCS_BASE_URL}/E0303`,
     matches: (raw) => /(?:unexpected closing tag|expected (?:a corresponding|the closing tag))/i.test(raw)
 };
 
@@ -115,7 +115,6 @@ export const E0304_UNCLOSED_JSX_ELEMENT: MdxErrorCode = {
     code: "E0304",
     title: "Unclosed JSX element",
     description: "Add a closing tag (`</Foo>`) or make the element self-closing (`<Foo />`).",
-    learnUrl: `${DOCS_BASE_URL}/E0304`,
     matches: (raw) => /unexpected end of file.*(?:tag|element)/i.test(raw)
 };
 
@@ -126,7 +125,6 @@ export const E0305_INVALID_JS_EXPRESSION: MdxErrorCode = {
     code: "E0305",
     title: "Invalid JavaScript expression in MDX",
     description: "Could not parse a `{ ... }` expression. Check for missing braces, commas, or quotes.",
-    learnUrl: `${DOCS_BASE_URL}/E0305`,
     matches: (raw) => /could not parse expression with acorn|unexpected (?:token|character).*expression/i.test(raw)
 };
 
@@ -136,7 +134,6 @@ export const E0305_INVALID_JS_EXPRESSION: MdxErrorCode = {
 export const UNKNOWN_MDX_ERROR: MdxErrorCode = {
     code: "E0300",
     title: "Could not parse markdown",
-    learnUrl: `${DOCS_BASE_URL}/E0300`,
     matches: () => true
 };
 

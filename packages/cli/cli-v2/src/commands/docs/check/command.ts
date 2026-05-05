@@ -1,15 +1,12 @@
 import { CliError } from "@fern-api/task-context";
 
 import chalk from "chalk";
-import inquirer from "inquirer";
-import path from "path";
 import type { Argv } from "yargs";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { isClaudeCodeSession } from "../../../context/isClaudeCodeSession.js";
 import { DocsChecker } from "../../../docs/checker/DocsChecker.js";
-import type { MdxParseError } from "../../../docs/errors/MdxParseError.js";
-import { MdxFixer } from "../../../docs/fixer/MdxFixer.js";
+import { offerAiFixes } from "../../../docs/fixer/offerAiFixes.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
 import { type JsonOutput, toJsonViolation } from "../../_internal/toJsonViolation.js";
@@ -72,7 +69,7 @@ export class CheckCommand {
 
             const isTTY = process.stdout.isTTY === true;
             if (isTTY && !isClaudeCodeSession()) {
-                await this.offerAiFixes(context, result.mdxParseErrors);
+                await offerAiFixes(context, result.mdxParseErrors);
             }
         }
 
@@ -87,67 +84,6 @@ export class CheckCommand {
         }
 
         context.stderr.info(`${Icons.success} ${chalk.green("All checks passed")}`);
-    }
-
-    private async offerAiFixes(context: Context, errors: MdxParseError[]): Promise<void> {
-        const fixer = new MdxFixer();
-
-        for (const error of errors) {
-            const absoluteFilepath = path.resolve(context.cwd, error.displayRelativeFilepath);
-
-            process.stderr.write(
-                `\n${chalk.magenta("◆")} ${chalk.bold("fix with AI?")} ${chalk.dim("·")} fern will patch ${chalk.cyan(error.displayRelativeFilepath)}\n`
-            );
-
-            type Choice = "yes" | "no" | "diff";
-            const { action } = await inquirer.prompt<{ action: Choice }>([
-                {
-                    type: "list",
-                    name: "action",
-                    message: "",
-                    choices: [
-                        { name: "yes", value: "yes" },
-                        { name: "no", value: "no" },
-                        { name: "show me the diff first", value: "diff" }
-                    ]
-                }
-            ]);
-
-            if (action === "no") {
-                continue;
-            }
-
-            if (action === "diff") {
-                process.stderr.write(chalk.dim(`  Asking Claude for a fix preview...\n`));
-                const preview = await fixer.previewFix({ error, absoluteFilepath });
-                if (preview == null) {
-                    process.stderr.write(chalk.dim("  Claude made no changes.\n"));
-                } else {
-                    process.stderr.write(`\n${preview}\n`);
-                }
-
-                const { confirm } = await inquirer.prompt<{ confirm: boolean }>([
-                    {
-                        type: "confirm",
-                        name: "confirm",
-                        message: "Apply this fix?",
-                        default: true
-                    }
-                ]);
-                if (!confirm) {
-                    continue;
-                }
-            }
-
-            process.stderr.write(chalk.dim(`  Asking Claude to fix ${error.displayRelativeFilepath}...\n`));
-            const fixResult = await fixer.applyFix({ error, absoluteFilepath });
-            if (fixResult.applied) {
-                const modelLabel = fixResult.model != null ? chalk.dim(`[${fixResult.model}] `) : "";
-                process.stderr.write(`${Icons.success} ${chalk.green("Fixed")} ${modelLabel}${fixResult.summary}\n`);
-            } else {
-                process.stderr.write(`${Icons.error} ${chalk.red("Could not fix:")} ${fixResult.summary}\n`);
-            }
-        }
     }
 
     private buildJsonResponse({

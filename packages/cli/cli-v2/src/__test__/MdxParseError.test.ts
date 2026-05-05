@@ -99,7 +99,7 @@ describe("MdxParseError.toString()", () => {
         return text.replace(/\u001b\[[0-9;]*m/g, "");
     }
 
-    it("renders header, location, source snippet, caret, fix, and learn URL", () => {
+    it("renders header, location, source snippet, caret, and fix", () => {
         // Disable colors so we can do plain-string assertions.
         chalk.level = 0;
         try {
@@ -112,7 +112,9 @@ describe("MdxParseError.toString()", () => {
             // Caret line is indented and contains a `^`.
             expect(out).toMatch(/^\s+\|\s+\^/m);
             expect(out).toContain('fix: icon=<Icon name="star" /> → icon={<Icon name="star" />}');
-            expect(out).toContain("see: https://buildwithfern.com/learn/docs/errors/E0301");
+            // E0301-E0305 currently have no learnUrl set — the `see:` line is
+            // intentionally omitted until the per-code docs pages exist.
+            expect(out).not.toContain("see:");
         } finally {
             chalk.level = ORIGINAL_CHALK_LEVEL;
         }
@@ -132,7 +134,8 @@ describe("MdxParseError.toString()", () => {
             });
             const out = stripAnsi(err.toString());
             expect(out).not.toContain("fix:");
-            expect(out).toContain("see:");
+            // No learnUrl on E0303 — `see:` should also be absent.
+            expect(out).not.toContain("see:");
         } finally {
             chalk.level = ORIGINAL_CHALK_LEVEL;
         }

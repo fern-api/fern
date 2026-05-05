@@ -3,6 +3,8 @@ import { readFile, writeFile } from "fs/promises";
 import path from "path";
 import { FernRcSchemaLoader } from "../../config/fern-rc/FernRcSchemaLoader.js";
 import type { MdxParseError } from "../errors/MdxParseError.js";
+import type { AiProviderClient, AiProviderResolution } from "./AiProvider.js";
+import { resolveAiProvider } from "./AiProvider.js";
 
 export declare namespace MdxFixer {
     export interface ApplyResult {
@@ -10,27 +12,33 @@ export declare namespace MdxFixer {
         applied: boolean;
         /** Human-readable description of what changed */
         summary: string;
-        /** The Claude model that produced the fix, when AI was used */
-        model?: string;
+        /** Strategy used for the fix: deterministic string-replace, or AI provider name */
+        strategy?: "deterministic" | "anthropic" | "openai" | "bedrock";
     }
 }
 
 /**
- * Applies AI-powered fixes to MDX/Markdown files via the Anthropic API.
+ * Apply fixes to MDX/Markdown files that failed to parse.
  *
- * The `fix:` hint shown in the error output is passed to Claude as guidance,
- * but Claude reads the full file and error context to produce the actual fix —
- * this is a real AI fix, not a regex string replacement.
+ * Strategy is deterministic-first:
+ *   1. If the {@link MdxParseError} carries a `fix` suggestion AND the `before`
+ *      text is present in the file, perform a literal string replace. This is
+ *      fast, requires no API key, and produces predictable diffs.
+ *   2. Otherwise, fall back to an AI provider (`anthropic` by default; can be
+ *      switched to `openai` or `bedrock` via `~/.fernrc`). The provider is
+ *      asked to return the corrected file contents; we strip code fences and
+ *      write the file back.
  *
- * Requires an Anthropic API key, either via:
- *   - ANTHROPIC_API_KEY environment variable
- *   - ai.anthropic_api_key in ~/.fernrc  (set via: fern config ai set-key <key>)
+ * Configure the AI provider with:
+ *   fern config ai set-provider <anthropic|openai|bedrock>
+ *   fern config ai set-key <key>     # for anthropic / openai
+ *
+ * Bedrock uses the standard AWS credentials chain (env vars / ~/.aws/credentials).
  */
 export class MdxFixer {
     /**
-     * Apply an AI-powered fix for an MDX parse error.
-     * Always calls the Anthropic API — Claude reads the full file and error
-     * context to produce the corrected content.
+     * Apply a fix for an MDX parse error. Writes the file in place when a fix
+     * is produced.
      */
     public async applyFix({
         error,
@@ -39,22 +47,42 @@ export class MdxFixer {
         error: MdxParseError;
         absoluteFilepath: string;
     }): Promise<MdxFixer.ApplyResult> {
-        const apiKey = await this.resolveApiKey();
-        if (apiKey == null) {
-            return this.noKeyResult();
+        const content = await readFile(absoluteFilepath, "utf-8");
+
+        // 1. Deterministic path — string replace based on the structured fix hint.
+        const deterministic = this.tryDeterministicFix({ error, content });
+        if (deterministic != null) {
+            await writeFile(absoluteFilepath, deterministic.patched, "utf-8");
+            return {
+                applied: true,
+                summary: `replaced \`${truncate(deterministic.fix.before)}\` with \`${truncate(deterministic.fix.after)}\``,
+                strategy: "deterministic"
+            };
         }
 
-        const content = await readFile(absoluteFilepath, "utf-8");
+        if (error.fix != null) {
+            // We had a fix suggestion but couldn't locate the `before` text in
+            // the file — likely the source has drifted from what the parser saw.
+            return {
+                applied: false,
+                summary: `Could not locate \`${truncate(error.fix.before)}\` in ${path.basename(absoluteFilepath)}.`
+            };
+        }
+
+        // 2. AI fallback.
+        const resolution = await this.resolveProvider();
+        if (!resolution.ok) {
+            return { applied: false, summary: resolution.reason };
+        }
 
         let patched: string;
         try {
-            patched = await callAnthropic({ prompt: buildPrompt({ error, content, absoluteFilepath }), apiKey });
-        } catch (fetchError) {
-            const message = fetchError instanceof Error ? fetchError.message : String(fetchError);
-            return { applied: false, summary: `AI fix failed: ${message}` };
+            patched = await resolution.client.complete(buildPrompt({ error, content, absoluteFilepath }));
+        } catch (e) {
+            const message = e instanceof Error ? e.message : String(e);
+            return { applied: false, summary: `AI fix failed (${resolution.provider}): ${message}` };
         }
 
-        // Strip accidental markdown code fences Claude might wrap the response in.
         patched = stripCodeFences(patched);
 
         if (patched.trim() === content.trim()) {
@@ -62,12 +90,17 @@ export class MdxFixer {
         }
 
         await writeFile(absoluteFilepath, patched, "utf-8");
-        return { applied: true, summary: "patched the file.", model: CLAUDE_MODEL };
+        return {
+            applied: true,
+            summary: `patched the file via ${resolution.provider}.`,
+            strategy: resolution.provider
+        };
     }
 
     /**
-     * Ask Claude for a fix and return a displayable diff without writing anything.
-     * Returns undefined if no API key is configured or Claude made no changes.
+     * Produce a displayable diff for the fix without writing anything. Returns
+     * `undefined` when no diff can be produced (no deterministic match and no
+     * AI provider configured / available).
      */
     public async previewFix({
         error,
@@ -76,22 +109,35 @@ export class MdxFixer {
         error: MdxParseError;
         absoluteFilepath: string;
     }): Promise<string | undefined> {
-        const apiKey = await this.resolveApiKey();
-        if (apiKey == null) {
+        const content = await readFile(absoluteFilepath, "utf-8");
+
+        const deterministic = this.tryDeterministicFix({ error, content });
+        if (deterministic != null) {
+            return formatInlineDiff({
+                original: content,
+                patched: deterministic.patched,
+                filepath: absoluteFilepath
+            });
+        }
+
+        if (error.fix != null) {
+            // Fix hint present but `before` text absent — nothing to preview.
             return undefined;
         }
 
-        const content = await readFile(absoluteFilepath, "utf-8");
+        const resolution = await this.resolveProvider();
+        if (!resolution.ok) {
+            return undefined;
+        }
 
         let patched: string;
         try {
-            patched = await callAnthropic({ prompt: buildPrompt({ error, content, absoluteFilepath }), apiKey });
+            patched = await resolution.client.complete(buildPrompt({ error, content, absoluteFilepath }));
         } catch {
             return undefined;
         }
 
         patched = stripCodeFences(patched);
-
         if (patched.trim() === content.trim()) {
             return undefined;
         }
@@ -99,35 +145,44 @@ export class MdxFixer {
         return formatInlineDiff({ original: content, patched, filepath: absoluteFilepath });
     }
 
-    private async resolveApiKey(): Promise<string | undefined> {
-        const envKey = process.env["ANTHROPIC_API_KEY"];
-        if (envKey != null && envKey !== "") {
-            return envKey;
+    /**
+     * Try a literal string-replace based on the structured fix hint.
+     * Returns `undefined` when no fix is suggested or the `before` text is
+     * not present in the file.
+     */
+    private tryDeterministicFix({
+        error,
+        content
+    }: {
+        error: MdxParseError;
+        content: string;
+    }): { patched: string; fix: { before: string; after: string } } | undefined {
+        if (error.fix == null) {
+            return undefined;
         }
-        const loader = new FernRcSchemaLoader();
-        const { data } = await loader.load();
-        const rcKey = data.ai?.anthropic_api_key;
-        return rcKey != null && rcKey !== "" ? rcKey : undefined;
+        const { before, after } = error.fix;
+        if (before === "" || !content.includes(before)) {
+            return undefined;
+        }
+        return { patched: content.replace(before, after), fix: { before, after } };
     }
 
-    private noKeyResult(): MdxFixer.ApplyResult {
-        return {
-            applied: false,
-            summary:
-                "No Anthropic API key found. Set one with:\n" +
-                chalk.dim("  fern config ai set-key <key>") +
-                "\n" +
-                chalk.dim("  or export ANTHROPIC_API_KEY=<key>")
-        };
+    private async resolveProvider(): Promise<AiProviderResolution> {
+        const loader = new FernRcSchemaLoader();
+        const { data } = await loader.load();
+        return resolveAiProvider({ aiConfig: data.ai });
     }
 }
 
+// ---------------------------------------------------------------------------
+// AI prompt construction
+// ---------------------------------------------------------------------------
+
 /**
- * Builds the prompt sent to Claude. Includes:
- *   - the structured error (code, title, raw message)
- *   - source lines with caret position so Claude sees exactly what's broken
- *   - the deterministic fix hint when available (gives Claude a strong signal)
- *   - the full file content to rewrite
+ * Build the prompt sent to whichever provider is configured. The prompt is
+ * provider-agnostic: it asks for the corrected file contents only, no
+ * explanation or markdown wrappers. Both Anthropic and OpenAI honour this
+ * instruction reliably; we still strip code fences as a safety net.
  */
 function buildPrompt({
     error,
@@ -163,8 +218,8 @@ function buildPrompt({
 }
 
 /**
- * Claude sometimes wraps its response in a markdown code fence even when told not to.
- * Strip it if present.
+ * Models sometimes wrap their response in a markdown code fence even when told
+ * not to. Strip it if present.
  */
 function stripCodeFences(text: string): string {
     const fenced = /^```(?:mdx|markdown|md)?\n([\s\S]*?)```\s*$/.exec(text.trim());
@@ -207,39 +262,9 @@ function formatInlineDiff({
     return hasDiff ? diffLines.join("\n") : "(no changes)";
 }
 
-const CLAUDE_MODEL = "claude-haiku-4-5-20251001";
-
-/**
- * Minimal Anthropic Messages API call — avoids importing the full SDK so we
- * don't add a hard runtime dependency just for this one feature.
- */
-async function callAnthropic({ prompt, apiKey }: { prompt: string; apiKey: string }): Promise<string> {
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: {
-            "x-api-key": apiKey,
-            "anthropic-version": "2023-06-01",
-            "content-type": "application/json"
-        },
-        body: JSON.stringify({
-            model: CLAUDE_MODEL,
-            max_tokens: 4096,
-            messages: [{ role: "user", content: prompt }]
-        })
-    });
-
-    if (!response.ok) {
-        const body = await response.text();
-        throw new Error(`Anthropic API error ${response.status}: ${body}`);
-    }
-
-    const json = (await response.json()) as {
-        content: Array<{ type: string; text: string }>;
-    };
-
-    const text = json.content.find((block) => block.type === "text")?.text;
-    if (text == null) {
-        throw new Error("Anthropic API returned no text content");
-    }
-    return text;
+function truncate(s: string, max = 60): string {
+    return s.length <= max ? s : `${s.slice(0, max - 1)}…`;
 }
+
+// Re-export for callers that want the client type directly.
+export type { AiProviderClient };
