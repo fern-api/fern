@@ -133,6 +133,7 @@ export class LegacyRemoteGenerationRunner {
                 skipFernignore: args.skipFernignore,
                 absolutePathToPreview,
                 whitelabel: undefined,
+                replay: fernWorkspace.generatorsConfiguration?.replay,
                 dynamicIrOnly: false,
                 retryRateLimited: false,
                 requireEnvVars: args.requireEnvVars ?? true

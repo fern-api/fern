@@ -180,6 +180,7 @@ export async function generateWorkspace({
                         shouldLogS3Url,
                         token,
                         whitelabel: workspace.generatorsConfiguration?.whitelabel,
+                        replay,
                         absolutePathToPreview,
                         mode,
                         fernignorePath,
