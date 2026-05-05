@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.14.0
+  changelogEntry:
+    - summary: |
+        Emit the `replay` PostHog event from cloud generation, with `surface`, `org_id`, `duration_ms`, and additional patch counters.
+      type: feat
+  createdAt: "2026-05-05"
+  irVersion: 66
 - version: 5.13.2
   changelogEntry:
     - summary: |
