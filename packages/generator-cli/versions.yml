@@ -1,16 +1,7 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Re-export `buildReplayTelemetryProps` from `@fern-api/generator-cli/pipeline`.
-        Pure refactor — the helper used to live in `local-workspace-runner`. Both the
-        local-CLI and remote-CLI replay telemetry hooks now share the same builder.
-      type: internal
-    - summary: |
-        Propagate five additional `ReplayReport` counters through `ReplayStep` to
-        `ReplayStepResult`: `patchesSkipped`, `patchesPartiallyApplied`,
-        `patchesConflictResolved`, `patchesReverted`, `patchesRefreshed`. The replay
-        engine has computed these for a while; they now reach the post-generation
-        pipeline and downstream telemetry. Sharpens the patch-outcome funnel.
+        Share `buildReplayTelemetryProps` and propagate five additional `ReplayReport` counters through `ReplayStep`.
       type: feat
   createdAt: "2026-05-05"
   version: 0.9.23

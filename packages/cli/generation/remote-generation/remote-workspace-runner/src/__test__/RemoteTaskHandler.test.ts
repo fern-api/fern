@@ -23,9 +23,7 @@ import {
  */
 describe("FIDDLE_PIPELINE_RESULT_LOG_REGEX", () => {
     it("locks the exact pattern Fiddle's GithubFiddleTask.java#974 emits", () => {
-        expect(FIDDLE_PIPELINE_RESULT_LOG_REGEX.source).toBe(
-            "^Pipeline: raw result \\(\\d+ bytes\\): (\\{.*\\})$"
-        );
+        expect(FIDDLE_PIPELINE_RESULT_LOG_REGEX.source).toBe("^Pipeline: raw result \\(\\d+ bytes\\): (\\{.*\\})$");
     });
 });
 
@@ -165,10 +163,7 @@ describe("RemoteTaskHandler.processUpdate — replay PostHog emission", () => {
         } as unknown as generatorsYml.GeneratorInvocation;
     }
 
-    function makeTask(opts: {
-        logs: FernFiddle.TaskLog[];
-        finished: boolean;
-    }): FernFiddle.remoteGen.Task {
+    function makeTask(opts: { logs: FernFiddle.TaskLog[]; finished: boolean }): FernFiddle.remoteGen.Task {
         return {
             packages: [],
             logs: opts.logs,
@@ -237,7 +232,10 @@ describe("RemoteTaskHandler.processUpdate — replay PostHog emission", () => {
         );
 
         expect(captured).toHaveLength(1);
-        const event = captured[0]!;
+        const event = captured[0];
+        if (event == null) {
+            throw new Error("expected captured event");
+        }
         expect(event.command).toBe("replay");
         expect(event.properties).toMatchObject({
             action: "pipeline_run",

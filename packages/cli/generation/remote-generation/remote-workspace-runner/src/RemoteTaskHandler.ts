@@ -321,7 +321,9 @@ export class RemoteTaskHandler {
                 command: "replay",
                 properties: { ...props, surface: "fiddle" }
             });
-            this.context.logger.debug(`[telemetry] replay event sent: ${JSON.stringify({ ...props, surface: "fiddle" })}`);
+            this.context.logger.debug(
+                `[telemetry] replay event sent: ${JSON.stringify({ ...props, surface: "fiddle" })}`
+            );
             this.replayEventEmitted = true;
         } catch (error) {
             this.context.logger.debug(`[telemetry] failed to send replay event: ${String(error)}`);
