@@ -4,6 +4,8 @@ import type * as GeneratorsYml from "../../../index.js";
 
 export interface GithubCommitAndReleaseSchema {
     repository: string;
+    /** If specified, commits and tags the release on this branch instead of the default branch. The branch must exist. */
+    branch?: string;
     license?: GeneratorsYml.GithubLicenseSchema;
     mode?: GeneratorsYml.GithubCommitAndReleaseMode;
 }

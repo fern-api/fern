@@ -422,6 +422,24 @@ describe("overrideGroupOutputForDiffBranch", () => {
         expect(result.generators[0]?.outputMode.type).toBe("githubV2");
     });
 
+    it("extracts owner/repo from githubV2 commitAndRelease with branch", () => {
+        const generator = makeGenerator(
+            FernFiddle.OutputMode.githubV2(
+                FernFiddle.GithubOutputModeV2.commitAndRelease({
+                    owner: "my-org",
+                    repo: "my-sdk",
+                    branch: "v2"
+                })
+            )
+        );
+        const group = makeGroup([generator]);
+
+        const result = overrideGroupOutputForDiffBranch({ group });
+
+        expect(result.generators).toHaveLength(1);
+        expect(result.generators[0]?.outputMode.type).toBe("githubV2");
+    });
+
     it("excludes generators without github config (publishV2)", () => {
         const generator = makeGenerator(
             FernFiddle.OutputMode.publishV2(

@@ -44,6 +44,12 @@ describe("convertGitOutput", () => {
         expect(result.gitOutput?.branch).toBe("main");
     });
 
+    it("preserves branch field on release mode", () => {
+        const result = convertGitOutput({ repository: "acme/sdk", mode: "release", branch: "v2" });
+        expect(result.gitOutput?.mode).toBe("release");
+        expect(result.gitOutput?.branch).toBe("v2");
+    });
+
     it("omits branch when not set", () => {
         const result = convertGitOutput({ repository: "acme/sdk", mode: "pull-request" });
         expect(result.gitOutput?.branch).toBeUndefined();
