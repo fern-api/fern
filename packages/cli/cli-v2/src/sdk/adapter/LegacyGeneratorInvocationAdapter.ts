@@ -129,6 +129,7 @@ export class LegacyGeneratorInvocationAdapter {
                     FernFiddle.GithubOutputModeV2.commitAndRelease({
                         owner: repository.owner,
                         repo: repository.repo,
+                        branch: git.branch,
                         license,
                         publishInfo,
                         downloadSnippets: undefined

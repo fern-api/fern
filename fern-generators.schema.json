@@ -932,6 +932,9 @@
         "repository": {
           "type": "string"
         },
+        "branch": {
+          "type": "string"
+        },
         "license": {
           "$ref": "#/definitions/license.GithubLicenseSchema"
         },
