@@ -175,12 +175,8 @@ async function createJob({
         publishMetadata: generatorInvocation.publishMetadata
     };
 
-    // Assigned to a const before the createJobV3 call so TypeScript skips the excess-property
-    // check — `replay` is not yet present on @fern-fern/fiddle-sdk's CreateJobRequestV2 type
-    // (schema landed in fern-api/fiddle#729; FER-10343). Until a fiddle-sdk version exposing
-    // `replay` is pinned in pnpm-workspace.yaml, the SDK serializer drops the field at runtime,
-    // so behavior matches today; once the pin moves forward, the field reaches Fiddle and the
-    // server-side gate honors `replay.enabled: false`.
+    // Const-typed payload ducks the TS excess-property check; `replay` isn't on
+    // fiddle-sdk's CreateJobRequestV2 yet (FER-10343).
     const createJobRequest = {
         apiName: workspace.definition.rootApiFile.contents.name,
         version,
