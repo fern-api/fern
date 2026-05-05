@@ -342,6 +342,43 @@ describe("retryWithRateLimit", () => {
         expect(delays).toEqual([30000]);
     });
 
+    it("should not let jitter reduce delay below server retryAfter hint", async () => {
+        const logger = createMockLogger();
+        const delays: number[] = [];
+        let callCount = 0;
+
+        // Mock Math.random to return 0.0 (minimum jitter: 1 + (0.0 - 0.5) * 0.5 = 0.75)
+        const originalRandom = Math.random;
+        Math.random = () => 0.0;
+
+        try {
+            await retryWithRateLimit({
+                fn: async () => {
+                    callCount++;
+                    if (callCount <= 1) {
+                        // Server says wait 30 seconds
+                        throw new TooManyRequestsError(30);
+                    }
+                    return "success";
+                },
+                retryRateLimited: true,
+                logger,
+                onRateLimitedWithoutRetry: () => {
+                    throw new Error("should not be called");
+                },
+                delayFn: async (ms: number) => {
+                    delays.push(ms);
+                }
+            });
+        } finally {
+            Math.random = originalRandom;
+        }
+
+        // Without the floor: effectiveBase=30000, jitter=0.75 → 22500ms (below 30s!)
+        // With the floor: max(22500, 30000) = 30000ms
+        expect(delays).toEqual([30000]);
+    });
+
     it("should use exponential backoff when it exceeds server retryAfter", async () => {
         const logger = createMockLogger();
         const delays: number[] = [];

@@ -63,7 +63,9 @@ export async function retryWithRateLimit<T>({
                 const serverHintMs = error.retryAfterSeconds != null ? error.retryAfterSeconds * 1000 : undefined;
                 const effectiveBase = serverHintMs != null ? Math.max(baseDelay, serverHintMs) : baseDelay;
                 const jitter = 1 + (Math.random() - 0.5) * RATE_LIMIT_JITTER_FACTOR;
-                const delay = Math.round(Math.min(effectiveBase * jitter, RATE_LIMIT_MAX_RETRY_DELAY_MS));
+                const delay = Math.round(
+                    Math.min(Math.max(effectiveBase * jitter, serverHintMs ?? 0), RATE_LIMIT_MAX_RETRY_DELAY_MS)
+                );
                 logger.warn(
                     `Received 429 Too Many Requests. Retrying in ${(delay / 1000).toFixed(1)}s (attempt ${attempt + 1}/${RATE_LIMIT_MAX_RETRIES})...`
                 );
