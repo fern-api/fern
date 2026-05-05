@@ -530,14 +530,6 @@ export function generateIntermediateRepresentation({
         return service.endpoints.some((endpoint) => endpoint.response?.body?.type === "fileDownload");
     });
 
-    // If the user has defined a custom global "User-Agent" header in their API definition
-    // (e.g. `headers: { user-agent: { name: ..., type: literal<"my-sdk"> } }`), suppress the
-    // Fern platform User-Agent so the user's value is the only User-Agent emitted by generators.
-    const hasCustomUserAgentHeader = intermediateRepresentationForAudiences.headers.some((header) => {
-        const wireValue = typeof header.name === "string" ? header.name : header.name.wireValue;
-        return wireValue.toLowerCase() === "user-agent";
-    });
-
     const sdkConfig: SdkConfig = {
         isAuthMandatory,
         hasStreamingEndpoints,
@@ -548,7 +540,7 @@ export function generateIntermediateRepresentation({
             sdkName: "X-Fern-SDK-Name",
             sdkVersion: "X-Fern-SDK-Version",
             userAgent:
-                !hasCustomUserAgentHeader && version != null && packageName != null
+                version != null && packageName != null
                     ? {
                           header: "User-Agent",
                           value: `${packageName}/${version}`

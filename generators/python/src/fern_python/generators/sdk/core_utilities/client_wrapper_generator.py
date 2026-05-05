@@ -16,7 +16,7 @@ from fern_python.generators.sdk.client_generator.base_client_generator import (
 from fern_python.generators.sdk.client_generator.type_utilities import is_type_reference_string
 from fern_python.generators.sdk.core_utilities.core_utilities import CoreUtilities
 from fern_python.snippet.template_utils import TemplateGenerator
-from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
+from fern_python.utils import get_name_from_wire_value, get_original_name, get_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -42,6 +42,25 @@ class LiteralHeader:
     private_member_name: str
     header: ir_types.HttpHeader
     header_key: typing.Optional[str] = None
+
+
+def _get_literal_header_dict_key(header: ir_types.HttpHeader) -> str:
+    """
+    Returns the dict key to use when assigning a literal header to the headers dict.
+
+    Prefers the user-supplied `name` (originalName) when it is a case-insensitive
+    variant of the wire value — this lets users normalize the casing (e.g. write
+    `user-agent: { name: User-Agent, type: literal<...> }`) so the literal header
+    overwrites the platform User-Agent in the dict instead of producing a duplicate
+    entry under a different casing. Falls back to the wire value otherwise so users
+    who set `name` to a code-only identifier (e.g. `version` for `X-API-Version`)
+    still emit the correct HTTP header on the wire.
+    """
+    wire_value = get_wire_value(header.name)
+    original_name = get_original_name(get_name_from_wire_value(header.name))
+    if original_name.lower() == wire_value.lower():
+        return original_name
+    return wire_value
 
 
 @dataclass
@@ -745,7 +764,7 @@ class ClientWrapperGenerator:
                         constructor_parameter_name=names.get_header_constructor_parameter_name(header),
                         private_member_name=names.get_header_private_member_name(header),
                         header=header,
-                        header_key=get_wire_value(header.name),
+                        header_key=_get_literal_header_dict_key(header),
                     )
                 )
                 continue
