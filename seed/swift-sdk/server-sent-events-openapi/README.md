@@ -55,7 +55,7 @@ private func main() async throws {
     let client = ApiClient()
 
     _ = try await client.streamProtocolNoCollision(request: StreamRequest(
-        query: "query"
+
     ))
 }
 

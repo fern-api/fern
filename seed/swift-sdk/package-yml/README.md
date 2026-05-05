@@ -54,10 +54,10 @@ private func main() async throws {
     let client = PackageYmlClient()
 
     _ = try await client.echo(
-        id: "id",
+        id: "id-ksfd9c1",
         request: EchoRequest(
-            name: "name",
-            size: 1
+            name: "Hello world!",
+            size: 20
         )
     )
 }

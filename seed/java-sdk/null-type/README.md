@@ -68,7 +68,6 @@ public class Example {
             OutboundCallConversationsRequest
                 .builder()
                 .toPhoneNumber("to_phone_number")
-                .dryRun(true)
                 .build()
         );
     }
