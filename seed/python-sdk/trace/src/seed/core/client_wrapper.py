@@ -16,6 +16,7 @@ class BaseClientWrapper:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
+        max_retries: int = 2,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         self._x_random_header = x_random_header
@@ -23,6 +24,7 @@ class BaseClientWrapper:
         self._headers = headers
         self._base_url = base_url
         self._timeout = timeout
+        self._max_retries = max_retries
         self._logging = logging
 
     def get_headers(self) -> typing.Dict[str, str]:
@@ -59,6 +61,9 @@ class BaseClientWrapper:
     def get_timeout(self) -> typing.Optional[float]:
         return self._timeout
 
+    def get_max_retries(self) -> int:
+        return self._max_retries
+
 
 class SyncClientWrapper(BaseClientWrapper):
     def __init__(
@@ -69,6 +74,7 @@ class SyncClientWrapper(BaseClientWrapper):
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
+        max_retries: int = 2,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         httpx_client: httpx.Client,
     ):
@@ -78,6 +84,7 @@ class SyncClientWrapper(BaseClientWrapper):
             headers=headers,
             base_url=base_url,
             timeout=timeout,
+            max_retries=max_retries,
             logging=logging,
         )
         self.httpx_client = HttpClient(
@@ -85,6 +92,7 @@ class SyncClientWrapper(BaseClientWrapper):
             base_headers=self.get_headers,
             base_timeout=self.get_timeout,
             base_url=self.get_base_url,
+            base_max_retries=self.get_max_retries(),
             logging_config=self._logging,
         )
 
@@ -98,6 +106,7 @@ class AsyncClientWrapper(BaseClientWrapper):
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
+        max_retries: int = 2,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         httpx_client: httpx.AsyncClient,
@@ -108,6 +117,7 @@ class AsyncClientWrapper(BaseClientWrapper):
             headers=headers,
             base_url=base_url,
             timeout=timeout,
+            max_retries=max_retries,
             logging=logging,
         )
         self._async_token = async_token
@@ -116,6 +126,7 @@ class AsyncClientWrapper(BaseClientWrapper):
             base_headers=self.get_headers,
             base_timeout=self.get_timeout,
             base_url=self.get_base_url,
+            base_max_retries=self.get_max_retries(),
             async_base_headers=self.async_get_headers,
             logging_config=self._logging,
         )
