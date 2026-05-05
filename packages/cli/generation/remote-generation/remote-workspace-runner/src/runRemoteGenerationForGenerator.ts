@@ -483,12 +483,13 @@ async function uploadDynamicIRForSdkGeneration({
     try {
         uploadUrlsResponse = await fdr.api.register.getSdkDynamicIrUploadUrls({
             orgId: FdrAPI.OrgId(organization),
-            apiId: "",
-            irVersions: []
+            apiId: getOriginalName(ir.apiName),
+            irVersions: [language]
         });
     } catch (error) {
-        // Log warning but don't fail the generation - dynamic IR upload is optional
-        context.logger.warn(`Failed to get dynamic IR upload URLs: ${error}`);
+        context.logger.warn(
+            `Failed to get dynamic IR upload URLs (non-fatal, dynamic snippets may be stale): ${error}`
+        );
         return;
     }
 
