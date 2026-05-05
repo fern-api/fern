@@ -5827,9 +5827,6 @@ importers:
       '@types/url-join':
         specifier: 4.0.1
         version: 4.0.1
-      '@types/uuid':
-        specifier: ^9.0.8
-        version: 9.0.8
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
@@ -5839,9 +5836,6 @@ importers:
       url-join:
         specifier: ^4.0.1
         version: 4.0.1
-      uuid:
-        specifier: 'catalog:'
-        version: 14.0.0
       vitest:
         specifier: 'catalog:'
         version: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@22.19.17)(@vitest/coverage-v8@4.1.4)(vite@7.3.2(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
