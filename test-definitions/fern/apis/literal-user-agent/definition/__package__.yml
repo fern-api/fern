@@ -1,0 +1,11 @@
+imports:
+  root: api.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    ping:
+      path: /ping
+      method: GET
+      response: string
