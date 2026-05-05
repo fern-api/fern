@@ -722,13 +722,15 @@ class ModuleFile {
         });
 
         rubyFilePaths.forEach((filePath) => {
-            // Filter out wire-test files — they must not be loaded in the main lib file.
-            // Use a precise pattern so legitimate subpackage paths that contain "test"
-            // in their name (e.g. pinnacle/rcs/test/client.rb) are not accidentally excluded.
+            // Filter out test and infrastructure files — they must not be loaded
+            // in the main lib barrel file to avoid circular requires.
+            // The barrel lives in lib/, so test paths resolve to ../test/wire/…
             const relativePath = relative(this.filePath, filePath);
             if (
                 relativePath.startsWith("spec/") ||
-                relativePath.startsWith("test/unit/") ||
+                relativePath.startsWith("test/") ||
+                relativePath.startsWith("../test/") ||
+                relativePath.startsWith("../wiremock/") ||
                 relativePath.includes("/wire-tests/")
             ) {
                 return;
