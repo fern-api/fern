@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Forward the top-level `replay` block from `generators.yml` to Fiddle's
+    `createJobV3` call so cloud generation honors `replay.enabled: false` and
+    skips the replay pipeline when a customer opts out. Activates once the
+    `@fern-fern/fiddle-sdk` catalog pin advances to a version that exposes
+    `replay` on `CreateJobRequestV2` (schema landed in fern-api/fiddle#729).
+  type: feat
