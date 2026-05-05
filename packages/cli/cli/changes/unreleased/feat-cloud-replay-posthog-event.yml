@@ -7,3 +7,14 @@
     cloud generation, mirroring the local-path hook. Honors
     `FERN_DISABLE_TELEMETRY`. No Fiddle change required.
   type: feat
+
+- summary: |
+    Enrich the `replay` PostHog event payload — adds `surface: "cli"` on local
+    runs (cloud already had `"fiddle"`); populates `duration_ms` for cloud via
+    CLI-observed wall-clock from job dispatch to `finished` status; attaches
+    `org_id` resolved via `venus.organization.getOrgIdsFromToken` so dashboards
+    can split adoption by org without parsing email domains; propagates five
+    additional `ReplayReport` counters end-to-end (`patches_skipped`,
+    `patches_partially_applied`, `patches_conflict_resolved`, `patches_reverted`,
+    `patches_refreshed`). Sharpens the patch-outcome funnel.
+  type: feat
