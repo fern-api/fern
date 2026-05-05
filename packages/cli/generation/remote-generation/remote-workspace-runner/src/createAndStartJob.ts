@@ -32,6 +32,7 @@ export async function createAndStartJob({
     shouldLogS3Url,
     token,
     whitelabel,
+    replay,
     irVersionOverride,
     absolutePathToPreview,
     fiddlePreview,
@@ -54,6 +55,7 @@ export async function createAndStartJob({
     shouldLogS3Url: boolean;
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
+    replay: generatorsYml.ReplayConfigSchema | undefined;
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     /** When provided, overrides the `preview` flag sent to Fiddle. When omitted, falls back to absolutePathToPreview != null. */
@@ -101,6 +103,7 @@ export async function createAndStartJob({
                 shouldLogS3Url,
                 token,
                 whitelabel,
+                replay,
                 absolutePathToPreview,
                 fiddlePreview,
                 pushPreviewBranch,
@@ -149,6 +152,7 @@ async function createJob({
     shouldLogS3Url: boolean;
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
+    replay: generatorsYml.ReplayConfigSchema | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     /** When provided, overrides the `preview` flag sent to Fiddle. When omitted, falls back to absolutePathToPreview != null. */
     fiddlePreview?: boolean;

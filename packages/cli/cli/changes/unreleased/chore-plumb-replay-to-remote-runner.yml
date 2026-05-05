@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Plumb the top-level `replay` block from `generators.yml` through the remote
+    generation runner to the createJobV3 wire boundary, so cloud generation can
+    honor `replay.enabled` once Fiddle exposes the field.
+  type: chore
