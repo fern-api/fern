@@ -1,6 +1,3 @@
-imports:
-  root: api.yml
-
 service:
   auth: false
   base-path: ""
