@@ -34,9 +34,11 @@ export function getFernRunId(): string | undefined {
 export function getRunIdProperties(): { fern_run_id?: string; github_run_id?: string } {
     const properties: { fern_run_id?: string; github_run_id?: string } = {};
     const fernRunId = getFernRunId();
-    if (fernRunId != null) {
+
+    if (fernRunId != null && fernRunId.length > 0) {
         properties.fern_run_id = fernRunId;
     }
+
     const githubRunId = process.env.GITHUB_RUN_ID;
     if (githubRunId != null && githubRunId.length > 0) {
         properties.github_run_id = githubRunId;
