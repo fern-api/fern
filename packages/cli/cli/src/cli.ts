@@ -1287,16 +1287,27 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false
                 }),
         async (argv) => {
+            // Docs validation may reference APIs outside `--api`; apply the filter
+            // only to API-level validation.
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+
+            if (argv.api != null && !project.apiWorkspaces.some((ws) => ws.workspaceName === argv.api)) {
+                cliContext.failAndThrow(`API does not exist: ${argv.api}`, undefined, {
+                    code: CliError.Code.ConfigError
+                });
+            }
+
             await validateWorkspaces({
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineApiWorkspace: argv.api,
-                    defaultToAllApiWorkspaces: true
-                }),
+                project,
                 cliContext,
                 logWarnings: argv.warnings,
                 brokenLinks: argv.brokenLinks,
                 errorOnBrokenLinks: argv.strictBrokenLinks,
-                directFromOpenapi: argv.fromOpenapi
+                directFromOpenapi: argv.fromOpenapi,
+                commandLineApiWorkspace: argv.api
             });
         }
     );
