@@ -13,6 +13,7 @@ import { createFdrService, createVenusService } from "@fern-api/core";
 import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { isAutoVersion } from "@fern-api/generator-cli/autoversion";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { dynamic, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { getOriginalName } from "@fern-api/ir-utils";
@@ -53,6 +54,8 @@ export async function runRemoteGenerationForGenerator({
     automationMode,
     autoMerge,
     skipIfNoDiff,
+    noReplay,
+    disableTelemetry,
     loginCommand
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
@@ -83,6 +86,14 @@ export async function runRemoteGenerationForGenerator({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    /**
+     * Whether the user passed `--no-replay`. Currently a no-op on the cloud path
+     * (Fiddle doesn't honor it yet — FER-10343 out-of-scope), but plumbed through
+     * for telemetry so the `no_replay_flag` property reflects user intent.
+     */
+    noReplay?: boolean;
+    /** Suppresses the `replay` PostHog event when true. Honors FERN_DISABLE_TELEMETRY. */
+    disableTelemetry?: boolean;
     /**
      * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
      * 'fern auth login' for CLI v2). Defaults to 'fern login'.
@@ -339,7 +350,18 @@ export async function runRemoteGenerationForGenerator({
         taskId,
         generatorInvocation,
         interactiveTaskContext,
-        absolutePathToPreview
+        absolutePathToPreview,
+        telemetryContext: {
+            cliVersion: workspace.cliVersion,
+            automationMode: automationMode === true,
+            autoMerge: autoMerge === true,
+            skipIfNoDiff: skipIfNoDiff === true,
+            versionArg: version == null ? "none" : isAutoVersion(version) ? "auto" : "explicit",
+            versionBump: undefined,
+            replayConfigEnabled: replay?.enabled === true,
+            noReplayFlag: noReplay === true,
+            disableTelemetry: disableTelemetry === true
+        }
     });
 
     let result = await pollJobAndReportStatus({

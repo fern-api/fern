@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Emit the `replay` PostHog event from cloud generation, with `surface`, `org_id`, `duration_ms`, and additional patch counters.
+  type: feat

@@ -15,7 +15,12 @@ import { createVenusService } from "@fern-api/core";
 import { ContainerRunner, extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AutoVersioningCache, isAutoVersion } from "@fern-api/generator-cli/autoversion";
-import { logReplaySummary, type PipelineLogger, PostGenerationPipeline } from "@fern-api/generator-cli/pipeline";
+import {
+    buildReplayTelemetryProps,
+    logReplaySummary,
+    type PipelineLogger,
+    PostGenerationPipeline
+} from "@fern-api/generator-cli/pipeline";
 import { cloneRepository, parseRepository } from "@fern-api/github";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
@@ -32,7 +37,6 @@ import * as fs from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
-import { buildReplayTelemetryProps } from "./buildReplayTelemetryProps.js";
 import { getGeneratorOutputSubfolder } from "./getGeneratorOutputSubfolder.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 
@@ -479,12 +483,17 @@ export async function runLocalGenerationForWorkspace({
                                     previewMode: selfhostedGithubConfig.previewMode === true,
                                     durationMs: pipelineDurationMs
                                 });
+                                // `surface: "cli"` mirrors the cloud emitter's `surface: "fiddle"`
+                                // so dashboards can split between CLI-local and Fiddle paths
+                                // without coalescing NULLs. Set as a final overlay so the local
+                                // helper itself stays surface-agnostic.
+                                const propsWithSurface = { ...replayTelemetryProps, surface: "cli" as const };
                                 interactiveTaskContext.instrumentPostHogEvent({
                                     command: "replay",
-                                    properties: replayTelemetryProps
+                                    properties: propsWithSurface
                                 });
                                 interactiveTaskContext.logger.debug(
-                                    `[telemetry] replay event sent: ${JSON.stringify(replayTelemetryProps)}`
+                                    `[telemetry] replay event sent: ${JSON.stringify(propsWithSurface)}`
                                 );
                             } catch (error) {
                                 interactiveTaskContext.logger.debug(

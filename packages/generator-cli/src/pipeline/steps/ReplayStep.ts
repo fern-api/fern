@@ -125,6 +125,11 @@ export class ReplayStep extends BaseStep {
             patchesRepointed: report.patchesRepointed,
             patchesContentRebased: report.patchesContentRebased,
             patchesKeptAsUserOwned: report.patchesKeptAsUserOwned,
+            patchesSkipped: report.patchesSkipped,
+            patchesPartiallyApplied: report.patchesPartiallyApplied,
+            patchesConflictResolved: report.patchesConflictResolved,
+            patchesReverted: report.patchesReverted,
+            patchesRefreshed: report.patchesRefreshed,
             unresolvedPatches: report.unresolvedPatches?.map((info) => ({
                 patchId: info.patchId,
                 patchMessage: info.patchMessage,
