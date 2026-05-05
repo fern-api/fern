@@ -179,6 +179,7 @@ describe("RemoteTaskHandler.processUpdate — replay PostHog emission", () => {
     function makeBaseTelemetryContext(): RemoteTaskHandler.ReplayTelemetryContext {
         return {
             cliVersion: "5.12.0",
+            orgId: "acme",
             automationMode: false,
             autoMerge: false,
             skipIfNoDiff: false,
@@ -256,7 +257,8 @@ describe("RemoteTaskHandler.processUpdate — replay PostHog emission", () => {
             github_mode: "pull-request",
             replay_config_enabled: true,
             no_replay_flag: false,
-            automation_mode: false
+            automation_mode: false,
+            org_id: "acme"
         });
         // Hashed (sha256/16) — no raw repo path leaks
         expect(event.properties?.repo_uri_hash).toMatch(/^[0-9a-f]{16}$/);

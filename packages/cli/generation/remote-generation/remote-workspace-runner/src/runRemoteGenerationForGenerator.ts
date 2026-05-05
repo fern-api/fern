@@ -353,6 +353,7 @@ export async function runRemoteGenerationForGenerator({
         absolutePathToPreview,
         telemetryContext: {
             cliVersion: workspace.cliVersion,
+            orgId: projectConfig.organization,
             automationMode: automationMode === true,
             autoMerge: autoMerge === true,
             skipIfNoDiff: skipIfNoDiff === true,
