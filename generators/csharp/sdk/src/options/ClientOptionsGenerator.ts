@@ -232,7 +232,9 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
             const name = this.case.pascalSafe(header.name);
             if (!seenNames.has(name)) {
                 seenNames.add(name);
-                const type = this.context.csharpTypeMapper.convert({ reference: header.valueType });
+                const type = this.context.csharpTypeMapper.convert({
+                    reference: header.valueType
+                });
                 const isOptional =
                     header.valueType.type === "container" && header.valueType.container.type === "optional";
                 const field: UnifiedField = {
@@ -299,26 +301,31 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
             return [
                 {
                     name: this.case.pascalSafe(scheme.name),
-                    type: this.context.csharpTypeMapper.convert({ reference: scheme.valueType }),
+                    type: this.context.csharpTypeMapper.convert({
+                        reference: scheme.valueType
+                    }),
                     docs: scheme.docs ?? `The ${this.case.camelSafe(scheme.name)} to use for authentication.`,
                     isOptional,
                     hasEnvironmentVariable: scheme.headerEnvVar != null
                 }
             ];
         } else if (scheme.type === "oauth") {
+            // OAuth supports two auth modes: client credentials or a pre-fetched bearer token.
+            // All three fields are optional at the API surface; a runtime check in the
+            // generated root client constructor enforces that one valid combination is provided.
             const fields: UnifiedField[] = [
                 {
                     name: "ClientId",
                     type: this.Primitive.string,
                     docs: "The clientId to use for authentication.",
-                    isOptional,
+                    isOptional: true,
                     hasEnvironmentVariable: scheme.configuration.clientIdEnvVar != null
                 },
                 {
                     name: "ClientSecret",
                     type: this.Primitive.string,
                     docs: "The clientSecret to use for authentication.",
-                    isOptional,
+                    isOptional: true,
                     hasEnvironmentVariable: scheme.configuration.clientSecretEnvVar != null
                 }
             ];
@@ -339,9 +346,15 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                     name: this.case.pascalSafe(customProperty.property.name),
                     type: typeRef,
                     docs: `The ${this.case.camelSafe(customProperty.property.name)} for OAuth authentication.`,
-                    isOptional
+                    isOptional: true
                 });
             }
+            fields.push({
+                name: "Token",
+                type: this.Primitive.string,
+                docs: "A pre-fetched bearer token. When provided, the OAuth client credentials flow is bypassed.",
+                isOptional: true
+            });
             return fields;
         } else if (scheme.type === "inferred") {
             // Inferred auth credentials become fields on ClientOptions

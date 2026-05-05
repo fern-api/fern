@@ -4,6 +4,11 @@ features:
     description: |
       Instantiate and use the client with the following:
 
+  - id: AUTHENTICATION
+    description: |
+      The SDK supports authenticating via the OAuth client credentials flow (clientId + clientSecret) or by
+      providing a pre-fetched bearer token. Choose whichever option fits your environment:
+
   - id: ENVIRONMENTS
     description: |
       This SDK allows you to configure different environments for API requests.

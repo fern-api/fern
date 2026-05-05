@@ -9,8 +9,9 @@ public partial class SeedOauthClientCredentialsClient : ISeedOauthClientCredenti
     private readonly RawClient _client;
 
     public SeedOauthClientCredentialsClient(
-        string clientId,
-        string clientSecret,
+        string? clientId = null,
+        string? clientSecret = null,
+        string? token = null,
         ClientOptions? clientOptions = null
     )
     {
@@ -37,15 +38,28 @@ public partial class SeedOauthClientCredentialsClient : ISeedOauthClientCredenti
                 }
             }
             var clientOptionsWithAuth = clientOptions.Clone();
-            var tokenProvider = new OAuthTokenProvider(
-                clientId,
-                clientSecret,
-                new AuthClient(new RawClient(clientOptions))
-            );
-            clientOptionsWithAuth.Headers["Authorization"] =
-                new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
-                    await tokenProvider.GetAccessTokenAsync().ConfigureAwait(false)
+            if (token != null)
+            {
+                clientOptionsWithAuth.Headers["Authorization"] = $"Bearer {token}";
+            }
+            else
+            {
+                if (clientId == null || clientSecret == null)
+                {
+                    throw new ArgumentException(
+                        "Please provide either a 'token' or both 'clientId' and 'clientSecret'."
+                    );
+                }
+                var tokenProvider = new OAuthTokenProvider(
+                    clientId,
+                    clientSecret,
+                    new AuthClient(new RawClient(clientOptions))
                 );
+                clientOptionsWithAuth.Headers["Authorization"] =
+                    new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
+                        await tokenProvider.GetAccessTokenAsync().ConfigureAwait(false)
+                    );
+            }
             _client = new RawClient(clientOptionsWithAuth);
             Auth = new AuthClient(_client);
             NestedNoAuth = new NestedNoAuthClient(_client);

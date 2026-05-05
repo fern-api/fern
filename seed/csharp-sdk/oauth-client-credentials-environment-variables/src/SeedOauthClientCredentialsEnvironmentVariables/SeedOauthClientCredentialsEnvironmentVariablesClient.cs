@@ -12,17 +12,21 @@ public partial class SeedOauthClientCredentialsEnvironmentVariablesClient
     public SeedOauthClientCredentialsEnvironmentVariablesClient(
         string? clientId = null,
         string? clientSecret = null,
+        string? token = null,
         ClientOptions? clientOptions = null
     )
     {
-        clientId ??= GetFromEnvironmentOrThrow(
-            "CLIENT_ID",
-            "Please pass in clientId or set the environment variable CLIENT_ID."
-        );
-        clientSecret ??= GetFromEnvironmentOrThrow(
-            "CLIENT_SECRET",
-            "Please pass in clientSecret or set the environment variable CLIENT_SECRET."
-        );
+        if (token == null)
+        {
+            clientId ??= GetFromEnvironmentOrThrow(
+                "CLIENT_ID",
+                "Please pass in clientId or set the environment variable CLIENT_ID."
+            );
+            clientSecret ??= GetFromEnvironmentOrThrow(
+                "CLIENT_SECRET",
+                "Please pass in clientSecret or set the environment variable CLIENT_SECRET."
+            );
+        }
         clientOptions ??= new ClientOptions();
         var platformHeaders = new Headers(
             new Dictionary<string, string>()
@@ -41,15 +45,28 @@ public partial class SeedOauthClientCredentialsEnvironmentVariablesClient
             }
         }
         var clientOptionsWithAuth = clientOptions.Clone();
-        var tokenProvider = new OAuthTokenProvider(
-            clientId,
-            clientSecret,
-            new AuthClient(new RawClient(clientOptions))
-        );
-        clientOptionsWithAuth.Headers["Authorization"] =
-            new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
-                await tokenProvider.GetAccessTokenAsync().ConfigureAwait(false)
+        if (token != null)
+        {
+            clientOptionsWithAuth.Headers["Authorization"] = $"Bearer {token}";
+        }
+        else
+        {
+            if (clientId == null || clientSecret == null)
+            {
+                throw new ArgumentException(
+                    "Please provide either a 'token' or both 'clientId' and 'clientSecret'."
+                );
+            }
+            var tokenProvider = new OAuthTokenProvider(
+                clientId,
+                clientSecret,
+                new AuthClient(new RawClient(clientOptions))
             );
+            clientOptionsWithAuth.Headers["Authorization"] =
+                new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
+                    await tokenProvider.GetAccessTokenAsync().ConfigureAwait(false)
+                );
+        }
         _client = new RawClient(clientOptionsWithAuth);
         Auth = new AuthClient(_client);
         NestedNoAuth = new NestedNoAuthClient(_client);

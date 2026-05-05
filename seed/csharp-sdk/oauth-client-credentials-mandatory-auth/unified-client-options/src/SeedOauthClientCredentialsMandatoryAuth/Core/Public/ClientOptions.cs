@@ -19,6 +19,7 @@ public partial class ClientOptions
         AdditionalHeaders = other.AdditionalHeaders;
         ClientId = other.ClientId;
         ClientSecret = other.ClientSecret;
+        Token = other.Token;
     }
 
     /// <summary>
@@ -85,7 +86,7 @@ public partial class ClientOptions
     /// <summary>
     /// The clientId to use for authentication.
     /// </summary>
-    public required string ClientId { get;
+    public string? ClientId { get;
 #if NET5_0_OR_GREATER
         init;
 #else
@@ -96,7 +97,18 @@ public partial class ClientOptions
     /// <summary>
     /// The clientSecret to use for authentication.
     /// </summary>
-    public required string ClientSecret { get;
+    public string? ClientSecret { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    }
+
+    /// <summary>
+    /// A pre-fetched bearer token. When provided, the OAuth client credentials flow is bypassed.
+    /// </summary>
+    public string? Token { get;
 #if NET5_0_OR_GREATER
         init;
 #else

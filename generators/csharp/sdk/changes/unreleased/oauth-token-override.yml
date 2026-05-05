@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    OAuth client credentials APIs now accept a pre-fetched bearer token in addition to clientId/clientSecret.
+    Callers can pass `token: "..."` to bypass the OAuth client credentials flow, or continue passing
+    `clientId`/`clientSecret` (or rely on env-var fallbacks) to have the SDK fetch and refresh tokens
+    automatically. The constructor performs a runtime check ensuring at least one valid auth combination
+    is provided. The README also documents both authentication options.
+  type: feat

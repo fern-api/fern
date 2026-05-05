@@ -11,6 +11,7 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Authentication](#authentication)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Retries](#retries)
@@ -45,6 +46,25 @@ var client = new SeedApiClient("client_id", "client_secret");
 await client.Identity.GetTokenAsync(
     new GetTokenIdentityRequest { Username = "username", Password = "password" }
 );
+```
+
+## Authentication
+
+The SDK supports authenticating via the OAuth client credentials flow (clientId + clientSecret) or by
+providing a pre-fetched bearer token. Choose whichever option fits your environment:
+
+```csharp
+using SeedApi;
+
+// Option 1: OAuth client credentials flow (the SDK fetches and refreshes tokens automatically)
+var client = new SeedApiClient(clientId: "client_id", clientSecret: "client_secret");
+```
+
+```csharp
+using SeedApi;
+
+// Option 2: Pre-fetched bearer token (the SDK skips the OAuth flow)
+var client = new SeedApiClient(token: "my-pre-generated-bearer-token");
 ```
 
 ## Exception Handling

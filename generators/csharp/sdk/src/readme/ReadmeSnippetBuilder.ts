@@ -135,7 +135,39 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             snippets[ReadmeSnippetBuilder.FORWARD_COMPATIBLE_ENUMS_FEATURE_ID] =
                 this.buildForwardCompatibleEnumSnippets();
         }
+        if (this.hasOAuthClientCredentials()) {
+            snippets[FernGeneratorCli.StructuredFeatureId.Authentication] = this.buildOAuthAuthenticationSnippets();
+        }
         return snippets;
+    }
+
+    private hasOAuthClientCredentials(): boolean {
+        return this.context.ir.auth.schemes.some((scheme) => scheme.type === "oauth");
+    }
+
+    private buildOAuthAuthenticationSnippets(): string[] {
+        const rootClientName = this.Types.RootClient.name;
+        const clientOptionsName = this.Types.ClientOptions.name;
+        const unified = this.context.settings.unifiedClientOptions;
+        const credentialsConstructor = unified
+            ? `var client = new ${rootClientName}(new ${clientOptionsName} { ClientId = "client_id", ClientSecret = "client_secret" });`
+            : `var client = new ${rootClientName}(clientId: "client_id", clientSecret: "client_secret");`;
+        const tokenConstructor = unified
+            ? `var client = new ${rootClientName}(new ${clientOptionsName} { Token = "my-pre-generated-bearer-token" });`
+            : `var client = new ${rootClientName}(token: "my-pre-generated-bearer-token");`;
+        const credentialsSnippet = this.writeCode(`
+using ${this.namespaces.root};
+
+// Option 1: OAuth client credentials flow (the SDK fetches and refreshes tokens automatically)
+${credentialsConstructor}
+`);
+        const tokenSnippet = this.writeCode(`
+using ${this.namespaces.root};
+
+// Option 2: Pre-fetched bearer token (the SDK skips the OAuth flow)
+${tokenConstructor}
+`);
+        return [credentialsSnippet, tokenSnippet];
     }
 
     private buildUsageSnippets(): string[] {

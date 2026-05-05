@@ -48,6 +48,17 @@ interface ConstructorParameter {
      * When present, the parameter is optional and uses this value as fallback.
      */
     clientDefault?: Literal;
+    /**
+     * If true, this parameter is omitted from generated example snippets.
+     * Used for the OAuth `token` override parameter so example snippets continue
+     * to demonstrate the credentials flow by default.
+     */
+    skipInSnippets?: boolean;
+    /**
+     * If set, the env var fallback for this parameter is wrapped in `if (<condition>) { ... }`.
+     * Used to skip OAuth client-credentials env var lookups when the user has provided a token.
+     */
+    envVarFallbackCondition?: string;
 }
 
 interface LiteralParameter {
@@ -270,7 +281,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         // when the same key is added twice, so we dedup here. Earlier entries
         // win; we preserve the IR-established ordering of required > optional
         // > literal so the most specific / required scheme takes precedence.
-        const authHeaderCandidates: { headerName: string; entry: ast.Dictionary.MapEntry }[] = [];
+        const authHeaderCandidates: {
+            headerName: string;
+            entry: ast.Dictionary.MapEntry;
+        }[] = [];
 
         for (const param of [...requiredParameters, ...optionalParameters]) {
             if (param.header != null) {
@@ -374,8 +388,33 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         );
                     }
 
-                    for (const param of optionalParameters) {
-                        if (param.environmentVariable != null) {
+                    // Group env var fallbacks by their fallback condition so that
+                    // params sharing a condition (e.g. OAuth credentials when no token was passed)
+                    // emit inside a single `if` block.
+                    const envVarParams = optionalParameters.filter((p) => p.environmentVariable != null);
+                    const envVarGroups: {
+                        condition: string | undefined;
+                        params: ConstructorParameter[];
+                    }[] = [];
+                    for (const param of envVarParams) {
+                        const last = envVarGroups[envVarGroups.length - 1];
+                        if (last != null && last.condition === param.envVarFallbackCondition) {
+                            last.params.push(param);
+                        } else {
+                            envVarGroups.push({
+                                condition: param.envVarFallbackCondition,
+                                params: [param]
+                            });
+                        }
+                    }
+                    for (const group of envVarGroups) {
+                        if (group.condition != null) {
+                            innerWriter.controlFlow("if", this.csharp.codeblock(group.condition));
+                        }
+                        for (const param of group.params) {
+                            if (param.environmentVariable == null) {
+                                continue;
+                            }
                             const target = paramAccess(param);
                             innerWriter.writeLine(`${target} ??= ${GetFromEnvironmentOrThrow}(`);
                             innerWriter.indent();
@@ -386,6 +425,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             );
                             innerWriter.dedent();
                             innerWriter.writeLine(");");
+                        }
+                        if (group.condition != null) {
+                            innerWriter.endControlFlow();
                         }
                     }
 
@@ -530,6 +572,27 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
                         );
 
+                        const tokenAccess = unified ? "clientOptions.Token" : "token";
+                        const clientIdAccess = unified ? "clientOptions.ClientId" : "clientId";
+                        const clientSecretAccess = unified ? "clientOptions.ClientSecret" : "clientSecret";
+
+                        // Token override path: use the pre-fetched bearer token directly.
+                        innerWriter.controlFlow("if", this.csharp.codeblock(`${tokenAccess} != null`));
+                        innerWriter.writeTextStatement(
+                            `clientOptionsWithAuth.Headers["Authorization"] = $"Bearer {${tokenAccess}}"`
+                        );
+                        innerWriter.alternativeControlFlow("else");
+
+                        // Runtime validation: when no token is provided, both credentials are required.
+                        innerWriter.controlFlow(
+                            "if",
+                            this.csharp.codeblock(`${clientIdAccess} == null || ${clientSecretAccess} == null`)
+                        );
+                        innerWriter.writeTextStatement(
+                            "throw new ArgumentException(\"Please provide either a 'token' or both 'clientId' and 'clientSecret'.\")"
+                        );
+                        innerWriter.endControlFlow();
+
                         // Use clientOptions (platform headers only) for OAuth token requests
                         const arguments_ = [
                             this.generation.Types.RawClient.new({
@@ -537,10 +600,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             })
                         ];
                         const oauthAdditionalParams = this.getOAuthAdditionalParamNames();
-                        const clientIdAccess = unified ? "clientOptions.ClientId" : "clientId";
-                        const clientSecretAccess = unified ? "clientOptions.ClientSecret" : "clientSecret";
+                        // Property accesses can't be tracked through nullable flow analysis,
+                        // so silence the warning with `!` after the explicit null check above.
+                        const credentialSuffix = unified ? "!" : "";
                         innerWriter.write(
-                            `var tokenProvider = new OAuthTokenProvider(${clientIdAccess}, ${clientSecretAccess}, `
+                            `var tokenProvider = new OAuthTokenProvider(${clientIdAccess}${credentialSuffix}, ${clientSecretAccess}${credentialSuffix}, `
                         );
                         for (const param of oauthAdditionalParams) {
                             const paramRef = unified ? `clientOptions.${this.toPascalCase(param)}` : param;
@@ -558,6 +622,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         innerWriter.writeTextStatement(
                             `clientOptionsWithAuth.Headers["Authorization"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => await tokenProvider.${this.names.methods.getAccessTokenAsync}().ConfigureAwait(false))`
                         );
+                        innerWriter.endControlFlow();
                     }
 
                     if (this.inferred != null) {
@@ -677,9 +742,15 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
         if (this.settings.unifiedClientOptions) {
             // In unified mode, auth params become named properties inside ClientOptions
-            const clientOptionsFields: Array<{ name: string; assignment: ast.CodeBlock | ast.AstNode }> = [];
+            const clientOptionsFields: Array<{
+                name: string;
+                assignment: ast.CodeBlock | ast.AstNode;
+            }> = [];
 
             for (const param of allParameters) {
+                if (param.skipInSnippets) {
+                    continue;
+                }
                 if (param.environmentVariable != null && !includeEnvVarArguments) {
                     continue;
                 }
@@ -718,6 +789,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             }
         } else {
             for (const param of allParameters) {
+                if (param.skipInSnippets) {
+                    continue;
+                }
                 // Skip parameters with environment variables unless explicitly including them
                 if (param.environmentVariable != null && !includeEnvVarArguments) {
                     continue;
@@ -886,11 +960,17 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             }
         } else if (scheme.type === "oauth") {
             if (this.oauth !== null) {
+                // OAuth supports two auth modes: client credentials (clientId + clientSecret)
+                // or a pre-fetched bearer token. Both paths are wired up in the constructor;
+                // a runtime check enforces that the caller provides one valid combination.
+                // All three params are therefore optional at the C# API layer.
+                const tokenAccess = this.settings.unifiedClientOptions ? "clientOptions.Token" : "token";
+                const envVarFallbackCondition = `${tokenAccess} == null`;
                 return [
                     {
                         name: "clientId",
                         docs: "The clientId to use for authentication.",
-                        isOptional,
+                        isOptional: true,
                         typeReference: FernIr.TypeReference.primitive({
                             v1: FernIr.PrimitiveTypeV1.String,
                             v2: FernIr.PrimitiveTypeV2.string({
@@ -900,12 +980,13 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }),
                         type: this.Primitive.string,
                         environmentVariable: scheme.configuration.clientIdEnvVar,
+                        envVarFallbackCondition,
                         exampleValue: "client_id"
                     },
                     {
                         name: "clientSecret",
                         docs: "The clientSecret to use for authentication.",
-                        isOptional,
+                        isOptional: true,
                         typeReference: FernIr.TypeReference.primitive({
                             v1: FernIr.PrimitiveTypeV1.String,
                             v2: FernIr.PrimitiveTypeV2.string({
@@ -915,9 +996,27 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }),
                         type: this.Primitive.string,
                         environmentVariable: scheme.configuration.clientSecretEnvVar,
+                        envVarFallbackCondition,
                         exampleValue: "client_secret"
                     },
-                    ...this.getOAuthAdditionalConstructorParams(scheme, isOptional)
+                    ...this.getOAuthAdditionalConstructorParams(scheme, true).map((p) => ({
+                        ...p,
+                        envVarFallbackCondition: p.environmentVariable != null ? envVarFallbackCondition : undefined
+                    })),
+                    {
+                        name: "token",
+                        docs: "A pre-fetched bearer token. When provided, the OAuth client credentials flow is bypassed.",
+                        isOptional: true,
+                        typeReference: FernIr.TypeReference.primitive({
+                            v1: FernIr.PrimitiveTypeV1.String,
+                            v2: FernIr.PrimitiveTypeV2.string({
+                                default: undefined,
+                                validation: undefined
+                            })
+                        }),
+                        type: this.Primitive.string,
+                        skipInSnippets: true
+                    }
                 ];
             } else {
                 this.context.logger.warn(

@@ -6,7 +6,12 @@ public partial class SeedApiClient : ISeedApiClient
 {
     private readonly RawClient _client;
 
-    public SeedApiClient(string clientId, string clientSecret, ClientOptions? clientOptions = null)
+    public SeedApiClient(
+        string? clientId = null,
+        string? clientSecret = null,
+        string? token = null,
+        ClientOptions? clientOptions = null
+    )
     {
         clientOptions ??= new ClientOptions();
         var platformHeaders = new Headers(
@@ -26,15 +31,28 @@ public partial class SeedApiClient : ISeedApiClient
             }
         }
         var clientOptionsWithAuth = clientOptions.Clone();
-        var tokenProvider = new OAuthTokenProvider(
-            clientId,
-            clientSecret,
-            new IdentityClient(new RawClient(clientOptions))
-        );
-        clientOptionsWithAuth.Headers["Authorization"] =
-            new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
-                await tokenProvider.GetAccessTokenAsync().ConfigureAwait(false)
+        if (token != null)
+        {
+            clientOptionsWithAuth.Headers["Authorization"] = $"Bearer {token}";
+        }
+        else
+        {
+            if (clientId == null || clientSecret == null)
+            {
+                throw new ArgumentException(
+                    "Please provide either a 'token' or both 'clientId' and 'clientSecret'."
+                );
+            }
+            var tokenProvider = new OAuthTokenProvider(
+                clientId,
+                clientSecret,
+                new IdentityClient(new RawClient(clientOptions))
             );
+            clientOptionsWithAuth.Headers["Authorization"] =
+                new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
+                    await tokenProvider.GetAccessTokenAsync().ConfigureAwait(false)
+                );
+        }
         _client = new RawClient(clientOptionsWithAuth);
         Identity = new IdentityClient(_client);
         Plants = new PlantsClient(_client);
