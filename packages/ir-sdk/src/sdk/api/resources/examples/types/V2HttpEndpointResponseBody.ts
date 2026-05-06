@@ -3,12 +3,12 @@
 import * as FernIr from "../../../index.js";
 
 export type V2HttpEndpointResponseBody =
-    | FernIr.V2HttpEndpointResponseBody.Error_
+    | FernIr.V2HttpEndpointResponseBody.Error
     | FernIr.V2HttpEndpointResponseBody.Json
     | FernIr.V2HttpEndpointResponseBody.Stream;
 
 export namespace V2HttpEndpointResponseBody {
-    export interface Error_ extends _Utils {
+    export interface Error extends _Utils {
         type: "error";
         value: unknown;
     }
@@ -36,12 +36,12 @@ export namespace V2HttpEndpointResponseBody {
 }
 
 export const V2HttpEndpointResponseBody = {
-    error: (value?: unknown): FernIr.V2HttpEndpointResponseBody.Error_ => {
+    error: (value?: unknown): FernIr.V2HttpEndpointResponseBody.Error => {
         return {
             value: value,
             type: "error",
             _visit: function <_Result>(
-                this: FernIr.V2HttpEndpointResponseBody.Error_,
+                this: FernIr.V2HttpEndpointResponseBody.Error,
                 visitor: FernIr.V2HttpEndpointResponseBody._Visitor<_Result>,
             ) {
                 return FernIr.V2HttpEndpointResponseBody._visit(this, visitor);
