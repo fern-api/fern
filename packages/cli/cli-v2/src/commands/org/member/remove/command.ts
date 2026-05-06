@@ -104,7 +104,7 @@ export class RemoveMemberCommand {
             return validateJsonInput({
                 value: raw,
                 schema: OrgMemberRemoveInputSchema,
-                schemaName: "org-member-remove-input"
+                schemaName: "params.org.member.remove"
             });
         }
         if (args.userId == null || args.org == null) {
@@ -143,7 +143,7 @@ export function addRemoveMemberCommand(cli: Argv<GlobalArgs>): void {
                 .option("params", {
                     type: "string",
                     description:
-                        "JSON payload describing the removal (inline JSON or @path/to.json (curl-style)). Run 'fern schema org-member-remove-input' to see the schema."
+                        "JSON payload describing the removal (inline JSON or @path/to.json (curl-style)). Run 'fern schema params.org.member.remove' to see the schema."
                 })
                 .example("$0 org member remove user123 acme", "# Remove user 'user123' from the 'acme' organization")
                 .example(

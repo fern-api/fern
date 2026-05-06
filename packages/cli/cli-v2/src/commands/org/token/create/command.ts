@@ -109,7 +109,7 @@ export class CreateTokenCommand {
             const payload = validateJsonInput({
                 value: raw,
                 schema: OrgTokenCreateInputSchema,
-                schemaName: "org-token-create-input"
+                schemaName: "params.org.token.create"
             });
             return { org: payload.org, description: payload.description };
         }
@@ -149,7 +149,7 @@ export function addCreateTokenCommand(cli: Argv<GlobalArgs>): void {
                 .option("params", {
                     type: "string",
                     description:
-                        "JSON payload describing the token to create (inline JSON or @path/to.json (curl-style)). Run 'fern schema org-token-create-input' to see the schema."
+                        "JSON payload describing the token to create (inline JSON or @path/to.json (curl-style)). Run 'fern schema params.org.token.create' to see the schema."
                 })
                 .example("$0 org token create acme", "# Create a token for the 'acme' organization")
                 .example('$0 org token create acme --description "CI token"', "# Create a token with a description")

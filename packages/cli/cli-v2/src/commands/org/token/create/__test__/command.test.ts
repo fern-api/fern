@@ -230,7 +230,7 @@ describe("CreateTokenCommand", () => {
                 params: JSON.stringify({ description: "missing org" })
             } as CreateTokenCommand.Args)
         ).rejects.toMatchObject({
-            message: expect.stringContaining("did not match the org-token-create-input schema"),
+            message: expect.stringContaining("did not match the params.org.token.create schema"),
             code: CliError.Code.ValidationError
         });
     });

@@ -78,7 +78,7 @@ export class RevokeTokenCommand {
             const payload = validateJsonInput({
                 value: raw,
                 schema: OrgTokenRevokeInputSchema,
-                schemaName: "org-token-revoke-input"
+                schemaName: "params.org.token.revoke"
             });
             return payload.tokenId;
         }
@@ -114,7 +114,7 @@ export function addRevokeTokenCommand(cli: Argv<GlobalArgs>): void {
                 .option("params", {
                     type: "string",
                     description:
-                        "JSON payload describing the revocation (inline JSON or @path/to.json (curl-style)). Run 'fern schema org-token-revoke-input' to see the schema."
+                        "JSON payload describing the revocation (inline JSON or @path/to.json (curl-style)). Run 'fern schema params.org.token.revoke' to see the schema."
                 })
                 .example("$0 org token revoke abc123", "# Revoke the token with ID 'abc123'")
                 .example(

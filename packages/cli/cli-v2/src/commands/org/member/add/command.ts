@@ -104,7 +104,7 @@ export class InviteMemberCommand {
             return validateJsonInput({
                 value: raw,
                 schema: OrgMemberInviteInputSchema,
-                schemaName: "org-member-invite-input"
+                schemaName: "params.org.member.invite"
             });
         }
         if (args.email == null || args.org == null) {
@@ -143,7 +143,7 @@ export function addInviteMemberCommand(cli: Argv<GlobalArgs>): void {
                 .option("params", {
                     type: "string",
                     description:
-                        "JSON payload describing the invite (inline JSON or @path/to.json (curl-style)). Run 'fern schema org-member-invite-input' to see the schema."
+                        "JSON payload describing the invite (inline JSON or @path/to.json (curl-style)). Run 'fern schema params.org.member.invite' to see the schema."
                 })
                 .example(
                     "$0 org member invite user@example.com acme",

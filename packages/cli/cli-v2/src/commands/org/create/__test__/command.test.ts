@@ -88,7 +88,7 @@ describe("CreateCommand (org)", () => {
         await expect(
             cmd.handle(context, { params: JSON.stringify({ name: 123 }) } as CreateCommand.Args)
         ).rejects.toMatchObject({
-            message: expect.stringContaining("did not match the org-create-input schema"),
+            message: expect.stringContaining("did not match the params.org.create schema"),
             code: CliError.Code.ValidationError
         });
     });

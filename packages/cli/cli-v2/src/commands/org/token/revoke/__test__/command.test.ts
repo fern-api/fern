@@ -168,7 +168,7 @@ describe("RevokeTokenCommand", () => {
         await expect(
             cmd.handle(context, { params: JSON.stringify({ wrongField: "x" }) } as RevokeTokenCommand.Args)
         ).rejects.toMatchObject({
-            message: expect.stringContaining("did not match the org-token-revoke-input schema"),
+            message: expect.stringContaining("did not match the params.org.token.revoke schema"),
             code: CliError.Code.ValidationError
         });
     });

@@ -227,7 +227,7 @@ describe("InviteMemberCommand", () => {
                 params: JSON.stringify({ email: "user@example.com" })
             } as InviteMemberCommand.Args)
         ).rejects.toMatchObject({
-            message: expect.stringContaining("did not match the org-member-invite-input schema"),
+            message: expect.stringContaining("did not match the params.org.member.invite schema"),
             code: CliError.Code.ValidationError
         });
     });

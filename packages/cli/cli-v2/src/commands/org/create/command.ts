@@ -68,7 +68,7 @@ export class CreateCommand {
             const payload = validateJsonInput({
                 value: raw,
                 schema: OrgCreateInputSchema,
-                schemaName: "org-create-input"
+                schemaName: "params.org.create"
             });
             return payload.name;
         }
@@ -99,7 +99,7 @@ export function addCreateCommand(cli: Argv<GlobalArgs>): void {
                 .option("params", {
                     type: "string",
                     description:
-                        "JSON payload describing the org to create (inline JSON or @path/to.json (curl-style)). Run 'fern schema org-create-input' to see the schema."
+                        "JSON payload describing the org to create (inline JSON or @path/to.json (curl-style)). Run 'fern schema params.org.create' to see the schema."
                 })
                 .example("$0 org create acme", "# Create the 'acme' organization")
                 .example(

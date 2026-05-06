@@ -223,7 +223,7 @@ describe("RemoveMemberCommand", () => {
                 params: JSON.stringify({ userId: "u1" })
             } as RemoveMemberCommand.Args)
         ).rejects.toMatchObject({
-            message: expect.stringContaining("did not match the org-member-remove-input schema"),
+            message: expect.stringContaining("did not match the params.org.member.remove schema"),
             code: CliError.Code.ValidationError
         });
     });
