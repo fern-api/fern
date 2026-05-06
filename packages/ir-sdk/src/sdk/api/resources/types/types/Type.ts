@@ -5,7 +5,7 @@ import * as FernIr from "../../../index.js";
 export type Type =
     | FernIr.Type.Alias
     | FernIr.Type.Enum
-    | FernIr.Type.Object_
+    | FernIr.Type.Object
     | FernIr.Type.Union
     | FernIr.Type.UndiscriminatedUnion;
 
@@ -18,7 +18,7 @@ export namespace Type {
         type: "enum";
     }
 
-    export interface Object_ extends FernIr.ObjectTypeDeclaration, _Utils {
+    export interface Object extends FernIr.ObjectTypeDeclaration, _Utils {
         type: "object";
     }
 
@@ -65,11 +65,11 @@ export const Type = {
         };
     },
 
-    object: (value: FernIr.ObjectTypeDeclaration): FernIr.Type.Object_ => {
+    object: (value: FernIr.ObjectTypeDeclaration): FernIr.Type.Object => {
         return {
             ...value,
             type: "object",
-            _visit: function <_Result>(this: FernIr.Type.Object_, visitor: FernIr.Type._Visitor<_Result>) {
+            _visit: function <_Result>(this: FernIr.Type.Object, visitor: FernIr.Type._Visitor<_Result>) {
                 return FernIr.Type._visit(this, visitor);
             },
         };

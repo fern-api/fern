@@ -5,7 +5,7 @@ import * as FernIr from "../../../index.js";
 export type ExampleTypeShape =
     | FernIr.ExampleTypeShape.Alias
     | FernIr.ExampleTypeShape.Enum
-    | FernIr.ExampleTypeShape.Object_
+    | FernIr.ExampleTypeShape.Object
     | FernIr.ExampleTypeShape.Union
     | FernIr.ExampleTypeShape.UndiscriminatedUnion;
 
@@ -18,7 +18,7 @@ export namespace ExampleTypeShape {
         type: "enum";
     }
 
-    export interface Object_ extends FernIr.ExampleObjectType, _Utils {
+    export interface Object extends FernIr.ExampleObjectType, _Utils {
         type: "object";
     }
 
@@ -71,12 +71,12 @@ export const ExampleTypeShape = {
         };
     },
 
-    object: (value: FernIr.ExampleObjectType): FernIr.ExampleTypeShape.Object_ => {
+    object: (value: FernIr.ExampleObjectType): FernIr.ExampleTypeShape.Object => {
         return {
             ...value,
             type: "object",
             _visit: function <_Result>(
-                this: FernIr.ExampleTypeShape.Object_,
+                this: FernIr.ExampleTypeShape.Object,
                 visitor: FernIr.ExampleTypeShape._Visitor<_Result>,
             ) {
                 return FernIr.ExampleTypeShape._visit(this, visitor);

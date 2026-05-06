@@ -1,3 +1,4 @@
+import { getRunIdProperties } from "@fern-api/cli-telemetry";
 import { PosthogEvent } from "@fern-api/task-context";
 import { PostHog } from "posthog-node";
 
@@ -23,7 +24,8 @@ export class AccessTokenPosthogManager implements PosthogManager {
                     ...event,
                     ...event.properties,
                     version: process.env.CLI_VERSION,
-                    usingAccessToken: true
+                    usingAccessToken: true,
+                    ...getRunIdProperties()
                 }
             });
         }
