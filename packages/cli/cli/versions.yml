@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.15.3
+  changelogEntry:
+    - summary: |
+        Fix `fern check` to respect `x-fern-ignore` when validating duplicate SDK method names. Operations marked with `x-fern-ignore: true` are now excluded from the duplicate override check.
+      type: fix
+  createdAt: "2026-05-06"
+  irVersion: 66
 - version: 5.15.2
   changelogEntry:
     - summary: |
