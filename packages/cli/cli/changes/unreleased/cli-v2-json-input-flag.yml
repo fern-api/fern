@@ -3,7 +3,6 @@
     flag accepts inline JSON or curl-style `@path/to.json` and bypasses
     interactive prompts, so agents can describe a fern.yml config or a new SDK
     target as a single JSON payload instead of composing many bespoke flags.
-    Payloads are validated against the schemas exposed by `fern schema` — run
-    `fern schema fern-yml` or `fern schema sdk-add-input` to see the exact
-    shape.
+    Run `fern schema` (or `fern schema sdks.targets` for the target shape) to
+    introspect the expected payload structure.
   type: feat

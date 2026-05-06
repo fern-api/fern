@@ -359,9 +359,9 @@ export function addAddCommand(cli: Argv<GlobalArgs>): void {
                 .option("params", {
                     type: "string",
                     description:
-                        "Add a target from a JSON payload (conforms to the `sdk-add-input` schema). " +
-                        "Accepts inline JSON or @path/to.json (curl-style). " +
-                        "Run 'fern schema sdk-add-input' to see the schema."
+                        "Add a target from a JSON payload ({ name, target }, where target conforms to " +
+                        "the SDK target schema — see `fern schema sdks.targets`). " +
+                        "Accepts inline JSON or @path/to.json (curl-style)."
                 })
     );
 }

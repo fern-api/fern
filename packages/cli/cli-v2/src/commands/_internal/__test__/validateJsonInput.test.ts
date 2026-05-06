@@ -30,7 +30,6 @@ describe("validateJsonInput", () => {
             expect(message).toContain("sdk-add-input");
             expect(message).toContain("name");
             expect(message).toContain("target.output");
-            expect(message).toContain("fern schema sdk-add-input");
         }
     });
 
