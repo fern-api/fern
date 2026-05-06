@@ -1,6 +1,21 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix `AutoVersionStep` silently regressing the SDK version when a customer
+        manually bumped `package.json` between generations. `resolvePreviousVersion`
+        now prefers the pipeline-supplied `baseVersion` (which fiddle reads from
+        `HEAD:.fern/metadata.json` on the customer's branch tip) over the
+        `[fern-generated] → [fern-generated]` diff, which is blind to customer
+        customizations. Validates `baseVersion` as semver before use to preserve
+        the existing shell-injection guard. Falls through to the prior extraction
+        path when `baseVersion` is unset, so the change is a no-op for callers
+        that don't supply it.
+      type: fix
+  createdAt: "2026-05-06"
+  version: 0.9.24
+
+- changelogEntry:
+    - summary: |
         Share `buildReplayTelemetryProps` and propagate five additional `ReplayReport` counters through `ReplayStep`.
       type: feat
   createdAt: "2026-05-05"

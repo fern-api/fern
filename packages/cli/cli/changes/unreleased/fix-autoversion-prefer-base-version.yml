@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump `@fern-api/generator-cli` to 0.9.24, which fixes `AutoVersionStep`
+    silently regressing the SDK version when a customer manually bumped
+    `package.json` between generations. Autoversion now prefers the pipeline's
+    `baseVersion` (read from main tip's `.fern/metadata.json`) over the pure
+    `[fern-generated]` diff, which is blind to customer manual bumps.
+  type: fix

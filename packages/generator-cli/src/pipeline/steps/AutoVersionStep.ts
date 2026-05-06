@@ -146,7 +146,12 @@ export class AutoVersionStep extends BaseStep {
 
         const rawDiff = this.gitDiff(previousGenerationSha, prepared.currentGenerationSha);
 
-        const previousVersion = await this.resolvePreviousVersion({ service, rawDiff, mappedMagicVersion });
+        const previousVersion = await this.resolvePreviousVersion({
+            service,
+            rawDiff,
+            mappedMagicVersion,
+            baseVersion: this.config.baseVersion
+        });
         if (previousVersion == null) {
             return await this.handleFirstGeneration({ service, language, mappedMagicVersion });
         }
@@ -336,8 +341,25 @@ export class AutoVersionStep extends BaseStep {
         service: AutoVersioningService;
         rawDiff: string;
         mappedMagicVersion: string;
+        baseVersion?: string;
     }): Promise<string | null> {
-        const { service, rawDiff, mappedMagicVersion } = params;
+        const { service, rawDiff, mappedMagicVersion, baseVersion } = params;
+
+        // Fiddle computes `baseVersion` from `git show HEAD:.fern/metadata.json`
+        // on the customer's branch tip before generation runs, so it reflects any
+        // version edits the customer has made since the last generation. The
+        // [fern-generated] → [fern-generated] diff that `extractPreviousVersion`
+        // reads sees only pure generator output and silently regresses the version
+        // when a customer has manually bumped between generations. Prefer the
+        // pipeline-supplied baseVersion when available; validate it as semver
+        // because it eventually flows into a `bash -c` + sed expression in
+        // `replaceMagicVersion` (same shell-injection concern that
+        // `handleFirstGeneration` guards).
+        if (baseVersion != null && isValidSemver(baseVersion)) {
+            this.logger.debug(`AutoVersionStep: previous version from pipeline baseVersion: ${baseVersion}`);
+            return this.normalizeVersionPrefix(baseVersion, mappedMagicVersion);
+        }
+
         try {
             const extracted = service.extractPreviousVersion(rawDiff, mappedMagicVersion);
             if (extracted != null) {
