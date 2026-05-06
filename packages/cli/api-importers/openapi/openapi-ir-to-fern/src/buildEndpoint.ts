@@ -589,6 +589,14 @@ function getRequest({
             }
         }
 
+        // Body wire names that collided with a path / query / header parameter and
+        // were therefore auto-renamed via `property.generatedName`. The Fern definition
+        // already records the SDK rename on the body; we additionally back-propagate a
+        // matching rename onto the colliding query parameter below so generators that
+        // resolve SDK names from the wire value (e.g. the TypeScript SDK with
+        // `noSerdeLayer: true`) end up with distinct property names on both sides.
+        const collisionRenamedBodyWireNames = new Set<string>();
+
         const properties = Object.fromEntries(
             resolvedSchema.properties
                 .filter((property) => {
@@ -650,6 +658,7 @@ function getRequest({
 
                     if (usedNames.has(name)) {
                         typeReference.name = property.generatedName;
+                        collisionRenamedBodyWireNames.add(name);
                     }
 
                     if (property.audiences.length > 0) {
@@ -664,6 +673,26 @@ function getRequest({
                     return [property.key, typeReference];
                 })
         );
+
+        // Back-propagate auto-renames from the body to the colliding query parameter so
+        // the IR carries an SDK `name:` override on both sides. Without this, a query
+        // parameter and a body property that share a wire value end up with identical
+        // SDK property names in generators that derive SDK names from the wire value.
+        // The wire value is unchanged; only the SDK property name is overridden.
+        if (queryParameters != null && collisionRenamedBodyWireNames.size > 0) {
+            for (const wireName of collisionRenamedBodyWireNames) {
+                const queryParam = queryParameters[wireName];
+                if (queryParam == null) {
+                    continue;
+                }
+                const renamedQueryName = `${generatedRequestName}_query_${wireName}`;
+                if (typeof queryParam === "string") {
+                    queryParameters[wireName] = { type: queryParam, name: renamedQueryName };
+                } else if (queryParam.name == null) {
+                    queryParam.name = renamedQueryName;
+                }
+            }
+        }
         // Determine which schemas need to be inlined due to property conflicts
         const schemasToInline = new Set<SchemaId>();
         const propertiesToSetToUnknown = new Set<string>();

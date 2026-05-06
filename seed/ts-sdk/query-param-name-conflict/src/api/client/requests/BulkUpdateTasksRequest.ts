@@ -5,9 +5,9 @@
  *     {}
  */
 export interface BulkUpdateTasksRequest {
-    assignedTo?: string | null;
-    isComplete?: string | null;
-    date?: string | null;
+    bulkUpdateTasksRequestQueryAssignedTo?: string | null;
+    bulkUpdateTasksRequestQueryIsComplete?: string | null;
+    bulkUpdateTasksRequestQueryDate?: string | null;
     /** Comma-separated list of fields to include in the response. */
     _fields?: string | null;
     assigned_to?: string | null;

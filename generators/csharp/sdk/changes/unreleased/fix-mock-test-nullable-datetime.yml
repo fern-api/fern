@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix mock-server test generation to correctly extract `datetime` example
+    values from query and header parameters whose IR type is wrapped in a
+    `nullable` container (e.g. `nullable<optional<datetime>>`). Previously the
+    helper only unwrapped `optional` containers, so datetime values inside a
+    `nullable` wrapper fell through and the generated mock server expectations
+    used incorrect string formatting, producing a 404 from WireMock.
+  type: fix

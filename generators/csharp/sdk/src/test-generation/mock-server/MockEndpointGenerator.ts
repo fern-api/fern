@@ -196,14 +196,22 @@ export class MockEndpointGenerator extends WithGeneration {
 
     private getDateTime(exampleTypeReference: ExampleTypeReference): Date | undefined {
         switch (exampleTypeReference.shape.type) {
-            case "container":
-                if (exampleTypeReference.shape.container.type !== "optional") {
-                    return undefined;
+            case "container": {
+                const container = exampleTypeReference.shape.container;
+                if (container.type === "optional") {
+                    if (container.optional == null) {
+                        return undefined;
+                    }
+                    return this.getDateTime(container.optional);
                 }
-                if (exampleTypeReference.shape.container.optional == null) {
-                    return undefined;
+                if (container.type === "nullable") {
+                    if (container.nullable == null) {
+                        return undefined;
+                    }
+                    return this.getDateTime(container.nullable);
                 }
-                return this.getDateTime(exampleTypeReference.shape.container.optional);
+                return undefined;
+            }
             case "named":
                 if (exampleTypeReference.shape.shape.type !== "alias") {
                     return undefined;

@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix the OpenAPI importer to back-propagate body property auto-renames onto
+    the colliding query parameter when an inlined request body property's wire
+    name conflicts with a path, query, or header parameter. This keeps the IR
+    SDK rename information symmetric on both sides of the collision so that
+    downstream generators which derive SDK property names from the wire value
+    (e.g. the TypeScript SDK with `noSerdeLayer: true`) emit unique property
+    identifiers. The wire format is unchanged.
+  type: fix
