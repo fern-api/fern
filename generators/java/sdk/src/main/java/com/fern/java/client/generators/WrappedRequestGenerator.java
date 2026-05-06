@@ -232,8 +232,45 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                 .addAllProperties(queryParameterObjectProperties)
                 .addAllProperties(objectProperties)
                 .build();
-        Set<ObjectProperty> allQueryParameterProperties = new HashSet<>(queryParameterObjectProperties);
-        allQueryParameterProperties.addAll(queryParameterAllowMultipleObjectProperties);
+        // Only mark query parameters as @JsonIgnore when the wrapped request itself is JSON-serialized
+        // as the body (i.e. the body is inlined alongside the query params). For pure-query, referenced-body,
+        // file-upload, and bytes endpoints the wrapped request is never written via JSON_MAPPER, so
+        // marking query params as @JsonIgnore would silently break toString()/stringify without fixing
+        // any leak.
+        boolean bodyIsInlined = httpEndpoint
+                .getRequestBody()
+                .map(body -> body.visit(new HttpRequestBody.Visitor<Boolean>() {
+                    @Override
+                    public Boolean visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
+                        return true;
+                    }
+
+                    @Override
+                    public Boolean visitReference(HttpRequestBodyReference reference) {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitFileUpload(FileUploadRequest fileUpload) {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitBytes(BytesRequest bytes) {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean _visitUnknown(Object unknownType) {
+                        return false;
+                    }
+                }))
+                .orElse(false);
+        Set<ObjectProperty> allQueryParameterProperties = new HashSet<>();
+        if (bodyIsInlined) {
+            allQueryParameterProperties.addAll(queryParameterObjectProperties);
+            allQueryParameterProperties.addAll(queryParameterAllowMultipleObjectProperties);
+        }
         ObjectGenerator objectGenerator = new ObjectGenerator(
                 objectTypeDeclaration,
                 Optional.empty(),

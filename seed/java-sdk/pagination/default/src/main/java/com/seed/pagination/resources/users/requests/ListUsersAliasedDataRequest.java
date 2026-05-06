@@ -5,9 +5,9 @@ package com.seed.pagination.resources.users.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -42,7 +42,7 @@ public final class ListUsersAliasedDataRequest {
     /**
      * @return Defaults to first page
      */
-    @JsonIgnore
+    @JsonProperty("page")
     public Optional<Integer> getPage() {
         return page;
     }
@@ -50,7 +50,7 @@ public final class ListUsersAliasedDataRequest {
     /**
      * @return Defaults to per page
      */
-    @JsonIgnore
+    @JsonProperty("per_page")
     public Optional<Integer> getPerPage() {
         return perPage;
     }
@@ -59,7 +59,7 @@ public final class ListUsersAliasedDataRequest {
      * @return The cursor used for pagination in order to fetch
      * the next page of results.
      */
-    @JsonIgnore
+    @JsonProperty("starting_after")
     public Optional<String> getStartingAfter() {
         return startingAfter;
     }
