@@ -139,22 +139,22 @@
                         "name": {
                             "wireValue": "assigned_to",
                             "name": {
-                                "originalName": "assigned_to",
+                                "originalName": "BulkUpdateTasksRequest_query_assigned_to",
                                 "camelCase": {
-                                    "unsafeName": "assignedTo",
-                                    "safeName": "assignedTo"
+                                    "unsafeName": "bulkUpdateTasksRequestQueryAssignedTo",
+                                    "safeName": "bulkUpdateTasksRequestQueryAssignedTo"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "assigned_to",
-                                    "safeName": "assigned_to"
+                                    "unsafeName": "bulk_update_tasks_request_query_assigned_to",
+                                    "safeName": "bulk_update_tasks_request_query_assigned_to"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "ASSIGNED_TO",
-                                    "safeName": "ASSIGNED_TO"
+                                    "unsafeName": "BULK_UPDATE_TASKS_REQUEST_QUERY_ASSIGNED_TO",
+                                    "safeName": "BULK_UPDATE_TASKS_REQUEST_QUERY_ASSIGNED_TO"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "AssignedTo",
-                                    "safeName": "AssignedTo"
+                                    "unsafeName": "BulkUpdateTasksRequestQueryAssignedTo",
+                                    "safeName": "BulkUpdateTasksRequestQueryAssignedTo"
                                 }
                             }
                         },
@@ -175,22 +175,22 @@
                         "name": {
                             "wireValue": "is_complete",
                             "name": {
-                                "originalName": "is_complete",
+                                "originalName": "BulkUpdateTasksRequest_query_is_complete",
                                 "camelCase": {
-                                    "unsafeName": "isComplete",
-                                    "safeName": "isComplete"
+                                    "unsafeName": "bulkUpdateTasksRequestQueryIsComplete",
+                                    "safeName": "bulkUpdateTasksRequestQueryIsComplete"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "is_complete",
-                                    "safeName": "is_complete"
+                                    "unsafeName": "bulk_update_tasks_request_query_is_complete",
+                                    "safeName": "bulk_update_tasks_request_query_is_complete"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "IS_COMPLETE",
-                                    "safeName": "IS_COMPLETE"
+                                    "unsafeName": "BULK_UPDATE_TASKS_REQUEST_QUERY_IS_COMPLETE",
+                                    "safeName": "BULK_UPDATE_TASKS_REQUEST_QUERY_IS_COMPLETE"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "IsComplete",
-                                    "safeName": "IsComplete"
+                                    "unsafeName": "BulkUpdateTasksRequestQueryIsComplete",
+                                    "safeName": "BulkUpdateTasksRequestQueryIsComplete"
                                 }
                             }
                         },
@@ -211,22 +211,22 @@
                         "name": {
                             "wireValue": "date",
                             "name": {
-                                "originalName": "date",
+                                "originalName": "BulkUpdateTasksRequest_query_date",
                                 "camelCase": {
-                                    "unsafeName": "date",
-                                    "safeName": "date"
+                                    "unsafeName": "bulkUpdateTasksRequestQueryDate",
+                                    "safeName": "bulkUpdateTasksRequestQueryDate"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "date",
-                                    "safeName": "date"
+                                    "unsafeName": "bulk_update_tasks_request_query_date",
+                                    "safeName": "bulk_update_tasks_request_query_date"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "DATE",
-                                    "safeName": "DATE"
+                                    "unsafeName": "BULK_UPDATE_TASKS_REQUEST_QUERY_DATE",
+                                    "safeName": "BULK_UPDATE_TASKS_REQUEST_QUERY_DATE"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "Date",
-                                    "safeName": "Date"
+                                    "unsafeName": "BulkUpdateTasksRequestQueryDate",
+                                    "safeName": "BulkUpdateTasksRequestQueryDate"
                                 }
                             }
                         },
