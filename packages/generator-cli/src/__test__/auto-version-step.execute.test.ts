@@ -339,13 +339,8 @@ describe("AutoVersionStep.execute() — pipeline baseVersion overrides diff extr
     beforeEach(async () => {
         mockAnalyzeSdkDiff.mockReset();
         mockConsolidateChangelog.mockReset();
-        // Mirrors the Frameio regression: previous [fern-generated] commit had
-        // version 3.2.4 baked in (the last value autoversion stamped). The
-        // customer manually bumped their working tree to 4.1.0 between
-        // generations, so fiddle's `computeBaseVersionForPipeline` reads
-        // `HEAD:.fern/metadata.json` and passes 4.1.0 as `config.baseVersion`.
-        // Without the fix, `extractPreviousVersion` reads 3.2.4 from the
-        // [fern-generated] → [fern-generated] diff and silently regresses.
+        // Frameio repro: previous [fern-generated] had 3.2.4; customer manually
+        // bumped to 4.1.0 between gens, so fiddle passes baseVersion=4.1.0.
         repo = await setupTwoGenerations({
             previousVersion: "3.2.4",
             featureFile: {
@@ -433,8 +428,6 @@ describe("AutoVersionStep.execute() — pipeline baseVersion overrides diff extr
         const result = await step.execute(makeContext(prepared));
 
         expect(result.success).toBe(true);
-        // Falls through to diff extraction rather than letting the malformed
-        // string flow into bash + sed.
         expect(result.previousVersion).toBe("3.2.4");
         expect(result.version).toBe("3.2.5");
     });
