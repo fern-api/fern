@@ -6,8 +6,6 @@ paths:
   /account/{account_id}:
     get:
       operationId: getAccount
-      tags:
-        - ''
       parameters:
         - name: account_id
           in: path

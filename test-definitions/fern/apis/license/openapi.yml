@@ -6,8 +6,6 @@ paths:
   /:
     get:
       operationId: get
-      tags:
-        - ''
       parameters: []
       responses:
         '204':

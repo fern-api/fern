@@ -6,8 +6,6 @@ paths:
   /vendors/batch:
     post:
       operationId: batchCreate
-      tags:
-        - ''
       parameters: []
       responses:
         '200':

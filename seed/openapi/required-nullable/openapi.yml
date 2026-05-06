@@ -6,8 +6,6 @@ paths:
   /foo:
     get:
       operationId: getFoo
-      tags:
-        - ''
       parameters:
         - name: optional_baz
           in: query
@@ -63,8 +61,6 @@ paths:
   /foo/{id}:
     patch:
       operationId: updateFoo
-      tags:
-        - ''
       parameters:
         - name: id
           in: path

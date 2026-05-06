@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Filter out empty/whitespace-only `tags` entries when parsing OpenAPI 3.x and
+    AsyncAPI documents. An empty tag previously turned into a subpackage with an
+    empty name, which caused downstream generators (e.g., the Java SDK) to crash
+    with `not a valid name`.
+  type: fix

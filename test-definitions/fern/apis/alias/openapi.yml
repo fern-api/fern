@@ -6,8 +6,6 @@ paths:
   /{typeId}:
     get:
       operationId: get
-      tags:
-        - ''
       parameters:
         - name: typeId
           in: path

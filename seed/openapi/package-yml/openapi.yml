@@ -6,8 +6,6 @@ paths:
   /{id}/:
     post:
       operationId: echo
-      tags:
-        - ''
       parameters:
         - name: id
           in: path

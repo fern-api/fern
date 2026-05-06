@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.5.2
+  changelogEntry:
+    - summary: |
+        Avoid emitting `tags: ['']` for top-level (un-namespaced) operations. The generator
+        previously joined an empty fern filepath into an empty string and emitted it as a tag,
+        which propagated to downstream importers and produced subpackages with empty names —
+        crashing the Java SDK generator with `not a valid name`. The `tags` field is now
+        omitted entirely when the derived tag would be empty.
+      type: fix
+  createdAt: "2026-05-06"
+  irVersion: 66
+
 - version: 0.5.1
   changelogEntry:
     - summary: |

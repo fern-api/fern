@@ -6,8 +6,6 @@ paths:
   /task/:
     put:
       operationId: _bulkUpdateTasks
-      tags:
-        - ''
       parameters:
         - name: assigned_to
           in: query

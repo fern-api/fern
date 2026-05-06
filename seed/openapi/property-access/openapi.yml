@@ -6,8 +6,6 @@ paths:
   /users:
     post:
       operationId: createUser
-      tags:
-        - ''
       parameters: []
       responses:
         '200':

@@ -6,8 +6,6 @@ paths:
   /user/getUsername:
     get:
       operationId: search
-      tags:
-        - ''
       parameters:
         - name: limit
           in: query

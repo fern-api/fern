@@ -7,8 +7,6 @@ paths:
   /extends/extended-inline-request-body:
     post:
       operationId: extendedInlineRequestBody
-      tags:
-        - ''
       parameters: []
       responses:
         '204':

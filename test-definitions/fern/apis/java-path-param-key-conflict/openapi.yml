@@ -6,8 +6,6 @@ paths:
   /{key}/{value}:
     post:
       operationId: createItem
-      tags:
-        - ''
       parameters:
         - name: key
           in: path

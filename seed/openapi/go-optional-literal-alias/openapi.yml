@@ -6,8 +6,6 @@ paths:
   /search:
     post:
       operationId: search
-      tags:
-        - ''
       parameters: []
       responses:
         '200':

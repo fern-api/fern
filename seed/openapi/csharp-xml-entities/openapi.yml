@@ -7,8 +7,6 @@ paths:
     get:
       description: Get timezone information with &plus; offset
       operationId: getTimeZone
-      tags:
-        - ''
       parameters: []
       responses:
         '200':

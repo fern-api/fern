@@ -6,8 +6,6 @@ paths:
   /users:
     post:
       operationId: createUser
-      tags:
-        - ''
       parameters: []
       responses:
         '200':
@@ -25,8 +23,6 @@ paths:
   /users/task:
     post:
       operationId: createTask
-      tags:
-        - ''
       parameters: []
       responses:
         '200':

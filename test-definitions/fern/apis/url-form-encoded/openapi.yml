@@ -6,8 +6,6 @@ paths:
   /submit:
     post:
       operationId: submitFormData
-      tags:
-        - ''
       parameters: []
       responses:
         '200':
@@ -51,8 +49,6 @@ paths:
   /token:
     post:
       operationId: get_token
-      tags:
-        - ''
       parameters: []
       responses:
         '200':

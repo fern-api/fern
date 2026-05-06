@@ -7,8 +7,6 @@ paths:
     get:
       description: Get latest insurance for a user. All query params are optional.
       operationId: getLatestInsurance
-      tags:
-        - ''
       parameters:
         - name: userId
           in: path
@@ -42,8 +40,6 @@ paths:
     get:
       description: Search policies with required query params
       operationId: searchPolicies
-      tags:
-        - ''
       parameters:
         - name: query
           in: query
@@ -72,8 +68,6 @@ paths:
     get:
       description: List all policies
       operationId: listAllPolicies
-      tags:
-        - ''
       parameters: []
       responses:
         '200':

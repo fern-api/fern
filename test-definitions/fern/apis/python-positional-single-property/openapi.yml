@@ -10,8 +10,6 @@ paths:
   /create:
     post:
       operationId: create
-      tags:
-        - ''
       parameters: []
       responses:
         '200':

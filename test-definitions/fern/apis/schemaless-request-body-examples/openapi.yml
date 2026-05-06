@@ -7,8 +7,6 @@ paths:
     post:
       description: Creates a plant with example JSON but no request body schema.
       operationId: createPlant
-      tags:
-        - ''
       parameters: []
       responses:
         '200':
@@ -44,8 +42,6 @@ paths:
     put:
       description: Updates a plant with example JSON but no request body schema.
       operationId: updatePlant
-      tags:
-        - ''
       parameters:
         - name: plantId
           in: path
@@ -83,8 +79,6 @@ paths:
     post:
       description: A control endpoint that has both schema and example defined.
       operationId: createPlantWithSchema
-      tags:
-        - ''
       parameters: []
       responses:
         '200':

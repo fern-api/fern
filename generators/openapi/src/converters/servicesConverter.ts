@@ -145,7 +145,7 @@ function convertHttpEndpoint({
             ...httpService.name.fernFilepath.allParts.map((name) => caseConverter.camelUnsafe(name)),
             getOriginalName(httpEndpoint.name)
         ].join("_"),
-        tags: [tag],
+        tags: tag.length > 0 ? [tag] : undefined,
         parameters,
         responses: convertResponse({
             httpResponse: httpEndpoint.response,

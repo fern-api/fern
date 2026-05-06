@@ -6,8 +6,6 @@ paths:
   /create:
     post:
       operationId: create
-      tags:
-        - ''
       parameters: []
       responses:
         '200':
@@ -50,8 +48,6 @@ paths:
   /:
     get:
       operationId: get
-      tags:
-        - ''
       parameters:
         - name: decimal
           in: query

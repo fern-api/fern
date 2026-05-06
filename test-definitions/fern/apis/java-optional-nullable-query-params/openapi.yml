@@ -7,8 +7,6 @@ paths:
     get:
       description: Search endpoint with optional nullable query params with defaults
       operationId: search
-      tags:
-        - ''
       parameters:
         - name: query
           in: query

@@ -6,8 +6,6 @@ paths:
   /documents/upload:
     post:
       operationId: uploadJsonDocument
-      tags:
-        - ''
       parameters: []
       responses:
         '200':
@@ -54,8 +52,6 @@ paths:
   /documents/upload/pdf:
     post:
       operationId: uploadPdfDocument
-      tags:
-        - ''
       parameters: []
       responses:
         '200':

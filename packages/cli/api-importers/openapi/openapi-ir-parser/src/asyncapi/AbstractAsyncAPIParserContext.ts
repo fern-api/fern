@@ -67,7 +67,7 @@ export abstract class AbstractAsyncAPIParserContext<TDocument extends object> im
             };
             tags.push(namespaceSegment);
         }
-        return tags.concat(operationTags ?? []);
+        return tags.concat((operationTags ?? []).filter((tag) => tag.trim().length > 0));
     }
 
     /**

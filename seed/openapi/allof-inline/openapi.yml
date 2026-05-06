@@ -6,8 +6,6 @@ paths:
   /rule-types:
     get:
       operationId: searchRuleTypes
-      tags:
-        - ''
       parameters:
         - name: query
           in: query
@@ -37,8 +35,6 @@ paths:
   /rules:
     post:
       operationId: createRule
-      tags:
-        - ''
       parameters: []
       responses:
         '200':
@@ -83,8 +79,6 @@ paths:
   /users:
     get:
       operationId: listUsers
-      tags:
-        - ''
       parameters: []
       responses:
         '200':
@@ -106,8 +100,6 @@ paths:
   /entities:
     get:
       operationId: getEntity
-      tags:
-        - ''
       parameters: []
       responses:
         '200':
@@ -127,8 +119,6 @@ paths:
   /organizations:
     get:
       operationId: getOrganization
-      tags:
-        - ''
       parameters: []
       responses:
         '200':

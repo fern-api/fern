@@ -6,8 +6,6 @@ paths:
   /root/root:
     post:
       operationId: getRoot
-      tags:
-        - ''
       parameters: []
       responses:
         '200':
@@ -33,8 +31,6 @@ paths:
   /root/discriminated-union:
     post:
       operationId: getDiscriminatedUnion
-      tags:
-        - ''
       parameters: []
       responses:
         '204':
@@ -56,8 +52,6 @@ paths:
   /root/undiscriminated-union:
     post:
       operationId: getUndiscriminatedUnion
-      tags:
-        - ''
       parameters: []
       responses:
         '204':

@@ -6,8 +6,6 @@ paths:
   /union:
     get:
       operationId: getUnion
-      tags:
-        - ''
       parameters: []
       responses:
         '200':
@@ -19,8 +17,6 @@ paths:
   /unions:
     get:
       operationId: listUnions
-      tags:
-        - ''
       parameters: []
       responses:
         '200':

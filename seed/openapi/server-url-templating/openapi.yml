@@ -6,8 +6,6 @@ paths:
   /users:
     get:
       operationId: _getUsers
-      tags:
-        - ''
       parameters: []
       responses:
         '200':
@@ -28,8 +26,6 @@ paths:
   /users/{userId}:
     get:
       operationId: _getUser
-      tags:
-        - ''
       parameters:
         - name: userId
           in: path
@@ -56,8 +52,6 @@ paths:
   /auth/token:
     post:
       operationId: _getToken
-      tags:
-        - ''
       parameters: []
       responses:
         '200':
