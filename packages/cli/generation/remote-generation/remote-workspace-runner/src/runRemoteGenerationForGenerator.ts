@@ -506,8 +506,8 @@ async function uploadDynamicIRForSdkGeneration({
     try {
         uploadUrlsResponse = await fdr.api.register.getSdkDynamicIrUploadUrls({
             orgId: FdrAPI.OrgId(organization),
-            apiId: getOriginalName(ir.apiName),
-            irVersions: [language]
+            version,
+            snippetConfiguration: { [language]: packageName }
         });
     } catch (error) {
         context.logger.warn(
