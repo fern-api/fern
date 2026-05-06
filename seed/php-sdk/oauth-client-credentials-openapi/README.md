@@ -37,14 +37,14 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Identity\Requests\GetTokenIdentityRequest;
+use Seed\Identity\Requests\IdentityGetTokenRequest;
 
 $client = new SeedClient(
     clientId: '<clientId>',
     clientSecret: '<clientSecret>',
 );
-$client->identity->getToken(
-    new GetTokenIdentityRequest([
+$client->identity->gettoken(
+    new IdentityGetTokenRequest([
         'username' => 'username',
         'password' => 'password',
     ]),
@@ -61,7 +61,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->identity->getToken(...);
+    $response = $client->identity->gettoken(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -120,7 +120,7 @@ The `retryStatusCodes` configuration controls which [5XX](https://developer.mozi
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->identity->getToken(
+$response = $client->identity->gettoken(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -133,7 +133,7 @@ $response = $client->identity->getToken(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->identity->getToken(
+$response = $client->identity->gettoken(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level

@@ -877,7 +877,14 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         writer.write("$this->oauthTokenProvider = new ");
         writer.writeNode(oauthTokenProviderClassReference);
-        writer.writeLine("($clientId ?? '', $clientSecret ?? '', $authClient);");
+        // When auth is mandatory the constructor params are non-nullable, so `?? ''` is dead code
+        // (and rejected by PHPStan). Only emit the fallback when the params are nullable.
+        const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
+        if (isAuthOptional) {
+            writer.writeLine("($clientId ?? '', $clientSecret ?? '', $authClient);");
+        } else {
+            writer.writeLine("($clientId, $clientSecret, $authClient);");
+        }
         writer.writeLine();
     }
 

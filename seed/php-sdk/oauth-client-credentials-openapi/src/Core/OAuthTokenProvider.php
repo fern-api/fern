@@ -4,7 +4,7 @@ namespace Seed\Core;
 
 use Seed\Identity\IdentityClient;
 use DateTime;
-use Seed\Identity\Requests\GetTokenIdentityRequest;
+use Seed\Identity\Requests\IdentityGetTokenRequest;
 use Seed\Exceptions\SeedException;
 
 /**
@@ -80,12 +80,12 @@ class OAuthTokenProvider
      */
     private function refresh(): string
     {
-        $request = new GetTokenIdentityRequest([
+        $request = new IdentityGetTokenRequest([
             'username' => $this->clientId,
             'password' => $this->clientSecret,
         ]);
 
-        $tokenResponse = $this->authClient->getToken($request);
+        $tokenResponse = $this->authClient->gettoken($request);
 
         if ($tokenResponse === null) {
             throw new SeedException(message: "Expected a token response, but received an empty response.");

@@ -1,6 +1,6 @@
 # Reference
 ## Identity
-<details><summary><code>$client-&gt;identity-&gt;getToken($request) -> ?TokenResponse</code></summary>
+<details><summary><code>$client-&gt;identity-&gt;gettoken($request) -> ?TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,8 +13,8 @@
 <dd>
 
 ```php
-$client->identity->getToken(
-    new GetTokenIdentityRequest([
+$client->identity->gettoken(
+    new IdentityGetTokenRequest([
         'username' => 'username',
         'password' => 'password',
     ]),

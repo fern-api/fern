@@ -5,7 +5,7 @@ namespace Seed\Identity\Requests;
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class GetTokenIdentityRequest extends JsonSerializableType
+class IdentityGetTokenRequest extends JsonSerializableType
 {
     /**
      * @var string $username

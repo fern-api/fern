@@ -4,7 +4,7 @@ namespace Seed\Identity;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Identity\Requests\GetTokenIdentityRequest;
+use Seed\Identity\Requests\IdentityGetTokenRequest;
 use Seed\Types\TokenResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -50,7 +50,7 @@ class IdentityClient
     }
 
     /**
-     * @param GetTokenIdentityRequest $request
+     * @param IdentityGetTokenRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -63,7 +63,7 @@ class IdentityClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getToken(GetTokenIdentityRequest $request, ?array $options = null): ?TokenResponse
+    public function gettoken(IdentityGetTokenRequest $request, ?array $options = null): ?TokenResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
