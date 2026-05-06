@@ -102,7 +102,7 @@ export class GithubStep extends BaseStep {
         resolved: ResolvedPrFields
     ): Promise<GithubStepResult> {
         const baseBranch = this.config.branch ?? (await repository.getDefaultBranch());
-        const octokit = new Octokit({ auth: this.config.token });
+        const octokit = this.createOctokit();
         const { owner, repo } = parseRepository(this.config.uri);
 
         let prBranch: string;
@@ -200,7 +200,8 @@ export class GithubStep extends BaseStep {
                 logger: this.logger
             });
             const pushedBranch = await repository.getCurrentBranch();
-            result.branchUrl = `https://github.com/${this.config.uri}/tree/${pushedBranch}`;
+            const { remote } = parseRepository(this.config.uri);
+            result.branchUrl = `https://${remote}/${this.config.uri}/tree/${pushedBranch}`;
             this.logger.info(`Pushed branch: ${result.branchUrl}`);
 
             if (generationBaseSha != null) {
@@ -332,8 +333,8 @@ export class GithubStep extends BaseStep {
         };
 
         if (!this.config.previewMode) {
-            const octokit = new Octokit({ auth: this.config.token });
-            const { owner, repo } = parseRepository(this.config.uri);
+            const octokit = this.createOctokit();
+            const { owner, repo, remote } = parseRepository(this.config.uri);
             await pushSignedCommit({
                 repository,
                 octokit,
@@ -346,11 +347,19 @@ export class GithubStep extends BaseStep {
             });
 
             const pushedBranch = await repository.getCurrentBranch();
-            result.branchUrl = `https://github.com/${this.config.uri}/tree/${pushedBranch}`;
+            result.branchUrl = `https://${remote}/${this.config.uri}/tree/${pushedBranch}`;
             this.logger.info(`Pushed branch: ${result.branchUrl}`);
         }
 
         return result;
+    }
+
+    private createOctokit(): Octokit {
+        const opts: ConstructorParameters<typeof Octokit>[0] = { auth: this.config.token };
+        if (this.config.apiBaseUrl != null) {
+            opts.baseUrl = this.config.apiBaseUrl;
+        }
+        return new Octokit(opts);
     }
 
     private async ensureFernignore(): Promise<void> {

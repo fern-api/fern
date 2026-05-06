@@ -142,6 +142,8 @@ export interface GithubStepConfig {
     breakingChangesSummary?: string;
     /** FERN_RUN_ID for cross-repo correlation (set by GitHub Action) */
     runId?: string;
+    /** GitHub API base URL for GitHub Enterprise (e.g. "https://github.intuit.com/api/v3"). Omit for github.com. */
+    apiBaseUrl?: string;
 }
 
 export interface PipelineResult {
