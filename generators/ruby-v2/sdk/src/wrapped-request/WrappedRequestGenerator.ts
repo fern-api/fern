@@ -44,7 +44,8 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
                     wireValue: getOriginalName(pathParameter.name)
                 },
                 propertyAccess: undefined,
-                availability: undefined
+                availability: undefined,
+                defaultValue: undefined
             });
         }
 
@@ -74,6 +75,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
                     valueType: reference.requestBodyType,
                     propertyAccess: undefined,
                     availability: undefined,
+                    defaultValue: undefined,
                     v2Examples: reference.v2Examples,
                     docs: reference.docs
                 });
