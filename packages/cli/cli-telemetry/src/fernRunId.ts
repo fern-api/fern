@@ -25,3 +25,23 @@ export function getOrCreateFernRunId(): string {
 export function getFernRunId(): string | undefined {
     return process.env[FERN_RUN_ID_ENV_VAR];
 }
+
+/**
+ * Returns the run-id correlation properties to attach to every PostHog event:
+ * `fern_run_id` (CLI-minted UUID) and `github_run_id` (GitHub Actions run ID,
+ * when running inside a workflow).
+ */
+export function getRunIdProperties(): { fern_run_id?: string; github_run_id?: string } {
+    const properties: { fern_run_id?: string; github_run_id?: string } = {};
+    const fernRunId = getFernRunId();
+
+    if (fernRunId != null && fernRunId.length > 0) {
+        properties.fern_run_id = fernRunId;
+    }
+
+    const githubRunId = process.env.GITHUB_RUN_ID;
+    if (githubRunId != null && githubRunId.length > 0) {
+        properties.github_run_id = githubRunId;
+    }
+    return properties;
+}

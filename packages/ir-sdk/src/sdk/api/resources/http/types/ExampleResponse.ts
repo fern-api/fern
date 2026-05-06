@@ -2,7 +2,7 @@
 
 import * as FernIr from "../../../index.js";
 
-export type ExampleResponse = FernIr.ExampleResponse.Ok | FernIr.ExampleResponse.Error_;
+export type ExampleResponse = FernIr.ExampleResponse.Ok | FernIr.ExampleResponse.Error;
 
 export namespace ExampleResponse {
     export interface Ok extends _Utils {
@@ -10,7 +10,7 @@ export namespace ExampleResponse {
         value: FernIr.ExampleEndpointSuccessResponse;
     }
 
-    export interface Error_ extends FernIr.ExampleEndpointErrorResponse, _Utils {
+    export interface Error extends FernIr.ExampleEndpointErrorResponse, _Utils {
         type: "error";
     }
 
@@ -39,12 +39,12 @@ export const ExampleResponse = {
         };
     },
 
-    error: (value: FernIr.ExampleEndpointErrorResponse): FernIr.ExampleResponse.Error_ => {
+    error: (value: FernIr.ExampleEndpointErrorResponse): FernIr.ExampleResponse.Error => {
         return {
             ...value,
             type: "error",
             _visit: function <_Result>(
-                this: FernIr.ExampleResponse.Error_,
+                this: FernIr.ExampleResponse.Error,
                 visitor: FernIr.ExampleResponse._Visitor<_Result>,
             ) {
                 return FernIr.ExampleResponse._visit(this, visitor);
