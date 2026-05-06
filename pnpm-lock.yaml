@@ -4763,6 +4763,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
+      '@fern-api/docs-markdown-utils':
+        specifier: workspace:*
+        version: link:../docs-markdown-utils
       '@fern-api/docs-preview':
         specifier: workspace:*
         version: link:../docs-preview
@@ -4889,6 +4892,9 @@ importers:
       get-port:
         specifier: ^7.0.0
         version: 7.2.0
+      gray-matter:
+        specifier: 'catalog:'
+        version: 4.0.3
       inquirer:
         specifier: ^9.2.15
         version: 9.3.8(@types/node@22.19.17)

@@ -8,7 +8,9 @@ import type { Context } from "../../context/Context.js";
 import type { Task } from "../../ui/Task.js";
 import type { Workspace } from "../../workspace/Workspace.js";
 import { LegacyProjectAdapter } from "../adapter/LegacyProjectAdapter.js";
+import type { MdxParseError } from "../errors/MdxParseError.js";
 import { DocsWorkspaceValidator } from "../validator/DocsWorkspaceValidator.js";
+import { MdxParseValidator } from "../validator/MdxParseValidator.js";
 
 export declare namespace DocsChecker {
     /**
@@ -34,6 +36,9 @@ export declare namespace DocsChecker {
     export interface Result {
         /** Resolved violations to display */
         violations: DocsChecker.ResolvedViolation[];
+
+        /** MDX/Markdown parse errors with rich source-context formatting. */
+        mdxParseErrors: MdxParseError[];
 
         /** Whether any errors (fatal or error severity) were found */
         hasErrors: boolean;
@@ -74,6 +79,7 @@ export class DocsChecker {
         if (workspace.docs == null) {
             return {
                 violations: [],
+                mdxParseErrors: [],
                 hasErrors: false,
                 hasWarnings: false,
                 errorCount: 0,
@@ -113,15 +119,24 @@ export class DocsChecker {
 
         const resolvedViolations = result.violations.map((v) => this.resolveViolation({ workspace, violation: v }));
 
+        // Run MDX-specific parse validation in parallel with the legacy rule
+        // visitor so users get rich source-context errors for syntax issues.
+        const mdxValidator = new MdxParseValidator({ context: this.context, task: this.task });
+        const mdxResult = await mdxValidator.validate({ workspace: docsWorkspace });
+
         const counts = this.countViolations(resolvedViolations);
+        const errorCount = counts.errorCount + mdxResult.errors.length;
+        const hasErrors = result.hasErrors || mdxResult.errors.length > 0;
         return {
-            ...counts,
-            hasErrors: result.hasErrors,
+            errorCount,
+            warningCount: counts.warningCount,
+            hasErrors,
             hasWarnings: result.hasWarnings,
             violations: strict
                 ? resolvedViolations
                 : resolvedViolations.filter((v) => v.severity === "fatal" || v.severity === "error"),
-            elapsedMillis: result.elapsedMillis
+            mdxParseErrors: mdxResult.errors,
+            elapsedMillis: result.elapsedMillis + mdxResult.elapsedMillis
         };
     }
 

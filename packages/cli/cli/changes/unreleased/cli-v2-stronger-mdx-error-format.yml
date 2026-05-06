@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    cli-v2: `fern check` now prints rich, Rust-style errors for MDX/Markdown
+    parse failures. Each error includes a stable error code (e.g. `E0301`),
+    a `--> path:line:col` location, two surrounding source lines with a
+    caret pointer, and an inline `fix:` suggestion when one is available.
+  type: feat
+
+- summary: |
+    cli-v2: add interactive AI-assisted fixes for MDX/Markdown parse errors.
+    `fern check` now offers to apply a fix when run interactively — using a
+    deterministic string-replace when the parser's `fix:` hint matches the
+    file, and falling back to a configured AI provider otherwise. Provider
+    is selected via `fern config ai set-provider <anthropic|openai|bedrock>`
+    and credentials via `fern config ai set-key <key>` (Bedrock uses the
+    standard AWS environment). Prompts are skipped automatically when
+    running inside a Claude Code session (`CLAUDECODE=1`).
+  type: feat
+
+- summary: |
+    cli-v2: when `fern check` finds multiple MDX errors, prompt once for a
+    batch action ("apply all", "review each", "skip all") instead of
+    prompting once per error.
+  type: feat

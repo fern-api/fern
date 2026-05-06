@@ -12,6 +12,9 @@ export { FernYmlSchema } from "./FernYmlSchema.js";
 export {
     createEmptyFernRcSchema,
     FernRcAccountSchema,
+    type FernRcAiProvider,
+    FernRcAiProviderSchema,
+    FernRcAiSchema,
     FernRcAuthSchema,
     FernRcCacheSchema,
     FernRcSchema
