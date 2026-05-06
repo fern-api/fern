@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+- summary: |
+    Avoid emitting redundant `?? ''` fallbacks when constructing the
+    `OAuthTokenProvider` for OAuth client-credentials. When auth is mandatory
+    the constructor parameters are non-nullable strings, so `?? ''` is dead
+    code and was rejected by PHPStan.
+  type: fix
