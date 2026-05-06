@@ -24,14 +24,11 @@ public partial class SeedAnyAuthClient : ISeedAnyAuthClient
             "MY_API_KEY",
             "Please pass in apiKey or set the environment variable MY_API_KEY."
         );
-        clientId ??= GetFromEnvironmentOrThrow(
-            "MY_CLIENT_ID",
-            "Please pass in clientId or set the environment variable MY_CLIENT_ID."
-        );
-        clientSecret ??= GetFromEnvironmentOrThrow(
-            "MY_CLIENT_SECRET",
-            "Please pass in clientSecret or set the environment variable MY_CLIENT_SECRET."
-        );
+        if (token == null)
+        {
+            clientId ??= Environment.GetEnvironmentVariable("MY_CLIENT_ID");
+            clientSecret ??= Environment.GetEnvironmentVariable("MY_CLIENT_SECRET");
+        }
         username ??= GetFromEnvironmentOrThrow(
             "MY_USERNAME",
             "Please pass in username or set the environment variable MY_USERNAME."

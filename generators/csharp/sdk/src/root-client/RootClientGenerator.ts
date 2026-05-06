@@ -975,20 +975,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 // or a pre-fetched bearer token. Both paths are wired up in the constructor;
                 // a runtime check enforces that the caller provides one valid combination.
                 // All three params are therefore optional at the C# API layer.
-                //
-                // Guard against a (rare) collision with a sibling bearer scheme whose token
-                // identifier also resolves to `token`. Without this, the dedup in
-                // `getConstructorParameters` would silently drop one of the two `token` params,
-                // breaking either the OAuth token override or the bearer auth header.
-                const collidingBearer = this.context.ir.auth.schemes.find(
-                    (s) => s.type === "bearer" && this.case.camelSafe(s.token) === "token"
-                );
-                if (collidingBearer != null) {
-                    throw new Error(
-                        "OAuth token override parameter `token` collides with a bearer auth scheme " +
-                            "whose token also resolves to `token`. Rename the bearer token in the IR to disambiguate."
-                    );
-                }
                 const tokenAccess = this.settings.unifiedClientOptions ? "clientOptions.Token" : "token";
                 const envVarFallbackCondition = `${tokenAccess} == null`;
                 return [

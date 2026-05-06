@@ -18,14 +18,8 @@ public partial class SeedOauthClientCredentialsEnvironmentVariablesClient
     {
         if (token == null)
         {
-            clientId ??= GetFromEnvironmentOrThrow(
-                "CLIENT_ID",
-                "Please pass in clientId or set the environment variable CLIENT_ID."
-            );
-            clientSecret ??= GetFromEnvironmentOrThrow(
-                "CLIENT_SECRET",
-                "Please pass in clientSecret or set the environment variable CLIENT_SECRET."
-            );
+            clientId ??= Environment.GetEnvironmentVariable("CLIENT_ID");
+            clientSecret ??= Environment.GetEnvironmentVariable("CLIENT_SECRET");
         }
         clientOptions ??= new ClientOptions();
         var platformHeaders = new Headers(
