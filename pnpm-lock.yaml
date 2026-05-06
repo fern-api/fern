@@ -483,6 +483,9 @@ catalogs:
     semver-diff:
       specifier: ^4.0.0
       version: 4.0.0
+    simple-git:
+      specifier: ^3.36.0
+      version: 3.36.0
     sort-package-json:
       specifier: 3.6.1
       version: 3.6.1
@@ -596,7 +599,6 @@ overrides:
   '@fern-api/ui-core-utils': 0.145.12-b50d999d1
   vite: ^7.3.2
   yauzl: ^3.2.1
-  simple-git: ^3.36.0
 
 importers:
 
@@ -7633,7 +7635,7 @@ importers:
         specifier: ^7.7.3
         version: 7.7.4
       simple-git:
-        specifier: ^3.36.0
+        specifier: 'catalog:'
         version: 3.36.0
       tmp-promise:
         specifier: 'catalog:'
