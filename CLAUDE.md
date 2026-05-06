@@ -346,6 +346,46 @@ When creating pull requests in this repository:
 3. **Description**: Follow the PR template in `.github/pull_request_template.md`
 4. **Testing**: Ensure all tests pass before marking PR as ready for review
 
+## Architecture Decision Records (ADRs)
+
+ADRs live in `docs/adr/` and are numbered sequentially (`0001-`, `0002-`, …).
+
+**Create an ADR when a change is cross-cutting — i.e., it affects how multiple components of the repo work together or sets a convention that all contributors must follow:**
+- A new repo-wide system or workflow (release pipelines, CI frameworks, build tooling)
+- A design decision that governs the IR or the contract between the CLI and generators broadly
+- A new architectural pattern or abstraction adopted across several packages
+- A policy change that constrains how all (or many) generators/packages must behave
+
+**Do NOT create an ADR for:**
+- Changes scoped to a single generator or package, even significant ones (new features, output format changes, config additions)
+- Bug fixes at any level
+- Dependency version bumps
+- Refactors that don't change observable behavior
+- IR additions that are additive and don't change existing generator contracts
+
+### ADR format
+
+```markdown
+# ADR NNNN: <Title>
+
+## Status
+Accepted — merged #<PR> on <date>.
+
+## Context
+Why this change was needed and what constraints shaped the design.
+
+## Decision
+What was decided and the key implementation details.
+
+## Alternatives Considered
+Other approaches evaluated and why they were rejected.
+
+## Consequences
+Trade-offs, limitations, and follow-on implications.
+```
+
+After writing the ADR, number it by finding the highest existing `docs/adr/NNNN-*.md` and incrementing by one.
+
 ## Troubleshooting
 
 ### Quick Fixes by Issue Type
