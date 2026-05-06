@@ -19,6 +19,7 @@ packages/**/build
 packages/**/lib
 packages/**/dist
 packages/**/tsconfig*tsbuildinfo
+tsconfig.tsbuildinfo
 packages/**/out
 
 # generators

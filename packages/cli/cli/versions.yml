@@ -1,4 +1,25 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.17.0
+  changelogEntry:
+    - summary: |
+        Attach `fern_run_id` and `github_run_id` as PostHog properties on every CLI
+        event so PostHog dashboards can correlate analytics with the FERN_RUN_ID set
+        by the GitHub Actions wrappers and the matching Sentry tags.
+      type: internal
+  createdAt: "2026-05-06"
+  irVersion: 66
+- version: 5.16.1
+  changelogEntry:
+    - summary: |
+        `fern check` now accepts changelog navigation entries whose URL has any
+        allowlisted segment (e.g. `whats-new`, `release-notes`, `changelog`),
+        not just the trailing one. This means a changelog page like
+        `/whats-new/product-updates` no longer raises a false-positive error
+        about RSS / Atom / JSON feeds 404ing — the docs server matches the
+        same loosened rule when serving feeds.
+      type: fix
+  createdAt: "2026-05-06"
+  irVersion: 66
 - version: 5.16.0
   changelogEntry:
     - summary: |
