@@ -8,16 +8,7 @@
 # minimatch (>=9.0.7), glob (>=10.5.0), tar (>=7.5.11), and diff (>=5.2.2).
 FROM node:22.22.2-alpine3.22 AS node
 
-# Stage 2: install csharpier as a dotnet global tool using the SDK image
-FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine AS dotnet-tools
-RUN dotnet tool install -g csharpier --version "1.2.6"
-
-# Final stage: runtime-only ASP.NET Core image (no SDK).
-# Switching from `dotnet/sdk:10.0-alpine` to `dotnet/aspnet:10.0-alpine` drops
-# the SDK-bundled System.Security.Cryptography.Xml 10.0.5 DLL flagged by
-# GHSA-37gx-xxp4-5rgx and GHSA-w3x6-4m5h-cxqf; the runtime image ships only
-# the patched ASP.NET Core 10.0.7 framework, which csharpier (net9.0) runs on.
-FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine
+FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine
 
 ENV YARN_CACHE_FOLDER=/.yarn
 ENV PATH="$PATH:/root/.dotnet/tools"
@@ -37,6 +28,16 @@ RUN apk --no-cache upgrade && \
     apk --no-cache add bash curl git zip && \
     git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
+
+# PowerShell is bundled with the .NET SDK image but is unused by the C# SDK
+# generator (the generator only needs `dotnet format` and the `csharpier`
+# tool). Removing it drops the vulnerable
+# /usr/share/powershell/.../System.Security.Cryptography.Xml.dll 10.0.5
+# (GHSA-37gx-xxp4-5rgx and GHSA-w3x6-4m5h-cxqf) without affecting the SDK
+# itself.
+RUN rm -rf /usr/share/powershell /usr/bin/pwsh
+
+RUN dotnet tool install -g csharpier --version "1.2.6"
 
 # Copy over node contents to be able to run the compiled CLI
 COPY --from=node /usr/local/bin/node /usr/local/bin/
@@ -89,9 +90,6 @@ RUN for dir in \
         rm brace-expansion-2.0.3.tgz; \
       fi; \
     done
-
-# Bring csharpier in from the SDK stage so the runtime image stays SDK-free.
-COPY --from=dotnet-tools /root/.dotnet/tools /root/.dotnet/tools
 
 COPY generators/csharp/sdk/features.yml /assets/features.yml
 COPY generators/csharp/sdk/dist /dist
