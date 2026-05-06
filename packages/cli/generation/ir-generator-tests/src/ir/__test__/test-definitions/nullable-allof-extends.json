@@ -276,11 +276,9 @@
             "availability": null,
             "name": {
                 "fernFilepath": {
-                    "allParts": [
-                        ""
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": ""
+                    "file": null
                 }
             },
             "displayName": null,
@@ -1685,47 +1683,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "",
-                                "camelCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "location": {
@@ -1765,47 +1725,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "",
-                                "camelCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "location": {
@@ -1873,28 +1795,7 @@
         "keywords": null,
         "smartCasing": true
     },
-    "subpackages": {
-        "subpackage_": {
-            "name": "",
-            "displayName": null,
-            "fernFilepath": {
-                "allParts": [
-                    ""
-                ],
-                "packagePath": [],
-                "file": ""
-            },
-            "service": "service_",
-            "types": [],
-            "errors": [],
-            "subpackages": [],
-            "navigationConfig": null,
-            "webhooks": null,
-            "websocket": null,
-            "hasEndpointsInTree": true,
-            "docs": null
-        }
-    },
+    "subpackages": {},
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
@@ -1902,16 +1803,14 @@
             "file": null
         },
         "websocket": null,
-        "service": null,
+        "service": "service_",
         "types": [
             "type_:RootObject",
             "type_:NormalObject",
             "type_:NullableObject"
         ],
         "errors": [],
-        "subpackages": [
-            "subpackage_"
-        ],
+        "subpackages": [],
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
