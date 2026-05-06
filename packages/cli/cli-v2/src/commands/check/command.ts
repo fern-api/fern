@@ -7,8 +7,10 @@ import type { Context } from "../../context/Context.js";
 import type { GlobalArgs } from "../../context/GlobalArgs.js";
 import { isClaudeCodeSession } from "../../context/isClaudeCodeSession.js";
 import { DocsChecker } from "../../docs/checker/DocsChecker.js";
+import { applyMdxFixes } from "../../docs/fixer/applyMdxFixes.js";
 import { offerAiFixes } from "../../docs/fixer/offerAiFixes.js";
 import { SdkChecker } from "../../sdk/checker/SdkChecker.js";
+import { SdkFixer } from "../../sdk/fixer/SdkFixer.js";
 import { Icons } from "../../ui/format.js";
 import type { Workspace } from "../../workspace/Workspace.js";
 import { command } from "../_internal/command.js";
@@ -22,6 +24,8 @@ export declare namespace CheckCommand {
         strict: boolean;
         /** Output results as JSON to stdout */
         json: boolean;
+        /** Automatically fix issues that have a known resolution */
+        fix: boolean;
     }
 }
 
@@ -86,17 +90,27 @@ export class CheckCommand {
         if (docsCheckResult.mdxParseErrors.length > 0) {
             this.displayMdxParseErrors(context, docsCheckResult.mdxParseErrors);
 
-            // Offer AI-assisted fixes when running interactively.
-            // Skip when: non-TTY (CI), JSON mode, or inside a Claude Code session
-            // (the AI is already in the IDE, so prompting here is redundant).
-            const isTTY = process.stdout.isTTY === true;
-            if (isTTY && !isClaudeCodeSession()) {
-                await offerAiFixes(context, docsCheckResult.mdxParseErrors);
+            if (args.fix) {
+                await applyMdxFixes(context, docsCheckResult.mdxParseErrors);
+            } else {
+                // Offer AI-assisted fixes when running interactively.
+                // Skip when: non-TTY (CI), JSON mode, or inside a Claude Code session
+                // (the AI is already in the IDE, so prompting here is redundant).
+                const isTTY = process.stdout.isTTY === true;
+                if (isTTY && !isClaudeCodeSession()) {
+                    await offerAiFixes(context, docsCheckResult.mdxParseErrors);
+                }
             }
         }
 
+        // Apply SDK fixes when --fix is specified.
+        if (args.fix && sdkCheckResult.violations.length > 0) {
+            const sdkFixer = new SdkFixer({ context });
+            await sdkFixer.fix({ workspace, violations: sdkCheckResult.violations });
+        }
+
         // Fail if there are errors, or if strict mode and there are warnings.
-        if (hasErrors) {
+        if (hasErrors && !args.fix) {
             throw new CliError({ code: CliError.Code.ValidationError });
         }
 
@@ -298,6 +312,11 @@ export function addCheckCommand(cli: Argv<GlobalArgs>): void {
                 .option("json", {
                     type: "boolean",
                     description: "Output results as JSON to stdout",
+                    default: false
+                })
+                .option("fix", {
+                    type: "boolean",
+                    description: "Automatically fix issues that have a known resolution",
                     default: false
                 })
     );
