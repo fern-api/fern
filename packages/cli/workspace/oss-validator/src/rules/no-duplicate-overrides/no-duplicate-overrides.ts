@@ -27,7 +27,12 @@ export const NoDuplicateOverridesRule: Rule = {
                             "x-fern-sdk-group-name"?: string | string[];
                             "x-fern-sdk-method-name"?: string;
                             "x-fern-audiences"?: string | string[];
+                            "x-fern-ignore"?: boolean;
                         };
+
+                        if (operationObj?.["x-fern-ignore"] === true) {
+                            continue;
+                        }
                         const rawSdkGroupName = operationObj?.["x-fern-sdk-group-name"];
                         const sdkGroupName = Array.isArray(rawSdkGroupName)
                             ? rawSdkGroupName.join(".")
