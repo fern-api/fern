@@ -1,6 +1,6 @@
 # Reference
 ## Contacts
-<details><summary><code>client.contacts.<a href="/Sources/Resources/Contacts/ContactsClient.swift">create</a>(request: Requests.CreateContactRequest, requestOptions: RequestOptions?) -> Contact?</code></summary>
+<details><summary><code>client.contacts.<a href="/Sources/Resources/Contacts/ContactsClient.swift">create</a>(request: Requests.ContactsCreateRequest, requestOptions: RequestOptions?) -> Nullable&lt;Contact&gt;</code></summary>
 <dl>
 <dd>
 
@@ -51,7 +51,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.CreateContactRequest` 
+**request:** `Requests.ContactsCreateRequest` 
     
 </dd>
 </dl>

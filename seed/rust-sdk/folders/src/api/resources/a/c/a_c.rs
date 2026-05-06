@@ -14,7 +14,7 @@ impl CClient {
 
     pub async fn foo(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client
-            .execute_request(Method::POST, "", None, None, options)
+            .execute_request(Method::POST, "/a/c", None, None, options)
             .await
     }
 }

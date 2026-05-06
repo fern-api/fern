@@ -24,7 +24,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "",
+            path: "/folder-d",
             request_options: request_options
           )
           begin

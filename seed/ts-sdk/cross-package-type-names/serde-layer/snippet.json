@@ -2,7 +2,7 @@
     "endpoints": [
         {
             "id": {
-                "path": "/",
+                "path": "/folder-a",
                 "method": "GET",
                 "identifier_override": "endpoint_folder-a/service.getDirectThread"
             },
@@ -13,7 +13,7 @@
         },
         {
             "id": {
-                "path": "/",
+                "path": "/folder-d",
                 "method": "GET",
                 "identifier_override": "endpoint_folder-d/service.getDirectThread"
             },

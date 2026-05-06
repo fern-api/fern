@@ -5,7 +5,10 @@ namespace Seed\Tests;
 use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
 use Seed\Endpoints\Params\Requests\GetWithQuery;
+use Seed\Endpoints\Params\Requests\GetWithMultipleQuery;
 use Seed\Endpoints\Params\Requests\GetWithPathAndQuery;
+use Seed\Endpoints\Params\Requests\GetWithInlinePathAndQuery;
+use Seed\Endpoints\Params\Requests\ModifyResourceAtInlinedPath;
 
 class EndpointsParamsWireTest extends WireMockTestCase
 {
@@ -39,7 +42,7 @@ class EndpointsParamsWireTest extends WireMockTestCase
      */
     public function testGetWithInlinePath(): void {
         $testId = 'endpoints.params.get_with_inline_path.0';
-        $this->client->endpoints->params->getWithPath(
+        $this->client->endpoints->params->getWithInlinePath(
             'param',
             [
                 'headers' => [
@@ -50,7 +53,7 @@ class EndpointsParamsWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "GET",
-            "/params/path/param",
+            "/params/inline-path/param",
             null,
             1
         );
@@ -84,10 +87,14 @@ class EndpointsParamsWireTest extends WireMockTestCase
      */
     public function testGetWithAllowMultipleQuery(): void {
         $testId = 'endpoints.params.get_with_allow_multiple_query.0';
-        $this->client->endpoints->params->getWithQuery(
-            new GetWithQuery([
-                'query' => 'query',
-                'number' => 1,
+        $this->client->endpoints->params->getWithAllowMultipleQuery(
+            new GetWithMultipleQuery([
+                'query' => [
+                    'query',
+                ],
+                'number' => [
+                    1,
+                ],
             ]),
             [
                 'headers' => [
@@ -98,7 +105,7 @@ class EndpointsParamsWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "GET",
-            "/params",
+            "/params/allow-multiple",
             ['query' => 'query', 'number' => '1'],
             1
         );
@@ -132,9 +139,9 @@ class EndpointsParamsWireTest extends WireMockTestCase
      */
     public function testGetWithInlinePathAndQuery(): void {
         $testId = 'endpoints.params.get_with_inline_path_and_query.0';
-        $this->client->endpoints->params->getWithPathAndQuery(
+        $this->client->endpoints->params->getWithInlinePathAndQuery(
             'param',
-            new GetWithPathAndQuery([
+            new GetWithInlinePathAndQuery([
                 'query' => 'query',
             ]),
             [
@@ -146,7 +153,7 @@ class EndpointsParamsWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "GET",
-            "/params/path-query/param",
+            "/params/inline-path-query/param",
             ['query' => 'query'],
             1
         );
@@ -178,9 +185,11 @@ class EndpointsParamsWireTest extends WireMockTestCase
      */
     public function testModifyWithInlinePath(): void {
         $testId = 'endpoints.params.modify_with_inline_path.0';
-        $this->client->endpoints->params->modifyWithPath(
+        $this->client->endpoints->params->modifyWithInlinePath(
             'param',
-            'string',
+            new ModifyResourceAtInlinedPath([
+                'body' => 'string',
+            ]),
             [
                 'headers' => [
                     'X-Test-Id' => 'endpoints.params.modify_with_inline_path.0',
@@ -190,7 +199,7 @@ class EndpointsParamsWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "PUT",
-            "/params/path/param",
+            "/params/inline-path/param",
             null,
             1
         );
@@ -243,7 +252,7 @@ class EndpointsParamsWireTest extends WireMockTestCase
      */
     public function testGetWithPathAndErrors(): void {
         $testId = 'endpoints.params.get_with_path_and_errors.0';
-        $this->client->endpoints->params->getWithPath(
+        $this->client->endpoints->params->getWithPathAndErrors(
             'param',
             [
                 'headers' => [
@@ -254,7 +263,7 @@ class EndpointsParamsWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "GET",
-            "/params/path/param",
+            "/params/path-with-errors/param",
             null,
             1
         );

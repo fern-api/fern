@@ -2,19 +2,19 @@
     "types": {},
     "endpoints": [
         {
-            "example_identifier": null,
+            "example_identifier": "Example1",
             "id": {
                 "path": "/conversations/outbound-call",
                 "method": "POST",
-                "identifier_override": "endpoint_conversations.outboundCall"
+                "identifier_override": "endpoint_conversations.outboundcall"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Conversations.OutboundCallAsync(\n    new OutboundCallConversationsRequest { ToPhoneNumber = \"to_phone_number\" }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Conversations.OutboundcallAsync(\n    new ConversationsOutboundCallRequest { ToPhoneNumber = \"to_phone_number\" }\n);\n"
             }
         },
         {
-            "example_identifier": null,
+            "example_identifier": "Example1",
             "id": {
                 "path": "/users/{id}",
                 "method": "GET",
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Users.GetAsync(new GetUsersRequest { Id = \"id\" });\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Users.GetAsync(new UsersGetRequest { Id = \"id\" });\n"
             }
         }
     ]

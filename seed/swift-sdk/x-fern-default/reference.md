@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/Sources/ApiClient.swift">testGet</a>(region: String, limit: String?, requestOptions: RequestOptions?) -> TestGetResponse</code></summary>
+<details><summary><code>client.<a href="/Sources/ApiClient.swift">testGet</a>(region: String, limit: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> TestGetResponse</code></summary>
 <dl>
 <dd>
 
@@ -44,7 +44,7 @@ try await main()
 <dl>
 <dd>
 
-**limit:** `String?` 
+**limit:** `Nullable<String>?` 
     
 </dd>
 </dl>

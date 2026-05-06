@@ -5,7 +5,7 @@ package com.seed.api.resources.identity;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
-import com.seed.api.resources.identity.requests.GetTokenIdentityRequest;
+import com.seed.api.resources.identity.requests.IdentityGetTokenRequest;
 import com.seed.api.types.TokenResponse;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,11 +26,11 @@ public class AsyncIdentityClient {
         return this.rawClient;
     }
 
-    public CompletableFuture<TokenResponse> getToken(GetTokenIdentityRequest request) {
-        return this.rawClient.getToken(request).thenApply(response -> response.body());
+    public CompletableFuture<TokenResponse> gettoken(IdentityGetTokenRequest request) {
+        return this.rawClient.gettoken(request).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<TokenResponse> getToken(GetTokenIdentityRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getToken(request, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<TokenResponse> gettoken(IdentityGetTokenRequest request, RequestOptions requestOptions) {
+        return this.rawClient.gettoken(request, requestOptions).thenApply(response -> response.body());
     }
 }

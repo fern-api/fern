@@ -9,7 +9,7 @@ async fn main() {
     let client = ApiClient::new(config).expect("Failed to build client");
     client
         .get_token(
-            &TokenRequest {
+            &GetTokenRequest {
                 client_id: "client_id".to_string(),
                 client_secret: "client_secret".to_string(),
             },

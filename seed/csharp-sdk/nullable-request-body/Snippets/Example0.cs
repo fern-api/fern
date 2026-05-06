@@ -9,8 +9,8 @@ public partial class Examples
             }
         );
 
-        await client.TestGroup.TestMethodNameAsync(
-            new TestMethodNameTestGroupRequest {
+        await client.Testgroup.TestMethodNameAsync(
+            new TestGroupTestMethodNameRequest {
                 PathParam = "path_param",
                 Body = new PlainObject()
             }

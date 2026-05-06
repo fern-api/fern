@@ -5,12 +5,15 @@ package com.seed.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.api.core.Nullable;
+import com.seed.api.core.NullableNonemptyFilter;
 import com.seed.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,8 +32,17 @@ public final class BulkUpdateTasksResponse {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("updated_count")
+    @JsonIgnore
     public Optional<Integer> getUpdatedCount() {
+        if (updatedCount == null) {
+            return Optional.empty();
+        }
+        return updatedCount;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("updated_count")
+    private Optional<Integer> _getUpdatedCount() {
         return updatedCount;
     }
 
@@ -85,6 +97,17 @@ public final class BulkUpdateTasksResponse {
 
         public Builder updatedCount(Integer updatedCount) {
             this.updatedCount = Optional.ofNullable(updatedCount);
+            return this;
+        }
+
+        public Builder updatedCount(Nullable<Integer> updatedCount) {
+            if (updatedCount.isNull()) {
+                this.updatedCount = null;
+            } else if (updatedCount.isEmpty()) {
+                this.updatedCount = Optional.empty();
+            } else {
+                this.updatedCount = Optional.of(updatedCount.get());
+            }
             return this;
         }
 

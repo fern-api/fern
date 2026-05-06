@@ -38,7 +38,7 @@ import (
 
 func do() {
     client := client.NewClient()
-    request := &fern.PostSubmitRequest{
+    request := &fern.SubmitFormDataRequest{
         Username: "johndoe",
         Email: "john@example.com",
     }

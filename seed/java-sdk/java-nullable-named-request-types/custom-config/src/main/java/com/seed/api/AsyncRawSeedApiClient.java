@@ -11,7 +11,7 @@ import com.seed.api.core.RequestOptions;
 import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
-import com.seed.api.requests.NonNullableObject;
+import com.seed.api.requests.PostWithNonNullableNamedRequestBodyTypeRequest;
 import com.seed.api.requests.PostWithNullableNamedRequestBodyTypeRequest;
 import com.seed.api.types.ResponseBody;
 import java.io.IOException;
@@ -97,22 +97,22 @@ public class AsyncRawSeedApiClient {
 
     public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNonNullableNamedRequestBodyType(String id) {
         return postWithNonNullableNamedRequestBodyType(
-                id, NonNullableObject.builder().build());
+                id, PostWithNonNullableNamedRequestBodyTypeRequest.builder().build());
     }
 
     public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNonNullableNamedRequestBodyType(
             String id, RequestOptions requestOptions) {
         return postWithNonNullableNamedRequestBodyType(
-                id, NonNullableObject.builder().build(), requestOptions);
+                id, PostWithNonNullableNamedRequestBodyTypeRequest.builder().build(), requestOptions);
     }
 
     public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNonNullableNamedRequestBodyType(
-            String id, NonNullableObject request) {
+            String id, PostWithNonNullableNamedRequestBodyTypeRequest request) {
         return postWithNonNullableNamedRequestBodyType(id, request, null);
     }
 
     public CompletableFuture<SeedApiHttpResponse<ResponseBody>> postWithNonNullableNamedRequestBodyType(
-            String id, NonNullableObject request, RequestOptions requestOptions) {
+            String id, PostWithNonNullableNamedRequestBodyTypeRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("postWithNonNullableNamedRequestBodyType")

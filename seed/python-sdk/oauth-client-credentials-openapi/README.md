@@ -43,7 +43,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.identity.get_token(
+client.identity.gettoken(
     username="username",
     password="password",
 )
@@ -66,7 +66,7 @@ client = AsyncSeedApi(
 
 
 async def main() -> None:
-    await client.identity.get_token(
+    await client.identity.gettoken(
         username="username",
         password="password",
     )
@@ -84,7 +84,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.identity.get_token(...)
+    client.identity.gettoken(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -122,7 +122,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 from seed import SeedApi
 
 client = SeedApi(...)
-response = client.identity.with_raw_response.get_token(...)
+response = client.identity.with_raw_response.gettoken(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -153,7 +153,7 @@ Which status codes are retried depends on the `retryStatusCodes` generator confi
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.identity.get_token(..., request_options={
+client.identity.gettoken(..., request_options={
     "max_retries": 1
 })
 ```
@@ -168,7 +168,7 @@ from seed import SeedApi
 client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.identity.get_token(..., request_options={
+client.identity.gettoken(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

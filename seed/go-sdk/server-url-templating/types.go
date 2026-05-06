@@ -10,11 +10,11 @@ import (
 )
 
 var (
-	tokenRequestFieldClientID     = big.NewInt(1 << 0)
-	tokenRequestFieldClientSecret = big.NewInt(1 << 1)
+	getTokenRequestFieldClientID     = big.NewInt(1 << 0)
+	getTokenRequestFieldClientSecret = big.NewInt(1 << 1)
 )
 
-type TokenRequest struct {
+type GetTokenRequest struct {
 	ClientID     string `json:"client_id" url:"-"`
 	ClientSecret string `json:"client_secret" url:"-"`
 
@@ -22,45 +22,45 @@ type TokenRequest struct {
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (t *TokenRequest) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+func (g *GetTokenRequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TokenRequest) SetClientID(clientID string) {
-	t.ClientID = clientID
-	t.require(tokenRequestFieldClientID)
+func (g *GetTokenRequest) SetClientID(clientID string) {
+	g.ClientID = clientID
+	g.require(getTokenRequestFieldClientID)
 }
 
 // SetClientSecret sets the ClientSecret field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TokenRequest) SetClientSecret(clientSecret string) {
-	t.ClientSecret = clientSecret
-	t.require(tokenRequestFieldClientSecret)
+func (g *GetTokenRequest) SetClientSecret(clientSecret string) {
+	g.ClientSecret = clientSecret
+	g.require(getTokenRequestFieldClientSecret)
 }
 
-func (t *TokenRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler TokenRequest
+func (g *GetTokenRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetTokenRequest
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*t = TokenRequest(body)
+	*g = GetTokenRequest(body)
 	return nil
 }
 
-func (t *TokenRequest) MarshalJSON() ([]byte, error) {
-	type embed TokenRequest
+func (g *GetTokenRequest) MarshalJSON() ([]byte, error) {
+	type embed GetTokenRequest
 	var marshaler = struct {
 		embed
 	}{
-		embed: embed(*t),
+		embed: embed(*g),
 	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
 	return json.Marshal(explicitMarshaler)
 }
 

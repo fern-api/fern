@@ -5,15 +5,15 @@ private func main() async throws {
     let client = ApiClient(baseURL: "https://api.fern.com")
 
     _ = try await client.bulkUpdateTasks(
-        filterAssignedTo: .value("filter_assigned_to"),
-        filterIsComplete: .value("filter_is_complete"),
-        filterDate: .value("filter_date"),
-        fields: "_fields",
+        assignedTo: .value("assigned_to"),
+        isComplete: .value("is_complete"),
+        date: .value("date"),
+        fields: .value("_fields"),
         request: .init(
-            bulkUpdateTasksRequestAssignedTo: "assigned_to",
-            bulkUpdateTasksRequestDate: CalendarDate("2023-01-15")!,
-            bulkUpdateTasksRequestIsComplete: true,
-            text: "text"
+            bulkUpdateTasksRequestAssignedTo: .value("assigned_to"),
+            bulkUpdateTasksRequestDate: .value(CalendarDate("2023-01-15")!),
+            bulkUpdateTasksRequestIsComplete: .value(true),
+            text: .value("text")
         )
     )
 }

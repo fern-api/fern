@@ -44,7 +44,6 @@ public partial class SeedApiClient : ISeedApiClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Base,
                     Method = HttpMethod.Get,
                     Path = "users",
                     Headers = _headers,
@@ -110,7 +109,6 @@ public partial class SeedApiClient : ISeedApiClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Base,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "users/{0}",
@@ -164,7 +162,7 @@ public partial class SeedApiClient : ISeedApiClient
     }
 
     private async Task<WithRawResponse<TokenResponse>> GetTokenAsyncCore(
-        TokenRequest request,
+        GetTokenRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -179,7 +177,6 @@ public partial class SeedApiClient : ISeedApiClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.Environment.Auth,
                     Method = HttpMethod.Post,
                     Path = "auth/token",
                     Body = request,
@@ -258,11 +255,11 @@ public partial class SeedApiClient : ISeedApiClient
 
     /// <example><code>
     /// await client.GetTokenAsync(
-    ///     new TokenRequest { ClientId = "client_id", ClientSecret = "client_secret" }
+    ///     new GetTokenRequest { ClientId = "client_id", ClientSecret = "client_secret" }
     /// );
     /// </code></example>
     public WithRawResponseTask<TokenResponse> GetTokenAsync(
-        TokenRequest request,
+        GetTokenRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>client.conversations.<a href="/lib/seed/conversations/client.rb">outbound_call</a>(request) -> Seed::Conversations::Types::OutboundCallConversationsResponse</code></summary>
+<details><summary><code>client.conversations.<a href="/lib/seed/conversations/client.rb">outboundcall</a>(request) -> Seed::Types::OutboundCallConversationsResponse</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ Place an outbound call or validate call setup with dry_run.
 <dd>
 
 ```ruby
-client.conversations.outbound_call(to_phone_number: "to_phone_number")
+client.conversations.outboundcall(to_phone_number: "to_phone_number")
 ```
 </dd>
 </dl>

@@ -20,7 +20,7 @@ import Testing
         )
 
         do {
-            _ = try await client.identity.getToken(
+            _ = try await client.identity.gettoken(
                 request: .init(
                     username: "username",
                     password: "password"
@@ -50,7 +50,7 @@ import Testing
         )
 
         do {
-            _ = try await client.identity.getToken(
+            _ = try await client.identity.gettoken(
                 request: .init(
                     username: "username",
                     password: "password"
@@ -80,7 +80,7 @@ import Testing
         )
 
         do {
-            _ = try await client.identity.getToken(
+            _ = try await client.identity.gettoken(
                 request: .init(
                     username: "username",
                     password: "password"
@@ -109,7 +109,7 @@ import Testing
         )
 
         do {
-            _ = try await client.identity.getToken(
+            _ = try await client.identity.gettoken(
                 request: .init(
                     username: "username",
                     password: "password"
@@ -137,7 +137,7 @@ import Testing
         )
 
         do {
-            _ = try await client.identity.getToken(
+            _ = try await client.identity.gettoken(
                 request: .init(
                     username: "username",
                     password: "password"
@@ -166,7 +166,7 @@ import Testing
         )
 
         do {
-            _ = try await client.identity.getToken(
+            _ = try await client.identity.gettoken(
                 request: .init(
                     username: "username",
                     password: "password"
@@ -195,7 +195,7 @@ import Testing
         )
 
         do {
-            _ = try await client.identity.getToken(
+            _ = try await client.identity.gettoken(
                 request: .init(
                     username: "username",
                     password: "password"
@@ -229,7 +229,7 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.identity.getToken(
+            _ = try await client.identity.gettoken(
                 request: .init(
                     username: "username",
                     password: "password"
@@ -273,7 +273,7 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.identity.getToken(
+            _ = try await client.identity.gettoken(
                 request: .init(
                     username: "username",
                     password: "password"
@@ -313,7 +313,7 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.identity.getToken(
+            _ = try await client.identity.gettoken(
                 request: .init(
                     username: "username",
                     password: "password"
@@ -364,7 +364,7 @@ import Testing
         )
 
         do {
-            _ = try await client.identity.getToken(
+            _ = try await client.identity.gettoken(
                 request: .init(
                     username: "username",
                     password: "password"
@@ -389,7 +389,7 @@ import Testing
         )
 
         do {
-            _ = try await client.identity.getToken(
+            _ = try await client.identity.gettoken(
                 request: .init(
                     username: "username",
                     password: "password"
@@ -418,7 +418,7 @@ import Testing
         )
 
         do {
-            _ = try await client.identity.getToken(
+            _ = try await client.identity.gettoken(
                 request: .init(
                     username: "username",
                     password: "password"

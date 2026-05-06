@@ -6,7 +6,7 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import PostSubmitResponse, TokenRequest, TokenResponse
+    from .types import PostSubmitResponse, TokenResponse
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedApi, SeedApi
     from .version import __version__
@@ -16,7 +16,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DefaultAsyncHttpxClient": "._default_clients",
     "PostSubmitResponse": ".types",
     "SeedApi": ".client",
-    "TokenRequest": ".types",
     "TokenResponse": ".types",
     "__version__": ".version",
 }
@@ -49,7 +48,6 @@ __all__ = [
     "DefaultAsyncHttpxClient",
     "PostSubmitResponse",
     "SeedApi",
-    "TokenRequest",
     "TokenResponse",
     "__version__",
 ]

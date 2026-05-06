@@ -5,12 +5,15 @@ package com.seed.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.api.core.Nullable;
+import com.seed.api.core.NullableNonemptyFilter;
 import com.seed.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,8 +32,17 @@ public final class ResponseBody {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("success")
+    @JsonIgnore
     public Optional<Boolean> getSuccess() {
+        if (success == null) {
+            return Optional.empty();
+        }
+        return success;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("success")
+    private Optional<Boolean> _getSuccess() {
         return success;
     }
 
@@ -85,6 +97,17 @@ public final class ResponseBody {
 
         public Builder success(Boolean success) {
             this.success = Optional.ofNullable(success);
+            return this;
+        }
+
+        public Builder success(Nullable<Boolean> success) {
+            if (success.isNull()) {
+                this.success = null;
+            } else if (success.isEmpty()) {
+                this.success = Optional.empty();
+            } else {
+                this.success = Optional.of(success.get());
+            }
             return this;
         }
 

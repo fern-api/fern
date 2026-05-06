@@ -27,7 +27,7 @@ Creates a new contact. Returns 200 with the contact or 204 with no content.
 <dd>
 
 ```go
-request := &fern.CreateContactRequest{
+request := &fern.ContactsCreateRequest{
         Name: "name",
     }
 client.Contacts.Create(
@@ -96,7 +96,7 @@ Gets a contact by ID. Returns 200 with the contact.
 <dd>
 
 ```go
-request := &fern.GetContactsRequest{
+request := &fern.ContactsGetRequest{
         ID: "id",
     }
 client.Contacts.Get(

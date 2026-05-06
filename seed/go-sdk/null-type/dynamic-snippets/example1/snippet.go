@@ -14,13 +14,13 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.OutboundCallConversationsRequest{
+    request := &fern.ConversationsOutboundCallRequest{
         ToPhoneNumber: "to_phone_number",
         DryRun: fern.Bool(
             true,
         ),
     }
-    client.Conversations.OutboundCall(
+    client.Conversations.Outboundcall(
         context.TODO(),
         request,
     )

@@ -5,7 +5,7 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
-import com.seed.api.requests.ItemData;
+import com.seed.api.requests.CreateItemRequest;
 import com.seed.api.types.Item;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,12 +26,12 @@ public class AsyncSeedApiClient {
         return this.rawClient;
     }
 
-    public CompletableFuture<Item> createItem(String key, String value, ItemData request) {
+    public CompletableFuture<Item> createItem(String key, String value, CreateItemRequest request) {
         return this.rawClient.createItem(key, value, request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Item> createItem(
-            String key, String value, ItemData request, RequestOptions requestOptions) {
+            String key, String value, CreateItemRequest request, RequestOptions requestOptions) {
         return this.rawClient.createItem(key, value, request, requestOptions).thenApply(response -> response.body());
     }
 

@@ -56,7 +56,7 @@ Instantiate and use the client with the following:
 package com.example.usage;
 
 import com.seed.api.SeedApiClient;
-import com.seed.api.requests.ItemData;
+import com.seed.api.requests.CreateItemRequest;
 
 public class Example {
     public static void main(String[] args) {
@@ -67,7 +67,7 @@ public class Example {
         client.createItem(
             "key",
             "value",
-            ItemData
+            CreateItemRequest
                 .builder()
                 .data("data")
                 .build()

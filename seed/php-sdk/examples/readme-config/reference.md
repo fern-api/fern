@@ -54,8 +54,8 @@ $client->echo_(
 <dd>
 
 ```php
-$client->echo_(
-    'primitive',
+$client->createType(
+    BasicType::Primitive->value,
 );
 ```
 </dd>

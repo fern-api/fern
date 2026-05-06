@@ -6,7 +6,11 @@ public partial class SeedApiClient : ISeedApiClient
 {
     private readonly RawClient _client;
 
-    public SeedApiClient(string clientId, string clientSecret, ClientOptions? clientOptions = null)
+    public SeedApiClient(
+        string? clientId = null,
+        string? clientSecret = null,
+        ClientOptions? clientOptions = null
+    )
     {
         clientOptions ??= new ClientOptions();
         var platformHeaders = new Headers(

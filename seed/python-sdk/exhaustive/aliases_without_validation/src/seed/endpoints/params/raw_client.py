@@ -82,7 +82,7 @@ class RawParamsClient:
         HttpResponse[str]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"params/path/{encode_path_param(param)}",
+            f"params/inline-path/{encode_path_param(param)}",
             method="GET",
             request_options=request_options,
         )
@@ -169,7 +169,7 @@ class RawParamsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "params",
+            "params/allow-multiple",
             method="GET",
             params={
                 "query": query,
@@ -248,7 +248,7 @@ class RawParamsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"params/path-query/{encode_path_param(param)}",
+            f"params/inline-path-query/{encode_path_param(param)}",
             method="GET",
             params={
                 "query": query,
@@ -332,7 +332,7 @@ class RawParamsClient:
         HttpResponse[str]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"params/path/{encode_path_param(param)}",
+            f"params/inline-path/{encode_path_param(param)}",
             method="PUT",
             json=request,
             request_options=request_options,
@@ -465,7 +465,7 @@ class RawParamsClient:
         HttpResponse[str]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"params/path/{encode_path_param(param)}",
+            f"params/path-with-errors/{encode_path_param(param)}",
             method="GET",
             request_options=request_options,
         )
@@ -563,7 +563,7 @@ class AsyncRawParamsClient:
         AsyncHttpResponse[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"params/path/{encode_path_param(param)}",
+            f"params/inline-path/{encode_path_param(param)}",
             method="GET",
             request_options=request_options,
         )
@@ -650,7 +650,7 @@ class AsyncRawParamsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "params",
+            "params/allow-multiple",
             method="GET",
             params={
                 "query": query,
@@ -729,7 +729,7 @@ class AsyncRawParamsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"params/path-query/{encode_path_param(param)}",
+            f"params/inline-path-query/{encode_path_param(param)}",
             method="GET",
             params={
                 "query": query,
@@ -813,7 +813,7 @@ class AsyncRawParamsClient:
         AsyncHttpResponse[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"params/path/{encode_path_param(param)}",
+            f"params/inline-path/{encode_path_param(param)}",
             method="PUT",
             json=request,
             request_options=request_options,
@@ -946,7 +946,7 @@ class AsyncRawParamsClient:
         AsyncHttpResponse[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"params/path/{encode_path_param(param)}",
+            f"params/path-with-errors/{encode_path_param(param)}",
             method="GET",
             request_options=request_options,
         )

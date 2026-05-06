@@ -5,7 +5,7 @@ info:
 paths:
   /users:
     get:
-      operationId: _getUsers
+      operationId: getUsers
       parameters: []
       responses:
         '200':
@@ -25,7 +25,7 @@ paths:
       summary: Get all users
   /users/{userId}:
     get:
-      operationId: _getUser
+      operationId: getUser
       parameters:
         - name: userId
           in: path
@@ -51,7 +51,7 @@ paths:
       summary: Get a user by ID
   /auth/token:
     post:
-      operationId: _getToken
+      operationId: getToken
       parameters: []
       responses:
         '200':

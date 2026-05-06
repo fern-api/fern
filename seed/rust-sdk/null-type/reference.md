@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>client.conversations.<a href="/src/api/resources/conversations/client.rs">outbound_call</a>(request: OutboundCallConversationsRequest) -> Result&lt;OutboundCallConversationsResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.conversations.<a href="/src/api/resources/conversations/client.rs">outboundcall</a>(request: ConversationsOutboundCallRequest) -> Result&lt;OutboundCallConversationsResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -37,8 +37,8 @@ async fn main() {
     let client = ApiClient::new(config).expect("Failed to build client");
     client
         .conversations
-        .outbound_call(
-            &OutboundCallConversationsRequest {
+        .outboundcall(
+            &ConversationsOutboundCallRequest {
                 to_phone_number: "to_phone_number".to_string(),
                 dry_run: None,
             },
@@ -68,7 +68,7 @@ async fn main() {
 <dl>
 <dd>
 
-**dry_run:** `Option<bool>` — If true, validates the outbound call setup without placing a call.
+**dry_run:** `Option<Option<bool>>` — If true, validates the outbound call setup without placing a call.
     
 </dd>
 </dl>

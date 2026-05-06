@@ -1,6 +1,6 @@
 # Reference
-## TestGroup
-<details><summary><code>client.testGroup.<a href="/Sources/Resources/TestGroup/TestGroupClient.swift">testMethodName</a>(pathParam: String, queryParamObject: Nullable&lt;PlainObject&gt;?, queryParamInteger: Nullable&lt;Int&gt;?, request: Nullable&lt;PlainObject&gt;, requestOptions: RequestOptions?) -> JSONValue</code></summary>
+## Testgroup
+<details><summary><code>client.testgroup.<a href="/Sources/Resources/Testgroup/TestgroupClient.swift">testMethodName</a>(pathParam: String, queryParamObject: Nullable&lt;PlainObject&gt;?, queryParamInteger: Nullable&lt;Int&gt;?, request: Nullable&lt;PlainObject&gt;, requestOptions: RequestOptions?) -> JSONValue</code></summary>
 <dl>
 <dd>
 
@@ -33,7 +33,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client.testGroup.testMethodName(
+    _ = try await client.testgroup.testMethodName(
         pathParam: "path_param",
         request: .value(PlainObject(
 

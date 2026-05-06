@@ -9,9 +9,9 @@ import (
 	testing "testing"
 )
 
-func TestSettersCreateContactRequest(t *testing.T) {
+func TestSettersContactsCreateRequest(t *testing.T) {
 	t.Run("SetName", func(t *testing.T) {
-		obj := &CreateContactRequest{}
+		obj := &ContactsCreateRequest{}
 		var fernTestValueName string
 		obj.SetName(fernTestValueName)
 		assert.Equal(t, fernTestValueName, obj.Name)
@@ -19,7 +19,7 @@ func TestSettersCreateContactRequest(t *testing.T) {
 	})
 
 	t.Run("SetEmail", func(t *testing.T) {
-		obj := &CreateContactRequest{}
+		obj := &ContactsCreateRequest{}
 		var fernTestValueEmail *string
 		obj.SetEmail(fernTestValueEmail)
 		assert.Equal(t, fernTestValueEmail, obj.Email)
@@ -28,11 +28,11 @@ func TestSettersCreateContactRequest(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitCreateContactRequest(t *testing.T) {
+func TestSettersMarkExplicitContactsCreateRequest(t *testing.T) {
 	t.Run("SetName_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &CreateContactRequest{}
+		obj := &ContactsCreateRequest{}
 		var fernTestValueName string
 
 		// Act
@@ -63,7 +63,7 @@ func TestSettersMarkExplicitCreateContactRequest(t *testing.T) {
 	t.Run("SetEmail_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &CreateContactRequest{}
+		obj := &ContactsCreateRequest{}
 		var fernTestValueEmail *string
 
 		// Act
@@ -93,9 +93,9 @@ func TestSettersMarkExplicitCreateContactRequest(t *testing.T) {
 
 }
 
-func TestSettersGetContactsRequest(t *testing.T) {
+func TestSettersContactsGetRequest(t *testing.T) {
 	t.Run("SetID", func(t *testing.T) {
-		obj := &GetContactsRequest{}
+		obj := &ContactsGetRequest{}
 		var fernTestValueID string
 		obj.SetID(fernTestValueID)
 		assert.Equal(t, fernTestValueID, obj.ID)
@@ -104,11 +104,11 @@ func TestSettersGetContactsRequest(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitGetContactsRequest(t *testing.T) {
+func TestSettersMarkExplicitContactsGetRequest(t *testing.T) {
 	t.Run("SetID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &GetContactsRequest{}
+		obj := &ContactsGetRequest{}
 		var fernTestValueID string
 
 		// Act

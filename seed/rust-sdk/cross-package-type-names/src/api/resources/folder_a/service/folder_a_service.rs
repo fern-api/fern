@@ -18,7 +18,7 @@ impl ServiceClient {
         options: Option<RequestOptions>,
     ) -> Result<Response, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "", None, None, options)
+            .execute_request(Method::GET, "/folder-a", None, None, options)
             .await
     }
 }

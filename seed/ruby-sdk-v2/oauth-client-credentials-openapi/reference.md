@@ -1,6 +1,6 @@
 # Reference
 ## Identity
-<details><summary><code>client.identity.<a href="/lib/seed/identity/client.rb">get_token</a>(request) -> Seed::Types::TokenResponse</code></summary>
+<details><summary><code>client.identity.<a href="/lib/seed/identity/client.rb">gettoken</a>(request) -> Seed::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.identity.get_token(
+client.identity.gettoken(
   username: "username",
   password: "password"
 )

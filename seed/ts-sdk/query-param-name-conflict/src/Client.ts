@@ -39,11 +39,11 @@ export class SeedApiClient {
         request: SeedApi.BulkUpdateTasksRequest = {},
         requestOptions?: SeedApiClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.BulkUpdateTasksResponse>> {
-        const { filterAssignedTo, filterIsComplete, filterDate, _fields: fields, ..._body } = request;
+        const { assignedTo, isComplete, date, _fields: fields, ..._body } = request;
         const _queryParams: Record<string, unknown> = {
-            assigned_to: filterAssignedTo,
-            is_complete: filterIsComplete,
-            date: filterDate,
+            assigned_to: assignedTo,
+            is_complete: isComplete,
+            date,
             _fields: fields,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);

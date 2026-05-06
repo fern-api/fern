@@ -9,9 +9,9 @@ import (
 	testing "testing"
 )
 
-func TestSettersGetUsersRequest(t *testing.T) {
+func TestSettersUsersGetRequest(t *testing.T) {
 	t.Run("SetID", func(t *testing.T) {
-		obj := &GetUsersRequest{}
+		obj := &UsersGetRequest{}
 		var fernTestValueID string
 		obj.SetID(fernTestValueID)
 		assert.Equal(t, fernTestValueID, obj.ID)
@@ -20,11 +20,11 @@ func TestSettersGetUsersRequest(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitGetUsersRequest(t *testing.T) {
+func TestSettersMarkExplicitUsersGetRequest(t *testing.T) {
 	t.Run("SetID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &GetUsersRequest{}
+		obj := &UsersGetRequest{}
 		var fernTestValueID string
 
 		// Act

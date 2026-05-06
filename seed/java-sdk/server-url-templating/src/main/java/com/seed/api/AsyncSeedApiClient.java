@@ -5,8 +5,8 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.requests.GetTokenRequest;
 import com.seed.api.requests.GetUserRequest;
-import com.seed.api.requests.TokenRequest;
 import com.seed.api.types.TokenResponse;
 import com.seed.api.types.User;
 import java.util.List;
@@ -53,11 +53,11 @@ public class AsyncSeedApiClient {
         return this.rawClient.getUser(userId, request, requestOptions).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<TokenResponse> getToken(TokenRequest request) {
+    public CompletableFuture<TokenResponse> getToken(GetTokenRequest request) {
         return this.rawClient.getToken(request).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<TokenResponse> getToken(TokenRequest request, RequestOptions requestOptions) {
+    public CompletableFuture<TokenResponse> getToken(GetTokenRequest request, RequestOptions requestOptions) {
         return this.rawClient.getToken(request, requestOptions).thenApply(response -> response.body());
     }
 

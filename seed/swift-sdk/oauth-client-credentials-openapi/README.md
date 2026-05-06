@@ -54,7 +54,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client.identity.getToken(request: .init(
+    _ = try await client.identity.gettoken(request: .init(
         username: "username",
         password: "password"
     ))
@@ -73,7 +73,7 @@ import Api
 let client = ApiClient(...)
 
 do {
-    let response = try await client.identity.getToken(...)
+    let response = try await client.identity.gettoken(...)
     // Handle successful response
 } catch let error as ApiError {
     switch error {
@@ -100,7 +100,7 @@ The SDK exports all request types as Swift structs. Simply import the SDK module
 ```swift
 import Api
 
-let request = Requests.GetTokenIdentityRequest(
+let request = Requests.IdentityGetTokenRequest(
     ...
 )
 ```
@@ -112,7 +112,7 @@ let request = Requests.GetTokenIdentityRequest(
 If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
 
 ```swift
-try await client.identity.getToken(..., requestOptions: .init(
+try await client.identity.gettoken(..., requestOptions: .init(
     additionalHeaders: [
         "X-Custom-Header": "custom value"
     ]
@@ -124,7 +124,7 @@ try await client.identity.getToken(..., requestOptions: .init(
 If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
 
 ```swift
-try await client.identity.getToken(..., requestOptions: .init(
+try await client.identity.gettoken(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
     ]
@@ -136,7 +136,7 @@ try await client.identity.getToken(..., requestOptions: .init(
 The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
 
 ```swift
-try await client.identity.getToken(..., requestOptions: .init(
+try await client.identity.gettoken(..., requestOptions: .init(
     timeout: 30
 ))
 ```

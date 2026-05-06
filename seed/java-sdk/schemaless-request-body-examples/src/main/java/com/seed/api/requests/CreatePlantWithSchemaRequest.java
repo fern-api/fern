@@ -5,12 +5,15 @@ package com.seed.api.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.api.core.Nullable;
+import com.seed.api.core.NullableNonemptyFilter;
 import com.seed.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,13 +36,31 @@ public final class CreatePlantWithSchemaRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("name")
+    @JsonIgnore
     public Optional<String> getName() {
+        if (name == null) {
+            return Optional.empty();
+        }
         return name;
     }
 
-    @JsonProperty("species")
+    @JsonIgnore
     public Optional<String> getSpecies() {
+        if (species == null) {
+            return Optional.empty();
+        }
+        return species;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("name")
+    private Optional<String> _getName() {
+        return name;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("species")
+    private Optional<String> _getSpecies() {
         return species;
     }
 
@@ -100,6 +121,17 @@ public final class CreatePlantWithSchemaRequest {
             return this;
         }
 
+        public Builder name(Nullable<String> name) {
+            if (name.isNull()) {
+                this.name = null;
+            } else if (name.isEmpty()) {
+                this.name = Optional.empty();
+            } else {
+                this.name = Optional.of(name.get());
+            }
+            return this;
+        }
+
         @JsonSetter(value = "species", nulls = Nulls.SKIP)
         public Builder species(Optional<String> species) {
             this.species = species;
@@ -108,6 +140,17 @@ public final class CreatePlantWithSchemaRequest {
 
         public Builder species(String species) {
             this.species = Optional.ofNullable(species);
+            return this;
+        }
+
+        public Builder species(Nullable<String> species) {
+            if (species.isNull()) {
+                this.species = null;
+            } else if (species.isEmpty()) {
+                this.species = Optional.empty();
+            } else {
+                this.species = Optional.of(species.get());
+            }
             return this;
         }
 

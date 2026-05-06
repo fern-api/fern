@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.api.core.Nullable;
 import com.seed.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +32,9 @@ public final class TestGetRequest {
 
     @JsonProperty("limit")
     public Optional<String> getLimit() {
+        if (limit == null) {
+            return Optional.empty();
+        }
         return limit;
     }
 
@@ -85,6 +89,17 @@ public final class TestGetRequest {
 
         public Builder limit(String limit) {
             this.limit = Optional.ofNullable(limit);
+            return this;
+        }
+
+        public Builder limit(Nullable<String> limit) {
+            if (limit.isNull()) {
+                this.limit = null;
+            } else if (limit.isEmpty()) {
+                this.limit = Optional.empty();
+            } else {
+                this.limit = Optional.of(limit.get());
+            }
             return this;
         }
 

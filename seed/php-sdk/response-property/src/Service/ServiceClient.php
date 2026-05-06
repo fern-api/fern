@@ -118,7 +118,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "movie",
+                    path: "movie/docs",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -165,7 +165,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "movie",
+                    path: "movie/name",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -212,7 +212,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "movie",
+                    path: "movie/metadata",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -259,7 +259,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "movie",
+                    path: "movie/optional",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -306,7 +306,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "movie",
+                    path: "movie/optional/docs",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -353,7 +353,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "movie",
+                    path: "movie/optional/name",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

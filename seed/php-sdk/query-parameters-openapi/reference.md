@@ -241,7 +241,7 @@ $client->search(
 <dl>
 <dd>
 
-**$neighborRequired:** `User|NestedUser|string|int` 
+**$neighborRequired:** `User` 
     
 </dd>
 </dl>

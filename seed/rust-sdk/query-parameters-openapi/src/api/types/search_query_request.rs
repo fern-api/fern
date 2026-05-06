@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 
 /// Query parameters for search
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct SearchQueryRequest {
     #[serde(default)]
     pub limit: i64,
@@ -21,12 +21,10 @@ pub struct SearchQueryRequest {
     pub user_list: Vec<Option<User>>,
     #[serde(rename = "optionalDeadline")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[serde(default)]
-    #[serde(with = "crate::core::flexible_datetime::offset::option")]
     pub optional_deadline: Option<DateTime<FixedOffset>>,
     #[serde(rename = "keyValue")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub key_value: Option<HashMap<String, String>>,
+    pub key_value: Option<HashMap<String, Option<String>>>,
     #[serde(rename = "optionalString")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub optional_string: Option<String>,
@@ -51,7 +49,8 @@ pub struct SearchQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub neighbor: Option<SearchRequestNeighbor>,
     #[serde(rename = "neighborRequired")]
-    pub neighbor_required: SearchRequestNeighborRequired,
+    #[serde(default)]
+    pub neighbor_required: User,
 }
 
 impl SearchQueryRequest {
@@ -71,7 +70,7 @@ pub struct SearchQueryRequestBuilder {
     user: Option<User>,
     user_list: Option<Vec<Option<User>>>,
     optional_deadline: Option<DateTime<FixedOffset>>,
-    key_value: Option<HashMap<String, String>>,
+    key_value: Option<HashMap<String, Option<String>>>,
     optional_string: Option<String>,
     nested_user: Option<NestedUser>,
     optional_user: Option<User>,
@@ -80,7 +79,7 @@ pub struct SearchQueryRequestBuilder {
     tags: Option<Vec<Option<String>>>,
     optional_tags: Option<Vec<Option<String>>>,
     neighbor: Option<SearchRequestNeighbor>,
-    neighbor_required: Option<SearchRequestNeighborRequired>,
+    neighbor_required: Option<User>,
 }
 
 impl SearchQueryRequestBuilder {
@@ -124,7 +123,7 @@ impl SearchQueryRequestBuilder {
         self
     }
 
-    pub fn key_value(mut self, value: HashMap<String, String>) -> Self {
+    pub fn key_value(mut self, value: HashMap<String, Option<String>>) -> Self {
         self.key_value = Some(value);
         self
     }
@@ -169,7 +168,7 @@ impl SearchQueryRequestBuilder {
         self
     }
 
-    pub fn neighbor_required(mut self, value: SearchRequestNeighborRequired) -> Self {
+    pub fn neighbor_required(mut self, value: User) -> Self {
         self.neighbor_required = Some(value);
         self
     }

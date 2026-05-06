@@ -22,7 +22,7 @@ public class GetDirectThreadTest : BaseMockServerTest
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/").UsingGet())
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/folder-d").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()

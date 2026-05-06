@@ -20,7 +20,7 @@ class User extends JsonSerializableType
     public string $name;
 
     /**
-     * @var mixed $deletedAt Always null for active users.
+     * @var mixed $deletedAt
      */
     #[JsonProperty('deleted_at')]
     public mixed $deletedAt;
@@ -29,7 +29,7 @@ class User extends JsonSerializableType
      * @param array{
      *   id: string,
      *   name: string,
-     *   deletedAt?: mixed,
+     *   deletedAt: mixed,
      * } $values
      */
     public function __construct(
@@ -37,7 +37,7 @@ class User extends JsonSerializableType
     ) {
         $this->id = $values['id'];
         $this->name = $values['name'];
-        $this->deletedAt = $values['deletedAt'] ?? null;
+        $this->deletedAt = $values['deletedAt'];
     }
 
     /**

@@ -77,7 +77,7 @@ func TestSettersSearchRequest(t *testing.T) {
 
 	t.Run("SetKeyValue", func(t *testing.T) {
 		obj := &SearchRequest{}
-		var fernTestValueKeyValue map[string]string
+		var fernTestValueKeyValue map[string]*string
 		obj.SetKeyValue(fernTestValueKeyValue)
 		assert.Equal(t, fernTestValueKeyValue, obj.KeyValue)
 		assert.NotNil(t, obj.explicitFields)
@@ -149,7 +149,7 @@ func TestSettersSearchRequest(t *testing.T) {
 
 	t.Run("SetNeighborRequired", func(t *testing.T) {
 		obj := &SearchRequest{}
-		var fernTestValueNeighborRequired *SearchRequestNeighborRequired
+		var fernTestValueNeighborRequired *User
 		obj.SetNeighborRequired(fernTestValueNeighborRequired)
 		assert.Equal(t, fernTestValueNeighborRequired, obj.NeighborRequired)
 		assert.NotNil(t, obj.explicitFields)
@@ -410,7 +410,7 @@ func TestSettersMarkExplicitSearchRequest(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &SearchRequest{}
-		var fernTestValueKeyValue map[string]string
+		var fernTestValueKeyValue map[string]*string
 
 		// Act
 		obj.SetKeyValue(fernTestValueKeyValue)
@@ -689,7 +689,7 @@ func TestSettersMarkExplicitSearchRequest(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &SearchRequest{}
-		var fernTestValueNeighborRequired *SearchRequestNeighborRequired
+		var fernTestValueNeighborRequired *User
 
 		// Act
 		obj.SetNeighborRequired(fernTestValueNeighborRequired)

@@ -10,7 +10,7 @@ public partial class Examples
         );
 
         await client.SubmitFormDataAsync(
-            new PostSubmitRequest {
+            new SubmitFormDataRequest {
                 Username = "username",
                 Email = "email"
             }

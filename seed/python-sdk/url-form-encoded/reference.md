@@ -103,7 +103,15 @@ client.get_token(
 <dl>
 <dd>
 
-**request:** `TokenRequest` 
+**client_id:** `str` — Client identifier
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_secret:** `str` — Client secret
     
 </dd>
 </dl>

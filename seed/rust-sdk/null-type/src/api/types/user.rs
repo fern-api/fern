@@ -6,9 +6,7 @@ pub struct User {
     pub id: String,
     #[serde(default)]
     pub name: String,
-    /// Always null for active users.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub deleted_at: Option<serde_json::Value>,
+    pub deleted_at: serde_json::Value,
 }
 
 impl User {
@@ -45,11 +43,14 @@ impl UserBuilder {
     /// This method will fail if any of the following fields are not set:
     /// - [`id`](UserBuilder::id)
     /// - [`name`](UserBuilder::name)
+    /// - [`deleted_at`](UserBuilder::deleted_at)
     pub fn build(self) -> Result<User, BuildError> {
         Ok(User {
             id: self.id.ok_or_else(|| BuildError::missing_field("id"))?,
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
-            deleted_at: self.deleted_at,
+            deleted_at: self
+                .deleted_at
+                .ok_or_else(|| BuildError::missing_field("deleted_at"))?,
         })
     }
 }

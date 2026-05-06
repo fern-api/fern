@@ -131,7 +131,7 @@ client.user.get_with_bearer
 <dd>
 
 ```ruby
-client.user.get_with_bearer
+client.user.get_with_api_key
 ```
 </dd>
 </dl>
@@ -171,7 +171,7 @@ client.user.get_with_bearer
 <dd>
 
 ```ruby
-client.user.get_with_bearer
+client.user.get_with_o_auth
 ```
 </dd>
 </dl>
@@ -211,7 +211,7 @@ client.user.get_with_bearer
 <dd>
 
 ```ruby
-client.user.get_with_bearer
+client.user.get_with_basic
 ```
 </dd>
 </dl>
@@ -251,7 +251,7 @@ client.user.get_with_bearer
 <dd>
 
 ```ruby
-client.user.get_with_bearer
+client.user.get_with_inferred_auth
 ```
 </dd>
 </dl>
@@ -291,7 +291,7 @@ client.user.get_with_bearer
 <dd>
 
 ```ruby
-client.user.get_with_bearer
+client.user.get_with_any_auth
 ```
 </dd>
 </dl>
@@ -331,7 +331,7 @@ client.user.get_with_bearer
 <dd>
 
 ```ruby
-client.user.get_with_bearer
+client.user.get_with_all_auth
 ```
 </dd>
 </dl>

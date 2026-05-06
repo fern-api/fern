@@ -8,7 +8,7 @@ public partial interface IPlantsClient
     );
 
     WithRawResponseTask<Plant> GetAsync(
-        GetPlantsRequest request,
+        PlantsGetRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

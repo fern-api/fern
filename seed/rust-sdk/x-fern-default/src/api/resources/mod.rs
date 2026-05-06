@@ -31,7 +31,7 @@ impl ApiClient {
                 &format!("test/{}/resource", region),
                 None,
                 QueryBuilder::new()
-                    .string("limit", request.limit.clone())
+                    .serialize("limit", request.limit.clone())
                     .build(),
                 options,
             )

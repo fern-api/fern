@@ -8,7 +8,7 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import PlainObject
     from .errors import UnprocessableEntityError
-    from . import test_group
+    from . import testgroup
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedApi, SeedApi
     from .version import __version__
@@ -20,7 +20,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SeedApi": ".client",
     "UnprocessableEntityError": ".errors",
     "__version__": ".version",
-    "test_group": ".test_group",
+    "testgroup": ".testgroup",
 }
 
 
@@ -53,5 +53,5 @@ __all__ = [
     "SeedApi",
     "UnprocessableEntityError",
     "__version__",
-    "test_group",
+    "testgroup",
 ]

@@ -20,7 +20,7 @@ class RawIdentityClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_token(
+    def gettoken(
         self, *, username: str, password: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[TokenResponse]:
         """
@@ -75,7 +75,7 @@ class AsyncRawIdentityClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_token(
+    async def gettoken(
         self, *, username: str, password: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[TokenResponse]:
         """

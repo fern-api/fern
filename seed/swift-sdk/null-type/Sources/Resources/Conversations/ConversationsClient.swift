@@ -10,7 +10,7 @@ public final class ConversationsClient: Sendable {
     /// Place an outbound call or validate call setup with dry_run.
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func outboundCall(request: Requests.OutboundCallConversationsRequest, requestOptions: RequestOptions? = nil) async throws -> OutboundCallConversationsResponse {
+    public func outboundcall(request: Requests.ConversationsOutboundCallRequest, requestOptions: RequestOptions? = nil) async throws -> OutboundCallConversationsResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/conversations/outbound-call",

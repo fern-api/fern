@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client._.CreateCatalogAsync(new CatalogV1Id());\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.CreateCatalogAsync(new CatalogV1Id());\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client._.CreateActivityAsync(new Activity());\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.CreateActivityAsync(new Activity());\n"
             }
         }
     ]

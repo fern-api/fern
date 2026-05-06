@@ -56,7 +56,7 @@ async fn main() {
         ..Default::default()
     };
     let client = CrossPackageTypeNamesClient::new(config).expect("Failed to build client");
-    client.folder_a.service.get_direct_thread(None).await;
+    client.folder_d.service.get_direct_thread(None).await;
 }
 ```
 </dd>

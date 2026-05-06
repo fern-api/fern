@@ -7,7 +7,7 @@ public partial class SeedApiClient : ISeedApiClient
 {
     private readonly RawClient _client;
 
-    public SeedApiClient(string? apiVersion = null, ClientOptions? clientOptions = null)
+    public SeedApiClient(ClientOptions? clientOptions = null)
     {
         clientOptions ??= new ClientOptions();
         var platformHeaders = new Headers(
@@ -26,15 +26,7 @@ public partial class SeedApiClient : ISeedApiClient
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
-        var clientOptionsWithAuth = clientOptions.Clone();
-        var authHeaders = new Headers(
-            new Dictionary<string, string>() { { "X-API-Version", apiVersion ?? "2024-02-08" } }
-        );
-        foreach (var header in authHeaders)
-        {
-            clientOptionsWithAuth.Headers[header.Key] = header.Value;
-        }
-        _client = new RawClient(clientOptionsWithAuth);
+        _client = new RawClient(clientOptions);
     }
 
     private async Task<WithRawResponse<TestGetResponse>> TestGetAsyncCore(

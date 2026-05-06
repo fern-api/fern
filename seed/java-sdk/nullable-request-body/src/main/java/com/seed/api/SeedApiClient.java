@@ -5,21 +5,21 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.Suppliers;
-import com.seed.api.resources.testgroup.TestGroupClient;
+import com.seed.api.resources.testgroup.TestgroupClient;
 import java.util.function.Supplier;
 
 public class SeedApiClient {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<TestGroupClient> testGroupClient;
+    protected final Supplier<TestgroupClient> testgroupClient;
 
     public SeedApiClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.testGroupClient = Suppliers.memoize(() -> new TestGroupClient(clientOptions));
+        this.testgroupClient = Suppliers.memoize(() -> new TestgroupClient(clientOptions));
     }
 
-    public TestGroupClient testGroup() {
-        return this.testGroupClient.get();
+    public TestgroupClient testgroup() {
+        return this.testgroupClient.get();
     }
 
     public static SeedApiClientBuilder builder() {

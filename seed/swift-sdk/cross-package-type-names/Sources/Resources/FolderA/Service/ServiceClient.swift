@@ -10,7 +10,7 @@ public final class ServiceClient: Sendable {
     public func getDirectThread(requestOptions: RequestOptions? = nil) async throws -> Response {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/",
+            path: "/folder-a",
             requestOptions: requestOptions,
             responseType: Response.self
         )

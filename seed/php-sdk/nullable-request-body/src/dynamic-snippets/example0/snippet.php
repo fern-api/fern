@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\TestGroup\Requests\TestMethodNameTestGroupRequest;
+use Seed\Testgroup\Requests\TestGroupTestMethodNameRequest;
 use Seed\Types\PlainObject;
 
 $client = new SeedClient(
@@ -11,9 +11,9 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->testGroup->testMethodName(
+$client->testgroup->testMethodName(
     'path_param',
-    new TestMethodNameTestGroupRequest([
+    new TestGroupTestMethodNameRequest([
         'body' => new PlainObject([]),
     ]),
 );

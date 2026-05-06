@@ -5,16 +5,16 @@ package com.seed.api.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.api.core.Nullable;
 import com.seed.api.core.ObjectMappers;
 import com.seed.api.types.NestedUser;
 import com.seed.api.types.SearchRequestNeighbor;
-import com.seed.api.types.SearchRequestNeighborRequired;
 import com.seed.api.types.User;
 import java.time.OffsetDateTime;
 import java.util.Collections;
@@ -52,7 +52,7 @@ public final class SearchRequest {
 
     private final Optional<OffsetDateTime> optionalDeadline;
 
-    private final Optional<Map<String, String>> keyValue;
+    private final Optional<Map<String, Optional<String>>> keyValue;
 
     private final Optional<String> optionalString;
 
@@ -62,7 +62,7 @@ public final class SearchRequest {
 
     private final Optional<SearchRequestNeighbor> neighbor;
 
-    private final SearchRequestNeighborRequired neighborRequired;
+    private final User neighborRequired;
 
     private final Map<String, Object> additionalProperties;
 
@@ -79,12 +79,12 @@ public final class SearchRequest {
             String bytes,
             User user,
             Optional<OffsetDateTime> optionalDeadline,
-            Optional<Map<String, String>> keyValue,
+            Optional<Map<String, Optional<String>>> keyValue,
             Optional<String> optionalString,
             Optional<NestedUser> nestedUser,
             Optional<User> optionalUser,
             Optional<SearchRequestNeighbor> neighbor,
-            SearchRequestNeighborRequired neighborRequired,
+            User neighborRequired,
             Map<String, Object> additionalProperties) {
         this.userList = userList;
         this.excludeUser = excludeUser;
@@ -107,99 +107,132 @@ public final class SearchRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("userList")
+    @JsonIgnore
     public Optional<List<User>> getUserList() {
+        if (userList == null) {
+            return Optional.empty();
+        }
         return userList;
     }
 
-    @JsonProperty("excludeUser")
+    @JsonIgnore
     public Optional<List<User>> getExcludeUser() {
+        if (excludeUser == null) {
+            return Optional.empty();
+        }
         return excludeUser;
     }
 
-    @JsonProperty("filter")
+    @JsonIgnore
     public Optional<List<String>> getFilter() {
+        if (filter == null) {
+            return Optional.empty();
+        }
         return filter;
     }
 
     /**
      * @return List of tags. Serialized as a comma-separated list.
      */
-    @JsonProperty("tags")
+    @JsonIgnore
     public Optional<List<String>> getTags() {
+        if (tags == null) {
+            return Optional.empty();
+        }
         return tags;
     }
 
     /**
      * @return Optional list of tags. Serialized as a comma-separated list.
      */
-    @JsonProperty("optionalTags")
+    @JsonIgnore
     public Optional<List<String>> getOptionalTags() {
+        if (optionalTags == null) {
+            return Optional.empty();
+        }
         return optionalTags;
     }
 
-    @JsonProperty("limit")
+    @JsonIgnore
     public int getLimit() {
         return limit;
     }
 
-    @JsonProperty("id")
+    @JsonIgnore
     public String getId() {
         return id;
     }
 
-    @JsonProperty("date")
+    @JsonIgnore
     public String getDate() {
         return date;
     }
 
-    @JsonProperty("deadline")
+    @JsonIgnore
     public OffsetDateTime getDeadline() {
         return deadline;
     }
 
-    @JsonProperty("bytes")
+    @JsonIgnore
     public String getBytes() {
         return bytes;
     }
 
-    @JsonProperty("user")
+    @JsonIgnore
     public User getUser() {
         return user;
     }
 
-    @JsonProperty("optionalDeadline")
+    @JsonIgnore
     public Optional<OffsetDateTime> getOptionalDeadline() {
+        if (optionalDeadline == null) {
+            return Optional.empty();
+        }
         return optionalDeadline;
     }
 
-    @JsonProperty("keyValue")
-    public Optional<Map<String, String>> getKeyValue() {
+    @JsonIgnore
+    public Optional<Map<String, Optional<String>>> getKeyValue() {
+        if (keyValue == null) {
+            return Optional.empty();
+        }
         return keyValue;
     }
 
-    @JsonProperty("optionalString")
+    @JsonIgnore
     public Optional<String> getOptionalString() {
+        if (optionalString == null) {
+            return Optional.empty();
+        }
         return optionalString;
     }
 
-    @JsonProperty("nestedUser")
+    @JsonIgnore
     public Optional<NestedUser> getNestedUser() {
+        if (nestedUser == null) {
+            return Optional.empty();
+        }
         return nestedUser;
     }
 
-    @JsonProperty("optionalUser")
+    @JsonIgnore
     public Optional<User> getOptionalUser() {
+        if (optionalUser == null) {
+            return Optional.empty();
+        }
         return optionalUser;
     }
 
-    @JsonProperty("neighbor")
+    @JsonIgnore
     public Optional<SearchRequestNeighbor> getNeighbor() {
+        if (neighbor == null) {
+            return Optional.empty();
+        }
         return neighbor;
     }
 
-    @JsonProperty("neighborRequired")
-    public SearchRequestNeighborRequired getNeighborRequired() {
+    @JsonIgnore
+    public User getNeighborRequired() {
         return neighborRequired;
     }
 
@@ -294,7 +327,7 @@ public final class SearchRequest {
     }
 
     public interface NeighborRequiredStage {
-        _FinalStage neighborRequired(@NotNull SearchRequestNeighborRequired neighborRequired);
+        _FinalStage neighborRequired(@NotNull User neighborRequired);
     }
 
     public interface _FinalStage {
@@ -308,17 +341,23 @@ public final class SearchRequest {
 
         _FinalStage userList(List<User> userList);
 
+        _FinalStage userList(Nullable<List<User>> userList);
+
         _FinalStage userList(User userList);
 
         _FinalStage excludeUser(Optional<List<User>> excludeUser);
 
         _FinalStage excludeUser(List<User> excludeUser);
 
+        _FinalStage excludeUser(Nullable<List<User>> excludeUser);
+
         _FinalStage excludeUser(User excludeUser);
 
         _FinalStage filter(Optional<List<String>> filter);
 
         _FinalStage filter(List<String> filter);
+
+        _FinalStage filter(Nullable<List<String>> filter);
 
         _FinalStage filter(String filter);
 
@@ -329,6 +368,8 @@ public final class SearchRequest {
 
         _FinalStage tags(List<String> tags);
 
+        _FinalStage tags(Nullable<List<String>> tags);
+
         _FinalStage tags(String tags);
 
         /**
@@ -338,31 +379,45 @@ public final class SearchRequest {
 
         _FinalStage optionalTags(List<String> optionalTags);
 
+        _FinalStage optionalTags(Nullable<List<String>> optionalTags);
+
         _FinalStage optionalTags(String optionalTags);
 
         _FinalStage optionalDeadline(Optional<OffsetDateTime> optionalDeadline);
 
         _FinalStage optionalDeadline(OffsetDateTime optionalDeadline);
 
-        _FinalStage keyValue(Optional<Map<String, String>> keyValue);
+        _FinalStage optionalDeadline(Nullable<OffsetDateTime> optionalDeadline);
 
-        _FinalStage keyValue(Map<String, String> keyValue);
+        _FinalStage keyValue(Optional<Map<String, Optional<String>>> keyValue);
+
+        _FinalStage keyValue(Map<String, Optional<String>> keyValue);
+
+        _FinalStage keyValue(Nullable<Map<String, Optional<String>>> keyValue);
 
         _FinalStage optionalString(Optional<String> optionalString);
 
         _FinalStage optionalString(String optionalString);
 
+        _FinalStage optionalString(Nullable<String> optionalString);
+
         _FinalStage nestedUser(Optional<NestedUser> nestedUser);
 
         _FinalStage nestedUser(NestedUser nestedUser);
+
+        _FinalStage nestedUser(Nullable<NestedUser> nestedUser);
 
         _FinalStage optionalUser(Optional<User> optionalUser);
 
         _FinalStage optionalUser(User optionalUser);
 
+        _FinalStage optionalUser(Nullable<User> optionalUser);
+
         _FinalStage neighbor(Optional<SearchRequestNeighbor> neighbor);
 
         _FinalStage neighbor(SearchRequestNeighbor neighbor);
+
+        _FinalStage neighbor(Nullable<SearchRequestNeighbor> neighbor);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -387,7 +442,7 @@ public final class SearchRequest {
 
         private User user;
 
-        private SearchRequestNeighborRequired neighborRequired;
+        private User neighborRequired;
 
         private Optional<SearchRequestNeighbor> neighbor = Optional.empty();
 
@@ -397,7 +452,7 @@ public final class SearchRequest {
 
         private Optional<String> optionalString = Optional.empty();
 
-        private Optional<Map<String, String>> keyValue = Optional.empty();
+        private Optional<Map<String, Optional<String>>> keyValue = Optional.empty();
 
         private Optional<OffsetDateTime> optionalDeadline = Optional.empty();
 
@@ -483,8 +538,20 @@ public final class SearchRequest {
 
         @java.lang.Override
         @JsonSetter("neighborRequired")
-        public _FinalStage neighborRequired(@NotNull SearchRequestNeighborRequired neighborRequired) {
+        public _FinalStage neighborRequired(@NotNull User neighborRequired) {
             this.neighborRequired = Objects.requireNonNull(neighborRequired, "neighborRequired must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage neighbor(Nullable<SearchRequestNeighbor> neighbor) {
+            if (neighbor.isNull()) {
+                this.neighbor = null;
+            } else if (neighbor.isEmpty()) {
+                this.neighbor = Optional.empty();
+            } else {
+                this.neighbor = Optional.of(neighbor.get());
+            }
             return this;
         }
 
@@ -502,6 +569,18 @@ public final class SearchRequest {
         }
 
         @java.lang.Override
+        public _FinalStage optionalUser(Nullable<User> optionalUser) {
+            if (optionalUser.isNull()) {
+                this.optionalUser = null;
+            } else if (optionalUser.isEmpty()) {
+                this.optionalUser = Optional.empty();
+            } else {
+                this.optionalUser = Optional.of(optionalUser.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage optionalUser(User optionalUser) {
             this.optionalUser = Optional.ofNullable(optionalUser);
             return this;
@@ -511,6 +590,18 @@ public final class SearchRequest {
         @JsonSetter(value = "optionalUser", nulls = Nulls.SKIP)
         public _FinalStage optionalUser(Optional<User> optionalUser) {
             this.optionalUser = optionalUser;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage nestedUser(Nullable<NestedUser> nestedUser) {
+            if (nestedUser.isNull()) {
+                this.nestedUser = null;
+            } else if (nestedUser.isEmpty()) {
+                this.nestedUser = Optional.empty();
+            } else {
+                this.nestedUser = Optional.of(nestedUser.get());
+            }
             return this;
         }
 
@@ -528,6 +619,18 @@ public final class SearchRequest {
         }
 
         @java.lang.Override
+        public _FinalStage optionalString(Nullable<String> optionalString) {
+            if (optionalString.isNull()) {
+                this.optionalString = null;
+            } else if (optionalString.isEmpty()) {
+                this.optionalString = Optional.empty();
+            } else {
+                this.optionalString = Optional.of(optionalString.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage optionalString(String optionalString) {
             this.optionalString = Optional.ofNullable(optionalString);
             return this;
@@ -541,15 +644,39 @@ public final class SearchRequest {
         }
 
         @java.lang.Override
-        public _FinalStage keyValue(Map<String, String> keyValue) {
+        public _FinalStage keyValue(Nullable<Map<String, Optional<String>>> keyValue) {
+            if (keyValue.isNull()) {
+                this.keyValue = null;
+            } else if (keyValue.isEmpty()) {
+                this.keyValue = Optional.empty();
+            } else {
+                this.keyValue = Optional.of(keyValue.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage keyValue(Map<String, Optional<String>> keyValue) {
             this.keyValue = Optional.ofNullable(keyValue);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "keyValue", nulls = Nulls.SKIP)
-        public _FinalStage keyValue(Optional<Map<String, String>> keyValue) {
+        public _FinalStage keyValue(Optional<Map<String, Optional<String>>> keyValue) {
             this.keyValue = keyValue;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage optionalDeadline(Nullable<OffsetDateTime> optionalDeadline) {
+            if (optionalDeadline.isNull()) {
+                this.optionalDeadline = null;
+            } else if (optionalDeadline.isEmpty()) {
+                this.optionalDeadline = Optional.empty();
+            } else {
+                this.optionalDeadline = Optional.of(optionalDeadline.get());
+            }
             return this;
         }
 
@@ -569,6 +696,22 @@ public final class SearchRequest {
         @java.lang.Override
         public _FinalStage optionalTags(String optionalTags) {
             this.optionalTags = Optional.of(Collections.singletonList(optionalTags));
+            return this;
+        }
+
+        /**
+         * <p>Optional list of tags. Serialized as a comma-separated list.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage optionalTags(Nullable<List<String>> optionalTags) {
+            if (optionalTags.isNull()) {
+                this.optionalTags = null;
+            } else if (optionalTags.isEmpty()) {
+                this.optionalTags = Optional.empty();
+            } else {
+                this.optionalTags = Optional.of(optionalTags.get());
+            }
             return this;
         }
 
@@ -603,6 +746,22 @@ public final class SearchRequest {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage tags(Nullable<List<String>> tags) {
+            if (tags.isNull()) {
+                this.tags = null;
+            } else if (tags.isEmpty()) {
+                this.tags = Optional.empty();
+            } else {
+                this.tags = Optional.of(tags.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>List of tags. Serialized as a comma-separated list.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage tags(List<String> tags) {
             this.tags = Optional.ofNullable(tags);
             return this;
@@ -621,6 +780,18 @@ public final class SearchRequest {
         @java.lang.Override
         public _FinalStage filter(String filter) {
             this.filter = Optional.of(Collections.singletonList(filter));
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage filter(Nullable<List<String>> filter) {
+            if (filter.isNull()) {
+                this.filter = null;
+            } else if (filter.isEmpty()) {
+                this.filter = Optional.empty();
+            } else {
+                this.filter = Optional.of(filter.get());
+            }
             return this;
         }
 
@@ -644,6 +815,18 @@ public final class SearchRequest {
         }
 
         @java.lang.Override
+        public _FinalStage excludeUser(Nullable<List<User>> excludeUser) {
+            if (excludeUser.isNull()) {
+                this.excludeUser = null;
+            } else if (excludeUser.isEmpty()) {
+                this.excludeUser = Optional.empty();
+            } else {
+                this.excludeUser = Optional.of(excludeUser.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage excludeUser(List<User> excludeUser) {
             this.excludeUser = Optional.ofNullable(excludeUser);
             return this;
@@ -659,6 +842,18 @@ public final class SearchRequest {
         @java.lang.Override
         public _FinalStage userList(User userList) {
             this.userList = Optional.of(Collections.singletonList(userList));
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage userList(Nullable<List<User>> userList) {
+            if (userList.isNull()) {
+                this.userList = null;
+            } else if (userList.isEmpty()) {
+                this.userList = Optional.empty();
+            } else {
+                this.userList = Optional.of(userList.get());
+            }
             return this;
         }
 

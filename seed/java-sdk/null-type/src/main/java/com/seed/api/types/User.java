@@ -5,20 +5,15 @@ package com.seed.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.seed.api.core.Nullable;
-import com.seed.api.core.NullableNonemptyFilter;
 import com.seed.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -28,11 +23,11 @@ public final class User {
 
     private final String name;
 
-    private final Optional<Object> deletedAt;
+    private final Object deletedAt;
 
     private final Map<String, Object> additionalProperties;
 
-    private User(String id, String name, Optional<Object> deletedAt, Map<String, Object> additionalProperties) {
+    private User(String id, String name, Object deletedAt, Map<String, Object> additionalProperties) {
         this.id = id;
         this.name = name;
         this.deletedAt = deletedAt;
@@ -49,20 +44,8 @@ public final class User {
         return name;
     }
 
-    /**
-     * @return Always null for active users.
-     */
-    @JsonIgnore
-    public Optional<Object> getDeletedAt() {
-        if (deletedAt == null) {
-            return Optional.empty();
-        }
-        return deletedAt;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("deleted_at")
-    private Optional<Object> _getDeletedAt() {
+    public Object getDeletedAt() {
         return deletedAt;
     }
 
@@ -102,7 +85,11 @@ public final class User {
     }
 
     public interface NameStage {
-        _FinalStage name(@NotNull String name);
+        DeletedAtStage name(@NotNull String name);
+    }
+
+    public interface DeletedAtStage {
+        _FinalStage deletedAt(Object deletedAt);
     }
 
     public interface _FinalStage {
@@ -111,24 +98,15 @@ public final class User {
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
-
-        /**
-         * <p>Always null for active users.</p>
-         */
-        _FinalStage deletedAt(Optional<Object> deletedAt);
-
-        _FinalStage deletedAt(Object deletedAt);
-
-        _FinalStage deletedAt(Nullable<Object> deletedAt);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, NameStage, _FinalStage {
+    public static final class Builder implements IdStage, NameStage, DeletedAtStage, _FinalStage {
         private String id;
 
         private String name;
 
-        private Optional<Object> deletedAt = Optional.empty();
+        private Object deletedAt;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -152,43 +130,14 @@ public final class User {
 
         @java.lang.Override
         @JsonSetter("name")
-        public _FinalStage name(@NotNull String name) {
+        public DeletedAtStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
-        /**
-         * <p>Always null for active users.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @java.lang.Override
-        public _FinalStage deletedAt(Nullable<Object> deletedAt) {
-            if (deletedAt.isNull()) {
-                this.deletedAt = null;
-            } else if (deletedAt.isEmpty()) {
-                this.deletedAt = Optional.empty();
-            } else {
-                this.deletedAt = Optional.of(deletedAt.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Always null for active users.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
+        @JsonSetter("deleted_at")
         public _FinalStage deletedAt(Object deletedAt) {
-            this.deletedAt = Optional.ofNullable(deletedAt);
-            return this;
-        }
-
-        /**
-         * <p>Always null for active users.</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "deleted_at", nulls = Nulls.SKIP)
-        public _FinalStage deletedAt(Optional<Object> deletedAt) {
             this.deletedAt = deletedAt;
             return this;
         }

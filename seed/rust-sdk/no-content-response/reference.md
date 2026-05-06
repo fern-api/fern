@@ -1,6 +1,6 @@
 # Reference
 ## Contacts
-<details><summary><code>client.contacts.<a href="/src/api/resources/contacts/client.rs">create</a>(request: CreateContactRequest) -> Result&lt;Option&lt;Contact&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.contacts.<a href="/src/api/resources/contacts/client.rs">create</a>(request: ContactsCreateRequest) -> Result&lt;Option&lt;Contact&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -38,7 +38,7 @@ async fn main() {
     client
         .contacts
         .create(
-            &CreateContactRequest {
+            &ContactsCreateRequest {
                 name: "name".to_string(),
                 email: None,
             },
@@ -68,7 +68,7 @@ async fn main() {
 <dl>
 <dd>
 
-**email:** `Option<String>` 
+**email:** `Option<Option<String>>` 
     
 </dd>
 </dl>

@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedApi;
 
-var client = new SeedApiClient("API_VERSION");
+var client = new SeedApiClient();
 await client.TestGetAsync(new TestGetRequest { Region = "region" });
 ```
 

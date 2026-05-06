@@ -11,8 +11,8 @@ import com.seed.api.core.RequestOptions;
 import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
-import com.seed.api.resources.conversations.requests.OutboundCallConversationsRequest;
-import com.seed.api.resources.conversations.types.OutboundCallConversationsResponse;
+import com.seed.api.resources.conversations.requests.ConversationsOutboundCallRequest;
+import com.seed.api.types.OutboundCallConversationsResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -32,16 +32,16 @@ public class RawConversationsClient {
     /**
      * Place an outbound call or validate call setup with dry_run.
      */
-    public SeedApiHttpResponse<OutboundCallConversationsResponse> outboundCall(
-            OutboundCallConversationsRequest request) {
-        return outboundCall(request, null);
+    public SeedApiHttpResponse<OutboundCallConversationsResponse> outboundcall(
+            ConversationsOutboundCallRequest request) {
+        return outboundcall(request, null);
     }
 
     /**
      * Place an outbound call or validate call setup with dry_run.
      */
-    public SeedApiHttpResponse<OutboundCallConversationsResponse> outboundCall(
-            OutboundCallConversationsRequest request, RequestOptions requestOptions) {
+    public SeedApiHttpResponse<OutboundCallConversationsResponse> outboundcall(
+            ConversationsOutboundCallRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("conversations/outbound-call");

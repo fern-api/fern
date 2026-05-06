@@ -27,51 +27,49 @@ import Testing
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
-                    name: "name",
-                    tags: [
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
+                    ])
                 ),
-                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                keyValue: [
-                    "keyValue": "keyValue"
-                ],
-                optionalString: "optionalString",
-                nestedUser: NestedUser(
-                    name: "name",
-                    user: User(
-                        name: "name",
-                        tags: [
+                optionalDeadline: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                keyValue: .value([
+                    "keyValue": .value("keyValue")
+                ]),
+                optionalString: .value("optionalString"),
+                nestedUser: .value(NestedUser(
+                    name: .value("name"),
+                    user: .value(User(
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
-                    )
-                ),
-                optionalUser: User(
-                    name: "name",
-                    tags: [
+                        ])
+                    ))
+                )),
+                optionalUser: .value(User(
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
-                ),
-                neighbor: SearchRequestNeighbor.user(
+                    ])
+                )),
+                neighbor: .value(SearchRequestNeighbor.user(
                     User(
-                        name: "name",
-                        tags: [
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
+                        ])
                     )
-                ),
-                neighborRequired: SearchRequestNeighborRequired.user(
-                    User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
+                )),
+                neighborRequired: User(
+                    name: .value("name"),
+                    tags: .value([
+                        "tags",
+                        "tags"
+                    ])
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -105,51 +103,49 @@ import Testing
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
-                    name: "name",
-                    tags: [
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
+                    ])
                 ),
-                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                keyValue: [
-                    "keyValue": "keyValue"
-                ],
-                optionalString: "optionalString",
-                nestedUser: NestedUser(
-                    name: "name",
-                    user: User(
-                        name: "name",
-                        tags: [
+                optionalDeadline: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                keyValue: .value([
+                    "keyValue": .value("keyValue")
+                ]),
+                optionalString: .value("optionalString"),
+                nestedUser: .value(NestedUser(
+                    name: .value("name"),
+                    user: .value(User(
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
-                    )
-                ),
-                optionalUser: User(
-                    name: "name",
-                    tags: [
+                        ])
+                    ))
+                )),
+                optionalUser: .value(User(
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
-                ),
-                neighbor: SearchRequestNeighbor.user(
+                    ])
+                )),
+                neighbor: .value(SearchRequestNeighbor.user(
                     User(
-                        name: "name",
-                        tags: [
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
+                        ])
                     )
-                ),
-                neighborRequired: SearchRequestNeighborRequired.user(
-                    User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
+                )),
+                neighborRequired: User(
+                    name: .value("name"),
+                    tags: .value([
+                        "tags",
+                        "tags"
+                    ])
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -183,51 +179,49 @@ import Testing
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
-                    name: "name",
-                    tags: [
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
+                    ])
                 ),
-                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                keyValue: [
-                    "keyValue": "keyValue"
-                ],
-                optionalString: "optionalString",
-                nestedUser: NestedUser(
-                    name: "name",
-                    user: User(
-                        name: "name",
-                        tags: [
+                optionalDeadline: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                keyValue: .value([
+                    "keyValue": .value("keyValue")
+                ]),
+                optionalString: .value("optionalString"),
+                nestedUser: .value(NestedUser(
+                    name: .value("name"),
+                    user: .value(User(
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
-                    )
-                ),
-                optionalUser: User(
-                    name: "name",
-                    tags: [
+                        ])
+                    ))
+                )),
+                optionalUser: .value(User(
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
-                ),
-                neighbor: SearchRequestNeighbor.user(
+                    ])
+                )),
+                neighbor: .value(SearchRequestNeighbor.user(
                     User(
-                        name: "name",
-                        tags: [
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
+                        ])
                     )
-                ),
-                neighborRequired: SearchRequestNeighborRequired.user(
-                    User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
+                )),
+                neighborRequired: User(
+                    name: .value("name"),
+                    tags: .value([
+                        "tags",
+                        "tags"
+                    ])
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -260,51 +254,49 @@ import Testing
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
-                    name: "name",
-                    tags: [
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
+                    ])
                 ),
-                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                keyValue: [
-                    "keyValue": "keyValue"
-                ],
-                optionalString: "optionalString",
-                nestedUser: NestedUser(
-                    name: "name",
-                    user: User(
-                        name: "name",
-                        tags: [
+                optionalDeadline: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                keyValue: .value([
+                    "keyValue": .value("keyValue")
+                ]),
+                optionalString: .value("optionalString"),
+                nestedUser: .value(NestedUser(
+                    name: .value("name"),
+                    user: .value(User(
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
-                    )
-                ),
-                optionalUser: User(
-                    name: "name",
-                    tags: [
+                        ])
+                    ))
+                )),
+                optionalUser: .value(User(
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
-                ),
-                neighbor: SearchRequestNeighbor.user(
+                    ])
+                )),
+                neighbor: .value(SearchRequestNeighbor.user(
                     User(
-                        name: "name",
-                        tags: [
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
+                        ])
                     )
-                ),
-                neighborRequired: SearchRequestNeighborRequired.user(
-                    User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
+                )),
+                neighborRequired: User(
+                    name: .value("name"),
+                    tags: .value([
+                        "tags",
+                        "tags"
+                    ])
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -336,51 +328,49 @@ import Testing
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
-                    name: "name",
-                    tags: [
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
+                    ])
                 ),
-                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                keyValue: [
-                    "keyValue": "keyValue"
-                ],
-                optionalString: "optionalString",
-                nestedUser: NestedUser(
-                    name: "name",
-                    user: User(
-                        name: "name",
-                        tags: [
+                optionalDeadline: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                keyValue: .value([
+                    "keyValue": .value("keyValue")
+                ]),
+                optionalString: .value("optionalString"),
+                nestedUser: .value(NestedUser(
+                    name: .value("name"),
+                    user: .value(User(
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
-                    )
-                ),
-                optionalUser: User(
-                    name: "name",
-                    tags: [
+                        ])
+                    ))
+                )),
+                optionalUser: .value(User(
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
-                ),
-                neighbor: SearchRequestNeighbor.user(
+                    ])
+                )),
+                neighbor: .value(SearchRequestNeighbor.user(
                     User(
-                        name: "name",
-                        tags: [
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
+                        ])
                     )
-                ),
-                neighborRequired: SearchRequestNeighborRequired.user(
-                    User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
+                )),
+                neighborRequired: User(
+                    name: .value("name"),
+                    tags: .value([
+                        "tags",
+                        "tags"
+                    ])
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -413,51 +403,49 @@ import Testing
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
-                    name: "name",
-                    tags: [
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
+                    ])
                 ),
-                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                keyValue: [
-                    "keyValue": "keyValue"
-                ],
-                optionalString: "optionalString",
-                nestedUser: NestedUser(
-                    name: "name",
-                    user: User(
-                        name: "name",
-                        tags: [
+                optionalDeadline: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                keyValue: .value([
+                    "keyValue": .value("keyValue")
+                ]),
+                optionalString: .value("optionalString"),
+                nestedUser: .value(NestedUser(
+                    name: .value("name"),
+                    user: .value(User(
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
-                    )
-                ),
-                optionalUser: User(
-                    name: "name",
-                    tags: [
+                        ])
+                    ))
+                )),
+                optionalUser: .value(User(
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
-                ),
-                neighbor: SearchRequestNeighbor.user(
+                    ])
+                )),
+                neighbor: .value(SearchRequestNeighbor.user(
                     User(
-                        name: "name",
-                        tags: [
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
+                        ])
                     )
-                ),
-                neighborRequired: SearchRequestNeighborRequired.user(
-                    User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
+                )),
+                neighborRequired: User(
+                    name: .value("name"),
+                    tags: .value([
+                        "tags",
+                        "tags"
+                    ])
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -490,51 +478,49 @@ import Testing
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
-                    name: "name",
-                    tags: [
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
+                    ])
                 ),
-                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                keyValue: [
-                    "keyValue": "keyValue"
-                ],
-                optionalString: "optionalString",
-                nestedUser: NestedUser(
-                    name: "name",
-                    user: User(
-                        name: "name",
-                        tags: [
+                optionalDeadline: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                keyValue: .value([
+                    "keyValue": .value("keyValue")
+                ]),
+                optionalString: .value("optionalString"),
+                nestedUser: .value(NestedUser(
+                    name: .value("name"),
+                    user: .value(User(
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
-                    )
-                ),
-                optionalUser: User(
-                    name: "name",
-                    tags: [
+                        ])
+                    ))
+                )),
+                optionalUser: .value(User(
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
-                ),
-                neighbor: SearchRequestNeighbor.user(
+                    ])
+                )),
+                neighbor: .value(SearchRequestNeighbor.user(
                     User(
-                        name: "name",
-                        tags: [
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
+                        ])
                     )
-                ),
-                neighborRequired: SearchRequestNeighborRequired.user(
-                    User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
+                )),
+                neighborRequired: User(
+                    name: .value("name"),
+                    tags: .value([
+                        "tags",
+                        "tags"
+                    ])
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -572,51 +558,49 @@ import Testing
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
-                    name: "name",
-                    tags: [
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
+                    ])
                 ),
-                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                keyValue: [
-                    "keyValue": "keyValue"
-                ],
-                optionalString: "optionalString",
-                nestedUser: NestedUser(
-                    name: "name",
-                    user: User(
-                        name: "name",
-                        tags: [
+                optionalDeadline: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                keyValue: .value([
+                    "keyValue": .value("keyValue")
+                ]),
+                optionalString: .value("optionalString"),
+                nestedUser: .value(NestedUser(
+                    name: .value("name"),
+                    user: .value(User(
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
-                    )
-                ),
-                optionalUser: User(
-                    name: "name",
-                    tags: [
+                        ])
+                    ))
+                )),
+                optionalUser: .value(User(
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
-                ),
-                neighbor: SearchRequestNeighbor.user(
+                    ])
+                )),
+                neighbor: .value(SearchRequestNeighbor.user(
                     User(
-                        name: "name",
-                        tags: [
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
+                        ])
                     )
-                ),
-                neighborRequired: SearchRequestNeighborRequired.user(
-                    User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
+                )),
+                neighborRequired: User(
+                    name: .value("name"),
+                    tags: .value([
+                        "tags",
+                        "tags"
+                    ])
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -664,51 +648,49 @@ import Testing
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
-                    name: "name",
-                    tags: [
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
+                    ])
                 ),
-                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                keyValue: [
-                    "keyValue": "keyValue"
-                ],
-                optionalString: "optionalString",
-                nestedUser: NestedUser(
-                    name: "name",
-                    user: User(
-                        name: "name",
-                        tags: [
+                optionalDeadline: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                keyValue: .value([
+                    "keyValue": .value("keyValue")
+                ]),
+                optionalString: .value("optionalString"),
+                nestedUser: .value(NestedUser(
+                    name: .value("name"),
+                    user: .value(User(
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
-                    )
-                ),
-                optionalUser: User(
-                    name: "name",
-                    tags: [
+                        ])
+                    ))
+                )),
+                optionalUser: .value(User(
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
-                ),
-                neighbor: SearchRequestNeighbor.user(
+                    ])
+                )),
+                neighbor: .value(SearchRequestNeighbor.user(
                     User(
-                        name: "name",
-                        tags: [
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
+                        ])
                     )
-                ),
-                neighborRequired: SearchRequestNeighborRequired.user(
-                    User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
+                )),
+                neighborRequired: User(
+                    name: .value("name"),
+                    tags: .value([
+                        "tags",
+                        "tags"
+                    ])
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -752,51 +734,49 @@ import Testing
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
-                    name: "name",
-                    tags: [
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
+                    ])
                 ),
-                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                keyValue: [
-                    "keyValue": "keyValue"
-                ],
-                optionalString: "optionalString",
-                nestedUser: NestedUser(
-                    name: "name",
-                    user: User(
-                        name: "name",
-                        tags: [
+                optionalDeadline: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                keyValue: .value([
+                    "keyValue": .value("keyValue")
+                ]),
+                optionalString: .value("optionalString"),
+                nestedUser: .value(NestedUser(
+                    name: .value("name"),
+                    user: .value(User(
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
-                    )
-                ),
-                optionalUser: User(
-                    name: "name",
-                    tags: [
+                        ])
+                    ))
+                )),
+                optionalUser: .value(User(
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
-                ),
-                neighbor: SearchRequestNeighbor.user(
+                    ])
+                )),
+                neighbor: .value(SearchRequestNeighbor.user(
                     User(
-                        name: "name",
-                        tags: [
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
+                        ])
                     )
-                ),
-                neighborRequired: SearchRequestNeighborRequired.user(
-                    User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
+                )),
+                neighborRequired: User(
+                    name: .value("name"),
+                    tags: .value([
+                        "tags",
+                        "tags"
+                    ])
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -851,51 +831,49 @@ import Testing
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
-                    name: "name",
-                    tags: [
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
+                    ])
                 ),
-                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                keyValue: [
-                    "keyValue": "keyValue"
-                ],
-                optionalString: "optionalString",
-                nestedUser: NestedUser(
-                    name: "name",
-                    user: User(
-                        name: "name",
-                        tags: [
+                optionalDeadline: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                keyValue: .value([
+                    "keyValue": .value("keyValue")
+                ]),
+                optionalString: .value("optionalString"),
+                nestedUser: .value(NestedUser(
+                    name: .value("name"),
+                    user: .value(User(
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
-                    )
-                ),
-                optionalUser: User(
-                    name: "name",
-                    tags: [
+                        ])
+                    ))
+                )),
+                optionalUser: .value(User(
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
-                ),
-                neighbor: SearchRequestNeighbor.user(
+                    ])
+                )),
+                neighbor: .value(SearchRequestNeighbor.user(
                     User(
-                        name: "name",
-                        tags: [
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
+                        ])
                     )
-                ),
-                neighborRequired: SearchRequestNeighborRequired.user(
-                    User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
+                )),
+                neighborRequired: User(
+                    name: .value("name"),
+                    tags: .value([
+                        "tags",
+                        "tags"
+                    ])
                 ),
                 requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
             )
@@ -924,51 +902,49 @@ import Testing
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
-                    name: "name",
-                    tags: [
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
+                    ])
                 ),
-                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                keyValue: [
-                    "keyValue": "keyValue"
-                ],
-                optionalString: "optionalString",
-                nestedUser: NestedUser(
-                    name: "name",
-                    user: User(
-                        name: "name",
-                        tags: [
+                optionalDeadline: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                keyValue: .value([
+                    "keyValue": .value("keyValue")
+                ]),
+                optionalString: .value("optionalString"),
+                nestedUser: .value(NestedUser(
+                    name: .value("name"),
+                    user: .value(User(
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
-                    )
-                ),
-                optionalUser: User(
-                    name: "name",
-                    tags: [
+                        ])
+                    ))
+                )),
+                optionalUser: .value(User(
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
-                ),
-                neighbor: SearchRequestNeighbor.user(
+                    ])
+                )),
+                neighbor: .value(SearchRequestNeighbor.user(
                     User(
-                        name: "name",
-                        tags: [
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
+                        ])
                     )
-                ),
-                neighborRequired: SearchRequestNeighborRequired.user(
-                    User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
+                )),
+                neighborRequired: User(
+                    name: .value("name"),
+                    tags: .value([
+                        "tags",
+                        "tags"
+                    ])
                 ),
                 requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
             )
@@ -1001,51 +977,49 @@ import Testing
                 deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 bytes: "bytes",
                 user: User(
-                    name: "name",
-                    tags: [
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
+                    ])
                 ),
-                optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                keyValue: [
-                    "keyValue": "keyValue"
-                ],
-                optionalString: "optionalString",
-                nestedUser: NestedUser(
-                    name: "name",
-                    user: User(
-                        name: "name",
-                        tags: [
+                optionalDeadline: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                keyValue: .value([
+                    "keyValue": .value("keyValue")
+                ]),
+                optionalString: .value("optionalString"),
+                nestedUser: .value(NestedUser(
+                    name: .value("name"),
+                    user: .value(User(
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
-                    )
-                ),
-                optionalUser: User(
-                    name: "name",
-                    tags: [
+                        ])
+                    ))
+                )),
+                optionalUser: .value(User(
+                    name: .value("name"),
+                    tags: .value([
                         "tags",
                         "tags"
-                    ]
-                ),
-                neighbor: SearchRequestNeighbor.user(
+                    ])
+                )),
+                neighbor: .value(SearchRequestNeighbor.user(
                     User(
-                        name: "name",
-                        tags: [
+                        name: .value("name"),
+                        tags: .value([
                             "tags",
                             "tags"
-                        ]
+                        ])
                     )
-                ),
-                neighborRequired: SearchRequestNeighborRequired.user(
-                    User(
-                        name: "name",
-                        tags: [
-                            "tags",
-                            "tags"
-                        ]
-                    )
+                )),
+                neighborRequired: User(
+                    name: .value("name"),
+                    tags: .value([
+                        "tags",
+                        "tags"
+                    ])
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )

@@ -159,7 +159,7 @@ client.search(
 <dl>
 <dd>
 
-**neighbor_required:** `SearchRequestNeighborRequired` 
+**neighbor_required:** `User` 
     
 </dd>
 </dl>
@@ -167,7 +167,7 @@ client.search(
 <dl>
 <dd>
 
-**user_list:** `typing.Optional[typing.Union[User, typing.Sequence[User]]]` 
+**user_list:** `typing.Optional[typing.Union[typing.Optional[User], typing.Sequence[typing.Optional[User]]]]` 
     
 </dd>
 </dl>
@@ -183,7 +183,7 @@ client.search(
 <dl>
 <dd>
 
-**key_value:** `typing.Optional[typing.Dict[str, str]]` 
+**key_value:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` 
     
 </dd>
 </dl>
@@ -215,7 +215,7 @@ client.search(
 <dl>
 <dd>
 
-**exclude_user:** `typing.Optional[typing.Union[User, typing.Sequence[User]]]` 
+**exclude_user:** `typing.Optional[typing.Union[typing.Optional[User], typing.Sequence[typing.Optional[User]]]]` 
     
 </dd>
 </dl>
@@ -223,7 +223,7 @@ client.search(
 <dl>
 <dd>
 
-**filter:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
+**filter:** `typing.Optional[typing.Union[typing.Optional[str], typing.Sequence[typing.Optional[str]]]]` 
     
 </dd>
 </dl>
@@ -231,7 +231,7 @@ client.search(
 <dl>
 <dd>
 
-**tags:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — List of tags. Serialized as a comma-separated list.
+**tags:** `typing.Optional[typing.Union[typing.Optional[str], typing.Sequence[typing.Optional[str]]]]` — List of tags. Serialized as a comma-separated list.
     
 </dd>
 </dl>
@@ -239,7 +239,7 @@ client.search(
 <dl>
 <dd>
 
-**optional_tags:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Optional list of tags. Serialized as a comma-separated list.
+**optional_tags:** `typing.Optional[typing.Union[typing.Optional[str], typing.Sequence[typing.Optional[str]]]]` — Optional list of tags. Serialized as a comma-separated list.
     
 </dd>
 </dl>

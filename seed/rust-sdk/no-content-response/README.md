@@ -54,7 +54,7 @@ async fn main() {
     client
         .contacts
         .create(
-            &CreateContactRequest {
+            &ContactsCreateRequest {
                 name: "name".to_string(),
                 email: None,
             },
@@ -89,7 +89,7 @@ The SDK exports all request types as Rust structs. Simply import them from the c
 ```rust
 use seed_api::prelude::{*};
 
-let request = CreateContactRequest {
+let request = ContactsCreateRequest {
     ...
 };
 ```

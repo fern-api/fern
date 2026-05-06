@@ -17,7 +17,7 @@ module Seed
     # @option params [Seed::Types::User] :user
     # @option params [Seed::Types::User, nil] :user_list
     # @option params [String, nil] :optional_deadline
-    # @option params [Hash[String, String], nil] :key_value
+    # @option params [Hash[String, String, nil], nil] :key_value
     # @option params [String, nil] :optional_string
     # @option params [Seed::Types::NestedUser, nil] :nested_user
     # @option params [Seed::Types::User, nil] :optional_user
@@ -26,7 +26,7 @@ module Seed
     # @option params [String, nil] :tags
     # @option params [String, nil] :optional_tags
     # @option params [Seed::Types::SearchRequestNeighbor, nil] :neighbor
-    # @option params [Seed::Types::SearchRequestNeighborRequired] :neighbor_required
+    # @option params [Seed::Types::User] :neighbor_required
     #
     # @return [Seed::Types::SearchResponse]
     def search(request_options: {}, **params)

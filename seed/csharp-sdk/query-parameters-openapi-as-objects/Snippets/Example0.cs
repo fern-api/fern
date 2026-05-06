@@ -37,7 +37,7 @@ public partial class Examples
                 }
                 ,
                 OptionalDeadline = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
-                KeyValue = new Dictionary<string, string>(){
+                KeyValue = new Dictionary<string, string?>(){
                     ["keyValue"] = "keyValue",
                 }
                 ,

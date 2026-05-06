@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/Sources/ApiClient.swift">submitFormData</a>(request: Requests.PostSubmitRequest, requestOptions: RequestOptions?) -> PostSubmitResponse</code></summary>
+<details><summary><code>client.<a href="/Sources/ApiClient.swift">submitFormData</a>(request: Requests.SubmitFormDataRequest, requestOptions: RequestOptions?) -> PostSubmitResponse</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +39,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.PostSubmitRequest` 
+**request:** `Requests.SubmitFormDataRequest` 
     
 </dd>
 </dl>
@@ -59,7 +59,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/Sources/ApiClient.swift">getToken</a>(request: TokenRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
+<details><summary><code>client.<a href="/Sources/ApiClient.swift">getToken</a>(request: Requests.TokenRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -78,7 +78,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client.getToken(request: TokenRequest(
+    _ = try await client.getToken(request: .init(
         clientId: "client_id",
         clientSecret: "client_secret"
     ))
@@ -99,7 +99,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `TokenRequest` 
+**request:** `Requests.TokenRequest` 
     
 </dd>
 </dl>

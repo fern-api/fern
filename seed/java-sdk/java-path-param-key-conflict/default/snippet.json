@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "b7195595",
+            "example_identifier": "Example1",
             "id": {
                 "method": "POST",
                 "path": "/{key}/{value}",
@@ -9,8 +9,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.ItemData;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createItem(\n            \"key\",\n            \"value\",\n            ItemData\n                .builder()\n                .data(\"data\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.ItemData;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createItem(\n            \"key\",\n            \"value\",\n            ItemData\n                .builder()\n                .data(\"data\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.CreateItemRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createItem(\n            \"key\",\n            \"value\",\n            CreateItemRequest\n                .builder()\n                .data(\"data\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.CreateItemRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createItem(\n            \"key\",\n            \"value\",\n            CreateItemRequest\n                .builder()\n                .data(\"data\")\n                .build()\n        );\n    }\n}\n"
             }
         }
     ],

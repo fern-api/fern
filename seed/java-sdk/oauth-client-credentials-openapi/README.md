@@ -57,7 +57,7 @@ Instantiate and use the client with the following:
 package com.example.usage;
 
 import com.seed.api.SeedApiClient;
-import com.seed.api.resources.identity.requests.GetTokenIdentityRequest;
+import com.seed.api.resources.identity.requests.IdentityGetTokenRequest;
 
 public class Example {
     public static void main(String[] args) {
@@ -65,8 +65,8 @@ public class Example {
             .build()
         ;
 
-        client.identity().getToken(
-            GetTokenIdentityRequest
+        client.identity().gettoken(
+            IdentityGetTokenRequest
                 .builder()
                 .username("username")
                 .password("password")
@@ -97,7 +97,7 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 import com.seed.api.core.SeedApiApiException;
 
 try{
-    client.identity().getToken(...);
+    client.identity().gettoken(...);
 } catch (SeedApiApiException e){
     // Do something with the API exception...
 }
@@ -195,7 +195,7 @@ SeedApiClient client = SeedApiClient
     .build();
 
 // Request level
-client.identity().getToken(
+client.identity().gettoken(
     ...,
     RequestOptions
         .builder()
@@ -221,7 +221,7 @@ SeedApiClient client = SeedApiClient
 ;
 
 // Request level
-client.identity().getToken(
+client.identity().gettoken(
     ...,
     RequestOptions
         .builder()
@@ -237,7 +237,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedApiHttpResponse response = client.identity().withRawResponse().getToken(...);
+SeedApiHttpResponse response = client.identity().withRawResponse().gettoken(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

@@ -1,6 +1,6 @@
 # Reference
-## TestGroup
-<details><summary><code>client.testGroup.testMethodName(pathParam, request) -> Object</code></summary>
+## Testgroup
+<details><summary><code>client.testgroup.testMethodName(pathParam, request) -> Object</code></summary>
 <dl>
 <dd>
 
@@ -27,9 +27,9 @@ Post a nullable request body
 <dd>
 
 ```java
-client.testGroup().testMethodName(
+client.testgroup().testMethodName(
     "path_param",
-    TestMethodNameTestGroupRequest
+    TestGroupTestMethodNameRequest
         .builder()
         .body(
             Optional.empty()

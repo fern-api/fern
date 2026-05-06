@@ -47,8 +47,10 @@ request := &fern.SearchRequest{
                 "2024-01-15T09:30:00Z",
             ),
         ),
-        KeyValue: map[string]string{
-            "keyValue": "keyValue",
+        KeyValue: map[string]*string{
+            "keyValue": fern.String(
+                "keyValue",
+            ),
         },
         OptionalString: fern.String(
             "optionalString",
@@ -113,15 +115,13 @@ request := &fern.SearchRequest{
                 },
             },
         },
-        NeighborRequired: &fern.SearchRequestNeighborRequired{
-            User: &fern.User{
-                Name: fern.String(
-                    "name",
-                ),
-                Tags: []string{
-                    "tags",
-                    "tags",
-                },
+        NeighborRequired: &fern.User{
+            Name: fern.String(
+                "name",
+            ),
+            Tags: []string{
+                "tags",
+                "tags",
             },
         },
     }
@@ -208,7 +208,7 @@ client.Search(
 <dl>
 <dd>
 
-**keyValue:** `map[string]string` 
+**keyValue:** `map[string]*string` 
     
 </dd>
 </dl>
@@ -280,7 +280,7 @@ client.Search(
 <dl>
 <dd>
 
-**neighborRequired:** `*fern.SearchRequestNeighborRequired` 
+**neighborRequired:** `*fern.User` 
     
 </dd>
 </dl>

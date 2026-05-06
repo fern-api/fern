@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\TokenRequest;
+use Seed\Requests\TokenRequest;
 
 $client = new SeedClient(
     options: [

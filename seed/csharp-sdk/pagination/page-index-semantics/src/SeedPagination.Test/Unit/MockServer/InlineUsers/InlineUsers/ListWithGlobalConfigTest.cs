@@ -23,7 +23,7 @@ public class ListWithGlobalConfigTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/inline-users")
+                    .WithPath("/inline-users/global-config")
                     .WithParam("offset", "1")
                     .UsingGet()
             )

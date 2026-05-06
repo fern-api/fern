@@ -5,7 +5,7 @@ package com.seed.api.resources.plants;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
-import com.seed.api.resources.plants.requests.GetPlantsRequest;
+import com.seed.api.resources.plants.requests.PlantsGetRequest;
 import com.seed.api.types.Plant;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -43,11 +43,11 @@ public class AsyncPlantsClient {
         return this.rawClient.get(plantId, requestOptions).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<Plant> get(String plantId, GetPlantsRequest request) {
+    public CompletableFuture<Plant> get(String plantId, PlantsGetRequest request) {
         return this.rawClient.get(plantId, request).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<Plant> get(String plantId, GetPlantsRequest request, RequestOptions requestOptions) {
+    public CompletableFuture<Plant> get(String plantId, PlantsGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(plantId, request, requestOptions).thenApply(response -> response.body());
     }
 }

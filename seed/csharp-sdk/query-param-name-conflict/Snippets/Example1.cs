@@ -11,9 +11,9 @@ public partial class Examples
 
         await client.BulkUpdateTasksAsync(
             new BulkUpdateTasksRequest {
-                FilterAssignedTo = "filter_assigned_to",
-                FilterIsComplete = "filter_is_complete",
-                FilterDate = "filter_date",
+                AssignedTo = "assigned_to",
+                IsComplete = "is_complete",
+                Date = "date",
                 Fields = "_fields",
                 BulkUpdateTasksRequestAssignedTo = "assigned_to",
                 BulkUpdateTasksRequestDate = DateOnly.Parse("2023-01-15"),

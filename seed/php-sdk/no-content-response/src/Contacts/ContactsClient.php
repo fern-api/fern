@@ -4,7 +4,7 @@ namespace Seed\Contacts;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Contacts\Requests\CreateContactRequest;
+use Seed\Contacts\Requests\ContactsCreateRequest;
 use Seed\Types\Contact;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -52,7 +52,7 @@ class ContactsClient
     /**
      * Creates a new contact. Returns 200 with the contact or 204 with no content.
      *
-     * @param CreateContactRequest $request
+     * @param ContactsCreateRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -65,7 +65,7 @@ class ContactsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function create(CreateContactRequest $request, ?array $options = null): ?Contact
+    public function create(ContactsCreateRequest $request, ?array $options = null): ?Contact
     {
         $options = array_merge($this->options, $options ?? []);
         try {

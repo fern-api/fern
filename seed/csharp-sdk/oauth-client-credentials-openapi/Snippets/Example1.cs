@@ -11,8 +11,8 @@ public partial class Examples
             }
         );
 
-        await client.Identity.GetTokenAsync(
-            new GetTokenIdentityRequest {
+        await client.Identity.GettokenAsync(
+            new IdentityGetTokenRequest {
                 Username = "username",
                 Password = "password"
             }

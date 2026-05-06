@@ -24,7 +24,6 @@ public class BaseMockServerTest
 
         // Initialize the Client
         Client = new SeedApiClient(
-            "API_VERSION",
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
     }

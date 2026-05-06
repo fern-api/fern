@@ -15,7 +15,7 @@
 client.createItem(
     "key",
     "value",
-    ItemData
+    CreateItemRequest
         .builder()
         .data("data")
         .build()

@@ -2456,7 +2456,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```java
-client.v2().problem().getLightweightProblems();
+client.v2().v3().problem().getLightweightProblems();
 ```
 </dd>
 </dl>
@@ -2495,7 +2495,7 @@ Returns latest versions of all problems
 <dd>
 
 ```java
-client.v2().problem().getProblems();
+client.v2().v3().problem().getProblems();
 ```
 </dd>
 </dl>
@@ -2534,7 +2534,7 @@ Returns latest version of a problem
 <dd>
 
 ```java
-client.v2().problem().getLatestProblem("problemId");
+client.v2().v3().problem().getLatestProblem("problemId");
 ```
 </dd>
 </dl>
@@ -2588,7 +2588,7 @@ Returns requested version of a problem
 <dd>
 
 ```java
-client.v2().problem().getProblemVersion("problemId", 1);
+client.v2().v3().problem().getProblemVersion("problemId", 1);
 ```
 </dd>
 </dl>

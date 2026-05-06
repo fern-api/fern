@@ -24,7 +24,7 @@ export class UsersClient {
     /**
      * Gets a user by ID. The deleted_at field uses type null.
      *
-     * @param {SeedApi.GetUsersRequest} request
+     * @param {SeedApi.UsersGetRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -33,14 +33,14 @@ export class UsersClient {
      *     })
      */
     public get(
-        request: SeedApi.GetUsersRequest,
+        request: SeedApi.UsersGetRequest,
         requestOptions?: UsersClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.User> {
         return core.HttpResponsePromise.fromPromise(this.__get(request, requestOptions));
     }
 
     private async __get(
-        request: SeedApi.GetUsersRequest,
+        request: SeedApi.UsersGetRequest,
         requestOptions?: UsersClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.User>> {
         const { id } = request;

@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Requests\PostSubmitRequest;
+use Seed\Requests\SubmitFormDataRequest;
 
 $client = new SeedClient(
     options: [
@@ -11,7 +11,7 @@ $client = new SeedClient(
     ],
 );
 $client->submitFormData(
-    new PostSubmitRequest([
+    new SubmitFormDataRequest([
         'username' => 'username',
         'email' => 'email',
     ]),

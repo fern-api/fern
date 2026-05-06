@@ -1727,7 +1727,7 @@ async fn main() {
     client
         .endpoints
         .params
-        .get_with_path(&"param".to_string(), None)
+        .get_with_inline_path(&"param".to_string(), None)
         .await;
 }
 ```
@@ -1877,10 +1877,10 @@ async fn main() {
     client
         .endpoints
         .params
-        .get_with_query(
-            &GetWithQueryQueryRequest {
-                query: "query".to_string(),
-                number: 1,
+        .get_with_allow_multiple_query(
+            &GetWithAllowMultipleQueryQueryRequest {
+                query: vec!["query".to_string()],
+                number: vec![1],
             },
             None,
         )
@@ -2041,9 +2041,9 @@ async fn main() {
     client
         .endpoints
         .params
-        .get_with_path_and_query(
+        .get_with_inline_path_and_query(
             &"param".to_string(),
-            &GetWithPathAndQueryQueryRequest {
+            &GetWithInlinePathAndQueryQueryRequest {
                 query: "query".to_string(),
             },
             None,
@@ -2191,7 +2191,7 @@ async fn main() {
     client
         .endpoints
         .params
-        .modify_with_path(&"param".to_string(), &"string".to_string(), None)
+        .modify_with_inline_path(&"param".to_string(), &"string".to_string(), None)
         .await;
 }
 ```
@@ -2395,7 +2395,7 @@ async fn main() {
     client
         .endpoints
         .params
-        .get_with_path(&"param".to_string(), None)
+        .get_with_path_and_errors(&"param".to_string(), None)
         .await;
 }
 ```

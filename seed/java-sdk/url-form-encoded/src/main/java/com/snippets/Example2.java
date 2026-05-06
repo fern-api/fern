@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.seed.api.SeedApiClient;
-import com.seed.api.types.TokenRequest;
+import com.seed.api.requests.TokenRequest;
 
 public class Example2 {
     public static void main(String[] args) {

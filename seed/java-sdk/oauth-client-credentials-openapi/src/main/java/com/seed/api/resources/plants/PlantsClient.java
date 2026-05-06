@@ -5,7 +5,7 @@ package com.seed.api.resources.plants;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
-import com.seed.api.resources.plants.requests.GetPlantsRequest;
+import com.seed.api.resources.plants.requests.PlantsGetRequest;
 import com.seed.api.types.Plant;
 import java.util.List;
 
@@ -42,11 +42,11 @@ public class PlantsClient {
         return this.rawClient.get(plantId, requestOptions).body();
     }
 
-    public Plant get(String plantId, GetPlantsRequest request) {
+    public Plant get(String plantId, PlantsGetRequest request) {
         return this.rawClient.get(plantId, request).body();
     }
 
-    public Plant get(String plantId, GetPlantsRequest request, RequestOptions requestOptions) {
+    public Plant get(String plantId, PlantsGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(plantId, request, requestOptions).body();
     }
 }

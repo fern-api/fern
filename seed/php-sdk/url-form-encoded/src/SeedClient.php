@@ -4,7 +4,7 @@ namespace Seed;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Requests\PostSubmitRequest;
+use Seed\Requests\SubmitFormDataRequest;
 use Seed\Types\PostSubmitResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -12,7 +12,7 @@ use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Types\TokenRequest;
+use Seed\Requests\TokenRequest;
 use Seed\Types\TokenResponse;
 
 class SeedClient
@@ -65,7 +65,7 @@ class SeedClient
     }
 
     /**
-     * @param PostSubmitRequest $request
+     * @param SubmitFormDataRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -78,7 +78,7 @@ class SeedClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function submitFormData(PostSubmitRequest $request, ?array $options = null): ?PostSubmitResponse
+    public function submitFormData(SubmitFormDataRequest $request, ?array $options = null): ?PostSubmitResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {

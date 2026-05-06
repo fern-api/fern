@@ -53,7 +53,7 @@ public final class ApiClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func submitFormData(request: Requests.PostSubmitRequest, requestOptions: RequestOptions? = nil) async throws -> PostSubmitResponse {
+    public func submitFormData(request: Requests.SubmitFormDataRequest, requestOptions: RequestOptions? = nil) async throws -> PostSubmitResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/submit",
@@ -63,7 +63,7 @@ public final class ApiClient: Sendable {
         )
     }
 
-    public func getToken(request: TokenRequest, requestOptions: RequestOptions? = nil) async throws -> TokenResponse {
+    public func getToken(request: Requests.TokenRequest, requestOptions: RequestOptions? = nil) async throws -> TokenResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/token",

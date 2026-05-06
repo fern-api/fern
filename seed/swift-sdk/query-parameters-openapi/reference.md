@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/Sources/ApiClient.swift">search</a>(limit: Int, id: String, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: User?, optionalDeadline: Date?, keyValue: [String: String]?, optionalString: String?, nestedUser: NestedUser?, optionalUser: User?, excludeUser: User?, filter: String?, tags: String?, optionalTags: String?, neighbor: SearchRequestNeighbor?, neighborRequired: SearchRequestNeighborRequired, requestOptions: RequestOptions?) -> SearchResponse</code></summary>
+<details><summary><code>client.<a href="/Sources/ApiClient.swift">search</a>(limit: Int, id: String, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: Nullable&lt;User&gt;?, optionalDeadline: Nullable&lt;Date&gt;?, keyValue: Nullable&lt;[String: Nullable&lt;String&gt;]&gt;?, optionalString: Nullable&lt;String&gt;?, nestedUser: Nullable&lt;NestedUser&gt;?, optionalUser: Nullable&lt;User&gt;?, excludeUser: Nullable&lt;User&gt;?, filter: Nullable&lt;String&gt;?, tags: Nullable&lt;String&gt;?, optionalTags: Nullable&lt;String&gt;?, neighbor: Nullable&lt;SearchRequestNeighbor&gt;?, neighborRequired: User, requestOptions: RequestOptions?) -> SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -25,51 +25,49 @@ private func main() async throws {
         deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
         bytes: "bytes",
         user: User(
-            name: "name",
-            tags: [
+            name: .value("name"),
+            tags: .value([
                 "tags",
                 "tags"
-            ]
+            ])
         ),
-        optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-        keyValue: [
-            "keyValue": "keyValue"
-        ],
-        optionalString: "optionalString",
-        nestedUser: NestedUser(
-            name: "name",
-            user: User(
-                name: "name",
-                tags: [
+        optionalDeadline: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+        keyValue: .value([
+            "keyValue": .value("keyValue")
+        ]),
+        optionalString: .value("optionalString"),
+        nestedUser: .value(NestedUser(
+            name: .value("name"),
+            user: .value(User(
+                name: .value("name"),
+                tags: .value([
                     "tags",
                     "tags"
-                ]
-            )
-        ),
-        optionalUser: User(
-            name: "name",
-            tags: [
+                ])
+            ))
+        )),
+        optionalUser: .value(User(
+            name: .value("name"),
+            tags: .value([
                 "tags",
                 "tags"
-            ]
-        ),
-        neighbor: SearchRequestNeighbor.user(
+            ])
+        )),
+        neighbor: .value(SearchRequestNeighbor.user(
             User(
-                name: "name",
-                tags: [
+                name: .value("name"),
+                tags: .value([
                     "tags",
                     "tags"
-                ]
+                ])
             )
-        ),
-        neighborRequired: SearchRequestNeighborRequired.user(
-            User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            )
+        )),
+        neighborRequired: User(
+            name: .value("name"),
+            tags: .value([
+                "tags",
+                "tags"
+            ])
         )
     )
 }
@@ -137,7 +135,7 @@ try await main()
 <dl>
 <dd>
 
-**userList:** `User?` 
+**userList:** `Nullable<User>?` 
     
 </dd>
 </dl>
@@ -145,7 +143,7 @@ try await main()
 <dl>
 <dd>
 
-**optionalDeadline:** `Date?` 
+**optionalDeadline:** `Nullable<Date>?` 
     
 </dd>
 </dl>
@@ -153,7 +151,7 @@ try await main()
 <dl>
 <dd>
 
-**keyValue:** `[String: String]?` 
+**keyValue:** `Nullable<[String: Nullable<String>]>?` 
     
 </dd>
 </dl>
@@ -161,7 +159,7 @@ try await main()
 <dl>
 <dd>
 
-**optionalString:** `String?` 
+**optionalString:** `Nullable<String>?` 
     
 </dd>
 </dl>
@@ -169,7 +167,7 @@ try await main()
 <dl>
 <dd>
 
-**nestedUser:** `NestedUser?` 
+**nestedUser:** `Nullable<NestedUser>?` 
     
 </dd>
 </dl>
@@ -177,7 +175,7 @@ try await main()
 <dl>
 <dd>
 
-**optionalUser:** `User?` 
+**optionalUser:** `Nullable<User>?` 
     
 </dd>
 </dl>
@@ -185,7 +183,7 @@ try await main()
 <dl>
 <dd>
 
-**excludeUser:** `User?` 
+**excludeUser:** `Nullable<User>?` 
     
 </dd>
 </dl>
@@ -193,7 +191,7 @@ try await main()
 <dl>
 <dd>
 
-**filter:** `String?` 
+**filter:** `Nullable<String>?` 
     
 </dd>
 </dl>
@@ -201,7 +199,7 @@ try await main()
 <dl>
 <dd>
 
-**tags:** `String?` — List of tags. Serialized as a comma-separated list.
+**tags:** `Nullable<String>?` — List of tags. Serialized as a comma-separated list.
     
 </dd>
 </dl>
@@ -209,7 +207,7 @@ try await main()
 <dl>
 <dd>
 
-**optionalTags:** `String?` — Optional list of tags. Serialized as a comma-separated list.
+**optionalTags:** `Nullable<String>?` — Optional list of tags. Serialized as a comma-separated list.
     
 </dd>
 </dl>
@@ -217,7 +215,7 @@ try await main()
 <dl>
 <dd>
 
-**neighbor:** `SearchRequestNeighbor?` 
+**neighbor:** `Nullable<SearchRequestNeighbor>?` 
     
 </dd>
 </dl>
@@ -225,7 +223,7 @@ try await main()
 <dl>
 <dd>
 
-**neighborRequired:** `SearchRequestNeighborRequired` 
+**neighborRequired:** `User` 
     
 </dd>
 </dl>

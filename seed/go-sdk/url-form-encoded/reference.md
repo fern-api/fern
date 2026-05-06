@@ -12,7 +12,7 @@
 <dd>
 
 ```go
-request := &fern.PostSubmitRequest{
+request := &fern.SubmitFormDataRequest{
         Username: "johndoe",
         Email: "john@example.com",
     }
@@ -91,7 +91,15 @@ client.GetToken(
 <dl>
 <dd>
 
-**request:** `*fern.TokenRequest` 
+**clientID:** `string` — Client identifier
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientSecret:** `string` — Client secret
     
 </dd>
 </dl>

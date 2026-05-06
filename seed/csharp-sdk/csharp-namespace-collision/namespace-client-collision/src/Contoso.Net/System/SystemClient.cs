@@ -30,7 +30,7 @@ public partial class SystemClient : ISystemClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "/users",
+                    Path = "/system/users",
                     Body = request,
                     Headers = _headers,
                     Options = options,
@@ -96,7 +96,7 @@ public partial class SystemClient : ISystemClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "/users",
+                    Path = "/system/users/task",
                     Body = request,
                     Headers = _headers,
                     Options = options,
@@ -162,7 +162,10 @@ public partial class SystemClient : ISystemClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = string.Format("/users/{0}", ValueConvert.ToPathParameterString(userId)),
+                    Path = string.Format(
+                        "/system/users/{0}",
+                        ValueConvert.ToPathParameterString(userId)
+                    ),
                     Headers = _headers,
                     Options = options,
                 },

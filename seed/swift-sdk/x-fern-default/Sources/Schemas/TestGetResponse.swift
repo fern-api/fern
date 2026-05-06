@@ -1,12 +1,12 @@
 import Foundation
 
 public struct TestGetResponse: Codable, Hashable, Sendable {
-    public let message: String?
+    public let message: Nullable<String>?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        message: String? = nil,
+        message: Nullable<String>? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.message = message
@@ -15,14 +15,14 @@ public struct TestGetResponse: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.message = try container.decodeIfPresent(String.self, forKey: .message)
+        self.message = try container.decodeNullableIfPresent(String.self, forKey: .message)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
-        try container.encodeIfPresent(self.message, forKey: .message)
+        try container.encodeNullableIfPresent(self.message, forKey: .message)
     }
 
     /// Keys for encoding/decoding struct properties.

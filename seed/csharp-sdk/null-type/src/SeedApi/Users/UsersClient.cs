@@ -13,7 +13,7 @@ public partial class UsersClient : IUsersClient
     }
 
     private async Task<WithRawResponse<User>> GetAsyncCore(
-        GetUsersRequest request,
+        UsersGetRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -84,10 +84,10 @@ public partial class UsersClient : IUsersClient
     /// Gets a user by ID. The deleted_at field uses type null.
     /// </summary>
     /// <example><code>
-    /// await client.Users.GetAsync(new GetUsersRequest { Id = "id" });
+    /// await client.Users.GetAsync(new UsersGetRequest { Id = "id" });
     /// </code></example>
     public WithRawResponseTask<User> GetAsync(
-        GetUsersRequest request,
+        UsersGetRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

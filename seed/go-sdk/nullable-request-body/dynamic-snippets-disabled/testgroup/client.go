@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 // Post a nullable request body
 func (c *Client) TestMethodName(
 	ctx context.Context,
-	request *fern.TestMethodNameTestGroupRequest,
+	request *fern.TestGroupTestMethodNameRequest,
 	opts ...option.RequestOption,
 ) (any, error) {
 	response, err := c.WithRawResponse.TestMethodName(

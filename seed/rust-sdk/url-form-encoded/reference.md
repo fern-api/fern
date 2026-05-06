@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">submit_form_data</a>(request: PostSubmitRequest) -> Result&lt;PostSubmitResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.<a href="/src/client.rs">submit_form_data</a>(request: SubmitFormDataRequest) -> Result&lt;PostSubmitResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -22,7 +22,7 @@ async fn main() {
     let client = ApiClient::new(config).expect("Failed to build client");
     client
         .submit_form_data(
-            &PostSubmitRequest {
+            &SubmitFormDataRequest {
                 username: "johndoe".to_string(),
                 email: "john@example.com".to_string(),
             },
@@ -90,13 +90,35 @@ async fn main() {
             &TokenRequest {
                 client_id: "client_id".to_string(),
                 client_secret: "client_secret".to_string(),
-                ..Default::default()
             },
             None,
         )
         .await;
 }
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**client_id:** `String` — Client identifier
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_secret:** `String` — Client secret
+    
 </dd>
 </dl>
 </dd>

@@ -11,6 +11,13 @@ public class GetTokenTest : BaseMockServerTest
     [NUnit.Framework.Test]
     public async Task MockServerTest_1()
     {
+        const string requestJson = """
+            {
+              "client_id": "client_id",
+              "client_secret": "client_secret"
+            }
+            """;
+
         const string mockResponse = """
             {
               "access_token": "access_token",
@@ -23,14 +30,9 @@ public class GetTokenTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/token")
-                    .WithHeader("Content-Type", "application/x-www-form-urlencoded")
+                    .WithHeader("Content-Type", "application/json")
                     .UsingPost()
-                    .WithBody(
-                        new WireMock.Matchers.FormUrlEncodedMatcher([
-                            "client_id=client_id",
-                            "client_secret=client_secret",
-                        ])
-                    )
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -48,6 +50,13 @@ public class GetTokenTest : BaseMockServerTest
     [NUnit.Framework.Test]
     public async Task MockServerTest_2()
     {
+        const string requestJson = """
+            {
+              "client_id": "client_id",
+              "client_secret": "client_secret"
+            }
+            """;
+
         const string mockResponse = """
             {
               "access_token": "access_token",
@@ -60,14 +69,9 @@ public class GetTokenTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/token")
-                    .WithHeader("Content-Type", "application/x-www-form-urlencoded")
+                    .WithHeader("Content-Type", "application/json")
                     .UsingPost()
-                    .WithBody(
-                        new WireMock.Matchers.FormUrlEncodedMatcher([
-                            "client_id=client_id",
-                            "client_secret=client_secret",
-                        ])
-                    )
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock

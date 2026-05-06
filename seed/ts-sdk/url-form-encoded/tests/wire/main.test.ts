@@ -13,7 +13,7 @@ describe("SeedApiClient", () => {
         server
             .mockEndpoint()
             .post("/submit")
-            .formUrlEncodedBody(rawRequestBody)
+            .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -35,7 +35,7 @@ describe("SeedApiClient", () => {
         server
             .mockEndpoint()
             .post("/token")
-            .formUrlEncodedBody(rawRequestBody)
+            .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)

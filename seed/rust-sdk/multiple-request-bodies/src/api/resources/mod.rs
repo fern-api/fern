@@ -43,7 +43,7 @@ impl ApiClient {
         self.http_client
             .execute_bytes_request(
                 Method::POST,
-                "documents/upload",
+                "documents/upload/pdf",
                 Some(request.to_vec()),
                 None,
                 options,

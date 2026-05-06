@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Contacts\Requests\CreateContactRequest;
+use Seed\Contacts\Requests\ContactsCreateRequest;
 
 $client = new SeedClient(
     options: [
@@ -11,7 +11,7 @@ $client = new SeedClient(
     ],
 );
 $client->contacts->create(
-    new CreateContactRequest([
+    new ContactsCreateRequest([
         'name' => 'name',
     ]),
 );

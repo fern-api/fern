@@ -8,7 +8,7 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .test_group
+        .testgroup
         .test_method_name(
             &"path_param".to_string(),
             &TestMethodNameRequest {

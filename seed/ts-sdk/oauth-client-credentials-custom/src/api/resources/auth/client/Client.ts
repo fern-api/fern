@@ -110,7 +110,7 @@ export class AuthClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/token",
+                "/token/refresh",
             ),
             method: "POST",
             headers: _headers,
@@ -139,6 +139,6 @@ export class AuthClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/token");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/token/refresh");
     }
 }

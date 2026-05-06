@@ -13,7 +13,7 @@
 
 ```php
 $client->submitFormData(
-    new PostSubmitRequest([
+    new SubmitFormDataRequest([
         'username' => 'johndoe',
         'email' => 'john@example.com',
     ]),
@@ -85,7 +85,15 @@ $client->getToken(
 <dl>
 <dd>
 
-**$request:** `TokenRequest` 
+**$clientId:** `string` — Client identifier
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$clientSecret:** `string` — Client secret
     
 </dd>
 </dl>

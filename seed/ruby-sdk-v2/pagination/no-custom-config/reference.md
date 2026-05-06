@@ -209,7 +209,9 @@ client.inline_users.inline_users.list_with_mixed_type_cursor_pagination(cursor: 
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_mixed_type_cursor_pagination
+client.inline_users.inline_users.list_with_body_cursor_pagination(pagination: {
+  cursor: "cursor"
+})
 ```
 </dd>
 </dl>
@@ -260,7 +262,7 @@ in order to fetch the next page of results.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination(
+client.inline_users.inline_users.list_with_offset_pagination(
   page: 1,
   per_page: 1,
   order: "asc",
@@ -340,7 +342,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination(
+client.inline_users.inline_users.list_with_double_offset_pagination(
   page: 1.1,
   per_page: 1.1,
   order: "asc",
@@ -420,7 +422,9 @@ the next page of results.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_mixed_type_cursor_pagination
+client.inline_users.inline_users.list_with_body_offset_pagination(pagination: {
+  page: 1
+})
 ```
 </dd>
 </dl>
@@ -471,8 +475,9 @@ in order to fetch the next page of results.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination(
+client.inline_users.inline_users.list_with_offset_step_pagination(
   page: 1,
+  limit: 1,
   order: "asc"
 )
 ```
@@ -542,8 +547,9 @@ paginated endpoint.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination(
+client.inline_users.inline_users.list_with_offset_pagination_has_next_page(
   page: 1,
+  limit: 1,
   order: "asc"
 )
 ```
@@ -613,7 +619,7 @@ paginated endpoint.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination
+client.inline_users.inline_users.list_with_extended_results(cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
 ```
 </dd>
 </dl>
@@ -661,7 +667,7 @@ client.inline_users.inline_users.list_with_cursor_pagination
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination
+client.inline_users.inline_users.list_with_extended_results_and_optional_data(cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
 ```
 </dd>
 </dl>
@@ -709,7 +715,7 @@ client.inline_users.inline_users.list_with_cursor_pagination
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination(starting_after: "starting_after")
+client.inline_users.inline_users.list_usernames(starting_after: "starting_after")
 ```
 </dd>
 </dl>
@@ -760,7 +766,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination
+client.inline_users.inline_users.list_with_global_config(offset: 1)
 ```
 </dd>
 </dl>
@@ -937,7 +943,9 @@ client.users.list_with_mixed_type_cursor_pagination(cursor: "cursor")
 <dd>
 
 ```ruby
-client.users.list_with_mixed_type_cursor_pagination
+client.users.list_with_body_cursor_pagination(pagination: {
+  cursor: "cursor"
+})
 ```
 </dd>
 </dl>
@@ -1066,7 +1074,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination(
+client.users.list_with_offset_pagination(
   page: 1,
   per_page: 1,
   order: "asc",
@@ -1146,7 +1154,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination(
+client.users.list_with_double_offset_pagination(
   page: 1.1,
   per_page: 1.1,
   order: "asc",
@@ -1226,7 +1234,9 @@ the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_mixed_type_cursor_pagination
+client.users.list_with_body_offset_pagination(pagination: {
+  page: 1
+})
 ```
 </dd>
 </dl>
@@ -1277,8 +1287,9 @@ in order to fetch the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination(
+client.users.list_with_offset_step_pagination(
   page: 1,
+  limit: 1,
   order: "asc"
 )
 ```
@@ -1348,8 +1359,9 @@ paginated endpoint.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination(
+client.users.list_with_offset_pagination_has_next_page(
   page: 1,
+  limit: 3,
   order: "asc"
 )
 ```
@@ -1419,7 +1431,7 @@ paginated endpoint.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination
+client.users.list_with_extended_results(cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
 ```
 </dd>
 </dl>
@@ -1467,7 +1479,7 @@ client.users.list_with_cursor_pagination
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination
+client.users.list_with_extended_results_and_optional_data(cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
 ```
 </dd>
 </dl>
@@ -1515,7 +1527,7 @@ client.users.list_with_cursor_pagination
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination(starting_after: "starting_after")
+client.users.list_usernames(starting_after: "starting_after")
 ```
 </dd>
 </dl>
@@ -1566,7 +1578,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination(starting_after: "starting_after")
+client.users.list_usernames_with_optional_response(starting_after: "starting_after")
 ```
 </dd>
 </dl>
@@ -1617,7 +1629,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination
+client.users.list_with_global_config(offset: 1)
 ```
 </dd>
 </dl>

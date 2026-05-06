@@ -64,7 +64,7 @@ await client.SearchAsync(
             },
         ],
         OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-        KeyValue = new Dictionary<string, string>() { { "keyValue", "keyValue" } },
+        KeyValue = new Dictionary<string, string?>() { { "keyValue", "keyValue" } },
         OptionalString = "optionalString",
         NestedUser = new NestedUser
         {

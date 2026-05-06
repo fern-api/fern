@@ -1,6 +1,5 @@
 # Reference
-## _
-<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">CreateCatalogAsync</a>(CatalogV1Id { ... }) -> WithRawResponseTask&lt;CatalogV1Id&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">CreateCatalogAsync</a>(CatalogV1Id { ... }) -> WithRawResponseTask&lt;CatalogV1Id&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +12,7 @@
 <dd>
 
 ```csharp
-await client._.CreateCatalogAsync(new CatalogV1Id());
+await client.CreateCatalogAsync(new CatalogV1Id());
 ```
 </dd>
 </dl>
@@ -40,7 +39,7 @@ await client._.CreateCatalogAsync(new CatalogV1Id());
 </dl>
 </details>
 
-<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">CreateActivityAsync</a>(Activity { ... }) -> WithRawResponseTask&lt;Activity&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">CreateActivityAsync</a>(Activity { ... }) -> WithRawResponseTask&lt;Activity&gt;</code></summary>
 <dl>
 <dd>
 
@@ -53,7 +52,7 @@ await client._.CreateCatalogAsync(new CatalogV1Id());
 <dd>
 
 ```csharp
-await client._.CreateActivityAsync(new Activity());
+await client.CreateActivityAsync(new Activity());
 ```
 </dd>
 </dl>

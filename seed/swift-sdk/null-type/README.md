@@ -54,7 +54,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client.conversations.outboundCall(request: .init(toPhoneNumber: "to_phone_number"))
+    _ = try await client.conversations.outboundcall(request: .init(toPhoneNumber: "to_phone_number"))
 }
 
 try await main()
@@ -70,7 +70,7 @@ import Api
 let client = ApiClient(...)
 
 do {
-    let response = try await client.conversations.outboundCall(...)
+    let response = try await client.conversations.outboundcall(...)
     // Handle successful response
 } catch let error as ApiError {
     switch error {
@@ -97,7 +97,7 @@ The SDK exports all request types as Swift structs. Simply import the SDK module
 ```swift
 import Api
 
-let request = Requests.OutboundCallConversationsRequest(
+let request = Requests.ConversationsOutboundCallRequest(
     ...
 )
 ```
@@ -109,7 +109,7 @@ let request = Requests.OutboundCallConversationsRequest(
 If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
 
 ```swift
-try await client.conversations.outboundCall(..., requestOptions: .init(
+try await client.conversations.outboundcall(..., requestOptions: .init(
     additionalHeaders: [
         "X-Custom-Header": "custom value"
     ]
@@ -121,7 +121,7 @@ try await client.conversations.outboundCall(..., requestOptions: .init(
 If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
 
 ```swift
-try await client.conversations.outboundCall(..., requestOptions: .init(
+try await client.conversations.outboundcall(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
     ]
@@ -133,7 +133,7 @@ try await client.conversations.outboundCall(..., requestOptions: .init(
 The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
 
 ```swift
-try await client.conversations.outboundCall(..., requestOptions: .init(
+try await client.conversations.outboundcall(..., requestOptions: .init(
     timeout: 30
 ))
 ```

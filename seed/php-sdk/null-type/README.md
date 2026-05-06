@@ -37,11 +37,11 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Conversations\Requests\OutboundCallConversationsRequest;
+use Seed\Conversations\Requests\ConversationsOutboundCallRequest;
 
 $client = new SeedClient();
-$client->conversations->outboundCall(
-    new OutboundCallConversationsRequest([
+$client->conversations->outboundcall(
+    new ConversationsOutboundCallRequest([
         'toPhoneNumber' => 'to_phone_number',
     ]),
 );
@@ -57,7 +57,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->conversations->outboundCall(...);
+    $response = $client->conversations->outboundcall(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -116,7 +116,7 @@ The `retryStatusCodes` configuration controls which [5XX](https://developer.mozi
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->conversations->outboundCall(
+$response = $client->conversations->outboundcall(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -129,7 +129,7 @@ $response = $client->conversations->outboundCall(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->conversations->outboundCall(
+$response = $client->conversations->outboundcall(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level

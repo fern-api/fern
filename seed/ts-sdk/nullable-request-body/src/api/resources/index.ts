@@ -1,2 +1,2 @@
-export * from "./testGroup/client/requests/index.js";
-export * as testGroup from "./testGroup/index.js";
+export * from "./testgroup/client/requests/index.js";
+export * as testgroup from "./testgroup/index.js";

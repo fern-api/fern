@@ -56,7 +56,7 @@ Instantiate and use the client with the following:
 package com.example.usage;
 
 import com.seed.api.SeedApiClient;
-import com.seed.api.resources.testgroup.requests.TestMethodNameTestGroupRequest;
+import com.seed.api.resources.testgroup.requests.TestGroupTestMethodNameRequest;
 import java.util.Optional;
 
 public class Example {
@@ -65,9 +65,9 @@ public class Example {
             .builder()
             .build();
 
-        client.testGroup().testMethodName(
+        client.testgroup().testMethodName(
             "path_param",
-            TestMethodNameTestGroupRequest
+            TestGroupTestMethodNameRequest
                 .builder()
                 .body(
                     Optional.empty()
@@ -99,7 +99,7 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 import com.seed.api.core.SeedApiApiException;
 
 try{
-    client.testGroup().testMethodName(...);
+    client.testgroup().testMethodName(...);
 } catch (SeedApiApiException e){
     // Do something with the API exception...
 }
@@ -171,7 +171,7 @@ SeedApiClient client = SeedApiClient
     .build();
 
 // Request level
-client.testGroup().testMethodName(
+client.testgroup().testMethodName(
     ...,
     RequestOptions
         .builder()
@@ -197,7 +197,7 @@ SeedApiClient client = SeedApiClient
 ;
 
 // Request level
-client.testGroup().testMethodName(
+client.testgroup().testMethodName(
     ...,
     RequestOptions
         .builder()
@@ -213,7 +213,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedApiHttpResponse response = client.testGroup().withRawResponse().testMethodName(...);
+SeedApiHttpResponse response = client.testgroup().withRawResponse().testMethodName(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

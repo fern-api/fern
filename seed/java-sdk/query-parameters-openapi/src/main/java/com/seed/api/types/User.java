@@ -5,12 +5,15 @@ package com.seed.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.api.core.Nullable;
+import com.seed.api.core.NullableNonemptyFilter;
 import com.seed.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.List;
@@ -33,13 +36,31 @@ public final class User {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("name")
+    @JsonIgnore
     public Optional<String> getName() {
+        if (name == null) {
+            return Optional.empty();
+        }
         return name;
     }
 
-    @JsonProperty("tags")
+    @JsonIgnore
     public Optional<List<String>> getTags() {
+        if (tags == null) {
+            return Optional.empty();
+        }
+        return tags;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("name")
+    private Optional<String> _getName() {
+        return name;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("tags")
+    private Optional<List<String>> _getTags() {
         return tags;
     }
 
@@ -100,6 +121,17 @@ public final class User {
             return this;
         }
 
+        public Builder name(Nullable<String> name) {
+            if (name.isNull()) {
+                this.name = null;
+            } else if (name.isEmpty()) {
+                this.name = Optional.empty();
+            } else {
+                this.name = Optional.of(name.get());
+            }
+            return this;
+        }
+
         @JsonSetter(value = "tags", nulls = Nulls.SKIP)
         public Builder tags(Optional<List<String>> tags) {
             this.tags = tags;
@@ -108,6 +140,17 @@ public final class User {
 
         public Builder tags(List<String> tags) {
             this.tags = Optional.ofNullable(tags);
+            return this;
+        }
+
+        public Builder tags(Nullable<List<String>> tags) {
+            if (tags.isNull()) {
+                this.tags = null;
+            } else if (tags.isEmpty()) {
+                this.tags = Optional.empty();
+            } else {
+                this.tags = Optional.of(tags.get());
+            }
             return this;
         }
 

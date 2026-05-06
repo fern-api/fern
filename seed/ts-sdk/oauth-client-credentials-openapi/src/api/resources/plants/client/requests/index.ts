@@ -1,1 +1,1 @@
-export type { GetPlantsRequest } from "./GetPlantsRequest.js";
+export type { PlantsGetRequest } from "./PlantsGetRequest.js";

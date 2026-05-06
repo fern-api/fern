@@ -10,7 +10,7 @@ public partial class Examples
         );
 
         await client.Users.GetAsync(
-            new GetUsersRequest {
+            new UsersGetRequest {
                 Id = "id"
             }
         );

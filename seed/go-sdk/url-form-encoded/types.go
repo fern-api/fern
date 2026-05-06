@@ -10,11 +10,68 @@ import (
 )
 
 var (
-	postSubmitRequestFieldUsername = big.NewInt(1 << 0)
-	postSubmitRequestFieldEmail    = big.NewInt(1 << 1)
+	tokenRequestFieldClientID     = big.NewInt(1 << 0)
+	tokenRequestFieldClientSecret = big.NewInt(1 << 1)
 )
 
-type PostSubmitRequest struct {
+type TokenRequest struct {
+	// Client identifier
+	ClientID string `json:"client_id" url:"-"`
+	// Client secret
+	ClientSecret string `json:"client_secret" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (t *TokenRequest) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenRequest) SetClientID(clientID string) {
+	t.ClientID = clientID
+	t.require(tokenRequestFieldClientID)
+}
+
+// SetClientSecret sets the ClientSecret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenRequest) SetClientSecret(clientSecret string) {
+	t.ClientSecret = clientSecret
+	t.require(tokenRequestFieldClientSecret)
+}
+
+func (t *TokenRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler TokenRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*t = TokenRequest(body)
+	return nil
+}
+
+func (t *TokenRequest) MarshalJSON() ([]byte, error) {
+	type embed TokenRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	submitFormDataRequestFieldUsername = big.NewInt(1 << 0)
+	submitFormDataRequestFieldEmail    = big.NewInt(1 << 1)
+)
+
+type SubmitFormDataRequest struct {
 	// The user's username
 	Username string `json:"username" url:"-"`
 	// The user's email address
@@ -24,45 +81,45 @@ type PostSubmitRequest struct {
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (p *PostSubmitRequest) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+func (s *SubmitFormDataRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetUsername sets the Username field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PostSubmitRequest) SetUsername(username string) {
-	p.Username = username
-	p.require(postSubmitRequestFieldUsername)
+func (s *SubmitFormDataRequest) SetUsername(username string) {
+	s.Username = username
+	s.require(submitFormDataRequestFieldUsername)
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PostSubmitRequest) SetEmail(email string) {
-	p.Email = email
-	p.require(postSubmitRequestFieldEmail)
+func (s *SubmitFormDataRequest) SetEmail(email string) {
+	s.Email = email
+	s.require(submitFormDataRequestFieldEmail)
 }
 
-func (p *PostSubmitRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler PostSubmitRequest
+func (s *SubmitFormDataRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler SubmitFormDataRequest
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*p = PostSubmitRequest(body)
+	*s = SubmitFormDataRequest(body)
 	return nil
 }
 
-func (p *PostSubmitRequest) MarshalJSON() ([]byte, error) {
-	type embed PostSubmitRequest
+func (s *SubmitFormDataRequest) MarshalJSON() ([]byte, error) {
+	type embed SubmitFormDataRequest
 	var marshaler = struct {
 		embed
 	}{
-		embed: embed(*p),
+		embed: embed(*s),
 	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
 	return json.Marshal(explicitMarshaler)
 }
 
@@ -164,108 +221,6 @@ func (p *PostSubmitResponse) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", p)
-}
-
-var (
-	tokenRequestFieldClientID     = big.NewInt(1 << 0)
-	tokenRequestFieldClientSecret = big.NewInt(1 << 1)
-)
-
-type TokenRequest struct {
-	// Client identifier
-	ClientID string `json:"client_id" url:"client_id"`
-	// Client secret
-	ClientSecret string `json:"client_secret" url:"client_secret"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (t *TokenRequest) GetClientID() string {
-	if t == nil {
-		return ""
-	}
-	return t.ClientID
-}
-
-func (t *TokenRequest) GetClientSecret() string {
-	if t == nil {
-		return ""
-	}
-	return t.ClientSecret
-}
-
-func (t *TokenRequest) GetExtraProperties() map[string]interface{} {
-	if t == nil {
-		return nil
-	}
-	return t.extraProperties
-}
-
-func (t *TokenRequest) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
-	}
-	t.explicitFields.Or(t.explicitFields, field)
-}
-
-// SetClientID sets the ClientID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TokenRequest) SetClientID(clientID string) {
-	t.ClientID = clientID
-	t.require(tokenRequestFieldClientID)
-}
-
-// SetClientSecret sets the ClientSecret field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TokenRequest) SetClientSecret(clientSecret string) {
-	t.ClientSecret = clientSecret
-	t.require(tokenRequestFieldClientSecret)
-}
-
-func (t *TokenRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler TokenRequest
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*t = TokenRequest(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *t)
-	if err != nil {
-		return err
-	}
-	t.extraProperties = extraProperties
-	t.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (t *TokenRequest) MarshalJSON() ([]byte, error) {
-	type embed TokenRequest
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*t),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (t *TokenRequest) String() string {
-	if t == nil {
-		return "<nil>"
-	}
-	if len(t.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(t); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", t)
 }
 
 var (

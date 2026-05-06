@@ -43,7 +43,7 @@ func (r *RawClient) Get(
 		"",
 	)
 	endpointURL := internal.EncodeURL(
-		baseURL+"/%v",
+		baseURL+"/union/%v",
 		id,
 	)
 	headers := internal.MergeHeaders(
@@ -85,7 +85,7 @@ func (r *RawClient) Update(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL
+	endpointURL := baseURL + "/union"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),

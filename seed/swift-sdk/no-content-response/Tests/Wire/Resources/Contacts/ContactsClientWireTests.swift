@@ -20,10 +20,10 @@ import Api
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
-        let expectedResponse = Optional(Contact(
+        let expectedResponse = Nullable<Contact>.value(Contact(
             id: "id",
             name: "name",
-            email: Optional("email")
+            email: Optional(Nullable<String>.value("email"))
         ))
         let response = try await client.contacts.create(
             request: .init(name: "name"),
@@ -49,15 +49,15 @@ import Api
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
-        let expectedResponse = Optional(Contact(
+        let expectedResponse = Nullable<Contact>.value(Contact(
             id: "id",
             name: "name",
-            email: Optional("email")
+            email: Optional(Nullable<String>.value("email"))
         ))
         let response = try await client.contacts.create(
             request: .init(
                 name: "name",
-                email: "email"
+                email: .value("email")
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
@@ -84,7 +84,7 @@ import Api
         let expectedResponse = Contact(
             id: "id",
             name: "name",
-            email: Optional("email")
+            email: Optional(Nullable<String>.value("email"))
         )
         let response = try await client.contacts.get(
             id: "id",
@@ -113,7 +113,7 @@ import Api
         let expectedResponse = Contact(
             id: "id",
             name: "name",
-            email: Optional("email")
+            email: Optional(Nullable<String>.value("email"))
         )
         let response = try await client.contacts.get(
             id: "id",

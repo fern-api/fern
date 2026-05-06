@@ -131,7 +131,7 @@ import EndpointSecurityAuth
 private func main() async throws {
     let client = EndpointSecurityAuthClient(token: "<token>")
 
-    _ = try await client.user.getWithBearer()
+    _ = try await client.user.getWithApiKey()
 }
 
 try await main()
@@ -180,7 +180,7 @@ import EndpointSecurityAuth
 private func main() async throws {
     let client = EndpointSecurityAuthClient(token: "<token>")
 
-    _ = try await client.user.getWithBearer()
+    _ = try await client.user.getWithOAuth()
 }
 
 try await main()
@@ -229,7 +229,7 @@ import EndpointSecurityAuth
 private func main() async throws {
     let client = EndpointSecurityAuthClient(token: "<token>")
 
-    _ = try await client.user.getWithBearer()
+    _ = try await client.user.getWithBasic()
 }
 
 try await main()
@@ -278,7 +278,7 @@ import EndpointSecurityAuth
 private func main() async throws {
     let client = EndpointSecurityAuthClient(token: "<token>")
 
-    _ = try await client.user.getWithBearer()
+    _ = try await client.user.getWithInferredAuth()
 }
 
 try await main()
@@ -327,7 +327,7 @@ import EndpointSecurityAuth
 private func main() async throws {
     let client = EndpointSecurityAuthClient(token: "<token>")
 
-    _ = try await client.user.getWithBearer()
+    _ = try await client.user.getWithAnyAuth()
 }
 
 try await main()
@@ -376,7 +376,7 @@ import EndpointSecurityAuth
 private func main() async throws {
     let client = EndpointSecurityAuthClient(token: "<token>")
 
-    _ = try await client.user.getWithBearer()
+    _ = try await client.user.getWithAllAuth()
 }
 
 try await main()

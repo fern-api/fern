@@ -4,7 +4,5 @@ export interface User {
     id: string;
     userName: string;
     createdAt: Date;
-    updatedAt?: Date;
-    /** Accepts any additional properties */
-    [key: string]: any;
+    updatedAt?: Date | null;
 }

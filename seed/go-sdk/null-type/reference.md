@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>client.Conversations.OutboundCall(request) -> *fern.OutboundCallConversationsResponse</code></summary>
+<details><summary><code>client.Conversations.Outboundcall(request) -> *fern.OutboundCallConversationsResponse</code></summary>
 <dl>
 <dd>
 
@@ -27,10 +27,10 @@ Place an outbound call or validate call setup with dry_run.
 <dd>
 
 ```go
-request := &fern.OutboundCallConversationsRequest{
+request := &fern.ConversationsOutboundCallRequest{
         ToPhoneNumber: "to_phone_number",
     }
-client.Conversations.OutboundCall(
+client.Conversations.Outboundcall(
         context.TODO(),
         request,
     )
@@ -97,7 +97,7 @@ Gets a user by ID. The deleted_at field uses type null.
 <dd>
 
 ```go
-request := &fern.GetUsersRequest{
+request := &fern.UsersGetRequest{
         ID: "id",
     }
 client.Users.Get(

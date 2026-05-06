@@ -2,7 +2,7 @@
     "types": {},
     "endpoints": [
         {
-            "example_identifier": null,
+            "example_identifier": "Example1",
             "id": {
                 "path": "/task/",
                 "method": "PUT",

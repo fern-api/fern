@@ -10,11 +10,11 @@ import (
 )
 
 var (
-	createContactRequestFieldName  = big.NewInt(1 << 0)
-	createContactRequestFieldEmail = big.NewInt(1 << 1)
+	contactsCreateRequestFieldName  = big.NewInt(1 << 0)
+	contactsCreateRequestFieldEmail = big.NewInt(1 << 1)
 )
 
-type CreateContactRequest struct {
+type ContactsCreateRequest struct {
 	Name  string  `json:"name" url:"-"`
 	Email *string `json:"email,omitempty" url:"-"`
 
@@ -22,7 +22,7 @@ type CreateContactRequest struct {
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (c *CreateContactRequest) require(field *big.Int) {
+func (c *ContactsCreateRequest) require(field *big.Int) {
 	if c.explicitFields == nil {
 		c.explicitFields = big.NewInt(0)
 	}
@@ -31,30 +31,30 @@ func (c *CreateContactRequest) require(field *big.Int) {
 
 // SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateContactRequest) SetName(name string) {
+func (c *ContactsCreateRequest) SetName(name string) {
 	c.Name = name
-	c.require(createContactRequestFieldName)
+	c.require(contactsCreateRequestFieldName)
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateContactRequest) SetEmail(email *string) {
+func (c *ContactsCreateRequest) SetEmail(email *string) {
 	c.Email = email
-	c.require(createContactRequestFieldEmail)
+	c.require(contactsCreateRequestFieldEmail)
 }
 
-func (c *CreateContactRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateContactRequest
+func (c *ContactsCreateRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ContactsCreateRequest
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*c = CreateContactRequest(body)
+	*c = ContactsCreateRequest(body)
 	return nil
 }
 
-func (c *CreateContactRequest) MarshalJSON() ([]byte, error) {
-	type embed CreateContactRequest
+func (c *ContactsCreateRequest) MarshalJSON() ([]byte, error) {
+	type embed ContactsCreateRequest
 	var marshaler = struct {
 		embed
 	}{
@@ -65,28 +65,28 @@ func (c *CreateContactRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	getContactsRequestFieldID = big.NewInt(1 << 0)
+	contactsGetRequestFieldID = big.NewInt(1 << 0)
 )
 
-type GetContactsRequest struct {
+type ContactsGetRequest struct {
 	ID string `json:"-" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (g *GetContactsRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+func (c *ContactsGetRequest) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetContactsRequest) SetID(id string) {
-	g.ID = id
-	g.require(getContactsRequestFieldID)
+func (c *ContactsGetRequest) SetID(id string) {
+	c.ID = id
+	c.require(contactsGetRequestFieldID)
 }
 
 var (

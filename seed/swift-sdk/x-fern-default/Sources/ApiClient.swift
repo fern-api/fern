@@ -13,22 +13,17 @@ public final class ApiClient: Sendable {
     /// - Parameter urlSession: Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.
     public convenience init(
         baseURL: String,
-        apiVersion: String? = nil,
         headers: [String: String]? = nil,
         timeout: Int? = nil,
         maxRetries: Int? = nil,
         urlSession: Networking.URLSession? = nil
     ) {
-        var mergedHeaders = headers ?? [:]
-        if let apiVersion = apiVersion {
-            mergedHeaders["X-API-Version"] = apiVersion
-        }
         self.init(
             baseURL: baseURL,
             headerAuth: nil,
             bearerAuth: nil,
             basicAuth: nil,
-            headers: mergedHeaders,
+            headers: headers,
             timeout: timeout,
             maxRetries: maxRetries,
             urlSession: urlSession
@@ -58,12 +53,12 @@ public final class ApiClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func testGet(region: String, limit: String? = nil, requestOptions: RequestOptions? = nil) async throws -> TestGetResponse {
+    public func testGet(region: String, limit: Nullable<String>? = nil, requestOptions: RequestOptions? = nil) async throws -> TestGetResponse {
         return try await httpClient.performRequest(
             method: .get,
             path: "/test/\(region)/resource",
             queryParams: [
-                "limit": limit.map { .string($0) }
+                "limit": limit?.wrappedValue.map { .string($0) }
             ],
             requestOptions: requestOptions,
             responseType: TestGetResponse.self

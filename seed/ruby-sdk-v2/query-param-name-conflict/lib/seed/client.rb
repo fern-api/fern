@@ -9,9 +9,9 @@ module Seed
     # @option request_options [Hash{String => Object}] :additional_query_parameters
     # @option request_options [Hash{String => Object}] :additional_body_parameters
     # @option request_options [Integer] :timeout_in_seconds
-    # @option params [String, nil] :filter_assigned_to
-    # @option params [String, nil] :filter_is_complete
-    # @option params [String, nil] :filter_date
+    # @option params [String, nil] :assigned_to
+    # @option params [String, nil] :is_complete
+    # @option params [String, nil] :date
     # @option params [String, nil] :fields
     #
     # @return [Seed::Types::BulkUpdateTasksResponse]
@@ -22,9 +22,9 @@ module Seed
       body = request_data.except(*non_body_param_names)
 
       query_params = {}
-      query_params["assigned_to"] = params[:filter_assigned_to] if params.key?(:filter_assigned_to)
-      query_params["is_complete"] = params[:filter_is_complete] if params.key?(:filter_is_complete)
-      query_params["date"] = params[:filter_date] if params.key?(:filter_date)
+      query_params["assigned_to"] = params[:assigned_to] if params.key?(:assigned_to)
+      query_params["is_complete"] = params[:is_complete] if params.key?(:is_complete)
+      query_params["date"] = params[:date] if params.key?(:date)
       query_params["_fields"] = params[:fields] if params.key?(:fields)
 
       request = Seed::Internal::JSON::Request.new(

@@ -5,12 +5,15 @@ package com.seed.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.api.core.Nullable;
+import com.seed.api.core.NullableNonemptyFilter;
 import com.seed.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,8 +53,17 @@ public final class TokenResponse {
         return expiresIn;
     }
 
-    @JsonProperty("refresh_token")
+    @JsonIgnore
     public Optional<String> getRefreshToken() {
+        if (refreshToken == null) {
+            return Optional.empty();
+        }
+        return refreshToken;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("refresh_token")
+    private Optional<String> _getRefreshToken() {
         return refreshToken;
     }
 
@@ -106,6 +118,8 @@ public final class TokenResponse {
         _FinalStage refreshToken(Optional<String> refreshToken);
 
         _FinalStage refreshToken(String refreshToken);
+
+        _FinalStage refreshToken(Nullable<String> refreshToken);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -140,6 +154,18 @@ public final class TokenResponse {
         @JsonSetter("expires_in")
         public _FinalStage expiresIn(int expiresIn) {
             this.expiresIn = expiresIn;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage refreshToken(Nullable<String> refreshToken) {
+            if (refreshToken.isNull()) {
+                this.refreshToken = null;
+            } else if (refreshToken.isEmpty()) {
+                this.refreshToken = Optional.empty();
+            } else {
+                this.refreshToken = Optional.of(refreshToken.get());
+            }
             return this;
         }
 

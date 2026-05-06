@@ -1,12 +1,9 @@
 //! Service clients and API endpoints
 //!
-//! This module contains client implementations for:
-//!
-//! - **Webhooks**
+//! This module provides the client implementations for all available services.
 
 use crate::{ApiError, ClientConfig};
 
-pub mod webhooks;
 pub struct ApiClient {
     pub config: ClientConfig,
 }
@@ -18,5 +15,3 @@ impl ApiClient {
         })
     }
 }
-
-pub use webhooks::WebhooksClient;

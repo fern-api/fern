@@ -18,18 +18,14 @@ public class AsyncSeedApiClientBuilder {
 
     private final Map<String, String> customHeaders = new HashMap<>();
 
-    private Environment environment = Environment.REGIONAL_API_SERVER;
+    private Environment environment;
 
     private OkHttpClient httpClient;
 
     private Optional<LogConfig> logging = Optional.empty();
 
-    private String region;
-
-    private String serverUrlEnvironment;
-
-    public AsyncSeedApiClientBuilder environment(Environment environment) {
-        this.environment = environment;
+    public AsyncSeedApiClientBuilder url(String url) {
+        this.environment = Environment.custom(url);
         return this;
     }
 
@@ -78,16 +74,6 @@ public class AsyncSeedApiClientBuilder {
         return this;
     }
 
-    public AsyncSeedApiClientBuilder region(String region) {
-        this.region = region;
-        return this;
-    }
-
-    public AsyncSeedApiClientBuilder serverUrlEnvironment(String serverUrlEnvironment) {
-        this.serverUrlEnvironment = serverUrlEnvironment;
-        return this;
-    }
-
     protected ClientOptions buildClientOptions() {
         ClientOptions.Builder builder = ClientOptions.builder();
         setEnvironment(builder);
@@ -109,18 +95,6 @@ public class AsyncSeedApiClientBuilder {
      * @param builder The ClientOptions.Builder to configure
      */
     protected void setEnvironment(ClientOptions.Builder builder) {
-        if (this.region != null || this.serverUrlEnvironment != null) {
-            String _region = this.region != null ? this.region : "us-east-1";
-            String _serverUrlEnvironment = this.serverUrlEnvironment != null ? this.serverUrlEnvironment : "prod";
-            this.environment = Environment.custom()
-                    .base("https://api.{region}.{environment}.example.com/v1"
-                            .replace("{region}", _region)
-                            .replace("{environment}", _serverUrlEnvironment))
-                    .auth("https://auth.{region}.example.com"
-                            .replace("{region}", _region)
-                            .replace("{environment}", _serverUrlEnvironment))
-                    .build();
-        }
         builder.environment(this.environment);
     }
 

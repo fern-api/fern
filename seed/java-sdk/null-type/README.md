@@ -56,7 +56,7 @@ Instantiate and use the client with the following:
 package com.example.usage;
 
 import com.seed.api.SeedApiClient;
-import com.seed.api.resources.conversations.requests.OutboundCallConversationsRequest;
+import com.seed.api.resources.conversations.requests.ConversationsOutboundCallRequest;
 
 public class Example {
     public static void main(String[] args) {
@@ -64,8 +64,8 @@ public class Example {
             .builder()
             .build();
 
-        client.conversations().outboundCall(
-            OutboundCallConversationsRequest
+        client.conversations().outboundcall(
+            ConversationsOutboundCallRequest
                 .builder()
                 .toPhoneNumber("to_phone_number")
                 .build()
@@ -95,7 +95,7 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 import com.seed.api.core.SeedApiApiException;
 
 try{
-    client.conversations().outboundCall(...);
+    client.conversations().outboundcall(...);
 } catch (SeedApiApiException e){
     // Do something with the API exception...
 }
@@ -167,7 +167,7 @@ SeedApiClient client = SeedApiClient
     .build();
 
 // Request level
-client.conversations().outboundCall(
+client.conversations().outboundcall(
     ...,
     RequestOptions
         .builder()
@@ -193,7 +193,7 @@ SeedApiClient client = SeedApiClient
 ;
 
 // Request level
-client.conversations().outboundCall(
+client.conversations().outboundcall(
     ...,
     RequestOptions
         .builder()
@@ -209,7 +209,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedApiHttpResponse response = client.conversations().withRawResponse().outboundCall(...);
+SeedApiHttpResponse response = client.conversations().withRawResponse().outboundcall(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

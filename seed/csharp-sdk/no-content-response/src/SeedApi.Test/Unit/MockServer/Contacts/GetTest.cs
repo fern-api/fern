@@ -29,7 +29,7 @@ public class GetTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Contacts.GetAsync(new GetContactsRequest { Id = "id" });
+        var response = await Client.Contacts.GetAsync(new ContactsGetRequest { Id = "id" });
         JsonAssert.AreEqual(response, mockResponse);
     }
 
@@ -53,7 +53,7 @@ public class GetTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Contacts.GetAsync(new GetContactsRequest { Id = "id" });
+        var response = await Client.Contacts.GetAsync(new ContactsGetRequest { Id = "id" });
         JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -1,4 +1,4 @@
-use crate::api::resources::TestGroupClient;
+use crate::api::resources::TestgroupClient;
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
@@ -99,8 +99,8 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(self) -> Result<TestGroupClient, ApiError> {
-        TestGroupClient::new(self.config)
+    pub fn build(self) -> Result<TestgroupClient, ApiError> {
+        TestgroupClient::new(self.config)
     }
 }
 #[cfg(test)]

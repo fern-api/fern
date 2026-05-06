@@ -1,2 +1,2 @@
-export type { CreateContactRequest } from "./CreateContactRequest.js";
-export type { GetContactsRequest } from "./GetContactsRequest.js";
+export type { ContactsCreateRequest } from "./ContactsCreateRequest.js";
+export type { ContactsGetRequest } from "./ContactsGetRequest.js";

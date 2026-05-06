@@ -311,7 +311,7 @@ public class GetProblemVersionTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/problems-v2/problem-info/problemId/version/1")
+                    .WithPath("/problems-v2/v3/problem-info/problemId/version/1")
                     .UsingGet()
             )
             .RespondWith(

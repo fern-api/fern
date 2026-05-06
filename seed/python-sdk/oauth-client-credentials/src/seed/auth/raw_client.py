@@ -107,7 +107,7 @@ class RawAuthClient:
         HttpResponse[TokenResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "token",
+            "token/refresh",
             method="POST",
             data={
                 "client_id": client_id,
@@ -234,7 +234,7 @@ class AsyncRawAuthClient:
         AsyncHttpResponse[TokenResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "token",
+            "token/refresh",
             method="POST",
             data={
                 "client_id": client_id,

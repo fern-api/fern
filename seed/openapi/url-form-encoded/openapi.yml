@@ -5,7 +5,7 @@ info:
 paths:
   /submit:
     post:
-      operationId: _submitFormData
+      operationId: submitFormData
       parameters: []
       responses:
         '200':
@@ -48,7 +48,7 @@ paths:
                   email: john@example.com
   /token:
     post:
-      operationId: _getToken
+      operationId: get_token
       parameters: []
       responses:
         '200':

@@ -1,6 +1,6 @@
 # Reference
-## TestGroup
-<details><summary><code>client.test_group.<a href="src/seed/test_group/client.py">test_method_name</a>(...) -> typing.Any</code></summary>
+## Testgroup
+<details><summary><code>client.testgroup.<a href="src/seed/testgroup/client.py">test_method_name</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -33,7 +33,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.test_group.test_method_name(
+client.testgroup.test_method_name(
     path_param="path_param",
     request=PlainObject(),
 )

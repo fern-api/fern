@@ -18,21 +18,11 @@ public class AsyncSeedApiClientBuilder {
 
     private final Map<String, String> customHeaders = new HashMap<>();
 
-    private String apiVersion = null;
-
     private Environment environment;
 
     private OkHttpClient httpClient;
 
     private Optional<LogConfig> logging = Optional.empty();
-
-    /**
-     * Sets apiVersion
-     */
-    public AsyncSeedApiClientBuilder apiVersion(String apiVersion) {
-        this.apiVersion = apiVersion;
-        return this;
-    }
 
     public AsyncSeedApiClientBuilder url(String url) {
         this.environment = Environment.custom(url);
@@ -87,7 +77,6 @@ public class AsyncSeedApiClientBuilder {
     protected ClientOptions buildClientOptions() {
         ClientOptions.Builder builder = ClientOptions.builder();
         setEnvironment(builder);
-        setCustomHeaders(builder);
         setHttpClient(builder);
         setTimeouts(builder);
         setRetries(builder);
@@ -107,27 +96,6 @@ public class AsyncSeedApiClientBuilder {
      */
     protected void setEnvironment(ClientOptions.Builder builder) {
         builder.environment(this.environment);
-    }
-
-    /**
-     * Override this method to add or modify custom headers.
-     * This method is called during client options construction to set up custom headers defined in the API.
-     *
-     * @param builder The ClientOptions.Builder to configure
-     *
-     * Example:
-     * <pre>{@code
-     * &#64;Override
-     * protected void setCustomHeaders(ClientOptions.Builder builder) {
-     *     super.setCustomHeaders(builder); // Keep existing headers
-     *     builder.addHeader("X-Trace-ID", generateTraceId());
-     * }
-     * }</pre>
-     */
-    protected void setCustomHeaders(ClientOptions.Builder builder) {
-        if (this.apiVersion != null) {
-            builder.addHeader("X-API-Version", this.apiVersion);
-        }
     }
 
     /**

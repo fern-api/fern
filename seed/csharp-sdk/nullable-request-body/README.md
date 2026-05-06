@@ -42,8 +42,8 @@ Instantiate and use the client with the following:
 using SeedApi;
 
 var client = new SeedApiClient();
-await client.TestGroup.TestMethodNameAsync(
-    new TestMethodNameTestGroupRequest { PathParam = "path_param", Body = new PlainObject() }
+await client.Testgroup.TestMethodNameAsync(
+    new TestGroupTestMethodNameRequest { PathParam = "path_param", Body = new PlainObject() }
 );
 ```
 
@@ -56,7 +56,7 @@ will be thrown.
 using SeedApi;
 
 try {
-    var response = await client.TestGroup.TestMethodNameAsync(...);
+    var response = await client.Testgroup.TestMethodNameAsync(...);
 } catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
@@ -88,7 +88,7 @@ Which status codes are retried depends on the `retryStatusCodes` generator confi
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.TestGroup.TestMethodNameAsync(
+var response = await client.Testgroup.TestMethodNameAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -101,7 +101,7 @@ var response = await client.TestGroup.TestMethodNameAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.TestGroup.TestMethodNameAsync(
+var response = await client.Testgroup.TestMethodNameAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -117,7 +117,7 @@ Access raw HTTP response data (status code, headers, URL) alongside parsed respo
 using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.TestGroup.TestMethodNameAsync(...).WithRawResponse();
+var result = await client.Testgroup.TestMethodNameAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -134,7 +134,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.TestGroup.TestMethodNameAsync(...);
+var data = await client.Testgroup.TestMethodNameAsync(...);
 ```
 
 ### Additional Headers
@@ -142,7 +142,7 @@ var data = await client.TestGroup.TestMethodNameAsync(...);
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.TestGroup.TestMethodNameAsync(
+var response = await client.Testgroup.TestMethodNameAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -158,7 +158,7 @@ var response = await client.TestGroup.TestMethodNameAsync(
 If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
 ```csharp
-var response = await client.TestGroup.TestMethodNameAsync(
+var response = await client.Testgroup.TestMethodNameAsync(
     ...,
     new RequestOptions {
         AdditionalQueryParameters = new Dictionary<string, string>

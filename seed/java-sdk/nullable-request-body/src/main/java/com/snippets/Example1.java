@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.seed.api.SeedApiClient;
-import com.seed.api.resources.testgroup.requests.TestMethodNameTestGroupRequest;
+import com.seed.api.resources.testgroup.requests.TestGroupTestMethodNameRequest;
 import com.seed.api.types.PlainObject;
 
 public class Example1 {
@@ -9,10 +9,10 @@ public class Example1 {
         SeedApiClient client =
                 SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.testGroup()
+        client.testgroup()
                 .testMethodName(
                         "path_param",
-                        TestMethodNameTestGroupRequest.builder()
+                        TestGroupTestMethodNameRequest.builder()
                                 .queryParamObject(PlainObject.builder()
                                         .id("id")
                                         .name("name")

@@ -255,7 +255,7 @@ client.types.update(request: {})
 <dd>
 
 ```ruby
-client.bigunion.get(id: "id")
+client.union.get(id: "id")
 ```
 </dd>
 </dl>

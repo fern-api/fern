@@ -3,15 +3,14 @@ import Foundation
 public struct User: Codable, Hashable, Sendable {
     public let id: String
     public let name: String
-    /// Always null for active users.
-    public let deletedAt: Nullable<JSONValue>
+    public let deletedAt: JSONValue
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         id: String,
         name: String,
-        deletedAt: Nullable<JSONValue>,
+        deletedAt: JSONValue,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.id = id
@@ -24,7 +23,7 @@ public struct User: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)
         self.name = try container.decode(String.self, forKey: .name)
-        self.deletedAt = try container.decode(Nullable<JSONValue>.self, forKey: .deletedAt)
+        self.deletedAt = try container.decode(JSONValue.self, forKey: .deletedAt)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

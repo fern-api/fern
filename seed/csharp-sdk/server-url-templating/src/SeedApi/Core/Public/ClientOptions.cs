@@ -11,15 +11,15 @@ public partial class ClientOptions
     internal Headers Headers { get; init; } = new();
 
     /// <summary>
-    /// The Environment for the API.
+    /// The Base URL for the API.
     /// </summary>
-    public SeedApiEnvironment Environment { get;
+    public string BaseUrl { get;
 #if NET5_0_OR_GREATER
         init;
 #else
         set;
 #endif
-    } = SeedApiEnvironment.RegionalApiServer;
+    } = "";
 
     /// <summary>
     /// The http client used to make requests.
@@ -73,7 +73,7 @@ public partial class ClientOptions
     {
         return new ClientOptions
         {
-            Environment = Environment,
+            BaseUrl = BaseUrl,
             HttpClient = HttpClient,
             MaxRetries = MaxRetries,
             Timeout = Timeout,

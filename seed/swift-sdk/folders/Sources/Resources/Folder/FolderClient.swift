@@ -12,7 +12,7 @@ public final class FolderClient: Sendable {
     public func foo(requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
-            path: "/",
+            path: "/folder",
             requestOptions: requestOptions
         )
     }

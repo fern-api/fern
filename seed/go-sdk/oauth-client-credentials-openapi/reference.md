@@ -1,6 +1,6 @@
 # Reference
 ## Identity
-<details><summary><code>client.Identity.GetToken(request) -> *fern.TokenResponse</code></summary>
+<details><summary><code>client.Identity.Gettoken(request) -> *fern.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,11 +13,11 @@
 <dd>
 
 ```go
-request := &fern.GetTokenIdentityRequest{
+request := &fern.IdentityGetTokenRequest{
         Username: "username",
         Password: "password",
     }
-client.Identity.GetToken(
+client.Identity.Gettoken(
         context.TODO(),
         request,
     )
@@ -98,7 +98,7 @@ client.Plants.List(
 <dd>
 
 ```go
-request := &fern.GetPlantsRequest{
+request := &fern.PlantsGetRequest{
         PlantID: "plantId",
     }
 client.Plants.Get(

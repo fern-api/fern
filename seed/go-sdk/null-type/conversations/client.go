@@ -34,12 +34,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Place an outbound call or validate call setup with dry_run.
-func (c *Client) OutboundCall(
+func (c *Client) Outboundcall(
 	ctx context.Context,
-	request *fern.OutboundCallConversationsRequest,
+	request *fern.ConversationsOutboundCallRequest,
 	opts ...option.RequestOption,
 ) (*fern.OutboundCallConversationsResponse, error) {
-	response, err := c.WithRawResponse.OutboundCall(
+	response, err := c.WithRawResponse.Outboundcall(
 		ctx,
 		request,
 		opts...,

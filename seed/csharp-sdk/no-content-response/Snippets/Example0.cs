@@ -10,7 +10,7 @@ public partial class Examples
         );
 
         await client.Contacts.CreateAsync(
-            new CreateContactRequest {
+            new ContactsCreateRequest {
                 Name = "name"
             }
         );

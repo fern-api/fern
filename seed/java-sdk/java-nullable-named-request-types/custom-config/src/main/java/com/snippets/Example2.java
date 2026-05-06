@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.seed.api.SeedApiClient;
-import com.seed.api.requests.NonNullableObject;
+import com.seed.api.requests.PostWithNonNullableNamedRequestBodyTypeRequest;
 
 public class Example2 {
     public static void main(String[] args) {
@@ -9,6 +9,6 @@ public class Example2 {
                 SeedApiClient.builder().url("https://api.fern.com").build();
 
         client.postWithNonNullableNamedRequestBodyType(
-                "id", NonNullableObject.builder().build());
+                "id", PostWithNonNullableNamedRequestBodyTypeRequest.builder().build());
     }
 }

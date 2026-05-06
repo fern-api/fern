@@ -5,7 +5,7 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
-import com.seed.api.requests.NonNullableObject;
+import com.seed.api.requests.PostWithNonNullableNamedRequestBodyTypeRequest;
 import com.seed.api.requests.PostWithNullableNamedRequestBodyTypeRequest;
 import com.seed.api.types.ResponseBody;
 
@@ -48,14 +48,15 @@ public class SeedApiClient {
                 .body();
     }
 
-    public ResponseBody postWithNonNullableNamedRequestBodyType(String id, NonNullableObject request) {
+    public ResponseBody postWithNonNullableNamedRequestBodyType(
+            String id, PostWithNonNullableNamedRequestBodyTypeRequest request) {
         return this.rawClient
                 .postWithNonNullableNamedRequestBodyType(id, request)
                 .body();
     }
 
     public ResponseBody postWithNonNullableNamedRequestBodyType(
-            String id, NonNullableObject request, RequestOptions requestOptions) {
+            String id, PostWithNonNullableNamedRequestBodyTypeRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .postWithNonNullableNamedRequestBodyType(id, request, requestOptions)
                 .body();

@@ -2843,7 +2843,7 @@ client = SeedTrace(
     environment=SeedTraceEnvironment.PROD,
 )
 
-client.v2.problem.get_lightweight_problems()
+client.v2.v3.problem.get_lightweight_problems()
 
 ```
 </dd>
@@ -2906,7 +2906,7 @@ client = SeedTrace(
     environment=SeedTraceEnvironment.PROD,
 )
 
-client.v2.problem.get_problems()
+client.v2.v3.problem.get_problems()
 
 ```
 </dd>
@@ -2969,7 +2969,7 @@ client = SeedTrace(
     environment=SeedTraceEnvironment.PROD,
 )
 
-client.v2.problem.get_latest_problem(
+client.v2.v3.problem.get_latest_problem(
     problem_id="problemId",
 )
 
@@ -3042,7 +3042,7 @@ client = SeedTrace(
     environment=SeedTraceEnvironment.PROD,
 )
 
-client.v2.problem.get_problem_version(
+client.v2.v3.problem.get_problem_version(
     problem_id="problemId",
     problem_version=1,
 )

@@ -9,7 +9,7 @@ async fn main() {
     let client = ApiClient::new(config).expect("Failed to build client");
     client
         .submit_form_data(
-            &PostSubmitRequest {
+            &SubmitFormDataRequest {
                 username: "username".to_string(),
                 email: "email".to_string(),
             },

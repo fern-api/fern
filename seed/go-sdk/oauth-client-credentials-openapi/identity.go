@@ -10,11 +10,11 @@ import (
 )
 
 var (
-	getTokenIdentityRequestFieldUsername = big.NewInt(1 << 0)
-	getTokenIdentityRequestFieldPassword = big.NewInt(1 << 1)
+	identityGetTokenRequestFieldUsername = big.NewInt(1 << 0)
+	identityGetTokenRequestFieldPassword = big.NewInt(1 << 1)
 )
 
-type GetTokenIdentityRequest struct {
+type IdentityGetTokenRequest struct {
 	Username string `json:"username" url:"-"`
 	Password string `json:"password" url:"-"`
 
@@ -22,45 +22,45 @@ type GetTokenIdentityRequest struct {
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (g *GetTokenIdentityRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+func (i *IdentityGetTokenRequest) require(field *big.Int) {
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	i.explicitFields.Or(i.explicitFields, field)
 }
 
 // SetUsername sets the Username field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetTokenIdentityRequest) SetUsername(username string) {
-	g.Username = username
-	g.require(getTokenIdentityRequestFieldUsername)
+func (i *IdentityGetTokenRequest) SetUsername(username string) {
+	i.Username = username
+	i.require(identityGetTokenRequestFieldUsername)
 }
 
 // SetPassword sets the Password field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetTokenIdentityRequest) SetPassword(password string) {
-	g.Password = password
-	g.require(getTokenIdentityRequestFieldPassword)
+func (i *IdentityGetTokenRequest) SetPassword(password string) {
+	i.Password = password
+	i.require(identityGetTokenRequestFieldPassword)
 }
 
-func (g *GetTokenIdentityRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler GetTokenIdentityRequest
+func (i *IdentityGetTokenRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler IdentityGetTokenRequest
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*g = GetTokenIdentityRequest(body)
+	*i = IdentityGetTokenRequest(body)
 	return nil
 }
 
-func (g *GetTokenIdentityRequest) MarshalJSON() ([]byte, error) {
-	type embed GetTokenIdentityRequest
+func (i *IdentityGetTokenRequest) MarshalJSON() ([]byte, error) {
+	type embed IdentityGetTokenRequest
 	var marshaler = struct {
 		embed
 	}{
-		embed: embed(*g),
+		embed: embed(*i),
 	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, i.explicitFields)
 	return json.Marshal(explicitMarshaler)
 }
 

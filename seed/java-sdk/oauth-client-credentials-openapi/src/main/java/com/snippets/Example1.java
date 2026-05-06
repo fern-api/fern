@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.seed.api.SeedApiClient;
-import com.seed.api.resources.identity.requests.GetTokenIdentityRequest;
+import com.seed.api.resources.identity.requests.IdentityGetTokenRequest;
 
 public class Example1 {
     public static void main(String[] args) {
@@ -10,7 +10,7 @@ public class Example1 {
                 .build();
 
         client.identity()
-                .getToken(GetTokenIdentityRequest.builder()
+                .gettoken(IdentityGetTokenRequest.builder()
                         .username("username")
                         .password("password")
                         .build());

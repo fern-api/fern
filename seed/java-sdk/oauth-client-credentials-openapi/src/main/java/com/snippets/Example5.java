@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.seed.api.SeedApiClient;
-import com.seed.api.resources.plants.requests.GetPlantsRequest;
+import com.seed.api.resources.plants.requests.PlantsGetRequest;
 
 public class Example5 {
     public static void main(String[] args) {
@@ -9,6 +9,6 @@ public class Example5 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.plants().get("plantId", GetPlantsRequest.builder().build());
+        client.plants().get("plantId", PlantsGetRequest.builder().build());
     }
 }

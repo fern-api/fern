@@ -9,7 +9,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedApiClient } from \"@fern/schemaless-request-body-examples\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.createPlant({\n    \"name\": \"Venus Flytrap\",\n    \"species\": \"Dionaea muscipula\",\n    \"care\": {\n        \"light\": \"full sun\",\n        \"water\": \"distilled only\",\n        \"humidity\": \"high\"\n    },\n    \"tags\": [\n        \"carnivorous\",\n        \"tropical\"\n    ]\n});\n"
-            }
+            },
+            "example_identifier": "Example1"
         },
         {
             "id": {
@@ -20,7 +21,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedApiClient } from \"@fern/schemaless-request-body-examples\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.updatePlant({\n    plantId: \"plantId\",\n    body: {\n        \"name\": \"Updated Venus Flytrap\",\n        \"care\": {\n            \"light\": \"partial shade\"\n        }\n    }\n});\n"
-            }
+            },
+            "example_identifier": "Example1"
         },
         {
             "id": {
@@ -31,7 +33,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedApiClient } from \"@fern/schemaless-request-body-examples\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.createPlantWithSchema({\n    name: \"Sundew\",\n    species: \"Drosera capensis\"\n});\n"
-            }
+            },
+            "example_identifier": "Example1"
         }
     ],
     "types": {}

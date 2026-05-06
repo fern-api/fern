@@ -11,9 +11,9 @@ import (
 )
 
 var (
-	bulkUpdateTasksRequestFieldFilterAssignedTo                 = big.NewInt(1 << 0)
-	bulkUpdateTasksRequestFieldFilterIsComplete                 = big.NewInt(1 << 1)
-	bulkUpdateTasksRequestFieldFilterDate                       = big.NewInt(1 << 2)
+	bulkUpdateTasksRequestFieldAssignedTo                       = big.NewInt(1 << 0)
+	bulkUpdateTasksRequestFieldIsComplete                       = big.NewInt(1 << 1)
+	bulkUpdateTasksRequestFieldDate                             = big.NewInt(1 << 2)
 	bulkUpdateTasksRequestFieldFields                           = big.NewInt(1 << 3)
 	bulkUpdateTasksRequestFieldBulkUpdateTasksRequestAssignedTo = big.NewInt(1 << 4)
 	bulkUpdateTasksRequestFieldBulkUpdateTasksRequestDate       = big.NewInt(1 << 5)
@@ -22,9 +22,9 @@ var (
 )
 
 type BulkUpdateTasksRequest struct {
-	FilterAssignedTo *string `json:"-" url:"assigned_to,omitempty"`
-	FilterIsComplete *string `json:"-" url:"is_complete,omitempty"`
-	FilterDate       *string `json:"-" url:"date,omitempty"`
+	AssignedTo *string `json:"-" url:"assigned_to,omitempty"`
+	IsComplete *string `json:"-" url:"is_complete,omitempty"`
+	Date       *string `json:"-" url:"date,omitempty"`
 	// Comma-separated list of fields to include in the response.
 	Fields                           *string    `json:"-" url:"_fields,omitempty"`
 	BulkUpdateTasksRequestAssignedTo *string    `json:"assigned_to,omitempty" url:"-"`
@@ -43,25 +43,25 @@ func (b *BulkUpdateTasksRequest) require(field *big.Int) {
 	b.explicitFields.Or(b.explicitFields, field)
 }
 
-// SetFilterAssignedTo sets the FilterAssignedTo field and marks it as non-optional;
+// SetAssignedTo sets the AssignedTo field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BulkUpdateTasksRequest) SetFilterAssignedTo(filterAssignedTo *string) {
-	b.FilterAssignedTo = filterAssignedTo
-	b.require(bulkUpdateTasksRequestFieldFilterAssignedTo)
+func (b *BulkUpdateTasksRequest) SetAssignedTo(assignedTo *string) {
+	b.AssignedTo = assignedTo
+	b.require(bulkUpdateTasksRequestFieldAssignedTo)
 }
 
-// SetFilterIsComplete sets the FilterIsComplete field and marks it as non-optional;
+// SetIsComplete sets the IsComplete field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BulkUpdateTasksRequest) SetFilterIsComplete(filterIsComplete *string) {
-	b.FilterIsComplete = filterIsComplete
-	b.require(bulkUpdateTasksRequestFieldFilterIsComplete)
+func (b *BulkUpdateTasksRequest) SetIsComplete(isComplete *string) {
+	b.IsComplete = isComplete
+	b.require(bulkUpdateTasksRequestFieldIsComplete)
 }
 
-// SetFilterDate sets the FilterDate field and marks it as non-optional;
+// SetDate sets the Date field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BulkUpdateTasksRequest) SetFilterDate(filterDate *string) {
-	b.FilterDate = filterDate
-	b.require(bulkUpdateTasksRequestFieldFilterDate)
+func (b *BulkUpdateTasksRequest) SetDate(date *string) {
+	b.Date = date
+	b.require(bulkUpdateTasksRequestFieldDate)
 }
 
 // SetFields sets the Fields field and marks it as non-optional;

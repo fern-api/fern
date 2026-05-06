@@ -1,6 +1,6 @@
 # Reference
-## TestGroup
-<details><summary><code>client.test_group.<a href="/src/api/resources/test_group/client.rs">test_method_name</a>(path_param: String, request: Option&lt;PlainObject&gt;, query_param_object: Option&lt;Option&lt;Option&lt;PlainObject&gt;&gt;&gt;, query_param_integer: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;) -> Result&lt;serde_json::Value, ApiError&gt;</code></summary>
+## Testgroup
+<details><summary><code>client.testgroup.<a href="/src/api/resources/testgroup/client.rs">test_method_name</a>(path_param: String, request: Option&lt;PlainObject&gt;, query_param_object: Option&lt;Option&lt;Option&lt;PlainObject&gt;&gt;&gt;, query_param_integer: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;) -> Result&lt;serde_json::Value, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -36,7 +36,7 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .test_group
+        .testgroup
         .test_method_name(
             &"path_param".to_string(),
             &TestMethodNameRequest {

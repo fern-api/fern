@@ -10,7 +10,7 @@ public final class BClient: Sendable {
     public func foo(requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
-            path: "/",
+            path: "/a/b",
             requestOptions: requestOptions
         )
     }

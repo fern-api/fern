@@ -120,7 +120,7 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "/users",
+                    Path = "/users/task",
                     Body = request,
                     Headers = _headers,
                     Options = options,

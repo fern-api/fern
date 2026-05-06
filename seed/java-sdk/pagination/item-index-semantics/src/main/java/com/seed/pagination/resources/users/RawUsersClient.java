@@ -85,7 +85,8 @@ public class RawUsersClient {
             ListUsersCursorPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("cursor-pagination");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page", request.getPage().get(), false);
@@ -165,7 +166,8 @@ public class RawUsersClient {
             ListUsersMixedTypeCursorPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("mixed-type-cursor-pagination");
         if (request.getCursor().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "cursor", request.getCursor().get(), false);
@@ -235,7 +237,8 @@ public class RawUsersClient {
             ListUsersBodyCursorPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("body-cursor-pagination");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -407,7 +410,8 @@ public class RawUsersClient {
             ListUsersOffsetPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("offset-pagination");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page", request.getPage().get(), false);
@@ -486,7 +490,8 @@ public class RawUsersClient {
             ListUsersDoubleOffsetPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("double-offset-pagination");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page", request.getPage().get(), false);
@@ -565,7 +570,8 @@ public class RawUsersClient {
             ListUsersBodyOffsetPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("body-offset-pagination");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -642,7 +648,8 @@ public class RawUsersClient {
             ListUsersOffsetStepPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("offset-step-pagination");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page", request.getPage().get(), false);
@@ -718,7 +725,8 @@ public class RawUsersClient {
             ListWithOffsetPaginationHasNextPageRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("offset-pagination-has-next-page");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page", request.getPage().get(), false);
@@ -793,7 +801,8 @@ public class RawUsersClient {
             ListUsersExtendedRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("extended-results");
         if (request.getCursor().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "cursor", request.getCursor().get(), false);
@@ -860,7 +869,8 @@ public class RawUsersClient {
             ListUsersExtendedRequestForOptionalData request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("extended-results-optional-data");
         if (request.getCursor().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "cursor", request.getCursor().get(), false);
@@ -925,7 +935,8 @@ public class RawUsersClient {
             ListUsernamesRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("usernames");
         if (request.getStartingAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "starting_after", request.getStartingAfter().get(), false);
@@ -992,7 +1003,8 @@ public class RawUsersClient {
             ListUsernamesWithOptionalResponseRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("usernames-optional-response");
         if (request.getStartingAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "starting_after", request.getStartingAfter().get(), false);
@@ -1063,7 +1075,8 @@ public class RawUsersClient {
             ListWithGlobalConfigRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("users");
+                .addPathSegments("users")
+                .addPathSegments("global-config");
         if (request.getOffset().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "offset", request.getOffset().get(), false);

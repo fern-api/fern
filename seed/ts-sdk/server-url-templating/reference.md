@@ -123,7 +123,7 @@ await client.getToken({
 <dl>
 <dd>
 
-**request:** `SeedApi.TokenRequest` 
+**request:** `SeedApi.GetTokenRequest` 
     
 </dd>
 </dl>

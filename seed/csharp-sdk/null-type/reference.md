@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>client.Conversations.<a href="/src/SeedApi/Conversations/ConversationsClient.cs">OutboundCallAsync</a>(OutboundCallConversationsRequest { ... }) -> WithRawResponseTask&lt;OutboundCallConversationsResponse&gt;</code></summary>
+<details><summary><code>client.Conversations.<a href="/src/SeedApi/Conversations/ConversationsClient.cs">OutboundcallAsync</a>(ConversationsOutboundCallRequest { ... }) -> WithRawResponseTask&lt;OutboundCallConversationsResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -27,8 +27,8 @@ Place an outbound call or validate call setup with dry_run.
 <dd>
 
 ```csharp
-await client.Conversations.OutboundCallAsync(
-    new OutboundCallConversationsRequest { ToPhoneNumber = "to_phone_number" }
+await client.Conversations.OutboundcallAsync(
+    new ConversationsOutboundCallRequest { ToPhoneNumber = "to_phone_number" }
 );
 ```
 </dd>
@@ -44,7 +44,7 @@ await client.Conversations.OutboundCallAsync(
 <dl>
 <dd>
 
-**request:** `OutboundCallConversationsRequest` 
+**request:** `ConversationsOutboundCallRequest` 
     
 </dd>
 </dl>
@@ -57,7 +57,7 @@ await client.Conversations.OutboundCallAsync(
 </details>
 
 ## Users
-<details><summary><code>client.Users.<a href="/src/SeedApi/Users/UsersClient.cs">GetAsync</a>(GetUsersRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedApi/Users/UsersClient.cs">GetAsync</a>(UsersGetRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -84,7 +84,7 @@ Gets a user by ID. The deleted_at field uses type null.
 <dd>
 
 ```csharp
-await client.Users.GetAsync(new GetUsersRequest { Id = "id" });
+await client.Users.GetAsync(new UsersGetRequest { Id = "id" });
 ```
 </dd>
 </dl>
@@ -99,7 +99,7 @@ await client.Users.GetAsync(new GetUsersRequest { Id = "id" });
 <dl>
 <dd>
 
-**request:** `GetUsersRequest` 
+**request:** `UsersGetRequest` 
     
 </dd>
 </dl>

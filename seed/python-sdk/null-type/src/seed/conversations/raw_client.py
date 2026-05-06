@@ -9,7 +9,7 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from .types.outbound_call_conversations_response import OutboundCallConversationsResponse
+from ..types.outbound_call_conversations_response import OutboundCallConversationsResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -20,7 +20,7 @@ class RawConversationsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def outbound_call(
+    def outboundcall(
         self,
         *,
         to_phone_number: str,
@@ -83,7 +83,7 @@ class AsyncRawConversationsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def outbound_call(
+    async def outboundcall(
         self,
         *,
         to_phone_number: str,

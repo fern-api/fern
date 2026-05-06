@@ -22,7 +22,7 @@ describe("InlineUsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .get("/inline-users")
+            .get("/inline-users/cursor-pagination")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -58,7 +58,7 @@ describe("InlineUsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .post("/inline-users")
+            .post("/inline-users/mixed-type-cursor-pagination")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -93,7 +93,7 @@ describe("InlineUsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .post("/inline-users")
+            .post("/inline-users/body-cursor-pagination")
             .jsonBody(rawRequestBody, { ignoredFields: ["pagination.cursor"] })
             .respondWith()
             .statusCode(200)
@@ -131,7 +131,7 @@ describe("InlineUsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .get("/inline-users")
+            .get("/inline-users/offset-pagination")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -169,7 +169,7 @@ describe("InlineUsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .get("/inline-users")
+            .get("/inline-users/double-offset-pagination")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -207,7 +207,7 @@ describe("InlineUsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .post("/inline-users")
+            .post("/inline-users/body-offset-pagination")
             .jsonBody(rawRequestBody, { ignoredFields: ["pagination.page"] })
             .respondWith()
             .statusCode(200)
@@ -245,7 +245,7 @@ describe("InlineUsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .get("/inline-users")
+            .get("/inline-users/offset-step-pagination")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -282,7 +282,7 @@ describe("InlineUsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .get("/inline-users")
+            .get("/inline-users/offset-pagination-has-next-page")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -318,7 +318,7 @@ describe("InlineUsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .get("/inline-users")
+            .get("/inline-users/extended-results")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -352,7 +352,7 @@ describe("InlineUsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .get("/inline-users")
+            .get("/inline-users/extended-results-optional-data")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -377,7 +377,7 @@ describe("InlineUsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .get("/inline-users")
+            .get("/inline-users/usernames")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -402,7 +402,7 @@ describe("InlineUsersClient", () => {
 
         server
             .mockEndpoint({ once: false })
-            .get("/inline-users")
+            .get("/inline-users/global-config")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)

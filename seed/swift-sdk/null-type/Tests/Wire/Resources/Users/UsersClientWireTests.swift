@@ -25,11 +25,11 @@ import Api
         let expectedResponse = User(
             id: "id",
             name: "name",
-            deletedAt: Nullable<JSONValue>.value(JSONValue.object(
+            deletedAt: JSONValue.object(
                 [
                     "key": JSONValue.string("value")
                 ]
-            ))
+            )
         )
         let response = try await client.users.get(
             id: "id",
@@ -60,11 +60,11 @@ import Api
         let expectedResponse = User(
             id: "id",
             name: "name",
-            deletedAt: Nullable<JSONValue>.value(JSONValue.object(
+            deletedAt: JSONValue.object(
                 [
                     "key": JSONValue.string("value")
                 ]
-            ))
+            )
         )
         let response = try await client.users.get(
             id: "id",

@@ -20,7 +20,7 @@ public final class ServiceClient: Sendable {
     public func getMovieDocs(request: String, requestOptions: RequestOptions? = nil) async throws -> Response {
         return try await httpClient.performRequest(
             method: .post,
-            path: "/movie",
+            path: "/movie/docs",
             body: request,
             requestOptions: requestOptions,
             responseType: Response.self
@@ -30,7 +30,7 @@ public final class ServiceClient: Sendable {
     public func getMovieName(request: String, requestOptions: RequestOptions? = nil) async throws -> StringResponse {
         return try await httpClient.performRequest(
             method: .post,
-            path: "/movie",
+            path: "/movie/name",
             body: request,
             requestOptions: requestOptions,
             responseType: StringResponse.self
@@ -40,7 +40,7 @@ public final class ServiceClient: Sendable {
     public func getMovieMetadata(request: String, requestOptions: RequestOptions? = nil) async throws -> Response {
         return try await httpClient.performRequest(
             method: .post,
-            path: "/movie",
+            path: "/movie/metadata",
             body: request,
             requestOptions: requestOptions,
             responseType: Response.self
@@ -50,7 +50,7 @@ public final class ServiceClient: Sendable {
     public func getOptionalMovie(request: String, requestOptions: RequestOptions? = nil) async throws -> Response? {
         return try await httpClient.performRequest(
             method: .post,
-            path: "/movie",
+            path: "/movie/optional",
             body: request,
             requestOptions: requestOptions,
             responseType: Response?.self
@@ -60,7 +60,7 @@ public final class ServiceClient: Sendable {
     public func getOptionalMovieDocs(request: String, requestOptions: RequestOptions? = nil) async throws -> OptionalWithDocs {
         return try await httpClient.performRequest(
             method: .post,
-            path: "/movie",
+            path: "/movie/optional/docs",
             body: request,
             requestOptions: requestOptions,
             responseType: OptionalWithDocs.self
@@ -70,7 +70,7 @@ public final class ServiceClient: Sendable {
     public func getOptionalMovieName(request: String, requestOptions: RequestOptions? = nil) async throws -> OptionalStringResponse {
         return try await httpClient.performRequest(
             method: .post,
-            path: "/movie",
+            path: "/movie/optional/name",
             body: request,
             requestOptions: requestOptions,
             responseType: OptionalStringResponse.self

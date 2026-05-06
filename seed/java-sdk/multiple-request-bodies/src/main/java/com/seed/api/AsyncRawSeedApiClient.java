@@ -116,7 +116,7 @@ public class AsyncRawSeedApiClient {
             InputStream request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("documents/upload");
+                .addPathSegments("documents/upload/pdf");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

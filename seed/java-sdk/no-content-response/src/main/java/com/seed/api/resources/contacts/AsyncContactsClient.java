@@ -5,8 +5,8 @@ package com.seed.api.resources.contacts;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
-import com.seed.api.resources.contacts.requests.CreateContactRequest;
-import com.seed.api.resources.contacts.requests.GetContactsRequest;
+import com.seed.api.resources.contacts.requests.ContactsCreateRequest;
+import com.seed.api.resources.contacts.requests.ContactsGetRequest;
 import com.seed.api.types.Contact;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -31,14 +31,14 @@ public class AsyncContactsClient {
     /**
      * Creates a new contact. Returns 200 with the contact or 204 with no content.
      */
-    public CompletableFuture<Optional<Contact>> create(CreateContactRequest request) {
+    public CompletableFuture<Optional<Contact>> create(ContactsCreateRequest request) {
         return this.rawClient.create(request).thenApply(response -> response.body());
     }
 
     /**
      * Creates a new contact. Returns 200 with the contact or 204 with no content.
      */
-    public CompletableFuture<Optional<Contact>> create(CreateContactRequest request, RequestOptions requestOptions) {
+    public CompletableFuture<Optional<Contact>> create(ContactsCreateRequest request, RequestOptions requestOptions) {
         return this.rawClient.create(request, requestOptions).thenApply(response -> response.body());
     }
 
@@ -59,14 +59,14 @@ public class AsyncContactsClient {
     /**
      * Gets a contact by ID. Returns 200 with the contact.
      */
-    public CompletableFuture<Contact> get(String id, GetContactsRequest request) {
+    public CompletableFuture<Contact> get(String id, ContactsGetRequest request) {
         return this.rawClient.get(id, request).thenApply(response -> response.body());
     }
 
     /**
      * Gets a contact by ID. Returns 200 with the contact.
      */
-    public CompletableFuture<Contact> get(String id, GetContactsRequest request, RequestOptions requestOptions) {
+    public CompletableFuture<Contact> get(String id, ContactsGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(id, request, requestOptions).thenApply(response -> response.body());
     }
 }

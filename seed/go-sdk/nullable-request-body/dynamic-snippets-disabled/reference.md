@@ -1,6 +1,6 @@
 # Reference
-## TestGroup
-<details><summary><code>client.TestGroup.TestMethodName(PathParam, request) -> any</code></summary>
+## Testgroup
+<details><summary><code>client.Testgroup.TestMethodName(PathParam, request) -> any</code></summary>
 <dl>
 <dd>
 
@@ -27,11 +27,11 @@ Post a nullable request body
 <dd>
 
 ```go
-request := &fern.TestMethodNameTestGroupRequest{
+request := &fern.TestGroupTestMethodNameRequest{
         PathParam: "path_param",
         Body: &fern.PlainObject{},
     }
-client.TestGroup.TestMethodName(
+client.Testgroup.TestMethodName(
         context.TODO(),
         request,
     )

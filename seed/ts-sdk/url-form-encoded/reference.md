@@ -31,7 +31,7 @@ await client.submitFormData({
 <dl>
 <dd>
 
-**request:** `SeedApi.PostSubmitRequest` 
+**request:** `SeedApi.SubmitFormDataRequest` 
     
 </dd>
 </dl>

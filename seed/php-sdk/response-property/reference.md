@@ -55,7 +55,7 @@ $client->service->getMovie(
 <dd>
 
 ```php
-$client->service->getMovie(
+$client->service->getMovieDocs(
     'string',
 );
 ```
@@ -97,7 +97,7 @@ $client->service->getMovie(
 <dd>
 
 ```php
-$client->service->getMovie(
+$client->service->getMovieName(
     'string',
 );
 ```
@@ -139,7 +139,7 @@ $client->service->getMovie(
 <dd>
 
 ```php
-$client->service->getMovie(
+$client->service->getMovieMetadata(
     'string',
 );
 ```
@@ -181,7 +181,7 @@ $client->service->getMovie(
 <dd>
 
 ```php
-$client->service->getMovie(
+$client->service->getOptionalMovie(
     'string',
 );
 ```
@@ -223,7 +223,7 @@ $client->service->getMovie(
 <dd>
 
 ```php
-$client->service->getMovie(
+$client->service->getOptionalMovieDocs(
     'string',
 );
 ```
@@ -265,7 +265,7 @@ $client->service->getMovie(
 <dd>
 
 ```php
-$client->service->getMovie(
+$client->service->getOptionalMovieName(
     'string',
 );
 ```

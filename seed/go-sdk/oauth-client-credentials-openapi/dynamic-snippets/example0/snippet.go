@@ -18,11 +18,11 @@ func do() {
             "<clientSecret>",
         ),
     )
-    request := &fern.GetTokenIdentityRequest{
+    request := &fern.IdentityGetTokenRequest{
         Username: "username",
         Password: "password",
     }
-    client.Identity.GetToken(
+    client.Identity.Gettoken(
         context.TODO(),
         request,
     )

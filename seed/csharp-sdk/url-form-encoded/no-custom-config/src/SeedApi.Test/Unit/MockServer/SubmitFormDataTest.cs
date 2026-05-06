@@ -11,6 +11,13 @@ public class SubmitFormDataTest : BaseMockServerTest
     [NUnit.Framework.Test]
     public async Task MockServerTest_1()
     {
+        const string requestJson = """
+            {
+              "username": "username",
+              "email": "email"
+            }
+            """;
+
         const string mockResponse = """
             {
               "status": "status",
@@ -23,14 +30,9 @@ public class SubmitFormDataTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/submit")
-                    .WithHeader("Content-Type", "application/x-www-form-urlencoded")
+                    .WithHeader("Content-Type", "application/json")
                     .UsingPost()
-                    .WithBody(
-                        new WireMock.Matchers.FormUrlEncodedMatcher([
-                            "username=username",
-                            "email=email",
-                        ])
-                    )
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -40,7 +42,7 @@ public class SubmitFormDataTest : BaseMockServerTest
             );
 
         var response = await Client.SubmitFormDataAsync(
-            new PostSubmitRequest { Username = "username", Email = "email" }
+            new SubmitFormDataRequest { Username = "username", Email = "email" }
         );
         JsonAssert.AreEqual(response, mockResponse);
     }
@@ -48,6 +50,13 @@ public class SubmitFormDataTest : BaseMockServerTest
     [NUnit.Framework.Test]
     public async Task MockServerTest_2()
     {
+        const string requestJson = """
+            {
+              "username": "johndoe",
+              "email": "john@example.com"
+            }
+            """;
+
         const string mockResponse = """
             {
               "status": "success",
@@ -60,14 +69,9 @@ public class SubmitFormDataTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/submit")
-                    .WithHeader("Content-Type", "application/x-www-form-urlencoded")
+                    .WithHeader("Content-Type", "application/json")
                     .UsingPost()
-                    .WithBody(
-                        new WireMock.Matchers.FormUrlEncodedMatcher([
-                            "username=johndoe",
-                            "email=john@example.com",
-                        ])
-                    )
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -77,7 +81,7 @@ public class SubmitFormDataTest : BaseMockServerTest
             );
 
         var response = await Client.SubmitFormDataAsync(
-            new PostSubmitRequest { Username = "johndoe", Email = "john@example.com" }
+            new SubmitFormDataRequest { Username = "johndoe", Email = "john@example.com" }
         );
         JsonAssert.AreEqual(response, mockResponse);
     }

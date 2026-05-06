@@ -12,8 +12,8 @@ import com.seed.api.core.RequestOptions;
 import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
+import com.seed.api.requests.GetTokenRequest;
 import com.seed.api.requests.GetUserRequest;
-import com.seed.api.requests.TokenRequest;
 import com.seed.api.types.TokenResponse;
 import com.seed.api.types.User;
 import java.io.IOException;
@@ -42,7 +42,7 @@ public class AsyncRawSeedApiClient {
     }
 
     public CompletableFuture<SeedApiHttpResponse<List<User>>> getUsers(RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getBaseURL())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users");
         if (requestOptions != null) {
@@ -104,7 +104,7 @@ public class AsyncRawSeedApiClient {
 
     public CompletableFuture<SeedApiHttpResponse<User>> getUser(
             String userId, GetUserRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getBaseURL())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users")
                 .addPathSegment(userId);
@@ -151,13 +151,13 @@ public class AsyncRawSeedApiClient {
         return future;
     }
 
-    public CompletableFuture<SeedApiHttpResponse<TokenResponse>> getToken(TokenRequest request) {
+    public CompletableFuture<SeedApiHttpResponse<TokenResponse>> getToken(GetTokenRequest request) {
         return getToken(request, null);
     }
 
     public CompletableFuture<SeedApiHttpResponse<TokenResponse>> getToken(
-            TokenRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getAuthURL())
+            GetTokenRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("auth/token");
         if (requestOptions != null) {

@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>$client-&gt;conversations-&gt;outboundCall($request) -> ?OutboundCallConversationsResponse</code></summary>
+<details><summary><code>$client-&gt;conversations-&gt;outboundcall($request) -> ?OutboundCallConversationsResponse</code></summary>
 <dl>
 <dd>
 
@@ -27,8 +27,8 @@ Place an outbound call or validate call setup with dry_run.
 <dd>
 
 ```php
-$client->conversations->outboundCall(
-    new OutboundCallConversationsRequest([
+$client->conversations->outboundcall(
+    new ConversationsOutboundCallRequest([
         'toPhoneNumber' => 'to_phone_number',
     ]),
 );

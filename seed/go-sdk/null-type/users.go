@@ -10,28 +10,28 @@ import (
 )
 
 var (
-	getUsersRequestFieldID = big.NewInt(1 << 0)
+	usersGetRequestFieldID = big.NewInt(1 << 0)
 )
 
-type GetUsersRequest struct {
+type UsersGetRequest struct {
 	ID string `json:"-" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (g *GetUsersRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+func (u *UsersGetRequest) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUsersRequest) SetID(id string) {
-	g.ID = id
-	g.require(getUsersRequestFieldID)
+func (u *UsersGetRequest) SetID(id string) {
+	u.ID = id
+	u.require(usersGetRequestFieldID)
 }
 
 var (
@@ -41,10 +41,9 @@ var (
 )
 
 type User struct {
-	ID   string `json:"id" url:"id"`
-	Name string `json:"name" url:"name"`
-	// Always null for active users.
-	DeletedAt any `json:"deleted_at,omitempty" url:"deleted_at,omitempty"`
+	ID        string `json:"id" url:"id"`
+	Name      string `json:"name" url:"name"`
+	DeletedAt any    `json:"deleted_at" url:"deleted_at"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`

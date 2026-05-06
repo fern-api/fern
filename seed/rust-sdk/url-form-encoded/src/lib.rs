@@ -15,7 +15,7 @@
 //!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
 //!         .submit_form_data(
-//!             &PostSubmitRequest {
+//!             &SubmitFormDataRequest {
 //!                 username: "johndoe".to_string(),
 //!                 email: "john@example.com".to_string(),
 //!             },

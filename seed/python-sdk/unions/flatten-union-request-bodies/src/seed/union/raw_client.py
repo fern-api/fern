@@ -35,7 +35,7 @@ class RawUnionClient:
         HttpResponse[Shape]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(id)}",
+            f"union/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -89,6 +89,7 @@ class RawUnionClient:
         HttpResponse[bool]
         """
         _response = self._client_wrapper.httpx_client.request(
+            "union",
             method="PATCH",
             json={
                 "name": name,
@@ -140,7 +141,7 @@ class AsyncRawUnionClient:
         AsyncHttpResponse[Shape]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(id)}",
+            f"union/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -194,6 +195,7 @@ class AsyncRawUnionClient:
         AsyncHttpResponse[bool]
         """
         _response = await self._client_wrapper.httpx_client.request(
+            "union",
             method="PATCH",
             json={
                 "name": name,

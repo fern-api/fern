@@ -39,6 +39,7 @@ public class AsyncRawUnionClient {
     public CompletableFuture<SeedUnionsHttpResponse<Shape>> get(String id, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("union")
                 .addPathSegment(id);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -88,9 +89,9 @@ public class AsyncRawUnionClient {
     }
 
     public CompletableFuture<SeedUnionsHttpResponse<Boolean>> update(Shape request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl =
-                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
-
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("union");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

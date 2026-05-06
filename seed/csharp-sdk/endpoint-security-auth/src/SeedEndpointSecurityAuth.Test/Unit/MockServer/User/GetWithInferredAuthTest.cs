@@ -25,7 +25,7 @@ public class GetWithInferredAuthTest : BaseMockServerTest
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users").UsingGet())
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users/inferred").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()

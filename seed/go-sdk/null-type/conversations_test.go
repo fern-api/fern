@@ -9,9 +9,9 @@ import (
 	testing "testing"
 )
 
-func TestSettersOutboundCallConversationsRequest(t *testing.T) {
+func TestSettersConversationsOutboundCallRequest(t *testing.T) {
 	t.Run("SetToPhoneNumber", func(t *testing.T) {
-		obj := &OutboundCallConversationsRequest{}
+		obj := &ConversationsOutboundCallRequest{}
 		var fernTestValueToPhoneNumber string
 		obj.SetToPhoneNumber(fernTestValueToPhoneNumber)
 		assert.Equal(t, fernTestValueToPhoneNumber, obj.ToPhoneNumber)
@@ -19,7 +19,7 @@ func TestSettersOutboundCallConversationsRequest(t *testing.T) {
 	})
 
 	t.Run("SetDryRun", func(t *testing.T) {
-		obj := &OutboundCallConversationsRequest{}
+		obj := &ConversationsOutboundCallRequest{}
 		var fernTestValueDryRun *bool
 		obj.SetDryRun(fernTestValueDryRun)
 		assert.Equal(t, fernTestValueDryRun, obj.DryRun)
@@ -28,11 +28,11 @@ func TestSettersOutboundCallConversationsRequest(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitOutboundCallConversationsRequest(t *testing.T) {
+func TestSettersMarkExplicitConversationsOutboundCallRequest(t *testing.T) {
 	t.Run("SetToPhoneNumber_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &OutboundCallConversationsRequest{}
+		obj := &ConversationsOutboundCallRequest{}
 		var fernTestValueToPhoneNumber string
 
 		// Act
@@ -63,7 +63,7 @@ func TestSettersMarkExplicitOutboundCallConversationsRequest(t *testing.T) {
 	t.Run("SetDryRun_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &OutboundCallConversationsRequest{}
+		obj := &ConversationsOutboundCallRequest{}
 		var fernTestValueDryRun *bool
 
 		// Act

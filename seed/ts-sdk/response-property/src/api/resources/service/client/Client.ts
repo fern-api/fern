@@ -96,7 +96,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "movie",
+                "movie/docs",
             ),
             method: "POST",
             headers: _headers,
@@ -122,7 +122,7 @@ export class ServiceClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie/docs");
     }
 
     /**
@@ -148,7 +148,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "movie",
+                "movie/name",
             ),
             method: "POST",
             headers: _headers,
@@ -174,7 +174,7 @@ export class ServiceClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie/name");
     }
 
     /**
@@ -200,7 +200,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "movie",
+                "movie/metadata",
             ),
             method: "POST",
             headers: _headers,
@@ -226,7 +226,7 @@ export class ServiceClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie/metadata");
     }
 
     /**
@@ -252,7 +252,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "movie",
+                "movie/optional",
             ),
             method: "POST",
             headers: _headers,
@@ -281,7 +281,7 @@ export class ServiceClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie/optional");
     }
 
     /**
@@ -307,7 +307,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "movie",
+                "movie/optional/docs",
             ),
             method: "POST",
             headers: _headers,
@@ -336,7 +336,7 @@ export class ServiceClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie/optional/docs");
     }
 
     /**
@@ -362,7 +362,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "movie",
+                "movie/optional/name",
             ),
             method: "POST",
             headers: _headers,
@@ -391,6 +391,6 @@ export class ServiceClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie/optional/name");
     }
 }

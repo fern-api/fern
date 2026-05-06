@@ -5,12 +5,15 @@ package com.seed.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.api.core.Nullable;
+import com.seed.api.core.NullableNonemptyFilter;
 import com.seed.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,8 +49,17 @@ public final class Contact {
         return name;
     }
 
-    @JsonProperty("email")
+    @JsonIgnore
     public Optional<String> getEmail() {
+        if (email == null) {
+            return Optional.empty();
+        }
+        return email;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("email")
+    private Optional<String> _getEmail() {
         return email;
     }
 
@@ -100,6 +112,8 @@ public final class Contact {
         _FinalStage email(Optional<String> email);
 
         _FinalStage email(String email);
+
+        _FinalStage email(Nullable<String> email);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -134,6 +148,18 @@ public final class Contact {
         @JsonSetter("name")
         public _FinalStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage email(Nullable<String> email) {
+            if (email.isNull()) {
+                this.email = null;
+            } else if (email.isEmpty()) {
+                this.email = Optional.empty();
+            } else {
+                this.email = Optional.of(email.get());
+            }
             return this;
         }
 

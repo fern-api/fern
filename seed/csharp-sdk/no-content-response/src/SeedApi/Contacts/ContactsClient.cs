@@ -13,7 +13,7 @@ public partial class ContactsClient : IContactsClient
     }
 
     private async Task<WithRawResponse<Contact?>> CreateAsyncCore(
-        CreateContactRequest request,
+        ContactsCreateRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -80,7 +80,7 @@ public partial class ContactsClient : IContactsClient
     }
 
     private async Task<WithRawResponse<Contact>> GetAsyncCore(
-        GetContactsRequest request,
+        ContactsGetRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -151,10 +151,10 @@ public partial class ContactsClient : IContactsClient
     /// Creates a new contact. Returns 200 with the contact or 204 with no content.
     /// </summary>
     /// <example><code>
-    /// await client.Contacts.CreateAsync(new CreateContactRequest { Name = "name" });
+    /// await client.Contacts.CreateAsync(new ContactsCreateRequest { Name = "name" });
     /// </code></example>
     public WithRawResponseTask<Contact?> CreateAsync(
-        CreateContactRequest request,
+        ContactsCreateRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -168,10 +168,10 @@ public partial class ContactsClient : IContactsClient
     /// Gets a contact by ID. Returns 200 with the contact.
     /// </summary>
     /// <example><code>
-    /// await client.Contacts.GetAsync(new GetContactsRequest { Id = "id" });
+    /// await client.Contacts.GetAsync(new ContactsGetRequest { Id = "id" });
     /// </code></example>
     public WithRawResponseTask<Contact> GetAsync(
-        GetContactsRequest request,
+        ContactsGetRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

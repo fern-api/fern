@@ -2,7 +2,7 @@
     "types": {},
     "endpoints": [
         {
-            "example_identifier": "default",
+            "example_identifier": "Example1",
             "id": {
                 "path": "/submit",
                 "method": "POST",
@@ -15,7 +15,7 @@
             }
         },
         {
-            "example_identifier": "default",
+            "example_identifier": "Example1",
             "id": {
                 "path": "/token",
                 "method": "POST",

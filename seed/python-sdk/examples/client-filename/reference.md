@@ -79,7 +79,7 @@ client = SeedExhaustive(
     environment=SeedExhaustiveEnvironment.PRODUCTION,
 )
 
-client.echo(
+client.create_type(
     request="primitive",
 )
 

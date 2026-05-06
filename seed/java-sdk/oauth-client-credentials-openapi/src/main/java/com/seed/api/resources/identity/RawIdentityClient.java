@@ -11,7 +11,7 @@ import com.seed.api.core.RequestOptions;
 import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
-import com.seed.api.resources.identity.requests.GetTokenIdentityRequest;
+import com.seed.api.resources.identity.requests.IdentityGetTokenRequest;
 import com.seed.api.types.TokenResponse;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -29,11 +29,11 @@ public class RawIdentityClient {
         this.clientOptions = clientOptions;
     }
 
-    public SeedApiHttpResponse<TokenResponse> getToken(GetTokenIdentityRequest request) {
-        return getToken(request, null);
+    public SeedApiHttpResponse<TokenResponse> gettoken(IdentityGetTokenRequest request) {
+        return gettoken(request, null);
     }
 
-    public SeedApiHttpResponse<TokenResponse> getToken(GetTokenIdentityRequest request, RequestOptions requestOptions) {
+    public SeedApiHttpResponse<TokenResponse> gettoken(IdentityGetTokenRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("identity/token");

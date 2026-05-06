@@ -11,27 +11,27 @@ import (
 )
 
 func TestSettersBulkUpdateTasksRequest(t *testing.T) {
-	t.Run("SetFilterAssignedTo", func(t *testing.T) {
+	t.Run("SetAssignedTo", func(t *testing.T) {
 		obj := &BulkUpdateTasksRequest{}
-		var fernTestValueFilterAssignedTo *string
-		obj.SetFilterAssignedTo(fernTestValueFilterAssignedTo)
-		assert.Equal(t, fernTestValueFilterAssignedTo, obj.FilterAssignedTo)
+		var fernTestValueAssignedTo *string
+		obj.SetAssignedTo(fernTestValueAssignedTo)
+		assert.Equal(t, fernTestValueAssignedTo, obj.AssignedTo)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetFilterIsComplete", func(t *testing.T) {
+	t.Run("SetIsComplete", func(t *testing.T) {
 		obj := &BulkUpdateTasksRequest{}
-		var fernTestValueFilterIsComplete *string
-		obj.SetFilterIsComplete(fernTestValueFilterIsComplete)
-		assert.Equal(t, fernTestValueFilterIsComplete, obj.FilterIsComplete)
+		var fernTestValueIsComplete *string
+		obj.SetIsComplete(fernTestValueIsComplete)
+		assert.Equal(t, fernTestValueIsComplete, obj.IsComplete)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetFilterDate", func(t *testing.T) {
+	t.Run("SetDate", func(t *testing.T) {
 		obj := &BulkUpdateTasksRequest{}
-		var fernTestValueFilterDate *string
-		obj.SetFilterDate(fernTestValueFilterDate)
-		assert.Equal(t, fernTestValueFilterDate, obj.FilterDate)
+		var fernTestValueDate *string
+		obj.SetDate(fernTestValueDate)
+		assert.Equal(t, fernTestValueDate, obj.Date)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -78,14 +78,14 @@ func TestSettersBulkUpdateTasksRequest(t *testing.T) {
 }
 
 func TestSettersMarkExplicitBulkUpdateTasksRequest(t *testing.T) {
-	t.Run("SetFilterAssignedTo_MarksExplicit", func(t *testing.T) {
+	t.Run("SetAssignedTo_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &BulkUpdateTasksRequest{}
-		var fernTestValueFilterAssignedTo *string
+		var fernTestValueAssignedTo *string
 
 		// Act
-		obj.SetFilterAssignedTo(fernTestValueFilterAssignedTo)
+		obj.SetAssignedTo(fernTestValueAssignedTo)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -109,14 +109,14 @@ func TestSettersMarkExplicitBulkUpdateTasksRequest(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetFilterIsComplete_MarksExplicit", func(t *testing.T) {
+	t.Run("SetIsComplete_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &BulkUpdateTasksRequest{}
-		var fernTestValueFilterIsComplete *string
+		var fernTestValueIsComplete *string
 
 		// Act
-		obj.SetFilterIsComplete(fernTestValueFilterIsComplete)
+		obj.SetIsComplete(fernTestValueIsComplete)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -140,14 +140,14 @@ func TestSettersMarkExplicitBulkUpdateTasksRequest(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetFilterDate_MarksExplicit", func(t *testing.T) {
+	t.Run("SetDate_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &BulkUpdateTasksRequest{}
-		var fernTestValueFilterDate *string
+		var fernTestValueDate *string
 
 		// Act
-		obj.SetFilterDate(fernTestValueFilterDate)
+		obj.SetDate(fernTestValueDate)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

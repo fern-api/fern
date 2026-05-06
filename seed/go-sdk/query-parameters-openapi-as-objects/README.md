@@ -73,8 +73,10 @@ func do() {
                 "2024-01-15T09:30:00Z",
             ),
         ),
-        KeyValue: map[string]string{
-            "keyValue": "keyValue",
+        KeyValue: map[string]*string{
+            "keyValue": fern.String(
+                "keyValue",
+            ),
         },
         OptionalString: fern.String(
             "optionalString",
@@ -139,15 +141,13 @@ func do() {
                 },
             },
         },
-        NeighborRequired: &fern.SearchRequestNeighborRequired{
-            User: &fern.User{
-                Name: fern.String(
-                    "name",
-                ),
-                Tags: []string{
-                    "tags",
-                    "tags",
-                },
+        NeighborRequired: &fern.User{
+            Name: fern.String(
+                "name",
+            ),
+            Tags: []string{
+                "tags",
+                "tags",
             },
         },
     }

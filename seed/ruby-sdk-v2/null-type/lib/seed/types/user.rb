@@ -7,7 +7,7 @@ module Seed
 
       field :name, -> { String }, optional: false, nullable: false
 
-      field :deleted_at, -> { Object }, optional: false, nullable: true
+      field :deleted_at, -> { Object }, optional: false, nullable: false
     end
   end
 end

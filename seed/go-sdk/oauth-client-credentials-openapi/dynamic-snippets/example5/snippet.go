@@ -18,7 +18,7 @@ func do() {
             "<clientSecret>",
         ),
     )
-    request := &fern.GetPlantsRequest{
+    request := &fern.PlantsGetRequest{
         PlantID: "plantId",
     }
     client.Plants.Get(

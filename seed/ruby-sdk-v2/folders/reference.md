@@ -53,7 +53,7 @@ client.foo
 <dd>
 
 ```ruby
-client.foo
+client.a.b.foo
 ```
 </dd>
 </dl>
@@ -94,7 +94,7 @@ client.foo
 <dd>
 
 ```ruby
-client.foo
+client.a.c.foo
 ```
 </dd>
 </dl>
@@ -135,7 +135,7 @@ client.foo
 <dd>
 
 ```ruby
-client.foo
+client.folder.foo
 ```
 </dd>
 </dl>

@@ -4,12 +4,13 @@
             "id": {
                 "path": "/conversations/outbound-call",
                 "method": "POST",
-                "identifier_override": "endpoint_conversations.outboundCall"
+                "identifier_override": "endpoint_conversations.outboundcall"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/null-type\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.conversations.outboundCall({\n    to_phone_number: \"to_phone_number\"\n});\n"
-            }
+                "client": "import { SeedApiClient } from \"@fern/null-type\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.conversations.outboundcall({\n    to_phone_number: \"to_phone_number\"\n});\n"
+            },
+            "example_identifier": "Example1"
         },
         {
             "id": {
@@ -20,7 +21,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedApiClient } from \"@fern/null-type\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.users.get({\n    id: \"id\"\n});\n"
-            }
+            },
+            "example_identifier": "Example1"
         }
     ],
     "types": {}

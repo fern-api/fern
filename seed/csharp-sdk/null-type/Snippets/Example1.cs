@@ -9,8 +9,8 @@ public partial class Examples
             }
         );
 
-        await client.Conversations.OutboundCallAsync(
-            new OutboundCallConversationsRequest {
+        await client.Conversations.OutboundcallAsync(
+            new ConversationsOutboundCallRequest {
                 ToPhoneNumber = "to_phone_number",
                 DryRun = true
             }

@@ -46,7 +46,7 @@ public class AsyncRawProblemClient {
             RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("problems-v2")
+                .addPathSegments("problems-v2/v3")
                 .addPathSegments("lightweight-problem-info");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -106,7 +106,7 @@ public class AsyncRawProblemClient {
     public CompletableFuture<SeedTraceHttpResponse<List<ProblemInfoV2>>> getProblems(RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("problems-v2")
+                .addPathSegments("problems-v2/v3")
                 .addPathSegments("problem-info");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -167,7 +167,7 @@ public class AsyncRawProblemClient {
             String problemId, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("problems-v2")
+                .addPathSegments("problems-v2/v3")
                 .addPathSegments("problem-info")
                 .addPathSegment(problemId);
         if (requestOptions != null) {
@@ -229,7 +229,7 @@ public class AsyncRawProblemClient {
             String problemId, int problemVersion, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("problems-v2")
+                .addPathSegments("problems-v2/v3")
                 .addPathSegments("problem-info")
                 .addPathSegment(problemId)
                 .addPathSegments("version")

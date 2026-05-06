@@ -53,7 +53,7 @@ public final class ApiClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func search(limit: Int, id: String, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: User? = nil, optionalDeadline: Date? = nil, keyValue: [String: String]? = nil, optionalString: String? = nil, nestedUser: NestedUser? = nil, optionalUser: User? = nil, excludeUser: User? = nil, filter: String? = nil, tags: String? = nil, optionalTags: String? = nil, neighbor: SearchRequestNeighbor? = nil, neighborRequired: SearchRequestNeighborRequired, requestOptions: RequestOptions? = nil) async throws -> SearchResponse {
+    public func search(limit: Int, id: String, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: Nullable<User>? = nil, optionalDeadline: Nullable<Date>? = nil, keyValue: Nullable<[String: Nullable<String>]>? = nil, optionalString: Nullable<String>? = nil, nestedUser: Nullable<NestedUser>? = nil, optionalUser: Nullable<User>? = nil, excludeUser: Nullable<User>? = nil, filter: Nullable<String>? = nil, tags: Nullable<String>? = nil, optionalTags: Nullable<String>? = nil, neighbor: Nullable<SearchRequestNeighbor>? = nil, neighborRequired: User, requestOptions: RequestOptions? = nil) async throws -> SearchResponse {
         return try await httpClient.performRequest(
             method: .get,
             path: "/user/getUsername",
@@ -64,17 +64,17 @@ public final class ApiClient: Sendable {
                 "deadline": .date(deadline), 
                 "bytes": .string(bytes), 
                 "user": .unknown(user), 
-                "userList": userList.map { .unknown($0) }, 
-                "optionalDeadline": optionalDeadline.map { .date($0) }, 
-                "keyValue": keyValue.map { .unknown($0) }, 
-                "optionalString": optionalString.map { .string($0) }, 
-                "nestedUser": nestedUser.map { .unknown($0) }, 
-                "optionalUser": optionalUser.map { .unknown($0) }, 
-                "excludeUser": excludeUser.map { .unknown($0) }, 
-                "filter": filter.map { .string($0) }, 
-                "tags": tags.map { .string($0) }, 
-                "optionalTags": optionalTags.map { .string($0) }, 
-                "neighbor": neighbor.map { .unknown($0) }, 
+                "userList": userList?.wrappedValue.map { .unknown($0) }, 
+                "optionalDeadline": optionalDeadline?.wrappedValue.map { .date($0) }, 
+                "keyValue": keyValue?.wrappedValue.map { .unknown($0) }, 
+                "optionalString": optionalString?.wrappedValue.map { .string($0) }, 
+                "nestedUser": nestedUser?.wrappedValue.map { .unknown($0) }, 
+                "optionalUser": optionalUser?.wrappedValue.map { .unknown($0) }, 
+                "excludeUser": excludeUser?.wrappedValue.map { .unknown($0) }, 
+                "filter": filter?.wrappedValue.map { .string($0) }, 
+                "tags": tags?.wrappedValue.map { .string($0) }, 
+                "optionalTags": optionalTags?.wrappedValue.map { .string($0) }, 
+                "neighbor": neighbor?.wrappedValue.map { .unknown($0) }, 
                 "neighborRequired": .unknown(neighborRequired)
             ],
             requestOptions: requestOptions,

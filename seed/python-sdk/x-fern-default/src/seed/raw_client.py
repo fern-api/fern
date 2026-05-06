@@ -20,9 +20,9 @@ class RawSeedApi:
 
     def test_get(
         self,
+        region: str,
         *,
-        region: str = "us-east-1",
-        limit: typing.Optional[str] = "100",
+        limit: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[TestGetResponse]:
         """
@@ -74,9 +74,9 @@ class AsyncRawSeedApi:
 
     async def test_get(
         self,
+        region: str,
         *,
-        region: str = "us-east-1",
-        limit: typing.Optional[str] = "100",
+        limit: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[TestGetResponse]:
         """

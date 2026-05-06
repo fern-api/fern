@@ -7,7 +7,7 @@ import (
 	core "github.com/nullable-request-body/fern/core"
 )
 
-// Validation Error
+// UnprocessableEntityError
 type UnprocessableEntityError struct {
 	*core.APIError
 	Body *PlainObject

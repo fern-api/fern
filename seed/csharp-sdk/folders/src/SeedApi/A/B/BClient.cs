@@ -31,7 +31,7 @@ public partial class BClient : IBClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "",
+                    Path = "/a/b",
                     Headers = _headers,
                     Options = options,
                 },

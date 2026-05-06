@@ -2,16 +2,16 @@
 
 namespace Seed;
 
-use Seed\TestGroup\TestGroupClient;
+use Seed\Testgroup\TestgroupClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient
 {
     /**
-     * @var TestGroupClient $testGroup
+     * @var TestgroupClient $testgroup
      */
-    public TestGroupClient $testGroup;
+    public TestgroupClient $testgroup;
 
     /**
      * @var array{
@@ -59,6 +59,6 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->testGroup = new TestGroupClient($this->client, $this->options);
+        $this->testgroup = new TestgroupClient($this->client, $this->options);
     }
 }

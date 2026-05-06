@@ -58,18 +58,18 @@ export interface SearchRequest {
     deadline: string;
     bytes: string;
     user: SeedApi.User;
-    userList?: SeedApi.User | SeedApi.User[];
-    optionalDeadline?: string;
-    keyValue?: Record<string, string>;
-    optionalString?: string;
-    nestedUser?: SeedApi.NestedUser;
-    optionalUser?: SeedApi.User;
-    excludeUser?: SeedApi.User | SeedApi.User[];
-    filter?: string | string[];
+    userList?: (SeedApi.User | null) | (SeedApi.User | null)[];
+    optionalDeadline?: string | null;
+    keyValue?: Record<string, string | null> | null;
+    optionalString?: string | null;
+    nestedUser?: SeedApi.NestedUser | null;
+    optionalUser?: SeedApi.User | null;
+    excludeUser?: (SeedApi.User | null) | (SeedApi.User | null)[];
+    filter?: (string | null) | (string | null)[];
     /** List of tags. Serialized as a comma-separated list. */
-    tags?: string | string[];
+    tags?: (string | null) | (string | null)[];
     /** Optional list of tags. Serialized as a comma-separated list. */
-    optionalTags?: string | string[];
-    neighbor?: SeedApi.SearchRequestNeighbor;
-    neighborRequired: SeedApi.SearchRequestNeighborRequired;
+    optionalTags?: (string | null) | (string | null)[];
+    neighbor?: SeedApi.SearchRequestNeighbor | null;
+    neighborRequired: SeedApi.User;
 }

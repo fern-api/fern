@@ -14,7 +14,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.CreateContactRequest{
+    request := &fern.ContactsCreateRequest{
         Name: "name",
     }
     client.Contacts.Create(

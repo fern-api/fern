@@ -101,7 +101,7 @@ public class RawParamsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
-                .addPathSegments("path")
+                .addPathSegments("inline-path")
                 .addPathSegment(request.getParam());
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -191,7 +191,8 @@ public class RawParamsClient {
             GetWithMultipleQuery request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("params");
+                .addPathSegments("params")
+                .addPathSegments("allow-multiple");
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), true);
         QueryStringMapper.addQueryParameter(httpUrl, "number", request.getNumber(), true);
         if (requestOptions != null) {
@@ -283,7 +284,7 @@ public class RawParamsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
-                .addPathSegments("path-query")
+                .addPathSegments("inline-path-query")
                 .addPathSegment(request.getParam());
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
         if (requestOptions != null) {
@@ -383,7 +384,7 @@ public class RawParamsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
-                .addPathSegments("path")
+                .addPathSegments("inline-path")
                 .addPathSegment(request.getParam());
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -546,7 +547,7 @@ public class RawParamsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
-                .addPathSegments("path")
+                .addPathSegments("path-with-errors")
                 .addPathSegment(param);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {

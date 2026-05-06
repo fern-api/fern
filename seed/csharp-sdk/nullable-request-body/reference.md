@@ -1,6 +1,6 @@
 # Reference
-## TestGroup
-<details><summary><code>client.TestGroup.<a href="/src/SeedApi/TestGroup/TestGroupClient.cs">TestMethodNameAsync</a>(TestMethodNameTestGroupRequest { ... }) -> WithRawResponseTask&lt;object&gt;</code></summary>
+## Testgroup
+<details><summary><code>client.Testgroup.<a href="/src/SeedApi/Testgroup/TestgroupClient.cs">TestMethodNameAsync</a>(TestGroupTestMethodNameRequest { ... }) -> WithRawResponseTask&lt;object&gt;</code></summary>
 <dl>
 <dd>
 
@@ -27,8 +27,8 @@ Post a nullable request body
 <dd>
 
 ```csharp
-await client.TestGroup.TestMethodNameAsync(
-    new TestMethodNameTestGroupRequest { PathParam = "path_param", Body = new PlainObject() }
+await client.Testgroup.TestMethodNameAsync(
+    new TestGroupTestMethodNameRequest { PathParam = "path_param", Body = new PlainObject() }
 );
 ```
 </dd>
@@ -44,7 +44,7 @@ await client.TestGroup.TestMethodNameAsync(
 <dl>
 <dd>
 
-**request:** `TestMethodNameTestGroupRequest` 
+**request:** `TestGroupTestMethodNameRequest` 
     
 </dd>
 </dl>

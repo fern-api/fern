@@ -53,15 +53,15 @@ public final class ApiClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func bulkUpdateTasks(filterAssignedTo: Nullable<String>? = nil, filterIsComplete: Nullable<String>? = nil, filterDate: Nullable<String>? = nil, fields: String? = nil, request: Requests.BulkUpdateTasksRequest, requestOptions: RequestOptions? = nil) async throws -> BulkUpdateTasksResponse {
+    public func bulkUpdateTasks(assignedTo: Nullable<String>? = nil, isComplete: Nullable<String>? = nil, date: Nullable<String>? = nil, fields: Nullable<String>? = nil, request: Requests.BulkUpdateTasksRequest, requestOptions: RequestOptions? = nil) async throws -> BulkUpdateTasksResponse {
         return try await httpClient.performRequest(
             method: .put,
             path: "/task",
             queryParams: [
-                "filter_assigned_to": filterAssignedTo?.wrappedValue.map { .string($0) }, 
-                "filter_is_complete": filterIsComplete?.wrappedValue.map { .string($0) }, 
-                "filter_date": filterDate?.wrappedValue.map { .string($0) }, 
-                "_fields": fields.map { .string($0) }
+                "assigned_to": assignedTo?.wrappedValue.map { .string($0) }, 
+                "is_complete": isComplete?.wrappedValue.map { .string($0) }, 
+                "date": date?.wrappedValue.map { .string($0) }, 
+                "_fields": fields?.wrappedValue.map { .string($0) }
             ],
             body: request,
             requestOptions: requestOptions,

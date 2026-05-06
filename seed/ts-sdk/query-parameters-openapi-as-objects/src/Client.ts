@@ -113,8 +113,8 @@ export class SeedApiClient {
             bytes,
             user,
             userList,
-            optionalDeadline: optionalDeadline != null ? optionalDeadline : undefined,
-            keyValue: keyValue != null ? toJson(keyValue) : undefined,
+            optionalDeadline: optionalDeadline !== undefined ? optionalDeadline : undefined,
+            keyValue: keyValue !== undefined ? toJson(keyValue) : undefined,
             optionalString,
             nestedUser,
             optionalUser,
@@ -124,16 +124,12 @@ export class SeedApiClient {
             optionalTags,
             neighbor: Array.isArray(neighbor)
                 ? neighbor.map((item) => (typeof item === "string" ? item : toJson(item)))
-                : neighbor != null
+                : neighbor !== undefined
                   ? typeof neighbor === "string"
                       ? neighbor
                       : toJson(neighbor)
                   : undefined,
-            neighborRequired: Array.isArray(neighborRequired)
-                ? neighborRequired.map((item) => (typeof item === "string" ? item : toJson(item)))
-                : typeof neighborRequired === "string"
-                  ? neighborRequired
-                  : toJson(neighborRequired),
+            neighborRequired,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
@@ -147,8 +143,6 @@ export class SeedApiClient {
             queryString: core.url
                 .queryBuilder()
                 .addMany(_queryParams)
-                .add("tags", _queryParams.tags, { style: "comma" })
-                .add("optionalTags", _queryParams.optionalTags, { style: "comma" })
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

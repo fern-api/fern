@@ -24,9 +24,9 @@ class RawSeedApi:
     def bulk_update_tasks(
         self,
         *,
-        filter_assigned_to: typing.Optional[str] = None,
-        filter_is_complete: typing.Optional[str] = None,
-        filter_date: typing.Optional[str] = None,
+        assigned_to: typing.Optional[str] = None,
+        is_complete: typing.Optional[str] = None,
+        date: typing.Optional[str] = None,
         fields: typing.Optional[str] = None,
         bulk_update_tasks_request_assigned_to: typing.Optional[str] = OMIT,
         bulk_update_tasks_request_date: typing.Optional[dt.date] = OMIT,
@@ -37,11 +37,11 @@ class RawSeedApi:
         """
         Parameters
         ----------
-        filter_assigned_to : typing.Optional[str]
+        assigned_to : typing.Optional[str]
 
-        filter_is_complete : typing.Optional[str]
+        is_complete : typing.Optional[str]
 
-        filter_date : typing.Optional[str]
+        date : typing.Optional[str]
 
         fields : typing.Optional[str]
             Comma-separated list of fields to include in the response.
@@ -66,9 +66,9 @@ class RawSeedApi:
             "task/",
             method="PUT",
             params={
-                "assigned_to": filter_assigned_to,
-                "is_complete": filter_is_complete,
-                "date": filter_date,
+                "assigned_to": assigned_to,
+                "is_complete": is_complete,
+                "date": date,
                 "_fields": fields,
             },
             json={
@@ -110,9 +110,9 @@ class AsyncRawSeedApi:
     async def bulk_update_tasks(
         self,
         *,
-        filter_assigned_to: typing.Optional[str] = None,
-        filter_is_complete: typing.Optional[str] = None,
-        filter_date: typing.Optional[str] = None,
+        assigned_to: typing.Optional[str] = None,
+        is_complete: typing.Optional[str] = None,
+        date: typing.Optional[str] = None,
         fields: typing.Optional[str] = None,
         bulk_update_tasks_request_assigned_to: typing.Optional[str] = OMIT,
         bulk_update_tasks_request_date: typing.Optional[dt.date] = OMIT,
@@ -123,11 +123,11 @@ class AsyncRawSeedApi:
         """
         Parameters
         ----------
-        filter_assigned_to : typing.Optional[str]
+        assigned_to : typing.Optional[str]
 
-        filter_is_complete : typing.Optional[str]
+        is_complete : typing.Optional[str]
 
-        filter_date : typing.Optional[str]
+        date : typing.Optional[str]
 
         fields : typing.Optional[str]
             Comma-separated list of fields to include in the response.
@@ -152,9 +152,9 @@ class AsyncRawSeedApi:
             "task/",
             method="PUT",
             params={
-                "assigned_to": filter_assigned_to,
-                "is_complete": filter_is_complete,
-                "date": filter_date,
+                "assigned_to": assigned_to,
+                "is_complete": is_complete,
+                "date": date,
                 "_fields": fields,
             },
             json={

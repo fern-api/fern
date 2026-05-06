@@ -31,7 +31,7 @@ public class GetTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Users.GetAsync(new GetUsersRequest { Id = "id" });
+        var response = await Client.Users.GetAsync(new UsersGetRequest { Id = "id" });
         JsonAssert.AreEqual(response, mockResponse);
     }
 
@@ -57,7 +57,7 @@ public class GetTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Users.GetAsync(new GetUsersRequest { Id = "id" });
+        var response = await Client.Users.GetAsync(new UsersGetRequest { Id = "id" });
         JsonAssert.AreEqual(response, mockResponse);
     }
 }

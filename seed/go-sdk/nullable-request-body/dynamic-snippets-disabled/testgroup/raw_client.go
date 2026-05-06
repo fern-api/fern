@@ -33,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) TestMethodName(
 	ctx context.Context,
-	request *fern.TestMethodNameTestGroupRequest,
+	request *fern.TestGroupTestMethodNameRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)

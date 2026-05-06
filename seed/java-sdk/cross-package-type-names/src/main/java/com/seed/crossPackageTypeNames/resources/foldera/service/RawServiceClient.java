@@ -29,9 +29,9 @@ public class RawServiceClient {
     }
 
     public SeedCrossPackageTypeNamesHttpResponse<Response> getDirectThread(RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl =
-                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
-
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("folder-a");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

@@ -56,7 +56,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "/token",
+          path: "/token/refresh",
           body: Seed::Auth::Types::RefreshTokenRequest.new(params).to_h,
           request_options: request_options
         )

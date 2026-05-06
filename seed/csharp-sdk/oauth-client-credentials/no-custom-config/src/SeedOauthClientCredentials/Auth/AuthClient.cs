@@ -96,7 +96,7 @@ public partial class AuthClient : IAuthClient
                 new FormRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "/token",
+                    Path = "/token/refresh",
                     Body = request,
                     Headers = _headers,
                     ContentType = "application/x-www-form-urlencoded",

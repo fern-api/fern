@@ -24,7 +24,7 @@ impl ContactsClient {
     /// JSON response from the API
     pub async fn create(
         &self,
-        request: &CreateContactRequest,
+        request: &ContactsCreateRequest,
         options: Option<RequestOptions>,
     ) -> Result<Option<Contact>, ApiError> {
         self.http_client

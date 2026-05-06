@@ -1,6 +1,6 @@
 # Reference
 ## Identity
-<details><summary><code>client.identity.getToken(request) -> TokenResponse</code></summary>
+<details><summary><code>client.identity.gettoken(request) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,8 +13,8 @@
 <dd>
 
 ```java
-client.identity().getToken(
-    GetTokenIdentityRequest
+client.identity().gettoken(
+    IdentityGetTokenRequest
         .builder()
         .username("username")
         .password("password")
@@ -95,7 +95,7 @@ client.plants().list();
 ```java
 client.plants().get(
     "plantId",
-    GetPlantsRequest
+    PlantsGetRequest
         .builder()
         .build()
 );

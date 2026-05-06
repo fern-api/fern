@@ -12,7 +12,7 @@ public partial class Examples
         );
 
         await client.Plants.GetAsync(
-            new GetPlantsRequest {
+            new PlantsGetRequest {
                 PlantId = "plantId"
             }
         );

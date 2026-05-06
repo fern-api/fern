@@ -84,7 +84,7 @@ func (r *RawClient) RefreshToken(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/token"
+	endpointURL := baseURL + "/token/refresh"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),

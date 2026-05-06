@@ -2,7 +2,7 @@
     "types": {},
     "endpoints": [
         {
-            "example_identifier": null,
+            "example_identifier": "Example1",
             "id": {
                 "path": "/contacts",
                 "method": "POST",
@@ -10,11 +10,11 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Contacts.CreateAsync(new CreateContactRequest { Name = \"name\" });\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Contacts.CreateAsync(new ContactsCreateRequest { Name = \"name\" });\n"
             }
         },
         {
-            "example_identifier": null,
+            "example_identifier": "Example1",
             "id": {
                 "path": "/contacts/{id}",
                 "method": "GET",
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Contacts.GetAsync(new GetContactsRequest { Id = \"id\" });\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Contacts.GetAsync(new ContactsGetRequest { Id = \"id\" });\n"
             }
         }
     ]

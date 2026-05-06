@@ -77,7 +77,7 @@ public partial class PlantsClient : IPlantsClient
     }
 
     private async Task<WithRawResponse<Plant>> GetAsyncCore(
-        GetPlantsRequest request,
+        PlantsGetRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -158,10 +158,10 @@ public partial class PlantsClient : IPlantsClient
     }
 
     /// <example><code>
-    /// await client.Plants.GetAsync(new GetPlantsRequest { PlantId = "plantId" });
+    /// await client.Plants.GetAsync(new PlantsGetRequest { PlantId = "plantId" });
     /// </code></example>
     public WithRawResponseTask<Plant> GetAsync(
-        GetPlantsRequest request,
+        PlantsGetRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

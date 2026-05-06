@@ -440,7 +440,7 @@ func (r *RawClient) WithFormEncodedContainers(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL
+	endpointURL := baseURL + "/form-encoded-containers"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),

@@ -15,9 +15,9 @@ module Seed
       )
     end
 
-    # @return [Seed::TestGroup::Client]
-    def test_group
-      @test_group ||= Seed::TestGroup::Client.new(client: @raw_client)
+    # @return [Seed::Testgroup::Client]
+    def testgroup
+      @testgroup ||= Seed::Testgroup::Client.new(client: @raw_client)
     end
   end
 end

@@ -22,9 +22,9 @@ impl ConversationsClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn outbound_call(
+    pub async fn outboundcall(
         &self,
-        request: &OutboundCallConversationsRequest,
+        request: &ConversationsOutboundCallRequest,
         options: Option<RequestOptions>,
     ) -> Result<OutboundCallConversationsResponse, ApiError> {
         self.http_client

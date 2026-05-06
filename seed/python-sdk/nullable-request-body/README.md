@@ -40,7 +40,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.test_group.test_method_name(
+client.testgroup.test_method_name(
     path_param="path_param",
     request=PlainObject(),
 )
@@ -61,7 +61,7 @@ client = AsyncSeedApi(
 
 
 async def main() -> None:
-    await client.test_group.test_method_name(
+    await client.testgroup.test_method_name(
         path_param="path_param",
         request=PlainObject(),
     )
@@ -79,7 +79,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.test_group.test_method_name(...)
+    client.testgroup.test_method_name(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -96,7 +96,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 from seed import SeedApi
 
 client = SeedApi(...)
-response = client.test_group.with_raw_response.test_method_name(...)
+response = client.testgroup.with_raw_response.test_method_name(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -127,7 +127,7 @@ Which status codes are retried depends on the `retryStatusCodes` generator confi
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.test_group.test_method_name(..., request_options={
+client.testgroup.test_method_name(..., request_options={
     "max_retries": 1
 })
 ```
@@ -142,7 +142,7 @@ from seed import SeedApi
 client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.test_group.test_method_name(..., request_options={
+client.testgroup.test_method_name(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

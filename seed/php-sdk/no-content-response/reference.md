@@ -28,7 +28,7 @@ Creates a new contact. Returns 200 with the contact or 204 with no content.
 
 ```php
 $client->contacts->create(
-    new CreateContactRequest([
+    new ContactsCreateRequest([
         'name' => 'name',
     ]),
 );

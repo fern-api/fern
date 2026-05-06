@@ -16,12 +16,12 @@ module Seed
     def test_get(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
       query_params = {}
-      query_params["limit"] = params.fetch(:limit, "100")
+      query_params["limit"] = params[:limit] if params.key?(:limit)
 
       request = Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "GET",
-        path: "test/#{URI.encode_uri_component(params.fetch(:region, "us-east-1").to_s)}/resource",
+        path: "test/#{URI.encode_uri_component(params[:region].to_s)}/resource",
         query: query_params,
         request_options: request_options
       )
@@ -40,16 +40,14 @@ module Seed
     end
 
     # @param base_url [String, nil]
-    # @param api_version [String, nil]
     #
     # @return [void]
-    def initialize(base_url: nil, api_version: "2024-02-08")
+    def initialize(base_url: nil)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_x-fern-default/0.0.1",
-          "X-Fern-Language" => "Ruby",
-          "X-API-Version" => api_version.to_s
+          "X-Fern-Language" => "Ruby"
         }
       )
     end

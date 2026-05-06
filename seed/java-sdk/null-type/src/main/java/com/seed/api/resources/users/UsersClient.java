@@ -5,7 +5,7 @@ package com.seed.api.resources.users;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
-import com.seed.api.resources.users.requests.GetUsersRequest;
+import com.seed.api.resources.users.requests.UsersGetRequest;
 import com.seed.api.types.User;
 
 public class UsersClient {
@@ -42,14 +42,14 @@ public class UsersClient {
     /**
      * Gets a user by ID. The deleted_at field uses type null.
      */
-    public User get(String id, GetUsersRequest request) {
+    public User get(String id, UsersGetRequest request) {
         return this.rawClient.get(id, request).body();
     }
 
     /**
      * Gets a user by ID. The deleted_at field uses type null.
      */
-    public User get(String id, GetUsersRequest request, RequestOptions requestOptions) {
+    public User get(String id, UsersGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(id, request, requestOptions).body();
     }
 }

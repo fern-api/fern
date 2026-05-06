@@ -1,6 +1,6 @@
 # Reference
 ## Identity
-<details><summary><code>client.Identity.<a href="/src/SeedApi/Identity/IdentityClient.cs">GetTokenAsync</a>(GetTokenIdentityRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
+<details><summary><code>client.Identity.<a href="/src/SeedApi/Identity/IdentityClient.cs">GettokenAsync</a>(IdentityGetTokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,8 +13,8 @@
 <dd>
 
 ```csharp
-await client.Identity.GetTokenAsync(
-    new GetTokenIdentityRequest { Username = "username", Password = "password" }
+await client.Identity.GettokenAsync(
+    new IdentityGetTokenRequest { Username = "username", Password = "password" }
 );
 ```
 </dd>
@@ -30,7 +30,7 @@ await client.Identity.GetTokenAsync(
 <dl>
 <dd>
 
-**request:** `GetTokenIdentityRequest` 
+**request:** `IdentityGetTokenRequest` 
     
 </dd>
 </dl>
@@ -68,7 +68,7 @@ await client.Plants.ListAsync();
 </dl>
 </details>
 
-<details><summary><code>client.Plants.<a href="/src/SeedApi/Plants/PlantsClient.cs">GetAsync</a>(GetPlantsRequest { ... }) -> WithRawResponseTask&lt;Plant&gt;</code></summary>
+<details><summary><code>client.Plants.<a href="/src/SeedApi/Plants/PlantsClient.cs">GetAsync</a>(PlantsGetRequest { ... }) -> WithRawResponseTask&lt;Plant&gt;</code></summary>
 <dl>
 <dd>
 
@@ -81,7 +81,7 @@ await client.Plants.ListAsync();
 <dd>
 
 ```csharp
-await client.Plants.GetAsync(new GetPlantsRequest { PlantId = "plantId" });
+await client.Plants.GetAsync(new PlantsGetRequest { PlantId = "plantId" });
 ```
 </dd>
 </dl>
@@ -96,7 +96,7 @@ await client.Plants.GetAsync(new GetPlantsRequest { PlantId = "plantId" });
 <dl>
 <dd>
 
-**request:** `GetPlantsRequest` 
+**request:** `PlantsGetRequest` 
     
 </dd>
 </dl>

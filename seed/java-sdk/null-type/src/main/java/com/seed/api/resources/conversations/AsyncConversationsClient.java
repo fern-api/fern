@@ -5,8 +5,8 @@ package com.seed.api.resources.conversations;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
-import com.seed.api.resources.conversations.requests.OutboundCallConversationsRequest;
-import com.seed.api.resources.conversations.types.OutboundCallConversationsResponse;
+import com.seed.api.resources.conversations.requests.ConversationsOutboundCallRequest;
+import com.seed.api.types.OutboundCallConversationsResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncConversationsClient {
@@ -29,15 +29,15 @@ public class AsyncConversationsClient {
     /**
      * Place an outbound call or validate call setup with dry_run.
      */
-    public CompletableFuture<OutboundCallConversationsResponse> outboundCall(OutboundCallConversationsRequest request) {
-        return this.rawClient.outboundCall(request).thenApply(response -> response.body());
+    public CompletableFuture<OutboundCallConversationsResponse> outboundcall(ConversationsOutboundCallRequest request) {
+        return this.rawClient.outboundcall(request).thenApply(response -> response.body());
     }
 
     /**
      * Place an outbound call or validate call setup with dry_run.
      */
-    public CompletableFuture<OutboundCallConversationsResponse> outboundCall(
-            OutboundCallConversationsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.outboundCall(request, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<OutboundCallConversationsResponse> outboundcall(
+            ConversationsOutboundCallRequest request, RequestOptions requestOptions) {
+        return this.rawClient.outboundcall(request, requestOptions).thenApply(response -> response.body());
     }
 }

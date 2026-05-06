@@ -83,7 +83,7 @@ client.getUser(
 
 ```java
 client.getToken(
-    TokenRequest
+    GetTokenRequest
         .builder()
         .clientId("client_id")
         .clientSecret("client_secret")

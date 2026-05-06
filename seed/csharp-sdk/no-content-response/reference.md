@@ -1,6 +1,6 @@
 # Reference
 ## Contacts
-<details><summary><code>client.Contacts.<a href="/src/SeedApi/Contacts/ContactsClient.cs">CreateAsync</a>(CreateContactRequest { ... }) -> WithRawResponseTask&lt;Contact?&gt;</code></summary>
+<details><summary><code>client.Contacts.<a href="/src/SeedApi/Contacts/ContactsClient.cs">CreateAsync</a>(ContactsCreateRequest { ... }) -> WithRawResponseTask&lt;Contact?&gt;</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ Creates a new contact. Returns 200 with the contact or 204 with no content.
 <dd>
 
 ```csharp
-await client.Contacts.CreateAsync(new CreateContactRequest { Name = "name" });
+await client.Contacts.CreateAsync(new ContactsCreateRequest { Name = "name" });
 ```
 </dd>
 </dl>
@@ -42,7 +42,7 @@ await client.Contacts.CreateAsync(new CreateContactRequest { Name = "name" });
 <dl>
 <dd>
 
-**request:** `CreateContactRequest` 
+**request:** `ContactsCreateRequest` 
     
 </dd>
 </dl>
@@ -54,7 +54,7 @@ await client.Contacts.CreateAsync(new CreateContactRequest { Name = "name" });
 </dl>
 </details>
 
-<details><summary><code>client.Contacts.<a href="/src/SeedApi/Contacts/ContactsClient.cs">GetAsync</a>(GetContactsRequest { ... }) -> WithRawResponseTask&lt;Contact&gt;</code></summary>
+<details><summary><code>client.Contacts.<a href="/src/SeedApi/Contacts/ContactsClient.cs">GetAsync</a>(ContactsGetRequest { ... }) -> WithRawResponseTask&lt;Contact&gt;</code></summary>
 <dl>
 <dd>
 
@@ -81,7 +81,7 @@ Gets a contact by ID. Returns 200 with the contact.
 <dd>
 
 ```csharp
-await client.Contacts.GetAsync(new GetContactsRequest { Id = "id" });
+await client.Contacts.GetAsync(new ContactsGetRequest { Id = "id" });
 ```
 </dd>
 </dl>
@@ -96,7 +96,7 @@ await client.Contacts.GetAsync(new GetContactsRequest { Id = "id" });
 <dl>
 <dd>
 
-**request:** `GetContactsRequest` 
+**request:** `ContactsGetRequest` 
     
 </dd>
 </dl>

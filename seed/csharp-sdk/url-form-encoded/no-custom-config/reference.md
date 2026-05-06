@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">SubmitFormDataAsync</a>(PostSubmitRequest { ... }) -> WithRawResponseTask&lt;PostSubmitResponse&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">SubmitFormDataAsync</a>(SubmitFormDataRequest { ... }) -> WithRawResponseTask&lt;PostSubmitResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 
 ```csharp
 await client.SubmitFormDataAsync(
-    new PostSubmitRequest { Username = "johndoe", Email = "john@example.com" }
+    new SubmitFormDataRequest { Username = "johndoe", Email = "john@example.com" }
 );
 ```
 </dd>
@@ -29,7 +29,7 @@ await client.SubmitFormDataAsync(
 <dl>
 <dd>
 
-**request:** `PostSubmitRequest` 
+**request:** `SubmitFormDataRequest` 
     
 </dd>
 </dl>

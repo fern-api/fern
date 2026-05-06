@@ -44,7 +44,7 @@ Instantiate and use the client with the following:
 import { SeedApiClient } from "@fern/oauth-client-credentials-openapi";
 
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL", clientId: "YOUR_CLIENT_ID", clientSecret: "YOUR_CLIENT_SECRET" });
-await client.identity.getToken({
+await client.identity.gettoken({
     username: "username",
     password: "password"
 });
@@ -89,7 +89,7 @@ following namespace:
 ```typescript
 import { SeedApi } from "@fern/oauth-client-credentials-openapi";
 
-const request: SeedApi.GetTokenIdentityRequest = {
+const request: SeedApi.IdentityGetTokenRequest = {
     ...
 };
 ```
@@ -103,7 +103,7 @@ will be thrown.
 import { SeedApiError } from "@fern/oauth-client-credentials-openapi";
 
 try {
-    await client.identity.getToken(...);
+    await client.identity.gettoken(...);
 } catch (err) {
     if (err instanceof SeedApiError) {
         console.log(err.statusCode);
@@ -140,7 +140,7 @@ const client = new SeedApiClient({
     }
 });
 
-const response = await client.identity.getToken(..., {
+const response = await client.identity.gettoken(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -152,7 +152,7 @@ const response = await client.identity.getToken(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.identity.getToken(..., {
+const response = await client.identity.gettoken(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -182,7 +182,7 @@ Which status codes are retried depends on the `retryStatusCodes` generator confi
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.identity.getToken(..., {
+const response = await client.identity.gettoken(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -192,7 +192,7 @@ const response = await client.identity.getToken(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.identity.getToken(..., {
+const response = await client.identity.gettoken(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -203,7 +203,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.identity.getToken(..., {
+const response = await client.identity.gettoken(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -215,7 +215,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.identity.getToken(...).withRawResponse();
+const { data, rawResponse } = await client.identity.gettoken(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);

@@ -26,7 +26,7 @@ class IdentityClient:
         """
         return self._raw_client
 
-    def get_token(
+    def gettoken(
         self, *, username: str, password: str, request_options: typing.Optional[RequestOptions] = None
     ) -> TokenResponse:
         """
@@ -53,12 +53,12 @@ class IdentityClient:
             client_id="YOUR_CLIENT_ID",
             client_secret="YOUR_CLIENT_SECRET",
         )
-        client.identity.get_token(
+        client.identity.gettoken(
             username="username",
             password="password",
         )
         """
-        _response = self._raw_client.get_token(username=username, password=password, request_options=request_options)
+        _response = self._raw_client.gettoken(username=username, password=password, request_options=request_options)
         return _response.data
 
 
@@ -77,7 +77,7 @@ class AsyncIdentityClient:
         """
         return self._raw_client
 
-    async def get_token(
+    async def gettoken(
         self, *, username: str, password: str, request_options: typing.Optional[RequestOptions] = None
     ) -> TokenResponse:
         """
@@ -109,7 +109,7 @@ class AsyncIdentityClient:
 
 
         async def main() -> None:
-            await client.identity.get_token(
+            await client.identity.gettoken(
                 username="username",
                 password="password",
             )
@@ -117,7 +117,7 @@ class AsyncIdentityClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_token(
+        _response = await self._raw_client.gettoken(
             username=username, password=password, request_options=request_options
         )
         return _response.data

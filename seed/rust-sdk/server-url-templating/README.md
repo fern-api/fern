@@ -10,7 +10,6 @@ The Seed Rust library provides convenient access to the Seed APIs from Rust.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
-- [Environments](#environments)
 - [Errors](#errors)
 - [Request Types](#request-types)
 - [Advanced](#advanced)
@@ -54,7 +53,7 @@ async fn main() {
     let client = ApiClient::new(config).expect("Failed to build client");
     client
         .get_token(
-            &TokenRequest {
+            &GetTokenRequest {
                 client_id: "client_id".to_string(),
                 client_secret: "client_secret".to_string(),
             },
@@ -62,20 +61,6 @@ async fn main() {
         )
         .await;
 }
-```
-
-## Environments
-
-This SDK allows you to configure different environments for API requests.
-
-```rust
-use seed_api::prelude::{*};
-
-let config = ClientConfig {
-    base_url: Environment::RegionalApiServer.url().to_string(),
-    ..Default::default()
-};
-let client = Client::new(config).expect("Failed to build client");
 ```
 
 ## Errors
@@ -103,7 +88,7 @@ The SDK exports all request types as Rust structs. Simply import them from the c
 ```rust
 use seed_api::prelude::{*};
 
-let request = TokenRequest {
+let request = GetTokenRequest {
     ...
 };
 ```

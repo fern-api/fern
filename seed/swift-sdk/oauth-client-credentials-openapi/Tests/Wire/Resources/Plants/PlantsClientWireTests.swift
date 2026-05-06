@@ -26,7 +26,7 @@ import Api
             Plant(
                 id: "id",
                 name: "name",
-                species: Optional("species")
+                species: Optional(Nullable<String>.value("species"))
             )
         ]
         let response = try await client.plants.list(requestOptions: RequestOptions(additionalHeaders: stub.headers))
@@ -61,12 +61,12 @@ import Api
             Plant(
                 id: "id",
                 name: "name",
-                species: Optional("species")
+                species: Optional(Nullable<String>.value("species"))
             ),
             Plant(
                 id: "id",
                 name: "name",
-                species: Optional("species")
+                species: Optional(Nullable<String>.value("species"))
             )
         ]
         let response = try await client.plants.list(requestOptions: RequestOptions(additionalHeaders: stub.headers))
@@ -93,7 +93,7 @@ import Api
         let expectedResponse = Plant(
             id: "id",
             name: "name",
-            species: Optional("species")
+            species: Optional(Nullable<String>.value("species"))
         )
         let response = try await client.plants.get(
             plantId: "plantId",
@@ -122,7 +122,7 @@ import Api
         let expectedResponse = Plant(
             id: "id",
             name: "name",
-            species: Optional("species")
+            species: Optional(Nullable<String>.value("species"))
         )
         let response = try await client.plants.get(
             plantId: "plantId",

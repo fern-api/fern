@@ -1,6 +1,6 @@
 # Reference
 ## Identity
-<details><summary><code>client.identity.<a href="/src/api/resources/identity/client.rs">get_token</a>(request: GetTokenIdentityRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.identity.<a href="/src/api/resources/identity/client.rs">gettoken</a>(request: IdentityGetTokenRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -23,8 +23,8 @@ async fn main() {
     let client = ApiClient::new(config).expect("Failed to build client");
     client
         .identity
-        .get_token(
-            &GetTokenIdentityRequest {
+        .gettoken(
+            &IdentityGetTokenRequest {
                 username: "username".to_string(),
                 password: "password".to_string(),
             },

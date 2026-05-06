@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/Sources/ApiClient.swift">bulkUpdateTasks</a>(filterAssignedTo: Nullable&lt;String&gt;?, filterIsComplete: Nullable&lt;String&gt;?, filterDate: Nullable&lt;String&gt;?, fields: String?, request: Requests.BulkUpdateTasksRequest, requestOptions: RequestOptions?) -> BulkUpdateTasksResponse</code></summary>
+<details><summary><code>client.<a href="/Sources/ApiClient.swift">bulkUpdateTasks</a>(assignedTo: Nullable&lt;String&gt;?, isComplete: Nullable&lt;String&gt;?, date: Nullable&lt;String&gt;?, fields: Nullable&lt;String&gt;?, request: Requests.BulkUpdateTasksRequest, requestOptions: RequestOptions?) -> BulkUpdateTasksResponse</code></summary>
 <dl>
 <dd>
 
@@ -36,7 +36,7 @@ try await main()
 <dl>
 <dd>
 
-**filterAssignedTo:** `Nullable<String>?` 
+**assignedTo:** `Nullable<String>?` 
     
 </dd>
 </dl>
@@ -44,7 +44,7 @@ try await main()
 <dl>
 <dd>
 
-**filterIsComplete:** `Nullable<String>?` 
+**isComplete:** `Nullable<String>?` 
     
 </dd>
 </dl>
@@ -52,7 +52,7 @@ try await main()
 <dl>
 <dd>
 
-**filterDate:** `Nullable<String>?` 
+**date:** `Nullable<String>?` 
     
 </dd>
 </dl>
@@ -60,7 +60,7 @@ try await main()
 <dl>
 <dd>
 
-**fields:** `String?` — Comma-separated list of fields to include in the response.
+**fields:** `Nullable<String>?` — Comma-separated list of fields to include in the response.
     
 </dd>
 </dl>

@@ -82,7 +82,7 @@ class RawServiceClient:
         HttpResponse[str]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "movie",
+            "movie/docs",
             method="POST",
             json=request,
             request_options=request_options,
@@ -124,7 +124,7 @@ class RawServiceClient:
         HttpResponse[str]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "movie",
+            "movie/name",
             method="POST",
             json=request,
             request_options=request_options,
@@ -166,7 +166,7 @@ class RawServiceClient:
         HttpResponse[typing.Dict[str, str]]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "movie",
+            "movie/metadata",
             method="POST",
             json=request,
             request_options=request_options,
@@ -208,7 +208,7 @@ class RawServiceClient:
         HttpResponse[typing.Optional[Movie]]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "movie",
+            "movie/optional",
             method="POST",
             json=request,
             request_options=request_options,
@@ -252,7 +252,7 @@ class RawServiceClient:
         HttpResponse[str]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "movie",
+            "movie/optional/docs",
             method="POST",
             json=request,
             request_options=request_options,
@@ -296,7 +296,7 @@ class RawServiceClient:
         HttpResponse[str]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "movie",
+            "movie/optional/name",
             method="POST",
             json=request,
             request_options=request_options,
@@ -387,7 +387,7 @@ class AsyncRawServiceClient:
         AsyncHttpResponse[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "movie",
+            "movie/docs",
             method="POST",
             json=request,
             request_options=request_options,
@@ -429,7 +429,7 @@ class AsyncRawServiceClient:
         AsyncHttpResponse[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "movie",
+            "movie/name",
             method="POST",
             json=request,
             request_options=request_options,
@@ -471,7 +471,7 @@ class AsyncRawServiceClient:
         AsyncHttpResponse[typing.Dict[str, str]]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "movie",
+            "movie/metadata",
             method="POST",
             json=request,
             request_options=request_options,
@@ -513,7 +513,7 @@ class AsyncRawServiceClient:
         AsyncHttpResponse[typing.Optional[Movie]]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "movie",
+            "movie/optional",
             method="POST",
             json=request,
             request_options=request_options,
@@ -557,7 +557,7 @@ class AsyncRawServiceClient:
         AsyncHttpResponse[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "movie",
+            "movie/optional/docs",
             method="POST",
             json=request,
             request_options=request_options,
@@ -601,7 +601,7 @@ class AsyncRawServiceClient:
         AsyncHttpResponse[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "movie",
+            "movie/optional/name",
             method="POST",
             json=request,
             request_options=request_options,

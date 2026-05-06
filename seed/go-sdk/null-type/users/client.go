@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 // Gets a user by ID. The deleted_at field uses type null.
 func (c *Client) Get(
 	ctx context.Context,
-	request *fern.GetUsersRequest,
+	request *fern.UsersGetRequest,
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
 	response, err := c.WithRawResponse.Get(

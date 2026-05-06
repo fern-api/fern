@@ -19,7 +19,7 @@ import Testing
         )
 
         do {
-            _ = try await client.testGroup.testMethodName(
+            _ = try await client.testgroup.testMethodName(
                 pathParam: "path_param",
                 request: .value(PlainObject(
 
@@ -55,7 +55,7 @@ import Testing
         )
 
         do {
-            _ = try await client.testGroup.testMethodName(
+            _ = try await client.testgroup.testMethodName(
                 pathParam: "path_param",
                 request: .value(PlainObject(
 
@@ -91,7 +91,7 @@ import Testing
         )
 
         do {
-            _ = try await client.testGroup.testMethodName(
+            _ = try await client.testgroup.testMethodName(
                 pathParam: "path_param",
                 request: .value(PlainObject(
 
@@ -129,7 +129,7 @@ import Testing
         )
 
         do {
-            _ = try await client.testGroup.testMethodName(
+            _ = try await client.testgroup.testMethodName(
                 pathParam: "path_param",
                 request: .value(PlainObject(
 
@@ -165,7 +165,7 @@ import Testing
         )
 
         do {
-            _ = try await client.testGroup.testMethodName(
+            _ = try await client.testgroup.testMethodName(
                 pathParam: "path_param",
                 request: .value(PlainObject(
 
@@ -203,7 +203,7 @@ import Testing
         )
 
         do {
-            _ = try await client.testGroup.testMethodName(
+            _ = try await client.testgroup.testMethodName(
                 pathParam: "path_param",
                 request: .value(PlainObject(
 
@@ -239,7 +239,7 @@ import Testing
         )
 
         do {
-            _ = try await client.testGroup.testMethodName(
+            _ = try await client.testgroup.testMethodName(
                 pathParam: "path_param",
                 request: .value(PlainObject(
 

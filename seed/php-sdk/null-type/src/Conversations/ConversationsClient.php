@@ -4,8 +4,8 @@ namespace Seed\Conversations;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Conversations\Requests\OutboundCallConversationsRequest;
-use Seed\Conversations\Types\OutboundCallConversationsResponse;
+use Seed\Conversations\Requests\ConversationsOutboundCallRequest;
+use Seed\Types\OutboundCallConversationsResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -52,7 +52,7 @@ class ConversationsClient
     /**
      * Place an outbound call or validate call setup with dry_run.
      *
-     * @param OutboundCallConversationsRequest $request
+     * @param ConversationsOutboundCallRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -65,7 +65,7 @@ class ConversationsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function outboundCall(OutboundCallConversationsRequest $request, ?array $options = null): ?OutboundCallConversationsResponse
+    public function outboundcall(ConversationsOutboundCallRequest $request, ?array $options = null): ?OutboundCallConversationsResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {

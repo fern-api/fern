@@ -12,8 +12,8 @@ public partial class IdentityClient : IIdentityClient
         _client = client;
     }
 
-    private async Task<WithRawResponse<TokenResponse>> GetTokenAsyncCore(
-        GetTokenIdentityRequest request,
+    private async Task<WithRawResponse<TokenResponse>> GettokenAsyncCore(
+        IdentityGetTokenRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -80,18 +80,18 @@ public partial class IdentityClient : IIdentityClient
     }
 
     /// <example><code>
-    /// await client.Identity.GetTokenAsync(
-    ///     new GetTokenIdentityRequest { Username = "username", Password = "password" }
+    /// await client.Identity.GettokenAsync(
+    ///     new IdentityGetTokenRequest { Username = "username", Password = "password" }
     /// );
     /// </code></example>
-    public WithRawResponseTask<TokenResponse> GetTokenAsync(
-        GetTokenIdentityRequest request,
+    public WithRawResponseTask<TokenResponse> GettokenAsync(
+        IdentityGetTokenRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         return new WithRawResponseTask<TokenResponse>(
-            GetTokenAsyncCore(request, options, cancellationToken)
+            GettokenAsyncCore(request, options, cancellationToken)
         );
     }
 }

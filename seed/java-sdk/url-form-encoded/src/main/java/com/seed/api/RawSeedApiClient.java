@@ -3,19 +3,19 @@
  */
 package com.seed.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.api.core.ClientOptions;
+import com.seed.api.core.MediaTypes;
 import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
-import com.seed.api.requests.PostSubmitRequest;
+import com.seed.api.requests.SubmitFormDataRequest;
+import com.seed.api.requests.TokenRequest;
 import com.seed.api.types.PostSubmitResponse;
-import com.seed.api.types.TokenRequest;
 import com.seed.api.types.TokenResponse;
 import java.io.IOException;
-import java.util.Map;
-import okhttp3.FormBody;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -31,12 +31,12 @@ public class RawSeedApiClient {
         this.clientOptions = clientOptions;
     }
 
-    public SeedApiHttpResponse<PostSubmitResponse> submitFormData(PostSubmitRequest request) {
+    public SeedApiHttpResponse<PostSubmitResponse> submitFormData(SubmitFormDataRequest request) {
         return submitFormData(request, null);
     }
 
     public SeedApiHttpResponse<PostSubmitResponse> submitFormData(
-            PostSubmitRequest request, RequestOptions requestOptions) {
+            SubmitFormDataRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("submit");
@@ -45,20 +45,20 @@ public class RawSeedApiClient {
                 httpUrl.addQueryParameter(_key, _value);
             });
         }
-        FormBody.Builder body = new FormBody.Builder();
+        RequestBody body;
         try {
-            body.add("username", String.valueOf(request.getUsername()));
-            body.add("email", String.valueOf(request.getEmail()));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedApiException("Failed to serialize request", e);
         }
-        Request.Builder _requestBuilder = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("POST", body.build())
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -91,24 +91,18 @@ public class RawSeedApiClient {
                 httpUrl.addQueryParameter(_key, _value);
             });
         }
-        FormBody.Builder bodyBuilder = new FormBody.Builder();
+        RequestBody body;
         try {
-            Map<String, Object> formParams = ObjectMappers.JSON_MAPPER.convertValue(
-                    request, new com.fasterxml.jackson.core.type.TypeReference<Map<String, Object>>() {});
-            for (Map.Entry<String, Object> entry : formParams.entrySet()) {
-                if (entry.getValue() != null) {
-                    bodyBuilder.add(entry.getKey(), String.valueOf(entry.getValue()));
-                }
-            }
-        } catch (Exception e) {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
             throw new SeedApiException("Failed to serialize request", e);
         }
-        RequestBody body = bodyBuilder.build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
                 .build();
         OkHttpClient client = clientOptions.httpClient();

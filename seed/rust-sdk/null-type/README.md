@@ -53,8 +53,8 @@ async fn main() {
     let client = ApiClient::new(config).expect("Failed to build client");
     client
         .conversations
-        .outbound_call(
-            &OutboundCallConversationsRequest {
+        .outboundcall(
+            &ConversationsOutboundCallRequest {
                 to_phone_number: "to_phone_number".to_string(),
                 dry_run: None,
             },
@@ -69,7 +69,7 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-match client.conversations.outbound_call(None)?.await {
+match client.conversations.outboundcall(None)?.await {
     Ok(response) => {
         println!("Success: {:?}", response);
     },
@@ -89,7 +89,7 @@ The SDK exports all request types as Rust structs. Simply import them from the c
 ```rust
 use seed_api::prelude::{*};
 
-let request = OutboundCallConversationsRequest {
+let request = ConversationsOutboundCallRequest {
     ...
 };
 ```
@@ -116,7 +116,7 @@ The `retryStatusCodes` configuration controls which [5XX](https://developer.mozi
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-let response = client.conversations.outbound_call(
+let response = client.conversations.outboundcall(
     Some(RequestOptions::new().max_retries(3))
 )?.await;
 ```
@@ -126,7 +126,7 @@ let response = client.conversations.outbound_call(
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-let response = client.conversations.outbound_call(
+let response = client.conversations.outboundcall(
     Some(RequestOptions::new().timeout_seconds(30))
 )?.await;
 ```
@@ -136,7 +136,7 @@ let response = client.conversations.outbound_call(
 You can add custom headers to requests using `RequestOptions`.
 
 ```rust
-let response = client.conversations.outbound_call(
+let response = client.conversations.outboundcall(
     Some(
         RequestOptions::new()
             .additional_header("X-Custom-Header", "custom-value")
@@ -151,7 +151,7 @@ let response = client.conversations.outbound_call(
 You can add custom query parameters to requests using `RequestOptions`.
 
 ```rust
-let response = client.conversations.outbound_call(
+let response = client.conversations.outboundcall(
     Some(
         RequestOptions::new()
             .additional_query_param("filter", "active")

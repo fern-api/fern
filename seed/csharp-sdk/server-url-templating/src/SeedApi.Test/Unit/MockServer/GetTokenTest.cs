@@ -42,7 +42,7 @@ public class GetTokenTest : BaseMockServerTest
             );
 
         var response = await Client.GetTokenAsync(
-            new TokenRequest { ClientId = "client_id", ClientSecret = "client_secret" }
+            new GetTokenRequest { ClientId = "client_id", ClientSecret = "client_secret" }
         );
         JsonAssert.AreEqual(response, mockResponse);
     }
@@ -81,7 +81,7 @@ public class GetTokenTest : BaseMockServerTest
             );
 
         var response = await Client.GetTokenAsync(
-            new TokenRequest { ClientId = "client_id", ClientSecret = "client_secret" }
+            new GetTokenRequest { ClientId = "client_id", ClientSecret = "client_secret" }
         );
         JsonAssert.AreEqual(response, mockResponse);
     }

@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
-/// Request for test_method_name (body + query parameters)
+/// Request for testMethodName (body + query parameters)
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct TestMethodNameRequest {
     #[serde(skip_serializing)]

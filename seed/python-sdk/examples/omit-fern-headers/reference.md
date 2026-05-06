@@ -79,7 +79,7 @@ client = SeedExamples(
     environment=SeedExamplesEnvironment.PRODUCTION,
 )
 
-client.echo(
+client.create_type(
     request="primitive",
 )
 

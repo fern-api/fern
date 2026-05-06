@@ -47,7 +47,7 @@ module Seed
       request = Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "POST",
-        path: "documents/upload",
+        path: "documents/upload/pdf",
         request_options: request_options
       )
       begin

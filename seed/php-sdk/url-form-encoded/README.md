@@ -37,11 +37,11 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Requests\PostSubmitRequest;
+use Seed\Requests\SubmitFormDataRequest;
 
 $client = new SeedClient();
 $client->submitFormData(
-    new PostSubmitRequest([
+    new SubmitFormDataRequest([
         'username' => 'johndoe',
         'email' => 'john@example.com',
     ]),

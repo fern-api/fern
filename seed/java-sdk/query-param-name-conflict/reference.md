@@ -31,7 +31,7 @@ client.bulkUpdateTasks(
 <dl>
 <dd>
 
-**filterAssignedTo:** `Optional<String>` 
+**assignedTo:** `Optional<String>` 
     
 </dd>
 </dl>
@@ -39,7 +39,7 @@ client.bulkUpdateTasks(
 <dl>
 <dd>
 
-**filterIsComplete:** `Optional<String>` 
+**isComplete:** `Optional<String>` 
     
 </dd>
 </dl>
@@ -47,7 +47,7 @@ client.bulkUpdateTasks(
 <dl>
 <dd>
 
-**filterDate:** `Optional<String>` 
+**date:** `Optional<String>` 
     
 </dd>
 </dl>

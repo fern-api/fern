@@ -16,7 +16,7 @@
 //!     client
 //!         .contacts
 //!         .create(
-//!             &CreateContactRequest {
+//!             &ContactsCreateRequest {
 //!                 name: "name".to_string(),
 //!                 email: None,
 //!             },

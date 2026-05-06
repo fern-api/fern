@@ -463,7 +463,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "",
+                    path: "/form-encoded-containers",
                     method: HttpMethod::POST,
                     body: $body,
                 ),

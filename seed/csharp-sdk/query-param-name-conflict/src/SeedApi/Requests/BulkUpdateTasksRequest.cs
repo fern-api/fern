@@ -7,13 +7,13 @@ namespace SeedApi;
 public record BulkUpdateTasksRequest
 {
     [JsonIgnore]
-    public string? FilterAssignedTo { get; set; }
+    public string? AssignedTo { get; set; }
 
     [JsonIgnore]
-    public string? FilterIsComplete { get; set; }
+    public string? IsComplete { get; set; }
 
     [JsonIgnore]
-    public string? FilterDate { get; set; }
+    public string? Date { get; set; }
 
     /// <summary>
     /// Comma-separated list of fields to include in the response.

@@ -4,7 +4,7 @@
 package com.seed.api.core;
 
 import com.seed.api.resources.identity.IdentityClient;
-import com.seed.api.resources.identity.requests.GetTokenIdentityRequest;
+import com.seed.api.resources.identity.requests.IdentityGetTokenRequest;
 import com.seed.api.types.TokenResponse;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -31,11 +31,11 @@ public final class OAuthTokenSupplier implements Supplier<String> {
     }
 
     public TokenResponse fetchToken() {
-        GetTokenIdentityRequest getTokenRequest = GetTokenIdentityRequest.builder()
+        IdentityGetTokenRequest getTokenRequest = IdentityGetTokenRequest.builder()
                 .username(clientId)
                 .password(clientSecret)
                 .build();
-        return authClient.getToken(getTokenRequest);
+        return authClient.gettoken(getTokenRequest);
     }
 
     @java.lang.Override

@@ -39,7 +39,7 @@ client.folderA().service().getDirectThread();
 <dd>
 
 ```java
-client.folderA().service().getDirectThread();
+client.folderD().service().getDirectThread();
 ```
 </dd>
 </dl>

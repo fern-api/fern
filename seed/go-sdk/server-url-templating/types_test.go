@@ -9,9 +9,9 @@ import (
 	testing "testing"
 )
 
-func TestSettersTokenRequest(t *testing.T) {
+func TestSettersGetTokenRequest(t *testing.T) {
 	t.Run("SetClientID", func(t *testing.T) {
-		obj := &TokenRequest{}
+		obj := &GetTokenRequest{}
 		var fernTestValueClientID string
 		obj.SetClientID(fernTestValueClientID)
 		assert.Equal(t, fernTestValueClientID, obj.ClientID)
@@ -19,7 +19,7 @@ func TestSettersTokenRequest(t *testing.T) {
 	})
 
 	t.Run("SetClientSecret", func(t *testing.T) {
-		obj := &TokenRequest{}
+		obj := &GetTokenRequest{}
 		var fernTestValueClientSecret string
 		obj.SetClientSecret(fernTestValueClientSecret)
 		assert.Equal(t, fernTestValueClientSecret, obj.ClientSecret)
@@ -28,11 +28,11 @@ func TestSettersTokenRequest(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitTokenRequest(t *testing.T) {
+func TestSettersMarkExplicitGetTokenRequest(t *testing.T) {
 	t.Run("SetClientID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &TokenRequest{}
+		obj := &GetTokenRequest{}
 		var fernTestValueClientID string
 
 		// Act
@@ -63,7 +63,7 @@ func TestSettersMarkExplicitTokenRequest(t *testing.T) {
 	t.Run("SetClientSecret_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &TokenRequest{}
+		obj := &GetTokenRequest{}
 		var fernTestValueClientSecret string
 
 		// Act

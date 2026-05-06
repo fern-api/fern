@@ -10,28 +10,28 @@ import (
 )
 
 var (
-	getPlantsRequestFieldPlantID = big.NewInt(1 << 0)
+	plantsGetRequestFieldPlantID = big.NewInt(1 << 0)
 )
 
-type GetPlantsRequest struct {
+type PlantsGetRequest struct {
 	PlantID string `json:"-" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (g *GetPlantsRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+func (p *PlantsGetRequest) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetPlantID sets the PlantID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetPlantsRequest) SetPlantID(plantID string) {
-	g.PlantID = plantID
-	g.require(getPlantsRequestFieldPlantID)
+func (p *PlantsGetRequest) SetPlantID(plantID string) {
+	p.PlantID = plantID
+	p.require(plantsGetRequestFieldPlantID)
 }
 
 var (

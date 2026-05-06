@@ -76,7 +76,8 @@ public class RawInlineUsersClient {
             ListUsersCursorPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("inline-users");
+                .addPathSegments("inline-users")
+                .addPathSegments("cursor-pagination");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page", request.getPage().get(), false);
@@ -156,7 +157,8 @@ public class RawInlineUsersClient {
             ListUsersMixedTypeCursorPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("inline-users");
+                .addPathSegments("inline-users")
+                .addPathSegments("mixed-type-cursor-pagination");
         if (request.getCursor().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "cursor", request.getCursor().get(), false);
@@ -226,7 +228,8 @@ public class RawInlineUsersClient {
             ListUsersBodyCursorPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("inline-users");
+                .addPathSegments("inline-users")
+                .addPathSegments("body-cursor-pagination");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -303,7 +306,8 @@ public class RawInlineUsersClient {
             ListUsersOffsetPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("inline-users");
+                .addPathSegments("inline-users")
+                .addPathSegments("offset-pagination");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page", request.getPage().get(), false);
@@ -382,7 +386,8 @@ public class RawInlineUsersClient {
             ListUsersDoubleOffsetPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("inline-users");
+                .addPathSegments("inline-users")
+                .addPathSegments("double-offset-pagination");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page", request.getPage().get(), false);
@@ -461,7 +466,8 @@ public class RawInlineUsersClient {
             ListUsersBodyOffsetPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("inline-users");
+                .addPathSegments("inline-users")
+                .addPathSegments("body-offset-pagination");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -538,7 +544,8 @@ public class RawInlineUsersClient {
             ListUsersOffsetStepPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("inline-users");
+                .addPathSegments("inline-users")
+                .addPathSegments("offset-step-pagination");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page", request.getPage().get(), false);
@@ -613,7 +620,8 @@ public class RawInlineUsersClient {
             ListWithOffsetPaginationHasNextPageRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("inline-users");
+                .addPathSegments("inline-users")
+                .addPathSegments("offset-pagination-has-next-page");
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page", request.getPage().get(), false);
@@ -687,7 +695,8 @@ public class RawInlineUsersClient {
             ListUsersExtendedRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("inline-users");
+                .addPathSegments("inline-users")
+                .addPathSegments("extended-results");
         if (request.getCursor().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "cursor", request.getCursor().get(), false);
@@ -754,7 +763,8 @@ public class RawInlineUsersClient {
             ListUsersExtendedRequestForOptionalData request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("inline-users");
+                .addPathSegments("inline-users")
+                .addPathSegments("extended-results-optional-data");
         if (request.getCursor().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "cursor", request.getCursor().get(), false);
@@ -819,7 +829,8 @@ public class RawInlineUsersClient {
             ListUsernamesRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("inline-users");
+                .addPathSegments("inline-users")
+                .addPathSegments("usernames");
         if (request.getStartingAfter().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "starting_after", request.getStartingAfter().get(), false);
@@ -883,7 +894,8 @@ public class RawInlineUsersClient {
             ListWithGlobalConfigRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("inline-users");
+                .addPathSegments("inline-users")
+                .addPathSegments("global-config");
         if (request.getOffset().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "offset", request.getOffset().get(), false);

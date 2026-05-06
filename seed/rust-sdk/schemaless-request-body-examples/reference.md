@@ -176,7 +176,7 @@ async fn main() {
 <dl>
 <dd>
 
-**name:** `Option<String>` 
+**name:** `Option<Option<String>>` 
     
 </dd>
 </dl>
@@ -184,7 +184,7 @@ async fn main() {
 <dl>
 <dd>
 
-**species:** `Option<String>` 
+**species:** `Option<Option<String>>` 
     
 </dd>
 </dl>

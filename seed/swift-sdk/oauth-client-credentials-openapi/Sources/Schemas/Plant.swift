@@ -3,14 +3,14 @@ import Foundation
 public struct Plant: Codable, Hashable, Sendable {
     public let id: String
     public let name: String
-    public let species: String?
+    public let species: Nullable<String>?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         id: String,
         name: String,
-        species: String? = nil,
+        species: Nullable<String>? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.id = id
@@ -23,7 +23,7 @@ public struct Plant: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)
         self.name = try container.decode(String.self, forKey: .name)
-        self.species = try container.decodeIfPresent(String.self, forKey: .species)
+        self.species = try container.decodeNullableIfPresent(String.self, forKey: .species)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -32,7 +32,7 @@ public struct Plant: Codable, Hashable, Sendable {
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.id, forKey: .id)
         try container.encode(self.name, forKey: .name)
-        try container.encodeIfPresent(self.species, forKey: .species)
+        try container.encodeNullableIfPresent(self.species, forKey: .species)
     }
 
     /// Keys for encoding/decoding struct properties.

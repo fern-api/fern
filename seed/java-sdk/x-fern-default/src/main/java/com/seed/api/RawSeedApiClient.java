@@ -46,7 +46,10 @@ public class RawSeedApiClient {
                 .addPathSegments("test")
                 .addPathSegment(region)
                 .addPathSegments("resource");
-        QueryStringMapper.addQueryParameter(httpUrl, "limit", request.getLimit().orElse("100"), false);
+        if (request.getLimit().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "limit", request.getLimit().get(), false);
+        }
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

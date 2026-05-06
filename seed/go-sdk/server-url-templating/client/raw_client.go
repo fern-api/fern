@@ -38,16 +38,8 @@ func (r *RawClient) GetUsers(
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
-		internal.ResolveEnvironmentBaseURL(
-			options.Environment,
-			"Base",
-		),
 		r.baseURL,
-		internal.ResolveEnvironmentBaseURL(
-			r.options.Environment,
-			"Base",
-		),
-		"https://api.example.com/v1",
+		"",
 	)
 	endpointURL := baseURL + "/users"
 	headers := internal.MergeHeaders(
@@ -86,16 +78,8 @@ func (r *RawClient) GetUser(
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
-		internal.ResolveEnvironmentBaseURL(
-			options.Environment,
-			"Base",
-		),
 		r.baseURL,
-		internal.ResolveEnvironmentBaseURL(
-			r.options.Environment,
-			"Base",
-		),
-		"https://api.example.com/v1",
+		"",
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/users/%v",
@@ -131,22 +115,14 @@ func (r *RawClient) GetUser(
 
 func (r *RawClient) GetToken(
 	ctx context.Context,
-	request *fern.TokenRequest,
+	request *fern.GetTokenRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.TokenResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
-		internal.ResolveEnvironmentBaseURL(
-			options.Environment,
-			"Auth",
-		),
 		r.baseURL,
-		internal.ResolveEnvironmentBaseURL(
-			r.options.Environment,
-			"Auth",
-		),
-		"https://auth.example.com",
+		"",
 	)
 	endpointURL := baseURL + "/auth/token"
 	headers := internal.MergeHeaders(

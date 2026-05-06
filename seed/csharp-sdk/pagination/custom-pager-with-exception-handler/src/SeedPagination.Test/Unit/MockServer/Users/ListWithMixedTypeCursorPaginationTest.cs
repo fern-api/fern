@@ -30,7 +30,7 @@ public class ListWithMixedTypeCursorPaginationTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/users")
+                    .WithPath("/users/mixed-type-cursor-pagination")
                     .WithParam("cursor", "cursor")
                     .UsingPost()
             )

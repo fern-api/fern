@@ -1,1 +1,1 @@
-export type { OutboundCallConversationsRequest } from "./OutboundCallConversationsRequest.js";
+export type { ConversationsOutboundCallRequest } from "./ConversationsOutboundCallRequest.js";

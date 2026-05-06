@@ -3,7 +3,7 @@ import Testing
 import Api
 
 @Suite("IdentityClient Wire Tests") struct IdentityClientWireTests {
-    @Test func getToken1() async throws -> Void {
+    @Test func gettoken1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -23,9 +23,9 @@ import Api
         let expectedResponse = TokenResponse(
             accessToken: "access_token",
             expiresIn: 1,
-            refreshToken: Optional("refresh_token")
+            refreshToken: Optional(Nullable<String>.value("refresh_token"))
         )
-        let response = try await client.identity.getToken(
+        let response = try await client.identity.gettoken(
             request: .init(
                 username: "username",
                 password: "password"
@@ -35,7 +35,7 @@ import Api
         try #require(response == expectedResponse)
     }
 
-    @Test func getToken2() async throws -> Void {
+    @Test func gettoken2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -55,9 +55,9 @@ import Api
         let expectedResponse = TokenResponse(
             accessToken: "access_token",
             expiresIn: 1,
-            refreshToken: Optional("refresh_token")
+            refreshToken: Optional(Nullable<String>.value("refresh_token"))
         )
-        let response = try await client.identity.getToken(
+        let response = try await client.identity.gettoken(
             request: .init(
                 username: "username",
                 password: "password"

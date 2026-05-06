@@ -38,7 +38,7 @@ import (
 
 func do() {
     client := client.NewClient()
-    request := &fern.CreateContactRequest{
+    request := &fern.ContactsCreateRequest{
         Name: "name",
     }
     client.Contacts.Create(

@@ -14,7 +14,7 @@ impl BClient {
 
     pub async fn foo(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client
-            .execute_request(Method::POST, "", None, None, options)
+            .execute_request(Method::POST, "/a/b", None, None, options)
             .await
     }
 }

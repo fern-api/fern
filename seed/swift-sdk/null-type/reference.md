@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>client.conversations.<a href="/Sources/Resources/Conversations/ConversationsClient.swift">outboundCall</a>(request: Requests.OutboundCallConversationsRequest, requestOptions: RequestOptions?) -> OutboundCallConversationsResponse</code></summary>
+<details><summary><code>client.conversations.<a href="/Sources/Resources/Conversations/ConversationsClient.swift">outboundcall</a>(request: Requests.ConversationsOutboundCallRequest, requestOptions: RequestOptions?) -> OutboundCallConversationsResponse</code></summary>
 <dl>
 <dd>
 
@@ -33,7 +33,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client.conversations.outboundCall(request: .init(toPhoneNumber: "to_phone_number"))
+    _ = try await client.conversations.outboundcall(request: .init(toPhoneNumber: "to_phone_number"))
 }
 
 try await main()
@@ -51,7 +51,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.OutboundCallConversationsRequest` 
+**request:** `Requests.ConversationsOutboundCallRequest` 
     
 </dd>
 </dl>

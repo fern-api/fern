@@ -13,21 +13,21 @@ module Seed
       # Place an outbound call or validate call setup with dry_run.
       #
       # @param request_options [Hash]
-      # @param params [Seed::Conversations::Types::OutboundCallConversationsRequest]
+      # @param params [Seed::Conversations::Types::ConversationsOutboundCallRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Seed::Conversations::Types::OutboundCallConversationsResponse]
-      def outbound_call(request_options: {}, **params)
+      # @return [Seed::Types::OutboundCallConversationsResponse]
+      def outboundcall(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "conversations/outbound-call",
-          body: Seed::Conversations::Types::OutboundCallConversationsRequest.new(params).to_h,
+          body: Seed::Conversations::Types::ConversationsOutboundCallRequest.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -37,7 +37,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Conversations::Types::OutboundCallConversationsResponse.load(response.body)
+          Seed::Types::OutboundCallConversationsResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

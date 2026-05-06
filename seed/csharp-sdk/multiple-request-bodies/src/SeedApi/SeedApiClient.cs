@@ -128,7 +128,7 @@ public partial class SeedApiClient : ISeedApiClient
                 new StreamRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "documents/upload",
+                    Path = "documents/upload/pdf",
                     Body = request,
                     Headers = _headers,
                     ContentType = "application/pdf",

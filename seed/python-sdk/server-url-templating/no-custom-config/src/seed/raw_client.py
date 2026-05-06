@@ -36,7 +36,6 @@ class RawSeedApi:
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -75,7 +74,6 @@ class RawSeedApi:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"users/{encode_path_param(user_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -118,7 +116,6 @@ class RawSeedApi:
         """
         _response = self._client_wrapper.httpx_client.request(
             "auth/token",
-            base_url=self._client_wrapper.get_environment().auth,
             method="POST",
             json={
                 "client_id": client_id,
@@ -170,7 +167,6 @@ class AsyncRawSeedApi:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -211,7 +207,6 @@ class AsyncRawSeedApi:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"users/{encode_path_param(user_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -254,7 +249,6 @@ class AsyncRawSeedApi:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "auth/token",
-            base_url=self._client_wrapper.get_environment().auth,
             method="POST",
             json={
                 "client_id": client_id,

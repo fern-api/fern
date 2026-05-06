@@ -44,12 +44,12 @@ class RawSeedApi:
         _response = self._client_wrapper.httpx_client.request(
             "submit",
             method="POST",
-            data={
+            json={
                 "username": username,
                 "email": email,
             },
             headers={
-                "content-type": "application/x-www-form-urlencoded",
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -96,12 +96,12 @@ class RawSeedApi:
         _response = self._client_wrapper.httpx_client.request(
             "token",
             method="POST",
-            data={
+            json={
                 "client_id": client_id,
                 "client_secret": client_secret,
             },
             headers={
-                "content-type": "application/x-www-form-urlencoded",
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -153,12 +153,12 @@ class AsyncRawSeedApi:
         _response = await self._client_wrapper.httpx_client.request(
             "submit",
             method="POST",
-            data={
+            json={
                 "username": username,
                 "email": email,
             },
             headers={
-                "content-type": "application/x-www-form-urlencoded",
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -205,12 +205,12 @@ class AsyncRawSeedApi:
         _response = await self._client_wrapper.httpx_client.request(
             "token",
             method="POST",
-            data={
+            json={
                 "client_id": client_id,
                 "client_secret": client_secret,
             },
             headers={
-                "content-type": "application/x-www-form-urlencoded",
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

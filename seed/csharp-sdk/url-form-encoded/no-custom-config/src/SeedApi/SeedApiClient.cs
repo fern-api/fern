@@ -30,7 +30,7 @@ public partial class SeedApiClient : ISeedApiClient
     }
 
     private async Task<WithRawResponse<PostSubmitResponse>> SubmitFormDataAsyncCore(
-        PostSubmitRequest request,
+        SubmitFormDataRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -43,13 +43,13 @@ public partial class SeedApiClient : ISeedApiClient
             .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
-                new FormRequest
+                new JsonRequest
                 {
                     Method = HttpMethod.Post,
                     Path = "submit",
                     Body = request,
                     Headers = _headers,
-                    ContentType = "application/x-www-form-urlencoded",
+                    ContentType = "application/json",
                     Options = options,
                 },
                 cancellationToken
@@ -110,13 +110,13 @@ public partial class SeedApiClient : ISeedApiClient
             .ConfigureAwait(false);
         var response = await _client
             .SendRequestAsync(
-                new FormRequest
+                new JsonRequest
                 {
                     Method = HttpMethod.Post,
                     Path = "token",
                     Body = request,
                     Headers = _headers,
-                    ContentType = "application/x-www-form-urlencoded",
+                    ContentType = "application/json",
                     Options = options,
                 },
                 cancellationToken
@@ -165,11 +165,11 @@ public partial class SeedApiClient : ISeedApiClient
 
     /// <example><code>
     /// await client.SubmitFormDataAsync(
-    ///     new PostSubmitRequest { Username = "johndoe", Email = "john@example.com" }
+    ///     new SubmitFormDataRequest { Username = "johndoe", Email = "john@example.com" }
     /// );
     /// </code></example>
     public WithRawResponseTask<PostSubmitResponse> SubmitFormDataAsync(
-        PostSubmitRequest request,
+        SubmitFormDataRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

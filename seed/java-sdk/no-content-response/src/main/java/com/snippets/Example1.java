@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.seed.api.SeedApiClient;
-import com.seed.api.resources.contacts.requests.CreateContactRequest;
+import com.seed.api.resources.contacts.requests.ContactsCreateRequest;
 
 public class Example1 {
     public static void main(String[] args) {
@@ -9,7 +9,7 @@ public class Example1 {
                 SeedApiClient.builder().url("https://api.fern.com").build();
 
         client.contacts()
-                .create(CreateContactRequest.builder()
+                .create(ContactsCreateRequest.builder()
                         .name("name")
                         .email("email")
                         .build());

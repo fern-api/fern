@@ -38,7 +38,7 @@ $client->foo();
 <dd>
 
 ```php
-$client->foo();
+$client->a->b->foo();
 ```
 </dd>
 </dl>
@@ -64,7 +64,7 @@ $client->foo();
 <dd>
 
 ```php
-$client->foo();
+$client->a->c->foo();
 ```
 </dd>
 </dl>
@@ -90,7 +90,7 @@ $client->foo();
 <dd>
 
 ```php
-$client->foo();
+$client->folder->foo();
 ```
 </dd>
 </dl>

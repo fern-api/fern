@@ -5,12 +5,15 @@ package com.seed.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.api.core.Nullable;
+import com.seed.api.core.NullableNonemptyFilter;
 import com.seed.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,13 +36,31 @@ public final class PostSubmitResponse {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("status")
+    @JsonIgnore
     public Optional<String> getStatus() {
+        if (status == null) {
+            return Optional.empty();
+        }
         return status;
     }
 
-    @JsonProperty("message")
+    @JsonIgnore
     public Optional<String> getMessage() {
+        if (message == null) {
+            return Optional.empty();
+        }
+        return message;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("status")
+    private Optional<String> _getStatus() {
+        return status;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("message")
+    private Optional<String> _getMessage() {
         return message;
     }
 
@@ -100,6 +121,17 @@ public final class PostSubmitResponse {
             return this;
         }
 
+        public Builder status(Nullable<String> status) {
+            if (status.isNull()) {
+                this.status = null;
+            } else if (status.isEmpty()) {
+                this.status = Optional.empty();
+            } else {
+                this.status = Optional.of(status.get());
+            }
+            return this;
+        }
+
         @JsonSetter(value = "message", nulls = Nulls.SKIP)
         public Builder message(Optional<String> message) {
             this.message = message;
@@ -108,6 +140,17 @@ public final class PostSubmitResponse {
 
         public Builder message(String message) {
             this.message = Optional.ofNullable(message);
+            return this;
+        }
+
+        public Builder message(Nullable<String> message) {
+            if (message.isNull()) {
+                this.message = null;
+            } else if (message.isEmpty()) {
+                this.message = Optional.empty();
+            } else {
+                this.message = Optional.of(message.get());
+            }
             return this;
         }
 

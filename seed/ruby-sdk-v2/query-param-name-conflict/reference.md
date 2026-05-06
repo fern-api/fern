@@ -27,7 +27,7 @@ client.bulk_update_tasks
 <dl>
 <dd>
 
-**filter_assigned_to:** `String` 
+**assigned_to:** `String` 
     
 </dd>
 </dl>
@@ -35,7 +35,7 @@ client.bulk_update_tasks
 <dl>
 <dd>
 
-**filter_is_complete:** `String` 
+**is_complete:** `String` 
     
 </dd>
 </dl>
@@ -43,7 +43,7 @@ client.bulk_update_tasks
 <dl>
 <dd>
 
-**filter_date:** `String` 
+**date:** `String` 
     
 </dd>
 </dl>

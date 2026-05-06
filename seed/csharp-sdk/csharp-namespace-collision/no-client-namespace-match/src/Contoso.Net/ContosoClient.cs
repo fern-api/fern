@@ -120,7 +120,7 @@ public partial class ContosoClient : IContosoClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "/users",
+                    Path = "/users/task",
                     Body = request,
                     Headers = _headers,
                     Options = options,

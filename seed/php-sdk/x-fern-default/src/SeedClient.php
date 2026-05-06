@@ -32,7 +32,6 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @param ?string $apiVersion
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -42,19 +41,14 @@ class SeedClient
      * } $options
      */
     public function __construct(
-        ?string $apiVersion = null,
         ?array $options = null,
     ) {
-        $apiVersion ??= '2024-02-08';
         $defaultHeaders = [
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        if ($apiVersion != null) {
-            $defaultHeaders['X-API-Version'] = $apiVersion;
-        }
 
         $this->options = $options ?? [];
 
@@ -83,11 +77,13 @@ class SeedClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function testGet(string $region = 'us-east-1', TestGetRequest $request = new TestGetRequest(), ?array $options = null): ?TestGetResponse
+    public function testGet(string $region, TestGetRequest $request = new TestGetRequest(), ?array $options = null): ?TestGetResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        $query['limit'] = $request->limit ?? '100';
+        if ($request->limit != null) {
+            $query['limit'] = $request->limit;
+        }
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(

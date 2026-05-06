@@ -17,11 +17,8 @@ public record User : IJsonOnDeserialized
     [JsonPropertyName("name")]
     public required string Name { get; set; }
 
-    /// <summary>
-    /// Always null for active users.
-    /// </summary>
     [JsonPropertyName("deleted_at")]
-    public object? DeletedAt { get; set; }
+    public required object DeletedAt { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

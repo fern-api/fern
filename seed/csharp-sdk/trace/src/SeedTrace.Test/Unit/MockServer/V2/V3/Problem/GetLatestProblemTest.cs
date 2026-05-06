@@ -311,7 +311,7 @@ public class GetLatestProblemTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/problems-v2/problem-info/problemId")
+                    .WithPath("/problems-v2/v3/problem-info/problemId")
                     .UsingGet()
             )
             .RespondWith(

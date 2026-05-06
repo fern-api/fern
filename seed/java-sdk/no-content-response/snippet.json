@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "fe904485",
+            "example_identifier": "Example1",
             "id": {
                 "method": "POST",
                 "path": "/contacts",
@@ -9,12 +9,12 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.contacts.requests.CreateContactRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.contacts().create(\n            CreateContactRequest\n                .builder()\n                .name(\"name\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.contacts.requests.CreateContactRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.contacts().create(\n            CreateContactRequest\n                .builder()\n                .name(\"name\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.contacts.requests.ContactsCreateRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.contacts().create(\n            ContactsCreateRequest\n                .builder()\n                .name(\"name\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.contacts.requests.ContactsCreateRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.contacts().create(\n            ContactsCreateRequest\n                .builder()\n                .name(\"name\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "ad06a3a4",
+            "example_identifier": "Example1",
             "id": {
                 "method": "GET",
                 "path": "/contacts/{id}",
@@ -22,8 +22,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.contacts.requests.GetContactsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.contacts().get(\n            \"id\",\n            GetContactsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.contacts.requests.GetContactsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.contacts().get(\n            \"id\",\n            GetContactsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.contacts.requests.ContactsGetRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.contacts().get(\n            \"id\",\n            ContactsGetRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.contacts.requests.ContactsGetRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.contacts().get(\n            \"id\",\n            ContactsGetRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         }
     ],

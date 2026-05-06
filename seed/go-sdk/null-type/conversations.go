@@ -10,11 +10,11 @@ import (
 )
 
 var (
-	outboundCallConversationsRequestFieldToPhoneNumber = big.NewInt(1 << 0)
-	outboundCallConversationsRequestFieldDryRun        = big.NewInt(1 << 1)
+	conversationsOutboundCallRequestFieldToPhoneNumber = big.NewInt(1 << 0)
+	conversationsOutboundCallRequestFieldDryRun        = big.NewInt(1 << 1)
 )
 
-type OutboundCallConversationsRequest struct {
+type ConversationsOutboundCallRequest struct {
 	// The phone number to call in E.164 format.
 	ToPhoneNumber string `json:"to_phone_number" url:"-"`
 	// If true, validates the outbound call setup without placing a call.
@@ -24,45 +24,45 @@ type OutboundCallConversationsRequest struct {
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (o *OutboundCallConversationsRequest) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+func (c *ConversationsOutboundCallRequest) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetToPhoneNumber sets the ToPhoneNumber field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OutboundCallConversationsRequest) SetToPhoneNumber(toPhoneNumber string) {
-	o.ToPhoneNumber = toPhoneNumber
-	o.require(outboundCallConversationsRequestFieldToPhoneNumber)
+func (c *ConversationsOutboundCallRequest) SetToPhoneNumber(toPhoneNumber string) {
+	c.ToPhoneNumber = toPhoneNumber
+	c.require(conversationsOutboundCallRequestFieldToPhoneNumber)
 }
 
 // SetDryRun sets the DryRun field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *OutboundCallConversationsRequest) SetDryRun(dryRun *bool) {
-	o.DryRun = dryRun
-	o.require(outboundCallConversationsRequestFieldDryRun)
+func (c *ConversationsOutboundCallRequest) SetDryRun(dryRun *bool) {
+	c.DryRun = dryRun
+	c.require(conversationsOutboundCallRequestFieldDryRun)
 }
 
-func (o *OutboundCallConversationsRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler OutboundCallConversationsRequest
+func (c *ConversationsOutboundCallRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConversationsOutboundCallRequest
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*o = OutboundCallConversationsRequest(body)
+	*c = ConversationsOutboundCallRequest(body)
 	return nil
 }
 
-func (o *OutboundCallConversationsRequest) MarshalJSON() ([]byte, error) {
-	type embed OutboundCallConversationsRequest
+func (c *ConversationsOutboundCallRequest) MarshalJSON() ([]byte, error) {
+	type embed ConversationsOutboundCallRequest
 	var marshaler = struct {
 		embed
 	}{
-		embed: embed(*o),
+		embed: embed(*c),
 	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
 	return json.Marshal(explicitMarshaler)
 }
 
@@ -72,8 +72,7 @@ var (
 )
 
 type OutboundCallConversationsResponse struct {
-	// Always null when dry_run is true.
-	ConversationID any `json:"conversation_id,omitempty" url:"conversation_id,omitempty"`
+	ConversationID any `json:"conversation_id" url:"conversation_id"`
 	// Always true for this response.
 	DryRun bool `json:"dry_run" url:"dry_run"`
 

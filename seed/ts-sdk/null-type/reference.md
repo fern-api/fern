@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>client.conversations.<a href="/src/api/resources/conversations/client/Client.ts">outboundCall</a>({ ...params }) -> SeedApi.OutboundCallConversationsResponse</code></summary>
+<details><summary><code>client.conversations.<a href="/src/api/resources/conversations/client/Client.ts">outboundcall</a>({ ...params }) -> SeedApi.OutboundCallConversationsResponse</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ Place an outbound call or validate call setup with dry_run.
 <dd>
 
 ```typescript
-await client.conversations.outboundCall({
+await client.conversations.outboundcall({
     to_phone_number: "to_phone_number"
 });
 
@@ -45,7 +45,7 @@ await client.conversations.outboundCall({
 <dl>
 <dd>
 
-**request:** `SeedApi.OutboundCallConversationsRequest` 
+**request:** `SeedApi.ConversationsOutboundCallRequest` 
     
 </dd>
 </dl>
@@ -111,7 +111,7 @@ await client.users.get({
 <dl>
 <dd>
 
-**request:** `SeedApi.GetUsersRequest` 
+**request:** `SeedApi.UsersGetRequest` 
     
 </dd>
 </dl>

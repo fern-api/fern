@@ -21,7 +21,7 @@ impl ApiClient {
 
     pub async fn submit_form_data(
         &self,
-        request: &PostSubmitRequest,
+        request: &SubmitFormDataRequest,
         options: Option<RequestOptions>,
     ) -> Result<PostSubmitResponse, ApiError> {
         self.http_client

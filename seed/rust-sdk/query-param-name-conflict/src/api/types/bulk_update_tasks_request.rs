@@ -13,15 +13,12 @@ pub struct BulkUpdateTasksRequest {
     pub bulk_update_tasks_request_is_complete: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub text: Option<String>,
-    #[serde(rename = "assigned_to")]
     #[serde(skip_serializing)]
-    pub filter_assigned_to: Option<String>,
-    #[serde(rename = "is_complete")]
+    pub assigned_to: Option<String>,
     #[serde(skip_serializing)]
-    pub filter_is_complete: Option<String>,
-    #[serde(rename = "date")]
+    pub is_complete: Option<String>,
     #[serde(skip_serializing)]
-    pub filter_date: Option<String>,
+    pub date: Option<String>,
     /// Comma-separated list of fields to include in the response.
     #[serde(rename = "_fields")]
     #[serde(skip_serializing)]
@@ -41,9 +38,9 @@ pub struct BulkUpdateTasksRequestBuilder {
     bulk_update_tasks_request_date: Option<NaiveDate>,
     bulk_update_tasks_request_is_complete: Option<bool>,
     text: Option<String>,
-    filter_assigned_to: Option<String>,
-    filter_is_complete: Option<String>,
-    filter_date: Option<String>,
+    assigned_to: Option<String>,
+    is_complete: Option<String>,
+    date: Option<String>,
     fields: Option<String>,
 }
 
@@ -68,18 +65,18 @@ impl BulkUpdateTasksRequestBuilder {
         self
     }
 
-    pub fn filter_assigned_to(mut self, value: impl Into<String>) -> Self {
-        self.filter_assigned_to = Some(value.into());
+    pub fn assigned_to(mut self, value: impl Into<String>) -> Self {
+        self.assigned_to = Some(value.into());
         self
     }
 
-    pub fn filter_is_complete(mut self, value: impl Into<String>) -> Self {
-        self.filter_is_complete = Some(value.into());
+    pub fn is_complete(mut self, value: impl Into<String>) -> Self {
+        self.is_complete = Some(value.into());
         self
     }
 
-    pub fn filter_date(mut self, value: impl Into<String>) -> Self {
-        self.filter_date = Some(value.into());
+    pub fn date(mut self, value: impl Into<String>) -> Self {
+        self.date = Some(value.into());
         self
     }
 
@@ -95,9 +92,9 @@ impl BulkUpdateTasksRequestBuilder {
             bulk_update_tasks_request_date: self.bulk_update_tasks_request_date,
             bulk_update_tasks_request_is_complete: self.bulk_update_tasks_request_is_complete,
             text: self.text,
-            filter_assigned_to: self.filter_assigned_to,
-            filter_is_complete: self.filter_is_complete,
-            filter_date: self.filter_date,
+            assigned_to: self.assigned_to,
+            is_complete: self.is_complete,
+            date: self.date,
             fields: self.fields,
         })
     }

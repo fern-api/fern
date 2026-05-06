@@ -38,15 +38,7 @@ client.get_token(
 
 ## Environments
 
-This SDK allows you to configure different environments or custom URLs for API requests. You can either use the predefined environments or specify your own custom URL.
-### Environments
-```ruby
-require "seed"
-
-seed = Seed::Client.new(
-    base_url: Seed::Environment::REGIONAL_API_SERVER
-)
-```
+This SDK allows you to configure different custom URLs for API requests. You can specify your own custom URL.
 
 ### Custom URL
 ```ruby

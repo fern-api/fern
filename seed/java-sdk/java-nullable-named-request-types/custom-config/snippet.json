@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "8a8806b8",
+            "example_identifier": "Example1",
             "id": {
                 "method": "POST",
                 "path": "/postWithNullableNamedRequestBodyType/{id}",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "8a8806b8",
+            "example_identifier": "Example1",
             "id": {
                 "method": "POST",
                 "path": "/postWithNonNullableNamedRequestBodyType/{id}",
@@ -22,8 +22,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.NonNullableObject;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.postWithNonNullableNamedRequestBodyType(\n            \"id\",\n            NonNullableObject\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.NonNullableObject;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.postWithNonNullableNamedRequestBodyType(\n            \"id\",\n            NonNullableObject\n                .builder()\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.PostWithNonNullableNamedRequestBodyTypeRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.postWithNonNullableNamedRequestBodyType(\n            \"id\",\n            PostWithNonNullableNamedRequestBodyTypeRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.PostWithNonNullableNamedRequestBodyTypeRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.postWithNonNullableNamedRequestBodyType(\n            \"id\",\n            PostWithNonNullableNamedRequestBodyTypeRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         }
     ],

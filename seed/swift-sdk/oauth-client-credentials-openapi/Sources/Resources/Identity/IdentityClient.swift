@@ -7,7 +7,7 @@ public final class IdentityClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getToken(request: Requests.GetTokenIdentityRequest, requestOptions: RequestOptions? = nil) async throws -> TokenResponse {
+    public func gettoken(request: Requests.IdentityGetTokenRequest, requestOptions: RequestOptions? = nil) async throws -> TokenResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/identity/token",

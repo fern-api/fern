@@ -5,12 +5,15 @@ package com.seed.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.api.core.Nullable;
+import com.seed.api.core.NullableNonemptyFilter;
 import com.seed.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.List;
@@ -30,8 +33,17 @@ public final class SearchResponse {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("results")
+    @JsonIgnore
     public Optional<List<String>> getResults() {
+        if (results == null) {
+            return Optional.empty();
+        }
+        return results;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("results")
+    private Optional<List<String>> _getResults() {
         return results;
     }
 
@@ -86,6 +98,17 @@ public final class SearchResponse {
 
         public Builder results(List<String> results) {
             this.results = Optional.ofNullable(results);
+            return this;
+        }
+
+        public Builder results(Nullable<List<String>> results) {
+            if (results.isNull()) {
+                this.results = null;
+            } else if (results.isEmpty()) {
+                this.results = Optional.empty();
+            } else {
+                this.results = Optional.of(results.get());
+            }
             return this;
         }
 

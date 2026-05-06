@@ -29,7 +29,7 @@ impl ProblemClient3 {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/problems-v2/lightweight-problem-info",
+                "/problems-v2/v3/lightweight-problem-info",
                 None,
                 None,
                 options,
@@ -53,7 +53,7 @@ impl ProblemClient3 {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/problems-v2/problem-info",
+                "/problems-v2/v3/problem-info",
                 None,
                 None,
                 options,
@@ -78,7 +78,7 @@ impl ProblemClient3 {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/problems-v2/problem-info/{}", problem_id.0),
+                &format!("/problems-v2/v3/problem-info/{}", problem_id.0),
                 None,
                 None,
                 options,
@@ -105,7 +105,7 @@ impl ProblemClient3 {
             .execute_request(
                 Method::GET,
                 &format!(
-                    "/problems-v2/problem-info/{}/version/{}",
+                    "/problems-v2/v3/problem-info/{}/version/{}",
                     problem_id.0, problem_version
                 ),
                 None,

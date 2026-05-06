@@ -2,23 +2,23 @@
 //!
 //! This module contains client implementations for:
 //!
-//! - **TestGroup**
+//! - **Testgroup**
 
 use crate::{ApiError, ClientConfig};
 
-pub mod test_group;
+pub mod testgroup;
 pub struct ApiClient {
     pub config: ClientConfig,
-    pub test_group: TestGroupClient,
+    pub testgroup: TestgroupClient,
 }
 
 impl ApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            test_group: TestGroupClient::new(config.clone())?,
+            testgroup: TestgroupClient::new(config.clone())?,
         })
     }
 }
 
-pub use test_group::TestGroupClient;
+pub use testgroup::TestgroupClient;

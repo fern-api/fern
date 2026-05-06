@@ -3,7 +3,6 @@
 package core
 
 import (
-	fmt "fmt"
 	http "net/http"
 	url "net/url"
 )
@@ -25,7 +24,6 @@ type RequestOptions struct {
 	QueryParameters url.Values
 	MaxAttempts     uint
 	MaxBufSize      int
-	APIVersion      *string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -46,15 +44,7 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 
 // ToHeader maps the configured request options into a http.Header used
 // for the request(s).
-func (r *RequestOptions) ToHeader() http.Header {
-	header := r.cloneHeader()
-	apiVersion := fmt.Sprintf("%v", "2024-02-08")
-	if r.APIVersion != nil {
-		apiVersion = fmt.Sprintf("%v", *r.APIVersion)
-	}
-	header.Set("X-API-Version", apiVersion)
-	return header
-}
+func (r *RequestOptions) ToHeader() http.Header { return r.cloneHeader() }
 
 func (r *RequestOptions) cloneHeader() http.Header {
 	headers := r.HTTPHeader.Clone()
@@ -126,13 +116,4 @@ type MaxBufSizeOption struct {
 
 func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
-}
-
-// APIVersionOption implements the RequestOption interface.
-type APIVersionOption struct {
-	APIVersion *string
-}
-
-func (a *APIVersionOption) applyRequestOptions(opts *RequestOptions) {
-	opts.APIVersion = a.APIVersion
 }

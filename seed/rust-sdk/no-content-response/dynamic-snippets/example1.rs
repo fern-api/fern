@@ -10,7 +10,7 @@ async fn main() {
     client
         .contacts
         .create(
-            &CreateContactRequest {
+            &ContactsCreateRequest {
                 name: "name".to_string(),
                 email: Some("email".to_string()),
             },

@@ -197,7 +197,7 @@ client.search(
 <dl>
 <dd>
 
-**neighbor_required:** `Seed::Types::SearchRequestNeighborRequired` 
+**neighbor_required:** `Seed::Types::User` 
     
 </dd>
 </dl>

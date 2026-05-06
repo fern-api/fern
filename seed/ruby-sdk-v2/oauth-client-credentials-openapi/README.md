@@ -33,7 +33,7 @@ client = Seed::Client.new(
   client_secret: "<clientSecret>"
 )
 
-client.identity.get_token(
+client.identity.gettoken(
   username: "username",
   password: "password"
 )
@@ -64,7 +64,7 @@ client = Seed::Client.new(
 )
 
 begin
-    result = client.identity.get_token
+    result = client.identity.gettoken
 rescue Seed::Errors::TimeoutError
     puts "API didn't respond before our timeout elapsed"
 rescue Seed::Errors::ServiceUnavailableError
@@ -114,7 +114,7 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
 ```ruby
 require "seed"
 
-response = client.identity.get_token(
+response = client.identity.gettoken(
     ...,
     timeout: 30  # 30 second timeout
 )
@@ -127,7 +127,7 @@ If you would like to send additional headers as part of the request, use the `ad
 ```ruby
 require "seed"
 
-response = client.identity.get_token(
+response = client.identity.gettoken(
     ...,
     request_options: {
         additional_headers: {
@@ -144,7 +144,7 @@ If you would like to send additional query parameters as part of the request, us
 ```ruby
 require "seed"
 
-response = client.identity.get_token(
+response = client.identity.gettoken(
     ...,
     request_options: {
         additional_query_parameters: {

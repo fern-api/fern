@@ -37,7 +37,7 @@ module Seed
 
       field :neighbor, -> { Seed::Types::SearchRequestNeighbor }, optional: true, nullable: false
 
-      field :neighbor_required, -> { Seed::Types::SearchRequestNeighborRequired }, optional: false, nullable: false, api_name: "neighborRequired"
+      field :neighbor_required, -> { Seed::Types::User }, optional: false, nullable: false, api_name: "neighborRequired"
     end
   end
 end

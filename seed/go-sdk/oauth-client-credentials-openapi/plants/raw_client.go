@@ -72,7 +72,7 @@ func (r *RawClient) List(
 
 func (r *RawClient) Get(
 	ctx context.Context,
-	request *fern.GetPlantsRequest,
+	request *fern.PlantsGetRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.Plant], error) {
 	options := core.NewRequestOptions(opts...)

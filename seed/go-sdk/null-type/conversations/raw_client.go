@@ -31,9 +31,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) OutboundCall(
+func (r *RawClient) Outboundcall(
 	ctx context.Context,
-	request *fern.OutboundCallConversationsRequest,
+	request *fern.ConversationsOutboundCallRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.OutboundCallConversationsResponse], error) {
 	options := core.NewRequestOptions(opts...)

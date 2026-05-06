@@ -60,7 +60,7 @@ client.echo(request: "Hello world!\\n\\nwith\\n\\tnewlines")
 <dd>
 
 ```ruby
-client.echo(request: "primitive")
+client.create_type(request: "primitive")
 ```
 </dd>
 </dl>

@@ -11,7 +11,7 @@ import com.seed.api.core.RequestOptions;
 import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
-import com.seed.api.requests.ItemData;
+import com.seed.api.requests.CreateItemRequest;
 import com.seed.api.types.Item;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -33,12 +33,13 @@ public class AsyncRawSeedApiClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<SeedApiHttpResponse<Item>> createItem(String key, String value, ItemData request) {
+    public CompletableFuture<SeedApiHttpResponse<Item>> createItem(
+            String key, String value, CreateItemRequest request) {
         return createItem(key, value, request, null);
     }
 
     public CompletableFuture<SeedApiHttpResponse<Item>> createItem(
-            String key, String value, ItemData request, RequestOptions requestOptions) {
+            String key, String value, CreateItemRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegment(key)

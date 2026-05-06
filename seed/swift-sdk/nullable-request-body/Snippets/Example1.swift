@@ -4,16 +4,16 @@ import Api
 private func main() async throws {
     let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.testGroup.testMethodName(
+    _ = try await client.testgroup.testMethodName(
         pathParam: "path_param",
         queryParamObject: .value(PlainObject(
-            id: "id",
-            name: "name"
+            id: .value("id"),
+            name: .value("name")
         )),
         queryParamInteger: .value(1),
         request: .value(PlainObject(
-            id: "id",
-            name: "name"
+            id: .value("id"),
+            name: .value("name")
         ))
     )
 }

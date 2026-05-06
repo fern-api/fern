@@ -72,7 +72,7 @@ class FolderClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "",
+                    path: "/folder",
                     method: HttpMethod::POST,
                 ),
                 $options,

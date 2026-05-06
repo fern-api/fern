@@ -4,47 +4,17 @@
 package com.seed.api.core;
 
 public final class Environment {
-    public static final Environment REGIONAL_API_SERVER =
-            new Environment("https://api.example.com/v1", "https://auth.example.com");
+    private final String url;
 
-    private final String base;
-
-    private final String auth;
-
-    Environment(String base, String auth) {
-        this.base = base;
-        this.auth = auth;
+    private Environment(String url) {
+        this.url = url;
     }
 
-    public String getBaseURL() {
-        return this.base;
+    public String getUrl() {
+        return this.url;
     }
 
-    public String getAuthURL() {
-        return this.auth;
-    }
-
-    public static Builder custom() {
-        return new Builder();
-    }
-
-    public static class Builder {
-        private String base;
-
-        private String auth;
-
-        public Builder base(String base) {
-            this.base = base;
-            return this;
-        }
-
-        public Builder auth(String auth) {
-            this.auth = auth;
-            return this;
-        }
-
-        public Environment build() {
-            return new Environment(base, auth);
-        }
+    public static Environment custom(String url) {
+        return new Environment(url);
     }
 }

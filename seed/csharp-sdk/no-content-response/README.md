@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 using SeedApi;
 
 var client = new SeedApiClient();
-await client.Contacts.CreateAsync(new CreateContactRequest { Name = "name" });
+await client.Contacts.CreateAsync(new ContactsCreateRequest { Name = "name" });
 ```
 
 ## Exception Handling

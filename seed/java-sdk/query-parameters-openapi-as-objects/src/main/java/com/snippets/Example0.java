@@ -4,7 +4,6 @@ import com.seed.api.SeedApiClient;
 import com.seed.api.requests.SearchRequest;
 import com.seed.api.types.NestedUser;
 import com.seed.api.types.SearchRequestNeighbor;
-import com.seed.api.types.SearchRequestNeighborRequired;
 import com.seed.api.types.User;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
@@ -26,10 +25,10 @@ public class Example0 {
                         .name("name")
                         .tags(Optional.of(Arrays.asList("tags", "tags")))
                         .build())
-                .neighborRequired(SearchRequestNeighborRequired.of(User.builder()
-                        .name(Optional.of("name"))
+                .neighborRequired(User.builder()
+                        .name("name")
                         .tags(Optional.of(Arrays.asList("tags", "tags")))
-                        .build()))
+                        .build())
                 .userList(Arrays.asList(User.builder()
                         .name("name")
                         .tags(Optional.of(Arrays.asList("tags", "tags")))
@@ -42,9 +41,9 @@ public class Example0 {
                 .tags(Arrays.asList("tags"))
                 .optionalTags(Arrays.asList("optionalTags"))
                 .optionalDeadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                .keyValue(new HashMap<String, String>() {
+                .keyValue(new HashMap<String, Optional<String>>() {
                     {
-                        put("keyValue", "keyValue");
+                        put("keyValue", Optional.of("keyValue"));
                     }
                 })
                 .optionalString("optionalString")

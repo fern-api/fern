@@ -16,7 +16,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/",
+                "path": "/a/b",
                 "method": "POST",
                 "identifier_override": "endpoint_a/b.foo"
             },
@@ -28,7 +28,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/",
+                "path": "/a/c",
                 "method": "POST",
                 "identifier_override": "endpoint_a/c.foo"
             },
@@ -40,7 +40,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/",
+                "path": "/folder",
                 "method": "POST",
                 "identifier_override": "endpoint_folder.foo"
             },

@@ -9,7 +9,7 @@ import com.seed.api.core.RequestOptions;
 import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
-import com.seed.api.resources.users.requests.GetUsersRequest;
+import com.seed.api.resources.users.requests.UsersGetRequest;
 import com.seed.api.types.User;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -30,27 +30,27 @@ public class RawUsersClient {
      * Gets a user by ID. The deleted_at field uses type null.
      */
     public SeedApiHttpResponse<User> get(String id) {
-        return get(id, GetUsersRequest.builder().build());
+        return get(id, UsersGetRequest.builder().build());
     }
 
     /**
      * Gets a user by ID. The deleted_at field uses type null.
      */
     public SeedApiHttpResponse<User> get(String id, RequestOptions requestOptions) {
-        return get(id, GetUsersRequest.builder().build(), requestOptions);
+        return get(id, UsersGetRequest.builder().build(), requestOptions);
     }
 
     /**
      * Gets a user by ID. The deleted_at field uses type null.
      */
-    public SeedApiHttpResponse<User> get(String id, GetUsersRequest request) {
+    public SeedApiHttpResponse<User> get(String id, UsersGetRequest request) {
         return get(id, request, null);
     }
 
     /**
      * Gets a user by ID. The deleted_at field uses type null.
      */
-    public SeedApiHttpResponse<User> get(String id, GetUsersRequest request, RequestOptions requestOptions) {
+    public SeedApiHttpResponse<User> get(String id, UsersGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users")

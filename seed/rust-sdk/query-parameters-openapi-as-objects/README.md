@@ -73,7 +73,7 @@ async fn main() {
                 ),
                 key_value: Some(HashMap::from([(
                     "keyValue".to_string(),
-                    "keyValue".to_string(),
+                    Some("keyValue".to_string()),
                 )])),
                 optional_string: Some("optionalString".to_string()),
                 nested_user: Some(NestedUser {
@@ -103,11 +103,11 @@ async fn main() {
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
                     ..Default::default()
                 })),
-                neighbor_required: SearchRequestNeighborRequired::User(User {
+                neighbor_required: User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
                     ..Default::default()
-                }),
+                },
             },
             None,
         )

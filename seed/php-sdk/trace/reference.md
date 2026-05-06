@@ -2168,7 +2168,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```php
-$client->v2->problem->getLightweightProblems();
+$client->v2->v3->problem->getLightweightProblems();
 ```
 </dd>
 </dl>
@@ -2207,7 +2207,7 @@ Returns latest versions of all problems
 <dd>
 
 ```php
-$client->v2->problem->getProblems();
+$client->v2->v3->problem->getProblems();
 ```
 </dd>
 </dl>
@@ -2246,7 +2246,7 @@ Returns latest version of a problem
 <dd>
 
 ```php
-$client->v2->problem->getLatestProblem(
+$client->v2->v3->problem->getLatestProblem(
     'problemId',
 );
 ```
@@ -2302,7 +2302,7 @@ Returns requested version of a problem
 <dd>
 
 ```php
-$client->v2->problem->getProblemVersion(
+$client->v2->v3->problem->getProblemVersion(
     'problemId',
     1,
 );

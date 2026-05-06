@@ -10,7 +10,7 @@ def test_union_get() -> None:
     client.union.get(
         id="id",
     )
-    verify_request_count(test_id, "GET", "/id", None, 1)
+    verify_request_count(test_id, "GET", "/union/id", None, 1)
 
 
 def test_union_update() -> None:
@@ -23,4 +23,4 @@ def test_union_update() -> None:
             radius=1.1,
         ),
     )
-    verify_request_count(test_id, "PATCH", "/", None, 1)
+    verify_request_count(test_id, "PATCH", "/union", None, 1)

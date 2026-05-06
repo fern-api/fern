@@ -56,7 +56,7 @@ following namespace:
 ```typescript
 import { SeedApi } from "@fern/url-form-encoded";
 
-const request: SeedApi.PostSubmitRequest = {
+const request: SeedApi.SubmitFormDataRequest = {
     ...
 };
 ```

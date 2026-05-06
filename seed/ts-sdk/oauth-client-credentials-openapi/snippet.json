@@ -4,12 +4,13 @@
             "id": {
                 "path": "/identity/token",
                 "method": "POST",
-                "identifier_override": "endpoint_identity.getToken"
+                "identifier_override": "endpoint_identity.gettoken"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/oauth-client-credentials-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.identity.getToken({\n    username: \"username\",\n    password: \"password\"\n});\n"
-            }
+                "client": "import { SeedApiClient } from \"@fern/oauth-client-credentials-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.identity.gettoken({\n    username: \"username\",\n    password: \"password\"\n});\n"
+            },
+            "example_identifier": "Example1"
         },
         {
             "id": {
@@ -20,7 +21,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedApiClient } from \"@fern/oauth-client-credentials-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.plants.list();\n"
-            }
+            },
+            "example_identifier": "Example1"
         },
         {
             "id": {
@@ -31,7 +33,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedApiClient } from \"@fern/oauth-client-credentials-openapi\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.plants.get({\n    plantId: \"plantId\"\n});\n"
-            }
+            },
+            "example_identifier": "Example1"
         }
     ],
     "types": {}

@@ -323,7 +323,7 @@ import Unions
 private func main() async throws {
     let client = UnionsClient()
 
-    _ = try await client.bigunion.get(id: "id")
+    _ = try await client.union.get(id: "id")
 }
 
 try await main()

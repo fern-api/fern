@@ -12,7 +12,6 @@ async fn main() {
             &TokenRequest {
                 client_id: "client_id".to_string(),
                 client_secret: "client_secret".to_string(),
-                ..Default::default()
             },
             None,
         )

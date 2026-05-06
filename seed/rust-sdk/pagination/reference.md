@@ -245,8 +245,12 @@ async fn main() {
     client
         .inline_users
         .inline_users
-        .list_with_mixed_type_cursor_pagination(
-            &InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest {
+        .list_with_body_cursor_pagination(
+            &ListUsersBodyCursorPaginationRequest {
+                pagination: Some(WithCursor {
+                    cursor: Some("cursor".to_string()),
+                    ..Default::default()
+                }),
                 ..Default::default()
             },
             None,
@@ -307,8 +311,8 @@ async fn main() {
     client
         .inline_users
         .inline_users
-        .list_with_cursor_pagination(
-            &InlineUsersInlineUsersListWithCursorPaginationQueryRequest {
+        .list_with_offset_pagination(
+            &InlineUsersInlineUsersListWithOffsetPaginationQueryRequest {
                 page: Some(1),
                 per_page: Some(1),
                 order: Some(Order::Asc),
@@ -487,8 +491,12 @@ async fn main() {
     client
         .inline_users
         .inline_users
-        .list_with_mixed_type_cursor_pagination(
-            &InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest {
+        .list_with_body_offset_pagination(
+            &ListUsersBodyOffsetPaginationRequest {
+                pagination: Some(WithPage {
+                    page: Some(1),
+                    ..Default::default()
+                }),
                 ..Default::default()
             },
             None,
@@ -631,8 +639,8 @@ async fn main() {
     client
         .inline_users
         .inline_users
-        .list_with_offset_step_pagination(
-            &InlineUsersInlineUsersListWithOffsetStepPaginationQueryRequest {
+        .list_with_offset_pagination_has_next_page(
+            &InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequest {
                 page: Some(1),
                 limit: Some(1),
                 order: Some(Order::Asc),
@@ -773,8 +781,8 @@ async fn main() {
     client
         .inline_users
         .inline_users
-        .list_with_extended_results(
-            &InlineUsersInlineUsersListWithExtendedResultsQueryRequest {
+        .list_with_extended_results_and_optional_data(
+            &InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataQueryRequest {
                 cursor: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
                 ..Default::default()
             },
@@ -833,8 +841,8 @@ async fn main() {
     client
         .inline_users
         .inline_users
-        .list_with_cursor_pagination(
-            &InlineUsersInlineUsersListWithCursorPaginationQueryRequest {
+        .list_usernames(
+            &InlineUsersInlineUsersListUsernamesQueryRequest {
                 starting_after: Some("starting_after".to_string()),
                 ..Default::default()
             },
@@ -1104,8 +1112,12 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_with_mixed_type_cursor_pagination(
-            &UsersListWithMixedTypeCursorPaginationQueryRequest {
+        .list_with_body_cursor_pagination(
+            &ListUsersBodyCursorPaginationRequest {
+                pagination: Some(WithCursor {
+                    cursor: Some("cursor".to_string()),
+                    ..Default::default()
+                }),
                 ..Default::default()
             },
             None,
@@ -1252,8 +1264,8 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_with_cursor_pagination(
-            &UsersListWithCursorPaginationQueryRequest {
+        .list_with_offset_pagination(
+            &UsersListWithOffsetPaginationQueryRequest {
                 page: Some(1),
                 per_page: Some(1),
                 order: Some(Order::Asc),
@@ -1430,8 +1442,12 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_with_mixed_type_cursor_pagination(
-            &UsersListWithMixedTypeCursorPaginationQueryRequest {
+        .list_with_body_offset_pagination(
+            &ListUsersBodyOffsetPaginationRequest {
+                pagination: Some(WithPage {
+                    page: Some(1),
+                    ..Default::default()
+                }),
                 ..Default::default()
             },
             None,
@@ -1572,8 +1588,8 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_with_offset_step_pagination(
-            &UsersListWithOffsetStepPaginationQueryRequest {
+        .list_with_offset_pagination_has_next_page(
+            &UsersListWithOffsetPaginationHasNextPageQueryRequest {
                 page: Some(1),
                 limit: Some(3),
                 order: Some(Order::Asc),
@@ -1712,8 +1728,8 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_with_extended_results(
-            &UsersListWithExtendedResultsQueryRequest {
+        .list_with_extended_results_and_optional_data(
+            &UsersListWithExtendedResultsAndOptionalDataQueryRequest {
                 cursor: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
                 ..Default::default()
             },
@@ -1771,8 +1787,8 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_with_cursor_pagination(
-            &UsersListWithCursorPaginationQueryRequest {
+        .list_usernames(
+            &UsersListUsernamesQueryRequest {
                 starting_after: Some("starting_after".to_string()),
                 ..Default::default()
             },
@@ -1833,8 +1849,8 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_with_cursor_pagination(
-            &UsersListWithCursorPaginationQueryRequest {
+        .list_usernames_with_optional_response(
+            &ListUsernamesWithOptionalResponseQueryRequest {
                 starting_after: Some("starting_after".to_string()),
                 ..Default::default()
             },

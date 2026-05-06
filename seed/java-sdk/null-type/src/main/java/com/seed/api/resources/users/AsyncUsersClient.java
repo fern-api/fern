@@ -5,7 +5,7 @@ package com.seed.api.resources.users;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
-import com.seed.api.resources.users.requests.GetUsersRequest;
+import com.seed.api.resources.users.requests.UsersGetRequest;
 import com.seed.api.types.User;
 import java.util.concurrent.CompletableFuture;
 
@@ -43,14 +43,14 @@ public class AsyncUsersClient {
     /**
      * Gets a user by ID. The deleted_at field uses type null.
      */
-    public CompletableFuture<User> get(String id, GetUsersRequest request) {
+    public CompletableFuture<User> get(String id, UsersGetRequest request) {
         return this.rawClient.get(id, request).thenApply(response -> response.body());
     }
 
     /**
      * Gets a user by ID. The deleted_at field uses type null.
      */
-    public CompletableFuture<User> get(String id, GetUsersRequest request, RequestOptions requestOptions) {
+    public CompletableFuture<User> get(String id, UsersGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(id, request, requestOptions).thenApply(response -> response.body());
     }
 }

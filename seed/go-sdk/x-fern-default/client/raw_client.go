@@ -42,20 +42,11 @@ func (r *RawClient) TestGet(
 		r.baseURL,
 		"",
 	)
-	_Region := request.Region
-	if _Region == "" {
-		_Region = "us-east-1"
-	}
 	endpointURL := internal.EncodeURL(
 		baseURL+"/test/%v/resource",
-		_Region,
+		request.Region,
 	)
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"limit": "100",
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}

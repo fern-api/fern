@@ -3,10 +3,11 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Environments;
 
 $client = new SeedClient(
-    environment: Environments::RegionalApiServer(),
+    options: [
+        'baseUrl' => 'https://api.fern.com',
+    ],
 );
 $client->getUser(
     'userId',

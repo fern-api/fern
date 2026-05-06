@@ -69,7 +69,7 @@ export class PlantsClient {
     }
 
     /**
-     * @param {SeedApi.GetPlantsRequest} request
+     * @param {SeedApi.PlantsGetRequest} request
      * @param {PlantsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -78,14 +78,14 @@ export class PlantsClient {
      *     })
      */
     public get(
-        request: SeedApi.GetPlantsRequest,
+        request: SeedApi.PlantsGetRequest,
         requestOptions?: PlantsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.Plant> {
         return core.HttpResponsePromise.fromPromise(this.__get(request, requestOptions));
     }
 
     private async __get(
-        request: SeedApi.GetPlantsRequest,
+        request: SeedApi.PlantsGetRequest,
         requestOptions?: PlantsClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.Plant>> {
         const { plantId } = request;

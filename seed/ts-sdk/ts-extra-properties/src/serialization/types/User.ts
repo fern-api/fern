@@ -4,21 +4,18 @@ import type * as SeedApi from "../../api/index.js";
 import * as core from "../../core/index.js";
 import type * as serializers from "../index.js";
 
-export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedApi.User> = core.serialization
-    .object({
-        id: core.serialization.string(),
-        userName: core.serialization.property("user_name", core.serialization.string()),
-        createdAt: core.serialization.property("created_at", core.serialization.date()),
-        updatedAt: core.serialization.property("updated_at", core.serialization.date().optional()),
-    })
-    .passthrough();
+export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedApi.User> = core.serialization.object({
+    id: core.serialization.string(),
+    userName: core.serialization.property("user_name", core.serialization.string()),
+    createdAt: core.serialization.property("created_at", core.serialization.date()),
+    updatedAt: core.serialization.property("updated_at", core.serialization.date().optionalNullable()),
+});
 
 export declare namespace User {
     export interface Raw {
         id: string;
         user_name: string;
         created_at: string;
-        updated_at?: string | null;
-        [key: string]: any;
+        updated_at?: (string | null | undefined) | null;
     }
 }

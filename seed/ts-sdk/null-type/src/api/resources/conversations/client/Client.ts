@@ -24,23 +24,23 @@ export class ConversationsClient {
     /**
      * Place an outbound call or validate call setup with dry_run.
      *
-     * @param {SeedApi.OutboundCallConversationsRequest} request
+     * @param {SeedApi.ConversationsOutboundCallRequest} request
      * @param {ConversationsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.conversations.outboundCall({
+     *     await client.conversations.outboundcall({
      *         to_phone_number: "to_phone_number"
      *     })
      */
-    public outboundCall(
-        request: SeedApi.OutboundCallConversationsRequest,
+    public outboundcall(
+        request: SeedApi.ConversationsOutboundCallRequest,
         requestOptions?: ConversationsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.OutboundCallConversationsResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__outboundCall(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__outboundcall(request, requestOptions));
     }
 
-    private async __outboundCall(
-        request: SeedApi.OutboundCallConversationsRequest,
+    private async __outboundcall(
+        request: SeedApi.ConversationsOutboundCallRequest,
         requestOptions?: ConversationsClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.OutboundCallConversationsResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);

@@ -22,7 +22,7 @@ export class SeedApiClient {
     }
 
     /**
-     * @param {SeedApi.PostSubmitRequest} request
+     * @param {SeedApi.SubmitFormDataRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -32,14 +32,14 @@ export class SeedApiClient {
      *     })
      */
     public submitFormData(
-        request: SeedApi.PostSubmitRequest,
+        request: SeedApi.SubmitFormDataRequest,
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.PostSubmitResponse> {
         return core.HttpResponsePromise.fromPromise(this.__submitFormData(request, requestOptions));
     }
 
     private async __submitFormData(
-        request: SeedApi.PostSubmitRequest,
+        request: SeedApi.SubmitFormDataRequest,
         requestOptions?: SeedApiClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.PostSubmitResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -51,9 +51,9 @@ export class SeedApiClient {
             ),
             method: "POST",
             headers: _headers,
-            contentType: "application/x-www-form-urlencoded",
+            contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            requestType: "form",
+            requestType: "json",
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -106,9 +106,9 @@ export class SeedApiClient {
             ),
             method: "POST",
             headers: _headers,
-            contentType: "application/x-www-form-urlencoded",
+            contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            requestType: "form",
+            requestType: "json",
             body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,

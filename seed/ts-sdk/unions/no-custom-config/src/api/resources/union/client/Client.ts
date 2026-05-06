@@ -41,7 +41,7 @@ export class UnionClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(id)}`,
+                `/union/${core.url.encodePathParam(id)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -64,7 +64,7 @@ export class UnionClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/{id}");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/union/{id}");
     }
 
     /**
@@ -92,9 +92,11 @@ export class UnionClient {
     ): Promise<core.WithRawResponse<boolean>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url:
+            url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)),
+                "/union",
+            ),
             method: "PATCH",
             headers: _headers,
             contentType: "application/json",
@@ -119,6 +121,6 @@ export class UnionClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/union");
     }
 }

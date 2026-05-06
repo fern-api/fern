@@ -36,7 +36,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 
 func (c *Client) SubmitFormData(
 	ctx context.Context,
-	request *fern.PostSubmitRequest,
+	request *fern.SubmitFormDataRequest,
 	opts ...option.RequestOption,
 ) (*fern.PostSubmitResponse, error) {
 	response, err := c.WithRawResponse.SubmitFormData(

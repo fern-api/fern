@@ -10,7 +10,7 @@ describe("UnionClient", () => {
 
         const rawResponseBody = { type: "circle", id: "id", name: "name", radius: 1.1 };
 
-        server.mockEndpoint().get("/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+        server.mockEndpoint().get("/union/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.union.get("id");
         expect(response).toEqual({
@@ -29,7 +29,7 @@ describe("UnionClient", () => {
 
         server
             .mockEndpoint()
-            .patch("")
+            .patch("/union")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)

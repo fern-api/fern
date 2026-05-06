@@ -1,6 +1,6 @@
 # Reference
 ## Identity
-<details><summary><code>client.identity.<a href="/Sources/Resources/Identity/IdentityClient.swift">getToken</a>(request: Requests.GetTokenIdentityRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
+<details><summary><code>client.identity.<a href="/Sources/Resources/Identity/IdentityClient.swift">gettoken</a>(request: Requests.IdentityGetTokenRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -19,7 +19,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client.identity.getToken(request: .init(
+    _ = try await client.identity.gettoken(request: .init(
         username: "username",
         password: "password"
     ))
@@ -40,7 +40,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.GetTokenIdentityRequest` 
+**request:** `Requests.IdentityGetTokenRequest` 
     
 </dd>
 </dl>

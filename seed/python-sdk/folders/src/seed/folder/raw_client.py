@@ -27,6 +27,7 @@ class RawFolderClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
+            "folder",
             method="POST",
             request_options=request_options,
         )
@@ -59,6 +60,7 @@ class AsyncRawFolderClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
+            "folder",
             method="POST",
             request_options=request_options,
         )

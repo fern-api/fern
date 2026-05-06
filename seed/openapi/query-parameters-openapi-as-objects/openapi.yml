@@ -5,7 +5,7 @@ info:
 paths:
   /user/getUsername:
     get:
-      operationId: _search
+      operationId: search
       parameters:
         - name: limit
           in: query

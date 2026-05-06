@@ -80,7 +80,7 @@ $client->getUser(
 
 ```php
 $client->getToken(
-    new TokenRequest([
+    new GetTokenRequest([
         'clientId' => 'client_id',
         'clientSecret' => 'client_secret',
     ]),

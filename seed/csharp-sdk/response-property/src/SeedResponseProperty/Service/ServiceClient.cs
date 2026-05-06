@@ -95,7 +95,7 @@ public partial class ServiceClient : IServiceClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "movie",
+                    Path = "movie/docs",
                     Body = request,
                     Headers = _headers,
                     Options = options,
@@ -161,7 +161,7 @@ public partial class ServiceClient : IServiceClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "movie",
+                    Path = "movie/name",
                     Body = request,
                     Headers = _headers,
                     Options = options,
@@ -227,7 +227,7 @@ public partial class ServiceClient : IServiceClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "movie",
+                    Path = "movie/metadata",
                     Body = request,
                     Headers = _headers,
                     Options = options,
@@ -293,7 +293,7 @@ public partial class ServiceClient : IServiceClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "movie",
+                    Path = "movie/optional",
                     Body = request,
                     Headers = _headers,
                     Options = options,
@@ -359,7 +359,7 @@ public partial class ServiceClient : IServiceClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "movie",
+                    Path = "movie/optional/docs",
                     Body = request,
                     Headers = _headers,
                     Options = options,
@@ -425,7 +425,7 @@ public partial class ServiceClient : IServiceClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "movie",
+                    Path = "movie/optional/name",
                     Body = request,
                     Headers = _headers,
                     Options = options,

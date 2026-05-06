@@ -98,7 +98,7 @@ class RawSeedApi:
             Successful response
         """
         _response = self._client_wrapper.httpx_client.request(
-            "documents/upload",
+            "documents/upload/pdf",
             method="POST",
             content=request,
             headers={
@@ -209,7 +209,7 @@ class AsyncRawSeedApi:
             Successful response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "documents/upload",
+            "documents/upload/pdf",
             method="POST",
             content=request,
             headers={

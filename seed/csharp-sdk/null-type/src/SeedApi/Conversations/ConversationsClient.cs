@@ -12,8 +12,8 @@ public partial class ConversationsClient : IConversationsClient
         _client = client;
     }
 
-    private async Task<WithRawResponse<OutboundCallConversationsResponse>> OutboundCallAsyncCore(
-        OutboundCallConversationsRequest request,
+    private async Task<WithRawResponse<OutboundCallConversationsResponse>> OutboundcallAsyncCore(
+        ConversationsOutboundCallRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -85,18 +85,18 @@ public partial class ConversationsClient : IConversationsClient
     /// Place an outbound call or validate call setup with dry_run.
     /// </summary>
     /// <example><code>
-    /// await client.Conversations.OutboundCallAsync(
-    ///     new OutboundCallConversationsRequest { ToPhoneNumber = "to_phone_number" }
+    /// await client.Conversations.OutboundcallAsync(
+    ///     new ConversationsOutboundCallRequest { ToPhoneNumber = "to_phone_number" }
     /// );
     /// </code></example>
-    public WithRawResponseTask<OutboundCallConversationsResponse> OutboundCallAsync(
-        OutboundCallConversationsRequest request,
+    public WithRawResponseTask<OutboundCallConversationsResponse> OutboundcallAsync(
+        ConversationsOutboundCallRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         return new WithRawResponseTask<OutboundCallConversationsResponse>(
-            OutboundCallAsyncCore(request, options, cancellationToken)
+            OutboundcallAsyncCore(request, options, cancellationToken)
         );
     }
 }

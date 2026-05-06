@@ -100,7 +100,7 @@ The SDK exports all request types as Swift structs. Simply import the SDK module
 ```swift
 import Api
 
-let request = Requests.PostSubmitRequest(
+let request = Requests.SubmitFormDataRequest(
     ...
 )
 ```

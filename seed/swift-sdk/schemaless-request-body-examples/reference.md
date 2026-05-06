@@ -203,8 +203,8 @@ private func main() async throws {
     let client = ApiClient()
 
     _ = try await client.createPlantWithSchema(request: .init(
-        name: "Sundew",
-        species: "Drosera capensis"
+        name: .value("Sundew"),
+        species: .value("Drosera capensis")
     ))
 }
 

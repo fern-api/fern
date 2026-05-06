@@ -4,7 +4,7 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("ConversationsClient", () => {
-    test("outboundCall", async () => {
+    test("outboundcall", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { to_phone_number: "to_phone_number" };
@@ -19,7 +19,7 @@ describe("ConversationsClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.conversations.outboundCall({
+        const response = await client.conversations.outboundcall({
             to_phone_number: "to_phone_number",
         });
         expect(response).toEqual(rawResponseBody);

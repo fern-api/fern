@@ -5,7 +5,7 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
-import com.seed.api.requests.NonNullableObject;
+import com.seed.api.requests.PostWithNonNullableNamedRequestBodyTypeRequest;
 import com.seed.api.requests.PostWithNullableNamedRequestBodyTypeRequest;
 import com.seed.api.types.ResponseBody;
 import java.util.concurrent.CompletableFuture;
@@ -51,14 +51,14 @@ public class AsyncSeedApiClient {
     }
 
     public CompletableFuture<ResponseBody> postWithNonNullableNamedRequestBodyType(
-            String id, NonNullableObject request) {
+            String id, PostWithNonNullableNamedRequestBodyTypeRequest request) {
         return this.rawClient
                 .postWithNonNullableNamedRequestBodyType(id, request)
                 .thenApply(response -> response.body());
     }
 
     public CompletableFuture<ResponseBody> postWithNonNullableNamedRequestBodyType(
-            String id, NonNullableObject request, RequestOptions requestOptions) {
+            String id, PostWithNonNullableNamedRequestBodyTypeRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .postWithNonNullableNamedRequestBodyType(id, request, requestOptions)
                 .thenApply(response -> response.body());

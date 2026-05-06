@@ -376,7 +376,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/problems-v2/lightweight-problem-info",
+                "path": "/problems-v2/v3/lightweight-problem-info",
                 "method": "GET",
                 "identifier_override": "endpoint_v2/v3/problem.getLightweightProblems"
             },
@@ -388,7 +388,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/problems-v2/problem-info",
+                "path": "/problems-v2/v3/problem-info",
                 "method": "GET",
                 "identifier_override": "endpoint_v2/v3/problem.getProblems"
             },
@@ -400,7 +400,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/problems-v2/problem-info/{problemId}",
+                "path": "/problems-v2/v3/problem-info/{problemId}",
                 "method": "GET",
                 "identifier_override": "endpoint_v2/v3/problem.getLatestProblem"
             },
@@ -412,7 +412,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/problems-v2/problem-info/{problemId}/version/{problemVersion}",
+                "path": "/problems-v2/v3/problem-info/{problemId}/version/{problemVersion}",
                 "method": "GET",
                 "identifier_override": "endpoint_v2/v3/problem.getProblemVersion"
             },

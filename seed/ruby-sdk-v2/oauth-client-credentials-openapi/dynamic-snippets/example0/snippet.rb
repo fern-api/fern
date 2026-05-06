@@ -6,7 +6,7 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.identity.get_token(
+client.identity.gettoken(
   username: "username",
   password: "password"
 )

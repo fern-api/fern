@@ -6,7 +6,7 @@ public partial interface IUsersClient
     /// Gets a user by ID. The deleted_at field uses type null.
     /// </summary>
     WithRawResponseTask<User> GetAsync(
-        GetUsersRequest request,
+        UsersGetRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

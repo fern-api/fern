@@ -5,7 +5,7 @@ package com.seed.api.resources.identity;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
-import com.seed.api.resources.identity.requests.GetTokenIdentityRequest;
+import com.seed.api.resources.identity.requests.IdentityGetTokenRequest;
 import com.seed.api.types.TokenResponse;
 
 public class IdentityClient {
@@ -25,11 +25,11 @@ public class IdentityClient {
         return this.rawClient;
     }
 
-    public TokenResponse getToken(GetTokenIdentityRequest request) {
-        return this.rawClient.getToken(request).body();
+    public TokenResponse gettoken(IdentityGetTokenRequest request) {
+        return this.rawClient.gettoken(request).body();
     }
 
-    public TokenResponse getToken(GetTokenIdentityRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getToken(request, requestOptions).body();
+    public TokenResponse gettoken(IdentityGetTokenRequest request, RequestOptions requestOptions) {
+        return this.rawClient.gettoken(request, requestOptions).body();
     }
 }

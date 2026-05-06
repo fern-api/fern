@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">bulk_update_tasks</a>(request: BulkUpdateTasksRequest, filter_assigned_to: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, filter_is_complete: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, filter_date: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, fields: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;BulkUpdateTasksResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.<a href="/src/client.rs">bulk_update_tasks</a>(request: BulkUpdateTasksRequest, assigned_to: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, is_complete: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, date: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, fields: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;BulkUpdateTasksResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -43,7 +43,7 @@ async fn main() {
 <dl>
 <dd>
 
-**bulk_update_tasks_request_assigned_to:** `Option<String>` 
+**bulk_update_tasks_request_assigned_to:** `Option<Option<String>>` 
     
 </dd>
 </dl>
@@ -51,7 +51,7 @@ async fn main() {
 <dl>
 <dd>
 
-**bulk_update_tasks_request_date:** `Option<String>` 
+**bulk_update_tasks_request_date:** `Option<Option<String>>` 
     
 </dd>
 </dl>
@@ -59,7 +59,7 @@ async fn main() {
 <dl>
 <dd>
 
-**bulk_update_tasks_request_is_complete:** `Option<bool>` 
+**bulk_update_tasks_request_is_complete:** `Option<Option<bool>>` 
     
 </dd>
 </dl>
@@ -67,7 +67,7 @@ async fn main() {
 <dl>
 <dd>
 
-**text:** `Option<String>` 
+**text:** `Option<Option<String>>` 
     
 </dd>
 </dl>
@@ -75,7 +75,7 @@ async fn main() {
 <dl>
 <dd>
 
-**filter_assigned_to:** `Option<Option<String>>` 
+**assigned_to:** `Option<Option<String>>` 
     
 </dd>
 </dl>
@@ -83,7 +83,7 @@ async fn main() {
 <dl>
 <dd>
 
-**filter_is_complete:** `Option<Option<String>>` 
+**is_complete:** `Option<Option<String>>` 
     
 </dd>
 </dl>
@@ -91,7 +91,7 @@ async fn main() {
 <dl>
 <dd>
 
-**filter_date:** `Option<Option<String>>` 
+**date:** `Option<Option<String>>` 
     
 </dd>
 </dl>
@@ -99,7 +99,7 @@ async fn main() {
 <dl>
 <dd>
 
-**fields:** `Option<String>` — Comma-separated list of fields to include in the response.
+**fields:** `Option<Option<String>>` — Comma-separated list of fields to include in the response.
     
 </dd>
 </dl>

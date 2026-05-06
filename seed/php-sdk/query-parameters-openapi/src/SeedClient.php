@@ -90,7 +90,7 @@ class SeedClient
         $query['deadline'] = JsonSerializer::serializeDateTime($request->deadline);
         $query['bytes'] = $request->bytes;
         $query['user'] = $request->user;
-        $query['neighborRequired'] = JsonSerializer::serializeUnion($request->neighborRequired, new Union(User::class, NestedUser::class, 'string', 'integer'));
+        $query['neighborRequired'] = $request->neighborRequired;
         if ($request->userList != null) {
             $query['userList'] = $request->userList;
         }

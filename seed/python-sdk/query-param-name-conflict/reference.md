@@ -34,7 +34,7 @@ client.bulk_update_tasks()
 <dl>
 <dd>
 
-**filter_assigned_to:** `typing.Optional[str]` 
+**assigned_to:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -42,7 +42,7 @@ client.bulk_update_tasks()
 <dl>
 <dd>
 
-**filter_is_complete:** `typing.Optional[str]` 
+**is_complete:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -50,7 +50,7 @@ client.bulk_update_tasks()
 <dl>
 <dd>
 
-**filter_date:** `typing.Optional[str]` 
+**date:** `typing.Optional[str]` 
     
 </dd>
 </dl>

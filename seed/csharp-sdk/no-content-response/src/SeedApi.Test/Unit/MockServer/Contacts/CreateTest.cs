@@ -44,7 +44,7 @@ public class CreateTest : BaseMockServerTest
             );
 
         var response = await Client.Contacts.CreateAsync(
-            new CreateContactRequest { Name = "name", Email = "email" }
+            new ContactsCreateRequest { Name = "name", Email = "email" }
         );
         JsonAssert.AreEqual(response, mockResponse);
     }
@@ -83,7 +83,7 @@ public class CreateTest : BaseMockServerTest
             );
 
         var response = await Client.Contacts.CreateAsync(
-            new CreateContactRequest { Name = "name" }
+            new ContactsCreateRequest { Name = "name" }
         );
         JsonAssert.AreEqual(response, mockResponse);
     }

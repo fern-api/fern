@@ -5,8 +5,8 @@ package com.seed.api.resources.contacts;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
-import com.seed.api.resources.contacts.requests.CreateContactRequest;
-import com.seed.api.resources.contacts.requests.GetContactsRequest;
+import com.seed.api.resources.contacts.requests.ContactsCreateRequest;
+import com.seed.api.resources.contacts.requests.ContactsGetRequest;
 import com.seed.api.types.Contact;
 import java.util.Optional;
 
@@ -30,14 +30,14 @@ public class ContactsClient {
     /**
      * Creates a new contact. Returns 200 with the contact or 204 with no content.
      */
-    public Optional<Contact> create(CreateContactRequest request) {
+    public Optional<Contact> create(ContactsCreateRequest request) {
         return this.rawClient.create(request).body();
     }
 
     /**
      * Creates a new contact. Returns 200 with the contact or 204 with no content.
      */
-    public Optional<Contact> create(CreateContactRequest request, RequestOptions requestOptions) {
+    public Optional<Contact> create(ContactsCreateRequest request, RequestOptions requestOptions) {
         return this.rawClient.create(request, requestOptions).body();
     }
 
@@ -58,14 +58,14 @@ public class ContactsClient {
     /**
      * Gets a contact by ID. Returns 200 with the contact.
      */
-    public Contact get(String id, GetContactsRequest request) {
+    public Contact get(String id, ContactsGetRequest request) {
         return this.rawClient.get(id, request).body();
     }
 
     /**
      * Gets a contact by ID. Returns 200 with the contact.
      */
-    public Contact get(String id, GetContactsRequest request, RequestOptions requestOptions) {
+    public Contact get(String id, ContactsGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(id, request, requestOptions).body();
     }
 }

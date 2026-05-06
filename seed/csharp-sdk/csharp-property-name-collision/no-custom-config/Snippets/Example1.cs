@@ -9,7 +9,7 @@ public partial class Examples
             }
         );
 
-        await client._.CreateCatalogAsync(
+        await client.CreateCatalogAsync(
             new CatalogV1Id {
                 CatalogV1Id_ = "catalog_v1_id",
                 LocationId = "location_id"

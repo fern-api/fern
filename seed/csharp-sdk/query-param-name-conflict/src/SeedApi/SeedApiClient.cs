@@ -36,9 +36,9 @@ public partial class SeedApiClient : ISeedApiClient
     )
     {
         var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 4)
-            .Add("assigned_to", request.FilterAssignedTo)
-            .Add("is_complete", request.FilterIsComplete)
-            .Add("date", request.FilterDate)
+            .Add("assigned_to", request.AssignedTo)
+            .Add("is_complete", request.IsComplete)
+            .Add("date", request.Date)
             .Add("_fields", request.Fields)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();

@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>client.conversations.outboundCall(request) -> OutboundCallConversationsResponse</code></summary>
+<details><summary><code>client.conversations.outboundcall(request) -> OutboundCallConversationsResponse</code></summary>
 <dl>
 <dd>
 
@@ -27,8 +27,8 @@ Place an outbound call or validate call setup with dry_run.
 <dd>
 
 ```java
-client.conversations().outboundCall(
-    OutboundCallConversationsRequest
+client.conversations().outboundcall(
+    ConversationsOutboundCallRequest
         .builder()
         .toPhoneNumber("to_phone_number")
         .build()
@@ -97,7 +97,7 @@ Gets a user by ID. The deleted_at field uses type null.
 ```java
 client.users().get(
     "id",
-    GetUsersRequest
+    UsersGetRequest
         .builder()
         .build()
 );

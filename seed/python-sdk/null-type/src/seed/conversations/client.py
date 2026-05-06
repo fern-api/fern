@@ -4,8 +4,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.outbound_call_conversations_response import OutboundCallConversationsResponse
 from .raw_client import AsyncRawConversationsClient, RawConversationsClient
-from .types.outbound_call_conversations_response import OutboundCallConversationsResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -26,7 +26,7 @@ class ConversationsClient:
         """
         return self._raw_client
 
-    def outbound_call(
+    def outboundcall(
         self,
         *,
         to_phone_number: str,
@@ -59,11 +59,11 @@ class ConversationsClient:
         client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.conversations.outbound_call(
+        client.conversations.outboundcall(
             to_phone_number="to_phone_number",
         )
         """
-        _response = self._raw_client.outbound_call(
+        _response = self._raw_client.outboundcall(
             to_phone_number=to_phone_number, dry_run=dry_run, request_options=request_options
         )
         return _response.data
@@ -84,7 +84,7 @@ class AsyncConversationsClient:
         """
         return self._raw_client
 
-    async def outbound_call(
+    async def outboundcall(
         self,
         *,
         to_phone_number: str,
@@ -122,14 +122,14 @@ class AsyncConversationsClient:
 
 
         async def main() -> None:
-            await client.conversations.outbound_call(
+            await client.conversations.outboundcall(
                 to_phone_number="to_phone_number",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.outbound_call(
+        _response = await self._raw_client.outboundcall(
             to_phone_number=to_phone_number, dry_run=dry_run, request_options=request_options
         )
         return _response.data

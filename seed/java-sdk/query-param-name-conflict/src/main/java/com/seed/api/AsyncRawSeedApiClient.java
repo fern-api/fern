@@ -52,17 +52,17 @@ public class AsyncRawSeedApiClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("task");
-        if (request.getFilterAssignedTo().isPresent()) {
+        if (request.getAssignedTo().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "assigned_to", request.getFilterAssignedTo().get(), false);
+                    httpUrl, "assigned_to", request.getAssignedTo().get(), false);
         }
-        if (request.getFilterIsComplete().isPresent()) {
+        if (request.getIsComplete().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "is_complete", request.getFilterIsComplete().get(), false);
+                    httpUrl, "is_complete", request.getIsComplete().get(), false);
         }
-        if (request.getFilterDate().isPresent()) {
+        if (request.getDate().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "date", request.getFilterDate().get(), false);
+                    httpUrl, "date", request.getDate().get(), false);
         }
         if (request.getFields().isPresent()) {
             QueryStringMapper.addQueryParameter(

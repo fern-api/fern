@@ -9,7 +9,7 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
 
 if typing.TYPE_CHECKING:
-    from .test_group.client import AsyncTestGroupClient, TestGroupClient
+    from .testgroup.client import AsyncTestgroupClient, TestgroupClient
 
 
 class SeedApi:
@@ -75,15 +75,15 @@ class SeedApi:
             max_retries=_defaulted_max_retries,
             logging=logging,
         )
-        self._test_group: typing.Optional[TestGroupClient] = None
+        self._testgroup: typing.Optional[TestgroupClient] = None
 
     @property
-    def test_group(self):
-        if self._test_group is None:
-            from .test_group.client import TestGroupClient  # noqa: E402
+    def testgroup(self):
+        if self._testgroup is None:
+            from .testgroup.client import TestgroupClient  # noqa: E402
 
-            self._test_group = TestGroupClient(client_wrapper=self._client_wrapper)
-        return self._test_group
+            self._testgroup = TestgroupClient(client_wrapper=self._client_wrapper)
+        return self._testgroup
 
 
 def _make_default_async_client(
@@ -165,12 +165,12 @@ class AsyncSeedApi:
             max_retries=_defaulted_max_retries,
             logging=logging,
         )
-        self._test_group: typing.Optional[AsyncTestGroupClient] = None
+        self._testgroup: typing.Optional[AsyncTestgroupClient] = None
 
     @property
-    def test_group(self):
-        if self._test_group is None:
-            from .test_group.client import AsyncTestGroupClient  # noqa: E402
+    def testgroup(self):
+        if self._testgroup is None:
+            from .testgroup.client import AsyncTestgroupClient  # noqa: E402
 
-            self._test_group = AsyncTestGroupClient(client_wrapper=self._client_wrapper)
-        return self._test_group
+            self._testgroup = AsyncTestgroupClient(client_wrapper=self._client_wrapper)
+        return self._testgroup

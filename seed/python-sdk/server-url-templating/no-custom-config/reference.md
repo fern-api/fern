@@ -13,10 +13,9 @@
 
 ```python
 from seed import SeedApi
-from seed.environment import SeedApiEnvironment
 
 client = SeedApi(
-    environment=SeedApiEnvironment.REGIONAL_API_SERVER,
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.get_users()
@@ -61,10 +60,9 @@ client.get_users()
 
 ```python
 from seed import SeedApi
-from seed.environment import SeedApiEnvironment
 
 client = SeedApi(
-    environment=SeedApiEnvironment.REGIONAL_API_SERVER,
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.get_user(
@@ -119,10 +117,9 @@ client.get_user(
 
 ```python
 from seed import SeedApi
-from seed.environment import SeedApiEnvironment
 
 client = SeedApi(
-    environment=SeedApiEnvironment.REGIONAL_API_SERVER,
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.get_token(

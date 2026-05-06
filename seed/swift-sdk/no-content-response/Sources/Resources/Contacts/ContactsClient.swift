@@ -10,13 +10,13 @@ public final class ContactsClient: Sendable {
     /// Creates a new contact. Returns 200 with the contact or 204 with no content.
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func create(request: Requests.CreateContactRequest, requestOptions: RequestOptions? = nil) async throws -> Contact? {
+    public func create(request: Requests.ContactsCreateRequest, requestOptions: RequestOptions? = nil) async throws -> Nullable<Contact> {
         return try await httpClient.performRequest(
             method: .post,
             path: "/contacts",
             body: request,
             requestOptions: requestOptions,
-            responseType: Contact?.self
+            responseType: Nullable<Contact>.self
         )
     }
 

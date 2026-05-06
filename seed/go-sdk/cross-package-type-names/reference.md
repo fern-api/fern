@@ -42,7 +42,7 @@ client.FolderA.Service.GetDirectThread(
 <dd>
 
 ```go
-client.FolderA.Service.GetDirectThread(
+client.FolderD.Service.GetDirectThread(
         context.TODO(),
     )
 }

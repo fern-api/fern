@@ -602,7 +602,7 @@ public class GetProblemsTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/problems-v2/problem-info")
+                    .WithPath("/problems-v2/v3/problem-info")
                     .UsingGet()
             )
             .RespondWith(

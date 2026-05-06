@@ -14,7 +14,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.GetContactsRequest{
+    request := &fern.ContactsGetRequest{
         ID: "id",
     }
     client.Contacts.Get(

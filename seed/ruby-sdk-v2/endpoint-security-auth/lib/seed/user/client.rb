@@ -23,7 +23,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "users",
+          path: "users/bearer",
           request_options: request_options
         )
         begin
@@ -51,7 +51,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "users",
+          path: "users/api-key",
           request_options: request_options
         )
         begin
@@ -79,7 +79,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "users",
+          path: "users/oauth",
           request_options: request_options
         )
         begin
@@ -107,7 +107,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "users",
+          path: "users/basic",
           request_options: request_options
         )
         begin
@@ -135,7 +135,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "users",
+          path: "users/inferred",
           request_options: request_options
         )
         begin
@@ -163,7 +163,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "users",
+          path: "users/any-auth",
           request_options: request_options
         )
         begin
@@ -191,7 +191,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "users",
+          path: "users/all-auth",
           request_options: request_options
         )
         begin

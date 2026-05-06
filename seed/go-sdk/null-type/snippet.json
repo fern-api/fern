@@ -4,11 +4,11 @@
             "id": {
                 "path": "/conversations/outbound-call",
                 "method": "POST",
-                "identifier_override": "endpoint_conversations.outboundCall"
+                "identifier_override": "endpoint_conversations.outboundcall"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/null-type/fern\"\n\tfernclient \"github.com/null-type/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Conversations.OutboundCall(\n\tcontext.TODO(),\n\t\u0026fern.OutboundCallConversationsRequest{\n\t\tToPhoneNumber: \"to_phone_number\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/null-type/fern\"\n\tfernclient \"github.com/null-type/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Conversations.Outboundcall(\n\tcontext.TODO(),\n\t\u0026fern.ConversationsOutboundCallRequest{\n\t\tToPhoneNumber: \"to_phone_number\",\n\t},\n)\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/null-type/fern\"\n\tfernclient \"github.com/null-type/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Users.Get(\n\tcontext.TODO(),\n\t\u0026fern.GetUsersRequest{\n\t\tID: \"id\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/null-type/fern\"\n\tfernclient \"github.com/null-type/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Users.Get(\n\tcontext.TODO(),\n\t\u0026fern.UsersGetRequest{\n\t\tID: \"id\",\n\t},\n)\n"
             }
         }
     ]

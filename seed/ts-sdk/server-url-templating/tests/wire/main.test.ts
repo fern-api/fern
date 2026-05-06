@@ -6,10 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("SeedApiClient", () => {
     test("getUsers", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({
-            maxRetries: 0,
-            environment: { base: server.baseUrl, auth: server.baseUrl },
-        });
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = [{ id: "id", name: "name", email: "email" }];
 
@@ -21,10 +18,7 @@ describe("SeedApiClient", () => {
 
     test("getUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({
-            maxRetries: 0,
-            environment: { base: server.baseUrl, auth: server.baseUrl },
-        });
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = { id: "id", name: "name", email: "email" };
 
@@ -38,10 +32,7 @@ describe("SeedApiClient", () => {
 
     test("getToken", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({
-            maxRetries: 0,
-            environment: { base: server.baseUrl, auth: server.baseUrl },
-        });
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { client_id: "client_id", client_secret: "client_secret" };
         const rawResponseBody = { access_token: "access_token", expires_in: 1 };
 

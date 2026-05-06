@@ -40,7 +40,7 @@ class SearchRequest extends JsonSerializableType
     public User $user;
 
     /**
-     * @var ?array<User> $userList
+     * @var ?array<?User> $userList
      */
     public ?array $userList;
 
@@ -50,7 +50,7 @@ class SearchRequest extends JsonSerializableType
     public ?DateTime $optionalDeadline;
 
     /**
-     * @var ?array<string, string> $keyValue
+     * @var ?array<string, ?string> $keyValue
      */
     public ?array $keyValue;
 
@@ -70,22 +70,22 @@ class SearchRequest extends JsonSerializableType
     public ?User $optionalUser;
 
     /**
-     * @var ?array<User> $excludeUser
+     * @var ?array<?User> $excludeUser
      */
     public ?array $excludeUser;
 
     /**
-     * @var ?array<string> $filter
+     * @var ?array<?string> $filter
      */
     public ?array $filter;
 
     /**
-     * @var ?array<string> $tags List of tags. Serialized as a comma-separated list.
+     * @var ?array<?string> $tags List of tags. Serialized as a comma-separated list.
      */
     public ?array $tags;
 
     /**
-     * @var ?array<string> $optionalTags Optional list of tags. Serialized as a comma-separated list.
+     * @var ?array<?string> $optionalTags Optional list of tags. Serialized as a comma-separated list.
      */
     public ?array $optionalTags;
 
@@ -100,14 +100,9 @@ class SearchRequest extends JsonSerializableType
     public User|NestedUser|string|int|null $neighbor;
 
     /**
-     * @var (
-     *    User
-     *   |NestedUser
-     *   |string
-     *   |int
-     * ) $neighborRequired
+     * @var User $neighborRequired
      */
-    public User|NestedUser|string|int $neighborRequired;
+    public User $neighborRequired;
 
     /**
      * @param array{
@@ -117,22 +112,17 @@ class SearchRequest extends JsonSerializableType
      *   deadline: DateTime,
      *   bytes: string,
      *   user: User,
-     *   neighborRequired: (
-     *    User
-     *   |NestedUser
-     *   |string
-     *   |int
-     * ),
-     *   userList?: ?array<User>,
+     *   neighborRequired: User,
+     *   userList?: ?array<?User>,
      *   optionalDeadline?: ?DateTime,
-     *   keyValue?: ?array<string, string>,
+     *   keyValue?: ?array<string, ?string>,
      *   optionalString?: ?string,
      *   nestedUser?: ?NestedUser,
      *   optionalUser?: ?User,
-     *   excludeUser?: ?array<User>,
-     *   filter?: ?array<string>,
-     *   tags?: ?array<string>,
-     *   optionalTags?: ?array<string>,
+     *   excludeUser?: ?array<?User>,
+     *   filter?: ?array<?string>,
+     *   tags?: ?array<?string>,
+     *   optionalTags?: ?array<?string>,
      *   neighbor?: (
      *    User
      *   |NestedUser

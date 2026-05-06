@@ -33,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) SubmitFormData(
 	ctx context.Context,
-	request *fern.PostSubmitRequest,
+	request *fern.SubmitFormDataRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.PostSubmitResponse], error) {
 	options := core.NewRequestOptions(opts...)
@@ -47,7 +47,7 @@ func (r *RawClient) SubmitFormData(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/x-www-form-urlencoded")
+	headers.Add("Content-Type", "application/json")
 	var response *fern.PostSubmitResponse
 	raw, err := r.caller.Call(
 		ctx,
@@ -89,6 +89,7 @@ func (r *RawClient) GetToken(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response *fern.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,

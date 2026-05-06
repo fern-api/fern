@@ -13,7 +13,7 @@
 
 ```java
 client.submitFormData(
-    PostSubmitRequest
+    SubmitFormDataRequest
         .builder()
         .username("johndoe")
         .email("john@example.com")
@@ -87,7 +87,15 @@ client.getToken(
 <dl>
 <dd>
 
-**request:** `TokenRequest` 
+**clientId:** `String` — Client identifier
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientSecret:** `String` — Client secret
     
 </dd>
 </dl>

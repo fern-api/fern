@@ -6,7 +6,6 @@ import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
 from .core.request_options import RequestOptions
-from .environment import SeedApiEnvironment
 from .raw_client import AsyncRawSeedApi, RawSeedApi
 from .types.token_response import TokenResponse
 from .types.user import User
@@ -21,20 +20,8 @@ class SeedApi:
 
     Parameters
     ----------
-    environment : SeedApiEnvironment
-        The environment to use for requests from the client. from .environment import SeedApiEnvironment
-
-
-
-        Defaults to SeedApiEnvironment.REGIONAL_API_SERVER
-
-
-
-    region : typing.Optional[str]
-        Server URL variable for 'region'. Defaults to 'us-east-1'.
-
-    server_url_environment : typing.Optional[str]
-        Server URL variable for 'environment'. Defaults to 'prod'.
+    base_url : str
+        The base url to use for requests from the client.
 
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
@@ -58,15 +45,15 @@ class SeedApi:
     --------
     from seed import SeedApi
 
-    client = SeedApi()
+    client = SeedApi(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
         self,
         *,
-        environment: SeedApiEnvironment = SeedApiEnvironment.REGIONAL_API_SERVER,
-        region: typing.Optional[str] = None,
-        server_url_environment: typing.Optional[str] = None,
+        base_url: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -78,19 +65,8 @@ class SeedApi:
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
         _defaulted_max_retries = max_retries if max_retries is not None else 2
-        if region is not None or server_url_environment is not None:
-            _region = region if region is not None else "us-east-1"
-            _server_url_environment = server_url_environment if server_url_environment is not None else "prod"
-            environment = SeedApiEnvironment(
-                base="https://api.{region}.{environment}.example.com/v1".format(
-                    region=_region, environment=_server_url_environment
-                ),
-                auth="https://auth.{region}.example.com".format(
-                    region=_region,
-                ),
-            )
         self._client_wrapper = SyncClientWrapper(
-            environment=environment,
+            base_url=base_url,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -130,7 +106,9 @@ class SeedApi:
         --------
         from seed import SeedApi
 
-        client = SeedApi()
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
         client.get_users()
         """
         _response = self._raw_client.get_users(request_options=request_options)
@@ -154,7 +132,9 @@ class SeedApi:
         --------
         from seed import SeedApi
 
-        client = SeedApi()
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
         client.get_user(
             user_id="userId",
         )
@@ -184,7 +164,9 @@ class SeedApi:
         --------
         from seed import SeedApi
 
-        client = SeedApi()
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
         client.get_token(
             client_id="client_id",
             client_secret="client_secret",
@@ -220,20 +202,8 @@ class AsyncSeedApi:
 
     Parameters
     ----------
-    environment : SeedApiEnvironment
-        The environment to use for requests from the client. from .environment import SeedApiEnvironment
-
-
-
-        Defaults to SeedApiEnvironment.REGIONAL_API_SERVER
-
-
-
-    region : typing.Optional[str]
-        Server URL variable for 'region'. Defaults to 'us-east-1'.
-
-    server_url_environment : typing.Optional[str]
-        Server URL variable for 'environment'. Defaults to 'prod'.
+    base_url : str
+        The base url to use for requests from the client.
 
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
@@ -257,15 +227,15 @@ class AsyncSeedApi:
     --------
     from seed import AsyncSeedApi
 
-    client = AsyncSeedApi()
+    client = AsyncSeedApi(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
         self,
         *,
-        environment: SeedApiEnvironment = SeedApiEnvironment.REGIONAL_API_SERVER,
-        region: typing.Optional[str] = None,
-        server_url_environment: typing.Optional[str] = None,
+        base_url: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -277,19 +247,8 @@ class AsyncSeedApi:
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
         _defaulted_max_retries = max_retries if max_retries is not None else 2
-        if region is not None or server_url_environment is not None:
-            _region = region if region is not None else "us-east-1"
-            _server_url_environment = server_url_environment if server_url_environment is not None else "prod"
-            environment = SeedApiEnvironment(
-                base="https://api.{region}.{environment}.example.com/v1".format(
-                    region=_region, environment=_server_url_environment
-                ),
-                auth="https://auth.{region}.example.com".format(
-                    region=_region,
-                ),
-            )
         self._client_wrapper = AsyncClientWrapper(
-            environment=environment,
+            base_url=base_url,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -329,7 +288,9 @@ class AsyncSeedApi:
 
         from seed import AsyncSeedApi
 
-        client = AsyncSeedApi()
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
 
 
         async def main() -> None:
@@ -361,7 +322,9 @@ class AsyncSeedApi:
 
         from seed import AsyncSeedApi
 
-        client = AsyncSeedApi()
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
 
 
         async def main() -> None:
@@ -399,7 +362,9 @@ class AsyncSeedApi:
 
         from seed import AsyncSeedApi
 
-        client = AsyncSeedApi()
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
 
 
         async def main() -> None:

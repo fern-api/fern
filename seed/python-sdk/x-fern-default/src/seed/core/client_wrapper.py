@@ -11,14 +11,12 @@ class BaseClientWrapper:
     def __init__(
         self,
         *,
-        api_version: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         max_retries: int = 2,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        self._api_version = api_version
         self._headers = headers
         self._base_url = base_url
         self._timeout = timeout
@@ -37,8 +35,6 @@ class BaseClientWrapper:
             "X-Fern-SDK-Version": "0.0.1",
             **(self.get_custom_headers() or {}),
         }
-        if self._api_version is not None:
-            headers["X-API-Version"] = self._api_version
         return headers
 
     def get_custom_headers(self) -> typing.Optional[typing.Dict[str, str]]:
@@ -58,7 +54,6 @@ class SyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
-        api_version: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
@@ -66,14 +61,7 @@ class SyncClientWrapper(BaseClientWrapper):
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(
-            api_version=api_version,
-            headers=headers,
-            base_url=base_url,
-            timeout=timeout,
-            max_retries=max_retries,
-            logging=logging,
-        )
+        super().__init__(headers=headers, base_url=base_url, timeout=timeout, max_retries=max_retries, logging=logging)
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
@@ -88,7 +76,6 @@ class AsyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
-        api_version: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
@@ -97,14 +84,7 @@ class AsyncClientWrapper(BaseClientWrapper):
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(
-            api_version=api_version,
-            headers=headers,
-            base_url=base_url,
-            timeout=timeout,
-            max_retries=max_retries,
-            logging=logging,
-        )
+        super().__init__(headers=headers, base_url=base_url, timeout=timeout, max_retries=max_retries, logging=logging)
         self._async_token = async_token
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,

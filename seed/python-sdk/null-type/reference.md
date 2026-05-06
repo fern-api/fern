@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>client.conversations.<a href="src/seed/conversations/client.py">outbound_call</a>(...) -> OutboundCallConversationsResponse</code></summary>
+<details><summary><code>client.conversations.<a href="src/seed/conversations/client.py">outboundcall</a>(...) -> OutboundCallConversationsResponse</code></summary>
 <dl>
 <dd>
 
@@ -33,7 +33,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.conversations.outbound_call(
+client.conversations.outboundcall(
     to_phone_number="to_phone_number",
 )
 

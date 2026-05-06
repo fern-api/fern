@@ -9,9 +9,9 @@ public class Example1 {
                 SeedApiClient.builder().url("https://api.fern.com").build();
 
         client.bulkUpdateTasks(BulkUpdateTasksRequest.builder()
-                .filterAssignedTo("filter_assigned_to")
-                .filterIsComplete("filter_is_complete")
-                .filterDate("filter_date")
+                .assignedTo("assigned_to")
+                .isComplete("is_complete")
+                .date("date")
                 .fields("_fields")
                 .bulkUpdateTasksRequestAssignedTo("assigned_to")
                 .bulkUpdateTasksRequestDate("2023-01-15")

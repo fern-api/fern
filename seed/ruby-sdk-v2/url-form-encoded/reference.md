@@ -89,7 +89,15 @@ client.get_token(
 <dl>
 <dd>
 
-**request:** `Seed::Types::TokenRequest` 
+**client_id:** `String` — Client identifier
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_secret:** `String` — Client secret
     
 </dd>
 </dl>

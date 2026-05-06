@@ -64,7 +64,7 @@ await client.GetUserAsync(new GetUserRequest { UserId = "userId" });
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">GetTokenAsync</a>(TokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">GetTokenAsync</a>(GetTokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -78,7 +78,7 @@ await client.GetUserAsync(new GetUserRequest { UserId = "userId" });
 
 ```csharp
 await client.GetTokenAsync(
-    new TokenRequest { ClientId = "client_id", ClientSecret = "client_secret" }
+    new GetTokenRequest { ClientId = "client_id", ClientSecret = "client_secret" }
 );
 ```
 </dd>
@@ -94,7 +94,7 @@ await client.GetTokenAsync(
 <dl>
 <dd>
 
-**request:** `TokenRequest` 
+**request:** `GetTokenRequest` 
     
 </dd>
 </dl>

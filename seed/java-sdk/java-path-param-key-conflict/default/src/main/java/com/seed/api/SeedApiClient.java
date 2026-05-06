@@ -5,7 +5,7 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
-import com.seed.api.requests.ItemData;
+import com.seed.api.requests.CreateItemRequest;
 import com.seed.api.types.Item;
 
 public class SeedApiClient {
@@ -25,11 +25,11 @@ public class SeedApiClient {
         return this.rawClient;
     }
 
-    public Item createItem(String key, String value, ItemData request) {
+    public Item createItem(String key, String value, CreateItemRequest request) {
         return this.rawClient.createItem(key, value, request).body();
     }
 
-    public Item createItem(String key, String value, ItemData request, RequestOptions requestOptions) {
+    public Item createItem(String key, String value, CreateItemRequest request, RequestOptions requestOptions) {
         return this.rawClient.createItem(key, value, request, requestOptions).body();
     }
 

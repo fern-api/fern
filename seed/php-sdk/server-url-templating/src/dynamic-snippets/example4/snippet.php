@@ -3,14 +3,15 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Environments;
-use Seed\Requests\TokenRequest;
+use Seed\Requests\GetTokenRequest;
 
 $client = new SeedClient(
-    environment: Environments::RegionalApiServer(),
+    options: [
+        'baseUrl' => 'https://api.fern.com',
+    ],
 );
 $client->getToken(
-    new TokenRequest([
+    new GetTokenRequest([
         'clientId' => 'client_id',
         'clientSecret' => 'client_secret',
     ]),

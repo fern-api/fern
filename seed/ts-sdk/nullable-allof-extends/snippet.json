@@ -9,7 +9,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedApiClient } from \"@fern/nullable-allof-extends\";\n\nconst client = new SeedApiClient;\nawait client.getTest();\n"
-            }
+            },
+            "example_identifier": "Example1"
         },
         {
             "id": {
@@ -20,7 +21,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedApi, SeedApiClient } from \"@fern/nullable-allof-extends\";\n\nconst client = new SeedApiClient;\nawait client.createTest({});\n"
-            }
+            },
+            "example_identifier": "Example1"
         }
     ],
     "types": {}

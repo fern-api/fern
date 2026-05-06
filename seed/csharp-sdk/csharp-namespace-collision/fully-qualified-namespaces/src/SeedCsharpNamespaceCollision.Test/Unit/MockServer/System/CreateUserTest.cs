@@ -36,7 +36,7 @@ public class CreateUserTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/users")
+                    .WithPath("/system/users")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )

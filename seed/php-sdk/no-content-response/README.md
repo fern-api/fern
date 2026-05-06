@@ -37,11 +37,11 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Contacts\Requests\CreateContactRequest;
+use Seed\Contacts\Requests\ContactsCreateRequest;
 
 $client = new SeedClient();
 $client->contacts->create(
-    new CreateContactRequest([
+    new ContactsCreateRequest([
         'name' => 'name',
     ]),
 );

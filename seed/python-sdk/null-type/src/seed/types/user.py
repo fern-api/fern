@@ -9,10 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class User(UniversalBaseModel):
     id: str
     name: str
-    deleted_at: typing.Optional[typing.Any] = pydantic.Field(default=None)
-    """
-    Always null for active users.
-    """
+    deleted_at: typing.Any
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

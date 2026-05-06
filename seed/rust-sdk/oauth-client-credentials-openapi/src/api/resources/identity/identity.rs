@@ -13,9 +13,9 @@ impl IdentityClient {
         })
     }
 
-    pub async fn get_token(
+    pub async fn gettoken(
         &self,
-        request: &GetTokenIdentityRequest,
+        request: &IdentityGetTokenRequest,
         options: Option<RequestOptions>,
     ) -> Result<TokenResponse, ApiError> {
         self.http_client

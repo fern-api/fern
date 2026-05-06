@@ -87,7 +87,7 @@ client.GetUser(
 <dd>
 
 ```go
-request := &fern.TokenRequest{
+request := &fern.GetTokenRequest{
         ClientID: "client_id",
         ClientSecret: "client_secret",
     }

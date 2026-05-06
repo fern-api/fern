@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 // Creates a new contact. Returns 200 with the contact or 204 with no content.
 func (c *Client) Create(
 	ctx context.Context,
-	request *fern.CreateContactRequest,
+	request *fern.ContactsCreateRequest,
 	opts ...option.RequestOption,
 ) (*fern.Contact, error) {
 	response, err := c.WithRawResponse.Create(
@@ -53,7 +53,7 @@ func (c *Client) Create(
 // Gets a contact by ID. Returns 200 with the contact.
 func (c *Client) Get(
 	ctx context.Context,
-	request *fern.GetContactsRequest,
+	request *fern.ContactsGetRequest,
 	opts ...option.RequestOption,
 ) (*fern.Contact, error) {
 	response, err := c.WithRawResponse.Get(

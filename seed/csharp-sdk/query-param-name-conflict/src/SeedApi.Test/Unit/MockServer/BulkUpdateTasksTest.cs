@@ -31,9 +31,9 @@ public class BulkUpdateTasksTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/task/")
-                    .WithParam("assigned_to", "filter_assigned_to")
-                    .WithParam("is_complete", "filter_is_complete")
-                    .WithParam("date", "filter_date")
+                    .WithParam("assigned_to", "assigned_to")
+                    .WithParam("is_complete", "is_complete")
+                    .WithParam("date", "date")
                     .WithParam("_fields", "_fields")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPut()
@@ -49,9 +49,9 @@ public class BulkUpdateTasksTest : BaseMockServerTest
         var response = await Client.BulkUpdateTasksAsync(
             new BulkUpdateTasksRequest
             {
-                FilterAssignedTo = "filter_assigned_to",
-                FilterIsComplete = "filter_is_complete",
-                FilterDate = "filter_date",
+                AssignedTo = "assigned_to",
+                IsComplete = "is_complete",
+                Date = "date",
                 Fields = "_fields",
                 BulkUpdateTasksRequestAssignedTo = "assigned_to",
                 BulkUpdateTasksRequestDate = new DateOnly(2023, 1, 15),

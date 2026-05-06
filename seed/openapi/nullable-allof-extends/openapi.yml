@@ -6,7 +6,7 @@ paths:
   /test:
     get:
       description: Returns a RootObject which inherits from a nullable schema.
-      operationId: _getTest
+      operationId: getTest
       parameters: []
       responses:
         '200':
@@ -23,7 +23,7 @@ paths:
       summary: Get Test
     post:
       description: Creates a test object with nullable allOf in request body.
-      operationId: _createTest
+      operationId: createTest
       parameters: []
       responses:
         '200':

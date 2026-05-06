@@ -33,26 +33,26 @@ var (
 )
 
 type SearchRequest struct {
-	Limit            int               `json:"-" url:"limit"`
-	ID               string            `json:"-" url:"id"`
-	Date             time.Time         `json:"-" url:"date" format:"date"`
-	Deadline         time.Time         `json:"-" url:"deadline"`
-	Bytes            string            `json:"-" url:"bytes"`
-	User             *User             `json:"-" url:"user"`
-	UserList         []*User           `json:"-" url:"userList,omitempty"`
-	OptionalDeadline *time.Time        `json:"-" url:"optionalDeadline,omitempty"`
-	KeyValue         map[string]string `json:"-" url:"keyValue,omitempty"`
-	OptionalString   *string           `json:"-" url:"optionalString,omitempty"`
-	NestedUser       *NestedUser       `json:"-" url:"nestedUser,omitempty"`
-	OptionalUser     *User             `json:"-" url:"optionalUser,omitempty"`
-	ExcludeUser      []*User           `json:"-" url:"excludeUser,omitempty"`
-	Filter           []*string         `json:"-" url:"filter,omitempty"`
+	Limit            int                `json:"-" url:"limit"`
+	ID               string             `json:"-" url:"id"`
+	Date             time.Time          `json:"-" url:"date" format:"date"`
+	Deadline         time.Time          `json:"-" url:"deadline"`
+	Bytes            string             `json:"-" url:"bytes"`
+	User             *User              `json:"-" url:"user"`
+	UserList         []*User            `json:"-" url:"userList,omitempty"`
+	OptionalDeadline *time.Time         `json:"-" url:"optionalDeadline,omitempty"`
+	KeyValue         map[string]*string `json:"-" url:"keyValue,omitempty"`
+	OptionalString   *string            `json:"-" url:"optionalString,omitempty"`
+	NestedUser       *NestedUser        `json:"-" url:"nestedUser,omitempty"`
+	OptionalUser     *User              `json:"-" url:"optionalUser,omitempty"`
+	ExcludeUser      []*User            `json:"-" url:"excludeUser,omitempty"`
+	Filter           []*string          `json:"-" url:"filter,omitempty"`
 	// List of tags. Serialized as a comma-separated list.
 	Tags []*string `json:"-" url:"tags,omitempty"`
 	// Optional list of tags. Serialized as a comma-separated list.
-	OptionalTags     []*string                      `json:"-" url:"optionalTags,omitempty"`
-	Neighbor         *SearchRequestNeighbor         `json:"-" url:"neighbor,omitempty"`
-	NeighborRequired *SearchRequestNeighborRequired `json:"-" url:"neighborRequired"`
+	OptionalTags     []*string              `json:"-" url:"optionalTags,omitempty"`
+	Neighbor         *SearchRequestNeighbor `json:"-" url:"neighbor,omitempty"`
+	NeighborRequired *User                  `json:"-" url:"neighborRequired"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -123,7 +123,7 @@ func (s *SearchRequest) SetOptionalDeadline(optionalDeadline *time.Time) {
 
 // SetKeyValue sets the KeyValue field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchRequest) SetKeyValue(keyValue map[string]string) {
+func (s *SearchRequest) SetKeyValue(keyValue map[string]*string) {
 	s.KeyValue = keyValue
 	s.require(searchRequestFieldKeyValue)
 }
@@ -186,7 +186,7 @@ func (s *SearchRequest) SetNeighbor(neighbor *SearchRequestNeighbor) {
 
 // SetNeighborRequired sets the NeighborRequired field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchRequest) SetNeighborRequired(neighborRequired *SearchRequestNeighborRequired) {
+func (s *SearchRequest) SetNeighborRequired(neighborRequired *User) {
 	s.NeighborRequired = neighborRequired
 	s.require(searchRequestFieldNeighborRequired)
 }
@@ -497,29 +497,6 @@ func (s SearchRequestNeighborRequired) MarshalJSON() ([]byte, error) {
 		return json.Marshal(s.Integer)
 	}
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", s)
-}
-
-func (s *SearchRequestNeighborRequired) EncodeQueryValues(key string, values *url.Values) error {
-	if s == nil {
-		return nil
-	}
-	if s.typ == "User" || s.User != nil {
-		values.Add(key, fmt.Sprintf("%v", s.User))
-		return nil
-	}
-	if s.typ == "NestedUser" || s.NestedUser != nil {
-		values.Add(key, fmt.Sprintf("%v", s.NestedUser))
-		return nil
-	}
-	if s.typ == "String" || s.String != "" {
-		values.Add(key, fmt.Sprintf("%v", s.String))
-		return nil
-	}
-	if s.typ == "Integer" || s.Integer != 0 {
-		values.Add(key, fmt.Sprintf("%v", s.Integer))
-		return nil
-	}
-	return nil
 }
 
 type SearchRequestNeighborRequiredVisitor interface {

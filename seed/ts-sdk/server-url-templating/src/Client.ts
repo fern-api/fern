@@ -5,7 +5,6 @@ import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
-import * as environments from "./environments.js";
 import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
 import * as errors from "./errors/index.js";
 
@@ -18,7 +17,7 @@ export declare namespace SeedApiClient {
 export class SeedApiClient {
     protected readonly _options: NormalizedClientOptions<SeedApiClient.Options>;
 
-    constructor(options: SeedApiClient.Options = {}) {
+    constructor(options: SeedApiClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
@@ -39,10 +38,7 @@ export class SeedApiClient {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.SeedApiEnvironment.RegionalApiServer
-                    ).base,
+                    (await core.Supplier.get(this._options.environment)),
                 "users",
             ),
             method: "GET",
@@ -94,10 +90,7 @@ export class SeedApiClient {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.SeedApiEnvironment.RegionalApiServer
-                    ).base,
+                    (await core.Supplier.get(this._options.environment)),
                 `users/${core.url.encodePathParam(userId)}`,
             ),
             method: "GET",
@@ -125,7 +118,7 @@ export class SeedApiClient {
     }
 
     /**
-     * @param {SeedApi.TokenRequest} request
+     * @param {SeedApi.GetTokenRequest} request
      * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -135,24 +128,21 @@ export class SeedApiClient {
      *     })
      */
     public getToken(
-        request: SeedApi.TokenRequest,
+        request: SeedApi.GetTokenRequest,
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.TokenResponse> {
         return core.HttpResponsePromise.fromPromise(this.__getToken(request, requestOptions));
     }
 
     private async __getToken(
-        request: SeedApi.TokenRequest,
+        request: SeedApi.GetTokenRequest,
         requestOptions?: SeedApiClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.TokenResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.SeedApiEnvironment.RegionalApiServer
-                    ).auth,
+                    (await core.Supplier.get(this._options.environment)),
                 "auth/token",
             ),
             method: "POST",
@@ -201,15 +191,7 @@ export class SeedApiClient {
             input,
             init,
             {
-                baseUrl:
-                    this._options.baseUrl ??
-                    (async () => {
-                        const env = await core.Supplier.get(this._options.environment);
-                        return typeof env === "string"
-                            ? env
-                            : ((env as Record<string, string>)?.base ??
-                                  environments.SeedApiEnvironment.RegionalApiServer.base);
-                    }),
+                baseUrl: this._options.baseUrl ?? this._options.environment,
                 headers: this._options.headers,
                 timeoutInSeconds: this._options.timeoutInSeconds,
                 maxRetries: this._options.maxRetries,

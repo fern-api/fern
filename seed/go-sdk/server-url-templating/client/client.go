@@ -66,7 +66,7 @@ func (c *Client) GetUser(
 
 func (c *Client) GetToken(
 	ctx context.Context,
-	request *fern.TokenRequest,
+	request *fern.GetTokenRequest,
 	opts ...option.RequestOption,
 ) (*fern.TokenResponse, error) {
 	response, err := c.WithRawResponse.GetToken(

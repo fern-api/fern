@@ -411,17 +411,6 @@
             "id": {
                 "path": "/params",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithAllowMultipleQuery"
-            },
-            "snippet": {
-                "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.Params.GetWithAllowMultipleQuery(\n\tcontext.TODO(),\n\t\u0026endpoints.GetWithMultipleQuery{\n\t\tQuery: []string{\n\t\t\t\"query\",\n\t\t},\n\t\tNumber: []int{\n\t\t\t1,\n\t\t},\n\t},\n)\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/params",
-                "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithQuery"
             },
             "snippet": {
@@ -431,13 +420,46 @@
         },
         {
             "id": {
-                "path": "/params/path-query/{param}",
+                "path": "/params/allow-multiple",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithAllowMultipleQuery"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.Params.GetWithAllowMultipleQuery(\n\tcontext.TODO(),\n\t\u0026endpoints.GetWithMultipleQuery{\n\t\tQuery: []string{\n\t\t\t\"query\",\n\t\t},\n\t\tNumber: []int{\n\t\t\t1,\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/inline-path-query/{param}",
                 "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithInlinePathAndQuery"
             },
             "snippet": {
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.Params.GetWithInlinePathAndQuery(\n\tcontext.TODO(),\n\t\u0026endpoints.GetWithInlinePathAndQuery{\n\t\tParam: \"param\",\n\t\tQuery: \"query\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/inline-path/{param}",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithInlinePath"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Params.GetWithInlinePath(\n\tcontext.TODO(),\n\t\u0026endpoints.GetWithInlinePath{\n\t\tParam: \"param\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/inline-path/{param}",
+                "method": "PUT",
+                "identifier_override": "endpoint_endpoints/params.modifyWithInlinePath"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Params.ModifyWithInlinePath(\n\tcontext.TODO(),\n\t\u0026endpoints.ModifyResourceAtInlinedPath{\n\t\tParam: \"param\",\n\t\tBody:  \"string\",\n\t},\n)\n"
             }
         },
         {
@@ -449,17 +471,6 @@
             "snippet": {
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.Params.GetWithPathAndQuery(\n\tcontext.TODO(),\n\t\"param\",\n\t\u0026endpoints.GetWithPathAndQuery{\n\t\tQuery: \"query\",\n\t},\n)\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/params/path/{param}",
-                "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithInlinePath"
-            },
-            "snippet": {
-                "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Params.GetWithInlinePath(\n\tcontext.TODO(),\n\t\u0026endpoints.GetWithInlinePath{\n\t\tParam: \"param\",\n\t},\n)\n"
             }
         },
         {
@@ -482,17 +493,6 @@
             "snippet": {
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Params.UploadWithPath(\n\tcontext.TODO(),\n\t\"upload-path\",\n)\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/params/path/{param}",
-                "method": "PUT",
-                "identifier_override": "endpoint_endpoints/params.modifyWithInlinePath"
-            },
-            "snippet": {
-                "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Params.ModifyWithInlinePath(\n\tcontext.TODO(),\n\t\u0026endpoints.ModifyResourceAtInlinedPath{\n\t\tParam: \"param\",\n\t\tBody:  \"string\",\n\t},\n)\n"
             }
         },
         {

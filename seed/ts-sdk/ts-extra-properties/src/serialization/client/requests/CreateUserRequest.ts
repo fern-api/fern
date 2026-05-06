@@ -11,13 +11,13 @@ export const CreateUserRequest: core.serialization.Schema<
     userName: core.serialization.property("user_name", core.serialization.string()),
     metaData: core.serialization.property(
         "meta_data",
-        core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
+        core.serialization.record(core.serialization.string(), core.serialization.unknown()).optionalNullable(),
     ),
 });
 
 export declare namespace CreateUserRequest {
     export interface Raw {
         user_name: string;
-        meta_data?: Record<string, unknown> | null;
+        meta_data?: (Record<string, unknown> | null | undefined) | null;
     }
 }

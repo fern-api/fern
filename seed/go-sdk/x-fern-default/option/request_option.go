@@ -71,10 +71,3 @@ func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
 		MaxBufSize: size,
 	}
 }
-
-// WithAPIVersion sets the apiVersion request header.
-func WithAPIVersion(apiVersion *string) *core.APIVersionOption {
-	return &core.APIVersionOption{
-		APIVersion: apiVersion,
-	}
-}

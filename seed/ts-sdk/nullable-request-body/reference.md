@@ -1,6 +1,6 @@
 # Reference
-## TestGroup
-<details><summary><code>client.testGroup.<a href="/src/api/resources/testGroup/client/Client.ts">testMethodName</a>({ ...params }) -> unknown</code></summary>
+## Testgroup
+<details><summary><code>client.testgroup.<a href="/src/api/resources/testgroup/client/Client.ts">testMethodName</a>({ ...params }) -> unknown</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ Post a nullable request body
 <dd>
 
 ```typescript
-await client.testGroup.testMethodName({
+await client.testgroup.testMethodName({
     path_param: "path_param",
     body: {}
 });
@@ -46,7 +46,7 @@ await client.testGroup.testMethodName({
 <dl>
 <dd>
 
-**request:** `SeedApi.TestMethodNameTestGroupRequest` 
+**request:** `SeedApi.TestGroupTestMethodNameRequest` 
     
 </dd>
 </dl>
@@ -54,7 +54,7 @@ await client.testGroup.testMethodName({
 <dl>
 <dd>
 
-**requestOptions:** `TestGroupClient.RequestOptions` 
+**requestOptions:** `TestgroupClient.RequestOptions` 
     
 </dd>
 </dl>

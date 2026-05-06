@@ -4,7 +4,7 @@
             "example_identifier": "82348cce",
             "id": {
                 "method": "GET",
-                "path": "/",
+                "path": "/folder-a",
                 "identifier_override": "endpoint_folder-a/service.getDirectThread"
             },
             "snippet": {
@@ -17,13 +17,13 @@
             "example_identifier": "96f724a0",
             "id": {
                 "method": "GET",
-                "path": "/",
+                "path": "/folder-d",
                 "identifier_override": "endpoint_folder-d/service.getDirectThread"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.crossPackageTypeNames.SeedCrossPackageTypeNamesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedCrossPackageTypeNamesClient client = SeedCrossPackageTypeNamesClient\n            .builder()\n            .build();\n\n        client.folderA().service().getDirectThread();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.crossPackageTypeNames.SeedCrossPackageTypeNamesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedCrossPackageTypeNamesClient client = SeedCrossPackageTypeNamesClient\n            .builder()\n            .build();\n\n        client.folderA().service().getDirectThread();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.crossPackageTypeNames.SeedCrossPackageTypeNamesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedCrossPackageTypeNamesClient client = SeedCrossPackageTypeNamesClient\n            .builder()\n            .build();\n\n        client.folderD().service().getDirectThread();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.crossPackageTypeNames.SeedCrossPackageTypeNamesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedCrossPackageTypeNamesClient client = SeedCrossPackageTypeNamesClient\n            .builder()\n            .build();\n\n        client.folderD().service().getDirectThread();\n    }\n}\n"
             }
         },
         {

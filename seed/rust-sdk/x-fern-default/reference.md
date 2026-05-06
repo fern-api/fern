@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">test_get</a>(region: String, limit: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;TestGetResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.<a href="/src/client.rs">test_get</a>(region: String, limit: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;TestGetResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -52,7 +52,7 @@ async fn main() {
 <dl>
 <dd>
 
-**limit:** `Option<String>` 
+**limit:** `Option<Option<String>>` 
     
 </dd>
 </dl>

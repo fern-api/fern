@@ -29,7 +29,7 @@ $client->bulkUpdateTasks(
 <dl>
 <dd>
 
-**$filterAssignedTo:** `?string` 
+**$assignedTo:** `?string` 
     
 </dd>
 </dl>
@@ -37,7 +37,7 @@ $client->bulkUpdateTasks(
 <dl>
 <dd>
 
-**$filterIsComplete:** `?string` 
+**$isComplete:** `?string` 
     
 </dd>
 </dl>
@@ -45,7 +45,7 @@ $client->bulkUpdateTasks(
 <dl>
 <dd>
 
-**$filterDate:** `?string` 
+**$date:** `?string` 
     
 </dd>
 </dl>

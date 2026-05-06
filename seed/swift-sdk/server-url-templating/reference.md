@@ -105,7 +105,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/Sources/ApiClient.swift">getToken</a>(request: Requests.TokenRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
+<details><summary><code>client.<a href="/Sources/ApiClient.swift">getToken</a>(request: Requests.GetTokenRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -145,7 +145,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.TokenRequest` 
+**request:** `Requests.GetTokenRequest` 
     
 </dd>
 </dl>

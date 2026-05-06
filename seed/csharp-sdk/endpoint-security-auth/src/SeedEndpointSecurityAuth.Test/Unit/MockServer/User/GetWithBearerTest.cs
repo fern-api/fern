@@ -25,7 +25,7 @@ public class GetWithBearerTest : BaseMockServerTest
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users").UsingGet())
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users/bearer").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()

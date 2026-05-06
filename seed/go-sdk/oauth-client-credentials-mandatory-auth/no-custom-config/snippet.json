@@ -35,7 +35,7 @@
         },
         {
             "id": {
-                "path": "/token",
+                "path": "/token/refresh",
                 "method": "POST",
                 "identifier_override": "endpoint_auth.refreshToken"
             },

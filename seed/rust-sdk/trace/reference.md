@@ -2557,7 +2557,7 @@ async fn main() {
         ..Default::default()
     };
     let client = TraceClient::new(config).expect("Failed to build client");
-    client.v2.problem.get_lightweight_problems(None).await;
+    client.v2.v3.problem.get_lightweight_problems(None).await;
 }
 ```
 </dd>
@@ -2606,7 +2606,7 @@ async fn main() {
         ..Default::default()
     };
     let client = TraceClient::new(config).expect("Failed to build client");
-    client.v2.problem.get_problems(None).await;
+    client.v2.v3.problem.get_problems(None).await;
 }
 ```
 </dd>
@@ -2657,6 +2657,7 @@ async fn main() {
     let client = TraceClient::new(config).expect("Failed to build client");
     client
         .v2
+        .v3
         .problem
         .get_latest_problem(&ProblemId("problemId".to_string()), None)
         .await;
@@ -2725,6 +2726,7 @@ async fn main() {
     let client = TraceClient::new(config).expect("Failed to build client");
     client
         .v2
+        .v3
         .problem
         .get_problem_version(&ProblemId("problemId".to_string()), 1, None)
         .await;

@@ -10,8 +10,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
 public final class RequestOptions {
-    private final String apiVersion;
-
     private final Optional<Integer> timeout;
 
     private final TimeUnit timeoutTimeUnit;
@@ -25,14 +23,12 @@ public final class RequestOptions {
     private final Map<String, Supplier<String>> queryParameterSuppliers;
 
     private RequestOptions(
-            String apiVersion,
             Optional<Integer> timeout,
             TimeUnit timeoutTimeUnit,
             Map<String, String> headers,
             Map<String, Supplier<String>> headerSuppliers,
             Map<String, String> queryParameters,
             Map<String, Supplier<String>> queryParameterSuppliers) {
-        this.apiVersion = apiVersion;
         this.timeout = timeout;
         this.timeoutTimeUnit = timeoutTimeUnit;
         this.headers = headers;
@@ -51,9 +47,6 @@ public final class RequestOptions {
 
     public Map<String, String> getHeaders() {
         Map<String, String> headers = new HashMap<>();
-        if (this.apiVersion != null) {
-            headers.put("X-API-Version", this.apiVersion);
-        }
         headers.putAll(this.headers);
         this.headerSuppliers.forEach((key, supplier) -> {
             headers.put(key, supplier.get());
@@ -74,8 +67,6 @@ public final class RequestOptions {
     }
 
     public static class Builder {
-        private String apiVersion = null;
-
         private Optional<Integer> timeout = Optional.empty();
 
         private TimeUnit timeoutTimeUnit = TimeUnit.SECONDS;
@@ -87,11 +78,6 @@ public final class RequestOptions {
         private final Map<String, String> queryParameters = new HashMap<>();
 
         private final Map<String, Supplier<String>> queryParameterSuppliers = new HashMap<>();
-
-        public Builder apiVersion(String apiVersion) {
-            this.apiVersion = apiVersion;
-            return this;
-        }
 
         public Builder timeout(Integer timeout) {
             this.timeout = Optional.of(timeout);
@@ -126,13 +112,7 @@ public final class RequestOptions {
 
         public RequestOptions build() {
             return new RequestOptions(
-                    apiVersion,
-                    timeout,
-                    timeoutTimeUnit,
-                    headers,
-                    headerSuppliers,
-                    queryParameters,
-                    queryParameterSuppliers);
+                    timeout, timeoutTimeUnit, headers, headerSuppliers, queryParameters, queryParameterSuppliers);
         }
     }
 }

@@ -28,7 +28,7 @@ Creates a new contact. Returns 200 with the contact or 204 with no content.
 
 ```java
 client.contacts().create(
-    CreateContactRequest
+    ContactsCreateRequest
         .builder()
         .name("name")
         .build()
@@ -96,7 +96,7 @@ Gets a contact by ID. Returns 200 with the contact.
 ```java
 client.contacts().get(
     "id",
-    GetContactsRequest
+    ContactsGetRequest
         .builder()
         .build()
 );

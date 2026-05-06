@@ -448,7 +448,7 @@ class InlineUsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/inline-users",
+                    path: "/inline-users/cursor-pagination",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -499,7 +499,7 @@ class InlineUsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/inline-users",
+                    path: "/inline-users/mixed-type-cursor-pagination",
                     method: HttpMethod::POST,
                     query: $query,
                 ),
@@ -546,7 +546,7 @@ class InlineUsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/inline-users",
+                    path: "/inline-users/body-cursor-pagination",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -606,7 +606,7 @@ class InlineUsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/inline-users",
+                    path: "/inline-users/offset-pagination",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -666,7 +666,7 @@ class InlineUsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/inline-users",
+                    path: "/inline-users/double-offset-pagination",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -713,7 +713,7 @@ class InlineUsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/inline-users",
+                    path: "/inline-users/body-offset-pagination",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -770,7 +770,7 @@ class InlineUsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/inline-users",
+                    path: "/inline-users/offset-step-pagination",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -827,7 +827,7 @@ class InlineUsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/inline-users",
+                    path: "/inline-users/offset-pagination-has-next-page",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -878,7 +878,7 @@ class InlineUsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/inline-users",
+                    path: "/inline-users/extended-results",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -929,7 +929,7 @@ class InlineUsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/inline-users",
+                    path: "/inline-users/extended-results-optional-data",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -980,7 +980,7 @@ class InlineUsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/inline-users",
+                    path: "/inline-users/usernames",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -1031,7 +1031,7 @@ class InlineUsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/inline-users",
+                    path: "/inline-users/global-config",
                     method: HttpMethod::GET,
                     query: $query,
                 ),

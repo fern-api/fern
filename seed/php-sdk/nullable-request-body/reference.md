@@ -1,6 +1,6 @@
 # Reference
-## TestGroup
-<details><summary><code>$client-&gt;testGroup-&gt;testMethodName($pathParam, $request) -> mixed</code></summary>
+## Testgroup
+<details><summary><code>$client-&gt;testgroup-&gt;testMethodName($pathParam, $request) -> mixed</code></summary>
 <dl>
 <dd>
 
@@ -27,9 +27,9 @@ Post a nullable request body
 <dd>
 
 ```php
-$client->testGroup->testMethodName(
+$client->testgroup->testMethodName(
     'path_param',
-    new TestMethodNameTestGroupRequest([
+    new TestGroupTestMethodNameRequest([
         'body' => new PlainObject([]),
     ]),
 );

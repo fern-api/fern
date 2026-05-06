@@ -3,7 +3,6 @@
 package option
 
 import (
-	fern "github.com/server-url-templating/fern"
 	core "github.com/server-url-templating/fern/core"
 	http "net/http"
 	url "net/url"
@@ -70,13 +69,5 @@ func WithMaxAttempts(attempts uint) *core.MaxAttemptsOption {
 func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
 	return &core.MaxBufSizeOption{
 		MaxBufSize: size,
-	}
-}
-
-// WithEnvironment sets the environment for the client, which determines
-// the base URL for each endpoint.
-func WithEnvironment(environment fern.Environment) *core.EnvironmentOption {
-	return &core.EnvironmentOption{
-		Environment: environment,
 	}
 }

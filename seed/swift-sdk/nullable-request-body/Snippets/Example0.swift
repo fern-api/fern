@@ -4,7 +4,7 @@ import Api
 private func main() async throws {
     let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.testGroup.testMethodName(
+    _ = try await client.testgroup.testMethodName(
         pathParam: "path_param",
         request: .value(PlainObject(
 

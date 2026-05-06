@@ -31,7 +31,7 @@ public class SearchTest : BaseMockServerTest
                     .WithParam("date", "2023-01-15")
                     .WithParam("deadline", "2024-01-15T09:30:00.000Z")
                     .WithParam("bytes", "bytes")
-                    .WithParam("optionalDeadline", "2024-01-15T09:30:00.000Z")
+                    .WithParam("optionalDeadline", "2024-01-15T09:30:00Z")
                     .WithParam("optionalString", "optionalString")
                     .WithParam("filter", "filter")
                     .WithParam("tags", "tags")
@@ -75,7 +75,7 @@ public class SearchTest : BaseMockServerTest
                     null,
                     DateTimeStyles.AdjustToUniversal
                 ),
-                KeyValue = new Dictionary<string, string>() { { "keyValue", "keyValue" } },
+                KeyValue = new Dictionary<string, string?>() { { "keyValue", "keyValue" } },
                 OptionalString = "optionalString",
                 NestedUser = new NestedUser
                 {

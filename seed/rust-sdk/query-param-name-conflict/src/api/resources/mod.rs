@@ -30,10 +30,10 @@ impl ApiClient {
                 "task/",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 QueryBuilder::new()
-                    .serialize("assigned_to", request.filter_assigned_to.clone())
-                    .serialize("is_complete", request.filter_is_complete.clone())
-                    .serialize("date", request.filter_date.clone())
-                    .string("_fields", request.fields.clone())
+                    .serialize("assigned_to", request.assigned_to.clone())
+                    .serialize("is_complete", request.is_complete.clone())
+                    .serialize("date", request.date.clone())
+                    .serialize("_fields", request.fields.clone())
                     .build(),
                 options,
             )

@@ -13,7 +13,10 @@ import Testing
             body: Data(#"{"message":"Bad request"}"#.utf8)
         )
 
-        let client = ApiClient(urlSession: stub.urlSession)
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
 
         do {
             _ = try await client.getUsers(requestOptions: RequestOptions(additionalHeaders: stub.headers))
@@ -40,7 +43,10 @@ import Testing
             body: Data(#"{"message":"Not found"}"#.utf8)
         )
 
-        let client = ApiClient(urlSession: stub.urlSession)
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
 
         do {
             _ = try await client.getUsers(requestOptions: RequestOptions(additionalHeaders: stub.headers))
@@ -67,7 +73,10 @@ import Testing
             body: Data(#"{"message":"Validation failed"}"#.utf8)
         )
 
-        let client = ApiClient(urlSession: stub.urlSession)
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
 
         do {
             _ = try await client.getUsers(requestOptions: RequestOptions(additionalHeaders: stub.headers))
@@ -96,7 +105,10 @@ import Testing
             body: Data(#"{"message":"Internal error"}"#.utf8)
         )
 
-        let client = ApiClient(urlSession: stub.urlSession)
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
 
         do {
             _ = try await client.getUsers(requestOptions: RequestOptions(additionalHeaders: stub.headers))
@@ -123,7 +135,10 @@ import Testing
             body: Data(#"{"message":"Unavailable"}"#.utf8)
         )
 
-        let client = ApiClient(urlSession: stub.urlSession)
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
 
         do {
             _ = try await client.getUsers(requestOptions: RequestOptions(additionalHeaders: stub.headers))
@@ -152,7 +167,10 @@ import Testing
             body: Data()
         )
 
-        let client = ApiClient(urlSession: stub.urlSession)
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
 
         do {
             _ = try await client.getUsers(requestOptions: RequestOptions(additionalHeaders: stub.headers))
@@ -179,7 +197,10 @@ import Testing
             body: Data("Plain text error".utf8)
         )
 
-        let client = ApiClient(urlSession: stub.urlSession)
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
 
         do {
             _ = try await client.getUsers(requestOptions: RequestOptions(additionalHeaders: stub.headers))

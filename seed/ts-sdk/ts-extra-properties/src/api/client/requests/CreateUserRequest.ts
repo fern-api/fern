@@ -8,5 +8,5 @@
  */
 export interface CreateUserRequest {
     userName: string;
-    metaData?: Record<string, unknown>;
+    metaData?: Record<string, unknown> | null;
 }

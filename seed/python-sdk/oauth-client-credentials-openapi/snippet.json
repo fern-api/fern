@@ -2,20 +2,20 @@
     "types": {},
     "endpoints": [
         {
-            "example_identifier": "default",
+            "example_identifier": "Example1",
             "id": {
                 "path": "/identity/token",
                 "method": "POST",
-                "identifier_override": "endpoint_identity.getToken"
+                "identifier_override": "endpoint_identity.gettoken"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"YOUR_BASE_URL\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.identity.get_token(\n    username=\"username\",\n    password=\"password\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"YOUR_BASE_URL\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.identity.get_token(\n        username=\"username\",\n        password=\"password\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"YOUR_BASE_URL\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.identity.gettoken(\n    username=\"username\",\n    password=\"password\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"YOUR_BASE_URL\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.identity.gettoken(\n        username=\"username\",\n        password=\"password\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
         {
-            "example_identifier": "default",
+            "example_identifier": "Example1",
             "id": {
                 "path": "/plants",
                 "method": "GET",
@@ -28,7 +28,7 @@
             }
         },
         {
-            "example_identifier": "default",
+            "example_identifier": "Example1",
             "id": {
                 "path": "/plants/{plantId}",
                 "method": "GET",

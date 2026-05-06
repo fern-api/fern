@@ -5,21 +5,21 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.Suppliers;
-import com.seed.api.resources.testgroup.AsyncTestGroupClient;
+import com.seed.api.resources.testgroup.AsyncTestgroupClient;
 import java.util.function.Supplier;
 
 public class AsyncSeedApiClient {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<AsyncTestGroupClient> testGroupClient;
+    protected final Supplier<AsyncTestgroupClient> testgroupClient;
 
     public AsyncSeedApiClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.testGroupClient = Suppliers.memoize(() -> new AsyncTestGroupClient(clientOptions));
+        this.testgroupClient = Suppliers.memoize(() -> new AsyncTestgroupClient(clientOptions));
     }
 
-    public AsyncTestGroupClient testGroup() {
-        return this.testGroupClient.get();
+    public AsyncTestgroupClient testgroup() {
+        return this.testgroupClient.get();
     }
 
     public static AsyncSeedApiClientBuilder builder() {

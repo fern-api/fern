@@ -118,7 +118,7 @@ class AuthClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/token",
+                    path: "/token/refresh",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

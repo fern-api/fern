@@ -14,7 +14,6 @@ from .core.request_options import RequestOptions
 from .core.serialization import convert_and_respect_annotation_metadata
 from .types.nested_user import NestedUser
 from .types.search_request_neighbor import SearchRequestNeighbor
-from .types.search_request_neighbor_required import SearchRequestNeighborRequired
 from .types.search_response import SearchResponse
 from .types.user import User
 from pydantic import ValidationError
@@ -33,10 +32,10 @@ class RawSeedApi:
         deadline: dt.datetime,
         bytes: str,
         user: User,
-        neighbor_required: SearchRequestNeighborRequired,
+        neighbor_required: User,
         user_list: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
         optional_deadline: typing.Optional[dt.datetime] = None,
-        key_value: typing.Optional[typing.Dict[str, str]] = None,
+        key_value: typing.Optional[typing.Dict[str, typing.Optional[str]]] = None,
         optional_string: typing.Optional[str] = None,
         nested_user: typing.Optional[NestedUser] = None,
         optional_user: typing.Optional[User] = None,
@@ -62,13 +61,13 @@ class RawSeedApi:
 
         user : User
 
-        neighbor_required : SearchRequestNeighborRequired
+        neighbor_required : User
 
         user_list : typing.Optional[typing.Union[User, typing.Sequence[User]]]
 
         optional_deadline : typing.Optional[dt.datetime]
 
-        key_value : typing.Optional[typing.Dict[str, str]]
+        key_value : typing.Optional[typing.Dict[str, typing.Optional[str]]]
 
         optional_string : typing.Optional[str]
 
@@ -107,30 +106,28 @@ class RawSeedApi:
                 "bytes": bytes,
                 "user": convert_and_respect_annotation_metadata(object_=user, annotation=User, direction="write"),
                 "userList": convert_and_respect_annotation_metadata(
-                    object_=user_list, annotation=User, direction="write"
+                    object_=user_list, annotation=typing.Optional[User], direction="write"
                 ),
                 "optionalDeadline": serialize_datetime(optional_deadline) if optional_deadline is not None else None,
                 "keyValue": key_value,
                 "optionalString": optional_string,
                 "nestedUser": convert_and_respect_annotation_metadata(
-                    object_=nested_user, annotation=NestedUser, direction="write"
+                    object_=nested_user, annotation=typing.Optional[NestedUser], direction="write"
                 ),
                 "optionalUser": convert_and_respect_annotation_metadata(
-                    object_=optional_user, annotation=User, direction="write"
+                    object_=optional_user, annotation=typing.Optional[User], direction="write"
                 ),
                 "excludeUser": convert_and_respect_annotation_metadata(
-                    object_=exclude_user, annotation=User, direction="write"
+                    object_=exclude_user, annotation=typing.Optional[User], direction="write"
                 ),
                 "filter": filter,
-                "tags": ",".join(map(str, tags)) if isinstance(tags, (list, tuple, set)) else tags,
-                "optionalTags": ",".join(map(str, optional_tags))
-                if isinstance(optional_tags, (list, tuple, set))
-                else optional_tags,
+                "tags": tags,
+                "optionalTags": optional_tags,
                 "neighbor": convert_and_respect_annotation_metadata(
-                    object_=neighbor, annotation=SearchRequestNeighbor, direction="write"
+                    object_=neighbor, annotation=typing.Optional[SearchRequestNeighbor], direction="write"
                 ),
                 "neighborRequired": convert_and_respect_annotation_metadata(
-                    object_=neighbor_required, annotation=SearchRequestNeighborRequired, direction="write"
+                    object_=neighbor_required, annotation=User, direction="write"
                 ),
             },
             request_options=request_options,
@@ -168,10 +165,10 @@ class AsyncRawSeedApi:
         deadline: dt.datetime,
         bytes: str,
         user: User,
-        neighbor_required: SearchRequestNeighborRequired,
+        neighbor_required: User,
         user_list: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
         optional_deadline: typing.Optional[dt.datetime] = None,
-        key_value: typing.Optional[typing.Dict[str, str]] = None,
+        key_value: typing.Optional[typing.Dict[str, typing.Optional[str]]] = None,
         optional_string: typing.Optional[str] = None,
         nested_user: typing.Optional[NestedUser] = None,
         optional_user: typing.Optional[User] = None,
@@ -197,13 +194,13 @@ class AsyncRawSeedApi:
 
         user : User
 
-        neighbor_required : SearchRequestNeighborRequired
+        neighbor_required : User
 
         user_list : typing.Optional[typing.Union[User, typing.Sequence[User]]]
 
         optional_deadline : typing.Optional[dt.datetime]
 
-        key_value : typing.Optional[typing.Dict[str, str]]
+        key_value : typing.Optional[typing.Dict[str, typing.Optional[str]]]
 
         optional_string : typing.Optional[str]
 
@@ -242,30 +239,28 @@ class AsyncRawSeedApi:
                 "bytes": bytes,
                 "user": convert_and_respect_annotation_metadata(object_=user, annotation=User, direction="write"),
                 "userList": convert_and_respect_annotation_metadata(
-                    object_=user_list, annotation=User, direction="write"
+                    object_=user_list, annotation=typing.Optional[User], direction="write"
                 ),
                 "optionalDeadline": serialize_datetime(optional_deadline) if optional_deadline is not None else None,
                 "keyValue": key_value,
                 "optionalString": optional_string,
                 "nestedUser": convert_and_respect_annotation_metadata(
-                    object_=nested_user, annotation=NestedUser, direction="write"
+                    object_=nested_user, annotation=typing.Optional[NestedUser], direction="write"
                 ),
                 "optionalUser": convert_and_respect_annotation_metadata(
-                    object_=optional_user, annotation=User, direction="write"
+                    object_=optional_user, annotation=typing.Optional[User], direction="write"
                 ),
                 "excludeUser": convert_and_respect_annotation_metadata(
-                    object_=exclude_user, annotation=User, direction="write"
+                    object_=exclude_user, annotation=typing.Optional[User], direction="write"
                 ),
                 "filter": filter,
-                "tags": ",".join(map(str, tags)) if isinstance(tags, (list, tuple, set)) else tags,
-                "optionalTags": ",".join(map(str, optional_tags))
-                if isinstance(optional_tags, (list, tuple, set))
-                else optional_tags,
+                "tags": tags,
+                "optionalTags": optional_tags,
                 "neighbor": convert_and_respect_annotation_metadata(
-                    object_=neighbor, annotation=SearchRequestNeighbor, direction="write"
+                    object_=neighbor, annotation=typing.Optional[SearchRequestNeighbor], direction="write"
                 ),
                 "neighborRequired": convert_and_respect_annotation_metadata(
-                    object_=neighbor_required, annotation=SearchRequestNeighborRequired, direction="write"
+                    object_=neighbor_required, annotation=User, direction="write"
                 ),
             },
             request_options=request_options,

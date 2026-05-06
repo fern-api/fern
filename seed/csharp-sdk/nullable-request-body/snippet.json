@@ -2,15 +2,15 @@
     "types": {},
     "endpoints": [
         {
-            "example_identifier": null,
+            "example_identifier": "Example1",
             "id": {
                 "path": "/optional-request-body/{path_param}",
                 "method": "POST",
-                "identifier_override": "endpoint_testGroup.test_method_name"
+                "identifier_override": "endpoint_testgroup.testMethodName"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.TestGroup.TestMethodNameAsync(\n    new TestMethodNameTestGroupRequest { PathParam = \"path_param\", Body = new PlainObject() }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Testgroup.TestMethodNameAsync(\n    new TestGroupTestMethodNameRequest { PathParam = \"path_param\", Body = new PlainObject() }\n);\n"
             }
         }
     ]

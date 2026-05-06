@@ -10,7 +10,7 @@ import com.seed.api.core.RequestOptions;
 import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
-import com.seed.api.resources.plants.requests.GetPlantsRequest;
+import com.seed.api.resources.plants.requests.PlantsGetRequest;
 import com.seed.api.types.Plant;
 import java.io.IOException;
 import java.util.List;
@@ -86,19 +86,19 @@ public class AsyncRawPlantsClient {
     }
 
     public CompletableFuture<SeedApiHttpResponse<Plant>> get(String plantId) {
-        return get(plantId, GetPlantsRequest.builder().build());
+        return get(plantId, PlantsGetRequest.builder().build());
     }
 
     public CompletableFuture<SeedApiHttpResponse<Plant>> get(String plantId, RequestOptions requestOptions) {
-        return get(plantId, GetPlantsRequest.builder().build(), requestOptions);
+        return get(plantId, PlantsGetRequest.builder().build(), requestOptions);
     }
 
-    public CompletableFuture<SeedApiHttpResponse<Plant>> get(String plantId, GetPlantsRequest request) {
+    public CompletableFuture<SeedApiHttpResponse<Plant>> get(String plantId, PlantsGetRequest request) {
         return get(plantId, request, null);
     }
 
     public CompletableFuture<SeedApiHttpResponse<Plant>> get(
-            String plantId, GetPlantsRequest request, RequestOptions requestOptions) {
+            String plantId, PlantsGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("plants")

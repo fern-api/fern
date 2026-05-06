@@ -9,7 +9,7 @@ public partial class Examples
             }
         );
 
-        await client._.CreateActivityAsync(
+        await client.CreateActivityAsync(
             new Activity()
         );
     }

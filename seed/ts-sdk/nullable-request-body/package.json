@@ -22,16 +22,16 @@
             },
             "default": "./dist/cjs/index.js"
         },
-        "./testGroup": {
+        "./testgroup": {
             "import": {
-                "types": "./dist/esm/api/resources/testGroup/exports.d.mts",
-                "default": "./dist/esm/api/resources/testGroup/exports.mjs"
+                "types": "./dist/esm/api/resources/testgroup/exports.d.mts",
+                "default": "./dist/esm/api/resources/testgroup/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/testGroup/exports.d.ts",
-                "default": "./dist/cjs/api/resources/testGroup/exports.js"
+                "types": "./dist/cjs/api/resources/testgroup/exports.d.ts",
+                "default": "./dist/cjs/api/resources/testgroup/exports.js"
             },
-            "default": "./dist/cjs/api/resources/testGroup/exports.js"
+            "default": "./dist/cjs/api/resources/testgroup/exports.js"
         },
         "./package.json": "./package.json"
     },

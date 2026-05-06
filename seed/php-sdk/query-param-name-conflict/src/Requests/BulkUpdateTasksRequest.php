@@ -10,19 +10,19 @@ use Seed\Core\Types\Date;
 class BulkUpdateTasksRequest extends JsonSerializableType
 {
     /**
-     * @var ?string $filterAssignedTo
+     * @var ?string $assignedTo
      */
-    public ?string $filterAssignedTo;
+    public ?string $assignedTo;
 
     /**
-     * @var ?string $filterIsComplete
+     * @var ?string $isComplete
      */
-    public ?string $filterIsComplete;
+    public ?string $isComplete;
 
     /**
-     * @var ?string $filterDate
+     * @var ?string $date
      */
-    public ?string $filterDate;
+    public ?string $date;
 
     /**
      * @var ?string $fields Comma-separated list of fields to include in the response.
@@ -55,9 +55,9 @@ class BulkUpdateTasksRequest extends JsonSerializableType
 
     /**
      * @param array{
-     *   filterAssignedTo?: ?string,
-     *   filterIsComplete?: ?string,
-     *   filterDate?: ?string,
+     *   assignedTo?: ?string,
+     *   isComplete?: ?string,
+     *   date?: ?string,
      *   fields?: ?string,
      *   bulkUpdateTasksRequestAssignedTo?: ?string,
      *   bulkUpdateTasksRequestDate?: ?DateTime,
@@ -68,9 +68,9 @@ class BulkUpdateTasksRequest extends JsonSerializableType
     public function __construct(
         array $values = [],
     ) {
-        $this->filterAssignedTo = $values['filterAssignedTo'] ?? null;
-        $this->filterIsComplete = $values['filterIsComplete'] ?? null;
-        $this->filterDate = $values['filterDate'] ?? null;
+        $this->assignedTo = $values['assignedTo'] ?? null;
+        $this->isComplete = $values['isComplete'] ?? null;
+        $this->date = $values['date'] ?? null;
         $this->fields = $values['fields'] ?? null;
         $this->bulkUpdateTasksRequestAssignedTo = $values['bulkUpdateTasksRequestAssignedTo'] ?? null;
         $this->bulkUpdateTasksRequestDate = $values['bulkUpdateTasksRequestDate'] ?? null;

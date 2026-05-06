@@ -5,12 +5,15 @@ package com.seed.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.api.core.Nullable;
+import com.seed.api.core.NullableNonemptyFilter;
 import com.seed.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,15 +36,33 @@ public final class RootObject implements INormalObject, INullableObject {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("normalField")
+    @JsonIgnore
     @java.lang.Override
     public Optional<String> getNormalField() {
+        if (normalField == null) {
+            return Optional.empty();
+        }
         return normalField;
     }
 
-    @JsonProperty("nullableField")
+    @JsonIgnore
     @java.lang.Override
     public Optional<String> getNullableField() {
+        if (nullableField == null) {
+            return Optional.empty();
+        }
+        return nullableField;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("normalField")
+    private Optional<String> _getNormalField() {
+        return normalField;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableField")
+    private Optional<String> _getNullableField() {
         return nullableField;
     }
 
@@ -102,6 +123,17 @@ public final class RootObject implements INormalObject, INullableObject {
             return this;
         }
 
+        public Builder normalField(Nullable<String> normalField) {
+            if (normalField.isNull()) {
+                this.normalField = null;
+            } else if (normalField.isEmpty()) {
+                this.normalField = Optional.empty();
+            } else {
+                this.normalField = Optional.of(normalField.get());
+            }
+            return this;
+        }
+
         @JsonSetter(value = "nullableField", nulls = Nulls.SKIP)
         public Builder nullableField(Optional<String> nullableField) {
             this.nullableField = nullableField;
@@ -110,6 +142,17 @@ public final class RootObject implements INormalObject, INullableObject {
 
         public Builder nullableField(String nullableField) {
             this.nullableField = Optional.ofNullable(nullableField);
+            return this;
+        }
+
+        public Builder nullableField(Nullable<String> nullableField) {
+            if (nullableField.isNull()) {
+                this.nullableField = null;
+            } else if (nullableField.isEmpty()) {
+                this.nullableField = Optional.empty();
+            } else {
+                this.nullableField = Optional.of(nullableField.get());
+            }
             return this;
         }
 

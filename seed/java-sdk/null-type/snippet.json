@@ -1,20 +1,20 @@
 {
     "endpoints": [
         {
-            "example_identifier": "863ac709",
+            "example_identifier": "Example1",
             "id": {
                 "method": "POST",
                 "path": "/conversations/outbound-call",
-                "identifier_override": "endpoint_conversations.outboundCall"
+                "identifier_override": "endpoint_conversations.outboundcall"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.conversations.requests.OutboundCallConversationsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.conversations().outboundCall(\n            OutboundCallConversationsRequest\n                .builder()\n                .toPhoneNumber(\"to_phone_number\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.conversations.requests.OutboundCallConversationsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.conversations().outboundCall(\n            OutboundCallConversationsRequest\n                .builder()\n                .toPhoneNumber(\"to_phone_number\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.conversations.requests.ConversationsOutboundCallRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.conversations().outboundcall(\n            ConversationsOutboundCallRequest\n                .builder()\n                .toPhoneNumber(\"to_phone_number\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.conversations.requests.ConversationsOutboundCallRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.conversations().outboundcall(\n            ConversationsOutboundCallRequest\n                .builder()\n                .toPhoneNumber(\"to_phone_number\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "2af03bad",
+            "example_identifier": "Example1",
             "id": {
                 "method": "GET",
                 "path": "/users/{id}",
@@ -22,8 +22,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.GetUsersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.users().get(\n            \"id\",\n            GetUsersRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.GetUsersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.users().get(\n            \"id\",\n            GetUsersRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersGetRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.users().get(\n            \"id\",\n            UsersGetRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersGetRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.users().get(\n            \"id\",\n            UsersGetRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         }
     ],

@@ -9,8 +9,8 @@ async fn main() {
     let client = ApiClient::new(config).expect("Failed to build client");
     client
         .conversations
-        .outbound_call(
-            &OutboundCallConversationsRequest {
+        .outboundcall(
+            &ConversationsOutboundCallRequest {
                 to_phone_number: "to_phone_number".to_string(),
                 dry_run: Some(true),
             },

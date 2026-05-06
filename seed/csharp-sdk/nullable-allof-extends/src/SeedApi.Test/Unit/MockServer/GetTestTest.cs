@@ -35,6 +35,7 @@ public class GetTestTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
+              "nullableField": "nullableField",
               "normalField": "normalField"
             }
             """;

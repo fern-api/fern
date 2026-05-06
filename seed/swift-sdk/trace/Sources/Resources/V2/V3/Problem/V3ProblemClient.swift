@@ -13,7 +13,7 @@ public final class V3ProblemClient: Sendable {
     public func getLightweightProblems(requestOptions: RequestOptions? = nil) async throws -> [LightweightProblemInfoV2Type] {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/problems-v2/lightweight-problem-info",
+            path: "/problems-v2/v3/lightweight-problem-info",
             requestOptions: requestOptions,
             responseType: [LightweightProblemInfoV2Type].self
         )
@@ -25,7 +25,7 @@ public final class V3ProblemClient: Sendable {
     public func getProblems(requestOptions: RequestOptions? = nil) async throws -> [ProblemInfoV2Type] {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/problems-v2/problem-info",
+            path: "/problems-v2/v3/problem-info",
             requestOptions: requestOptions,
             responseType: [ProblemInfoV2Type].self
         )
@@ -37,7 +37,7 @@ public final class V3ProblemClient: Sendable {
     public func getLatestProblem(problemId: String, requestOptions: RequestOptions? = nil) async throws -> ProblemInfoV2Type {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/problems-v2/problem-info/\(problemId)",
+            path: "/problems-v2/v3/problem-info/\(problemId)",
             requestOptions: requestOptions,
             responseType: ProblemInfoV2Type.self
         )
@@ -49,7 +49,7 @@ public final class V3ProblemClient: Sendable {
     public func getProblemVersion(problemId: String, problemVersion: String, requestOptions: RequestOptions? = nil) async throws -> ProblemInfoV2Type {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/problems-v2/problem-info/\(problemId)/version/\(problemVersion)",
+            path: "/problems-v2/v3/problem-info/\(problemId)/version/\(problemVersion)",
             requestOptions: requestOptions,
             responseType: ProblemInfoV2Type.self
         )

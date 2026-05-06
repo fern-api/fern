@@ -28,8 +28,8 @@ public partial class OAuthTokenProvider
         if (_accessToken == null || DateTime.UtcNow >= _expiresAt)
         {
             var tokenResponse = await _client
-                .GetTokenAsync(
-                    new GetTokenIdentityRequest { Username = _clientId, Password = _clientSecret }
+                .GettokenAsync(
+                    new IdentityGetTokenRequest { Username = _clientId, Password = _clientSecret }
                 )
                 .ConfigureAwait(false);
             _accessToken = tokenResponse.AccessToken;

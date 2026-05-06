@@ -56,7 +56,7 @@ following namespace:
 ```typescript
 import { SeedApi } from "@fern/no-content-response";
 
-const request: SeedApi.CreateContactRequest = {
+const request: SeedApi.ContactsCreateRequest = {
     ...
 };
 ```

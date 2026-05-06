@@ -25,7 +25,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{URI.encode_uri_component(params[:id].to_s)}",
+          path: "/union/#{URI.encode_uri_component(params[:id].to_s)}",
           request_options: request_options
         )
         begin
@@ -56,7 +56,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
-          path: "",
+          path: "/union",
           body: Seed::Union::Types::Shape.new(params).to_h,
           request_options: request_options
         )

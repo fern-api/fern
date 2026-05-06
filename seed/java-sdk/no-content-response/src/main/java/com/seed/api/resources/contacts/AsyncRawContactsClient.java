@@ -12,8 +12,8 @@ import com.seed.api.core.RequestOptions;
 import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
-import com.seed.api.resources.contacts.requests.CreateContactRequest;
-import com.seed.api.resources.contacts.requests.GetContactsRequest;
+import com.seed.api.resources.contacts.requests.ContactsCreateRequest;
+import com.seed.api.resources.contacts.requests.ContactsGetRequest;
 import com.seed.api.types.Contact;
 import java.io.IOException;
 import java.util.Optional;
@@ -39,7 +39,7 @@ public class AsyncRawContactsClient {
     /**
      * Creates a new contact. Returns 200 with the contact or 204 with no content.
      */
-    public CompletableFuture<SeedApiHttpResponse<Optional<Contact>>> create(CreateContactRequest request) {
+    public CompletableFuture<SeedApiHttpResponse<Optional<Contact>>> create(ContactsCreateRequest request) {
         return create(request, null);
     }
 
@@ -47,7 +47,7 @@ public class AsyncRawContactsClient {
      * Creates a new contact. Returns 200 with the contact or 204 with no content.
      */
     public CompletableFuture<SeedApiHttpResponse<Optional<Contact>>> create(
-            CreateContactRequest request, RequestOptions requestOptions) {
+            ContactsCreateRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("contacts");
@@ -108,20 +108,20 @@ public class AsyncRawContactsClient {
      * Gets a contact by ID. Returns 200 with the contact.
      */
     public CompletableFuture<SeedApiHttpResponse<Contact>> get(String id) {
-        return get(id, GetContactsRequest.builder().build());
+        return get(id, ContactsGetRequest.builder().build());
     }
 
     /**
      * Gets a contact by ID. Returns 200 with the contact.
      */
     public CompletableFuture<SeedApiHttpResponse<Contact>> get(String id, RequestOptions requestOptions) {
-        return get(id, GetContactsRequest.builder().build(), requestOptions);
+        return get(id, ContactsGetRequest.builder().build(), requestOptions);
     }
 
     /**
      * Gets a contact by ID. Returns 200 with the contact.
      */
-    public CompletableFuture<SeedApiHttpResponse<Contact>> get(String id, GetContactsRequest request) {
+    public CompletableFuture<SeedApiHttpResponse<Contact>> get(String id, ContactsGetRequest request) {
         return get(id, request, null);
     }
 
@@ -129,7 +129,7 @@ public class AsyncRawContactsClient {
      * Gets a contact by ID. Returns 200 with the contact.
      */
     public CompletableFuture<SeedApiHttpResponse<Contact>> get(
-            String id, GetContactsRequest request, RequestOptions requestOptions) {
+            String id, ContactsGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("contacts")

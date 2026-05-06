@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "6a33368e",
+            "example_identifier": "Example1",
             "id": {
                 "method": "GET",
                 "path": "/test/{region}/resource",

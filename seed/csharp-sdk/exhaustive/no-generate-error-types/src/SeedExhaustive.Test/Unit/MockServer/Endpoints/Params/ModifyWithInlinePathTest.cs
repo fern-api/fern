@@ -24,7 +24,7 @@ public class ModifyWithInlinePathTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/params/path/param")
+                    .WithPath("/params/inline-path/param")
                     .UsingPut()
                     .WithBody(requestJson)
             )

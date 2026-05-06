@@ -61,7 +61,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/cursor-pagination",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -89,7 +89,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/inline-users/cursor-pagination",
+                );
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -146,7 +151,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/mixed-type-cursor-pagination",
                     ),
                     method: "POST",
                     headers: _headers,
@@ -174,7 +179,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "POST",
+                    "/inline-users/mixed-type-cursor-pagination",
+                );
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -225,7 +235,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/body-cursor-pagination",
                     ),
                     method: "POST",
                     headers: _headers,
@@ -252,7 +262,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "POST",
+                    "/inline-users/body-cursor-pagination",
+                );
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -315,7 +330,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/offset-pagination",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -343,7 +358,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/inline-users/offset-pagination",
+                );
             },
         );
         let _offset = request?.page != null ? request?.page : 0;
@@ -403,7 +423,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/double-offset-pagination",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -431,7 +451,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/inline-users/double-offset-pagination",
+                );
             },
         );
         let _offset = request?.page != null ? request?.page : 1;
@@ -483,7 +508,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/body-offset-pagination",
                     ),
                     method: "POST",
                     headers: _headers,
@@ -510,7 +535,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "POST",
+                    "/inline-users/body-offset-pagination",
+                );
             },
         );
         let _offset = request?.pagination?.page != null ? request?.pagination?.page : 1;
@@ -568,7 +598,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/offset-step-pagination",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -596,7 +626,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/inline-users/offset-step-pagination",
+                );
             },
         );
         let _offset = request?.page != null ? request?.page : 1;
@@ -654,7 +689,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/offset-pagination-has-next-page",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -682,7 +717,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/inline-users/offset-pagination-has-next-page",
+                );
             },
         );
         let _offset = request?.page != null ? request?.page : 1;
@@ -737,7 +777,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/extended-results",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -765,7 +805,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/inline-users/extended-results",
+                );
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -818,7 +863,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/extended-results-optional-data",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -846,7 +891,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/inline-users/extended-results-optional-data",
+                );
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -894,7 +944,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/usernames",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -922,7 +972,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/inline-users/usernames",
+                );
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -968,7 +1023,7 @@ export class InlineUsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
+                        "/inline-users/global-config",
                     ),
                     method: "GET",
                     headers: _headers,
@@ -996,7 +1051,12 @@ export class InlineUsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/inline-users");
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/inline-users/global-config",
+                );
             },
         );
         let _offset = request?.offset != null ? request?.offset : 1;

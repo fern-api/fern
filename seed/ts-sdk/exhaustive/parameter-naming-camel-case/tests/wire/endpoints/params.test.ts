@@ -23,7 +23,13 @@ describe("ParamsClient", () => {
 
         const rawResponseBody = "string";
 
-        server.mockEndpoint().get("/params/path/param").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+        server
+            .mockEndpoint()
+            .get("/params/inline-path/param")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
         const response = await client.endpoints.params.getWithInlinePath({
             param: "param",
@@ -48,7 +54,7 @@ describe("ParamsClient", () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
-        server.mockEndpoint().get("/params").respondWith().statusCode(200).build();
+        server.mockEndpoint().get("/params/allow-multiple").respondWith().statusCode(200).build();
 
         const response = await client.endpoints.params.getWithAllowMultipleQuery({
             query: "query",
@@ -73,7 +79,7 @@ describe("ParamsClient", () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
-        server.mockEndpoint().get("/params/path-query/param").respondWith().statusCode(200).build();
+        server.mockEndpoint().get("/params/inline-path-query/param").respondWith().statusCode(200).build();
 
         const response = await client.endpoints.params.getWithInlinePathAndQuery({
             param: "param",
@@ -109,7 +115,7 @@ describe("ParamsClient", () => {
 
         server
             .mockEndpoint()
-            .put("/params/path/param")
+            .put("/params/inline-path/param")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -147,7 +153,13 @@ describe("ParamsClient", () => {
 
         const rawResponseBody = "string";
 
-        server.mockEndpoint().get("/params/path/param").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+        server
+            .mockEndpoint()
+            .get("/params/path-with-errors/param")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
         const response = await client.endpoints.params.getWithPathAndErrors("param");
         expect(response).toEqual(rawResponseBody);
@@ -159,7 +171,13 @@ describe("ParamsClient", () => {
 
         const rawResponseBody = { message: "message" };
 
-        server.mockEndpoint().get("/params/path/param").respondWith().statusCode(400).jsonBody(rawResponseBody).build();
+        server
+            .mockEndpoint()
+            .get("/params/path-with-errors/param")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
 
         await expect(async () => {
             return await client.endpoints.params.getWithPathAndErrors("param");

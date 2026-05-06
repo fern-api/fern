@@ -10,7 +10,6 @@ from .core.request_options import RequestOptions
 from .raw_client import AsyncRawSeedApi, RawSeedApi
 from .types.nested_user import NestedUser
 from .types.search_request_neighbor import SearchRequestNeighbor
-from .types.search_request_neighbor_required import SearchRequestNeighborRequired
 from .types.search_response import SearchResponse
 from .types.user import User
 
@@ -100,10 +99,10 @@ class SeedApi:
         deadline: dt.datetime,
         bytes: str,
         user: User,
-        neighbor_required: SearchRequestNeighborRequired,
+        neighbor_required: User,
         user_list: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
         optional_deadline: typing.Optional[dt.datetime] = None,
-        key_value: typing.Optional[typing.Dict[str, str]] = None,
+        key_value: typing.Optional[typing.Dict[str, typing.Optional[str]]] = None,
         optional_string: typing.Optional[str] = None,
         nested_user: typing.Optional[NestedUser] = None,
         optional_user: typing.Optional[User] = None,
@@ -129,13 +128,13 @@ class SeedApi:
 
         user : User
 
-        neighbor_required : SearchRequestNeighborRequired
+        neighbor_required : User
 
         user_list : typing.Optional[typing.Union[User, typing.Sequence[User]]]
 
         optional_deadline : typing.Optional[dt.datetime]
 
-        key_value : typing.Optional[typing.Dict[str, str]]
+        key_value : typing.Optional[typing.Dict[str, typing.Optional[str]]]
 
         optional_string : typing.Optional[str]
 
@@ -348,10 +347,10 @@ class AsyncSeedApi:
         deadline: dt.datetime,
         bytes: str,
         user: User,
-        neighbor_required: SearchRequestNeighborRequired,
+        neighbor_required: User,
         user_list: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
         optional_deadline: typing.Optional[dt.datetime] = None,
-        key_value: typing.Optional[typing.Dict[str, str]] = None,
+        key_value: typing.Optional[typing.Dict[str, typing.Optional[str]]] = None,
         optional_string: typing.Optional[str] = None,
         nested_user: typing.Optional[NestedUser] = None,
         optional_user: typing.Optional[User] = None,
@@ -377,13 +376,13 @@ class AsyncSeedApi:
 
         user : User
 
-        neighbor_required : SearchRequestNeighborRequired
+        neighbor_required : User
 
         user_list : typing.Optional[typing.Union[User, typing.Sequence[User]]]
 
         optional_deadline : typing.Optional[dt.datetime]
 
-        key_value : typing.Optional[typing.Dict[str, str]]
+        key_value : typing.Optional[typing.Dict[str, typing.Optional[str]]]
 
         optional_string : typing.Optional[str]
 

@@ -9,9 +9,9 @@ import (
 	testing "testing"
 )
 
-func TestSettersGetTokenIdentityRequest(t *testing.T) {
+func TestSettersIdentityGetTokenRequest(t *testing.T) {
 	t.Run("SetUsername", func(t *testing.T) {
-		obj := &GetTokenIdentityRequest{}
+		obj := &IdentityGetTokenRequest{}
 		var fernTestValueUsername string
 		obj.SetUsername(fernTestValueUsername)
 		assert.Equal(t, fernTestValueUsername, obj.Username)
@@ -19,7 +19,7 @@ func TestSettersGetTokenIdentityRequest(t *testing.T) {
 	})
 
 	t.Run("SetPassword", func(t *testing.T) {
-		obj := &GetTokenIdentityRequest{}
+		obj := &IdentityGetTokenRequest{}
 		var fernTestValuePassword string
 		obj.SetPassword(fernTestValuePassword)
 		assert.Equal(t, fernTestValuePassword, obj.Password)
@@ -28,11 +28,11 @@ func TestSettersGetTokenIdentityRequest(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitGetTokenIdentityRequest(t *testing.T) {
+func TestSettersMarkExplicitIdentityGetTokenRequest(t *testing.T) {
 	t.Run("SetUsername_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &GetTokenIdentityRequest{}
+		obj := &IdentityGetTokenRequest{}
 		var fernTestValueUsername string
 
 		// Act
@@ -63,7 +63,7 @@ func TestSettersMarkExplicitGetTokenIdentityRequest(t *testing.T) {
 	t.Run("SetPassword_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &GetTokenIdentityRequest{}
+		obj := &IdentityGetTokenRequest{}
 		var fernTestValuePassword string
 
 		// Act

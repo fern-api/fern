@@ -26,7 +26,7 @@ public class ListUsernamesTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/users")
+                    .WithPath("/users/usernames")
                     .WithParam("starting_after", "starting_after")
                     .UsingGet()
             )

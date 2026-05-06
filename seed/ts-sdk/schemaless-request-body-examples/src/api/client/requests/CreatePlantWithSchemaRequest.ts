@@ -8,6 +8,6 @@
  *     }
  */
 export interface CreatePlantWithSchemaRequest {
-    name?: string;
-    species?: string;
+    name?: string | null;
+    species?: string | null;
 }

@@ -93,9 +93,9 @@ class SeedApi:
     def bulk_update_tasks(
         self,
         *,
-        filter_assigned_to: typing.Optional[str] = None,
-        filter_is_complete: typing.Optional[str] = None,
-        filter_date: typing.Optional[str] = None,
+        assigned_to: typing.Optional[str] = None,
+        is_complete: typing.Optional[str] = None,
+        date: typing.Optional[str] = None,
         fields: typing.Optional[str] = None,
         bulk_update_tasks_request_assigned_to: typing.Optional[str] = OMIT,
         bulk_update_tasks_request_date: typing.Optional[dt.date] = OMIT,
@@ -106,11 +106,11 @@ class SeedApi:
         """
         Parameters
         ----------
-        filter_assigned_to : typing.Optional[str]
+        assigned_to : typing.Optional[str]
 
-        filter_is_complete : typing.Optional[str]
+        is_complete : typing.Optional[str]
 
-        filter_date : typing.Optional[str]
+        date : typing.Optional[str]
 
         fields : typing.Optional[str]
             Comma-separated list of fields to include in the response.
@@ -141,9 +141,9 @@ class SeedApi:
         client.bulk_update_tasks()
         """
         _response = self._raw_client.bulk_update_tasks(
-            filter_assigned_to=filter_assigned_to,
-            filter_is_complete=filter_is_complete,
-            filter_date=filter_date,
+            assigned_to=assigned_to,
+            is_complete=is_complete,
+            date=date,
             fields=fields,
             bulk_update_tasks_request_assigned_to=bulk_update_tasks_request_assigned_to,
             bulk_update_tasks_request_date=bulk_update_tasks_request_date,
@@ -249,9 +249,9 @@ class AsyncSeedApi:
     async def bulk_update_tasks(
         self,
         *,
-        filter_assigned_to: typing.Optional[str] = None,
-        filter_is_complete: typing.Optional[str] = None,
-        filter_date: typing.Optional[str] = None,
+        assigned_to: typing.Optional[str] = None,
+        is_complete: typing.Optional[str] = None,
+        date: typing.Optional[str] = None,
         fields: typing.Optional[str] = None,
         bulk_update_tasks_request_assigned_to: typing.Optional[str] = OMIT,
         bulk_update_tasks_request_date: typing.Optional[dt.date] = OMIT,
@@ -262,11 +262,11 @@ class AsyncSeedApi:
         """
         Parameters
         ----------
-        filter_assigned_to : typing.Optional[str]
+        assigned_to : typing.Optional[str]
 
-        filter_is_complete : typing.Optional[str]
+        is_complete : typing.Optional[str]
 
-        filter_date : typing.Optional[str]
+        date : typing.Optional[str]
 
         fields : typing.Optional[str]
             Comma-separated list of fields to include in the response.
@@ -305,9 +305,9 @@ class AsyncSeedApi:
         asyncio.run(main())
         """
         _response = await self._raw_client.bulk_update_tasks(
-            filter_assigned_to=filter_assigned_to,
-            filter_is_complete=filter_is_complete,
-            filter_date=filter_date,
+            assigned_to=assigned_to,
+            is_complete=is_complete,
+            date=date,
             fields=fields,
             bulk_update_tasks_request_assigned_to=bulk_update_tasks_request_assigned_to,
             bulk_update_tasks_request_date=bulk_update_tasks_request_date,

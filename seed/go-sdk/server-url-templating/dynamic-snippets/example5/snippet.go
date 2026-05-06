@@ -14,7 +14,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.TokenRequest{
+    request := &fern.GetTokenRequest{
         ClientID: "client_id",
         ClientSecret: "client_secret",
     }

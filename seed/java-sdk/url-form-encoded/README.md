@@ -56,7 +56,7 @@ Instantiate and use the client with the following:
 package com.example.usage;
 
 import com.seed.api.SeedApiClient;
-import com.seed.api.requests.PostSubmitRequest;
+import com.seed.api.requests.SubmitFormDataRequest;
 
 public class Example {
     public static void main(String[] args) {
@@ -65,7 +65,7 @@ public class Example {
             .build();
 
         client.submitFormData(
-            PostSubmitRequest
+            SubmitFormDataRequest
                 .builder()
                 .username("johndoe")
                 .email("john@example.com")

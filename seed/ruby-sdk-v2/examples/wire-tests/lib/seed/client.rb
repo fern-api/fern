@@ -16,7 +16,7 @@ module Seed
       request = Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "POST",
-        path: "",
+        path: "/echo",
         body: params,
         request_options: request_options
       )
@@ -46,7 +46,7 @@ module Seed
       request = Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "POST",
-        path: "",
+        path: "/create-type",
         body: Seed::Types::Type.new(params).to_h,
         request_options: request_options
       )

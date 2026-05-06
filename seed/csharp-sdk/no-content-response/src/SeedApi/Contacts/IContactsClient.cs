@@ -6,7 +6,7 @@ public partial interface IContactsClient
     /// Creates a new contact. Returns 200 with the contact or 204 with no content.
     /// </summary>
     WithRawResponseTask<Contact?> CreateAsync(
-        CreateContactRequest request,
+        ContactsCreateRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
@@ -15,7 +15,7 @@ public partial interface IContactsClient
     /// Gets a contact by ID. Returns 200 with the contact.
     /// </summary>
     WithRawResponseTask<Contact> GetAsync(
-        GetContactsRequest request,
+        ContactsGetRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

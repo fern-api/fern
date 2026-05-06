@@ -10,7 +10,7 @@ public final class FolderDServiceClient: Sendable {
     public func getDirectThread(requestOptions: RequestOptions? = nil) async throws -> ResponseType {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/",
+            path: "/folder-d",
             requestOptions: requestOptions,
             responseType: ResponseType.self
         )

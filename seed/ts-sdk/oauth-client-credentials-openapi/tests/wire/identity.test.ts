@@ -5,7 +5,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 import { mockCustomAuth } from "./mockAuth";
 
 describe("IdentityClient", () => {
-    test("getToken", async () => {
+    test("gettoken", async () => {
         const server = mockServerPool.createServer();
         mockCustomAuth(server);
 
@@ -27,7 +27,7 @@ describe("IdentityClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.identity.getToken({
+        const response = await client.identity.gettoken({
             username: "username",
             password: "password",
         });

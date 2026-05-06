@@ -5,12 +5,15 @@ package com.seed.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.api.core.Nullable;
+import com.seed.api.core.NullableNonemptyFilter;
 import com.seed.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,13 +36,31 @@ public final class TokenResponse {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("access_token")
+    @JsonIgnore
     public Optional<String> getAccessToken() {
+        if (accessToken == null) {
+            return Optional.empty();
+        }
         return accessToken;
     }
 
-    @JsonProperty("expires_in")
+    @JsonIgnore
     public Optional<Integer> getExpiresIn() {
+        if (expiresIn == null) {
+            return Optional.empty();
+        }
+        return expiresIn;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("access_token")
+    private Optional<String> _getAccessToken() {
+        return accessToken;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("expires_in")
+    private Optional<Integer> _getExpiresIn() {
         return expiresIn;
     }
 
@@ -100,6 +121,17 @@ public final class TokenResponse {
             return this;
         }
 
+        public Builder accessToken(Nullable<String> accessToken) {
+            if (accessToken.isNull()) {
+                this.accessToken = null;
+            } else if (accessToken.isEmpty()) {
+                this.accessToken = Optional.empty();
+            } else {
+                this.accessToken = Optional.of(accessToken.get());
+            }
+            return this;
+        }
+
         @JsonSetter(value = "expires_in", nulls = Nulls.SKIP)
         public Builder expiresIn(Optional<Integer> expiresIn) {
             this.expiresIn = expiresIn;
@@ -108,6 +140,17 @@ public final class TokenResponse {
 
         public Builder expiresIn(Integer expiresIn) {
             this.expiresIn = Optional.ofNullable(expiresIn);
+            return this;
+        }
+
+        public Builder expiresIn(Nullable<Integer> expiresIn) {
+            if (expiresIn.isNull()) {
+                this.expiresIn = null;
+            } else if (expiresIn.isEmpty()) {
+                this.expiresIn = Optional.empty();
+            } else {
+                this.expiresIn = Optional.of(expiresIn.get());
+            }
             return this;
         }
 

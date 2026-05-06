@@ -32,7 +32,7 @@ client.BulkUpdateTasks(
 <dl>
 <dd>
 
-**filterAssignedTo:** `*string` 
+**assignedTo:** `*string` 
     
 </dd>
 </dl>
@@ -40,7 +40,7 @@ client.BulkUpdateTasks(
 <dl>
 <dd>
 
-**filterIsComplete:** `*string` 
+**isComplete:** `*string` 
     
 </dd>
 </dl>
@@ -48,7 +48,7 @@ client.BulkUpdateTasks(
 <dl>
 <dd>
 
-**filterDate:** `*string` 
+**date:** `*string` 
     
 </dd>
 </dl>

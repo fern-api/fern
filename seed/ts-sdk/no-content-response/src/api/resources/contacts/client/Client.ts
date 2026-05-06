@@ -24,7 +24,7 @@ export class ContactsClient {
     /**
      * Creates a new contact. Returns 200 with the contact or 204 with no content.
      *
-     * @param {SeedApi.CreateContactRequest} request
+     * @param {SeedApi.ContactsCreateRequest} request
      * @param {ContactsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -33,16 +33,16 @@ export class ContactsClient {
      *     })
      */
     public create(
-        request: SeedApi.CreateContactRequest,
+        request: SeedApi.ContactsCreateRequest,
         requestOptions?: ContactsClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.Contact | undefined> {
+    ): core.HttpResponsePromise<SeedApi.Contact | null> {
         return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
     }
 
     private async __create(
-        request: SeedApi.CreateContactRequest,
+        request: SeedApi.ContactsCreateRequest,
         requestOptions?: ContactsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.Contact | undefined>> {
+    ): Promise<core.WithRawResponse<SeedApi.Contact | null>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -63,7 +63,7 @@ export class ContactsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.Contact | undefined, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.Contact | null, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -80,7 +80,7 @@ export class ContactsClient {
     /**
      * Gets a contact by ID. Returns 200 with the contact.
      *
-     * @param {SeedApi.GetContactsRequest} request
+     * @param {SeedApi.ContactsGetRequest} request
      * @param {ContactsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -89,14 +89,14 @@ export class ContactsClient {
      *     })
      */
     public get(
-        request: SeedApi.GetContactsRequest,
+        request: SeedApi.ContactsGetRequest,
         requestOptions?: ContactsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.Contact> {
         return core.HttpResponsePromise.fromPromise(this.__get(request, requestOptions));
     }
 
     private async __get(
-        request: SeedApi.GetContactsRequest,
+        request: SeedApi.ContactsGetRequest,
         requestOptions?: ContactsClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.Contact>> {
         const { id } = request;

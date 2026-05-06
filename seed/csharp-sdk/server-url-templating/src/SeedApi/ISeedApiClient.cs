@@ -14,7 +14,7 @@ public partial interface ISeedApiClient
     );
 
     WithRawResponseTask<TokenResponse> GetTokenAsync(
-        TokenRequest request,
+        GetTokenRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

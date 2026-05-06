@@ -1,5 +1,5 @@
 pub mod contact;
-pub mod create_contact_request;
+pub mod contacts_create_request;
 
 pub use contact::Contact;
-pub use create_contact_request::CreateContactRequest;
+pub use contacts_create_request::ContactsCreateRequest;

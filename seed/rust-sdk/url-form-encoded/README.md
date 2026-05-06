@@ -53,7 +53,7 @@ async fn main() {
     let client = ApiClient::new(config).expect("Failed to build client");
     client
         .submit_form_data(
-            &PostSubmitRequest {
+            &SubmitFormDataRequest {
                 username: "johndoe".to_string(),
                 email: "john@example.com".to_string(),
             },
@@ -88,7 +88,7 @@ The SDK exports all request types as Rust structs. Simply import them from the c
 ```rust
 use seed_api::prelude::{*};
 
-let request = PostSubmitRequest {
+let request = SubmitFormDataRequest {
     ...
 };
 ```

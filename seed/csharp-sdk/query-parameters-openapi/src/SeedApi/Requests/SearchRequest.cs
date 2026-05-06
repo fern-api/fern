@@ -26,13 +26,13 @@ public record SearchRequest
     public required User User { get; set; }
 
     [JsonIgnore]
-    public IEnumerable<User> UserList { get; set; } = new List<User>();
+    public IEnumerable<User?> UserList { get; set; } = new List<User?>();
 
     [JsonIgnore]
     public DateTime? OptionalDeadline { get; set; }
 
     [JsonIgnore]
-    public Dictionary<string, string>? KeyValue { get; set; }
+    public Dictionary<string, string?>? KeyValue { get; set; }
 
     [JsonIgnore]
     public string? OptionalString { get; set; }
@@ -44,28 +44,28 @@ public record SearchRequest
     public User? OptionalUser { get; set; }
 
     [JsonIgnore]
-    public IEnumerable<User> ExcludeUser { get; set; } = new List<User>();
+    public IEnumerable<User?> ExcludeUser { get; set; } = new List<User?>();
 
     [JsonIgnore]
-    public IEnumerable<string> Filter { get; set; } = new List<string>();
+    public IEnumerable<string?> Filter { get; set; } = new List<string?>();
 
     /// <summary>
     /// List of tags. Serialized as a comma-separated list.
     /// </summary>
     [JsonIgnore]
-    public IEnumerable<string> Tags { get; set; } = new List<string>();
+    public IEnumerable<string?> Tags { get; set; } = new List<string?>();
 
     /// <summary>
     /// Optional list of tags. Serialized as a comma-separated list.
     /// </summary>
     [JsonIgnore]
-    public IEnumerable<string> OptionalTags { get; set; } = new List<string>();
+    public IEnumerable<string?> OptionalTags { get; set; } = new List<string?>();
 
     [JsonIgnore]
     public OneOf<User, NestedUser, string, int>? Neighbor { get; set; }
 
     [JsonIgnore]
-    public required OneOf<User, NestedUser, string, int> NeighborRequired { get; set; }
+    public required User NeighborRequired { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

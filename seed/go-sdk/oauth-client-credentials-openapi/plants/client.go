@@ -49,7 +49,7 @@ func (c *Client) List(
 
 func (c *Client) Get(
 	ctx context.Context,
-	request *fern.GetPlantsRequest,
+	request *fern.PlantsGetRequest,
 	opts ...option.RequestOption,
 ) (*fern.Plant, error) {
 	response, err := c.WithRawResponse.Get(

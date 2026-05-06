@@ -71,7 +71,7 @@ class BigunionClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/{$id}",
+                    path: "/bigunion/{$id}",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -117,7 +117,7 @@ class BigunionClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "",
+                    path: "/bigunion",
                     method: HttpMethod::PATCH,
                     body: $request,
                 ),
@@ -164,7 +164,7 @@ class BigunionClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/many",
+                    path: "/bigunion/many",
                     method: HttpMethod::PATCH,
                     body: JsonSerializer::serializeArray($request, [BigUnion::class]),
                 ),

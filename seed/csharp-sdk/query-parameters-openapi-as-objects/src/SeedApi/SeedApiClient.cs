@@ -139,7 +139,7 @@ public partial class SeedApiClient : ISeedApiClient
     ///             },
     ///         ],
     ///         OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         KeyValue = new Dictionary&lt;string, string&gt;() { { "keyValue", "keyValue" } },
+    ///         KeyValue = new Dictionary&lt;string, string?&gt;() { { "keyValue", "keyValue" } },
     ///         OptionalString = "optionalString",
     ///         NestedUser = new NestedUser
     ///         {

@@ -40,7 +40,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/users",
+            path: "/users/cursor-pagination",
             query: query_params,
             request_options: request_options
           )
@@ -84,7 +84,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/users",
+            path: "/users/mixed-type-cursor-pagination",
             query: query_params,
             request_options: request_options
           )
@@ -124,7 +124,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/users",
+            path: "/users/body-cursor-pagination",
             body: Seed::Users::Types::ListUsersBodyCursorPaginationRequest.new(params).to_h,
             request_options: request_options
           )
@@ -219,7 +219,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/users",
+            path: "/users/offset-pagination",
             query: query_params,
             request_options: request_options
           )
@@ -270,7 +270,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/users",
+            path: "/users/double-offset-pagination",
             query: query_params,
             request_options: request_options
           )
@@ -311,7 +311,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/users",
+            path: "/users/body-offset-pagination",
             body: Seed::Users::Types::ListUsersBodyOffsetPaginationRequest.new(params).to_h,
             request_options: request_options
           )
@@ -360,7 +360,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/users",
+            path: "/users/offset-step-pagination",
             query: query_params,
             request_options: request_options
           )
@@ -409,7 +409,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/users",
+            path: "/users/offset-pagination-has-next-page",
             query: query_params,
             request_options: request_options
           )
@@ -453,7 +453,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/users",
+            path: "/users/extended-results",
             query: query_params,
             request_options: request_options
           )
@@ -497,7 +497,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/users",
+            path: "/users/extended-results-optional-data",
             query: query_params,
             request_options: request_options
           )
@@ -541,7 +541,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/users",
+            path: "/users/usernames",
             query: query_params,
             request_options: request_options
           )
@@ -585,7 +585,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/users",
+            path: "/users/usernames-optional-response",
             query: query_params,
             request_options: request_options
           )
@@ -629,7 +629,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/users",
+            path: "/users/global-config",
             query: query_params,
             request_options: request_options
           )

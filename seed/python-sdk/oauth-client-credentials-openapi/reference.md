@@ -1,6 +1,6 @@
 # Reference
 ## Identity
-<details><summary><code>client.identity.<a href="src/seed/identity/client.py">get_token</a>(...) -> TokenResponse</code></summary>
+<details><summary><code>client.identity.<a href="src/seed/identity/client.py">gettoken</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -21,7 +21,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.identity.get_token(
+client.identity.gettoken(
     username="username",
     password="password",
 )

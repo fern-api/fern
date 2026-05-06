@@ -12,8 +12,8 @@ import com.seed.api.core.RequestOptions;
 import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
-import com.seed.api.resources.contacts.requests.CreateContactRequest;
-import com.seed.api.resources.contacts.requests.GetContactsRequest;
+import com.seed.api.resources.contacts.requests.ContactsCreateRequest;
+import com.seed.api.resources.contacts.requests.ContactsGetRequest;
 import com.seed.api.types.Contact;
 import java.io.IOException;
 import java.util.Optional;
@@ -35,14 +35,14 @@ public class RawContactsClient {
     /**
      * Creates a new contact. Returns 200 with the contact or 204 with no content.
      */
-    public SeedApiHttpResponse<Optional<Contact>> create(CreateContactRequest request) {
+    public SeedApiHttpResponse<Optional<Contact>> create(ContactsCreateRequest request) {
         return create(request, null);
     }
 
     /**
      * Creates a new contact. Returns 200 with the contact or 204 with no content.
      */
-    public SeedApiHttpResponse<Optional<Contact>> create(CreateContactRequest request, RequestOptions requestOptions) {
+    public SeedApiHttpResponse<Optional<Contact>> create(ContactsCreateRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("contacts");
@@ -90,27 +90,27 @@ public class RawContactsClient {
      * Gets a contact by ID. Returns 200 with the contact.
      */
     public SeedApiHttpResponse<Contact> get(String id) {
-        return get(id, GetContactsRequest.builder().build());
+        return get(id, ContactsGetRequest.builder().build());
     }
 
     /**
      * Gets a contact by ID. Returns 200 with the contact.
      */
     public SeedApiHttpResponse<Contact> get(String id, RequestOptions requestOptions) {
-        return get(id, GetContactsRequest.builder().build(), requestOptions);
+        return get(id, ContactsGetRequest.builder().build(), requestOptions);
     }
 
     /**
      * Gets a contact by ID. Returns 200 with the contact.
      */
-    public SeedApiHttpResponse<Contact> get(String id, GetContactsRequest request) {
+    public SeedApiHttpResponse<Contact> get(String id, ContactsGetRequest request) {
         return get(id, request, null);
     }
 
     /**
      * Gets a contact by ID. Returns 200 with the contact.
      */
-    public SeedApiHttpResponse<Contact> get(String id, GetContactsRequest request, RequestOptions requestOptions) {
+    public SeedApiHttpResponse<Contact> get(String id, ContactsGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("contacts")

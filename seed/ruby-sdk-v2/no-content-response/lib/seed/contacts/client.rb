@@ -13,7 +13,7 @@ module Seed
       # Creates a new contact. Returns 200 with the contact or 204 with no content.
       #
       # @param request_options [Hash]
-      # @param params [Seed::Contacts::Types::CreateContactRequest]
+      # @param params [Seed::Contacts::Types::ContactsCreateRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -27,7 +27,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "contacts",
-          body: Seed::Contacts::Types::CreateContactRequest.new(params).to_h,
+          body: Seed::Contacts::Types::ContactsCreateRequest.new(params).to_h,
           request_options: request_options
         )
         begin

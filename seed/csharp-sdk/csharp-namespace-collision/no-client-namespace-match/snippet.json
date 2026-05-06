@@ -16,7 +16,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/users",
+                "path": "/users/task",
                 "method": "POST",
                 "identifier_override": "endpoint_.createTask"
             },
@@ -64,7 +64,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/users",
+                "path": "/system/users",
                 "method": "POST",
                 "identifier_override": "endpoint_System.createUser"
             },
@@ -76,7 +76,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/users",
+                "path": "/system/users/task",
                 "method": "POST",
                 "identifier_override": "endpoint_System.createTask"
             },
@@ -88,7 +88,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/users/{userId}",
+                "path": "/system/users/{userId}",
                 "method": "GET",
                 "identifier_override": "endpoint_System.getUser"
             },

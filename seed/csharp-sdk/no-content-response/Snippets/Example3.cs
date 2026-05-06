@@ -10,7 +10,7 @@ public partial class Examples
         );
 
         await client.Contacts.GetAsync(
-            new GetContactsRequest {
+            new ContactsGetRequest {
                 Id = "id"
             }
         );

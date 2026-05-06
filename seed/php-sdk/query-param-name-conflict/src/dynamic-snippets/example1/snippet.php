@@ -13,9 +13,9 @@ $client = new SeedClient(
 );
 $client->bulkUpdateTasks(
     new BulkUpdateTasksRequest([
-        'filterAssignedTo' => 'filter_assigned_to',
-        'filterIsComplete' => 'filter_is_complete',
-        'filterDate' => 'filter_date',
+        'assignedTo' => 'assigned_to',
+        'isComplete' => 'is_complete',
+        'date' => 'date',
         'fields' => '_fields',
         'bulkUpdateTasksRequestAssignedTo' => 'assigned_to',
         'bulkUpdateTasksRequestDate' => new DateTime('2023-01-15'),

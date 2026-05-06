@@ -23,7 +23,12 @@ public class GetUserTest : BaseMockServerTest
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users/userId").UsingGet())
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/system/users/userId")
+                    .UsingGet()
+            )
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">search</a>(limit: Option&lt;i64&gt;, id: Option&lt;String&gt;, date: Option&lt;String&gt;, deadline: Option&lt;String&gt;, bytes: Option&lt;String&gt;, user: Option&lt;User&gt;, optional_deadline: Option&lt;Option&lt;String&gt;&gt;, key_value: Option&lt;Option&lt;std::collections::HashMap&lt;String, String&gt;&gt;&gt;, optional_string: Option&lt;Option&lt;String&gt;&gt;, nested_user: Option&lt;Option&lt;NestedUser&gt;&gt;, optional_user: Option&lt;Option&lt;User&gt;&gt;, neighbor: Option&lt;Option&lt;SearchRequestNeighbor&gt;&gt;, neighbor_required: Option&lt;SearchRequestNeighborRequired&gt;) -> Result&lt;SearchResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.<a href="/src/client.rs">search</a>(limit: Option&lt;i64&gt;, id: Option&lt;String&gt;, date: Option&lt;String&gt;, deadline: Option&lt;String&gt;, bytes: Option&lt;String&gt;, user: Option&lt;User&gt;, optional_deadline: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, key_value: Option&lt;Option&lt;Option&lt;std::collections::HashMap&lt;String, Option&lt;String&gt;&gt;&gt;&gt;&gt;, optional_string: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, nested_user: Option&lt;Option&lt;Option&lt;NestedUser&gt;&gt;&gt;, optional_user: Option&lt;Option&lt;Option&lt;User&gt;&gt;&gt;, neighbor: Option&lt;Option&lt;Option&lt;SearchRequestNeighbor&gt;&gt;&gt;, neighbor_required: Option&lt;User&gt;) -> Result&lt;SearchResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -43,7 +43,7 @@ async fn main() {
                 ),
                 key_value: Some(HashMap::from([(
                     "keyValue".to_string(),
-                    "keyValue".to_string(),
+                    Some("keyValue".to_string()),
                 )])),
                 optional_string: Some("optionalString".to_string()),
                 nested_user: Some(NestedUser {
@@ -73,11 +73,11 @@ async fn main() {
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
                     ..Default::default()
                 })),
-                neighbor_required: SearchRequestNeighborRequired::User(User {
+                neighbor_required: User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
                     ..Default::default()
-                }),
+                },
             },
             None,
         )
@@ -145,7 +145,7 @@ async fn main() {
 <dl>
 <dd>
 
-**user_list:** `Option<User>` 
+**user_list:** `Option<Option<User>>` 
     
 </dd>
 </dl>
@@ -153,7 +153,7 @@ async fn main() {
 <dl>
 <dd>
 
-**optional_deadline:** `Option<String>` 
+**optional_deadline:** `Option<Option<String>>` 
     
 </dd>
 </dl>
@@ -161,7 +161,7 @@ async fn main() {
 <dl>
 <dd>
 
-**key_value:** `Option<std::collections::HashMap<String, String>>` 
+**key_value:** `Option<Option<std::collections::HashMap<String, Option<String>>>>` 
     
 </dd>
 </dl>
@@ -169,7 +169,7 @@ async fn main() {
 <dl>
 <dd>
 
-**optional_string:** `Option<String>` 
+**optional_string:** `Option<Option<String>>` 
     
 </dd>
 </dl>
@@ -177,7 +177,7 @@ async fn main() {
 <dl>
 <dd>
 
-**nested_user:** `Option<NestedUser>` 
+**nested_user:** `Option<Option<NestedUser>>` 
     
 </dd>
 </dl>
@@ -185,7 +185,7 @@ async fn main() {
 <dl>
 <dd>
 
-**optional_user:** `Option<User>` 
+**optional_user:** `Option<Option<User>>` 
     
 </dd>
 </dl>
@@ -193,7 +193,7 @@ async fn main() {
 <dl>
 <dd>
 
-**exclude_user:** `Option<User>` 
+**exclude_user:** `Option<Option<User>>` 
     
 </dd>
 </dl>
@@ -201,7 +201,7 @@ async fn main() {
 <dl>
 <dd>
 
-**filter:** `Option<String>` 
+**filter:** `Option<Option<String>>` 
     
 </dd>
 </dl>
@@ -209,7 +209,7 @@ async fn main() {
 <dl>
 <dd>
 
-**tags:** `Option<String>` — List of tags. Serialized as a comma-separated list.
+**tags:** `Option<Option<String>>` — List of tags. Serialized as a comma-separated list.
     
 </dd>
 </dl>
@@ -217,7 +217,7 @@ async fn main() {
 <dl>
 <dd>
 
-**optional_tags:** `Option<String>` — Optional list of tags. Serialized as a comma-separated list.
+**optional_tags:** `Option<Option<String>>` — Optional list of tags. Serialized as a comma-separated list.
     
 </dd>
 </dl>
@@ -225,7 +225,7 @@ async fn main() {
 <dl>
 <dd>
 
-**neighbor:** `Option<SearchRequestNeighbor>` 
+**neighbor:** `Option<Option<SearchRequestNeighbor>>` 
     
 </dd>
 </dl>
@@ -233,7 +233,7 @@ async fn main() {
 <dl>
 <dd>
 
-**neighbor_required:** `SearchRequestNeighborRequired` 
+**neighbor_required:** `User` 
     
 </dd>
 </dl>

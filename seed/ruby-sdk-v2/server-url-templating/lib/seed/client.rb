@@ -13,7 +13,7 @@ module Seed
     # @return [Array[Seed::Types::User]]
     def get_users(request_options: {}, **_params)
       request = Seed::Internal::JSON::Request.new(
-        base_url: request_options[:base_url] || @base_url || @environment&.dig(:base),
+        base_url: request_options[:base_url],
         method: "GET",
         path: "users",
         request_options: request_options
@@ -43,7 +43,7 @@ module Seed
     def get_user(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
       request = Seed::Internal::JSON::Request.new(
-        base_url: request_options[:base_url] || @base_url || @environment&.dig(:base),
+        base_url: request_options[:base_url],
         method: "GET",
         path: "users/#{URI.encode_uri_component(params[:user_id].to_s)}",
         request_options: request_options
@@ -63,7 +63,7 @@ module Seed
     end
 
     # @param request_options [Hash]
-    # @param params [Seed::Types::TokenRequest]
+    # @param params [Seed::Types::GetTokenRequest]
     # @option request_options [String] :base_url
     # @option request_options [Hash{String => Object}] :additional_headers
     # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -74,10 +74,10 @@ module Seed
     def get_token(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
       request = Seed::Internal::JSON::Request.new(
-        base_url: request_options[:base_url] || @base_url || @environment&.dig(:auth),
+        base_url: request_options[:base_url],
         method: "POST",
         path: "auth/token",
-        body: Seed::Types::TokenRequest.new(params).to_h,
+        body: Seed::Types::GetTokenRequest.new(params).to_h,
         request_options: request_options
       )
       begin
@@ -95,15 +95,11 @@ module Seed
     end
 
     # @param base_url [String, nil]
-    # @param environment [Hash[Symbol, String], nil]
     #
     # @return [void]
-    def initialize(base_url: nil, environment: Seed::Environment::REGIONAL_API_SERVER)
-      @base_url = base_url
-      @environment = environment
-
+    def initialize(base_url: nil)
       @raw_client = Seed::Internal::Http::RawClient.new(
-        base_url: base_url || environment&.dig(:base),
+        base_url: base_url,
         headers: {
           "User-Agent" => "fern_server-url-templating/0.0.1",
           "X-Fern-Language" => "Ruby"

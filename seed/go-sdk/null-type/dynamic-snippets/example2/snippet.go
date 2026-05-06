@@ -14,7 +14,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.GetUsersRequest{
+    request := &fern.UsersGetRequest{
         ID: "id",
     }
     client.Users.Get(

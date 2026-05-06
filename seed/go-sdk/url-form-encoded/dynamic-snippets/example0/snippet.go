@@ -14,7 +14,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.PostSubmitRequest{
+    request := &fern.SubmitFormDataRequest{
         Username: "johndoe",
         Email: "john@example.com",
     }

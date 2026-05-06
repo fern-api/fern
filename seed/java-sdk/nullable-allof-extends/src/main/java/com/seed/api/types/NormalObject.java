@@ -5,12 +5,15 @@ package com.seed.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.api.core.Nullable;
+import com.seed.api.core.NullableNonemptyFilter;
 import com.seed.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,9 +32,18 @@ public final class NormalObject implements INormalObject {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("normalField")
+    @JsonIgnore
     @java.lang.Override
     public Optional<String> getNormalField() {
+        if (normalField == null) {
+            return Optional.empty();
+        }
+        return normalField;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("normalField")
+    private Optional<String> _getNormalField() {
         return normalField;
     }
 
@@ -86,6 +98,17 @@ public final class NormalObject implements INormalObject {
 
         public Builder normalField(String normalField) {
             this.normalField = Optional.ofNullable(normalField);
+            return this;
+        }
+
+        public Builder normalField(Nullable<String> normalField) {
+            if (normalField.isNull()) {
+                this.normalField = null;
+            } else if (normalField.isEmpty()) {
+                this.normalField = Optional.empty();
+            } else {
+                this.normalField = Optional.of(normalField.get());
+            }
             return this;
         }
 

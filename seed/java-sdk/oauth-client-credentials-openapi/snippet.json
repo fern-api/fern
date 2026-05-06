@@ -1,20 +1,20 @@
 {
     "endpoints": [
         {
-            "example_identifier": "156f2b60",
+            "example_identifier": "Example1",
             "id": {
                 "method": "POST",
                 "path": "/identity/token",
-                "identifier_override": "endpoint_identity.getToken"
+                "identifier_override": "endpoint_identity.gettoken"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.identity.requests.GetTokenIdentityRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.identity().getToken(\n            GetTokenIdentityRequest\n                .builder()\n                .username(\"username\")\n                .password(\"password\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.identity.requests.GetTokenIdentityRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.identity().getToken(\n            GetTokenIdentityRequest\n                .builder()\n                .username(\"username\")\n                .password(\"password\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.identity.requests.IdentityGetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.identity().gettoken(\n            IdentityGetTokenRequest\n                .builder()\n                .username(\"username\")\n                .password(\"password\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.identity.requests.IdentityGetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.identity().gettoken(\n            IdentityGetTokenRequest\n                .builder()\n                .username(\"username\")\n                .password(\"password\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "61f528a8",
+            "example_identifier": "Example1",
             "id": {
                 "method": "GET",
                 "path": "/plants",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "e2f6cfca",
+            "example_identifier": "Example1",
             "id": {
                 "method": "GET",
                 "path": "/plants/{plantId}",
@@ -35,8 +35,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.plants.requests.GetPlantsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.plants().get(\n            \"plantId\",\n            GetPlantsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.plants.requests.GetPlantsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.plants().get(\n            \"plantId\",\n            GetPlantsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.plants.requests.PlantsGetRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.plants().get(\n            \"plantId\",\n            PlantsGetRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.plants.requests.PlantsGetRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.plants().get(\n            \"plantId\",\n            PlantsGetRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         }
     ],

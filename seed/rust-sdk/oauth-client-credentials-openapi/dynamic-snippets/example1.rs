@@ -9,8 +9,8 @@ async fn main() {
     let client = ApiClient::new(config).expect("Failed to build client");
     client
         .identity
-        .get_token(
-            &GetTokenIdentityRequest {
+        .gettoken(
+            &IdentityGetTokenRequest {
                 username: "username".to_string(),
                 password: "password".to_string(),
             },

@@ -70,7 +70,7 @@ client.postWithNullableNamedRequestBodyType(
 ```java
 client.postWithNonNullableNamedRequestBodyType(
     "id",
-    NonNullableObject
+    PostWithNonNullableNamedRequestBodyTypeRequest
         .builder()
         .build()
 );
@@ -96,7 +96,7 @@ client.postWithNonNullableNamedRequestBodyType(
 <dl>
 <dd>
 
-**nonNullableObjectId:** `Optional<String>` 
+**postWithNonNullableNamedRequestBodyTypeRequestId:** `Optional<String>` 
     
 </dd>
 </dl>

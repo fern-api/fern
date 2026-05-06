@@ -1,6 +1,6 @@
 # Reference
 ## Identity
-<details><summary><code>client.identity.<a href="/src/api/resources/identity/client/Client.ts">getToken</a>({ ...params }) -> SeedApi.TokenResponse</code></summary>
+<details><summary><code>client.identity.<a href="/src/api/resources/identity/client/Client.ts">gettoken</a>({ ...params }) -> SeedApi.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```typescript
-await client.identity.getToken({
+await client.identity.gettoken({
     username: "username",
     password: "password"
 });
@@ -32,7 +32,7 @@ await client.identity.getToken({
 <dl>
 <dd>
 
-**request:** `SeedApi.GetTokenIdentityRequest` 
+**request:** `SeedApi.IdentityGetTokenRequest` 
     
 </dd>
 </dl>
@@ -125,7 +125,7 @@ await client.plants.get({
 <dl>
 <dd>
 
-**request:** `SeedApi.GetPlantsRequest` 
+**request:** `SeedApi.PlantsGetRequest` 
     
 </dd>
 </dl>

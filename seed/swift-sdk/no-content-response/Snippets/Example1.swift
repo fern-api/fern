@@ -6,7 +6,7 @@ private func main() async throws {
 
     _ = try await client.contacts.create(request: .init(
         name: "name",
-        email: "email"
+        email: .value("email")
     ))
 }
 

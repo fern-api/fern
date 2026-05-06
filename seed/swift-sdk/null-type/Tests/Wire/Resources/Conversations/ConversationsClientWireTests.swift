@@ -3,7 +3,7 @@ import Testing
 import Api
 
 @Suite("ConversationsClient Wire Tests") struct ConversationsClientWireTests {
-    @Test func outboundCall1() async throws -> Void {
+    @Test func outboundcall1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -22,21 +22,21 @@ import Api
             urlSession: stub.urlSession
         )
         let expectedResponse = OutboundCallConversationsResponse(
-            conversationId: Nullable<JSONValue>.value(JSONValue.object(
+            conversationId: JSONValue.object(
                 [
                     "key": JSONValue.string("value")
                 ]
-            )),
+            ),
             dryRun: true
         )
-        let response = try await client.conversations.outboundCall(
+        let response = try await client.conversations.outboundcall(
             request: .init(toPhoneNumber: "to_phone_number"),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func outboundCall2() async throws -> Void {
+    @Test func outboundcall2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -55,17 +55,17 @@ import Api
             urlSession: stub.urlSession
         )
         let expectedResponse = OutboundCallConversationsResponse(
-            conversationId: Nullable<JSONValue>.value(JSONValue.object(
+            conversationId: JSONValue.object(
                 [
                     "key": JSONValue.string("value")
                 ]
-            )),
+            ),
             dryRun: true
         )
-        let response = try await client.conversations.outboundCall(
+        let response = try await client.conversations.outboundcall(
             request: .init(
                 toPhoneNumber: "to_phone_number",
-                dryRun: true
+                dryRun: .value(true)
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )

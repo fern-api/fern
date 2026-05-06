@@ -10,7 +10,6 @@ The Seed Java library provides convenient access to the Seed APIs from Java.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
-- [Environments](#environments)
 - [Base Url](#base-url)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -57,28 +56,23 @@ Instantiate and use the client with the following:
 package com.example.usage;
 
 import com.seed.api.SeedApiClient;
+import com.seed.api.requests.GetTokenRequest;
 
-SeedApiClient client = SeedApiClient
-    .builder()
-    .region("YOUR_REGION")
-    .environment("YOUR_ENVIRONMENT")
-    .build();
+public class Example {
+    public static void main(String[] args) {
+        SeedApiClient client = SeedApiClient
+            .builder()
+            .build();
 
-client.getToken(...);
-```
-
-## Environments
-
-This SDK allows you to configure different environments for API requests.
-
-```java
-import com.seed.api.SeedApiClient;
-import com.seed.api.core.Environment;
-
-SeedApiClient client = SeedApiClient
-    .builder()
-    .environment(Environment.Regional API server)
-    .build();
+        client.getToken(
+            GetTokenRequest
+                .builder()
+                .clientId("client_id")
+                .clientSecret("client_secret")
+                .build()
+        );
+    }
+}
 ```
 
 ## Base Url

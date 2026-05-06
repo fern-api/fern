@@ -1,6 +1,6 @@
 # Reference
 ## Contacts
-<details><summary><code>client.contacts.<a href="/src/api/resources/contacts/client/Client.ts">create</a>({ ...params }) -> SeedApi.Contact | undefined</code></summary>
+<details><summary><code>client.contacts.<a href="/src/api/resources/contacts/client/Client.ts">create</a>({ ...params }) -> SeedApi.Contact | null</code></summary>
 <dl>
 <dd>
 
@@ -45,7 +45,7 @@ await client.contacts.create({
 <dl>
 <dd>
 
-**request:** `SeedApi.CreateContactRequest` 
+**request:** `SeedApi.ContactsCreateRequest` 
     
 </dd>
 </dl>
@@ -110,7 +110,7 @@ await client.contacts.get({
 <dl>
 <dd>
 
-**request:** `SeedApi.GetContactsRequest` 
+**request:** `SeedApi.ContactsGetRequest` 
     
 </dd>
 </dl>

@@ -12,13 +12,14 @@ use Seed\Core\Client\HttpMethod;
 use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Requests\TokenRequest;
+use Seed\Requests\GetTokenRequest;
 use Seed\Types\TokenResponse;
 
 class SeedClient
 {
     /**
      * @var array{
+     *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
      *   timeout?: float,
@@ -33,13 +34,8 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @var Environments $environment
-     */
-    private Environments $environment;
-
-    /**
-     * @param ?Environments $environment The environment to use for API requests.
      * @param ?array{
+     *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
      *   timeout?: float,
@@ -47,7 +43,6 @@ class SeedClient
      * } $options
      */
     public function __construct(
-        ?Environments $environment = null,
         ?array $options = null,
     ) {
         $defaultHeaders = [
@@ -58,8 +53,6 @@ class SeedClient
         ];
 
         $this->options = $options ?? [];
-        $environment ??= Environments::RegionalApiServer();
-        $this->environment = $environment;
 
         $this->options['headers'] = array_merge(
             $defaultHeaders,
@@ -73,6 +66,7 @@ class SeedClient
 
     /**
      * @param ?array{
+     *   baseUrl?: string,
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
@@ -89,7 +83,7 @@ class SeedClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->environment->base,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "users",
                     method: HttpMethod::GET,
                 ),
@@ -118,6 +112,7 @@ class SeedClient
     /**
      * @param string $userId
      * @param ?array{
+     *   baseUrl?: string,
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
@@ -134,7 +129,7 @@ class SeedClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->environment->base,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "users/{$userId}",
                     method: HttpMethod::GET,
                 ),
@@ -161,8 +156,9 @@ class SeedClient
     }
 
     /**
-     * @param TokenRequest $request
+     * @param GetTokenRequest $request
      * @param ?array{
+     *   baseUrl?: string,
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
@@ -173,13 +169,13 @@ class SeedClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getToken(TokenRequest $request, ?array $options = null): ?TokenResponse
+    public function getToken(GetTokenRequest $request, ?array $options = null): ?TokenResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->environment->auth,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "auth/token",
                     method: HttpMethod::POST,
                     body: $request,

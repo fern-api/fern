@@ -11,8 +11,8 @@ import com.seed.api.core.RequestOptions;
 import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
-import com.seed.api.resources.conversations.requests.OutboundCallConversationsRequest;
-import com.seed.api.resources.conversations.types.OutboundCallConversationsResponse;
+import com.seed.api.resources.conversations.requests.ConversationsOutboundCallRequest;
+import com.seed.api.types.OutboundCallConversationsResponse;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
@@ -36,16 +36,16 @@ public class AsyncRawConversationsClient {
     /**
      * Place an outbound call or validate call setup with dry_run.
      */
-    public CompletableFuture<SeedApiHttpResponse<OutboundCallConversationsResponse>> outboundCall(
-            OutboundCallConversationsRequest request) {
-        return outboundCall(request, null);
+    public CompletableFuture<SeedApiHttpResponse<OutboundCallConversationsResponse>> outboundcall(
+            ConversationsOutboundCallRequest request) {
+        return outboundcall(request, null);
     }
 
     /**
      * Place an outbound call or validate call setup with dry_run.
      */
-    public CompletableFuture<SeedApiHttpResponse<OutboundCallConversationsResponse>> outboundCall(
-            OutboundCallConversationsRequest request, RequestOptions requestOptions) {
+    public CompletableFuture<SeedApiHttpResponse<OutboundCallConversationsResponse>> outboundcall(
+            ConversationsOutboundCallRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("conversations/outbound-call");

@@ -10,9 +10,9 @@ async fn main() {
     client
         .bulk_update_tasks(
             &BulkUpdateTasksRequest {
-                filter_assigned_to: Some("filter_assigned_to".to_string()),
-                filter_is_complete: Some("filter_is_complete".to_string()),
-                filter_date: Some("filter_date".to_string()),
+                assigned_to: Some("assigned_to".to_string()),
+                is_complete: Some("is_complete".to_string()),
+                date: Some("date".to_string()),
                 fields: Some("_fields".to_string()),
                 bulk_update_tasks_request_assigned_to: Some("assigned_to".to_string()),
                 bulk_update_tasks_request_date: Some(

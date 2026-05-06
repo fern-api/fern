@@ -15,14 +15,14 @@ func do() {
         ),
     )
     request := &fern.BulkUpdateTasksRequest{
-        FilterAssignedTo: fern.String(
-            "filter_assigned_to",
+        AssignedTo: fern.String(
+            "assigned_to",
         ),
-        FilterIsComplete: fern.String(
-            "filter_is_complete",
+        IsComplete: fern.String(
+            "is_complete",
         ),
-        FilterDate: fern.String(
-            "filter_date",
+        Date: fern.String(
+            "date",
         ),
         Fields: fern.String(
             "_fields",
