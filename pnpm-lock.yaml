@@ -1386,8 +1386,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/commons/fs-utils
       '@fern-fern/ir-sdk':
-        specifier: 66.0.0
-        version: 66.0.0
+        specifier: 67.1.0
+        version: 67.1.0
       '@types/js-yaml':
         specifier: 'catalog:'
         version: 4.0.9
@@ -9455,6 +9455,10 @@ packages:
     resolution: {integrity: sha512-BKtpmuyK98GagBSZ5CMe3oAkkwG5l3MId+/VyyyGbUV+HRrqIS+htIBlGmsNBW6fzuKK6hgOGn+Kyb2N4+Mejg==}
     engines: {node: '>=18.0.0'}
 
+  '@fern-fern/ir-sdk@67.1.0':
+    resolution: {integrity: sha512-fkTbqm3ldzx5hUGgIyVliBn+bebNsKoPVvuzc3ZUpoPgXQXJkmWi0TvKKHoyHTqZ0lWLMsjX4ADY3doILrUS3g==}
+    engines: {node: '>=18.0.0'}
+
   '@fern-fern/ir-v53-sdk@1.0.1':
     resolution: {integrity: sha512-SVNbkGBVgE/PkgurqqdFEYkmYBGNZzD2Qh8wF9nApp1NH2Wipte5zbzngl78snGTk/e9DN6+mYHfgQPzv6Pi4w==}
     engines: {node: '>=18.0.0'}
@@ -16529,6 +16533,8 @@ snapshots:
   '@fern-fern/ir-sdk@66.2.0': {}
 
   '@fern-fern/ir-sdk@66.3.0': {}
+
+  '@fern-fern/ir-sdk@67.1.0': {}
 
   '@fern-fern/ir-v53-sdk@1.0.1': {}
 
