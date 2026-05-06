@@ -217,7 +217,7 @@ catalog:
   remark-mdx: ^3.0.1
   remark-stringify: ^11.0.0
   semver-diff: ^4.0.0
-  simple-git: ^3.32.3
+  simple-git: ^3.36.0
   sort-package-json: 3.6.1
   stream-json: ^1.8.0
   strip-ansi: ^7.2.0
