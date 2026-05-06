@@ -1,5 +1,23 @@
-FROM node:22.12-alpine3.20 AS node
-FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine
+# Stage 1: Node.js
+# Pinned to 22.22.2-alpine3.22 to fix Node.js binary CVEs picked up by the
+# 2026-05-06 grype scan (CVE-2025-23166, CVE-2025-23083, CVE-2025-59465,
+# CVE-2026-21637, CVE-2025-55131, CVE-2026-21710, CVE-2025-59466,
+# CVE-2025-23085, CVE-2026-21717, CVE-2026-21713, CVE-2026-21714,
+# CVE-2025-55132, CVE-2025-23165, CVE-2026-21715, CVE-2026-21716,
+# CVE-2025-55130) and to upgrade npm-bundled deps cross-spawn (>=7.0.5),
+# minimatch (>=9.0.7), glob (>=10.5.0), tar (>=7.5.11), and diff (>=5.2.2).
+FROM node:22.22.2-alpine3.22 AS node
+
+# Stage 2: install csharpier as a dotnet global tool using the SDK image
+FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine AS dotnet-tools
+RUN dotnet tool install -g csharpier --version "1.2.6"
+
+# Final stage: runtime-only ASP.NET Core image (no SDK).
+# Switching from `dotnet/sdk:10.0-alpine` to `dotnet/aspnet:10.0-alpine` drops
+# the SDK-bundled System.Security.Cryptography.Xml 10.0.5 DLL flagged by
+# GHSA-37gx-xxp4-5rgx and GHSA-w3x6-4m5h-cxqf; the runtime image ships only
+# the patched ASP.NET Core 10.0.7 framework, which csharpier (net9.0) runs on.
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine
 
 ENV YARN_CACHE_FOLDER=/.yarn
 ENV PATH="$PATH:/root/.dotnet/tools"
@@ -13,7 +31,10 @@ ENV SENTRY_DSN=$SENTRY_DSN
 ENV SENTRY_ENVIRONMENT=$SENTRY_ENVIRONMENT
 ENV SENTRY_RELEASE=$SENTRY_RELEASE
 
-RUN apk --no-cache add bash curl git zip && \
+# `apk upgrade` pulls the latest Alpine 3.23 package fixes (e.g. nghttp2-libs
+# 1.69.0-r0 to address CVE-2026-27135) on top of what ships in the base image.
+RUN apk --no-cache upgrade && \
+    apk --no-cache add bash curl git zip && \
     git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
 
@@ -23,7 +44,54 @@ COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
-RUN dotnet tool install -g csharpier --version "1.2.6"
+# Patch ip-address to 10.1.1 to fix GHSA-v2v4-37r5-5v8g
+# (XSS in Address6 HTML-emitting methods).
+# Location: npm bundles its own copy of ip-address.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/ip-address; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/ip-address/-/ip-address-10.1.1.tgz -o ip-address-10.1.1.tgz && \
+        tar -xzf ip-address-10.1.1.tgz && \
+        mv package ip-address && \
+        rm ip-address-10.1.1.tgz; \
+      fi; \
+    done
+
+# Patch picomatch to 4.0.4 to fix GHSA-c2c7-rcm5-vvqj (ReDoS via extglob
+# quantifiers) and GHSA-3v7f-55p6-f55p (Method Injection in POSIX Character
+# Classes). Location: npm's bundled tinyglobby depends on picomatch.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/picomatch \
+      /usr/local/lib/node_modules/npm/node_modules/tinyglobby/node_modules/picomatch; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/picomatch/-/picomatch-4.0.4.tgz -o picomatch-4.0.4.tgz && \
+        tar -xzf picomatch-4.0.4.tgz && \
+        mv package picomatch && \
+        rm picomatch-4.0.4.tgz; \
+      fi; \
+    done
+
+# Patch brace-expansion to 2.0.3 to fix GHSA-f886-m6hf-6m8v
+# (zero-step sequence causes process hang and memory exhaustion).
+# Location: npm bundles its own copy of brace-expansion.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/brace-expansion; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-2.0.3.tgz -o brace-expansion-2.0.3.tgz && \
+        tar -xzf brace-expansion-2.0.3.tgz && \
+        mv package brace-expansion && \
+        rm brace-expansion-2.0.3.tgz; \
+      fi; \
+    done
+
+# Bring csharpier in from the SDK stage so the runtime image stays SDK-free.
+COPY --from=dotnet-tools /root/.dotnet/tools /root/.dotnet/tools
 
 COPY generators/csharp/sdk/features.yml /assets/features.yml
 COPY generators/csharp/sdk/dist /dist
