@@ -57,6 +57,7 @@ export class ReferencedRequestWithQueryGenerator {
                 valueType: referencedBody.requestBodyType,
                 docs: referencedBody.docs,
                 availability: undefined,
+                defaultValue: undefined,
                 propertyAccess: undefined,
                 v2Examples: undefined
             };

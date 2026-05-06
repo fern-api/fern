@@ -62,6 +62,7 @@ export class BytesRequestBodyGenerator {
                 valueType: bodyType,
                 docs: undefined,
                 availability: undefined,
+                defaultValue: undefined,
                 propertyAccess: undefined,
                 v2Examples: undefined
             };

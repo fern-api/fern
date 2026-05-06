@@ -402,6 +402,7 @@ export function convertQueryParametersToProperties(
             valueType,
             docs: queryParam.docs,
             availability: queryParam.availability,
+            defaultValue: undefined,
             propertyAccess: undefined,
             v2Examples: undefined
         };
