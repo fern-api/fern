@@ -56,7 +56,7 @@ export function addSchemaCommand(cli: Argv<GlobalArgs>): void {
     command(
         cli,
         "schema [name]",
-        "Print a JSON Schema for a Fern config surface (e.g. fern.yml, sdks, api)",
+        "Print a JSON Schema for a Fern config surface (e.g. fern-yml, fern-yml.sdks, fern-yml.api)",
         (context, args) => cmd.handle(context, args as SchemaCommand.Args),
         (yargs) =>
             yargs

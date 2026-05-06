@@ -14,7 +14,15 @@ import { SdkTargetSchema } from "./schemas/SdkTargetSchema.js";
  * Each name corresponds to a top-level or frequently referenced section of
  * `fern.yml`. Agents can introspect these via `fern schema <name>`.
  */
-export type JsonSchemaName = "fern-yml" | "api" | "apis" | "sdks" | "sdk-target" | "docs" | "ai" | "cli";
+export type JsonSchemaName =
+    | "fern-yml"
+    | "fern-yml.api"
+    | "fern-yml.apis"
+    | "fern-yml.sdks"
+    | "fern-yml.sdks.target"
+    | "fern-yml.docs"
+    | "fern-yml.ai"
+    | "fern-yml.cli";
 
 type SchemaEntry = {
     name: JsonSchemaName;
@@ -30,37 +38,37 @@ const SCHEMA_ENTRIES: readonly SchemaEntry[] = [
         schema: FernYmlSchema
     },
     {
-        name: "api",
+        name: "fern-yml.api",
         description: "A single API definition (the `api:` block in fern.yml).",
         schema: ApiDefinitionSchema
     },
     {
-        name: "apis",
+        name: "fern-yml.apis",
         description: "A map of named API definitions (the `apis:` block in fern.yml).",
         schema: ApisSchema
     },
     {
-        name: "sdks",
+        name: "fern-yml.sdks",
         description: "The `sdks:` block in fern.yml, including defaultGroup, targets, and readme.",
         schema: SdksSchema
     },
     {
-        name: "sdk-target",
+        name: "fern-yml.sdks.target",
         description: "A single SDK target (a value inside `sdks.targets`).",
         schema: SdkTargetSchema
     },
     {
-        name: "docs",
+        name: "fern-yml.docs",
         description: "The `docs:` block in fern.yml (documentation configuration).",
         schema: DocsSchema
     },
     {
-        name: "ai",
+        name: "fern-yml.ai",
         description: "The `ai:` block in fern.yml (AI-powered example generation config).",
         schema: AiConfigSchema
     },
     {
-        name: "cli",
+        name: "fern-yml.cli",
         description: "The `cli:` block in fern.yml (CLI version pinning).",
         schema: CliSchema
     }
