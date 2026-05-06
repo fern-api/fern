@@ -99,7 +99,7 @@ export function addCreateCommand(cli: Argv<GlobalArgs>): void {
                 .option("params", {
                     type: "string",
                     description:
-                        "JSON payload describing the org to create (inline JSON or @path/to.json (curl-style)). Run 'fern schema params.org.create' to see the schema."
+                        "JSON payload describing the org to create. Accepts inline JSON or @path/to.json (curl-style). Shape: { name: string }."
                 })
                 .example("$0 org create acme", "# Create the 'acme' organization")
                 .example(

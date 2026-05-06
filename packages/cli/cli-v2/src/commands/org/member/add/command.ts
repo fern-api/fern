@@ -143,7 +143,7 @@ export function addInviteMemberCommand(cli: Argv<GlobalArgs>): void {
                 .option("params", {
                     type: "string",
                     description:
-                        "JSON payload describing the invite (inline JSON or @path/to.json (curl-style)). Run 'fern schema params.org.member.invite' to see the schema."
+                        "JSON payload describing the invite. Accepts inline JSON or @path/to.json (curl-style). Shape: { email: string, org: string }."
                 })
                 .example(
                     "$0 org member invite user@example.com acme",

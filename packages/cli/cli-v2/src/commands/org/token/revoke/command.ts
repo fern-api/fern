@@ -114,7 +114,7 @@ export function addRevokeTokenCommand(cli: Argv<GlobalArgs>): void {
                 .option("params", {
                     type: "string",
                     description:
-                        "JSON payload describing the revocation (inline JSON or @path/to.json (curl-style)). Run 'fern schema params.org.token.revoke' to see the schema."
+                        "JSON payload describing the revocation. Accepts inline JSON or @path/to.json (curl-style). Shape: { tokenId: string }."
                 })
                 .example("$0 org token revoke abc123", "# Revoke the token with ID 'abc123'")
                 .example(

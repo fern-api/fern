@@ -2,8 +2,7 @@
     Add `--params <json>` flag to the mutating `fern org` subcommands (CLI v2):
     `org create`, `org member invite`, `org member remove`, `org token create`,
     and `org token revoke`. The flag accepts inline JSON or curl-style
-    `@path/to.json`, and is validated against Zod-backed schemas that can be
-    introspected with `fern schema <name>`. Agents can describe an org
-    operation as a single JSON payload instead of composing positional args
-    and flags.
+    `@path/to.json`, and is validated against Zod-backed payload schemas.
+    Agents can describe an org operation as a single JSON payload instead of
+    composing positional args and flags.
   type: feat

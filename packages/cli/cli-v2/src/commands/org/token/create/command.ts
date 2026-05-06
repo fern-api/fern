@@ -149,7 +149,7 @@ export function addCreateTokenCommand(cli: Argv<GlobalArgs>): void {
                 .option("params", {
                     type: "string",
                     description:
-                        "JSON payload describing the token to create (inline JSON or @path/to.json (curl-style)). Run 'fern schema params.org.token.create' to see the schema."
+                        "JSON payload describing the token to create. Accepts inline JSON or @path/to.json (curl-style). Shape: { org: string, description?: string }."
                 })
                 .example("$0 org token create acme", "# Create a token for the 'acme' organization")
                 .example('$0 org token create acme --description "CI token"', "# Create a token with a description")
