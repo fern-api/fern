@@ -147,26 +147,8 @@ export function isValidSemver(version: string): boolean {
     return SEMVER_PATTERN.test(version);
 }
 
-/**
- * Increments a semantic version based on the version bump type.
- *
- * Pre-release semantics: when `currentVersion` has a pre-release suffix
- * (e.g. "4.0.0-beta.2", "4.0.0-rc.0"), every real bump (MAJOR/MINOR/PATCH)
- * advances the pre-release counter and stays in the same line — the customer
- * never gets silently promoted to a stable version. NO_CHANGE preserves
- * the version verbatim. Promotion to stable (e.g. 4.0.0-rc.2 -> 4.0.0)
- * is a deliberate decision the customer must make explicitly via baseVersion;
- * autoversion never infers it from FAI's bump signal because the BAML prompt
- * is silent on pre-release lines (it only describes API-surface impact).
- *
- * Build metadata (`+build.5`) is informational and is dropped on real bumps,
- * matching `semver.inc` semantics. NO_CHANGE preserves it.
- *
- * @param currentVersion The current version (e.g., "1.2.3", "v1.2.3", "4.0.0-rc.2")
- * @param versionBump The type of version bump (MAJOR, MINOR, PATCH, NO_CHANGE)
- * @return The incremented version
- * @throws AutoVersioningException if version parsing fails or unknown bump type
- */
+// Pre-release lines stay in line: any real bump advances the prerelease counter.
+// Promotion to stable (4.0.0-rc.2 → 4.0.0) requires an explicit baseVersion. See FER-10378.
 export function incrementVersion(currentVersion: string, versionBump: VersionBump): string {
     const matcher = currentVersion.match(SEMVER_PATTERN);
     if (!matcher) {
@@ -178,22 +160,12 @@ export function incrementVersion(currentVersion: string, versionBump: VersionBum
     const preRelease = matcher[5];
 
     if (versionBump === VersionBump.NO_CHANGE) {
-        // Preserve the version verbatim, including any pre-release/build metadata.
         return currentVersion;
     }
 
     let bumped: string | null;
     if (preRelease != null) {
-        // Stay in the pre-release line. The identifier is the leading
-        // non-numeric segment (e.g. "beta" from "beta.2", "rc" from "rc.0").
-        // Pure-numeric prereleases (e.g. "-0") pass undefined so semver bumps
-        // the trailing counter to "-1" without inserting a new identifier.
-        const head = preRelease.split(".")[0];
-        const identifier = head != null && head.length > 0 && !/^\d+$/.test(head) ? head : undefined;
-        bumped =
-            identifier != null
-                ? semver.inc(versionWithoutPrefix, "prerelease", identifier)
-                : semver.inc(versionWithoutPrefix, "prerelease");
+        bumped = semver.inc(versionWithoutPrefix, "prerelease");
     } else if (versionBump === VersionBump.MAJOR) {
         bumped = semver.inc(versionWithoutPrefix, "major");
     } else if (versionBump === VersionBump.MINOR) {

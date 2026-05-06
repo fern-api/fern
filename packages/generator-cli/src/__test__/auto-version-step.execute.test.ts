@@ -439,8 +439,6 @@ describe("AutoVersionStep.execute() — pre-release version handling", () => {
     beforeEach(async () => {
         mockAnalyzeSdkDiff.mockReset();
         mockConsolidateChangelog.mockReset();
-        // The previous on-disk version is irrelevant when baseVersion is provided —
-        // resolvePreviousVersion short-circuits on a valid baseVersion.
         repo = await setupTwoGenerations({
             previousVersion: "0.0.1",
             featureFile: {
@@ -482,10 +480,6 @@ describe("AutoVersionStep.execute() — pre-release version handling", () => {
         };
         return pkg.version;
     }
-
-    // Real bumps stay in the pre-release line; promotion to stable is never inferred.
-    // NO_CHANGE preserves the version verbatim. Build metadata is dropped on real
-    // bumps (matching semver.inc) and preserved on NO_CHANGE.
 
     it("PATCH on 4.0.0-beta.2 advances the prerelease counter (4.0.0-beta.3)", async () => {
         const result = await runWithBaseVersionAndBump("4.0.0-beta.2", "PATCH");
@@ -549,6 +543,14 @@ describe("AutoVersionStep.execute() — pre-release version handling", () => {
         expect(result.previousVersion).toBe("4.0.0-0");
         expect(result.version).toBe("4.0.0-1");
         expect(packageJsonVersion()).toBe("4.0.0-1");
+    });
+
+    it("PATCH on 1.0.0-alpha.beta.1 (multi-segment prerelease) preserves all earlier segments (1.0.0-alpha.beta.2)", async () => {
+        const result = await runWithBaseVersionAndBump("1.0.0-alpha.beta.1", "PATCH");
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("1.0.0-alpha.beta.1");
+        expect(result.version).toBe("1.0.0-alpha.beta.2");
+        expect(packageJsonVersion()).toBe("1.0.0-alpha.beta.2");
     });
 });
 
