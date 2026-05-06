@@ -2,7 +2,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 
-import { packageManagerCommands, SupportedPackageManager } from "./packageManagerCommands.js";
+import { packageManagerCommands, SupportedPackageManager } from "./packageManagerCommands";
 
 const VERIFY_SCRIPT_FILENAME = "verify.sh";
 const VERIFY_SCRIPT_DIRNAME = ".fern";

@@ -4,7 +4,7 @@ import { tmpdir } from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
-import { buildVerifyScript, writeVerifyScript } from "../writeVerifyScript.js";
+import { buildVerifyScript, writeVerifyScript } from "../writeVerifyScript";
 
 describe("buildVerifyScript", () => {
     it("emits the pnpm install/build/test sequence under bash + set -euo pipefail", () => {

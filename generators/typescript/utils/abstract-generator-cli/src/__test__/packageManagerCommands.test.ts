@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { packageManagerCommands } from "../packageManagerCommands.js";
+import { packageManagerCommands } from "../packageManagerCommands";
 
 describe("packageManagerCommands", () => {
     it("returns pnpm-prefixed install/build/test commands when packageManager is pnpm", () => {

@@ -3,7 +3,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 
-import { packageManagerCommands, SupportedPackageManager } from "./packageManagerCommands.js";
+import { packageManagerCommands, SupportedPackageManager } from "./packageManagerCommands";
 
 export async function writeGitHubWorkflows({
     config,
