@@ -131,6 +131,33 @@ export class FernYmlEditor {
         this.markDirty(section.filePath);
     }
 
+    /** Removes the `defaultGroup` field from the sdks section. */
+    public async deleteDefaultGroup(): Promise<void> {
+        const section = await this.resolveSection("sdks", ["targets"]);
+        // The sdks section basePath ends with "targets" — go up to the sdks level.
+        const sdksPath = section.basePath.slice(0, -1);
+        const defaultGroupPath = [...sdksPath, "defaultGroup"];
+        const existing = section.document.getIn(defaultGroupPath);
+        if (existing != null) {
+            section.document.deleteIn(defaultGroupPath);
+            this.markDirty(section.filePath);
+        }
+    }
+
+    // ─── Docs methods ─────────────────────────────────────────────────────
+
+    /** Sets the URL for a docs instance at the given index. */
+    public async setDocsInstanceUrl(index: number, url: string): Promise<void> {
+        const section = await this.resolveSection("docs", ["instances"]);
+        const urlPath = [...section.basePath, index, "url"];
+        const existing = section.document.getIn(urlPath);
+        if (existing == null) {
+            return;
+        }
+        section.document.setIn(urlPath, url);
+        this.markDirty(section.filePath);
+    }
+
     // ─── API spec methods ────────────────────────────────────────────────
 
     /**

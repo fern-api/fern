@@ -7,6 +7,7 @@ import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { isClaudeCodeSession } from "../../../context/isClaudeCodeSession.js";
 import { DocsChecker } from "../../../docs/checker/DocsChecker.js";
 import { applyMdxFixes } from "../../../docs/fixer/applyMdxFixes.js";
+import { DocsFixer } from "../../../docs/fixer/DocsFixer.js";
 import { offerAiFixes } from "../../../docs/fixer/offerAiFixes.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
@@ -78,6 +79,12 @@ export class CheckCommand {
                     await offerAiFixes(context, result.mdxParseErrors);
                 }
             }
+        }
+
+        // Apply docs config fixes when --fix is specified.
+        if (args.fix && filteredViolations.length > 0) {
+            const docsFixer = new DocsFixer({ context });
+            await docsFixer.fix({ workspace, violations: filteredViolations });
         }
 
         if (hasErrors && !args.fix) {

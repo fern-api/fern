@@ -122,7 +122,7 @@ sdks:
         }
     });
 
-    it("skips non-version violations", async () => {
+    it("fixes unreferenced defaultGroup by removing it", async () => {
         await writeFile(
             join(testDir, "fern.yml"),
             `edition: 2026-01-01
@@ -152,15 +152,22 @@ sdks:
         });
         const result = await checker.check({ workspace });
 
-        // The defaultGroup violation is not a version issue.
+        // The defaultGroup violation should be detected.
         expect(result.errorCount).toBe(1);
+        expect(result.violations[0]?.message).toContain("is not referenced by any target");
 
         const fixer = new SdkFixer({ context });
         const fixResult = await fixer.fix({ workspace, violations: result.violations });
 
-        // No fixes should be applied for non-version violations.
-        expect(fixResult.fixedCount).toBe(0);
-        expect(fixResult.fixes).toHaveLength(0);
+        expect(fixResult.fixedCount).toBe(1);
+        expect(fixResult.fixes[0]?.description).toBe("unreferenced defaultGroup removed");
+        expect(fixResult.fixes[0]?.oldValue).toBe("nonexistent-group");
+        expect(fixResult.fixes[0]?.newValue).toBe("(removed)");
+
+        // Verify fern.yml no longer contains defaultGroup.
+        const updatedContent = await readFile(join(testDir, "fern.yml"), "utf-8");
+        expect(updatedContent).not.toContain("defaultGroup");
+        expect(updatedContent).not.toContain("nonexistent-group");
     });
 
     it("returns empty result for workspace without fern.yml path", async () => {

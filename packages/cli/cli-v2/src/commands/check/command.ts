@@ -8,6 +8,7 @@ import type { GlobalArgs } from "../../context/GlobalArgs.js";
 import { isClaudeCodeSession } from "../../context/isClaudeCodeSession.js";
 import { DocsChecker } from "../../docs/checker/DocsChecker.js";
 import { applyMdxFixes } from "../../docs/fixer/applyMdxFixes.js";
+import { DocsFixer } from "../../docs/fixer/DocsFixer.js";
 import { offerAiFixes } from "../../docs/fixer/offerAiFixes.js";
 import { SdkChecker } from "../../sdk/checker/SdkChecker.js";
 import { SdkFixer } from "../../sdk/fixer/SdkFixer.js";
@@ -107,6 +108,12 @@ export class CheckCommand {
         if (args.fix && sdkCheckResult.violations.length > 0) {
             const sdkFixer = new SdkFixer({ context });
             await sdkFixer.fix({ workspace, violations: sdkCheckResult.violations });
+        }
+
+        // Apply docs config fixes when --fix is specified.
+        if (args.fix && filteredDocsViolations.length > 0) {
+            const docsFixer = new DocsFixer({ context });
+            await docsFixer.fix({ workspace, violations: filteredDocsViolations });
         }
 
         // Fail if there are errors, or if strict mode and there are warnings.

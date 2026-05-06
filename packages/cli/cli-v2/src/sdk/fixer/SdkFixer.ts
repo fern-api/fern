@@ -32,6 +32,7 @@ export declare namespace SdkFixer {
  *
  * Currently supports:
  *   - Replacing invalid or empty versions with the latest stable release.
+ *   - Removing unreferenced `defaultGroup` field.
  */
 export class SdkFixer {
     private readonly context: Context;
@@ -43,8 +44,8 @@ export class SdkFixer {
     /**
      * Attempt to fix SDK violations by modifying fern.yml.
      *
-     * Only version-related violations are fixable. Returns the number of
-     * fixes applied.
+     * Fixable violations: version issues and unreferenced defaultGroup.
+     * Returns the number of fixes applied.
      */
     public async fix({
         workspace,
@@ -59,11 +60,10 @@ export class SdkFixer {
         }
 
         const targets = workspace.sdks?.targets;
-        if (targets == null || targets.length === 0) {
-            return { fixedCount: 0, fixes: [] };
-        }
 
-        const fixableViolations = violations.filter((v) => this.isVersionViolation(v));
+        const fixableViolations = violations.filter(
+            (v) => this.isVersionViolation(v) || this.isDefaultGroupViolation(v)
+        );
         if (fixableViolations.length === 0) {
             return { fixedCount: 0, fixes: [] };
         }
@@ -72,6 +72,24 @@ export class SdkFixer {
         const fixes: SdkFixer.FixDescription[] = [];
 
         for (const violation of fixableViolations) {
+            if (this.isDefaultGroupViolation(violation)) {
+                const defaultGroup = this.extractDefaultGroup(violation);
+                if (defaultGroup != null) {
+                    await editor.deleteDefaultGroup();
+                    fixes.push({
+                        targetName: "sdks",
+                        description: "unreferenced defaultGroup removed",
+                        oldValue: defaultGroup,
+                        newValue: "(removed)"
+                    });
+                }
+                continue;
+            }
+
+            if (targets == null || targets.length === 0) {
+                continue;
+            }
+
             const target = this.findTargetForViolation(targets, violation);
             if (target == null) {
                 continue;
@@ -107,6 +125,15 @@ export class SdkFixer {
             violation.message.includes("does not exist for generator") ||
             violation.message === "Version must not be empty"
         );
+    }
+
+    private isDefaultGroupViolation(violation: SdkChecker.ResolvedViolation): boolean {
+        return violation.message.includes("is not referenced by any target");
+    }
+
+    private extractDefaultGroup(violation: SdkChecker.ResolvedViolation): string | undefined {
+        const match = /Default group '([^']+)'/i.exec(violation.message);
+        return match?.[1];
     }
 
     private findTargetForViolation(targets: Target[], violation: SdkChecker.ResolvedViolation): Target | undefined {
