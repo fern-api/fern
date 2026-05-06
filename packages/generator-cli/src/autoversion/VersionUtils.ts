@@ -1,3 +1,5 @@
+import semver from "semver";
+
 import { AutoVersioningException } from "./AutoVersioningService.js";
 
 /**
@@ -145,57 +147,40 @@ export function isValidSemver(version: string): boolean {
     return SEMVER_PATTERN.test(version);
 }
 
-/**
- * Increments a semantic version based on the version bump type.
- *
- * @param currentVersion The current version (e.g., "1.2.3" or "v1.2.3")
- * @param versionBump The type of version bump (MAJOR, MINOR, PATCH)
- * @return The incremented version
- * @throws AutoVersioningException if version parsing fails or unknown bump type
- */
+// Pre-release lines stay in line: any real bump advances the prerelease counter.
+// Promotion to stable (4.0.0-rc.2 → 4.0.0) requires an explicit baseVersion. See FER-10378.
 export function incrementVersion(currentVersion: string, versionBump: VersionBump): string {
     const matcher = currentVersion.match(SEMVER_PATTERN);
     if (!matcher) {
         throw new AutoVersioningException("Invalid semantic version format: " + currentVersion);
     }
 
-    const prefix = matcher[1] || "";
-    let major = parseInt(matcher[2] ?? "0", 10);
-    let minor = parseInt(matcher[3] ?? "0", 10);
-    let patch = parseInt(matcher[4] ?? "0", 10);
+    const prefix = matcher[1] ?? "";
+    const versionWithoutPrefix = currentVersion.slice(prefix.length);
     const preRelease = matcher[5];
-    const buildMetadata = matcher[6];
 
-    let preserveMetadata = false;
+    if (versionBump === VersionBump.NO_CHANGE) {
+        return currentVersion;
+    }
 
-    if (versionBump === VersionBump.MAJOR) {
-        major++;
-        minor = 0;
-        patch = 0;
+    let bumped: string | null;
+    if (preRelease != null) {
+        bumped = semver.inc(versionWithoutPrefix, "prerelease");
+    } else if (versionBump === VersionBump.MAJOR) {
+        bumped = semver.inc(versionWithoutPrefix, "major");
     } else if (versionBump === VersionBump.MINOR) {
-        minor++;
-        patch = 0;
+        bumped = semver.inc(versionWithoutPrefix, "minor");
     } else if (versionBump === VersionBump.PATCH) {
-        patch++;
-    } else if (versionBump === VersionBump.NO_CHANGE) {
-        preserveMetadata = true;
+        bumped = semver.inc(versionWithoutPrefix, "patch");
     } else {
         throw new AutoVersioningException("Unknown version bump type: " + versionBump);
     }
 
-    let newVersion = `${prefix}${major}.${minor}.${patch}`;
-
-    if (preserveMetadata) {
-        if (preRelease) {
-            newVersion += `-${preRelease}`;
-        }
-
-        if (buildMetadata) {
-            newVersion += `+${buildMetadata}`;
-        }
+    if (bumped === null) {
+        throw new AutoVersioningException("Failed to increment version: " + currentVersion);
     }
 
-    return newVersion;
+    return `${prefix}${bumped}`;
 }
 
 /**

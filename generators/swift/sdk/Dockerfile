@@ -1,4 +1,4 @@
-FROM node:22.12-alpine3.20
+FROM node:22.22-alpine3.22
 
 RUN apk --no-cache add bash curl git zip
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \

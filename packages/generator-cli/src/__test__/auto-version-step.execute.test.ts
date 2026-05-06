@@ -433,6 +433,127 @@ describe("AutoVersionStep.execute() — pipeline baseVersion overrides diff extr
     });
 });
 
+describe("AutoVersionStep.execute() — pre-release version handling", () => {
+    let repo: TwoGenerations;
+
+    beforeEach(async () => {
+        mockAnalyzeSdkDiff.mockReset();
+        mockConsolidateChangelog.mockReset();
+        repo = await setupTwoGenerations({
+            previousVersion: "0.0.1",
+            featureFile: {
+                path: "src/newFeature.ts",
+                content: "export function newFeature(): number {\n    return 42;\n}\n"
+            }
+        });
+    });
+
+    afterEach(async () => {
+        await repo.cleanup();
+    });
+
+    async function runWithBaseVersionAndBump(
+        baseVersion: string,
+        versionBump: "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE"
+    ) {
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: versionBump,
+            message: versionBump === "NO_CHANGE" ? "" : "feat: change",
+            changelog_entry: versionBump === "NO_CHANGE" ? "" : "### Added\n- change",
+            version_bump_reason: "test"
+        });
+        const step = new AutoVersionStep(repo.repoPath, makeLogger(), {
+            ...baseConfig,
+            baseVersion
+        });
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+        return step.execute(makeContext(prepared));
+    }
+
+    function packageJsonVersion(): string {
+        const pkg = JSON.parse(readFileSync(join(repo.repoPath, "package.json"), "utf-8")) as {
+            version: string;
+        };
+        return pkg.version;
+    }
+
+    it("PATCH on 4.0.0-beta.2 advances the prerelease counter (4.0.0-beta.3)", async () => {
+        const result = await runWithBaseVersionAndBump("4.0.0-beta.2", "PATCH");
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("4.0.0-beta.2");
+        expect(result.version).toBe("4.0.0-beta.3");
+        expect(packageJsonVersion()).toBe("4.0.0-beta.3");
+    });
+
+    it("MINOR on 4.0.0-beta.2 stays in the beta line (4.0.0-beta.3)", async () => {
+        const result = await runWithBaseVersionAndBump("4.0.0-beta.2", "MINOR");
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("4.0.0-beta.2");
+        expect(result.version).toBe("4.0.0-beta.3");
+        expect(packageJsonVersion()).toBe("4.0.0-beta.3");
+    });
+
+    it("MAJOR on 4.0.0-beta.2 stays in the beta line (4.0.0-beta.3) — promotion is never inferred", async () => {
+        const result = await runWithBaseVersionAndBump("4.0.0-beta.2", "MAJOR");
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("4.0.0-beta.2");
+        expect(result.version).toBe("4.0.0-beta.3");
+        expect(packageJsonVersion()).toBe("4.0.0-beta.3");
+    });
+
+    it("NO_CHANGE on 4.0.0-beta.2 preserves the version verbatim", async () => {
+        const result = await runWithBaseVersionAndBump("4.0.0-beta.2", "NO_CHANGE");
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("4.0.0-beta.2");
+        expect(result.version).toBe("4.0.0-beta.2");
+        expect(packageJsonVersion()).toBe("4.0.0-beta.2");
+    });
+
+    it("PATCH on 4.0.0-rc.0 advances rc counter (4.0.0-rc.1)", async () => {
+        const result = await runWithBaseVersionAndBump("4.0.0-rc.0", "PATCH");
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("4.0.0-rc.0");
+        expect(result.version).toBe("4.0.0-rc.1");
+        expect(packageJsonVersion()).toBe("4.0.0-rc.1");
+    });
+
+    it("PATCH on 4.0.0+build.123 drops build metadata and bumps patch (4.0.1)", async () => {
+        const result = await runWithBaseVersionAndBump("4.0.0+build.123", "PATCH");
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("4.0.0+build.123");
+        expect(result.version).toBe("4.0.1");
+        expect(packageJsonVersion()).toBe("4.0.1");
+    });
+
+    it("PATCH on 4.0.0-rc.2+build.5 drops build metadata and advances rc (4.0.0-rc.3)", async () => {
+        const result = await runWithBaseVersionAndBump("4.0.0-rc.2+build.5", "PATCH");
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("4.0.0-rc.2+build.5");
+        expect(result.version).toBe("4.0.0-rc.3");
+        expect(packageJsonVersion()).toBe("4.0.0-rc.3");
+    });
+
+    it("PATCH on 4.0.0-0 (numeric prerelease) advances the trailing counter (4.0.0-1)", async () => {
+        const result = await runWithBaseVersionAndBump("4.0.0-0", "PATCH");
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("4.0.0-0");
+        expect(result.version).toBe("4.0.0-1");
+        expect(packageJsonVersion()).toBe("4.0.0-1");
+    });
+
+    it("PATCH on 1.0.0-alpha.beta.1 (multi-segment prerelease) preserves all earlier segments (1.0.0-alpha.beta.2)", async () => {
+        const result = await runWithBaseVersionAndBump("1.0.0-alpha.beta.1", "PATCH");
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("1.0.0-alpha.beta.1");
+        expect(result.version).toBe("1.0.0-alpha.beta.2");
+        expect(packageJsonVersion()).toBe("1.0.0-alpha.beta.2");
+    });
+});
+
 describe("AutoVersionStep.execute() — first generation", () => {
     let tmpDir: tmp.DirectoryResult;
     let repoPath: string;
