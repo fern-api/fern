@@ -5,6 +5,9 @@ ENV YARN_CACHE_FOLDER=/.yarn-cache
 ENV PNPM_HOME=/.pnpm
 ENV PATH=$PNPM_HOME:$PATH
 
+# Update corepack first; the version bundled with node:22.12-slim ships with
+# outdated signing keys and rejects newer pnpm/yarn releases (corepack#612).
+RUN npm install -g corepack@latest
 RUN npm install -g pnpm@10.20.0 --force
 RUN corepack prepare pnpm@10.20.0
 RUN npm install -g yarn@1.22.22 --force
