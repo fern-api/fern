@@ -27,7 +27,6 @@ class BaseClientWrapper:
         import platform
 
         headers: typing.Dict[str, str] = {
-            "User-Agent": "fern_literal-user-agent/0.0.1",
             "X-Fern-Language": "Python",
             "X-Fern-Runtime": f"python/{platform.python_version()}",
             "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
@@ -35,7 +34,7 @@ class BaseClientWrapper:
             "X-Fern-SDK-Version": "0.0.1",
             **(self.get_custom_headers() or {}),
         }
-        headers["User-Agent"] = self._user_agent if self._user_agent is not None else "frameio-py"
+        headers["user-agent"] = self._user_agent if self._user_agent is not None else "frameio-py"
         return headers
 
     def get_custom_headers(self) -> typing.Optional[typing.Dict[str, str]]:
