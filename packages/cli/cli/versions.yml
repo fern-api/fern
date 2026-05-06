@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.17.1
+  changelogEntry:
+    - summary: |
+        Fix publish to respect FERN_FDR_ORIGIN environment variable override.
+      type: fix
+  createdAt: "2026-05-06"
+  irVersion: 66
 - version: 5.17.0
   changelogEntry:
     - summary: |
