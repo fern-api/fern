@@ -1,4 +1,4 @@
-import { getJsonSchemaByName, getJsonSchemaNames, JSON_SCHEMA_ENTRIES } from "@fern-api/config";
+import { getFernYmlJsonSchema, getJsonSchemaByName, getJsonSchemaNames } from "@fern-api/config";
 import { CliError } from "@fern-api/task-context";
 
 import type { Argv } from "yargs";
@@ -8,7 +8,10 @@ import { command } from "../_internal/command.js";
 
 export declare namespace SchemaCommand {
     export interface Args extends GlobalArgs {
-        /** Name of the schema to print. When omitted, lists all schemas. */
+        /**
+         * Dot-delimited path inside fern.yml (e.g. `api`, `sdks.targets`).
+         * When omitted, the full fern.yml schema is printed.
+         */
         name?: string;
         /** Pretty-print JSON output. Defaults to true. */
         pretty: boolean;
@@ -16,20 +19,20 @@ export declare namespace SchemaCommand {
 }
 
 /**
- * Emits JSON Schemas describing Fern configuration surfaces.
+ * Emits a JSON Schema describing the Fern `fern.yml` config (or a subsection).
  *
- * This exists primarily for AI agents: rather than relying on stale prose
- * documentation, agents can introspect the exact shape of `fern.yml`, `sdks:`,
- * `api:`, and related blocks at runtime.
+ * Intended primarily for AI agents: rather than relying on stale prose
+ * documentation, agents can introspect the exact shape of `fern.yml` at
+ * runtime. With no name, prints the full schema. With a dot-delimited name
+ * (e.g. `api`, `sdks.targets`), prints just that subsection.
  *
- * All output goes to stdout as pure JSON so it is pipe-safe (e.g. `fern schema
- * fern-yml | jq .properties.sdks`). Human-readable messages go to stderr only
- * on error.
+ * Output is pure JSON on stdout so it is pipe-safe (e.g.
+ * `fern schema | jq .properties.sdks`).
  */
 export class SchemaCommand {
     public async handle(context: Context, args: SchemaCommand.Args): Promise<void> {
-        if (args.name == null || args.name === "list") {
-            this.writeJson(context, { schemas: [...JSON_SCHEMA_ENTRIES] }, args.pretty);
+        if (args.name == null) {
+            this.writeJson(context, getFernYmlJsonSchema(), args.pretty);
             return;
         }
 
@@ -37,7 +40,7 @@ export class SchemaCommand {
         if (schema == null) {
             const available = getJsonSchemaNames().join(", ");
             throw new CliError({
-                message: `Unknown schema '${args.name}'. Available schemas: ${available}.`,
+                message: `Unknown schema '${args.name}'. Available subsections: ${available}.`,
                 code: CliError.Code.ConfigError
             });
         }
@@ -56,15 +59,15 @@ export function addSchemaCommand(cli: Argv<GlobalArgs>): void {
     command(
         cli,
         "schema [name]",
-        "Print a JSON Schema for a Fern config surface (e.g. fern-yml, fern-yml.sdks, fern-yml.api)",
+        "Print a JSON Schema for fern.yml (or a dot-delimited subsection like `sdks` or `sdks.targets`)",
         (context, args) => cmd.handle(context, args as SchemaCommand.Args),
         (yargs) =>
             yargs
                 .positional("name", {
                     type: "string",
                     description:
-                        "Name of the schema to print. Omit (or use 'list') to list all available schemas. " +
-                        `Available: ${getJsonSchemaNames().join(", ")}.`
+                        "Dot-delimited subsection of fern.yml. Omit to print the full schema. " +
+                        `Available subsections: ${getJsonSchemaNames().join(", ")}.`
                 })
                 .option("pretty", {
                     type: "boolean",

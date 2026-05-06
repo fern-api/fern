@@ -1,4 +1,5 @@
 export {
+    getFernYmlJsonSchema,
     getJsonSchemaByName,
     getJsonSchemaNames,
     JSON_SCHEMA_ENTRIES,

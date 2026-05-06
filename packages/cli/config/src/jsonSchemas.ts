@@ -11,19 +11,10 @@ import { SdkTargetSchema } from "./schemas/SdkTargetSchema.js";
 /**
  * Name of a named JSON Schema exported by this package.
  *
- * Each name corresponds to a top-level or frequently referenced section of
- * `fern.yml`. Agents can introspect these via `fern schema <name>`.
+ * Names mirror the dot-delimited path inside `fern.yml`. The root (the full
+ * fern.yml schema) is reachable by passing no name to `fern schema`.
  */
-export type JsonSchemaName =
-    | "fern-yml"
-    | "fern-yml.api"
-    | "fern-yml.apis"
-    | "fern-yml.apis.api"
-    | "fern-yml.sdks"
-    | "fern-yml.sdks.target"
-    | "fern-yml.docs"
-    | "fern-yml.ai"
-    | "fern-yml.cli";
+export type JsonSchemaName = "api" | "apis" | "sdks" | "sdks.targets" | "docs" | "ai" | "cli";
 
 type SchemaEntry = {
     name: JsonSchemaName;
@@ -34,64 +25,53 @@ type SchemaEntry = {
 
 const SCHEMA_ENTRIES: readonly SchemaEntry[] = [
     {
-        name: "fern-yml",
-        description: "The full fern.yml configuration schema.",
-        schema: FernYmlSchema
-    },
-    {
-        name: "fern-yml.api",
+        name: "api",
         description: "A single API definition (the `api:` block in fern.yml).",
         schema: ApiDefinitionSchema
     },
     {
-        name: "fern-yml.apis",
+        name: "apis",
         description: "A map of named API definitions (the `apis:` block in fern.yml).",
         schema: ApisSchema
     },
     {
-        name: "fern-yml.apis.api",
-        description: "A single API definition as it appears as an entry inside the `apis:` map in fern.yml.",
-        schema: ApiDefinitionSchema
-    },
-    {
-        name: "fern-yml.sdks",
+        name: "sdks",
         description: "The `sdks:` block in fern.yml, including defaultGroup, targets, and readme.",
         schema: SdksSchema
     },
     {
-        name: "fern-yml.sdks.target",
+        name: "sdks.targets",
         description: "A single SDK target (a value inside `sdks.targets`).",
         schema: SdkTargetSchema
     },
     {
-        name: "fern-yml.docs",
+        name: "docs",
         description: "The `docs:` block in fern.yml (documentation configuration).",
         schema: DocsSchema
     },
     {
-        name: "fern-yml.ai",
+        name: "ai",
         description: "The `ai:` block in fern.yml (AI-powered example generation config).",
         schema: AiConfigSchema
     },
     {
-        name: "fern-yml.cli",
+        name: "cli",
         description: "The `cli:` block in fern.yml (CLI version pinning).",
         schema: CliSchema
     }
 ] as const;
 
 /**
- * A short, machine-readable description of every schema available via
- * `getJsonSchemaByName`. Intended for `fern schema list`.
+ * A short, machine-readable description of every named subsection schema.
  */
 export const JSON_SCHEMA_ENTRIES: readonly { name: JsonSchemaName; description: string }[] = SCHEMA_ENTRIES.map(
     ({ name, description }) => ({ name, description })
 );
 
 /**
- * Convert a named Fern config schema to a JSON Schema object.
+ * Convert a named Fern config subsection schema to a JSON Schema object.
  *
- * Returns `undefined` if `name` is not a recognized schema.
+ * Returns `undefined` if `name` is not a recognized subsection.
  */
 export function getJsonSchemaByName(name: string): Record<string, unknown> | undefined {
     const entry = SCHEMA_ENTRIES.find((e) => e.name === name);
@@ -102,8 +82,15 @@ export function getJsonSchemaByName(name: string): Record<string, unknown> | und
 }
 
 /**
- * Returns the list of all recognized schema names.
+ * Returns the list of all recognized subsection names.
  */
 export function getJsonSchemaNames(): readonly JsonSchemaName[] {
     return SCHEMA_ENTRIES.map((e) => e.name);
+}
+
+/**
+ * Returns the full fern.yml JSON Schema (the root config).
+ */
+export function getFernYmlJsonSchema(): Record<string, unknown> {
+    return z.toJSONSchema(FernYmlSchema) as Record<string, unknown>;
 }

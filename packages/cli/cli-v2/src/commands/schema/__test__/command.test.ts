@@ -20,38 +20,11 @@ describe("fern schema", () => {
         await rm(testDir, { recursive: true, force: true });
     });
 
-    it("lists all available schemas when no name is provided", async () => {
+    it("prints the full fern.yml JSON Schema when no name is provided", async () => {
         const { context, getStdout, getStderr } = await createTestContextWithCapture({ cwd: testDir });
         const cmd = new SchemaCommand();
 
         await cmd.handle(context, { "log-level": "info", pretty: true });
-
-        const stderr = getStderr();
-        expect(stderr).toBe("");
-
-        const parsed = JSON.parse(getStdout());
-        expect(Array.isArray(parsed.schemas)).toBe(true);
-        expect(parsed.schemas.length).toBeGreaterThan(0);
-
-        const names = parsed.schemas.map((s: { name: string }) => s.name);
-        expect(names).toContain("fern-yml");
-        expect(names).toContain("fern-yml.sdks");
-        expect(names).toContain("fern-yml.api");
-        expect(names).toContain("fern-yml.apis");
-        expect(names).toContain("fern-yml.apis.api");
-        expect(names).toContain("fern-yml.docs");
-
-        for (const entry of parsed.schemas) {
-            expect(typeof entry.name).toBe("string");
-            expect(typeof entry.description).toBe("string");
-        }
-    });
-
-    it("prints the fern-yml JSON Schema when requested", async () => {
-        const { context, getStdout, getStderr } = await createTestContextWithCapture({ cwd: testDir });
-        const cmd = new SchemaCommand();
-
-        await cmd.handle(context, { "log-level": "info", pretty: true, name: "fern-yml" });
 
         expect(getStderr()).toBe("");
 
@@ -63,11 +36,11 @@ describe("fern schema", () => {
         expect(parsed.required).toContain("org");
     });
 
-    it("prints the fern-yml.sdks JSON Schema when requested", async () => {
+    it("prints the sdks JSON Schema when requested", async () => {
         const { context, getStdout } = await createTestContextWithCapture({ cwd: testDir });
         const cmd = new SchemaCommand();
 
-        await cmd.handle(context, { "log-level": "info", pretty: true, name: "fern-yml.sdks" });
+        await cmd.handle(context, { "log-level": "info", pretty: true, name: "sdks" });
 
         const parsed = JSON.parse(getStdout());
         expect(parsed.type).toBe("object");
@@ -75,11 +48,11 @@ describe("fern schema", () => {
         expect(parsed.required).toContain("targets");
     });
 
-    it("prints the fern-yml.api JSON Schema when requested", async () => {
+    it("prints the api JSON Schema when requested", async () => {
         const { context, getStdout } = await createTestContextWithCapture({ cwd: testDir });
         const cmd = new SchemaCommand();
 
-        await cmd.handle(context, { "log-level": "info", pretty: true, name: "fern-yml.api" });
+        await cmd.handle(context, { "log-level": "info", pretty: true, name: "api" });
 
         const parsed = JSON.parse(getStdout());
         expect(parsed.type).toBe("object");
@@ -87,11 +60,21 @@ describe("fern schema", () => {
         expect(parsed.required).toContain("specs");
     });
 
+    it("prints the sdks.targets JSON Schema (single target shape) when requested", async () => {
+        const { context, getStdout } = await createTestContextWithCapture({ cwd: testDir });
+        const cmd = new SchemaCommand();
+
+        await cmd.handle(context, { "log-level": "info", pretty: true, name: "sdks.targets" });
+
+        const parsed = JSON.parse(getStdout());
+        expect(parsed).toBeDefined();
+    });
+
     it("emits minified JSON when --no-pretty is set", async () => {
         const { context, getStdout } = await createTestContextWithCapture({ cwd: testDir });
         const cmd = new SchemaCommand();
 
-        await cmd.handle(context, { "log-level": "info", pretty: false, name: "fern-yml.cli" });
+        await cmd.handle(context, { "log-level": "info", pretty: false, name: "cli" });
 
         const raw = getStdout();
         // Minified output should not contain newlines inside the JSON payload.
@@ -102,16 +85,6 @@ describe("fern schema", () => {
         const parsed = JSON.parse(trimmed);
         expect(parsed.type).toBe("object");
         expect(parsed.properties.version).toBeDefined();
-    });
-
-    it("supports 'list' as an explicit subcommand-like name", async () => {
-        const { context, getStdout } = await createTestContextWithCapture({ cwd: testDir });
-        const cmd = new SchemaCommand();
-
-        await cmd.handle(context, { "log-level": "info", pretty: true, name: "list" });
-
-        const parsed = JSON.parse(getStdout());
-        expect(Array.isArray(parsed.schemas)).toBe(true);
     });
 
     it("throws a helpful CliError for an unknown schema name", async () => {
@@ -131,7 +104,7 @@ describe("fern schema", () => {
         const { context, getStderr } = await createTestContextWithCapture({ cwd: testDir });
         const cmd = new SchemaCommand();
 
-        await cmd.handle(context, { "log-level": "info", pretty: true, name: "fern-yml" });
+        await cmd.handle(context, { "log-level": "info", pretty: true });
 
         expect(getStderr()).toBe("");
     });
