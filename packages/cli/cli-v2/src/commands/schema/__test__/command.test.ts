@@ -37,6 +37,8 @@ describe("fern schema", () => {
         expect(names).toContain("fern-yml");
         expect(names).toContain("fern-yml.sdks");
         expect(names).toContain("fern-yml.api");
+        expect(names).toContain("fern-yml.apis");
+        expect(names).toContain("fern-yml.apis.api");
         expect(names).toContain("fern-yml.docs");
 
         for (const entry of parsed.schemas) {

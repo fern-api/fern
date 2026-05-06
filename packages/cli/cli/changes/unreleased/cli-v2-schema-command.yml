@@ -1,8 +1,8 @@
 - summary: |
     Add `fern schema [name]` command (CLI v2) that emits a JSON Schema for
     each Fern configuration surface (fern-yml, fern-yml.api, fern-yml.apis,
-    fern-yml.sdks, fern-yml.sdks.target, fern-yml.docs, fern-yml.ai,
-    fern-yml.cli). Running `fern schema` with no argument prints the list of
+    fern-yml.apis.api, fern-yml.sdks, fern-yml.sdks.target, fern-yml.docs,
+    fern-yml.ai, fern-yml.cli). Running `fern schema` with no argument prints the list of
     available schemas. Intended primarily for AI agents that need to generate
     or validate Fern config at runtime without consulting external docs.
   type: feat

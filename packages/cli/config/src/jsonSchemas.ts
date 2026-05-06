@@ -18,6 +18,7 @@ export type JsonSchemaName =
     | "fern-yml"
     | "fern-yml.api"
     | "fern-yml.apis"
+    | "fern-yml.apis.api"
     | "fern-yml.sdks"
     | "fern-yml.sdks.target"
     | "fern-yml.docs"
@@ -46,6 +47,11 @@ const SCHEMA_ENTRIES: readonly SchemaEntry[] = [
         name: "fern-yml.apis",
         description: "A map of named API definitions (the `apis:` block in fern.yml).",
         schema: ApisSchema
+    },
+    {
+        name: "fern-yml.apis.api",
+        description: "A single API definition as it appears as an entry inside the `apis:` map in fern.yml.",
+        schema: ApiDefinitionSchema
     },
     {
         name: "fern-yml.sdks",
