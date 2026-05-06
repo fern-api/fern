@@ -183,6 +183,21 @@ RUN for dir in \
       fi; \
     done
 
+# Patch ip-address to 10.2.0 to fix GHSA-v2v4-37r5-5v8g (CVE-2026-42338)
+# (XSS in Address6 HTML-emitting methods; fixed in 10.1.1)
+# Location: npm bundles its own copy via socks-proxy-agent -> socks -> ip-address
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/ip-address; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/ip-address/-/ip-address-10.2.0.tgz -o ip-address-10.2.0.tgz && \
+        tar -xzf ip-address-10.2.0.tgz && \
+        mv package ip-address && \
+        rm ip-address-10.2.0.tgz; \
+      fi; \
+    done
+
 # Copy Node CLI from first stage and rename it /bin/java-v2
 COPY --from=node /dist/cli.cjs /bin/java-v2
 COPY --from=node /assets/features.yml /assets/features.yml
