@@ -333,6 +333,106 @@ describe("AutoVersionStep.execute() — normal MINOR flow", () => {
     });
 });
 
+describe("AutoVersionStep.execute() — pipeline baseVersion overrides diff extraction", () => {
+    let repo: TwoGenerations;
+
+    beforeEach(async () => {
+        mockAnalyzeSdkDiff.mockReset();
+        mockConsolidateChangelog.mockReset();
+        // Frameio repro: previous [fern-generated] had 3.2.4; customer manually
+        // bumped to 4.1.0 between gens, so fiddle passes baseVersion=4.1.0.
+        repo = await setupTwoGenerations({
+            previousVersion: "3.2.4",
+            featureFile: {
+                path: "src/newFeature.ts",
+                content: "export function newFeature(): number {\n    return 42;\n}\n"
+            }
+        });
+    });
+
+    afterEach(async () => {
+        await repo.cleanup();
+    });
+
+    it("bumps from baseVersion (4.1.0 → 4.2.0) instead of regressing to the diff value (3.2.4 → 3.2.5)", async () => {
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: "MINOR",
+            message: "feat: add newFeature helper",
+            changelog_entry: "### Added\n- newFeature()",
+            version_bump_reason: "New public API."
+        });
+
+        const step = new AutoVersionStep(repo.repoPath, makeLogger(), {
+            ...baseConfig,
+            baseVersion: "4.1.0"
+        });
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+
+        const result = await step.execute(makeContext(prepared));
+
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("4.1.0");
+        expect(result.version).toBe("4.2.0");
+        expect(result.versionBump).toBe("MINOR");
+
+        const pkg = JSON.parse(readFileSync(join(repo.repoPath, "package.json"), "utf-8")) as {
+            version: string;
+        };
+        expect(pkg.version).toBe("4.2.0");
+    });
+
+    it("falls back to diff extraction when baseVersion is omitted (preserves prior behavior)", async () => {
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: "PATCH",
+            message: "fix: minor",
+            changelog_entry: "",
+            version_bump_reason: "Internal."
+        });
+
+        const step = new AutoVersionStep(repo.repoPath, makeLogger(), baseConfig);
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+
+        const result = await step.execute(makeContext(prepared));
+
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("3.2.4");
+        expect(result.version).toBe("3.2.5");
+    });
+
+    it("ignores a malformed baseVersion and falls back to extraction (shell-injection guard)", async () => {
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: "PATCH",
+            message: "fix: minor",
+            changelog_entry: "",
+            version_bump_reason: "Internal."
+        });
+
+        const step = new AutoVersionStep(repo.repoPath, makeLogger(), {
+            ...baseConfig,
+            baseVersion: "4.1.0; rm -rf /"
+        });
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+
+        const result = await step.execute(makeContext(prepared));
+
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("3.2.4");
+        expect(result.version).toBe("3.2.5");
+    });
+});
+
 describe("AutoVersionStep.execute() — first generation", () => {
     let tmpDir: tmp.DirectoryResult;
     let repoPath: string;

@@ -146,7 +146,12 @@ export class AutoVersionStep extends BaseStep {
 
         const rawDiff = this.gitDiff(previousGenerationSha, prepared.currentGenerationSha);
 
-        const previousVersion = await this.resolvePreviousVersion({ service, rawDiff, mappedMagicVersion });
+        const previousVersion = await this.resolvePreviousVersion({
+            service,
+            rawDiff,
+            mappedMagicVersion,
+            baseVersion: this.config.baseVersion
+        });
         if (previousVersion == null) {
             return await this.handleFirstGeneration({ service, language, mappedMagicVersion });
         }
@@ -336,8 +341,18 @@ export class AutoVersionStep extends BaseStep {
         service: AutoVersioningService;
         rawDiff: string;
         mappedMagicVersion: string;
+        baseVersion?: string;
     }): Promise<string | null> {
-        const { service, rawDiff, mappedMagicVersion } = params;
+        const { service, rawDiff, mappedMagicVersion, baseVersion } = params;
+
+        // Prefer the pipeline-supplied baseVersion (main tip's metadata.json) over
+        // diff extraction, which is blind to customer manual bumps. Semver-validate
+        // before use — it flows into bash + sed in replaceMagicVersion.
+        if (baseVersion != null && isValidSemver(baseVersion)) {
+            this.logger.debug(`AutoVersionStep: previous version from pipeline baseVersion: ${baseVersion}`);
+            return this.normalizeVersionPrefix(baseVersion, mappedMagicVersion);
+        }
+
         try {
             const extracted = service.extractPreviousVersion(rawDiff, mappedMagicVersion);
             if (extracted != null) {
