@@ -193,4 +193,92 @@ describe("buildJsonFromExampleTypeReference", () => {
         expect(result).toEqual([null, "x"]);
         expect(JSON.stringify(result)).toBe('[null,"x"]');
     });
+
+    /**
+     * Mirrors `WireTestFunctionGenerator.generateDateTimeLiteral` so these tests
+     * can verify that the JSON body and expected Swift struct use the same date
+     * string representation.
+     */
+    function expectedStructDateString(raw: string): string {
+        const timestampMs = new Date(raw).getTime();
+        const timestampSec = Math.round(timestampMs / 1000);
+        const roundedDateTime = new Date(timestampSec * 1000).toISOString();
+        return roundedDateTime.replace(/\.\d{3}Z$/, "Z");
+    }
+
+    /**
+     * Swift's runtime `JSONDecoder` (see `generators/swift/base/src/asIs/Sources/Serde.swift`)
+     * only knows how to parse ISO 8601 date strings — it uses `ISO8601DateFormatter`
+     * regardless of whether the IR field was `datetime` or `datetimeRfc2822`. Any
+     * non-ISO 8601 string in the wire-test JSON body fails to decode entirely.
+     */
+    const ISO_8601_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z$/;
+
+    describe("datetime", () => {
+        it("matches the expected-struct date string when raw has fractional seconds", () => {
+            const raw = "2024-01-01T00:00:00.123Z";
+            const ref = refPrimitive(
+                FernIr.ExamplePrimitive.datetime({
+                    datetime: new Date(raw),
+                    raw
+                }),
+                raw
+            );
+            expect(buildJsonFromExampleTypeReference(ref)).toBe(expectedStructDateString(raw));
+        });
+
+        it("emits an ISO 8601 string when raw is absent", () => {
+            const ref = refPrimitive(
+                FernIr.ExamplePrimitive.datetime({
+                    datetime: new Date("2024-01-01T00:00:00Z"),
+                    raw: undefined
+                }),
+                undefined
+            );
+            const result = buildJsonFromExampleTypeReference(ref);
+            expect(typeof result).toBe("string");
+            expect(result).toMatch(ISO_8601_REGEX);
+        });
+    });
+
+    describe("datetimeRfc2822", () => {
+        it("emits an ISO 8601 string (Swift's JSONDecoder cannot parse RFC 2822) when raw is RFC 2822", () => {
+            const raw = "Mon, 01 Jan 2024 00:00:00 GMT";
+            const ref = refPrimitive(
+                FernIr.ExamplePrimitive.datetimeRfc2822({
+                    datetime: new Date(raw),
+                    raw
+                }),
+                raw
+            );
+            const result = buildJsonFromExampleTypeReference(ref);
+            expect(typeof result).toBe("string");
+            expect(result).toMatch(ISO_8601_REGEX);
+        });
+
+        it("emits an ISO 8601 string when raw is absent", () => {
+            const ref = refPrimitive(
+                FernIr.ExamplePrimitive.datetimeRfc2822({
+                    datetime: new Date("2024-01-01T00:00:00Z"),
+                    raw: undefined
+                }),
+                undefined
+            );
+            const result = buildJsonFromExampleTypeReference(ref);
+            expect(typeof result).toBe("string");
+            expect(result).toMatch(ISO_8601_REGEX);
+        });
+
+        it("matches the expected-struct date string when raw is RFC 2822", () => {
+            const raw = "Mon, 01 Jan 2024 00:00:00 GMT";
+            const ref = refPrimitive(
+                FernIr.ExamplePrimitive.datetimeRfc2822({
+                    datetime: new Date(raw),
+                    raw
+                }),
+                raw
+            );
+            expect(buildJsonFromExampleTypeReference(ref)).toBe(expectedStructDateString(raw));
+        });
+    });
 });
