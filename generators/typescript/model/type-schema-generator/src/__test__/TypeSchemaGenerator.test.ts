@@ -237,7 +237,8 @@ function createObjectProperty(
         docs: undefined,
         availability: undefined,
         v2Examples: undefined,
-        propertyAccess: undefined
+        propertyAccess: undefined,
+        defaultValue: undefined
     };
 }
 

@@ -512,6 +512,7 @@ describe("GeneratedRequestWrapperExampleImpl", () => {
                         availability: undefined,
                         v2Examples: undefined,
                         propertyAccess: undefined,
+                        defaultValue: undefined,
                         contentType: undefined,
                         style: undefined
                     })

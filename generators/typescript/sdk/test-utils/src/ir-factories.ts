@@ -167,7 +167,8 @@ export function createQueryParameter(
         docs: undefined,
         availability: undefined,
         explode: undefined,
-        clientDefault: undefined
+        clientDefault: undefined,
+        defaultValue: undefined
     };
 }
 
@@ -216,7 +217,8 @@ export function createHttpHeader(
         v2Examples: undefined,
         docs: opts?.docs,
         availability: undefined,
-        clientDefault: undefined
+        clientDefault: undefined,
+        defaultValue: undefined
     };
 }
 
@@ -234,7 +236,8 @@ export function createInlinedRequestBodyProperty(
         docs: opts?.docs,
         availability: undefined,
         v2Examples: undefined,
-        propertyAccess: undefined
+        propertyAccess: undefined,
+        defaultValue: undefined
     };
 }
 
@@ -372,7 +375,8 @@ export function createObjectProperty(
         docs: opts?.docs,
         availability: undefined,
         v2Examples: undefined,
-        propertyAccess: undefined
+        propertyAccess: undefined,
+        defaultValue: undefined
     };
 }
 

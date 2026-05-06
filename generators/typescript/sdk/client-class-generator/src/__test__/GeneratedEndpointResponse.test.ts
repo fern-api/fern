@@ -24,6 +24,7 @@ function createResponseProperty(name: string, valueType?: FernIr.TypeReference):
             availability: undefined,
             docs: undefined,
             propertyAccess: undefined,
+            defaultValue: undefined,
             v2Examples: undefined
         },
         propertyPath: []
@@ -38,6 +39,7 @@ function createRequestProperty(name: string, valueType?: FernIr.TypeReference): 
             availability: undefined,
             docs: undefined,
             propertyAccess: undefined,
+            defaultValue: undefined,
             v2Examples: undefined
         }),
         propertyPath: []

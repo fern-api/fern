@@ -390,7 +390,8 @@ describe("FileUploadRequestParameter", () => {
             availability: undefined,
             docs: undefined,
             v2Examples: undefined,
-            clientDefault: undefined
+            clientDefault: undefined,
+            defaultValue: undefined
         };
         const ref = param.getReferenceToNonLiteralHeader(header, context);
         expect(getTextOfTsNode(ref)).toContain(".");
@@ -414,7 +415,8 @@ describe("FileUploadRequestParameter", () => {
             availability: undefined,
             docs: undefined,
             v2Examples: undefined,
-            clientDefault: undefined
+            clientDefault: undefined,
+            defaultValue: undefined
         };
         const ref = param.getReferenceToNonLiteralHeader(header, context);
         const text = getTextOfTsNode(ref);
@@ -455,7 +457,8 @@ describe("FileUploadRequestParameter", () => {
             docs: undefined,
             availability: undefined,
             v2Examples: undefined,
-            propertyAccess: undefined
+            propertyAccess: undefined,
+            defaultValue: undefined
         };
         const ref = param.getReferenceToBodyProperty(bodyProp, context);
         expect(getTextOfTsNode(ref)).toContain("data");

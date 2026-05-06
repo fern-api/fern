@@ -388,7 +388,8 @@ describe("GeneratedUnionTypeImpl", () => {
                         docs: undefined,
                         availability: undefined,
                         v2Examples: undefined,
-                        propertyAccess: undefined
+                        propertyAccess: undefined,
+                        defaultValue: undefined
                     }
                 ]
             });
@@ -414,7 +415,8 @@ describe("GeneratedUnionTypeImpl", () => {
                         docs: undefined,
                         availability: undefined,
                         v2Examples: undefined,
-                        propertyAccess: undefined
+                        propertyAccess: undefined,
+                        defaultValue: undefined
                     }
                 ],
                 extends: [withNameType]
@@ -868,7 +870,8 @@ describe("GeneratedUnionTypeImpl", () => {
                         docs: undefined,
                         availability: undefined,
                         v2Examples: undefined,
-                        propertyAccess: undefined
+                        propertyAccess: undefined,
+                        defaultValue: undefined
                     }
                 ]
             });
