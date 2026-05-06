@@ -103,7 +103,7 @@ export class GithubStep extends BaseStep {
     ): Promise<GithubStepResult> {
         const baseBranch = this.config.branch ?? (await repository.getDefaultBranch());
         const octokit = this.createOctokit();
-        const { owner, repo } = parseRepository(this.config.uri);
+        const { owner, repo, remote } = parseRepository(this.config.uri);
 
         let prBranch: string;
         let isUpdatingExistingPR = false;
@@ -200,8 +200,7 @@ export class GithubStep extends BaseStep {
                 logger: this.logger
             });
             const pushedBranch = await repository.getCurrentBranch();
-            const { remote } = parseRepository(this.config.uri);
-            result.branchUrl = `https://${remote}/${this.config.uri}/tree/${pushedBranch}`;
+            result.branchUrl = `https://${remote}/${owner}/${repo}/tree/${pushedBranch}`;
             this.logger.info(`Pushed branch: ${result.branchUrl}`);
 
             if (generationBaseSha != null) {
@@ -220,7 +219,7 @@ export class GithubStep extends BaseStep {
 
         const headSha = await repository.getHeadSha();
         const changelogUrl = resolved.changelogEntry
-            ? `https://github.com/${this.config.uri}/blob/${headSha}/changelog.md`
+            ? `https://${remote}/${owner}/${repo}/blob/${headSha}/changelog.md`
             : undefined;
         const { prTitle, prBody } = parseCommitMessageForPR(
             resolved.commitMessage,
@@ -347,7 +346,7 @@ export class GithubStep extends BaseStep {
             });
 
             const pushedBranch = await repository.getCurrentBranch();
-            result.branchUrl = `https://${remote}/${this.config.uri}/tree/${pushedBranch}`;
+            result.branchUrl = `https://${remote}/${owner}/${repo}/tree/${pushedBranch}`;
             this.logger.info(`Pushed branch: ${result.branchUrl}`);
         }
 
