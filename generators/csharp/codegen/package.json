@@ -33,8 +33,8 @@
   "dependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/dynamic-ir-sdk": "66.1.0",
-    "@fern-fern/ir-sdk": "66.3.0",
+    "@fern-api/dynamic-ir-sdk": "67.1.0",
+    "@fern-fern/ir-sdk": "67.1.0",
     "domhandler": "catalog:",
     "htmlparser2": "catalog:",
     "zod": "catalog:"
