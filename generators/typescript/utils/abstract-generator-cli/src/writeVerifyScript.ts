@@ -2,6 +2,8 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 
+import { packageManagerCommands, SupportedPackageManager } from "./packageManagerCommands.js";
+
 const VERIFY_SCRIPT_FILENAME = "verify.sh";
 const VERIFY_SCRIPT_DIRNAME = ".fern";
 const VERIFY_SCRIPT_MODE = 0o755;
@@ -11,12 +13,13 @@ const VERIFY_SCRIPT_MODE = 0o755;
  * is the contract the paired validator Docker image executes against a freshly
  * generated SDK to confirm it installs, builds, and tests cleanly.
  */
-export function buildVerifyScript(packageManager: "pnpm" | "yarn"): string {
+export function buildVerifyScript(packageManager: SupportedPackageManager): string {
+    const { install, build, test } = packageManagerCommands(packageManager);
     return `#!/bin/bash
 set -euo pipefail
-${packageManager} install
-${packageManager} build
-${packageManager} test
+${install}
+${build}
+${test}
 `;
 }
 
@@ -25,7 +28,7 @@ export async function writeVerifyScript({
     packageManager
 }: {
     pathToProject: AbsoluteFilePath;
-    packageManager: "pnpm" | "yarn";
+    packageManager: SupportedPackageManager;
 }): Promise<void> {
     const verifyScriptDir = path.join(pathToProject, VERIFY_SCRIPT_DIRNAME);
     await mkdir(verifyScriptDir, { recursive: true });
