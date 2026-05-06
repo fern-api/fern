@@ -1,38 +1,42 @@
 # Stage 1: Pull wiremock image as tar (no daemon needed)
-FROM alpine:3.22 AS wiremock-pull
+FROM alpine:3.23 AS wiremock-pull
 RUN apk add --no-cache curl && \
     ARCH=$(uname -m) && if [ "$ARCH" = "aarch64" ]; then ARCH="arm64"; fi && \
     curl -sL "https://github.com/google/go-containerregistry/releases/download/v0.21.2/go-containerregistry_Linux_${ARCH}.tar.gz" | tar xz -C /usr/local/bin crane && \
     crane pull wiremock/wiremock:3.9.1 /wiremock.tar
 
 # Stage 2: Build the seed image
-FROM docker:28.4.0-dind-alpine3.22
+FROM docker:29.4.1-dind-alpine3.23
+
+# Apply latest security patches to base image packages (libssl3, libcrypto3, libcurl, etc.)
+RUN apk upgrade --no-cache
 
 # Copy pre-pulled wiremock image
 COPY --from=wiremock-pull /wiremock.tar /wiremock.tar
 
 # Install PHP, Composer, and required extensions
+# alpine 3.23's composer package depends on php84, so php84 is the runtime here.
+# This is forward-compatible with the generated SDK templates (which require php: ^8.1).
 RUN apk add --no-cache \
-    php83 \
-    php83-phar \
-    php83-mbstring \
-    php83-openssl \
-    php83-curl \
-    php83-json \
-    php83-dom \
-    php83-xml \
-    php83-xmlwriter \
-    php83-tokenizer \
-    php83-ctype \
-    php83-iconv \
-    php83-simplexml \
-    php83-fileinfo \
+    php84 \
+    php84-phar \
+    php84-mbstring \
+    php84-openssl \
+    php84-curl \
+    php84-dom \
+    php84-xml \
+    php84-xmlwriter \
+    php84-tokenizer \
+    php84-ctype \
+    php84-iconv \
+    php84-simplexml \
+    php84-fileinfo \
     composer \
     bash \
     git
 
 # Create symlink for php command
-RUN ln -sf /usr/bin/php83 /usr/bin/php
+RUN ln -sf /usr/bin/php84 /usr/bin/php
 
 # Create entrypoint script to start dockerd and wait until it is ready
 RUN echo '#!/bin/sh' > /entrypoint.sh && \
