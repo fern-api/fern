@@ -6,6 +6,9 @@ import type { MdxParseError } from "../errors/MdxParseError.js";
 import type { AiProviderClient, AiProviderResolution } from "./AiProvider.js";
 import { resolveAiProvider } from "./AiProvider.js";
 
+// chalk is used in the noKeyResult fallback message below
+void chalk;
+
 export declare namespace MdxFixer {
     export interface ApplyResult {
         /** Whether a fix was actually applied */
@@ -170,7 +173,7 @@ export class MdxFixer {
     private async resolveProvider(): Promise<AiProviderResolution> {
         const loader = new FernRcSchemaLoader();
         const { data } = await loader.load();
-        return resolveAiProvider({ aiConfig: data.ai });
+        return resolveAiProvider({ aiConfig: data.ai }); // async — reads keyring for API keys
     }
 }
 

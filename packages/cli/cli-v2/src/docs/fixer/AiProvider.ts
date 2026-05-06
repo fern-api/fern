@@ -1,4 +1,5 @@
 import { schemas } from "@fern-api/config";
+import { AiCredentialStore } from "../../auth/AiCredentialStore.js";
 
 type FernRcAiProvider = schemas.FernRcAiProvider;
 type FernRcAiSchema = schemas.FernRcAiSchema;
@@ -27,19 +28,26 @@ export type AiProviderResolution =
  * to environment variables for keys. The `provider` field defaults to
  * `anthropic` when unset for backwards compatibility.
  */
-export function resolveAiProvider({ aiConfig }: { aiConfig: FernRcAiSchema | undefined }): AiProviderResolution {
+export async function resolveAiProvider({
+    aiConfig
+}: {
+    aiConfig: FernRcAiSchema | undefined;
+}): Promise<AiProviderResolution> {
     const provider: FernRcAiProvider = aiConfig?.provider ?? "anthropic";
+    const credentialStore = new AiCredentialStore();
 
     switch (provider) {
         case "anthropic": {
-            const key = process.env["ANTHROPIC_API_KEY"] ?? aiConfig?.anthropic_api_key;
+            // Priority: env var → OS keyring
+            const key = process.env["ANTHROPIC_API_KEY"] ?? (await credentialStore.getKey("anthropic"));
             if (key == null || key === "") {
                 return { ok: false, reason: missingKeyMessage("anthropic", "ANTHROPIC_API_KEY") };
             }
             return { ok: true, provider, client: new AnthropicClient(key) };
         }
         case "openai": {
-            const key = process.env["OPENAI_API_KEY"] ?? aiConfig?.openai_api_key;
+            // Priority: env var → OS keyring
+            const key = process.env["OPENAI_API_KEY"] ?? (await credentialStore.getKey("openai"));
             if (key == null || key === "") {
                 return { ok: false, reason: missingKeyMessage("openai", "OPENAI_API_KEY") };
             }
