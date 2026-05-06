@@ -1,3 +1,5 @@
+import semver from "semver";
+
 import { AutoVersioningException } from "./AutoVersioningService.js";
 
 /**
@@ -148,8 +150,20 @@ export function isValidSemver(version: string): boolean {
 /**
  * Increments a semantic version based on the version bump type.
  *
- * @param currentVersion The current version (e.g., "1.2.3" or "v1.2.3")
- * @param versionBump The type of version bump (MAJOR, MINOR, PATCH)
+ * Pre-release semantics: when `currentVersion` has a pre-release suffix
+ * (e.g. "4.0.0-beta.2", "4.0.0-rc.0"), every real bump (MAJOR/MINOR/PATCH)
+ * advances the pre-release counter and stays in the same line — the customer
+ * never gets silently promoted to a stable version. NO_CHANGE preserves
+ * the version verbatim. Promotion to stable (e.g. 4.0.0-rc.2 -> 4.0.0)
+ * is a deliberate decision the customer must make explicitly via baseVersion;
+ * autoversion never infers it from FAI's bump signal because the BAML prompt
+ * is silent on pre-release lines (it only describes API-surface impact).
+ *
+ * Build metadata (`+build.5`) is informational and is dropped on real bumps,
+ * matching `semver.inc` semantics. NO_CHANGE preserves it.
+ *
+ * @param currentVersion The current version (e.g., "1.2.3", "v1.2.3", "4.0.0-rc.2")
+ * @param versionBump The type of version bump (MAJOR, MINOR, PATCH, NO_CHANGE)
  * @return The incremented version
  * @throws AutoVersioningException if version parsing fails or unknown bump type
  */
@@ -159,43 +173,42 @@ export function incrementVersion(currentVersion: string, versionBump: VersionBum
         throw new AutoVersioningException("Invalid semantic version format: " + currentVersion);
     }
 
-    const prefix = matcher[1] || "";
-    let major = parseInt(matcher[2] ?? "0", 10);
-    let minor = parseInt(matcher[3] ?? "0", 10);
-    let patch = parseInt(matcher[4] ?? "0", 10);
+    const prefix = matcher[1] ?? "";
+    const versionWithoutPrefix = currentVersion.slice(prefix.length);
     const preRelease = matcher[5];
-    const buildMetadata = matcher[6];
 
-    let preserveMetadata = false;
+    if (versionBump === VersionBump.NO_CHANGE) {
+        // Preserve the version verbatim, including any pre-release/build metadata.
+        return currentVersion;
+    }
 
-    if (versionBump === VersionBump.MAJOR) {
-        major++;
-        minor = 0;
-        patch = 0;
+    let bumped: string | null;
+    if (preRelease != null) {
+        // Stay in the pre-release line. The identifier is the leading
+        // non-numeric segment (e.g. "beta" from "beta.2", "rc" from "rc.0").
+        // Pure-numeric prereleases (e.g. "-0") pass undefined so semver bumps
+        // the trailing counter to "-1" without inserting a new identifier.
+        const head = preRelease.split(".")[0];
+        const identifier = head != null && head.length > 0 && !/^\d+$/.test(head) ? head : undefined;
+        bumped =
+            identifier != null
+                ? semver.inc(versionWithoutPrefix, "prerelease", identifier)
+                : semver.inc(versionWithoutPrefix, "prerelease");
+    } else if (versionBump === VersionBump.MAJOR) {
+        bumped = semver.inc(versionWithoutPrefix, "major");
     } else if (versionBump === VersionBump.MINOR) {
-        minor++;
-        patch = 0;
+        bumped = semver.inc(versionWithoutPrefix, "minor");
     } else if (versionBump === VersionBump.PATCH) {
-        patch++;
-    } else if (versionBump === VersionBump.NO_CHANGE) {
-        preserveMetadata = true;
+        bumped = semver.inc(versionWithoutPrefix, "patch");
     } else {
         throw new AutoVersioningException("Unknown version bump type: " + versionBump);
     }
 
-    let newVersion = `${prefix}${major}.${minor}.${patch}`;
-
-    if (preserveMetadata) {
-        if (preRelease) {
-            newVersion += `-${preRelease}`;
-        }
-
-        if (buildMetadata) {
-            newVersion += `+${buildMetadata}`;
-        }
+    if (bumped === null) {
+        throw new AutoVersioningException("Failed to increment version: " + currentVersion);
     }
 
-    return newVersion;
+    return `${prefix}${bumped}`;
 }
 
 /**

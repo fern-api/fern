@@ -483,35 +483,35 @@ describe("AutoVersionStep.execute() — pre-release version handling", () => {
         return pkg.version;
     }
 
-    // Pre-fix baseline: real bumps strip the pre-release suffix, silently
-    // demoting a customer's release candidate to a "stable" version.
-    // These assertions document the bug; stage 4 flips them to correct values.
+    // Real bumps stay in the pre-release line; promotion to stable is never inferred.
+    // NO_CHANGE preserves the version verbatim. Build metadata is dropped on real
+    // bumps (matching semver.inc) and preserved on NO_CHANGE.
 
-    it("PATCH on 4.0.0-beta.2 strips prerelease (current bug — silently demotes beta to stable)", async () => {
+    it("PATCH on 4.0.0-beta.2 advances the prerelease counter (4.0.0-beta.3)", async () => {
         const result = await runWithBaseVersionAndBump("4.0.0-beta.2", "PATCH");
         expect(result.success).toBe(true);
         expect(result.previousVersion).toBe("4.0.0-beta.2");
-        expect(result.version).toBe("4.0.1");
-        expect(packageJsonVersion()).toBe("4.0.1");
+        expect(result.version).toBe("4.0.0-beta.3");
+        expect(packageJsonVersion()).toBe("4.0.0-beta.3");
     });
 
-    it("MINOR on 4.0.0-beta.2 strips prerelease (current bug)", async () => {
+    it("MINOR on 4.0.0-beta.2 stays in the beta line (4.0.0-beta.3)", async () => {
         const result = await runWithBaseVersionAndBump("4.0.0-beta.2", "MINOR");
         expect(result.success).toBe(true);
         expect(result.previousVersion).toBe("4.0.0-beta.2");
-        expect(result.version).toBe("4.1.0");
-        expect(packageJsonVersion()).toBe("4.1.0");
+        expect(result.version).toBe("4.0.0-beta.3");
+        expect(packageJsonVersion()).toBe("4.0.0-beta.3");
     });
 
-    it("MAJOR on 4.0.0-beta.2 strips prerelease (current bug)", async () => {
+    it("MAJOR on 4.0.0-beta.2 stays in the beta line (4.0.0-beta.3) — promotion is never inferred", async () => {
         const result = await runWithBaseVersionAndBump("4.0.0-beta.2", "MAJOR");
         expect(result.success).toBe(true);
         expect(result.previousVersion).toBe("4.0.0-beta.2");
-        expect(result.version).toBe("5.0.0");
-        expect(packageJsonVersion()).toBe("5.0.0");
+        expect(result.version).toBe("4.0.0-beta.3");
+        expect(packageJsonVersion()).toBe("4.0.0-beta.3");
     });
 
-    it("NO_CHANGE on 4.0.0-beta.2 preserves prerelease (already correct via finalizeNoChange path)", async () => {
+    it("NO_CHANGE on 4.0.0-beta.2 preserves the version verbatim", async () => {
         const result = await runWithBaseVersionAndBump("4.0.0-beta.2", "NO_CHANGE");
         expect(result.success).toBe(true);
         expect(result.previousVersion).toBe("4.0.0-beta.2");
@@ -519,15 +519,15 @@ describe("AutoVersionStep.execute() — pre-release version handling", () => {
         expect(packageJsonVersion()).toBe("4.0.0-beta.2");
     });
 
-    it("PATCH on 4.0.0-rc.0 strips prerelease (current bug)", async () => {
+    it("PATCH on 4.0.0-rc.0 advances rc counter (4.0.0-rc.1)", async () => {
         const result = await runWithBaseVersionAndBump("4.0.0-rc.0", "PATCH");
         expect(result.success).toBe(true);
         expect(result.previousVersion).toBe("4.0.0-rc.0");
-        expect(result.version).toBe("4.0.1");
-        expect(packageJsonVersion()).toBe("4.0.1");
+        expect(result.version).toBe("4.0.0-rc.1");
+        expect(packageJsonVersion()).toBe("4.0.0-rc.1");
     });
 
-    it("PATCH on 4.0.0+build.123 drops build metadata (matches semver.inc behavior — not the bug)", async () => {
+    it("PATCH on 4.0.0+build.123 drops build metadata and bumps patch (4.0.1)", async () => {
         const result = await runWithBaseVersionAndBump("4.0.0+build.123", "PATCH");
         expect(result.success).toBe(true);
         expect(result.previousVersion).toBe("4.0.0+build.123");
@@ -535,20 +535,20 @@ describe("AutoVersionStep.execute() — pre-release version handling", () => {
         expect(packageJsonVersion()).toBe("4.0.1");
     });
 
-    it("PATCH on 4.0.0-rc.2+build.5 strips both prerelease and build (current bug — drops rc)", async () => {
+    it("PATCH on 4.0.0-rc.2+build.5 drops build metadata and advances rc (4.0.0-rc.3)", async () => {
         const result = await runWithBaseVersionAndBump("4.0.0-rc.2+build.5", "PATCH");
         expect(result.success).toBe(true);
         expect(result.previousVersion).toBe("4.0.0-rc.2+build.5");
-        expect(result.version).toBe("4.0.1");
-        expect(packageJsonVersion()).toBe("4.0.1");
+        expect(result.version).toBe("4.0.0-rc.3");
+        expect(packageJsonVersion()).toBe("4.0.0-rc.3");
     });
 
-    it("PATCH on 4.0.0-0 (numeric prerelease) strips prerelease (current bug)", async () => {
+    it("PATCH on 4.0.0-0 (numeric prerelease) advances the trailing counter (4.0.0-1)", async () => {
         const result = await runWithBaseVersionAndBump("4.0.0-0", "PATCH");
         expect(result.success).toBe(true);
         expect(result.previousVersion).toBe("4.0.0-0");
-        expect(result.version).toBe("4.0.1");
-        expect(packageJsonVersion()).toBe("4.0.1");
+        expect(result.version).toBe("4.0.0-1");
+        expect(packageJsonVersion()).toBe("4.0.0-1");
     });
 });
 
