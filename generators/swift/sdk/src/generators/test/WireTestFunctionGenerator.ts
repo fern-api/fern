@@ -6,6 +6,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../../utils/convertEndpointSnippetRequest.js";
 import { buildJsonFromExampleTypeReference } from "./buildJsonFromExampleTypeReference.js";
+import { formatDateTimeForWire } from "./formatDateTimeForWire.js";
 
 export declare namespace WireTestFunctionGenerator {
     interface Args {
@@ -553,15 +554,11 @@ export class WireTestFunctionGenerator {
     }
 
     private generateDateTimeLiteral(raw: string | null | undefined): swift.Expression {
-        if (raw == null) {
+        const formatted = formatDateTimeForWire(raw);
+        if (formatted == null) {
             return swift.Expression.nop();
         }
-        const timestampMs = new Date(raw).getTime();
-        const timestampSec = Math.round(timestampMs / 1000);
-        const roundedDateTime = new Date(timestampSec * 1000).toISOString();
-        // Remove fractional seconds (.000Z -> Z) for Swift compatibility
-        const dateTimeWithoutFractional = roundedDateTime.replace(/\.\d{3}Z$/, "Z");
-        return swift.Expression.dateLiteral(dateTimeWithoutFractional);
+        return swift.Expression.dateLiteral(formatted);
     }
 
     private generateUnknownExampleResponse(val: unknown): swift.Expression {

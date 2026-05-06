@@ -1,6 +1,8 @@
 import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 
+import { formatDateTimeForWire } from "./formatDateTimeForWire.js";
+
 /**
  * Walks an `ExampleTypeReference` and produces a JSON-encodable JS value that
  * mirrors what would be produced on the wire.
@@ -33,8 +35,8 @@ function buildJsonFromExamplePrimitive(primitive: FernIr.ExamplePrimitive): unkn
         boolean: (value) => value,
         string: (value) => value.original,
         date: (value) => value,
-        datetime: (value) => value.raw ?? value.datetime.toISOString(),
-        datetimeRfc2822: (value) => value.raw ?? value.datetime.toUTCString(),
+        datetime: (value) => formatDateTimeForWire(value.raw),
+        datetimeRfc2822: (value) => formatDateTimeForWire(value.raw),
         uuid: (value) => value,
         base64: (value) => value,
         bigInteger: (value) => value,
