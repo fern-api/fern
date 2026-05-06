@@ -1,4 +1,4 @@
-import { setSentryRunIdTags } from "@fern-api/cli-telemetry";
+import { getRunIdProperties, setSentryRunIdTags } from "@fern-api/cli-telemetry";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 import * as Sentry from "@sentry/node";
@@ -36,7 +36,8 @@ export class TelemetryClient {
             ci: IS_CI,
             os: os.platform(),
             tty: isTTY,
-            usingAccessToken: process.env.FERN_TOKEN != null
+            usingAccessToken: process.env.FERN_TOKEN != null,
+            ...getRunIdProperties()
         };
         this.posthog = apiKey != null && apiKey.length > 0 && isTelemetryEnabled ? new PostHog(apiKey) : undefined;
 

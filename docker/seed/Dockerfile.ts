@@ -1,12 +1,21 @@
-FROM node:22.12-slim
+FROM node:24.15.0-trixie-slim
 
 ENV PNPM_STORE_PATH=/.pnpm-cache
 ENV YARN_CACHE_FOLDER=/.yarn-cache
 ENV PNPM_HOME=/.pnpm
 ENV PATH=$PNPM_HOME:$PATH
 
-RUN npm install -g pnpm@10.20.0 --force
-RUN corepack prepare pnpm@10.20.0
+# Apply latest Debian security updates so that grype-tracked OS package
+# vulnerabilities (perl-base, liblzma5, libgnutls30, libpam*, libc*, gpgv,
+# libsystemd0, libudev1, libcap2, libtasn1-6, login/passwd, etc.) are
+# resolved on top of the base image.
+RUN apt-get update \
+  && apt-get -y upgrade \
+  && apt-get -y autoremove \
+  && rm -rf /var/lib/apt/lists/*
+
+RUN npm install -g pnpm@10.33.3 --force
+RUN corepack prepare pnpm@10.33.3
 RUN npm install -g yarn@1.22.22 --force
 RUN corepack prepare yarn@1.22.22
 

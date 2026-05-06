@@ -1,6 +1,18 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix `AutoVersionStep` silently stripping pre-release identifiers on
+        bump. A customer on `4.0.0-rc.2` getting a PATCH-classified change
+        previously landed on `4.0.1`, demoting their release candidate to a
+        "stable" version. `incrementVersion` now stays in the pre-release line
+        (e.g. `4.0.0-rc.2` → `4.0.0-rc.3`) for any real bump; promotion to
+        stable must be done explicitly by setting `baseVersion`.
+      type: fix
+  createdAt: "2026-05-06"
+  version: 0.9.25
+
+- changelogEntry:
+    - summary: |
         Fix `AutoVersionStep` silently regressing the SDK version when a customer
         manually bumped between generations. `resolvePreviousVersion` now prefers
         the pipeline-supplied `baseVersion` over the `[fern-generated]` diff.

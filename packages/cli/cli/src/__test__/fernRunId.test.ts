@@ -1,4 +1,4 @@
-import { getFernRunId, getOrCreateFernRunId } from "@fern-api/cli-telemetry";
+import { getFernRunId, getOrCreateFernRunId, getRunIdProperties } from "@fern-api/cli-telemetry";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 describe("getOrCreateFernRunId", () => {
@@ -48,5 +48,56 @@ describe("getFernRunId", () => {
     it("returns the current FERN_RUN_ID when set", () => {
         process.env.FERN_RUN_ID = "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee";
         expect(getFernRunId()).toBe("aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee");
+    });
+});
+
+describe("getRunIdProperties", () => {
+    beforeEach(() => {
+        delete process.env.FERN_RUN_ID;
+        delete process.env.GITHUB_RUN_ID;
+    });
+
+    afterEach(() => {
+        delete process.env.FERN_RUN_ID;
+        delete process.env.GITHUB_RUN_ID;
+    });
+
+    it("returns both fern_run_id and github_run_id when both env vars are set", () => {
+        process.env.FERN_RUN_ID = "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee";
+        process.env.GITHUB_RUN_ID = "12345678";
+
+        expect(getRunIdProperties()).toEqual({
+            fern_run_id: "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee",
+            github_run_id: "12345678"
+        });
+    });
+
+    it("omits github_run_id when GITHUB_RUN_ID is not set", () => {
+        process.env.FERN_RUN_ID = "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee";
+
+        expect(getRunIdProperties()).toEqual({
+            fern_run_id: "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee"
+        });
+    });
+
+    it("omits fern_run_id when FERN_RUN_ID is not set", () => {
+        process.env.GITHUB_RUN_ID = "12345678";
+
+        expect(getRunIdProperties()).toEqual({
+            github_run_id: "12345678"
+        });
+    });
+
+    it("returns an empty object when neither env var is set", () => {
+        expect(getRunIdProperties()).toEqual({});
+    });
+
+    it("omits github_run_id when GITHUB_RUN_ID is empty", () => {
+        process.env.FERN_RUN_ID = "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee";
+        process.env.GITHUB_RUN_ID = "";
+
+        expect(getRunIdProperties()).toEqual({
+            fern_run_id: "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee"
+        });
     });
 });

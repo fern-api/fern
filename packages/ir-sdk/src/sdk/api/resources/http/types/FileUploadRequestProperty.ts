@@ -3,11 +3,11 @@
 import * as FernIr from "../../../index.js";
 
 export type FileUploadRequestProperty =
-    | FernIr.FileUploadRequestProperty.File_
+    | FernIr.FileUploadRequestProperty.File
     | FernIr.FileUploadRequestProperty.BodyProperty;
 
 export namespace FileUploadRequestProperty {
-    export interface File_ extends _Utils {
+    export interface File extends _Utils {
         type: "file";
         value: FernIr.FileProperty;
     }
@@ -28,12 +28,12 @@ export namespace FileUploadRequestProperty {
 }
 
 export const FileUploadRequestProperty = {
-    file: (value: FernIr.FileProperty): FernIr.FileUploadRequestProperty.File_ => {
+    file: (value: FernIr.FileProperty): FernIr.FileUploadRequestProperty.File => {
         return {
             value: value,
             type: "file",
             _visit: function <_Result>(
-                this: FernIr.FileUploadRequestProperty.File_,
+                this: FernIr.FileUploadRequestProperty.File,
                 visitor: FernIr.FileUploadRequestProperty._Visitor<_Result>,
             ) {
                 return FernIr.FileUploadRequestProperty._visit(this, visitor);

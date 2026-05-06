@@ -1,4 +1,5 @@
 import { FernUserToken, getUserIdFromToken } from "@fern-api/auth";
+import { getRunIdProperties } from "@fern-api/cli-telemetry";
 import { createVenusService } from "@fern-api/core";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { PosthogEvent } from "@fern-api/task-context";
@@ -43,7 +44,8 @@ export class UserPosthogManager implements PosthogManager {
                 ...event,
                 ...event.properties,
                 usingAccessToken: false,
-                ...(userEmail != null ? { userEmail } : {})
+                ...(userEmail != null ? { userEmail } : {}),
+                ...getRunIdProperties()
             }
         });
     }

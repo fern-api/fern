@@ -2,10 +2,10 @@
 
 import * as FernIr from "../../../index.js";
 
-export type FileProperty = FernIr.FileProperty.File_ | FernIr.FileProperty.FileArray;
+export type FileProperty = FernIr.FileProperty.File | FernIr.FileProperty.FileArray;
 
 export namespace FileProperty {
-    export interface File_ extends FernIr.FilePropertySingle, _Utils {
+    export interface File extends FernIr.FilePropertySingle, _Utils {
         type: "file";
     }
 
@@ -25,14 +25,11 @@ export namespace FileProperty {
 }
 
 export const FileProperty = {
-    file: (value: FernIr.FilePropertySingle): FernIr.FileProperty.File_ => {
+    file: (value: FernIr.FilePropertySingle): FernIr.FileProperty.File => {
         return {
             ...value,
             type: "file",
-            _visit: function <_Result>(
-                this: FernIr.FileProperty.File_,
-                visitor: FernIr.FileProperty._Visitor<_Result>,
-            ) {
+            _visit: function <_Result>(this: FernIr.FileProperty.File, visitor: FernIr.FileProperty._Visitor<_Result>) {
                 return FernIr.FileProperty._visit(this, visitor);
             },
         };
