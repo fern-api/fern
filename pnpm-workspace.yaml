@@ -25,6 +25,9 @@ minimumReleaseAge: 1440
 
 # Exempt internal Fern packages from the release age requirement since they are
 # published and consumed frequently within the monorepo ecosystem.
+# Also temporarily exempting rolldown/tsdown packages — these were published
+# today (2026-05-07) and haven't aged past the 24h window yet. These exclusions
+# can be removed once the pinned versions are older than 24 hours.
 minimumReleaseAgeExclude:
   - "@fern-api/*"
   - "@fern-fern/*"
