@@ -1,0 +1,16 @@
+# Webhook with inline payload + property-level audiences. Filter [external]
+# should keep `userId` and drop `internalReason`.
+webhooks:
+  userAdded:
+    audiences:
+      - external
+    display-name: User Added
+    method: POST
+    payload:
+      name: UserAddedPayload
+      properties:
+        userId: string
+        internalReason:
+          type: string
+          audiences:
+            - internal

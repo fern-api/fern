@@ -24,6 +24,16 @@ it("audiences", async () => {
     });
 });
 
+it("property-level audiences", async () => {
+    const PROPERTY_AUDIENCES_DIR = path.join(__dirname, "fixtures/property-level-audiences/fern");
+    await generateAndSnapshotIRFromPath({
+        absolutePathToIr: AbsoluteFilePath.of(IR_DIR),
+        absolutePathToWorkspace: AbsoluteFilePath.of(PROPERTY_AUDIENCES_DIR),
+        audiences: { type: "select", audiences: ["external"] },
+        workspaceName: "propertyLevelAudiences"
+    });
+});
+
 it("environments no audiences", async () => {
     const AUDIENCES_DIR = path.join(__dirname, "fixtures/audiences/fern");
     await generateAndSnapshotIRFromPath({
