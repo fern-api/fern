@@ -1,6 +1,13 @@
-FROM node:24.14-slim
+FROM node:24.15.0-trixie-slim
 
-RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates git zip && rm -rf /var/lib/apt/lists/*
+# Apply latest Debian security updates so that grype-tracked OS package
+# vulnerabilities (glibc, dpkg, nghttp2, libcap2, systemd, libgcrypt20,
+# krb5, etc.) are resolved on top of the base image.
+RUN apt-get update \
+  && apt-get -y upgrade \
+  && apt-get install -y --no-install-recommends ca-certificates git zip \
+  && apt-get -y autoremove \
+  && rm -rf /var/lib/apt/lists/*
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
 
