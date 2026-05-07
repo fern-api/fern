@@ -1358,8 +1358,7 @@ export function convertSchemaObject(
                 // We don't short-circuit if additionalProperties is set, as we'd lose that information.
                 // Before short-circuiting, merge any constraints from filtered-out primitive
                 // allOf elements (e.g. pattern, format, minLength) into the remaining element.
-                let elementToConvert: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject =
-                    filteredAllOfObjects[0];
+                let elementToConvert: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject = filteredAllOfObjects[0];
                 if (filteredOutPrimitiveElements.length > 0 && isReferenceObject(elementToConvert)) {
                     const resolvedRef = context.resolveSchemaReference(elementToConvert);
                     const mergedSchema: OpenAPIV3.SchemaObject = { ...resolvedRef };
