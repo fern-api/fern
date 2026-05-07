@@ -5,12 +5,19 @@
 FROM rust:1.82-alpine3.20 AS rust
 RUN rustup component add rustfmt
 
-FROM node:22.22-alpine3.22
+FROM node:22.22.2-alpine3.22
+
+# Pull the latest Alpine 3.22 package fixes on top of what ships in the base
+# image. This picks up the patched openssl/libssl3/libcrypto3 build from the
+# Alpine repository, addressing the seven openssl 3.5.5 CVEs (critical,
+# CVSS 9.8) flagged by the 2026-05-07 grype scan of the rust-sdk-generator
+# container.
+RUN apk --no-cache upgrade
 
 # Update bundled npm to refresh transitive dependencies (picomatch, brace-expansion,
 # ip-address, etc.) that ship inside /usr/local/lib/node_modules/npm and otherwise
 # carry known CVEs into the image. We install into a fresh prefix and swap directories
-# because in-place self-upgrade of the bundled npm in node:22.22-alpine3.22 fails with
+# because in-place self-upgrade of the bundled npm in node:22.22.2-alpine3.22 fails with
 # a stale module-resolution error.
 RUN mkdir -p /tmp/npm-upgrade \
     && npm install --prefix /tmp/npm-upgrade npm@11.13.0 \
