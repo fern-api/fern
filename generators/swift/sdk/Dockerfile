@@ -1,7 +1,8 @@
-# Pinned to 22.22.2-alpine3.22 to fix Node.js binary CVEs picked up by recent
-# grype scans and to upgrade npm-bundled deps (picomatch >=4.0.4,
-# brace-expansion >=2.0.3, ip-address >=10.1.1).
-FROM node:22.22.2-alpine3.22
+# Track the latest 22.22.x Node.js patch on Alpine 3.23 (newer base than the
+# original 3.22 to drop several `git` / `curl` / `busybox` CVEs that have no
+# fix in 3.22). Floating the patch tag means future Node.js 22.22.x security
+# releases are picked up automatically.
+FROM node:22.22-alpine3.23
 
 # `apk --no-cache upgrade` pulls Alpine's backported security fixes on top of
 # the base image (e.g. openssl backports addressing CVE-2026-31789,
