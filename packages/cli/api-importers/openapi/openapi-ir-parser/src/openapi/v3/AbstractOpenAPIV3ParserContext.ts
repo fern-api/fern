@@ -78,7 +78,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         if (this.namespace != null) {
             tags.push(this.namespace);
         }
-        return tags.concat(operationTags ?? []);
+        return tags.concat((operationTags ?? []).filter((tag) => tag.trim().length > 0));
     }
 
     public resolveTags(operationTags: string[] | undefined): SdkGroup[] {
@@ -91,7 +91,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
 
             tags.push(namespaceSegment);
         }
-        return tags.concat(operationTags ?? []);
+        return tags.concat((operationTags ?? []).filter((tag) => tag.trim().length > 0));
     }
 
     public resolveGroupName(groupName: SdkGroupName): SdkGroupName {
