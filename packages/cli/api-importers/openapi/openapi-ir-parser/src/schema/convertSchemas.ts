@@ -1335,13 +1335,18 @@ export function convertSchemaObject(
 
             // Now that we've handled the single-element allOf case, filter the
             // allOfs down to just the objects.
-            const filteredAllOfObjects = filteredAllOfs.filter((allOf) => {
-                const valid = isValidAllOfObject(allOf);
-                if (!valid) {
+            const filteredAllOfObjects: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[] = [];
+            const filteredOutPrimitiveElements: OpenAPIV3.SchemaObject[] = [];
+            for (const allOf of filteredAllOfs) {
+                if (isValidAllOfObject(allOf)) {
+                    filteredAllOfObjects.push(allOf);
+                } else {
                     context.logger.debug(`Skipping non-object allOf element: ${JSON.stringify(allOf)}`);
+                    if (!isReferenceObject(allOf)) {
+                        filteredOutPrimitiveElements.push(allOf);
+                    }
                 }
-                return valid;
-            });
+            }
 
             if (
                 (schema.properties == null || hasNoProperties(schema)) &&
@@ -1351,8 +1356,57 @@ export function convertSchemaObject(
             ) {
                 // Try to short-circuit again.
                 // We don't short-circuit if additionalProperties is set, as we'd lose that information.
+                // Before short-circuiting, merge any constraints from filtered-out primitive
+                // allOf elements (e.g. pattern, format, minLength) into the remaining element.
+                let elementToConvert: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject =
+                    filteredAllOfObjects[0];
+                if (filteredOutPrimitiveElements.length > 0 && isReferenceObject(elementToConvert)) {
+                    const resolvedRef = context.resolveSchemaReference(elementToConvert);
+                    const mergedSchema: OpenAPIV3.SchemaObject = { ...resolvedRef };
+                    for (const primitiveElement of filteredOutPrimitiveElements) {
+                        // Merge primitive constraints: override wins (like allOf semantics)
+                        if (primitiveElement.pattern != null) {
+                            mergedSchema.pattern = primitiveElement.pattern;
+                        }
+                        if (primitiveElement.format != null) {
+                            mergedSchema.format = primitiveElement.format;
+                        }
+                        if (primitiveElement.minLength != null) {
+                            mergedSchema.minLength = primitiveElement.minLength;
+                        }
+                        if (primitiveElement.maxLength != null) {
+                            mergedSchema.maxLength = primitiveElement.maxLength;
+                        }
+                        if (primitiveElement.minimum != null) {
+                            mergedSchema.minimum = primitiveElement.minimum;
+                        }
+                        if (primitiveElement.maximum != null) {
+                            mergedSchema.maximum = primitiveElement.maximum;
+                        }
+                        if (primitiveElement.exclusiveMinimum != null) {
+                            mergedSchema.exclusiveMinimum = primitiveElement.exclusiveMinimum;
+                        }
+                        if (primitiveElement.exclusiveMaximum != null) {
+                            mergedSchema.exclusiveMaximum = primitiveElement.exclusiveMaximum;
+                        }
+                        if (primitiveElement.multipleOf != null) {
+                            mergedSchema.multipleOf = primitiveElement.multipleOf;
+                        }
+                        if (primitiveElement.description != null) {
+                            mergedSchema.description = primitiveElement.description;
+                        }
+                        if (primitiveElement.default != null) {
+                            mergedSchema.default = primitiveElement.default;
+                        }
+                    }
+                    elementToConvert = mergedSchema;
+                } else if (filteredOutPrimitiveElements.length > 0 && !isReferenceObject(elementToConvert)) {
+                    for (const primitiveElement of filteredOutPrimitiveElements) {
+                        elementToConvert = { ...elementToConvert, ...primitiveElement };
+                    }
+                }
                 const convertedSchema = convertSchema(
-                    filteredAllOfObjects[0],
+                    elementToConvert,
                     wrapAsOptional,
                     wrapAsNullable,
                     context,

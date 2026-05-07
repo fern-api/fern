@@ -106,8 +106,8 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
 
         // When allOf has exactly one $ref to a non-object type (e.g. enum) and the
         // remaining elements are inline primitive constraints (no properties, no enum,
-        // no composition keywords), reference the $ref type directly instead of
-        // creating a synthetic merged copy.
+        // no composition keywords, no additional validation rules), reference the $ref
+        // type directly instead of creating a synthetic merged copy.
         const refElements = this.schemaOrReference.allOf.filter((s) => this.context.isReferenceObject(s));
         const inlineElements = this.schemaOrReference.allOf.filter(
             (s): s is OpenAPIV3_1.SchemaObject =>
@@ -118,7 +118,22 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         if (
             singleRef != null &&
             inlineElements.every(
-                (s) => !s.properties && !s.enum && !s.oneOf && !s.anyOf && !s.allOf && !s.format && !("items" in s)
+                (s) =>
+                    !s.properties &&
+                    !s.enum &&
+                    !s.oneOf &&
+                    !s.anyOf &&
+                    !s.allOf &&
+                    !s.format &&
+                    !("items" in s) &&
+                    !s.pattern &&
+                    s.minLength == null &&
+                    s.maxLength == null &&
+                    s.minimum == null &&
+                    s.maximum == null &&
+                    s.exclusiveMinimum == null &&
+                    s.exclusiveMaximum == null &&
+                    s.multipleOf == null
             ) &&
             !inlineElements.some((s) => s.type === "null" || (Array.isArray(s.type) && s.type.includes("null")))
         ) {

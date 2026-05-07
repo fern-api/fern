@@ -1,0 +1,3 @@
+- summary: |
+    Fix allOf schema conversion dropping validation constraints (pattern, minLength, maxLength, minimum, maximum, exclusiveMinimum, exclusiveMaximum, multipleOf) when merging a $ref with inline primitive elements. Previously, the short-circuit path returned only the $ref and discarded the inline constraints.
+  type: fix
