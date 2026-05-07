@@ -46,12 +46,16 @@ export class CheckCommand {
         }
 
         // Apply SDK fixes when --fix is specified.
+        let sdkFixedCount = 0;
         if (args.fix && result.violations.length > 0) {
             const sdkFixer = new SdkFixer({ context });
-            await sdkFixer.fix({ workspace, violations: result.violations });
+            const fixResult = await sdkFixer.fix({ workspace, violations: result.violations });
+            sdkFixedCount = fixResult.fixedCount;
         }
 
-        if (hasErrors && !args.fix) {
+        // Fail if there are errors and either --fix was not used, or --fix ran but
+        // could not resolve any violations (non-fixable errors remain).
+        if (hasErrors && (!args.fix || sdkFixedCount === 0)) {
             throw new CliError({ code: CliError.Code.ValidationError });
         }
 

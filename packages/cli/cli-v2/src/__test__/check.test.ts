@@ -1,6 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { randomUUID } from "crypto";
-import { mkdir, rm, writeFile } from "fs/promises";
+import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
@@ -219,6 +219,11 @@ paths: {}
                 "log-level": "info"
             })
         ).resolves.not.toThrow();
+
+        // Verify the fern.yml was actually mutated: defaultGroup should be removed.
+        const updatedContent = await readFile(join(testDir, "fern.yml"), "utf-8");
+        expect(updatedContent).not.toContain("defaultGroup");
+        expect(updatedContent).not.toContain("nonexistent-group");
     });
 });
 
@@ -274,5 +279,10 @@ paths: {}
                 "log-level": "info"
             })
         ).resolves.not.toThrow();
+
+        // Verify the fern.yml was actually mutated: defaultGroup should be removed.
+        const updatedContent = await readFile(join(testDir, "fern.yml"), "utf-8");
+        expect(updatedContent).not.toContain("defaultGroup");
+        expect(updatedContent).not.toContain("nonexistent-group");
     });
 });

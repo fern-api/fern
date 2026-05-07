@@ -8,7 +8,6 @@ import { Icons } from "../../ui/format.js";
 import { Version } from "../../version.js";
 import type { Workspace } from "../../workspace/Workspace.js";
 import type { SdkChecker } from "../checker/SdkChecker.js";
-import { getGeneratorIdFromImage } from "../config/converter/getGeneratorIdFromImage.js";
 import type { Target } from "../config/Target.js";
 
 export declare namespace SdkFixer {
@@ -147,8 +146,6 @@ export class SdkFixer {
 
     private async resolveLatestVersion(target: Target): Promise<string | undefined> {
         try {
-            const generatorId = getGeneratorIdFromImage({ image: target.image });
-            void generatorId;
             return await getLatestGeneratorVersion({
                 generatorName: target.image,
                 cliVersion: Version,

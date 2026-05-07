@@ -66,13 +66,15 @@ export class CheckCommand {
             }
         }
 
+        let totalFixedCount = 0;
+
         if (result.mdxParseErrors.length > 0) {
             for (const error of result.mdxParseErrors) {
                 context.stderr.info(`\n${error.toString()}\n`);
             }
 
             if (args.fix) {
-                await applyMdxFixes(context, result.mdxParseErrors);
+                totalFixedCount += await applyMdxFixes(context, result.mdxParseErrors);
             } else {
                 const isTTY = process.stdout.isTTY === true;
                 if (isTTY && !isClaudeCodeSession()) {
@@ -84,10 +86,13 @@ export class CheckCommand {
         // Apply docs config fixes when --fix is specified.
         if (args.fix && filteredViolations.length > 0) {
             const docsFixer = new DocsFixer({ context });
-            await docsFixer.fix({ workspace, violations: filteredViolations });
+            const fixResult = await docsFixer.fix({ workspace, violations: filteredViolations });
+            totalFixedCount += fixResult.fixedCount;
         }
 
-        if (hasErrors && !args.fix) {
+        // Fail if there are errors and either --fix was not used, or --fix ran but
+        // could not resolve any violations (non-fixable errors remain).
+        if (hasErrors && (!args.fix || totalFixedCount === 0)) {
             throw new CliError({ code: CliError.Code.ValidationError });
         }
 

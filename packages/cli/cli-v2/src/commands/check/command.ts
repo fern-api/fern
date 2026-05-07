@@ -88,11 +88,13 @@ export class CheckCommand {
             this.displayViolations(violations);
         }
 
+        let totalFixedCount = 0;
+
         if (docsCheckResult.mdxParseErrors.length > 0) {
             this.displayMdxParseErrors(context, docsCheckResult.mdxParseErrors);
 
             if (args.fix) {
-                await applyMdxFixes(context, docsCheckResult.mdxParseErrors);
+                totalFixedCount += await applyMdxFixes(context, docsCheckResult.mdxParseErrors);
             } else {
                 // Offer AI-assisted fixes when running interactively.
                 // Skip when: non-TTY (CI), JSON mode, or inside a Claude Code session
@@ -107,17 +109,20 @@ export class CheckCommand {
         // Apply SDK fixes when --fix is specified.
         if (args.fix && sdkCheckResult.violations.length > 0) {
             const sdkFixer = new SdkFixer({ context });
-            await sdkFixer.fix({ workspace, violations: sdkCheckResult.violations });
+            const sdkFixResult = await sdkFixer.fix({ workspace, violations: sdkCheckResult.violations });
+            totalFixedCount += sdkFixResult.fixedCount;
         }
 
         // Apply docs config fixes when --fix is specified.
         if (args.fix && filteredDocsViolations.length > 0) {
             const docsFixer = new DocsFixer({ context });
-            await docsFixer.fix({ workspace, violations: filteredDocsViolations });
+            const docsFixResult = await docsFixer.fix({ workspace, violations: filteredDocsViolations });
+            totalFixedCount += docsFixResult.fixedCount;
         }
 
-        // Fail if there are errors, or if strict mode and there are warnings.
-        if (hasErrors && !args.fix) {
+        // Fail if there are errors and either --fix was not used, or --fix ran but
+        // could not resolve any violations (non-fixable errors remain).
+        if (hasErrors && (!args.fix || totalFixedCount === 0)) {
             throw new CliError({ code: CliError.Code.ValidationError });
         }
 
