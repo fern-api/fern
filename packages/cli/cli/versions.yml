@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.18.1
+  changelogEntry:
+    - summary: |
+        Fix GitHub Enterprise support for self-hosted SDK generation. Octokit API calls
+        (signed commits, PR creation, ref updates) now use the correct GHE API base URL
+        derived from the repository URI instead of always hitting api.github.com.
+      type: fix
+  createdAt: "2026-05-07"
+  irVersion: 66
 - version: 5.18.0
   changelogEntry:
     - summary: |
