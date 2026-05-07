@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.19.0
+  changelogEntry:
+    - summary: |
+        Add PR title, body, and commit message to `fern automations upgrade --json` output.
+        The new `pr` field in the JSON output allows GitHub Actions consumers to use
+        CLI-generated PR formatting directly, eliminating duplicated presentation logic.
+      type: feat
+  createdAt: "2026-05-07"
+  irVersion: 66
 - version: 5.18.1
   changelogEntry:
     - summary: |
