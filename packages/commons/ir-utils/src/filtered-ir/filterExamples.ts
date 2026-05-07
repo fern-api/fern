@@ -298,12 +298,18 @@ function filterExamplePathParameters({
 
 function filterExampleQueryParameters({
     filteredIr,
-    queryParameters
+    queryParameters,
+    endpointId
 }: {
     filteredIr: FilteredIr;
     queryParameters: ExampleQueryParameter[];
+    endpointId: string | undefined;
 }): ExampleQueryParameter[] {
     return queryParameters
+        .filter(
+            (queryParameter) =>
+                endpointId == null || filteredIr.hasQueryParameter(endpointId, getWireValue(queryParameter.name))
+        )
         .map((queryParameter) => {
             const filteredQueryParameter = filterExampleTypeReference({
                 filteredIr,
@@ -462,13 +468,79 @@ export function filterEndpointExample({
         }),
         serviceHeaders: filterExampleHeader({ filteredIr, headers: example.serviceHeaders }),
         endpointHeaders: filterExampleHeader({ filteredIr, headers: example.endpointHeaders }),
-        queryParameters: filterExampleQueryParameters({ filteredIr, queryParameters: example.queryParameters }),
+        queryParameters: filterExampleQueryParameters({
+            filteredIr,
+            queryParameters: example.queryParameters,
+            endpointId
+        }),
         request:
             example.request !== undefined
                 ? filterExampleRequestBody({ filteredIr, requestBody: example.request, endpointId })
                 : undefined,
         response: filterExampleResponse({ filteredIr, response: example.response })
     };
+}
+
+/**
+ * Filters an inline webhook payload example by `hasWebhookPayloadProperty`. Inline
+ * webhook payloads are not registered as regular types in the filter graph, so we
+ * cannot reuse `filterExampleTypeReference` (which short-circuits on `hasTypeId`).
+ *
+ * The IR converter currently emits user-specified inline webhook payload examples
+ * as `container.map` shapes of `unknown` values (one entry per top-level key)
+ * rather than as typed `named.object` shapes. We handle both forms.
+ */
+export function filterWebhookExamplePayload({
+    filteredIr,
+    payload,
+    webhookId
+}: {
+    filteredIr: FilteredIr;
+    payload: ExampleTypeReference;
+    webhookId: string | undefined;
+}): ExampleTypeReference {
+    if (webhookId == null) {
+        return payload;
+    }
+    const isAllowed = (wireName: string) => filteredIr.hasWebhookPayloadProperty(webhookId, wireName);
+
+    if (payload.shape.type === "named" && payload.shape.shape.type === "object") {
+        const named = payload.shape;
+        const objectShape = named.shape;
+        if (objectShape.type !== "object") {
+            return payload;
+        }
+        const filteredProperties = objectShape.properties.filter((p) => isAllowed(getWireValue(p.name)));
+        const allowedKeys = new Set(filteredProperties.map((p) => getWireValue(p.name)));
+        return {
+            ...payload,
+            jsonExample: filterJsonExampleObjectKeys(payload.jsonExample, allowedKeys),
+            shape: ExampleTypeReferenceShape.named({
+                ...named,
+                shape: ExampleTypeShape.object({ ...objectShape, properties: filteredProperties })
+            })
+        };
+    }
+
+    if (payload.shape.type === "container" && payload.shape.container.type === "map") {
+        const mapContainer = payload.shape.container;
+        const filteredEntries = mapContainer.map.filter((entry) => {
+            const keyJson = entry.key.jsonExample;
+            return typeof keyJson === "string" && isAllowed(keyJson);
+        });
+        const allowedKeys = new Set(
+            filteredEntries
+                .map((entry) => entry.key.jsonExample)
+                .filter((key): key is string => typeof key === "string")
+        );
+        return {
+            ...payload,
+            jsonExample: filterJsonExampleObjectKeys(payload.jsonExample, allowedKeys),
+            shape: ExampleTypeReferenceShape.container(ExampleContainer.map({ ...mapContainer, map: filteredEntries }))
+        };
+    }
+
+    return payload;
 }
 
 export function filterExampleType({

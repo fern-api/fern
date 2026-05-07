@@ -10,7 +10,7 @@ import { mapValues, pickBy } from "lodash-es";
 
 import { getWireValue } from "../utils/namesUtils.js";
 import { FilteredIr } from "./FilteredIr.js";
-import { filterEndpointExample, filterExampleType } from "./filterExamples.js";
+import { filterEndpointExample, filterExampleType, filterWebhookExamplePayload } from "./filterExamples.js";
 
 export function filterIntermediateRepresentationForAudiences(
     intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">,
@@ -63,6 +63,16 @@ export function filterIntermediateRepresentationForAudiences(
                                 return filteredIr.hasWebhookPayloadProperty(webhookId, getWireValue(property.name));
                             })
                         };
+                    }
+                    if (webhook.examples != null && webhookId != null) {
+                        webhook.examples = webhook.examples.map((example) => ({
+                            ...example,
+                            payload: filterWebhookExamplePayload({
+                                filteredIr,
+                                payload: example.payload,
+                                webhookId
+                            })
+                        }));
                     }
                     return webhook;
                 });

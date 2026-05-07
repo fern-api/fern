@@ -46,7 +46,7 @@ service:
             audiences:
               - external
           internalRef:
-            type: optional<string>
+            type: string
             audiences:
               - internal
         body:
