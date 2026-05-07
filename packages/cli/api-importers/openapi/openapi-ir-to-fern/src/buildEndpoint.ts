@@ -253,7 +253,8 @@ export function buildEndpoint({
                     docs: jsonResponse.description ?? undefined,
                     type: getTypeFromTypeReference(responseTypeReference),
                     format: "sse",
-                    terminator: jsonResponse.terminator ?? undefined
+                    terminator: jsonResponse.terminator ?? undefined,
+                    resumable: jsonResponse.resumable ?? undefined
                 };
             },
             file: (fileResponse) => {
