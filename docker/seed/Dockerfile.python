@@ -1,3 +1,7 @@
+# Global ARG (only valid before the first FROM) used by the compose-build
+# stage's FROM line.
+ARG COMPOSE_GO_VERSION=1.26.2
+
 # Stage 1: Pull wiremock image as tar (no daemon needed)
 FROM alpine:3.23 AS wiremock-pull
 RUN apk add --no-cache curl && \
@@ -5,7 +9,47 @@ RUN apk add --no-cache curl && \
     curl -sL "https://github.com/google/go-containerregistry/releases/download/v0.21.2/go-containerregistry_Linux_${ARCH}.tar.gz" | tar xz -C /usr/local/bin crane && \
     crane pull wiremock/wiremock:3.9.1 /wiremock.tar
 
-# Stage 2: Build the seed image
+# Stage 2: Rebuild docker-compose with a patched Go toolchain + opentelemetry
+# pinned to a non-vulnerable version. The compose binary that ships in the
+# dind base image is built with go1.25.8 + otel 1.42.0, both of which trigger
+# CVEs that have no upstream compose release yet. Building from source lets us
+# pick up patched versions immediately.
+FROM golang:${COMPOSE_GO_VERSION}-alpine3.23 AS compose-build
+ARG COMPOSE_VERSION=v5.1.3
+ARG COMPOSE_OTEL_VERSION=v1.43.0
+RUN apk add --no-cache git make bash
+WORKDIR /src
+RUN git clone --depth 1 --branch "${COMPOSE_VERSION}" https://github.com/docker/compose.git .
+# Override the vulnerable otel module versions before building. Using
+# `replace` (rather than `require`) ensures the override applies to indirect
+# dependencies as well.
+RUN go mod edit \
+        -replace="go.opentelemetry.io/otel=go.opentelemetry.io/otel@${COMPOSE_OTEL_VERSION}" \
+        -replace="go.opentelemetry.io/otel/sdk=go.opentelemetry.io/otel/sdk@${COMPOSE_OTEL_VERSION}" \
+        -replace="go.opentelemetry.io/otel/metric=go.opentelemetry.io/otel/metric@${COMPOSE_OTEL_VERSION}" \
+        -replace="go.opentelemetry.io/otel/trace=go.opentelemetry.io/otel/trace@${COMPOSE_OTEL_VERSION}" \
+        -replace="go.opentelemetry.io/otel/exporters/otlp/otlptrace=go.opentelemetry.io/otel/exporters/otlp/otlptrace@${COMPOSE_OTEL_VERSION}" \
+        -replace="go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc=go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc@${COMPOSE_OTEL_VERSION}" \
+        -replace="go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp=go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp@${COMPOSE_OTEL_VERSION}" \
+        -replace="go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc=go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc@${COMPOSE_OTEL_VERSION}" \
+        -replace="go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp=go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp@${COMPOSE_OTEL_VERSION}" \
+    && go mod tidy
+RUN CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" \
+        -o /out/docker-compose ./cmd
+
+# Stage 3: Rebuild runc with the patched Go toolchain. Upstream runc v1.4.2
+# binaries are compiled with go1.25.8, which trips multiple Go stdlib CVEs
+# (including a Critical compiler memory-corruption issue). Rebuilding from the
+# tagged release source pulls in the patched Go runtime.
+FROM golang:${COMPOSE_GO_VERSION}-alpine3.23 AS runc-build
+ARG RUNC_VERSION=1.4.2
+RUN apk add --no-cache git make bash gcc musl-dev linux-headers \
+        libseccomp-dev libseccomp-static pkgconf
+WORKDIR /src
+RUN git clone --depth 1 --branch "v${RUNC_VERSION}" https://github.com/opencontainers/runc.git .
+RUN make static && mkdir -p /out && cp runc /out/runc
+
+# Stage 4: Build the seed image
 FROM docker:29.4.1-dind-alpine3.23
 
 # Copy pre-pulled wiremock image
@@ -13,6 +57,39 @@ COPY --from=wiremock-pull /wiremock.tar /wiremock.tar
 
 # Apply the latest APK security patches available for the base image
 RUN apk update && apk upgrade --no-cache
+
+# Replace the bundled containerd binaries with the upstream v2.3.0 release,
+# which is built against patched go-jose, go.opentelemetry.io/*,
+# google.golang.org/grpc, and golang.org/x/net versions flagged by grype.
+ARG CONTAINERD_VERSION=2.3.0
+RUN set -eux \
+    && apk add --no-cache --virtual .fetch curl tar \
+    && case "$(uname -m)" in \
+        x86_64)  GOARCH=amd64 ;; \
+        aarch64) GOARCH=arm64 ;; \
+        *) echo "unsupported arch: $(uname -m)" >&2; exit 1 ;; \
+    esac \
+    && curl -fsSL "https://github.com/containerd/containerd/releases/download/v${CONTAINERD_VERSION}/containerd-static-${CONTAINERD_VERSION}-linux-${GOARCH}.tar.gz" \
+        | tar -xz -C /usr/local \
+    && apk del .fetch
+
+# Replace the bundled runc binary with one we rebuilt against the patched Go
+# toolchain (no upstream runc release ships go1.25.9/1.26.2 yet).
+COPY --from=runc-build /out/runc /usr/local/sbin/runc
+RUN chmod 0755 /usr/local/sbin/runc \
+    && rm -f /usr/local/bin/runc \
+    && ln -s /usr/local/sbin/runc /usr/local/bin/runc
+
+# Drop the docker-buildx CLI plugin: the seed wire-test workflow only needs
+# `docker compose up` of a pre-loaded wiremock image, never `docker buildx`.
+# Removing it eliminates the spdystream / sigstore / otel / Go stdlib CVEs
+# that grype reports against the buildx binary.
+RUN rm -f /usr/local/libexec/docker/cli-plugins/docker-buildx
+
+# Replace the bundled docker-compose plugin with the binary we rebuilt against
+# a patched Go toolchain + opentelemetry tree.
+COPY --from=compose-build /out/docker-compose /usr/local/libexec/docker/cli-plugins/docker-compose
+RUN chmod 0755 /usr/local/libexec/docker/cli-plugins/docker-compose
 
 # Install Python and Poetry
 RUN apk add --no-cache python3 py3-pip \
