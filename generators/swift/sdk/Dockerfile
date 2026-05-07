@@ -1,5 +1,6 @@
-FROM node:22.22-alpine3.22
+FROM node:22.22-alpine3.23
 
+RUN apk update && apk upgrade --no-cache
 RUN apk --no-cache add bash curl git zip
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"

@@ -1,4 +1,4 @@
-FROM node:22.12-alpine3.20 AS node
+FROM node:22.22-alpine3.23 AS node
 FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine
 
 ENV YARN_CACHE_FOLDER=/.yarn
@@ -13,7 +13,8 @@ ENV SENTRY_DSN=$SENTRY_DSN
 ENV SENTRY_ENVIRONMENT=$SENTRY_ENVIRONMENT
 ENV SENTRY_RELEASE=$SENTRY_RELEASE
 
-RUN apk --no-cache add bash curl git zip && \
+RUN apk update && apk upgrade --no-cache && \
+    apk --no-cache add bash curl git zip && \
     git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
 

@@ -1,12 +1,12 @@
 # Stage 1: Node.js
-# Pinned to 22.22.2-alpine3.22 to fix Node.js binary CVEs picked up by the
+# Pinned to 22.22-alpine3.23 to fix Node.js binary CVEs picked up by the
 # 2026-05-06 grype scan (CVE-2025-23166, CVE-2025-23083, CVE-2025-59465,
 # CVE-2026-21637, CVE-2025-55131, CVE-2026-21710, CVE-2025-59466,
 # CVE-2025-23085, CVE-2026-21717, CVE-2026-21713, CVE-2026-21714,
 # CVE-2025-55132, CVE-2025-23165, CVE-2026-21715, CVE-2026-21716,
 # CVE-2025-55130) and to upgrade npm-bundled deps cross-spawn (>=7.0.5),
 # minimatch (>=9.0.7), glob (>=10.5.0), tar (>=7.5.11), and diff (>=5.2.2).
-FROM node:22.22.2-alpine3.22 AS node
+FROM node:22.22-alpine3.23 AS node
 
 FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine
 
