@@ -815,7 +815,12 @@ async function convertOutputMode({
     const downloadSnippets = generator.snippets != null && generator.snippets.path !== "";
     if (generator.github) {
         const repoString = isGithubSelfhosted(generator.github) ? generator.github.uri : generator.github.repository;
-        const { owner, repo } = parseRepository(repoString);
+        const { owner, repo, remote } = parseRepository(repoString);
+        // For GHE instances, pass the host so Fiddle targets the correct API endpoint.
+        // The field isn't on the current fiddle-sdk types yet; intermediate variables
+        // bypass TypeScript's excess-property check (same pattern as `replay` in
+        // createAndStartJob.ts). Once the SDK is regenerated the field will type-check.
+        const host = remote !== "github.com" ? remote : undefined;
         const publishInfo =
             generator.output != null
                 ? getGithubPublishInfo(generator.output, maybeGroupLevelMetadata, maybeTopLevelMetadata)
@@ -833,15 +838,17 @@ async function convertOutputMode({
             case "commit":
             case "release": {
                 const releaseConfig = generator.github as generatorsYml.GithubCommitAndReleaseSchema;
+                const commitAndReleaseValue = {
+                    owner,
+                    repo,
+                    host,
+                    branch: releaseConfig.branch,
+                    license,
+                    publishInfo,
+                    downloadSnippets
+                };
                 return FernFiddle.OutputMode.githubV2(
-                    FernFiddle.GithubOutputModeV2.commitAndRelease({
-                        owner,
-                        repo,
-                        branch: releaseConfig.branch,
-                        license,
-                        publishInfo,
-                        downloadSnippets
-                    })
+                    FernFiddle.GithubOutputModeV2.commitAndRelease(commitAndReleaseValue)
                 );
             }
             case "pull-request": {
@@ -851,29 +858,30 @@ async function convertOutputMode({
                     groupLevelReviewers: maybeGroupLevelReviewers,
                     outputModeReviewers: pullRequestConfig.reviewers
                 });
-                return FernFiddle.OutputMode.githubV2(
-                    FernFiddle.GithubOutputModeV2.pullRequest({
-                        owner,
-                        repo,
-                        license,
-                        publishInfo,
-                        downloadSnippets,
-                        reviewers,
-                        branch: pullRequestConfig.branch
-                    })
-                );
+                const pullRequestValue = {
+                    owner,
+                    repo,
+                    host,
+                    license,
+                    publishInfo,
+                    downloadSnippets,
+                    reviewers,
+                    branch: pullRequestConfig.branch
+                };
+                return FernFiddle.OutputMode.githubV2(FernFiddle.GithubOutputModeV2.pullRequest(pullRequestValue));
             }
-            case "push":
-                return FernFiddle.OutputMode.githubV2(
-                    FernFiddle.GithubOutputModeV2.push({
-                        owner,
-                        repo,
-                        branch: generator.github.mode === "push" ? generator.github.branch : undefined,
-                        license,
-                        publishInfo,
-                        downloadSnippets
-                    })
-                );
+            case "push": {
+                const pushValue = {
+                    owner,
+                    repo,
+                    host,
+                    branch: generator.github.mode === "push" ? generator.github.branch : undefined,
+                    license,
+                    publishInfo,
+                    downloadSnippets
+                };
+                return FernFiddle.OutputMode.githubV2(FernFiddle.GithubOutputModeV2.push(pushValue));
+            }
             default:
                 assertNever(mode);
         }
