@@ -8,9 +8,11 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.nullableOptional.core.NullableNonemptyFilter;
 import com.seed.nullableOptional.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,17 +46,17 @@ public final class ListUsersRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonIgnore
+    @JsonProperty("limit")
     public Optional<Integer> getLimit() {
         return limit;
     }
 
-    @JsonIgnore
+    @JsonProperty("offset")
     public Optional<Integer> getOffset() {
         return offset;
     }
 
-    @JsonIgnore
+    @JsonProperty("includeDeleted")
     public Optional<Boolean> getIncludeDeleted() {
         return includeDeleted;
     }
@@ -64,6 +66,12 @@ public final class ListUsersRequest {
         if (sortBy == null) {
             return Optional.empty();
         }
+        return sortBy;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("sortBy")
+    private Optional<String> _getSortBy() {
         return sortBy;
     }
 

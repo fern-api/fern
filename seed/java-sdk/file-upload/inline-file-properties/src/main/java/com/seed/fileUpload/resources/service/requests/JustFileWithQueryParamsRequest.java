@@ -5,7 +5,6 @@ package com.seed.fileUpload.resources.service.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -62,27 +61,27 @@ public final class JustFileWithQueryParamsRequest {
         return file;
     }
 
-    @JsonIgnore
+    @JsonProperty("listOfStrings")
     public List<String> getListOfStrings() {
         return listOfStrings;
     }
 
-    @JsonIgnore
+    @JsonProperty("optionalListOfStrings")
     public Optional<List<String>> getOptionalListOfStrings() {
         return optionalListOfStrings;
     }
 
-    @JsonIgnore
+    @JsonProperty("maybeString")
     public Optional<String> getMaybeString() {
         return maybeString;
     }
 
-    @JsonIgnore
+    @JsonProperty("integer")
     public int getInteger() {
         return integer;
     }
 
-    @JsonIgnore
+    @JsonProperty("maybeInteger")
     public Optional<Integer> getMaybeInteger() {
         return maybeInteger;
     }
