@@ -1,0 +1,212 @@
+import { ContainerRunner, extractErrorMessage } from "@fern-api/core-utils";
+import { copyToContainer, execInContainer, startContainer, stopContainer } from "@fern-api/docker-utils";
+import type { Logger } from "@fern-api/logger";
+import { LogLevel } from "@fern-api/logger";
+import { existsSync } from "fs";
+import { join } from "path";
+import type { PipelineLogger } from "../PipelineLogger";
+import type { PipelineContext, VerificationStepResult, VerifyStepConfig } from "../types";
+import { BaseStep } from "./BaseStep";
+
+const CONTAINER_WORKSPACE_PATH = "/workspace";
+const VERIFY_SCRIPT_RELATIVE_PATH = ".fern/verify.sh";
+const VERIFY_SCRIPT_CONTAINER_PATH = `${CONTAINER_WORKSPACE_PATH}/${VERIFY_SCRIPT_RELATIVE_PATH}`;
+
+/**
+ * Runs `.fern/verify.sh` (when emitted by the generator) inside a language-specific
+ * validator container. The validator image follows the convention
+ * `{generatorImage}-validator:{version}` — for `fernapi/fern-typescript-sdk:0.42.1`
+ * the validator is `fernapi/fern-typescript-sdk-validator:0.42.1`.
+ *
+ * No-ops when `.fern/verify.sh` is absent (only the TypeScript SDK generator emits
+ * it today; other languages will follow up via FER-9681). When the script runs and
+ * exits non-zero, the step records the failure on `result.success = false` and
+ * surfaces raw stderr through the pipeline logger so the orchestrator skips
+ * `GithubStep`.
+ */
+export class VerificationStep extends BaseStep {
+    readonly name = "verify";
+
+    constructor(
+        outputDir: string,
+        logger: PipelineLogger,
+        private readonly config: VerifyStepConfig,
+        private readonly generatorName?: string,
+        private readonly generatorVersions?: Record<string, string>
+    ) {
+        super(outputDir, logger);
+    }
+
+    async execute(_context: PipelineContext): Promise<VerificationStepResult> {
+        const verifyScriptHostPath = join(this.outputDir, VERIFY_SCRIPT_RELATIVE_PATH);
+        if (!existsSync(verifyScriptHostPath)) {
+            return { executed: true, success: true, skipped: true };
+        }
+
+        const validatorImage = this.deriveValidatorImage();
+        if (validatorImage == null) {
+            const message =
+                "Cannot derive validator image: generatorName and generatorVersions are required to compute " +
+                "the `{generatorImage}-validator:{version}` tag.";
+            this.logger.error(message);
+            return {
+                executed: true,
+                success: false,
+                skipped: false,
+                errorMessage: message
+            };
+        }
+
+        const runner: ContainerRunner = this.config.runner ?? "docker";
+        const dockerLogger = createDockerLoggerAdapter(this.logger);
+
+        let containerId: string | undefined;
+        try {
+            try {
+                containerId = await startContainer({
+                    logger: dockerLogger,
+                    imageName: validatorImage,
+                    runner
+                });
+            } catch (error) {
+                const message = `Failed to start verification container from image ${validatorImage}: ${extractErrorMessage(error)}`;
+                this.logger.error(message);
+                return {
+                    executed: true,
+                    success: false,
+                    skipped: false,
+                    errorMessage: message
+                };
+            }
+
+            try {
+                await copyToContainer({
+                    logger: dockerLogger,
+                    containerId,
+                    hostPath: this.outputDir,
+                    containerPath: CONTAINER_WORKSPACE_PATH,
+                    runner
+                });
+            } catch (error) {
+                const message = `Failed to copy workspace into verification container: ${extractErrorMessage(error)}`;
+                this.logger.error(message);
+                return {
+                    executed: true,
+                    success: false,
+                    skipped: false,
+                    errorMessage: message
+                };
+            }
+
+            const { stdout, stderr, exitCode } = await execInContainer({
+                logger: dockerLogger,
+                containerId,
+                command: ["bash", VERIFY_SCRIPT_CONTAINER_PATH],
+                runner,
+                writeLogsToFile: false,
+                reject: false
+            });
+
+            if (exitCode !== 0) {
+                const capturedStderr = stderr.length > 0 ? stderr : stdout;
+                this.logger.error(
+                    `Verification failed (exit code ${exitCode}) for image ${validatorImage}.\n${capturedStderr}`
+                );
+                return {
+                    executed: true,
+                    success: false,
+                    skipped: false,
+                    stderr: capturedStderr,
+                    errorMessage: `Verification script exited with code ${exitCode}`
+                };
+            }
+
+            this.logger.info(`Verification succeeded for image ${validatorImage}`);
+            return { executed: true, success: true, skipped: false };
+        } finally {
+            if (containerId != null) {
+                try {
+                    await stopContainer({ logger: dockerLogger, containerId, runner });
+                } catch (error) {
+                    this.logger.debug(
+                        `Best-effort cleanup: failed to stop verification container ${containerId}: ${extractErrorMessage(error)}`
+                    );
+                }
+            }
+        }
+    }
+
+    private deriveValidatorImage(): string | undefined {
+        if (this.generatorName == null) {
+            return undefined;
+        }
+        const version = this.generatorVersions?.[this.generatorName];
+        if (version == null) {
+            return undefined;
+        }
+        return `${this.generatorName}-validator:${version}`;
+    }
+}
+
+/**
+ * Bridges the pipeline's narrow `PipelineLogger` shape to `@fern-api/logger`'s
+ * richer `Logger` interface so it can be passed to the docker-utils functions
+ * (which require a real `Logger`, not the pipeline abstraction).
+ */
+function createDockerLoggerAdapter(pipelineLogger: PipelineLogger): Logger {
+    let enabled = true;
+    const logger: Logger = {
+        disable: () => {
+            enabled = false;
+        },
+        enable: () => {
+            enabled = true;
+        },
+        trace: (...args) => {
+            if (enabled) {
+                pipelineLogger.debug(args.join(" "));
+            }
+        },
+        debug: (...args) => {
+            if (enabled) {
+                pipelineLogger.debug(args.join(" "));
+            }
+        },
+        info: (...args) => {
+            if (enabled) {
+                pipelineLogger.info(args.join(" "));
+            }
+        },
+        warn: (...args) => {
+            if (enabled) {
+                pipelineLogger.warn(args.join(" "));
+            }
+        },
+        error: (...args) => {
+            if (enabled) {
+                pipelineLogger.error(args.join(" "));
+            }
+        },
+        log: (level, ...args) => {
+            if (!enabled) {
+                return;
+            }
+            switch (level) {
+                case LogLevel.Trace:
+                case LogLevel.Debug:
+                    pipelineLogger.debug(args.join(" "));
+                    return;
+                case LogLevel.Info:
+                    pipelineLogger.info(args.join(" "));
+                    return;
+                case LogLevel.Warn:
+                    pipelineLogger.warn(args.join(" "));
+                    return;
+                case LogLevel.Error:
+                    pipelineLogger.error(args.join(" "));
+                    return;
+            }
+        }
+    };
+    return logger;
+}

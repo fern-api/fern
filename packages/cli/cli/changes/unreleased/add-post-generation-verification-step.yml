@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add an opt-in `VerificationStep` to the post-generation pipeline that runs
+    `.fern/verify.sh` (when emitted by the generator) inside a language-specific
+    `{generatorImage}-validator` container after replay and before any GitHub
+    push. A failing script aborts the pipeline before opening a PR and surfaces
+    raw stderr through the pipeline logger; a missing script is a silent no-op.
+    The step is wired conditionally on `config.verify.enabled` and is not
+    surfaced through any CLI flag yet.
+  type: internal
