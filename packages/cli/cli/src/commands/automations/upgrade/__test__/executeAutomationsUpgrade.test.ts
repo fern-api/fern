@@ -148,9 +148,6 @@ describe("buildPrTitle", () => {
         expect(buildPrTitle({ cli: CLI_UPGRADED, generators: [] })).toBe("chore(fern): upgrade CLI 4.66.0 → 5.7.3");
     });
 
-    it("no changes", () => {
-        expect(buildPrTitle({ cli: CLI_NOT_UPGRADED, generators: [] })).toBe("chore(fern): upgrade check (no changes)");
-    });
 });
 
 describe("buildPrBody", () => {
@@ -185,26 +182,22 @@ describe("buildPrBody", () => {
 describe("buildCommitMessage", () => {
     it("includes cli and short generator names", () => {
         expect(buildCommitMessage({ cli: CLI_UPGRADED, generators: [GENERATOR_TS] })).toBe(
-            "chore: upgrade fern cli 4.66.0 → 5.7.3, typescript-sdk 3.63.4 → 3.65.5"
+            "chore: upgrade fern cli 4.66.0 -> 5.7.3, typescript-sdk 3.63.4 -> 3.65.5"
         );
     });
 
     it("generators only", () => {
         expect(buildCommitMessage({ cli: CLI_NOT_UPGRADED, generators: [GENERATOR_TS, GENERATOR_GO] })).toBe(
-            "chore: upgrade fern typescript-sdk 3.63.4 → 3.65.5, go-sdk 0.28.0 → 1.39.0"
+            "chore: upgrade fern typescript-sdk 3.63.4 -> 3.65.5, go-sdk 0.28.0 -> 1.39.0"
         );
     });
 
-    it("no changes", () => {
-        expect(buildCommitMessage({ cli: CLI_NOT_UPGRADED, generators: [] })).toBe(
-            "chore: fern upgrade check (no changes)"
-        );
-    });
 });
 
 describe("AutomationsUpgradeResult schema", () => {
     it("documents the expected JSON output shape including pr field", () => {
         const exampleResult = {
+            schemaVersion: 1 as const,
             cli: { from: "4.66.0", to: "4.96.0", upgraded: true },
             generators: [
                 {
@@ -222,10 +215,11 @@ describe("AutomationsUpgradeResult schema", () => {
             pr: {
                 title: "chore(fern): upgrade CLI 4.66.0 → 4.96.0 and 1 generator",
                 body: "## Fern Upgrade\n...",
-                commitMessage: "chore: upgrade fern cli 4.66.0 → 4.96.0, typescript-sdk 3.63.4 → 3.65.5"
+                commitMessage: "chore: upgrade fern cli 4.66.0 -> 4.96.0, typescript-sdk 3.63.4 -> 3.65.5"
             }
         };
 
+        expect(exampleResult).toHaveProperty("schemaVersion", 1);
         expect(exampleResult).toHaveProperty("cli");
         expect(exampleResult).toHaveProperty("generators");
         expect(exampleResult).toHaveProperty("skippedMajor");
@@ -264,6 +258,7 @@ describe("AutomationsUpgradeResult schema", () => {
 
     it("pr is null when nothing changed", () => {
         const result = {
+            schemaVersion: 1 as const,
             cli: { from: "5.7.3", to: "5.7.3", upgraded: false },
             generators: [],
             skippedMajor: [],

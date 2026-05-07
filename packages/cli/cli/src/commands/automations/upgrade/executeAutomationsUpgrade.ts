@@ -68,6 +68,7 @@ interface PrSuggestion {
 }
 
 export interface AutomationsUpgradeResult {
+    schemaVersion: 1;
     cli: CliUpgradeResult;
     generators: GeneratorUpgradeEntry[];
     skippedMajor: SkippedMajorEntry[];
@@ -102,6 +103,7 @@ async function getCurrentCliVersion(cliContext: CliContext): Promise<string> {
  *
  * JSON output format (on --json):
  *   {
+ *     "schemaVersion": 1,
  *     "cli": { "from": "4.66.0", "to": "4.96.0", "upgraded": true },
  *     "generators": [
  *       {
@@ -119,7 +121,7 @@ async function getCurrentCliVersion(cliContext: CliContext): Promise<string> {
  *     "pr": {
  *       "title": "chore(fern): upgrade CLI 4.66.0 → 4.96.0 and 2 generators",
  *       "body": "## Fern Upgrade\n...",
- *       "commitMessage": "chore: upgrade fern cli 4.66.0 → 4.96.0, ..."
+ *       "commitMessage": "chore: upgrade fern cli 4.66.0 -> 4.96.0, ..."
  *     }
  *   }
  */
@@ -177,6 +179,7 @@ export async function executeAutomationsUpgrade({
     const pr = hasChanges ? buildPrSuggestion({ cli: cliResult, generators: generatorResults.generators }) : null;
 
     const result: AutomationsUpgradeResult = {
+        schemaVersion: 1,
         cli: cliResult,
         generators: generatorResults.generators,
         skippedMajor: generatorResults.skippedMajor,
@@ -307,10 +310,6 @@ export function buildPrTitle({
         parts.push(`${generators.length} generator${generators.length === 1 ? "" : "s"}`);
     }
 
-    if (parts.length === 0) {
-        return "chore(fern): upgrade check (no changes)";
-    }
-
     return `chore(fern): upgrade ${parts.join(" and ")}`;
 }
 
@@ -363,15 +362,11 @@ export function buildCommitMessage({
     const parts: string[] = [];
 
     if (cli.upgraded) {
-        parts.push(`cli ${cli.from} → ${cli.to}`);
+        parts.push(`cli ${cli.from} -> ${cli.to}`);
     }
 
     for (const g of generators) {
-        parts.push(`${getShortGeneratorName(g.name)} ${g.from} → ${g.to}`);
-    }
-
-    if (parts.length === 0) {
-        return "chore: fern upgrade check (no changes)";
+        parts.push(`${getShortGeneratorName(g.name)} ${g.from} -> ${g.to}`);
     }
 
     return `chore: upgrade fern ${parts.join(", ")}`;

@@ -2605,6 +2605,7 @@ function addAutomationsGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: 
  *
  * JSON output format (--json):
  *   {
+ *     "schemaVersion": 1,
  *     "cli": { "from": "4.66.0", "to": "4.96.0", "upgraded": true },
  *     "generators": [
  *       {
@@ -2622,7 +2623,7 @@ function addAutomationsGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: 
  *     "pr": {
  *       "title": "chore(fern): upgrade CLI 4.66.0 → 4.96.0 and 1 generator",
  *       "body": "## Fern Upgrade\n...",
- *       "commitMessage": "chore: upgrade fern cli 4.66.0 → 4.96.0, typescript-sdk 3.63.4 → 3.65.5"
+ *       "commitMessage": "chore: upgrade fern cli 4.66.0 -> 4.96.0, typescript-sdk 3.63.4 -> 3.65.5"
  *     }
  *   }
  *
