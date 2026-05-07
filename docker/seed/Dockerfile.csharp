@@ -20,6 +20,15 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# PowerShell is bundled with the .NET SDK image but is unused by the seed
+# tests. Removing it drops the vulnerable assemblies bundled under
+# /usr/share/powershell/.store/.../tools/net10.0/ flagged by the 2026-05-07
+# grype scan:
+#   - System.Net.Http.dll 4.3.0 (GHSA-7jgj-8wvc-jh57)
+#   - System.Security.Cryptography.Xml.dll 10.0.5
+#       (GHSA-37gx-xxp4-5rgx, GHSA-w3x6-4m5h-cxqf)
+RUN rm -rf /usr/share/powershell /usr/bin/pwsh
+
 ENV PATH="$PATH:/root/.dotnet/tools"
 ENV DOTNET_NOLOGO=1
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
@@ -111,5 +120,32 @@ RUN dotnet tool install -g csharpier --version "1.2.6" && \
 </Project>' > /dependencies.csproj && \
     dotnet restore /dependencies.csproj && \
     rm /dependencies.csproj
+
+# Address the System.Net.Http 4.3.0 vulnerability (GHSA-7jgj-8wvc-jh57)
+# flagged by the 2026-05-07 grype scan. The 4.3.0 binary surfaces in two
+# locations:
+#
+# 1. The .NET SDK bundles the legacy System.Net.Http implementation under its
+#    .NET Framework cross-targeting paths. Overwrite those copies with the
+#    4.3.4 build pulled into the NuGet cache by the dependencies.csproj
+#    restore above.
+# 2. NuGet packages can ship build-time .deps.json manifests that still
+#    reference System.Net.Http 4.3.0 transitively (e.g. jmespath.net.parser
+#    1.1.0). These manifests are informational metadata bundled with the
+#    package and are not consulted by the .NET runtime at execution time
+#    (the runtime uses the application-level .deps.json instead). Rewrite
+#    the stale 4.3.0 reference to 4.3.4 so grype no longer flags it.
+RUN SRC="$(ls /root/.nuget/packages/system.net.http/4.3.4/lib/net46/System.Net.Http.dll)" && \
+    for sdk in /usr/share/dotnet/sdk/*/; do \
+        for tfm in net461 net47 net471; do \
+            target="${sdk}Microsoft/Microsoft.NET.Build.Extensions/${tfm}/lib/System.Net.Http.dll"; \
+            if [ -f "$target" ]; then cp "$SRC" "$target"; fi; \
+        done; \
+        target="${sdk}TestHostNetFramework/System.Net.Http.dll"; \
+        if [ -f "$target" ]; then cp "$SRC" "$target"; fi; \
+    done && \
+    grep -rlE '"System\.Net\.Http(/|": ")4\.3\.0"' /root/.nuget/packages 2>/dev/null | \
+        xargs -r sed -i -e 's|"System.Net.Http": "4.3.0"|"System.Net.Http": "4.3.4"|g' \
+                        -e 's|"System.Net.Http/4.3.0"|"System.Net.Http/4.3.4"|g'
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
