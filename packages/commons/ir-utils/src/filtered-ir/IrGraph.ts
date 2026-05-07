@@ -463,91 +463,68 @@ export class IrGraph {
             this.addReferencedTypes(typeIds, channelNode.referencedTypes);
         }
 
-        const properties: Record<TypeId, Set<string> | undefined> = {};
-        const requestProperties: Record<EndpointId, Set<string> | undefined> = {};
-        const queryParameters: Record<EndpointId, Set<string> | undefined> = {};
-        const webhookPayloadProperties: Record<WebhookId, Set<string> | undefined> = {};
+        // Property-level filtering is exclusion-based: a property is excluded iff it has
+        // at least one declared audience and none of those overlap the active filter.
+        const excludedProperties: Record<TypeId, Set<string> | undefined> = {};
+        const excludedRequestProperties: Record<EndpointId, Set<string> | undefined> = {};
+        const excludedQueryParameters: Record<EndpointId, Set<string> | undefined> = {};
+        const excludedWebhookPayloadProperties: Record<WebhookId, Set<string> | undefined> = {};
 
         if (this.audiences.type === "filtered") {
+            const activeAudiences = this.audiences.audiences;
+
             for (const [typeId, typePropertiesNode] of Object.entries(this.properties)) {
                 if (!typeIds.has(typeId)) {
                     continue;
                 }
-                const propertiesForTypeId = new Set<string>();
-                for (const audience of this.audiences.audiences) {
-                    const propertiesForAudience = typePropertiesNode.propertiesByAudience[audience];
-                    if (propertiesForAudience != null) {
-                        propertiesForAudience.forEach((property) => {
-                            propertiesForTypeId.add(property);
-                        });
-                    }
-                }
-                if (propertiesForTypeId.size > 0) {
-                    properties[typeId] = propertiesForTypeId;
-                }
-                properties[typeId] = propertiesForTypeId.size > 0 ? propertiesForTypeId : undefined;
+                excludedProperties[typeId] = computeExcludedKeys(
+                    typePropertiesNode.propertiesByAudience,
+                    activeAudiences
+                );
             }
 
             for (const [endpointId, requestPropertiesNode] of Object.entries(this.requestProperties)) {
                 if (!this.endpointsNeededForAudience.has(endpointId)) {
                     continue;
                 }
-                const propertiesForEndpoint = new Set<string>();
-                for (const audience of this.audiences.audiences) {
-                    const propertiesForAudience = requestPropertiesNode.propertiesByAudience[audience];
-                    if (propertiesForAudience != null) {
-                        propertiesForAudience.forEach((property) => {
-                            propertiesForEndpoint.add(property);
-                        });
-                    }
-                }
-                requestProperties[endpointId] = propertiesForEndpoint.size > 0 ? propertiesForEndpoint : undefined;
+                excludedRequestProperties[endpointId] = computeExcludedKeys(
+                    requestPropertiesNode.propertiesByAudience,
+                    activeAudiences
+                );
             }
 
             for (const [endpointId, queryParametersNode] of Object.entries(this.queryParameters)) {
                 if (!this.endpointsNeededForAudience.has(endpointId)) {
                     continue;
                 }
-                const parametersForEndpoint = new Set<string>();
-                for (const audience of this.audiences.audiences) {
-                    const parametersByAudience = queryParametersNode.parametersByAudience[audience];
-                    if (parametersByAudience != null) {
-                        parametersByAudience.forEach((parameter) => {
-                            parametersForEndpoint.add(parameter);
-                        });
-                    }
-                }
-                queryParameters[endpointId] = parametersForEndpoint.size > 0 ? parametersForEndpoint : undefined;
+                excludedQueryParameters[endpointId] = computeExcludedKeys(
+                    queryParametersNode.parametersByAudience,
+                    activeAudiences
+                );
             }
 
             for (const [webhookId, webhookPaylodPropertiesNode] of Object.entries(this.webhookProperties)) {
                 if (!this.webhooksNeededForAudience.has(webhookId)) {
                     continue;
                 }
-                const propertiesForWebhook = new Set<string>();
-                for (const audience of this.audiences.audiences) {
-                    const propertiesForAudience = webhookPaylodPropertiesNode.propertiesByAudience[audience];
-                    if (propertiesForAudience != null) {
-                        propertiesForAudience.forEach((property) => {
-                            propertiesForWebhook.add(property);
-                        });
-                    }
-                }
-                webhookPayloadProperties[webhookId] = propertiesForWebhook.size > 0 ? propertiesForWebhook : undefined;
+                excludedWebhookPayloadProperties[webhookId] = computeExcludedKeys(
+                    webhookPaylodPropertiesNode.propertiesByAudience,
+                    activeAudiences
+                );
             }
         }
 
         return new FilteredIrImpl({
             types: typeIds,
-            properties,
+            excludedProperties,
             errors: errorIds,
-            requestProperties,
-            queryParameters,
+            excludedRequestProperties,
+            excludedQueryParameters,
             environments: this.environmentsNeededForAudience,
             services: this.servicesNeededForAudience,
             endpoints: this.endpointsNeededForAudience,
             webhooks: this.webhooksNeededForAudience,
-            webhookPayloadProperties,
+            excludedWebhookPayloadProperties,
             subpackages: this.subpackagesNeededForAudience,
             channels: this.channelsNeededForAudience
         });
@@ -673,6 +650,29 @@ interface NoAudience {
 interface FilteredAudiences {
     type: "filtered";
     audiences: Set<string>;
+}
+
+/**
+ * Excludes keys whose declared audiences do not overlap `activeAudiences`. Keys absent
+ * from `keysByAudience` are untagged (universal) and never excluded.
+ */
+function computeExcludedKeys(
+    keysByAudience: Record<AudienceId, Set<string>>,
+    activeAudiences: Set<AudienceId>
+): Set<string> {
+    const matched = new Set<string>();
+    for (const audience of activeAudiences) {
+        keysByAudience[audience]?.forEach((key) => matched.add(key));
+    }
+    const excluded = new Set<string>();
+    for (const keys of Object.values(keysByAudience)) {
+        keys.forEach((key) => {
+            if (!matched.has(key)) {
+                excluded.add(key);
+            }
+        });
+    }
+    return excluded;
 }
 
 function audiencesFromConfig(configAudiences: ConfigAudiences): Audiences {
