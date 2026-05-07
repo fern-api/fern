@@ -1,0 +1,5 @@
+- summary: |
+    Fix example generation for objects using allOf with property overrides. Direct properties now
+    take precedence over inherited allOf properties, so overridden fields like `results` render
+    with the correct typed example instead of an empty object.
+  type: fix

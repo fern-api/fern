@@ -931,8 +931,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             if (typeof result.validExample === "object" && result.validExample !== null) {
                 const validExampleObj = result.validExample as Record<string, unknown>;
                 example = {
-                    ...example,
-                    ...Object.fromEntries(Object.entries(validExampleObj).filter(([_, value]) => value !== undefined))
+                    ...Object.fromEntries(Object.entries(validExampleObj).filter(([_, value]) => value !== undefined)),
+                    ...example
                 };
             }
         }
