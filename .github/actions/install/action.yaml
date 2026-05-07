@@ -6,17 +6,17 @@ runs:
 
   steps:
     - name: ⎔ Setup pnpm
-      uses: pnpm/action-setup@v5
+      uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
 
     - name: ⎔ Setup Node.js
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
       with:
         node-version: 22
         registry-url: "https://registry.npmjs.org"
         cache: pnpm
 
     - name: ⎔ Cache turbo build
-      uses: actions/cache@v5
+      uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
       with:
         path: .turbo
         key: ${{ runner.os }}-turbo-${{ github.job }}-${{ github.sha }}

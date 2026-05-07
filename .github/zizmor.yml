@@ -1,0 +1,24 @@
+# zizmor configuration — https://docs.zizmor.sh/configuration/
+#
+# Each disabled audit below has pre-existing findings that aren't in scope for
+# the SHA-pinning ratchet this file enforces. Re-enable an audit once its
+# findings have been driven to zero — that tightens the ratchet so regressions
+# fail CI.
+#
+# Currently enforced:
+#   - unpinned-uses: every external `uses:` must reference a commit SHA.
+rules:
+  excessive-permissions:
+    disable: true
+  artipacked:
+    disable: true
+  dangerous-triggers:
+    disable: true
+  template-injection:
+    disable: true
+  github-env:
+    disable: true
+  bot-conditions:
+    disable: true
+  superfluous-actions:
+    disable: true

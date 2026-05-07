@@ -26,7 +26,7 @@ jobs:
     if: github.event_name == 'pull_request'
     steps:
       - name: Post seed selector comment
-        uses: actions/github-script@v8
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
         with:
           script: |
             const marker = '<!-- seed-selector -->';
@@ -84,7 +84,7 @@ jobs:
     steps:
       - name: Parse checked languages
         id: parse
-        uses: actions/github-script@v8
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
         with:
           script: |
             const commentBody = context.payload.comment.body;
@@ -215,7 +215,7 @@ jobs:
       - name: Check if we can push to PR branch
         id: check-push
         if: steps.parse.outputs.checked-languages != ''
-        uses: actions/github-script@v8
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
         with:
           script: |
             const prRepoFullName = '${{ steps.parse.outputs.pr-repo-full-name }}';
@@ -230,7 +230,7 @@ jobs:
 
       - name: Checkout PR branch
         if: steps.parse.outputs.checked-languages != ''
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           ref: ${{ steps.parse.outputs.pr-ref }}
           fetch-tags: false
@@ -242,7 +242,7 @@ jobs:
 
       - name: Run seed tests for selected languages
         if: steps.parse.outputs.checked-languages != ''
-        uses: actions/github-script@v8
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
         with:
           script: |
             const fs = require('fs');

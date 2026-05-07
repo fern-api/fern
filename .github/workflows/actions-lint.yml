@@ -1,0 +1,68 @@
+name: Actions Lint
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/**"
+      - ".github/actions/**"
+      - ".github/zizmor.yml"
+      - ".github/dependabot.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/**"
+      - ".github/actions/**"
+      - ".github/zizmor.yml"
+      - ".github/dependabot.yml"
+
+permissions: {}
+
+jobs:
+  pinact:
+    name: Verify actions are pinned to SHAs
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      PINACT_VERSION: 3.9.2
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Install pinact
+        run: |
+          curl -fsSL "https://github.com/suzuki-shunsuke/pinact/releases/download/v${PINACT_VERSION}/pinact_linux_amd64.tar.gz" | tar -xz
+          sudo mv pinact /usr/local/bin/
+          pinact --version
+
+      - name: Check that all external actions are SHA-pinned
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          pinact run --check
+          pinact run --check $(find .github/actions -type f \( -name 'action.yaml' -o -name 'action.yml' \))
+
+  zizmor:
+    name: Run zizmor static analysis
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      ZIZMOR_VERSION: 1.24.1
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Install zizmor
+        run: |
+          curl -fsSL "https://github.com/zizmorcore/zizmor/releases/download/v${ZIZMOR_VERSION}/zizmor-x86_64-unknown-linux-gnu.tar.gz" | tar -xz
+          sudo mv zizmor /usr/local/bin/
+          zizmor --version
+
+      - name: Audit workflows and composite actions
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: zizmor --config .github/zizmor.yml .github/workflows .github/actions

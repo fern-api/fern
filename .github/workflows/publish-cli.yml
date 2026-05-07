@@ -38,7 +38,7 @@ jobs:
       is_release_bump: ${{ steps.check_versions_yml.outputs.is_release_bump }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 2
 
@@ -66,7 +66,7 @@ jobs:
       SENTRY_AUTH_TOKEN: ${{ secrets.FERN_SENTRY_AUTH_TOKEN }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
           fetch-tags: true
@@ -100,7 +100,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Install
         uses: ./.github/actions/install
@@ -132,7 +132,7 @@ jobs:
       SENTRY_AUTH_TOKEN: ${{ secrets.FERN_SENTRY_AUTH_TOKEN }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           ref: main
           fetch-depth: 20
@@ -187,7 +187,7 @@ jobs:
       SENTRY_AUTH_TOKEN: ${{ secrets.FERN_SENTRY_AUTH_TOKEN }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-tags: true
 
@@ -224,7 +224,7 @@ jobs:
       AUTOPILOT_HOST: ${{ vars.AUTOPILOT_HOST != '' && vars.AUTOPILOT_HOST || 'https://autopilot.buildwithfern.com' }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Get CLI version
         id: get_version

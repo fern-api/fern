@@ -26,7 +26,7 @@ jobs:
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - name: Checkout main
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           sparse-checkout: |
             .github/actions/fetch-benchmark-specs
@@ -37,7 +37,7 @@ jobs:
         uses: ./.github/actions/fetch-benchmark-specs
 
       - name: Upload specs as shared artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: benchmark-specs
           path: benchmarks/fern/apis/*/openapi.json
@@ -57,13 +57,13 @@ jobs:
           [ts-sdk, python-sdk, java-sdk, go-sdk, csharp-sdk, ruby-sdk-v2, php-sdk, swift-sdk, rust-sdk]
     steps:
       - name: Checkout main
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Install
         uses: ./.github/actions/install
 
       - name: Download shared specs
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
         with:
           name: benchmark-specs
           path: benchmarks/fern/apis
@@ -76,7 +76,7 @@ jobs:
 
       - name: Upload baseline results
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: benchmark-baseline-${{ matrix.generator }}
           path: benchmark-results/
@@ -97,13 +97,13 @@ jobs:
           [ts-sdk, python-sdk, java-sdk, go-sdk, csharp-sdk, ruby-sdk-v2, php-sdk, swift-sdk, rust-sdk]
     steps:
       - name: Checkout main
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Install
         uses: ./.github/actions/install
 
       - name: Download shared specs
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
         with:
           name: benchmark-specs
           path: benchmarks/fern/apis
@@ -115,7 +115,7 @@ jobs:
 
       - name: Upload E2E results
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: benchmark-e2e-${{ matrix.generator }}
           path: benchmark-results/
@@ -130,13 +130,13 @@ jobs:
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - name: Checkout main
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Install
         uses: ./.github/actions/install
 
       - name: Download shared specs
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
         with:
           name: benchmark-specs
           path: benchmarks/fern/apis
@@ -147,7 +147,7 @@ jobs:
           fern-token: ${{ secrets.FERN_FERN_TOKEN }}
 
       - name: Upload docs baseline results
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: benchmark-docs-baseline
           path: benchmark-results/
@@ -165,21 +165,21 @@ jobs:
     permissions: {}
     steps:
       - name: Download generator-only baseline artifacts
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
         with:
           pattern: benchmark-baseline-*
           path: baseline-results
           merge-multiple: true
 
       - name: Download E2E baseline artifacts
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
         with:
           pattern: benchmark-e2e-*
           path: e2e-results
           merge-multiple: true
 
       - name: Download docs baseline artifacts
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
         with:
           pattern: benchmark-docs-baseline
           path: docs-results
