@@ -3,7 +3,8 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { getOriginalName } from "@fern-api/ir-utils";
+import { serialization as IrSerialization } from "@fern-api/ir-sdk";
+import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { readdirSync } from "fs";
@@ -24,13 +25,62 @@ it("audiences", async () => {
     });
 });
 
-it("property-level audiences", async () => {
+describe("property-level audiences", () => {
     const PROPERTY_AUDIENCES_DIR = path.join(__dirname, "fixtures/property-level-audiences/fern");
-    await generateAndSnapshotIRFromPath({
-        absolutePathToIr: AbsoluteFilePath.of(IR_DIR),
-        absolutePathToWorkspace: AbsoluteFilePath.of(PROPERTY_AUDIENCES_DIR),
-        audiences: { type: "select", audiences: ["external"] },
-        workspaceName: "propertyLevelAudiences"
+
+    it("excludes properties whose audiences do not overlap the active filter", async () => {
+        const ir = await generateIRFromPath({
+            absolutePathToWorkspace: AbsoluteFilePath.of(PROPERTY_AUDIENCES_DIR),
+            workspaceName: "propertyLevelAudiences",
+            audiences: { type: "select", audiences: ["external"] }
+        });
+
+        const movie = ir.types["type_imdb:Movie"];
+        expect(movie?.shape.type).toBe("object");
+        if (movie?.shape.type === "object") {
+            expect(movie.shape.properties.map((p) => getWireValue(p.name))).toEqual(["id", "title", "untaggedField"]);
+        }
+
+        const service = Object.values(ir.services)[0];
+        expect(service).toBeDefined();
+        const createMovie = service?.endpoints.find((e) => getOriginalName(e.name) === "createMovie");
+        expect(createMovie?.requestBody?.type).toBe("inlinedRequestBody");
+        if (createMovie?.requestBody?.type === "inlinedRequestBody") {
+            expect(createMovie.requestBody.properties.map((p) => getWireValue(p.name))).toEqual([
+                "title",
+                "untaggedDraft"
+            ]);
+        }
+        expect(createMovie?.queryParameters.map((q) => getWireValue(q.name))).toEqual(["ref"]);
+
+        const archiveMovie = service?.endpoints.find((e) => getOriginalName(e.name) === "archiveMovie");
+        expect(archiveMovie?.requestBody?.type).toBe("inlinedRequestBody");
+        if (archiveMovie?.requestBody?.type === "inlinedRequestBody") {
+            expect(archiveMovie.requestBody.properties).toHaveLength(0);
+        }
+
+        const userAdded = Object.values(ir.webhookGroups)[0]?.find((w) => getOriginalName(w.name) === "userAdded");
+        expect(userAdded?.payload.type).toBe("inlinedPayload");
+        if (userAdded?.payload.type === "inlinedPayload") {
+            expect(userAdded.payload.properties.map((p) => getWireValue(p.name))).toEqual(["userId"]);
+        }
+
+        // Defense in depth: ensure no audience-tagged identifier leaks anywhere in the
+        // serialized IR (catches regressions in example/`jsonExample` filtering).
+        const irJson = IrSerialization.IntermediateRepresentation.jsonOrThrow(ir, {
+            unrecognizedObjectKeys: "strip"
+        });
+        const irText = JSON.stringify(irJson);
+        for (const excluded of [
+            "internalNote",
+            "secretRating",
+            "internalDraft",
+            "internalRef",
+            "internalOnly",
+            "internalReason"
+        ]) {
+            expect(irText).not.toContain(excluded);
+        }
     });
 });
 
