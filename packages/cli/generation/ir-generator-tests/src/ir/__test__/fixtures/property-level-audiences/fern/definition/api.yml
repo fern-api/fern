@@ -1,0 +1,6 @@
+name: api
+error-discrimination:
+  strategy: status-code
+audiences:
+  - external
+  - internal
