@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Patch 9 transitive npm dependency vulnerabilities flagged by Grype in the
+    typescript-sdk generator container by upgrading the bundled `npm` to
+    11.13.0, the bundled `pnpm` to 10.33.3, and replacing npm's vendored
+    `ip-address@10.1.0` with the patched `10.1.1` release. Addresses
+    GHSA-7r86-cg39-jmmj, GHSA-23c5-xmqv-rm74 (minimatch), GHSA-c2c7-rcm5-vvqj,
+    GHSA-3v7f-55p6-f55p (picomatch), GHSA-9ppj-qmqm-q256, GHSA-qffp-2rhf-9h96
+    (tar), GHSA-f886-m6hf-6m8v (brace-expansion), and GHSA-v2v4-37r5-5v8g
+    (ip-address).
+  type: chore
