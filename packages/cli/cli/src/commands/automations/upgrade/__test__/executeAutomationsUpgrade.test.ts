@@ -147,7 +147,6 @@ describe("buildPrTitle", () => {
     it("CLI only", () => {
         expect(buildPrTitle({ cli: CLI_UPGRADED, generators: [] })).toBe("chore(fern): upgrade CLI 4.66.0 → 5.7.3");
     });
-
 });
 
 describe("buildPrBody", () => {
@@ -191,7 +190,6 @@ describe("buildCommitMessage", () => {
             "chore: upgrade fern typescript-sdk 3.63.4 -> 3.65.5, go-sdk 0.28.0 -> 1.39.0"
         );
     });
-
 });
 
 describe("AutomationsUpgradeResult schema", () => {
