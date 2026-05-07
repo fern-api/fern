@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Also delete the unpacked gem source directories for the original
+    `erb-4.0.3` and `net-imap-0.4.21` gems shipped with the base image after
+    installing the patched `erb 4.0.3.1` / `net-imap 0.4.24` over the top.
+    Removing only the stale gemspec hides the old versions from grype but
+    leaves the vulnerable source under `/usr/local/lib/ruby/gems/3.3.0/gems/`,
+    which AWS Inspector and other SBOM scanners can still match against the
+    package database. Removing both the spec and the unpacked gem closes
+    that gap.
+  type: chore

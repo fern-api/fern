@@ -28,19 +28,25 @@ RUN apk --no-cache upgrade && \
         gcc \
         libc-dev && \
     # Update the remaining vulnerable Ruby gems shipped with the base image:
-    # - erb 4.0.3 -> 4.0.3.1 (GHSA-q339-8rmv-2mhv: deserialization guard bypass)
+    # - erb 4.0.3 -> 4.0.3.1 (GHSA-q339-8rmv-2mhv / CVE-2026-41316:
+    #   @_init deserialization guard bypass via def_module / def_method / def_class)
     # - net-imap 0.4.21 -> 0.4.24 (GHSA-vcgp-9326-pqcp STARTTLS stripping,
     #   GHSA-75xq-5h9v-w6px command injection, GHSA-87pf-fpwv-p7m7 SCRAM DoS,
     #   GHSA-hm49-wcqc-g2xg "raw" command injection, GHSA-q2mw-fvj9-vvcw response DoS)
-    # Ruby ships erb as a default gem and net-imap as a preinstalled gem; simply
-    # running `gem install` leaves the original gemspec on disk and SBOM scanners
-    # (grype) still report the old version, so remove the stale gemspecs after
-    # installing the patched versions.
+    # Ruby ships erb as a default gem and net-imap as a preinstalled gem.
+    # `gem install` puts the patched versions under $GEM_HOME (/usr/local/bundle/),
+    # but the original (vulnerable) source trees and gemspecs remain under the
+    # system Ruby gem path (/usr/local/lib/ruby/gems/3.3.0/). SBOM scanners
+    # (grype, AWS Inspector) still flag the stale copies, so remove both the
+    # gemspec entries AND the unpacked gem directories after installing the
+    # patched versions.
     gem install --no-document \
         erb:4.0.3.1 \
         net-imap:0.4.24 && \
     rm -f /usr/local/lib/ruby/gems/3.3.0/specifications/default/erb-*.gemspec \
           /usr/local/lib/ruby/gems/3.3.0/specifications/net-imap-0.4.21.gemspec && \
+    rm -rf /usr/local/lib/ruby/gems/3.3.0/gems/erb-4.0.3 \
+           /usr/local/lib/ruby/gems/3.3.0/gems/net-imap-0.4.21 && \
     gem install --no-document 'rubocop:~> 1.21' rubocop-minitest && \
     apk del .build-deps
 
