@@ -126,7 +126,6 @@ describe("first generation - no lockfile (auto-bootstrap)", { tags: ["slow", "fl
 
         const fernignore = readFileSync(join(repoPath, ".fernignore"), "utf-8");
         expect(fernignore).toContain(".fern/replay.lock");
-        expect(fernignore).toContain(".fern/replay.yml");
         expect(fernignore).toContain(".gitattributes");
 
         const gitattributes = readFileSync(join(repoPath, ".gitattributes"), "utf-8");

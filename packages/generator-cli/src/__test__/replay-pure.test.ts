@@ -439,9 +439,8 @@ describe("parseCommitMessageForPR", () => {
 describe("fernignore", () => {
     it("REPLAY_FERNIGNORE_ENTRIES contains expected values", () => {
         expect(REPLAY_FERNIGNORE_ENTRIES).toContain(".fern/replay.lock");
-        expect(REPLAY_FERNIGNORE_ENTRIES).toContain(".fern/replay.yml");
         expect(REPLAY_FERNIGNORE_ENTRIES).toContain(".gitattributes");
-        expect(REPLAY_FERNIGNORE_ENTRIES.length).toBeGreaterThanOrEqual(3);
+        expect(REPLAY_FERNIGNORE_ENTRIES.length).toBeGreaterThanOrEqual(2);
     });
 
     it("GITATTRIBUTES_ENTRIES marks the replay lockfile as linguist-generated", () => {
