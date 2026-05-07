@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump the PHP SDK generator container base images to address security vulnerabilities.
+    Upgrades the composer base image from 2.7.9 to 2.9.7 (Alpine 3.20 -> 3.23,
+    PHP 8.3.12 -> 8.5.5) and the multi-stage node source from
+    node:22.12-alpine3.20 to node:22.22-alpine3.23, and runs apk upgrade
+    to apply the latest patches at build time.
+  type: chore
