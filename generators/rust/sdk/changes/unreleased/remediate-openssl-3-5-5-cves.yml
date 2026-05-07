@@ -3,8 +3,7 @@
 - summary: |
     Remediate the seven critical (CVSS 9.8) `openssl/openssl:3.5.5` CVEs
     flagged by the 2026-05-07 grype scan of the `fern-rust-sdk` container.
-    Pin the Node base image to `node:22.22.2-alpine3.22` and run
-    `apk --no-cache upgrade` during the build to pick up the patched
-    `openssl`, `libssl3`, and `libcrypto3` packages from the Alpine 3.22
-    repository.
+    Run `apk --no-cache upgrade` during the Docker build to pick up the
+    patched `openssl`, `libssl3`, and `libcrypto3` packages from the
+    Alpine 3.22 repository.
   type: chore
