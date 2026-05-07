@@ -25,6 +25,7 @@ import { GeneratorContext } from "@fern-typescript/contexts";
 import { publishPackage } from "./publishPackage.js";
 import { writeGenerationMetadata } from "./writeGenerationMetadata.js";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows.js";
+import { writeVerifyScript } from "./writeVerifyScript.js";
 
 const OUTPUT_ZIP_FILENAME = "output.zip";
 
@@ -147,6 +148,10 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         sdkVersion: version
                     });
                 }
+                await writeVerifyScript({
+                    pathToProject,
+                    packageManager: typescriptProject.getPackageManager()
+                });
             });
 
             // Run npm pkg fix to normalize package.json (enabled by default)
