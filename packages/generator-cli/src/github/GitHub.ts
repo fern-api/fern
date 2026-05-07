@@ -1,5 +1,5 @@
 import { cwd, resolve } from "@fern-api/fs-utils";
-import { ClonedRepository, cloneRepository, parseRepository } from "@fern-api/github";
+import { ClonedRepository, cloneRepository, getGithubApiBaseUrl, parseRepository } from "@fern-api/github";
 import { Octokit } from "@octokit/rest";
 
 import type { FernGeneratorCli } from "../configuration/sdk/index.js";
@@ -92,8 +92,10 @@ export class GitHub {
             await repository.commit("SDK Generation");
             await repository.push();
 
+            const apiBaseUrl = getGithubApiBaseUrl(this.githubConfig.uri);
             const octokit = new Octokit({
-                auth: this.githubConfig.token
+                auth: this.githubConfig.token,
+                ...(apiBaseUrl != null ? { baseUrl: apiBaseUrl } : {})
             });
             // Use octokit directly to create the pull request
             const parsedRepo = parseRepository(this.githubConfig.uri);
