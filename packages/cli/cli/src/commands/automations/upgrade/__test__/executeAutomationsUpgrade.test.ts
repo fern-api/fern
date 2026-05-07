@@ -195,7 +195,6 @@ describe("buildCommitMessage", () => {
 describe("AutomationsUpgradeResult schema", () => {
     it("documents the expected JSON output shape including pr field", () => {
         const exampleResult = {
-            schemaVersion: 1 as const,
             cli: { from: "4.66.0", to: "4.96.0", upgraded: true },
             generators: [
                 {
@@ -217,7 +216,6 @@ describe("AutomationsUpgradeResult schema", () => {
             }
         };
 
-        expect(exampleResult).toHaveProperty("schemaVersion", 1);
         expect(exampleResult).toHaveProperty("cli");
         expect(exampleResult).toHaveProperty("generators");
         expect(exampleResult).toHaveProperty("skippedMajor");
@@ -256,7 +254,6 @@ describe("AutomationsUpgradeResult schema", () => {
 
     it("pr is null when nothing changed", () => {
         const result = {
-            schemaVersion: 1 as const,
             cli: { from: "5.7.3", to: "5.7.3", upgraded: false },
             generators: [],
             skippedMajor: [],

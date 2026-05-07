@@ -68,7 +68,6 @@ interface PrSuggestion {
 }
 
 export interface AutomationsUpgradeResult {
-    schemaVersion: 1;
     cli: CliUpgradeResult;
     generators: GeneratorUpgradeEntry[];
     skippedMajor: SkippedMajorEntry[];
@@ -103,7 +102,6 @@ async function getCurrentCliVersion(cliContext: CliContext): Promise<string> {
  *
  * JSON output format (on --json):
  *   {
- *     "schemaVersion": 1,
  *     "cli": { "from": "4.66.0", "to": "4.96.0", "upgraded": true },
  *     "generators": [
  *       {
@@ -179,7 +177,6 @@ export async function executeAutomationsUpgrade({
     const pr = hasChanges ? buildPrSuggestion({ cli: cliResult, generators: generatorResults.generators }) : null;
 
     const result: AutomationsUpgradeResult = {
-        schemaVersion: 1,
         cli: cliResult,
         generators: generatorResults.generators,
         skippedMajor: generatorResults.skippedMajor,

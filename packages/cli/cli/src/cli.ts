@@ -2605,7 +2605,6 @@ function addAutomationsGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: 
  *
  * JSON output format (--json):
  *   {
- *     "schemaVersion": 1,
  *     "cli": { "from": "4.66.0", "to": "4.96.0", "upgraded": true },
  *     "generators": [
  *       {
