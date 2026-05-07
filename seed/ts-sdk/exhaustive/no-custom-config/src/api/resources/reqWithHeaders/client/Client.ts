@@ -6,63 +6,55 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedExhaustive from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
-export declare namespace ReqWithHeadersClient {
+export declare namespace ReqwithheadersClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class ReqWithHeadersClient {
-    protected readonly _options: NormalizedClientOptionsWithAuth<ReqWithHeadersClient.Options>;
+export class ReqwithheadersClient {
+    protected readonly _options: NormalizedClientOptionsWithAuth<ReqwithheadersClient.Options>;
 
-    constructor(options: ReqWithHeadersClient.Options) {
+    constructor(options: ReqwithheadersClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
     }
 
     /**
-     * @param {SeedExhaustive.ReqWithHeaders} request
-     * @param {ReqWithHeadersClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {SeedApi.GetwithcustomheaderReqwithheadersRequest} request
+     * @param {ReqwithheadersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.reqWithHeaders.getWithCustomHeader({
-     *         "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
+     *     await client.reqwithheaders.getwithcustomheader({
      *         "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
      *         body: "string"
      *     })
      */
-    public getWithCustomHeader(
-        request: SeedExhaustive.ReqWithHeaders,
-        requestOptions?: ReqWithHeadersClient.RequestOptions,
+    public getwithcustomheader(
+        request: SeedApi.GetwithcustomheaderReqwithheadersRequest,
+        requestOptions?: ReqwithheadersClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__getWithCustomHeader(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__getwithcustomheader(request, requestOptions));
     }
 
-    private async __getWithCustomHeader(
-        request: SeedExhaustive.ReqWithHeaders,
-        requestOptions?: ReqWithHeadersClient.RequestOptions,
+    private async __getwithcustomheader(
+        request: SeedApi.GetwithcustomheaderReqwithheadersRequest,
+        requestOptions?: ReqwithheadersClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const {
-            "X-TEST-SERVICE-HEADER": xTestServiceHeader,
-            "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
-            body: _body,
-        } = request;
+        const { "X-TEST-ENDPOINT-HEADER": testEndpointHeader, body: _body } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-TEST-SERVICE-HEADER": xTestServiceHeader,
-                "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
-            }),
+            mergeOnlyDefinedHeaders({ "X-TEST-ENDPOINT-HEADER": testEndpointHeader }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/test-headers/custom-header",
+                "test-headers/custom-header",
             ),
             method: "POST",
             headers: _headers,
@@ -81,7 +73,7 @@ export class ReqWithHeadersClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

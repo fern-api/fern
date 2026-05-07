@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
-import type * as SeedExhaustive from "../../../../../index.js";
+import type * as SeedApi from "../../../../../index.js";
 
 export declare namespace PutClient {
     export type Options = BaseClientOptions;
@@ -22,25 +22,25 @@ export class PutClient {
     }
 
     /**
-     * @param {SeedExhaustive.endpoints.PutRequest} request
+     * @param {SeedApi.endpoints.EndpointsPutAddPutRequest} request
      * @param {PutClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.put.add({
+     *     await client.endpoints.put.endpointsPutAdd({
      *         id: "id"
      *     })
      */
-    public add(
-        request: SeedExhaustive.endpoints.PutRequest,
+    public endpointsPutAdd(
+        request: SeedApi.endpoints.EndpointsPutAddPutRequest,
         requestOptions?: PutClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.endpoints.PutResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__add(request, requestOptions));
+    ): core.HttpResponsePromise<SeedApi.EndpointsPutResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__endpointsPutAdd(request, requestOptions));
     }
 
-    private async __add(
-        request: SeedExhaustive.endpoints.PutRequest,
+    private async __endpointsPutAdd(
+        request: SeedApi.endpoints.EndpointsPutAddPutRequest,
         requestOptions?: PutClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.endpoints.PutResponse>> {
+    ): Promise<core.WithRawResponse<SeedApi.EndpointsPutResponse>> {
         const { id } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -64,11 +64,11 @@ export class PutClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExhaustive.endpoints.PutResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.EndpointsPutResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

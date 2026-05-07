@@ -6,18 +6,18 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import * as SeedExhaustive from "../../../index.js";
+import * as SeedApi from "../../../index.js";
 
-export declare namespace NoAuthClient {
+export declare namespace NoauthClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class NoAuthClient {
-    protected readonly _options: NormalizedClientOptions<NoAuthClient.Options>;
+export class NoauthClient {
+    protected readonly _options: NormalizedClientOptions<NoauthClient.Options>;
 
-    constructor(options: NoAuthClient.Options) {
+    constructor(options: NoauthClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
@@ -25,32 +25,32 @@ export class NoAuthClient {
      * POST request with no auth
      *
      * @param {unknown} request
-     * @param {NoAuthClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {NoauthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedExhaustive.BadRequestBody}
+     * @throws {@link SeedApi.BadRequestError}
      *
      * @example
-     *     await client.noAuth.postWithNoAuth({
+     *     await client.noauth.postwithnoauth({
      *         "key": "value"
      *     })
      */
-    public postWithNoAuth(
+    public postwithnoauth(
         request?: unknown,
-        requestOptions?: NoAuthClient.RequestOptions,
+        requestOptions?: NoauthClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromPromise(this.__postWithNoAuth(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__postwithnoauth(request, requestOptions));
     }
 
-    private async __postWithNoAuth(
+    private async __postwithnoauth(
         request?: unknown,
-        requestOptions?: NoAuthClient.RequestOptions,
+        requestOptions?: NoauthClient.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/no-auth",
+                "no-auth",
             ),
             method: "POST",
             headers: _headers,
@@ -71,12 +71,12 @@ export class NoAuthClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new SeedExhaustive.BadRequestBody(
-                        _response.error.body as SeedExhaustive.BadObjectRequestInfo,
+                    throw new SeedApi.BadRequestError(
+                        _response.error.body as SeedApi.BadObjectRequestInfo,
                         _response.rawResponse,
                     );
                 default:
-                    throw new errors.SeedExhaustiveError({
+                    throw new errors.SeedApiError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                         rawResponse: _response.rawResponse,
