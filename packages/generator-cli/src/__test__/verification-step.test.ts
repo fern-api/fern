@@ -415,6 +415,48 @@ describe("PostGenerationPipeline integration with VerificationStep", () => {
         }
     });
 
+    it("forwards config.verify.runner to docker-utils calls (CLI plumbing parity for --verify with --runner)", async () => {
+        // Mirrors the shape `runLocalGenerationForWorkspace` produces when the user passes
+        // `--verify` with a non-default `--runner`: `verify: { enabled: verify === true, runner }`.
+        writeVerifyScript();
+        mockStartContainer.mockResolvedValue("container-runner");
+        mockCopyToContainer.mockResolvedValue(undefined);
+        mockExecInContainer.mockResolvedValue({ stdout: "", stderr: "", exitCode: 0 });
+        mockStopContainer.mockResolvedValue(undefined);
+
+        const githubExecute = vi
+            .spyOn(GithubStep.prototype, "execute")
+            .mockResolvedValue({ executed: true, success: true });
+
+        try {
+            const pipeline = new PostGenerationPipeline(
+                {
+                    outputDir: workspacePath,
+                    generatorName,
+                    generatorVersions,
+                    verify: { enabled: true, runner: "podman" },
+                    github: {
+                        enabled: true,
+                        uri: "owner/repo",
+                        token: "ghp_xxx",
+                        mode: "pull-request"
+                    }
+                },
+                silentLogger
+            );
+
+            const result = await pipeline.run();
+
+            expect(result.success).toBe(true);
+            expect(result.steps.verify).toEqual({ executed: true, success: true, skipped: false });
+            for (const mock of [mockStartContainer, mockCopyToContainer, mockExecInContainer, mockStopContainer]) {
+                expect(mock).toHaveBeenCalledWith(expect.objectContaining({ runner: "podman" }));
+            }
+        } finally {
+            githubExecute.mockRestore();
+        }
+    });
+
     it("no-ops when .fern/verify.sh is missing and lets GithubStep run", async () => {
         // Intentionally do NOT write .fern/verify.sh — simulates a generator that
         // hasn't adopted verify yet.

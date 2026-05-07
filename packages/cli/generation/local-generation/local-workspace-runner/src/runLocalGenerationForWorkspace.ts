@@ -62,6 +62,7 @@ export async function runLocalGenerationForWorkspace({
     automationMode,
     autoMerge,
     skipIfNoDiff,
+    verify,
     disableTelemetry
 }: {
     token: FernToken | undefined;
@@ -78,6 +79,8 @@ export async function runLocalGenerationForWorkspace({
     replay?: generatorsYml.ReplayConfigSchema | undefined;
     noReplay?: boolean;
     validateWorkspace?: boolean;
+    /** When true, run `.fern/verify.sh` (if emitted by the generator) inside a validator container after replay and before any GitHub push. Local generation only — remote/Fiddle pipelines do not honor this flag. */
+    verify?: boolean;
     requireEnvVars?: boolean;
     skipFernignore?: boolean;
     publishToRegistry?: boolean;
@@ -408,6 +411,7 @@ export async function runLocalGenerationForWorkspace({
                         {
                             outputDir: absolutePathToLocalOutput,
                             replay: { enabled: replay?.enabled === true, skipApplication: noReplay, stageOnly: false },
+                            verify: { enabled: verify === true, runner },
                             github: {
                                 enabled: true,
                                 uri: selfhostedGithubConfig.uri,

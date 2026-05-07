@@ -6,6 +6,10 @@
     `{generatorImage}-validator` container after replay and before any GitHub
     push. A failing script aborts the pipeline before opening a PR and surfaces
     raw stderr through the pipeline logger; a missing script is a silent no-op.
-    The step is wired conditionally on `config.verify.enabled` and is not
-    surfaced through any CLI flag yet.
+
+    The step is gated on a hidden `--verify` flag for `fern generate`; when
+    passed (with `--local` or `--runner`), the local workspace runner sets
+    `config.verify.enabled = true` on the pipeline and the configured container
+    runtime (`docker` or `podman`) is forwarded to the validator container.
+    Remote/Fiddle generation does not honor this flag yet.
   type: internal
