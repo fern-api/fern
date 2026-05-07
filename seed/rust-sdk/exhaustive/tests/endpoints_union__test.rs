@@ -1,4 +1,4 @@
-use seed_exhaustive::prelude::*;
+use seed_api::prelude::*;
 
 mod wire_test_utils;
 
@@ -14,19 +14,20 @@ async fn test_endpoints_union_get_and_return_union_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
         .endpoints
         .union_
         .get_and_return_union(
-            &Animal::Dog {
-                data: Dog {
+            &TypesAnimal::TypesAnimalZero(TypesAnimalZero {
+                types_dog_fields: TypesDog {
                     name: "name".to_string(),
                     likes_to_woof: true,
                     ..Default::default()
                 },
-            },
+                animal: TypesAnimalZeroAnimal::Dog,
+            }),
             None,
         )
         .await;

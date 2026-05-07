@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
 )
@@ -16,7 +17,14 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.URLs.WithUnderscores(
+    request := &fern.TypesObjectWithDatetimeLikeString{
+        DatetimeLikeString: "datetimeLikeString",
+        ActualDatetime: fern.MustParseDateTime(
+            "2024-01-15T09:30:00Z",
+        ),
+    }
+    client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(
         context.TODO(),
+        request,
     )
 }

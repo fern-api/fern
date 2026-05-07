@@ -1,11 +1,8 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-swift-sdk",
-  "generatorVersion": "local",
+  "generatorVersion": "latest",
   "generatorConfig": {},
   "originGitCommit": "DUMMY",
-  "invokedBy": "ci",
-  "requestedVersion": "0.0.1",
-  "ciProvider": "github",
   "sdkVersion": "0.0.1"
 }

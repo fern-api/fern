@@ -17,29 +17,29 @@ module Seed
       )
     end
 
+    # @return [Seed::Inlinedrequests::Client]
+    def inlinedrequests
+      @inlinedrequests ||= Seed::Inlinedrequests::Client.new(client: @raw_client)
+    end
+
+    # @return [Seed::Noauth::Client]
+    def noauth
+      @noauth ||= Seed::Noauth::Client.new(client: @raw_client)
+    end
+
+    # @return [Seed::Noreqbody::Client]
+    def noreqbody
+      @noreqbody ||= Seed::Noreqbody::Client.new(client: @raw_client)
+    end
+
+    # @return [Seed::Reqwithheaders::Client]
+    def reqwithheaders
+      @reqwithheaders ||= Seed::Reqwithheaders::Client.new(client: @raw_client)
+    end
+
     # @return [Seed::Endpoints::Client]
     def endpoints
       @endpoints ||= Seed::Endpoints::Client.new(client: @raw_client)
-    end
-
-    # @return [Seed::InlinedRequests::Client]
-    def inlined_requests
-      @inlined_requests ||= Seed::InlinedRequests::Client.new(client: @raw_client)
-    end
-
-    # @return [Seed::NoAuth::Client]
-    def no_auth
-      @no_auth ||= Seed::NoAuth::Client.new(client: @raw_client)
-    end
-
-    # @return [Seed::NoReqBody::Client]
-    def no_req_body
-      @no_req_body ||= Seed::NoReqBody::Client.new(client: @raw_client)
-    end
-
-    # @return [Seed::ReqWithHeaders::Client]
-    def req_with_headers
-      @req_with_headers ||= Seed::ReqWithHeaders::Client.new(client: @raw_client)
     end
   end
 end

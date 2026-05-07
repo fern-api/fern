@@ -30,8 +30,60 @@ impl ParamsClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/params/path/{}", param),
+                &format!("params/path/{}", param),
                 None,
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// POST bytes with path param returning object
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn upload_with_path(
+        &self,
+        param: &str,
+        request: &Vec<u8>,
+        options: Option<RequestOptions>,
+    ) -> Result<TypesObjectWithRequiredField, ApiError> {
+        self.http_client
+            .execute_bytes_request(
+                Method::POST,
+                &format!("params/path/{}", param),
+                Some(request.to_vec()),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// PUT to update with path param
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn modify_with_path(
+        &self,
+        param: &str,
+        request: &str,
+        options: Option<RequestOptions>,
+    ) -> Result<String, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::PUT,
+                &format!("params/path/{}", param),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -55,8 +107,34 @@ impl ParamsClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/params/path/{}", param),
+                &format!("params/inline-path/{}", param),
                 None,
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// PUT to update with path param
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn modify_with_inline_path(
+        &self,
+        param: &str,
+        request: &str,
+        options: Option<RequestOptions>,
+    ) -> Result<String, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::PUT,
+                &format!("params/inline-path/{}", param),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -80,7 +158,7 @@ impl ParamsClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/params",
+                "params",
                 None,
                 QueryBuilder::new()
                     .structured_query("query", request.query.clone())
@@ -108,7 +186,7 @@ impl ParamsClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/params",
+                "params/allow-multiple-query",
                 None,
                 QueryBuilder::new()
                     .string_array("query", request.query.clone())
@@ -137,7 +215,7 @@ impl ParamsClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/params/path-query/{}", param),
+                &format!("params/path-query/{}", param),
                 None,
                 QueryBuilder::new()
                     .structured_query("query", request.query.clone())
@@ -165,139 +243,11 @@ impl ParamsClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/params/path-query/{}", param),
+                &format!("params/inline-path-query/{}", param),
                 None,
                 QueryBuilder::new()
                     .structured_query("query", request.query.clone())
                     .build(),
-                options,
-            )
-            .await
-    }
-
-    /// PUT to update with path param
-    ///
-    /// # Arguments
-    ///
-    /// * `options` - Additional request options such as headers, timeout, etc.
-    ///
-    /// # Returns
-    ///
-    /// JSON response from the API
-    pub async fn modify_with_path(
-        &self,
-        param: &str,
-        request: &str,
-        options: Option<RequestOptions>,
-    ) -> Result<String, ApiError> {
-        self.http_client
-            .execute_request(
-                Method::PUT,
-                &format!("/params/path/{}", param),
-                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
-                None,
-                options,
-            )
-            .await
-    }
-
-    /// PUT to update with path param
-    ///
-    /// # Arguments
-    ///
-    /// * `options` - Additional request options such as headers, timeout, etc.
-    ///
-    /// # Returns
-    ///
-    /// JSON response from the API
-    pub async fn modify_with_inline_path(
-        &self,
-        param: &str,
-        request: &str,
-        options: Option<RequestOptions>,
-    ) -> Result<String, ApiError> {
-        self.http_client
-            .execute_request(
-                Method::PUT,
-                &format!("/params/path/{}", param),
-                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
-                None,
-                options,
-            )
-            .await
-    }
-
-    /// POST bytes with path param returning object
-    ///
-    /// # Arguments
-    ///
-    /// * `options` - Additional request options such as headers, timeout, etc.
-    ///
-    /// # Returns
-    ///
-    /// JSON response from the API
-    pub async fn upload_with_path(
-        &self,
-        param: &str,
-        request: &Vec<u8>,
-        options: Option<RequestOptions>,
-    ) -> Result<ObjectWithRequiredField, ApiError> {
-        self.http_client
-            .execute_bytes_request(
-                Method::POST,
-                &format!("/params/path/{}", param),
-                Some(request.to_vec()),
-                None,
-                options,
-            )
-            .await
-    }
-
-    /// GET with boolean path param
-    ///
-    /// # Arguments
-    ///
-    /// * `options` - Additional request options such as headers, timeout, etc.
-    ///
-    /// # Returns
-    ///
-    /// JSON response from the API
-    pub async fn get_with_boolean_path(
-        &self,
-        param: bool,
-        options: Option<RequestOptions>,
-    ) -> Result<String, ApiError> {
-        self.http_client
-            .execute_request(
-                Method::GET,
-                &format!("/params/path-bool/{}", param),
-                None,
-                None,
-                options,
-            )
-            .await
-    }
-
-    /// GET with path param that can throw errors
-    ///
-    /// # Arguments
-    ///
-    /// * `options` - Additional request options such as headers, timeout, etc.
-    ///
-    /// # Returns
-    ///
-    /// JSON response from the API
-    pub async fn get_with_path_and_errors(
-        &self,
-        param: &str,
-        options: Option<RequestOptions>,
-    ) -> Result<String, ApiError> {
-        self.http_client
-            .execute_request(
-                Method::GET,
-                &format!("/params/path/{}", param),
-                None,
-                None,
                 options,
             )
             .await

@@ -7,13 +7,13 @@ public final class UnionClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getAndReturnUnion(request: Animal, requestOptions: RequestOptions? = nil) async throws -> Animal {
+    public func getAndReturnUnion(request: TypesAnimal, requestOptions: RequestOptions? = nil) async throws -> TypesAnimal {
         return try await httpClient.performRequest(
             method: .post,
             path: "/union",
             body: request,
             requestOptions: requestOptions,
-            responseType: Animal.self
+            responseType: TypesAnimal.self
         )
     }
 }

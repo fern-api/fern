@@ -1,9 +1,42 @@
 import Foundation
 import Testing
-import Exhaustive
+import Api
 
 @Suite("PaginationClient Wire Tests") struct PaginationClientWireTests {
     @Test func listItems1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                #"""
+                {
+                  "items": [
+                    {
+                      "string": "string"
+                    }
+                  ],
+                  "next": "next"
+                }
+                """#.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = EndpointsPaginatedResponse(
+            items: [
+                TypesObjectWithRequiredField(
+                    string: "string"
+                )
+            ],
+            next: Optional(Nullable<String>.value("next"))
+        )
+        let response = try await client.endpoints.pagination.listItems(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        try #require(response == expectedResponse)
+    }
+
+    @Test func listItems2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -22,25 +55,25 @@ import Exhaustive
                 """#.utf8
             )
         )
-        let client = ExhaustiveClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = PaginatedResponse(
+        let expectedResponse = EndpointsPaginatedResponse(
             items: [
-                ObjectWithRequiredField(
+                TypesObjectWithRequiredField(
                     string: "string"
                 ),
-                ObjectWithRequiredField(
+                TypesObjectWithRequiredField(
                     string: "string"
                 )
             ],
-            next: Optional("next")
+            next: Optional(Nullable<String>.value("next"))
         )
         let response = try await client.endpoints.pagination.listItems(
-            cursor: "cursor",
-            limit: 1,
+            cursor: .value("cursor"),
+            limit: .value(1),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)

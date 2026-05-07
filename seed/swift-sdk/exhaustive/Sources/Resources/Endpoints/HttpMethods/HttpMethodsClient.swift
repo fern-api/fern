@@ -7,7 +7,7 @@ public final class HttpMethodsClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func testGet(id: String, requestOptions: RequestOptions? = nil) async throws -> String {
+    public func httpMethodsTestGet(id: String, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .get,
             path: "/http-methods/\(id)",
@@ -16,42 +16,42 @@ public final class HttpMethodsClient: Sendable {
         )
     }
 
-    public func testPost(request: ObjectWithRequiredField, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
-        return try await httpClient.performRequest(
-            method: .post,
-            path: "/http-methods",
-            body: request,
-            requestOptions: requestOptions,
-            responseType: ObjectWithOptionalField.self
-        )
-    }
-
-    public func testPut(id: String, request: ObjectWithRequiredField, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
+    public func httpMethodsTestPut(id: String, request: TypesObjectWithRequiredField, requestOptions: RequestOptions? = nil) async throws -> TypesObjectWithOptionalField {
         return try await httpClient.performRequest(
             method: .put,
             path: "/http-methods/\(id)",
             body: request,
             requestOptions: requestOptions,
-            responseType: ObjectWithOptionalField.self
+            responseType: TypesObjectWithOptionalField.self
         )
     }
 
-    public func testPatch(id: String, request: ObjectWithOptionalField, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
-        return try await httpClient.performRequest(
-            method: .patch,
-            path: "/http-methods/\(id)",
-            body: request,
-            requestOptions: requestOptions,
-            responseType: ObjectWithOptionalField.self
-        )
-    }
-
-    public func testDelete(id: String, requestOptions: RequestOptions? = nil) async throws -> Bool {
+    public func httpMethodsTestDelete(id: String, requestOptions: RequestOptions? = nil) async throws -> Bool {
         return try await httpClient.performRequest(
             method: .delete,
             path: "/http-methods/\(id)",
             requestOptions: requestOptions,
             responseType: Bool.self
+        )
+    }
+
+    public func httpMethodsTestPatch(id: String, request: TypesObjectWithOptionalField, requestOptions: RequestOptions? = nil) async throws -> TypesObjectWithOptionalField {
+        return try await httpClient.performRequest(
+            method: .patch,
+            path: "/http-methods/\(id)",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: TypesObjectWithOptionalField.self
+        )
+    }
+
+    public func httpMethodsTestPost(request: TypesObjectWithRequiredField, requestOptions: RequestOptions? = nil) async throws -> TypesObjectWithOptionalField {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/http-methods",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: TypesObjectWithOptionalField.self
         )
     }
 }

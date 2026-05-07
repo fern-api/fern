@@ -14,11 +14,11 @@ import (
 )
 
 type Client struct {
+	Inlinedrequests *inlinedrequests.Client
+	Noauth          *noauth.Client
+	Noreqbody       *noreqbody.Client
+	Reqwithheaders  *reqwithheaders.Client
 	Endpoints       *client.Client
-	InlinedRequests *inlinedrequests.Client
-	NoAuth          *noauth.Client
-	NoReqBody       *noreqbody.Client
-	ReqWithHeaders  *reqwithheaders.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -28,11 +28,11 @@ type Client struct {
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
+		Inlinedrequests: inlinedrequests.NewClient(options),
+		Noauth:          noauth.NewClient(options),
+		Noreqbody:       noreqbody.NewClient(options),
+		Reqwithheaders:  reqwithheaders.NewClient(options),
 		Endpoints:       client.NewClient(options),
-		InlinedRequests: inlinedrequests.NewClient(options),
-		NoAuth:          noauth.NewClient(options),
-		NoReqBody:       noreqbody.NewClient(options),
-		ReqWithHeaders:  reqwithheaders.NewClient(options),
 		options:         options,
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(

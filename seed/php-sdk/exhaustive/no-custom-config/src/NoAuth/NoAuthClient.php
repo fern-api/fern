@@ -1,6 +1,6 @@
 <?php
 
-namespace Seed\NoAuth;
+namespace Seed\Noauth;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
@@ -12,7 +12,7 @@ use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class NoAuthClient
+class NoauthClient
 {
     /**
      * @var array{
@@ -64,14 +64,14 @@ class NoAuthClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function postWithNoAuth(mixed $request, ?array $options = null): ?bool
+    public function postwithnoauth(mixed $request, ?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/no-auth",
+                    path: "no-auth",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

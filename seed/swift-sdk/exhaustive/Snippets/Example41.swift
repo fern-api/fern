@@ -1,16 +1,15 @@
 import Foundation
-import Exhaustive
+import Api
 
 private func main() async throws {
-    let client = ExhaustiveClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.endpoints.params.uploadWithPath(
-        param: "upload-path",
-        request: Data("data".utf8)
-    )
+    _ = try await client.endpoints.httpMethods.httpMethodsTestPost(request: TypesObjectWithRequiredField(
+        string: "string"
+    ))
 }
 
 try await main()

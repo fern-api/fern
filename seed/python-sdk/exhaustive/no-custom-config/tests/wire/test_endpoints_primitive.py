@@ -1,5 +1,4 @@
 import datetime
-import uuid
 
 from .conftest import get_client, verify_request_count
 
@@ -79,7 +78,7 @@ def test_endpoints_primitive_get_and_return_uuid() -> None:
     test_id = "endpoints.primitive.get_and_return_uuid.0"
     client = get_client(test_id)
     client.endpoints.primitive.get_and_return_uuid(
-        request=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        request="string",
     )
     verify_request_count(test_id, "POST", "/primitive/uuid", None, 1)
 
@@ -89,6 +88,6 @@ def test_endpoints_primitive_get_and_return_base64() -> None:
     test_id = "endpoints.primitive.get_and_return_base64.0"
     client = get_client(test_id)
     client.endpoints.primitive.get_and_return_base64(
-        request="SGVsbG8gd29ybGQh",
+        request="string",
     )
     verify_request_count(test_id, "POST", "/primitive/base64", None, 1)

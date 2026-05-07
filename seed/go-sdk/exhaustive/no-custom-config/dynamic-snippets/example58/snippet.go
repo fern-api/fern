@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
 )
@@ -16,7 +17,13 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.URLs.WithEndingSlash(
+    request := map[string]fern.TypesDocumentedUnknownType{
+        "string": map[string]any{
+            "key": "value",
+        },
+    }
+    client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownType(
         context.TODO(),
+        request,
     )
 }

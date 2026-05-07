@@ -1,0 +1,12 @@
+using SeedApi;
+
+namespace SeedApi.Endpoints;
+
+public partial interface IPutClient
+{
+    WithRawResponseTask<EndpointsPutResponse> EndpointsPutAddAsync(
+        EndpointsPutAddPutRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+}

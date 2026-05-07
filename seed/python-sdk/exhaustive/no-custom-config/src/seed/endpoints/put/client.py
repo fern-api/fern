@@ -4,8 +4,8 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.endpoints_put_response import EndpointsPutResponse
 from .raw_client import AsyncRawPutClient, RawPutClient
-from .types.put_response import PutResponse
 
 
 class PutClient:
@@ -23,7 +23,9 @@ class PutClient:
         """
         return self._raw_client
 
-    def add(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> PutResponse:
+    def endpoints_put_add(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> EndpointsPutResponse:
         """
         Parameters
         ----------
@@ -34,21 +36,22 @@ class PutClient:
 
         Returns
         -------
-        PutResponse
+        EndpointsPutResponse
+
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import SeedApi
 
-        client = SeedExhaustive(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.endpoints.put.add(
+        client.endpoints.put.endpoints_put_add(
             id="id",
         )
         """
-        _response = self._raw_client.add(id, request_options=request_options)
+        _response = self._raw_client.endpoints_put_add(id, request_options=request_options)
         return _response.data
 
 
@@ -67,7 +70,9 @@ class AsyncPutClient:
         """
         return self._raw_client
 
-    async def add(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> PutResponse:
+    async def endpoints_put_add(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> EndpointsPutResponse:
         """
         Parameters
         ----------
@@ -78,27 +83,28 @@ class AsyncPutClient:
 
         Returns
         -------
-        PutResponse
+        EndpointsPutResponse
+
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.endpoints.put.add(
+            await client.endpoints.put.endpoints_put_add(
                 id="id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.add(id, request_options=request_options)
+        _response = await self._raw_client.endpoints_put_add(id, request_options=request_options)
         return _response.data

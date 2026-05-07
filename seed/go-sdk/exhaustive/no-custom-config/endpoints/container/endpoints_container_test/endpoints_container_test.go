@@ -10,9 +10,9 @@ import (
 	os "os"
 	testing "testing"
 
+	fern "github.com/exhaustive/fern"
 	client "github.com/exhaustive/fern/client"
 	option "github.com/exhaustive/fern/option"
-	types "github.com/exhaustive/fern/types"
 	require "github.com/stretchr/testify/require"
 )
 
@@ -90,7 +90,6 @@ func TestEndpointsContainerGetAndReturnListOfPrimitivesWithWireMock(
 	)
 	request := []string{
 		"string",
-		"string",
 	}
 	_, invocationErr := client.Endpoints.Container.GetAndReturnListOfPrimitives(
 		context.TODO(),
@@ -115,11 +114,8 @@ func TestEndpointsContainerGetAndReturnListOfObjectsWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := []*types.ObjectWithRequiredField{
-		&types.ObjectWithRequiredField{
-			FieldString: "string",
-		},
-		&types.ObjectWithRequiredField{
+	request := []*fern.TypesObjectWithRequiredField{
+		&fern.TypesObjectWithRequiredField{
 			FieldString: "string",
 		},
 	}
@@ -172,8 +168,8 @@ func TestEndpointsContainerGetAndReturnSetOfObjectsWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := []*types.ObjectWithRequiredField{
-		&types.ObjectWithRequiredField{
+	request := []*fern.TypesObjectWithRequiredField{
+		&fern.TypesObjectWithRequiredField{
 			FieldString: "string",
 		},
 	}
@@ -201,7 +197,7 @@ func TestEndpointsContainerGetAndReturnMapPrimToPrimWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := map[string]string{
-		"string": "string",
+		"key": "value",
 	}
 	_, invocationErr := client.Endpoints.Container.GetAndReturnMapPrimToPrim(
 		context.TODO(),
@@ -226,8 +222,8 @@ func TestEndpointsContainerGetAndReturnMapOfPrimToObjectWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := map[string]*types.ObjectWithRequiredField{
-		"string": &types.ObjectWithRequiredField{
+	request := map[string]*fern.TypesObjectWithRequiredField{
+		"key": &fern.TypesObjectWithRequiredField{
 			FieldString: "string",
 		},
 	}
@@ -254,8 +250,8 @@ func TestEndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnionWithWireMo
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := map[string]*types.MixedType{
-		"string": &types.MixedType{
+	request := map[string]*fern.TypesMixedType{
+		"key": &fern.TypesMixedType{
 			Double: 1.1,
 		},
 	}
@@ -282,7 +278,7 @@ func TestEndpointsContainerGetAndReturnOptionalWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &types.ObjectWithRequiredField{
+	request := &fern.TypesObjectWithRequiredField{
 		FieldString: "string",
 	}
 	_, invocationErr := client.Endpoints.Container.GetAndReturnOptional(

@@ -11,8 +11,10 @@ use Seed\Core\Client\HttpMethod;
 use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Types\Object\Types\ObjectWithRequiredField;
-use Seed\Types\Object\Types\ObjectWithOptionalField;
+use Seed\Endpoints\HttpMethods\Requests\HttpMethodsTestPutHttpMethodsRequest;
+use Seed\Types\TypesObjectWithOptionalField;
+use Seed\Endpoints\HttpMethods\Requests\HttpMethodsTestPatchHttpMethodsRequest;
+use Seed\Types\TypesObjectWithRequiredField;
 
 class HttpMethodsClient
 {
@@ -64,14 +66,14 @@ class HttpMethodsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function testGet(string $id, ?array $options = null): ?string
+    public function httpMethodsTestGet(string $id, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/http-methods/{$id}",
+                    path: "http-methods/{$id}",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -97,55 +99,8 @@ class HttpMethodsClient
     }
 
     /**
-     * @param ObjectWithRequiredField $request
-     * @param ?array{
-     *   baseUrl?: string,
-     *   maxRetries?: int,
-     *   timeout?: float,
-     *   headers?: array<string, string>,
-     *   queryParameters?: array<string, mixed>,
-     *   bodyProperties?: array<string, mixed>,
-     * } $options
-     * @return ?ObjectWithOptionalField
-     * @throws SeedException
-     * @throws SeedApiException
-     */
-    public function testPost(ObjectWithRequiredField $request, ?array $options = null): ?ObjectWithOptionalField
-    {
-        $options = array_merge($this->options, $options ?? []);
-        try {
-            $response = $this->client->sendRequest(
-                new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/http-methods",
-                    method: HttpMethod::POST,
-                    body: $request,
-                ),
-                $options,
-            );
-            $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
-                $json = $response->getBody()->getContents();
-                if (empty($json)) {
-                    return null;
-                }
-                return ObjectWithOptionalField::fromJson($json);
-            }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (ClientExceptionInterface $e) {
-            throw new SeedException(message: $e->getMessage(), previous: $e);
-        }
-        throw new SeedApiException(
-            message: 'API request failed',
-            statusCode: $statusCode,
-            body: $response->getBody()->getContents(),
-        );
-    }
-
-    /**
      * @param string $id
-     * @param ObjectWithRequiredField $request
+     * @param HttpMethodsTestPutHttpMethodsRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -154,20 +109,20 @@ class HttpMethodsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?ObjectWithOptionalField
+     * @return ?TypesObjectWithOptionalField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function testPut(string $id, ObjectWithRequiredField $request, ?array $options = null): ?ObjectWithOptionalField
+    public function httpMethodsTestPut(string $id, HttpMethodsTestPutHttpMethodsRequest $request, ?array $options = null): ?TypesObjectWithOptionalField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/http-methods/{$id}",
+                    path: "http-methods/{$id}",
                     method: HttpMethod::PUT,
-                    body: $request,
+                    body: $request->body,
                 ),
                 $options,
             );
@@ -177,55 +132,7 @@ class HttpMethodsClient
                 if (empty($json)) {
                     return null;
                 }
-                return ObjectWithOptionalField::fromJson($json);
-            }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (ClientExceptionInterface $e) {
-            throw new SeedException(message: $e->getMessage(), previous: $e);
-        }
-        throw new SeedApiException(
-            message: 'API request failed',
-            statusCode: $statusCode,
-            body: $response->getBody()->getContents(),
-        );
-    }
-
-    /**
-     * @param string $id
-     * @param ObjectWithOptionalField $request
-     * @param ?array{
-     *   baseUrl?: string,
-     *   maxRetries?: int,
-     *   timeout?: float,
-     *   headers?: array<string, string>,
-     *   queryParameters?: array<string, mixed>,
-     *   bodyProperties?: array<string, mixed>,
-     * } $options
-     * @return ?ObjectWithOptionalField
-     * @throws SeedException
-     * @throws SeedApiException
-     */
-    public function testPatch(string $id, ObjectWithOptionalField $request, ?array $options = null): ?ObjectWithOptionalField
-    {
-        $options = array_merge($this->options, $options ?? []);
-        try {
-            $response = $this->client->sendRequest(
-                new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/http-methods/{$id}",
-                    method: HttpMethod::PATCH,
-                    body: $request,
-                ),
-                $options,
-            );
-            $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
-                $json = $response->getBody()->getContents();
-                if (empty($json)) {
-                    return null;
-                }
-                return ObjectWithOptionalField::fromJson($json);
+                return TypesObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -253,14 +160,14 @@ class HttpMethodsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function testDelete(string $id, ?array $options = null): ?bool
+    public function httpMethodsTestDelete(string $id, ?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/http-methods/{$id}",
+                    path: "http-methods/{$id}",
                     method: HttpMethod::DELETE,
                 ),
                 $options,
@@ -272,6 +179,101 @@ class HttpMethodsClient
                     return null;
                 }
                 return JsonDecoder::decodeBool($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param string $id
+     * @param HttpMethodsTestPatchHttpMethodsRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?TypesObjectWithOptionalField
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function httpMethodsTestPatch(string $id, HttpMethodsTestPatchHttpMethodsRequest $request, ?array $options = null): ?TypesObjectWithOptionalField
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "http-methods/{$id}",
+                    method: HttpMethod::PATCH,
+                    body: $request->body,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return TypesObjectWithOptionalField::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param TypesObjectWithRequiredField $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?TypesObjectWithOptionalField
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function httpMethodsTestPost(TypesObjectWithRequiredField $request, ?array $options = null): ?TypesObjectWithOptionalField
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "http-methods",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return TypesObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

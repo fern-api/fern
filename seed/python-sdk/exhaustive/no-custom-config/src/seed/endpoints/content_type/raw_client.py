@@ -2,7 +2,6 @@
 
 import datetime as dt
 import typing
-import uuid
 from json.decoder import JSONDecodeError
 
 from ...core.api_error import ApiError
@@ -20,7 +19,7 @@ class RawContentTypeClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def post_json_patch_content_type(
+    def content_type_post_json_patch_content_type(
         self,
         *,
         string: typing.Optional[str] = OMIT,
@@ -30,12 +29,12 @@ class RawContentTypeClient:
         bool_: typing.Optional[bool] = OMIT,
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
-        uuid_: typing.Optional[uuid.UUID] = OMIT,
+        uuid_: typing.Optional[str] = OMIT,
         base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
-        set_: typing.Optional[typing.Set[str]] = OMIT,
-        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
-        bigint: typing.Optional[str] = OMIT,
+        set_: typing.Optional[typing.Sequence[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        bigint: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
         """
@@ -56,17 +55,17 @@ class RawContentTypeClient:
 
         date : typing.Optional[dt.date]
 
-        uuid_ : typing.Optional[uuid.UUID]
+        uuid_ : typing.Optional[str]
 
         base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
-        set_ : typing.Optional[typing.Set[str]]
+        set_ : typing.Optional[typing.Sequence[str]]
 
-        map_ : typing.Optional[typing.Dict[int, str]]
+        map_ : typing.Optional[typing.Dict[str, typing.Optional[str]]]
 
-        bigint : typing.Optional[str]
+        bigint : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -94,7 +93,7 @@ class RawContentTypeClient:
                 "bigint": bigint,
             },
             headers={
-                "content-type": "application/json-patch+json",
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -111,7 +110,7 @@ class RawContentTypeClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def post_json_patch_content_with_charset_type(
+    def content_type_post_json_patch_content_with_charset_type(
         self,
         *,
         string: typing.Optional[str] = OMIT,
@@ -121,12 +120,12 @@ class RawContentTypeClient:
         bool_: typing.Optional[bool] = OMIT,
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
-        uuid_: typing.Optional[uuid.UUID] = OMIT,
+        uuid_: typing.Optional[str] = OMIT,
         base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
-        set_: typing.Optional[typing.Set[str]] = OMIT,
-        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
-        bigint: typing.Optional[str] = OMIT,
+        set_: typing.Optional[typing.Sequence[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        bigint: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
         """
@@ -147,17 +146,17 @@ class RawContentTypeClient:
 
         date : typing.Optional[dt.date]
 
-        uuid_ : typing.Optional[uuid.UUID]
+        uuid_ : typing.Optional[str]
 
         base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
-        set_ : typing.Optional[typing.Set[str]]
+        set_ : typing.Optional[typing.Sequence[str]]
 
-        map_ : typing.Optional[typing.Dict[int, str]]
+        map_ : typing.Optional[typing.Dict[str, typing.Optional[str]]]
 
-        bigint : typing.Optional[str]
+        bigint : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -185,7 +184,7 @@ class RawContentTypeClient:
                 "bigint": bigint,
             },
             headers={
-                "content-type": "application/json-patch+json; charset=utf-8",
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -207,7 +206,7 @@ class AsyncRawContentTypeClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def post_json_patch_content_type(
+    async def content_type_post_json_patch_content_type(
         self,
         *,
         string: typing.Optional[str] = OMIT,
@@ -217,12 +216,12 @@ class AsyncRawContentTypeClient:
         bool_: typing.Optional[bool] = OMIT,
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
-        uuid_: typing.Optional[uuid.UUID] = OMIT,
+        uuid_: typing.Optional[str] = OMIT,
         base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
-        set_: typing.Optional[typing.Set[str]] = OMIT,
-        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
-        bigint: typing.Optional[str] = OMIT,
+        set_: typing.Optional[typing.Sequence[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        bigint: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
         """
@@ -243,17 +242,17 @@ class AsyncRawContentTypeClient:
 
         date : typing.Optional[dt.date]
 
-        uuid_ : typing.Optional[uuid.UUID]
+        uuid_ : typing.Optional[str]
 
         base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
-        set_ : typing.Optional[typing.Set[str]]
+        set_ : typing.Optional[typing.Sequence[str]]
 
-        map_ : typing.Optional[typing.Dict[int, str]]
+        map_ : typing.Optional[typing.Dict[str, typing.Optional[str]]]
 
-        bigint : typing.Optional[str]
+        bigint : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -281,7 +280,7 @@ class AsyncRawContentTypeClient:
                 "bigint": bigint,
             },
             headers={
-                "content-type": "application/json-patch+json",
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -298,7 +297,7 @@ class AsyncRawContentTypeClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def post_json_patch_content_with_charset_type(
+    async def content_type_post_json_patch_content_with_charset_type(
         self,
         *,
         string: typing.Optional[str] = OMIT,
@@ -308,12 +307,12 @@ class AsyncRawContentTypeClient:
         bool_: typing.Optional[bool] = OMIT,
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
-        uuid_: typing.Optional[uuid.UUID] = OMIT,
+        uuid_: typing.Optional[str] = OMIT,
         base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
-        set_: typing.Optional[typing.Set[str]] = OMIT,
-        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
-        bigint: typing.Optional[str] = OMIT,
+        set_: typing.Optional[typing.Sequence[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        bigint: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
         """
@@ -334,17 +333,17 @@ class AsyncRawContentTypeClient:
 
         date : typing.Optional[dt.date]
 
-        uuid_ : typing.Optional[uuid.UUID]
+        uuid_ : typing.Optional[str]
 
         base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
-        set_ : typing.Optional[typing.Set[str]]
+        set_ : typing.Optional[typing.Sequence[str]]
 
-        map_ : typing.Optional[typing.Dict[int, str]]
+        map_ : typing.Optional[typing.Dict[str, typing.Optional[str]]]
 
-        bigint : typing.Optional[str]
+        bigint : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -372,7 +371,7 @@ class AsyncRawContentTypeClient:
                 "bigint": bigint,
             },
             headers={
-                "content-type": "application/json-patch+json; charset=utf-8",
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

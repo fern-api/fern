@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Exhaustive
+import Api
 
 @Suite("ContentTypeClient Wire Tests") struct ContentTypeClientWireTests {
 }

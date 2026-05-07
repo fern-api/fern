@@ -5,10 +5,10 @@ package container
 import (
 	context "context"
 
+	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
-	types "github.com/exhaustive/fern/types"
 )
 
 type Client struct {
@@ -51,9 +51,9 @@ func (c *Client) GetAndReturnListOfPrimitives(
 
 func (c *Client) GetAndReturnListOfObjects(
 	ctx context.Context,
-	request []*types.ObjectWithRequiredField,
+	request []*fern.TypesObjectWithRequiredField,
 	opts ...option.RequestOption,
-) ([]*types.ObjectWithRequiredField, error) {
+) ([]*fern.TypesObjectWithRequiredField, error) {
 	response, err := c.WithRawResponse.GetAndReturnListOfObjects(
 		ctx,
 		request,
@@ -83,9 +83,9 @@ func (c *Client) GetAndReturnSetOfPrimitives(
 
 func (c *Client) GetAndReturnSetOfObjects(
 	ctx context.Context,
-	request []*types.ObjectWithRequiredField,
+	request []*fern.TypesObjectWithRequiredField,
 	opts ...option.RequestOption,
-) ([]*types.ObjectWithRequiredField, error) {
+) ([]*fern.TypesObjectWithRequiredField, error) {
 	response, err := c.WithRawResponse.GetAndReturnSetOfObjects(
 		ctx,
 		request,
@@ -115,9 +115,9 @@ func (c *Client) GetAndReturnMapPrimToPrim(
 
 func (c *Client) GetAndReturnMapOfPrimToObject(
 	ctx context.Context,
-	request map[string]*types.ObjectWithRequiredField,
+	request map[string]*fern.TypesObjectWithRequiredField,
 	opts ...option.RequestOption,
-) (map[string]*types.ObjectWithRequiredField, error) {
+) (map[string]*fern.TypesObjectWithRequiredField, error) {
 	response, err := c.WithRawResponse.GetAndReturnMapOfPrimToObject(
 		ctx,
 		request,
@@ -131,9 +131,9 @@ func (c *Client) GetAndReturnMapOfPrimToObject(
 
 func (c *Client) GetAndReturnMapOfPrimToUndiscriminatedUnion(
 	ctx context.Context,
-	request map[string]*types.MixedType,
+	request map[string]*fern.TypesMixedType,
 	opts ...option.RequestOption,
-) (map[string]*types.MixedType, error) {
+) (map[string]*fern.TypesMixedType, error) {
 	response, err := c.WithRawResponse.GetAndReturnMapOfPrimToUndiscriminatedUnion(
 		ctx,
 		request,
@@ -147,9 +147,9 @@ func (c *Client) GetAndReturnMapOfPrimToUndiscriminatedUnion(
 
 func (c *Client) GetAndReturnOptional(
 	ctx context.Context,
-	request *types.ObjectWithRequiredField,
+	request *fern.TypesObjectWithRequiredField,
 	opts ...option.RequestOption,
-) (*types.ObjectWithRequiredField, error) {
+) (*fern.TypesObjectWithRequiredField, error) {
 	response, err := c.WithRawResponse.GetAndReturnOptional(
 		ctx,
 		request,

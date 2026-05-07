@@ -1,17 +1,18 @@
 package com.snippets;
 
-import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePath;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.endpoints.httpmethods.requests.HttpMethodsTestGetHttpMethodsRequest;
 
 public class Example34 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
         client.endpoints()
-                .params()
-                .getWithInlinePath("param", GetWithInlinePath.builder().build());
+                .httpMethods()
+                .httpMethodsTestGet(
+                        "id", HttpMethodsTestGetHttpMethodsRequest.builder().build());
     }
 }

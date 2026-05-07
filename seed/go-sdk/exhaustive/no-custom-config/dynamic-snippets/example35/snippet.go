@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     endpoints "github.com/exhaustive/fern/endpoints"
     option "github.com/exhaustive/fern/option"
@@ -17,11 +18,13 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.GetWithQuery{
-        Query: "query",
-        Number: 1,
+    request := &endpoints.HTTPMethodsTestPutHTTPMethodsRequest{
+        ID: "id",
+        Body: &fern.TypesObjectWithRequiredField{
+            FieldString: "string",
+        },
     }
-    client.Endpoints.Params.GetWithQuery(
+    client.Endpoints.HTTPMethods.HTTPMethodsTestPut(
         context.TODO(),
         request,
     )

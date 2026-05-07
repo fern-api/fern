@@ -2,49 +2,43 @@
 //!
 //! This module contains client implementations for:
 //!
+//! - **Inlinedrequests**
+//! - **Noauth**
+//! - **Noreqbody**
+//! - **Reqwithheaders**
 //! - **Endpoints**
-//! - **GeneralErrors**
-//! - **InlinedRequests**
-//! - **NoAuth**
-//! - **NoReqBody**
-//! - **ReqWithHeaders**
-//! - **Types**
 
 use crate::{ApiError, ClientConfig};
 
 pub mod endpoints;
-pub mod general_errors;
-pub mod inlined_requests;
-pub mod no_auth;
-pub mod no_req_body;
-pub mod req_with_headers;
-pub mod types;
-pub struct ExhaustiveClient {
+pub mod inlinedrequests;
+pub mod noauth;
+pub mod noreqbody;
+pub mod reqwithheaders;
+pub struct ApiClient {
     pub config: ClientConfig,
+    pub inlinedrequests: InlinedrequestsClient,
+    pub noauth: NoauthClient,
+    pub noreqbody: NoreqbodyClient,
+    pub reqwithheaders: ReqwithheadersClient,
     pub endpoints: EndpointsClient,
-    pub inlined_requests: InlinedRequestsClient,
-    pub no_auth: NoAuthClient,
-    pub no_req_body: NoReqBodyClient,
-    pub req_with_headers: ReqWithHeadersClient,
 }
 
-impl ExhaustiveClient {
+impl ApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
+            inlinedrequests: InlinedrequestsClient::new(config.clone())?,
+            noauth: NoauthClient::new(config.clone())?,
+            noreqbody: NoreqbodyClient::new(config.clone())?,
+            reqwithheaders: ReqwithheadersClient::new(config.clone())?,
             endpoints: EndpointsClient::new(config.clone())?,
-            inlined_requests: InlinedRequestsClient::new(config.clone())?,
-            no_auth: NoAuthClient::new(config.clone())?,
-            no_req_body: NoReqBodyClient::new(config.clone())?,
-            req_with_headers: ReqWithHeadersClient::new(config.clone())?,
         })
     }
 }
 
 pub use endpoints::EndpointsClient;
-pub use general_errors::GeneralErrorsClient;
-pub use inlined_requests::InlinedRequestsClient;
-pub use no_auth::NoAuthClient;
-pub use no_req_body::NoReqBodyClient;
-pub use req_with_headers::ReqWithHeadersClient;
-pub use types::TypesClient;
+pub use inlinedrequests::InlinedrequestsClient;
+pub use noauth::NoauthClient;
+pub use noreqbody::NoreqbodyClient;
+pub use reqwithheaders::ReqwithheadersClient;

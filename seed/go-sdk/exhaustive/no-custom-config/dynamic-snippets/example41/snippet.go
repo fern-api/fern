@@ -1,9 +1,9 @@
 package example
 
 import (
-    bytes "bytes"
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
 )
@@ -17,12 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    request := bytes.NewReader(
-        []byte(""),
-    )
-    client.Endpoints.Params.UploadWithPath(
+    request := &fern.TypesObjectWithRequiredField{
+        FieldString: "string",
+    }
+    client.Endpoints.HTTPMethods.HTTPMethodsTestPost(
         context.TODO(),
-        "upload-path",
         request,
     )
 }

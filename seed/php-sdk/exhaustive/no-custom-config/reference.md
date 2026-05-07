@@ -1,4 +1,245 @@
 # Reference
+## Inlinedrequests
+<details><summary><code>$client-&gt;inlinedrequests-&gt;postwithobjectbodyandresponse($request) -> ?TypesObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with custom object in request body, response is an object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->inlinedrequests->postwithobjectbodyandresponse(
+    new PostwithobjectbodyandresponseInlinedrequestsRequest([
+        'string' => 'string',
+        'integer' => 1,
+        'nestedObject' => new TypesObjectWithOptionalField([]),
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$string:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$integer:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$nestedObject:** `TypesObjectWithOptionalField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Noauth
+<details><summary><code>$client-&gt;noauth-&gt;postwithnoauth($request) -> ?bool</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST request with no auth
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->noauth->postwithnoauth(
+    [
+        'key' => "value",
+    ],
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `mixed` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Noreqbody
+<details><summary><code>$client-&gt;noreqbody-&gt;getwithnorequestbody() -> ?TypesObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->noreqbody->getwithnorequestbody();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;noreqbody-&gt;postwithnorequestbody() -> ?string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->noreqbody->postwithnorequestbody();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reqwithheaders
+<details><summary><code>$client-&gt;reqwithheaders-&gt;getwithcustomheader($request)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->reqwithheaders->getwithcustomheader(
+    new GetwithcustomheaderReqwithheadersRequest([
+        'testEndpointHeader' => 'X-TEST-ENDPOINT-HEADER',
+        'body' => 'string',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$testEndpointHeader:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$request:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Container
 <details><summary><code>$client-&gt;endpoints-&gt;container-&gt;getAndReturnListOfPrimitives($request) -> ?array</code></summary>
 <dl>
@@ -15,7 +256,6 @@
 ```php
 $client->endpoints->container->getAndReturnListOfPrimitives(
     [
-        'string',
         'string',
     ],
 );
@@ -60,10 +300,7 @@ $client->endpoints->container->getAndReturnListOfPrimitives(
 ```php
 $client->endpoints->container->getAndReturnListOfObjects(
     [
-        new ObjectWithRequiredField([
-            'string' => 'string',
-        ]),
-        new ObjectWithRequiredField([
+        new TypesObjectWithRequiredField([
             'string' => 'string',
         ]),
     ],
@@ -153,7 +390,7 @@ $client->endpoints->container->getAndReturnSetOfPrimitives(
 ```php
 $client->endpoints->container->getAndReturnSetOfObjects(
     [
-        new ObjectWithRequiredField([
+        new TypesObjectWithRequiredField([
             'string' => 'string',
         ]),
     ],
@@ -199,7 +436,7 @@ $client->endpoints->container->getAndReturnSetOfObjects(
 ```php
 $client->endpoints->container->getAndReturnMapPrimToPrim(
     [
-        'string' => 'string',
+        'key' => 'value',
     ],
 );
 ```
@@ -243,7 +480,7 @@ $client->endpoints->container->getAndReturnMapPrimToPrim(
 ```php
 $client->endpoints->container->getAndReturnMapOfPrimToObject(
     [
-        'string' => new ObjectWithRequiredField([
+        'key' => new TypesObjectWithRequiredField([
             'string' => 'string',
         ]),
     ],
@@ -289,7 +526,7 @@ $client->endpoints->container->getAndReturnMapOfPrimToObject(
 ```php
 $client->endpoints->container->getAndReturnMapOfPrimToUndiscriminatedUnion(
     [
-        'string' => 1.1,
+        'key' => 1.1,
     ],
 );
 ```
@@ -318,7 +555,7 @@ $client->endpoints->container->getAndReturnMapOfPrimToUndiscriminatedUnion(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;endpoints-&gt;container-&gt;getAndReturnOptional($request) -> ?ObjectWithRequiredField</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;container-&gt;getAndReturnOptional($request) -> ?TypesObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -332,7 +569,7 @@ $client->endpoints->container->getAndReturnMapOfPrimToUndiscriminatedUnion(
 
 ```php
 $client->endpoints->container->getAndReturnOptional(
-    new ObjectWithRequiredField([
+    new TypesObjectWithRequiredField([
         'string' => 'string',
     ]),
 );
@@ -350,7 +587,7 @@ $client->endpoints->container->getAndReturnOptional(
 <dl>
 <dd>
 
-**$request:** `?ObjectWithRequiredField` 
+**$request:** `TypesObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -363,7 +600,7 @@ $client->endpoints->container->getAndReturnOptional(
 </details>
 
 ## Endpoints ContentType
-<details><summary><code>$client-&gt;endpoints-&gt;contentType-&gt;postJsonPatchContentType($request)</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;contentType-&gt;contentTypePostJsonPatchContentType($request)</code></summary>
 <dl>
 <dd>
 
@@ -376,29 +613,8 @@ $client->endpoints->container->getAndReturnOptional(
 <dd>
 
 ```php
-$client->endpoints->contentType->postJsonPatchContentType(
-    new ObjectWithOptionalField([
-        'string' => 'string',
-        'integer' => 1,
-        'long' => 1000000,
-        'double' => 1.1,
-        'bool' => true,
-        'datetime' => new DateTime('2024-01-15T09:30:00Z'),
-        'date' => new DateTime('2023-01-15'),
-        'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-        'base64' => 'SGVsbG8gd29ybGQh',
-        'list' => [
-            'list',
-            'list',
-        ],
-        'set' => [
-            'set',
-        ],
-        'map' => [
-            1 => 'map',
-        ],
-        'bigint' => '1000000',
-    ]),
+$client->endpoints->contentType->contentTypePostJsonPatchContentType(
+    new TypesObjectWithOptionalField([]),
 );
 ```
 </dd>
@@ -414,7 +630,7 @@ $client->endpoints->contentType->postJsonPatchContentType(
 <dl>
 <dd>
 
-**$request:** `ObjectWithOptionalField` 
+**$request:** `TypesObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -426,7 +642,7 @@ $client->endpoints->contentType->postJsonPatchContentType(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;endpoints-&gt;contentType-&gt;postJsonPatchContentWithCharsetType($request)</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;contentType-&gt;contentTypePostJsonPatchContentWithCharsetType($request)</code></summary>
 <dl>
 <dd>
 
@@ -439,29 +655,8 @@ $client->endpoints->contentType->postJsonPatchContentType(
 <dd>
 
 ```php
-$client->endpoints->contentType->postJsonPatchContentWithCharsetType(
-    new ObjectWithOptionalField([
-        'string' => 'string',
-        'integer' => 1,
-        'long' => 1000000,
-        'double' => 1.1,
-        'bool' => true,
-        'datetime' => new DateTime('2024-01-15T09:30:00Z'),
-        'date' => new DateTime('2023-01-15'),
-        'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-        'base64' => 'SGVsbG8gd29ybGQh',
-        'list' => [
-            'list',
-            'list',
-        ],
-        'set' => [
-            'set',
-        ],
-        'map' => [
-            1 => 'map',
-        ],
-        'bigint' => '1000000',
-    ]),
+$client->endpoints->contentType->contentTypePostJsonPatchContentWithCharsetType(
+    new TypesObjectWithOptionalField([]),
 );
 ```
 </dd>
@@ -477,7 +672,7 @@ $client->endpoints->contentType->postJsonPatchContentWithCharsetType(
 <dl>
 <dd>
 
-**$request:** `ObjectWithOptionalField` 
+**$request:** `TypesObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -504,7 +699,7 @@ $client->endpoints->contentType->postJsonPatchContentWithCharsetType(
 
 ```php
 $client->endpoints->enum->getAndReturnEnum(
-    WeatherReport::Sunny->value,
+    TypesWeatherReport::Sunny->value,
 );
 ```
 </dd>
@@ -533,7 +728,7 @@ $client->endpoints->enum->getAndReturnEnum(
 </details>
 
 ## Endpoints HttpMethods
-<details><summary><code>$client-&gt;endpoints-&gt;httpMethods-&gt;testGet($id) -> ?string</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;httpMethods-&gt;httpMethodsTestGet($id) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -546,7 +741,7 @@ $client->endpoints->enum->getAndReturnEnum(
 <dd>
 
 ```php
-$client->endpoints->httpMethods->testGet(
+$client->endpoints->httpMethods->httpMethodsTestGet(
     'id',
 );
 ```
@@ -575,7 +770,7 @@ $client->endpoints->httpMethods->testGet(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;endpoints-&gt;httpMethods-&gt;testPost($request) -> ?ObjectWithOptionalField</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;httpMethods-&gt;httpMethodsTestPut($id, $request) -> ?TypesObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -588,397 +783,11 @@ $client->endpoints->httpMethods->testGet(
 <dd>
 
 ```php
-$client->endpoints->httpMethods->testPost(
-    new ObjectWithRequiredField([
-        'string' => 'string',
-    ]),
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `ObjectWithRequiredField` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;endpoints-&gt;httpMethods-&gt;testPut($id, $request) -> ?ObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->endpoints->httpMethods->testPut(
+$client->endpoints->httpMethods->httpMethodsTestPut(
     'id',
-    new ObjectWithRequiredField([
-        'string' => 'string',
-    ]),
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `ObjectWithRequiredField` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;endpoints-&gt;httpMethods-&gt;testPatch($id, $request) -> ?ObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->endpoints->httpMethods->testPatch(
-    'id',
-    new ObjectWithOptionalField([
-        'string' => 'string',
-        'integer' => 1,
-        'long' => 1000000,
-        'double' => 1.1,
-        'bool' => true,
-        'datetime' => new DateTime('2024-01-15T09:30:00Z'),
-        'date' => new DateTime('2023-01-15'),
-        'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-        'base64' => 'SGVsbG8gd29ybGQh',
-        'list' => [
-            'list',
-            'list',
-        ],
-        'set' => [
-            'set',
-        ],
-        'map' => [
-            1 => 'map',
-        ],
-        'bigint' => '1000000',
-    ]),
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `ObjectWithOptionalField` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;endpoints-&gt;httpMethods-&gt;testDelete($id) -> ?bool</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->endpoints->httpMethods->testDelete(
-    'id',
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$id:** `string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Endpoints Object
-<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithOptionalField($request) -> ?ObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->endpoints->object->getAndReturnWithOptionalField(
-    new ObjectWithOptionalField([
-        'string' => 'string',
-        'integer' => 1,
-        'long' => 1000000,
-        'double' => 1.1,
-        'bool' => true,
-        'datetime' => new DateTime('2024-01-15T09:30:00Z'),
-        'date' => new DateTime('2023-01-15'),
-        'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-        'base64' => 'SGVsbG8gd29ybGQh',
-        'list' => [
-            'list',
-            'list',
-        ],
-        'set' => [
-            'set',
-        ],
-        'map' => [
-            1 => 'map',
-        ],
-        'bigint' => '1000000',
-    ]),
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `ObjectWithOptionalField` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithRequiredField($request) -> ?ObjectWithRequiredField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->endpoints->object->getAndReturnWithRequiredField(
-    new ObjectWithRequiredField([
-        'string' => 'string',
-    ]),
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `ObjectWithRequiredField` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithMapOfMap($request) -> ?ObjectWithMapOfMap</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->endpoints->object->getAndReturnWithMapOfMap(
-    new ObjectWithMapOfMap([
-        'map' => [
-            'map' => [
-                'map' => 'map',
-            ],
-        ],
-    ]),
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `ObjectWithMapOfMap` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnNestedWithOptionalField($request) -> ?NestedObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->endpoints->object->getAndReturnNestedWithOptionalField(
-    new NestedObjectWithOptionalField([
-        'string' => 'string',
-        'nestedObject' => new ObjectWithOptionalField([
+    new HttpMethodsTestPutHttpMethodsRequest([
+        'body' => new TypesObjectWithRequiredField([
             'string' => 'string',
-            'integer' => 1,
-            'long' => 1000000,
-            'double' => 1.1,
-            'bool' => true,
-            'datetime' => new DateTime('2024-01-15T09:30:00Z'),
-            'date' => new DateTime('2023-01-15'),
-            'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-            'base64' => 'SGVsbG8gd29ybGQh',
-            'list' => [
-                'list',
-                'list',
-            ],
-            'set' => [
-                'set',
-            ],
-            'map' => [
-                1 => 'map',
-            ],
-            'bigint' => '1000000',
         ]),
     ]),
 );
@@ -996,7 +805,15 @@ $client->endpoints->object->getAndReturnNestedWithOptionalField(
 <dl>
 <dd>
 
-**$request:** `NestedObjectWithOptionalField` 
+**$id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$request:** `TypesObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -1008,7 +825,323 @@ $client->endpoints->object->getAndReturnNestedWithOptionalField(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnNestedWithRequiredField($string, $request) -> ?NestedObjectWithRequiredField</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;httpMethods-&gt;httpMethodsTestDelete($id) -> ?bool</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->httpMethods->httpMethodsTestDelete(
+    'id',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$id:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;endpoints-&gt;httpMethods-&gt;httpMethodsTestPatch($id, $request) -> ?TypesObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->httpMethods->httpMethodsTestPatch(
+    'id',
+    new HttpMethodsTestPatchHttpMethodsRequest([
+        'body' => new TypesObjectWithOptionalField([]),
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$request:** `TypesObjectWithOptionalField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;endpoints-&gt;httpMethods-&gt;httpMethodsTestPost($request) -> ?TypesObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->httpMethods->httpMethodsTestPost(
+    new TypesObjectWithRequiredField([
+        'string' => 'string',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `TypesObjectWithRequiredField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Endpoints Object
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithOptionalField($request) -> ?TypesObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->object->getAndReturnWithOptionalField(
+    new TypesObjectWithOptionalField([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `TypesObjectWithOptionalField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithRequiredField($request) -> ?TypesObjectWithRequiredField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->object->getAndReturnWithRequiredField(
+    new TypesObjectWithRequiredField([
+        'string' => 'string',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `TypesObjectWithRequiredField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithMapOfMap($request) -> ?TypesObjectWithMapOfMap</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->object->getAndReturnWithMapOfMap(
+    new TypesObjectWithMapOfMap([
+        'map' => [
+            'key' => [
+                'key' => 'value',
+            ],
+        ],
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `TypesObjectWithMapOfMap` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnNestedWithOptionalField($request) -> ?TypesNestedObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->object->getAndReturnNestedWithOptionalField(
+    new TypesNestedObjectWithOptionalField([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `TypesNestedObjectWithOptionalField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnNestedWithRequiredField($string, $request) -> ?TypesNestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1023,29 +1156,10 @@ $client->endpoints->object->getAndReturnNestedWithOptionalField(
 ```php
 $client->endpoints->object->getAndReturnNestedWithRequiredField(
     'string',
-    new NestedObjectWithRequiredField([
-        'string' => 'string',
-        'nestedObject' => new ObjectWithOptionalField([
+    new GetAndReturnNestedWithRequiredFieldObjectRequest([
+        'body' => new TypesNestedObjectWithRequiredField([
             'string' => 'string',
-            'integer' => 1,
-            'long' => 1000000,
-            'double' => 1.1,
-            'bool' => true,
-            'datetime' => new DateTime('2024-01-15T09:30:00Z'),
-            'date' => new DateTime('2023-01-15'),
-            'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-            'base64' => 'SGVsbG8gd29ybGQh',
-            'list' => [
-                'list',
-                'list',
-            ],
-            'set' => [
-                'set',
-            ],
-            'map' => [
-                1 => 'map',
-            ],
-            'bigint' => '1000000',
+            'nestedObject' => new TypesObjectWithOptionalField([]),
         ]),
     ]),
 );
@@ -1071,7 +1185,7 @@ $client->endpoints->object->getAndReturnNestedWithRequiredField(
 <dl>
 <dd>
 
-**$request:** `NestedObjectWithRequiredField` 
+**$request:** `TypesNestedObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -1083,7 +1197,7 @@ $client->endpoints->object->getAndReturnNestedWithRequiredField(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnNestedWithRequiredFieldAsList($request) -> ?NestedObjectWithRequiredField</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnNestedWithRequiredFieldAsList($request) -> ?TypesNestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1098,55 +1212,9 @@ $client->endpoints->object->getAndReturnNestedWithRequiredField(
 ```php
 $client->endpoints->object->getAndReturnNestedWithRequiredFieldAsList(
     [
-        new NestedObjectWithRequiredField([
+        new TypesNestedObjectWithRequiredField([
             'string' => 'string',
-            'nestedObject' => new ObjectWithOptionalField([
-                'string' => 'string',
-                'integer' => 1,
-                'long' => 1000000,
-                'double' => 1.1,
-                'bool' => true,
-                'datetime' => new DateTime('2024-01-15T09:30:00Z'),
-                'date' => new DateTime('2023-01-15'),
-                'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-                'base64' => 'SGVsbG8gd29ybGQh',
-                'list' => [
-                    'list',
-                    'list',
-                ],
-                'set' => [
-                    'set',
-                ],
-                'map' => [
-                    1 => 'map',
-                ],
-                'bigint' => '1000000',
-            ]),
-        ]),
-        new NestedObjectWithRequiredField([
-            'string' => 'string',
-            'nestedObject' => new ObjectWithOptionalField([
-                'string' => 'string',
-                'integer' => 1,
-                'long' => 1000000,
-                'double' => 1.1,
-                'bool' => true,
-                'datetime' => new DateTime('2024-01-15T09:30:00Z'),
-                'date' => new DateTime('2023-01-15'),
-                'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-                'base64' => 'SGVsbG8gd29ybGQh',
-                'list' => [
-                    'list',
-                    'list',
-                ],
-                'set' => [
-                    'set',
-                ],
-                'map' => [
-                    1 => 'map',
-                ],
-                'bigint' => '1000000',
-            ]),
+            'nestedObject' => new TypesObjectWithOptionalField([]),
         ]),
     ],
 );
@@ -1176,7 +1244,7 @@ $client->endpoints->object->getAndReturnNestedWithRequiredFieldAsList(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithUnknownField($request) -> ?ObjectWithUnknownField</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithUnknownField($request) -> ?TypesObjectWithUnknownField</code></summary>
 <dl>
 <dd>
 
@@ -1190,9 +1258,9 @@ $client->endpoints->object->getAndReturnNestedWithRequiredFieldAsList(
 
 ```php
 $client->endpoints->object->getAndReturnWithUnknownField(
-    new ObjectWithUnknownField([
+    new TypesObjectWithUnknownField([
         'unknown' => [
-            '$ref' => "https://example.com/schema",
+            'key' => "value",
         ],
     ]),
 );
@@ -1210,7 +1278,7 @@ $client->endpoints->object->getAndReturnWithUnknownField(
 <dl>
 <dd>
 
-**$request:** `ObjectWithUnknownField` 
+**$request:** `TypesObjectWithUnknownField` 
     
 </dd>
 </dl>
@@ -1222,7 +1290,7 @@ $client->endpoints->object->getAndReturnWithUnknownField(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithDocumentedUnknownType($request) -> ?ObjectWithDocumentedUnknownType</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithDocumentedUnknownType($request) -> ?TypesObjectWithDocumentedUnknownType</code></summary>
 <dl>
 <dd>
 
@@ -1236,7 +1304,7 @@ $client->endpoints->object->getAndReturnWithUnknownField(
 
 ```php
 $client->endpoints->object->getAndReturnWithDocumentedUnknownType(
-    new ObjectWithDocumentedUnknownType([
+    new TypesObjectWithDocumentedUnknownType([
         'documentedUnknownType' => [
             'key' => "value",
         ],
@@ -1256,7 +1324,7 @@ $client->endpoints->object->getAndReturnWithDocumentedUnknownType(
 <dl>
 <dd>
 
-**$request:** `ObjectWithDocumentedUnknownType` 
+**$request:** `TypesObjectWithDocumentedUnknownType` 
     
 </dd>
 </dl>
@@ -1282,11 +1350,7 @@ $client->endpoints->object->getAndReturnWithDocumentedUnknownType(
 
 ```php
 $client->endpoints->object->getAndReturnMapOfDocumentedUnknownType(
-    [
-        'string' => [
-            'key' => "value",
-        ],
-    ],
+    [],
 );
 ```
 </dd>
@@ -1314,134 +1378,7 @@ $client->endpoints->object->getAndReturnMapOfDocumentedUnknownType(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithMixedRequiredAndOptionalFields($request) -> ?ObjectWithMixedRequiredAndOptionalFields</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Tests that dynamic snippets include all required properties in the
-object initializer, even when the example omits some required fields.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->endpoints->object->getAndReturnWithMixedRequiredAndOptionalFields(
-    new ObjectWithMixedRequiredAndOptionalFields([
-        'requiredString' => 'hello',
-        'requiredInteger' => 0,
-        'optionalString' => 'world',
-        'requiredLong' => 0,
-    ]),
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `ObjectWithMixedRequiredAndOptionalFields` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithRequiredNestedObject($request) -> ?ObjectWithRequiredNestedObject</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Tests that dynamic snippets recursively construct default objects for
-required properties whose type is a named object. When the example
-omits the nested object, the generator should construct a default
-initializer with the nested object's required properties filled in.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->endpoints->object->getAndReturnWithRequiredNestedObject(
-    new ObjectWithRequiredNestedObject([
-        'requiredString' => 'hello',
-        'requiredObject' => new NestedObjectWithRequiredField([
-            'string' => 'nested',
-            'nestedObject' => new ObjectWithOptionalField([]),
-        ]),
-    ]),
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `ObjectWithRequiredNestedObject` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithDatetimeLikeString($request) -> ?ObjectWithDatetimeLikeString</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithDatetimeLikeString($request) -> ?TypesObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>
 
@@ -1471,9 +1408,9 @@ without being converted to "2023-08-31T14:15:22.000Z".
 
 ```php
 $client->endpoints->object->getAndReturnWithDatetimeLikeString(
-    new ObjectWithDatetimeLikeString([
-        'datetimeLikeString' => '2023-08-31T14:15:22Z',
-        'actualDatetime' => new DateTime('2023-08-31T14:15:22Z'),
+    new TypesObjectWithDatetimeLikeString([
+        'datetimeLikeString' => 'datetimeLikeString',
+        'actualDatetime' => new DateTime('2024-01-15T09:30:00Z'),
     ]),
 );
 ```
@@ -1490,7 +1427,7 @@ $client->endpoints->object->getAndReturnWithDatetimeLikeString(
 <dl>
 <dd>
 
-**$request:** `ObjectWithDatetimeLikeString` 
+**$request:** `TypesObjectWithDatetimeLikeString` 
     
 </dd>
 </dl>
@@ -1503,7 +1440,7 @@ $client->endpoints->object->getAndReturnWithDatetimeLikeString(
 </details>
 
 ## Endpoints Pagination
-<details><summary><code>$client-&gt;endpoints-&gt;pagination-&gt;listItems($request) -> ?PaginatedResponse</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;pagination-&gt;listItems($request) -> ?EndpointsPaginatedResponse</code></summary>
 <dl>
 <dd>
 
@@ -1531,10 +1468,7 @@ List items with cursor pagination
 
 ```php
 $client->endpoints->pagination->listItems(
-    new ListItemsRequest([
-        'cursor' => 'cursor',
-        'limit' => 1,
-    ]),
+    new ListItemsPaginationRequest([]),
 );
 ```
 </dd>
@@ -1627,6 +1561,127 @@ $client->endpoints->params->getWithPath(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;uploadWithPath($param) -> ?TypesObjectWithRequiredField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST bytes with path param returning object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->params->uploadWithPath($param): ?TypesObjectWithRequiredField;
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$param:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;modifyWithPath($param, $request) -> ?string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+PUT to update with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->params->modifyWithPath(
+    'param',
+    new ModifyWithPathParamsRequest([
+        'body' => 'string',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$param:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$request:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;endpoints-&gt;params-&gt;getWithInlinePath($param) -> ?string</code></summary>
 <dl>
 <dd>
@@ -1654,7 +1709,7 @@ GET with path param
 <dd>
 
 ```php
-$client->endpoints->params->getWithPath(
+$client->endpoints->params->getWithInlinePath(
     'param',
 );
 ```
@@ -1672,6 +1727,73 @@ $client->endpoints->params->getWithPath(
 <dd>
 
 **$param:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;modifyWithInlinePath($param, $request) -> ?string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+PUT to update with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->params->modifyWithInlinePath(
+    'param',
+    new ModifyWithInlinePathParamsRequest([
+        'body' => 'string',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$param:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$request:** `string` 
     
 </dd>
 </dl>
@@ -1711,7 +1833,7 @@ GET with query param
 
 ```php
 $client->endpoints->params->getWithQuery(
-    new GetWithQuery([
+    new GetWithQueryParamsRequest([
         'query' => 'query',
         'number' => 1,
     ]),
@@ -1777,10 +1899,14 @@ GET with multiple of same query param
 <dd>
 
 ```php
-$client->endpoints->params->getWithQuery(
-    new GetWithQuery([
-        'query' => 'query',
-        'number' => 1,
+$client->endpoints->params->getWithAllowMultipleQuery(
+    new GetWithAllowMultipleQueryParamsRequest([
+        'query' => [
+            'query',
+        ],
+        'number' => [
+            1,
+        ],
     ]),
 );
 ```
@@ -1797,7 +1923,7 @@ $client->endpoints->params->getWithQuery(
 <dl>
 <dd>
 
-**$query:** `string` 
+**$query:** `?string` 
     
 </dd>
 </dl>
@@ -1805,7 +1931,7 @@ $client->endpoints->params->getWithQuery(
 <dl>
 <dd>
 
-**$number:** `int` 
+**$number:** `?int` 
     
 </dd>
 </dl>
@@ -1846,7 +1972,7 @@ GET with path and query params
 ```php
 $client->endpoints->params->getWithPathAndQuery(
     'param',
-    new GetWithPathAndQuery([
+    new GetWithPathAndQueryParamsRequest([
         'query' => 'query',
     ]),
 );
@@ -1911,9 +2037,9 @@ GET with path and query params
 <dd>
 
 ```php
-$client->endpoints->params->getWithPathAndQuery(
+$client->endpoints->params->getWithInlinePathAndQuery(
     'param',
-    new GetWithPathAndQuery([
+    new GetWithInlinePathAndQueryParamsRequest([
         'query' => 'query',
     ]),
 );
@@ -1940,305 +2066,6 @@ $client->endpoints->params->getWithPathAndQuery(
 <dd>
 
 **$query:** `string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;modifyWithPath($param, $request) -> ?string</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-PUT to update with path param
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->endpoints->params->modifyWithPath(
-    'param',
-    'string',
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$param:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;modifyWithInlinePath($param, $request) -> ?string</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-PUT to update with path param
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->endpoints->params->modifyWithPath(
-    'param',
-    'string',
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$param:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;uploadWithPath($param) -> ?ObjectWithRequiredField</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-POST bytes with path param returning object
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->endpoints->params->uploadWithPath(
-    'upload-path',
-    ,
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$param:** `string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;getWithBooleanPath($param) -> ?string</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-GET with boolean path param
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->endpoints->params->getWithBooleanPath(
-    true,
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$param:** `bool` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;getWithPathAndErrors($param) -> ?string</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-GET with path param that can throw errors
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->endpoints->params->getWithPath(
-    'param',
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$param:** `string` 
     
 </dd>
 </dl>
@@ -2559,7 +2386,7 @@ $client->endpoints->primitive->getAndReturnDate(
 
 ```php
 $client->endpoints->primitive->getAndReturnUuid(
-    'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    'string',
 );
 ```
 </dd>
@@ -2601,7 +2428,7 @@ $client->endpoints->primitive->getAndReturnUuid(
 
 ```php
 $client->endpoints->primitive->getAndReturnBase64(
-    'SGVsbG8gd29ybGQh',
+    'string',
 );
 ```
 </dd>
@@ -2630,7 +2457,7 @@ $client->endpoints->primitive->getAndReturnBase64(
 </details>
 
 ## Endpoints Put
-<details><summary><code>$client-&gt;endpoints-&gt;put-&gt;add($id) -> ?PutResponse</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;put-&gt;endpointsPutAdd($id) -> ?EndpointsPutResponse</code></summary>
 <dl>
 <dd>
 
@@ -2643,7 +2470,7 @@ $client->endpoints->primitive->getAndReturnBase64(
 <dd>
 
 ```php
-$client->endpoints->put->add(
+$client->endpoints->put->endpointsPutAdd(
     'id',
 );
 ```
@@ -2673,7 +2500,7 @@ $client->endpoints->put->add(
 </details>
 
 ## Endpoints Union
-<details><summary><code>$client-&gt;endpoints-&gt;union-&gt;getAndReturnUnion($request) -> ?Animal</code></summary>
+<details><summary><code>$client-&gt;endpoints-&gt;union-&gt;getAndReturnUnion($request) -> TypesAnimalZero|TypesAnimalOne|null</code></summary>
 <dl>
 <dd>
 
@@ -2687,10 +2514,11 @@ $client->endpoints->put->add(
 
 ```php
 $client->endpoints->union->getAndReturnUnion(
-    Animal::dog(new Dog([
+    new TypesAnimalZero([
         'name' => 'name',
         'likesToWoof' => true,
-    ])),
+        'animal' => TypesAnimalZeroAnimal::Dog->value,
+    ]),
 );
 ```
 </dd>
@@ -2706,7 +2534,7 @@ $client->endpoints->union->getAndReturnUnion(
 <dl>
 <dd>
 
-**$request:** `Animal` 
+**$request:** `TypesAnimalZero|TypesAnimalOne` 
     
 </dd>
 </dl>
@@ -2809,269 +2637,6 @@ $client->endpoints->urls->withEndingSlash();
 ```php
 $client->endpoints->urls->withUnderscores();
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## InlinedRequests
-<details><summary><code>$client-&gt;inlinedRequests-&gt;postWithObjectBodyandResponse($request) -> ?ObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-POST with custom object in request body, response is an object
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->inlinedRequests->postWithObjectBodyandResponse(
-    new PostWithObjectBody([
-        'string' => 'string',
-        'integer' => 1,
-        'nestedObject' => new ObjectWithOptionalField([
-            'string' => 'string',
-            'integer' => 1,
-            'long' => 1000000,
-            'double' => 1.1,
-            'bool' => true,
-            'datetime' => new DateTime('2024-01-15T09:30:00Z'),
-            'date' => new DateTime('2023-01-15'),
-            'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-            'base64' => 'SGVsbG8gd29ybGQh',
-            'list' => [
-                'list',
-                'list',
-            ],
-            'set' => [
-                'set',
-            ],
-            'map' => [
-                1 => 'map',
-            ],
-            'bigint' => '1000000',
-        ]),
-    ]),
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$string:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$integer:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$nestedObject:** `ObjectWithOptionalField` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## NoAuth
-<details><summary><code>$client-&gt;noAuth-&gt;postWithNoAuth($request) -> ?bool</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-POST request with no auth
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->noAuth->postWithNoAuth(
-    [
-        'key' => "value",
-    ],
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `mixed` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## NoReqBody
-<details><summary><code>$client-&gt;noReqBody-&gt;getWithNoRequestBody() -> ?ObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->noReqBody->getWithNoRequestBody();
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;noReqBody-&gt;postWithNoRequestBody() -> ?string</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->noReqBody->postWithNoRequestBody();
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ReqWithHeaders
-<details><summary><code>$client-&gt;reqWithHeaders-&gt;getWithCustomHeader($request)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->reqWithHeaders->getWithCustomHeader(
-    new ReqWithHeaders([
-        'xTestServiceHeader' => 'X-TEST-SERVICE-HEADER',
-        'xTestEndpointHeader' => 'X-TEST-ENDPOINT-HEADER',
-        'body' => 'string',
-    ]),
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$xTestEndpointHeader:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `string` 
-    
 </dd>
 </dl>
 </dd>

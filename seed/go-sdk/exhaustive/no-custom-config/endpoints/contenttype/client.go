@@ -5,10 +5,10 @@ package contenttype
 import (
 	context "context"
 
+	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
-	types "github.com/exhaustive/fern/types"
 )
 
 type Client struct {
@@ -33,12 +33,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) PostJSONPatchContentType(
+func (c *Client) ContentTypePostJSONPatchContentType(
 	ctx context.Context,
-	request *types.ObjectWithOptionalField,
+	request *fern.TypesObjectWithOptionalField,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.PostJSONPatchContentType(
+	_, err := c.WithRawResponse.ContentTypePostJSONPatchContentType(
 		ctx,
 		request,
 		opts...,
@@ -49,12 +49,12 @@ func (c *Client) PostJSONPatchContentType(
 	return nil
 }
 
-func (c *Client) PostJSONPatchContentWithCharsetType(
+func (c *Client) ContentTypePostJSONPatchContentWithCharsetType(
 	ctx context.Context,
-	request *types.ObjectWithOptionalField,
+	request *fern.TypesObjectWithOptionalField,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.PostJSONPatchContentWithCharsetType(
+	_, err := c.WithRawResponse.ContentTypePostJSONPatchContentWithCharsetType(
 		ctx,
 		request,
 		opts...,

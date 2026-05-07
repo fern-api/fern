@@ -1,6 +1,6 @@
 import Foundation
 
-public final class InlinedRequestsClient: Sendable {
+public final class InlinedrequestsClient: Sendable {
     private let httpClient: HTTPClient
 
     init(config: ClientConfig) {
@@ -10,13 +10,13 @@ public final class InlinedRequestsClient: Sendable {
     /// POST with custom object in request body, response is an object
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func postWithObjectBodyandResponse(request: Requests.PostWithObjectBody, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
+    public func postwithobjectbodyandresponse(request: Requests.PostwithobjectbodyandresponseInlinedrequestsRequest, requestOptions: RequestOptions? = nil) async throws -> TypesObjectWithOptionalField {
         return try await httpClient.performRequest(
             method: .post,
             path: "/req-bodies/object",
             body: request,
             requestOptions: requestOptions,
-            responseType: ObjectWithOptionalField.self
+            responseType: TypesObjectWithOptionalField.self
         )
     }
 }

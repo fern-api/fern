@@ -17,33 +17,33 @@ public final class ContainerClient: Sendable {
         )
     }
 
-    public func getAndReturnListOfObjects(request: [ObjectWithRequiredField], requestOptions: RequestOptions? = nil) async throws -> [ObjectWithRequiredField] {
+    public func getAndReturnListOfObjects(request: [TypesObjectWithRequiredField], requestOptions: RequestOptions? = nil) async throws -> [TypesObjectWithRequiredField] {
         return try await httpClient.performRequest(
             method: .post,
             path: "/container/list-of-objects",
             body: request,
             requestOptions: requestOptions,
-            responseType: [ObjectWithRequiredField].self
+            responseType: [TypesObjectWithRequiredField].self
         )
     }
 
-    public func getAndReturnSetOfPrimitives(request: JSONValue, requestOptions: RequestOptions? = nil) async throws -> JSONValue {
+    public func getAndReturnSetOfPrimitives(request: [String], requestOptions: RequestOptions? = nil) async throws -> [String] {
         return try await httpClient.performRequest(
             method: .post,
             path: "/container/set-of-primitives",
             body: request,
             requestOptions: requestOptions,
-            responseType: JSONValue.self
+            responseType: [String].self
         )
     }
 
-    public func getAndReturnSetOfObjects(request: JSONValue, requestOptions: RequestOptions? = nil) async throws -> JSONValue {
+    public func getAndReturnSetOfObjects(request: [TypesObjectWithRequiredField], requestOptions: RequestOptions? = nil) async throws -> [TypesObjectWithRequiredField] {
         return try await httpClient.performRequest(
             method: .post,
             path: "/container/set-of-objects",
             body: request,
             requestOptions: requestOptions,
-            responseType: JSONValue.self
+            responseType: [TypesObjectWithRequiredField].self
         )
     }
 
@@ -57,33 +57,33 @@ public final class ContainerClient: Sendable {
         )
     }
 
-    public func getAndReturnMapOfPrimToObject(request: [String: ObjectWithRequiredField], requestOptions: RequestOptions? = nil) async throws -> [String: ObjectWithRequiredField] {
+    public func getAndReturnMapOfPrimToObject(request: [String: TypesObjectWithRequiredField], requestOptions: RequestOptions? = nil) async throws -> [String: TypesObjectWithRequiredField] {
         return try await httpClient.performRequest(
             method: .post,
             path: "/container/map-prim-to-object",
             body: request,
             requestOptions: requestOptions,
-            responseType: [String: ObjectWithRequiredField].self
+            responseType: [String: TypesObjectWithRequiredField].self
         )
     }
 
-    public func getAndReturnMapOfPrimToUndiscriminatedUnion(request: [String: MixedType], requestOptions: RequestOptions? = nil) async throws -> [String: MixedType] {
+    public func getAndReturnMapOfPrimToUndiscriminatedUnion(request: [String: TypesMixedType], requestOptions: RequestOptions? = nil) async throws -> [String: TypesMixedType] {
         return try await httpClient.performRequest(
             method: .post,
             path: "/container/map-prim-to-union",
             body: request,
             requestOptions: requestOptions,
-            responseType: [String: MixedType].self
+            responseType: [String: TypesMixedType].self
         )
     }
 
-    public func getAndReturnOptional(request: ObjectWithRequiredField?, requestOptions: RequestOptions? = nil) async throws -> ObjectWithRequiredField? {
+    public func getAndReturnOptional(request: TypesObjectWithRequiredField, requestOptions: RequestOptions? = nil) async throws -> TypesObjectWithRequiredField {
         return try await httpClient.performRequest(
             method: .post,
             path: "/container/opt-objects",
             body: request,
             requestOptions: requestOptions,
-            responseType: ObjectWithRequiredField?.self
+            responseType: TypesObjectWithRequiredField.self
         )
     }
 }

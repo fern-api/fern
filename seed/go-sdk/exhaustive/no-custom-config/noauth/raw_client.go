@@ -31,7 +31,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) PostWithNoAuth(
+func (r *RawClient) Postwithnoauth(
 	ctx context.Context,
 	request any,
 	opts ...option.RequestOption,

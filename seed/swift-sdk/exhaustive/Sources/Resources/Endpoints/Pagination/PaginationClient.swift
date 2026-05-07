@@ -12,16 +12,16 @@ public final class PaginationClient: Sendable {
     /// - Parameter cursor: The cursor for pagination
     /// - Parameter limit: Maximum number of items to return
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func listItems(cursor: String? = nil, limit: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> PaginatedResponse {
+    public func listItems(cursor: Nullable<String>? = nil, limit: Nullable<Int>? = nil, requestOptions: RequestOptions? = nil) async throws -> EndpointsPaginatedResponse {
         return try await httpClient.performRequest(
             method: .get,
             path: "/pagination",
             queryParams: [
-                "cursor": cursor.map { .string($0) }, 
-                "limit": limit.map { .int($0) }
+                "cursor": cursor?.wrappedValue.map { .string($0) }, 
+                "limit": limit?.wrappedValue.map { .int($0) }
             ],
             requestOptions: requestOptions,
-            responseType: PaginatedResponse.self
+            responseType: EndpointsPaginatedResponse.self
         )
     }
 }

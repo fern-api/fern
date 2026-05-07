@@ -13,7 +13,6 @@ import (
 	fern "github.com/exhaustive/fern"
 	client "github.com/exhaustive/fern/client"
 	option "github.com/exhaustive/fern/option"
-	uuid "github.com/google/uuid"
 	require "github.com/stretchr/testify/require"
 )
 
@@ -235,9 +234,7 @@ func TestEndpointsPrimitiveGetAndReturnUUIDWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := uuid.MustParse(
-		"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-	)
+	request := "string"
 	_, invocationErr := client.Endpoints.Primitive.GetAndReturnUUID(
 		context.TODO(),
 		request,
@@ -261,7 +258,7 @@ func TestEndpointsPrimitiveGetAndReturnBase64WithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := []byte("SGVsbG8gd29ybGQh")
+	request := "string"
 	_, invocationErr := client.Endpoints.Primitive.GetAndReturnBase64(
 		context.TODO(),
 		request,

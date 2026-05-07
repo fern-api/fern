@@ -77,13 +77,13 @@ public final class PrimitiveClient: Sendable {
         )
     }
 
-    public func getAndReturnUuid(request: UUID, requestOptions: RequestOptions? = nil) async throws -> UUID {
+    public func getAndReturnUuid(request: String, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
             path: "/primitive/uuid",
             body: request,
             requestOptions: requestOptions,
-            responseType: UUID.self
+            responseType: String.self
         )
     }
 

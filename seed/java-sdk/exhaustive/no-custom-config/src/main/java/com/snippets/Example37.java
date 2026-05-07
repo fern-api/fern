@@ -1,18 +1,18 @@
 package com.snippets;
 
-import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.resources.endpoints.params.requests.GetWithPathAndQuery;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.endpoints.httpmethods.requests.HttpMethodsTestDeleteHttpMethodsRequest;
 
 public class Example37 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
         client.endpoints()
-                .params()
-                .getWithPathAndQuery(
-                        "param", GetWithPathAndQuery.builder().query("query").build());
+                .httpMethods()
+                .httpMethodsTestDelete(
+                        "id", HttpMethodsTestDeleteHttpMethodsRequest.builder().build());
     }
 }

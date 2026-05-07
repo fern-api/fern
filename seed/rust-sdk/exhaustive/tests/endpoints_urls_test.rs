@@ -1,4 +1,4 @@
-use seed_exhaustive::prelude::*;
+use seed_api::prelude::*;
 
 mod wire_test_utils;
 
@@ -14,7 +14,7 @@ async fn test_endpoints_urls_with_mixed_case_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client.endpoints.urls.with_mixed_case(None).await;
 
@@ -37,7 +37,7 @@ async fn test_endpoints_urls_no_ending_slash_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client.endpoints.urls.no_ending_slash(None).await;
 
@@ -60,7 +60,7 @@ async fn test_endpoints_urls_with_ending_slash_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client.endpoints.urls.with_ending_slash(None).await;
 
@@ -83,7 +83,7 @@ async fn test_endpoints_urls_with_underscores_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client.endpoints.urls.with_underscores(None).await;
 

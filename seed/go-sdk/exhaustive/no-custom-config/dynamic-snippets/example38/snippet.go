@@ -17,11 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.GetWithInlinePathAndQuery{
-        Param: "param",
-        Query: "query",
+    request := &endpoints.HTTPMethodsTestDeleteHTTPMethodsRequest{
+        ID: "id",
     }
-    client.Endpoints.Params.GetWithInlinePathAndQuery(
+    client.Endpoints.HTTPMethods.HTTPMethodsTestDelete(
         context.TODO(),
         request,
     )

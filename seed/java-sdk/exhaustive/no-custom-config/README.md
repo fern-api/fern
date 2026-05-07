@@ -55,18 +55,28 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.exhaustive.SeedExhaustiveClient;
-import java.util.Arrays;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.inlinedrequests.requests.PostwithobjectbodyandresponseInlinedrequestsRequest;
+import com.seed.api.types.TypesObjectWithOptionalField;
 
 public class Example {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")
             .build();
 
-        client.endpoints().container().getAndReturnListOfPrimitives(
-            Arrays.asList("string", "string")
+        client.inlinedrequests().postwithobjectbodyandresponse(
+            PostwithobjectbodyandresponseInlinedrequestsRequest
+                .builder()
+                .string("string")
+                .integer(1)
+                .nestedObject(
+                    TypesObjectWithOptionalField
+                        .builder()
+                        .build()
+                )
+                .build()
         );
     }
 }
@@ -77,9 +87,9 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.exhaustive.SeedExhaustiveClient;
+import com.seed.api.SeedApiClient;
 
-SeedExhaustiveClient client = SeedExhaustiveClient
+SeedApiClient client = SeedApiClient
     .builder()
     .url("https://example.com")
     .build();
@@ -90,11 +100,11 @@ SeedExhaustiveClient client = SeedExhaustiveClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.exhaustive.core.SeedExhaustiveApiException;
+import com.seed.api.core.SeedApiApiException;
 
 try{
-    client.endpoints().container().getAndReturnListOfPrimitives(...);
-} catch (SeedExhaustiveApiException e){
+    client.inlinedrequests().postwithobjectbodyandresponse(...);
+} catch (SeedApiApiException e){
     // Do something with the API exception...
 }
 ```
@@ -107,12 +117,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.exhaustive.SeedExhaustiveClient;
+import com.seed.api.SeedApiClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedExhaustiveClient client = SeedExhaustiveClient
+SeedApiClient client = SeedApiClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -143,9 +153,9 @@ Which status codes are retried depends on the `retry-status-codes` generator con
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.exhaustive.SeedExhaustiveClient;
+import com.seed.api.SeedApiClient;
 
-SeedExhaustiveClient client = SeedExhaustiveClient
+SeedApiClient client = SeedApiClient
     .builder()
     .maxRetries(1)
     .build();
@@ -155,17 +165,17 @@ SeedExhaustiveClient client = SeedExhaustiveClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedExhaustiveClient client = SeedExhaustiveClient
+SeedApiClient client = SeedApiClient
     .builder()
     .timeout(60)
     .build();
 
 // Request level
-client.endpoints().container().getAndReturnListOfPrimitives(
+client.inlinedrequests().postwithobjectbodyandresponse(
     ...,
     RequestOptions
         .builder()
@@ -179,11 +189,11 @@ client.endpoints().container().getAndReturnListOfPrimitives(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedExhaustiveClient client = SeedExhaustiveClient
+SeedApiClient client = SeedApiClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -191,7 +201,7 @@ SeedExhaustiveClient client = SeedExhaustiveClient
 ;
 
 // Request level
-client.endpoints().container().getAndReturnListOfPrimitives(
+client.inlinedrequests().postwithobjectbodyandresponse(
     ...,
     RequestOptions
         .builder()
@@ -207,7 +217,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedExhaustiveHttpResponse response = client.endpoints().container().withRawResponse().getAndReturnListOfPrimitives(...);
+SeedApiHttpResponse response = client.inlinedrequests().withRawResponse().postwithobjectbodyandresponse(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

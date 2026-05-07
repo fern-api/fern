@@ -5,10 +5,10 @@ package union
 import (
 	context "context"
 
+	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
-	types "github.com/exhaustive/fern/types"
 )
 
 type Client struct {
@@ -35,9 +35,9 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) GetAndReturnUnion(
 	ctx context.Context,
-	request *types.Animal,
+	request *fern.TypesAnimal,
 	opts ...option.RequestOption,
-) (*types.Animal, error) {
+) (*fern.TypesAnimal, error) {
 	response, err := c.WithRawResponse.GetAndReturnUnion(
 		ctx,
 		request,

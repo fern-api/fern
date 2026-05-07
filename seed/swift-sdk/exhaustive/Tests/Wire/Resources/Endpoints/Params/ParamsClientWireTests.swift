@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Exhaustive
+import Api
 
 @Suite("ParamsClient Wire Tests") struct ParamsClientWireTests {
     @Test func getWithPath1() async throws -> Void {
@@ -12,7 +12,7 @@ import Exhaustive
                 """#.utf8
             )
         )
-        let client = ExhaustiveClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -25,7 +25,7 @@ import Exhaustive
         try #require(response == expectedResponse)
     }
 
-    @Test func getWithInlinePath1() async throws -> Void {
+    @Test func getWithPath2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -34,13 +34,13 @@ import Exhaustive
                 """#.utf8
             )
         )
-        let client = ExhaustiveClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.endpoints.params.getWithInlinePath(
+        let response = try await client.endpoints.params.getWithPath(
             param: "param",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
@@ -56,7 +56,7 @@ import Exhaustive
                 """#.utf8
             )
         )
-        let client = ExhaustiveClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -65,6 +65,73 @@ import Exhaustive
         let response = try await client.endpoints.params.modifyWithPath(
             param: "param",
             request: "string",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func modifyWithPath2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                #"""
+                string
+                """#.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = "string"
+        let response = try await client.endpoints.params.modifyWithPath(
+            param: "param",
+            request: "string",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getWithInlinePath1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                #"""
+                string
+                """#.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = "string"
+        let response = try await client.endpoints.params.getWithInlinePath(
+            param: "param",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getWithInlinePath2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                #"""
+                string
+                """#.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = "string"
+        let response = try await client.endpoints.params.getWithInlinePath(
+            param: "param",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
@@ -79,7 +146,7 @@ import Exhaustive
                 """#.utf8
             )
         )
-        let client = ExhaustiveClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -93,34 +160,7 @@ import Exhaustive
         try #require(response == expectedResponse)
     }
 
-    @Test func uploadWithPath1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                #"""
-                {
-                  "string": "uploaded"
-                }
-                """#.utf8
-            )
-        )
-        let client = ExhaustiveClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ObjectWithRequiredField(
-            string: "uploaded"
-        )
-        let response = try await client.endpoints.params.uploadWithPath(
-            param: "upload-path",
-            request: Data("data".utf8),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getWithBooleanPath1() async throws -> Void {
+    @Test func modifyWithInlinePath2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -129,36 +169,15 @@ import Exhaustive
                 """#.utf8
             )
         )
-        let client = ExhaustiveClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.endpoints.params.getWithBooleanPath(
-            param: true,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getWithPathAndErrors1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                #"""
-                string
-                """#.utf8
-            )
-        )
-        let client = ExhaustiveClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = "string"
-        let response = try await client.endpoints.params.getWithPathAndErrors(
+        let response = try await client.endpoints.params.modifyWithInlinePath(
             param: "param",
+            request: "string",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)

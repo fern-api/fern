@@ -1,4 +1,260 @@
 # Reference
+## Inlinedrequests
+<details><summary><code>client.Inlinedrequests.Postwithobjectbodyandresponse(request) -> *fern.TypesObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with custom object in request body, response is an object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.PostwithobjectbodyandresponseInlinedrequestsRequest{
+        FieldString: "string",
+        Integer: 1,
+        NestedObject: &fern.TypesObjectWithOptionalField{},
+    }
+client.Inlinedrequests.Postwithobjectbodyandresponse(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**string_:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**integer:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**nestedObject:** `*fern.TypesObjectWithOptionalField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Noauth
+<details><summary><code>client.Noauth.Postwithnoauth(request) -> bool</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST request with no auth
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := map[string]any{
+        "key": "value",
+    }
+client.Noauth.Postwithnoauth(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `any` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Noreqbody
+<details><summary><code>client.Noreqbody.Getwithnorequestbody() -> *fern.TypesObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Noreqbody.Getwithnorequestbody(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Noreqbody.Postwithnorequestbody() -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Noreqbody.Postwithnorequestbody(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reqwithheaders
+<details><summary><code>client.Reqwithheaders.Getwithcustomheader(request) -> error</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.GetwithcustomheaderReqwithheadersRequest{
+        TestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+        Body: "string",
+    }
+client.Reqwithheaders.Getwithcustomheader(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**testEndpointHeader:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Container
 <details><summary><code>client.Endpoints.Container.GetAndReturnListOfPrimitives(request) -> []string</code></summary>
 <dl>
@@ -14,7 +270,6 @@
 
 ```go
 request := []string{
-        "string",
         "string",
     }
 client.Endpoints.Container.GetAndReturnListOfPrimitives(
@@ -48,7 +303,7 @@ client.Endpoints.Container.GetAndReturnListOfPrimitives(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.GetAndReturnListOfObjects(request) -> []*types.ObjectWithRequiredField</code></summary>
+<details><summary><code>client.Endpoints.Container.GetAndReturnListOfObjects(request) -> []*fern.TypesObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -61,11 +316,8 @@ client.Endpoints.Container.GetAndReturnListOfPrimitives(
 <dd>
 
 ```go
-request := []*types.ObjectWithRequiredField{
-        &types.ObjectWithRequiredField{
-            FieldString: "string",
-        },
-        &types.ObjectWithRequiredField{
+request := []*fern.TypesObjectWithRequiredField{
+        &fern.TypesObjectWithRequiredField{
             FieldString: "string",
         },
     }
@@ -88,7 +340,7 @@ client.Endpoints.Container.GetAndReturnListOfObjects(
 <dl>
 <dd>
 
-**request:** `[]*types.ObjectWithRequiredField` 
+**request:** `[]*fern.TypesObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -147,7 +399,7 @@ client.Endpoints.Container.GetAndReturnSetOfPrimitives(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.GetAndReturnSetOfObjects(request) -> []*types.ObjectWithRequiredField</code></summary>
+<details><summary><code>client.Endpoints.Container.GetAndReturnSetOfObjects(request) -> []*fern.TypesObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -160,8 +412,8 @@ client.Endpoints.Container.GetAndReturnSetOfPrimitives(
 <dd>
 
 ```go
-request := []*types.ObjectWithRequiredField{
-        &types.ObjectWithRequiredField{
+request := []*fern.TypesObjectWithRequiredField{
+        &fern.TypesObjectWithRequiredField{
             FieldString: "string",
         },
     }
@@ -184,7 +436,7 @@ client.Endpoints.Container.GetAndReturnSetOfObjects(
 <dl>
 <dd>
 
-**request:** `[]*types.ObjectWithRequiredField` 
+**request:** `[]*fern.TypesObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -210,7 +462,7 @@ client.Endpoints.Container.GetAndReturnSetOfObjects(
 
 ```go
 request := map[string]string{
-        "string": "string",
+        "key": "value",
     }
 client.Endpoints.Container.GetAndReturnMapPrimToPrim(
         context.TODO(),
@@ -243,7 +495,7 @@ client.Endpoints.Container.GetAndReturnMapPrimToPrim(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.GetAndReturnMapOfPrimToObject(request) -> map[string]*types.ObjectWithRequiredField</code></summary>
+<details><summary><code>client.Endpoints.Container.GetAndReturnMapOfPrimToObject(request) -> map[string]*fern.TypesObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -256,8 +508,8 @@ client.Endpoints.Container.GetAndReturnMapPrimToPrim(
 <dd>
 
 ```go
-request := map[string]*types.ObjectWithRequiredField{
-        "string": &types.ObjectWithRequiredField{
+request := map[string]*fern.TypesObjectWithRequiredField{
+        "key": &fern.TypesObjectWithRequiredField{
             FieldString: "string",
         },
     }
@@ -280,7 +532,7 @@ client.Endpoints.Container.GetAndReturnMapOfPrimToObject(
 <dl>
 <dd>
 
-**request:** `map[string]*types.ObjectWithRequiredField` 
+**request:** `map[string]*fern.TypesObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -292,7 +544,7 @@ client.Endpoints.Container.GetAndReturnMapOfPrimToObject(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(request) -> map[string]*types.MixedType</code></summary>
+<details><summary><code>client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(request) -> map[string]*fern.TypesMixedType</code></summary>
 <dl>
 <dd>
 
@@ -305,8 +557,8 @@ client.Endpoints.Container.GetAndReturnMapOfPrimToObject(
 <dd>
 
 ```go
-request := map[string]*types.MixedType{
-        "string": &types.MixedType{
+request := map[string]*fern.TypesMixedType{
+        "key": &fern.TypesMixedType{
             Double: 1.1,
         },
     }
@@ -329,7 +581,7 @@ client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
 <dl>
 <dd>
 
-**request:** `map[string]*types.MixedType` 
+**request:** `map[string]*fern.TypesMixedType` 
     
 </dd>
 </dl>
@@ -341,7 +593,7 @@ client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.GetAndReturnOptional(request) -> *types.ObjectWithRequiredField</code></summary>
+<details><summary><code>client.Endpoints.Container.GetAndReturnOptional(request) -> *fern.TypesObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -354,7 +606,7 @@ client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
 <dd>
 
 ```go
-request := &types.ObjectWithRequiredField{
+request := &fern.TypesObjectWithRequiredField{
         FieldString: "string",
     }
 client.Endpoints.Container.GetAndReturnOptional(
@@ -376,7 +628,7 @@ client.Endpoints.Container.GetAndReturnOptional(
 <dl>
 <dd>
 
-**request:** `*types.ObjectWithRequiredField` 
+**request:** `*fern.TypesObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -389,7 +641,7 @@ client.Endpoints.Container.GetAndReturnOptional(
 </details>
 
 ## Endpoints ContentType
-<details><summary><code>client.Endpoints.ContentType.PostJSONPatchContentType(request) -> error</code></summary>
+<details><summary><code>client.Endpoints.ContentType.ContentTypePostJSONPatchContentType(request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -402,55 +654,8 @@ client.Endpoints.Container.GetAndReturnOptional(
 <dd>
 
 ```go
-request := &types.ObjectWithOptionalField{
-        FieldString: fern.String(
-            "string",
-        ),
-        Integer: fern.Int(
-            1,
-        ),
-        Long: fern.Int64(
-            int64(1000000),
-        ),
-        Double: fern.Float64(
-            1.1,
-        ),
-        Bool: fern.Bool(
-            true,
-        ),
-        Datetime: fern.Time(
-            fern.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
-            ),
-        ),
-        Date: fern.Time(
-            fern.MustParseDate(
-                "2023-01-15",
-            ),
-        ),
-        UUID: fern.UUID(
-            uuid.MustParse(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-        ),
-        Base64: fern.Bytes(
-            []byte("SGVsbG8gd29ybGQh"),
-        ),
-        List: []string{
-            "list",
-            "list",
-        },
-        Set: []string{
-            "set",
-        },
-        Map: map[int]string{
-            1: "map",
-        },
-        Bigint: fern.String(
-            "1000000",
-        ),
-    }
-client.Endpoints.ContentType.PostJSONPatchContentType(
+request := &fern.TypesObjectWithOptionalField{}
+client.Endpoints.ContentType.ContentTypePostJSONPatchContentType(
         context.TODO(),
         request,
     )
@@ -469,7 +674,7 @@ client.Endpoints.ContentType.PostJSONPatchContentType(
 <dl>
 <dd>
 
-**request:** `*types.ObjectWithOptionalField` 
+**request:** `*fern.TypesObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -481,7 +686,7 @@ client.Endpoints.ContentType.PostJSONPatchContentType(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.ContentType.PostJSONPatchContentWithCharsetType(request) -> error</code></summary>
+<details><summary><code>client.Endpoints.ContentType.ContentTypePostJSONPatchContentWithCharsetType(request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -494,55 +699,8 @@ client.Endpoints.ContentType.PostJSONPatchContentType(
 <dd>
 
 ```go
-request := &types.ObjectWithOptionalField{
-        FieldString: fern.String(
-            "string",
-        ),
-        Integer: fern.Int(
-            1,
-        ),
-        Long: fern.Int64(
-            int64(1000000),
-        ),
-        Double: fern.Float64(
-            1.1,
-        ),
-        Bool: fern.Bool(
-            true,
-        ),
-        Datetime: fern.Time(
-            fern.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
-            ),
-        ),
-        Date: fern.Time(
-            fern.MustParseDate(
-                "2023-01-15",
-            ),
-        ),
-        UUID: fern.UUID(
-            uuid.MustParse(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-        ),
-        Base64: fern.Bytes(
-            []byte("SGVsbG8gd29ybGQh"),
-        ),
-        List: []string{
-            "list",
-            "list",
-        },
-        Set: []string{
-            "set",
-        },
-        Map: map[int]string{
-            1: "map",
-        },
-        Bigint: fern.String(
-            "1000000",
-        ),
-    }
-client.Endpoints.ContentType.PostJSONPatchContentWithCharsetType(
+request := &fern.TypesObjectWithOptionalField{}
+client.Endpoints.ContentType.ContentTypePostJSONPatchContentWithCharsetType(
         context.TODO(),
         request,
     )
@@ -561,7 +719,7 @@ client.Endpoints.ContentType.PostJSONPatchContentWithCharsetType(
 <dl>
 <dd>
 
-**request:** `*types.ObjectWithOptionalField` 
+**request:** `*fern.TypesObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -574,7 +732,7 @@ client.Endpoints.ContentType.PostJSONPatchContentWithCharsetType(
 </details>
 
 ## Endpoints Enum
-<details><summary><code>client.Endpoints.Enum.GetAndReturnEnum(request) -> *types.WeatherReport</code></summary>
+<details><summary><code>client.Endpoints.Enum.GetAndReturnEnum(request) -> *fern.TypesWeatherReport</code></summary>
 <dl>
 <dd>
 
@@ -606,7 +764,7 @@ client.Endpoints.Enum.GetAndReturnEnum(
 <dl>
 <dd>
 
-**request:** `*types.WeatherReport` 
+**request:** `*fern.TypesWeatherReport` 
     
 </dd>
 </dl>
@@ -619,7 +777,7 @@ client.Endpoints.Enum.GetAndReturnEnum(
 </details>
 
 ## Endpoints HTTPMethods
-<details><summary><code>client.Endpoints.HTTPMethods.TestGet(ID) -> string</code></summary>
+<details><summary><code>client.Endpoints.HTTPMethods.HTTPMethodsTestGet(ID) -> string</code></summary>
 <dl>
 <dd>
 
@@ -632,9 +790,12 @@ client.Endpoints.Enum.GetAndReturnEnum(
 <dd>
 
 ```go
-client.Endpoints.HTTPMethods.TestGet(
+request := &endpoints.HTTPMethodsTestGetHTTPMethodsRequest{
+        ID: "id",
+    }
+client.Endpoints.HTTPMethods.HTTPMethodsTestGet(
         context.TODO(),
-        "id",
+        request,
     )
 }
 ```
@@ -663,7 +824,7 @@ client.Endpoints.HTTPMethods.TestGet(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.HTTPMethods.TestPost(request) -> *types.ObjectWithOptionalField</code></summary>
+<details><summary><code>client.Endpoints.HTTPMethods.HTTPMethodsTestPut(ID, request) -> *fern.TypesObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -676,10 +837,171 @@ client.Endpoints.HTTPMethods.TestGet(
 <dd>
 
 ```go
-request := &types.ObjectWithRequiredField{
+request := &endpoints.HTTPMethodsTestPutHTTPMethodsRequest{
+        ID: "id",
+        Body: &fern.TypesObjectWithRequiredField{
+            FieldString: "string",
+        },
+    }
+client.Endpoints.HTTPMethods.HTTPMethodsTestPut(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `*fern.TypesObjectWithRequiredField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.HTTPMethods.HTTPMethodsTestDelete(ID) -> bool</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &endpoints.HTTPMethodsTestDeleteHTTPMethodsRequest{
+        ID: "id",
+    }
+client.Endpoints.HTTPMethods.HTTPMethodsTestDelete(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.HTTPMethods.HTTPMethodsTestPatch(ID, request) -> *fern.TypesObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &endpoints.HTTPMethodsTestPatchHTTPMethodsRequest{
+        ID: "id",
+        Body: &fern.TypesObjectWithOptionalField{},
+    }
+client.Endpoints.HTTPMethods.HTTPMethodsTestPatch(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `*fern.TypesObjectWithOptionalField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.HTTPMethods.HTTPMethodsTestPost(request) -> *fern.TypesObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.TypesObjectWithRequiredField{
         FieldString: "string",
     }
-client.Endpoints.HTTPMethods.TestPost(
+client.Endpoints.HTTPMethods.HTTPMethodsTestPost(
         context.TODO(),
         request,
     )
@@ -698,208 +1020,7 @@ client.Endpoints.HTTPMethods.TestPost(
 <dl>
 <dd>
 
-**request:** `*types.ObjectWithRequiredField` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Endpoints.HTTPMethods.TestPut(ID, request) -> *types.ObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &types.ObjectWithRequiredField{
-        FieldString: "string",
-    }
-client.Endpoints.HTTPMethods.TestPut(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `*types.ObjectWithRequiredField` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Endpoints.HTTPMethods.TestPatch(ID, request) -> *types.ObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &types.ObjectWithOptionalField{
-        FieldString: fern.String(
-            "string",
-        ),
-        Integer: fern.Int(
-            1,
-        ),
-        Long: fern.Int64(
-            int64(1000000),
-        ),
-        Double: fern.Float64(
-            1.1,
-        ),
-        Bool: fern.Bool(
-            true,
-        ),
-        Datetime: fern.Time(
-            fern.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
-            ),
-        ),
-        Date: fern.Time(
-            fern.MustParseDate(
-                "2023-01-15",
-            ),
-        ),
-        UUID: fern.UUID(
-            uuid.MustParse(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-        ),
-        Base64: fern.Bytes(
-            []byte("SGVsbG8gd29ybGQh"),
-        ),
-        List: []string{
-            "list",
-            "list",
-        },
-        Set: []string{
-            "set",
-        },
-        Map: map[int]string{
-            1: "map",
-        },
-        Bigint: fern.String(
-            "1000000",
-        ),
-    }
-client.Endpoints.HTTPMethods.TestPatch(
-        context.TODO(),
-        "id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `*types.ObjectWithOptionalField` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Endpoints.HTTPMethods.TestDelete(ID) -> bool</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Endpoints.HTTPMethods.TestDelete(
-        context.TODO(),
-        "id",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` 
+**request:** `*fern.TypesObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -912,7 +1033,7 @@ client.Endpoints.HTTPMethods.TestDelete(
 </details>
 
 ## Endpoints Object
-<details><summary><code>client.Endpoints.Object.GetAndReturnWithOptionalField(request) -> *types.ObjectWithOptionalField</code></summary>
+<details><summary><code>client.Endpoints.Object.GetAndReturnWithOptionalField(request) -> *fern.TypesObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -925,54 +1046,7 @@ client.Endpoints.HTTPMethods.TestDelete(
 <dd>
 
 ```go
-request := &types.ObjectWithOptionalField{
-        FieldString: fern.String(
-            "string",
-        ),
-        Integer: fern.Int(
-            1,
-        ),
-        Long: fern.Int64(
-            int64(1000000),
-        ),
-        Double: fern.Float64(
-            1.1,
-        ),
-        Bool: fern.Bool(
-            true,
-        ),
-        Datetime: fern.Time(
-            fern.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
-            ),
-        ),
-        Date: fern.Time(
-            fern.MustParseDate(
-                "2023-01-15",
-            ),
-        ),
-        UUID: fern.UUID(
-            uuid.MustParse(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-        ),
-        Base64: fern.Bytes(
-            []byte("SGVsbG8gd29ybGQh"),
-        ),
-        List: []string{
-            "list",
-            "list",
-        },
-        Set: []string{
-            "set",
-        },
-        Map: map[int]string{
-            1: "map",
-        },
-        Bigint: fern.String(
-            "1000000",
-        ),
-    }
+request := &fern.TypesObjectWithOptionalField{}
 client.Endpoints.Object.GetAndReturnWithOptionalField(
         context.TODO(),
         request,
@@ -992,7 +1066,7 @@ client.Endpoints.Object.GetAndReturnWithOptionalField(
 <dl>
 <dd>
 
-**request:** `*types.ObjectWithOptionalField` 
+**request:** `*fern.TypesObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -1004,7 +1078,7 @@ client.Endpoints.Object.GetAndReturnWithOptionalField(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object.GetAndReturnWithRequiredField(request) -> *types.ObjectWithRequiredField</code></summary>
+<details><summary><code>client.Endpoints.Object.GetAndReturnWithRequiredField(request) -> *fern.TypesObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1017,7 +1091,7 @@ client.Endpoints.Object.GetAndReturnWithOptionalField(
 <dd>
 
 ```go
-request := &types.ObjectWithRequiredField{
+request := &fern.TypesObjectWithRequiredField{
         FieldString: "string",
     }
 client.Endpoints.Object.GetAndReturnWithRequiredField(
@@ -1039,7 +1113,7 @@ client.Endpoints.Object.GetAndReturnWithRequiredField(
 <dl>
 <dd>
 
-**request:** `*types.ObjectWithRequiredField` 
+**request:** `*fern.TypesObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -1051,7 +1125,7 @@ client.Endpoints.Object.GetAndReturnWithRequiredField(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object.GetAndReturnWithMapOfMap(request) -> *types.ObjectWithMapOfMap</code></summary>
+<details><summary><code>client.Endpoints.Object.GetAndReturnWithMapOfMap(request) -> *fern.TypesObjectWithMapOfMap</code></summary>
 <dl>
 <dd>
 
@@ -1064,10 +1138,10 @@ client.Endpoints.Object.GetAndReturnWithRequiredField(
 <dd>
 
 ```go
-request := &types.ObjectWithMapOfMap{
+request := &fern.TypesObjectWithMapOfMap{
         Map: map[string]map[string]string{
-            "map": map[string]string{
-                "map": "map",
+            "key": map[string]string{
+                "key": "value",
             },
         },
     }
@@ -1090,7 +1164,7 @@ client.Endpoints.Object.GetAndReturnWithMapOfMap(
 <dl>
 <dd>
 
-**request:** `*types.ObjectWithMapOfMap` 
+**request:** `*fern.TypesObjectWithMapOfMap` 
     
 </dd>
 </dl>
@@ -1102,7 +1176,7 @@ client.Endpoints.Object.GetAndReturnWithMapOfMap(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object.GetAndReturnNestedWithOptionalField(request) -> *types.NestedObjectWithOptionalField</code></summary>
+<details><summary><code>client.Endpoints.Object.GetAndReturnNestedWithOptionalField(request) -> *fern.TypesNestedObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -1115,59 +1189,7 @@ client.Endpoints.Object.GetAndReturnWithMapOfMap(
 <dd>
 
 ```go
-request := &types.NestedObjectWithOptionalField{
-        FieldString: fern.String(
-            "string",
-        ),
-        NestedObject: &types.ObjectWithOptionalField{
-            FieldString: fern.String(
-                "string",
-            ),
-            Integer: fern.Int(
-                1,
-            ),
-            Long: fern.Int64(
-                int64(1000000),
-            ),
-            Double: fern.Float64(
-                1.1,
-            ),
-            Bool: fern.Bool(
-                true,
-            ),
-            Datetime: fern.Time(
-                fern.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
-                ),
-            ),
-            Date: fern.Time(
-                fern.MustParseDate(
-                    "2023-01-15",
-                ),
-            ),
-            UUID: fern.UUID(
-                uuid.MustParse(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-            ),
-            Base64: fern.Bytes(
-                []byte("SGVsbG8gd29ybGQh"),
-            ),
-            List: []string{
-                "list",
-                "list",
-            },
-            Set: []string{
-                "set",
-            },
-            Map: map[int]string{
-                1: "map",
-            },
-            Bigint: fern.String(
-                "1000000",
-            ),
-        },
-    }
+request := &fern.TypesNestedObjectWithOptionalField{}
 client.Endpoints.Object.GetAndReturnNestedWithOptionalField(
         context.TODO(),
         request,
@@ -1187,7 +1209,7 @@ client.Endpoints.Object.GetAndReturnNestedWithOptionalField(
 <dl>
 <dd>
 
-**request:** `*types.NestedObjectWithOptionalField` 
+**request:** `*fern.TypesNestedObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -1199,7 +1221,7 @@ client.Endpoints.Object.GetAndReturnNestedWithOptionalField(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object.GetAndReturnNestedWithRequiredField(String, request) -> *types.NestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.Endpoints.Object.GetAndReturnNestedWithRequiredField(String, request) -> *fern.TypesNestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1212,60 +1234,15 @@ client.Endpoints.Object.GetAndReturnNestedWithOptionalField(
 <dd>
 
 ```go
-request := &types.NestedObjectWithRequiredField{
-        FieldString: "string",
-        NestedObject: &types.ObjectWithOptionalField{
-            FieldString: fern.String(
-                "string",
-            ),
-            Integer: fern.Int(
-                1,
-            ),
-            Long: fern.Int64(
-                int64(1000000),
-            ),
-            Double: fern.Float64(
-                1.1,
-            ),
-            Bool: fern.Bool(
-                true,
-            ),
-            Datetime: fern.Time(
-                fern.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
-                ),
-            ),
-            Date: fern.Time(
-                fern.MustParseDate(
-                    "2023-01-15",
-                ),
-            ),
-            UUID: fern.UUID(
-                uuid.MustParse(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-            ),
-            Base64: fern.Bytes(
-                []byte("SGVsbG8gd29ybGQh"),
-            ),
-            List: []string{
-                "list",
-                "list",
-            },
-            Set: []string{
-                "set",
-            },
-            Map: map[int]string{
-                1: "map",
-            },
-            Bigint: fern.String(
-                "1000000",
-            ),
+request := &endpoints.GetAndReturnNestedWithRequiredFieldObjectRequest{
+        String: "string",
+        Body: &fern.TypesNestedObjectWithRequiredField{
+            FieldString: "string",
+            NestedObject: &fern.TypesObjectWithOptionalField{},
         },
     }
 client.Endpoints.Object.GetAndReturnNestedWithRequiredField(
         context.TODO(),
-        "string",
         request,
     )
 }
@@ -1291,7 +1268,7 @@ client.Endpoints.Object.GetAndReturnNestedWithRequiredField(
 <dl>
 <dd>
 
-**request:** `*types.NestedObjectWithRequiredField` 
+**request:** `*fern.TypesNestedObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -1303,7 +1280,7 @@ client.Endpoints.Object.GetAndReturnNestedWithRequiredField(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(request) -> *types.NestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(request) -> *fern.TypesNestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1316,108 +1293,10 @@ client.Endpoints.Object.GetAndReturnNestedWithRequiredField(
 <dd>
 
 ```go
-request := []*types.NestedObjectWithRequiredField{
-        &types.NestedObjectWithRequiredField{
+request := []*fern.TypesNestedObjectWithRequiredField{
+        &fern.TypesNestedObjectWithRequiredField{
             FieldString: "string",
-            NestedObject: &types.ObjectWithOptionalField{
-                FieldString: fern.String(
-                    "string",
-                ),
-                Integer: fern.Int(
-                    1,
-                ),
-                Long: fern.Int64(
-                    int64(1000000),
-                ),
-                Double: fern.Float64(
-                    1.1,
-                ),
-                Bool: fern.Bool(
-                    true,
-                ),
-                Datetime: fern.Time(
-                    fern.MustParseDateTime(
-                        "2024-01-15T09:30:00Z",
-                    ),
-                ),
-                Date: fern.Time(
-                    fern.MustParseDate(
-                        "2023-01-15",
-                    ),
-                ),
-                UUID: fern.UUID(
-                    uuid.MustParse(
-                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    ),
-                ),
-                Base64: fern.Bytes(
-                    []byte("SGVsbG8gd29ybGQh"),
-                ),
-                List: []string{
-                    "list",
-                    "list",
-                },
-                Set: []string{
-                    "set",
-                },
-                Map: map[int]string{
-                    1: "map",
-                },
-                Bigint: fern.String(
-                    "1000000",
-                ),
-            },
-        },
-        &types.NestedObjectWithRequiredField{
-            FieldString: "string",
-            NestedObject: &types.ObjectWithOptionalField{
-                FieldString: fern.String(
-                    "string",
-                ),
-                Integer: fern.Int(
-                    1,
-                ),
-                Long: fern.Int64(
-                    int64(1000000),
-                ),
-                Double: fern.Float64(
-                    1.1,
-                ),
-                Bool: fern.Bool(
-                    true,
-                ),
-                Datetime: fern.Time(
-                    fern.MustParseDateTime(
-                        "2024-01-15T09:30:00Z",
-                    ),
-                ),
-                Date: fern.Time(
-                    fern.MustParseDate(
-                        "2023-01-15",
-                    ),
-                ),
-                UUID: fern.UUID(
-                    uuid.MustParse(
-                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    ),
-                ),
-                Base64: fern.Bytes(
-                    []byte("SGVsbG8gd29ybGQh"),
-                ),
-                List: []string{
-                    "list",
-                    "list",
-                },
-                Set: []string{
-                    "set",
-                },
-                Map: map[int]string{
-                    1: "map",
-                },
-                Bigint: fern.String(
-                    "1000000",
-                ),
-            },
+            NestedObject: &fern.TypesObjectWithOptionalField{},
         },
     }
 client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(
@@ -1439,7 +1318,7 @@ client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(
 <dl>
 <dd>
 
-**request:** `[]*types.NestedObjectWithRequiredField` 
+**request:** `[]*fern.TypesNestedObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -1451,7 +1330,7 @@ client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object.GetAndReturnWithUnknownField(request) -> *types.ObjectWithUnknownField</code></summary>
+<details><summary><code>client.Endpoints.Object.GetAndReturnWithUnknownField(request) -> *fern.TypesObjectWithUnknownField</code></summary>
 <dl>
 <dd>
 
@@ -1464,9 +1343,9 @@ client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(
 <dd>
 
 ```go
-request := &types.ObjectWithUnknownField{
+request := &fern.TypesObjectWithUnknownField{
         Unknown: map[string]any{
-            "$ref": "https://example.com/schema",
+            "key": "value",
         },
     }
 client.Endpoints.Object.GetAndReturnWithUnknownField(
@@ -1488,7 +1367,7 @@ client.Endpoints.Object.GetAndReturnWithUnknownField(
 <dl>
 <dd>
 
-**request:** `*types.ObjectWithUnknownField` 
+**request:** `*fern.TypesObjectWithUnknownField` 
     
 </dd>
 </dl>
@@ -1500,7 +1379,7 @@ client.Endpoints.Object.GetAndReturnWithUnknownField(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object.GetAndReturnWithDocumentedUnknownType(request) -> *types.ObjectWithDocumentedUnknownType</code></summary>
+<details><summary><code>client.Endpoints.Object.GetAndReturnWithDocumentedUnknownType(request) -> *fern.TypesObjectWithDocumentedUnknownType</code></summary>
 <dl>
 <dd>
 
@@ -1513,7 +1392,7 @@ client.Endpoints.Object.GetAndReturnWithUnknownField(
 <dd>
 
 ```go
-request := &types.ObjectWithDocumentedUnknownType{
+request := &fern.TypesObjectWithDocumentedUnknownType{
         DocumentedUnknownType: map[string]any{
             "key": "value",
         },
@@ -1537,7 +1416,7 @@ client.Endpoints.Object.GetAndReturnWithDocumentedUnknownType(
 <dl>
 <dd>
 
-**request:** `*types.ObjectWithDocumentedUnknownType` 
+**request:** `*fern.TypesObjectWithDocumentedUnknownType` 
     
 </dd>
 </dl>
@@ -1549,7 +1428,7 @@ client.Endpoints.Object.GetAndReturnWithDocumentedUnknownType(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownType(request) -> types.MapOfDocumentedUnknownType</code></summary>
+<details><summary><code>client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownType(request) -> fern.TypesMapOfDocumentedUnknownType</code></summary>
 <dl>
 <dd>
 
@@ -1562,11 +1441,7 @@ client.Endpoints.Object.GetAndReturnWithDocumentedUnknownType(
 <dd>
 
 ```go
-request := map[string]types.DocumentedUnknownType{
-        "string": map[string]any{
-            "key": "value",
-        },
-    }
+request := map[string]fern.TypesDocumentedUnknownType{}
 client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownType(
         context.TODO(),
         request,
@@ -1586,7 +1461,7 @@ client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownType(
 <dl>
 <dd>
 
-**request:** `types.MapOfDocumentedUnknownType` 
+**request:** `fern.TypesMapOfDocumentedUnknownType` 
     
 </dd>
 </dl>
@@ -1598,142 +1473,7 @@ client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownType(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFields(request) -> *types.ObjectWithMixedRequiredAndOptionalFields</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Tests that dynamic snippets include all required properties in the
-object initializer, even when the example omits some required fields.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &types.ObjectWithMixedRequiredAndOptionalFields{
-        RequiredString: "hello",
-        RequiredInteger: 0,
-        OptionalString: fern.String(
-            "world",
-        ),
-        RequiredLong: int64(0),
-    }
-client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFields(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `*types.ObjectWithMixedRequiredAndOptionalFields` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Endpoints.Object.GetAndReturnWithRequiredNestedObject(request) -> *types.ObjectWithRequiredNestedObject</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Tests that dynamic snippets recursively construct default objects for
-required properties whose type is a named object. When the example
-omits the nested object, the generator should construct a default
-initializer with the nested object's required properties filled in.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &types.ObjectWithRequiredNestedObject{
-        RequiredString: "hello",
-        RequiredObject: &types.NestedObjectWithRequiredField{
-            FieldString: "nested",
-            NestedObject: &types.ObjectWithOptionalField{},
-        },
-    }
-client.Endpoints.Object.GetAndReturnWithRequiredNestedObject(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `*types.ObjectWithRequiredNestedObject` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(request) -> *types.ObjectWithDatetimeLikeString</code></summary>
+<details><summary><code>client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(request) -> *fern.TypesObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>
 
@@ -1762,10 +1502,10 @@ without being converted to "2023-08-31T14:15:22.000Z".
 <dd>
 
 ```go
-request := &types.ObjectWithDatetimeLikeString{
-        DatetimeLikeString: "2023-08-31T14:15:22Z",
+request := &fern.TypesObjectWithDatetimeLikeString{
+        DatetimeLikeString: "datetimeLikeString",
         ActualDatetime: fern.MustParseDateTime(
-            "2023-08-31T14:15:22Z",
+            "2024-01-15T09:30:00Z",
         ),
     }
 client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(
@@ -1787,7 +1527,7 @@ client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(
 <dl>
 <dd>
 
-**request:** `*types.ObjectWithDatetimeLikeString` 
+**request:** `*fern.TypesObjectWithDatetimeLikeString` 
     
 </dd>
 </dl>
@@ -1800,7 +1540,7 @@ client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(
 </details>
 
 ## Endpoints Pagination
-<details><summary><code>client.Endpoints.Pagination.ListItems() -> *endpoints.PaginatedResponse</code></summary>
+<details><summary><code>client.Endpoints.Pagination.ListItems() -> *fern.EndpointsPaginatedResponse</code></summary>
 <dl>
 <dd>
 
@@ -1827,14 +1567,7 @@ List items with cursor pagination
 <dd>
 
 ```go
-request := &endpoints.ListItemsRequest{
-        Cursor: fern.String(
-            "cursor",
-        ),
-        Limit: fern.Int(
-            1,
-        ),
-    }
+request := &endpoints.ListItemsPaginationRequest{}
 client.Endpoints.Pagination.ListItems(
         context.TODO(),
         request,
@@ -1902,9 +1635,12 @@ GET with path param
 <dd>
 
 ```go
+request := &endpoints.GetWithPathParamsRequest{
+        Param: "param",
+    }
 client.Endpoints.Params.GetWithPath(
         context.TODO(),
-        "param",
+        request,
     )
 }
 ```
@@ -1922,6 +1658,76 @@ client.Endpoints.Params.GetWithPath(
 <dd>
 
 **param:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.Params.ModifyWithPath(Param, request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+PUT to update with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &endpoints.ModifyWithPathParamsRequest{
+        Param: "param",
+        Body: "string",
+    }
+client.Endpoints.Params.ModifyWithPath(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `string` 
     
 </dd>
 </dl>
@@ -1960,9 +1766,12 @@ GET with path param
 <dd>
 
 ```go
-client.Endpoints.Params.GetWithPath(
+request := &endpoints.GetWithInlinePathParamsRequest{
+        Param: "param",
+    }
+client.Endpoints.Params.GetWithInlinePath(
         context.TODO(),
-        "param",
+        request,
     )
 }
 ```
@@ -1980,6 +1789,76 @@ client.Endpoints.Params.GetWithPath(
 <dd>
 
 **param:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.Params.ModifyWithInlinePath(Param, request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+PUT to update with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &endpoints.ModifyWithInlinePathParamsRequest{
+        Param: "param",
+        Body: "string",
+    }
+client.Endpoints.Params.ModifyWithInlinePath(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `string` 
     
 </dd>
 </dl>
@@ -2018,7 +1897,7 @@ GET with query param
 <dd>
 
 ```go
-request := &endpoints.GetWithQuery{
+request := &endpoints.GetWithQueryParamsRequest{
         Query: "query",
         Number: 1,
     }
@@ -2088,11 +1967,19 @@ GET with multiple of same query param
 <dd>
 
 ```go
-request := &endpoints.GetWithQuery{
-        Query: "query",
-        Number: 1,
+request := &endpoints.GetWithAllowMultipleQueryParamsRequest{
+        Query: []*string{
+            fern.String(
+                "query",
+            ),
+        },
+        Number: []*int{
+            fern.Int(
+                1,
+            ),
+        },
     }
-client.Endpoints.Params.GetWithQuery(
+client.Endpoints.Params.GetWithAllowMultipleQuery(
         context.TODO(),
         request,
     )
@@ -2111,7 +1998,7 @@ client.Endpoints.Params.GetWithQuery(
 <dl>
 <dd>
 
-**query:** `string` 
+**query:** `*string` 
     
 </dd>
 </dl>
@@ -2119,7 +2006,7 @@ client.Endpoints.Params.GetWithQuery(
 <dl>
 <dd>
 
-**number:** `int` 
+**number:** `*int` 
     
 </dd>
 </dl>
@@ -2158,12 +2045,12 @@ GET with path and query params
 <dd>
 
 ```go
-request := &endpoints.GetWithPathAndQuery{
+request := &endpoints.GetWithPathAndQueryParamsRequest{
+        Param: "param",
         Query: "query",
     }
 client.Endpoints.Params.GetWithPathAndQuery(
         context.TODO(),
-        "param",
         request,
     )
 }
@@ -2228,12 +2115,12 @@ GET with path and query params
 <dd>
 
 ```go
-request := &endpoints.GetWithPathAndQuery{
+request := &endpoints.GetWithInlinePathAndQueryParamsRequest{
+        Param: "param",
         Query: "query",
     }
-client.Endpoints.Params.GetWithPathAndQuery(
+client.Endpoints.Params.GetWithInlinePathAndQuery(
         context.TODO(),
-        "param",
         request,
     )
 }
@@ -2260,315 +2147,6 @@ client.Endpoints.Params.GetWithPathAndQuery(
 <dd>
 
 **query:** `string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Endpoints.Params.ModifyWithPath(Param, request) -> string</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-PUT to update with path param
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Endpoints.Params.ModifyWithPath(
-        context.TODO(),
-        "param",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**param:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Endpoints.Params.ModifyWithInlinePath(Param, request) -> string</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-PUT to update with path param
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Endpoints.Params.ModifyWithPath(
-        context.TODO(),
-        "param",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**param:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Endpoints.Params.UploadWithPath(Param, request) -> *types.ObjectWithRequiredField</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-POST bytes with path param returning object
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Endpoints.Params.UploadWithPath(
-        context.TODO(),
-        "upload-path",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**param:** `string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Endpoints.Params.GetWithBooleanPath(Param) -> string</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-GET with boolean path param
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Endpoints.Params.GetWithBooleanPath(
-        context.TODO(),
-        true,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**param:** `bool` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Endpoints.Params.GetWithPathAndErrors(Param) -> string</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-GET with path param that can throw errors
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Endpoints.Params.GetWithPath(
-        context.TODO(),
-        "param",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**param:** `string` 
     
 </dd>
 </dl>
@@ -2889,7 +2467,7 @@ client.Endpoints.Primitive.GetAndReturnDate(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Primitive.GetAndReturnUUID(request) -> uuid.UUID</code></summary>
+<details><summary><code>client.Endpoints.Primitive.GetAndReturnUUID(request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -2921,7 +2499,7 @@ client.Endpoints.Primitive.GetAndReturnUUID(
 <dl>
 <dd>
 
-**request:** `uuid.UUID` 
+**request:** `string` 
     
 </dd>
 </dl>
@@ -2933,7 +2511,7 @@ client.Endpoints.Primitive.GetAndReturnUUID(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Primitive.GetAndReturnBase64(request) -> []byte</code></summary>
+<details><summary><code>client.Endpoints.Primitive.GetAndReturnBase64(request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -2965,7 +2543,7 @@ client.Endpoints.Primitive.GetAndReturnBase64(
 <dl>
 <dd>
 
-**request:** `[]byte` 
+**request:** `string` 
     
 </dd>
 </dl>
@@ -2978,7 +2556,7 @@ client.Endpoints.Primitive.GetAndReturnBase64(
 </details>
 
 ## Endpoints Put
-<details><summary><code>client.Endpoints.Put.Add(ID) -> *endpoints.PutResponse</code></summary>
+<details><summary><code>client.Endpoints.Put.EndpointsPutAdd(ID) -> *fern.EndpointsPutResponse</code></summary>
 <dl>
 <dd>
 
@@ -2991,10 +2569,10 @@ client.Endpoints.Primitive.GetAndReturnBase64(
 <dd>
 
 ```go
-request := &endpoints.PutRequest{
+request := &endpoints.EndpointsPutAddPutRequest{
         ID: "id",
     }
-client.Endpoints.Put.Add(
+client.Endpoints.Put.EndpointsPutAdd(
         context.TODO(),
         request,
     )
@@ -3026,7 +2604,7 @@ client.Endpoints.Put.Add(
 </details>
 
 ## Endpoints Union
-<details><summary><code>client.Endpoints.Union.GetAndReturnUnion(request) -> *types.Animal</code></summary>
+<details><summary><code>client.Endpoints.Union.GetAndReturnUnion(request) -> *fern.TypesAnimal</code></summary>
 <dl>
 <dd>
 
@@ -3039,10 +2617,11 @@ client.Endpoints.Put.Add(
 <dd>
 
 ```go
-request := &types.Animal{
-        Dog: &types.Dog{
+request := &fern.TypesAnimal{
+        TypesAnimalZero: &fern.TypesAnimalZero{
             Name: "name",
             LikesToWoof: true,
+            Animal: fern.TypesAnimalZeroAnimalDog,
         },
     }
 client.Endpoints.Union.GetAndReturnUnion(
@@ -3064,7 +2643,7 @@ client.Endpoints.Union.GetAndReturnUnion(
 <dl>
 <dd>
 
-**request:** `*types.Animal` 
+**request:** `*fern.TypesAnimal` 
     
 </dd>
 </dl>
@@ -3179,310 +2758,6 @@ client.Endpoints.URLs.WithUnderscores(
     )
 }
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## InlinedRequests
-<details><summary><code>client.InlinedRequests.PostWithObjectBodyandResponse(request) -> *types.ObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-POST with custom object in request body, response is an object
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &fern.PostWithObjectBody{
-        FieldString: "string",
-        Integer: 1,
-        NestedObject: &types.ObjectWithOptionalField{
-            FieldString: fern.String(
-                "string",
-            ),
-            Integer: fern.Int(
-                1,
-            ),
-            Long: fern.Int64(
-                int64(1000000),
-            ),
-            Double: fern.Float64(
-                1.1,
-            ),
-            Bool: fern.Bool(
-                true,
-            ),
-            Datetime: fern.Time(
-                fern.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
-                ),
-            ),
-            Date: fern.Time(
-                fern.MustParseDate(
-                    "2023-01-15",
-                ),
-            ),
-            UUID: fern.UUID(
-                uuid.MustParse(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-            ),
-            Base64: fern.Bytes(
-                []byte("SGVsbG8gd29ybGQh"),
-            ),
-            List: []string{
-                "list",
-                "list",
-            },
-            Set: []string{
-                "set",
-            },
-            Map: map[int]string{
-                1: "map",
-            },
-            Bigint: fern.String(
-                "1000000",
-            ),
-        },
-    }
-client.InlinedRequests.PostWithObjectBodyandResponse(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**string_:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**integer:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**nestedObject:** `*types.ObjectWithOptionalField` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## NoAuth
-<details><summary><code>client.NoAuth.PostWithNoAuth(request) -> bool</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-POST request with no auth
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := map[string]any{
-        "key": "value",
-    }
-client.NoAuth.PostWithNoAuth(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `any` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## NoReqBody
-<details><summary><code>client.NoReqBody.GetWithNoRequestBody() -> *types.ObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.NoReqBody.GetWithNoRequestBody(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.NoReqBody.PostWithNoRequestBody() -> string</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.NoReqBody.PostWithNoRequestBody(
-        context.TODO(),
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ReqWithHeaders
-<details><summary><code>client.ReqWithHeaders.GetWithCustomHeader(request) -> error</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &fern.ReqWithHeaders{
-        XTestServiceHeader: "X-TEST-SERVICE-HEADER",
-        XTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
-        Body: "string",
-    }
-client.ReqWithHeaders.GetWithCustomHeader(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**xTestEndpointHeader:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `string` 
-    
 </dd>
 </dl>
 </dd>

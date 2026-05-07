@@ -13,7 +13,7 @@ impl HttpMethodsClient {
         })
     }
 
-    pub async fn test_get(
+    pub async fn http_methods_test_get(
         &self,
         id: &str,
         options: Option<RequestOptions>,
@@ -21,7 +21,7 @@ impl HttpMethodsClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/http-methods/{}", id),
+                &format!("http-methods/{}", id),
                 None,
                 None,
                 options,
@@ -29,32 +29,16 @@ impl HttpMethodsClient {
             .await
     }
 
-    pub async fn test_post(
-        &self,
-        request: &ObjectWithRequiredField,
-        options: Option<RequestOptions>,
-    ) -> Result<ObjectWithOptionalField, ApiError> {
-        self.http_client
-            .execute_request(
-                Method::POST,
-                "/http-methods",
-                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
-                None,
-                options,
-            )
-            .await
-    }
-
-    pub async fn test_put(
+    pub async fn http_methods_test_put(
         &self,
         id: &str,
-        request: &ObjectWithRequiredField,
+        request: &TypesObjectWithRequiredField,
         options: Option<RequestOptions>,
-    ) -> Result<ObjectWithOptionalField, ApiError> {
+    ) -> Result<TypesObjectWithOptionalField, ApiError> {
         self.http_client
             .execute_request(
                 Method::PUT,
-                &format!("/http-methods/{}", id),
+                &format!("http-methods/{}", id),
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -62,24 +46,7 @@ impl HttpMethodsClient {
             .await
     }
 
-    pub async fn test_patch(
-        &self,
-        id: &str,
-        request: &ObjectWithOptionalField,
-        options: Option<RequestOptions>,
-    ) -> Result<ObjectWithOptionalField, ApiError> {
-        self.http_client
-            .execute_request(
-                Method::PATCH,
-                &format!("/http-methods/{}", id),
-                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
-                None,
-                options,
-            )
-            .await
-    }
-
-    pub async fn test_delete(
+    pub async fn http_methods_test_delete(
         &self,
         id: &str,
         options: Option<RequestOptions>,
@@ -87,8 +54,41 @@ impl HttpMethodsClient {
         self.http_client
             .execute_request(
                 Method::DELETE,
-                &format!("/http-methods/{}", id),
+                &format!("http-methods/{}", id),
                 None,
+                None,
+                options,
+            )
+            .await
+    }
+
+    pub async fn http_methods_test_patch(
+        &self,
+        id: &str,
+        request: &TypesObjectWithOptionalField,
+        options: Option<RequestOptions>,
+    ) -> Result<TypesObjectWithOptionalField, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::PATCH,
+                &format!("http-methods/{}", id),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    pub async fn http_methods_test_post(
+        &self,
+        request: &TypesObjectWithRequiredField,
+        options: Option<RequestOptions>,
+    ) -> Result<TypesObjectWithOptionalField, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "http-methods",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

@@ -7,13 +7,13 @@ public final class EnumClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getAndReturnEnum(request: WeatherReport, requestOptions: RequestOptions? = nil) async throws -> WeatherReport {
+    public func getAndReturnEnum(request: TypesWeatherReport, requestOptions: RequestOptions? = nil) async throws -> TypesWeatherReport {
         return try await httpClient.performRequest(
             method: .post,
             path: "/enum",
             body: request,
             requestOptions: requestOptions,
-            responseType: WeatherReport.self
+            responseType: TypesWeatherReport.self
         )
     }
 }

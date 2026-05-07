@@ -5,10 +5,11 @@ package httpmethods
 import (
 	context "context"
 
+	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
+	endpoints "github.com/exhaustive/fern/endpoints"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
-	types "github.com/exhaustive/fern/types"
 )
 
 type Client struct {
@@ -33,14 +34,14 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) TestGet(
+func (c *Client) HTTPMethodsTestGet(
 	ctx context.Context,
-	id string,
+	request *endpoints.HTTPMethodsTestGetHTTPMethodsRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.TestGet(
+	response, err := c.WithRawResponse.HTTPMethodsTestGet(
 		ctx,
-		id,
+		request,
 		opts...,
 	)
 	if err != nil {
@@ -49,12 +50,12 @@ func (c *Client) TestGet(
 	return response.Body, nil
 }
 
-func (c *Client) TestPost(
+func (c *Client) HTTPMethodsTestPut(
 	ctx context.Context,
-	request *types.ObjectWithRequiredField,
+	request *endpoints.HTTPMethodsTestPutHTTPMethodsRequest,
 	opts ...option.RequestOption,
-) (*types.ObjectWithOptionalField, error) {
-	response, err := c.WithRawResponse.TestPost(
+) (*fern.TypesObjectWithOptionalField, error) {
+	response, err := c.WithRawResponse.HTTPMethodsTestPut(
 		ctx,
 		request,
 		opts...,
@@ -65,54 +66,50 @@ func (c *Client) TestPost(
 	return response.Body, nil
 }
 
-func (c *Client) TestPut(
+func (c *Client) HTTPMethodsTestDelete(
 	ctx context.Context,
-	id string,
-	request *types.ObjectWithRequiredField,
-	opts ...option.RequestOption,
-) (*types.ObjectWithOptionalField, error) {
-	response, err := c.WithRawResponse.TestPut(
-		ctx,
-		id,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return response.Body, nil
-}
-
-func (c *Client) TestPatch(
-	ctx context.Context,
-	id string,
-	request *types.ObjectWithOptionalField,
-	opts ...option.RequestOption,
-) (*types.ObjectWithOptionalField, error) {
-	response, err := c.WithRawResponse.TestPatch(
-		ctx,
-		id,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return response.Body, nil
-}
-
-func (c *Client) TestDelete(
-	ctx context.Context,
-	id string,
+	request *endpoints.HTTPMethodsTestDeleteHTTPMethodsRequest,
 	opts ...option.RequestOption,
 ) (bool, error) {
-	response, err := c.WithRawResponse.TestDelete(
+	response, err := c.WithRawResponse.HTTPMethodsTestDelete(
 		ctx,
-		id,
+		request,
 		opts...,
 	)
 	if err != nil {
 		return false, err
+	}
+	return response.Body, nil
+}
+
+func (c *Client) HTTPMethodsTestPatch(
+	ctx context.Context,
+	request *endpoints.HTTPMethodsTestPatchHTTPMethodsRequest,
+	opts ...option.RequestOption,
+) (*fern.TypesObjectWithOptionalField, error) {
+	response, err := c.WithRawResponse.HTTPMethodsTestPatch(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+func (c *Client) HTTPMethodsTestPost(
+	ctx context.Context,
+	request *fern.TypesObjectWithRequiredField,
+	opts ...option.RequestOption,
+) (*fern.TypesObjectWithOptionalField, error) {
+	response, err := c.WithRawResponse.HTTPMethodsTestPost(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
 	}
 	return response.Body, nil
 }

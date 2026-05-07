@@ -9,18 +9,18 @@ import (
 	testing "testing"
 )
 
-func TestSettersGetWithMultipleQuery(t *testing.T) {
+func TestSettersGetWithAllowMultipleQueryParamsRequest(t *testing.T) {
 	t.Run("SetQuery", func(t *testing.T) {
-		obj := &GetWithMultipleQuery{}
-		var fernTestValueQuery []string
+		obj := &GetWithAllowMultipleQueryParamsRequest{}
+		var fernTestValueQuery []*string
 		obj.SetQuery(fernTestValueQuery)
 		assert.Equal(t, fernTestValueQuery, obj.Query)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetNumber", func(t *testing.T) {
-		obj := &GetWithMultipleQuery{}
-		var fernTestValueNumber []int
+		obj := &GetWithAllowMultipleQueryParamsRequest{}
+		var fernTestValueNumber []*int
 		obj.SetNumber(fernTestValueNumber)
 		assert.Equal(t, fernTestValueNumber, obj.Number)
 		assert.NotNil(t, obj.explicitFields)
@@ -28,12 +28,12 @@ func TestSettersGetWithMultipleQuery(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitGetWithMultipleQuery(t *testing.T) {
+func TestSettersMarkExplicitGetWithAllowMultipleQueryParamsRequest(t *testing.T) {
 	t.Run("SetQuery_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &GetWithMultipleQuery{}
-		var fernTestValueQuery []string
+		obj := &GetWithAllowMultipleQueryParamsRequest{}
+		var fernTestValueQuery []*string
 
 		// Act
 		obj.SetQuery(fernTestValueQuery)
@@ -63,8 +63,8 @@ func TestSettersMarkExplicitGetWithMultipleQuery(t *testing.T) {
 	t.Run("SetNumber_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &GetWithMultipleQuery{}
-		var fernTestValueNumber []int
+		obj := &GetWithAllowMultipleQueryParamsRequest{}
+		var fernTestValueNumber []*int
 
 		// Act
 		obj.SetNumber(fernTestValueNumber)
@@ -93,9 +93,9 @@ func TestSettersMarkExplicitGetWithMultipleQuery(t *testing.T) {
 
 }
 
-func TestSettersGetWithInlinePath(t *testing.T) {
+func TestSettersGetWithInlinePathParamsRequest(t *testing.T) {
 	t.Run("SetParam", func(t *testing.T) {
-		obj := &GetWithInlinePath{}
+		obj := &GetWithInlinePathParamsRequest{}
 		var fernTestValueParam string
 		obj.SetParam(fernTestValueParam)
 		assert.Equal(t, fernTestValueParam, obj.Param)
@@ -104,11 +104,11 @@ func TestSettersGetWithInlinePath(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitGetWithInlinePath(t *testing.T) {
+func TestSettersMarkExplicitGetWithInlinePathParamsRequest(t *testing.T) {
 	t.Run("SetParam_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &GetWithInlinePath{}
+		obj := &GetWithInlinePathParamsRequest{}
 		var fernTestValueParam string
 
 		// Act
@@ -138,9 +138,9 @@ func TestSettersMarkExplicitGetWithInlinePath(t *testing.T) {
 
 }
 
-func TestSettersGetWithInlinePathAndQuery(t *testing.T) {
+func TestSettersGetWithInlinePathAndQueryParamsRequest(t *testing.T) {
 	t.Run("SetParam", func(t *testing.T) {
-		obj := &GetWithInlinePathAndQuery{}
+		obj := &GetWithInlinePathAndQueryParamsRequest{}
 		var fernTestValueParam string
 		obj.SetParam(fernTestValueParam)
 		assert.Equal(t, fernTestValueParam, obj.Param)
@@ -148,7 +148,7 @@ func TestSettersGetWithInlinePathAndQuery(t *testing.T) {
 	})
 
 	t.Run("SetQuery", func(t *testing.T) {
-		obj := &GetWithInlinePathAndQuery{}
+		obj := &GetWithInlinePathAndQueryParamsRequest{}
 		var fernTestValueQuery string
 		obj.SetQuery(fernTestValueQuery)
 		assert.Equal(t, fernTestValueQuery, obj.Query)
@@ -157,11 +157,11 @@ func TestSettersGetWithInlinePathAndQuery(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitGetWithInlinePathAndQuery(t *testing.T) {
+func TestSettersMarkExplicitGetWithInlinePathAndQueryParamsRequest(t *testing.T) {
 	t.Run("SetParam_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &GetWithInlinePathAndQuery{}
+		obj := &GetWithInlinePathAndQueryParamsRequest{}
 		var fernTestValueParam string
 
 		// Act
@@ -192,7 +192,7 @@ func TestSettersMarkExplicitGetWithInlinePathAndQuery(t *testing.T) {
 	t.Run("SetQuery_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &GetWithInlinePathAndQuery{}
+		obj := &GetWithInlinePathAndQueryParamsRequest{}
 		var fernTestValueQuery string
 
 		// Act
@@ -222,9 +222,62 @@ func TestSettersMarkExplicitGetWithInlinePathAndQuery(t *testing.T) {
 
 }
 
-func TestSettersGetWithPathAndQuery(t *testing.T) {
+func TestSettersGetWithPathParamsRequest(t *testing.T) {
+	t.Run("SetParam", func(t *testing.T) {
+		obj := &GetWithPathParamsRequest{}
+		var fernTestValueParam string
+		obj.SetParam(fernTestValueParam)
+		assert.Equal(t, fernTestValueParam, obj.Param)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestSettersMarkExplicitGetWithPathParamsRequest(t *testing.T) {
+	t.Run("SetParam_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetWithPathParamsRequest{}
+		var fernTestValueParam string
+
+		// Act
+		obj.SetParam(fernTestValueParam)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersGetWithPathAndQueryParamsRequest(t *testing.T) {
+	t.Run("SetParam", func(t *testing.T) {
+		obj := &GetWithPathAndQueryParamsRequest{}
+		var fernTestValueParam string
+		obj.SetParam(fernTestValueParam)
+		assert.Equal(t, fernTestValueParam, obj.Param)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetQuery", func(t *testing.T) {
-		obj := &GetWithPathAndQuery{}
+		obj := &GetWithPathAndQueryParamsRequest{}
 		var fernTestValueQuery string
 		obj.SetQuery(fernTestValueQuery)
 		assert.Equal(t, fernTestValueQuery, obj.Query)
@@ -233,11 +286,42 @@ func TestSettersGetWithPathAndQuery(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitGetWithPathAndQuery(t *testing.T) {
+func TestSettersMarkExplicitGetWithPathAndQueryParamsRequest(t *testing.T) {
+	t.Run("SetParam_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetWithPathAndQueryParamsRequest{}
+		var fernTestValueParam string
+
+		// Act
+		obj.SetParam(fernTestValueParam)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetQuery_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &GetWithPathAndQuery{}
+		obj := &GetWithPathAndQueryParamsRequest{}
 		var fernTestValueQuery string
 
 		// Act
@@ -267,9 +351,9 @@ func TestSettersMarkExplicitGetWithPathAndQuery(t *testing.T) {
 
 }
 
-func TestSettersGetWithQuery(t *testing.T) {
+func TestSettersGetWithQueryParamsRequest(t *testing.T) {
 	t.Run("SetQuery", func(t *testing.T) {
-		obj := &GetWithQuery{}
+		obj := &GetWithQueryParamsRequest{}
 		var fernTestValueQuery string
 		obj.SetQuery(fernTestValueQuery)
 		assert.Equal(t, fernTestValueQuery, obj.Query)
@@ -277,7 +361,7 @@ func TestSettersGetWithQuery(t *testing.T) {
 	})
 
 	t.Run("SetNumber", func(t *testing.T) {
-		obj := &GetWithQuery{}
+		obj := &GetWithQueryParamsRequest{}
 		var fernTestValueNumber int
 		obj.SetNumber(fernTestValueNumber)
 		assert.Equal(t, fernTestValueNumber, obj.Number)
@@ -286,11 +370,11 @@ func TestSettersGetWithQuery(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitGetWithQuery(t *testing.T) {
+func TestSettersMarkExplicitGetWithQueryParamsRequest(t *testing.T) {
 	t.Run("SetQuery_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &GetWithQuery{}
+		obj := &GetWithQueryParamsRequest{}
 		var fernTestValueQuery string
 
 		// Act
@@ -321,7 +405,7 @@ func TestSettersMarkExplicitGetWithQuery(t *testing.T) {
 	t.Run("SetNumber_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &GetWithQuery{}
+		obj := &GetWithQueryParamsRequest{}
 		var fernTestValueNumber int
 
 		// Act
@@ -351,9 +435,9 @@ func TestSettersMarkExplicitGetWithQuery(t *testing.T) {
 
 }
 
-func TestSettersModifyResourceAtInlinedPath(t *testing.T) {
+func TestSettersModifyWithInlinePathParamsRequest(t *testing.T) {
 	t.Run("SetParam", func(t *testing.T) {
-		obj := &ModifyResourceAtInlinedPath{}
+		obj := &ModifyWithInlinePathParamsRequest{}
 		var fernTestValueParam string
 		obj.SetParam(fernTestValueParam)
 		assert.Equal(t, fernTestValueParam, obj.Param)
@@ -362,11 +446,56 @@ func TestSettersModifyResourceAtInlinedPath(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitModifyResourceAtInlinedPath(t *testing.T) {
+func TestSettersMarkExplicitModifyWithInlinePathParamsRequest(t *testing.T) {
 	t.Run("SetParam_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &ModifyResourceAtInlinedPath{}
+		obj := &ModifyWithInlinePathParamsRequest{}
+		var fernTestValueParam string
+
+		// Act
+		obj.SetParam(fernTestValueParam)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersModifyWithPathParamsRequest(t *testing.T) {
+	t.Run("SetParam", func(t *testing.T) {
+		obj := &ModifyWithPathParamsRequest{}
+		var fernTestValueParam string
+		obj.SetParam(fernTestValueParam)
+		assert.Equal(t, fernTestValueParam, obj.Param)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestSettersMarkExplicitModifyWithPathParamsRequest(t *testing.T) {
+	t.Run("SetParam_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ModifyWithPathParamsRequest{}
 		var fernTestValueParam string
 
 		// Act

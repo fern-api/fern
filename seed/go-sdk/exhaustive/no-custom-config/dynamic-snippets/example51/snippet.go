@@ -5,6 +5,7 @@ import (
 
     fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
+    endpoints "github.com/exhaustive/fern/endpoints"
     option "github.com/exhaustive/fern/option"
 )
 
@@ -17,10 +18,14 @@ func do() {
             "<token>",
         ),
     )
-    request := fern.MustParseDate(
-        "2023-01-15",
-    )
-    client.Endpoints.Primitive.GetAndReturnDate(
+    request := &endpoints.GetAndReturnNestedWithRequiredFieldObjectRequest{
+        String: "string",
+        Body: &fern.TypesNestedObjectWithRequiredField{
+            FieldString: "string",
+            NestedObject: &fern.TypesObjectWithOptionalField{},
+        },
+    }
+    client.Endpoints.Object.GetAndReturnNestedWithRequiredField(
         context.TODO(),
         request,
     )

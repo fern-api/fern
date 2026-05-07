@@ -5,4 +5,7 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.enum.get_and_return_enum(request: "SUNNY")
+client.reqwithheaders.getwithcustomheader(
+  test_endpoint_header: "testEndpointHeader",
+  body: "string"
+)

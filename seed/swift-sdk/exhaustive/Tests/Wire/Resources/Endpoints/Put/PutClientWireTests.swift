@@ -1,9 +1,49 @@
 import Foundation
 import Testing
-import Exhaustive
+import Api
 
 @Suite("PutClient Wire Tests") struct PutClientWireTests {
-    @Test func add1() async throws -> Void {
+    @Test func endpointsPutAdd1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                #"""
+                {
+                  "errors": [
+                    {
+                      "category": "API_ERROR",
+                      "code": "INTERNAL_SERVER_ERROR",
+                      "detail": "detail",
+                      "field": "field"
+                    }
+                  ]
+                }
+                """#.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = EndpointsPutResponse(
+            errors: Optional(Nullable<[EndpointsError]>.value([
+                EndpointsError(
+                    category: .apiError,
+                    code: .internalServerError,
+                    detail: Optional(Nullable<String>.value("detail")),
+                    field: Optional(Nullable<String>.value("field"))
+                )
+            ]))
+        )
+        let response = try await client.endpoints.put.endpointsPutAdd(
+            id: "id",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func endpointsPutAdd2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -27,28 +67,28 @@ import Exhaustive
                 """#.utf8
             )
         )
-        let client = ExhaustiveClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = PutResponse(
-            errors: Optional([
-                Error(
+        let expectedResponse = EndpointsPutResponse(
+            errors: Optional(Nullable<[EndpointsError]>.value([
+                EndpointsError(
                     category: .apiError,
                     code: .internalServerError,
-                    detail: Optional("detail"),
-                    field: Optional("field")
+                    detail: Optional(Nullable<String>.value("detail")),
+                    field: Optional(Nullable<String>.value("field"))
                 ),
-                Error(
+                EndpointsError(
                     category: .apiError,
                     code: .internalServerError,
-                    detail: Optional("detail"),
-                    field: Optional("field")
+                    detail: Optional(Nullable<String>.value("detail")),
+                    field: Optional(Nullable<String>.value("field"))
                 )
-            ])
+            ]))
         )
-        let response = try await client.endpoints.put.add(
+        let response = try await client.endpoints.put.endpointsPutAdd(
             id: "id",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )

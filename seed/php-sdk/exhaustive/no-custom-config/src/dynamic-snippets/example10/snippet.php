@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\Enum\Types\WeatherReport;
+use Seed\Reqwithheaders\Requests\GetwithcustomheaderReqwithheadersRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,6 +11,9 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->enum->getAndReturnEnum(
-    WeatherReport::Sunny->value,
+$client->reqwithheaders->getwithcustomheader(
+    new GetwithcustomheaderReqwithheadersRequest([
+        'testEndpointHeader' => 'testEndpointHeader',
+        'body' => 'string',
+    ]),
 );

@@ -1,13 +1,41 @@
 import Foundation
-import Exhaustive
+import Api
 
 private func main() async throws {
-    let client = ExhaustiveClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.endpoints.primitive.getAndReturnUuid(request: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!)
+    _ = try await client.endpoints.object.getAndReturnNestedWithRequiredField(
+        string: "string",
+        request: .init(body: TypesNestedObjectWithRequiredField(
+            string: "string",
+            nestedObject: TypesObjectWithOptionalField(
+                string: .value("string"),
+                integer: .value(1),
+                long: .value(1000000),
+                double: .value(1.1),
+                bool: .value(true),
+                datetime: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                date: .value(CalendarDate("2023-01-15")!),
+                uuid: .value("uuid"),
+                base64: .value("base64"),
+                list: .value([
+                    "list",
+                    "list"
+                ]),
+                set: .value([
+                    "set",
+                    "set"
+                ]),
+                map: .value([
+                    "map": .value("map")
+                ]),
+                bigint: .value(1)
+            )
+        ))
+    )
 }
 
 try await main()

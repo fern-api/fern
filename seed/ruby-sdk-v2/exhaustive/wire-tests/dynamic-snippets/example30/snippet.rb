@@ -5,7 +5,20 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.object.get_and_return_with_datetime_like_string(
-  datetime_like_string: "2023-08-31T14:15:22Z",
-  actual_datetime: "2023-08-31T14:15:22Z"
+client.endpoints.content_type.content_type_post_json_patch_content_with_charset_type(
+  string: "string",
+  integer: 1,
+  long: 1000000,
+  double: 1.1,
+  bool: true,
+  datetime: "2024-01-15T09:30:00Z",
+  date: "2023-01-15",
+  uuid: "uuid",
+  base64: "base64",
+  list: %w[list list],
+  set: %w[set set],
+  map: {
+    map: "map"
+  },
+  bigint: 1
 )

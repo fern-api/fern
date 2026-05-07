@@ -15,13 +15,13 @@ impl UnionClient {
 
     pub async fn get_and_return_union(
         &self,
-        request: &Animal,
+        request: &TypesAnimal,
         options: Option<RequestOptions>,
-    ) -> Result<Animal, ApiError> {
+    ) -> Result<TypesAnimal, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/union",
+                "union",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

@@ -17,10 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.GetWithInlinePath{
-        Param: "param",
+    request := &endpoints.HTTPMethodsTestGetHTTPMethodsRequest{
+        ID: "id",
     }
-    client.Endpoints.Params.GetWithInlinePath(
+    client.Endpoints.HTTPMethods.HTTPMethodsTestGet(
         context.TODO(),
         request,
     )

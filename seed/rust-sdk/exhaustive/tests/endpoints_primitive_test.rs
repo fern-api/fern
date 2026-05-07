@@ -1,5 +1,4 @@
-use base64::Engine;
-use seed_exhaustive::prelude::*;
+use seed_api::prelude::*;
 
 mod wire_test_utils;
 
@@ -15,7 +14,7 @@ async fn test_endpoints_primitive_get_and_return_string_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
         .endpoints
@@ -42,7 +41,7 @@ async fn test_endpoints_primitive_get_and_return_int_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
         .endpoints
@@ -69,7 +68,7 @@ async fn test_endpoints_primitive_get_and_return_long_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
         .endpoints
@@ -96,7 +95,7 @@ async fn test_endpoints_primitive_get_and_return_double_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
         .endpoints
@@ -123,7 +122,7 @@ async fn test_endpoints_primitive_get_and_return_bool_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
         .endpoints
@@ -150,7 +149,7 @@ async fn test_endpoints_primitive_get_and_return_datetime_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
         .endpoints
@@ -180,7 +179,7 @@ async fn test_endpoints_primitive_get_and_return_date_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
         .endpoints
@@ -210,15 +209,12 @@ async fn test_endpoints_primitive_get_and_return_uuid_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
         .endpoints
         .primitive
-        .get_and_return_uuid(
-            &Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
-            None,
-        )
+        .get_and_return_uuid(&"string".to_string(), None)
         .await;
 
     assert!(result.is_ok(), "Client method call should succeed");
@@ -240,17 +236,12 @@ async fn test_endpoints_primitive_get_and_return_base64_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
         .endpoints
         .primitive
-        .get_and_return_base64(
-            &base64::engine::general_purpose::STANDARD
-                .decode("SGVsbG8gd29ybGQh")
-                .unwrap(),
-            None,
-        )
+        .get_and_return_base64(&"string".to_string(), None)
         .await;
 
     assert!(result.is_ok(), "Client method call should succeed");

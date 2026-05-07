@@ -13,8 +13,6 @@ import (
 	fern "github.com/exhaustive/fern"
 	client "github.com/exhaustive/fern/client"
 	option "github.com/exhaustive/fern/option"
-	types "github.com/exhaustive/fern/types"
-	uuid "github.com/google/uuid"
 	require "github.com/stretchr/testify/require"
 )
 
@@ -79,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestEndpointsContentTypePostJSONPatchContentTypeWithWireMock(
+func TestEndpointsContentTypeContentTypePostJSONPatchContentTypeWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -90,67 +88,20 @@ func TestEndpointsContentTypePostJSONPatchContentTypeWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &types.ObjectWithOptionalField{
-		FieldString: fern.String(
-			"string",
-		),
-		Integer: fern.Int(
-			1,
-		),
-		Long: fern.Int64(
-			int64(1000000),
-		),
-		Double: fern.Float64(
-			1.1,
-		),
-		Bool: fern.Bool(
-			true,
-		),
-		Datetime: fern.Time(
-			fern.MustParseDateTime(
-				"2024-01-15T09:30:00Z",
-			),
-		),
-		Date: fern.Time(
-			fern.MustParseDate(
-				"2023-01-15",
-			),
-		),
-		UUID: fern.UUID(
-			uuid.MustParse(
-				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-			),
-		),
-		Base64: fern.Bytes(
-			[]byte("SGVsbG8gd29ybGQh"),
-		),
-		List: []string{
-			"list",
-			"list",
-		},
-		Set: []string{
-			"set",
-		},
-		Map: map[int]string{
-			1: "map",
-		},
-		Bigint: fern.String(
-			"1000000",
-		),
-	}
-	invocationErr := client.Endpoints.ContentType.PostJSONPatchContentType(
+	request := &fern.TypesObjectWithOptionalField{}
+	invocationErr := client.Endpoints.ContentType.ContentTypePostJSONPatchContentType(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsContentTypePostJSONPatchContentTypeWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEndpointsContentTypeContentTypePostJSONPatchContentTypeWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsContentTypePostJSONPatchContentTypeWithWireMock", "POST", "/foo/bar", nil, 1)
+	VerifyRequestCount(t, "TestEndpointsContentTypeContentTypePostJSONPatchContentTypeWithWireMock", "POST", "/foo/bar", nil, 1)
 }
 
-func TestEndpointsContentTypePostJSONPatchContentWithCharsetTypeWithWireMock(
+func TestEndpointsContentTypeContentTypePostJSONPatchContentWithCharsetTypeWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -161,62 +112,15 @@ func TestEndpointsContentTypePostJSONPatchContentWithCharsetTypeWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &types.ObjectWithOptionalField{
-		FieldString: fern.String(
-			"string",
-		),
-		Integer: fern.Int(
-			1,
-		),
-		Long: fern.Int64(
-			int64(1000000),
-		),
-		Double: fern.Float64(
-			1.1,
-		),
-		Bool: fern.Bool(
-			true,
-		),
-		Datetime: fern.Time(
-			fern.MustParseDateTime(
-				"2024-01-15T09:30:00Z",
-			),
-		),
-		Date: fern.Time(
-			fern.MustParseDate(
-				"2023-01-15",
-			),
-		),
-		UUID: fern.UUID(
-			uuid.MustParse(
-				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-			),
-		),
-		Base64: fern.Bytes(
-			[]byte("SGVsbG8gd29ybGQh"),
-		),
-		List: []string{
-			"list",
-			"list",
-		},
-		Set: []string{
-			"set",
-		},
-		Map: map[int]string{
-			1: "map",
-		},
-		Bigint: fern.String(
-			"1000000",
-		),
-	}
-	invocationErr := client.Endpoints.ContentType.PostJSONPatchContentWithCharsetType(
+	request := &fern.TypesObjectWithOptionalField{}
+	invocationErr := client.Endpoints.ContentType.ContentTypePostJSONPatchContentWithCharsetType(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsContentTypePostJSONPatchContentWithCharsetTypeWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEndpointsContentTypeContentTypePostJSONPatchContentWithCharsetTypeWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsContentTypePostJSONPatchContentWithCharsetTypeWithWireMock", "POST", "/foo/baz", nil, 1)
+	VerifyRequestCount(t, "TestEndpointsContentTypeContentTypePostJSONPatchContentWithCharsetTypeWithWireMock", "POST", "/foo/baz", nil, 1)
 }

@@ -1,16 +1,19 @@
 import Foundation
-import Exhaustive
+import Api
 
 private func main() async throws {
-    let client = ExhaustiveClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.endpoints.container.getAndReturnListOfPrimitives(request: [
-        "string",
-        "string"
-    ])
+    _ = try await client.inlinedrequests.postwithobjectbodyandresponse(request: .init(
+        string: "string",
+        integer: 1,
+        nestedObject: TypesObjectWithOptionalField(
+
+        )
+    ))
 }
 
 try await main()

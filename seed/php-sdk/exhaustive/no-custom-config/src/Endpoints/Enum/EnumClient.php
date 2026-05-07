@@ -4,7 +4,7 @@ namespace Seed\Endpoints\Enum;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Types\Enum\Types\WeatherReport;
+use Seed\Types\TypesWeatherReport;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -50,7 +50,7 @@ class EnumClient
     }
 
     /**
-     * @param value-of<WeatherReport> $request
+     * @param value-of<TypesWeatherReport> $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -59,7 +59,7 @@ class EnumClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?value-of<WeatherReport>
+     * @return ?value-of<TypesWeatherReport>
      * @throws SeedException
      * @throws SeedApiException
      */
@@ -70,7 +70,7 @@ class EnumClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/enum",
+                    path: "enum",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

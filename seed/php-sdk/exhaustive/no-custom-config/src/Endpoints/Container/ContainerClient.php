@@ -12,7 +12,7 @@ use Seed\Core\Json\JsonSerializer;
 use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Types\Object\Types\ObjectWithRequiredField;
+use Seed\Types\TypesObjectWithRequiredField;
 use Seed\Core\Types\Union;
 
 class ContainerClient
@@ -72,7 +72,7 @@ class ContainerClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/container/list-of-primitives",
+                    path: "container/list-of-primitives",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, ['string']),
                 ),
@@ -99,7 +99,7 @@ class ContainerClient
     }
 
     /**
-     * @param array<ObjectWithRequiredField> $request
+     * @param array<TypesObjectWithRequiredField> $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -108,7 +108,7 @@ class ContainerClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?array<ObjectWithRequiredField>
+     * @return ?array<TypesObjectWithRequiredField>
      * @throws SeedException
      * @throws SeedApiException
      */
@@ -119,9 +119,9 @@ class ContainerClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/container/list-of-objects",
+                    path: "container/list-of-objects",
                     method: HttpMethod::POST,
-                    body: JsonSerializer::serializeArray($request, [ObjectWithRequiredField::class]),
+                    body: JsonSerializer::serializeArray($request, [TypesObjectWithRequiredField::class]),
                 ),
                 $options,
             );
@@ -131,7 +131,7 @@ class ContainerClient
                 if (empty($json)) {
                     return null;
                 }
-                return JsonDecoder::decodeArray($json, [ObjectWithRequiredField::class]); // @phpstan-ignore-line
+                return JsonDecoder::decodeArray($json, [TypesObjectWithRequiredField::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -166,7 +166,7 @@ class ContainerClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/container/set-of-primitives",
+                    path: "container/set-of-primitives",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, ['string']),
                 ),
@@ -193,7 +193,7 @@ class ContainerClient
     }
 
     /**
-     * @param array<ObjectWithRequiredField> $request
+     * @param array<TypesObjectWithRequiredField> $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -202,7 +202,7 @@ class ContainerClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?array<ObjectWithRequiredField>
+     * @return ?array<TypesObjectWithRequiredField>
      * @throws SeedException
      * @throws SeedApiException
      */
@@ -213,9 +213,9 @@ class ContainerClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/container/set-of-objects",
+                    path: "container/set-of-objects",
                     method: HttpMethod::POST,
-                    body: JsonSerializer::serializeArray($request, [ObjectWithRequiredField::class]),
+                    body: JsonSerializer::serializeArray($request, [TypesObjectWithRequiredField::class]),
                 ),
                 $options,
             );
@@ -225,7 +225,7 @@ class ContainerClient
                 if (empty($json)) {
                     return null;
                 }
-                return JsonDecoder::decodeArray($json, [ObjectWithRequiredField::class]); // @phpstan-ignore-line
+                return JsonDecoder::decodeArray($json, [TypesObjectWithRequiredField::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -260,7 +260,7 @@ class ContainerClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/container/map-prim-to-prim",
+                    path: "container/map-prim-to-prim",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, ['string' => 'string']),
                 ),
@@ -287,7 +287,7 @@ class ContainerClient
     }
 
     /**
-     * @param array<string, ObjectWithRequiredField> $request
+     * @param array<string, TypesObjectWithRequiredField> $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -296,7 +296,7 @@ class ContainerClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?array<string, ObjectWithRequiredField>
+     * @return ?array<string, TypesObjectWithRequiredField>
      * @throws SeedException
      * @throws SeedApiException
      */
@@ -307,9 +307,9 @@ class ContainerClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/container/map-prim-to-object",
+                    path: "container/map-prim-to-object",
                     method: HttpMethod::POST,
-                    body: JsonSerializer::serializeArray($request, ['string' => ObjectWithRequiredField::class]),
+                    body: JsonSerializer::serializeArray($request, ['string' => TypesObjectWithRequiredField::class]),
                 ),
                 $options,
             );
@@ -319,7 +319,7 @@ class ContainerClient
                 if (empty($json)) {
                     return null;
                 }
-                return JsonDecoder::decodeArray($json, ['string' => ObjectWithRequiredField::class]); // @phpstan-ignore-line
+                return JsonDecoder::decodeArray($json, ['string' => TypesObjectWithRequiredField::class]); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -364,7 +364,7 @@ class ContainerClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/container/map-prim-to-union",
+                    path: "container/map-prim-to-union",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, ['string' => new Union('float', 'bool', 'string', ['string'])]),
                 ),
@@ -391,7 +391,7 @@ class ContainerClient
     }
 
     /**
-     * @param ?ObjectWithRequiredField $request
+     * @param TypesObjectWithRequiredField $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -400,18 +400,18 @@ class ContainerClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?ObjectWithRequiredField
+     * @return ?TypesObjectWithRequiredField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnOptional(?ObjectWithRequiredField $request = null, ?array $options = null): ?ObjectWithRequiredField
+    public function getAndReturnOptional(TypesObjectWithRequiredField $request, ?array $options = null): ?TypesObjectWithRequiredField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/container/opt-objects",
+                    path: "container/opt-objects",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -423,7 +423,7 @@ class ContainerClient
                 if (empty($json)) {
                     return null;
                 }
-                return ObjectWithRequiredField::fromJson($json);
+                return TypesObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

@@ -5,4 +5,7 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.primitive.get_and_return_base64(request: "SGVsbG8gd29ybGQh")
+client.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{
+  string: "string",
+  nested_object: {}
+}])

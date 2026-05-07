@@ -4,13 +4,73 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/req-bodies/object",
+                "method": "POST",
+                "identifier_override": "endpoint_inlinedrequests.postwithobjectbodyandresponse"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Inlinedrequests.PostwithobjectbodyandresponseAsync(\n    new PostwithobjectbodyandresponseInlinedrequestsRequest\n    {\n        String = \"string\",\n        Integer = 1,\n        NestedObject = new TypesObjectWithOptionalField(),\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/no-auth",
+                "method": "POST",
+                "identifier_override": "endpoint_noauth.postwithnoauth"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Noauth.PostwithnoauthAsync(new Dictionary<object, object?>() { { \"key\", \"value\" } });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/no-req-body",
+                "method": "GET",
+                "identifier_override": "endpoint_noreqbody.getwithnorequestbody"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Noreqbody.GetwithnorequestbodyAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/no-req-body",
+                "method": "POST",
+                "identifier_override": "endpoint_noreqbody.postwithnorequestbody"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Noreqbody.PostwithnorequestbodyAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/test-headers/custom-header",
+                "method": "POST",
+                "identifier_override": "endpoint_reqwithheaders.getwithcustomheader"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Reqwithheaders.GetwithcustomheaderAsync(\n    new GetwithcustomheaderReqwithheadersRequest\n    {\n        TestEndpointHeader = \"X-TEST-ENDPOINT-HEADER\",\n        Body = \"string\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/container/list-of-primitives",
                 "method": "POST",
                 "identifier_override": "endpoint_endpoints/container.getAndReturnListOfPrimitives"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(\n    new List<string>() { \"string\", \"string\" }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(new List<string>() { \"string\" });\n"
             }
         },
         {
@@ -22,7 +82,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnListOfObjectsAsync(\n    new List<ObjectWithRequiredField>()\n    {\n        new ObjectWithRequiredField { String = \"string\" },\n        new ObjectWithRequiredField { String = \"string\" },\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnListOfObjectsAsync(\n    new List<TypesObjectWithRequiredField>()\n    {\n        new TypesObjectWithRequiredField { String = \"string\" },\n    }\n);\n"
             }
         },
         {
@@ -34,7 +94,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnSetOfPrimitivesAsync(\n    new HashSet<string>() { \"string\" }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnSetOfPrimitivesAsync(new List<string>() { \"string\" });\n"
             }
         },
         {
@@ -46,7 +106,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnSetOfObjectsAsync(\n    new HashSet<ObjectWithRequiredField>() { new ObjectWithRequiredField { String = \"string\" } }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnSetOfObjectsAsync(\n    new List<TypesObjectWithRequiredField>()\n    {\n        new TypesObjectWithRequiredField { String = \"string\" },\n    }\n);\n"
             }
         },
         {
@@ -58,7 +118,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnMapPrimToPrimAsync(\n    new Dictionary<string, string>() { { \"string\", \"string\" } }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnMapPrimToPrimAsync(\n    new Dictionary<string, string>() { { \"key\", \"value\" } }\n);\n"
             }
         },
         {
@@ -70,7 +130,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(\n    new Dictionary<string, ObjectWithRequiredField>()\n    {\n        {\n            \"string\",\n            new ObjectWithRequiredField { String = \"string\" }\n        },\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(\n    new Dictionary<string, TypesObjectWithRequiredField>()\n    {\n        {\n            \"key\",\n            new TypesObjectWithRequiredField { String = \"string\" }\n        },\n    }\n);\n"
             }
         },
         {
@@ -82,7 +142,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(\n    new Dictionary<string, MixedType>() { { \"string\", 1.1 } }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(\n    new Dictionary<string, TypesMixedType>() { { \"key\", 1.1 } }\n);\n"
             }
         },
         {
@@ -94,7 +154,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnOptionalAsync(\n    new ObjectWithRequiredField { String = \"string\" }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnOptionalAsync(\n    new TypesObjectWithRequiredField { String = \"string\" }\n);\n"
             }
         },
         {
@@ -102,11 +162,11 @@
             "id": {
                 "path": "/foo/bar",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/content-type.postJsonPatchContentType"
+                "identifier_override": "endpoint_endpoints/contentType.contentType_postJsonPatchContentType"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.ContentType.PostJsonPatchContentTypeAsync(\n    new ObjectWithOptionalField\n    {\n        String = \"string\",\n        Integer = 1,\n        Long = 1000000,\n        Double = 1.1,\n        Bool = true,\n        Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n        Date = new DateOnly(2023, 1, 15),\n        Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        Base64 = \"SGVsbG8gd29ybGQh\",\n        List = new List<string>() { \"list\", \"list\" },\n        Set = new HashSet<string>() { \"set\" },\n        Map = new Dictionary<int, string>() { { 1, \"map\" } },\n        Bigint = \"1000000\",\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.ContentType.ContentTypePostJsonPatchContentTypeAsync(\n    new TypesObjectWithOptionalField()\n);\n"
             }
         },
         {
@@ -114,11 +174,11 @@
             "id": {
                 "path": "/foo/baz",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/content-type.postJsonPatchContentWithCharsetType"
+                "identifier_override": "endpoint_endpoints/contentType.contentType_postJsonPatchContentWithCharsetType"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.ContentType.PostJsonPatchContentWithCharsetTypeAsync(\n    new ObjectWithOptionalField\n    {\n        String = \"string\",\n        Integer = 1,\n        Long = 1000000,\n        Double = 1.1,\n        Bool = true,\n        Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n        Date = new DateOnly(2023, 1, 15),\n        Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        Base64 = \"SGVsbG8gd29ybGQh\",\n        List = new List<string>() { \"list\", \"list\" },\n        Set = new HashSet<string>() { \"set\" },\n        Map = new Dictionary<int, string>() { { 1, \"map\" } },\n        Bigint = \"1000000\",\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.ContentType.ContentTypePostJsonPatchContentWithCharsetTypeAsync(\n    new TypesObjectWithOptionalField()\n);\n"
             }
         },
         {
@@ -130,7 +190,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Enum.GetAndReturnEnumAsync(WeatherReport.Sunny);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Enum.GetAndReturnEnumAsync(TypesWeatherReport.Sunny);\n"
             }
         },
         {
@@ -138,23 +198,11 @@
             "id": {
                 "path": "/http-methods/{id}",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/http-methods.testGet"
+                "identifier_override": "endpoint_endpoints/httpMethods.httpMethods_testGet"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.HttpMethods.TestGetAsync(\"id\");\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/http-methods",
-                "method": "POST",
-                "identifier_override": "endpoint_endpoints/http-methods.testPost"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.HttpMethods.TestPostAsync(new ObjectWithRequiredField { String = \"string\" });\n"
+                "client": "using SeedApi.Endpoints;\nusing SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.HttpMethods.HttpMethodsTestGetAsync(\n    new HttpMethodsTestGetHttpMethodsRequest { Id = \"id\" }\n);\n"
             }
         },
         {
@@ -162,23 +210,11 @@
             "id": {
                 "path": "/http-methods/{id}",
                 "method": "PUT",
-                "identifier_override": "endpoint_endpoints/http-methods.testPut"
+                "identifier_override": "endpoint_endpoints/httpMethods.httpMethods_testPut"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.HttpMethods.TestPutAsync(\n    \"id\",\n    new ObjectWithRequiredField { String = \"string\" }\n);\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/http-methods/{id}",
-                "method": "PATCH",
-                "identifier_override": "endpoint_endpoints/http-methods.testPatch"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.HttpMethods.TestPatchAsync(\n    \"id\",\n    new ObjectWithOptionalField\n    {\n        String = \"string\",\n        Integer = 1,\n        Long = 1000000,\n        Double = 1.1,\n        Bool = true,\n        Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n        Date = new DateOnly(2023, 1, 15),\n        Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        Base64 = \"SGVsbG8gd29ybGQh\",\n        List = new List<string>() { \"list\", \"list\" },\n        Set = new HashSet<string>() { \"set\" },\n        Map = new Dictionary<int, string>() { { 1, \"map\" } },\n        Bigint = \"1000000\",\n    }\n);\n"
+                "client": "using SeedApi.Endpoints;\nusing SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.HttpMethods.HttpMethodsTestPutAsync(\n    new HttpMethodsTestPutHttpMethodsRequest\n    {\n        Id = \"id\",\n        Body = new TypesObjectWithRequiredField { String = \"string\" },\n    }\n);\n"
             }
         },
         {
@@ -186,11 +222,35 @@
             "id": {
                 "path": "/http-methods/{id}",
                 "method": "DELETE",
-                "identifier_override": "endpoint_endpoints/http-methods.testDelete"
+                "identifier_override": "endpoint_endpoints/httpMethods.httpMethods_testDelete"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.HttpMethods.TestDeleteAsync(\"id\");\n"
+                "client": "using SeedApi.Endpoints;\nusing SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.HttpMethods.HttpMethodsTestDeleteAsync(\n    new HttpMethodsTestDeleteHttpMethodsRequest { Id = \"id\" }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_endpoints/httpMethods.httpMethods_testPatch"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi.Endpoints;\nusing SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.HttpMethods.HttpMethodsTestPatchAsync(\n    new HttpMethodsTestPatchHttpMethodsRequest\n    {\n        Id = \"id\",\n        Body = new TypesObjectWithOptionalField(),\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/http-methods",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/httpMethods.httpMethods_testPost"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.HttpMethods.HttpMethodsTestPostAsync(\n    new TypesObjectWithRequiredField { String = \"string\" }\n);\n"
             }
         },
         {
@@ -202,7 +262,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(\n    new ObjectWithOptionalField\n    {\n        String = \"string\",\n        Integer = 1,\n        Long = 1000000,\n        Double = 1.1,\n        Bool = true,\n        Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n        Date = new DateOnly(2023, 1, 15),\n        Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        Base64 = \"SGVsbG8gd29ybGQh\",\n        List = new List<string>() { \"list\", \"list\" },\n        Set = new HashSet<string>() { \"set\" },\n        Map = new Dictionary<int, string>() { { 1, \"map\" } },\n        Bigint = \"1000000\",\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(\n    new TypesObjectWithOptionalField()\n);\n"
             }
         },
         {
@@ -214,7 +274,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithRequiredFieldAsync(\n    new ObjectWithRequiredField { String = \"string\" }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithRequiredFieldAsync(\n    new TypesObjectWithRequiredField { String = \"string\" }\n);\n"
             }
         },
         {
@@ -226,7 +286,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithMapOfMapAsync(\n    new ObjectWithMapOfMap\n    {\n        Map = new Dictionary<string, Dictionary<string, string>>()\n        {\n            {\n                \"map\",\n                new Dictionary<string, string>() { { \"map\", \"map\" } }\n            },\n        },\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithMapOfMapAsync(\n    new TypesObjectWithMapOfMap\n    {\n        Map = new Dictionary<string, Dictionary<string, string>>()\n        {\n            {\n                \"key\",\n                new Dictionary<string, string>() { { \"key\", \"value\" } }\n            },\n        },\n    }\n);\n"
             }
         },
         {
@@ -238,7 +298,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnNestedWithOptionalFieldAsync(\n    new NestedObjectWithOptionalField\n    {\n        String = \"string\",\n        NestedObject = new ObjectWithOptionalField\n        {\n            String = \"string\",\n            Integer = 1,\n            Long = 1000000,\n            Double = 1.1,\n            Bool = true,\n            Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n            Date = new DateOnly(2023, 1, 15),\n            Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            Base64 = \"SGVsbG8gd29ybGQh\",\n            List = new List<string>() { \"list\", \"list\" },\n            Set = new HashSet<string>() { \"set\" },\n            Map = new Dictionary<int, string>() { { 1, \"map\" } },\n            Bigint = \"1000000\",\n        },\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnNestedWithOptionalFieldAsync(\n    new TypesNestedObjectWithOptionalField()\n);\n"
             }
         },
         {
@@ -250,7 +310,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsync(\n    \"string\",\n    new NestedObjectWithRequiredField\n    {\n        String = \"string\",\n        NestedObject = new ObjectWithOptionalField\n        {\n            String = \"string\",\n            Integer = 1,\n            Long = 1000000,\n            Double = 1.1,\n            Bool = true,\n            Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n            Date = new DateOnly(2023, 1, 15),\n            Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            Base64 = \"SGVsbG8gd29ybGQh\",\n            List = new List<string>() { \"list\", \"list\" },\n            Set = new HashSet<string>() { \"set\" },\n            Map = new Dictionary<int, string>() { { 1, \"map\" } },\n            Bigint = \"1000000\",\n        },\n    }\n);\n"
+                "client": "using SeedApi.Endpoints;\nusing SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsync(\n    new GetAndReturnNestedWithRequiredFieldObjectRequest\n    {\n        String = \"string\",\n        Body = new TypesNestedObjectWithRequiredField\n        {\n            String = \"string\",\n            NestedObject = new TypesObjectWithOptionalField(),\n        },\n    }\n);\n"
             }
         },
         {
@@ -262,11 +322,11 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(\n    new List<NestedObjectWithRequiredField>()\n    {\n        new NestedObjectWithRequiredField\n        {\n            String = \"string\",\n            NestedObject = new ObjectWithOptionalField\n            {\n                String = \"string\",\n                Integer = 1,\n                Long = 1000000,\n                Double = 1.1,\n                Bool = true,\n                Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n                Date = new DateOnly(2023, 1, 15),\n                Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n                Base64 = \"SGVsbG8gd29ybGQh\",\n                List = new List<string>() { \"list\", \"list\" },\n                Set = new HashSet<string>() { \"set\" },\n                Map = new Dictionary<int, string>() { { 1, \"map\" } },\n                Bigint = \"1000000\",\n            },\n        },\n        new NestedObjectWithRequiredField\n        {\n            String = \"string\",\n            NestedObject = new ObjectWithOptionalField\n            {\n                String = \"string\",\n                Integer = 1,\n                Long = 1000000,\n                Double = 1.1,\n                Bool = true,\n                Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n                Date = new DateOnly(2023, 1, 15),\n                Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n                Base64 = \"SGVsbG8gd29ybGQh\",\n                List = new List<string>() { \"list\", \"list\" },\n                Set = new HashSet<string>() { \"set\" },\n                Map = new Dictionary<int, string>() { { 1, \"map\" } },\n                Bigint = \"1000000\",\n            },\n        },\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(\n    new List<TypesNestedObjectWithRequiredField>()\n    {\n        new TypesNestedObjectWithRequiredField\n        {\n            String = \"string\",\n            NestedObject = new TypesObjectWithOptionalField(),\n        },\n    }\n);\n"
             }
         },
         {
-            "example_identifier": "BackslashExample",
+            "example_identifier": null,
             "id": {
                 "path": "/object/get-and-return-with-unknown-field",
                 "method": "POST",
@@ -274,7 +334,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithUnknownFieldAsync(\n    new ObjectWithUnknownField\n    {\n        Unknown = new Dictionary<object, object?>() { { \"$ref\", \"https://example.com/schema\" } },\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithUnknownFieldAsync(\n    new TypesObjectWithUnknownField\n    {\n        Unknown = new Dictionary<object, object?>() { { \"key\", \"value\" } },\n    }\n);\n"
             }
         },
         {
@@ -286,7 +346,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithDocumentedUnknownTypeAsync(\n    new ObjectWithDocumentedUnknownType\n    {\n        DocumentedUnknownType = new Dictionary<object, object?>() { { \"key\", \"value\" } },\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithDocumentedUnknownTypeAsync(\n    new TypesObjectWithDocumentedUnknownType\n    {\n        DocumentedUnknownType = new Dictionary<object, object?>() { { \"key\", \"value\" } },\n    }\n);\n"
             }
         },
         {
@@ -298,35 +358,11 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownTypeAsync(\n    new Dictionary<string, object>()\n    {\n        {\n            \"string\",\n            new Dictionary<object, object?>() { { \"key\", \"value\" } }\n        },\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownTypeAsync(\n    new Dictionary<string, object>() { }\n);\n"
             }
         },
         {
-            "example_identifier": "PartialRequiredFields",
-            "id": {
-                "path": "/object/get-and-return-with-mixed-required-and-optional-fields",
-                "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnWithMixedRequiredAndOptionalFields"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFieldsAsync(\n    new ObjectWithMixedRequiredAndOptionalFields\n    {\n        RequiredString = \"hello\",\n        RequiredInteger = 0,\n        OptionalString = \"world\",\n        RequiredLong = 0,\n    }\n);\n"
-            }
-        },
-        {
-            "example_identifier": "NestedObjectMissing",
-            "id": {
-                "path": "/object/get-and-return-with-required-nested-object",
-                "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnWithRequiredNestedObject"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithRequiredNestedObjectAsync(\n    new ObjectWithRequiredNestedObject\n    {\n        RequiredString = \"hello\",\n        RequiredObject = new NestedObjectWithRequiredField\n        {\n            String = \"nested\",\n            NestedObject = new ObjectWithOptionalField(),\n        },\n    }\n);\n"
-            }
-        },
-        {
-            "example_identifier": "DatetimeLikeStringExample",
+            "example_identifier": null,
             "id": {
                 "path": "/object/get-and-return-with-datetime-like-string",
                 "method": "POST",
@@ -334,7 +370,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithDatetimeLikeStringAsync(\n    new ObjectWithDatetimeLikeString\n    {\n        DatetimeLikeString = \"2023-08-31T14:15:22Z\",\n        ActualDatetime = new DateTime(2023, 08, 31, 14, 15, 22, 000),\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithDatetimeLikeStringAsync(\n    new TypesObjectWithDatetimeLikeString\n    {\n        DatetimeLikeString = \"datetimeLikeString\",\n        ActualDatetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n    }\n);\n"
             }
         },
         {
@@ -346,7 +382,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nvar items = await client.Endpoints.Pagination.ListItemsAsync(\n    new ListItemsRequest { Cursor = \"cursor\", Limit = 1 }\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+                "client": "using SeedApi.Endpoints;\nusing SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Pagination.ListItemsAsync(new ListItemsPaginationRequest());\n"
             }
         },
         {
@@ -358,67 +394,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithPathAsync(\"param\");\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/params/path/{param}",
-                "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithInlinePath"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithInlinePathAsync(new GetWithInlinePath { Param = \"param\" });\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/params",
-                "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithQuery"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithQueryAsync(new GetWithQuery { Query = \"query\", Number = 1 });\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/params",
-                "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithAllowMultipleQuery"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithAllowMultipleQueryAsync(\n    new GetWithMultipleQuery { Query = [\"query\"], Number = [1] }\n);\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/params/path-query/{param}",
-                "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithPathAndQuery"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithPathAndQueryAsync(\n    \"param\",\n    new GetWithPathAndQuery { Query = \"query\" }\n);\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/params/path-query/{param}",
-                "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithInlinePathAndQuery"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithInlinePathAndQueryAsync(\n    new GetWithInlinePathAndQuery { Param = \"param\", Query = \"query\" }\n);\n"
+                "client": "using SeedApi.Endpoints;\nusing SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithPathAsync(new GetWithPathParamsRequest { Param = \"param\" });\n"
             }
         },
         {
@@ -430,55 +406,79 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.ModifyWithPathAsync(\"param\", \"string\");\n"
+                "client": "using SeedApi.Endpoints;\nusing SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Params.ModifyWithPathAsync(\n    new ModifyWithPathParamsRequest { Param = \"param\", Body = \"string\" }\n);\n"
             }
         },
         {
             "example_identifier": null,
             "id": {
-                "path": "/params/path/{param}",
+                "path": "/params/inline-path/{param}",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithInlinePath"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi.Endpoints;\nusing SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithInlinePathAsync(\n    new GetWithInlinePathParamsRequest { Param = \"param\" }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/params/inline-path/{param}",
                 "method": "PUT",
                 "identifier_override": "endpoint_endpoints/params.modifyWithInlinePath"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.ModifyWithInlinePathAsync(\n    new ModifyResourceAtInlinedPath { Param = \"param\", Body = \"string\" }\n);\n"
+                "client": "using SeedApi.Endpoints;\nusing SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Params.ModifyWithInlinePathAsync(\n    new ModifyWithInlinePathParamsRequest { Param = \"param\", Body = \"string\" }\n);\n"
             }
         },
         {
             "example_identifier": null,
             "id": {
-                "path": "/params/path/{param}",
-                "method": "POST",
-                "identifier_override": "endpoint_endpoints/params.uploadWithPath"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedExhaustive;\nusing global::System.Text;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.UploadWithPathAsync(\n    \"upload-path\",\n    new MemoryStream(Encoding.UTF8.GetBytes(\"[bytes]\"))\n);\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/params/path-bool/{param}",
+                "path": "/params",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithBooleanPath"
+                "identifier_override": "endpoint_endpoints/params.getWithQuery"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithBooleanPathAsync(true);\n"
+                "client": "using SeedApi.Endpoints;\nusing SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithQueryAsync(\n    new GetWithQueryParamsRequest { Query = \"query\", Number = 1 }\n);\n"
             }
         },
         {
             "example_identifier": null,
             "id": {
-                "path": "/params/path/{param}",
+                "path": "/params/allow-multiple-query",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithPathAndErrors"
+                "identifier_override": "endpoint_endpoints/params.getWithAllowMultipleQuery"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithPathAndErrorsAsync(\"param\");\n"
+                "client": "using SeedApi.Endpoints;\nusing SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithAllowMultipleQueryAsync(\n    new GetWithAllowMultipleQueryParamsRequest { Query = [\"query\"], Number = [1] }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/params/path-query/{param}",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithPathAndQuery"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi.Endpoints;\nusing SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithPathAndQueryAsync(\n    new GetWithPathAndQueryParamsRequest { Param = \"param\", Query = \"query\" }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/params/inline-path-query/{param}",
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithInlinePathAndQuery"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi.Endpoints;\nusing SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Params.GetWithInlinePathAndQueryAsync(\n    new GetWithInlinePathAndQueryParamsRequest { Param = \"param\", Query = \"query\" }\n);\n"
             }
         },
         {
@@ -490,7 +490,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Primitive.GetAndReturnStringAsync(\"string\");\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Primitive.GetAndReturnStringAsync(\"string\");\n"
             }
         },
         {
@@ -502,7 +502,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Primitive.GetAndReturnIntAsync(1);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Primitive.GetAndReturnIntAsync(1);\n"
             }
         },
         {
@@ -514,7 +514,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Primitive.GetAndReturnLongAsync(1000000);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Primitive.GetAndReturnLongAsync(1000000);\n"
             }
         },
         {
@@ -526,7 +526,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Primitive.GetAndReturnDoubleAsync(1.1);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Primitive.GetAndReturnDoubleAsync(1.1);\n"
             }
         },
         {
@@ -538,7 +538,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Primitive.GetAndReturnBoolAsync(true);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Primitive.GetAndReturnBoolAsync(true);\n"
             }
         },
         {
@@ -550,7 +550,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Primitive.GetAndReturnDatetimeAsync(\n    new DateTime(2024, 01, 15, 09, 30, 00, 000)\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Primitive.GetAndReturnDatetimeAsync(\n    new DateTime(2024, 01, 15, 09, 30, 00, 000)\n);\n"
             }
         },
         {
@@ -562,7 +562,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Primitive.GetAndReturnDateAsync(new DateOnly(2023, 1, 15));\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Primitive.GetAndReturnDateAsync(new DateOnly(2023, 1, 15));\n"
             }
         },
         {
@@ -574,7 +574,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Primitive.GetAndReturnUuidAsync(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\");\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Primitive.GetAndReturnUuidAsync(\"string\");\n"
             }
         },
         {
@@ -586,7 +586,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Primitive.GetAndReturnBase64Async(\"SGVsbG8gd29ybGQh\");\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Primitive.GetAndReturnBase64Async(\"string\");\n"
             }
         },
         {
@@ -594,11 +594,11 @@
             "id": {
                 "path": "/{id}",
                 "method": "PUT",
-                "identifier_override": "endpoint_endpoints/put.add"
+                "identifier_override": "endpoint_endpoints/put.endpoints_put_add"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Put.AddAsync(new PutRequest { Id = \"id\" });\n"
+                "client": "using SeedApi.Endpoints;\nusing SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Put.EndpointsPutAddAsync(new EndpointsPutAddPutRequest { Id = \"id\" });\n"
             }
         },
         {
@@ -610,7 +610,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Union.GetAndReturnUnionAsync(\n    new Animal(new Animal.Dog(new Dog { Name = \"name\", LikesToWoof = true }))\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Union.GetAndReturnUnionAsync(\n    new TypesAnimalZero\n    {\n        Name = \"name\",\n        LikesToWoof = true,\n        Animal = TypesAnimalZeroAnimal.Dog,\n    }\n);\n"
             }
         },
         {
@@ -622,7 +622,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Urls.WithMixedCaseAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Urls.WithMixedCaseAsync();\n"
             }
         },
         {
@@ -634,7 +634,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Urls.NoEndingSlashAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Urls.NoEndingSlashAsync();\n"
             }
         },
         {
@@ -646,7 +646,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Urls.WithEndingSlashAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Urls.WithEndingSlashAsync();\n"
             }
         },
         {
@@ -658,67 +658,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Urls.WithUnderscoresAsync();\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/req-bodies/object",
-                "method": "POST",
-                "identifier_override": "endpoint_inlined-requests.postWithObjectBodyandResponse"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.InlinedRequests.PostWithObjectBodyandResponseAsync(\n    new PostWithObjectBody\n    {\n        String = \"string\",\n        Integer = 1,\n        NestedObject = new ObjectWithOptionalField\n        {\n            String = \"string\",\n            Integer = 1,\n            Long = 1000000,\n            Double = 1.1,\n            Bool = true,\n            Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n            Date = new DateOnly(2023, 1, 15),\n            Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            Base64 = \"SGVsbG8gd29ybGQh\",\n            List = new List<string>() { \"list\", \"list\" },\n            Set = new HashSet<string>() { \"set\" },\n            Map = new Dictionary<int, string>() { { 1, \"map\" } },\n            Bigint = \"1000000\",\n        },\n    }\n);\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/no-auth",
-                "method": "POST",
-                "identifier_override": "endpoint_no-auth.postWithNoAuth"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.NoAuth.PostWithNoAuthAsync(new Dictionary<object, object?>() { { \"key\", \"value\" } });\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/no-req-body",
-                "method": "GET",
-                "identifier_override": "endpoint_no-req-body.getWithNoRequestBody"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.NoReqBody.GetWithNoRequestBodyAsync();\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/no-req-body",
-                "method": "POST",
-                "identifier_override": "endpoint_no-req-body.postWithNoRequestBody"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.NoReqBody.PostWithNoRequestBodyAsync();\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/test-headers/custom-header",
-                "method": "POST",
-                "identifier_override": "endpoint_req-with-headers.getWithCustomHeader"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.ReqWithHeaders.GetWithCustomHeaderAsync(\n    new ReqWithHeaders\n    {\n        XTestEndpointHeader = \"X-TEST-ENDPOINT-HEADER\",\n        XTestServiceHeader = \"X-TEST-SERVICE-HEADER\",\n        Body = \"string\",\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Endpoints.Urls.WithUnderscoresAsync();\n"
             }
         }
     ]

@@ -3,7 +3,9 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
+    endpoints "github.com/exhaustive/fern/endpoints"
     option "github.com/exhaustive/fern/option"
 )
 
@@ -16,10 +18,12 @@ func do() {
             "<token>",
         ),
     )
-    request := "string"
-    client.Endpoints.Params.ModifyWithPath(
+    request := &endpoints.HTTPMethodsTestPatchHTTPMethodsRequest{
+        ID: "id",
+        Body: &fern.TypesObjectWithOptionalField{},
+    }
+    client.Endpoints.HTTPMethods.HTTPMethodsTestPatch(
         context.TODO(),
-        "param",
         request,
     )
 }

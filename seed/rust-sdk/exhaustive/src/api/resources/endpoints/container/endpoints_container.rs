@@ -1,7 +1,7 @@
 use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 
 pub struct ContainerClient {
     pub http_client: HttpClient,
@@ -22,7 +22,7 @@ impl ContainerClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/container/list-of-primitives",
+                "container/list-of-primitives",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -32,13 +32,13 @@ impl ContainerClient {
 
     pub async fn get_and_return_list_of_objects(
         &self,
-        request: &Vec<ObjectWithRequiredField>,
+        request: &Vec<TypesObjectWithRequiredField>,
         options: Option<RequestOptions>,
-    ) -> Result<Vec<ObjectWithRequiredField>, ApiError> {
+    ) -> Result<Vec<TypesObjectWithRequiredField>, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/container/list-of-objects",
+                "container/list-of-objects",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -48,13 +48,13 @@ impl ContainerClient {
 
     pub async fn get_and_return_set_of_primitives(
         &self,
-        request: &HashSet<String>,
+        request: &Vec<String>,
         options: Option<RequestOptions>,
-    ) -> Result<HashSet<String>, ApiError> {
+    ) -> Result<Vec<String>, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/container/set-of-primitives",
+                "container/set-of-primitives",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -64,13 +64,13 @@ impl ContainerClient {
 
     pub async fn get_and_return_set_of_objects(
         &self,
-        request: &HashSet<ObjectWithRequiredField>,
+        request: &Vec<TypesObjectWithRequiredField>,
         options: Option<RequestOptions>,
-    ) -> Result<HashSet<ObjectWithRequiredField>, ApiError> {
+    ) -> Result<Vec<TypesObjectWithRequiredField>, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/container/set-of-objects",
+                "container/set-of-objects",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -86,7 +86,7 @@ impl ContainerClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/container/map-prim-to-prim",
+                "container/map-prim-to-prim",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -96,13 +96,13 @@ impl ContainerClient {
 
     pub async fn get_and_return_map_of_prim_to_object(
         &self,
-        request: &HashMap<String, ObjectWithRequiredField>,
+        request: &HashMap<String, TypesObjectWithRequiredField>,
         options: Option<RequestOptions>,
-    ) -> Result<HashMap<String, ObjectWithRequiredField>, ApiError> {
+    ) -> Result<HashMap<String, TypesObjectWithRequiredField>, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/container/map-prim-to-object",
+                "container/map-prim-to-object",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -112,13 +112,13 @@ impl ContainerClient {
 
     pub async fn get_and_return_map_of_prim_to_undiscriminated_union(
         &self,
-        request: &HashMap<String, MixedType>,
+        request: &HashMap<String, TypesMixedType>,
         options: Option<RequestOptions>,
-    ) -> Result<HashMap<String, MixedType>, ApiError> {
+    ) -> Result<HashMap<String, TypesMixedType>, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/container/map-prim-to-union",
+                "container/map-prim-to-union",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -128,13 +128,13 @@ impl ContainerClient {
 
     pub async fn get_and_return_optional(
         &self,
-        request: &Option<ObjectWithRequiredField>,
+        request: &TypesObjectWithRequiredField,
         options: Option<RequestOptions>,
-    ) -> Result<Option<ObjectWithRequiredField>, ApiError> {
+    ) -> Result<TypesObjectWithRequiredField, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/container/opt-objects",
+                "container/opt-objects",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

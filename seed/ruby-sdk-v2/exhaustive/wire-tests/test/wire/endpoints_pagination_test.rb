@@ -15,16 +15,11 @@ class EndpointsPaginationWireTest < WireMockTestCase
   def test_endpoints_pagination_list_items_with_wiremock
     test_id = "endpoints.pagination.list_items.0"
 
-    result = @client.endpoints.pagination.list_items(
-      cursor: "cursor",
-      limit: 1,
-      request_options: {
-        additional_headers: {
-          "X-Test-Id" => "endpoints.pagination.list_items.0"
-        }
+    @client.endpoints.pagination.list_items(request_options: {
+      additional_headers: {
+        "X-Test-Id" => "endpoints.pagination.list_items.0"
       }
-    )
-    result.pages.next_page
+    })
 
     verify_request_count(
       test_id: test_id,

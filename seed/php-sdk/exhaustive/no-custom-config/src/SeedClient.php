@@ -2,40 +2,40 @@
 
 namespace Seed;
 
+use Seed\Inlinedrequests\InlinedrequestsClient;
+use Seed\Noauth\NoauthClient;
+use Seed\Noreqbody\NoreqbodyClient;
+use Seed\Reqwithheaders\ReqwithheadersClient;
 use Seed\Endpoints\EndpointsClient;
-use Seed\InlinedRequests\InlinedRequestsClient;
-use Seed\NoAuth\NoAuthClient;
-use Seed\NoReqBody\NoReqBodyClient;
-use Seed\ReqWithHeaders\ReqWithHeadersClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient
 {
     /**
+     * @var InlinedrequestsClient $inlinedrequests
+     */
+    public InlinedrequestsClient $inlinedrequests;
+
+    /**
+     * @var NoauthClient $noauth
+     */
+    public NoauthClient $noauth;
+
+    /**
+     * @var NoreqbodyClient $noreqbody
+     */
+    public NoreqbodyClient $noreqbody;
+
+    /**
+     * @var ReqwithheadersClient $reqwithheaders
+     */
+    public ReqwithheadersClient $reqwithheaders;
+
+    /**
      * @var EndpointsClient $endpoints
      */
     public EndpointsClient $endpoints;
-
-    /**
-     * @var InlinedRequestsClient $inlinedRequests
-     */
-    public InlinedRequestsClient $inlinedRequests;
-
-    /**
-     * @var NoAuthClient $noAuth
-     */
-    public NoAuthClient $noAuth;
-
-    /**
-     * @var NoReqBodyClient $noReqBody
-     */
-    public NoReqBodyClient $noReqBody;
-
-    /**
-     * @var ReqWithHeadersClient $reqWithHeaders
-     */
-    public ReqWithHeadersClient $reqWithHeaders;
 
     /**
      * @var array{
@@ -88,10 +88,10 @@ class SeedClient
             options: $this->options,
         );
 
+        $this->inlinedrequests = new InlinedrequestsClient($this->client, $this->options);
+        $this->noauth = new NoauthClient($this->client, $this->options);
+        $this->noreqbody = new NoreqbodyClient($this->client, $this->options);
+        $this->reqwithheaders = new ReqwithheadersClient($this->client, $this->options);
         $this->endpoints = new EndpointsClient($this->client, $this->options);
-        $this->inlinedRequests = new InlinedRequestsClient($this->client, $this->options);
-        $this->noAuth = new NoAuthClient($this->client, $this->options);
-        $this->noReqBody = new NoReqBodyClient($this->client, $this->options);
-        $this->reqWithHeaders = new ReqWithHeadersClient($this->client, $this->options);
     }
 }

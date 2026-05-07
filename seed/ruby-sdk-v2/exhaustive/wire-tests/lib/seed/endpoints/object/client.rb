@@ -12,21 +12,21 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param params [Seed::Types::Object_::Types::ObjectWithOptionalField]
+        # @param params [Seed::Types::TypesObjectWithOptionalField]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
-        # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
+        # @return [Seed::Types::TypesObjectWithOptionalField]
         def get_and_return_with_optional_field(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/object/get-and-return-with-optional-field",
-            body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params).to_h,
+            path: "object/get-and-return-with-optional-field",
+            body: Seed::Types::TypesObjectWithOptionalField.new(params).to_h,
             request_options: request_options
           )
           begin
@@ -36,7 +36,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            Seed::Types::Object_::Types::ObjectWithOptionalField.load(response.body)
+            Seed::Types::TypesObjectWithOptionalField.load(response.body)
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -44,21 +44,21 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param params [Seed::Types::Object_::Types::ObjectWithRequiredField]
+        # @param params [Seed::Types::TypesObjectWithRequiredField]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
-        # @return [Seed::Types::Object_::Types::ObjectWithRequiredField]
+        # @return [Seed::Types::TypesObjectWithRequiredField]
         def get_and_return_with_required_field(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/object/get-and-return-with-required-field",
-            body: Seed::Types::Object_::Types::ObjectWithRequiredField.new(params).to_h,
+            path: "object/get-and-return-with-required-field",
+            body: Seed::Types::TypesObjectWithRequiredField.new(params).to_h,
             request_options: request_options
           )
           begin
@@ -68,7 +68,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            Seed::Types::Object_::Types::ObjectWithRequiredField.load(response.body)
+            Seed::Types::TypesObjectWithRequiredField.load(response.body)
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -76,21 +76,21 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param params [Seed::Types::Object_::Types::ObjectWithMapOfMap]
+        # @param params [Seed::Types::TypesObjectWithMapOfMap]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
-        # @return [Seed::Types::Object_::Types::ObjectWithMapOfMap]
+        # @return [Seed::Types::TypesObjectWithMapOfMap]
         def get_and_return_with_map_of_map(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/object/get-and-return-with-map-of-map",
-            body: Seed::Types::Object_::Types::ObjectWithMapOfMap.new(params).to_h,
+            path: "object/get-and-return-with-map-of-map",
+            body: Seed::Types::TypesObjectWithMapOfMap.new(params).to_h,
             request_options: request_options
           )
           begin
@@ -100,7 +100,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            Seed::Types::Object_::Types::ObjectWithMapOfMap.load(response.body)
+            Seed::Types::TypesObjectWithMapOfMap.load(response.body)
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -108,21 +108,21 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param params [Seed::Types::Object_::Types::NestedObjectWithOptionalField]
+        # @param params [Seed::Types::TypesNestedObjectWithOptionalField]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
-        # @return [Seed::Types::Object_::Types::NestedObjectWithOptionalField]
+        # @return [Seed::Types::TypesNestedObjectWithOptionalField]
         def get_and_return_nested_with_optional_field(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/object/get-and-return-nested-with-optional-field",
-            body: Seed::Types::Object_::Types::NestedObjectWithOptionalField.new(params).to_h,
+            path: "object/get-and-return-nested-with-optional-field",
+            body: Seed::Types::TypesNestedObjectWithOptionalField.new(params).to_h,
             request_options: request_options
           )
           begin
@@ -132,7 +132,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            Seed::Types::Object_::Types::NestedObjectWithOptionalField.load(response.body)
+            Seed::Types::TypesNestedObjectWithOptionalField.load(response.body)
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -140,7 +140,7 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param params [Seed::Types::Object_::Types::NestedObjectWithRequiredField]
+        # @param params [Seed::Types::TypesNestedObjectWithRequiredField]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -148,14 +148,17 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :string
         #
-        # @return [Seed::Types::Object_::Types::NestedObjectWithRequiredField]
+        # @return [Seed::Types::TypesNestedObjectWithRequiredField]
         def get_and_return_nested_with_required_field(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
+          path_param_names = %i[string]
+          body_params = params.except(*path_param_names)
+
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/object/get-and-return-nested-with-required-field/#{URI.encode_uri_component(params[:string].to_s)}",
-            body: Seed::Types::Object_::Types::NestedObjectWithRequiredField.new(params).to_h,
+            path: "object/get-and-return-nested-with-required-field/#{URI.encode_uri_component(params[:string].to_s)}",
+            body: Seed::Types::TypesNestedObjectWithRequiredField.new(body_params).to_h,
             request_options: request_options
           )
           begin
@@ -165,7 +168,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            Seed::Types::Object_::Types::NestedObjectWithRequiredField.load(response.body)
+            Seed::Types::TypesNestedObjectWithRequiredField.load(response.body)
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -180,13 +183,13 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
-        # @return [Seed::Types::Object_::Types::NestedObjectWithRequiredField]
+        # @return [Seed::Types::TypesNestedObjectWithRequiredField]
         def get_and_return_nested_with_required_field_as_list(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/object/get-and-return-nested-with-required-field-list",
+            path: "object/get-and-return-nested-with-required-field-list",
             body: params,
             request_options: request_options
           )
@@ -197,7 +200,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            Seed::Types::Object_::Types::NestedObjectWithRequiredField.load(response.body)
+            Seed::Types::TypesNestedObjectWithRequiredField.load(response.body)
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -205,21 +208,21 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param params [Seed::Types::Object_::Types::ObjectWithUnknownField]
+        # @param params [Seed::Types::TypesObjectWithUnknownField]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
-        # @return [Seed::Types::Object_::Types::ObjectWithUnknownField]
+        # @return [Seed::Types::TypesObjectWithUnknownField]
         def get_and_return_with_unknown_field(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/object/get-and-return-with-unknown-field",
-            body: Seed::Types::Object_::Types::ObjectWithUnknownField.new(params).to_h,
+            path: "object/get-and-return-with-unknown-field",
+            body: Seed::Types::TypesObjectWithUnknownField.new(params).to_h,
             request_options: request_options
           )
           begin
@@ -229,7 +232,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            Seed::Types::Object_::Types::ObjectWithUnknownField.load(response.body)
+            Seed::Types::TypesObjectWithUnknownField.load(response.body)
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -237,21 +240,21 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param params [Seed::Types::Object_::Types::ObjectWithDocumentedUnknownType]
+        # @param params [Seed::Types::TypesObjectWithDocumentedUnknownType]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
-        # @return [Seed::Types::Object_::Types::ObjectWithDocumentedUnknownType]
+        # @return [Seed::Types::TypesObjectWithDocumentedUnknownType]
         def get_and_return_with_documented_unknown_type(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/object/get-and-return-with-documented-unknown-type",
-            body: Seed::Types::Object_::Types::ObjectWithDocumentedUnknownType.new(params).to_h,
+            path: "object/get-and-return-with-documented-unknown-type",
+            body: Seed::Types::TypesObjectWithDocumentedUnknownType.new(params).to_h,
             request_options: request_options
           )
           begin
@@ -261,7 +264,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            Seed::Types::Object_::Types::ObjectWithDocumentedUnknownType.load(response.body)
+            Seed::Types::TypesObjectWithDocumentedUnknownType.load(response.body)
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -269,7 +272,7 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param params [Seed::Types::Object_::Types::MapOfDocumentedUnknownType]
+        # @param params [Seed::Types::TypesMapOfDocumentedUnknownType]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -282,7 +285,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/object/get-and-return-map-of-documented-unknown-type",
+            path: "object/get-and-return-map-of-documented-unknown-type",
             body: params,
             request_options: request_options
           )
@@ -293,79 +296,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            Seed::Types::Object_::Types::MapOfDocumentedUnknownType.load(response.body)
-          else
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-            raise error_class.new(response.body, code: code)
-          end
-        end
-
-        # Tests that dynamic snippets include all required properties in the
-        # object initializer, even when the example omits some required fields.
-        #
-        # @param request_options [Hash]
-        # @param params [Seed::Types::Object_::Types::ObjectWithMixedRequiredAndOptionalFields]
-        # @option request_options [String] :base_url
-        # @option request_options [Hash{String => Object}] :additional_headers
-        # @option request_options [Hash{String => Object}] :additional_query_parameters
-        # @option request_options [Hash{String => Object}] :additional_body_parameters
-        # @option request_options [Integer] :timeout_in_seconds
-        #
-        # @return [Seed::Types::Object_::Types::ObjectWithMixedRequiredAndOptionalFields]
-        def get_and_return_with_mixed_required_and_optional_fields(request_options: {}, **params)
-          params = Seed::Internal::Types::Utils.normalize_keys(params)
-          request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url],
-            method: "POST",
-            path: "/object/get-and-return-with-mixed-required-and-optional-fields",
-            body: Seed::Types::Object_::Types::ObjectWithMixedRequiredAndOptionalFields.new(params).to_h,
-            request_options: request_options
-          )
-          begin
-            response = @client.send(request)
-          rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
-          end
-          code = response.code.to_i
-          if code.between?(200, 299)
-            Seed::Types::Object_::Types::ObjectWithMixedRequiredAndOptionalFields.load(response.body)
-          else
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-            raise error_class.new(response.body, code: code)
-          end
-        end
-
-        # Tests that dynamic snippets recursively construct default objects for
-        # required properties whose type is a named object. When the example
-        # omits the nested object, the generator should construct a default
-        # initializer with the nested object's required properties filled in.
-        #
-        # @param request_options [Hash]
-        # @param params [Seed::Types::Object_::Types::ObjectWithRequiredNestedObject]
-        # @option request_options [String] :base_url
-        # @option request_options [Hash{String => Object}] :additional_headers
-        # @option request_options [Hash{String => Object}] :additional_query_parameters
-        # @option request_options [Hash{String => Object}] :additional_body_parameters
-        # @option request_options [Integer] :timeout_in_seconds
-        #
-        # @return [Seed::Types::Object_::Types::ObjectWithRequiredNestedObject]
-        def get_and_return_with_required_nested_object(request_options: {}, **params)
-          params = Seed::Internal::Types::Utils.normalize_keys(params)
-          request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url],
-            method: "POST",
-            path: "/object/get-and-return-with-required-nested-object",
-            body: Seed::Types::Object_::Types::ObjectWithRequiredNestedObject.new(params).to_h,
-            request_options: request_options
-          )
-          begin
-            response = @client.send(request)
-          rescue Net::HTTPRequestTimeout
-            raise Seed::Errors::TimeoutError
-          end
-          code = response.code.to_i
-          if code.between?(200, 299)
-            Seed::Types::Object_::Types::ObjectWithRequiredNestedObject.load(response.body)
+            Seed::Types::TypesMapOfDocumentedUnknownType.load(response.body)
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)
@@ -377,21 +308,21 @@ module Seed
         # without being converted to "2023-08-31T14:15:22.000Z".
         #
         # @param request_options [Hash]
-        # @param params [Seed::Types::Object_::Types::ObjectWithDatetimeLikeString]
+        # @param params [Seed::Types::TypesObjectWithDatetimeLikeString]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
-        # @return [Seed::Types::Object_::Types::ObjectWithDatetimeLikeString]
+        # @return [Seed::Types::TypesObjectWithDatetimeLikeString]
         def get_and_return_with_datetime_like_string(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/object/get-and-return-with-datetime-like-string",
-            body: Seed::Types::Object_::Types::ObjectWithDatetimeLikeString.new(params).to_h,
+            path: "object/get-and-return-with-datetime-like-string",
+            body: Seed::Types::TypesObjectWithDatetimeLikeString.new(params).to_h,
             request_options: request_options
           )
           begin
@@ -401,7 +332,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            Seed::Types::Object_::Types::ObjectWithDatetimeLikeString.load(response.body)
+            Seed::Types::TypesObjectWithDatetimeLikeString.load(response.body)
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)

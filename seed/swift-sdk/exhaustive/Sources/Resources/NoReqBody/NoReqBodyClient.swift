@@ -1,22 +1,22 @@
 import Foundation
 
-public final class NoReqBodyClient: Sendable {
+public final class NoreqbodyClient: Sendable {
     private let httpClient: HTTPClient
 
     init(config: ClientConfig) {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getWithNoRequestBody(requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
+    public func getwithnorequestbody(requestOptions: RequestOptions? = nil) async throws -> TypesObjectWithOptionalField {
         return try await httpClient.performRequest(
             method: .get,
             path: "/no-req-body",
             requestOptions: requestOptions,
-            responseType: ObjectWithOptionalField.self
+            responseType: TypesObjectWithOptionalField.self
         )
     }
 
-    public func postWithNoRequestBody(requestOptions: RequestOptions? = nil) async throws -> String {
+    public func postwithnorequestbody(requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
             path: "/no-req-body",

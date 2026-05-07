@@ -77,7 +77,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestEndpointsPutAddWithWireMock(
+func TestEndpointsPutEndpointsPutAddWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -88,17 +88,17 @@ func TestEndpointsPutAddWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &endpoints.PutRequest{
+	request := &endpoints.EndpointsPutAddPutRequest{
 		ID: "id",
 	}
-	_, invocationErr := client.Endpoints.Put.Add(
+	_, invocationErr := client.Endpoints.Put.EndpointsPutAdd(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsPutAddWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestEndpointsPutEndpointsPutAddWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsPutAddWithWireMock", "PUT", "/id", nil, 1)
+	VerifyRequestCount(t, "TestEndpointsPutEndpointsPutAddWithWireMock", "PUT", "/id", nil, 1)
 }

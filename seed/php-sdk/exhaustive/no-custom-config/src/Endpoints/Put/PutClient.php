@@ -4,7 +4,7 @@ namespace Seed\Endpoints\Put;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Endpoints\Put\Types\PutResponse;
+use Seed\Types\EndpointsPutResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -58,11 +58,11 @@ class PutClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?PutResponse
+     * @return ?EndpointsPutResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function add(string $id, ?array $options = null): ?PutResponse
+    public function endpointsPutAdd(string $id, ?array $options = null): ?EndpointsPutResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -80,7 +80,7 @@ class PutClient
                 if (empty($json)) {
                     return null;
                 }
-                return PutResponse::fromJson($json);
+                return EndpointsPutResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

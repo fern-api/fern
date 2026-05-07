@@ -4,6 +4,7 @@ import (
     context "context"
 
     client "github.com/exhaustive/fern/client"
+    endpoints "github.com/exhaustive/fern/endpoints"
     option "github.com/exhaustive/fern/option"
 )
 
@@ -16,10 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := map[string]any{
-        "key": "value",
+    request := &endpoints.GetWithPathParamsRequest{
+        Param: "param",
     }
-    client.NoAuth.PostWithNoAuth(
+    client.Endpoints.Params.GetWithPath(
         context.TODO(),
         request,
     )

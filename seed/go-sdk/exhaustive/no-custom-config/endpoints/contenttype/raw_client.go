@@ -6,10 +6,10 @@ import (
 	context "context"
 	http "net/http"
 
+	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
-	types "github.com/exhaustive/fern/types"
 )
 
 type RawClient struct {
@@ -31,9 +31,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) PostJSONPatchContentType(
+func (r *RawClient) ContentTypePostJSONPatchContentType(
 	ctx context.Context,
-	request *types.ObjectWithOptionalField,
+	request *fern.TypesObjectWithOptionalField,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -70,9 +70,9 @@ func (r *RawClient) PostJSONPatchContentType(
 	}, nil
 }
 
-func (r *RawClient) PostJSONPatchContentWithCharsetType(
+func (r *RawClient) ContentTypePostJSONPatchContentWithCharsetType(
 	ctx context.Context,
-	request *types.ObjectWithOptionalField,
+	request *fern.TypesObjectWithOptionalField,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)

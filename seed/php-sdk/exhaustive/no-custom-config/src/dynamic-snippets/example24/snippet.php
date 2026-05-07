@@ -3,7 +3,6 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\Object\Types\ObjectWithDocumentedUnknownType;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,10 +10,8 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->object->getAndReturnWithDocumentedUnknownType(
-    new ObjectWithDocumentedUnknownType([
-        'documentedUnknownType' => [
-            'key' => "value",
-        ],
-    ]),
+$client->endpoints->container->getAndReturnMapOfPrimToUndiscriminatedUnion(
+    [
+        'string' => 1.1,
+    ],
 );

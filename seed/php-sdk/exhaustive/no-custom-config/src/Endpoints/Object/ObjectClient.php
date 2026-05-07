@@ -4,24 +4,23 @@ namespace Seed\Endpoints\Object;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Types\Object\Types\ObjectWithOptionalField;
+use Seed\Types\TypesObjectWithOptionalField;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Types\Object\Types\ObjectWithRequiredField;
-use Seed\Types\Object\Types\ObjectWithMapOfMap;
-use Seed\Types\Object\Types\NestedObjectWithOptionalField;
-use Seed\Types\Object\Types\NestedObjectWithRequiredField;
+use Seed\Types\TypesObjectWithRequiredField;
+use Seed\Types\TypesObjectWithMapOfMap;
+use Seed\Types\TypesNestedObjectWithOptionalField;
+use Seed\Endpoints\Object\Requests\GetAndReturnNestedWithRequiredFieldObjectRequest;
+use Seed\Types\TypesNestedObjectWithRequiredField;
 use Seed\Core\Json\JsonSerializer;
-use Seed\Types\Object\Types\ObjectWithUnknownField;
-use Seed\Types\Object\Types\ObjectWithDocumentedUnknownType;
+use Seed\Types\TypesObjectWithUnknownField;
+use Seed\Types\TypesObjectWithDocumentedUnknownType;
 use Seed\Core\Json\JsonDecoder;
-use Seed\Types\Object\Types\ObjectWithMixedRequiredAndOptionalFields;
-use Seed\Types\Object\Types\ObjectWithRequiredNestedObject;
-use Seed\Types\Object\Types\ObjectWithDatetimeLikeString;
+use Seed\Types\TypesObjectWithDatetimeLikeString;
 
 class ObjectClient
 {
@@ -60,7 +59,7 @@ class ObjectClient
     }
 
     /**
-     * @param ObjectWithOptionalField $request
+     * @param TypesObjectWithOptionalField $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -69,18 +68,18 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?ObjectWithOptionalField
+     * @return ?TypesObjectWithOptionalField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnWithOptionalField(ObjectWithOptionalField $request, ?array $options = null): ?ObjectWithOptionalField
+    public function getAndReturnWithOptionalField(TypesObjectWithOptionalField $request, ?array $options = null): ?TypesObjectWithOptionalField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/object/get-and-return-with-optional-field",
+                    path: "object/get-and-return-with-optional-field",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -92,7 +91,7 @@ class ObjectClient
                 if (empty($json)) {
                     return null;
                 }
-                return ObjectWithOptionalField::fromJson($json);
+                return TypesObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -107,7 +106,7 @@ class ObjectClient
     }
 
     /**
-     * @param ObjectWithRequiredField $request
+     * @param TypesObjectWithRequiredField $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -116,18 +115,18 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?ObjectWithRequiredField
+     * @return ?TypesObjectWithRequiredField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnWithRequiredField(ObjectWithRequiredField $request, ?array $options = null): ?ObjectWithRequiredField
+    public function getAndReturnWithRequiredField(TypesObjectWithRequiredField $request, ?array $options = null): ?TypesObjectWithRequiredField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/object/get-and-return-with-required-field",
+                    path: "object/get-and-return-with-required-field",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -139,7 +138,7 @@ class ObjectClient
                 if (empty($json)) {
                     return null;
                 }
-                return ObjectWithRequiredField::fromJson($json);
+                return TypesObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -154,7 +153,7 @@ class ObjectClient
     }
 
     /**
-     * @param ObjectWithMapOfMap $request
+     * @param TypesObjectWithMapOfMap $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -163,18 +162,18 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?ObjectWithMapOfMap
+     * @return ?TypesObjectWithMapOfMap
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnWithMapOfMap(ObjectWithMapOfMap $request, ?array $options = null): ?ObjectWithMapOfMap
+    public function getAndReturnWithMapOfMap(TypesObjectWithMapOfMap $request, ?array $options = null): ?TypesObjectWithMapOfMap
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/object/get-and-return-with-map-of-map",
+                    path: "object/get-and-return-with-map-of-map",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -186,7 +185,7 @@ class ObjectClient
                 if (empty($json)) {
                     return null;
                 }
-                return ObjectWithMapOfMap::fromJson($json);
+                return TypesObjectWithMapOfMap::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -201,7 +200,7 @@ class ObjectClient
     }
 
     /**
-     * @param NestedObjectWithOptionalField $request
+     * @param TypesNestedObjectWithOptionalField $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -210,18 +209,18 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?NestedObjectWithOptionalField
+     * @return ?TypesNestedObjectWithOptionalField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField $request, ?array $options = null): ?NestedObjectWithOptionalField
+    public function getAndReturnNestedWithOptionalField(TypesNestedObjectWithOptionalField $request, ?array $options = null): ?TypesNestedObjectWithOptionalField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/object/get-and-return-nested-with-optional-field",
+                    path: "object/get-and-return-nested-with-optional-field",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -233,7 +232,7 @@ class ObjectClient
                 if (empty($json)) {
                     return null;
                 }
-                return NestedObjectWithOptionalField::fromJson($json);
+                return TypesNestedObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -249,7 +248,7 @@ class ObjectClient
 
     /**
      * @param string $string
-     * @param NestedObjectWithRequiredField $request
+     * @param GetAndReturnNestedWithRequiredFieldObjectRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -258,20 +257,20 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?NestedObjectWithRequiredField
+     * @return ?TypesNestedObjectWithRequiredField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnNestedWithRequiredField(string $string, NestedObjectWithRequiredField $request, ?array $options = null): ?NestedObjectWithRequiredField
+    public function getAndReturnNestedWithRequiredField(string $string, GetAndReturnNestedWithRequiredFieldObjectRequest $request, ?array $options = null): ?TypesNestedObjectWithRequiredField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/object/get-and-return-nested-with-required-field/{$string}",
+                    path: "object/get-and-return-nested-with-required-field/{$string}",
                     method: HttpMethod::POST,
-                    body: $request,
+                    body: $request->body,
                 ),
                 $options,
             );
@@ -281,7 +280,7 @@ class ObjectClient
                 if (empty($json)) {
                     return null;
                 }
-                return NestedObjectWithRequiredField::fromJson($json);
+                return TypesNestedObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -296,7 +295,7 @@ class ObjectClient
     }
 
     /**
-     * @param array<NestedObjectWithRequiredField> $request
+     * @param array<TypesNestedObjectWithRequiredField> $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -305,20 +304,20 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?NestedObjectWithRequiredField
+     * @return ?TypesNestedObjectWithRequiredField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnNestedWithRequiredFieldAsList(array $request, ?array $options = null): ?NestedObjectWithRequiredField
+    public function getAndReturnNestedWithRequiredFieldAsList(array $request, ?array $options = null): ?TypesNestedObjectWithRequiredField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/object/get-and-return-nested-with-required-field-list",
+                    path: "object/get-and-return-nested-with-required-field-list",
                     method: HttpMethod::POST,
-                    body: JsonSerializer::serializeArray($request, [NestedObjectWithRequiredField::class]),
+                    body: JsonSerializer::serializeArray($request, [TypesNestedObjectWithRequiredField::class]),
                 ),
                 $options,
             );
@@ -328,7 +327,7 @@ class ObjectClient
                 if (empty($json)) {
                     return null;
                 }
-                return NestedObjectWithRequiredField::fromJson($json);
+                return TypesNestedObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -343,7 +342,7 @@ class ObjectClient
     }
 
     /**
-     * @param ObjectWithUnknownField $request
+     * @param TypesObjectWithUnknownField $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -352,18 +351,18 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?ObjectWithUnknownField
+     * @return ?TypesObjectWithUnknownField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnWithUnknownField(ObjectWithUnknownField $request, ?array $options = null): ?ObjectWithUnknownField
+    public function getAndReturnWithUnknownField(TypesObjectWithUnknownField $request, ?array $options = null): ?TypesObjectWithUnknownField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/object/get-and-return-with-unknown-field",
+                    path: "object/get-and-return-with-unknown-field",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -375,7 +374,7 @@ class ObjectClient
                 if (empty($json)) {
                     return null;
                 }
-                return ObjectWithUnknownField::fromJson($json);
+                return TypesObjectWithUnknownField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -390,7 +389,7 @@ class ObjectClient
     }
 
     /**
-     * @param ObjectWithDocumentedUnknownType $request
+     * @param TypesObjectWithDocumentedUnknownType $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -399,18 +398,18 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?ObjectWithDocumentedUnknownType
+     * @return ?TypesObjectWithDocumentedUnknownType
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnWithDocumentedUnknownType(ObjectWithDocumentedUnknownType $request, ?array $options = null): ?ObjectWithDocumentedUnknownType
+    public function getAndReturnWithDocumentedUnknownType(TypesObjectWithDocumentedUnknownType $request, ?array $options = null): ?TypesObjectWithDocumentedUnknownType
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/object/get-and-return-with-documented-unknown-type",
+                    path: "object/get-and-return-with-documented-unknown-type",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -422,7 +421,7 @@ class ObjectClient
                 if (empty($json)) {
                     return null;
                 }
-                return ObjectWithDocumentedUnknownType::fromJson($json);
+                return TypesObjectWithDocumentedUnknownType::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -457,7 +456,7 @@ class ObjectClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/object/get-and-return-map-of-documented-unknown-type",
+                    path: "object/get-and-return-map-of-documented-unknown-type",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, ['string' => 'mixed']),
                 ),
@@ -484,113 +483,11 @@ class ObjectClient
     }
 
     /**
-     * Tests that dynamic snippets include all required properties in the
-     * object initializer, even when the example omits some required fields.
-     *
-     * @param ObjectWithMixedRequiredAndOptionalFields $request
-     * @param ?array{
-     *   baseUrl?: string,
-     *   maxRetries?: int,
-     *   timeout?: float,
-     *   headers?: array<string, string>,
-     *   queryParameters?: array<string, mixed>,
-     *   bodyProperties?: array<string, mixed>,
-     * } $options
-     * @return ?ObjectWithMixedRequiredAndOptionalFields
-     * @throws SeedException
-     * @throws SeedApiException
-     */
-    public function getAndReturnWithMixedRequiredAndOptionalFields(ObjectWithMixedRequiredAndOptionalFields $request, ?array $options = null): ?ObjectWithMixedRequiredAndOptionalFields
-    {
-        $options = array_merge($this->options, $options ?? []);
-        try {
-            $response = $this->client->sendRequest(
-                new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/object/get-and-return-with-mixed-required-and-optional-fields",
-                    method: HttpMethod::POST,
-                    body: $request,
-                ),
-                $options,
-            );
-            $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
-                $json = $response->getBody()->getContents();
-                if (empty($json)) {
-                    return null;
-                }
-                return ObjectWithMixedRequiredAndOptionalFields::fromJson($json);
-            }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (ClientExceptionInterface $e) {
-            throw new SeedException(message: $e->getMessage(), previous: $e);
-        }
-        throw new SeedApiException(
-            message: 'API request failed',
-            statusCode: $statusCode,
-            body: $response->getBody()->getContents(),
-        );
-    }
-
-    /**
-     * Tests that dynamic snippets recursively construct default objects for
-     * required properties whose type is a named object. When the example
-     * omits the nested object, the generator should construct a default
-     * initializer with the nested object's required properties filled in.
-     *
-     * @param ObjectWithRequiredNestedObject $request
-     * @param ?array{
-     *   baseUrl?: string,
-     *   maxRetries?: int,
-     *   timeout?: float,
-     *   headers?: array<string, string>,
-     *   queryParameters?: array<string, mixed>,
-     *   bodyProperties?: array<string, mixed>,
-     * } $options
-     * @return ?ObjectWithRequiredNestedObject
-     * @throws SeedException
-     * @throws SeedApiException
-     */
-    public function getAndReturnWithRequiredNestedObject(ObjectWithRequiredNestedObject $request, ?array $options = null): ?ObjectWithRequiredNestedObject
-    {
-        $options = array_merge($this->options, $options ?? []);
-        try {
-            $response = $this->client->sendRequest(
-                new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/object/get-and-return-with-required-nested-object",
-                    method: HttpMethod::POST,
-                    body: $request,
-                ),
-                $options,
-            );
-            $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
-                $json = $response->getBody()->getContents();
-                if (empty($json)) {
-                    return null;
-                }
-                return ObjectWithRequiredNestedObject::fromJson($json);
-            }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (ClientExceptionInterface $e) {
-            throw new SeedException(message: $e->getMessage(), previous: $e);
-        }
-        throw new SeedApiException(
-            message: 'API request failed',
-            statusCode: $statusCode,
-            body: $response->getBody()->getContents(),
-        );
-    }
-
-    /**
      * Tests that string fields containing datetime-like values are NOT reformatted.
      * The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
      * without being converted to "2023-08-31T14:15:22.000Z".
      *
-     * @param ObjectWithDatetimeLikeString $request
+     * @param TypesObjectWithDatetimeLikeString $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -599,18 +496,18 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?ObjectWithDatetimeLikeString
+     * @return ?TypesObjectWithDatetimeLikeString
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnWithDatetimeLikeString(ObjectWithDatetimeLikeString $request, ?array $options = null): ?ObjectWithDatetimeLikeString
+    public function getAndReturnWithDatetimeLikeString(TypesObjectWithDatetimeLikeString $request, ?array $options = null): ?TypesObjectWithDatetimeLikeString
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/object/get-and-return-with-datetime-like-string",
+                    path: "object/get-and-return-with-datetime-like-string",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -622,7 +519,7 @@ class ObjectClient
                 if (empty($json)) {
                     return null;
                 }
-                return ObjectWithDatetimeLikeString::fromJson($json);
+                return TypesObjectWithDatetimeLikeString::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

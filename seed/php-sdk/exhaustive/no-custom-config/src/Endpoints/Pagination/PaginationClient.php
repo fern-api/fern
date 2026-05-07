@@ -4,11 +4,8 @@ namespace Seed\Endpoints\Pagination;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Endpoints\Pagination\Requests\ListItemsRequest;
-use Seed\Core\Pagination\Pager;
-use Seed\Types\Object\Types\ObjectWithRequiredField;
-use Seed\Core\Pagination\CursorPager;
-use Seed\Endpoints\Pagination\Types\PaginatedResponse;
+use Seed\Endpoints\Pagination\Requests\ListItemsPaginationRequest;
+use Seed\Types\EndpointsPaginatedResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -55,7 +52,7 @@ class PaginationClient
     /**
      * List items with cursor pagination
      *
-     * @param ListItemsRequest $request
+     * @param ListItemsPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -64,40 +61,11 @@ class PaginationClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Pager<ObjectWithRequiredField>
-     */
-    public function listItems(ListItemsRequest $request = new ListItemsRequest(), ?array $options = null): Pager
-    {
-        return new CursorPager(
-            request: $request,
-            getNextPage: fn (ListItemsRequest $request) => $this->_listItems($request, $options),
-            setCursor: function (ListItemsRequest $request, ?string $cursor) {
-                $request->cursor = $cursor;
-            },
-            /* @phpstan-ignore-next-line */
-            getNextCursor: fn (?PaginatedResponse $response) => $response?->next ?? null,
-            /* @phpstan-ignore-next-line */
-            getItems: fn (?PaginatedResponse $response) => $response?->items ?? [],
-        );
-    }
-
-    /**
-     * List items with cursor pagination
-     *
-     * @param ListItemsRequest $request
-     * @param ?array{
-     *   baseUrl?: string,
-     *   maxRetries?: int,
-     *   timeout?: float,
-     *   headers?: array<string, string>,
-     *   queryParameters?: array<string, mixed>,
-     *   bodyProperties?: array<string, mixed>,
-     * } $options
-     * @return ?PaginatedResponse
+     * @return ?EndpointsPaginatedResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listItems(ListItemsRequest $request = new ListItemsRequest(), ?array $options = null): ?PaginatedResponse
+    public function listItems(ListItemsPaginationRequest $request = new ListItemsPaginationRequest(), ?array $options = null): ?EndpointsPaginatedResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -111,7 +79,7 @@ class PaginationClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/pagination",
+                    path: "pagination",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -123,7 +91,7 @@ class PaginationClient
                 if (empty($json)) {
                     return null;
                 }
-                return PaginatedResponse::fromJson($json);
+                return EndpointsPaginatedResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

@@ -1,17 +1,17 @@
 <?php
 
-namespace Seed\ReqWithHeaders;
+namespace Seed\Reqwithheaders;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\ReqWithHeaders\Requests\ReqWithHeaders;
+use Seed\Reqwithheaders\Requests\GetwithcustomheaderReqwithheadersRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class ReqWithHeadersClient
+class ReqwithheadersClient
 {
     /**
      * @var array{
@@ -48,7 +48,7 @@ class ReqWithHeadersClient
     }
 
     /**
-     * @param ReqWithHeaders $request
+     * @param GetwithcustomheaderReqwithheadersRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -60,17 +60,16 @@ class ReqWithHeadersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithCustomHeader(ReqWithHeaders $request, ?array $options = null): void
+    public function getwithcustomheader(GetwithcustomheaderReqwithheadersRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
-        $headers['X-TEST-SERVICE-HEADER'] = $request->xTestServiceHeader;
-        $headers['X-TEST-ENDPOINT-HEADER'] = $request->xTestEndpointHeader;
+        $headers['X-TEST-ENDPOINT-HEADER'] = $request->testEndpointHeader;
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/test-headers/custom-header",
+                    path: "test-headers/custom-header",
                     method: HttpMethod::POST,
                     headers: $headers,
                     body: $request->body,

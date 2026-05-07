@@ -19,13 +19,53 @@ public final class ParamsClient: Sendable {
         )
     }
 
+    /// POST bytes with path param returning object
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func uploadWithPath(param: String, request: Data, requestOptions: RequestOptions? = nil) async throws -> TypesObjectWithRequiredField {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/params/path/\(param)",
+            contentType: .applicationOctetStream,
+            body: request,
+            requestOptions: requestOptions,
+            responseType: TypesObjectWithRequiredField.self
+        )
+    }
+
+    /// PUT to update with path param
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func modifyWithPath(param: String, request: String, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .put,
+            path: "/params/path/\(param)",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: String.self
+        )
+    }
+
     /// GET with path param
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func getWithInlinePath(param: String, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/params/path/\(param)",
+            path: "/params/inline-path/\(param)",
+            requestOptions: requestOptions,
+            responseType: String.self
+        )
+    }
+
+    /// PUT to update with path param
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func modifyWithInlinePath(param: String, request: String, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .put,
+            path: "/params/inline-path/\(param)",
+            body: request,
             requestOptions: requestOptions,
             responseType: String.self
         )
@@ -49,13 +89,13 @@ public final class ParamsClient: Sendable {
     /// GET with multiple of same query param
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func getWithAllowMultipleQuery(query: String, number: Int, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func getWithAllowMultipleQuery(query: String? = nil, number: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/params",
+            path: "/params/allow-multiple-query",
             queryParams: [
-                "query": .string(query), 
-                "number": .int(number)
+                "query": query.map { .string($0) }, 
+                "number": number.map { .int($0) }
             ],
             requestOptions: requestOptions
         )
@@ -81,75 +121,11 @@ public final class ParamsClient: Sendable {
     public func getWithInlinePathAndQuery(param: String, query: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/params/path-query/\(param)",
+            path: "/params/inline-path-query/\(param)",
             queryParams: [
                 "query": .string(query)
             ],
             requestOptions: requestOptions
-        )
-    }
-
-    /// PUT to update with path param
-    ///
-    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func modifyWithPath(param: String, request: String, requestOptions: RequestOptions? = nil) async throws -> String {
-        return try await httpClient.performRequest(
-            method: .put,
-            path: "/params/path/\(param)",
-            body: request,
-            requestOptions: requestOptions,
-            responseType: String.self
-        )
-    }
-
-    /// PUT to update with path param
-    ///
-    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func modifyWithInlinePath(param: String, request: String, requestOptions: RequestOptions? = nil) async throws -> String {
-        return try await httpClient.performRequest(
-            method: .put,
-            path: "/params/path/\(param)",
-            body: request,
-            requestOptions: requestOptions,
-            responseType: String.self
-        )
-    }
-
-    /// POST bytes with path param returning object
-    ///
-    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func uploadWithPath(param: String, request: Data, requestOptions: RequestOptions? = nil) async throws -> ObjectWithRequiredField {
-        return try await httpClient.performRequest(
-            method: .post,
-            path: "/params/path/\(param)",
-            contentType: .applicationOctetStream,
-            body: request,
-            requestOptions: requestOptions,
-            responseType: ObjectWithRequiredField.self
-        )
-    }
-
-    /// GET with boolean path param
-    ///
-    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func getWithBooleanPath(param: String, requestOptions: RequestOptions? = nil) async throws -> String {
-        return try await httpClient.performRequest(
-            method: .get,
-            path: "/params/path-bool/\(param)",
-            requestOptions: requestOptions,
-            responseType: String.self
-        )
-    }
-
-    /// GET with path param that can throw errors
-    ///
-    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func getWithPathAndErrors(param: String, requestOptions: RequestOptions? = nil) async throws -> String {
-        return try await httpClient.performRequest(
-            method: .get,
-            path: "/params/path/\(param)",
-            requestOptions: requestOptions,
-            responseType: String.self
         )
     }
 }

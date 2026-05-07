@@ -2,7 +2,6 @@
 
 import datetime as dt
 import typing
-import uuid
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
@@ -27,7 +26,7 @@ class ContentTypeClient:
         """
         return self._raw_client
 
-    def post_json_patch_content_type(
+    def content_type_post_json_patch_content_type(
         self,
         *,
         string: typing.Optional[str] = OMIT,
@@ -37,12 +36,12 @@ class ContentTypeClient:
         bool_: typing.Optional[bool] = OMIT,
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
-        uuid_: typing.Optional[uuid.UUID] = OMIT,
+        uuid_: typing.Optional[str] = OMIT,
         base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
-        set_: typing.Optional[typing.Set[str]] = OMIT,
-        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
-        bigint: typing.Optional[str] = OMIT,
+        set_: typing.Optional[typing.Sequence[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        bigint: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -63,17 +62,17 @@ class ContentTypeClient:
 
         date : typing.Optional[dt.date]
 
-        uuid_ : typing.Optional[uuid.UUID]
+        uuid_ : typing.Optional[str]
 
         base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
-        set_ : typing.Optional[typing.Set[str]]
+        set_ : typing.Optional[typing.Sequence[str]]
 
-        map_ : typing.Optional[typing.Dict[int, str]]
+        map_ : typing.Optional[typing.Dict[str, typing.Optional[str]]]
 
-        bigint : typing.Optional[str]
+        bigint : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -84,38 +83,15 @@ class ContentTypeClient:
 
         Examples
         --------
-        import datetime
-        import uuid
+        from seed import SeedApi
 
-        from seed import SeedExhaustive
-
-        client = SeedExhaustive(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.endpoints.content_type.post_json_patch_content_type(
-            string="string",
-            integer=1,
-            long_=1000000,
-            double=1.1,
-            bool_=True,
-            datetime=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            date=datetime.date.fromisoformat(
-                "2023-01-15",
-            ),
-            uuid_=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            base64="SGVsbG8gd29ybGQh",
-            list_=["list", "list"],
-            set_={"set"},
-            map_={1: "map"},
-            bigint=1000000,
-        )
+        client.endpoints.content_type.content_type_post_json_patch_content_type()
         """
-        _response = self._raw_client.post_json_patch_content_type(
+        _response = self._raw_client.content_type_post_json_patch_content_type(
             string=string,
             integer=integer,
             long_=long_,
@@ -133,7 +109,7 @@ class ContentTypeClient:
         )
         return _response.data
 
-    def post_json_patch_content_with_charset_type(
+    def content_type_post_json_patch_content_with_charset_type(
         self,
         *,
         string: typing.Optional[str] = OMIT,
@@ -143,12 +119,12 @@ class ContentTypeClient:
         bool_: typing.Optional[bool] = OMIT,
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
-        uuid_: typing.Optional[uuid.UUID] = OMIT,
+        uuid_: typing.Optional[str] = OMIT,
         base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
-        set_: typing.Optional[typing.Set[str]] = OMIT,
-        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
-        bigint: typing.Optional[str] = OMIT,
+        set_: typing.Optional[typing.Sequence[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        bigint: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -169,17 +145,17 @@ class ContentTypeClient:
 
         date : typing.Optional[dt.date]
 
-        uuid_ : typing.Optional[uuid.UUID]
+        uuid_ : typing.Optional[str]
 
         base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
-        set_ : typing.Optional[typing.Set[str]]
+        set_ : typing.Optional[typing.Sequence[str]]
 
-        map_ : typing.Optional[typing.Dict[int, str]]
+        map_ : typing.Optional[typing.Dict[str, typing.Optional[str]]]
 
-        bigint : typing.Optional[str]
+        bigint : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -190,38 +166,15 @@ class ContentTypeClient:
 
         Examples
         --------
-        import datetime
-        import uuid
+        from seed import SeedApi
 
-        from seed import SeedExhaustive
-
-        client = SeedExhaustive(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.endpoints.content_type.post_json_patch_content_with_charset_type(
-            string="string",
-            integer=1,
-            long_=1000000,
-            double=1.1,
-            bool_=True,
-            datetime=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            date=datetime.date.fromisoformat(
-                "2023-01-15",
-            ),
-            uuid_=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            base64="SGVsbG8gd29ybGQh",
-            list_=["list", "list"],
-            set_={"set"},
-            map_={1: "map"},
-            bigint=1000000,
-        )
+        client.endpoints.content_type.content_type_post_json_patch_content_with_charset_type()
         """
-        _response = self._raw_client.post_json_patch_content_with_charset_type(
+        _response = self._raw_client.content_type_post_json_patch_content_with_charset_type(
             string=string,
             integer=integer,
             long_=long_,
@@ -255,7 +208,7 @@ class AsyncContentTypeClient:
         """
         return self._raw_client
 
-    async def post_json_patch_content_type(
+    async def content_type_post_json_patch_content_type(
         self,
         *,
         string: typing.Optional[str] = OMIT,
@@ -265,12 +218,12 @@ class AsyncContentTypeClient:
         bool_: typing.Optional[bool] = OMIT,
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
-        uuid_: typing.Optional[uuid.UUID] = OMIT,
+        uuid_: typing.Optional[str] = OMIT,
         base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
-        set_: typing.Optional[typing.Set[str]] = OMIT,
-        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
-        bigint: typing.Optional[str] = OMIT,
+        set_: typing.Optional[typing.Sequence[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        bigint: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -291,17 +244,17 @@ class AsyncContentTypeClient:
 
         date : typing.Optional[dt.date]
 
-        uuid_ : typing.Optional[uuid.UUID]
+        uuid_ : typing.Optional[str]
 
         base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
-        set_ : typing.Optional[typing.Set[str]]
+        set_ : typing.Optional[typing.Sequence[str]]
 
-        map_ : typing.Optional[typing.Dict[int, str]]
+        map_ : typing.Optional[typing.Dict[str, typing.Optional[str]]]
 
-        bigint : typing.Optional[str]
+        bigint : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -313,44 +266,22 @@ class AsyncContentTypeClient:
         Examples
         --------
         import asyncio
-        import datetime
-        import uuid
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.endpoints.content_type.post_json_patch_content_type(
-                string="string",
-                integer=1,
-                long_=1000000,
-                double=1.1,
-                bool_=True,
-                datetime=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                date=datetime.date.fromisoformat(
-                    "2023-01-15",
-                ),
-                uuid_=uuid.UUID(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-                base64="SGVsbG8gd29ybGQh",
-                list_=["list", "list"],
-                set_={"set"},
-                map_={1: "map"},
-                bigint=1000000,
-            )
+            await client.endpoints.content_type.content_type_post_json_patch_content_type()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.post_json_patch_content_type(
+        _response = await self._raw_client.content_type_post_json_patch_content_type(
             string=string,
             integer=integer,
             long_=long_,
@@ -368,7 +299,7 @@ class AsyncContentTypeClient:
         )
         return _response.data
 
-    async def post_json_patch_content_with_charset_type(
+    async def content_type_post_json_patch_content_with_charset_type(
         self,
         *,
         string: typing.Optional[str] = OMIT,
@@ -378,12 +309,12 @@ class AsyncContentTypeClient:
         bool_: typing.Optional[bool] = OMIT,
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
-        uuid_: typing.Optional[uuid.UUID] = OMIT,
+        uuid_: typing.Optional[str] = OMIT,
         base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
-        set_: typing.Optional[typing.Set[str]] = OMIT,
-        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
-        bigint: typing.Optional[str] = OMIT,
+        set_: typing.Optional[typing.Sequence[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        bigint: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -404,17 +335,17 @@ class AsyncContentTypeClient:
 
         date : typing.Optional[dt.date]
 
-        uuid_ : typing.Optional[uuid.UUID]
+        uuid_ : typing.Optional[str]
 
         base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
-        set_ : typing.Optional[typing.Set[str]]
+        set_ : typing.Optional[typing.Sequence[str]]
 
-        map_ : typing.Optional[typing.Dict[int, str]]
+        map_ : typing.Optional[typing.Dict[str, typing.Optional[str]]]
 
-        bigint : typing.Optional[str]
+        bigint : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -426,44 +357,22 @@ class AsyncContentTypeClient:
         Examples
         --------
         import asyncio
-        import datetime
-        import uuid
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.endpoints.content_type.post_json_patch_content_with_charset_type(
-                string="string",
-                integer=1,
-                long_=1000000,
-                double=1.1,
-                bool_=True,
-                datetime=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                date=datetime.date.fromisoformat(
-                    "2023-01-15",
-                ),
-                uuid_=uuid.UUID(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-                base64="SGVsbG8gd29ybGQh",
-                list_=["list", "list"],
-                set_={"set"},
-                map_={1: "map"},
-                bigint=1000000,
-            )
+            await client.endpoints.content_type.content_type_post_json_patch_content_with_charset_type()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.post_json_patch_content_with_charset_type(
+        _response = await self._raw_client.content_type_post_json_patch_content_with_charset_type(
             string=string,
             integer=integer,
             long_=long_,

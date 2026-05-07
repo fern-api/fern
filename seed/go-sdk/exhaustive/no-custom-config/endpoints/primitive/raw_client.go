@@ -10,7 +10,6 @@ import (
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
-	uuid "github.com/google/uuid"
 )
 
 type RawClient struct {
@@ -321,9 +320,9 @@ func (r *RawClient) GetAndReturnDate(
 
 func (r *RawClient) GetAndReturnUUID(
 	ctx context.Context,
-	request uuid.UUID,
+	request string,
 	opts ...option.RequestOption,
-) (*core.Response[uuid.UUID], error) {
+) (*core.Response[string], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -335,7 +334,7 @@ func (r *RawClient) GetAndReturnUUID(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response uuid.UUID
+	var response string
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -353,7 +352,7 @@ func (r *RawClient) GetAndReturnUUID(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[uuid.UUID]{
+	return &core.Response[string]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -362,9 +361,9 @@ func (r *RawClient) GetAndReturnUUID(
 
 func (r *RawClient) GetAndReturnBase64(
 	ctx context.Context,
-	request []byte,
+	request string,
 	opts ...option.RequestOption,
-) (*core.Response[[]byte], error) {
+) (*core.Response[string], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -376,7 +375,7 @@ func (r *RawClient) GetAndReturnBase64(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response []byte
+	var response string
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -394,7 +393,7 @@ func (r *RawClient) GetAndReturnBase64(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[[]byte]{
+	return &core.Response[string]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

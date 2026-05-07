@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Exhaustive
+import Api
 
 @Suite("ObjectClient Wire Tests") struct ObjectClientWireTests {
     @Test func getAndReturnWithOptionalField1() async throws -> Void {
@@ -16,66 +16,139 @@ import Exhaustive
                   "bool": true,
                   "datetime": "2024-01-15T09:30:00Z",
                   "date": "2023-01-15",
-                  "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                  "base64": "SGVsbG8gd29ybGQh",
+                  "uuid": "uuid",
+                  "base64": "base64",
                   "list": [
-                    "list",
                     "list"
                   ],
                   "set": [
                     "set"
                   ],
                   "map": {
-                    "1": "map"
+                    "key": "value"
                   },
-                  "bigint": "1000000"
+                  "bigint": 1
                 }
                 """#.utf8
             )
         )
-        let client = ExhaustiveClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = ObjectWithOptionalField(
-            string: Optional("string"),
-            integer: Optional(1),
-            long: Optional(1000000),
-            double: Optional(1.1),
-            bool: Optional(true),
-            datetime: Optional(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-            date: Optional(CalendarDate("2023-01-15")!),
-            uuid: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!),
-            base64: Optional("SGVsbG8gd29ybGQh"),
-            list: Optional([
-                "list",
+        let expectedResponse = TypesObjectWithOptionalField(
+            string: Optional(Nullable<String>.value("string")),
+            integer: Optional(Nullable<Int>.value(1)),
+            long: Optional(Nullable<Int64>.value(1000000)),
+            double: Optional(Nullable<Double>.value(1.1)),
+            bool: Optional(Nullable<Bool>.value(true)),
+            datetime: Optional(Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601))),
+            date: Optional(Nullable<CalendarDate>.value(CalendarDate("2023-01-15")!)),
+            uuid: Optional(Nullable<String>.value("uuid")),
+            base64: Optional(Nullable<String>.value("base64")),
+            list: Optional(Nullable<[String]>.value([
                 "list"
-            ]),
-            set: Optional([]),
-            map: Optional([
-                1: "map"
-            ]),
-            bigint: Optional("1000000")
+            ])),
+            set: Optional(Nullable<[String]>.value([
+                "set"
+            ])),
+            map: Optional(Nullable<[String: Nullable<String>]>.value([
+                "key": Nullable<String>.value("value")
+            ])),
+            bigint: Optional(Nullable<Int>.value(1))
         )
         let response = try await client.endpoints.object.getAndReturnWithOptionalField(
-            request: ObjectWithOptionalField(
-                string: "string",
-                integer: 1,
-                long: 1000000,
-                double: 1.1,
-                bool: true,
-                datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                date: CalendarDate("2023-01-15")!,
-                uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-                base64: "SGVsbG8gd29ybGQh",
-                list: [
+            request: TypesObjectWithOptionalField(
+
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getAndReturnWithOptionalField2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                #"""
+                {
+                  "string": "string",
+                  "integer": 1,
+                  "long": 1000000,
+                  "double": 1.1,
+                  "bool": true,
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "date": "2023-01-15",
+                  "uuid": "uuid",
+                  "base64": "base64",
+                  "list": [
                     "list",
                     "list"
-                ],
-                map: [
-                    1: "map"
-                ]
+                  ],
+                  "set": [
+                    "set",
+                    "set"
+                  ],
+                  "map": {
+                    "map": "map"
+                  },
+                  "bigint": 1
+                }
+                """#.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = TypesObjectWithOptionalField(
+            string: Optional(Nullable<String>.value("string")),
+            integer: Optional(Nullable<Int>.value(1)),
+            long: Optional(Nullable<Int64>.value(1000000)),
+            double: Optional(Nullable<Double>.value(1.1)),
+            bool: Optional(Nullable<Bool>.value(true)),
+            datetime: Optional(Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601))),
+            date: Optional(Nullable<CalendarDate>.value(CalendarDate("2023-01-15")!)),
+            uuid: Optional(Nullable<String>.value("uuid")),
+            base64: Optional(Nullable<String>.value("base64")),
+            list: Optional(Nullable<[String]>.value([
+                "list",
+                "list"
+            ])),
+            set: Optional(Nullable<[String]>.value([
+                "set",
+                "set"
+            ])),
+            map: Optional(Nullable<[String: Nullable<String>]>.value([
+                "map": Nullable<String>.value("map")
+            ])),
+            bigint: Optional(Nullable<Int>.value(1))
+        )
+        let response = try await client.endpoints.object.getAndReturnWithOptionalField(
+            request: TypesObjectWithOptionalField(
+                string: .value("string"),
+                integer: .value(1),
+                long: .value(1000000),
+                double: .value(1.1),
+                bool: .value(true),
+                datetime: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                date: .value(CalendarDate("2023-01-15")!),
+                uuid: .value("uuid"),
+                base64: .value("base64"),
+                list: .value([
+                    "list",
+                    "list"
+                ]),
+                set: .value([
+                    "set",
+                    "set"
+                ]),
+                map: .value([
+                    "map": .value("map")
+                ]),
+                bigint: .value(1)
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
@@ -93,16 +166,44 @@ import Exhaustive
                 """#.utf8
             )
         )
-        let client = ExhaustiveClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = ObjectWithRequiredField(
+        let expectedResponse = TypesObjectWithRequiredField(
             string: "string"
         )
         let response = try await client.endpoints.object.getAndReturnWithRequiredField(
-            request: ObjectWithRequiredField(
+            request: TypesObjectWithRequiredField(
+                string: "string"
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getAndReturnWithRequiredField2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                #"""
+                {
+                  "string": "string"
+                }
+                """#.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = TypesObjectWithRequiredField(
+            string: "string"
+        )
+        let response = try await client.endpoints.object.getAndReturnWithRequiredField(
+            request: TypesObjectWithRequiredField(
                 string: "string"
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -117,6 +218,46 @@ import Exhaustive
                 #"""
                 {
                   "map": {
+                    "key": {
+                      "key": "value"
+                    }
+                  }
+                }
+                """#.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = TypesObjectWithMapOfMap(
+            map: [
+                "key": [
+                    "key": "value"
+                ]
+            ]
+        )
+        let response = try await client.endpoints.object.getAndReturnWithMapOfMap(
+            request: TypesObjectWithMapOfMap(
+                map: [
+                    "key": [
+                        "key": "value"
+                    ]
+                ]
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getAndReturnWithMapOfMap2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                #"""
+                {
+                  "map": {
                     "map": {
                       "map": "map"
                     }
@@ -125,12 +266,12 @@ import Exhaustive
                 """#.utf8
             )
         )
-        let client = ExhaustiveClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = ObjectWithMapOfMap(
+        let expectedResponse = TypesObjectWithMapOfMap(
             map: [
                 "map": [
                     "map": "map"
@@ -138,7 +279,7 @@ import Exhaustive
             ]
         )
         let response = try await client.endpoints.object.getAndReturnWithMapOfMap(
-            request: ObjectWithMapOfMap(
+            request: TypesObjectWithMapOfMap(
                 map: [
                     "map": [
                         "map": "map"
@@ -165,72 +306,151 @@ import Exhaustive
                     "bool": true,
                     "datetime": "2024-01-15T09:30:00Z",
                     "date": "2023-01-15",
-                    "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    "base64": "SGVsbG8gd29ybGQh",
+                    "uuid": "uuid",
+                    "base64": "base64",
                     "list": [
-                      "list",
                       "list"
                     ],
                     "set": [
                       "set"
                     ],
                     "map": {
-                      "1": "map"
+                      "key": "value"
                     },
-                    "bigint": "1000000"
+                    "bigint": 1
                   }
                 }
                 """#.utf8
             )
         )
-        let client = ExhaustiveClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = NestedObjectWithOptionalField(
-            string: Optional("string"),
-            nestedObject: Optional(ObjectWithOptionalField(
-                string: Optional("string"),
-                integer: Optional(1),
-                long: Optional(1000000),
-                double: Optional(1.1),
-                bool: Optional(true),
-                datetime: Optional(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                date: Optional(CalendarDate("2023-01-15")!),
-                uuid: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!),
-                base64: Optional("SGVsbG8gd29ybGQh"),
-                list: Optional([
-                    "list",
+        let expectedResponse = TypesNestedObjectWithOptionalField(
+            string: Optional(Nullable<String>.value("string")),
+            nestedObject: Optional(TypesObjectWithOptionalField(
+                string: Optional(Nullable<String>.value("string")),
+                integer: Optional(Nullable<Int>.value(1)),
+                long: Optional(Nullable<Int64>.value(1000000)),
+                double: Optional(Nullable<Double>.value(1.1)),
+                bool: Optional(Nullable<Bool>.value(true)),
+                datetime: Optional(Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601))),
+                date: Optional(Nullable<CalendarDate>.value(CalendarDate("2023-01-15")!)),
+                uuid: Optional(Nullable<String>.value("uuid")),
+                base64: Optional(Nullable<String>.value("base64")),
+                list: Optional(Nullable<[String]>.value([
                     "list"
-                ]),
-                set: Optional([]),
-                map: Optional([
-                    1: "map"
-                ]),
-                bigint: Optional("1000000")
+                ])),
+                set: Optional(Nullable<[String]>.value([
+                    "set"
+                ])),
+                map: Optional(Nullable<[String: Nullable<String>]>.value([
+                    "key": Nullable<String>.value("value")
+                ])),
+                bigint: Optional(Nullable<Int>.value(1))
             ))
         )
         let response = try await client.endpoints.object.getAndReturnNestedWithOptionalField(
-            request: NestedObjectWithOptionalField(
-                string: "string",
-                nestedObject: ObjectWithOptionalField(
-                    string: "string",
-                    integer: 1,
-                    long: 1000000,
-                    double: 1.1,
-                    bool: true,
-                    datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    date: CalendarDate("2023-01-15")!,
-                    uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-                    base64: "SGVsbG8gd29ybGQh",
-                    list: [
+            request: TypesNestedObjectWithOptionalField(
+
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getAndReturnNestedWithOptionalField2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                #"""
+                {
+                  "string": "string",
+                  "NestedObject": {
+                    "string": "string",
+                    "integer": 1,
+                    "long": 1000000,
+                    "double": 1.1,
+                    "bool": true,
+                    "datetime": "2024-01-15T09:30:00Z",
+                    "date": "2023-01-15",
+                    "uuid": "uuid",
+                    "base64": "base64",
+                    "list": [
+                      "list",
+                      "list"
+                    ],
+                    "set": [
+                      "set",
+                      "set"
+                    ],
+                    "map": {
+                      "map": "map"
+                    },
+                    "bigint": 1
+                  }
+                }
+                """#.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = TypesNestedObjectWithOptionalField(
+            string: Optional(Nullable<String>.value("string")),
+            nestedObject: Optional(TypesObjectWithOptionalField(
+                string: Optional(Nullable<String>.value("string")),
+                integer: Optional(Nullable<Int>.value(1)),
+                long: Optional(Nullable<Int64>.value(1000000)),
+                double: Optional(Nullable<Double>.value(1.1)),
+                bool: Optional(Nullable<Bool>.value(true)),
+                datetime: Optional(Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601))),
+                date: Optional(Nullable<CalendarDate>.value(CalendarDate("2023-01-15")!)),
+                uuid: Optional(Nullable<String>.value("uuid")),
+                base64: Optional(Nullable<String>.value("base64")),
+                list: Optional(Nullable<[String]>.value([
+                    "list",
+                    "list"
+                ])),
+                set: Optional(Nullable<[String]>.value([
+                    "set",
+                    "set"
+                ])),
+                map: Optional(Nullable<[String: Nullable<String>]>.value([
+                    "map": Nullable<String>.value("map")
+                ])),
+                bigint: Optional(Nullable<Int>.value(1))
+            ))
+        )
+        let response = try await client.endpoints.object.getAndReturnNestedWithOptionalField(
+            request: TypesNestedObjectWithOptionalField(
+                string: .value("string"),
+                nestedObject: TypesObjectWithOptionalField(
+                    string: .value("string"),
+                    integer: .value(1),
+                    long: .value(1000000),
+                    double: .value(1.1),
+                    bool: .value(true),
+                    datetime: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                    date: .value(CalendarDate("2023-01-15")!),
+                    uuid: .value("uuid"),
+                    base64: .value("base64"),
+                    list: .value([
                         "list",
                         "list"
-                    ],
-                    map: [
-                        1: "map"
-                    ]
+                    ]),
+                    set: .value([
+                        "set",
+                        "set"
+                    ]),
+                    map: .value([
+                        "map": .value("map")
+                    ]),
+                    bigint: .value(1)
                 )
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -253,73 +473,156 @@ import Exhaustive
                     "bool": true,
                     "datetime": "2024-01-15T09:30:00Z",
                     "date": "2023-01-15",
-                    "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    "base64": "SGVsbG8gd29ybGQh",
+                    "uuid": "uuid",
+                    "base64": "base64",
                     "list": [
-                      "list",
                       "list"
                     ],
                     "set": [
                       "set"
                     ],
                     "map": {
-                      "1": "map"
+                      "key": "value"
                     },
-                    "bigint": "1000000"
+                    "bigint": 1
                   }
                 }
                 """#.utf8
             )
         )
-        let client = ExhaustiveClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = NestedObjectWithRequiredField(
+        let expectedResponse = TypesNestedObjectWithRequiredField(
             string: "string",
-            nestedObject: ObjectWithOptionalField(
-                string: Optional("string"),
-                integer: Optional(1),
-                long: Optional(1000000),
-                double: Optional(1.1),
-                bool: Optional(true),
-                datetime: Optional(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                date: Optional(CalendarDate("2023-01-15")!),
-                uuid: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!),
-                base64: Optional("SGVsbG8gd29ybGQh"),
-                list: Optional([
-                    "list",
+            nestedObject: TypesObjectWithOptionalField(
+                string: Optional(Nullable<String>.value("string")),
+                integer: Optional(Nullable<Int>.value(1)),
+                long: Optional(Nullable<Int64>.value(1000000)),
+                double: Optional(Nullable<Double>.value(1.1)),
+                bool: Optional(Nullable<Bool>.value(true)),
+                datetime: Optional(Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601))),
+                date: Optional(Nullable<CalendarDate>.value(CalendarDate("2023-01-15")!)),
+                uuid: Optional(Nullable<String>.value("uuid")),
+                base64: Optional(Nullable<String>.value("base64")),
+                list: Optional(Nullable<[String]>.value([
                     "list"
-                ]),
-                set: Optional([]),
-                map: Optional([
-                    1: "map"
-                ]),
-                bigint: Optional("1000000")
+                ])),
+                set: Optional(Nullable<[String]>.value([
+                    "set"
+                ])),
+                map: Optional(Nullable<[String: Nullable<String>]>.value([
+                    "key": Nullable<String>.value("value")
+                ])),
+                bigint: Optional(Nullable<Int>.value(1))
             )
         )
         let response = try await client.endpoints.object.getAndReturnNestedWithRequiredField(
             string: "string",
-            request: NestedObjectWithRequiredField(
+            request: TypesNestedObjectWithRequiredField(
                 string: "string",
-                nestedObject: ObjectWithOptionalField(
-                    string: "string",
-                    integer: 1,
-                    long: 1000000,
-                    double: 1.1,
-                    bool: true,
-                    datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    date: CalendarDate("2023-01-15")!,
-                    uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-                    base64: "SGVsbG8gd29ybGQh",
-                    list: [
+                nestedObject: TypesObjectWithOptionalField(
+
+                )
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getAndReturnNestedWithRequiredField2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                #"""
+                {
+                  "string": "string",
+                  "NestedObject": {
+                    "string": "string",
+                    "integer": 1,
+                    "long": 1000000,
+                    "double": 1.1,
+                    "bool": true,
+                    "datetime": "2024-01-15T09:30:00Z",
+                    "date": "2023-01-15",
+                    "uuid": "uuid",
+                    "base64": "base64",
+                    "list": [
+                      "list",
+                      "list"
+                    ],
+                    "set": [
+                      "set",
+                      "set"
+                    ],
+                    "map": {
+                      "map": "map"
+                    },
+                    "bigint": 1
+                  }
+                }
+                """#.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = TypesNestedObjectWithRequiredField(
+            string: "string",
+            nestedObject: TypesObjectWithOptionalField(
+                string: Optional(Nullable<String>.value("string")),
+                integer: Optional(Nullable<Int>.value(1)),
+                long: Optional(Nullable<Int64>.value(1000000)),
+                double: Optional(Nullable<Double>.value(1.1)),
+                bool: Optional(Nullable<Bool>.value(true)),
+                datetime: Optional(Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601))),
+                date: Optional(Nullable<CalendarDate>.value(CalendarDate("2023-01-15")!)),
+                uuid: Optional(Nullable<String>.value("uuid")),
+                base64: Optional(Nullable<String>.value("base64")),
+                list: Optional(Nullable<[String]>.value([
+                    "list",
+                    "list"
+                ])),
+                set: Optional(Nullable<[String]>.value([
+                    "set",
+                    "set"
+                ])),
+                map: Optional(Nullable<[String: Nullable<String>]>.value([
+                    "map": Nullable<String>.value("map")
+                ])),
+                bigint: Optional(Nullable<Int>.value(1))
+            )
+        )
+        let response = try await client.endpoints.object.getAndReturnNestedWithRequiredField(
+            string: "string",
+            request: TypesNestedObjectWithRequiredField(
+                string: "string",
+                nestedObject: TypesObjectWithOptionalField(
+                    string: .value("string"),
+                    integer: .value(1),
+                    long: .value(1000000),
+                    double: .value(1.1),
+                    bool: .value(true),
+                    datetime: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                    date: .value(CalendarDate("2023-01-15")!),
+                    uuid: .value("uuid"),
+                    base64: .value("base64"),
+                    list: .value([
                         "list",
                         "list"
-                    ],
-                    map: [
-                        1: "map"
-                    ]
+                    ]),
+                    set: .value([
+                        "set",
+                        "set"
+                    ]),
+                    map: .value([
+                        "map": .value("map")
+                    ]),
+                    bigint: .value(1)
                 )
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -342,94 +645,183 @@ import Exhaustive
                     "bool": true,
                     "datetime": "2024-01-15T09:30:00Z",
                     "date": "2023-01-15",
-                    "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    "base64": "SGVsbG8gd29ybGQh",
+                    "uuid": "uuid",
+                    "base64": "base64",
                     "list": [
-                      "list",
                       "list"
                     ],
                     "set": [
                       "set"
                     ],
                     "map": {
-                      "1": "map"
+                      "key": "value"
                     },
-                    "bigint": "1000000"
+                    "bigint": 1
                   }
                 }
                 """#.utf8
             )
         )
-        let client = ExhaustiveClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = NestedObjectWithRequiredField(
+        let expectedResponse = TypesNestedObjectWithRequiredField(
             string: "string",
-            nestedObject: ObjectWithOptionalField(
-                string: Optional("string"),
-                integer: Optional(1),
-                long: Optional(1000000),
-                double: Optional(1.1),
-                bool: Optional(true),
-                datetime: Optional(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                date: Optional(CalendarDate("2023-01-15")!),
-                uuid: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!),
-                base64: Optional("SGVsbG8gd29ybGQh"),
-                list: Optional([
-                    "list",
+            nestedObject: TypesObjectWithOptionalField(
+                string: Optional(Nullable<String>.value("string")),
+                integer: Optional(Nullable<Int>.value(1)),
+                long: Optional(Nullable<Int64>.value(1000000)),
+                double: Optional(Nullable<Double>.value(1.1)),
+                bool: Optional(Nullable<Bool>.value(true)),
+                datetime: Optional(Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601))),
+                date: Optional(Nullable<CalendarDate>.value(CalendarDate("2023-01-15")!)),
+                uuid: Optional(Nullable<String>.value("uuid")),
+                base64: Optional(Nullable<String>.value("base64")),
+                list: Optional(Nullable<[String]>.value([
                     "list"
-                ]),
-                set: Optional([]),
-                map: Optional([
-                    1: "map"
-                ]),
-                bigint: Optional("1000000")
+                ])),
+                set: Optional(Nullable<[String]>.value([
+                    "set"
+                ])),
+                map: Optional(Nullable<[String: Nullable<String>]>.value([
+                    "key": Nullable<String>.value("value")
+                ])),
+                bigint: Optional(Nullable<Int>.value(1))
             )
         )
         let response = try await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(
             request: [
-                NestedObjectWithRequiredField(
+                TypesNestedObjectWithRequiredField(
                     string: "string",
-                    nestedObject: ObjectWithOptionalField(
-                        string: "string",
-                        integer: 1,
-                        long: 1000000,
-                        double: 1.1,
-                        bool: true,
-                        datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                        date: CalendarDate("2023-01-15")!,
-                        uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-                        base64: "SGVsbG8gd29ybGQh",
-                        list: [
+                    nestedObject: TypesObjectWithOptionalField(
+
+                    )
+                )
+            ],
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getAndReturnNestedWithRequiredFieldAsList2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                #"""
+                {
+                  "string": "string",
+                  "NestedObject": {
+                    "string": "string",
+                    "integer": 1,
+                    "long": 1000000,
+                    "double": 1.1,
+                    "bool": true,
+                    "datetime": "2024-01-15T09:30:00Z",
+                    "date": "2023-01-15",
+                    "uuid": "uuid",
+                    "base64": "base64",
+                    "list": [
+                      "list",
+                      "list"
+                    ],
+                    "set": [
+                      "set",
+                      "set"
+                    ],
+                    "map": {
+                      "map": "map"
+                    },
+                    "bigint": 1
+                  }
+                }
+                """#.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = TypesNestedObjectWithRequiredField(
+            string: "string",
+            nestedObject: TypesObjectWithOptionalField(
+                string: Optional(Nullable<String>.value("string")),
+                integer: Optional(Nullable<Int>.value(1)),
+                long: Optional(Nullable<Int64>.value(1000000)),
+                double: Optional(Nullable<Double>.value(1.1)),
+                bool: Optional(Nullable<Bool>.value(true)),
+                datetime: Optional(Nullable<Date>.value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601))),
+                date: Optional(Nullable<CalendarDate>.value(CalendarDate("2023-01-15")!)),
+                uuid: Optional(Nullable<String>.value("uuid")),
+                base64: Optional(Nullable<String>.value("base64")),
+                list: Optional(Nullable<[String]>.value([
+                    "list",
+                    "list"
+                ])),
+                set: Optional(Nullable<[String]>.value([
+                    "set",
+                    "set"
+                ])),
+                map: Optional(Nullable<[String: Nullable<String>]>.value([
+                    "map": Nullable<String>.value("map")
+                ])),
+                bigint: Optional(Nullable<Int>.value(1))
+            )
+        )
+        let response = try await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(
+            request: [
+                TypesNestedObjectWithRequiredField(
+                    string: "string",
+                    nestedObject: TypesObjectWithOptionalField(
+                        string: .value("string"),
+                        integer: .value(1),
+                        long: .value(1000000),
+                        double: .value(1.1),
+                        bool: .value(true),
+                        datetime: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                        date: .value(CalendarDate("2023-01-15")!),
+                        uuid: .value("uuid"),
+                        base64: .value("base64"),
+                        list: .value([
                             "list",
                             "list"
-                        ],
-                        map: [
-                            1: "map"
-                        ]
+                        ]),
+                        set: .value([
+                            "set",
+                            "set"
+                        ]),
+                        map: .value([
+                            "map": .value("map")
+                        ]),
+                        bigint: .value(1)
                     )
                 ),
-                NestedObjectWithRequiredField(
+                TypesNestedObjectWithRequiredField(
                     string: "string",
-                    nestedObject: ObjectWithOptionalField(
-                        string: "string",
-                        integer: 1,
-                        long: 1000000,
-                        double: 1.1,
-                        bool: true,
-                        datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                        date: CalendarDate("2023-01-15")!,
-                        uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-                        base64: "SGVsbG8gd29ybGQh",
-                        list: [
+                    nestedObject: TypesObjectWithOptionalField(
+                        string: .value("string"),
+                        integer: .value(1),
+                        long: .value(1000000),
+                        double: .value(1.1),
+                        bool: .value(true),
+                        datetime: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                        date: .value(CalendarDate("2023-01-15")!),
+                        uuid: .value("uuid"),
+                        base64: .value("base64"),
+                        list: .value([
                             "list",
                             "list"
-                        ],
-                        map: [
-                            1: "map"
-                        ]
+                        ]),
+                        set: .value([
+                            "set",
+                            "set"
+                        ]),
+                        map: .value([
+                            "map": .value("map")
+                        ]),
+                        bigint: .value(1)
                     )
                 )
             ],
@@ -445,54 +837,18 @@ import Exhaustive
                 #"""
                 {
                   "unknown": {
-                    "$ref": "https://example.com/schema"
-                  }
-                }
-                """#.utf8
-            )
-        )
-        let client = ExhaustiveClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ObjectWithUnknownField(
-            unknown: JSONValue.object(
-                [
-                    "$ref": JSONValue.string("https://example.com/schema")
-                ]
-            )
-        )
-        let response = try await client.endpoints.object.getAndReturnWithUnknownField(
-            request: ObjectWithUnknownField(
-                unknown: .object([
-                    "$ref": .string("https://example.com/schema")
-                ])
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getAndReturnWithUnknownField2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                #"""
-                {
-                  "unknown": {
                     "key": "value"
                   }
                 }
                 """#.utf8
             )
         )
-        let client = ExhaustiveClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = ObjectWithUnknownField(
+        let expectedResponse = TypesObjectWithUnknownField(
             unknown: JSONValue.object(
                 [
                     "key": JSONValue.string("value")
@@ -500,7 +856,7 @@ import Exhaustive
             )
         )
         let response = try await client.endpoints.object.getAndReturnWithUnknownField(
-            request: ObjectWithUnknownField(
+            request: TypesObjectWithUnknownField(
                 unknown: .object([
                     "key": .string("value")
                 ])
@@ -523,12 +879,12 @@ import Exhaustive
                 """#.utf8
             )
         )
-        let client = ExhaustiveClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = ObjectWithDocumentedUnknownType(
+        let expectedResponse = TypesObjectWithDocumentedUnknownType(
             documentedUnknownType: JSONValue.object(
                 [
                     "key": JSONValue.string("value")
@@ -536,7 +892,7 @@ import Exhaustive
             )
         )
         let response = try await client.endpoints.object.getAndReturnWithDocumentedUnknownType(
-            request: ObjectWithDocumentedUnknownType(
+            request: TypesObjectWithDocumentedUnknownType(
                 documentedUnknownType: .object([
                     "key": .string("value")
                 ])
@@ -552,6 +908,38 @@ import Exhaustive
             body: Data(
                 #"""
                 {
+                  "key": {
+                    "key": "value"
+                  }
+                }
+                """#.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = [
+            "key": JSONValue.object(
+                [
+                    "key": JSONValue.string("value")
+                ]
+            )
+        ]
+        let response = try await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType(
+            request: [:],
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getAndReturnMapOfDocumentedUnknownType2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                #"""
+                {
                   "string": {
                     "key": "value"
                   }
@@ -559,7 +947,7 @@ import Exhaustive
                 """#.utf8
             )
         )
-        let client = ExhaustiveClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -582,246 +970,31 @@ import Exhaustive
         try #require(response == expectedResponse)
     }
 
-    @Test func getAndReturnWithMixedRequiredAndOptionalFields1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                #"""
-                {
-                  "requiredString": "hello",
-                  "requiredInteger": 0,
-                  "optionalString": "world",
-                  "requiredLong": 0
-                }
-                """#.utf8
-            )
-        )
-        let client = ExhaustiveClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ObjectWithMixedRequiredAndOptionalFields(
-            requiredString: "hello",
-            requiredInteger: 0,
-            optionalString: Optional("world"),
-            requiredLong: 0
-        )
-        let response = try await client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields(
-            request: ObjectWithMixedRequiredAndOptionalFields(
-                requiredString: "hello",
-                requiredInteger: 0,
-                optionalString: "world",
-                requiredLong: 0
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getAndReturnWithMixedRequiredAndOptionalFields2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                #"""
-                {
-                  "requiredString": "requiredString",
-                  "requiredInteger": 1,
-                  "optionalString": "optionalString",
-                  "requiredLong": 1000000
-                }
-                """#.utf8
-            )
-        )
-        let client = ExhaustiveClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ObjectWithMixedRequiredAndOptionalFields(
-            requiredString: "requiredString",
-            requiredInteger: 1,
-            optionalString: Optional("optionalString"),
-            requiredLong: 1000000
-        )
-        let response = try await client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields(
-            request: ObjectWithMixedRequiredAndOptionalFields(
-                requiredString: "requiredString",
-                requiredInteger: 1,
-                optionalString: "optionalString",
-                requiredLong: 1000000
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getAndReturnWithRequiredNestedObject1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                #"""
-                {
-                  "requiredString": "hello",
-                  "requiredObject": {
-                    "string": "nested",
-                    "NestedObject": {}
-                  }
-                }
-                """#.utf8
-            )
-        )
-        let client = ExhaustiveClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ObjectWithRequiredNestedObject(
-            requiredString: "hello",
-            requiredObject: NestedObjectWithRequiredField(
-                string: "nested",
-                nestedObject: ObjectWithOptionalField(
-
-                )
-            )
-        )
-        let response = try await client.endpoints.object.getAndReturnWithRequiredNestedObject(
-            request: ObjectWithRequiredNestedObject(
-                requiredString: "hello",
-                requiredObject: NestedObjectWithRequiredField(
-                    string: "nested",
-                    nestedObject: ObjectWithOptionalField(
-
-                    )
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getAndReturnWithRequiredNestedObject2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                #"""
-                {
-                  "requiredString": "requiredString",
-                  "requiredObject": {
-                    "string": "string",
-                    "NestedObject": {
-                      "string": "string",
-                      "integer": 1,
-                      "long": 1000000,
-                      "double": 1.1,
-                      "bool": true,
-                      "datetime": "2024-01-15T09:30:00Z",
-                      "date": "2023-01-15",
-                      "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                      "base64": "SGVsbG8gd29ybGQh",
-                      "list": [
-                        "list",
-                        "list"
-                      ],
-                      "set": [
-                        "set"
-                      ],
-                      "map": {
-                        "1": "map"
-                      },
-                      "bigint": "1000000"
-                    }
-                  }
-                }
-                """#.utf8
-            )
-        )
-        let client = ExhaustiveClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ObjectWithRequiredNestedObject(
-            requiredString: "requiredString",
-            requiredObject: NestedObjectWithRequiredField(
-                string: "string",
-                nestedObject: ObjectWithOptionalField(
-                    string: Optional("string"),
-                    integer: Optional(1),
-                    long: Optional(1000000),
-                    double: Optional(1.1),
-                    bool: Optional(true),
-                    datetime: Optional(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
-                    date: Optional(CalendarDate("2023-01-15")!),
-                    uuid: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!),
-                    base64: Optional("SGVsbG8gd29ybGQh"),
-                    list: Optional([
-                        "list",
-                        "list"
-                    ]),
-                    set: Optional([]),
-                    map: Optional([
-                        1: "map"
-                    ]),
-                    bigint: Optional("1000000")
-                )
-            )
-        )
-        let response = try await client.endpoints.object.getAndReturnWithRequiredNestedObject(
-            request: ObjectWithRequiredNestedObject(
-                requiredString: "requiredString",
-                requiredObject: NestedObjectWithRequiredField(
-                    string: "string",
-                    nestedObject: ObjectWithOptionalField(
-                        string: "string",
-                        integer: 1,
-                        long: 1000000,
-                        double: 1.1,
-                        bool: true,
-                        datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                        date: CalendarDate("2023-01-15")!,
-                        uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-                        base64: "SGVsbG8gd29ybGQh",
-                        list: [
-                            "list",
-                            "list"
-                        ],
-                        map: [
-                            1: "map"
-                        ]
-                    )
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
     @Test func getAndReturnWithDatetimeLikeString1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 #"""
                 {
-                  "datetimeLikeString": "2023-08-31T14:15:22Z",
-                  "actualDatetime": "2023-08-31T14:15:22Z"
+                  "datetimeLikeString": "datetimeLikeString",
+                  "actualDatetime": "2024-01-15T09:30:00Z"
                 }
                 """#.utf8
             )
         )
-        let client = ExhaustiveClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = ObjectWithDatetimeLikeString(
-            datetimeLikeString: "2023-08-31T14:15:22Z",
-            actualDatetime: try! Date("2023-08-31T14:15:22Z", strategy: .iso8601)
+        let expectedResponse = TypesObjectWithDatetimeLikeString(
+            datetimeLikeString: "datetimeLikeString",
+            actualDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)
         )
         let response = try await client.endpoints.object.getAndReturnWithDatetimeLikeString(
-            request: ObjectWithDatetimeLikeString(
-                datetimeLikeString: "2023-08-31T14:15:22Z",
-                actualDatetime: try! Date("2023-08-31T14:15:22Z", strategy: .iso8601)
+            request: TypesObjectWithDatetimeLikeString(
+                datetimeLikeString: "datetimeLikeString",
+                actualDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
@@ -840,17 +1013,17 @@ import Exhaustive
                 """#.utf8
             )
         )
-        let client = ExhaustiveClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = ObjectWithDatetimeLikeString(
+        let expectedResponse = TypesObjectWithDatetimeLikeString(
             datetimeLikeString: "datetimeLikeString",
             actualDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)
         )
         let response = try await client.endpoints.object.getAndReturnWithDatetimeLikeString(
-            request: ObjectWithDatetimeLikeString(
+            request: TypesObjectWithDatetimeLikeString(
                 datetimeLikeString: "datetimeLikeString",
                 actualDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)
             ),

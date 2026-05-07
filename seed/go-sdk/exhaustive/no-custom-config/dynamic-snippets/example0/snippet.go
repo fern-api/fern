@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
 )
@@ -16,11 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := []string{
-        "string",
-        "string",
+    request := &fern.PostwithobjectbodyandresponseInlinedrequestsRequest{
+        FieldString: "string",
+        Integer: 1,
+        NestedObject: &fern.TypesObjectWithOptionalField{},
     }
-    client.Endpoints.Container.GetAndReturnListOfPrimitives(
+    client.Inlinedrequests.Postwithobjectbodyandresponse(
         context.TODO(),
         request,
     )

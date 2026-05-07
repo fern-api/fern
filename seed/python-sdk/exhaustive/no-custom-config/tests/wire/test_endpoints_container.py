@@ -1,6 +1,6 @@
 from .conftest import get_client, verify_request_count
 
-from seed.types.object import ObjectWithRequiredField
+from seed import TypesObjectWithRequiredField
 
 
 def test_endpoints_container_get_and_return_list_of_primitives() -> None:
@@ -8,7 +8,7 @@ def test_endpoints_container_get_and_return_list_of_primitives() -> None:
     test_id = "endpoints.container.get_and_return_list_of_primitives.0"
     client = get_client(test_id)
     client.endpoints.container.get_and_return_list_of_primitives(
-        request=["string", "string"],
+        request=["string"],
     )
     verify_request_count(test_id, "POST", "/container/list-of-primitives", None, 1)
 
@@ -19,12 +19,9 @@ def test_endpoints_container_get_and_return_list_of_objects() -> None:
     client = get_client(test_id)
     client.endpoints.container.get_and_return_list_of_objects(
         request=[
-            ObjectWithRequiredField(
+            TypesObjectWithRequiredField(
                 string="string",
-            ),
-            ObjectWithRequiredField(
-                string="string",
-            ),
+            )
         ],
     )
     verify_request_count(test_id, "POST", "/container/list-of-objects", None, 1)
@@ -46,7 +43,7 @@ def test_endpoints_container_get_and_return_set_of_objects() -> None:
     client = get_client(test_id)
     client.endpoints.container.get_and_return_set_of_objects(
         request=[
-            ObjectWithRequiredField(
+            TypesObjectWithRequiredField(
                 string="string",
             )
         ],
@@ -59,7 +56,7 @@ def test_endpoints_container_get_and_return_map_prim_to_prim() -> None:
     test_id = "endpoints.container.get_and_return_map_prim_to_prim.0"
     client = get_client(test_id)
     client.endpoints.container.get_and_return_map_prim_to_prim(
-        request={"string": "string"},
+        request={"key": "value"},
     )
     verify_request_count(test_id, "POST", "/container/map-prim-to-prim", None, 1)
 
@@ -70,7 +67,7 @@ def test_endpoints_container_get_and_return_map_of_prim_to_object() -> None:
     client = get_client(test_id)
     client.endpoints.container.get_and_return_map_of_prim_to_object(
         request={
-            "string": ObjectWithRequiredField(
+            "key": TypesObjectWithRequiredField(
                 string="string",
             )
         },
@@ -83,7 +80,7 @@ def test_endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union
     test_id = "endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union.0"
     client = get_client(test_id)
     client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
-        request={"string": 1.1},
+        request={"key": 1.1},
     )
     verify_request_count(test_id, "POST", "/container/map-prim-to-union", None, 1)
 
@@ -93,8 +90,6 @@ def test_endpoints_container_get_and_return_optional() -> None:
     test_id = "endpoints.container.get_and_return_optional.0"
     client = get_client(test_id)
     client.endpoints.container.get_and_return_optional(
-        request=ObjectWithRequiredField(
-            string="string",
-        ),
+        string="string",
     )
     verify_request_count(test_id, "POST", "/container/opt-objects", None, 1)

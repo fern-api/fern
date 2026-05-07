@@ -1,17 +1,17 @@
 import Foundation
-import Exhaustive
+import Api
 
 private func main() async throws {
-    let client = ExhaustiveClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.endpoints.object.getAndReturnWithUnknownField(request: ObjectWithUnknownField(
-        unknown: .object([
-            "$ref": .string("https://example.com/schema")
-        ])
-    ))
+    _ = try await client.endpoints.container.getAndReturnMapOfPrimToObject(request: [
+        "string": TypesObjectWithRequiredField(
+            string: "string"
+        )
+    ])
 }
 
 try await main()

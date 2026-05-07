@@ -49,15 +49,18 @@ Instantiate and use the client with the following:
 
 ```swift
 import Foundation
-import Exhaustive
+import Api
 
 private func main() async throws {
-    let client = ExhaustiveClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.endpoints.container.getAndReturnListOfPrimitives(request: [
-        "string",
-        "string"
-    ])
+    _ = try await client.inlinedrequests.postwithobjectbodyandresponse(request: .init(
+        string: "string",
+        integer: 1,
+        nestedObject: TypesObjectWithOptionalField(
+
+        )
+    ))
 }
 
 try await main()
@@ -68,14 +71,14 @@ try await main()
 The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
 
 ```swift
-import Exhaustive
+import Api
 
-let client = ExhaustiveClient(token: "YOUR_API_KEY")
+let client = ApiClient(token: "YOUR_API_KEY")
 
 do {
-    let response = try await client.endpoints.container.getAndReturnListOfPrimitives(...)
+    let response = try await client.inlinedrequests.postwithobjectbodyandresponse(...)
     // Handle successful response
-} catch let error as ExhaustiveError {
+} catch let error as ApiError {
     switch error {
     case .httpError(let httpError):
         print("Status code:", httpError.statusCode)
@@ -98,9 +101,9 @@ do {
 The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
 
 ```swift
-import Exhaustive
+import Api
 
-let request = Requests.PostWithObjectBody(
+let request = Requests.PostwithobjectbodyandresponseInlinedrequestsRequest(
     ...
 )
 ```
@@ -112,7 +115,7 @@ let request = Requests.PostWithObjectBody(
 If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
 
 ```swift
-try await client.endpoints.container.getAndReturnListOfPrimitives(..., requestOptions: .init(
+try await client.inlinedrequests.postwithobjectbodyandresponse(..., requestOptions: .init(
     additionalHeaders: [
         "X-Custom-Header": "custom value"
     ]
@@ -124,7 +127,7 @@ try await client.endpoints.container.getAndReturnListOfPrimitives(..., requestOp
 If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
 
 ```swift
-try await client.endpoints.container.getAndReturnListOfPrimitives(..., requestOptions: .init(
+try await client.inlinedrequests.postwithobjectbodyandresponse(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
     ]
@@ -136,7 +139,7 @@ try await client.endpoints.container.getAndReturnListOfPrimitives(..., requestOp
 The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
 
 ```swift
-try await client.endpoints.container.getAndReturnListOfPrimitives(..., requestOptions: .init(
+try await client.inlinedrequests.postwithobjectbodyandresponse(..., requestOptions: .init(
     timeout: 30
 ))
 ```
@@ -147,9 +150,9 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import Exhaustive
+import Api
 
-let client = ExhaustiveClient(
+let client = ApiClient(
     token: "YOUR_API_KEY",
     urlSession: // Provide your implementation here
 )

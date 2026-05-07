@@ -25,7 +25,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/container/list-of-primitives",
+            path: "container/list-of-primitives",
             body: params,
             request_options: request_options
           )
@@ -49,13 +49,13 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
-        # @return [Array[Seed::Types::Object_::Types::ObjectWithRequiredField]]
+        # @return [Array[Seed::Types::TypesObjectWithRequiredField]]
         def get_and_return_list_of_objects(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/container/list-of-objects",
+            path: "container/list-of-objects",
             body: params,
             request_options: request_options
           )
@@ -85,7 +85,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/container/set-of-primitives",
+            path: "container/set-of-primitives",
             body: params,
             request_options: request_options
           )
@@ -109,13 +109,13 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
-        # @return [Array[Seed::Types::Object_::Types::ObjectWithRequiredField]]
+        # @return [Array[Seed::Types::TypesObjectWithRequiredField]]
         def get_and_return_set_of_objects(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/container/set-of-objects",
+            path: "container/set-of-objects",
             body: params,
             request_options: request_options
           )
@@ -145,7 +145,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/container/map-prim-to-prim",
+            path: "container/map-prim-to-prim",
             body: params,
             request_options: request_options
           )
@@ -169,13 +169,13 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
-        # @return [Hash[String, Seed::Types::Object_::Types::ObjectWithRequiredField]]
+        # @return [Hash[String, Seed::Types::TypesObjectWithRequiredField]]
         def get_and_return_map_of_prim_to_object(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/container/map-prim-to-object",
+            path: "container/map-prim-to-object",
             body: params,
             request_options: request_options
           )
@@ -199,13 +199,13 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
-        # @return [Hash[String, Seed::Types::Union::Types::MixedType]]
+        # @return [Hash[String, Seed::Types::TypesMixedType]]
         def get_and_return_map_of_prim_to_undiscriminated_union(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/container/map-prim-to-union",
+            path: "container/map-prim-to-union",
             body: params,
             request_options: request_options
           )
@@ -222,21 +222,21 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param params [Hash]
+        # @param params [Seed::Types::TypesObjectWithRequiredField]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
         #
-        # @return [Seed::Types::Object_::Types::ObjectWithRequiredField, nil]
+        # @return [Seed::Types::TypesObjectWithRequiredField]
         def get_and_return_optional(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/container/opt-objects",
-            body: params,
+            path: "container/opt-objects",
+            body: Seed::Types::TypesObjectWithRequiredField.new(params).to_h,
             request_options: request_options
           )
           begin
@@ -245,10 +245,12 @@ module Seed
             raise Seed::Errors::TimeoutError
           end
           code = response.code.to_i
-          return if code.between?(200, 299)
-
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          if code.between?(200, 299)
+            Seed::Types::TypesObjectWithRequiredField.load(response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
         end
       end
     end

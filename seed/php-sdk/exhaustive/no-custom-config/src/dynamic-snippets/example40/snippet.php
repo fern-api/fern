@@ -3,7 +3,9 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Endpoints\Params\Requests\ModifyResourceAtInlinedPath;
+use Seed\Endpoints\HttpMethods\Requests\HttpMethodsTestPatchHttpMethodsRequest;
+use Seed\Types\TypesObjectWithOptionalField;
+use DateTime;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,9 +13,31 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->params->modifyWithInlinePath(
-    'param',
-    new ModifyResourceAtInlinedPath([
-        'body' => 'string',
+$client->endpoints->httpMethods->httpMethodsTestPatch(
+    'id',
+    new HttpMethodsTestPatchHttpMethodsRequest([
+        'body' => new TypesObjectWithOptionalField([
+            'string' => 'string',
+            'integer' => 1,
+            'long' => 1000000,
+            'double' => 1.1,
+            'bool' => true,
+            'datetime' => new DateTime('2024-01-15T09:30:00Z'),
+            'date' => new DateTime('2023-01-15'),
+            'uuid' => 'uuid',
+            'base64' => 'base64',
+            'list' => [
+                'list',
+                'list',
+            ],
+            'set' => [
+                'set',
+                'set',
+            ],
+            'map' => [
+                'map' => 'map',
+            ],
+            'bigint' => 1,
+        ]),
     ]),
 );

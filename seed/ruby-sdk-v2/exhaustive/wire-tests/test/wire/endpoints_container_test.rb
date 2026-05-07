@@ -16,7 +16,7 @@ class EndpointsContainerWireTest < WireMockTestCase
     test_id = "endpoints.container.get_and_return_list_of_primitives.0"
 
     @client.endpoints.container.get_and_return_list_of_primitives(
-      request: %w[string string],
+      request: ["string"],
       request_options: {
         additional_headers: {
           "X-Test-Id" => "endpoints.container.get_and_return_list_of_primitives.0"
@@ -39,8 +39,6 @@ class EndpointsContainerWireTest < WireMockTestCase
     @client.endpoints.container.get_and_return_list_of_objects(
       request: [{
         string: "string"
-      }, {
-        string: "string"
       }],
       request_options: {
         additional_headers: {
@@ -62,7 +60,7 @@ class EndpointsContainerWireTest < WireMockTestCase
     test_id = "endpoints.container.get_and_return_set_of_primitives.0"
 
     @client.endpoints.container.get_and_return_set_of_primitives(
-      request: Set.new(["string"]),
+      request: ["string"],
       request_options: {
         additional_headers: {
           "X-Test-Id" => "endpoints.container.get_and_return_set_of_primitives.0"
@@ -83,9 +81,9 @@ class EndpointsContainerWireTest < WireMockTestCase
     test_id = "endpoints.container.get_and_return_set_of_objects.0"
 
     @client.endpoints.container.get_and_return_set_of_objects(
-      request: Set.new([{
+      request: [{
         string: "string"
-      }]),
+      }],
       request_options: {
         additional_headers: {
           "X-Test-Id" => "endpoints.container.get_and_return_set_of_objects.0"
@@ -107,7 +105,7 @@ class EndpointsContainerWireTest < WireMockTestCase
 
     @client.endpoints.container.get_and_return_map_prim_to_prim(
       request: {
-        string: "string"
+        key: "value"
       },
       request_options: {
         additional_headers: {
@@ -130,7 +128,7 @@ class EndpointsContainerWireTest < WireMockTestCase
 
     @client.endpoints.container.get_and_return_map_of_prim_to_object(
       request: {
-        string: {
+        key: {
           string: "string"
         }
       },
@@ -155,7 +153,7 @@ class EndpointsContainerWireTest < WireMockTestCase
 
     @client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
       request: {
-        string: 1.1
+        key: 1.1
       },
       request_options: {
         additional_headers: {
@@ -177,9 +175,7 @@ class EndpointsContainerWireTest < WireMockTestCase
     test_id = "endpoints.container.get_and_return_optional.0"
 
     @client.endpoints.container.get_and_return_optional(
-      request: {
-        string: "string"
-      },
+      string: "string",
       request_options: {
         additional_headers: {
           "X-Test-Id" => "endpoints.container.get_and_return_optional.0"
