@@ -1,15 +1,18 @@
 # Stage 1: Pull wiremock image as tar (no daemon needed)
-FROM alpine:3.22 AS wiremock-pull
+FROM alpine:3.23 AS wiremock-pull
 RUN apk add --no-cache curl && \
     ARCH=$(uname -m) && if [ "$ARCH" = "aarch64" ]; then ARCH="arm64"; fi && \
     curl -sL "https://github.com/google/go-containerregistry/releases/download/v0.21.2/go-containerregistry_Linux_${ARCH}.tar.gz" | tar xz -C /usr/local/bin crane && \
     crane pull wiremock/wiremock:3.9.1 /wiremock.tar
 
 # Stage 2: Build the seed image
-FROM docker:28.4.0-dind-alpine3.22
+FROM docker:29.4.1-dind-alpine3.23
 
 # Copy pre-pulled wiremock image
 COPY --from=wiremock-pull /wiremock.tar /wiremock.tar
+
+# Apply the latest APK security patches available for the base image
+RUN apk update && apk upgrade --no-cache
 
 # Install Go (multi-arch: supports both amd64 and arm64)
 ENV GO_VERSION=1.23.8
