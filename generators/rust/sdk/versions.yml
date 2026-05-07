@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.36.2
+  changelogEntry:
+    - summary: |
+        Bump the rust-sdk generator Docker base image from `node:22.12-alpine3.20`
+        to `node:22.22-alpine3.22`, refresh the bundled npm to `11.13.0`, and patch
+        npm's transitively bundled `ip-address` to `10.1.1` to address the container
+        vulnerabilities reported by Grype (Node.js, musl-utils, busybox, zlib, and
+        bundled npm transitive packages such as cross-spawn, minimatch, glob, tar,
+        brace-expansion, ip-address, picomatch, and diff).
+      type: chore
+  createdAt: "2026-05-07"
+  irVersion: 66
 - version: 0.36.1
   changelogEntry:
     - summary: |
