@@ -1,4 +1,4 @@
-# Updated Node.js base from 22.12-slim to 22.22.2-bookworm-slim to address container CVEs:
+# Updated Node.js base from 22.12-slim to 22.22-bookworm-slim to address container CVEs:
 # - Node binary CVEs (CVE-2025-23083, CVE-2025-23166, CVE-2025-23085, CVE-2025-23165, CVE-2025-55131,
 #   CVE-2025-55132, CVE-2025-59465, CVE-2025-59466, CVE-2026-21637, CVE-2026-21710, CVE-2026-21712,
 #   CVE-2026-21713, CVE-2026-21714, CVE-2026-21715, CVE-2026-21716, CVE-2026-21717)
@@ -7,7 +7,7 @@
 # Bundled npm globals are removed below so the npm-bundled JS dependencies (cross-spawn, glob,
 # minimatch, tar, brace-expansion, ip-address, diff) cannot be flagged or invoked at runtime — this
 # image only runs the bundled CLI directly via node.
-FROM node:22.22.2-bookworm-slim
+FROM node:22.22-bookworm-slim
 RUN apt-get update \
     && apt-get -y --no-install-recommends dist-upgrade \
     && apt-get install -y --no-install-recommends ca-certificates curl \
