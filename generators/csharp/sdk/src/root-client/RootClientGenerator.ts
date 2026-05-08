@@ -23,6 +23,7 @@ import { RawClient } from "../endpoint/http/RawClient.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
 import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
+import { buildUserAgentHeaderEntry } from "./buildUserAgentHeaderEntry.js";
 import { dedupAuthHeaderEntries } from "./dedupAuthHeaderEntries.js";
 
 const GetFromEnvironmentOrThrow = "GetFromEnvironmentOrThrow";
@@ -330,25 +331,17 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 key: this.csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
                 value: this.context.getCurrentVersionValueAccess()
             });
-            if (platformHeaders.userAgent != null) {
-                platformHeaderEntries.push({
-                    key: this.csharp.codeblock(`"${platformHeaders.userAgent.header}"`),
-                    value: this.csharp.codeblock(`"${platformHeaders.userAgent.value}"`)
-                });
-            } else {
-                // Fallback: emit `<NuGetPackageId>/<version>` so SDKs imported from OpenAPI
-                // (where `platformHeaders.userAgent` is unset) still send a User-Agent,
-                // mirroring the TypeScript generator's npm-package-name fallback.
-                const packageName = this.generation.names.project.packageId;
-                platformHeaderEntries.push({
-                    key: this.csharp.codeblock('"User-Agent"'),
-                    value: this.csharp.codeblock((writer) => {
-                        writer.write(`$"${packageName}/{`);
-                        writer.writeNode(this.context.getCurrentVersionValueAccess());
-                        writer.write('}"');
-                    })
-                });
-            }
+            // Falls back to `$"<NuGetPackageId>/{Version.Current}"` when the IR has no
+            // `platformHeaders.userAgent` (e.g. OpenAPI imports), mirroring the TypeScript
+            // generator's npm-package-name fallback.
+            platformHeaderEntries.push(
+                buildUserAgentHeaderEntry({
+                    userAgent: platformHeaders.userAgent,
+                    packageName: this.generation.names.project.packageId,
+                    csharp: this.csharp,
+                    versionValueAccess: this.context.getCurrentVersionValueAccess()
+                })
+            );
         }
 
         const platformHeaderDictionary = this.csharp.dictionary({
