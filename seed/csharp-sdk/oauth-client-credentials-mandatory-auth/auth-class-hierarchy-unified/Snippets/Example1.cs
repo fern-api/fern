@@ -5,8 +5,7 @@ public partial class Examples
     public async Task Example1() {
         var client = new SeedOauthClientCredentialsMandatoryAuthClient(
             clientOptions: new ClientOptions {
-                ClientId = "<clientId>",
-                ClientSecret = "<clientSecret>",
+                Auth = new Auth.ClientCredentials("<clientId>", "<clientSecret>"),
                 BaseUrl = "https://api.fern.com"
             }
         );

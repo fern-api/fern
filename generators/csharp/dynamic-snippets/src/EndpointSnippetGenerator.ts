@@ -451,6 +451,25 @@ export class EndpointSnippetGenerator extends WithGeneration {
         auth: FernIr.dynamic.OAuth;
         values: FernIr.dynamic.OAuthValues;
     }): NamedArgument[] {
+        if (this.settings.authClassHierarchy) {
+            // With the auth-class-hierarchy flag enabled, OAuth credentials are wrapped in
+            // a single `Auth.ClientCredentials` instance instead of separate clientId/clientSecret args.
+            return [
+                {
+                    name: "auth",
+                    assignment: this.csharp.Literal.reference(
+                        this.csharp.instantiateClass({
+                            classReference: this.Types.AuthClientCredentials,
+                            arguments_: [
+                                this.csharp.codeblock(`"${values.clientId}"`),
+                                this.csharp.codeblock(`"${values.clientSecret}"`)
+                            ],
+                            forceUseConstructor: true
+                        })
+                    )
+                }
+            ];
+        }
         return [
             {
                 name: this.context.getParameterName(auth.clientId),

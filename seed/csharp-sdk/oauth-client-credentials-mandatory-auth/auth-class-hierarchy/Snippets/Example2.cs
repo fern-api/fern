@@ -4,8 +4,7 @@ public partial class Examples
 {
     public async Task Example2() {
         var client = new SeedOauthClientCredentialsMandatoryAuthClient(
-            clientId: "<clientId>",
-            clientSecret: "<clientSecret>",
+            auth: new Auth.ClientCredentials("<clientId>", "<clientSecret>"),
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
