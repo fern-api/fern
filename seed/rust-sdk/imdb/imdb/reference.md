@@ -42,13 +42,35 @@ async fn main() {
             &CreateMovieRequest {
                 title: "title".to_string(),
                 rating: 1.1,
-                ..Default::default()
             },
             None,
         )
         .await;
 }
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**title:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rating:** `f64` 
+    
 </dd>
 </dl>
 </dd>
