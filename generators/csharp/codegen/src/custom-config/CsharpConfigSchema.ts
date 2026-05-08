@@ -117,7 +117,13 @@ export const CsharpConfigSchema = z.object({
     // "slnx" (default) generates only the modern .slnx format.
     "sln-format": z.enum(["sln", "slnx"]).optional(),
     maxRetries: z.number().int().min(0).optional(),
-    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"]))
+    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"])),
+    "default-timeout-in-seconds": z
+        .union([z.number().positive(), z.literal("infinity")])
+        .optional()
+        .describe(
+            "The default timeout for network requests, in seconds. Set to `infinity` to disable the default timeout. SDK users can still override this per-request via request options."
+        )
 });
 
 export type CsharpConfigSchema = z.infer<typeof CsharpConfigSchema>;
