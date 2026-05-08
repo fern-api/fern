@@ -235,6 +235,8 @@ export class Generation {
         extraDependencies: () => this.customConfig["extra-dependencies"] ?? {},
         /** When true, omits Fern platform headers (X-Fern-Language, SDK name/version, User-Agent) from generated SDK requests. Default: false. */
         omitFernHeaders: () => this.customConfig["omit-fern-headers"] ?? false,
+        /** When true, falls back to `<NuGetPackageId>/<version>` for the `User-Agent` header when the IR doesn't supply one. Default: false. */
+        userAgentNameFromPackage: () => this.customConfig["user-agent-name-from-package"] ?? false,
         /** When true, moves auth params and IR headers into ClientOptions so the constructor takes only named arguments. Default: false. */
         unifiedClientOptions: () => this.customConfig["unified-client-options"] ?? false,
         /** When true, uses PascalCase for environment names (e.g., "Production" instead of "production"). Default: true. */
