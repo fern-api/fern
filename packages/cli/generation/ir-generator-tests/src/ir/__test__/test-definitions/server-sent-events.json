@@ -216,6 +216,7 @@
                                     "inline": null
                                 },
                                 "terminator": "[[DONE]]",
+                                "resumable": null,
                                 "docs": null,
                                 "v2Examples": null
                             }
@@ -738,6 +739,7 @@
                                     "inline": null
                                 },
                                 "terminator": null,
+                                "resumable": null,
                                 "docs": null,
                                 "v2Examples": null
                             }

@@ -1,0 +1,8 @@
+- summary: |
+    Bump the php-sdk container's `composer` base image from `composer:2.7.9`
+    (Alpine 3.20, PHP 8.3.12) to `composer:2.9.7` (Alpine 3.22, current PHP),
+    addressing the Alpine 3.20 EOL alert and the PHP 8.3.12 CVEs
+    (CVE-2024-8932, CVE-2024-11236, CVE-2025-1861), and force a fresh
+    `apk upgrade` so the rebuilt image picks up the patched openssl 3.5.6-r0
+    from Alpine 3.23.4 (CVE-2026-31789).
+  type: chore

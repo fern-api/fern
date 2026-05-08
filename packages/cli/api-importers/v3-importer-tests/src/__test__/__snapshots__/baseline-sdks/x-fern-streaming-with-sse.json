@@ -216,6 +216,7 @@
                   },
                   "type": "primitive"
                 },
+                "resumable": false,
                 "type": "sse"
               },
               "type": "streaming"

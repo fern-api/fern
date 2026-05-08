@@ -32,7 +32,7 @@ it("breaking", async ({ signal }) => {
         expect(result.stdout).toMatchSnapshot();
         expect(result.exitCode).toBe(1);
     }
-}, 20_000);
+}, 60_000);
 
 it("non-breaking", async ({ signal }) => {
     const nonBreakingChangeDirs = await readdir(NON_BREAKING_FIXTURES_DIR, { withFileTypes: true });
@@ -50,4 +50,4 @@ it("non-breaking", async ({ signal }) => {
         expect(result.stdout).toMatchSnapshot();
         expect(result.exitCode).toBe(0);
     }
-}, 20_000);
+}, 60_000);

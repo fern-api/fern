@@ -2402,6 +2402,16 @@
               "type": "null"
             }
           ]
+        },
+        "resumable": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [

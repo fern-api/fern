@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump the python-sdk container's Node.js stage from `node:20.19.4-slim`
+    (Node 20 went EOL March 24, 2026) to `node:22.22-bookworm-slim`, and
+    apply latest Debian trixie security updates at build time so OS-level
+    package CVEs are picked up. Addresses CVE-2025-55130 (Node 20.19.4
+    permission-model symlink bypass) and the OS-level CVE-2026-31789
+    against `openssl 3.5.1-1`.
+  type: chore
