@@ -33,7 +33,10 @@ for api_name in "${fixtures[@]}"; do
         continue
     fi
 
-    if [ -f "$dir/openapi.yml" ]; then
+    gen_file="$dir/generators.yml"
+
+    # Skip fixtures already wired to a non-definition input
+    if grep -q '^api:' "$gen_file" 2>/dev/null; then
         skipped=$((skipped + 1))
         continue
     fi
@@ -61,6 +64,6 @@ echo "================================"
 echo "Copy OpenAPI Specs Results"
 echo "================================"
 echo "Copied:        $copied"
-echo "Skipped:       $skipped (already have openapi.yml)"
+echo "Skipped:       $skipped (already wired to spec)"
 echo "No seed spec:  $no_seed_spec"
 echo "================================"
