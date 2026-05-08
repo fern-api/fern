@@ -40,8 +40,6 @@ groups:
     generators:
       - name: fernapi/fern-swift-sdk
         version: latest
-        config:
-          maxExamplesPerEndpoint: 1
   rust-sdk:
     generators:
       - name: fernapi/fern-rust-sdk

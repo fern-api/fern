@@ -10,8 +10,7 @@ export const SdkCustomConfigSchemaDefaults = defaults satisfies SdkCustomConfigS
 
 export const SdkCustomConfigSchema = BaseSwiftCustomConfigSchema.extend({
     enableWireTests: z.boolean().default(defaults.enableWireTests),
-    nullableAsOptional: z.boolean().default(defaults.nullableAsOptional),
-    maxExamplesPerEndpoint: z.number().int().min(1).optional()
+    nullableAsOptional: z.boolean().default(defaults.nullableAsOptional)
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

@@ -65,10 +65,7 @@ export class WireTestFunctionGenerator {
     }
 
     public generateTestFunctionsForEndpoint(): swift.Method[] {
-        const allExamples = this.dynamicEndpoint.examples ?? [];
-        const maxExamples = this.sdkGeneratorContext.customConfig.maxExamplesPerEndpoint;
-        const examples = maxExamples != null ? allExamples.slice(0, maxExamples) : allExamples;
-        return examples
+        return (this.dynamicEndpoint.examples ?? [])
             .map((endpointExample, endpointExampleIdx) => {
                 const exampleEndpointCall = this.exampleEndpointCallsById[endpointExample.id];
                 if (exampleEndpointCall == null || exampleEndpointCall.response.type === "error") {

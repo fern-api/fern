@@ -5,10 +5,6 @@
     renaming output directory from Snippets/ to .snippets/ (hidden from SPM discovery).
   type: fix
 - summary: |
-    Add `maxExamplesPerEndpoint` config option to limit the number of wire test
-    examples generated per endpoint, reducing test compilation time for large specs.
-  type: feat
-- summary: |
     Combine build and test into single `swift test -c release` invocation to avoid
     redundant recompilation in seed scripts.
   type: chore
