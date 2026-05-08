@@ -23,6 +23,7 @@ import { CustomExceptionInterceptorGenerator } from "./error/CustomExceptionInte
 import { ErrorGenerator } from "./error/ErrorGenerator.js";
 import { generateSdkTests } from "./generateSdkTests.js";
 import { InferredAuthTokenProviderGenerator } from "./inferred-auth/InferredAuthTokenProviderGenerator.js";
+import { AuthClassGenerator } from "./oauth/AuthClassGenerator.js";
 import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator.js";
 import { BaseOptionsGenerator } from "./options/BaseOptionsGenerator.js";
 import { ClientOptionsGenerator } from "./options/ClientOptionsGenerator.js";
@@ -267,6 +268,14 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                 scheme: oauth
             });
             context.project.addSourceFiles(oauthTokenProvider.generate());
+
+            if (context.settings.authClassHierarchy) {
+                const authClass = new AuthClassGenerator({
+                    context,
+                    scheme: oauth
+                });
+                context.project.addSourceFiles(authClass.generate());
+            }
         }
 
         const inferred = context.getInferredAuth();

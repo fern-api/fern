@@ -99,6 +99,11 @@ export const CsharpConfigSchema = z.object({
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
     "omit-fern-headers": z.boolean().optional(),
     "unified-client-options": z.boolean().optional(),
+    // When true (and the API uses OAuth), generates an `Auth` abstract class
+    // hierarchy with `Auth.ClientCredentials` and `Auth.Bearer` sealed subclasses.
+    // The root client constructor takes a single `Auth auth` parameter instead of
+    // separate `clientId` / `clientSecret` parameters. Defaults to false.
+    "auth-class-hierarchy": z.boolean().optional(),
     // When true, fall back to `$"<NuGetPackageId>/{Version.Current}"` for the
     // `User-Agent` platform header when the IR's `platformHeaders.userAgent` is
     // unset (e.g. SDKs imported from OpenAPI). Off by default to preserve the

@@ -239,6 +239,14 @@ export class Generation {
         userAgentNameFromPackage: () => this.customConfig["user-agent-name-from-package"] ?? false,
         /** When true, moves auth params and IR headers into ClientOptions so the constructor takes only named arguments. Default: false. */
         unifiedClientOptions: () => this.customConfig["unified-client-options"] ?? false,
+        /**
+         * When true (and the API uses OAuth), the root client constructor takes a single
+         * `Auth auth` parameter — an instance of either `Auth.ClientCredentials` or
+         * `Auth.Bearer` — instead of separate `clientId` / `clientSecret` parameters.
+         * The token override path is exposed as the harder-to-find `Auth.Bearer` subclass.
+         * Default: false.
+         */
+        authClassHierarchy: () => this.customConfig["auth-class-hierarchy"] ?? false,
         /** When true, uses PascalCase for environment names (e.g., "Production" instead of "production"). Default: true. */
         pascalCaseEnvironments: () => this.customConfig["pascal-case-environments"] ?? true,
         /** Solution file format: "sln" generates both .sln and .slnx, "slnx" (default) generates only .slnx. */
@@ -761,6 +769,24 @@ export class Generation {
             this.csharp.classReference({
                 origin: this.model.staticExplicit("OAuthTokenProvider"),
                 namespace: this.namespaces.core
+            }),
+        /** Auth abstract class hierarchy with `Auth.ClientCredentials` and `Auth.Bearer` subclasses. */
+        Auth: () =>
+            this.csharp.classReference({
+                name: "Auth",
+                namespace: this.namespaces.publicCoreClasses
+            }),
+        /** `Auth.ClientCredentials` sealed subclass for OAuth client-credentials flow. */
+        AuthClientCredentials: () =>
+            this.csharp.classReference({
+                name: "ClientCredentials",
+                enclosingType: this.Types.Auth
+            }),
+        /** `Auth.Bearer` sealed subclass for pre-fetched bearer token. */
+        AuthBearer: () =>
+            this.csharp.classReference({
+                name: "Bearer",
+                enclosingType: this.Types.Auth
             }),
         /** Inferred auth token provider for authentication */
         InferredAuthTokenProvider: () =>

@@ -1,0 +1,9 @@
+- summary: |
+    Add experimental `auth-class-hierarchy` custom config flag that, when enabled on an
+    OAuth-protected API, generates a public `Auth` abstract class with sealed
+    `Auth.ClientCredentials` and `Auth.Bearer` subclasses. The root client takes a
+    single `Auth` parameter (or a `required Auth` property on `ClientOptions` in unified
+    mode) and pattern-matches at runtime to either fetch tokens via the OAuth token
+    provider or send a pre-fetched bearer token directly. Defaults off; existing
+    behavior is unchanged when the flag is absent.
+  type: feat

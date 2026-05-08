@@ -79,6 +79,16 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             this.serviceId != null ? this.context.getGrpcClientInfoForServiceId(this.serviceId) : undefined;
     }
 
+    /**
+     * True when the `auth-class-hierarchy` feature flag is on AND the API has
+     * an OAuth scheme. Drives the alternate constructor and snippet code paths
+     * that take a single `Auth` parameter instead of separate `clientId` /
+     * `clientSecret` arguments.
+     */
+    private isAuthClassHierarchyEnabled(): boolean {
+        return this.settings.authClassHierarchy && this.oauth != null;
+    }
+
     private members = lazy({
         clientOptionsParameterName: () => "clientOptions",
         client: () => this.Types.RootClient.explicit("_client"),
@@ -200,17 +210,30 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     private getConstructorMethod() {
         const { requiredParameters, optionalParameters, literalParameters } = this.getConstructorParameters();
         const unified = this.settings.unifiedClientOptions;
+        const useAuthClassHierarchy = this.isAuthClassHierarchyEnabled();
         const parameters: ast.Parameter[] = [];
 
         // In unified mode, check if any ClientOptions fields are truly required.
         // This includes auth params (non-optional, no env var) and BaseUrl when there's no default environment.
         // If so, ClientOptions itself must be required (non-nullable, no default).
+        // When the auth-class-hierarchy flag is on, the unified ClientOptions exposes a
+        // `required Auth Auth` property which also forces ClientOptions to be required.
         const hasRequiredUnifiedFields =
             unified &&
             (requiredParameters.some((p) => p.environmentVariable == null) ||
-                this.context.ir.environments?.defaultEnvironment == null);
+                this.context.ir.environments?.defaultEnvironment == null ||
+                useAuthClassHierarchy);
 
         if (!unified) {
+            if (useAuthClassHierarchy) {
+                parameters.push(
+                    this.csharp.parameter({
+                        name: "auth",
+                        type: this.Types.Auth,
+                        docs: "OAuth authentication. Use `Auth.ClientCredentials` for the standard OAuth client-credentials flow, or `Auth.Bearer` to provide a pre-fetched access token."
+                    })
+                );
+            }
             for (const param of requiredParameters) {
                 parameters.push(
                     this.csharp.parameter({
@@ -547,27 +570,71 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             })
                         ];
                         const oauthAdditionalParams = this.getOAuthAdditionalParamNames();
-                        const clientIdAccess = unified ? "clientOptions.ClientId" : "clientId";
-                        const clientSecretAccess = unified ? "clientOptions.ClientSecret" : "clientSecret";
-                        innerWriter.write(
-                            `var tokenProvider = new OAuthTokenProvider(${clientIdAccess}, ${clientSecretAccess}, `
-                        );
-                        for (const param of oauthAdditionalParams) {
-                            const paramRef = unified ? `clientOptions.${this.toPascalCase(param)}` : param;
-                            innerWriter.write(`${paramRef}, `);
-                        }
-                        innerWriter.writeNode(
-                            this.csharp.instantiateClass({
-                                classReference: authClientClassReference,
-                                arguments_,
-                                forceUseConstructor: true
-                            })
-                        );
-                        innerWriter.writeTextStatement(")");
 
-                        innerWriter.writeTextStatement(
-                            `clientOptionsWithAuth.Headers["Authorization"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => await tokenProvider.${this.names.methods.getAccessTokenAsync}().ConfigureAwait(false))`
-                        );
+                        if (useAuthClassHierarchy) {
+                            // The `auth` parameter (or `clientOptions.Auth` in unified mode) is a
+                            // sealed Auth subclass. Pattern-match to either set the bearer token
+                            // directly or fall back to the OAuth token provider for client-credentials.
+                            const authAccess = unified ? "clientOptions.Auth" : "auth";
+                            innerWriter.controlFlow("switch", this.csharp.codeblock(authAccess));
+                            innerWriter.writeLine(`case ${this.Types.AuthBearer.name} bearer:`);
+                            innerWriter.indent();
+                            innerWriter.writeTextStatement(
+                                `clientOptionsWithAuth.Headers["Authorization"] = $"Bearer {bearer.Token}"`
+                            );
+                            innerWriter.writeTextStatement("break");
+                            innerWriter.dedent();
+                            innerWriter.writeLine(`case ${this.Types.AuthClientCredentials.name} creds:`);
+                            innerWriter.indent();
+                            innerWriter.write(
+                                "var tokenProvider = new OAuthTokenProvider(creds.ClientId, creds.ClientSecret, "
+                            );
+                            for (const param of oauthAdditionalParams) {
+                                innerWriter.write(`creds.${this.toPascalCase(param)}, `);
+                            }
+                            innerWriter.writeNode(
+                                this.csharp.instantiateClass({
+                                    classReference: authClientClassReference,
+                                    arguments_,
+                                    forceUseConstructor: true
+                                })
+                            );
+                            innerWriter.writeTextStatement(")");
+                            innerWriter.writeTextStatement(
+                                `clientOptionsWithAuth.Headers["Authorization"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => await tokenProvider.${this.names.methods.getAccessTokenAsync}().ConfigureAwait(false))`
+                            );
+                            innerWriter.writeTextStatement("break");
+                            innerWriter.dedent();
+                            innerWriter.writeLine("default:");
+                            innerWriter.indent();
+                            innerWriter.writeTextStatement(
+                                `throw new ArgumentException($"Unsupported Auth type: {${authAccess}.GetType().Name}", nameof(${unified ? "clientOptions" : "auth"}))`
+                            );
+                            innerWriter.dedent();
+                            innerWriter.endControlFlow();
+                        } else {
+                            const clientIdAccess = unified ? "clientOptions.ClientId" : "clientId";
+                            const clientSecretAccess = unified ? "clientOptions.ClientSecret" : "clientSecret";
+                            innerWriter.write(
+                                `var tokenProvider = new OAuthTokenProvider(${clientIdAccess}, ${clientSecretAccess}, `
+                            );
+                            for (const param of oauthAdditionalParams) {
+                                const paramRef = unified ? `clientOptions.${this.toPascalCase(param)}` : param;
+                                innerWriter.write(`${paramRef}, `);
+                            }
+                            innerWriter.writeNode(
+                                this.csharp.instantiateClass({
+                                    classReference: authClientClassReference,
+                                    arguments_,
+                                    forceUseConstructor: true
+                                })
+                            );
+                            innerWriter.writeTextStatement(")");
+
+                            innerWriter.writeTextStatement(
+                                `clientOptionsWithAuth.Headers["Authorization"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => await tokenProvider.${this.names.methods.getAccessTokenAsync}().ConfigureAwait(false))`
+                            );
+                        }
                     }
 
                     if (this.inferred != null) {
@@ -684,10 +751,18 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         // Use the same parameter ordering as the constructor
         const { requiredParameters, optionalParameters } = this.getConstructorParameters();
         const allParameters = [...requiredParameters, ...optionalParameters];
+        const useAuthClassHierarchy = this.isAuthClassHierarchyEnabled();
 
         if (this.settings.unifiedClientOptions) {
             // In unified mode, auth params become named properties inside ClientOptions
             const clientOptionsFields: Array<{ name: string; assignment: ast.CodeBlock | ast.AstNode }> = [];
+
+            if (useAuthClassHierarchy) {
+                clientOptionsFields.push({
+                    name: "Auth",
+                    assignment: this.buildAuthClientCredentialsExample()
+                });
+            }
 
             for (const param of allParameters) {
                 if (param.environmentVariable != null && !includeEnvVarArguments) {
@@ -727,6 +802,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 );
             }
         } else {
+            if (useAuthClassHierarchy) {
+                arguments_.push(this.buildAuthClientCredentialsExample());
+            }
+
             for (const param of allParameters) {
                 // Skip parameters with environment variables unless explicitly including them
                 if (param.environmentVariable != null && !includeEnvVarArguments) {
@@ -751,6 +830,19 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             classReference: asSnippet ? this.Types.RootClientForSnippets : this.Types.RootClient,
             arguments_
         });
+    }
+
+    /**
+     * Build `new Auth.ClientCredentials("client_id", "client_secret", ...)` for snippets.
+     * Includes example values for any extra OAuth token-endpoint properties (audience, scopes, ...).
+     */
+    private buildAuthClientCredentialsExample(): ast.CodeBlock {
+        const extraParams = this.getOAuthAdditionalParamNames();
+        const args: string[] = ['"client_id"', '"client_secret"'];
+        for (const param of extraParams) {
+            args.push(`"${param}"`);
+        }
+        return this.csharp.codeblock(`new Auth.ClientCredentials(${args.join(", ")})`);
     }
 
     private getConstructorParameters(authOnly = false): {
@@ -896,6 +988,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             }
         } else if (scheme.type === "oauth") {
             if (this.oauth !== null) {
+                if (this.isAuthClassHierarchyEnabled()) {
+                    // OAuth credentials and any extra token-endpoint properties are carried
+                    // by `Auth.ClientCredentials`; the root client constructor takes a single
+                    // `Auth auth` parameter instead. See `getConstructorMethod`.
+                    return [];
+                }
                 return [
                     {
                         name: "clientId",

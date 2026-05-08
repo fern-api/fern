@@ -4,6 +4,13 @@ features:
     description: |
       Instantiate and use the client with the following:
 
+  - id: AUTHENTICATION
+    description: |
+      The SDK supports two authentication strategies. The standard flow is OAuth client
+      credentials, where the SDK fetches and refreshes access tokens automatically. As an
+      alternative, callers that already manage tokens out-of-band can pass a pre-fetched
+      bearer token; the SDK will not refresh it.
+
   - id: ENVIRONMENTS
     description: |
       This SDK allows you to configure different environments for API requests.

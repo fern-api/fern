@@ -21,6 +21,7 @@ interface EndpointWithFilepath {
 }
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
+    private static AUTHENTICATION_FEATURE_ID: FernGeneratorCli.FeatureId = "AUTHENTICATION";
     private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
     private static FORWARD_COMPATIBLE_ENUMS_FEATURE_ID: FernGeneratorCli.FeatureId = "FORWARD_COMPATIBLE_ENUMS";
     private static RAW_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "RAW_RESPONSE";
@@ -115,6 +116,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
         const snippets: Record<FernGeneratorCli.FeatureId, string[]> = {};
         snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
+        if (this.context.settings.authClassHierarchy && this.context.getOauth() != null) {
+            snippets[ReadmeSnippetBuilder.AUTHENTICATION_FEATURE_ID] = this.buildAuthenticationSnippets();
+        }
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
@@ -172,6 +176,20 @@ var response = await ${this.getMethodCall(timeoutEndpoint)}(
 );
 `)
         );
+    }
+
+    private buildAuthenticationSnippets(): string[] {
+        return [
+            this.writeCode(`
+using ${this.namespaces.root};
+
+// Option 1: OAuth client credentials (recommended). The SDK fetches and refreshes tokens automatically.
+var client = new ${this.Types.RootClient.name}(new ${this.Types.Auth.name}.${this.Types.AuthClientCredentials.name}("client_id", "client_secret"));
+
+// Option 2: Pre-fetched bearer token. Use this when you manage token acquisition out-of-band.
+var clientWithToken = new ${this.Types.RootClient.name}(new ${this.Types.Auth.name}.${this.Types.AuthBearer.name}("my-token"));
+`)
+        ];
     }
 
     private buildExceptionHandlingSnippets(): string[] {

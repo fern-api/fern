@@ -290,6 +290,13 @@ fixtures:
     - customConfig:
         unified-client-options: true
       outputFolder: unified-client-options
+    - customConfig:
+        auth-class-hierarchy: true
+      outputFolder: auth-class-hierarchy
+    - customConfig:
+        auth-class-hierarchy: true
+        unified-client-options: true
+      outputFolder: auth-class-hierarchy-unified
   bearer-token-environment-variable:
     - customConfig: null
       outputFolder: no-custom-config

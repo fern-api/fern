@@ -306,6 +306,18 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                 }
             ];
         } else if (scheme.type === "oauth") {
+            if (this.settings.authClassHierarchy) {
+                // OAuth credentials and any token-endpoint custom properties are carried by
+                // `Auth.ClientCredentials` (or replaced by `Auth.Bearer`); ClientOptions only
+                // exposes a single `required Auth` property for the caller to populate.
+                return [
+                    {
+                        name: "Auth",
+                        type: this.Types.Auth,
+                        docs: "OAuth authentication. Use `Auth.ClientCredentials` for the standard OAuth client-credentials flow, or `Auth.Bearer` to provide a pre-fetched access token."
+                    }
+                ];
+            }
             const fields: UnifiedField[] = [
                 {
                     name: "ClientId",
