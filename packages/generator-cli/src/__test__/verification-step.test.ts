@@ -415,6 +415,46 @@ describe("PostGenerationPipeline integration with VerificationStep", () => {
         }
     });
 
+    it("aborts the pipeline before GithubStep when VerificationStep.execute() throws an unexpected error", async () => {
+        // Defense-in-depth: even if VerificationStep's internal try/catch is bypassed and an
+        // unhandled exception leaks out, the pipeline must not push a broken SDK to GithubStep.
+        const verifyExecute = vi
+            .spyOn(VerificationStep.prototype, "execute")
+            .mockRejectedValue(new Error("docker daemon unreachable"));
+
+        const githubExecute = vi
+            .spyOn(GithubStep.prototype, "execute")
+            .mockResolvedValue({ executed: true, success: true });
+
+        try {
+            const pipeline = new PostGenerationPipeline(
+                {
+                    outputDir: workspacePath,
+                    generatorName,
+                    generatorVersions,
+                    verify: { enabled: true },
+                    github: {
+                        enabled: true,
+                        uri: "owner/repo",
+                        token: "ghp_xxx",
+                        mode: "pull-request"
+                    }
+                },
+                silentLogger
+            );
+
+            const result = await pipeline.run();
+
+            expect(result.success).toBe(false);
+            expect(result.errors?.some((err) => err.includes("docker daemon unreachable"))).toBe(true);
+            expect(githubExecute).not.toHaveBeenCalled();
+            expect(result.steps.github).toBeUndefined();
+        } finally {
+            verifyExecute.mockRestore();
+            githubExecute.mockRestore();
+        }
+    });
+
     it("forwards config.verify.runner to docker-utils calls (CLI plumbing parity for --verify with --runner)", async () => {
         // Mirrors the shape `runLocalGenerationForWorkspace` produces when the user passes
         // `--verify` with a non-default `--runner`: `verify: { enabled: verify === true, runner }`.

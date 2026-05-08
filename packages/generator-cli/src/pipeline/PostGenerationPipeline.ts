@@ -185,6 +185,12 @@ export class PostGenerationPipeline {
                 result.errors = result.errors ?? [];
                 const errorMessage = extractErrorMessage(error);
                 result.errors.push(`${step.name} step error: ${errorMessage}`);
+                // Defense-in-depth: an unhandled throw inside VerificationStep should still
+                // abort the pipeline so a broken SDK never makes it to GithubStep, mirroring
+                // the success: false branch above.
+                if (step.name === "verify") {
+                    break;
+                }
             }
         }
 
