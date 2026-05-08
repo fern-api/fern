@@ -199,6 +199,12 @@ types:
       type: string
       format: optional<StreamFormat>
       terminator: optional<string>
+      resumable:
+        type: optional<boolean>
+        docs: |
+          For SSE responses (`format: sse`), when true, the endpoint
+          participates in client-side reconnection using `Last-Event-ID`
+          and `retry:`. Defaults to false. No effect on non-SSE streams.
 
   StreamFormat:
     enum:

@@ -2054,6 +2054,7 @@ service:
               "response-stream": {
                 "docs": "OK",
                 "format": "sse",
+                "resumable": false,
                 "terminator": "[DONE]",
                 "type": "SessionsEventsResponse",
               },
@@ -2739,6 +2740,7 @@ service:
         type: SessionsEventsResponse
         format: sse
         terminator: '[DONE]'
+        resumable: false
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError

@@ -13,6 +13,7 @@ export const JsonResponse: core.serialization.ObjectSchema<serializers.JsonRespo
             schema: core.serialization.lazy(() => serializers.Schema),
             responseProperty: core.serialization.string().optional(),
             terminator: core.serialization.string().optional(),
+            resumable: core.serialization.boolean().optional(),
         })
         .extend(WithDescription)
         .extend(WithSource)
@@ -23,5 +24,6 @@ export declare namespace JsonResponse {
         schema: serializers.Schema.Raw;
         responseProperty?: string | null;
         terminator?: string | null;
+        resumable?: boolean | null;
     }
 }

@@ -85,6 +85,7 @@
               "response-stream": {
                 "docs": "Success!",
                 "format": "sse",
+                "resumable": false,
                 "terminator": undefined,
                 "type": "string",
               },
@@ -118,6 +119,7 @@
         docs: Success!
         type: string
         format: sse
+        resumable: false
       examples:
         - request:
             prompt: prompt
