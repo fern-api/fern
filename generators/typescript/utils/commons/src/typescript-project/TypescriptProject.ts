@@ -432,7 +432,7 @@ export abstract class TypescriptProject {
 
     protected getCommonDevDependencies(): Record<string, string> {
         const deps: Record<string, string> = {
-            "@types/node": "^18.19.70",
+            "@types/node": "^20.0.0",
             typescript: "~5.9.3"
         };
         if (this.linter === "biome" || this.formatter === "biome") {

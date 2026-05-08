@@ -1,0 +1,8 @@
+- summary: |
+    Property-level `x-fern-audiences` (and Fern definition `audiences:`) filtering now
+    correctly excludes properties whose audiences do not overlap the active filter and
+    preserves untagged properties as universal — matching endpoint-level audience semantics.
+    Examples are also scrubbed of excluded items: auto-generated `jsonExample` snapshots,
+    inlined request-body example properties, endpoint example query parameters, and
+    user-specified webhook payload examples.
+  type: fix

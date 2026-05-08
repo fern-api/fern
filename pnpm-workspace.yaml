@@ -25,9 +25,16 @@ minimumReleaseAge: 1440
 
 # Exempt internal Fern packages from the release age requirement since they are
 # published and consumed frequently within the monorepo ecosystem.
+# Also temporarily exempting rolldown/tsdown packages — these were published
+# today (2026-05-07) and haven't aged past the 24h window yet. These exclusions
+# can be removed once the pinned versions are older than 24 hours.
 minimumReleaseAgeExclude:
   - "@fern-api/*"
   - "@fern-fern/*"
+  - "@rolldown/*"
+  - rolldown
+  - rolldown-plugin-dts
+  - tsdown
 
 # Prevent trust level downgrades (e.g. a previously trusted-publisher package
 # losing its attestation). Catches compromised maintainer accounts.
@@ -65,7 +72,7 @@ catalog:
   "@fern-api/venus-api-sdk": 0.22.34
   "@fern-fern/docs-config": 0.0.80
   "@fern-fern/fdr-test-sdk": ^0.0.5297
-  "@fern-fern/fiddle-sdk": 1.0.2
+  "@fern-fern/fiddle-sdk": 1.0.3
   "@fern-fern/generator-exec-sdk": ^0.0.1167
   "@fern-fern/generators-sdk": 0.114.0-5745f9e74
   "@fern-fern/ir-v53-sdk": 1.0.1
@@ -87,7 +94,7 @@ catalog:
   "@octokit/rest": ^22.0.1
   "@open-rpc/meta-schema": ^1.14.9
   "@redocly/openapi-core": ^1.4.1
-  "@rolldown/binding-darwin-arm64": 1.0.0-rc.5
+  "@rolldown/binding-darwin-arm64": 1.0.0
   "@sentry/cli": ^2.42.2
   "@types/cli-progress": ^3.11.6
   "@types/cors": ^2.8.13
@@ -232,7 +239,7 @@ catalog:
   ts-essentials: ^10.1.1
   ts-morph: ^27.0.2
   ts-poet: ^6.7.0
-  tsdown: 0.20.1
+  tsdown: 0.22.0
   tsup: ^8.5.1
   tsx: ^4.21.0
   turbo: ^2.9.9

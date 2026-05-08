@@ -95,7 +95,23 @@ export const E0302_UNTERMINATED_STRING_LITERAL: MdxErrorCode = {
     description: "Make sure every quoted attribute value has a matching closing quote.",
     matches: (raw) =>
         /unexpected (?:end of file|line ending).*(?:attribute value|string)/i.test(raw) ||
-        /missing closing.*quote/i.test(raw)
+        /missing closing.*quote/i.test(raw),
+    suggestFix({ errorLineContent }) {
+        // Match an attribute with an opening quote but no closing quote on the same line.
+        // e.g. `prop="value` → `prop="value"`
+        const match = errorLineContent.match(/([A-Za-z_$][\w$-]*)=(["'])([^"']*?)$/);
+        if (match == null) {
+            return undefined;
+        }
+        const [whole, , quote, value] = match;
+        if (quote == null || value == null) {
+            return undefined;
+        }
+        return {
+            before: whole,
+            after: `${whole}${quote}`
+        };
+    }
 };
 
 /**
@@ -105,7 +121,21 @@ export const E0303_MISMATCHED_CLOSING_TAG: MdxErrorCode = {
     code: "E0303",
     title: "Mismatched JSX closing tag",
     description: "Make sure every JSX element is closed with a matching tag (or is self-closing).",
-    matches: (raw) => /(?:unexpected closing tag|expected (?:a corresponding|the closing tag))/i.test(raw)
+    matches: (raw) => /(?:unexpected closing tag|expected (?:a corresponding|the closing tag))/i.test(raw),
+    suggestFix({ errorLineContent, rawMessage }) {
+        // Try to extract the expected and actual tag names from the raw message.
+        // Common patterns: "expected closing tag </Foo>, not </Bar>"
+        //                  "Unexpected closing tag `</Bar>`, expected `</Foo>`"
+        const expectedMatch = rawMessage.match(/expected.*<\/([A-Za-z][\w.]*)\s*>/i);
+        const actualMatch = errorLineContent.match(/<\/([A-Za-z][\w.]*)\s*>/);
+        if (expectedMatch?.[1] != null && actualMatch?.[1] != null && expectedMatch[1] !== actualMatch[1]) {
+            return {
+                before: `</${actualMatch[1]}>`,
+                after: `</${expectedMatch[1]}>`
+            };
+        }
+        return undefined;
+    }
 };
 
 /**
@@ -115,7 +145,20 @@ export const E0304_UNCLOSED_JSX_ELEMENT: MdxErrorCode = {
     code: "E0304",
     title: "Unclosed JSX element",
     description: "Add a closing tag (`</Foo>`) or make the element self-closing (`<Foo />`).",
-    matches: (raw) => /unexpected end of file.*(?:tag|element)/i.test(raw)
+    matches: (raw) => /unexpected end of file.*(?:tag|element)/i.test(raw),
+    suggestFix({ errorLineContent }) {
+        // Match an unclosed tag like `<Foo` or `<Foo attr="val"` and close it.
+        const match = errorLineContent.match(/<([A-Za-z][\w.]*)(\s[^>]*)?$/);
+        if (match?.[1] == null) {
+            return undefined;
+        }
+        const tagName = match[1];
+        const attrs = match[2] ?? "";
+        return {
+            before: `<${tagName}${attrs}`,
+            after: `<${tagName}${attrs} />`
+        };
+    }
 };
 
 /**
@@ -125,7 +168,21 @@ export const E0305_INVALID_JS_EXPRESSION: MdxErrorCode = {
     code: "E0305",
     title: "Invalid JavaScript expression in MDX",
     description: "Could not parse a `{ ... }` expression. Check for missing braces, commas, or quotes.",
-    matches: (raw) => /could not parse expression with acorn|unexpected (?:token|character).*expression/i.test(raw)
+    matches: (raw) => /could not parse expression with acorn|unexpected (?:token|character).*expression/i.test(raw),
+    suggestFix({ errorLineContent }) {
+        // Common case: a standalone `{` or `}` that should be escaped as `\{` or `\}`.
+        // In MDX, literal braces must be escaped. Match a line that has an unmatched
+        // brace — simple heuristic: count open vs close braces.
+        const opens = (errorLineContent.match(/\{/g) ?? []).length;
+        const closes = (errorLineContent.match(/\}/g) ?? []).length;
+        if (opens === 1 && closes === 0) {
+            return { before: "{", after: "\\{" };
+        }
+        if (closes === 1 && opens === 0) {
+            return { before: "}", after: "\\}" };
+        }
+        return undefined;
+    }
 };
 
 /**

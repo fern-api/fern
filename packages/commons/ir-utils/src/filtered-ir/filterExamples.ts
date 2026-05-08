@@ -23,6 +23,22 @@ import {
 import { getWireValue } from "../utils/namesUtils.js";
 import { FilteredIr } from "./FilteredIr.js";
 
+/**
+ * Drops `jsonExample` keys that are not in the audience-filtered property list.
+ */
+function filterJsonExampleObjectKeys(jsonExample: unknown, allowedKeys: Set<string>): unknown {
+    if (jsonExample == null || typeof jsonExample !== "object" || Array.isArray(jsonExample)) {
+        return jsonExample;
+    }
+    const filtered: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(jsonExample as Record<string, unknown>)) {
+        if (allowedKeys.has(key)) {
+            filtered[key] = value;
+        }
+    }
+    return filtered;
+}
+
 function filterExampleSingleUnionTypeProperties({
     filteredIr,
     singleUnionTypeProperties
@@ -188,27 +204,32 @@ function filterExampleTypeReference({
                           ...exampleTypeReference,
                           shape: ExampleTypeReferenceShape.named({ ...n, shape: ExampleTypeShape.enum(e) })
                       }),
-                      object: (o) => ({
-                          ...exampleTypeReference,
-                          shape: ExampleTypeReferenceShape.named({
-                              ...n,
-                              shape: ExampleTypeShape.object({
-                                  ...o,
-                                  properties: o.properties
-                                      .filter((p) =>
-                                          filteredIr.hasProperty(p.originalTypeDeclaration.typeId, getWireValue(p.name))
-                                      )
-                                      .map((p) => ({
-                                          ...p,
-                                          value: filterExampleTypeReference({
-                                              filteredIr,
-                                              exampleTypeReference: p.value
-                                          })
-                                      }))
-                                      .filter((p): p is ExampleObjectProperty => p.value !== undefined)
+                      object: (o) => {
+                          const filteredProperties = o.properties
+                              .filter((p) =>
+                                  filteredIr.hasProperty(p.originalTypeDeclaration.typeId, getWireValue(p.name))
+                              )
+                              .map((p) => ({
+                                  ...p,
+                                  value: filterExampleTypeReference({
+                                      filteredIr,
+                                      exampleTypeReference: p.value
+                                  })
+                              }))
+                              .filter((p): p is ExampleObjectProperty => p.value !== undefined);
+                          const allowedKeys = new Set(filteredProperties.map((p) => getWireValue(p.name)));
+                          return {
+                              ...exampleTypeReference,
+                              jsonExample: filterJsonExampleObjectKeys(exampleTypeReference.jsonExample, allowedKeys),
+                              shape: ExampleTypeReferenceShape.named({
+                                  ...n,
+                                  shape: ExampleTypeShape.object({
+                                      ...o,
+                                      properties: filteredProperties
+                                  })
                               })
-                          })
-                      }),
+                          };
+                      },
                       union: (u) => {
                           const filteredUnion = filterExampleSingleUnionTypeProperties({
                               filteredIr,
@@ -277,12 +298,18 @@ function filterExamplePathParameters({
 
 function filterExampleQueryParameters({
     filteredIr,
-    queryParameters
+    queryParameters,
+    endpointId
 }: {
     filteredIr: FilteredIr;
     queryParameters: ExampleQueryParameter[];
+    endpointId: string | undefined;
 }): ExampleQueryParameter[] {
     return queryParameters
+        .filter(
+            (queryParameter) =>
+                endpointId == null || filteredIr.hasQueryParameter(endpointId, getWireValue(queryParameter.name))
+        )
         .map((queryParameter) => {
             const filteredQueryParameter = filterExampleTypeReference({
                 filteredIr,
@@ -320,34 +347,36 @@ function filterExampleHeader({
 
 function filterExampleRequestBody({
     filteredIr,
-    requestBody
+    requestBody,
+    endpointId
 }: {
     filteredIr: FilteredIr;
     requestBody: ExampleRequestBody;
+    endpointId: string | undefined;
 }): ExampleRequestBody | undefined {
     return requestBody._visit<ExampleRequestBody | undefined>({
         inlinedRequestBody: (inlined) => {
+            const filteredProperties = inlined.properties
+                .filter((p) => {
+                    const wireName = getWireValue(p.name);
+                    if (p.originalTypeDeclaration == null) {
+                        return endpointId != null ? filteredIr.hasRequestProperty(endpointId, wireName) : true;
+                    }
+                    return filteredIr.hasProperty(p.originalTypeDeclaration.typeId, wireName);
+                })
+                .map((property: ExampleInlinedRequestBodyProperty) => {
+                    const filteredValue = filterExampleTypeReference({
+                        filteredIr,
+                        exampleTypeReference: property.value
+                    });
+                    return filteredValue !== undefined ? { ...property, value: filteredValue } : undefined;
+                })
+                .filter((property): property is ExampleInlinedRequestBodyProperty => property !== undefined);
+            const allowedKeys = new Set(filteredProperties.map((p) => getWireValue(p.name)));
             return {
                 ...requestBody,
-                properties: inlined.properties
-                    .filter((p: ExampleInlinedRequestBodyProperty) =>
-                        p.originalTypeDeclaration
-                            ? filteredIr.hasProperty(p.originalTypeDeclaration.typeId, getWireValue(p.name))
-                            : true
-                    )
-                    .map((property: ExampleInlinedRequestBodyProperty) => {
-                        const filteredProperty = filterExampleTypeReference({
-                            filteredIr,
-                            exampleTypeReference: property.value
-                        });
-                        return filteredProperty !== undefined
-                            ? {
-                                  ...property,
-                                  value: filteredProperty
-                              }
-                            : undefined;
-                    })
-                    .filter((property): property is ExampleInlinedRequestBodyProperty => property !== undefined)
+                jsonExample: filterJsonExampleObjectKeys(inlined.jsonExample, allowedKeys),
+                properties: filteredProperties
             };
         },
         reference: (reference) => {
@@ -419,10 +448,12 @@ function filterExampleResponse({
 
 export function filterEndpointExample({
     filteredIr,
-    example
+    example,
+    endpointId
 }: {
     filteredIr: FilteredIr;
     example: ExampleEndpointCall;
+    endpointId?: string;
 }): ExampleEndpointCall {
     return {
         ...example,
@@ -437,13 +468,79 @@ export function filterEndpointExample({
         }),
         serviceHeaders: filterExampleHeader({ filteredIr, headers: example.serviceHeaders }),
         endpointHeaders: filterExampleHeader({ filteredIr, headers: example.endpointHeaders }),
-        queryParameters: filterExampleQueryParameters({ filteredIr, queryParameters: example.queryParameters }),
+        queryParameters: filterExampleQueryParameters({
+            filteredIr,
+            queryParameters: example.queryParameters,
+            endpointId
+        }),
         request:
             example.request !== undefined
-                ? filterExampleRequestBody({ filteredIr, requestBody: example.request })
+                ? filterExampleRequestBody({ filteredIr, requestBody: example.request, endpointId })
                 : undefined,
         response: filterExampleResponse({ filteredIr, response: example.response })
     };
+}
+
+/**
+ * Filters an inline webhook payload example by `hasWebhookPayloadProperty`. Inline
+ * webhook payloads are not registered as regular types in the filter graph, so we
+ * cannot reuse `filterExampleTypeReference` (which short-circuits on `hasTypeId`).
+ *
+ * The IR converter currently emits user-specified inline webhook payload examples
+ * as `container.map` shapes of `unknown` values (one entry per top-level key)
+ * rather than as typed `named.object` shapes. We handle both forms.
+ */
+export function filterWebhookExamplePayload({
+    filteredIr,
+    payload,
+    webhookId
+}: {
+    filteredIr: FilteredIr;
+    payload: ExampleTypeReference;
+    webhookId: string | undefined;
+}): ExampleTypeReference {
+    if (webhookId == null) {
+        return payload;
+    }
+    const isAllowed = (wireName: string) => filteredIr.hasWebhookPayloadProperty(webhookId, wireName);
+
+    if (payload.shape.type === "named" && payload.shape.shape.type === "object") {
+        const named = payload.shape;
+        const objectShape = named.shape;
+        if (objectShape.type !== "object") {
+            return payload;
+        }
+        const filteredProperties = objectShape.properties.filter((p) => isAllowed(getWireValue(p.name)));
+        const allowedKeys = new Set(filteredProperties.map((p) => getWireValue(p.name)));
+        return {
+            ...payload,
+            jsonExample: filterJsonExampleObjectKeys(payload.jsonExample, allowedKeys),
+            shape: ExampleTypeReferenceShape.named({
+                ...named,
+                shape: ExampleTypeShape.object({ ...objectShape, properties: filteredProperties })
+            })
+        };
+    }
+
+    if (payload.shape.type === "container" && payload.shape.container.type === "map") {
+        const mapContainer = payload.shape.container;
+        const filteredEntries = mapContainer.map.filter((entry) => {
+            const keyJson = entry.key.jsonExample;
+            return typeof keyJson === "string" && isAllowed(keyJson);
+        });
+        const allowedKeys = new Set(
+            filteredEntries
+                .map((entry) => entry.key.jsonExample)
+                .filter((key): key is string => typeof key === "string")
+        );
+        return {
+            ...payload,
+            jsonExample: filterJsonExampleObjectKeys(payload.jsonExample, allowedKeys),
+            shape: ExampleTypeReferenceShape.container(ExampleContainer.map({ ...mapContainer, map: filteredEntries }))
+        };
+    }
+
+    return payload;
 }
 
 export function filterExampleType({
@@ -461,19 +558,21 @@ export function filterExampleType({
                 : undefined;
         },
         enum: () => exampleType,
-        object: (o) => ({
-            ...exampleType,
-            shape: ExampleTypeShape.object({
-                ...o,
-                properties: o.properties
-                    .filter((p) => filteredIr.hasProperty(p.originalTypeDeclaration.typeId, getWireValue(p.name)))
-                    .map((p) => ({
-                        ...p,
-                        value: filterExampleTypeReference({ filteredIr, exampleTypeReference: p.value })
-                    }))
-                    .filter((p): p is ExampleObjectProperty => p.value !== undefined)
-            })
-        }),
+        object: (o) => {
+            const filteredProperties = o.properties
+                .filter((p) => filteredIr.hasProperty(p.originalTypeDeclaration.typeId, getWireValue(p.name)))
+                .map((p) => ({
+                    ...p,
+                    value: filterExampleTypeReference({ filteredIr, exampleTypeReference: p.value })
+                }))
+                .filter((p): p is ExampleObjectProperty => p.value !== undefined);
+            const allowedKeys = new Set(filteredProperties.map((p) => getWireValue(p.name)));
+            return {
+                ...exampleType,
+                jsonExample: filterJsonExampleObjectKeys(exampleType.jsonExample, allowedKeys),
+                shape: ExampleTypeShape.object({ ...o, properties: filteredProperties })
+            };
+        },
         union: (u) => {
             const filteredUnion = filterExampleSingleUnionTypeProperties({
                 filteredIr,
