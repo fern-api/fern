@@ -663,6 +663,7 @@ dotnet_diagnostic.IDE0005.severity = error
 
         // Auth fields are required when isAuthMandatory is false (confusingly named)
         const isOptional = this.context.ir.sdkConfig.isAuthMandatory;
+        const authClassHierarchy = this.context.generation.settings.authClassHierarchy;
         if (!isOptional) {
             for (const scheme of this.context.ir.auth.schemes) {
                 if (scheme.type === "bearer") {
@@ -673,8 +674,19 @@ dotnet_diagnostic.IDE0005.severity = error
                 } else if (scheme.type === "header") {
                     parts.push(`${this.context.case.pascalSafe(scheme.name)} = "test"`);
                 } else if (scheme.type === "oauth") {
-                    parts.push(`ClientId = "test"`);
-                    parts.push(`ClientSecret = "test"`);
+                    if (authClassHierarchy) {
+                        // When the auth-class-hierarchy flag is on, ClientOptions has a single
+                        // required `Auth` property instead of separate ClientId/ClientSecret
+                        // fields. The fully qualified name (with `global::`) is used because the
+                        // test project may declare a sibling `Auth` namespace that would
+                        // otherwise shadow the SDK `Auth` type (CS0234).
+                        parts.push(
+                            `Auth = new global::${this.namespaces.publicCore}.Auth.ClientCredentials("test", "test")`
+                        );
+                    } else {
+                        parts.push(`ClientId = "test"`);
+                        parts.push(`ClientSecret = "test"`);
+                    }
                 }
             }
         }

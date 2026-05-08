@@ -835,14 +835,25 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     /**
      * Build `new Auth.ClientCredentials("client_id", "client_secret", ...)` for snippets.
      * Includes example values for any extra OAuth token-endpoint properties (audience, scopes, ...).
+     *
+     * Always emits a fully-qualified type name so the snippet compiles even when the
+     * surrounding scope (e.g. a test namespace) declares a sibling `Auth` sub-namespace
+     * (CS0234), which would otherwise shadow the SDK `Auth` type.
      */
     private buildAuthClientCredentialsExample(): ast.CodeBlock {
         const extraParams = this.getOAuthAdditionalParamNames();
-        const args: string[] = ['"client_id"', '"client_secret"'];
+        const args: ast.CodeBlock[] = [this.csharp.codeblock('"client_id"'), this.csharp.codeblock('"client_secret"')];
         for (const param of extraParams) {
-            args.push(`"${param}"`);
+            args.push(this.csharp.codeblock(`"${param}"`));
         }
-        return this.csharp.codeblock(`new Auth.ClientCredentials(${args.join(", ")})`);
+        return this.csharp.codeblock((writer) => {
+            writer.writeNode(
+                this.csharp.instantiateClass({
+                    classReference: this.Types.AuthClientCredentials.asFullyQualified(),
+                    arguments_: args
+                })
+            );
+        });
     }
 
     private getConstructorParameters(authOnly = false): {

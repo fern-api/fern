@@ -82,7 +82,10 @@ public class BaseMockServerTest
         Client = new SeedOauthClientCredentialsMandatoryAuthClient(
             clientOptions: new ClientOptions
             {
-                Auth = new Auth.ClientCredentials("client_id", "client_secret"),
+                Auth = new SeedOauthClientCredentialsMandatoryAuth.Auth.ClientCredentials(
+                    "client_id",
+                    "client_secret"
+                ),
                 BaseUrl = Server.Urls[0],
                 MaxRetries = 0,
             }

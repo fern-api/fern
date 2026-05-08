@@ -45,7 +45,10 @@ using SeedOauthClientCredentialsMandatoryAuth;
 var client = new SeedOauthClientCredentialsMandatoryAuthClient(
     clientOptions: new ClientOptions
     {
-        Auth = new Auth.ClientCredentials("client_id", "client_secret"),
+        Auth = new SeedOauthClientCredentialsMandatoryAuth.Auth.ClientCredentials(
+            "client_id",
+            "client_secret"
+        ),
     }
 );
 await client.Auth.GetTokenWithClientCredentialsAsync(

@@ -31,8 +31,10 @@ public class RetriesTests
                 HttpClient = _httpClient,
                 MaxRetries = MaxRetries,
                 BaseUrl = "http://localhost",
-                ClientId = "test",
-                ClientSecret = "test",
+                Auth = new global::SeedOauthClientCredentialsMandatoryAuth.Auth.ClientCredentials(
+                    "test",
+                    "test"
+                ),
             }
         )
         {
