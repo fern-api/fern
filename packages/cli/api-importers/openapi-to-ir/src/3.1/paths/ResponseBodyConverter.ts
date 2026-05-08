@@ -300,6 +300,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                             docs: this.responseBody.description,
                             payload: convertedSchema.type,
                             terminator: this.streamingExtension?.terminator,
+                            resumable: this.streamingExtension?.resumable,
                             v2Examples: this.convertMediaTypeObjectExamples({
                                 mediaTypeObject,
                                 generateOptionalProperties: true,

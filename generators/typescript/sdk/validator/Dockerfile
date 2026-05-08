@@ -1,4 +1,4 @@
-FROM node:20-slim
+FROM node:22.22-bookworm-slim
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates git \

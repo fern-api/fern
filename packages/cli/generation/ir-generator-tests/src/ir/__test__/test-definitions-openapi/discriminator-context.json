@@ -888,6 +888,7 @@
                                     "inline": null
                                 },
                                 "terminator": null,
+                                "resumable": false,
                                 "docs": "SSE events stream",
                                 "v2Examples": null
                             }
@@ -1683,6 +1684,7 @@
                                     "inline": null
                                 },
                                 "terminator": null,
+                                "resumable": false,
                                 "docs": "Events with explicit context",
                                 "v2Examples": null
                             }
