@@ -785,6 +785,30 @@ importers:
         specifier: 'catalog:'
         version: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@22.19.17)(@vitest/coverage-v8@4.1.4)(vite@7.3.2(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
+  generators/cli:
+    devDependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../packages/configs
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../packages/commons/fs-utils
+      '@fern-fern/ir-sdk':
+        specifier: 66.0.0
+        version: 66.0.0
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.19.17
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@22.19.17)(@vitest/coverage-v8@4.1.4)(vite@7.3.2(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
+
   generators/csharp/base:
     devDependencies:
       '@fern-api/base-generator':
@@ -17608,7 +17632,7 @@ snapshots:
 
   '@rolldown/binding-wasm32-wasi@1.0.0-rc.12(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
     dependencies:
-      '@napi-rs/wasm-runtime': 1.1.2(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
+      '@napi-rs/wasm-runtime': 1.1.4(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
     transitivePeerDependencies:
       - '@emnapi/core'
       - '@emnapi/runtime'
