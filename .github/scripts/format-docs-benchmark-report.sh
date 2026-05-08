@@ -42,7 +42,7 @@ lookup_docs_baseline() {
       for f in "${run_dir}"*.jsonl; do
         [ -f "$f" ] || continue
         local dur
-        dur=$(jq -r --arg spec "$spec" 'select(.spec == $spec) | .duration_seconds' "$f" 2>/dev/null || true)
+        dur=$(jq -r --arg spec "$spec" 'select(.spec == $spec and (.exit_code == 0 or .exit_code == null)) | .duration_seconds' "$f" 2>/dev/null || true)
         if [ -n "$dur" ] && [ "$dur" != "null" ] && [ "$dur" != "0" ]; then
           durations+=("$dur")
         fi
@@ -57,7 +57,7 @@ lookup_docs_baseline() {
     for f in "${BASELINE_DIR}"/*.jsonl; do
       [ -f "$f" ] || continue
       local dur
-      dur=$(jq -r --arg spec "$spec" 'select(.spec == $spec) | .duration_seconds' "$f" 2>/dev/null || true)
+      dur=$(jq -r --arg spec "$spec" 'select(.spec == $spec and (.exit_code == 0 or .exit_code == null)) | .duration_seconds' "$f" 2>/dev/null || true)
       if [ -n "$dur" ] && [ "$dur" != "null" ] && [ "$dur" != "0" ]; then
         BASELINE_VAL="$dur"
         BASELINE_RUNS=1
