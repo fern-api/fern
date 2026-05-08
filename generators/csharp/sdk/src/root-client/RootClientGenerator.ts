@@ -331,7 +331,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 key: this.csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
                 value: this.context.getCurrentVersionValueAccess()
             });
-            // When `user-agent-from-package` is enabled, falls back to
+            // When `user-agent-name-from-package` is enabled, falls back to
             // `$"<NuGetPackageId>/{Version.Current}"` when the IR has no
             // `platformHeaders.userAgent` (e.g. OpenAPI imports), mirroring the
             // TypeScript generator's npm-package-name fallback. Defaults off so
@@ -341,7 +341,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 packageName: this.generation.names.project.packageId,
                 csharp: this.csharp,
                 versionValueAccess: this.context.getCurrentVersionValueAccess(),
-                userAgentFromPackage: this.settings.userAgentFromPackage
+                userAgentNameFromPackage: this.settings.userAgentNameFromPackage
             });
             if (userAgentEntry != null) {
                 platformHeaderEntries.push(userAgentEntry);
