@@ -1,4 +1,4 @@
-FROM node:24.14-slim
+FROM node:24.15.0-slim
 
 RUN apt-get update \
     && apt-get -y --no-install-recommends dist-upgrade \

@@ -5,7 +5,7 @@
 FROM rust:1.82-alpine3.20 AS rust
 RUN rustup component add rustfmt
 
-FROM node:22.22-alpine3.23
+FROM node:24.15.0-alpine3.23
 
 RUN apk update && apk upgrade --no-cache
 
