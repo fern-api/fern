@@ -14,9 +14,8 @@ test:
     image: fernapi/fern-cli:latest
     command: docker build -f ./generators/cli/Dockerfile -t fernapi/fern-cli:latest .
 
-language: cli
 generatorType: SDK
-defaultOutputMode: github
+defaultOutputMode: local_files
 defaultCustomConfig: {}
 
 fixtures:
