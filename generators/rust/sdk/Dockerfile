@@ -5,12 +5,14 @@
 FROM rust:1.82-alpine3.20 AS rust
 RUN rustup component add rustfmt
 
-FROM node:22.22-alpine3.22
+FROM node:22.22-alpine3.23
+
+RUN apk update && apk upgrade --no-cache
 
 # Update bundled npm to refresh transitive dependencies (picomatch, brace-expansion,
 # ip-address, etc.) that ship inside /usr/local/lib/node_modules/npm and otherwise
 # carry known CVEs into the image. We install into a fresh prefix and swap directories
-# because in-place self-upgrade of the bundled npm in node:22.22-alpine3.22 fails with
+# because in-place self-upgrade of the bundled npm in node:22.22-alpine3.23 fails with
 # a stale module-resolution error.
 RUN mkdir -p /tmp/npm-upgrade \
     && npm install --prefix /tmp/npm-upgrade npm@11.13.0 \

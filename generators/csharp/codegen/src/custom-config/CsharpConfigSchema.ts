@@ -99,6 +99,11 @@ export const CsharpConfigSchema = z.object({
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
     "omit-fern-headers": z.boolean().optional(),
     "unified-client-options": z.boolean().optional(),
+    // When true, fall back to `$"<NuGetPackageId>/{Version.Current}"` for the
+    // `User-Agent` platform header when the IR's `platformHeaders.userAgent` is
+    // unset (e.g. SDKs imported from OpenAPI). Off by default to preserve the
+    // pre-existing behavior of emitting no `User-Agent` header in that case.
+    "user-agent-name-from-package": z.boolean().optional(),
 
     // Deprecated.
     "extra-dependencies": z
@@ -117,7 +122,13 @@ export const CsharpConfigSchema = z.object({
     // "slnx" (default) generates only the modern .slnx format.
     "sln-format": z.enum(["sln", "slnx"]).optional(),
     maxRetries: z.number().int().min(0).optional(),
-    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"]))
+    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"])),
+    "default-timeout-in-seconds": z
+        .union([z.number().positive(), z.literal("infinity")])
+        .optional()
+        .describe(
+            "The default timeout for network requests, in seconds. Set to `infinity` to disable the default timeout. SDK users can still override this per-request via request options."
+        )
 });
 
 export type CsharpConfigSchema = z.infer<typeof CsharpConfigSchema>;

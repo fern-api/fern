@@ -1,4 +1,32 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.66.0
+  changelogEntry:
+    - summary: |
+        Add a `default-timeout-in-seconds` config option to the C# SDK generator.
+        When set, the generated `ClientOptions.Timeout` defaults to the configured
+        value (or `Timeout.InfiniteTimeSpan` when set to `"infinity"`) instead of
+        the previously hardcoded 30 seconds. SDK users can still override the
+        timeout per-request via `RequestOptions.Timeout`.
+      type: feat
+    - summary: |
+        Add an opt-in `user-agent-name-from-package` custom config option. When set
+        to `true`, the generated client falls back to a
+        `<NuGetPackageId>/<version>` `User-Agent` header when no
+        `platformHeaders.userAgent` is set in the IR (e.g. for SDKs imported from
+        OpenAPI), matching the TypeScript generator's npm-package-name fallback.
+        Defaults to `false`, preserving the existing behavior of emitting no
+        `User-Agent` header in that case.
+      type: feat
+  createdAt: "2026-05-08"
+  irVersion: 66
+- version: 2.65.2
+  changelogEntry:
+    - summary: |
+        Bump generator container Node.js base image to `node:22.22-alpine3.23` and
+        apply latest Alpine package security updates at build time.
+      type: chore
+  createdAt: "2026-05-07"
+  irVersion: 66
 - version: 2.65.1
   changelogEntry:
     - summary: |

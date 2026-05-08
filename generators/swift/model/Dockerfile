@@ -1,4 +1,6 @@
-FROM node:22.12-alpine3.20
+FROM node:22.22-alpine3.23
+
+RUN apk update && apk upgrade --no-cache
 
 ARG SENTRY_DSN
 ARG SENTRY_ENVIRONMENT=production

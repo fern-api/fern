@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.40.3
+  changelogEntry:
+    - summary: |
+        Bump generator container Node.js base image to `node:22.22-alpine3.23` and
+        apply latest Alpine package security updates at build time.
+      type: chore
+  createdAt: "2026-05-07"
+  irVersion: 66
 - version: 1.40.2
   changelogEntry:
     - summary: |
