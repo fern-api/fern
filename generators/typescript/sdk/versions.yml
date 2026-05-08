@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.70.2
+  changelogEntry:
+    - summary: |
+        Bump the typescript-sdk-validator container's `node:20-slim` base image
+        to `node:22.22-bookworm-slim`. Node 20 went EOL March 24, 2026, and the
+        container was carrying the Node 20 EOL alert plus CVE-2025-55130
+        (Node 20 permission-model symlink bypass).
+      type: chore
+  createdAt: "2026-05-08"
+  irVersion: 66
 - version: 3.70.1
   changelogEntry:
     - summary: |
