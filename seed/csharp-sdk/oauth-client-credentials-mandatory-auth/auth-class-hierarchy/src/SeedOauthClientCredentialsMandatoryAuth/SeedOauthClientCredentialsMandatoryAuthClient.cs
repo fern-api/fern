@@ -1,0 +1,67 @@
+using SeedOauthClientCredentialsMandatoryAuth.Core;
+using SeedOauthClientCredentialsMandatoryAuth.Nested;
+
+namespace SeedOauthClientCredentialsMandatoryAuth;
+
+public partial class SeedOauthClientCredentialsMandatoryAuthClient
+    : ISeedOauthClientCredentialsMandatoryAuthClient
+{
+    private readonly RawClient _client;
+
+    public SeedOauthClientCredentialsMandatoryAuthClient(
+        Auth auth,
+        ClientOptions? clientOptions = null
+    )
+    {
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedOauthClientCredentialsMandatoryAuth" },
+                { "X-Fern-SDK-Version", Version.Current },
+                { "User-Agent", "Fernoauth-client-credentials-mandatory-auth/0.0.1" },
+            }
+        );
+        foreach (var header in platformHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        var clientOptionsWithAuth = clientOptions.Clone();
+        switch (auth)
+        {
+            case Auth.Bearer bearer:
+                clientOptionsWithAuth.Headers["Authorization"] = $"Bearer {bearer.Token}";
+                break;
+            case Auth.ClientCredentials creds:
+                var tokenProvider = new OAuthTokenProvider(
+                    creds.ClientId,
+                    creds.ClientSecret,
+                    new AuthClient(new RawClient(clientOptions))
+                );
+                clientOptionsWithAuth.Headers["Authorization"] =
+                    new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
+                        await tokenProvider.GetAccessTokenAsync().ConfigureAwait(false)
+                    );
+                break;
+            default:
+                throw new ArgumentException(
+                    $"Unsupported Auth type: {auth.GetType().Name}",
+                    nameof(auth)
+                );
+        }
+        _client = new RawClient(clientOptionsWithAuth);
+        Auth = new AuthClient(_client);
+        Nested = new NestedClient(_client);
+        Simple = new SimpleClient(_client);
+    }
+
+    public IAuthClient Auth { get; }
+
+    public INestedClient Nested { get; }
+
+    public ISimpleClient Simple { get; }
+}

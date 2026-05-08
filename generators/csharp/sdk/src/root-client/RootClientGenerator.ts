@@ -577,14 +577,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             // directly or fall back to the OAuth token provider for client-credentials.
                             const authAccess = unified ? "clientOptions.Auth" : "auth";
                             innerWriter.controlFlow("switch", this.csharp.codeblock(authAccess));
-                            innerWriter.writeLine(`case ${this.Types.AuthBearer.name} bearer:`);
+                            innerWriter.writeLine(`case ${this.Types.AuthBearer.scopedName} bearer:`);
                             innerWriter.indent();
                             innerWriter.writeTextStatement(
                                 `clientOptionsWithAuth.Headers["Authorization"] = $"Bearer {bearer.Token}"`
                             );
                             innerWriter.writeTextStatement("break");
                             innerWriter.dedent();
-                            innerWriter.writeLine(`case ${this.Types.AuthClientCredentials.name} creds:`);
+                            innerWriter.writeLine(`case ${this.Types.AuthClientCredentials.scopedName} creds:`);
                             innerWriter.indent();
                             innerWriter.write(
                                 "var tokenProvider = new OAuthTokenProvider(creds.ClientId, creds.ClientSecret, "
