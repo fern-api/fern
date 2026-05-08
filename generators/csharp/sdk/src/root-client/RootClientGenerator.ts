@@ -335,6 +335,19 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     key: this.csharp.codeblock(`"${platformHeaders.userAgent.header}"`),
                     value: this.csharp.codeblock(`"${platformHeaders.userAgent.value}"`)
                 });
+            } else {
+                // Fallback: emit `<NuGetPackageId>/<version>` so SDKs imported from OpenAPI
+                // (where `platformHeaders.userAgent` is unset) still send a User-Agent,
+                // mirroring the TypeScript generator's npm-package-name fallback.
+                const packageName = this.generation.names.project.packageId;
+                platformHeaderEntries.push({
+                    key: this.csharp.codeblock('"User-Agent"'),
+                    value: this.csharp.codeblock((writer) => {
+                        writer.write(`$"${packageName}/{`);
+                        writer.writeNode(this.context.getCurrentVersionValueAccess());
+                        writer.write('}"');
+                    })
+                });
             }
         }
 
