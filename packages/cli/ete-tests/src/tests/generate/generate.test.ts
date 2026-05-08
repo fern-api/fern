@@ -19,6 +19,17 @@ describe("fern generate", () => {
         expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of("sdks/typescript")))).toBe(true);
     }, 300_000);
 
+    it.concurrent("generate --local --verify succeeds with typescript sdk", async ({ signal }) => {
+        const pathOfDirectory = await init({ signal });
+
+        await runFernCli(["generate", "--local", "--verify", "--keepDocker"], {
+            cwd: pathOfDirectory,
+            signal
+        });
+
+        expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of("sdks/typescript")))).toBe(true);
+    }, 300_000);
+
     it.concurrent("ir contains fdr definitionid", async ({ signal }) => {
         if (globalThis.process.env.FERN_ORG_TOKEN_DEV == null) {
             throw new Error("FERN_ORG_TOKEN_DEV is not set");
