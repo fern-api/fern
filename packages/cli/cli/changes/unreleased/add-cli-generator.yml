@@ -1,0 +1,3 @@
+- summary: |
+    Register the new `fernapi/fern-cli` generator in the CLI configuration.
+  type: feat

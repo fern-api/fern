@@ -60,6 +60,12 @@
       "versionsFile": "generators/typescript/sdk/versions.yml",
       "changelogFolder": "generators/typescript/sdk/changes",
       "softwareDirectory": "generators/typescript"
+    },
+    "cli-generator": {
+      "name": "CLI Generator",
+      "versionsFile": "generators/cli/versions.yml",
+      "changelogFolder": "generators/cli/changes",
+      "softwareDirectory": "generators/cli"
     }
   }
 }

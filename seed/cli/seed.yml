@@ -1,0 +1,25 @@
+irVersion: v66
+displayName: CLI
+image: fernapi/fern-cli
+changelogLocation: ../../generators/cli/versions.yml
+
+publish:
+  docker:
+    file: ./generators/cli/Dockerfile
+    image: fernapi/fern-cli
+    context: .
+
+test:
+  docker:
+    image: fernapi/fern-cli:latest
+    command: docker build -f ./generators/cli/Dockerfile -t fernapi/fern-cli:latest .
+
+language: cli
+generatorType: SDK
+defaultOutputMode: github
+defaultCustomConfig: {}
+
+fixtures:
+  simple-api:
+    - customConfig: null
+      outputFolder: no-custom-config
