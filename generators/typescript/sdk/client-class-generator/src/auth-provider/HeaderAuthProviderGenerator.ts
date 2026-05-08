@@ -137,6 +137,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         const headerEnvVar = this.authScheme.headerEnvVar;
         const headerName = getWireValue(this.authScheme.name);
         const wrapperPropertyName = this.getWrapperPropertyName();
+        const prefix = this.authScheme.prefix;
 
         const constants: string[] = [];
 
@@ -147,6 +148,9 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
             constants.push(`const ENV_HEADER_KEY = "${headerEnvVar}" as const;`);
         }
         constants.push(`const HEADER_NAME = "${headerName}" as const;`);
+        if (prefix != null) {
+            constants.push(`const HEADER_PREFIX = "${prefix} " as const;`);
+        }
 
         for (const constant of constants.filter((c) => c !== "")) {
             context.sourceFile.addStatements(constant);
@@ -272,6 +276,8 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
                 ? `\n            (${supplierGetCode}) ??\n            process.env?.[ENV_HEADER_KEY]`
                 : supplierGetCode;
 
+        const headerValueExpr = this.authScheme.prefix != null ? `\`\${HEADER_PREFIX}\${${headerVar}}\`` : headerVar;
+
         if (this.neverThrowErrors) {
             // When neverThrowErrors is true, return empty headers if header value is missing
             return `
@@ -281,7 +287,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         }
 
         return {
-            headers: { [HEADER_NAME]: ${headerVar} },
+            headers: { [HEADER_NAME]: ${headerValueExpr} },
         };
         `;
         } else {
@@ -299,7 +305,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         }
 
         return {
-            headers: { [HEADER_NAME]: ${headerVar} },
+            headers: { [HEADER_NAME]: ${headerValueExpr} },
         };
         `;
         }
