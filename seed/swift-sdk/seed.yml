@@ -39,9 +39,9 @@ scripts:
     - image: swift:6.1.2
       commands:
         build:
-          - swift build -c release --build-tests
+          - swift test -c release
         test:
-          - swift test
+          - echo "tests ran during build step"
   local:
     - commands:
         build:

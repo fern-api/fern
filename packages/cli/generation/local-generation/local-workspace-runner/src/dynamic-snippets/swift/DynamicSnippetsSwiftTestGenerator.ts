@@ -74,7 +74,7 @@ export class DynamicSnippetsSwiftTestGenerator {
     }
 
     private async initializeProject(outputDir: AbsoluteFilePath): Promise<AbsoluteFilePath> {
-        const absolutePathToOutputDir = join(outputDir, RelativeFilePath.of("Snippets"));
+        const absolutePathToOutputDir = join(outputDir, RelativeFilePath.of(".snippets"));
         await mkdir(absolutePathToOutputDir, { recursive: true });
         return absolutePathToOutputDir;
     }
