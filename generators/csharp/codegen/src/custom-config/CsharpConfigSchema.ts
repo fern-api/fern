@@ -99,6 +99,11 @@ export const CsharpConfigSchema = z.object({
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
     "omit-fern-headers": z.boolean().optional(),
     "unified-client-options": z.boolean().optional(),
+    // When true, fall back to `$"<NuGetPackageId>/{Version.Current}"` for the
+    // `User-Agent` platform header when the IR's `platformHeaders.userAgent` is
+    // unset (e.g. SDKs imported from OpenAPI). Off by default to preserve the
+    // pre-existing behavior of emitting no `User-Agent` header in that case.
+    "user-agent-from-package": z.boolean().optional(),
 
     // Deprecated.
     "extra-dependencies": z

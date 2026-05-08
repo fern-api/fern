@@ -331,17 +331,21 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 key: this.csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
                 value: this.context.getCurrentVersionValueAccess()
             });
-            // Falls back to `$"<NuGetPackageId>/{Version.Current}"` when the IR has no
-            // `platformHeaders.userAgent` (e.g. OpenAPI imports), mirroring the TypeScript
-            // generator's npm-package-name fallback.
-            platformHeaderEntries.push(
-                buildUserAgentHeaderEntry({
-                    userAgent: platformHeaders.userAgent,
-                    packageName: this.generation.names.project.packageId,
-                    csharp: this.csharp,
-                    versionValueAccess: this.context.getCurrentVersionValueAccess()
-                })
-            );
+            // When `user-agent-from-package` is enabled, falls back to
+            // `$"<NuGetPackageId>/{Version.Current}"` when the IR has no
+            // `platformHeaders.userAgent` (e.g. OpenAPI imports), mirroring the
+            // TypeScript generator's npm-package-name fallback. Defaults off so
+            // existing C# SDKs imported from OpenAPI keep emitting no User-Agent.
+            const userAgentEntry = buildUserAgentHeaderEntry({
+                userAgent: platformHeaders.userAgent,
+                packageName: this.generation.names.project.packageId,
+                csharp: this.csharp,
+                versionValueAccess: this.context.getCurrentVersionValueAccess(),
+                userAgentFromPackage: this.settings.userAgentFromPackage
+            });
+            if (userAgentEntry != null) {
+                platformHeaderEntries.push(userAgentEntry);
+            }
         }
 
         const platformHeaderDictionary = this.csharp.dictionary({

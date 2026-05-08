@@ -29,32 +29,55 @@ function fakeVersionAccess(): ast.CodeBlock {
 }
 
 describe("buildUserAgentHeaderEntry", () => {
-    it("emits the IR-supplied header and value when `userAgent` is set", () => {
+    it("emits the IR-supplied header and value when `userAgent` is set, regardless of `userAgentFromPackage`", () => {
         // Mirrors the Fern Definition path where `sdkConfig.platformHeaders.userAgent`
-        // is always populated, so the generator should pass it through verbatim.
+        // is always populated, so the generator should pass it through verbatim
+        // even when the new opt-in flag is off.
         const entry = buildUserAgentHeaderEntry({
             userAgent: { header: "User-Agent", value: "MyClient/1.2.3" },
             packageName: "Plantstore",
             csharp: generation.csharp,
-            versionValueAccess: fakeVersionAccess()
+            versionValueAccess: fakeVersionAccess(),
+            userAgentFromPackage: false
         });
 
+        if (entry == null) {
+            throw new Error("Expected entry to be defined when `userAgent` is set.");
+        }
         expect(render(entry.key)).toBe('"User-Agent"');
         expect(render(entry.value)).toBe('"MyClient/1.2.3"');
     });
 
-    it("falls back to `<packageName>/{Version.Current}` when `userAgent` is undefined", () => {
-        // OpenAPI imports never set `platformHeaders.userAgent`, so the generator
-        // must synthesize a User-Agent from the NuGet package id and the static
-        // `Version.Current` expression — matching the TS generator's
-        // `<npm-package-name>/<version>` fallback.
+    it("returns `undefined` when `userAgent` is unset and `userAgentFromPackage` is false", () => {
+        // Default behavior for OpenAPI imports: the generator must emit no
+        // User-Agent entry at all so the generated SDK matches the pre-flag
+        // baseline. Returning `undefined` lets the caller skip the push.
         const entry = buildUserAgentHeaderEntry({
             userAgent: undefined,
             packageName: "Plantstore",
             csharp: generation.csharp,
-            versionValueAccess: fakeVersionAccess()
+            versionValueAccess: fakeVersionAccess(),
+            userAgentFromPackage: false
         });
 
+        expect(entry).toBeUndefined();
+    });
+
+    it("falls back to `<packageName>/{Version.Current}` when `userAgent` is undefined and the flag is on", () => {
+        // Opt-in parity with the TypeScript generator's
+        // `<npm-package-name>/<version>` fallback: only emitted when the user
+        // has explicitly enabled `user-agent-from-package`.
+        const entry = buildUserAgentHeaderEntry({
+            userAgent: undefined,
+            packageName: "Plantstore",
+            csharp: generation.csharp,
+            versionValueAccess: fakeVersionAccess(),
+            userAgentFromPackage: true
+        });
+
+        if (entry == null) {
+            throw new Error("Expected entry to be defined when `userAgentFromPackage` is true.");
+        }
         expect(render(entry.key)).toBe('"User-Agent"');
         expect(render(entry.value)).toBe('$"Plantstore/{Version.Current}"');
     });
@@ -66,9 +89,13 @@ describe("buildUserAgentHeaderEntry", () => {
             userAgent: undefined,
             packageName: "DocuSign.eSign",
             csharp: generation.csharp,
-            versionValueAccess: fakeVersionAccess()
+            versionValueAccess: fakeVersionAccess(),
+            userAgentFromPackage: true
         });
 
+        if (entry == null) {
+            throw new Error("Expected entry to be defined when `userAgentFromPackage` is true.");
+        }
         expect(render(entry.value)).toBe('$"DocuSign.eSign/{Version.Current}"');
     });
 
@@ -83,9 +110,13 @@ describe("buildUserAgentHeaderEntry", () => {
             csharp: generation.csharp,
             versionValueAccess: generation.csharp.codeblock((writer) => {
                 writer.write("MyVersionType.Current");
-            })
+            }),
+            userAgentFromPackage: true
         });
 
+        if (entry == null) {
+            throw new Error("Expected entry to be defined when `userAgentFromPackage` is true.");
+        }
         expect(render(entry.value)).toBe('$"pkg/{MyVersionType.Current}"');
     });
 });
