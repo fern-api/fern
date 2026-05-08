@@ -51,7 +51,11 @@ for api_name in "${fixtures[@]}"; do
         continue
     fi
 
-    api_block="api:\n  specs:\n    - openapi: ./openapi.yml"
+    if [ -f "$dir/openapi-overrides.yml" ]; then
+        api_block="api:\n  specs:\n    - openapi: ./openapi.yml\n      overrides: ./openapi-overrides.yml"
+    else
+        api_block="api:\n  specs:\n    - openapi: ./openapi.yml"
+    fi
 
     if [ ! -f "$gen_file" ]; then
         printf '# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json\n%b\n' "$api_block" > "$gen_file"

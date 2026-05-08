@@ -2,6 +2,7 @@
 api:
   specs:
     - openapi: ./openapi.yml
+      overrides: ./openapi-overrides.yml
 groups:
   php-sdk:
     generators:

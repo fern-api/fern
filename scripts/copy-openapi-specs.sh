@@ -1,7 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
-# Copy seed-generated OpenAPI specs into test-definition directories.
+# Copy seed-generated OpenAPI specs into test-definition directories and
+# generate x-fern-sdk-group-name / x-fern-sdk-method-name overrides.
 # Does NOT modify generators.yml — use wire-openapi-specs.sh for that.
 #
 # Usage:
@@ -55,6 +56,12 @@ for api_name in "${fixtures[@]}"; do
     fi
 
     cp "$seed_spec" "$dir/openapi.yml"
+
+    # Generate overrides if a definition/ directory exists (needed for group/method naming)
+    if [ -d "$dir/definition" ]; then
+        python3 "$SCRIPT_DIR/generate-openapi-overrides.py" "$dir/openapi.yml" "$dir/openapi-overrides.yml"
+    fi
+
     echo "✓ $api_name"
     copied=$((copied + 1))
 done
