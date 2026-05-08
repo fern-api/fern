@@ -10,7 +10,7 @@ ENV PATH=$PNPM_HOME:$PATH
 # libsystemd0, libudev1, libcap2, libtasn1-6, login/passwd, etc.) are
 # resolved on top of the base image.
 RUN apt-get update \
-  && apt-get -y --no-install-recommends dist-upgrade \
+  && apt-get -y upgrade \
   && apt-get -y autoremove \
   && rm -rf /var/lib/apt/lists/*
 

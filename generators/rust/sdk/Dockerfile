@@ -7,7 +7,7 @@ RUN rustup component add rustfmt
 
 FROM node:22.22-alpine3.23
 
-RUN apk update && apk upgrade --no-cache --available
+RUN apk update && apk upgrade --no-cache
 
 # Update bundled npm to refresh transitive dependencies (picomatch, brace-expansion,
 # ip-address, etc.) that ship inside /usr/local/lib/node_modules/npm and otherwise

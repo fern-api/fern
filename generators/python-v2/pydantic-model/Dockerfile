@@ -11,7 +11,6 @@ FROM node:22.22-bookworm-slim
 RUN apt-get update \
     && apt-get -y --no-install-recommends dist-upgrade \
     && apt-get install -y --no-install-recommends ca-certificates curl \
-    && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/*
 RUN rm -rf /usr/local/lib/node_modules /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /opt/yarn-*
 RUN curl -LsSf https://astral.sh/ruff/0.15.7/install.sh | sh
