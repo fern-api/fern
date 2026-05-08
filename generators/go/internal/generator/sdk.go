@@ -690,22 +690,8 @@ func (f *fileWriter) writeRequestOptionStructs(
 				}
 				declaredOptionStructs[pascalCase] = true
 
-				funcTypeName := pascalCase + "FuncOption"
-				receiver := typeNameToReceiver(funcTypeName)
-				f.P("// ", funcTypeName, " implements the RequestOption interface.")
-				f.P("type ", funcTypeName, " struct {")
-				f.P(pascalCase, "Func func() (string, error)")
-				f.P("}")
-				f.P()
-				f.P("func (", receiver, " *", funcTypeName, ") applyRequestOptions(opts *RequestOptions) {")
-				f.P("opts.", pascalCase, "Func = ", receiver, ".", pascalCase, "Func")
-				f.P("}")
-				f.P()
-				if asIdempotentRequestOption {
-					f.P("func (", receiver, " *", funcTypeName, ") applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {")
-					f.P("opts.", pascalCase, "Func = ", receiver, ".", pascalCase, "Func")
-					f.P("}")
-					f.P()
+				if err := f.writeOptionStruct(pascalCase+"Func", "func() (string, error)", true, asIdempotentRequestOption); err != nil {
+					return err
 				}
 			}
 			if authScheme.Basic != nil {
