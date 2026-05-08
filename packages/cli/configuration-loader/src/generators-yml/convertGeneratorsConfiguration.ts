@@ -816,10 +816,6 @@ async function convertOutputMode({
     if (generator.github) {
         const repoString = isGithubSelfhosted(generator.github) ? generator.github.uri : generator.github.repository;
         const { owner, repo, remote } = parseRepository(repoString);
-        // For GHE instances, pass the host so Fiddle targets the correct API endpoint.
-        // The field isn't on the current fiddle-sdk types yet; intermediate variables
-        // bypass TypeScript's excess-property check (same pattern as `replay` in
-        // createAndStartJob.ts). Once the SDK is regenerated the field will type-check.
         const host = remote !== "github.com" ? remote : undefined;
         const publishInfo =
             generator.output != null
