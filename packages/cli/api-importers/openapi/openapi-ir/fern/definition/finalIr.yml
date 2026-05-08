@@ -708,6 +708,12 @@ types:
       schema: Schema
       responseProperty: optional<string>
       terminator: optional<string>
+      resumable:
+        type: optional<boolean>
+        docs: |
+          For `streamingSse` responses, when true, the endpoint participates in
+          client-side reconnection using SSE primitives (`Last-Event-ID` /
+          `retry:`). Unset/false on non-SSE variants.
 
   Schema:
     union:

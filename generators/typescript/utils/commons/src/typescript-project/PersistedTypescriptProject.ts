@@ -78,6 +78,10 @@ export class PersistedTypescriptProject {
         return this.testDirectory;
     }
 
+    public getPackageManager(): "pnpm" | "yarn" {
+        return this.packageManager;
+    }
+
     public async fixPackageJson(logger: Logger): Promise<void> {
         if (!this.runScripts) {
             return;

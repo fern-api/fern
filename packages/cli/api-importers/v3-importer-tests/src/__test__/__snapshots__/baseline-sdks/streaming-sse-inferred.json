@@ -229,6 +229,7 @@
                   "typeId": "type_:CompletionChunk",
                   "type": "named"
                 },
+                "resumable": false,
                 "type": "sse"
               },
               "type": "streaming"

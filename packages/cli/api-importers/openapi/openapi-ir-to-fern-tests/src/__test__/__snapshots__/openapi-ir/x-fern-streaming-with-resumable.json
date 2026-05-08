@@ -1,0 +1,289 @@
+{
+  "title": "Test x-fern-streaming.resumable document-level inheritance and per-endpoint override.",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "chatCompletions"
+        ],
+        "methodName": "createInheritsResumable"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateInheritsResumableChatCompletionsRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateInheritsResumableChatCompletionsRequest",
+          "schema": "CreateCompletionRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success!",
+        "resumable": true,
+        "fullExamples": [],
+        "schema": {
+          "generatedName": "CreateInheritsResumableChatCompletionsResponse",
+          "schema": "CompletionChunk",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "streamingSse"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "SSE endpoint that inherits resumable=true from the document-level config.",
+      "authed": false,
+      "method": "POST",
+      "path": "/completions/chat",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "prompt": {
+                "value": {
+                  "value": "prompt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "sse": true,
+            "events": [
+              {
+                "properties": {
+                  "text": {
+                    "value": {
+                      "value": "text",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "chatCompletions"
+        ],
+        "methodName": "createOptedOut"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateOptedOutChatCompletionsRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateOptedOutChatCompletionsRequest",
+          "schema": "CreateCompletionRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success!",
+        "resumable": false,
+        "fullExamples": [],
+        "schema": {
+          "generatedName": "CreateOptedOutChatCompletionsResponse",
+          "schema": "CompletionChunk",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "streamingSse"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "SSE endpoint that overrides the document-level default to opt out.",
+      "authed": false,
+      "method": "POST",
+      "path": "/completions/chat-no-resume",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "prompt": {
+                "value": {
+                  "value": "prompt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "sse": true,
+            "events": [
+              {
+                "properties": {
+                  "text": {
+                    "value": {
+                      "value": "text",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "CreateCompletionRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "createCompletionRequestPrompt",
+            "key": "prompt",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "CreateCompletionRequestPrompt",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "CreateCompletionRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "CompletionChunk": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "completionChunkText",
+            "key": "text",
+            "schema": {
+              "generatedName": "CompletionChunkText",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CompletionChunkText",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "CompletionChunk",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

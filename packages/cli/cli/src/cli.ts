@@ -2618,7 +2618,12 @@ function addAutomationsGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: 
  *       }
  *     ],
  *     "skippedMajor": [{ "name": "...", "current": "0.28.0", "latest": "1.37.0" }],
- *     "alreadyUpToDate": [{ "name": "...", "version": "3.65.5" }]
+ *     "alreadyUpToDate": [{ "name": "...", "version": "3.65.5" }],
+ *     "pr": {
+ *       "title": "chore(fern): upgrade CLI 4.66.0 → 4.96.0 and 1 generator",
+ *       "body": "## Fern Upgrade\n...",
+ *       "commitMessage": "chore: upgrade fern cli 4.66.0 -> 4.96.0, typescript-sdk 3.63.4 -> 3.65.5"
+ *     }
  *   }
  *
  * Example GitHub Actions usage:

@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.2.0] - 2026-05-08
+
+- Feature: Add optional `resumable` field to `SseStreamChunk`. When `true`, signals
+  to generators that the SSE endpoint supports auto-reconnection via standard SSE
+  primitives (`Last-Event-ID` request header and `retry:` directive). Populated from
+  the new `x-fern-streaming.resumable` OpenAPI extension (inheritable from the
+  document root) and the `resumable` field on Fern Definition `response-stream`
+  blocks. Defaults to `false`; non-resumable JSON streaming endpoints always emit
+  `false` since they have no `Last-Event-ID` semantics.
+
 ## [v67.1.0] - 2026-05-01
 
 - Feature: Add optional `defaultValue` field to `HttpHeader`, `QueryParameter`,

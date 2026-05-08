@@ -189,12 +189,17 @@ Multi-stage process: API Schema → IR Updates → Generator Updates → Release
 **Stages**:
 1. **API Schema**: Update `/fern/apis/<definition>/` → Run generator command (check `generators.yml` in each API folder)
 2. **IR Updates**: Modify `/packages/ir-sdk/fern/apis/ir-types-latest/definition/` → `pnpm ir:generate`
-3. **Versioning**: Update `CHANGELOG.md`, `VERSION`, and `/packages/cli/cli/versions.yml`
-4. **Compile**: `pnpm compile` and fix breaking changes (common: `switch` statements need new cases)
-5. **Generator Updates**: One PR for CLI/IR updates (merge first), then separate PR(s) for generator changes
-6. **IR Migrations**: Update `/packages/cli/generation/ir-migrations/` for backward compatibility
+3. **IR Versioning (REQUIRED for any change to `ir-types-latest`)**:
+   - Bump `packages/ir-sdk/fern/apis/ir-types-latest/VERSION` (minor for additive/optional fields, patch for non-schema, major only as a separate batched PR)
+   - Add an entry to `packages/ir-sdk/fern/apis/ir-types-latest/changelog/CHANGELOG.md` (hand-edited; no `changes/unreleased/` for IR)
+   - Do **not** edit `packages/cli/cli/versions.yml` `irVersion` for minor/patch — that field tracks the IR major and only changes during major bumps
+   - See `packages/ir-sdk/CLAUDE.md` for the full checklist
+4. **CLI Versioning**: Add a CLI changelog entry under `packages/cli/cli/changes/unreleased/` (drives CLI semver only — see `packages/cli/CLAUDE.md`)
+5. **Compile**: `pnpm compile` and fix breaking changes (common: `switch` statements need new cases)
+6. **Generator Updates**: One PR for CLI/IR updates (merge first), then separate PR(s) for generator changes
+7. **IR Migrations**: Only required for major IR bumps — add under `/packages/cli/generation/ir-migrations/`
 
-**Key Points**: Multiple PRs required, automatic publishing via `versions.yml`, generators use published (not workspace) IR versions
+**Key Points**: Multiple PRs required, automatic publishing via `versions.yml`, generators use published (not workspace) IR versions. Forgetting to bump `ir-types-latest/VERSION` means no new `@fern-fern/ir-sdk` is published and the new field is invisible to downstream consumers.
 
 ### Other Core Workflows
 

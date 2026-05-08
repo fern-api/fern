@@ -1,0 +1,60 @@
+openapi: 3.1.0
+info:
+  title: Test x-fern-streaming.resumable document-level inheritance and per-endpoint override.
+  version: 1.0.0
+x-fern-streaming:
+  resumable: true
+paths:
+  "/completions/chat":
+    post:
+      x-fern-sdk-group-name: chatCompletions
+      x-fern-sdk-method-name: createInheritsResumable
+      description: "SSE endpoint that inherits resumable=true from the document-level config."
+      x-fern-streaming:
+        format: sse
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCompletionRequest"
+      responses:
+        "200":
+          description: "Success!"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompletionChunk"
+  "/completions/chat-no-resume":
+    post:
+      x-fern-sdk-group-name: chatCompletions
+      x-fern-sdk-method-name: createOptedOut
+      description: "SSE endpoint that overrides the document-level default to opt out."
+      x-fern-streaming:
+        format: sse
+        resumable: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCompletionRequest"
+      responses:
+        "200":
+          description: "Success!"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompletionChunk"
+components:
+  schemas:
+    CreateCompletionRequest:
+      type: object
+      properties:
+        prompt:
+          type: string
+      required:
+        - prompt
+    CompletionChunk:
+      type: object
+      properties:
+        text:
+          type: string

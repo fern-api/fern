@@ -1,6 +1,11 @@
 # Build base image with dependencies
 FROM python:3.11.13 AS base
 
+RUN apt-get update \
+    && apt-get -y --no-install-recommends dist-upgrade \
+    && apt-get -y autoremove \
+    && rm -rf /var/lib/apt/lists/*
+
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 ENV _TYPER_STANDARD_TRACEBACK=1
 

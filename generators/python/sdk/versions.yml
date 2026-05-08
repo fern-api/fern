@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.12.3
+  changelogEntry:
+    - summary: |
+        Bump the python-sdk container's Node.js stage from `node:20.19.4-slim`
+        (Node 20 went EOL March 24, 2026) to `node:22.22-bookworm-slim`, and
+        apply latest Debian trixie security updates at build time so OS-level
+        package CVEs are picked up. Addresses CVE-2025-55130 (Node 20.19.4
+        permission-model symlink bypass) and the OS-level CVE-2026-31789
+        against `openssl 3.5.1-1`.
+      type: chore
+  createdAt: "2026-05-08"
+  irVersion: 66
+- version: 5.12.2
+  changelogEntry:
+    - summary: |
+        Apply latest Debian security updates to the python pydantic generator container
+        (`python:3.11.13`) at build time so OS-level package CVEs are picked up.
+      type: chore
+  createdAt: "2026-05-07"
+  irVersion: 66
 - version: 5.12.1
   changelogEntry:
     - summary: |

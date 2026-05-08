@@ -164,6 +164,7 @@ export function convertStreamHttpResponseBody({
                 docs,
                 payload: file.parseTypeReference(typeReference),
                 terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined,
+                resumable: typeof responseStream !== "string" ? responseStream.resumable : undefined,
                 v2Examples: undefined
             });
         } else {

@@ -112,27 +112,47 @@ pnpm generate
 - Update switch statements for new union cases
 - Test generator compatibility
 
-### 4. Add Migrations (if breaking)
+### 4. Bump the IR version (REQUIRED)
+**Every PR that modifies `ir-types-latest/definition/` must bump the IR version, otherwise no new IR package is published and consumers can't pick up the change.**
+
+The IR carries its own semver in `packages/ir-sdk/fern/apis/ir-types-latest/VERSION` (currently `MAJOR.MINOR.PATCH`, e.g. `67.2.0`). Pick the bump based on the change:
+
+- **Minor bump** (`67.1.0` → `67.2.0`): additive, backward-compatible changes — new optional fields, new union variants on forward-compatible enums, additive type declarations. This is the common case.
+- **Patch bump** (`67.1.0` → `67.1.1`): non-schema fixes (doc-string edits, comment-only changes, internal refactors that don't alter the public type surface).
+- **Major bump** (`67.x.x` → `68.0.0`): breaking changes — required-field additions, field removals/renames, type changes, removed enum values. **Major bumps are batched and done as a separate "Update IR to N+1" PR**, not per-feature; they require freezing the previous latest into `ir-types-vN/`, adding a `vN+1-to-vN` migration under `packages/cli/generation/ir-migrations/`, and re-aliasing `IrVersions.ts`.
+
+**Per-PR checklist for additive IR changes:**
+
+1. Edit `packages/ir-sdk/fern/apis/ir-types-latest/definition/<file>.yml`.
+2. Run `pnpm ir:generate` from the repo root to regenerate `packages/ir-sdk/src/sdk/...` artifacts.
+3. **Bump `packages/ir-sdk/fern/apis/ir-types-latest/VERSION`** (minor for additive, patch for non-schema).
+4. **Add an entry to `packages/ir-sdk/fern/apis/ir-types-latest/changelog/CHANGELOG.md`** describing the new field/feature, dated today, under a new `## [vMAJ.MIN.PATCH] - YYYY-MM-DD` heading at the top.
+5. Run `pnpm --filter @fern-api/ir-sdk compile` to confirm the workspace types still build.
+6. Do **not** edit `packages/cli/cli/versions.yml`'s `irVersion` — that field tracks the IR *major* and is only updated during major-version bumps.
+7. Do **not** edit `generators.yml` coordinates (`irV66`, `fern_fern_ir_v66`) — those reference the published external IR major and are stable across minor bumps.
+
+The IR changelog is **hand-edited**, not driven by a `changes/unreleased/` directory like the CLI.
+
+### 5. Add Migrations (only on major bump)
 ```bash
-# Add migration in CLI package
+# Required only when freezing latest into a new numbered version
 vim packages/cli/generation/ir-migrations/src/migrations/
 ```
 
 ## Version Release Process
 
-### 1. Prepare Release
-- Ensure `ir-types-latest` is stable
-- Update `CHANGELOG.md` with changes
-- Update `VERSION` file
+### Per-PR (minor / patch) — see "Adding New IR Features" above
+- Bump `packages/ir-sdk/fern/apis/ir-types-latest/VERSION`
+- Append entry to `packages/ir-sdk/fern/apis/ir-types-latest/changelog/CHANGELOG.md`
+- Release automation publishes a new `@fern-fern/ir-sdk` minor on merge to main
 
-### 2. Create New Version
-- Copy `ir-types-latest` to `ir-types-v{n+1}`
-- Update `packages/cli/cli/versions.yml`
-
-### 3. Test Compatibility
-- Run full test suite (`pnpm test:ete`)
-- Test seed across all generators
-- Validate migration logic
+### Major-version bump (batched, separate PR)
+1. Freeze current `ir-types-latest` contents into `packages/ir-sdk/fern/apis/ir-types-v{N}/`
+2. Set `ir-types-latest/VERSION` to `{N+1}.0.0`
+3. Add `packages/cli/generation/ir-migrations/src/migrations/v{N+1}-to-v{N}/` with backward migration logic
+4. Re-alias `packages/cli/generation/ir-migrations/src/ir-versions/IrVersions.ts` so `V{N+1} = @fern-api/ir-sdk` and add a frozen `@fern-fern/ir-v{N}-sdk` import
+5. Update `packages/cli/cli/versions.yml` `irVersion: {N}` → `{N+1}` for the next CLI release
+6. Run full test suite (`pnpm test:ete`) and seed across all generators
 
 ## Best Practices
 

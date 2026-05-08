@@ -1,0 +1,211 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "CompletionChunk": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "text": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "CreateCompletionRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "prompt": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  CreateCompletionRequest:
+    properties:
+      prompt: string
+    source:
+      openapi: ../openapi.yml
+  CompletionChunk:
+    properties:
+      text: optional<string>
+    source:
+      openapi: ../openapi.yml
+",
+    },
+    "chatCompletions.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "imports": {
+          "root": "__package__.yml",
+        },
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createInheritsResumable": {
+              "auth": undefined,
+              "docs": "SSE endpoint that inherits resumable=true from the document-level config.",
+              "examples": [
+                {
+                  "request": {
+                    "prompt": "prompt",
+                  },
+                  "response": {
+                    "stream": [
+                      {
+                        "data": {
+                          "text": "text",
+                        },
+                        "event": "",
+                      },
+                    ],
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/completions/chat",
+              "request": {
+                "body": "root.CreateCompletionRequest",
+                "content-type": "application/json",
+              },
+              "response-stream": {
+                "docs": "Success!",
+                "format": "sse",
+                "resumable": true,
+                "terminator": undefined,
+                "type": "root.CompletionChunk",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "createOptedOut": {
+              "auth": undefined,
+              "docs": "SSE endpoint that overrides the document-level default to opt out.",
+              "examples": [
+                {
+                  "request": {
+                    "prompt": "prompt",
+                  },
+                  "response": {
+                    "stream": [
+                      {
+                        "data": {
+                          "text": "text",
+                        },
+                        "event": "",
+                      },
+                    ],
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/completions/chat-no-resume",
+              "request": {
+                "body": "root.CreateCompletionRequest",
+                "content-type": "application/json",
+              },
+              "response-stream": {
+                "docs": "Success!",
+                "format": "sse",
+                "resumable": false,
+                "terminator": undefined,
+                "type": "root.CompletionChunk",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createInheritsResumable:
+      path: /completions/chat
+      method: POST
+      docs: >-
+        SSE endpoint that inherits resumable=true from the document-level
+        config.
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: root.CreateCompletionRequest
+        content-type: application/json
+      response-stream:
+        docs: Success!
+        type: root.CompletionChunk
+        format: sse
+        resumable: true
+      examples:
+        - request:
+            prompt: prompt
+          response:
+            stream:
+              - event: ''
+                data:
+                  text: text
+    createOptedOut:
+      path: /completions/chat-no-resume
+      method: POST
+      docs: SSE endpoint that overrides the document-level default to opt out.
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: root.CreateCompletionRequest
+        content-type: application/json
+      response-stream:
+        docs: Success!
+        type: root.CompletionChunk
+        format: sse
+        resumable: false
+      examples:
+        - request:
+            prompt: prompt
+          response:
+            stream:
+              - event: ''
+                data:
+                  text: text
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Test x-fern-streaming.resumable document-level inheritance and per-endpoint override.",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: >-
+  Test x-fern-streaming.resumable document-level inheritance and per-endpoint
+  override.
+",
+  },
+}
