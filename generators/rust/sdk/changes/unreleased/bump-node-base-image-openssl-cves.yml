@@ -1,7 +1,7 @@
 - summary: |
-    Bump Node base image from `node:22.22-alpine3.23` to
-    `node:24.15.0-alpine3.23` so the rebuilt image picks up the Alpine 3.23.4
-    openssl 3.5.6-r0 patch, addressing the OpenSSL April 2026 advisory CVEs
-    (CVE-2026-31789, CVE-2026-31790, CVE-2026-28387, CVE-2026-28388,
-    CVE-2026-28389, CVE-2026-28390, CVE-2026-2673).
+    Force a fresh `apk upgrade` in the rust-sdk container so the next image
+    rebuild pulls the patched openssl 3.5.6-r0 from Alpine 3.23.4, addressing
+    the OpenSSL April 2026 advisory CVEs (CVE-2026-31789, CVE-2026-31790,
+    CVE-2026-28387, CVE-2026-28388, CVE-2026-28389, CVE-2026-28390,
+    CVE-2026-2673).
   type: chore

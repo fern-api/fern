@@ -1,8 +1,9 @@
-FROM node:24.15.0-slim
+FROM node:24.14-slim
 
 RUN apt-get update \
     && apt-get -y --no-install-recommends dist-upgrade \
     && apt-get install -y --no-install-recommends ca-certificates git zip \
+    && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/*
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"

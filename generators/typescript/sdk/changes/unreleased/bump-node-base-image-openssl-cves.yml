@@ -1,7 +1,7 @@
 - summary: |
-    Bump Node base image from `node:24.14-slim` to `node:24.15.0-slim` so the
-    rebuilt image picks up the Debian trixie security update for openssl
-    (3.5.5-1~deb13u2), addressing the OpenSSL April 2026 advisory CVEs
-    (CVE-2026-31789, CVE-2026-31790, CVE-2026-28387, CVE-2026-28388,
+    Force a fresh `apt-get dist-upgrade` in the typescript-sdk container so the
+    next image rebuild pulls the patched openssl 3.5.5-1~deb13u2 from the
+    Debian trixie security suite, addressing the OpenSSL April 2026 advisory
+    CVEs (CVE-2026-31789, CVE-2026-31790, CVE-2026-28387, CVE-2026-28388,
     CVE-2026-28389, CVE-2026-28390, CVE-2026-2673).
   type: chore
