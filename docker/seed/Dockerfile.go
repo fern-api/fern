@@ -12,10 +12,10 @@ FROM docker:29.4.1-dind-alpine3.23
 COPY --from=wiremock-pull /wiremock.tar /wiremock.tar
 
 # Apply the latest APK security patches available for the base image
-RUN apk update && apk upgrade --no-cache
+RUN apk update && apk upgrade --no-cache --available
 
 # Install Go (multi-arch: supports both amd64 and arm64)
-ENV GO_VERSION=1.23.8
+ENV GO_VERSION=1.26.3
 RUN set -eux; \
     ARCH="$(uname -m)"; \
     case "${ARCH}" in \
@@ -34,7 +34,7 @@ ENV PATH="/usr/local/go/bin:${PATH}" \
 RUN mkdir -p "${GOPATH}/src" "${GOPATH}/bin"
 
 # Install golangci-lint
-ENV GOLANGCI_LINT_VERSION=v2.10.1
+ENV GOLANGCI_LINT_VERSION=v2.12.2
 RUN wget -O- -nv https://golangci-lint.run/install.sh | sh -s -- -b /usr/local/bin ${GOLANGCI_LINT_VERSION}
 
 # Create entrypoint script to start dockerd and wait until it is ready
