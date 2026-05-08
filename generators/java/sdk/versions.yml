@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.8.4
+  changelogEntry:
+    - summary: |
+        Apply latest Ubuntu security updates to the Java model generator container
+        (`gradle:8.5.0-jdk17-jammy`) at build time so OS-level package CVEs are
+        picked up.
+      type: chore
+  createdAt: "2026-05-07"
+  irVersion: 66
 - version: 4.8.3
   changelogEntry:
     - summary: |

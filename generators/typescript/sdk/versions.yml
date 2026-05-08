@@ -1,4 +1,36 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.70.1
+  changelogEntry:
+    - summary: |
+        Update `@types/node` from `^18.19.70` to `^20.0.0` in generated SDKs to
+        satisfy vitest 4.x peer dependency requirements. Previously, `npm install`
+        failed with `ERESOLVE` because vitest 4.x requires
+        `@types/node@^20.0.0 || ^22.0.0 || >=24.0.0`.
+      type: fix
+  createdAt: "2026-05-07"
+  irVersion: 66
+- version: 3.70.0
+  changelogEntry:
+    - summary: |
+        Emit `.fern/verify.sh` (mode 0755) alongside `.fern/metadata.json`. The script
+        runs `<packageManager> install`, `<packageManager> build`, and
+        `<packageManager> test` against the generated SDK, with the package manager
+        matching the value pinned in the project's `package.json#packageManager`
+        field (`pnpm` or `yarn`). The script is the contract executed by the paired
+        `fernapi/fern-typescript-sdk-validator` Docker image, which is published
+        alongside `fernapi/fern-typescript-sdk` with the same version tag. Customers
+        that `.fernignore` `.fern/verify.sh` retain their version on regeneration.
+      type: internal
+  createdAt: "2026-05-07"
+  irVersion: 66
+- version: 3.69.3
+  changelogEntry:
+    - summary: |
+        Apply latest Debian security updates to the TypeScript SDK CLI container
+        (`node:24.14-slim`) at build time so OS-level package CVEs are picked up.
+      type: chore
+  createdAt: "2026-05-07"
+  irVersion: 66
 - version: 3.69.2
   changelogEntry:
     - summary: |

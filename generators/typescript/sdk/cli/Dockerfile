@@ -39,11 +39,11 @@ RUN pnpm add -g typescript@~5.9.3 \
   @biomejs/biome@2.4.10 \
   oxlint@1.63.0 \
   oxlint-tsgolint@0.22.1 \
-  @types/node@^18.19.70 \
+  @types/node@^20.0.0 \
   ts-loader@^9.5.4 \
   webpack@^5.105.4 \
   msw@2.12.14 \
-  vitest@^3.2.4
+  vitest@^4.1.1
 
 COPY generators/typescript/sdk/cli/dist/ /
 

@@ -3,6 +3,8 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 
+import { packageManagerCommands, SupportedPackageManager } from "./packageManagerCommands";
+
 export async function writeGitHubWorkflows({
     config,
     githubOutputMode,
@@ -16,7 +18,7 @@ export async function writeGitHubWorkflows({
     isPackagePrivate: boolean;
     pathToProject: AbsoluteFilePath;
     publishToJsr: boolean;
-    packageManager: "pnpm" | "yarn";
+    packageManager: SupportedPackageManager;
 }): Promise<void> {
     if (githubOutputMode.publishInfo != null && githubOutputMode.publishInfo.type !== "npm") {
         throw new Error(
@@ -46,9 +48,10 @@ function constructWorkflowYaml({
     publishInfo: FernGeneratorExec.NpmGithubPublishInfo | undefined;
     isPackagePrivate: boolean;
     publishToJsr: boolean;
-    packageManager: "pnpm" | "yarn";
+    packageManager: SupportedPackageManager;
 }) {
     const usePnpm = packageManager === "pnpm";
+    const { frozenInstall, build, test } = packageManagerCommands(packageManager);
     let workflowYaml = `name: ci
 
 on: [push]
@@ -76,10 +79,10 @@ jobs:
         }
 
       - name: Install dependencies
-        run: ${packageManager} install --frozen-lockfile
+        run: ${frozenInstall}
 
       - name: Compile
-        run: ${packageManager} build
+        run: ${build}
 
   test:
     runs-on: ubuntu-latest
@@ -99,10 +102,10 @@ jobs:
         }
 
       - name: Install dependencies
-        run: ${packageManager} install --frozen-lockfile
+        run: ${frozenInstall}
 
       - name: Test
-        run: ${packageManager} test
+        run: ${test}
 `;
 
     // First condition is for resilience in the event that Fiddle isn't upgraded to include the new flag
@@ -141,10 +144,10 @@ jobs:
         }
 
       - name: Install dependencies
-        run: ${packageManager} install --frozen-lockfile
+        run: ${frozenInstall}
 
       - name: Build
-        run: ${packageManager} build
+        run: ${build}
 
       - name: Publish to npm
         run: |${
@@ -204,10 +207,10 @@ jobs:
         }
       
       - name: Install dependencies
-        run: ${packageManager} install --frozen-lockfile
+        run: ${frozenInstall}
       
       - name: Build
-        run: ${packageManager} build
+        run: ${build}
 
       - name: Publish to JSR
         run: npx jsr publish`;
