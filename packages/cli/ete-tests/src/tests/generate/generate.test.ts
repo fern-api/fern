@@ -1,9 +1,16 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { exec } from "child_process";
+import { mkdir, readFile, writeFile } from "fs/promises";
 import stripAnsi from "strip-ansi";
 
 import { runFernCli } from "../../utils/runFernCli.js";
 import { init } from "../init/init.js";
+
+// Pinned to a published TypeScript SDK generator version that has a matching
+// `fernapi/fern-typescript-sdk-validator:<version>` image on Docker Hub. The
+// version `fern init` resolves via FDR predates the validator image, so
+// without this pin VerificationStep would not have an image to pull.
+const TS_SDK_GENERATOR_VERSION_WITH_VERIFY = "3.70.2";
 
 const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
@@ -22,12 +29,45 @@ describe("fern generate", () => {
     it.concurrent("generate --local --verify succeeds with typescript sdk", async ({ signal }) => {
         const pathOfDirectory = await init({ signal });
 
-        await runFernCli(["generate", "--local", "--verify", "--keepDocker"], {
+        // Pin the TS SDK generator to a version with a published validator
+        // image. See comment on the constant.
+        const generatorsYmlPath = join(pathOfDirectory, RelativeFilePath.of("fern/generators.yml"));
+        const generatorsYml = await readFile(generatorsYmlPath, "utf-8");
+        await writeFile(
+            generatorsYmlPath,
+            generatorsYml.replace(
+                /(name:\s*fern-typescript-sdk[\s\S]*?version:\s*)\S+/,
+                `$1${TS_SDK_GENERATOR_VERSION_WITH_VERIFY}`
+            )
+        );
+
+        // The TS SDK writes `.fern/verify.sh` into the generated project, but
+        // for the default `local-file-system` output (src-only) the SDK does
+        // not copy `.fern/` into the destination. Pre-create a stub script and
+        // a `.fernignore` entry so the local task handler preserves the file
+        // through generation. The validator container then has a script to
+        // execute, exercising the full plumbing through VerificationStep.
+        const sdkOutputDir = join(pathOfDirectory, RelativeFilePath.of("sdks/typescript"));
+        const verifyScriptDir = join(sdkOutputDir, RelativeFilePath.of(".fern"));
+        await mkdir(verifyScriptDir, { recursive: true });
+        await writeFile(
+            join(verifyScriptDir, RelativeFilePath.of("verify.sh")),
+            "#!/bin/bash\nset -euo pipefail\necho ok\n",
+            { mode: 0o755 }
+        );
+        await writeFile(join(sdkOutputDir, RelativeFilePath.of(".fernignore")), ".fern/verify.sh\n");
+
+        const { stdout, stderr } = await runFernCli(["generate", "--local", "--verify", "--keepDocker", "--force"], {
             cwd: pathOfDirectory,
             signal
         });
 
-        expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of("sdks/typescript")))).toBe(true);
+        expect(await doesPathExist(sdkOutputDir)).toBe(true);
+        // Prove that VerificationStep actually ran end-to-end (not just that
+        // --verify plumbing exits 0 via the silent no-op path). This message
+        // is emitted by VerificationStep on a successful validator container
+        // run (see VerificationStep.ts).
+        expect(stripAnsi(stdout) + stripAnsi(stderr)).toContain("Verification succeeded for image");
     }, 300_000);
 
     it.concurrent("ir contains fdr definitionid", async ({ signal }) => {

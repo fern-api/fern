@@ -396,8 +396,12 @@ export async function runLocalGenerationForWorkspace({
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
 
-                // Run post-generation pipeline (replay + GitHub) when outputting to a self-hosted GitHub repo
-                if (selfhostedGithubConfig != null && shouldCommit) {
+                // Run post-generation pipeline when:
+                //   - outputting to a self-hosted GitHub repo (full replay + GitHub flow), or
+                //   - `--verify` is set (verify-only flow; no replay, no GitHub).
+                const githubPipelineEnabled = selfhostedGithubConfig != null && shouldCommit;
+                const verifyOnlyPipelineEnabled = !githubPipelineEnabled && verify === true;
+                if (githubPipelineEnabled || verifyOnlyPipelineEnabled) {
                     const pipelineLogger: PipelineLogger = {
                         debug: (msg) => interactiveTaskContext.logger.debug(msg),
                         info: (msg) => interactiveTaskContext.logger.info(msg),
@@ -410,31 +414,38 @@ export async function runLocalGenerationForWorkspace({
                     const pipeline = new PostGenerationPipeline(
                         {
                             outputDir: absolutePathToLocalOutput,
-                            replay: { enabled: replay?.enabled === true, skipApplication: noReplay, stageOnly: false },
+                            replay: githubPipelineEnabled
+                                ? { enabled: replay?.enabled === true, skipApplication: noReplay, stageOnly: false }
+                                : undefined,
                             verify: { enabled: verify === true, runner },
-                            github: {
-                                enabled: true,
-                                uri: selfhostedGithubConfig.uri,
-                                token: selfhostedGithubConfig.token,
-                                mode: selfhostedGithubConfig.mode ?? "push",
-                                branch: selfhostedGithubConfig.branch,
-                                commitMessage: autoVersioningCommitMessage,
-                                changelogEntry: autoVersioningChangelogEntry,
-                                prDescription: autoVersioningPrDescription,
-                                versionBumpReason: autoVersioningVersionBumpReason,
-                                previousVersion: autoVersioningPreviousVersion,
-                                newVersion: autoVersioningNewVersion,
-                                versionBump: autoVersioningVersionBump,
-                                previewMode: selfhostedGithubConfig.previewMode,
-                                generatorName: generatorInvocation.name,
-                                automationMode,
-                                autoMerge,
-                                skipIfNoDiff,
-                                hasBreakingChanges,
-                                breakingChangesSummary: hasBreakingChanges ? autoVersioningPrDescription : undefined,
-                                runId: process.env.FERN_RUN_ID,
-                                apiBaseUrl: getGithubApiBaseUrl(selfhostedGithubConfig.uri)
-                            },
+                            github:
+                                githubPipelineEnabled && selfhostedGithubConfig != null
+                                    ? {
+                                          enabled: true,
+                                          uri: selfhostedGithubConfig.uri,
+                                          token: selfhostedGithubConfig.token,
+                                          mode: selfhostedGithubConfig.mode ?? "push",
+                                          branch: selfhostedGithubConfig.branch,
+                                          commitMessage: autoVersioningCommitMessage,
+                                          changelogEntry: autoVersioningChangelogEntry,
+                                          prDescription: autoVersioningPrDescription,
+                                          versionBumpReason: autoVersioningVersionBumpReason,
+                                          previousVersion: autoVersioningPreviousVersion,
+                                          newVersion: autoVersioningNewVersion,
+                                          versionBump: autoVersioningVersionBump,
+                                          previewMode: selfhostedGithubConfig.previewMode,
+                                          generatorName: generatorInvocation.name,
+                                          automationMode,
+                                          autoMerge,
+                                          skipIfNoDiff,
+                                          hasBreakingChanges,
+                                          breakingChangesSummary: hasBreakingChanges
+                                              ? autoVersioningPrDescription
+                                              : undefined,
+                                          runId: process.env.FERN_RUN_ID,
+                                          apiBaseUrl: getGithubApiBaseUrl(selfhostedGithubConfig.uri)
+                                      }
+                                    : undefined,
                             cliVersion: workspace.cliVersion ?? "unknown",
                             generatorVersions: {
                                 [generatorInvocation.name]: generatorInvocation.version
@@ -449,7 +460,7 @@ export async function runLocalGenerationForWorkspace({
                     const pipelineDurationMs = Date.now() - pipelineStart;
 
                     // Log replay summary
-                    if (pipelineResult.steps.replay != null) {
+                    if (pipelineResult.steps.replay != null && selfhostedGithubConfig != null) {
                         logReplaySummary(pipelineResult.steps.replay, {
                             debug: (msg) => interactiveTaskContext.logger.debug(msg),
                             info: (msg) => {

@@ -80,10 +80,17 @@ export class VerificationStep extends BaseStep {
             }
 
             try {
+                // Append `/.` so `docker cp` copies the *contents* of the
+                // generator output dir into `/workspace`, not the dir itself
+                // as a subdirectory. The validator images set
+                // `WORKDIR /workspace`, so `/workspace` already exists; without
+                // this, `docker cp /a/b <cid>:/workspace` results in
+                // `/workspace/b/...`, leaving `.fern/verify.sh` unreachable
+                // at the expected `/workspace/.fern/verify.sh` path.
                 await copyToContainer({
                     logger: dockerLogger,
                     containerId,
-                    hostPath: this.outputDir,
+                    hostPath: `${this.outputDir}/.`,
                     containerPath: CONTAINER_WORKSPACE_PATH,
                     runner
                 });

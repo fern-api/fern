@@ -119,7 +119,9 @@ describe("VerificationStep.execute()", () => {
         expect(mockCopyToContainer).toHaveBeenCalledWith(
             expect.objectContaining({
                 containerId: "container-abc",
-                hostPath: workspacePath,
+                // `docker cp` of `<dir>/.` copies the directory's contents
+                // into `/workspace` rather than nesting it as a subdir.
+                hostPath: `${workspacePath}/.`,
                 containerPath: "/workspace",
                 runner: "docker"
             })
