@@ -99,6 +99,49 @@ describe("buildUserAgentHeaderEntry", () => {
         expect(render(entry.value)).toBe('$"DocuSign.eSign/{Version.Current}"');
     });
 
+    it("uses the namespace cascade as the User-Agent prefix when no `package-id` is configured", () => {
+        // Regression guard for the `names.project.packageId` cascade in
+        // generation-info.ts: when neither `package-id` nor `namespace` is set
+        // in custom config, the project's package id falls back to
+        // `PascalCase(<organization>_<apiName>)` — the same string the SDK
+        // ships under as a NuGet project. The fallback must therefore be
+        // non-empty, so the User-Agent prefix always matches whatever package
+        // the customer is publishing.
+        const cascadingGeneration = new Generation(
+            {} as unknown as IntermediateRepresentation,
+            "plantstore",
+            {} as CsharpConfigSchema,
+            {
+                dryRun: false,
+                irFilepath: "",
+                organization: "fern",
+                workspaceName: "plantstore"
+            }
+        );
+        const cascadedPackageId = cascadingGeneration.names.project.packageId;
+        expect(cascadedPackageId).toBe("FernPlantstore");
+
+        const entry = buildUserAgentHeaderEntry({
+            userAgent: undefined,
+            packageName: cascadedPackageId,
+            csharp: cascadingGeneration.csharp,
+            versionValueAccess: cascadingGeneration.csharp.codeblock("Version.Current"),
+            userAgentNameFromPackage: true
+        });
+
+        if (entry == null) {
+            throw new Error("Expected entry to be defined when `userAgentNameFromPackage` is true.");
+        }
+        expect(
+            entry.value.toString({
+                namespace: "",
+                allNamespaceSegments: new Set<string>(),
+                allTypeClassReferences: new Map<string, Set<string>>(),
+                generation: cascadingGeneration
+            })
+        ).toBe('$"FernPlantstore/{Version.Current}"');
+    });
+
     it("interpolates the version value access without re-quoting the prefix", () => {
         // Regression guard: the helper builds the value via a writer callback so
         // the version sub-expression is emitted as code, not as a string literal.
