@@ -1,3 +1,4 @@
+import { schemas } from "@fern-api/config";
 import { CliError } from "@fern-api/task-context";
 import { FernRegistry, FernRegistryClient as GeneratorsClient } from "@fern-fern/generators-sdk";
 import chalk from "chalk";
@@ -43,6 +44,11 @@ export class ListCommand {
     private async loadConfiguredTargets(context: Context): Promise<Target[]> {
         const result = await context.loadWorkspace();
         if (result == null || !result.success) {
+            if (result != null && !result.success) {
+                context.stderr.warn(
+                    chalk.dim("  Warning: Could not load fern.yml — showing unconfigured generators only.")
+                );
+            }
             return [];
         }
         return result.workspace.sdks?.targets ?? [];
@@ -148,19 +154,21 @@ export class ListCommand {
             context.stderr.info("");
 
             for (const target of filteredTargets) {
-                const version = chalk.dim(`v${target.version}`);
+                const version = chalk.dim(`v${target.version}`.padEnd(20));
                 const output = chalk.dim(`→ ${this.formatOutput(target)}`);
                 const groups =
                     target.groups != null && target.groups.length > 0
                         ? chalk.dim(` [${target.groups.join(", ")}]`)
                         : "";
-                const displayName = LANGUAGE_DISPLAY_NAMES[target.lang] ?? target.name;
-                context.stderr.info(
-                    `  ${chalk.white(displayName.padEnd(14))} ${version.padEnd(20)} ${output}${groups}`
-                );
+                const displayName = LANGUAGE_DISPLAY_NAMES[target.lang];
+                context.stderr.info(`  ${chalk.white(displayName.padEnd(14))} ${version} ${output}${groups}`);
             }
         } else if (languageFilter == null && typeFilter == null) {
             context.stderr.info(chalk.dim("No SDK targets configured."));
+        } else if (typeFilter != null && typeFilter !== "sdk") {
+            context.stderr.info(
+                chalk.dim("Configured targets are always of type 'sdk'; none match the given type filter.")
+            );
         } else {
             context.stderr.info(chalk.dim("No configured SDK targets match the given filters."));
         }
@@ -206,7 +214,7 @@ export class ListCommand {
         if (typeFilter != null) {
             // Configured targets in fern.yml are SDK targets only;
             // filter out everything if a non-sdk type is requested.
-            if ((typeFilter as string) !== "sdk") {
+            if (typeFilter !== "sdk") {
                 return [];
             }
         }
@@ -216,10 +224,10 @@ export class ListCommand {
     private formatOutput(target: Target): string {
         if (target.output.git != null) {
             const git = target.output.git;
-            if ("repository" in git) {
+            if (schemas.isGitOutputGitHubRepository(git)) {
                 return git.repository;
             }
-            if ("uri" in git) {
+            if (schemas.isGitOutputSelfHosted(git)) {
                 return git.uri;
             }
         }
@@ -227,8 +235,8 @@ export class ListCommand {
     }
 
     private parseLanguageFilter(value: string): Language {
-        const lang = value.toLowerCase() as Language;
-        if (LANGUAGES.includes(lang)) {
+        const lang = LANGUAGES.find((l) => l === value.toLowerCase());
+        if (lang != null) {
             return lang;
         }
         const supported = LANGUAGES.join(", ");
@@ -239,8 +247,8 @@ export class ListCommand {
     }
 
     private parseTypeFilter(value: string): GeneratorTypeFilter {
-        const type = value.toLowerCase() as GeneratorTypeFilter;
-        if (GENERATOR_TYPES.includes(type)) {
+        const type = GENERATOR_TYPES.find((t) => t === value.toLowerCase());
+        if (type != null) {
             return type;
         }
         const supported = GENERATOR_TYPES.join(", ");
