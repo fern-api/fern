@@ -1,9 +1,25 @@
 # Stage 1: Build Node CLI
-FROM node:22.12-alpine3.20 AS node
+FROM node:22.22-alpine3.23 AS node
 
 RUN apk --no-cache add git zip
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
+
+# Patch vulnerable packages bundled inside npm's node_modules that lag behind
+# upstream advisories (ip-address GHSA-v2v4-37r5-5v8g, brace-expansion
+# GHSA-f886-m6hf-6m8v, picomatch GHSA-3v7f-55p6-f55p / GHSA-c2c7-rcm5-vvqj).
+# We replace them with the latest patched releases via `npm pack` so the
+# resulting layer does not ship known-vulnerable copies.
+RUN set -eux; \
+    NPM_NM=/usr/local/lib/node_modules/npm/node_modules; \
+    mkdir -p /tmp/pkg-fix && cd /tmp/pkg-fix; \
+    for pkg in ip-address brace-expansion picomatch; do \
+        TARBALL="$(npm pack "${pkg}@latest" --silent)"; \
+        rm -rf "${NPM_NM:?}/${pkg}"; \
+        mkdir -p "${NPM_NM}/${pkg}"; \
+        tar -xzf "${TARBALL}" -C "${NPM_NM}/${pkg}" --strip-components=1; \
+    done; \
+    cd / && rm -rf /tmp/pkg-fix /root/.npm
 
 COPY generators/go-v2/sdk/dist/ /dist/
 
@@ -12,6 +28,7 @@ FROM golang:1.26.2-alpine3.23
 
 WORKDIR /workspace
 
+RUN apk update && apk upgrade --no-cache
 RUN apk add --no-cache ca-certificates git libstdc++
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"

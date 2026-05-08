@@ -6,6 +6,8 @@ import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { isClaudeCodeSession } from "../../../context/isClaudeCodeSession.js";
 import { DocsChecker } from "../../../docs/checker/DocsChecker.js";
+import { applyMdxFixes } from "../../../docs/fixer/applyMdxFixes.js";
+import { DocsFixer } from "../../../docs/fixer/DocsFixer.js";
 import { offerAiFixes } from "../../../docs/fixer/offerAiFixes.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
@@ -17,6 +19,8 @@ export declare namespace CheckCommand {
         strict: boolean;
         /** Output results as JSON to stdout */
         json: boolean;
+        /** Automatically fix issues that have a known resolution */
+        fix: boolean;
     }
 }
 
@@ -62,18 +66,33 @@ export class CheckCommand {
             }
         }
 
+        let totalFixedCount = 0;
+
         if (result.mdxParseErrors.length > 0) {
             for (const error of result.mdxParseErrors) {
                 context.stderr.info(`\n${error.toString()}\n`);
             }
 
-            const isTTY = process.stdout.isTTY === true;
-            if (isTTY && !isClaudeCodeSession()) {
-                await offerAiFixes(context, result.mdxParseErrors);
+            if (args.fix) {
+                totalFixedCount += await applyMdxFixes(context, result.mdxParseErrors);
+            } else {
+                const isTTY = process.stdout.isTTY === true;
+                if (isTTY && !isClaudeCodeSession()) {
+                    await offerAiFixes(context, result.mdxParseErrors);
+                }
             }
         }
 
-        if (hasErrors) {
+        // Apply docs config fixes when --fix is specified.
+        if (args.fix && filteredViolations.length > 0) {
+            const docsFixer = new DocsFixer({ context });
+            const fixResult = await docsFixer.fix({ workspace, violations: filteredViolations });
+            totalFixedCount += fixResult.fixedCount;
+        }
+
+        // Fail if there are errors and either --fix was not used, or --fix ran but
+        // could not resolve any violations (non-fixable errors remain).
+        if (hasErrors && (!args.fix || totalFixedCount === 0)) {
             throw new CliError({ code: CliError.Code.ValidationError });
         }
 
@@ -175,6 +194,11 @@ export function addCheckCommand(cli: Argv<GlobalArgs>): void {
                 .option("json", {
                     type: "boolean",
                     description: "Output results as JSON to stdout",
+                    default: false
+                })
+                .option("fix", {
+                    type: "boolean",
+                    description: "Automatically fix issues that have a known resolution",
                     default: false
                 })
     );

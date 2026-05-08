@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Apply latest Debian security updates to the python pydantic generator container
+    (`python:3.11.13`) at build time so OS-level package CVEs are picked up.
+  type: chore

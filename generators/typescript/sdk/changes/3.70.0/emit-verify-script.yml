@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Emit `.fern/verify.sh` (mode 0755) alongside `.fern/metadata.json`. The script
+    runs `<packageManager> install`, `<packageManager> build`, and
+    `<packageManager> test` against the generated SDK, with the package manager
+    matching the value pinned in the project's `package.json#packageManager`
+    field (`pnpm` or `yarn`). The script is the contract executed by the paired
+    `fernapi/fern-typescript-sdk-validator` Docker image, which is published
+    alongside `fernapi/fern-typescript-sdk` with the same version tag. Customers
+    that `.fernignore` `.fern/verify.sh` retain their version on regeneration.
+  type: internal

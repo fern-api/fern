@@ -5,9 +5,9 @@ package com.seed.unionQueryParameters.resources.events.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -37,12 +37,12 @@ public final class SubscribeEventsRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonIgnore
+    @JsonProperty("event_type")
     public Optional<EventTypeParam> getEventType() {
         return eventType;
     }
 
-    @JsonIgnore
+    @JsonProperty("tags")
     public Optional<StringOrListParam> getTags() {
         return tags;
     }

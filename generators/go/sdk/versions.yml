@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.40.3
+  changelogEntry:
+    - summary: |
+        Bump generator container Node.js base image to `node:22.22-alpine3.23` and
+        apply latest Alpine package security updates at build time.
+      type: chore
+  createdAt: "2026-05-07"
+  irVersion: 66
+- version: 1.40.2
+  changelogEntry:
+    - summary: |
+        Bumped the Node stage of the go-sdk container from
+        node:22.12-alpine3.20 to node:22.22-alpine3.22 (Node 22.22.2) and
+        replaced the still-vulnerable copies of ip-address (10.1.0 -> 10.2.0),
+        brace-expansion (2.0.2 -> 5.0.5), and picomatch (4.0.3 -> 4.0.4)
+        bundled inside npm's node_modules to remediate the CVEs flagged by
+        Grype. No runtime behavior changes.
+      type: chore
+  createdAt: "2026-05-07"
+  irVersion: 66
 - version: 1.40.1
   changelogEntry:
     - summary: |

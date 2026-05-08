@@ -5,6 +5,8 @@ import { EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../../utils/convertEndpointSnippetRequest.js";
+import { buildJsonFromExampleTypeReference } from "./buildJsonFromExampleTypeReference.js";
+import { formatDateTimeForWire } from "./formatDateTimeForWire.js";
 
 export declare namespace WireTestFunctionGenerator {
     interface Args {
@@ -96,9 +98,7 @@ export class WireTestFunctionGenerator {
                                             swift.functionArgument({
                                                 value: swift.Expression.memberAccess({
                                                     target: swift.Expression.rawMultiLineStringLiteral(
-                                                        typeof exampleTypeRef.jsonExample === "string"
-                                                            ? exampleTypeRef.jsonExample
-                                                            : JSON.stringify(exampleTypeRef.jsonExample, null, 2)
+                                                        renderWireTestResponseBody(exampleTypeRef)
                                                     ),
                                                     memberName: "utf8"
                                                 })
@@ -345,7 +345,7 @@ export class WireTestFunctionGenerator {
                                     if (
                                         property.value.shape.type === "container" &&
                                         property.value.shape.container.type === "optional" &&
-                                        property.value.jsonExample === undefined
+                                        property.value.shape.container.optional == null
                                     ) {
                                         return null;
                                     }
@@ -387,7 +387,7 @@ export class WireTestFunctionGenerator {
                                         if (
                                             property.value.shape.type === "container" &&
                                             property.value.shape.container.type === "optional" &&
-                                            property.value.jsonExample === undefined
+                                            property.value.shape.container.optional == null
                                         ) {
                                             return null;
                                         }
@@ -554,15 +554,11 @@ export class WireTestFunctionGenerator {
     }
 
     private generateDateTimeLiteral(raw: string | null | undefined): swift.Expression {
-        if (raw == null) {
+        const formatted = formatDateTimeForWire(raw);
+        if (formatted == null) {
             return swift.Expression.nop();
         }
-        const timestampMs = new Date(raw).getTime();
-        const timestampSec = Math.round(timestampMs / 1000);
-        const roundedDateTime = new Date(timestampSec * 1000).toISOString();
-        // Remove fractional seconds (.000Z -> Z) for Swift compatibility
-        const dateTimeWithoutFractional = roundedDateTime.replace(/\.\d{3}Z$/, "Z");
-        return swift.Expression.dateLiteral(dateTimeWithoutFractional);
+        return swift.Expression.dateLiteral(formatted);
     }
 
     private generateUnknownExampleResponse(val: unknown): swift.Expression {
@@ -627,4 +623,15 @@ export class WireTestFunctionGenerator {
         }
         throw GeneratorError.internalError(`Unknown value: ${JSON.stringify(val)}`);
     }
+}
+
+function renderWireTestResponseBody(exampleTypeRef: FernIr.ExampleTypeReference): string {
+    if (typeof exampleTypeRef.jsonExample === "string") {
+        return exampleTypeRef.jsonExample;
+    }
+    const value = buildJsonFromExampleTypeReference(exampleTypeRef);
+    if (typeof value === "string") {
+        return value;
+    }
+    return JSON.stringify(value, null, 2);
 }

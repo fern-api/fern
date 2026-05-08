@@ -1,4 +1,80 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.20.1
+  changelogEntry:
+    - summary: |
+        Pass GitHub Enterprise host to Fiddle for remote generation so that
+        self-hosted GHE instances are correctly targeted by the remote pipeline.
+      type: fix
+  createdAt: "2026-05-08"
+  irVersion: 66
+- version: 5.20.0
+  changelogEntry:
+    - summary: |
+        Add `--fix` flag to `fern check`, `fern sdk check`, and `fern docs check`.
+        When specified, the CLI automatically applies known fixes for detected issues
+        (e.g. replacing invalid SDK target versions with the latest stable release,
+        applying deterministic MDX parse error fixes).
+      type: feat
+  createdAt: "2026-05-07"
+  irVersion: 66
+- version: 5.19.1
+  changelogEntry:
+    - summary: |
+        Property-level `x-fern-audiences` (and Fern definition `audiences:`) filtering now
+        correctly excludes properties whose audiences do not overlap the active filter and
+        preserves untagged properties as universal — matching endpoint-level audience semantics.
+        Examples are also scrubbed of excluded items: auto-generated `jsonExample` snapshots,
+        inlined request-body example properties, endpoint example query parameters, and
+        user-specified webhook payload examples.
+      type: fix
+  createdAt: "2026-05-07"
+  irVersion: 66
+- version: 5.19.0
+  changelogEntry:
+    - summary: |
+        Add PR title, body, and commit message to `fern automations upgrade --json` output.
+        The new `pr` field in the JSON output allows GitHub Actions consumers to use
+        CLI-generated PR formatting directly, eliminating duplicated presentation logic.
+      type: feat
+  createdAt: "2026-05-07"
+  irVersion: 66
+- version: 5.18.1
+  changelogEntry:
+    - summary: |
+        Fix GitHub Enterprise support for self-hosted SDK generation. Octokit API calls
+        (signed commits, PR creation, ref updates) now use the correct GHE API base URL
+        derived from the repository URI instead of always hitting api.github.com.
+      type: fix
+  createdAt: "2026-05-07"
+  irVersion: 66
+- version: 5.18.0
+  changelogEntry:
+    - summary: |
+        Add `fern schema [name]` command (CLI v2) that emits a JSON Schema for
+        `fern.yml`. Running `fern schema` with no argument prints the full schema;
+        passing a dot-delimited subsection (e.g. `fern schema sdks`,
+        `fern schema sdks.targets`, `fern schema api`) prints just that block.
+        Intended primarily for AI agents that need to generate or validate Fern
+        config at runtime without consulting external docs.
+      type: feat
+  createdAt: "2026-05-07"
+  irVersion: 66
+- version: 5.17.1
+  changelogEntry:
+    - summary: |
+        Fix publish to respect FERN_FDR_ORIGIN environment variable override.
+      type: fix
+  createdAt: "2026-05-06"
+  irVersion: 66
+- version: 5.17.0
+  changelogEntry:
+    - summary: |
+        Attach `fern_run_id` and `github_run_id` as PostHog properties on every CLI
+        event so PostHog dashboards can correlate analytics with the FERN_RUN_ID set
+        by the GitHub Actions wrappers and the matching Sentry tags.
+      type: internal
+  createdAt: "2026-05-06"
+  irVersion: 66
 - version: 5.16.1
   changelogEntry:
     - summary: |

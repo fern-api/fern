@@ -5,9 +5,9 @@ package com.seed.validation.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.validation.core.ObjectMappers;
@@ -34,17 +34,17 @@ public final class GetRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonIgnore
+    @JsonProperty("decimal")
     public double getDecimal() {
         return decimal;
     }
 
-    @JsonIgnore
+    @JsonProperty("even")
     public int getEven() {
         return even;
     }
 
-    @JsonIgnore
+    @JsonProperty("name")
     public String getName() {
         return name;
     }

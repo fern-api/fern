@@ -1,23 +1,30 @@
 # Stage 1: Pull wiremock image as tar (no daemon needed)
-FROM alpine:3.22 AS wiremock-pull
+FROM alpine:3.23 AS wiremock-pull
 RUN apk add --no-cache curl && \
     ARCH=$(uname -m) && if [ "$ARCH" = "aarch64" ]; then ARCH="arm64"; fi && \
     curl -sL "https://github.com/google/go-containerregistry/releases/download/v0.21.2/go-containerregistry_Linux_${ARCH}.tar.gz" | tar xz -C /usr/local/bin crane && \
     crane pull wiremock/wiremock:3.9.1 /wiremock.tar
 
 # Stage 2: Build the seed image
-FROM docker:28.4.0-dind-alpine3.22
+FROM docker:29.4.1-dind-alpine3.23
 
 # Copy pre-pulled wiremock image
 COPY --from=wiremock-pull /wiremock.tar /wiremock.tar
+
+# Apply the latest APK security patches available for the base image
+RUN apk update && apk upgrade --no-cache
 
 # Install Python and Poetry
 RUN apk add --no-cache python3 py3-pip \
     && ln -sf python3 /usr/bin/python
 
 # renovate: datasource=pypi depName=poetry versioning=semver
-ENV POETRY_VERSION=1.8.5
-RUN pip install --no-cache-dir --break-system-packages poetry==${POETRY_VERSION}
+ENV POETRY_VERSION=2.3.4
+RUN pip install --no-cache-dir --break-system-packages --upgrade \
+        "pip>=26.1" \
+        "setuptools>=82.0.0" \
+        "wheel>=0.46.2" \
+    && pip install --no-cache-dir --break-system-packages "poetry==${POETRY_VERSION}"
 
 # Create entrypoint script to start dockerd and wait until it is ready
 RUN echo '#!/bin/sh' > /entrypoint.sh && \

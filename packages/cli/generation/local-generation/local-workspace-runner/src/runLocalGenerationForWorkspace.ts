@@ -21,7 +21,7 @@ import {
     type PipelineLogger,
     PostGenerationPipeline
 } from "@fern-api/generator-cli/pipeline";
-import { cloneRepository, parseRepository } from "@fern-api/github";
+import { cloneRepository, getGithubApiBaseUrl, parseRepository } from "@fern-api/github";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
@@ -428,7 +428,8 @@ export async function runLocalGenerationForWorkspace({
                                 skipIfNoDiff,
                                 hasBreakingChanges,
                                 breakingChangesSummary: hasBreakingChanges ? autoVersioningPrDescription : undefined,
-                                runId: process.env.FERN_RUN_ID
+                                runId: process.env.FERN_RUN_ID,
+                                apiBaseUrl: getGithubApiBaseUrl(selfhostedGithubConfig.uri)
                             },
                             cliVersion: workspace.cliVersion ?? "unknown",
                             generatorVersions: {
