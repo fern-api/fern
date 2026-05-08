@@ -8,6 +8,10 @@ import {
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
+import { mkdir, writeFile } from "fs/promises";
+import path from "path";
+
+import { CLI_TEMPLATE } from "./templates/cli-template.js";
 
 const pathToConfig = process.argv[process.argv.length - 1];
 if (pathToConfig == null) {
@@ -33,9 +37,12 @@ async function generate(configPath: string): Promise<void> {
                 parse: IrSerialization.IntermediateRepresentation.parse
             });
 
-            // TODO: Implement CLI generation logic here.
-            // This generator will read the IR and produce CLI output files
-            // in config.output.path using simple copy/paste with minimal templating.
+            const outputDir = config.output.path;
+            await mkdir(outputDir, { recursive: true });
+
+            const apiName = typeof ir.apiName === "string" ? ir.apiName : ir.apiName.originalName;
+            const rendered = CLI_TEMPLATE.replaceAll("{{apiName}}", apiName);
+            await writeFile(path.join(outputDir, "cli.ts"), rendered);
 
             await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful({})));
         } catch (e) {
