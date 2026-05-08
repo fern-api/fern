@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump the Rust toolchain stage in `rust-sdk-generator` and `rust-model-generator`
+    from `rust:1.82-alpine3.20` (Alpine 3.20 went EOL 2026-05-01) to
+    `rust:1-alpine3.23` (currently Rust 1.95.0), addressing the `ALPINE_LINUX_3_20`
+    Vanta finding on both containers. Generated Rust SDKs are still formatted with
+    `rustfmt` from this stage, so the bump effectively also moves generated SDKs
+    from being formatted by Rust 1.82 `rustfmt` to Rust 1.95 `rustfmt`.
+  type: chore
