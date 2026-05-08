@@ -13,7 +13,6 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [File Uploads](#file-uploads)
-- [Pagination](#pagination)
 - [Advanced](#advanced)
   - [Subpackage Exports](#subpackage-exports)
   - [Additional Headers](#additional-headers)
@@ -42,10 +41,14 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { SeedApiClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"]);
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+await client.inlinedRequests.postWithObjectBodyandResponse({
+    string: "string",
+    integer: 1,
+    nestedObject: {}
+});
 ```
 
 ## Request and Response Types
@@ -54,9 +57,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedExhaustive } from "@fern/exhaustive";
+import { SeedApi } from "@fern/exhaustive";
 
-const request: SeedExhaustive.ListItemsRequest = {
+const request: SeedApi.PostWithObjectBodyandResponseInlinedRequestsRequest = {
     ...
 };
 ```
@@ -67,12 +70,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedExhaustiveError } from "@fern/exhaustive";
+import { SeedApiError } from "@fern/exhaustive";
 
 try {
-    await client.endpoints.container.getAndReturnListOfPrimitives(...);
+    await client.inlinedRequests.postWithObjectBodyandResponse(...);
 } catch (err) {
-    if (err instanceof SeedExhaustiveError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -126,35 +129,6 @@ The metadata is used to set the `Content-Length`, `Content-Type`, and `Content-D
 For example, `fs.ReadStream` has a `path` property which the SDK uses to retrieve the file size from the filesystem without loading it into memory.
 
 
-## Pagination
-
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
-
-```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
-
-const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-const pageableResponse = await client.endpoints.pagination.listItems({
-    cursor: "cursor",
-    limit: 1
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.endpoints.pagination.listItems({
-    cursor: "cursor",
-    limit: 1
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
-```
-
 ## Advanced
 
 ### Subpackage Exports
@@ -162,9 +136,9 @@ const response = page.response;
 This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
 
 ```typescript
-import { EndpointsClient } from '@fern/exhaustive/endpoints';
+import { InlinedRequestsClient } from '@fern/exhaustive/inlinedRequests';
 
-const client = new EndpointsClient({...});
+const client = new InlinedRequestsClient({...});
 ```
 
 ### Additional Headers
@@ -172,16 +146,16 @@ const client = new EndpointsClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
+import { SeedApiClient } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
     }
 });
 
-const response = await client.endpoints.container.getAndReturnListOfPrimitives(..., {
+const response = await client.inlinedRequests.postWithObjectBodyandResponse(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -193,7 +167,7 @@ const response = await client.endpoints.container.getAndReturnListOfPrimitives(.
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.endpoints.container.getAndReturnListOfPrimitives(..., {
+const response = await client.inlinedRequests.postWithObjectBodyandResponse(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -223,7 +197,7 @@ Which status codes are retried depends on the `retryStatusCodes` generator confi
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.endpoints.container.getAndReturnListOfPrimitives(..., {
+const response = await client.inlinedRequests.postWithObjectBodyandResponse(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -233,7 +207,7 @@ const response = await client.endpoints.container.getAndReturnListOfPrimitives(.
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.endpoints.container.getAndReturnListOfPrimitives(..., {
+const response = await client.inlinedRequests.postWithObjectBodyandResponse(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -244,7 +218,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.endpoints.container.getAndReturnListOfPrimitives(..., {
+const response = await client.inlinedRequests.postWithObjectBodyandResponse(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -256,7 +230,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.endpoints.container.getAndReturnListOfPrimitives(...).withRawResponse();
+const { data, rawResponse } = await client.inlinedRequests.postWithObjectBodyandResponse(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);
@@ -267,9 +241,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedExhaustiveClient, logging } from "@fern/exhaustive";
+import { SeedApiClient, logging } from "@fern/exhaustive";
 
-const client = new SeedExhaustiveClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

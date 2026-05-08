@@ -5,6 +5,7 @@ package put
 import (
 	context "context"
 
+	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
 	endpoints "github.com/exhaustive/fern/endpoints"
 	internal "github.com/exhaustive/fern/internal"
@@ -35,9 +36,9 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) Add(
 	ctx context.Context,
-	request *endpoints.PutRequest,
+	request *endpoints.AddPutRequest,
 	opts ...option.RequestOption,
-) (*endpoints.PutResponse, error) {
+) (*fern.EndpointsPutResponse, error) {
 	response, err := c.WithRawResponse.Add(
 		ctx,
 		request,

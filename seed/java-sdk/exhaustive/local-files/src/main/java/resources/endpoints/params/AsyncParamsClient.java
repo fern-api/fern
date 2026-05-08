@@ -6,13 +6,15 @@ package com.fern.sdk.resources.endpoints.params;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.endpoints.params.requests.GetWithInlinePath;
-import com.fern.sdk.resources.endpoints.params.requests.GetWithInlinePathAndQuery;
-import com.fern.sdk.resources.endpoints.params.requests.GetWithMultipleQuery;
-import com.fern.sdk.resources.endpoints.params.requests.GetWithPathAndQuery;
-import com.fern.sdk.resources.endpoints.params.requests.GetWithQuery;
-import com.fern.sdk.resources.endpoints.params.requests.ModifyResourceAtInlinedPath;
-import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithAllowMultipleQueryParamsRequest;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithInlinePathAndQueryParamsRequest;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithInlinePathParamsRequest;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithPathAndQueryParamsRequest;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithPathParamsRequest;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithQueryParamsRequest;
+import com.fern.sdk.resources.endpoints.params.requests.ModifyWithInlinePathParamsRequest;
+import com.fern.sdk.resources.endpoints.params.requests.ModifyWithPathParamsRequest;
+import com.fern.sdk.types.TypesObjectWithRequiredField;
 import java.io.InputStream;
 import java.lang.String;
 import java.lang.Void;
@@ -52,6 +54,69 @@ public class AsyncParamsClient {
   /**
    * GET with path param
    */
+  public CompletableFuture<String> getWithPath(String param, GetWithPathParamsRequest request) {
+    return this.rawClient.getWithPath(param, request).thenApply(response -> response.body());
+  }
+
+  /**
+   * GET with path param
+   */
+  public CompletableFuture<String> getWithPath(String param, GetWithPathParamsRequest request,
+      RequestOptions requestOptions) {
+    return this.rawClient.getWithPath(param, request, requestOptions).thenApply(response -> response.body());
+  }
+
+  /**
+   * POST bytes with path param returning object
+   */
+  public CompletableFuture<TypesObjectWithRequiredField> uploadWithPath(String param,
+      InputStream request) {
+    return this.rawClient.uploadWithPath(param, request).thenApply(response -> response.body());
+  }
+
+  /**
+   * POST bytes with path param returning object
+   */
+  public CompletableFuture<TypesObjectWithRequiredField> uploadWithPath(String param,
+      InputStream request, RequestOptions requestOptions) {
+    return this.rawClient.uploadWithPath(param, request, requestOptions).thenApply(response -> response.body());
+  }
+
+  /**
+   * POST bytes with path param returning object
+   */
+  public CompletableFuture<TypesObjectWithRequiredField> uploadWithPath(String param,
+      byte[] request) {
+    return this.rawClient.uploadWithPath(param, request).thenApply(response -> response.body());
+  }
+
+  /**
+   * POST bytes with path param returning object
+   */
+  public CompletableFuture<TypesObjectWithRequiredField> uploadWithPath(String param,
+      byte[] request, RequestOptions requestOptions) {
+    return this.rawClient.uploadWithPath(param, request, requestOptions).thenApply(response -> response.body());
+  }
+
+  /**
+   * PUT to update with path param
+   */
+  public CompletableFuture<String> modifyWithPath(String param,
+      ModifyWithPathParamsRequest request) {
+    return this.rawClient.modifyWithPath(param, request).thenApply(response -> response.body());
+  }
+
+  /**
+   * PUT to update with path param
+   */
+  public CompletableFuture<String> modifyWithPath(String param, ModifyWithPathParamsRequest request,
+      RequestOptions requestOptions) {
+    return this.rawClient.modifyWithPath(param, request, requestOptions).thenApply(response -> response.body());
+  }
+
+  /**
+   * GET with path param
+   */
   public CompletableFuture<String> getWithInlinePath(String param) {
     return this.rawClient.getWithInlinePath(param).thenApply(response -> response.body());
   }
@@ -66,98 +131,24 @@ public class AsyncParamsClient {
   /**
    * GET with path param
    */
-  public CompletableFuture<String> getWithInlinePath(String param, GetWithInlinePath request) {
+  public CompletableFuture<String> getWithInlinePath(String param,
+      GetWithInlinePathParamsRequest request) {
     return this.rawClient.getWithInlinePath(param, request).thenApply(response -> response.body());
   }
 
   /**
    * GET with path param
    */
-  public CompletableFuture<String> getWithInlinePath(String param, GetWithInlinePath request,
-      RequestOptions requestOptions) {
+  public CompletableFuture<String> getWithInlinePath(String param,
+      GetWithInlinePathParamsRequest request, RequestOptions requestOptions) {
     return this.rawClient.getWithInlinePath(param, request, requestOptions).thenApply(response -> response.body());
-  }
-
-  /**
-   * GET with query param
-   */
-  public CompletableFuture<Void> getWithQuery(GetWithQuery request) {
-    return this.rawClient.getWithQuery(request).thenApply(response -> response.body());
-  }
-
-  /**
-   * GET with query param
-   */
-  public CompletableFuture<Void> getWithQuery(GetWithQuery request, RequestOptions requestOptions) {
-    return this.rawClient.getWithQuery(request, requestOptions).thenApply(response -> response.body());
-  }
-
-  /**
-   * GET with multiple of same query param
-   */
-  public CompletableFuture<Void> getWithAllowMultipleQuery(GetWithMultipleQuery request) {
-    return this.rawClient.getWithAllowMultipleQuery(request).thenApply(response -> response.body());
-  }
-
-  /**
-   * GET with multiple of same query param
-   */
-  public CompletableFuture<Void> getWithAllowMultipleQuery(GetWithMultipleQuery request,
-      RequestOptions requestOptions) {
-    return this.rawClient.getWithAllowMultipleQuery(request, requestOptions).thenApply(response -> response.body());
-  }
-
-  /**
-   * GET with path and query params
-   */
-  public CompletableFuture<Void> getWithPathAndQuery(String param, GetWithPathAndQuery request) {
-    return this.rawClient.getWithPathAndQuery(param, request).thenApply(response -> response.body());
-  }
-
-  /**
-   * GET with path and query params
-   */
-  public CompletableFuture<Void> getWithPathAndQuery(String param, GetWithPathAndQuery request,
-      RequestOptions requestOptions) {
-    return this.rawClient.getWithPathAndQuery(param, request, requestOptions).thenApply(response -> response.body());
-  }
-
-  /**
-   * GET with path and query params
-   */
-  public CompletableFuture<Void> getWithInlinePathAndQuery(String param,
-      GetWithInlinePathAndQuery request) {
-    return this.rawClient.getWithInlinePathAndQuery(param, request).thenApply(response -> response.body());
-  }
-
-  /**
-   * GET with path and query params
-   */
-  public CompletableFuture<Void> getWithInlinePathAndQuery(String param,
-      GetWithInlinePathAndQuery request, RequestOptions requestOptions) {
-    return this.rawClient.getWithInlinePathAndQuery(param, request, requestOptions).thenApply(response -> response.body());
-  }
-
-  /**
-   * PUT to update with path param
-   */
-  public CompletableFuture<String> modifyWithPath(String param, String request) {
-    return this.rawClient.modifyWithPath(param, request).thenApply(response -> response.body());
-  }
-
-  /**
-   * PUT to update with path param
-   */
-  public CompletableFuture<String> modifyWithPath(String param, String request,
-      RequestOptions requestOptions) {
-    return this.rawClient.modifyWithPath(param, request, requestOptions).thenApply(response -> response.body());
   }
 
   /**
    * PUT to update with path param
    */
   public CompletableFuture<String> modifyWithInlinePath(String param,
-      ModifyResourceAtInlinedPath request) {
+      ModifyWithInlinePathParamsRequest request) {
     return this.rawClient.modifyWithInlinePath(param, request).thenApply(response -> response.body());
   }
 
@@ -165,68 +156,84 @@ public class AsyncParamsClient {
    * PUT to update with path param
    */
   public CompletableFuture<String> modifyWithInlinePath(String param,
-      ModifyResourceAtInlinedPath request, RequestOptions requestOptions) {
+      ModifyWithInlinePathParamsRequest request, RequestOptions requestOptions) {
     return this.rawClient.modifyWithInlinePath(param, request, requestOptions).thenApply(response -> response.body());
   }
 
   /**
-   * POST bytes with path param returning object
+   * GET with query param
    */
-  public CompletableFuture<ObjectWithRequiredField> uploadWithPath(String param,
-      InputStream request) {
-    return this.rawClient.uploadWithPath(param, request).thenApply(response -> response.body());
+  public CompletableFuture<Void> getWithQuery(GetWithQueryParamsRequest request) {
+    return this.rawClient.getWithQuery(request).thenApply(response -> response.body());
   }
 
   /**
-   * POST bytes with path param returning object
+   * GET with query param
    */
-  public CompletableFuture<ObjectWithRequiredField> uploadWithPath(String param,
-      InputStream request, RequestOptions requestOptions) {
-    return this.rawClient.uploadWithPath(param, request, requestOptions).thenApply(response -> response.body());
-  }
-
-  /**
-   * POST bytes with path param returning object
-   */
-  public CompletableFuture<ObjectWithRequiredField> uploadWithPath(String param, byte[] request) {
-    return this.rawClient.uploadWithPath(param, request).thenApply(response -> response.body());
-  }
-
-  /**
-   * POST bytes with path param returning object
-   */
-  public CompletableFuture<ObjectWithRequiredField> uploadWithPath(String param, byte[] request,
+  public CompletableFuture<Void> getWithQuery(GetWithQueryParamsRequest request,
       RequestOptions requestOptions) {
-    return this.rawClient.uploadWithPath(param, request, requestOptions).thenApply(response -> response.body());
+    return this.rawClient.getWithQuery(request, requestOptions).thenApply(response -> response.body());
   }
 
   /**
-   * GET with boolean path param
+   * GET with multiple of same query param
    */
-  public CompletableFuture<String> getWithBooleanPath(boolean param) {
-    return this.rawClient.getWithBooleanPath(param).thenApply(response -> response.body());
+  public CompletableFuture<Void> getWithAllowMultipleQuery() {
+    return this.rawClient.getWithAllowMultipleQuery().thenApply(response -> response.body());
   }
 
   /**
-   * GET with boolean path param
+   * GET with multiple of same query param
    */
-  public CompletableFuture<String> getWithBooleanPath(boolean param,
-      RequestOptions requestOptions) {
-    return this.rawClient.getWithBooleanPath(param, requestOptions).thenApply(response -> response.body());
+  public CompletableFuture<Void> getWithAllowMultipleQuery(RequestOptions requestOptions) {
+    return this.rawClient.getWithAllowMultipleQuery(requestOptions).thenApply(response -> response.body());
   }
 
   /**
-   * GET with path param that can throw errors
+   * GET with multiple of same query param
    */
-  public CompletableFuture<String> getWithPathAndErrors(String param) {
-    return this.rawClient.getWithPathAndErrors(param).thenApply(response -> response.body());
+  public CompletableFuture<Void> getWithAllowMultipleQuery(
+      GetWithAllowMultipleQueryParamsRequest request) {
+    return this.rawClient.getWithAllowMultipleQuery(request).thenApply(response -> response.body());
   }
 
   /**
-   * GET with path param that can throw errors
+   * GET with multiple of same query param
    */
-  public CompletableFuture<String> getWithPathAndErrors(String param,
-      RequestOptions requestOptions) {
-    return this.rawClient.getWithPathAndErrors(param, requestOptions).thenApply(response -> response.body());
+  public CompletableFuture<Void> getWithAllowMultipleQuery(
+      GetWithAllowMultipleQueryParamsRequest request, RequestOptions requestOptions) {
+    return this.rawClient.getWithAllowMultipleQuery(request, requestOptions).thenApply(response -> response.body());
+  }
+
+  /**
+   * GET with path and query params
+   */
+  public CompletableFuture<Void> getWithPathAndQuery(String param,
+      GetWithPathAndQueryParamsRequest request) {
+    return this.rawClient.getWithPathAndQuery(param, request).thenApply(response -> response.body());
+  }
+
+  /**
+   * GET with path and query params
+   */
+  public CompletableFuture<Void> getWithPathAndQuery(String param,
+      GetWithPathAndQueryParamsRequest request, RequestOptions requestOptions) {
+    return this.rawClient.getWithPathAndQuery(param, request, requestOptions).thenApply(response -> response.body());
+  }
+
+  /**
+   * GET with path and query params
+   */
+  public CompletableFuture<Void> getWithInlinePathAndQuery(String param,
+      GetWithInlinePathAndQueryParamsRequest request) {
+    return this.rawClient.getWithInlinePathAndQuery(param, request).thenApply(response -> response.body());
+  }
+
+  /**
+   * GET with path and query params
+   */
+  public CompletableFuture<Void> getWithInlinePathAndQuery(String param,
+      GetWithInlinePathAndQueryParamsRequest request, RequestOptions requestOptions) {
+    return this.rawClient.getWithInlinePathAndQuery(param, request, requestOptions).thenApply(response -> response.body());
   }
 }

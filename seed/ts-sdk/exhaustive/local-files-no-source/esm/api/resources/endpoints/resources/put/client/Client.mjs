@@ -18,7 +18,7 @@ export class PutClient {
         this._options = normalizeClientOptionsWithAuth(options);
     }
     /**
-     * @param {SeedExhaustive.endpoints.PutRequest} request
+     * @param {SeedApi.endpoints.AddPutRequest} request
      * @param {PutClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -50,7 +50,7 @@ export class PutClient {
                 return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
+                throw new errors.SeedApiError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.body,
                     rawResponse: _response.rawResponse,

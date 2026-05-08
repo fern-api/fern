@@ -4,8 +4,8 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.endpoints_put_response import EndpointsPutResponse
 from .raw_client import AsyncRawPutClient, RawPutClient
-from .types.put_response import PutResponse
 
 
 class PutClient:
@@ -23,7 +23,7 @@ class PutClient:
         """
         return self._raw_client
 
-    def add(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> PutResponse:
+    def add(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EndpointsPutResponse:
         """
         Parameters
         ----------
@@ -34,7 +34,8 @@ class PutClient:
 
         Returns
         -------
-        PutResponse
+        EndpointsPutResponse
+
 
         Examples
         --------
@@ -67,7 +68,7 @@ class AsyncPutClient:
         """
         return self._raw_client
 
-    async def add(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> PutResponse:
+    async def add(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> EndpointsPutResponse:
         """
         Parameters
         ----------
@@ -78,7 +79,8 @@ class AsyncPutClient:
 
         Returns
         -------
-        PutResponse
+        EndpointsPutResponse
+
 
         Examples
         --------

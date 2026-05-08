@@ -6,8 +6,8 @@ package com.fern.sdk.resources.endpoints.put;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.endpoints.put.requests.PutRequest;
-import com.fern.sdk.resources.endpoints.put.types.PutResponse;
+import com.fern.sdk.resources.endpoints.put.requests.AddPutRequest;
+import com.fern.sdk.types.EndpointsPutResponse;
 import java.lang.String;
 
 public class PutClient {
@@ -27,19 +27,19 @@ public class PutClient {
     return this.rawClient;
   }
 
-  public PutResponse add(String id) {
+  public EndpointsPutResponse add(String id) {
     return this.rawClient.add(id).body();
   }
 
-  public PutResponse add(String id, RequestOptions requestOptions) {
+  public EndpointsPutResponse add(String id, RequestOptions requestOptions) {
     return this.rawClient.add(id, requestOptions).body();
   }
 
-  public PutResponse add(String id, PutRequest request) {
+  public EndpointsPutResponse add(String id, AddPutRequest request) {
     return this.rawClient.add(id, request).body();
   }
 
-  public PutResponse add(String id, PutRequest request, RequestOptions requestOptions) {
+  public EndpointsPutResponse add(String id, AddPutRequest request, RequestOptions requestOptions) {
     return this.rawClient.add(id, request, requestOptions).body();
   }
 }

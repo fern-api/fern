@@ -3,11 +3,9 @@
 import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ...core.pagination import AsyncPager, SyncPager
 from ...core.request_options import RequestOptions
-from ...types.object.types.object_with_required_field import ObjectWithRequiredField
+from ...types.endpoints_paginated_response import EndpointsPaginatedResponse
 from .raw_client import AsyncRawPaginationClient, RawPaginationClient
-from .types.paginated_response import PaginatedResponse
 
 
 class PaginationClient:
@@ -31,7 +29,7 @@ class PaginationClient:
         cursor: typing.Optional[str] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[ObjectWithRequiredField, PaginatedResponse]:
+    ) -> EndpointsPaginatedResponse:
         """
         List items with cursor pagination
 
@@ -48,27 +46,21 @@ class PaginationClient:
 
         Returns
         -------
-        SyncPager[ObjectWithRequiredField, PaginatedResponse]
+        EndpointsPaginatedResponse
+
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import SeedApi
 
-        client = SeedExhaustive(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.endpoints.pagination.list_items(
-            cursor="cursor",
-            limit=1,
-        )
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
+        client.endpoints.pagination.list_items()
         """
-        return self._raw_client.list_items(cursor=cursor, limit=limit, request_options=request_options)
+        _response = self._raw_client.list_items(cursor=cursor, limit=limit, request_options=request_options)
+        return _response.data
 
 
 class AsyncPaginationClient:
@@ -92,7 +84,7 @@ class AsyncPaginationClient:
         cursor: typing.Optional[str] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ObjectWithRequiredField, PaginatedResponse]:
+    ) -> EndpointsPaginatedResponse:
         """
         List items with cursor pagination
 
@@ -109,33 +101,26 @@ class AsyncPaginationClient:
 
         Returns
         -------
-        AsyncPager[ObjectWithRequiredField, PaginatedResponse]
+        EndpointsPaginatedResponse
+
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            response = await client.endpoints.pagination.list_items(
-                cursor="cursor",
-                limit=1,
-            )
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
+            await client.endpoints.pagination.list_items()
 
 
         asyncio.run(main())
         """
-        return await self._raw_client.list_items(cursor=cursor, limit=limit, request_options=request_options)
+        _response = await self._raw_client.list_items(cursor=cursor, limit=limit, request_options=request_options)
+        return _response.data

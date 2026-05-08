@@ -40,16 +40,16 @@ exports.urls = exports.union = exports.put = exports.primitive = exports.params 
 exports.container = __importStar(require("./container/index.js"));
 exports.contentType = __importStar(require("./contentType/index.js"));
 exports.enum_ = __importStar(require("./enum/index.js"));
+__exportStar(require("./httpMethods/client/requests/index.js"), exports);
 exports.httpMethods = __importStar(require("./httpMethods/index.js"));
+__exportStar(require("./object/client/requests/index.js"), exports);
 exports.object = __importStar(require("./object/index.js"));
 __exportStar(require("./pagination/client/requests/index.js"), exports);
 exports.pagination = __importStar(require("./pagination/index.js"));
-__exportStar(require("./pagination/types/index.js"), exports);
 __exportStar(require("./params/client/requests/index.js"), exports);
 exports.params = __importStar(require("./params/index.js"));
 exports.primitive = __importStar(require("./primitive/index.js"));
 __exportStar(require("./put/client/requests/index.js"), exports);
 exports.put = __importStar(require("./put/index.js"));
-__exportStar(require("./put/types/index.js"), exports);
 exports.union = __importStar(require("./union/index.js"));
 exports.urls = __importStar(require("./urls/index.js"));

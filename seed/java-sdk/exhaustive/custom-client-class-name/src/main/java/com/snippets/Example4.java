@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.exhaustive.Best;
+import com.seed.api.Best;
 import java.util.HashMap;
 
 public class Example4 {
@@ -8,9 +8,9 @@ public class Example4 {
         Best client =
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.endpoints().container().getAndReturnMapPrimToPrim(new HashMap<String, String>() {
+        client.noAuth().postWithNoAuth(new HashMap<String, Object>() {
             {
-                put("string", "string");
+                put("key", "value");
             }
         });
     }

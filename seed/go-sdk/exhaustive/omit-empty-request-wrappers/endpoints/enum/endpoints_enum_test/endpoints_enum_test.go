@@ -10,9 +10,9 @@ import (
 	os "os"
 	testing "testing"
 
+	fern "github.com/exhaustive/fern"
 	client "github.com/exhaustive/fern/client"
 	option "github.com/exhaustive/fern/option"
-	types "github.com/exhaustive/fern/types"
 	require "github.com/stretchr/testify/require"
 )
 
@@ -88,7 +88,7 @@ func TestEndpointsEnumGetAndReturnEnumWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := types.WeatherReportSunny.Ptr()
+	request := fern.TypesWeatherReportSunny.Ptr()
 	_, invocationErr := client.Endpoints.Enum.GetAndReturnEnum(
 		context.TODO(),
 		request,

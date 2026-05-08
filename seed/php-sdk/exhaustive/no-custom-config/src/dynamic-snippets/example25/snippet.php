@@ -3,6 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Types\TypesObjectWithRequiredField;
 
 $client = new SeedClient(
     token: '<token>',
@@ -10,10 +11,8 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->object->getAndReturnMapOfDocumentedUnknownType(
-    [
-        'string' => [
-            'key' => "value",
-        ],
-    ],
+$client->endpoints->container->getAndReturnOptional(
+    new TypesObjectWithRequiredField([
+        'string' => 'string',
+    ]),
 );

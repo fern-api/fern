@@ -3,8 +3,8 @@ package example
 import (
     context "context"
 
-    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
+    endpoints "github.com/exhaustive/fern/endpoints"
     option "github.com/exhaustive/fern/option"
 )
 
@@ -17,12 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ReqWithHeaders{
-        XTestServiceHeader: "X-TEST-SERVICE-HEADER",
-        XTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+    request := &endpoints.ModifyWithPathParamsRequest{
+        Param: "param",
         Body: "string",
     }
-    client.ReqWithHeaders.GetWithCustomHeader(
+    client.Endpoints.Params.ModifyWithPath(
         context.TODO(),
         request,
     )

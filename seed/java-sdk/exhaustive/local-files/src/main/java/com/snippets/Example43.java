@@ -1,15 +1,20 @@
 package com.snippets;
 
-import com.fern.sdk.SeedExhaustiveClient;
+import com.fern.sdk.SeedApiClient;
+import com.fern.sdk.types.TypesObjectWithOptionalField;
 
 public class Example43 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().params().getWithPathAndErrors("param");
+        client.endpoints().object().getAndReturnWithOptionalField(
+            TypesObjectWithOptionalField
+                .builder()
+                .build()
+        );
     }
 }

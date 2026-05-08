@@ -6,7 +6,7 @@ package com.fern.sdk.resources.noreqbody;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
+import com.fern.sdk.types.TypesObjectWithOptionalField;
 import java.lang.String;
 
 public class NoReqBodyClient {
@@ -26,11 +26,11 @@ public class NoReqBodyClient {
     return this.rawClient;
   }
 
-  public ObjectWithOptionalField getWithNoRequestBody() {
+  public TypesObjectWithOptionalField getWithNoRequestBody() {
     return this.rawClient.getWithNoRequestBody().body();
   }
 
-  public ObjectWithOptionalField getWithNoRequestBody(RequestOptions requestOptions) {
+  public TypesObjectWithOptionalField getWithNoRequestBody(RequestOptions requestOptions) {
     return this.rawClient.getWithNoRequestBody(requestOptions).body();
   }
 

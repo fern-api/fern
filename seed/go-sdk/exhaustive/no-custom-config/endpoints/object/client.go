@@ -5,10 +5,11 @@ package object
 import (
 	context "context"
 
+	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
+	endpoints "github.com/exhaustive/fern/endpoints"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
-	types "github.com/exhaustive/fern/types"
 )
 
 type Client struct {
@@ -35,9 +36,9 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) GetAndReturnWithOptionalField(
 	ctx context.Context,
-	request *types.ObjectWithOptionalField,
+	request *fern.TypesObjectWithOptionalField,
 	opts ...option.RequestOption,
-) (*types.ObjectWithOptionalField, error) {
+) (*fern.TypesObjectWithOptionalField, error) {
 	response, err := c.WithRawResponse.GetAndReturnWithOptionalField(
 		ctx,
 		request,
@@ -51,9 +52,9 @@ func (c *Client) GetAndReturnWithOptionalField(
 
 func (c *Client) GetAndReturnWithRequiredField(
 	ctx context.Context,
-	request *types.ObjectWithRequiredField,
+	request *fern.TypesObjectWithRequiredField,
 	opts ...option.RequestOption,
-) (*types.ObjectWithRequiredField, error) {
+) (*fern.TypesObjectWithRequiredField, error) {
 	response, err := c.WithRawResponse.GetAndReturnWithRequiredField(
 		ctx,
 		request,
@@ -67,9 +68,9 @@ func (c *Client) GetAndReturnWithRequiredField(
 
 func (c *Client) GetAndReturnWithMapOfMap(
 	ctx context.Context,
-	request *types.ObjectWithMapOfMap,
+	request *fern.TypesObjectWithMapOfMap,
 	opts ...option.RequestOption,
-) (*types.ObjectWithMapOfMap, error) {
+) (*fern.TypesObjectWithMapOfMap, error) {
 	response, err := c.WithRawResponse.GetAndReturnWithMapOfMap(
 		ctx,
 		request,
@@ -83,9 +84,9 @@ func (c *Client) GetAndReturnWithMapOfMap(
 
 func (c *Client) GetAndReturnNestedWithOptionalField(
 	ctx context.Context,
-	request *types.NestedObjectWithOptionalField,
+	request *fern.TypesNestedObjectWithOptionalField,
 	opts ...option.RequestOption,
-) (*types.NestedObjectWithOptionalField, error) {
+) (*fern.TypesNestedObjectWithOptionalField, error) {
 	response, err := c.WithRawResponse.GetAndReturnNestedWithOptionalField(
 		ctx,
 		request,
@@ -99,13 +100,11 @@ func (c *Client) GetAndReturnNestedWithOptionalField(
 
 func (c *Client) GetAndReturnNestedWithRequiredField(
 	ctx context.Context,
-	string_ string,
-	request *types.NestedObjectWithRequiredField,
+	request *endpoints.GetAndReturnNestedWithRequiredFieldObjectRequest,
 	opts ...option.RequestOption,
-) (*types.NestedObjectWithRequiredField, error) {
+) (*fern.TypesNestedObjectWithRequiredField, error) {
 	response, err := c.WithRawResponse.GetAndReturnNestedWithRequiredField(
 		ctx,
-		string_,
 		request,
 		opts...,
 	)
@@ -117,9 +116,9 @@ func (c *Client) GetAndReturnNestedWithRequiredField(
 
 func (c *Client) GetAndReturnNestedWithRequiredFieldAsList(
 	ctx context.Context,
-	request []*types.NestedObjectWithRequiredField,
+	request []*fern.TypesNestedObjectWithRequiredField,
 	opts ...option.RequestOption,
-) (*types.NestedObjectWithRequiredField, error) {
+) (*fern.TypesNestedObjectWithRequiredField, error) {
 	response, err := c.WithRawResponse.GetAndReturnNestedWithRequiredFieldAsList(
 		ctx,
 		request,
@@ -133,9 +132,9 @@ func (c *Client) GetAndReturnNestedWithRequiredFieldAsList(
 
 func (c *Client) GetAndReturnWithUnknownField(
 	ctx context.Context,
-	request *types.ObjectWithUnknownField,
+	request *fern.TypesObjectWithUnknownField,
 	opts ...option.RequestOption,
-) (*types.ObjectWithUnknownField, error) {
+) (*fern.TypesObjectWithUnknownField, error) {
 	response, err := c.WithRawResponse.GetAndReturnWithUnknownField(
 		ctx,
 		request,
@@ -149,9 +148,9 @@ func (c *Client) GetAndReturnWithUnknownField(
 
 func (c *Client) GetAndReturnWithDocumentedUnknownType(
 	ctx context.Context,
-	request *types.ObjectWithDocumentedUnknownType,
+	request *fern.TypesObjectWithDocumentedUnknownType,
 	opts ...option.RequestOption,
-) (*types.ObjectWithDocumentedUnknownType, error) {
+) (*fern.TypesObjectWithDocumentedUnknownType, error) {
 	response, err := c.WithRawResponse.GetAndReturnWithDocumentedUnknownType(
 		ctx,
 		request,
@@ -165,48 +164,10 @@ func (c *Client) GetAndReturnWithDocumentedUnknownType(
 
 func (c *Client) GetAndReturnMapOfDocumentedUnknownType(
 	ctx context.Context,
-	request types.MapOfDocumentedUnknownType,
+	request fern.TypesMapOfDocumentedUnknownType,
 	opts ...option.RequestOption,
-) (types.MapOfDocumentedUnknownType, error) {
+) (fern.TypesMapOfDocumentedUnknownType, error) {
 	response, err := c.WithRawResponse.GetAndReturnMapOfDocumentedUnknownType(
-		ctx,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return response.Body, nil
-}
-
-// Tests that dynamic snippets include all required properties in the
-// object initializer, even when the example omits some required fields.
-func (c *Client) GetAndReturnWithMixedRequiredAndOptionalFields(
-	ctx context.Context,
-	request *types.ObjectWithMixedRequiredAndOptionalFields,
-	opts ...option.RequestOption,
-) (*types.ObjectWithMixedRequiredAndOptionalFields, error) {
-	response, err := c.WithRawResponse.GetAndReturnWithMixedRequiredAndOptionalFields(
-		ctx,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return response.Body, nil
-}
-
-// Tests that dynamic snippets recursively construct default objects for
-// required properties whose type is a named object. When the example
-// omits the nested object, the generator should construct a default
-// initializer with the nested object's required properties filled in.
-func (c *Client) GetAndReturnWithRequiredNestedObject(
-	ctx context.Context,
-	request *types.ObjectWithRequiredNestedObject,
-	opts ...option.RequestOption,
-) (*types.ObjectWithRequiredNestedObject, error) {
-	response, err := c.WithRawResponse.GetAndReturnWithRequiredNestedObject(
 		ctx,
 		request,
 		opts...,
@@ -222,9 +183,9 @@ func (c *Client) GetAndReturnWithRequiredNestedObject(
 // without being converted to "2023-08-31T14:15:22.000Z".
 func (c *Client) GetAndReturnWithDatetimeLikeString(
 	ctx context.Context,
-	request *types.ObjectWithDatetimeLikeString,
+	request *fern.TypesObjectWithDatetimeLikeString,
 	opts ...option.RequestOption,
-) (*types.ObjectWithDatetimeLikeString, error) {
+) (*fern.TypesObjectWithDatetimeLikeString, error) {
 	response, err := c.WithRawResponse.GetAndReturnWithDatetimeLikeString(
 		ctx,
 		request,

@@ -2,7 +2,6 @@
 
 import datetime as dt
 import typing
-import uuid
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
@@ -40,6 +39,7 @@ class PrimitiveClient:
         -------
         str
 
+
         Examples
         --------
         from seed import Exhaustive
@@ -68,6 +68,7 @@ class PrimitiveClient:
         -------
         int
 
+
         Examples
         --------
         from seed import Exhaustive
@@ -95,6 +96,7 @@ class PrimitiveClient:
         Returns
         -------
         int
+
 
         Examples
         --------
@@ -126,6 +128,7 @@ class PrimitiveClient:
         -------
         float
 
+
         Examples
         --------
         from seed import Exhaustive
@@ -153,6 +156,7 @@ class PrimitiveClient:
         Returns
         -------
         bool
+
 
         Examples
         --------
@@ -183,6 +187,7 @@ class PrimitiveClient:
         Returns
         -------
         dt.datetime
+
 
         Examples
         --------
@@ -218,6 +223,7 @@ class PrimitiveClient:
         -------
         dt.date
 
+
         Examples
         --------
         import datetime
@@ -237,25 +243,22 @@ class PrimitiveClient:
         _response = self._raw_client.get_and_return_date(request=request, request_options=request_options)
         return _response.data
 
-    def get_and_return_uuid(
-        self, *, request: uuid.UUID, request_options: typing.Optional[RequestOptions] = None
-    ) -> uuid.UUID:
+    def get_and_return_uuid(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------
-        request : uuid.UUID
+        request : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        uuid.UUID
+        str
+
 
         Examples
         --------
-        import uuid
-
         from seed import Exhaustive
 
         client = Exhaustive(
@@ -263,9 +266,7 @@ class PrimitiveClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.primitive.get_and_return_uuid(
-            request=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
+            request="string",
         )
         """
         _response = self._raw_client.get_and_return_uuid(request=request, request_options=request_options)
@@ -284,6 +285,7 @@ class PrimitiveClient:
         -------
         str
 
+
         Examples
         --------
         from seed import Exhaustive
@@ -293,7 +295,7 @@ class PrimitiveClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.primitive.get_and_return_base64(
-            request="SGVsbG8gd29ybGQh",
+            request="string",
         )
         """
         _response = self._raw_client.get_and_return_base64(request=request, request_options=request_options)
@@ -330,6 +332,7 @@ class AsyncPrimitiveClient:
         -------
         str
 
+
         Examples
         --------
         import asyncio
@@ -365,6 +368,7 @@ class AsyncPrimitiveClient:
         Returns
         -------
         int
+
 
         Examples
         --------
@@ -404,6 +408,7 @@ class AsyncPrimitiveClient:
         -------
         int
 
+
         Examples
         --------
         import asyncio
@@ -441,6 +446,7 @@ class AsyncPrimitiveClient:
         Returns
         -------
         float
+
 
         Examples
         --------
@@ -480,6 +486,7 @@ class AsyncPrimitiveClient:
         -------
         bool
 
+
         Examples
         --------
         import asyncio
@@ -517,6 +524,7 @@ class AsyncPrimitiveClient:
         Returns
         -------
         dt.datetime
+
 
         Examples
         --------
@@ -559,6 +567,7 @@ class AsyncPrimitiveClient:
         -------
         dt.date
 
+
         Examples
         --------
         import asyncio
@@ -586,24 +595,24 @@ class AsyncPrimitiveClient:
         return _response.data
 
     async def get_and_return_uuid(
-        self, *, request: uuid.UUID, request_options: typing.Optional[RequestOptions] = None
-    ) -> uuid.UUID:
+        self, *, request: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> str:
         """
         Parameters
         ----------
-        request : uuid.UUID
+        request : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        uuid.UUID
+        str
+
 
         Examples
         --------
         import asyncio
-        import uuid
 
         from seed import AsyncExhaustive
 
@@ -615,9 +624,7 @@ class AsyncPrimitiveClient:
 
         async def main() -> None:
             await client.endpoints.primitive.get_and_return_uuid(
-                request=uuid.UUID(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
+                request="string",
             )
 
 
@@ -641,6 +648,7 @@ class AsyncPrimitiveClient:
         -------
         str
 
+
         Examples
         --------
         import asyncio
@@ -655,7 +663,7 @@ class AsyncPrimitiveClient:
 
         async def main() -> None:
             await client.endpoints.primitive.get_and_return_base64(
-                request="SGVsbG8gd29ybGQh",
+                request="string",
             )
 
 

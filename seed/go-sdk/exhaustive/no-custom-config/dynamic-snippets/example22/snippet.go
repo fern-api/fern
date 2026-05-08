@@ -3,9 +3,9 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    types "github.com/exhaustive/fern/types"
 )
 
 func do() {
@@ -17,12 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &types.ObjectWithUnknownField{
-        Unknown: map[string]any{
-            "$ref": "https://example.com/schema",
+    request := map[string]*fern.TypesObjectWithRequiredField{
+        "string": &fern.TypesObjectWithRequiredField{
+            FieldString: "string",
         },
     }
-    client.Endpoints.Object.GetAndReturnWithUnknownField(
+    client.Endpoints.Container.GetAndReturnMapOfPrimToObject(
         context.TODO(),
         request,
     )

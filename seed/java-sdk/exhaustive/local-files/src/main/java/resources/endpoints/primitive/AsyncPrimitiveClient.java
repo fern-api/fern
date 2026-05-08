@@ -12,7 +12,6 @@ import java.lang.Integer;
 import java.lang.Long;
 import java.lang.String;
 import java.time.OffsetDateTime;
-import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncPrimitiveClient {
@@ -92,19 +91,19 @@ public class AsyncPrimitiveClient {
     return this.rawClient.getAndReturnDate(request, requestOptions).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<UUID> getAndReturnUuid(UUID request) {
+  public CompletableFuture<String> getAndReturnUuid(String request) {
     return this.rawClient.getAndReturnUuid(request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<UUID> getAndReturnUuid(UUID request, RequestOptions requestOptions) {
+  public CompletableFuture<String> getAndReturnUuid(String request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnUuid(request, requestOptions).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<byte[]> getAndReturnBase64(byte[] request) {
+  public CompletableFuture<String> getAndReturnBase64(String request) {
     return this.rawClient.getAndReturnBase64(request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<byte[]> getAndReturnBase64(byte[] request,
+  public CompletableFuture<String> getAndReturnBase64(String request,
       RequestOptions requestOptions) {
     return this.rawClient.getAndReturnBase64(request, requestOptions).thenApply(response -> response.body());
   }

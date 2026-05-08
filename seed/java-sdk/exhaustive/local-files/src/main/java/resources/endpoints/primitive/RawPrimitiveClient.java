@@ -9,9 +9,9 @@ import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.core.SeedExhaustiveApiException;
-import com.fern.sdk.core.SeedExhaustiveException;
-import com.fern.sdk.core.SeedExhaustiveHttpResponse;
+import com.fern.sdk.core.SeedApiApiException;
+import com.fern.sdk.core.SeedApiException;
+import com.fern.sdk.core.SeedApiHttpResponse;
 import java.io.IOException;
 import java.lang.Boolean;
 import java.lang.Double;
@@ -20,7 +20,6 @@ import java.lang.Long;
 import java.lang.Object;
 import java.lang.String;
 import java.time.OffsetDateTime;
-import java.util.UUID;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -36,15 +35,15 @@ public class RawPrimitiveClient {
     this.clientOptions = clientOptions;
   }
 
-  public SeedExhaustiveHttpResponse<String> getAndReturnString(String request) {
+  public SeedApiHttpResponse<String> getAndReturnString(String request) {
     return getAndReturnString(request,null);
   }
 
-  public SeedExhaustiveHttpResponse<String> getAndReturnString(String request,
+  public SeedApiHttpResponse<String> getAndReturnString(String request,
       RequestOptions requestOptions) {
     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-      .addPathSegments("primitive")
-      .addPathSegments("string");if (requestOptions != null) {
+
+      .addPathSegments("primitive/string");if (requestOptions != null) {
         requestOptions.getQueryParameters().forEach((_key, _value) -> {
           httpUrl.addQueryParameter(_key, _value);
         } );
@@ -54,7 +53,7 @@ public class RawPrimitiveClient {
         body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
       }
       catch(JsonProcessingException e) {
-        throw new SeedExhaustiveException("Failed to serialize request", e);
+        throw new SeedApiException("Failed to serialize request", e);
       }
       Request okhttpRequest = new Request.Builder()
         .url(httpUrl.build())
@@ -71,25 +70,25 @@ public class RawPrimitiveClient {
         ResponseBody responseBody = response.body();
         String responseBodyString = responseBody != null ? responseBody.string() : "{}";
         if (response.isSuccessful()) {
-          return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+          return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
         }
         Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-        throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+        throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
       }
       catch (IOException e) {
-        throw new SeedExhaustiveException("Network error executing HTTP request", e);
+        throw new SeedApiException("Network error executing HTTP request", e);
       }
     }
 
-    public SeedExhaustiveHttpResponse<Integer> getAndReturnInt(int request) {
+    public SeedApiHttpResponse<Integer> getAndReturnInt(int request) {
       return getAndReturnInt(request,null);
     }
 
-    public SeedExhaustiveHttpResponse<Integer> getAndReturnInt(int request,
+    public SeedApiHttpResponse<Integer> getAndReturnInt(int request,
         RequestOptions requestOptions) {
       HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-        .addPathSegments("primitive")
-        .addPathSegments("integer");if (requestOptions != null) {
+
+        .addPathSegments("primitive/integer");if (requestOptions != null) {
           requestOptions.getQueryParameters().forEach((_key, _value) -> {
             httpUrl.addQueryParameter(_key, _value);
           } );
@@ -99,7 +98,7 @@ public class RawPrimitiveClient {
           body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         }
         catch(JsonProcessingException e) {
-          throw new SeedExhaustiveException("Failed to serialize request", e);
+          throw new SeedApiException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
           .url(httpUrl.build())
@@ -116,25 +115,25 @@ public class RawPrimitiveClient {
           ResponseBody responseBody = response.body();
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           if (response.isSuccessful()) {
-            return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, int.class), response);
+            return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, int.class), response);
           }
           Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+          throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
         }
         catch (IOException e) {
-          throw new SeedExhaustiveException("Network error executing HTTP request", e);
+          throw new SeedApiException("Network error executing HTTP request", e);
         }
       }
 
-      public SeedExhaustiveHttpResponse<Long> getAndReturnLong(long request) {
+      public SeedApiHttpResponse<Long> getAndReturnLong(long request) {
         return getAndReturnLong(request,null);
       }
 
-      public SeedExhaustiveHttpResponse<Long> getAndReturnLong(long request,
+      public SeedApiHttpResponse<Long> getAndReturnLong(long request,
           RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-          .addPathSegments("primitive")
-          .addPathSegments("long");if (requestOptions != null) {
+
+          .addPathSegments("primitive/long");if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
               httpUrl.addQueryParameter(_key, _value);
             } );
@@ -144,7 +143,7 @@ public class RawPrimitiveClient {
             body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
           }
           catch(JsonProcessingException e) {
-            throw new SeedExhaustiveException("Failed to serialize request", e);
+            throw new SeedApiException("Failed to serialize request", e);
           }
           Request okhttpRequest = new Request.Builder()
             .url(httpUrl.build())
@@ -161,25 +160,25 @@ public class RawPrimitiveClient {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
-              return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, long.class), response);
+              return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, long.class), response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+            throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
           }
           catch (IOException e) {
-            throw new SeedExhaustiveException("Network error executing HTTP request", e);
+            throw new SeedApiException("Network error executing HTTP request", e);
           }
         }
 
-        public SeedExhaustiveHttpResponse<Double> getAndReturnDouble(double request) {
+        public SeedApiHttpResponse<Double> getAndReturnDouble(double request) {
           return getAndReturnDouble(request,null);
         }
 
-        public SeedExhaustiveHttpResponse<Double> getAndReturnDouble(double request,
+        public SeedApiHttpResponse<Double> getAndReturnDouble(double request,
             RequestOptions requestOptions) {
           HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-            .addPathSegments("primitive")
-            .addPathSegments("double");if (requestOptions != null) {
+
+            .addPathSegments("primitive/double");if (requestOptions != null) {
               requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
               } );
@@ -189,7 +188,7 @@ public class RawPrimitiveClient {
               body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
             }
             catch(JsonProcessingException e) {
-              throw new SeedExhaustiveException("Failed to serialize request", e);
+              throw new SeedApiException("Failed to serialize request", e);
             }
             Request okhttpRequest = new Request.Builder()
               .url(httpUrl.build())
@@ -206,25 +205,25 @@ public class RawPrimitiveClient {
               ResponseBody responseBody = response.body();
               String responseBodyString = responseBody != null ? responseBody.string() : "{}";
               if (response.isSuccessful()) {
-                return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, double.class), response);
+                return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, double.class), response);
               }
               Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-              throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+              throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
             }
             catch (IOException e) {
-              throw new SeedExhaustiveException("Network error executing HTTP request", e);
+              throw new SeedApiException("Network error executing HTTP request", e);
             }
           }
 
-          public SeedExhaustiveHttpResponse<Boolean> getAndReturnBool(boolean request) {
+          public SeedApiHttpResponse<Boolean> getAndReturnBool(boolean request) {
             return getAndReturnBool(request,null);
           }
 
-          public SeedExhaustiveHttpResponse<Boolean> getAndReturnBool(boolean request,
+          public SeedApiHttpResponse<Boolean> getAndReturnBool(boolean request,
               RequestOptions requestOptions) {
             HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-              .addPathSegments("primitive")
-              .addPathSegments("boolean");if (requestOptions != null) {
+
+              .addPathSegments("primitive/boolean");if (requestOptions != null) {
                 requestOptions.getQueryParameters().forEach((_key, _value) -> {
                   httpUrl.addQueryParameter(_key, _value);
                 } );
@@ -234,7 +233,7 @@ public class RawPrimitiveClient {
                 body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
               }
               catch(JsonProcessingException e) {
-                throw new SeedExhaustiveException("Failed to serialize request", e);
+                throw new SeedApiException("Failed to serialize request", e);
               }
               Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
@@ -251,26 +250,26 @@ public class RawPrimitiveClient {
                 ResponseBody responseBody = response.body();
                 String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                 if (response.isSuccessful()) {
-                  return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, boolean.class), response);
+                  return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, boolean.class), response);
                 }
                 Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+                throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
               }
               catch (IOException e) {
-                throw new SeedExhaustiveException("Network error executing HTTP request", e);
+                throw new SeedApiException("Network error executing HTTP request", e);
               }
             }
 
-            public SeedExhaustiveHttpResponse<OffsetDateTime> getAndReturnDatetime(
+            public SeedApiHttpResponse<OffsetDateTime> getAndReturnDatetime(
                 OffsetDateTime request) {
               return getAndReturnDatetime(request,null);
             }
 
-            public SeedExhaustiveHttpResponse<OffsetDateTime> getAndReturnDatetime(
-                OffsetDateTime request, RequestOptions requestOptions) {
+            public SeedApiHttpResponse<OffsetDateTime> getAndReturnDatetime(OffsetDateTime request,
+                RequestOptions requestOptions) {
               HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-                .addPathSegments("primitive")
-                .addPathSegments("datetime");if (requestOptions != null) {
+
+                .addPathSegments("primitive/datetime");if (requestOptions != null) {
                   requestOptions.getQueryParameters().forEach((_key, _value) -> {
                     httpUrl.addQueryParameter(_key, _value);
                   } );
@@ -280,7 +279,7 @@ public class RawPrimitiveClient {
                   body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
                 }
                 catch(JsonProcessingException e) {
-                  throw new SeedExhaustiveException("Failed to serialize request", e);
+                  throw new SeedApiException("Failed to serialize request", e);
                 }
                 Request okhttpRequest = new Request.Builder()
                   .url(httpUrl.build())
@@ -297,25 +296,25 @@ public class RawPrimitiveClient {
                   ResponseBody responseBody = response.body();
                   String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                   if (response.isSuccessful()) {
-                    return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, OffsetDateTime.class), response);
+                    return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, OffsetDateTime.class), response);
                   }
                   Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                  throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+                  throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
                 }
                 catch (IOException e) {
-                  throw new SeedExhaustiveException("Network error executing HTTP request", e);
+                  throw new SeedApiException("Network error executing HTTP request", e);
                 }
               }
 
-              public SeedExhaustiveHttpResponse<String> getAndReturnDate(String request) {
+              public SeedApiHttpResponse<String> getAndReturnDate(String request) {
                 return getAndReturnDate(request,null);
               }
 
-              public SeedExhaustiveHttpResponse<String> getAndReturnDate(String request,
+              public SeedApiHttpResponse<String> getAndReturnDate(String request,
                   RequestOptions requestOptions) {
                 HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-                  .addPathSegments("primitive")
-                  .addPathSegments("date");if (requestOptions != null) {
+
+                  .addPathSegments("primitive/date");if (requestOptions != null) {
                     requestOptions.getQueryParameters().forEach((_key, _value) -> {
                       httpUrl.addQueryParameter(_key, _value);
                     } );
@@ -325,7 +324,7 @@ public class RawPrimitiveClient {
                     body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
                   }
                   catch(JsonProcessingException e) {
-                    throw new SeedExhaustiveException("Failed to serialize request", e);
+                    throw new SeedApiException("Failed to serialize request", e);
                   }
                   Request okhttpRequest = new Request.Builder()
                     .url(httpUrl.build())
@@ -342,25 +341,25 @@ public class RawPrimitiveClient {
                     ResponseBody responseBody = response.body();
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                      return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+                      return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
                     }
                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                    throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+                    throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
                   }
                   catch (IOException e) {
-                    throw new SeedExhaustiveException("Network error executing HTTP request", e);
+                    throw new SeedApiException("Network error executing HTTP request", e);
                   }
                 }
 
-                public SeedExhaustiveHttpResponse<UUID> getAndReturnUuid(UUID request) {
+                public SeedApiHttpResponse<String> getAndReturnUuid(String request) {
                   return getAndReturnUuid(request,null);
                 }
 
-                public SeedExhaustiveHttpResponse<UUID> getAndReturnUuid(UUID request,
+                public SeedApiHttpResponse<String> getAndReturnUuid(String request,
                     RequestOptions requestOptions) {
                   HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-                    .addPathSegments("primitive")
-                    .addPathSegments("uuid");if (requestOptions != null) {
+
+                    .addPathSegments("primitive/uuid");if (requestOptions != null) {
                       requestOptions.getQueryParameters().forEach((_key, _value) -> {
                         httpUrl.addQueryParameter(_key, _value);
                       } );
@@ -370,7 +369,7 @@ public class RawPrimitiveClient {
                       body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
                     }
                     catch(JsonProcessingException e) {
-                      throw new SeedExhaustiveException("Failed to serialize request", e);
+                      throw new SeedApiException("Failed to serialize request", e);
                     }
                     Request okhttpRequest = new Request.Builder()
                       .url(httpUrl.build())
@@ -387,25 +386,25 @@ public class RawPrimitiveClient {
                       ResponseBody responseBody = response.body();
                       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                       if (response.isSuccessful()) {
-                        return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UUID.class), response);
+                        return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
                       }
                       Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+                      throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
                     }
                     catch (IOException e) {
-                      throw new SeedExhaustiveException("Network error executing HTTP request", e);
+                      throw new SeedApiException("Network error executing HTTP request", e);
                     }
                   }
 
-                  public SeedExhaustiveHttpResponse<byte[]> getAndReturnBase64(byte[] request) {
+                  public SeedApiHttpResponse<String> getAndReturnBase64(String request) {
                     return getAndReturnBase64(request,null);
                   }
 
-                  public SeedExhaustiveHttpResponse<byte[]> getAndReturnBase64(byte[] request,
+                  public SeedApiHttpResponse<String> getAndReturnBase64(String request,
                       RequestOptions requestOptions) {
                     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-                      .addPathSegments("primitive")
-                      .addPathSegments("base64");if (requestOptions != null) {
+
+                      .addPathSegments("primitive/base64");if (requestOptions != null) {
                         requestOptions.getQueryParameters().forEach((_key, _value) -> {
                           httpUrl.addQueryParameter(_key, _value);
                         } );
@@ -415,7 +414,7 @@ public class RawPrimitiveClient {
                         body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
                       }
                       catch(JsonProcessingException e) {
-                        throw new SeedExhaustiveException("Failed to serialize request", e);
+                        throw new SeedApiException("Failed to serialize request", e);
                       }
                       Request okhttpRequest = new Request.Builder()
                         .url(httpUrl.build())
@@ -432,13 +431,13 @@ public class RawPrimitiveClient {
                         ResponseBody responseBody = response.body();
                         String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                         if (response.isSuccessful()) {
-                          return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, byte[].class), response);
+                          return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
                         }
                         Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                        throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+                        throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
                       }
                       catch (IOException e) {
-                        throw new SeedExhaustiveException("Network error executing HTTP request", e);
+                        throw new SeedApiException("Network error executing HTTP request", e);
                       }
                     }
                   }

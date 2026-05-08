@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
-import type * as SeedExhaustive from "../../../../../index.js";
+import type * as SeedApi from "../../../../../index.js";
 
 export declare namespace ContentTypeClient {
     export type Options = BaseClientOptions;
@@ -22,37 +22,21 @@ export class ContentTypeClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {SeedApi.TypesObjectWithOptionalField} request
      * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.contentType.postJsonPatchContentType({
-     *         string: "string",
-     *         integer: 1,
-     *         long: 1000000,
-     *         double: 1.1,
-     *         bool: true,
-     *         datetime: "2024-01-15T09:30:00Z",
-     *         date: "2023-01-15",
-     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *         base64: "SGVsbG8gd29ybGQh",
-     *         list: ["list", "list"],
-     *         set: ["set"],
-     *         map: {
-     *             1: "map"
-     *         },
-     *         bigint: "1000000"
-     *     })
+     *     await client.endpoints.contentType.postJsonPatchContentType({})
      */
     public postJsonPatchContentType(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
+        request: SeedApi.TypesObjectWithOptionalField,
         requestOptions?: ContentTypeClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__postJsonPatchContentType(request, requestOptions));
     }
 
     private async __postJsonPatchContentType(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
+        request: SeedApi.TypesObjectWithOptionalField,
         requestOptions?: ContentTypeClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
@@ -65,11 +49,11 @@ export class ContentTypeClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/foo/bar",
+                "foo/bar",
             ),
             method: "POST",
             headers: _headers,
-            contentType: "application/json-patch+json",
+            contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: request,
@@ -84,7 +68,7 @@ export class ContentTypeClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -95,30 +79,14 @@ export class ContentTypeClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {SeedApi.TypesObjectWithOptionalField} request
      * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
-     *         string: "string",
-     *         integer: 1,
-     *         long: 1000000,
-     *         double: 1.1,
-     *         bool: true,
-     *         datetime: "2024-01-15T09:30:00Z",
-     *         date: "2023-01-15",
-     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *         base64: "SGVsbG8gd29ybGQh",
-     *         list: ["list", "list"],
-     *         set: ["set"],
-     *         map: {
-     *             1: "map"
-     *         },
-     *         bigint: "1000000"
-     *     })
+     *     await client.endpoints.contentType.postJsonPatchContentWithCharsetType({})
      */
     public postJsonPatchContentWithCharsetType(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
+        request: SeedApi.TypesObjectWithOptionalField,
         requestOptions?: ContentTypeClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(
@@ -127,7 +95,7 @@ export class ContentTypeClient {
     }
 
     private async __postJsonPatchContentWithCharsetType(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
+        request: SeedApi.TypesObjectWithOptionalField,
         requestOptions?: ContentTypeClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
@@ -140,11 +108,11 @@ export class ContentTypeClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/foo/baz",
+                "foo/baz",
             ),
             method: "POST",
             headers: _headers,
-            contentType: "application/json-patch+json; charset=utf-8",
+            contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
             body: request,
@@ -159,7 +127,7 @@ export class ContentTypeClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

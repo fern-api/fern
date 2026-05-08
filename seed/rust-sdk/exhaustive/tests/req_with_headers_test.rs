@@ -1,4 +1,4 @@
-use seed_exhaustive::prelude::*;
+use seed_api::prelude::*;
 
 mod wire_test_utils;
 
@@ -14,7 +14,7 @@ async fn test_req_with_headers_get_with_custom_header_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
         .req_with_headers
@@ -22,7 +22,6 @@ async fn test_req_with_headers_get_with_custom_header_with_wiremock() {
             &"string".to_string(),
             Some(
                 RequestOptions::new()
-                    .additional_header("X-TEST-SERVICE-HEADER", "X-TEST-SERVICE-HEADER")
                     .additional_header("X-TEST-ENDPOINT-HEADER", "X-TEST-ENDPOINT-HEADER"),
             ),
         )

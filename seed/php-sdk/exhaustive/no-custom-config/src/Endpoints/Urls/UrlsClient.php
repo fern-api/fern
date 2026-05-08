@@ -68,7 +68,7 @@ class UrlsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/urls/MixedCase",
+                    path: "urls/MixedCase",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -113,7 +113,7 @@ class UrlsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/urls/no-ending-slash",
+                    path: "urls/no-ending-slash",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -158,7 +158,7 @@ class UrlsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/urls/with-ending-slash/",
+                    path: "urls/with-ending-slash/",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -203,7 +203,7 @@ class UrlsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/urls/with_underscores",
+                    path: "urls/with_underscores",
                     method: HttpMethod::GET,
                 ),
                 $options,

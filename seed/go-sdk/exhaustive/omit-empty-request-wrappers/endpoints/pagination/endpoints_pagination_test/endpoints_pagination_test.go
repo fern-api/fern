@@ -10,7 +10,6 @@ import (
 	os "os"
 	testing "testing"
 
-	fern "github.com/exhaustive/fern"
 	client "github.com/exhaustive/fern/client"
 	endpoints "github.com/exhaustive/fern/endpoints"
 	option "github.com/exhaustive/fern/option"
@@ -89,14 +88,7 @@ func TestEndpointsPaginationListItemsWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &endpoints.ListItemsRequest{
-		Cursor: fern.String(
-			"cursor",
-		),
-		Limit: fern.Int(
-			1,
-		),
-	}
+	request := &endpoints.ListItemsPaginationRequest{}
 	_, invocationErr := client.Endpoints.Pagination.ListItems(
 		context.TODO(),
 		request,
@@ -106,5 +98,5 @@ func TestEndpointsPaginationListItemsWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsPaginationListItemsWithWireMock", "GET", "/pagination", map[string]interface{}{"cursor": "cursor", "limit": "1"}, 1)
+	VerifyRequestCount(t, "TestEndpointsPaginationListItemsWithWireMock", "GET", "/pagination", nil, 1)
 }

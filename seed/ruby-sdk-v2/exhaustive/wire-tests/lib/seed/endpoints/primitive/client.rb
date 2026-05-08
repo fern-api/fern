@@ -25,7 +25,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/primitive/string",
+            path: "primitive/string",
             body: params,
             request_options: request_options
           )
@@ -55,7 +55,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/primitive/integer",
+            path: "primitive/integer",
             body: params,
             request_options: request_options
           )
@@ -85,7 +85,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/primitive/long",
+            path: "primitive/long",
             body: params,
             request_options: request_options
           )
@@ -115,7 +115,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/primitive/double",
+            path: "primitive/double",
             body: params,
             request_options: request_options
           )
@@ -145,7 +145,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/primitive/boolean",
+            path: "primitive/boolean",
             body: params,
             request_options: request_options
           )
@@ -175,7 +175,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/primitive/datetime",
+            path: "primitive/datetime",
             body: params,
             request_options: request_options
           )
@@ -205,7 +205,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/primitive/date",
+            path: "primitive/date",
             body: params,
             request_options: request_options
           )
@@ -235,7 +235,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/primitive/uuid",
+            path: "primitive/uuid",
             body: params,
             request_options: request_options
           )
@@ -265,7 +265,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/primitive/base64",
+            path: "primitive/base64",
             body: params,
             request_options: request_options
           )

@@ -6,24 +6,24 @@ import { ReqWithHeadersClient } from "./api/resources/reqWithHeaders/client/Clie
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.mjs";
 import { type NormalizedClientOptionsWithAuth } from "./BaseClient.mjs";
 import * as core from "./core/index.mjs";
-export declare namespace SeedExhaustiveClient {
+export declare namespace SeedApiClient {
     type Options = BaseClientOptions;
     interface RequestOptions extends BaseRequestOptions {
     }
 }
-export declare class SeedExhaustiveClient {
-    protected readonly _options: NormalizedClientOptionsWithAuth<SeedExhaustiveClient.Options>;
-    protected _endpoints: EndpointsClient | undefined;
+export declare class SeedApiClient {
+    protected readonly _options: NormalizedClientOptionsWithAuth<SeedApiClient.Options>;
     protected _inlinedRequests: InlinedRequestsClient | undefined;
     protected _noAuth: NoAuthClient | undefined;
     protected _noReqBody: NoReqBodyClient | undefined;
     protected _reqWithHeaders: ReqWithHeadersClient | undefined;
-    constructor(options: SeedExhaustiveClient.Options);
-    get endpoints(): EndpointsClient;
+    protected _endpoints: EndpointsClient | undefined;
+    constructor(options: SeedApiClient.Options);
     get inlinedRequests(): InlinedRequestsClient;
     get noAuth(): NoAuthClient;
     get noReqBody(): NoReqBodyClient;
     get reqWithHeaders(): ReqWithHeadersClient;
+    get endpoints(): EndpointsClient;
     /**
      * Make a passthrough request using the SDK's configured auth, retry, logging, etc.
      * This is useful for making requests to endpoints not yet supported in the SDK.

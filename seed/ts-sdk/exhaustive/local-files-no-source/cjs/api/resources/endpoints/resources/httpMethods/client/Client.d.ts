@@ -1,7 +1,7 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import * as core from "../../../../../../core/index.js";
-import type * as SeedExhaustive from "../../../../../index.js";
+import type * as SeedApi from "../../../../../index.js";
 export declare namespace HttpMethodsClient {
     type Options = BaseClientOptions;
     interface RequestOptions extends BaseRequestOptions {
@@ -11,18 +11,55 @@ export declare class HttpMethodsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<HttpMethodsClient.Options>;
     constructor(options: HttpMethodsClient.Options);
     /**
-     * @param {string} id
+     * @param {SeedApi.endpoints.TestGetHttpMethodsRequest} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.httpMethods.testGet("id")
+     *     await client.endpoints.httpMethods.testGet({
+     *         id: "id"
+     *     })
      */
-    testGet(id: string, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<string>;
+    testGet(request: SeedApi.endpoints.TestGetHttpMethodsRequest, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<string>;
     private __testGet;
     /**
-     * @deprecated
+     * @param {SeedApi.endpoints.TestPutHttpMethodsRequest} request
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @example
+     *     await client.endpoints.httpMethods.testPut({
+     *         id: "id",
+     *         body: {
+     *             string: "string"
+     *         }
+     *     })
+     */
+    testPut(request: SeedApi.endpoints.TestPutHttpMethodsRequest, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<SeedApi.TypesObjectWithOptionalField>;
+    private __testPut;
+    /**
+     * @param {SeedApi.endpoints.TestDeleteHttpMethodsRequest} request
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testDelete({
+     *         id: "id"
+     *     })
+     */
+    testDelete(request: SeedApi.endpoints.TestDeleteHttpMethodsRequest, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<boolean>;
+    private __testDelete;
+    /**
+     * @param {SeedApi.endpoints.TestPatchHttpMethodsRequest} request
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testPatch({
+     *         id: "id",
+     *         body: {}
+     *     })
+     */
+    testPatch(request: SeedApi.endpoints.TestPatchHttpMethodsRequest, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<SeedApi.TypesObjectWithOptionalField>;
+    private __testPatch;
+    /**
+     * @param {SeedApi.TypesObjectWithRequiredField} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -30,59 +67,6 @@ export declare class HttpMethodsClient {
      *         string: "string"
      *     })
      */
-    testPost(request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
+    testPost(request: SeedApi.TypesObjectWithRequiredField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<SeedApi.TypesObjectWithOptionalField>;
     private __testPost;
-    /**
-     * @deprecated Use testPatch instead.
-     *
-     * @param {string} id
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
-     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.httpMethods.testPut("id", {
-     *         string: "string"
-     *     })
-     */
-    testPut(id: string, request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
-    private __testPut;
-    /**
-     * @beta This endpoint is in pre-release and may change.
-     *
-     * @param {string} id
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
-     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.httpMethods.testPatch("id", {
-     *         string: "string",
-     *         integer: 1,
-     *         long: 1000000,
-     *         double: 1.1,
-     *         bool: true,
-     *         datetime: "2024-01-15T09:30:00Z",
-     *         date: "2023-01-15",
-     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *         base64: "SGVsbG8gd29ybGQh",
-     *         list: ["list", "list"],
-     *         set: ["set"],
-     *         map: {
-     *             1: "map"
-     *         },
-     *         bigint: "1000000"
-     *     })
-     */
-    testPatch(id: string, request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
-    private __testPatch;
-    /**
-     * @beta This endpoint is in development and may change.
-     *
-     * @param {string} id
-     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.httpMethods.testDelete("id")
-     */
-    testDelete(id: string, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<boolean>;
-    private __testDelete;
 }

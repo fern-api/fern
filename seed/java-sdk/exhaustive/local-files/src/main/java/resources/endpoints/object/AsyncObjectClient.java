@@ -6,16 +6,15 @@ package com.fern.sdk.resources.endpoints.object;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.types.object.types.NestedObjectWithOptionalField;
-import com.fern.sdk.resources.types.object.types.NestedObjectWithRequiredField;
-import com.fern.sdk.resources.types.object.types.ObjectWithDatetimeLikeString;
-import com.fern.sdk.resources.types.object.types.ObjectWithDocumentedUnknownType;
-import com.fern.sdk.resources.types.object.types.ObjectWithMapOfMap;
-import com.fern.sdk.resources.types.object.types.ObjectWithMixedRequiredAndOptionalFields;
-import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
-import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
-import com.fern.sdk.resources.types.object.types.ObjectWithRequiredNestedObject;
-import com.fern.sdk.resources.types.object.types.ObjectWithUnknownField;
+import com.fern.sdk.resources.endpoints.object.requests.GetAndReturnNestedWithRequiredFieldObjectRequest;
+import com.fern.sdk.types.TypesNestedObjectWithOptionalField;
+import com.fern.sdk.types.TypesNestedObjectWithRequiredField;
+import com.fern.sdk.types.TypesObjectWithDatetimeLikeString;
+import com.fern.sdk.types.TypesObjectWithDocumentedUnknownType;
+import com.fern.sdk.types.TypesObjectWithMapOfMap;
+import com.fern.sdk.types.TypesObjectWithOptionalField;
+import com.fern.sdk.types.TypesObjectWithRequiredField;
+import com.fern.sdk.types.TypesObjectWithUnknownField;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -39,101 +38,103 @@ public class AsyncObjectClient {
     return this.rawClient;
   }
 
-  public CompletableFuture<ObjectWithOptionalField> getAndReturnWithOptionalField() {
+  public CompletableFuture<TypesObjectWithOptionalField> getAndReturnWithOptionalField() {
     return this.rawClient.getAndReturnWithOptionalField().thenApply(response -> response.body());
   }
 
-  public CompletableFuture<ObjectWithOptionalField> getAndReturnWithOptionalField(
+  public CompletableFuture<TypesObjectWithOptionalField> getAndReturnWithOptionalField(
       RequestOptions requestOptions) {
     return this.rawClient.getAndReturnWithOptionalField(requestOptions).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<ObjectWithOptionalField> getAndReturnWithOptionalField(
-      ObjectWithOptionalField request) {
+  public CompletableFuture<TypesObjectWithOptionalField> getAndReturnWithOptionalField(
+      TypesObjectWithOptionalField request) {
     return this.rawClient.getAndReturnWithOptionalField(request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<ObjectWithOptionalField> getAndReturnWithOptionalField(
-      ObjectWithOptionalField request, RequestOptions requestOptions) {
+  public CompletableFuture<TypesObjectWithOptionalField> getAndReturnWithOptionalField(
+      TypesObjectWithOptionalField request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnWithOptionalField(request, requestOptions).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<ObjectWithRequiredField> getAndReturnWithRequiredField(
-      ObjectWithRequiredField request) {
+  public CompletableFuture<TypesObjectWithRequiredField> getAndReturnWithRequiredField(
+      TypesObjectWithRequiredField request) {
     return this.rawClient.getAndReturnWithRequiredField(request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<ObjectWithRequiredField> getAndReturnWithRequiredField(
-      ObjectWithRequiredField request, RequestOptions requestOptions) {
+  public CompletableFuture<TypesObjectWithRequiredField> getAndReturnWithRequiredField(
+      TypesObjectWithRequiredField request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnWithRequiredField(request, requestOptions).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<ObjectWithMapOfMap> getAndReturnWithMapOfMap(
-      ObjectWithMapOfMap request) {
+  public CompletableFuture<TypesObjectWithMapOfMap> getAndReturnWithMapOfMap(
+      TypesObjectWithMapOfMap request) {
     return this.rawClient.getAndReturnWithMapOfMap(request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<ObjectWithMapOfMap> getAndReturnWithMapOfMap(ObjectWithMapOfMap request,
-      RequestOptions requestOptions) {
+  public CompletableFuture<TypesObjectWithMapOfMap> getAndReturnWithMapOfMap(
+      TypesObjectWithMapOfMap request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnWithMapOfMap(request, requestOptions).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField() {
+  public CompletableFuture<TypesNestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
+      ) {
     return this.rawClient.getAndReturnNestedWithOptionalField().thenApply(response -> response.body());
   }
 
-  public CompletableFuture<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
+  public CompletableFuture<TypesNestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
       RequestOptions requestOptions) {
     return this.rawClient.getAndReturnNestedWithOptionalField(requestOptions).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
-      NestedObjectWithOptionalField request) {
+  public CompletableFuture<TypesNestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
+      TypesNestedObjectWithOptionalField request) {
     return this.rawClient.getAndReturnNestedWithOptionalField(request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
-      NestedObjectWithOptionalField request, RequestOptions requestOptions) {
+  public CompletableFuture<TypesNestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
+      TypesNestedObjectWithOptionalField request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnNestedWithOptionalField(request, requestOptions).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredField(
-      String string, NestedObjectWithRequiredField request) {
-    return this.rawClient.getAndReturnNestedWithRequiredField(string, request).thenApply(response -> response.body());
+  public CompletableFuture<TypesNestedObjectWithRequiredField> getAndReturnNestedWithRequiredField(
+      String stringValue, GetAndReturnNestedWithRequiredFieldObjectRequest request) {
+    return this.rawClient.getAndReturnNestedWithRequiredField(stringValue, request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredField(
-      String string, NestedObjectWithRequiredField request, RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnNestedWithRequiredField(string, request, requestOptions).thenApply(response -> response.body());
+  public CompletableFuture<TypesNestedObjectWithRequiredField> getAndReturnNestedWithRequiredField(
+      String stringValue, GetAndReturnNestedWithRequiredFieldObjectRequest request,
+      RequestOptions requestOptions) {
+    return this.rawClient.getAndReturnNestedWithRequiredField(stringValue, request, requestOptions).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredFieldAsList(
-      List<NestedObjectWithRequiredField> request) {
+  public CompletableFuture<TypesNestedObjectWithRequiredField> getAndReturnNestedWithRequiredFieldAsList(
+      List<TypesNestedObjectWithRequiredField> request) {
     return this.rawClient.getAndReturnNestedWithRequiredFieldAsList(request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredFieldAsList(
-      List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
+  public CompletableFuture<TypesNestedObjectWithRequiredField> getAndReturnNestedWithRequiredFieldAsList(
+      List<TypesNestedObjectWithRequiredField> request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnNestedWithRequiredFieldAsList(request, requestOptions).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<ObjectWithUnknownField> getAndReturnWithUnknownField(
-      ObjectWithUnknownField request) {
+  public CompletableFuture<TypesObjectWithUnknownField> getAndReturnWithUnknownField(
+      TypesObjectWithUnknownField request) {
     return this.rawClient.getAndReturnWithUnknownField(request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<ObjectWithUnknownField> getAndReturnWithUnknownField(
-      ObjectWithUnknownField request, RequestOptions requestOptions) {
+  public CompletableFuture<TypesObjectWithUnknownField> getAndReturnWithUnknownField(
+      TypesObjectWithUnknownField request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnWithUnknownField(request, requestOptions).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<ObjectWithDocumentedUnknownType> getAndReturnWithDocumentedUnknownType(
-      ObjectWithDocumentedUnknownType request) {
+  public CompletableFuture<TypesObjectWithDocumentedUnknownType> getAndReturnWithDocumentedUnknownType(
+      TypesObjectWithDocumentedUnknownType request) {
     return this.rawClient.getAndReturnWithDocumentedUnknownType(request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<ObjectWithDocumentedUnknownType> getAndReturnWithDocumentedUnknownType(
-      ObjectWithDocumentedUnknownType request, RequestOptions requestOptions) {
+  public CompletableFuture<TypesObjectWithDocumentedUnknownType> getAndReturnWithDocumentedUnknownType(
+      TypesObjectWithDocumentedUnknownType request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnWithDocumentedUnknownType(request, requestOptions).thenApply(response -> response.body());
   }
 
@@ -148,52 +149,12 @@ public class AsyncObjectClient {
   }
 
   /**
-   * Tests that dynamic snippets include all required properties in the
-   * object initializer, even when the example omits some required fields.
-   */
-  public CompletableFuture<ObjectWithMixedRequiredAndOptionalFields> getAndReturnWithMixedRequiredAndOptionalFields(
-      ObjectWithMixedRequiredAndOptionalFields request) {
-    return this.rawClient.getAndReturnWithMixedRequiredAndOptionalFields(request).thenApply(response -> response.body());
-  }
-
-  /**
-   * Tests that dynamic snippets include all required properties in the
-   * object initializer, even when the example omits some required fields.
-   */
-  public CompletableFuture<ObjectWithMixedRequiredAndOptionalFields> getAndReturnWithMixedRequiredAndOptionalFields(
-      ObjectWithMixedRequiredAndOptionalFields request, RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnWithMixedRequiredAndOptionalFields(request, requestOptions).thenApply(response -> response.body());
-  }
-
-  /**
-   * Tests that dynamic snippets recursively construct default objects for
-   * required properties whose type is a named object. When the example
-   * omits the nested object, the generator should construct a default
-   * initializer with the nested object's required properties filled in.
-   */
-  public CompletableFuture<ObjectWithRequiredNestedObject> getAndReturnWithRequiredNestedObject(
-      ObjectWithRequiredNestedObject request) {
-    return this.rawClient.getAndReturnWithRequiredNestedObject(request).thenApply(response -> response.body());
-  }
-
-  /**
-   * Tests that dynamic snippets recursively construct default objects for
-   * required properties whose type is a named object. When the example
-   * omits the nested object, the generator should construct a default
-   * initializer with the nested object's required properties filled in.
-   */
-  public CompletableFuture<ObjectWithRequiredNestedObject> getAndReturnWithRequiredNestedObject(
-      ObjectWithRequiredNestedObject request, RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnWithRequiredNestedObject(request, requestOptions).thenApply(response -> response.body());
-  }
-
-  /**
    * Tests that string fields containing datetime-like values are NOT reformatted.
    * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
    * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
    */
-  public CompletableFuture<ObjectWithDatetimeLikeString> getAndReturnWithDatetimeLikeString(
-      ObjectWithDatetimeLikeString request) {
+  public CompletableFuture<TypesObjectWithDatetimeLikeString> getAndReturnWithDatetimeLikeString(
+      TypesObjectWithDatetimeLikeString request) {
     return this.rawClient.getAndReturnWithDatetimeLikeString(request).thenApply(response -> response.body());
   }
 
@@ -202,8 +163,8 @@ public class AsyncObjectClient {
    * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
    * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
    */
-  public CompletableFuture<ObjectWithDatetimeLikeString> getAndReturnWithDatetimeLikeString(
-      ObjectWithDatetimeLikeString request, RequestOptions requestOptions) {
+  public CompletableFuture<TypesObjectWithDatetimeLikeString> getAndReturnWithDatetimeLikeString(
+      TypesObjectWithDatetimeLikeString request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnWithDatetimeLikeString(request, requestOptions).thenApply(response -> response.body());
   }
 }

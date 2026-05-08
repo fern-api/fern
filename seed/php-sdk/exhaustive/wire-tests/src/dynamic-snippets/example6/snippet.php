@@ -10,8 +10,4 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->container->getAndReturnMapOfPrimToUndiscriminatedUnion(
-    [
-        'string' => 1.1,
-    ],
-);
+$client->noReqBody->getWithNoRequestBody();

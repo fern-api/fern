@@ -9,26 +9,22 @@ import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 import * as core from "./core/index.js";
 
-export declare namespace SeedExhaustiveClient {
+export declare namespace SeedApiClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class SeedExhaustiveClient {
-    protected readonly _options: NormalizedClientOptionsWithAuth<SeedExhaustiveClient.Options>;
-    protected _endpoints: EndpointsClient | undefined;
+export class SeedApiClient {
+    protected readonly _options: NormalizedClientOptionsWithAuth<SeedApiClient.Options>;
     protected _inlinedRequests: InlinedRequestsClient | undefined;
     protected _noAuth: NoAuthClient | undefined;
     protected _noReqBody: NoReqBodyClient | undefined;
     protected _reqWithHeaders: ReqWithHeadersClient | undefined;
+    protected _endpoints: EndpointsClient | undefined;
 
-    constructor(options: SeedExhaustiveClient.Options) {
+    constructor(options: SeedApiClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
-    }
-
-    public get endpoints(): EndpointsClient {
-        return (this._endpoints ??= new EndpointsClient(this._options));
     }
 
     public get inlinedRequests(): InlinedRequestsClient {
@@ -45,6 +41,10 @@ export class SeedExhaustiveClient {
 
     public get reqWithHeaders(): ReqWithHeadersClient {
         return (this._reqWithHeaders ??= new ReqWithHeadersClient(this._options));
+    }
+
+    public get endpoints(): EndpointsClient {
+        return (this._endpoints ??= new EndpointsClient(this._options));
     }
 
     /**

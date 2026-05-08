@@ -1,15 +1,18 @@
 package com.snippets;
 
-import com.fern.sdk.SeedExhaustiveClient;
+import com.fern.sdk.SeedApiClient;
+import java.util.Arrays;
 
 public class Example15 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().httpMethods().testDelete("id");
+        client.endpoints().container().getAndReturnSetOfPrimitives(
+            Arrays.asList("string")
+        );
     }
 }

@@ -24,13 +24,13 @@ impl InlinedRequestsClient {
     /// JSON response from the API
     pub async fn post_with_object_bodyand_response(
         &self,
-        request: &PostWithObjectBody,
+        request: &PostWithObjectBodyandResponseInlinedRequestsRequest,
         options: Option<RequestOptions>,
-    ) -> Result<ObjectWithOptionalField, ApiError> {
+    ) -> Result<TypesObjectWithOptionalField, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/req-bodies/object",
+                "req-bodies/object",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

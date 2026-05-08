@@ -16,8 +16,11 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.HTTPMethods.TestDelete(
+    request := []string{
+        "string",
+    }
+    client.Endpoints.Container.GetAndReturnSetOfPrimitives(
         context.TODO(),
-        "id",
+        request,
     )
 }

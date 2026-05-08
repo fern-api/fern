@@ -15,13 +15,9 @@ import { NoReqBodyClient } from "./api/resources/noReqBody/client/Client.mjs";
 import { ReqWithHeadersClient } from "./api/resources/reqWithHeaders/client/Client.mjs";
 import { normalizeClientOptionsWithAuth } from "./BaseClient.mjs";
 import * as core from "./core/index.mjs";
-export class SeedExhaustiveClient {
+export class SeedApiClient {
     constructor(options) {
         this._options = normalizeClientOptionsWithAuth(options);
-    }
-    get endpoints() {
-        var _a;
-        return ((_a = this._endpoints) !== null && _a !== void 0 ? _a : (this._endpoints = new EndpointsClient(this._options)));
     }
     get inlinedRequests() {
         var _a;
@@ -38,6 +34,10 @@ export class SeedExhaustiveClient {
     get reqWithHeaders() {
         var _a;
         return ((_a = this._reqWithHeaders) !== null && _a !== void 0 ? _a : (this._reqWithHeaders = new ReqWithHeadersClient(this._options)));
+    }
+    get endpoints() {
+        var _a;
+        return ((_a = this._endpoints) !== null && _a !== void 0 ? _a : (this._endpoints = new EndpointsClient(this._options)));
     }
     /**
      * Make a passthrough request using the SDK's configured auth, retry, logging, etc.

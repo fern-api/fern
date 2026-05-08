@@ -165,7 +165,7 @@ class EndpointsPrimitiveWireTest extends WireMockTestCase
     public function testGetAndReturnUuid(): void {
         $testId = 'endpoints.primitive.get_and_return_uuid.0';
         $this->client->endpoints->primitive->getAndReturnUuid(
-            'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+            'string',
             [
                 'headers' => [
                     'X-Test-Id' => 'endpoints.primitive.get_and_return_uuid.0',
@@ -186,7 +186,7 @@ class EndpointsPrimitiveWireTest extends WireMockTestCase
     public function testGetAndReturnBase64(): void {
         $testId = 'endpoints.primitive.get_and_return_base64.0';
         $this->client->endpoints->primitive->getAndReturnBase64(
-            'SGVsbG8gd29ybGQh',
+            'string',
             [
                 'headers' => [
                     'X-Test-Id' => 'endpoints.primitive.get_and_return_base64.0',

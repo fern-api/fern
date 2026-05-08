@@ -33,6 +33,7 @@ class UrlsClient:
         -------
         str
 
+
         Examples
         --------
         from seed import Exhaustive
@@ -56,6 +57,7 @@ class UrlsClient:
         Returns
         -------
         str
+
 
         Examples
         --------
@@ -81,6 +83,7 @@ class UrlsClient:
         -------
         str
 
+
         Examples
         --------
         from seed import Exhaustive
@@ -104,6 +107,7 @@ class UrlsClient:
         Returns
         -------
         str
+
 
         Examples
         --------
@@ -145,6 +149,7 @@ class AsyncUrlsClient:
         -------
         str
 
+
         Examples
         --------
         import asyncio
@@ -176,6 +181,7 @@ class AsyncUrlsClient:
         Returns
         -------
         str
+
 
         Examples
         --------
@@ -209,6 +215,7 @@ class AsyncUrlsClient:
         -------
         str
 
+
         Examples
         --------
         import asyncio
@@ -240,6 +247,7 @@ class AsyncUrlsClient:
         Returns
         -------
         str
+
 
         Examples
         --------

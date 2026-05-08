@@ -1,4 +1,4 @@
-use seed_exhaustive::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,10 +7,16 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .endpoints
-        .params
-        .upload_with_path(&"upload-path".to_string(), &vec![], None)
+        .http_methods
+        .test_post(
+            &TypesObjectWithRequiredField {
+                string: "string".to_string(),
+                ..Default::default()
+            },
+            None,
+        )
         .await;
 }

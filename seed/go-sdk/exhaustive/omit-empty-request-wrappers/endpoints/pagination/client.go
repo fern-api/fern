@@ -4,13 +4,12 @@ package pagination
 
 import (
 	context "context"
-	http "net/http"
 
+	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
 	endpoints "github.com/exhaustive/fern/endpoints"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
-	types "github.com/exhaustive/fern/types"
 )
 
 type Client struct {
@@ -38,58 +37,16 @@ func NewClient(options *core.RequestOptions) *Client {
 // List items with cursor pagination
 func (c *Client) ListItems(
 	ctx context.Context,
-	request *endpoints.ListItemsRequest,
+	request *endpoints.ListItemsPaginationRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*string, *types.ObjectWithRequiredField, *endpoints.PaginatedResponse], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
+) (*fern.EndpointsPaginatedResponse, error) {
+	response, err := c.WithRawResponse.ListItems(
+		ctx,
+		request,
+		opts...,
 	)
-	endpointURL := baseURL + "/pagination"
-	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("cursor", *pageRequest.Cursor)
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-		}
-	}
-	readPageResponse := func(response *endpoints.PaginatedResponse) *core.PageResponse[*string, *types.ObjectWithRequiredField, *endpoints.PaginatedResponse] {
-		var zeroValue *string
-		next := response.GetNext()
-		results := response.GetItems()
-		return &core.PageResponse[*string, *types.ObjectWithRequiredField, *endpoints.PaginatedResponse]{
-			Results:  results,
-			Response: response,
-			Next:     next,
-			Done:     next == zeroValue,
-		}
-	}
-	pager := internal.NewCursorPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, request.Cursor)
+	return response.Body, nil
 }

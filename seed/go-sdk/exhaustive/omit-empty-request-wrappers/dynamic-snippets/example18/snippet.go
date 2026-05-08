@@ -3,9 +3,9 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    types "github.com/exhaustive/fern/types"
 )
 
 func do() {
@@ -17,14 +17,15 @@ func do() {
             "<token>",
         ),
     )
-    request := &types.ObjectWithMapOfMap{
-        Map: map[string]map[string]string{
-            "map": map[string]string{
-                "map": "map",
-            },
+    request := []*fern.TypesObjectWithRequiredField{
+        &fern.TypesObjectWithRequiredField{
+            FieldString: "string",
+        },
+        &fern.TypesObjectWithRequiredField{
+            FieldString: "string",
         },
     }
-    client.Endpoints.Object.GetAndReturnWithMapOfMap(
+    client.Endpoints.Container.GetAndReturnSetOfObjects(
         context.TODO(),
         request,
     )

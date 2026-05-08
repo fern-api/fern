@@ -6,10 +6,11 @@ import (
 	context "context"
 	http "net/http"
 
+	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
+	endpoints "github.com/exhaustive/fern/endpoints"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
-	types "github.com/exhaustive/fern/types"
 )
 
 type RawClient struct {
@@ -33,9 +34,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) GetAndReturnWithOptionalField(
 	ctx context.Context,
-	request *types.ObjectWithOptionalField,
+	request *fern.TypesObjectWithOptionalField,
 	opts ...option.RequestOption,
-) (*core.Response[*types.ObjectWithOptionalField], error) {
+) (*core.Response[*fern.TypesObjectWithOptionalField], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -47,7 +48,7 @@ func (r *RawClient) GetAndReturnWithOptionalField(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *types.ObjectWithOptionalField
+	var response *fern.TypesObjectWithOptionalField
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -65,7 +66,7 @@ func (r *RawClient) GetAndReturnWithOptionalField(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*types.ObjectWithOptionalField]{
+	return &core.Response[*fern.TypesObjectWithOptionalField]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -74,9 +75,9 @@ func (r *RawClient) GetAndReturnWithOptionalField(
 
 func (r *RawClient) GetAndReturnWithRequiredField(
 	ctx context.Context,
-	request *types.ObjectWithRequiredField,
+	request *fern.TypesObjectWithRequiredField,
 	opts ...option.RequestOption,
-) (*core.Response[*types.ObjectWithRequiredField], error) {
+) (*core.Response[*fern.TypesObjectWithRequiredField], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -88,7 +89,7 @@ func (r *RawClient) GetAndReturnWithRequiredField(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *types.ObjectWithRequiredField
+	var response *fern.TypesObjectWithRequiredField
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -106,7 +107,7 @@ func (r *RawClient) GetAndReturnWithRequiredField(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*types.ObjectWithRequiredField]{
+	return &core.Response[*fern.TypesObjectWithRequiredField]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -115,9 +116,9 @@ func (r *RawClient) GetAndReturnWithRequiredField(
 
 func (r *RawClient) GetAndReturnWithMapOfMap(
 	ctx context.Context,
-	request *types.ObjectWithMapOfMap,
+	request *fern.TypesObjectWithMapOfMap,
 	opts ...option.RequestOption,
-) (*core.Response[*types.ObjectWithMapOfMap], error) {
+) (*core.Response[*fern.TypesObjectWithMapOfMap], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -129,7 +130,7 @@ func (r *RawClient) GetAndReturnWithMapOfMap(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *types.ObjectWithMapOfMap
+	var response *fern.TypesObjectWithMapOfMap
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -147,7 +148,7 @@ func (r *RawClient) GetAndReturnWithMapOfMap(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*types.ObjectWithMapOfMap]{
+	return &core.Response[*fern.TypesObjectWithMapOfMap]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -156,9 +157,9 @@ func (r *RawClient) GetAndReturnWithMapOfMap(
 
 func (r *RawClient) GetAndReturnNestedWithOptionalField(
 	ctx context.Context,
-	request *types.NestedObjectWithOptionalField,
+	request *fern.TypesNestedObjectWithOptionalField,
 	opts ...option.RequestOption,
-) (*core.Response[*types.NestedObjectWithOptionalField], error) {
+) (*core.Response[*fern.TypesNestedObjectWithOptionalField], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -170,7 +171,7 @@ func (r *RawClient) GetAndReturnNestedWithOptionalField(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *types.NestedObjectWithOptionalField
+	var response *fern.TypesNestedObjectWithOptionalField
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -188,7 +189,7 @@ func (r *RawClient) GetAndReturnNestedWithOptionalField(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*types.NestedObjectWithOptionalField]{
+	return &core.Response[*fern.TypesNestedObjectWithOptionalField]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -197,10 +198,9 @@ func (r *RawClient) GetAndReturnNestedWithOptionalField(
 
 func (r *RawClient) GetAndReturnNestedWithRequiredField(
 	ctx context.Context,
-	string_ string,
-	request *types.NestedObjectWithRequiredField,
+	request *endpoints.GetAndReturnNestedWithRequiredFieldObjectRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*types.NestedObjectWithRequiredField], error) {
+) (*core.Response[*fern.TypesNestedObjectWithRequiredField], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -209,13 +209,14 @@ func (r *RawClient) GetAndReturnNestedWithRequiredField(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/object/get-and-return-nested-with-required-field/%v",
-		string_,
+		request.StringValue,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *types.NestedObjectWithRequiredField
+	headers.Add("Content-Type", "application/json")
+	var response *fern.TypesNestedObjectWithRequiredField
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -233,7 +234,7 @@ func (r *RawClient) GetAndReturnNestedWithRequiredField(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*types.NestedObjectWithRequiredField]{
+	return &core.Response[*fern.TypesNestedObjectWithRequiredField]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -242,9 +243,9 @@ func (r *RawClient) GetAndReturnNestedWithRequiredField(
 
 func (r *RawClient) GetAndReturnNestedWithRequiredFieldAsList(
 	ctx context.Context,
-	request []*types.NestedObjectWithRequiredField,
+	request []*fern.TypesNestedObjectWithRequiredField,
 	opts ...option.RequestOption,
-) (*core.Response[*types.NestedObjectWithRequiredField], error) {
+) (*core.Response[*fern.TypesNestedObjectWithRequiredField], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -256,7 +257,7 @@ func (r *RawClient) GetAndReturnNestedWithRequiredFieldAsList(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *types.NestedObjectWithRequiredField
+	var response *fern.TypesNestedObjectWithRequiredField
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -274,7 +275,7 @@ func (r *RawClient) GetAndReturnNestedWithRequiredFieldAsList(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*types.NestedObjectWithRequiredField]{
+	return &core.Response[*fern.TypesNestedObjectWithRequiredField]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -283,9 +284,9 @@ func (r *RawClient) GetAndReturnNestedWithRequiredFieldAsList(
 
 func (r *RawClient) GetAndReturnWithUnknownField(
 	ctx context.Context,
-	request *types.ObjectWithUnknownField,
+	request *fern.TypesObjectWithUnknownField,
 	opts ...option.RequestOption,
-) (*core.Response[*types.ObjectWithUnknownField], error) {
+) (*core.Response[*fern.TypesObjectWithUnknownField], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -297,7 +298,7 @@ func (r *RawClient) GetAndReturnWithUnknownField(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *types.ObjectWithUnknownField
+	var response *fern.TypesObjectWithUnknownField
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -315,7 +316,7 @@ func (r *RawClient) GetAndReturnWithUnknownField(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*types.ObjectWithUnknownField]{
+	return &core.Response[*fern.TypesObjectWithUnknownField]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -324,9 +325,9 @@ func (r *RawClient) GetAndReturnWithUnknownField(
 
 func (r *RawClient) GetAndReturnWithDocumentedUnknownType(
 	ctx context.Context,
-	request *types.ObjectWithDocumentedUnknownType,
+	request *fern.TypesObjectWithDocumentedUnknownType,
 	opts ...option.RequestOption,
-) (*core.Response[*types.ObjectWithDocumentedUnknownType], error) {
+) (*core.Response[*fern.TypesObjectWithDocumentedUnknownType], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -338,7 +339,7 @@ func (r *RawClient) GetAndReturnWithDocumentedUnknownType(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *types.ObjectWithDocumentedUnknownType
+	var response *fern.TypesObjectWithDocumentedUnknownType
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -356,7 +357,7 @@ func (r *RawClient) GetAndReturnWithDocumentedUnknownType(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*types.ObjectWithDocumentedUnknownType]{
+	return &core.Response[*fern.TypesObjectWithDocumentedUnknownType]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -365,9 +366,9 @@ func (r *RawClient) GetAndReturnWithDocumentedUnknownType(
 
 func (r *RawClient) GetAndReturnMapOfDocumentedUnknownType(
 	ctx context.Context,
-	request types.MapOfDocumentedUnknownType,
+	request fern.TypesMapOfDocumentedUnknownType,
 	opts ...option.RequestOption,
-) (*core.Response[types.MapOfDocumentedUnknownType], error) {
+) (*core.Response[fern.TypesMapOfDocumentedUnknownType], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -379,7 +380,7 @@ func (r *RawClient) GetAndReturnMapOfDocumentedUnknownType(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response types.MapOfDocumentedUnknownType
+	var response fern.TypesMapOfDocumentedUnknownType
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -397,89 +398,7 @@ func (r *RawClient) GetAndReturnMapOfDocumentedUnknownType(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[types.MapOfDocumentedUnknownType]{
-		StatusCode: raw.StatusCode,
-		Header:     raw.Header,
-		Body:       response,
-	}, nil
-}
-
-func (r *RawClient) GetAndReturnWithMixedRequiredAndOptionalFields(
-	ctx context.Context,
-	request *types.ObjectWithMixedRequiredAndOptionalFields,
-	opts ...option.RequestOption,
-) (*core.Response[*types.ObjectWithMixedRequiredAndOptionalFields], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		r.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/object/get-and-return-with-mixed-required-and-optional-fields"
-	headers := internal.MergeHeaders(
-		r.options.ToHeader(),
-		options.ToHeader(),
-	)
-	var response *types.ObjectWithMixedRequiredAndOptionalFields
-	raw, err := r.caller.Call(
-		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Request:         request,
-			Response:        &response,
-		},
-	)
-	if err != nil {
-		return nil, err
-	}
-	return &core.Response[*types.ObjectWithMixedRequiredAndOptionalFields]{
-		StatusCode: raw.StatusCode,
-		Header:     raw.Header,
-		Body:       response,
-	}, nil
-}
-
-func (r *RawClient) GetAndReturnWithRequiredNestedObject(
-	ctx context.Context,
-	request *types.ObjectWithRequiredNestedObject,
-	opts ...option.RequestOption,
-) (*core.Response[*types.ObjectWithRequiredNestedObject], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		r.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/object/get-and-return-with-required-nested-object"
-	headers := internal.MergeHeaders(
-		r.options.ToHeader(),
-		options.ToHeader(),
-	)
-	var response *types.ObjectWithRequiredNestedObject
-	raw, err := r.caller.Call(
-		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Request:         request,
-			Response:        &response,
-		},
-	)
-	if err != nil {
-		return nil, err
-	}
-	return &core.Response[*types.ObjectWithRequiredNestedObject]{
+	return &core.Response[fern.TypesMapOfDocumentedUnknownType]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -488,9 +407,9 @@ func (r *RawClient) GetAndReturnWithRequiredNestedObject(
 
 func (r *RawClient) GetAndReturnWithDatetimeLikeString(
 	ctx context.Context,
-	request *types.ObjectWithDatetimeLikeString,
+	request *fern.TypesObjectWithDatetimeLikeString,
 	opts ...option.RequestOption,
-) (*core.Response[*types.ObjectWithDatetimeLikeString], error) {
+) (*core.Response[*fern.TypesObjectWithDatetimeLikeString], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -502,7 +421,7 @@ func (r *RawClient) GetAndReturnWithDatetimeLikeString(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *types.ObjectWithDatetimeLikeString
+	var response *fern.TypesObjectWithDatetimeLikeString
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -520,7 +439,7 @@ func (r *RawClient) GetAndReturnWithDatetimeLikeString(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*types.ObjectWithDatetimeLikeString]{
+	return &core.Response[*fern.TypesObjectWithDatetimeLikeString]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

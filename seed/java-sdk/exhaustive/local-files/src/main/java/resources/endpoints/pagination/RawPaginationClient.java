@@ -8,18 +8,14 @@ import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.QueryStringMapper;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.core.SeedExhaustiveApiException;
-import com.fern.sdk.core.SeedExhaustiveException;
-import com.fern.sdk.core.SeedExhaustiveHttpResponse;
-import com.fern.sdk.core.pagination.SyncPagingIterable;
-import com.fern.sdk.resources.endpoints.pagination.requests.ListItemsRequest;
-import com.fern.sdk.resources.endpoints.pagination.types.PaginatedResponse;
-import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
+import com.fern.sdk.core.SeedApiApiException;
+import com.fern.sdk.core.SeedApiException;
+import com.fern.sdk.core.SeedApiHttpResponse;
+import com.fern.sdk.resources.endpoints.pagination.requests.ListItemsPaginationRequest;
+import com.fern.sdk.types.EndpointsPaginatedResponse;
 import java.io.IOException;
 import java.lang.Object;
 import java.lang.String;
-import java.util.List;
-import java.util.Optional;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -37,34 +33,33 @@ public class RawPaginationClient {
   /**
    * List items with cursor pagination
    */
-  public SeedExhaustiveHttpResponse<SyncPagingIterable<ObjectWithRequiredField>> listItems() {
-    return listItems(ListItemsRequest.builder().build());
+  public SeedApiHttpResponse<EndpointsPaginatedResponse> listItems() {
+    return listItems(ListItemsPaginationRequest.builder().build());
   }
 
   /**
    * List items with cursor pagination
    */
-  public SeedExhaustiveHttpResponse<SyncPagingIterable<ObjectWithRequiredField>> listItems(
-      RequestOptions requestOptions) {
-    return listItems(ListItemsRequest.builder().build(),requestOptions);
+  public SeedApiHttpResponse<EndpointsPaginatedResponse> listItems(RequestOptions requestOptions) {
+    return listItems(ListItemsPaginationRequest.builder().build(),requestOptions);
   }
 
   /**
    * List items with cursor pagination
    */
-  public SeedExhaustiveHttpResponse<SyncPagingIterable<ObjectWithRequiredField>> listItems(
-      ListItemsRequest request) {
+  public SeedApiHttpResponse<EndpointsPaginatedResponse> listItems(
+      ListItemsPaginationRequest request) {
     return listItems(request,null);
   }
 
   /**
    * List items with cursor pagination
    */
-  public SeedExhaustiveHttpResponse<SyncPagingIterable<ObjectWithRequiredField>> listItems(
-      ListItemsRequest request, RequestOptions requestOptions) {
+  public SeedApiHttpResponse<EndpointsPaginatedResponse> listItems(
+      ListItemsPaginationRequest request, RequestOptions requestOptions) {
     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-      .addPathSegments("pagination")
-      ;if (request.getCursor().isPresent()) {
+
+      .addPathSegments("pagination");if (request.getCursor().isPresent()) {
         QueryStringMapper.addQueryParameter(httpUrl, "cursor", request.getCursor().get(), false);
       }
       if (request.getLimit().isPresent()) {
@@ -89,17 +84,13 @@ public class RawPaginationClient {
         ResponseBody responseBody = response.body();
         String responseBodyString = responseBody != null ? responseBody.string() : "{}";
         if (response.isSuccessful()) {
-          PaginatedResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(responseBodyString, PaginatedResponse.class);
-          Optional<String> startingAfter = parsedResponse.getNext();
-          ListItemsRequest nextRequest = ListItemsRequest.builder().from(request).cursor(startingAfter).build();
-          List<ObjectWithRequiredField> result = parsedResponse.getItems();
-          return new SeedExhaustiveHttpResponse<>(new SyncPagingIterable<ObjectWithRequiredField>(startingAfter.isPresent(), result, parsedResponse, () -> listItems(nextRequest, requestOptions).body()), response);
+          return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, EndpointsPaginatedResponse.class), response);
         }
         Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-        throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+        throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
       }
       catch (IOException e) {
-        throw new SeedExhaustiveException("Network error executing HTTP request", e);
+        throw new SeedApiException("Network error executing HTTP request", e);
       }
     }
   }

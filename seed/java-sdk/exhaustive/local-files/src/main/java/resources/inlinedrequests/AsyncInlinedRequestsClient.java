@@ -6,8 +6,8 @@ package com.fern.sdk.resources.inlinedrequests;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.inlinedrequests.requests.PostWithObjectBody;
-import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
+import com.fern.sdk.resources.inlinedrequests.requests.PostWithObjectBodyandResponseInlinedRequestsRequest;
+import com.fern.sdk.types.TypesObjectWithOptionalField;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncInlinedRequestsClient {
@@ -30,16 +30,16 @@ public class AsyncInlinedRequestsClient {
   /**
    * POST with custom object in request body, response is an object
    */
-  public CompletableFuture<ObjectWithOptionalField> postWithObjectBodyandResponse(
-      PostWithObjectBody request) {
+  public CompletableFuture<TypesObjectWithOptionalField> postWithObjectBodyandResponse(
+      PostWithObjectBodyandResponseInlinedRequestsRequest request) {
     return this.rawClient.postWithObjectBodyandResponse(request).thenApply(response -> response.body());
   }
 
   /**
    * POST with custom object in request body, response is an object
    */
-  public CompletableFuture<ObjectWithOptionalField> postWithObjectBodyandResponse(
-      PostWithObjectBody request, RequestOptions requestOptions) {
+  public CompletableFuture<TypesObjectWithOptionalField> postWithObjectBodyandResponse(
+      PostWithObjectBodyandResponseInlinedRequestsRequest request, RequestOptions requestOptions) {
     return this.rawClient.postWithObjectBodyandResponse(request, requestOptions).thenApply(response -> response.body());
   }
 }

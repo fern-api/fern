@@ -1,7 +1,7 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import * as core from "../../../../../../core/index.js";
-import type * as SeedExhaustive from "../../../../../index.js";
+import type * as SeedApi from "../../../../../index.js";
 export declare namespace PaginationClient {
     type Options = BaseClientOptions;
     interface RequestOptions extends BaseRequestOptions {
@@ -13,14 +13,12 @@ export declare class PaginationClient {
     /**
      * List items with cursor pagination
      *
-     * @param {SeedExhaustive.endpoints.ListItemsRequest} request
+     * @param {SeedApi.endpoints.ListItemsPaginationRequest} request
      * @param {PaginationClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.pagination.listItems({
-     *         cursor: "cursor",
-     *         limit: 1
-     *     })
+     *     await client.endpoints.pagination.listItems()
      */
-    listItems(request?: SeedExhaustive.endpoints.ListItemsRequest, requestOptions?: PaginationClient.RequestOptions): Promise<core.Page<SeedExhaustive.types.ObjectWithRequiredField, SeedExhaustive.endpoints.PaginatedResponse>>;
+    listItems(request?: SeedApi.endpoints.ListItemsPaginationRequest, requestOptions?: PaginationClient.RequestOptions): core.HttpResponsePromise<SeedApi.EndpointsPaginatedResponse>;
+    private __listItems;
 }

@@ -3,7 +3,8 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Endpoints\Params\Requests\GetWithMultipleQuery;
+use Seed\Endpoints\HttpMethods\Requests\TestPutHttpMethodsRequest;
+use Seed\Types\TypesObjectWithRequiredField;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,13 +12,11 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->params->getWithAllowMultipleQuery(
-    new GetWithMultipleQuery([
-        'query' => [
-            'query',
-        ],
-        'number' => [
-            1,
-        ],
+$client->endpoints->httpMethods->testPut(
+    'id',
+    new TestPutHttpMethodsRequest([
+        'body' => new TypesObjectWithRequiredField([
+            'string' => 'string',
+        ]),
     ]),
 );

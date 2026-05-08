@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
-import type * as SeedExhaustive from "../../../../../index.js";
+import type * as SeedApi from "../../../../../index.js";
 
 export declare namespace EnumClient {
     export type Options = BaseClientOptions;
@@ -22,23 +22,23 @@ export class EnumClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.WeatherReport} request
+     * @param {SeedApi.TypesWeatherReport} request
      * @param {EnumClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.enum.getAndReturnEnum("SUNNY")
      */
     public getAndReturnEnum(
-        request: SeedExhaustive.types.WeatherReport,
+        request: SeedApi.TypesWeatherReport,
         requestOptions?: EnumClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.WeatherReport> {
+    ): core.HttpResponsePromise<SeedApi.TypesWeatherReport> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnEnum(request, requestOptions));
     }
 
     private async __getAndReturnEnum(
-        request: SeedExhaustive.types.WeatherReport,
+        request: SeedApi.TypesWeatherReport,
         requestOptions?: EnumClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.WeatherReport>> {
+    ): Promise<core.WithRawResponse<SeedApi.TypesWeatherReport>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -49,7 +49,7 @@ export class EnumClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/enum",
+                "enum",
             ),
             method: "POST",
             headers: _headers,
@@ -64,11 +64,11 @@ export class EnumClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExhaustive.types.WeatherReport, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.TypesWeatherReport, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

@@ -1,8 +1,7 @@
 package com.snippets;
 
-import com.seed.exhaustive.Best;
-import com.seed.exhaustive.resources.types.object.types.DocumentedUnknownType;
-import com.seed.exhaustive.resources.types.object.types.ObjectWithDocumentedUnknownType;
+import com.seed.api.Best;
+import com.seed.api.types.TypesMixedType;
 import java.util.HashMap;
 
 public class Example24 {
@@ -11,13 +10,11 @@ public class Example24 {
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
         client.endpoints()
-                .object()
-                .getAndReturnWithDocumentedUnknownType(ObjectWithDocumentedUnknownType.builder()
-                        .documentedUnknownType(DocumentedUnknownType.of(new HashMap<String, Object>() {
-                            {
-                                put("key", "value");
-                            }
-                        }))
-                        .build());
+                .container()
+                .getAndReturnMapOfPrimToUndiscriminatedUnion(new HashMap<String, TypesMixedType>() {
+                    {
+                        put("string", TypesMixedType.of(1.1));
+                    }
+                });
     }
 }

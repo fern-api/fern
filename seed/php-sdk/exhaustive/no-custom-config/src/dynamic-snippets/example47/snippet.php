@@ -3,6 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Types\TypesObjectWithMapOfMap;
 
 $client = new SeedClient(
     token: '<token>',
@@ -10,6 +11,12 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->primitive->getAndReturnLong(
-    1000000,
+$client->endpoints->object->getAndReturnWithMapOfMap(
+    new TypesObjectWithMapOfMap([
+        'map' => [
+            'key' => [
+                'key' => 'value',
+            ],
+        ],
+    ]),
 );

@@ -1,4 +1,4 @@
-use seed_exhaustive::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,16 +7,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .req_with_headers
-        .get_with_custom_header(
-            &"string".to_string(),
-            Some(
-                RequestOptions::new()
-                    .additional_header("X-TEST-SERVICE-HEADER", "X-TEST-SERVICE-HEADER")
-                    .additional_header("X-TEST-ENDPOINT-HEADER", "X-TEST-ENDPOINT-HEADER"),
-            ),
-        )
+        .endpoints
+        .params
+        .modify_with_path(&"param".to_string(), &"string".to_string(), None)
         .await;
 }

@@ -12,7 +12,7 @@ from .no_req_body.client import AsyncNoReqBodyClient, NoReqBodyClient
 from .req_with_headers.client import AsyncReqWithHeadersClient, ReqWithHeadersClient
 
 
-class SeedExhaustive:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -42,9 +42,9 @@ class SeedExhaustive:
 
     Examples
     --------
-    from seed import SeedExhaustive
+    from seed import SeedApi
 
-    client = SeedExhaustive(
+    client = SeedApi(
         token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )
@@ -79,11 +79,11 @@ class SeedExhaustive:
             max_retries=_defaulted_max_retries,
             logging=logging,
         )
-        self.endpoints = EndpointsClient(client_wrapper=self._client_wrapper)
         self.inlined_requests = InlinedRequestsClient(client_wrapper=self._client_wrapper)
         self.no_auth = NoAuthClient(client_wrapper=self._client_wrapper)
         self.no_req_body = NoReqBodyClient(client_wrapper=self._client_wrapper)
         self.req_with_headers = ReqWithHeadersClient(client_wrapper=self._client_wrapper)
+        self.endpoints = EndpointsClient(client_wrapper=self._client_wrapper)
 
 
 def _make_default_async_client(
@@ -104,7 +104,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedExhaustive:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -137,9 +137,9 @@ class AsyncSeedExhaustive:
 
     Examples
     --------
-    from seed import AsyncSeedExhaustive
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedExhaustive(
+    client = AsyncSeedApi(
         token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )
@@ -174,8 +174,8 @@ class AsyncSeedExhaustive:
             max_retries=_defaulted_max_retries,
             logging=logging,
         )
-        self.endpoints = AsyncEndpointsClient(client_wrapper=self._client_wrapper)
         self.inlined_requests = AsyncInlinedRequestsClient(client_wrapper=self._client_wrapper)
         self.no_auth = AsyncNoAuthClient(client_wrapper=self._client_wrapper)
         self.no_req_body = AsyncNoReqBodyClient(client_wrapper=self._client_wrapper)
         self.req_with_headers = AsyncReqWithHeadersClient(client_wrapper=self._client_wrapper)
+        self.endpoints = AsyncEndpointsClient(client_wrapper=self._client_wrapper)

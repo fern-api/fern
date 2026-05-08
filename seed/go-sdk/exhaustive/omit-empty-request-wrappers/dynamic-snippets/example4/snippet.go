@@ -16,10 +16,10 @@ func do() {
             "<token>",
         ),
     )
-    request := map[string]string{
-        "string": "string",
+    request := map[string]any{
+        "key": "value",
     }
-    client.Endpoints.Container.GetAndReturnMapPrimToPrim(
+    client.NoAuth.PostWithNoAuth(
         context.TODO(),
         request,
     )

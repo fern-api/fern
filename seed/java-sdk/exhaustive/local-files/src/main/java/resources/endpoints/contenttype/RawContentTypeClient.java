@@ -6,19 +6,19 @@ package com.fern.sdk.resources.endpoints.contenttype;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.sdk.core.ClientOptions;
+import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.core.SeedExhaustiveApiException;
-import com.fern.sdk.core.SeedExhaustiveException;
-import com.fern.sdk.core.SeedExhaustiveHttpResponse;
-import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
+import com.fern.sdk.core.SeedApiApiException;
+import com.fern.sdk.core.SeedApiException;
+import com.fern.sdk.core.SeedApiHttpResponse;
+import com.fern.sdk.types.TypesObjectWithOptionalField;
 import java.io.IOException;
 import java.lang.Object;
 import java.lang.String;
 import java.lang.Void;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -32,40 +32,39 @@ public class RawContentTypeClient {
     this.clientOptions = clientOptions;
   }
 
-  public SeedExhaustiveHttpResponse<Void> postJsonPatchContentType() {
-    return postJsonPatchContentType(ObjectWithOptionalField.builder().build());
+  public SeedApiHttpResponse<Void> postJsonPatchContentType() {
+    return postJsonPatchContentType(TypesObjectWithOptionalField.builder().build());
   }
 
-  public SeedExhaustiveHttpResponse<Void> postJsonPatchContentType(RequestOptions requestOptions) {
-    return postJsonPatchContentType(ObjectWithOptionalField.builder().build(),requestOptions);
+  public SeedApiHttpResponse<Void> postJsonPatchContentType(RequestOptions requestOptions) {
+    return postJsonPatchContentType(TypesObjectWithOptionalField.builder().build(),requestOptions);
   }
 
-  public SeedExhaustiveHttpResponse<Void> postJsonPatchContentType(
-      ObjectWithOptionalField request) {
+  public SeedApiHttpResponse<Void> postJsonPatchContentType(TypesObjectWithOptionalField request) {
     return postJsonPatchContentType(request,null);
   }
 
-  public SeedExhaustiveHttpResponse<Void> postJsonPatchContentType(ObjectWithOptionalField request,
+  public SeedApiHttpResponse<Void> postJsonPatchContentType(TypesObjectWithOptionalField request,
       RequestOptions requestOptions) {
     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-      .addPathSegments("foo")
-      .addPathSegments("bar");if (requestOptions != null) {
+
+      .addPathSegments("foo/bar");if (requestOptions != null) {
         requestOptions.getQueryParameters().forEach((_key, _value) -> {
           httpUrl.addQueryParameter(_key, _value);
         } );
       }
       RequestBody body;
       try {
-        body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json-patch+json"));
+        body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
       }
       catch(JsonProcessingException e) {
-        throw new SeedExhaustiveException("Failed to serialize request", e);
+        throw new SeedApiException("Failed to serialize request", e);
       }
       Request okhttpRequest = new Request.Builder()
         .url(httpUrl.build())
         .method("POST", body)
         .headers(Headers.of(clientOptions.headers(requestOptions)))
-        .addHeader("Content-Type", "application/json-patch+json")
+        .addHeader("Content-Type", "application/json")
         .build();
       OkHttpClient client = clientOptions.httpClient();
       if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -74,52 +73,52 @@ public class RawContentTypeClient {
       try (Response response = client.newCall(okhttpRequest).execute()) {
         ResponseBody responseBody = response.body();
         if (response.isSuccessful()) {
-          return new SeedExhaustiveHttpResponse<>(null, response);
+          return new SeedApiHttpResponse<>(null, response);
         }
         String responseBodyString = responseBody != null ? responseBody.string() : "{}";
         Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-        throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+        throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
       }
       catch (IOException e) {
-        throw new SeedExhaustiveException("Network error executing HTTP request", e);
+        throw new SeedApiException("Network error executing HTTP request", e);
       }
     }
 
-    public SeedExhaustiveHttpResponse<Void> postJsonPatchContentWithCharsetType() {
-      return postJsonPatchContentWithCharsetType(ObjectWithOptionalField.builder().build());
+    public SeedApiHttpResponse<Void> postJsonPatchContentWithCharsetType() {
+      return postJsonPatchContentWithCharsetType(TypesObjectWithOptionalField.builder().build());
     }
 
-    public SeedExhaustiveHttpResponse<Void> postJsonPatchContentWithCharsetType(
+    public SeedApiHttpResponse<Void> postJsonPatchContentWithCharsetType(
         RequestOptions requestOptions) {
-      return postJsonPatchContentWithCharsetType(ObjectWithOptionalField.builder().build(),requestOptions);
+      return postJsonPatchContentWithCharsetType(TypesObjectWithOptionalField.builder().build(),requestOptions);
     }
 
-    public SeedExhaustiveHttpResponse<Void> postJsonPatchContentWithCharsetType(
-        ObjectWithOptionalField request) {
+    public SeedApiHttpResponse<Void> postJsonPatchContentWithCharsetType(
+        TypesObjectWithOptionalField request) {
       return postJsonPatchContentWithCharsetType(request,null);
     }
 
-    public SeedExhaustiveHttpResponse<Void> postJsonPatchContentWithCharsetType(
-        ObjectWithOptionalField request, RequestOptions requestOptions) {
+    public SeedApiHttpResponse<Void> postJsonPatchContentWithCharsetType(
+        TypesObjectWithOptionalField request, RequestOptions requestOptions) {
       HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-        .addPathSegments("foo")
-        .addPathSegments("baz");if (requestOptions != null) {
+
+        .addPathSegments("foo/baz");if (requestOptions != null) {
           requestOptions.getQueryParameters().forEach((_key, _value) -> {
             httpUrl.addQueryParameter(_key, _value);
           } );
         }
         RequestBody body;
         try {
-          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json-patch+json; charset=utf-8"));
+          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         }
         catch(JsonProcessingException e) {
-          throw new SeedExhaustiveException("Failed to serialize request", e);
+          throw new SeedApiException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
           .url(httpUrl.build())
           .method("POST", body)
           .headers(Headers.of(clientOptions.headers(requestOptions)))
-          .addHeader("Content-Type", "application/json-patch+json; charset=utf-8")
+          .addHeader("Content-Type", "application/json")
           .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -128,14 +127,14 @@ public class RawContentTypeClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
           ResponseBody responseBody = response.body();
           if (response.isSuccessful()) {
-            return new SeedExhaustiveHttpResponse<>(null, response);
+            return new SeedApiHttpResponse<>(null, response);
           }
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+          throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
         }
         catch (IOException e) {
-          throw new SeedExhaustiveException("Network error executing HTTP request", e);
+          throw new SeedApiException("Network error executing HTTP request", e);
         }
       }
     }

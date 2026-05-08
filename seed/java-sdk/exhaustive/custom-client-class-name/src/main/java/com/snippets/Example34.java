@@ -1,7 +1,7 @@
 package com.snippets;
 
-import com.seed.exhaustive.Best;
-import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePath;
+import com.seed.api.Best;
+import com.seed.api.resources.endpoints.httpmethods.requests.TestGetHttpMethodsRequest;
 
 public class Example34 {
     public static void main(String[] args) {
@@ -9,7 +9,7 @@ public class Example34 {
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
         client.endpoints()
-                .params()
-                .getWithInlinePath(GetWithInlinePath.builder().param("param").build());
+                .httpMethods()
+                .testGet(TestGetHttpMethodsRequest.builder().id("id").build());
     }
 }

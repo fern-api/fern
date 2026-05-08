@@ -33,6 +33,50 @@
             },
             "default": "./dist/cjs/serialization/index.js"
         },
+        "./inlinedRequests": {
+            "import": {
+                "types": "./dist/esm/api/resources/inlinedRequests/exports.d.mts",
+                "default": "./dist/esm/api/resources/inlinedRequests/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/inlinedRequests/exports.d.ts",
+                "default": "./dist/cjs/api/resources/inlinedRequests/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/inlinedRequests/exports.js"
+        },
+        "./noAuth": {
+            "import": {
+                "types": "./dist/esm/api/resources/noAuth/exports.d.mts",
+                "default": "./dist/esm/api/resources/noAuth/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/noAuth/exports.d.ts",
+                "default": "./dist/cjs/api/resources/noAuth/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/noAuth/exports.js"
+        },
+        "./noReqBody": {
+            "import": {
+                "types": "./dist/esm/api/resources/noReqBody/exports.d.mts",
+                "default": "./dist/esm/api/resources/noReqBody/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/noReqBody/exports.d.ts",
+                "default": "./dist/cjs/api/resources/noReqBody/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/noReqBody/exports.js"
+        },
+        "./reqWithHeaders": {
+            "import": {
+                "types": "./dist/esm/api/resources/reqWithHeaders/exports.d.mts",
+                "default": "./dist/esm/api/resources/reqWithHeaders/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/reqWithHeaders/exports.d.ts",
+                "default": "./dist/cjs/api/resources/reqWithHeaders/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/reqWithHeaders/exports.js"
+        },
         "./endpoints": {
             "import": {
                 "types": "./dist/esm/api/resources/endpoints/exports.d.mts",
@@ -164,61 +208,6 @@
                 "default": "./dist/cjs/api/resources/endpoints/resources/urls/exports.js"
             },
             "default": "./dist/cjs/api/resources/endpoints/resources/urls/exports.js"
-        },
-        "./inlinedRequests": {
-            "import": {
-                "types": "./dist/esm/api/resources/inlinedRequests/exports.d.mts",
-                "default": "./dist/esm/api/resources/inlinedRequests/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/inlinedRequests/exports.d.ts",
-                "default": "./dist/cjs/api/resources/inlinedRequests/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/inlinedRequests/exports.js"
-        },
-        "./noAuth": {
-            "import": {
-                "types": "./dist/esm/api/resources/noAuth/exports.d.mts",
-                "default": "./dist/esm/api/resources/noAuth/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/noAuth/exports.d.ts",
-                "default": "./dist/cjs/api/resources/noAuth/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/noAuth/exports.js"
-        },
-        "./noReqBody": {
-            "import": {
-                "types": "./dist/esm/api/resources/noReqBody/exports.d.mts",
-                "default": "./dist/esm/api/resources/noReqBody/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/noReqBody/exports.d.ts",
-                "default": "./dist/cjs/api/resources/noReqBody/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/noReqBody/exports.js"
-        },
-        "./reqWithHeaders": {
-            "import": {
-                "types": "./dist/esm/api/resources/reqWithHeaders/exports.d.mts",
-                "default": "./dist/esm/api/resources/reqWithHeaders/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/reqWithHeaders/exports.d.ts",
-                "default": "./dist/cjs/api/resources/reqWithHeaders/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/reqWithHeaders/exports.js"
-        },
-        "./types": {
-            "import": {
-                "types": "./dist/esm/api/resources/types/exports.d.mts",
-                "default": "./dist/esm/api/resources/types/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/types/exports.d.ts",
-                "default": "./dist/cjs/api/resources/types/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/types/exports.js"
         },
         "./package.json": "./package.json"
     },

@@ -1,4 +1,4 @@
-use seed_exhaustive::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,6 +7,16 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
-    client.endpoints.urls.with_ending_slash(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .object
+        .get_and_return_map_of_documented_unknown_type(
+            &TypesMapOfDocumentedUnknownType(HashMap::from([(
+                "string".to_string(),
+                TypesDocumentedUnknownType(serde_json::json!({"key":"value"})),
+            )])),
+            None,
+        )
+        .await;
 }

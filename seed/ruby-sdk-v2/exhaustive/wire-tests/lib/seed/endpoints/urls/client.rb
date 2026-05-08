@@ -24,7 +24,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/urls/MixedCase",
+            path: "urls/MixedCase",
             request_options: request_options
           )
           begin
@@ -52,7 +52,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/urls/no-ending-slash",
+            path: "urls/no-ending-slash",
             request_options: request_options
           )
           begin
@@ -80,7 +80,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/urls/with-ending-slash/",
+            path: "urls/with-ending-slash/",
             request_options: request_options
           )
           begin
@@ -108,7 +108,7 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/urls/with_underscores",
+            path: "urls/with_underscores",
             request_options: request_options
           )
           begin

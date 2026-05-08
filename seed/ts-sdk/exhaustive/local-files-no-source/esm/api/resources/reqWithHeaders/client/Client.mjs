@@ -18,12 +18,11 @@ export class ReqWithHeadersClient {
         this._options = normalizeClientOptionsWithAuth(options);
     }
     /**
-     * @param {SeedExhaustive.ReqWithHeaders} request
+     * @param {SeedApi.GetWithCustomHeaderReqWithHeadersRequest} request
      * @param {ReqWithHeadersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.reqWithHeaders.getWithCustomHeader({
-     *         "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
      *         "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
      *         body: "string"
      *     })
@@ -34,14 +33,11 @@ export class ReqWithHeadersClient {
     __getWithCustomHeader(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const { "X-TEST-SERVICE-HEADER": xTestServiceHeader, "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader, body: _body, } = request;
+            const { "X-TEST-ENDPOINT-HEADER": testEndpointHeader, body: _body } = request;
             const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({
-                "X-TEST-SERVICE-HEADER": xTestServiceHeader,
-                "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
-            }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ "X-TEST-ENDPOINT-HEADER": testEndpointHeader }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/test-headers/custom-header"),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "test-headers/custom-header"),
                 method: "POST",
                 headers: _headers,
                 contentType: "application/json",
@@ -58,7 +54,7 @@ export class ReqWithHeadersClient {
                 return { data: undefined, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
+                throw new errors.SeedApiError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.body,
                     rawResponse: _response.rawResponse,

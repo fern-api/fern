@@ -1,17 +1,25 @@
-using SeedExhaustive;
+using SeedApi;
 
 public partial class Examples
 {
     public async Task Example48() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnDoubleAsync(
-            1.1
+        await client.Endpoints.Object.GetAndReturnWithMapOfMapAsync(
+            new TypesObjectWithMapOfMap {
+                Map = new Dictionary<string, Dictionary<string, string>>(){
+                    ["map"] = new Dictionary<string, string>(){
+                        ["map"] = "map",
+                    }
+                    ,
+                }
+
+            }
         );
     }
 

@@ -1,20 +1,20 @@
-using SeedExhaustive;
-using SeedExhaustive.Core;
+using SeedApi;
+using SeedApi.Core;
+using SeedApi.Endpoints;
 
 public partial class Examples
 {
     public async Task Example63() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.NoAuth.PostWithNoAuthAsync(
-            new Dictionary<string, object>()
-            {
-                ["key"] = "value",
+        await client.Endpoints.Params.GetWithPathAsync(
+            new GetWithPathParamsRequest {
+                Param = "param"
             }
         );
     }

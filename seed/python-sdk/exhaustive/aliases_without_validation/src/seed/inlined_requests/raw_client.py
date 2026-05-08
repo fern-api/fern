@@ -9,9 +9,9 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
-from ..general_errors.errors.bad_request_body import BadRequestBody
-from ..general_errors.types.bad_object_request_info import BadObjectRequestInfo
-from ..types.object.types.object_with_optional_field import ObjectWithOptionalField
+from ..errors.bad_request_error import BadRequestError
+from ..types.bad_object_request_info import BadObjectRequestInfo
+from ..types.types_object_with_optional_field import TypesObjectWithOptionalField
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -27,9 +27,9 @@ class RawInlinedRequestsClient:
         *,
         string: str,
         integer: int,
-        nested_object: ObjectWithOptionalField,
+        nested_object: TypesObjectWithOptionalField,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[ObjectWithOptionalField]:
+    ) -> HttpResponse[TypesObjectWithOptionalField]:
         """
         POST with custom object in request body, response is an object
 
@@ -39,14 +39,15 @@ class RawInlinedRequestsClient:
 
         integer : int
 
-        nested_object : ObjectWithOptionalField
+        nested_object : TypesObjectWithOptionalField
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[ObjectWithOptionalField]
+        HttpResponse[TypesObjectWithOptionalField]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "req-bodies/object",
@@ -56,21 +57,24 @@ class RawInlinedRequestsClient:
                 "integer": integer,
                 "NestedObject": nested_object,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ObjectWithOptionalField,
+                    TypesObjectWithOptionalField,
                     construct_type(
-                        type_=ObjectWithOptionalField,  # type: ignore
+                        type_=TypesObjectWithOptionalField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
             if _response.status_code == 400:
-                raise BadRequestBody(
+                raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         BadObjectRequestInfo,
@@ -99,9 +103,9 @@ class AsyncRawInlinedRequestsClient:
         *,
         string: str,
         integer: int,
-        nested_object: ObjectWithOptionalField,
+        nested_object: TypesObjectWithOptionalField,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ObjectWithOptionalField]:
+    ) -> AsyncHttpResponse[TypesObjectWithOptionalField]:
         """
         POST with custom object in request body, response is an object
 
@@ -111,14 +115,15 @@ class AsyncRawInlinedRequestsClient:
 
         integer : int
 
-        nested_object : ObjectWithOptionalField
+        nested_object : TypesObjectWithOptionalField
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[ObjectWithOptionalField]
+        AsyncHttpResponse[TypesObjectWithOptionalField]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "req-bodies/object",
@@ -128,21 +133,24 @@ class AsyncRawInlinedRequestsClient:
                 "integer": integer,
                 "NestedObject": nested_object,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ObjectWithOptionalField,
+                    TypesObjectWithOptionalField,
                     construct_type(
-                        type_=ObjectWithOptionalField,  # type: ignore
+                        type_=TypesObjectWithOptionalField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 400:
-                raise BadRequestBody(
+                raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         BadObjectRequestInfo,

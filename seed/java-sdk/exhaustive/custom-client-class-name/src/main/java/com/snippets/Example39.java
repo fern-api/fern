@@ -1,12 +1,19 @@
 package com.snippets;
 
-import com.seed.exhaustive.Best;
+import com.seed.api.Best;
+import com.seed.api.resources.endpoints.httpmethods.requests.TestPatchHttpMethodsRequest;
+import com.seed.api.types.TypesObjectWithOptionalField;
 
 public class Example39 {
     public static void main(String[] args) {
         Best client =
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.endpoints().params().modifyWithPath("param", "string");
+        client.endpoints()
+                .httpMethods()
+                .testPatch(TestPatchHttpMethodsRequest.builder()
+                        .id("id")
+                        .body(TypesObjectWithOptionalField.builder().build())
+                        .build());
     }
 }

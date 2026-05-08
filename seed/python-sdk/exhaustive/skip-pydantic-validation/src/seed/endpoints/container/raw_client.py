@@ -10,8 +10,8 @@ from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
-from ...types.object.types.object_with_required_field import ObjectWithRequiredField
-from ...types.union.types.mixed_type import MixedType
+from ...types.types_mixed_type import TypesMixedType
+from ...types.types_object_with_required_field import TypesObjectWithRequiredField
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -36,11 +36,15 @@ class RawContainerClient:
         Returns
         -------
         HttpResponse[typing.List[str]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "container/list-of-primitives",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -66,36 +70,40 @@ class RawContainerClient:
     def get_and_return_list_of_objects(
         self,
         *,
-        request: typing.Sequence[ObjectWithRequiredField],
+        request: typing.Sequence[TypesObjectWithRequiredField],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[typing.List[ObjectWithRequiredField]]:
+    ) -> HttpResponse[typing.List[TypesObjectWithRequiredField]]:
         """
         Parameters
         ----------
-        request : typing.Sequence[ObjectWithRequiredField]
+        request : typing.Sequence[TypesObjectWithRequiredField]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[typing.List[ObjectWithRequiredField]]
+        HttpResponse[typing.List[TypesObjectWithRequiredField]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "container/list-of-objects",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Sequence[ObjectWithRequiredField], direction="write"
+                object_=request, annotation=typing.Sequence[TypesObjectWithRequiredField], direction="write"
             ),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[ObjectWithRequiredField],
+                    typing.List[TypesObjectWithRequiredField],
                     construct_type(
-                        type_=typing.List[ObjectWithRequiredField],  # type: ignore
+                        type_=typing.List[TypesObjectWithRequiredField],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -110,33 +118,37 @@ class RawContainerClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_and_return_set_of_primitives(
-        self, *, request: typing.Set[str], request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[typing.Set[str]]:
+        self, *, request: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[typing.List[str]]:
         """
         Parameters
         ----------
-        request : typing.Set[str]
+        request : typing.Sequence[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[typing.Set[str]]
+        HttpResponse[typing.List[str]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "container/set-of-primitives",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.Set[str],
+                    typing.List[str],
                     construct_type(
-                        type_=typing.Set[str],  # type: ignore
+                        type_=typing.List[str],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -153,36 +165,40 @@ class RawContainerClient:
     def get_and_return_set_of_objects(
         self,
         *,
-        request: typing.Sequence[ObjectWithRequiredField],
+        request: typing.Sequence[TypesObjectWithRequiredField],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[typing.List[ObjectWithRequiredField]]:
+    ) -> HttpResponse[typing.List[TypesObjectWithRequiredField]]:
         """
         Parameters
         ----------
-        request : typing.Sequence[ObjectWithRequiredField]
+        request : typing.Sequence[TypesObjectWithRequiredField]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[typing.List[ObjectWithRequiredField]]
+        HttpResponse[typing.List[TypesObjectWithRequiredField]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "container/set-of-objects",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Sequence[ObjectWithRequiredField], direction="write"
+                object_=request, annotation=typing.Sequence[TypesObjectWithRequiredField], direction="write"
             ),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[ObjectWithRequiredField],
+                    typing.List[TypesObjectWithRequiredField],
                     construct_type(
-                        type_=typing.List[ObjectWithRequiredField],  # type: ignore
+                        type_=typing.List[TypesObjectWithRequiredField],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -210,11 +226,15 @@ class RawContainerClient:
         Returns
         -------
         HttpResponse[typing.Dict[str, str]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "container/map-prim-to-prim",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -240,36 +260,40 @@ class RawContainerClient:
     def get_and_return_map_of_prim_to_object(
         self,
         *,
-        request: typing.Dict[str, ObjectWithRequiredField],
+        request: typing.Dict[str, TypesObjectWithRequiredField],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[typing.Dict[str, ObjectWithRequiredField]]:
+    ) -> HttpResponse[typing.Dict[str, TypesObjectWithRequiredField]]:
         """
         Parameters
         ----------
-        request : typing.Dict[str, ObjectWithRequiredField]
+        request : typing.Dict[str, TypesObjectWithRequiredField]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[typing.Dict[str, ObjectWithRequiredField]]
+        HttpResponse[typing.Dict[str, TypesObjectWithRequiredField]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "container/map-prim-to-object",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Dict[str, ObjectWithRequiredField], direction="write"
+                object_=request, annotation=typing.Dict[str, TypesObjectWithRequiredField], direction="write"
             ),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.Dict[str, ObjectWithRequiredField],
+                    typing.Dict[str, TypesObjectWithRequiredField],
                     construct_type(
-                        type_=typing.Dict[str, ObjectWithRequiredField],  # type: ignore
+                        type_=typing.Dict[str, TypesObjectWithRequiredField],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -284,35 +308,39 @@ class RawContainerClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_and_return_map_of_prim_to_undiscriminated_union(
-        self, *, request: typing.Dict[str, MixedType], request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[typing.Dict[str, MixedType]]:
+        self, *, request: typing.Dict[str, TypesMixedType], request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[typing.Dict[str, TypesMixedType]]:
         """
         Parameters
         ----------
-        request : typing.Dict[str, MixedType]
+        request : typing.Dict[str, TypesMixedType]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[typing.Dict[str, MixedType]]
+        HttpResponse[typing.Dict[str, TypesMixedType]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "container/map-prim-to-union",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Dict[str, MixedType], direction="write"
+                object_=request, annotation=typing.Dict[str, TypesMixedType], direction="write"
             ),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.Dict[str, MixedType],
+                    typing.Dict[str, TypesMixedType],
                     construct_type(
-                        type_=typing.Dict[str, MixedType],  # type: ignore
+                        type_=typing.Dict[str, TypesMixedType],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -327,40 +355,39 @@ class RawContainerClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_and_return_optional(
-        self,
-        *,
-        request: typing.Optional[ObjectWithRequiredField] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[typing.Optional[ObjectWithRequiredField]]:
+        self, *, string: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[TypesObjectWithRequiredField]:
         """
         Parameters
         ----------
-        request : typing.Optional[ObjectWithRequiredField]
+        string : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[typing.Optional[ObjectWithRequiredField]]
+        HttpResponse[TypesObjectWithRequiredField]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "container/opt-objects",
             method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=ObjectWithRequiredField, direction="write"
-            ),
+            json={
+                "string": string,
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
-            if _response is None or not _response.text.strip():
-                return HttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.Optional[ObjectWithRequiredField],
+                    TypesObjectWithRequiredField,
                     construct_type(
-                        type_=typing.Optional[ObjectWithRequiredField],  # type: ignore
+                        type_=TypesObjectWithRequiredField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -393,11 +420,15 @@ class AsyncRawContainerClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[str]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/list-of-primitives",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -423,36 +454,40 @@ class AsyncRawContainerClient:
     async def get_and_return_list_of_objects(
         self,
         *,
-        request: typing.Sequence[ObjectWithRequiredField],
+        request: typing.Sequence[TypesObjectWithRequiredField],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[typing.List[ObjectWithRequiredField]]:
+    ) -> AsyncHttpResponse[typing.List[TypesObjectWithRequiredField]]:
         """
         Parameters
         ----------
-        request : typing.Sequence[ObjectWithRequiredField]
+        request : typing.Sequence[TypesObjectWithRequiredField]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[typing.List[ObjectWithRequiredField]]
+        AsyncHttpResponse[typing.List[TypesObjectWithRequiredField]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/list-of-objects",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Sequence[ObjectWithRequiredField], direction="write"
+                object_=request, annotation=typing.Sequence[TypesObjectWithRequiredField], direction="write"
             ),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[ObjectWithRequiredField],
+                    typing.List[TypesObjectWithRequiredField],
                     construct_type(
-                        type_=typing.List[ObjectWithRequiredField],  # type: ignore
+                        type_=typing.List[TypesObjectWithRequiredField],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -467,33 +502,37 @@ class AsyncRawContainerClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_and_return_set_of_primitives(
-        self, *, request: typing.Set[str], request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[typing.Set[str]]:
+        self, *, request: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[typing.List[str]]:
         """
         Parameters
         ----------
-        request : typing.Set[str]
+        request : typing.Sequence[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[typing.Set[str]]
+        AsyncHttpResponse[typing.List[str]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/set-of-primitives",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.Set[str],
+                    typing.List[str],
                     construct_type(
-                        type_=typing.Set[str],  # type: ignore
+                        type_=typing.List[str],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -510,36 +549,40 @@ class AsyncRawContainerClient:
     async def get_and_return_set_of_objects(
         self,
         *,
-        request: typing.Sequence[ObjectWithRequiredField],
+        request: typing.Sequence[TypesObjectWithRequiredField],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[typing.List[ObjectWithRequiredField]]:
+    ) -> AsyncHttpResponse[typing.List[TypesObjectWithRequiredField]]:
         """
         Parameters
         ----------
-        request : typing.Sequence[ObjectWithRequiredField]
+        request : typing.Sequence[TypesObjectWithRequiredField]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[typing.List[ObjectWithRequiredField]]
+        AsyncHttpResponse[typing.List[TypesObjectWithRequiredField]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/set-of-objects",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Sequence[ObjectWithRequiredField], direction="write"
+                object_=request, annotation=typing.Sequence[TypesObjectWithRequiredField], direction="write"
             ),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[ObjectWithRequiredField],
+                    typing.List[TypesObjectWithRequiredField],
                     construct_type(
-                        type_=typing.List[ObjectWithRequiredField],  # type: ignore
+                        type_=typing.List[TypesObjectWithRequiredField],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -567,11 +610,15 @@ class AsyncRawContainerClient:
         Returns
         -------
         AsyncHttpResponse[typing.Dict[str, str]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/map-prim-to-prim",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -597,36 +644,40 @@ class AsyncRawContainerClient:
     async def get_and_return_map_of_prim_to_object(
         self,
         *,
-        request: typing.Dict[str, ObjectWithRequiredField],
+        request: typing.Dict[str, TypesObjectWithRequiredField],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[typing.Dict[str, ObjectWithRequiredField]]:
+    ) -> AsyncHttpResponse[typing.Dict[str, TypesObjectWithRequiredField]]:
         """
         Parameters
         ----------
-        request : typing.Dict[str, ObjectWithRequiredField]
+        request : typing.Dict[str, TypesObjectWithRequiredField]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[typing.Dict[str, ObjectWithRequiredField]]
+        AsyncHttpResponse[typing.Dict[str, TypesObjectWithRequiredField]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/map-prim-to-object",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Dict[str, ObjectWithRequiredField], direction="write"
+                object_=request, annotation=typing.Dict[str, TypesObjectWithRequiredField], direction="write"
             ),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.Dict[str, ObjectWithRequiredField],
+                    typing.Dict[str, TypesObjectWithRequiredField],
                     construct_type(
-                        type_=typing.Dict[str, ObjectWithRequiredField],  # type: ignore
+                        type_=typing.Dict[str, TypesObjectWithRequiredField],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -641,35 +692,39 @@ class AsyncRawContainerClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_and_return_map_of_prim_to_undiscriminated_union(
-        self, *, request: typing.Dict[str, MixedType], request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[typing.Dict[str, MixedType]]:
+        self, *, request: typing.Dict[str, TypesMixedType], request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[typing.Dict[str, TypesMixedType]]:
         """
         Parameters
         ----------
-        request : typing.Dict[str, MixedType]
+        request : typing.Dict[str, TypesMixedType]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[typing.Dict[str, MixedType]]
+        AsyncHttpResponse[typing.Dict[str, TypesMixedType]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/map-prim-to-union",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=typing.Dict[str, MixedType], direction="write"
+                object_=request, annotation=typing.Dict[str, TypesMixedType], direction="write"
             ),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.Dict[str, MixedType],
+                    typing.Dict[str, TypesMixedType],
                     construct_type(
-                        type_=typing.Dict[str, MixedType],  # type: ignore
+                        type_=typing.Dict[str, TypesMixedType],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -684,40 +739,39 @@ class AsyncRawContainerClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_and_return_optional(
-        self,
-        *,
-        request: typing.Optional[ObjectWithRequiredField] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[typing.Optional[ObjectWithRequiredField]]:
+        self, *, string: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[TypesObjectWithRequiredField]:
         """
         Parameters
         ----------
-        request : typing.Optional[ObjectWithRequiredField]
+        string : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[typing.Optional[ObjectWithRequiredField]]
+        AsyncHttpResponse[TypesObjectWithRequiredField]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "container/opt-objects",
             method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=ObjectWithRequiredField, direction="write"
-            ),
+            json={
+                "string": string,
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
-            if _response is None or not _response.text.strip():
-                return AsyncHttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.Optional[ObjectWithRequiredField],
+                    TypesObjectWithRequiredField,
                     construct_type(
-                        type_=typing.Optional[ObjectWithRequiredField],  # type: ignore
+                        type_=TypesObjectWithRequiredField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

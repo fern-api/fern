@@ -83,19 +83,11 @@ class Exhaustive:
             max_retries=_defaulted_max_retries,
             logging=logging,
         )
-        self._endpoints: typing.Optional[EndpointsClient] = None
         self._inlined_requests: typing.Optional[InlinedRequestsClient] = None
         self._no_auth: typing.Optional[NoAuthClient] = None
         self._no_req_body: typing.Optional[NoReqBodyClient] = None
         self._req_with_headers: typing.Optional[ReqWithHeadersClient] = None
-
-    @property
-    def endpoints(self):
-        if self._endpoints is None:
-            from .endpoints.client import EndpointsClient  # noqa: E402
-
-            self._endpoints = EndpointsClient(client_wrapper=self._client_wrapper)
-        return self._endpoints
+        self._endpoints: typing.Optional[EndpointsClient] = None
 
     @property
     def inlined_requests(self):
@@ -128,6 +120,14 @@ class Exhaustive:
 
             self._req_with_headers = ReqWithHeadersClient(client_wrapper=self._client_wrapper)
         return self._req_with_headers
+
+    @property
+    def endpoints(self):
+        if self._endpoints is None:
+            from .endpoints.client import EndpointsClient  # noqa: E402
+
+            self._endpoints = EndpointsClient(client_wrapper=self._client_wrapper)
+        return self._endpoints
 
 
 def _make_default_async_client(
@@ -218,19 +218,11 @@ class AsyncExhaustive:
             max_retries=_defaulted_max_retries,
             logging=logging,
         )
-        self._endpoints: typing.Optional[AsyncEndpointsClient] = None
         self._inlined_requests: typing.Optional[AsyncInlinedRequestsClient] = None
         self._no_auth: typing.Optional[AsyncNoAuthClient] = None
         self._no_req_body: typing.Optional[AsyncNoReqBodyClient] = None
         self._req_with_headers: typing.Optional[AsyncReqWithHeadersClient] = None
-
-    @property
-    def endpoints(self):
-        if self._endpoints is None:
-            from .endpoints.client import AsyncEndpointsClient  # noqa: E402
-
-            self._endpoints = AsyncEndpointsClient(client_wrapper=self._client_wrapper)
-        return self._endpoints
+        self._endpoints: typing.Optional[AsyncEndpointsClient] = None
 
     @property
     def inlined_requests(self):
@@ -263,3 +255,11 @@ class AsyncExhaustive:
 
             self._req_with_headers = AsyncReqWithHeadersClient(client_wrapper=self._client_wrapper)
         return self._req_with_headers
+
+    @property
+    def endpoints(self):
+        if self._endpoints is None:
+            from .endpoints.client import AsyncEndpointsClient  # noqa: E402
+
+            self._endpoints = AsyncEndpointsClient(client_wrapper=self._client_wrapper)
+        return self._endpoints

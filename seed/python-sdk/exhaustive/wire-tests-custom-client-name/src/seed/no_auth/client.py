@@ -42,6 +42,7 @@ class NoAuthClient:
         -------
         bool
 
+
         Examples
         --------
         from seed import Exhaustive
@@ -89,6 +90,7 @@ class AsyncNoAuthClient:
         Returns
         -------
         bool
+
 
         Examples
         --------

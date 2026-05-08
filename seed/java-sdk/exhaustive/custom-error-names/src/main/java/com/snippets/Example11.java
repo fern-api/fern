@@ -1,14 +1,15 @@
 package com.snippets;
 
-import com.seed.exhaustive.SeedExhaustiveClient;
+import com.seed.api.SeedApiClient;
+import java.util.Arrays;
 
 public class Example11 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints().httpMethods().testGet("id");
+        client.endpoints().container().getAndReturnListOfPrimitives(Arrays.asList("string"));
     }
 }

@@ -4,8 +4,8 @@ namespace Seed\Tests;
 
 use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
-use Seed\Types\Union\Types\Animal;
-use Seed\Types\Union\Types\Dog;
+use Seed\Types\TypesAnimalZero;
+use Seed\Types\TypesAnimalZeroAnimal;
 
 class EndpointsUnionWireTest extends WireMockTestCase
 {
@@ -19,10 +19,11 @@ class EndpointsUnionWireTest extends WireMockTestCase
     public function testGetAndReturnUnion(): void {
         $testId = 'endpoints.union.get_and_return_union.0';
         $this->client->endpoints->union->getAndReturnUnion(
-            Animal::dog(new Dog([
+            new TypesAnimalZero([
                 'name' => 'name',
                 'likesToWoof' => true,
-            ])),
+                'animal' => TypesAnimalZeroAnimal::Dog->value,
+            ]),
             [
                 'headers' => [
                     'X-Test-Id' => 'endpoints.union.get_and_return_union.0',

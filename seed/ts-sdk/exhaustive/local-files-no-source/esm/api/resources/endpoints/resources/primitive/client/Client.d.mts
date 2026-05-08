@@ -77,7 +77,7 @@ export declare class PrimitiveClient {
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+     *     await client.endpoints.primitive.getAndReturnUuid("string")
      */
     getAndReturnUuid(request: string, requestOptions?: PrimitiveClient.RequestOptions): core.HttpResponsePromise<string>;
     private __getAndReturnUuid;
@@ -86,7 +86,7 @@ export declare class PrimitiveClient {
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh")
+     *     await client.endpoints.primitive.getAndReturnBase64("string")
      */
     getAndReturnBase64(request: string, requestOptions?: PrimitiveClient.RequestOptions): core.HttpResponsePromise<string>;
     private __getAndReturnBase64;

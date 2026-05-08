@@ -19,7 +19,7 @@ paths:
                 items:
                   type: string
       security: &ref_0
-        - BearerAuth: []
+        - bearer: []
       requestBody:
         required: true
         content:
@@ -440,6 +440,7 @@ paths:
         - name: string
           in: path
           required: true
+          x-fern-parameter-name: stringValue
           schema:
             type: string
       responses:
@@ -1567,6 +1568,6 @@ components:
           items:
             type: string
   securitySchemes:
-    BearerAuth:
+    bearer:
       type: http
       scheme: bearer

@@ -18,22 +18,25 @@ export class HttpMethodsClient {
         this._options = normalizeClientOptionsWithAuth(options);
     }
     /**
-     * @param {string} id
+     * @param {SeedApi.endpoints.TestGetHttpMethodsRequest} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.httpMethods.testGet("id")
+     *     await client.endpoints.httpMethods.testGet({
+     *         id: "id"
+     *     })
      */
-    testGet(id, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__testGet(id, requestOptions));
+    testGet(request, requestOptions) {
+        return core.HttpResponsePromise.fromPromise(this.__testGet(request, requestOptions));
     }
-    __testGet(id, requestOptions) {
+    __testGet(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
+            const { id } = request;
             const _authRequest = yield this._options.authProvider.getAuthRequest();
             const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/http-methods/${core.url.encodePathParam(id)}`),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `http-methods/${core.url.encodePathParam(id)}`),
                 method: "GET",
                 headers: _headers,
                 queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
@@ -47,7 +50,7 @@ export class HttpMethodsClient {
                 return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
+                throw new errors.SeedApiError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.body,
                     rawResponse: _response.rawResponse,
@@ -57,9 +60,143 @@ export class HttpMethodsClient {
         });
     }
     /**
-     * @deprecated
+     * @param {SeedApi.endpoints.TestPutHttpMethodsRequest} request
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @example
+     *     await client.endpoints.httpMethods.testPut({
+     *         id: "id",
+     *         body: {
+     *             string: "string"
+     *         }
+     *     })
+     */
+    testPut(request, requestOptions) {
+        return core.HttpResponsePromise.fromPromise(this.__testPut(request, requestOptions));
+    }
+    __testPut(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b, _c, _d, _e, _f, _g, _h;
+            const { id, body: _body } = request;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _response = yield core.fetcher({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `http-methods/${core.url.encodePathParam(id)}`),
+                method: "PUT",
+                headers: _headers,
+                contentType: "application/json",
+                queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
+                requestType: "json",
+                body: _body,
+                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
+                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
+                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
+                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
+                logging: this._options.logging,
+            });
+            if (_response.ok) {
+                return { data: _response.body, rawResponse: _response.rawResponse };
+            }
+            if (_response.error.reason === "status-code") {
+                throw new errors.SeedApiError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.body,
+                    rawResponse: _response.rawResponse,
+                });
+            }
+            return handleNonStatusCodeError(_response.error, _response.rawResponse, "PUT", "/http-methods/{id}");
+        });
+    }
+    /**
+     * @param {SeedApi.endpoints.TestDeleteHttpMethodsRequest} request
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testDelete({
+     *         id: "id"
+     *     })
+     */
+    testDelete(request, requestOptions) {
+        return core.HttpResponsePromise.fromPromise(this.__testDelete(request, requestOptions));
+    }
+    __testDelete(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b, _c, _d, _e, _f, _g, _h;
+            const { id } = request;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _response = yield core.fetcher({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `http-methods/${core.url.encodePathParam(id)}`),
+                method: "DELETE",
+                headers: _headers,
+                queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
+                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
+                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
+                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
+                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
+                logging: this._options.logging,
+            });
+            if (_response.ok) {
+                return { data: _response.body, rawResponse: _response.rawResponse };
+            }
+            if (_response.error.reason === "status-code") {
+                throw new errors.SeedApiError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.body,
+                    rawResponse: _response.rawResponse,
+                });
+            }
+            return handleNonStatusCodeError(_response.error, _response.rawResponse, "DELETE", "/http-methods/{id}");
+        });
+    }
+    /**
+     * @param {SeedApi.endpoints.TestPatchHttpMethodsRequest} request
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testPatch({
+     *         id: "id",
+     *         body: {}
+     *     })
+     */
+    testPatch(request, requestOptions) {
+        return core.HttpResponsePromise.fromPromise(this.__testPatch(request, requestOptions));
+    }
+    __testPatch(request, requestOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b, _c, _d, _e, _f, _g, _h;
+            const { id, body: _body } = request;
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _response = yield core.fetcher({
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `http-methods/${core.url.encodePathParam(id)}`),
+                method: "PATCH",
+                headers: _headers,
+                contentType: "application/json",
+                queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
+                requestType: "json",
+                body: _body,
+                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
+                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
+                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
+                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
+                logging: this._options.logging,
+            });
+            if (_response.ok) {
+                return { data: _response.body, rawResponse: _response.rawResponse };
+            }
+            if (_response.error.reason === "status-code") {
+                throw new errors.SeedApiError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.body,
+                    rawResponse: _response.rawResponse,
+                });
+            }
+            return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/http-methods/{id}");
+        });
+    }
+    /**
+     * @param {SeedApi.TypesObjectWithRequiredField} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -76,7 +213,7 @@ export class HttpMethodsClient {
             const _authRequest = yield this._options.authProvider.getAuthRequest();
             const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/http-methods"),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "http-methods"),
                 method: "POST",
                 headers: _headers,
                 contentType: "application/json",
@@ -90,174 +227,16 @@ export class HttpMethodsClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
+                throw new errors.SeedApiError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.body,
                     rawResponse: _response.rawResponse,
                 });
             }
             return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/http-methods");
-        });
-    }
-    /**
-     * @deprecated Use testPatch instead.
-     *
-     * @param {string} id
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
-     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.httpMethods.testPut("id", {
-     *         string: "string"
-     *     })
-     */
-    testPut(id, request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__testPut(id, request, requestOptions));
-    }
-    __testPut(id, request, requestOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
-            const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/http-methods/${core.url.encodePathParam(id)}`),
-                method: "PUT",
-                headers: _headers,
-                contentType: "application/json",
-                queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
-                requestType: "json",
-                body: request,
-                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
-                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
-                logging: this._options.logging,
-            });
-            if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return handleNonStatusCodeError(_response.error, _response.rawResponse, "PUT", "/http-methods/{id}");
-        });
-    }
-    /**
-     * @beta This endpoint is in pre-release and may change.
-     *
-     * @param {string} id
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
-     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.httpMethods.testPatch("id", {
-     *         string: "string",
-     *         integer: 1,
-     *         long: 1000000,
-     *         double: 1.1,
-     *         bool: true,
-     *         datetime: "2024-01-15T09:30:00Z",
-     *         date: "2023-01-15",
-     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *         base64: "SGVsbG8gd29ybGQh",
-     *         list: ["list", "list"],
-     *         set: ["set"],
-     *         map: {
-     *             1: "map"
-     *         },
-     *         bigint: "1000000"
-     *     })
-     */
-    testPatch(id, request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__testPatch(id, request, requestOptions));
-    }
-    __testPatch(id, request, requestOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
-            const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/http-methods/${core.url.encodePathParam(id)}`),
-                method: "PATCH",
-                headers: _headers,
-                contentType: "application/json",
-                queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
-                requestType: "json",
-                body: request,
-                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
-                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
-                logging: this._options.logging,
-            });
-            if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/http-methods/{id}");
-        });
-    }
-    /**
-     * @beta This endpoint is in development and may change.
-     *
-     * @param {string} id
-     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.httpMethods.testDelete("id")
-     */
-    testDelete(id, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__testDelete(id, requestOptions));
-    }
-    __testDelete(id, requestOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
-            const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/http-methods/${core.url.encodePathParam(id)}`),
-                method: "DELETE",
-                headers: _headers,
-                queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
-                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
-                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
-                logging: this._options.logging,
-            });
-            if (_response.ok) {
-                return { data: _response.body, rawResponse: _response.rawResponse };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return handleNonStatusCodeError(_response.error, _response.rawResponse, "DELETE", "/http-methods/{id}");
         });
     }
 }

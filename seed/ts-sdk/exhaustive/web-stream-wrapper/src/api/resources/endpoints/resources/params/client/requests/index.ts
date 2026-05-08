@@ -1,6 +1,8 @@
-export type { GetWithInlinePath } from "./GetWithInlinePath.js";
-export type { GetWithInlinePathAndQuery } from "./GetWithInlinePathAndQuery.js";
-export type { GetWithMultipleQuery } from "./GetWithMultipleQuery.js";
-export type { GetWithPathAndQuery } from "./GetWithPathAndQuery.js";
-export type { GetWithQuery } from "./GetWithQuery.js";
-export type { ModifyResourceAtInlinedPath } from "./ModifyResourceAtInlinedPath.js";
+export type { GetWithAllowMultipleQueryParamsRequest } from "./GetWithAllowMultipleQueryParamsRequest.js";
+export type { GetWithInlinePathAndQueryParamsRequest } from "./GetWithInlinePathAndQueryParamsRequest.js";
+export type { GetWithInlinePathParamsRequest } from "./GetWithInlinePathParamsRequest.js";
+export type { GetWithPathAndQueryParamsRequest } from "./GetWithPathAndQueryParamsRequest.js";
+export type { GetWithPathParamsRequest } from "./GetWithPathParamsRequest.js";
+export type { GetWithQueryParamsRequest } from "./GetWithQueryParamsRequest.js";
+export type { ModifyWithInlinePathParamsRequest } from "./ModifyWithInlinePathParamsRequest.js";
+export type { ModifyWithPathParamsRequest } from "./ModifyWithPathParamsRequest.js";

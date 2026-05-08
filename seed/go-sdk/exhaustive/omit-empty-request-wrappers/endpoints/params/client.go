@@ -6,11 +6,11 @@ import (
 	context "context"
 	io "io"
 
+	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
 	endpoints "github.com/exhaustive/fern/endpoints"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
-	types "github.com/exhaustive/fern/types"
 )
 
 type Client struct {
@@ -38,133 +38,10 @@ func NewClient(options *core.RequestOptions) *Client {
 // GET with path param
 func (c *Client) GetWithPath(
 	ctx context.Context,
-	param string,
+	request *endpoints.GetWithPathParamsRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
 	response, err := c.WithRawResponse.GetWithPath(
-		ctx,
-		param,
-		opts...,
-	)
-	if err != nil {
-		return "", err
-	}
-	return response.Body, nil
-}
-
-// GET with path param
-func (c *Client) GetWithInlinePath(
-	ctx context.Context,
-	request *endpoints.GetWithInlinePath,
-	opts ...option.RequestOption,
-) (string, error) {
-	response, err := c.WithRawResponse.GetWithInlinePath(
-		ctx,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return "", err
-	}
-	return response.Body, nil
-}
-
-// GET with query param
-func (c *Client) GetWithQuery(
-	ctx context.Context,
-	request *endpoints.GetWithQuery,
-	opts ...option.RequestOption,
-) error {
-	_, err := c.WithRawResponse.GetWithQuery(
-		ctx,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-// GET with multiple of same query param
-func (c *Client) GetWithAllowMultipleQuery(
-	ctx context.Context,
-	request *endpoints.GetWithMultipleQuery,
-	opts ...option.RequestOption,
-) error {
-	_, err := c.WithRawResponse.GetWithAllowMultipleQuery(
-		ctx,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-// GET with path and query params
-func (c *Client) GetWithPathAndQuery(
-	ctx context.Context,
-	param string,
-	request *endpoints.GetWithPathAndQuery,
-	opts ...option.RequestOption,
-) error {
-	_, err := c.WithRawResponse.GetWithPathAndQuery(
-		ctx,
-		param,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-// GET with path and query params
-func (c *Client) GetWithInlinePathAndQuery(
-	ctx context.Context,
-	request *endpoints.GetWithInlinePathAndQuery,
-	opts ...option.RequestOption,
-) error {
-	_, err := c.WithRawResponse.GetWithInlinePathAndQuery(
-		ctx,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-// PUT to update with path param
-func (c *Client) ModifyWithPath(
-	ctx context.Context,
-	param string,
-	request string,
-	opts ...option.RequestOption,
-) (string, error) {
-	response, err := c.WithRawResponse.ModifyWithPath(
-		ctx,
-		param,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return "", err
-	}
-	return response.Body, nil
-}
-
-// PUT to update with path param
-func (c *Client) ModifyWithInlinePath(
-	ctx context.Context,
-	request *endpoints.ModifyResourceAtInlinedPath,
-	opts ...option.RequestOption,
-) (string, error) {
-	response, err := c.WithRawResponse.ModifyWithInlinePath(
 		ctx,
 		request,
 		opts...,
@@ -181,7 +58,7 @@ func (c *Client) UploadWithPath(
 	param string,
 	request io.Reader,
 	opts ...option.RequestOption,
-) (*types.ObjectWithRequiredField, error) {
+) (*fern.TypesObjectWithRequiredField, error) {
 	response, err := c.WithRawResponse.UploadWithPath(
 		ctx,
 		param,
@@ -194,15 +71,15 @@ func (c *Client) UploadWithPath(
 	return response.Body, nil
 }
 
-// GET with boolean path param
-func (c *Client) GetWithBooleanPath(
+// PUT to update with path param
+func (c *Client) ModifyWithPath(
 	ctx context.Context,
-	param bool,
+	request *endpoints.ModifyWithPathParamsRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.GetWithBooleanPath(
+	response, err := c.WithRawResponse.ModifyWithPath(
 		ctx,
-		param,
+		request,
 		opts...,
 	)
 	if err != nil {
@@ -211,19 +88,104 @@ func (c *Client) GetWithBooleanPath(
 	return response.Body, nil
 }
 
-// GET with path param that can throw errors
-func (c *Client) GetWithPathAndErrors(
+// GET with path param
+func (c *Client) GetWithInlinePath(
 	ctx context.Context,
-	param string,
+	request *endpoints.GetWithInlinePathParamsRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.GetWithPathAndErrors(
+	response, err := c.WithRawResponse.GetWithInlinePath(
 		ctx,
-		param,
+		request,
 		opts...,
 	)
 	if err != nil {
 		return "", err
 	}
 	return response.Body, nil
+}
+
+// PUT to update with path param
+func (c *Client) ModifyWithInlinePath(
+	ctx context.Context,
+	request *endpoints.ModifyWithInlinePathParamsRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.ModifyWithInlinePath(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
+}
+
+// GET with query param
+func (c *Client) GetWithQuery(
+	ctx context.Context,
+	request *endpoints.GetWithQueryParamsRequest,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.GetWithQuery(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// GET with multiple of same query param
+func (c *Client) GetWithAllowMultipleQuery(
+	ctx context.Context,
+	request *endpoints.GetWithAllowMultipleQueryParamsRequest,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.GetWithAllowMultipleQuery(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// GET with path and query params
+func (c *Client) GetWithPathAndQuery(
+	ctx context.Context,
+	request *endpoints.GetWithPathAndQueryParamsRequest,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.GetWithPathAndQuery(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// GET with path and query params
+func (c *Client) GetWithInlinePathAndQuery(
+	ctx context.Context,
+	request *endpoints.GetWithInlinePathAndQueryParamsRequest,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.GetWithInlinePathAndQuery(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
 }

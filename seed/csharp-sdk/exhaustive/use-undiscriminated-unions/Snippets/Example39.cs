@@ -1,18 +1,21 @@
-using SeedExhaustive;
+using SeedApi;
+using SeedApi.Endpoints;
 
 public partial class Examples
 {
     public async Task Example39() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Endpoints.Params.ModifyWithPathAsync(
-            "param",
-            "string"
+        await client.Endpoints.HttpMethods.TestPatchAsync(
+            new TestPatchHttpMethodsRequest {
+                Id = "id",
+                Body = new TypesObjectWithOptionalField()
+            }
         );
     }
 

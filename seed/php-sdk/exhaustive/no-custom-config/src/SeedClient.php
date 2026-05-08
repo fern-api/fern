@@ -2,21 +2,16 @@
 
 namespace Seed;
 
-use Seed\Endpoints\EndpointsClient;
 use Seed\InlinedRequests\InlinedRequestsClient;
 use Seed\NoAuth\NoAuthClient;
 use Seed\NoReqBody\NoReqBodyClient;
 use Seed\ReqWithHeaders\ReqWithHeadersClient;
+use Seed\Endpoints\EndpointsClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient
 {
-    /**
-     * @var EndpointsClient $endpoints
-     */
-    public EndpointsClient $endpoints;
-
     /**
      * @var InlinedRequestsClient $inlinedRequests
      */
@@ -36,6 +31,11 @@ class SeedClient
      * @var ReqWithHeadersClient $reqWithHeaders
      */
     public ReqWithHeadersClient $reqWithHeaders;
+
+    /**
+     * @var EndpointsClient $endpoints
+     */
+    public EndpointsClient $endpoints;
 
     /**
      * @var array{
@@ -88,10 +88,10 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->endpoints = new EndpointsClient($this->client, $this->options);
         $this->inlinedRequests = new InlinedRequestsClient($this->client, $this->options);
         $this->noAuth = new NoAuthClient($this->client, $this->options);
         $this->noReqBody = new NoReqBodyClient($this->client, $this->options);
         $this->reqWithHeaders = new ReqWithHeadersClient($this->client, $this->options);
+        $this->endpoints = new EndpointsClient($this->client, $this->options);
     }
 }

@@ -1,2 +1,2 @@
-export { SeedExhaustiveError } from "./SeedExhaustiveError.mjs";
-export { SeedExhaustiveTimeoutError } from "./SeedExhaustiveTimeoutError.mjs";
+export { SeedApiError } from "./SeedApiError.mjs";
+export { SeedApiTimeoutError } from "./SeedApiTimeoutError.mjs";

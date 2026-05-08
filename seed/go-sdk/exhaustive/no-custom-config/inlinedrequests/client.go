@@ -9,7 +9,6 @@ import (
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
-	types "github.com/exhaustive/fern/types"
 )
 
 type Client struct {
@@ -37,9 +36,9 @@ func NewClient(options *core.RequestOptions) *Client {
 // POST with custom object in request body, response is an object
 func (c *Client) PostWithObjectBodyandResponse(
 	ctx context.Context,
-	request *fern.PostWithObjectBody,
+	request *fern.PostWithObjectBodyandResponseInlinedRequestsRequest,
 	opts ...option.RequestOption,
-) (*types.ObjectWithOptionalField, error) {
+) (*fern.TypesObjectWithOptionalField, error) {
 	response, err := c.WithRawResponse.PostWithObjectBodyandResponse(
 		ctx,
 		request,

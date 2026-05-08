@@ -1,13 +1,12 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-java-sdk",
-  "generatorVersion": "local",
+  "generatorVersion": "latest",
   "generatorConfig": {
     "inline-path-parameters": true,
     "package-prefix": "com.fern.sdk"
   },
   "originGitCommit": "DUMMY",
-  "invokedBy": "ci",
-  "requestedVersion": "0.0.1",
-  "ciProvider": "github"
+  "invokedBy": "manual",
+  "requestedVersion": "0.0.1"
 }

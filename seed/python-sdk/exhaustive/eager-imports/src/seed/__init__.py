@@ -2,25 +2,80 @@
 
 # isort: skip_file
 
-from . import endpoints, general_errors, inlined_requests, no_auth, no_req_body, req_with_headers, types
+from .types import (
+    BadObjectRequestInfo,
+    EndpointsError,
+    EndpointsErrorCategory,
+    EndpointsErrorCode,
+    EndpointsPaginatedResponse,
+    EndpointsPutResponse,
+    TypesAnimal,
+    TypesAnimalOne,
+    TypesAnimalOneAnimal,
+    TypesAnimalZero,
+    TypesAnimalZeroAnimal,
+    TypesCat,
+    TypesDocumentedUnknownType,
+    TypesDog,
+    TypesDoubleOptional,
+    TypesMapOfDocumentedUnknownType,
+    TypesMixedType,
+    TypesNestedObjectWithOptionalField,
+    TypesNestedObjectWithRequiredField,
+    TypesObjectWithDatetimeLikeString,
+    TypesObjectWithDocs,
+    TypesObjectWithDocumentedUnknownType,
+    TypesObjectWithMapOfMap,
+    TypesObjectWithOptionalField,
+    TypesObjectWithRequiredField,
+    TypesObjectWithUnknownField,
+    TypesOptionalAlias,
+    TypesWeatherReport,
+)
+from .errors import BadRequestError
+from . import endpoints, inlined_requests, no_auth, no_req_body, req_with_headers
 from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-from .client import AsyncSeedExhaustive, SeedExhaustive
-from .general_errors import BadObjectRequestInfo, BadRequestBody
+from .client import AsyncSeedApi, SeedApi
 from .version import __version__
 
 __all__ = [
-    "AsyncSeedExhaustive",
+    "AsyncSeedApi",
     "BadObjectRequestInfo",
-    "BadRequestBody",
+    "BadRequestError",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
-    "SeedExhaustive",
+    "EndpointsError",
+    "EndpointsErrorCategory",
+    "EndpointsErrorCode",
+    "EndpointsPaginatedResponse",
+    "EndpointsPutResponse",
+    "SeedApi",
+    "TypesAnimal",
+    "TypesAnimalOne",
+    "TypesAnimalOneAnimal",
+    "TypesAnimalZero",
+    "TypesAnimalZeroAnimal",
+    "TypesCat",
+    "TypesDocumentedUnknownType",
+    "TypesDog",
+    "TypesDoubleOptional",
+    "TypesMapOfDocumentedUnknownType",
+    "TypesMixedType",
+    "TypesNestedObjectWithOptionalField",
+    "TypesNestedObjectWithRequiredField",
+    "TypesObjectWithDatetimeLikeString",
+    "TypesObjectWithDocs",
+    "TypesObjectWithDocumentedUnknownType",
+    "TypesObjectWithMapOfMap",
+    "TypesObjectWithOptionalField",
+    "TypesObjectWithRequiredField",
+    "TypesObjectWithUnknownField",
+    "TypesOptionalAlias",
+    "TypesWeatherReport",
     "__version__",
     "endpoints",
-    "general_errors",
     "inlined_requests",
     "no_auth",
     "no_req_body",
     "req_with_headers",
-    "types",
 ]

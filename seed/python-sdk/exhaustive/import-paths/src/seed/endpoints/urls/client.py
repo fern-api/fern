@@ -33,11 +33,12 @@ class UrlsClient:
         -------
         str
 
+
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import SeedApi
 
-        client = SeedExhaustive(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -57,11 +58,12 @@ class UrlsClient:
         -------
         str
 
+
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import SeedApi
 
-        client = SeedExhaustive(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -81,11 +83,12 @@ class UrlsClient:
         -------
         str
 
+
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import SeedApi
 
-        client = SeedExhaustive(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -105,11 +108,12 @@ class UrlsClient:
         -------
         str
 
+
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import SeedApi
 
-        client = SeedExhaustive(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -145,13 +149,14 @@ class AsyncUrlsClient:
         -------
         str
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -177,13 +182,14 @@ class AsyncUrlsClient:
         -------
         str
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -209,13 +215,14 @@ class AsyncUrlsClient:
         -------
         str
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -241,13 +248,14 @@ class AsyncUrlsClient:
         -------
         str
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )

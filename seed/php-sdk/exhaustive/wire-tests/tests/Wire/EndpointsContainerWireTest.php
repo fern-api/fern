@@ -4,7 +4,7 @@ namespace Seed\Tests;
 
 use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
-use Seed\Types\Object\Types\ObjectWithRequiredField;
+use Seed\Types\TypesObjectWithRequiredField;
 
 class EndpointsContainerWireTest extends WireMockTestCase
 {
@@ -19,7 +19,6 @@ class EndpointsContainerWireTest extends WireMockTestCase
         $testId = 'endpoints.container.get_and_return_list_of_primitives.0';
         $this->client->endpoints->container->getAndReturnListOfPrimitives(
             [
-                'string',
                 'string',
             ],
             [
@@ -43,10 +42,7 @@ class EndpointsContainerWireTest extends WireMockTestCase
         $testId = 'endpoints.container.get_and_return_list_of_objects.0';
         $this->client->endpoints->container->getAndReturnListOfObjects(
             [
-                new ObjectWithRequiredField([
-                    'string' => 'string',
-                ]),
-                new ObjectWithRequiredField([
+                new TypesObjectWithRequiredField([
                     'string' => 'string',
                 ]),
             ],
@@ -94,7 +90,7 @@ class EndpointsContainerWireTest extends WireMockTestCase
         $testId = 'endpoints.container.get_and_return_set_of_objects.0';
         $this->client->endpoints->container->getAndReturnSetOfObjects(
             [
-                new ObjectWithRequiredField([
+                new TypesObjectWithRequiredField([
                     'string' => 'string',
                 ]),
             ],
@@ -119,7 +115,7 @@ class EndpointsContainerWireTest extends WireMockTestCase
         $testId = 'endpoints.container.get_and_return_map_prim_to_prim.0';
         $this->client->endpoints->container->getAndReturnMapPrimToPrim(
             [
-                'string' => 'string',
+                'key' => 'value',
             ],
             [
                 'headers' => [
@@ -142,7 +138,7 @@ class EndpointsContainerWireTest extends WireMockTestCase
         $testId = 'endpoints.container.get_and_return_map_of_prim_to_object.0';
         $this->client->endpoints->container->getAndReturnMapOfPrimToObject(
             [
-                'string' => new ObjectWithRequiredField([
+                'key' => new TypesObjectWithRequiredField([
                     'string' => 'string',
                 ]),
             ],
@@ -167,7 +163,7 @@ class EndpointsContainerWireTest extends WireMockTestCase
         $testId = 'endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union.0';
         $this->client->endpoints->container->getAndReturnMapOfPrimToUndiscriminatedUnion(
             [
-                'string' => 1.1,
+                'key' => 1.1,
             ],
             [
                 'headers' => [
@@ -189,7 +185,7 @@ class EndpointsContainerWireTest extends WireMockTestCase
     public function testGetAndReturnOptional(): void {
         $testId = 'endpoints.container.get_and_return_optional.0';
         $this->client->endpoints->container->getAndReturnOptional(
-            new ObjectWithRequiredField([
+            new TypesObjectWithRequiredField([
                 'string' => 'string',
             ]),
             [

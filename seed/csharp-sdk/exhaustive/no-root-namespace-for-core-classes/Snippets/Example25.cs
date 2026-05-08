@@ -1,23 +1,19 @@
-using SeedExhaustive;
-using SeedExhaustive.Core;
+using SeedApi;
+using SeedApi.Core;
 
 public partial class Examples
 {
     public async Task Example25() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownTypeAsync(
-            new Dictionary<string, object>(){
-                ["string"] = new Dictionary<string, object>()
-                {
-                    ["key"] = "value",
-                }
-                ,
+        await client.Endpoints.Container.GetAndReturnOptionalAsync(
+            new TypesObjectWithRequiredField {
+                String = "string"
             }
         );
     }

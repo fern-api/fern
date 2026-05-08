@@ -1,24 +1,26 @@
 package com.snippets;
 
-import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.types.types.ObjectWithUnknownField;
+import com.seed.api.SeedApiClient;
+import com.seed.api.types.TypesObjectWithRequiredField;
 import java.util.HashMap;
 
 public class Example22 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
         client.endpoints()
-                .object()
-                .getAndReturnWithUnknownField(ObjectWithUnknownField.builder()
-                        .unknown(new HashMap<String, Object>() {
-                            {
-                                put("$ref", "https://example.com/schema");
-                            }
-                        })
-                        .build());
+                .container()
+                .getAndReturnMapOfPrimToObject(new HashMap<String, TypesObjectWithRequiredField>() {
+                    {
+                        put(
+                                "string",
+                                TypesObjectWithRequiredField.builder()
+                                        .string("string")
+                                        .build());
+                    }
+                });
     }
 }

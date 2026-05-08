@@ -30,7 +30,11 @@ require "seed"
 
 client = Seed::MyClient.new(token: "<token>")
 
-client.endpoints.container.get_and_return_list_of_primitives(request: %w[string string])
+client.inlined_requests.post_with_object_bodyand_response(
+  string: "string",
+  integer: 1,
+  nested_object: {}
+)
 ```
 
 ## Environments
@@ -58,7 +62,7 @@ client = Seed::MyClient.new(
 )
 
 begin
-    result = client.endpoints.container.get_and_return_list_of_primitives
+    result = client.inlined_requests.post_with_object_bodyand_response
 rescue Seed::Errors::TimeoutError
     puts "API didn't respond before our timeout elapsed"
 rescue Seed::Errors::ServiceUnavailableError
@@ -108,7 +112,7 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
 ```ruby
 require "seed"
 
-response = client.endpoints.container.get_and_return_list_of_primitives(
+response = client.inlined_requests.post_with_object_bodyand_response(
     ...,
     timeout: 30  # 30 second timeout
 )
@@ -121,7 +125,7 @@ If you would like to send additional headers as part of the request, use the `ad
 ```ruby
 require "seed"
 
-response = client.endpoints.container.get_and_return_list_of_primitives(
+response = client.inlined_requests.post_with_object_bodyand_response(
     ...,
     request_options: {
         additional_headers: {
@@ -138,7 +142,7 @@ If you would like to send additional query parameters as part of the request, us
 ```ruby
 require "seed"
 
-response = client.endpoints.container.get_and_return_list_of_primitives(
+response = client.inlined_requests.post_with_object_bodyand_response(
     ...,
     request_options: {
         additional_query_parameters: {

@@ -26,6 +26,7 @@ class RawUrlsClient:
         Returns
         -------
         HttpResponse[str]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "urls/MixedCase",
@@ -61,6 +62,7 @@ class RawUrlsClient:
         Returns
         -------
         HttpResponse[str]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "urls/no-ending-slash",
@@ -96,6 +98,7 @@ class RawUrlsClient:
         Returns
         -------
         HttpResponse[str]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "urls/with-ending-slash/",
@@ -131,6 +134,7 @@ class RawUrlsClient:
         Returns
         -------
         HttpResponse[str]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "urls/with_underscores",
@@ -173,6 +177,7 @@ class AsyncRawUrlsClient:
         Returns
         -------
         AsyncHttpResponse[str]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "urls/MixedCase",
@@ -210,6 +215,7 @@ class AsyncRawUrlsClient:
         Returns
         -------
         AsyncHttpResponse[str]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "urls/no-ending-slash",
@@ -247,6 +253,7 @@ class AsyncRawUrlsClient:
         Returns
         -------
         AsyncHttpResponse[str]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "urls/with-ending-slash/",
@@ -284,6 +291,7 @@ class AsyncRawUrlsClient:
         Returns
         -------
         AsyncHttpResponse[str]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "urls/with_underscores",

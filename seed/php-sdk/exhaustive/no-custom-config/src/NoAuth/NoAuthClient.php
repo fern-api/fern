@@ -71,7 +71,7 @@ class NoAuthClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/no-auth",
+                    path: "no-auth",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

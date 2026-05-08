@@ -1,19 +1,20 @@
 package com.snippets;
 
-import com.seed.exhaustive.SeedExhaustiveClient;
-import java.util.HashMap;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.endpoints.pagination.requests.ListItemsPaginationRequest;
 
 public class Example62 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.noAuth().postWithNoAuth(new HashMap<String, Object>() {
-            {
-                put("key", "value");
-            }
-        });
+        client.endpoints()
+                .pagination()
+                .listItems(ListItemsPaginationRequest.builder()
+                        .cursor("cursor")
+                        .limit(1)
+                        .build());
     }
 }

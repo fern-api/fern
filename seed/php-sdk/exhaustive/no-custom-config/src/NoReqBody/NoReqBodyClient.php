@@ -4,7 +4,7 @@ namespace Seed\NoReqBody;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Types\Object\Types\ObjectWithOptionalField;
+use Seed\Types\TypesObjectWithOptionalField;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -58,18 +58,18 @@ class NoReqBodyClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?ObjectWithOptionalField
+     * @return ?TypesObjectWithOptionalField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithNoRequestBody(?array $options = null): ?ObjectWithOptionalField
+    public function getWithNoRequestBody(?array $options = null): ?TypesObjectWithOptionalField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/no-req-body",
+                    path: "no-req-body",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -80,7 +80,7 @@ class NoReqBodyClient
                 if (empty($json)) {
                     return null;
                 }
-                return ObjectWithOptionalField::fromJson($json);
+                return TypesObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -114,7 +114,7 @@ class NoReqBodyClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/no-req-body",
+                    path: "no-req-body",
                     method: HttpMethod::POST,
                 ),
                 $options,

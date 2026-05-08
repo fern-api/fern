@@ -10,7 +10,7 @@ from ...core.jsonable_encoder import encode_path_param
 from ...core.parse_error import ParsingError
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
-from .types.put_response import PutResponse
+from ...types.endpoints_put_response import EndpointsPutResponse
 from pydantic import ValidationError
 
 
@@ -18,7 +18,9 @@ class RawPutClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def add(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[PutResponse]:
+    def add(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[EndpointsPutResponse]:
         """
         Parameters
         ----------
@@ -29,7 +31,8 @@ class RawPutClient:
 
         Returns
         -------
-        HttpResponse[PutResponse]
+        HttpResponse[EndpointsPutResponse]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             f"{encode_path_param(id)}",
@@ -39,9 +42,9 @@ class RawPutClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    PutResponse,
+                    EndpointsPutResponse,
                     parse_obj_as(
-                        type_=PutResponse,  # type: ignore
+                        type_=EndpointsPutResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -62,7 +65,7 @@ class AsyncRawPutClient:
 
     async def add(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[PutResponse]:
+    ) -> AsyncHttpResponse[EndpointsPutResponse]:
         """
         Parameters
         ----------
@@ -73,7 +76,8 @@ class AsyncRawPutClient:
 
         Returns
         -------
-        AsyncHttpResponse[PutResponse]
+        AsyncHttpResponse[EndpointsPutResponse]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"{encode_path_param(id)}",
@@ -83,9 +87,9 @@ class AsyncRawPutClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    PutResponse,
+                    EndpointsPutResponse,
                     parse_obj_as(
-                        type_=PutResponse,  # type: ignore
+                        type_=EndpointsPutResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

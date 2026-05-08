@@ -26,7 +26,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "/no-auth",
+          path: "no-auth",
           body: params,
           request_options: request_options
         )

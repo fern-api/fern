@@ -23,39 +23,31 @@ module Seed
         # @option params [String, nil] :cursor
         # @option params [Integer, nil] :limit
         #
-        # @return [Seed::Endpoints::Pagination::Types::PaginatedResponse]
+        # @return [Seed::Types::EndpointsPaginatedResponse]
         def list_items(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
           query_params = {}
           query_params["cursor"] = params[:cursor] if params.key?(:cursor)
           query_params["limit"] = params[:limit] if params.key?(:limit)
 
-          Seed::Internal::CursorItemIterator.new(
-            cursor_field: :next_,
-            item_field: :items,
-            initial_cursor: query_params["cursor"]
-          ) do |next_cursor|
-            query_params["cursor"] = next_cursor
-            request = Seed::Internal::JSON::Request.new(
-              base_url: request_options[:base_url],
-              method: "GET",
-              path: "/pagination",
-              query: query_params,
-              request_options: request_options
-            )
-            begin
-              response = @client.send(request)
-            rescue Net::HTTPRequestTimeout
-              raise Seed::Errors::TimeoutError
-            end
-            code = response.code.to_i
-            if code.between?(200, 299)
-              parsed_response = Seed::Endpoints::Pagination::Types::PaginatedResponse.load(response.body)
-              [parsed_response, response]
-            else
-              error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-              raise error_class.new(response.body, code: code)
-            end
+          request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "GET",
+            path: "pagination",
+            query: query_params,
+            request_options: request_options
+          )
+          begin
+            response = @client.send(request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = response.code.to_i
+          if code.between?(200, 299)
+            Seed::Types::EndpointsPaginatedResponse.load(response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
           end
         end
       end

@@ -5,4 +5,8 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.container.get_and_return_list_of_primitives(request: %w[string string])
+client.inlined_requests.post_with_object_bodyand_response(
+  string: "string",
+  integer: 1,
+  nested_object: {}
+)

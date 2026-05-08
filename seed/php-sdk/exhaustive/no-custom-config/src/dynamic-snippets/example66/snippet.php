@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\ReqWithHeaders\Requests\ReqWithHeaders;
+use Seed\Endpoints\Params\Requests\ModifyWithPathParamsRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,10 +11,9 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->reqWithHeaders->getWithCustomHeader(
-    new ReqWithHeaders([
-        'xTestServiceHeader' => 'X-TEST-SERVICE-HEADER',
-        'xTestEndpointHeader' => 'X-TEST-ENDPOINT-HEADER',
+$client->endpoints->params->modifyWithPath(
+    'param',
+    new ModifyWithPathParamsRequest([
         'body' => 'string',
     ]),
 );

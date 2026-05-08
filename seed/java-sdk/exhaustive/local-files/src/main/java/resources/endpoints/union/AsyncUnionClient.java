@@ -6,7 +6,7 @@ package com.fern.sdk.resources.endpoints.union;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.types.union.types.Animal;
+import com.fern.sdk.types.TypesAnimal;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncUnionClient {
@@ -26,11 +26,11 @@ public class AsyncUnionClient {
     return this.rawClient;
   }
 
-  public CompletableFuture<Animal> getAndReturnUnion(Animal request) {
+  public CompletableFuture<TypesAnimal> getAndReturnUnion(TypesAnimal request) {
     return this.rawClient.getAndReturnUnion(request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<Animal> getAndReturnUnion(Animal request,
+  public CompletableFuture<TypesAnimal> getAndReturnUnion(TypesAnimal request,
       RequestOptions requestOptions) {
     return this.rawClient.getAndReturnUnion(request, requestOptions).thenApply(response -> response.body());
   }

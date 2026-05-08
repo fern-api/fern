@@ -7,7 +7,7 @@ import * as core from "../../../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
 import * as serializers from "../../../../../../serialization/index.js";
-import type * as SeedExhaustive from "../../../../../index.js";
+import type * as SeedApi from "../../../../../index.js";
 
 export declare namespace HttpMethodsClient {
     export type Options = BaseClientOptions;
@@ -23,20 +23,26 @@ export class HttpMethodsClient {
     }
 
     /**
-     * @param {string} id
+     * @param {SeedApi.endpoints.TestGetHttpMethodsRequest} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.httpMethods.testGet("id")
+     *     await client.endpoints.httpMethods.testGet({
+     *         id: "id"
+     *     })
      */
-    public testGet(id: string, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__testGet(id, requestOptions));
+    public testGet(
+        request: SeedApi.endpoints.TestGetHttpMethodsRequest,
+        requestOptions?: HttpMethodsClient.RequestOptions,
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__testGet(request, requestOptions));
     }
 
     private async __testGet(
-        id: string,
+        request: SeedApi.endpoints.TestGetHttpMethodsRequest,
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
+        const { id } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -47,7 +53,7 @@ export class HttpMethodsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${core.url.encodePathParam(id)}`,
+                `http-methods/${core.url.encodePathParam(id)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -72,7 +78,7 @@ export class HttpMethodsClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -83,103 +89,29 @@ export class HttpMethodsClient {
     }
 
     /**
-     * @deprecated
-     *
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {SeedApi.endpoints.TestPutHttpMethodsRequest} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.httpMethods.testPost({
-     *         string: "string"
-     *     })
-     */
-    public testPost(
-        request: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: HttpMethodsClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
-        return core.HttpResponsePromise.fromPromise(this.__testPost(request, requestOptions));
-    }
-
-    private async __testPost(
-        request: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: HttpMethodsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/http-methods",
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            requestType: "json",
-            body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/http-methods");
-    }
-
-    /**
-     * @deprecated Use testPatch instead.
-     *
-     * @param {string} id
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
-     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.httpMethods.testPut("id", {
-     *         string: "string"
+     *     await client.endpoints.httpMethods.testPut({
+     *         id: "id",
+     *         body: {
+     *             string: "string"
+     *         }
      *     })
      */
     public testPut(
-        id: string,
-        request: SeedExhaustive.types.ObjectWithRequiredField,
+        request: SeedApi.endpoints.TestPutHttpMethodsRequest,
         requestOptions?: HttpMethodsClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
-        return core.HttpResponsePromise.fromPromise(this.__testPut(id, request, requestOptions));
+    ): core.HttpResponsePromise<SeedApi.TypesObjectWithOptionalField> {
+        return core.HttpResponsePromise.fromPromise(this.__testPut(request, requestOptions));
     }
 
     private async __testPut(
-        id: string,
-        request: SeedExhaustive.types.ObjectWithRequiredField,
+        request: SeedApi.endpoints.TestPutHttpMethodsRequest,
         requestOptions?: HttpMethodsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
+    ): Promise<core.WithRawResponse<SeedApi.TypesObjectWithOptionalField>> {
+        const { id, body: _body } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -190,14 +122,14 @@ export class HttpMethodsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${core.url.encodePathParam(id)}`,
+                `http-methods/${core.url.encodePathParam(id)}`,
             ),
             method: "PUT",
             headers: _headers,
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
+            body: serializers.TypesObjectWithRequiredField.jsonOrThrow(_body, {
                 unrecognizedObjectKeys: "strip",
                 omitUndefined: true,
             }),
@@ -209,7 +141,7 @@ export class HttpMethodsClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                data: serializers.TypesObjectWithOptionalField.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -221,7 +153,7 @@ export class HttpMethodsClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -232,115 +164,26 @@ export class HttpMethodsClient {
     }
 
     /**
-     * @beta This endpoint is in pre-release and may change.
-     *
-     * @param {string} id
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {SeedApi.endpoints.TestDeleteHttpMethodsRequest} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.httpMethods.testPatch("id", {
-     *         string: "string",
-     *         integer: 1,
-     *         long: 1000000,
-     *         double: 1.1,
-     *         bool: true,
-     *         datetime: new Date("2024-01-15T09:30:00.000Z"),
-     *         date: "2023-01-15",
-     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *         base64: "SGVsbG8gd29ybGQh",
-     *         list: ["list", "list"],
-     *         set: new Set(["set"]),
-     *         map: {
-     *             1: "map"
-     *         },
-     *         bigint: "1000000"
+     *     await client.endpoints.httpMethods.testDelete({
+     *         id: "id"
      *     })
      */
-    public testPatch(
-        id: string,
-        request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: HttpMethodsClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
-        return core.HttpResponsePromise.fromPromise(this.__testPatch(id, request, requestOptions));
-    }
-
-    private async __testPatch(
-        id: string,
-        request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: HttpMethodsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${core.url.encodePathParam(id)}`,
-            ),
-            method: "PATCH",
-            headers: _headers,
-            contentType: "application/json",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            requestType: "json",
-            body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/http-methods/{id}");
-    }
-
-    /**
-     * @beta This endpoint is in development and may change.
-     *
-     * @param {string} id
-     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.httpMethods.testDelete("id")
-     */
     public testDelete(
-        id: string,
+        request: SeedApi.endpoints.TestDeleteHttpMethodsRequest,
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromPromise(this.__testDelete(id, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__testDelete(request, requestOptions));
     }
 
     private async __testDelete(
-        id: string,
+        request: SeedApi.endpoints.TestDeleteHttpMethodsRequest,
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
+        const { id } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -351,7 +194,7 @@ export class HttpMethodsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${core.url.encodePathParam(id)}`,
+                `http-methods/${core.url.encodePathParam(id)}`,
             ),
             method: "DELETE",
             headers: _headers,
@@ -376,7 +219,7 @@ export class HttpMethodsClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -384,5 +227,149 @@ export class HttpMethodsClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "DELETE", "/http-methods/{id}");
+    }
+
+    /**
+     * @param {SeedApi.endpoints.TestPatchHttpMethodsRequest} request
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testPatch({
+     *         id: "id",
+     *         body: {}
+     *     })
+     */
+    public testPatch(
+        request: SeedApi.endpoints.TestPatchHttpMethodsRequest,
+        requestOptions?: HttpMethodsClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.TypesObjectWithOptionalField> {
+        return core.HttpResponsePromise.fromPromise(this.__testPatch(request, requestOptions));
+    }
+
+    private async __testPatch(
+        request: SeedApi.endpoints.TestPatchHttpMethodsRequest,
+        requestOptions?: HttpMethodsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.TypesObjectWithOptionalField>> {
+        const { id, body: _body } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `http-methods/${core.url.encodePathParam(id)}`,
+            ),
+            method: "PATCH",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: serializers.TypesObjectWithOptionalField.jsonOrThrow(_body, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.TypesObjectWithOptionalField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/http-methods/{id}");
+    }
+
+    /**
+     * @param {SeedApi.TypesObjectWithRequiredField} request
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testPost({
+     *         string: "string"
+     *     })
+     */
+    public testPost(
+        request: SeedApi.TypesObjectWithRequiredField,
+        requestOptions?: HttpMethodsClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.TypesObjectWithOptionalField> {
+        return core.HttpResponsePromise.fromPromise(this.__testPost(request, requestOptions));
+    }
+
+    private async __testPost(
+        request: SeedApi.TypesObjectWithRequiredField,
+        requestOptions?: HttpMethodsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.TypesObjectWithOptionalField>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "http-methods",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: serializers.TypesObjectWithRequiredField.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.TypesObjectWithOptionalField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/http-methods");
     }
 }

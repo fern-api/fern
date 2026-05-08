@@ -9,9 +9,9 @@ import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.core.SeedExhaustiveApiException;
-import com.fern.sdk.core.SeedExhaustiveException;
-import com.fern.sdk.core.SeedExhaustiveHttpResponse;
+import com.fern.sdk.core.SeedApiApiException;
+import com.fern.sdk.core.SeedApiException;
+import com.fern.sdk.core.SeedApiHttpResponse;
 import java.io.IOException;
 import java.lang.Boolean;
 import java.lang.Double;
@@ -21,7 +21,6 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.time.OffsetDateTime;
-import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -41,15 +40,15 @@ public class AsyncRawPrimitiveClient {
     this.clientOptions = clientOptions;
   }
 
-  public CompletableFuture<SeedExhaustiveHttpResponse<String>> getAndReturnString(String request) {
+  public CompletableFuture<SeedApiHttpResponse<String>> getAndReturnString(String request) {
     return getAndReturnString(request,null);
   }
 
-  public CompletableFuture<SeedExhaustiveHttpResponse<String>> getAndReturnString(String request,
+  public CompletableFuture<SeedApiHttpResponse<String>> getAndReturnString(String request,
       RequestOptions requestOptions) {
     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-      .addPathSegments("primitive")
-      .addPathSegments("string");if (requestOptions != null) {
+
+      .addPathSegments("primitive/string");if (requestOptions != null) {
         requestOptions.getQueryParameters().forEach((_key, _value) -> {
           httpUrl.addQueryParameter(_key, _value);
         } );
@@ -59,7 +58,7 @@ public class AsyncRawPrimitiveClient {
         body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
       }
       catch(JsonProcessingException e) {
-        throw new SeedExhaustiveException("Failed to serialize request", e);
+        throw new SeedApiException("Failed to serialize request", e);
       }
       Request okhttpRequest = new Request.Builder()
         .url(httpUrl.build())
@@ -72,42 +71,42 @@ public class AsyncRawPrimitiveClient {
       if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
         client = clientOptions.httpClientWithTimeout(requestOptions);
       }
-      CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
+      CompletableFuture<SeedApiHttpResponse<String>> future = new CompletableFuture<>();
       client.newCall(okhttpRequest).enqueue(new Callback() {
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
           try (ResponseBody responseBody = response.body()) {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
-              future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
+              future.complete(new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
               return;
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+            future.completeExceptionally(new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response));
             return;
           }
           catch (IOException e) {
-            future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+            future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
           }
         }
 
         @Override
         public void onFailure(@NotNull Call call, @NotNull IOException e) {
-          future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+          future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
         }
       });
       return future;
     }
 
-    public CompletableFuture<SeedExhaustiveHttpResponse<Integer>> getAndReturnInt(int request) {
+    public CompletableFuture<SeedApiHttpResponse<Integer>> getAndReturnInt(int request) {
       return getAndReturnInt(request,null);
     }
 
-    public CompletableFuture<SeedExhaustiveHttpResponse<Integer>> getAndReturnInt(int request,
+    public CompletableFuture<SeedApiHttpResponse<Integer>> getAndReturnInt(int request,
         RequestOptions requestOptions) {
       HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-        .addPathSegments("primitive")
-        .addPathSegments("integer");if (requestOptions != null) {
+
+        .addPathSegments("primitive/integer");if (requestOptions != null) {
           requestOptions.getQueryParameters().forEach((_key, _value) -> {
             httpUrl.addQueryParameter(_key, _value);
           } );
@@ -117,7 +116,7 @@ public class AsyncRawPrimitiveClient {
           body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         }
         catch(JsonProcessingException e) {
-          throw new SeedExhaustiveException("Failed to serialize request", e);
+          throw new SeedApiException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
           .url(httpUrl.build())
@@ -130,42 +129,42 @@ public class AsyncRawPrimitiveClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
           client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<SeedExhaustiveHttpResponse<Integer>> future = new CompletableFuture<>();
+        CompletableFuture<SeedApiHttpResponse<Integer>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
           @Override
           public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
             try (ResponseBody responseBody = response.body()) {
               String responseBodyString = responseBody != null ? responseBody.string() : "{}";
               if (response.isSuccessful()) {
-                future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, int.class), response));
+                future.complete(new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, int.class), response));
                 return;
               }
               Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-              future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+              future.completeExceptionally(new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response));
               return;
             }
             catch (IOException e) {
-              future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+              future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
             }
           }
 
           @Override
           public void onFailure(@NotNull Call call, @NotNull IOException e) {
-            future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+            future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
           }
         });
         return future;
       }
 
-      public CompletableFuture<SeedExhaustiveHttpResponse<Long>> getAndReturnLong(long request) {
+      public CompletableFuture<SeedApiHttpResponse<Long>> getAndReturnLong(long request) {
         return getAndReturnLong(request,null);
       }
 
-      public CompletableFuture<SeedExhaustiveHttpResponse<Long>> getAndReturnLong(long request,
+      public CompletableFuture<SeedApiHttpResponse<Long>> getAndReturnLong(long request,
           RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-          .addPathSegments("primitive")
-          .addPathSegments("long");if (requestOptions != null) {
+
+          .addPathSegments("primitive/long");if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
               httpUrl.addQueryParameter(_key, _value);
             } );
@@ -175,7 +174,7 @@ public class AsyncRawPrimitiveClient {
             body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
           }
           catch(JsonProcessingException e) {
-            throw new SeedExhaustiveException("Failed to serialize request", e);
+            throw new SeedApiException("Failed to serialize request", e);
           }
           Request okhttpRequest = new Request.Builder()
             .url(httpUrl.build())
@@ -188,43 +187,42 @@ public class AsyncRawPrimitiveClient {
           if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
           }
-          CompletableFuture<SeedExhaustiveHttpResponse<Long>> future = new CompletableFuture<>();
+          CompletableFuture<SeedApiHttpResponse<Long>> future = new CompletableFuture<>();
           client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
               try (ResponseBody responseBody = response.body()) {
                 String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                 if (response.isSuccessful()) {
-                  future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, long.class), response));
+                  future.complete(new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, long.class), response));
                   return;
                 }
                 Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+                future.completeExceptionally(new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response));
                 return;
               }
               catch (IOException e) {
-                future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
               }
             }
 
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-              future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+              future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
             }
           });
           return future;
         }
 
-        public CompletableFuture<SeedExhaustiveHttpResponse<Double>> getAndReturnDouble(
-            double request) {
+        public CompletableFuture<SeedApiHttpResponse<Double>> getAndReturnDouble(double request) {
           return getAndReturnDouble(request,null);
         }
 
-        public CompletableFuture<SeedExhaustiveHttpResponse<Double>> getAndReturnDouble(
-            double request, RequestOptions requestOptions) {
+        public CompletableFuture<SeedApiHttpResponse<Double>> getAndReturnDouble(double request,
+            RequestOptions requestOptions) {
           HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-            .addPathSegments("primitive")
-            .addPathSegments("double");if (requestOptions != null) {
+
+            .addPathSegments("primitive/double");if (requestOptions != null) {
               requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
               } );
@@ -234,7 +232,7 @@ public class AsyncRawPrimitiveClient {
               body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
             }
             catch(JsonProcessingException e) {
-              throw new SeedExhaustiveException("Failed to serialize request", e);
+              throw new SeedApiException("Failed to serialize request", e);
             }
             Request okhttpRequest = new Request.Builder()
               .url(httpUrl.build())
@@ -247,43 +245,42 @@ public class AsyncRawPrimitiveClient {
             if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
               client = clientOptions.httpClientWithTimeout(requestOptions);
             }
-            CompletableFuture<SeedExhaustiveHttpResponse<Double>> future = new CompletableFuture<>();
+            CompletableFuture<SeedApiHttpResponse<Double>> future = new CompletableFuture<>();
             client.newCall(okhttpRequest).enqueue(new Callback() {
               @Override
               public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                   String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                   if (response.isSuccessful()) {
-                    future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, double.class), response));
+                    future.complete(new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, double.class), response));
                     return;
                   }
                   Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                  future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+                  future.completeExceptionally(new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response));
                   return;
                 }
                 catch (IOException e) {
-                  future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                  future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                 }
               }
 
               @Override
               public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
               }
             });
             return future;
           }
 
-          public CompletableFuture<SeedExhaustiveHttpResponse<Boolean>> getAndReturnBool(
-              boolean request) {
+          public CompletableFuture<SeedApiHttpResponse<Boolean>> getAndReturnBool(boolean request) {
             return getAndReturnBool(request,null);
           }
 
-          public CompletableFuture<SeedExhaustiveHttpResponse<Boolean>> getAndReturnBool(
-              boolean request, RequestOptions requestOptions) {
+          public CompletableFuture<SeedApiHttpResponse<Boolean>> getAndReturnBool(boolean request,
+              RequestOptions requestOptions) {
             HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-              .addPathSegments("primitive")
-              .addPathSegments("boolean");if (requestOptions != null) {
+
+              .addPathSegments("primitive/boolean");if (requestOptions != null) {
                 requestOptions.getQueryParameters().forEach((_key, _value) -> {
                   httpUrl.addQueryParameter(_key, _value);
                 } );
@@ -293,7 +290,7 @@ public class AsyncRawPrimitiveClient {
                 body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
               }
               catch(JsonProcessingException e) {
-                throw new SeedExhaustiveException("Failed to serialize request", e);
+                throw new SeedApiException("Failed to serialize request", e);
               }
               Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
@@ -306,43 +303,43 @@ public class AsyncRawPrimitiveClient {
               if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
                 client = clientOptions.httpClientWithTimeout(requestOptions);
               }
-              CompletableFuture<SeedExhaustiveHttpResponse<Boolean>> future = new CompletableFuture<>();
+              CompletableFuture<SeedApiHttpResponse<Boolean>> future = new CompletableFuture<>();
               client.newCall(okhttpRequest).enqueue(new Callback() {
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                   try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                      future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, boolean.class), response));
+                      future.complete(new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, boolean.class), response));
                       return;
                     }
                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                    future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+                    future.completeExceptionally(new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                   }
                   catch (IOException e) {
-                    future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                    future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                   }
                 }
 
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                  future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                  future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                 }
               });
               return future;
             }
 
-            public CompletableFuture<SeedExhaustiveHttpResponse<OffsetDateTime>> getAndReturnDatetime(
+            public CompletableFuture<SeedApiHttpResponse<OffsetDateTime>> getAndReturnDatetime(
                 OffsetDateTime request) {
               return getAndReturnDatetime(request,null);
             }
 
-            public CompletableFuture<SeedExhaustiveHttpResponse<OffsetDateTime>> getAndReturnDatetime(
+            public CompletableFuture<SeedApiHttpResponse<OffsetDateTime>> getAndReturnDatetime(
                 OffsetDateTime request, RequestOptions requestOptions) {
               HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-                .addPathSegments("primitive")
-                .addPathSegments("datetime");if (requestOptions != null) {
+
+                .addPathSegments("primitive/datetime");if (requestOptions != null) {
                   requestOptions.getQueryParameters().forEach((_key, _value) -> {
                     httpUrl.addQueryParameter(_key, _value);
                   } );
@@ -352,7 +349,7 @@ public class AsyncRawPrimitiveClient {
                   body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
                 }
                 catch(JsonProcessingException e) {
-                  throw new SeedExhaustiveException("Failed to serialize request", e);
+                  throw new SeedApiException("Failed to serialize request", e);
                 }
                 Request okhttpRequest = new Request.Builder()
                   .url(httpUrl.build())
@@ -365,43 +362,43 @@ public class AsyncRawPrimitiveClient {
                 if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
                   client = clientOptions.httpClientWithTimeout(requestOptions);
                 }
-                CompletableFuture<SeedExhaustiveHttpResponse<OffsetDateTime>> future = new CompletableFuture<>();
+                CompletableFuture<SeedApiHttpResponse<OffsetDateTime>> future = new CompletableFuture<>();
                 client.newCall(okhttpRequest).enqueue(new Callback() {
                   @Override
                   public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                     try (ResponseBody responseBody = response.body()) {
                       String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                       if (response.isSuccessful()) {
-                        future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, OffsetDateTime.class), response));
+                        future.complete(new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, OffsetDateTime.class), response));
                         return;
                       }
                       Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                      future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+                      future.completeExceptionally(new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response));
                       return;
                     }
                     catch (IOException e) {
-                      future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                      future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                     }
                   }
 
                   @Override
                   public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                    future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                    future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                   }
                 });
                 return future;
               }
 
-              public CompletableFuture<SeedExhaustiveHttpResponse<String>> getAndReturnDate(
+              public CompletableFuture<SeedApiHttpResponse<String>> getAndReturnDate(
                   String request) {
                 return getAndReturnDate(request,null);
               }
 
-              public CompletableFuture<SeedExhaustiveHttpResponse<String>> getAndReturnDate(
-                  String request, RequestOptions requestOptions) {
+              public CompletableFuture<SeedApiHttpResponse<String>> getAndReturnDate(String request,
+                  RequestOptions requestOptions) {
                 HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-                  .addPathSegments("primitive")
-                  .addPathSegments("date");if (requestOptions != null) {
+
+                  .addPathSegments("primitive/date");if (requestOptions != null) {
                     requestOptions.getQueryParameters().forEach((_key, _value) -> {
                       httpUrl.addQueryParameter(_key, _value);
                     } );
@@ -411,7 +408,7 @@ public class AsyncRawPrimitiveClient {
                     body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
                   }
                   catch(JsonProcessingException e) {
-                    throw new SeedExhaustiveException("Failed to serialize request", e);
+                    throw new SeedApiException("Failed to serialize request", e);
                   }
                   Request okhttpRequest = new Request.Builder()
                     .url(httpUrl.build())
@@ -424,43 +421,43 @@ public class AsyncRawPrimitiveClient {
                   if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
                     client = clientOptions.httpClientWithTimeout(requestOptions);
                   }
-                  CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
+                  CompletableFuture<SeedApiHttpResponse<String>> future = new CompletableFuture<>();
                   client.newCall(okhttpRequest).enqueue(new Callback() {
                     @Override
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                       try (ResponseBody responseBody = response.body()) {
                         String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                         if (response.isSuccessful()) {
-                          future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
+                          future.complete(new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
                           return;
                         }
                         Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                        future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+                        future.completeExceptionally(new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response));
                         return;
                       }
                       catch (IOException e) {
-                        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                        future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                       }
                     }
 
                     @Override
                     public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                      future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                      future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                     }
                   });
                   return future;
                 }
 
-                public CompletableFuture<SeedExhaustiveHttpResponse<UUID>> getAndReturnUuid(
-                    UUID request) {
+                public CompletableFuture<SeedApiHttpResponse<String>> getAndReturnUuid(
+                    String request) {
                   return getAndReturnUuid(request,null);
                 }
 
-                public CompletableFuture<SeedExhaustiveHttpResponse<UUID>> getAndReturnUuid(
-                    UUID request, RequestOptions requestOptions) {
+                public CompletableFuture<SeedApiHttpResponse<String>> getAndReturnUuid(
+                    String request, RequestOptions requestOptions) {
                   HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-                    .addPathSegments("primitive")
-                    .addPathSegments("uuid");if (requestOptions != null) {
+
+                    .addPathSegments("primitive/uuid");if (requestOptions != null) {
                       requestOptions.getQueryParameters().forEach((_key, _value) -> {
                         httpUrl.addQueryParameter(_key, _value);
                       } );
@@ -470,7 +467,7 @@ public class AsyncRawPrimitiveClient {
                       body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
                     }
                     catch(JsonProcessingException e) {
-                      throw new SeedExhaustiveException("Failed to serialize request", e);
+                      throw new SeedApiException("Failed to serialize request", e);
                     }
                     Request okhttpRequest = new Request.Builder()
                       .url(httpUrl.build())
@@ -483,43 +480,43 @@ public class AsyncRawPrimitiveClient {
                     if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
                       client = clientOptions.httpClientWithTimeout(requestOptions);
                     }
-                    CompletableFuture<SeedExhaustiveHttpResponse<UUID>> future = new CompletableFuture<>();
+                    CompletableFuture<SeedApiHttpResponse<String>> future = new CompletableFuture<>();
                     client.newCall(okhttpRequest).enqueue(new Callback() {
                       @Override
                       public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                         try (ResponseBody responseBody = response.body()) {
                           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                           if (response.isSuccessful()) {
-                            future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UUID.class), response));
+                            future.complete(new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
                             return;
                           }
                           Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                          future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+                          future.completeExceptionally(new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response));
                           return;
                         }
                         catch (IOException e) {
-                          future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                          future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                         }
                       }
 
                       @Override
                       public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                        future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                        future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                       }
                     });
                     return future;
                   }
 
-                  public CompletableFuture<SeedExhaustiveHttpResponse<byte[]>> getAndReturnBase64(
-                      byte[] request) {
+                  public CompletableFuture<SeedApiHttpResponse<String>> getAndReturnBase64(
+                      String request) {
                     return getAndReturnBase64(request,null);
                   }
 
-                  public CompletableFuture<SeedExhaustiveHttpResponse<byte[]>> getAndReturnBase64(
-                      byte[] request, RequestOptions requestOptions) {
+                  public CompletableFuture<SeedApiHttpResponse<String>> getAndReturnBase64(
+                      String request, RequestOptions requestOptions) {
                     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-                      .addPathSegments("primitive")
-                      .addPathSegments("base64");if (requestOptions != null) {
+
+                      .addPathSegments("primitive/base64");if (requestOptions != null) {
                         requestOptions.getQueryParameters().forEach((_key, _value) -> {
                           httpUrl.addQueryParameter(_key, _value);
                         } );
@@ -529,7 +526,7 @@ public class AsyncRawPrimitiveClient {
                         body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
                       }
                       catch(JsonProcessingException e) {
-                        throw new SeedExhaustiveException("Failed to serialize request", e);
+                        throw new SeedApiException("Failed to serialize request", e);
                       }
                       Request okhttpRequest = new Request.Builder()
                         .url(httpUrl.build())
@@ -542,28 +539,28 @@ public class AsyncRawPrimitiveClient {
                       if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
                         client = clientOptions.httpClientWithTimeout(requestOptions);
                       }
-                      CompletableFuture<SeedExhaustiveHttpResponse<byte[]>> future = new CompletableFuture<>();
+                      CompletableFuture<SeedApiHttpResponse<String>> future = new CompletableFuture<>();
                       client.newCall(okhttpRequest).enqueue(new Callback() {
                         @Override
                         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                           try (ResponseBody responseBody = response.body()) {
                             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                             if (response.isSuccessful()) {
-                              future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, byte[].class), response));
+                              future.complete(new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
                               return;
                             }
                             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                            future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+                            future.completeExceptionally(new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response));
                             return;
                           }
                           catch (IOException e) {
-                            future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                            future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                           }
                         }
 
                         @Override
                         public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                          future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                          future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                         }
                       });
                       return future;

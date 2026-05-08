@@ -8,7 +8,6 @@ import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
 import java.lang.String;
 import java.time.OffsetDateTime;
-import java.util.UUID;
 
 public class PrimitiveClient {
   protected final ClientOptions clientOptions;
@@ -84,19 +83,19 @@ public class PrimitiveClient {
     return this.rawClient.getAndReturnDate(request, requestOptions).body();
   }
 
-  public UUID getAndReturnUuid(UUID request) {
+  public String getAndReturnUuid(String request) {
     return this.rawClient.getAndReturnUuid(request).body();
   }
 
-  public UUID getAndReturnUuid(UUID request, RequestOptions requestOptions) {
+  public String getAndReturnUuid(String request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnUuid(request, requestOptions).body();
   }
 
-  public byte[] getAndReturnBase64(byte[] request) {
+  public String getAndReturnBase64(String request) {
     return this.rawClient.getAndReturnBase64(request).body();
   }
 
-  public byte[] getAndReturnBase64(byte[] request, RequestOptions requestOptions) {
+  public String getAndReturnBase64(String request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnBase64(request, requestOptions).body();
   }
 }

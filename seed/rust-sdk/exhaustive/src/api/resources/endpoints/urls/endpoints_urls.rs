@@ -17,7 +17,7 @@ impl UrlsClient {
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "/urls/MixedCase", None, None, options)
+            .execute_request(Method::GET, "urls/MixedCase", None, None, options)
             .await
     }
 
@@ -26,7 +26,7 @@ impl UrlsClient {
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "/urls/no-ending-slash", None, None, options)
+            .execute_request(Method::GET, "urls/no-ending-slash", None, None, options)
             .await
     }
 
@@ -35,7 +35,7 @@ impl UrlsClient {
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "/urls/with-ending-slash/", None, None, options)
+            .execute_request(Method::GET, "urls/with-ending-slash/", None, None, options)
             .await
     }
 
@@ -44,7 +44,7 @@ impl UrlsClient {
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "/urls/with_underscores", None, None, options)
+            .execute_request(Method::GET, "urls/with_underscores", None, None, options)
             .await
     }
 }

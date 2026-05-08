@@ -5,12 +5,11 @@ from json.decoder import JSONDecodeError
 
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ...core.pagination import AsyncPager, SyncPager
+from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
-from ...types.object.types.object_with_required_field import ObjectWithRequiredField
-from .types.paginated_response import PaginatedResponse
+from ...types.endpoints_paginated_response import EndpointsPaginatedResponse
 from pydantic import ValidationError
 
 
@@ -24,7 +23,7 @@ class RawPaginationClient:
         cursor: typing.Optional[str] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[ObjectWithRequiredField, PaginatedResponse]:
+    ) -> HttpResponse[EndpointsPaginatedResponse]:
         """
         List items with cursor pagination
 
@@ -41,7 +40,8 @@ class RawPaginationClient:
 
         Returns
         -------
-        SyncPager[ObjectWithRequiredField, PaginatedResponse]
+        HttpResponse[EndpointsPaginatedResponse]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "pagination",
@@ -54,22 +54,14 @@ class RawPaginationClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
-                    PaginatedResponse,
+                _data = typing.cast(
+                    EndpointsPaginatedResponse,
                     construct_type(
-                        type_=PaginatedResponse,  # type: ignore
+                        type_=EndpointsPaginatedResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                _items = _parsed_response.items
-                _parsed_next = _parsed_response.next
-                _has_next = _parsed_next is not None and _parsed_next != ""
-                _get_next = lambda: self.list_items(
-                    cursor=_parsed_next,
-                    limit=limit,
-                    request_options=request_options,
-                )
-                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -90,7 +82,7 @@ class AsyncRawPaginationClient:
         cursor: typing.Optional[str] = None,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ObjectWithRequiredField, PaginatedResponse]:
+    ) -> AsyncHttpResponse[EndpointsPaginatedResponse]:
         """
         List items with cursor pagination
 
@@ -107,7 +99,8 @@ class AsyncRawPaginationClient:
 
         Returns
         -------
-        AsyncPager[ObjectWithRequiredField, PaginatedResponse]
+        AsyncHttpResponse[EndpointsPaginatedResponse]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "pagination",
@@ -120,25 +113,14 @@ class AsyncRawPaginationClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
-                    PaginatedResponse,
+                _data = typing.cast(
+                    EndpointsPaginatedResponse,
                     construct_type(
-                        type_=PaginatedResponse,  # type: ignore
+                        type_=EndpointsPaginatedResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                _items = _parsed_response.items
-                _parsed_next = _parsed_response.next
-                _has_next = _parsed_next is not None and _parsed_next != ""
-
-                async def _get_next():
-                    return await self.list_items(
-                        cursor=_parsed_next,
-                        limit=limit,
-                        request_options=request_options,
-                    )
-
-                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

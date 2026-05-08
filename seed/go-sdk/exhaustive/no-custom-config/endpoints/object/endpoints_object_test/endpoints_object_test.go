@@ -12,9 +12,8 @@ import (
 
 	fern "github.com/exhaustive/fern"
 	client "github.com/exhaustive/fern/client"
+	endpoints "github.com/exhaustive/fern/endpoints"
 	option "github.com/exhaustive/fern/option"
-	types "github.com/exhaustive/fern/types"
-	uuid "github.com/google/uuid"
 	require "github.com/stretchr/testify/require"
 )
 
@@ -90,54 +89,7 @@ func TestEndpointsObjectGetAndReturnWithOptionalFieldWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &types.ObjectWithOptionalField{
-		FieldString: fern.String(
-			"string",
-		),
-		Integer: fern.Int(
-			1,
-		),
-		Long: fern.Int64(
-			int64(1000000),
-		),
-		Double: fern.Float64(
-			1.1,
-		),
-		Bool: fern.Bool(
-			true,
-		),
-		Datetime: fern.Time(
-			fern.MustParseDateTime(
-				"2024-01-15T09:30:00Z",
-			),
-		),
-		Date: fern.Time(
-			fern.MustParseDate(
-				"2023-01-15",
-			),
-		),
-		UUID: fern.UUID(
-			uuid.MustParse(
-				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-			),
-		),
-		Base64: fern.Bytes(
-			[]byte("SGVsbG8gd29ybGQh"),
-		),
-		List: []string{
-			"list",
-			"list",
-		},
-		Set: []string{
-			"set",
-		},
-		Map: map[int]string{
-			1: "map",
-		},
-		Bigint: fern.String(
-			"1000000",
-		),
-	}
+	request := &fern.TypesObjectWithOptionalField{}
 	_, invocationErr := client.Endpoints.Object.GetAndReturnWithOptionalField(
 		context.TODO(),
 		request,
@@ -161,7 +113,7 @@ func TestEndpointsObjectGetAndReturnWithRequiredFieldWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &types.ObjectWithRequiredField{
+	request := &fern.TypesObjectWithRequiredField{
 		FieldString: "string",
 	}
 	_, invocationErr := client.Endpoints.Object.GetAndReturnWithRequiredField(
@@ -187,10 +139,10 @@ func TestEndpointsObjectGetAndReturnWithMapOfMapWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &types.ObjectWithMapOfMap{
+	request := &fern.TypesObjectWithMapOfMap{
 		Map: map[string]map[string]string{
-			"map": map[string]string{
-				"map": "map",
+			"key": map[string]string{
+				"key": "value",
 			},
 		},
 	}
@@ -217,59 +169,7 @@ func TestEndpointsObjectGetAndReturnNestedWithOptionalFieldWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &types.NestedObjectWithOptionalField{
-		FieldString: fern.String(
-			"string",
-		),
-		NestedObject: &types.ObjectWithOptionalField{
-			FieldString: fern.String(
-				"string",
-			),
-			Integer: fern.Int(
-				1,
-			),
-			Long: fern.Int64(
-				int64(1000000),
-			),
-			Double: fern.Float64(
-				1.1,
-			),
-			Bool: fern.Bool(
-				true,
-			),
-			Datetime: fern.Time(
-				fern.MustParseDateTime(
-					"2024-01-15T09:30:00Z",
-				),
-			),
-			Date: fern.Time(
-				fern.MustParseDate(
-					"2023-01-15",
-				),
-			),
-			UUID: fern.UUID(
-				uuid.MustParse(
-					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-				),
-			),
-			Base64: fern.Bytes(
-				[]byte("SGVsbG8gd29ybGQh"),
-			),
-			List: []string{
-				"list",
-				"list",
-			},
-			Set: []string{
-				"set",
-			},
-			Map: map[int]string{
-				1: "map",
-			},
-			Bigint: fern.String(
-				"1000000",
-			),
-		},
-	}
+	request := &fern.TypesNestedObjectWithOptionalField{}
 	_, invocationErr := client.Endpoints.Object.GetAndReturnNestedWithOptionalField(
 		context.TODO(),
 		request,
@@ -293,60 +193,15 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &types.NestedObjectWithRequiredField{
-		FieldString: "string",
-		NestedObject: &types.ObjectWithOptionalField{
-			FieldString: fern.String(
-				"string",
-			),
-			Integer: fern.Int(
-				1,
-			),
-			Long: fern.Int64(
-				int64(1000000),
-			),
-			Double: fern.Float64(
-				1.1,
-			),
-			Bool: fern.Bool(
-				true,
-			),
-			Datetime: fern.Time(
-				fern.MustParseDateTime(
-					"2024-01-15T09:30:00Z",
-				),
-			),
-			Date: fern.Time(
-				fern.MustParseDate(
-					"2023-01-15",
-				),
-			),
-			UUID: fern.UUID(
-				uuid.MustParse(
-					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-				),
-			),
-			Base64: fern.Bytes(
-				[]byte("SGVsbG8gd29ybGQh"),
-			),
-			List: []string{
-				"list",
-				"list",
-			},
-			Set: []string{
-				"set",
-			},
-			Map: map[int]string{
-				1: "map",
-			},
-			Bigint: fern.String(
-				"1000000",
-			),
+	request := &endpoints.GetAndReturnNestedWithRequiredFieldObjectRequest{
+		StringValue: "string",
+		Body: &fern.TypesNestedObjectWithRequiredField{
+			FieldString:  "string",
+			NestedObject: &fern.TypesObjectWithOptionalField{},
 		},
 	}
 	_, invocationErr := client.Endpoints.Object.GetAndReturnNestedWithRequiredField(
 		context.TODO(),
-		"string",
 		request,
 		option.WithHTTPHeader(
 			http.Header{"X-Test-Id": []string{"TestEndpointsObjectGetAndReturnNestedWithRequiredFieldWithWireMock"}},
@@ -368,108 +223,10 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldAsListWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := []*types.NestedObjectWithRequiredField{
-		&types.NestedObjectWithRequiredField{
-			FieldString: "string",
-			NestedObject: &types.ObjectWithOptionalField{
-				FieldString: fern.String(
-					"string",
-				),
-				Integer: fern.Int(
-					1,
-				),
-				Long: fern.Int64(
-					int64(1000000),
-				),
-				Double: fern.Float64(
-					1.1,
-				),
-				Bool: fern.Bool(
-					true,
-				),
-				Datetime: fern.Time(
-					fern.MustParseDateTime(
-						"2024-01-15T09:30:00Z",
-					),
-				),
-				Date: fern.Time(
-					fern.MustParseDate(
-						"2023-01-15",
-					),
-				),
-				UUID: fern.UUID(
-					uuid.MustParse(
-						"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-					),
-				),
-				Base64: fern.Bytes(
-					[]byte("SGVsbG8gd29ybGQh"),
-				),
-				List: []string{
-					"list",
-					"list",
-				},
-				Set: []string{
-					"set",
-				},
-				Map: map[int]string{
-					1: "map",
-				},
-				Bigint: fern.String(
-					"1000000",
-				),
-			},
-		},
-		&types.NestedObjectWithRequiredField{
-			FieldString: "string",
-			NestedObject: &types.ObjectWithOptionalField{
-				FieldString: fern.String(
-					"string",
-				),
-				Integer: fern.Int(
-					1,
-				),
-				Long: fern.Int64(
-					int64(1000000),
-				),
-				Double: fern.Float64(
-					1.1,
-				),
-				Bool: fern.Bool(
-					true,
-				),
-				Datetime: fern.Time(
-					fern.MustParseDateTime(
-						"2024-01-15T09:30:00Z",
-					),
-				),
-				Date: fern.Time(
-					fern.MustParseDate(
-						"2023-01-15",
-					),
-				),
-				UUID: fern.UUID(
-					uuid.MustParse(
-						"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-					),
-				),
-				Base64: fern.Bytes(
-					[]byte("SGVsbG8gd29ybGQh"),
-				),
-				List: []string{
-					"list",
-					"list",
-				},
-				Set: []string{
-					"set",
-				},
-				Map: map[int]string{
-					1: "map",
-				},
-				Bigint: fern.String(
-					"1000000",
-				),
-			},
+	request := []*fern.TypesNestedObjectWithRequiredField{
+		&fern.TypesNestedObjectWithRequiredField{
+			FieldString:  "string",
+			NestedObject: &fern.TypesObjectWithOptionalField{},
 		},
 	}
 	_, invocationErr := client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(
@@ -495,9 +252,9 @@ func TestEndpointsObjectGetAndReturnWithUnknownFieldWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &types.ObjectWithUnknownField{
+	request := &fern.TypesObjectWithUnknownField{
 		Unknown: map[string]any{
-			"$ref": "https://example.com/schema",
+			"key": "value",
 		},
 	}
 	_, invocationErr := client.Endpoints.Object.GetAndReturnWithUnknownField(
@@ -523,7 +280,7 @@ func TestEndpointsObjectGetAndReturnWithDocumentedUnknownTypeWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &types.ObjectWithDocumentedUnknownType{
+	request := &fern.TypesObjectWithDocumentedUnknownType{
 		DocumentedUnknownType: map[string]any{
 			"key": "value",
 		},
@@ -551,11 +308,7 @@ func TestEndpointsObjectGetAndReturnMapOfDocumentedUnknownTypeWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := map[string]types.DocumentedUnknownType{
-		"string": map[string]any{
-			"key": "value",
-		},
-	}
+	request := map[string]fern.TypesDocumentedUnknownType{}
 	_, invocationErr := client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownType(
 		context.TODO(),
 		request,
@@ -566,67 +319,6 @@ func TestEndpointsObjectGetAndReturnMapOfDocumentedUnknownTypeWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestEndpointsObjectGetAndReturnMapOfDocumentedUnknownTypeWithWireMock", "POST", "/object/get-and-return-map-of-documented-unknown-type", nil, 1)
-}
-
-func TestEndpointsObjectGetAndReturnWithMixedRequiredAndOptionalFieldsWithWireMock(
-	t *testing.T,
-) {
-	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
-	if WireMockBaseURL == "" {
-		WireMockBaseURL = "http://localhost:8080"
-	}
-	client := client.NewClient(
-		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
-	)
-	request := &types.ObjectWithMixedRequiredAndOptionalFields{
-		RequiredString:  "hello",
-		RequiredInteger: 0,
-		OptionalString: fern.String(
-			"world",
-		),
-		RequiredLong: int64(0),
-	}
-	_, invocationErr := client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFields(
-		context.TODO(),
-		request,
-		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsObjectGetAndReturnWithMixedRequiredAndOptionalFieldsWithWireMock"}},
-		),
-	)
-
-	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsObjectGetAndReturnWithMixedRequiredAndOptionalFieldsWithWireMock", "POST", "/object/get-and-return-with-mixed-required-and-optional-fields", nil, 1)
-}
-
-func TestEndpointsObjectGetAndReturnWithRequiredNestedObjectWithWireMock(
-	t *testing.T,
-) {
-	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
-	if WireMockBaseURL == "" {
-		WireMockBaseURL = "http://localhost:8080"
-	}
-	client := client.NewClient(
-		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
-	)
-	request := &types.ObjectWithRequiredNestedObject{
-		RequiredString: "hello",
-		RequiredObject: &types.NestedObjectWithRequiredField{
-			FieldString:  "nested",
-			NestedObject: &types.ObjectWithOptionalField{},
-		},
-	}
-	_, invocationErr := client.Endpoints.Object.GetAndReturnWithRequiredNestedObject(
-		context.TODO(),
-		request,
-		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsObjectGetAndReturnWithRequiredNestedObjectWithWireMock"}},
-		),
-	)
-
-	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsObjectGetAndReturnWithRequiredNestedObjectWithWireMock", "POST", "/object/get-and-return-with-required-nested-object", nil, 1)
 }
 
 func TestEndpointsObjectGetAndReturnWithDatetimeLikeStringWithWireMock(
@@ -640,10 +332,10 @@ func TestEndpointsObjectGetAndReturnWithDatetimeLikeStringWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &types.ObjectWithDatetimeLikeString{
-		DatetimeLikeString: "2023-08-31T14:15:22Z",
+	request := &fern.TypesObjectWithDatetimeLikeString{
+		DatetimeLikeString: "datetimeLikeString",
 		ActualDatetime: fern.MustParseDateTime(
-			"2023-08-31T14:15:22Z",
+			"2024-01-15T09:30:00Z",
 		),
 	}
 	_, invocationErr := client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(

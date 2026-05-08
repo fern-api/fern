@@ -1,20 +1,19 @@
 package com.snippets;
 
-import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.resources.reqwithheaders.requests.ReqWithHeaders;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.endpoints.params.requests.ModifyWithPathParamsRequest;
 
 public class Example66 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.reqWithHeaders()
-                .getWithCustomHeader(ReqWithHeaders.builder()
-                        .xTestServiceHeader("X-TEST-SERVICE-HEADER")
-                        .xTestEndpointHeader("X-TEST-ENDPOINT-HEADER")
-                        .body("string")
-                        .build());
+        client.endpoints()
+                .params()
+                .modifyWithPath(
+                        "param",
+                        ModifyWithPathParamsRequest.builder().body("string").build());
     }
 }

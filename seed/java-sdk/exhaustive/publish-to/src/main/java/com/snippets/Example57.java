@@ -1,14 +1,15 @@
 package com.snippets;
 
-import com.seed.exhaustive.SeedExhaustiveClient;
+import com.seed.api.SeedApiClient;
+import java.util.HashMap;
 
 public class Example57 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints().urls().noEndingSlash();
+        client.endpoints().object().getAndReturnMapOfDocumentedUnknownType(new HashMap<String, Object>());
     }
 }

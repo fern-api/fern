@@ -3,8 +3,8 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
-    endpoints "github.com/exhaustive/fern/endpoints"
     option "github.com/exhaustive/fern/option"
 )
 
@@ -17,10 +17,113 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.PutRequest{
-        ID: "id",
+    request := []*fern.TypesNestedObjectWithRequiredField{
+        &fern.TypesNestedObjectWithRequiredField{
+            FieldString: "string",
+            NestedObject: &fern.TypesObjectWithOptionalField{
+                FieldString: fern.String(
+                    "string",
+                ),
+                Integer: fern.Int(
+                    1,
+                ),
+                Long: fern.Int64(
+                    int64(1000000),
+                ),
+                Double: fern.Float64(
+                    1.1,
+                ),
+                Bool: fern.Bool(
+                    true,
+                ),
+                Datetime: fern.Time(
+                    fern.MustParseDateTime(
+                        "2024-01-15T09:30:00Z",
+                    ),
+                ),
+                Date: fern.Time(
+                    fern.MustParseDate(
+                        "2023-01-15",
+                    ),
+                ),
+                UUID: fern.String(
+                    "uuid",
+                ),
+                Base64: fern.String(
+                    "base64",
+                ),
+                List: []string{
+                    "list",
+                    "list",
+                },
+                Set: []string{
+                    "set",
+                    "set",
+                },
+                Map: map[string]*string{
+                    "map": fern.String(
+                        "map",
+                    ),
+                },
+                Bigint: fern.Int(
+                    1,
+                ),
+            },
+        },
+        &fern.TypesNestedObjectWithRequiredField{
+            FieldString: "string",
+            NestedObject: &fern.TypesObjectWithOptionalField{
+                FieldString: fern.String(
+                    "string",
+                ),
+                Integer: fern.Int(
+                    1,
+                ),
+                Long: fern.Int64(
+                    int64(1000000),
+                ),
+                Double: fern.Float64(
+                    1.1,
+                ),
+                Bool: fern.Bool(
+                    true,
+                ),
+                Datetime: fern.Time(
+                    fern.MustParseDateTime(
+                        "2024-01-15T09:30:00Z",
+                    ),
+                ),
+                Date: fern.Time(
+                    fern.MustParseDate(
+                        "2023-01-15",
+                    ),
+                ),
+                UUID: fern.String(
+                    "uuid",
+                ),
+                Base64: fern.String(
+                    "base64",
+                ),
+                List: []string{
+                    "list",
+                    "list",
+                },
+                Set: []string{
+                    "set",
+                    "set",
+                },
+                Map: map[string]*string{
+                    "map": fern.String(
+                        "map",
+                    ),
+                },
+                Bigint: fern.Int(
+                    1,
+                ),
+            },
+        },
     }
-    client.Endpoints.Put.Add(
+    client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(
         context.TODO(),
         request,
     )

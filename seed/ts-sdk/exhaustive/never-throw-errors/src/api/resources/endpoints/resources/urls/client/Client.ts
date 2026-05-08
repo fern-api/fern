@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
-import * as SeedExhaustive from "../../../../../index.js";
+import * as SeedApi from "../../../../../index.js";
 
 export declare namespace UrlsClient {
     export type Options = BaseClientOptions;
@@ -27,13 +27,13 @@ export class UrlsClient {
      */
     public withMixedCase(
         requestOptions?: UrlsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.urls.withMixedCase.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<string, SeedApi.endpoints.urls.withMixedCase.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__withMixedCase(requestOptions));
     }
 
     private async __withMixedCase(
         requestOptions?: UrlsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.urls.withMixedCase.Error>>> {
+    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedApi.endpoints.urls.withMixedCase.Error>>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -44,7 +44,7 @@ export class UrlsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/urls/MixedCase",
+                "urls/MixedCase",
             ),
             method: "GET",
             headers: _headers,
@@ -70,7 +70,7 @@ export class UrlsClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.urls.withMixedCase.Error._unknown(_response.error),
+                error: SeedApi.endpoints.urls.withMixedCase.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -85,13 +85,13 @@ export class UrlsClient {
      */
     public noEndingSlash(
         requestOptions?: UrlsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.urls.noEndingSlash.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<string, SeedApi.endpoints.urls.noEndingSlash.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__noEndingSlash(requestOptions));
     }
 
     private async __noEndingSlash(
         requestOptions?: UrlsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.urls.noEndingSlash.Error>>> {
+    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedApi.endpoints.urls.noEndingSlash.Error>>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -102,7 +102,7 @@ export class UrlsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/urls/no-ending-slash",
+                "urls/no-ending-slash",
             ),
             method: "GET",
             headers: _headers,
@@ -128,7 +128,7 @@ export class UrlsClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.urls.noEndingSlash.Error._unknown(_response.error),
+                error: SeedApi.endpoints.urls.noEndingSlash.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -143,13 +143,13 @@ export class UrlsClient {
      */
     public withEndingSlash(
         requestOptions?: UrlsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.urls.withEndingSlash.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<string, SeedApi.endpoints.urls.withEndingSlash.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__withEndingSlash(requestOptions));
     }
 
     private async __withEndingSlash(
         requestOptions?: UrlsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.urls.withEndingSlash.Error>>> {
+    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedApi.endpoints.urls.withEndingSlash.Error>>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -160,7 +160,7 @@ export class UrlsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/urls/with-ending-slash/",
+                "urls/with-ending-slash/",
             ),
             method: "GET",
             headers: _headers,
@@ -186,7 +186,7 @@ export class UrlsClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.urls.withEndingSlash.Error._unknown(_response.error),
+                error: SeedApi.endpoints.urls.withEndingSlash.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -201,13 +201,13 @@ export class UrlsClient {
      */
     public withUnderscores(
         requestOptions?: UrlsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.urls.withUnderscores.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<string, SeedApi.endpoints.urls.withUnderscores.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__withUnderscores(requestOptions));
     }
 
     private async __withUnderscores(
         requestOptions?: UrlsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.urls.withUnderscores.Error>>> {
+    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedApi.endpoints.urls.withUnderscores.Error>>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -218,7 +218,7 @@ export class UrlsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/urls/with_underscores",
+                "urls/with_underscores",
             ),
             method: "GET",
             headers: _headers,
@@ -244,7 +244,7 @@ export class UrlsClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.urls.withUnderscores.Error._unknown(_response.error),
+                error: SeedApi.endpoints.urls.withUnderscores.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,

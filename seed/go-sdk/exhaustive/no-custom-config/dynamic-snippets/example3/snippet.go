@@ -5,7 +5,6 @@ import (
 
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    types "github.com/exhaustive/fern/types"
 )
 
 func do() {
@@ -17,12 +16,10 @@ func do() {
             "<token>",
         ),
     )
-    request := []*types.ObjectWithRequiredField{
-        &types.ObjectWithRequiredField{
-            FieldString: "string",
-        },
+    request := map[string]any{
+        "key": "value",
     }
-    client.Endpoints.Container.GetAndReturnSetOfObjects(
+    client.NoAuth.PostWithNoAuth(
         context.TODO(),
         request,
     )

@@ -7,7 +7,7 @@ import * as core from "../../../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
 import * as serializers from "../../../../../../serialization/index.js";
-import type * as SeedExhaustive from "../../../../../index.js";
+import type * as SeedApi from "../../../../../index.js";
 
 export declare namespace UnionClient {
     export type Options = BaseClientOptions;
@@ -23,27 +23,27 @@ export class UnionClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.Animal} request
+     * @param {SeedApi.TypesAnimal} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.union.getAndReturnUnion({
-     *         animal: "dog",
      *         name: "name",
-     *         likesToWoof: true
+     *         likesToWoof: true,
+     *         animal: "dog"
      *     })
      */
     public getAndReturnUnion(
-        request: SeedExhaustive.types.Animal,
+        request: SeedApi.TypesAnimal,
         requestOptions?: UnionClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.Animal> {
+    ): core.HttpResponsePromise<SeedApi.TypesAnimal> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnUnion(request, requestOptions));
     }
 
     private async __getAndReturnUnion(
-        request: SeedExhaustive.types.Animal,
+        request: SeedApi.TypesAnimal,
         requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.Animal>> {
+    ): Promise<core.WithRawResponse<SeedApi.TypesAnimal>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -54,14 +54,14 @@ export class UnionClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/union",
+                "union",
             ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: serializers.types.Animal.jsonOrThrow(request, {
+            body: serializers.TypesAnimal.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
                 omitUndefined: true,
             }),
@@ -73,7 +73,7 @@ export class UnionClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.types.Animal.parseOrThrow(_response.body, {
+                data: serializers.TypesAnimal.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -85,7 +85,7 @@ export class UnionClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

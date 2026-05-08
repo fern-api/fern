@@ -1,4 +1,4 @@
-use seed_exhaustive::prelude::*;
+use seed_api::prelude::*;
 
 mod wire_test_utils;
 
@@ -14,15 +14,13 @@ async fn test_endpoints_pagination_list_items_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
         .endpoints
         .pagination
         .list_items(
             &ListItemsQueryRequest {
-                cursor: Some("cursor".to_string()),
-                limit: Some(1),
                 ..Default::default()
             },
             None,
@@ -31,15 +29,7 @@ async fn test_endpoints_pagination_list_items_with_wiremock() {
 
     assert!(result.is_ok(), "Client method call should succeed");
 
-    wire_test_utils::verify_request_count(
-        "GET",
-        "/pagination",
-        Some(HashMap::from([
-            ("cursor".to_string(), json!("cursor")),
-            ("limit".to_string(), json!("1")),
-        ])),
-        1,
-    )
-    .await
-    .unwrap();
+    wire_test_utils::verify_request_count("GET", "/pagination", None, 1)
+        .await
+        .unwrap();
 }

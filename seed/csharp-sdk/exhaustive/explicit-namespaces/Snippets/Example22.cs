@@ -1,23 +1,20 @@
-using SeedExhaustive;
-using SeedExhaustive.Types.Object;
+using SeedApi;
 
 public partial class Examples
 {
     public async Task Example22() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Endpoints.Object.GetAndReturnWithUnknownFieldAsync(
-            new ObjectWithUnknownField {
-                Unknown = new Dictionary<string, object>()
-                {
-                    ["$ref"] = "https://example.com/schema",
-                }
-
+        await client.Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(
+            new Dictionary<string, TypesObjectWithRequiredField>(){
+                ["string"] = new TypesObjectWithRequiredField {
+                    String = "string"
+                },
             }
         );
     }

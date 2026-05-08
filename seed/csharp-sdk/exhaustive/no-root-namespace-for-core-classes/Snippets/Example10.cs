@@ -1,19 +1,21 @@
-using SeedExhaustive;
-using SeedExhaustive.Core;
-using SeedExhaustive.Types;
+using SeedApi;
+using SeedApi.Core;
 
 public partial class Examples
 {
     public async Task Example10() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Endpoints.Enum.GetAndReturnEnumAsync(
-            WeatherReport.Sunny
+        await client.ReqWithHeaders.GetWithCustomHeaderAsync(
+            new GetWithCustomHeaderReqWithHeadersRequest {
+                TestEndpointHeader = "testEndpointHeader",
+                Body = "string"
+            }
         );
     }
 

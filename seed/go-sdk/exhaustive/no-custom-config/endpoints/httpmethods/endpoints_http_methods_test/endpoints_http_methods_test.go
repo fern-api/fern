@@ -12,9 +12,8 @@ import (
 
 	fern "github.com/exhaustive/fern"
 	client "github.com/exhaustive/fern/client"
+	endpoints "github.com/exhaustive/fern/endpoints"
 	option "github.com/exhaustive/fern/option"
-	types "github.com/exhaustive/fern/types"
-	uuid "github.com/google/uuid"
 	require "github.com/stretchr/testify/require"
 )
 
@@ -90,9 +89,12 @@ func TestEndpointsHTTPMethodsTestGetWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
+	request := &endpoints.TestGetHTTPMethodsRequest{
+		ID: "id",
+	}
 	_, invocationErr := client.Endpoints.HTTPMethods.TestGet(
 		context.TODO(),
-		"id",
+		request,
 		option.WithHTTPHeader(
 			http.Header{"X-Test-Id": []string{"TestEndpointsHTTPMethodsTestGetWithWireMock"}},
 		),
@@ -100,32 +102,6 @@ func TestEndpointsHTTPMethodsTestGetWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestEndpointsHTTPMethodsTestGetWithWireMock", "GET", "/http-methods/id", nil, 1)
-}
-
-func TestEndpointsHTTPMethodsTestPostWithWireMock(
-	t *testing.T,
-) {
-	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
-	if WireMockBaseURL == "" {
-		WireMockBaseURL = "http://localhost:8080"
-	}
-	client := client.NewClient(
-		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
-	)
-	request := &types.ObjectWithRequiredField{
-		FieldString: "string",
-	}
-	_, invocationErr := client.Endpoints.HTTPMethods.TestPost(
-		context.TODO(),
-		request,
-		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsHTTPMethodsTestPostWithWireMock"}},
-		),
-	)
-
-	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsHTTPMethodsTestPostWithWireMock", "POST", "/http-methods", nil, 1)
 }
 
 func TestEndpointsHTTPMethodsTestPutWithWireMock(
@@ -139,12 +115,14 @@ func TestEndpointsHTTPMethodsTestPutWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &types.ObjectWithRequiredField{
-		FieldString: "string",
+	request := &endpoints.TestPutHTTPMethodsRequest{
+		ID: "id",
+		Body: &fern.TypesObjectWithRequiredField{
+			FieldString: "string",
+		},
 	}
 	_, invocationErr := client.Endpoints.HTTPMethods.TestPut(
 		context.TODO(),
-		"id",
 		request,
 		option.WithHTTPHeader(
 			http.Header{"X-Test-Id": []string{"TestEndpointsHTTPMethodsTestPutWithWireMock"}},
@@ -153,78 +131,6 @@ func TestEndpointsHTTPMethodsTestPutWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestEndpointsHTTPMethodsTestPutWithWireMock", "PUT", "/http-methods/id", nil, 1)
-}
-
-func TestEndpointsHTTPMethodsTestPatchWithWireMock(
-	t *testing.T,
-) {
-	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
-	if WireMockBaseURL == "" {
-		WireMockBaseURL = "http://localhost:8080"
-	}
-	client := client.NewClient(
-		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
-	)
-	request := &types.ObjectWithOptionalField{
-		FieldString: fern.String(
-			"string",
-		),
-		Integer: fern.Int(
-			1,
-		),
-		Long: fern.Int64(
-			int64(1000000),
-		),
-		Double: fern.Float64(
-			1.1,
-		),
-		Bool: fern.Bool(
-			true,
-		),
-		Datetime: fern.Time(
-			fern.MustParseDateTime(
-				"2024-01-15T09:30:00Z",
-			),
-		),
-		Date: fern.Time(
-			fern.MustParseDate(
-				"2023-01-15",
-			),
-		),
-		UUID: fern.UUID(
-			uuid.MustParse(
-				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-			),
-		),
-		Base64: fern.Bytes(
-			[]byte("SGVsbG8gd29ybGQh"),
-		),
-		List: []string{
-			"list",
-			"list",
-		},
-		Set: []string{
-			"set",
-		},
-		Map: map[int]string{
-			1: "map",
-		},
-		Bigint: fern.String(
-			"1000000",
-		),
-	}
-	_, invocationErr := client.Endpoints.HTTPMethods.TestPatch(
-		context.TODO(),
-		"id",
-		request,
-		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestEndpointsHTTPMethodsTestPatchWithWireMock"}},
-		),
-	)
-
-	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsHTTPMethodsTestPatchWithWireMock", "PATCH", "/http-methods/id", nil, 1)
 }
 
 func TestEndpointsHTTPMethodsTestDeleteWithWireMock(
@@ -238,9 +144,12 @@ func TestEndpointsHTTPMethodsTestDeleteWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
+	request := &endpoints.TestDeleteHTTPMethodsRequest{
+		ID: "id",
+	}
 	_, invocationErr := client.Endpoints.HTTPMethods.TestDelete(
 		context.TODO(),
-		"id",
+		request,
 		option.WithHTTPHeader(
 			http.Header{"X-Test-Id": []string{"TestEndpointsHTTPMethodsTestDeleteWithWireMock"}},
 		),
@@ -248,4 +157,57 @@ func TestEndpointsHTTPMethodsTestDeleteWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestEndpointsHTTPMethodsTestDeleteWithWireMock", "DELETE", "/http-methods/id", nil, 1)
+}
+
+func TestEndpointsHTTPMethodsTestPatchWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &endpoints.TestPatchHTTPMethodsRequest{
+		ID:   "id",
+		Body: &fern.TypesObjectWithOptionalField{},
+	}
+	_, invocationErr := client.Endpoints.HTTPMethods.TestPatch(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestEndpointsHTTPMethodsTestPatchWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestEndpointsHTTPMethodsTestPatchWithWireMock", "PATCH", "/http-methods/id", nil, 1)
+}
+
+func TestEndpointsHTTPMethodsTestPostWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &fern.TypesObjectWithRequiredField{
+		FieldString: "string",
+	}
+	_, invocationErr := client.Endpoints.HTTPMethods.TestPost(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestEndpointsHTTPMethodsTestPostWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestEndpointsHTTPMethodsTestPostWithWireMock", "POST", "/http-methods", nil, 1)
 }

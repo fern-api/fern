@@ -2,7 +2,6 @@
 
 import datetime as dt
 import typing
-import uuid
 from json.decoder import JSONDecodeError
 
 from ...core.api_error import ApiError
@@ -12,20 +11,16 @@ from ...core.jsonable_encoder import encode_path_param
 from ...core.parse_error import ParsingError
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
-from ...types.object.types.documented_unknown_type import DocumentedUnknownType
-from ...types.object.types.map_of_documented_unknown_type import MapOfDocumentedUnknownType
-from ...types.object.types.nested_object_with_optional_field import NestedObjectWithOptionalField
-from ...types.object.types.nested_object_with_required_field import NestedObjectWithRequiredField
-from ...types.object.types.object_with_datetime_like_string import ObjectWithDatetimeLikeString
-from ...types.object.types.object_with_documented_unknown_type import ObjectWithDocumentedUnknownType
-from ...types.object.types.object_with_map_of_map import ObjectWithMapOfMap
-from ...types.object.types.object_with_mixed_required_and_optional_fields import (
-    ObjectWithMixedRequiredAndOptionalFields,
-)
-from ...types.object.types.object_with_optional_field import ObjectWithOptionalField
-from ...types.object.types.object_with_required_field import ObjectWithRequiredField
-from ...types.object.types.object_with_required_nested_object import ObjectWithRequiredNestedObject
-from ...types.object.types.object_with_unknown_field import ObjectWithUnknownField
+from ...types.types_documented_unknown_type import TypesDocumentedUnknownType
+from ...types.types_map_of_documented_unknown_type import TypesMapOfDocumentedUnknownType
+from ...types.types_nested_object_with_optional_field import TypesNestedObjectWithOptionalField
+from ...types.types_nested_object_with_required_field import TypesNestedObjectWithRequiredField
+from ...types.types_object_with_datetime_like_string import TypesObjectWithDatetimeLikeString
+from ...types.types_object_with_documented_unknown_type import TypesObjectWithDocumentedUnknownType
+from ...types.types_object_with_map_of_map import TypesObjectWithMapOfMap
+from ...types.types_object_with_optional_field import TypesObjectWithOptionalField
+from ...types.types_object_with_required_field import TypesObjectWithRequiredField
+from ...types.types_object_with_unknown_field import TypesObjectWithUnknownField
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -46,14 +41,14 @@ class RawObjectClient:
         bool_: typing.Optional[bool] = OMIT,
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
-        uuid_: typing.Optional[uuid.UUID] = OMIT,
+        uuid_: typing.Optional[str] = OMIT,
         base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
-        set_: typing.Optional[typing.Set[str]] = OMIT,
-        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
-        bigint: typing.Optional[str] = OMIT,
+        set_: typing.Optional[typing.Sequence[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        bigint: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[ObjectWithOptionalField]:
+    ) -> HttpResponse[TypesObjectWithOptionalField]:
         """
         Parameters
         ----------
@@ -72,24 +67,25 @@ class RawObjectClient:
 
         date : typing.Optional[dt.date]
 
-        uuid_ : typing.Optional[uuid.UUID]
+        uuid_ : typing.Optional[str]
 
         base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
-        set_ : typing.Optional[typing.Set[str]]
+        set_ : typing.Optional[typing.Sequence[str]]
 
-        map_ : typing.Optional[typing.Dict[int, str]]
+        map_ : typing.Optional[typing.Dict[str, typing.Optional[str]]]
 
-        bigint : typing.Optional[str]
+        bigint : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[ObjectWithOptionalField]
+        HttpResponse[TypesObjectWithOptionalField]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "object/get-and-return-with-optional-field",
@@ -109,15 +105,18 @@ class RawObjectClient:
                 "map": map_,
                 "bigint": bigint,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ObjectWithOptionalField,
+                    TypesObjectWithOptionalField,
                     parse_obj_as(
-                        type_=ObjectWithOptionalField,  # type: ignore
+                        type_=TypesObjectWithOptionalField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -133,7 +132,7 @@ class RawObjectClient:
 
     def get_and_return_with_required_field(
         self, *, string: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[ObjectWithRequiredField]:
+    ) -> HttpResponse[TypesObjectWithRequiredField]:
         """
         Parameters
         ----------
@@ -144,7 +143,8 @@ class RawObjectClient:
 
         Returns
         -------
-        HttpResponse[ObjectWithRequiredField]
+        HttpResponse[TypesObjectWithRequiredField]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "object/get-and-return-with-required-field",
@@ -152,15 +152,18 @@ class RawObjectClient:
             json={
                 "string": string,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ObjectWithRequiredField,
+                    TypesObjectWithRequiredField,
                     parse_obj_as(
-                        type_=ObjectWithRequiredField,  # type: ignore
+                        type_=TypesObjectWithRequiredField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -176,7 +179,7 @@ class RawObjectClient:
 
     def get_and_return_with_map_of_map(
         self, *, map_: typing.Dict[str, typing.Dict[str, str]], request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[ObjectWithMapOfMap]:
+    ) -> HttpResponse[TypesObjectWithMapOfMap]:
         """
         Parameters
         ----------
@@ -187,7 +190,8 @@ class RawObjectClient:
 
         Returns
         -------
-        HttpResponse[ObjectWithMapOfMap]
+        HttpResponse[TypesObjectWithMapOfMap]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "object/get-and-return-with-map-of-map",
@@ -195,15 +199,18 @@ class RawObjectClient:
             json={
                 "map": map_,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ObjectWithMapOfMap,
+                    TypesObjectWithMapOfMap,
                     parse_obj_as(
-                        type_=ObjectWithMapOfMap,  # type: ignore
+                        type_=TypesObjectWithMapOfMap,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -221,22 +228,23 @@ class RawObjectClient:
         self,
         *,
         string: typing.Optional[str] = OMIT,
-        nested_object: typing.Optional[ObjectWithOptionalField] = OMIT,
+        nested_object: typing.Optional[TypesObjectWithOptionalField] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[NestedObjectWithOptionalField]:
+    ) -> HttpResponse[TypesNestedObjectWithOptionalField]:
         """
         Parameters
         ----------
         string : typing.Optional[str]
 
-        nested_object : typing.Optional[ObjectWithOptionalField]
+        nested_object : typing.Optional[TypesObjectWithOptionalField]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[NestedObjectWithOptionalField]
+        HttpResponse[TypesNestedObjectWithOptionalField]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "object/get-and-return-nested-with-optional-field",
@@ -245,15 +253,18 @@ class RawObjectClient:
                 "string": string,
                 "NestedObject": nested_object,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    NestedObjectWithOptionalField,
+                    TypesNestedObjectWithOptionalField,
                     parse_obj_as(
-                        type_=NestedObjectWithOptionalField,  # type: ignore
+                        type_=TypesNestedObjectWithOptionalField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -269,34 +280,38 @@ class RawObjectClient:
 
     def get_and_return_nested_with_required_field(
         self,
-        string_: str,
+        string_value: str,
         *,
         string: str,
-        nested_object: ObjectWithOptionalField,
+        nested_object: TypesObjectWithOptionalField,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[NestedObjectWithRequiredField]:
+    ) -> HttpResponse[TypesNestedObjectWithRequiredField]:
         """
         Parameters
         ----------
-        string_ : str
+        string_value : str
 
         string : str
 
-        nested_object : ObjectWithOptionalField
+        nested_object : TypesObjectWithOptionalField
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[NestedObjectWithRequiredField]
+        HttpResponse[TypesNestedObjectWithRequiredField]
+
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"object/get-and-return-nested-with-required-field/{encode_path_param(string_)}",
+            f"object/get-and-return-nested-with-required-field/{encode_path_param(string_value)}",
             method="POST",
             json={
                 "string": string,
                 "NestedObject": nested_object,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -304,9 +319,9 @@ class RawObjectClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    NestedObjectWithRequiredField,
+                    TypesNestedObjectWithRequiredField,
                     parse_obj_as(
-                        type_=NestedObjectWithRequiredField,  # type: ignore
+                        type_=TypesNestedObjectWithRequiredField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -323,34 +338,38 @@ class RawObjectClient:
     def get_and_return_nested_with_required_field_as_list(
         self,
         *,
-        request: typing.Sequence[NestedObjectWithRequiredField],
+        request: typing.Sequence[TypesNestedObjectWithRequiredField],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[NestedObjectWithRequiredField]:
+    ) -> HttpResponse[TypesNestedObjectWithRequiredField]:
         """
         Parameters
         ----------
-        request : typing.Sequence[NestedObjectWithRequiredField]
+        request : typing.Sequence[TypesNestedObjectWithRequiredField]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[NestedObjectWithRequiredField]
+        HttpResponse[TypesNestedObjectWithRequiredField]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "object/get-and-return-nested-with-required-field-list",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    NestedObjectWithRequiredField,
+                    TypesNestedObjectWithRequiredField,
                     parse_obj_as(
-                        type_=NestedObjectWithRequiredField,  # type: ignore
+                        type_=TypesNestedObjectWithRequiredField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -366,7 +385,7 @@ class RawObjectClient:
 
     def get_and_return_with_unknown_field(
         self, *, unknown: typing.Any, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[ObjectWithUnknownField]:
+    ) -> HttpResponse[TypesObjectWithUnknownField]:
         """
         Parameters
         ----------
@@ -377,7 +396,8 @@ class RawObjectClient:
 
         Returns
         -------
-        HttpResponse[ObjectWithUnknownField]
+        HttpResponse[TypesObjectWithUnknownField]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "object/get-and-return-with-unknown-field",
@@ -385,15 +405,18 @@ class RawObjectClient:
             json={
                 "unknown": unknown,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ObjectWithUnknownField,
+                    TypesObjectWithUnknownField,
                     parse_obj_as(
-                        type_=ObjectWithUnknownField,  # type: ignore
+                        type_=TypesObjectWithUnknownField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -408,19 +431,23 @@ class RawObjectClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_and_return_with_documented_unknown_type(
-        self, *, documented_unknown_type: DocumentedUnknownType, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[ObjectWithDocumentedUnknownType]:
+        self,
+        *,
+        documented_unknown_type: TypesDocumentedUnknownType,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[TypesObjectWithDocumentedUnknownType]:
         """
         Parameters
         ----------
-        documented_unknown_type : DocumentedUnknownType
+        documented_unknown_type : TypesDocumentedUnknownType
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[ObjectWithDocumentedUnknownType]
+        HttpResponse[TypesObjectWithDocumentedUnknownType]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "object/get-and-return-with-documented-unknown-type",
@@ -428,15 +455,18 @@ class RawObjectClient:
             json={
                 "documentedUnknownType": documented_unknown_type,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ObjectWithDocumentedUnknownType,
+                    TypesObjectWithDocumentedUnknownType,
                     parse_obj_as(
-                        type_=ObjectWithDocumentedUnknownType,  # type: ignore
+                        type_=TypesObjectWithDocumentedUnknownType,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -451,84 +481,27 @@ class RawObjectClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_and_return_map_of_documented_unknown_type(
-        self, *, request: MapOfDocumentedUnknownType, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[MapOfDocumentedUnknownType]:
+        self, *, request: TypesMapOfDocumentedUnknownType, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[TypesMapOfDocumentedUnknownType]:
         """
         Parameters
         ----------
-        request : MapOfDocumentedUnknownType
+        request : TypesMapOfDocumentedUnknownType
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[MapOfDocumentedUnknownType]
+        HttpResponse[TypesMapOfDocumentedUnknownType]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "object/get-and-return-map-of-documented-unknown-type",
             method="POST",
             json=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    MapOfDocumentedUnknownType,
-                    parse_obj_as(
-                        type_=MapOfDocumentedUnknownType,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def get_and_return_with_mixed_required_and_optional_fields(
-        self,
-        *,
-        required_string: str,
-        required_integer: int,
-        required_long: int,
-        optional_string: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[ObjectWithMixedRequiredAndOptionalFields]:
-        """
-        Tests that dynamic snippets include all required properties in the
-        object initializer, even when the example omits some required fields.
-
-        Parameters
-        ----------
-        required_string : str
-
-        required_integer : int
-
-        required_long : int
-
-        optional_string : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[ObjectWithMixedRequiredAndOptionalFields]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "object/get-and-return-with-mixed-required-and-optional-fields",
-            method="POST",
-            json={
-                "requiredString": required_string,
-                "requiredInteger": required_integer,
-                "optionalString": optional_string,
-                "requiredLong": required_long,
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -536,64 +509,9 @@ class RawObjectClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ObjectWithMixedRequiredAndOptionalFields,
+                    TypesMapOfDocumentedUnknownType,
                     parse_obj_as(
-                        type_=ObjectWithMixedRequiredAndOptionalFields,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def get_and_return_with_required_nested_object(
-        self,
-        *,
-        required_string: str,
-        required_object: NestedObjectWithRequiredField,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[ObjectWithRequiredNestedObject]:
-        """
-        Tests that dynamic snippets recursively construct default objects for
-        required properties whose type is a named object. When the example
-        omits the nested object, the generator should construct a default
-        initializer with the nested object's required properties filled in.
-
-        Parameters
-        ----------
-        required_string : str
-
-        required_object : NestedObjectWithRequiredField
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[ObjectWithRequiredNestedObject]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "object/get-and-return-with-required-nested-object",
-            method="POST",
-            json={
-                "requiredString": required_string,
-                "requiredObject": required_object,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ObjectWithRequiredNestedObject,
-                    parse_obj_as(
-                        type_=ObjectWithRequiredNestedObject,  # type: ignore
+                        type_=TypesMapOfDocumentedUnknownType,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -613,7 +531,7 @@ class RawObjectClient:
         datetime_like_string: str,
         actual_datetime: dt.datetime,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[ObjectWithDatetimeLikeString]:
+    ) -> HttpResponse[TypesObjectWithDatetimeLikeString]:
         """
         Tests that string fields containing datetime-like values are NOT reformatted.
         The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
@@ -632,7 +550,8 @@ class RawObjectClient:
 
         Returns
         -------
-        HttpResponse[ObjectWithDatetimeLikeString]
+        HttpResponse[TypesObjectWithDatetimeLikeString]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "object/get-and-return-with-datetime-like-string",
@@ -641,15 +560,18 @@ class RawObjectClient:
                 "datetimeLikeString": datetime_like_string,
                 "actualDatetime": actual_datetime,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ObjectWithDatetimeLikeString,
+                    TypesObjectWithDatetimeLikeString,
                     parse_obj_as(
-                        type_=ObjectWithDatetimeLikeString,  # type: ignore
+                        type_=TypesObjectWithDatetimeLikeString,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -678,14 +600,14 @@ class AsyncRawObjectClient:
         bool_: typing.Optional[bool] = OMIT,
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
-        uuid_: typing.Optional[uuid.UUID] = OMIT,
+        uuid_: typing.Optional[str] = OMIT,
         base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
-        set_: typing.Optional[typing.Set[str]] = OMIT,
-        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
-        bigint: typing.Optional[str] = OMIT,
+        set_: typing.Optional[typing.Sequence[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        bigint: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ObjectWithOptionalField]:
+    ) -> AsyncHttpResponse[TypesObjectWithOptionalField]:
         """
         Parameters
         ----------
@@ -704,24 +626,25 @@ class AsyncRawObjectClient:
 
         date : typing.Optional[dt.date]
 
-        uuid_ : typing.Optional[uuid.UUID]
+        uuid_ : typing.Optional[str]
 
         base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
-        set_ : typing.Optional[typing.Set[str]]
+        set_ : typing.Optional[typing.Sequence[str]]
 
-        map_ : typing.Optional[typing.Dict[int, str]]
+        map_ : typing.Optional[typing.Dict[str, typing.Optional[str]]]
 
-        bigint : typing.Optional[str]
+        bigint : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[ObjectWithOptionalField]
+        AsyncHttpResponse[TypesObjectWithOptionalField]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "object/get-and-return-with-optional-field",
@@ -741,15 +664,18 @@ class AsyncRawObjectClient:
                 "map": map_,
                 "bigint": bigint,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ObjectWithOptionalField,
+                    TypesObjectWithOptionalField,
                     parse_obj_as(
-                        type_=ObjectWithOptionalField,  # type: ignore
+                        type_=TypesObjectWithOptionalField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -765,7 +691,7 @@ class AsyncRawObjectClient:
 
     async def get_and_return_with_required_field(
         self, *, string: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[ObjectWithRequiredField]:
+    ) -> AsyncHttpResponse[TypesObjectWithRequiredField]:
         """
         Parameters
         ----------
@@ -776,7 +702,8 @@ class AsyncRawObjectClient:
 
         Returns
         -------
-        AsyncHttpResponse[ObjectWithRequiredField]
+        AsyncHttpResponse[TypesObjectWithRequiredField]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "object/get-and-return-with-required-field",
@@ -784,15 +711,18 @@ class AsyncRawObjectClient:
             json={
                 "string": string,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ObjectWithRequiredField,
+                    TypesObjectWithRequiredField,
                     parse_obj_as(
-                        type_=ObjectWithRequiredField,  # type: ignore
+                        type_=TypesObjectWithRequiredField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -808,7 +738,7 @@ class AsyncRawObjectClient:
 
     async def get_and_return_with_map_of_map(
         self, *, map_: typing.Dict[str, typing.Dict[str, str]], request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[ObjectWithMapOfMap]:
+    ) -> AsyncHttpResponse[TypesObjectWithMapOfMap]:
         """
         Parameters
         ----------
@@ -819,7 +749,8 @@ class AsyncRawObjectClient:
 
         Returns
         -------
-        AsyncHttpResponse[ObjectWithMapOfMap]
+        AsyncHttpResponse[TypesObjectWithMapOfMap]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "object/get-and-return-with-map-of-map",
@@ -827,15 +758,18 @@ class AsyncRawObjectClient:
             json={
                 "map": map_,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ObjectWithMapOfMap,
+                    TypesObjectWithMapOfMap,
                     parse_obj_as(
-                        type_=ObjectWithMapOfMap,  # type: ignore
+                        type_=TypesObjectWithMapOfMap,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -853,22 +787,23 @@ class AsyncRawObjectClient:
         self,
         *,
         string: typing.Optional[str] = OMIT,
-        nested_object: typing.Optional[ObjectWithOptionalField] = OMIT,
+        nested_object: typing.Optional[TypesObjectWithOptionalField] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[NestedObjectWithOptionalField]:
+    ) -> AsyncHttpResponse[TypesNestedObjectWithOptionalField]:
         """
         Parameters
         ----------
         string : typing.Optional[str]
 
-        nested_object : typing.Optional[ObjectWithOptionalField]
+        nested_object : typing.Optional[TypesObjectWithOptionalField]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[NestedObjectWithOptionalField]
+        AsyncHttpResponse[TypesNestedObjectWithOptionalField]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "object/get-and-return-nested-with-optional-field",
@@ -877,15 +812,18 @@ class AsyncRawObjectClient:
                 "string": string,
                 "NestedObject": nested_object,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    NestedObjectWithOptionalField,
+                    TypesNestedObjectWithOptionalField,
                     parse_obj_as(
-                        type_=NestedObjectWithOptionalField,  # type: ignore
+                        type_=TypesNestedObjectWithOptionalField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -901,34 +839,38 @@ class AsyncRawObjectClient:
 
     async def get_and_return_nested_with_required_field(
         self,
-        string_: str,
+        string_value: str,
         *,
         string: str,
-        nested_object: ObjectWithOptionalField,
+        nested_object: TypesObjectWithOptionalField,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[NestedObjectWithRequiredField]:
+    ) -> AsyncHttpResponse[TypesNestedObjectWithRequiredField]:
         """
         Parameters
         ----------
-        string_ : str
+        string_value : str
 
         string : str
 
-        nested_object : ObjectWithOptionalField
+        nested_object : TypesObjectWithOptionalField
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[NestedObjectWithRequiredField]
+        AsyncHttpResponse[TypesNestedObjectWithRequiredField]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"object/get-and-return-nested-with-required-field/{encode_path_param(string_)}",
+            f"object/get-and-return-nested-with-required-field/{encode_path_param(string_value)}",
             method="POST",
             json={
                 "string": string,
                 "NestedObject": nested_object,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -936,9 +878,9 @@ class AsyncRawObjectClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    NestedObjectWithRequiredField,
+                    TypesNestedObjectWithRequiredField,
                     parse_obj_as(
-                        type_=NestedObjectWithRequiredField,  # type: ignore
+                        type_=TypesNestedObjectWithRequiredField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -955,34 +897,38 @@ class AsyncRawObjectClient:
     async def get_and_return_nested_with_required_field_as_list(
         self,
         *,
-        request: typing.Sequence[NestedObjectWithRequiredField],
+        request: typing.Sequence[TypesNestedObjectWithRequiredField],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[NestedObjectWithRequiredField]:
+    ) -> AsyncHttpResponse[TypesNestedObjectWithRequiredField]:
         """
         Parameters
         ----------
-        request : typing.Sequence[NestedObjectWithRequiredField]
+        request : typing.Sequence[TypesNestedObjectWithRequiredField]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[NestedObjectWithRequiredField]
+        AsyncHttpResponse[TypesNestedObjectWithRequiredField]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "object/get-and-return-nested-with-required-field-list",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    NestedObjectWithRequiredField,
+                    TypesNestedObjectWithRequiredField,
                     parse_obj_as(
-                        type_=NestedObjectWithRequiredField,  # type: ignore
+                        type_=TypesNestedObjectWithRequiredField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -998,7 +944,7 @@ class AsyncRawObjectClient:
 
     async def get_and_return_with_unknown_field(
         self, *, unknown: typing.Any, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[ObjectWithUnknownField]:
+    ) -> AsyncHttpResponse[TypesObjectWithUnknownField]:
         """
         Parameters
         ----------
@@ -1009,7 +955,8 @@ class AsyncRawObjectClient:
 
         Returns
         -------
-        AsyncHttpResponse[ObjectWithUnknownField]
+        AsyncHttpResponse[TypesObjectWithUnknownField]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "object/get-and-return-with-unknown-field",
@@ -1017,15 +964,18 @@ class AsyncRawObjectClient:
             json={
                 "unknown": unknown,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ObjectWithUnknownField,
+                    TypesObjectWithUnknownField,
                     parse_obj_as(
-                        type_=ObjectWithUnknownField,  # type: ignore
+                        type_=TypesObjectWithUnknownField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1040,19 +990,23 @@ class AsyncRawObjectClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_and_return_with_documented_unknown_type(
-        self, *, documented_unknown_type: DocumentedUnknownType, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[ObjectWithDocumentedUnknownType]:
+        self,
+        *,
+        documented_unknown_type: TypesDocumentedUnknownType,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[TypesObjectWithDocumentedUnknownType]:
         """
         Parameters
         ----------
-        documented_unknown_type : DocumentedUnknownType
+        documented_unknown_type : TypesDocumentedUnknownType
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[ObjectWithDocumentedUnknownType]
+        AsyncHttpResponse[TypesObjectWithDocumentedUnknownType]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "object/get-and-return-with-documented-unknown-type",
@@ -1060,15 +1014,18 @@ class AsyncRawObjectClient:
             json={
                 "documentedUnknownType": documented_unknown_type,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ObjectWithDocumentedUnknownType,
+                    TypesObjectWithDocumentedUnknownType,
                     parse_obj_as(
-                        type_=ObjectWithDocumentedUnknownType,  # type: ignore
+                        type_=TypesObjectWithDocumentedUnknownType,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1083,84 +1040,27 @@ class AsyncRawObjectClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_and_return_map_of_documented_unknown_type(
-        self, *, request: MapOfDocumentedUnknownType, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[MapOfDocumentedUnknownType]:
+        self, *, request: TypesMapOfDocumentedUnknownType, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[TypesMapOfDocumentedUnknownType]:
         """
         Parameters
         ----------
-        request : MapOfDocumentedUnknownType
+        request : TypesMapOfDocumentedUnknownType
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[MapOfDocumentedUnknownType]
+        AsyncHttpResponse[TypesMapOfDocumentedUnknownType]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "object/get-and-return-map-of-documented-unknown-type",
             method="POST",
             json=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    MapOfDocumentedUnknownType,
-                    parse_obj_as(
-                        type_=MapOfDocumentedUnknownType,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def get_and_return_with_mixed_required_and_optional_fields(
-        self,
-        *,
-        required_string: str,
-        required_integer: int,
-        required_long: int,
-        optional_string: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ObjectWithMixedRequiredAndOptionalFields]:
-        """
-        Tests that dynamic snippets include all required properties in the
-        object initializer, even when the example omits some required fields.
-
-        Parameters
-        ----------
-        required_string : str
-
-        required_integer : int
-
-        required_long : int
-
-        optional_string : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[ObjectWithMixedRequiredAndOptionalFields]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "object/get-and-return-with-mixed-required-and-optional-fields",
-            method="POST",
-            json={
-                "requiredString": required_string,
-                "requiredInteger": required_integer,
-                "optionalString": optional_string,
-                "requiredLong": required_long,
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -1168,64 +1068,9 @@ class AsyncRawObjectClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ObjectWithMixedRequiredAndOptionalFields,
+                    TypesMapOfDocumentedUnknownType,
                     parse_obj_as(
-                        type_=ObjectWithMixedRequiredAndOptionalFields,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def get_and_return_with_required_nested_object(
-        self,
-        *,
-        required_string: str,
-        required_object: NestedObjectWithRequiredField,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ObjectWithRequiredNestedObject]:
-        """
-        Tests that dynamic snippets recursively construct default objects for
-        required properties whose type is a named object. When the example
-        omits the nested object, the generator should construct a default
-        initializer with the nested object's required properties filled in.
-
-        Parameters
-        ----------
-        required_string : str
-
-        required_object : NestedObjectWithRequiredField
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[ObjectWithRequiredNestedObject]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "object/get-and-return-with-required-nested-object",
-            method="POST",
-            json={
-                "requiredString": required_string,
-                "requiredObject": required_object,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ObjectWithRequiredNestedObject,
-                    parse_obj_as(
-                        type_=ObjectWithRequiredNestedObject,  # type: ignore
+                        type_=TypesMapOfDocumentedUnknownType,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1245,7 +1090,7 @@ class AsyncRawObjectClient:
         datetime_like_string: str,
         actual_datetime: dt.datetime,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ObjectWithDatetimeLikeString]:
+    ) -> AsyncHttpResponse[TypesObjectWithDatetimeLikeString]:
         """
         Tests that string fields containing datetime-like values are NOT reformatted.
         The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
@@ -1264,7 +1109,8 @@ class AsyncRawObjectClient:
 
         Returns
         -------
-        AsyncHttpResponse[ObjectWithDatetimeLikeString]
+        AsyncHttpResponse[TypesObjectWithDatetimeLikeString]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "object/get-and-return-with-datetime-like-string",
@@ -1273,15 +1119,18 @@ class AsyncRawObjectClient:
                 "datetimeLikeString": datetime_like_string,
                 "actualDatetime": actual_datetime,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ObjectWithDatetimeLikeString,
+                    TypesObjectWithDatetimeLikeString,
                     parse_obj_as(
-                        type_=ObjectWithDatetimeLikeString,  # type: ignore
+                        type_=TypesObjectWithDatetimeLikeString,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

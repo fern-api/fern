@@ -9,7 +9,7 @@ from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.parse_error import ParsingError
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
-from ...types.enum.types.weather_report import WeatherReport
+from ...types.types_weather_report import TypesWeatherReport
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -21,33 +21,37 @@ class RawEnumClient:
         self._client_wrapper = client_wrapper
 
     def get_and_return_enum(
-        self, *, request: WeatherReport, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[WeatherReport]:
+        self, *, request: TypesWeatherReport, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[TypesWeatherReport]:
         """
         Parameters
         ----------
-        request : WeatherReport
+        request : TypesWeatherReport
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[WeatherReport]
+        HttpResponse[TypesWeatherReport]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "enum",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    WeatherReport,
+                    TypesWeatherReport,
                     parse_obj_as(
-                        type_=WeatherReport,  # type: ignore
+                        type_=TypesWeatherReport,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -67,33 +71,37 @@ class AsyncRawEnumClient:
         self._client_wrapper = client_wrapper
 
     async def get_and_return_enum(
-        self, *, request: WeatherReport, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[WeatherReport]:
+        self, *, request: TypesWeatherReport, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[TypesWeatherReport]:
         """
         Parameters
         ----------
-        request : WeatherReport
+        request : TypesWeatherReport
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[WeatherReport]
+        AsyncHttpResponse[TypesWeatherReport]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "enum",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    WeatherReport,
+                    TypesWeatherReport,
                     parse_obj_as(
-                        type_=WeatherReport,  # type: ignore
+                        type_=TypesWeatherReport,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -17,11 +17,6 @@ module Seed
       )
     end
 
-    # @return [Seed::Endpoints::Client]
-    def endpoints
-      @endpoints ||= Seed::Endpoints::Client.new(client: @raw_client)
-    end
-
     # @return [Seed::InlinedRequests::Client]
     def inlined_requests
       @inlined_requests ||= Seed::InlinedRequests::Client.new(client: @raw_client)
@@ -40,6 +35,11 @@ module Seed
     # @return [Seed::ReqWithHeaders::Client]
     def req_with_headers
       @req_with_headers ||= Seed::ReqWithHeaders::Client.new(client: @raw_client)
+    end
+
+    # @return [Seed::Endpoints::Client]
+    def endpoints
+      @endpoints ||= Seed::Endpoints::Client.new(client: @raw_client)
     end
   end
 end

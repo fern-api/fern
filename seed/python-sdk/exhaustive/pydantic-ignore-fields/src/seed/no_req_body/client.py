@@ -4,7 +4,7 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.object.types.object_with_optional_field import ObjectWithOptionalField
+from ..types.types_object_with_optional_field import TypesObjectWithOptionalField
 from .raw_client import AsyncRawNoReqBodyClient, RawNoReqBodyClient
 
 
@@ -25,7 +25,7 @@ class NoReqBodyClient:
 
     def get_with_no_request_body(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ObjectWithOptionalField:
+    ) -> TypesObjectWithOptionalField:
         """
         Parameters
         ----------
@@ -34,13 +34,14 @@ class NoReqBodyClient:
 
         Returns
         -------
-        ObjectWithOptionalField
+        TypesObjectWithOptionalField
+
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import SeedApi
 
-        client = SeedExhaustive(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -60,11 +61,12 @@ class NoReqBodyClient:
         -------
         str
 
+
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import SeedApi
 
-        client = SeedExhaustive(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -91,7 +93,7 @@ class AsyncNoReqBodyClient:
 
     async def get_with_no_request_body(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ObjectWithOptionalField:
+    ) -> TypesObjectWithOptionalField:
         """
         Parameters
         ----------
@@ -100,15 +102,16 @@ class AsyncNoReqBodyClient:
 
         Returns
         -------
-        ObjectWithOptionalField
+        TypesObjectWithOptionalField
+
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -134,13 +137,14 @@ class AsyncNoReqBodyClient:
         -------
         str
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )

@@ -6,7 +6,7 @@ package com.fern.sdk.resources.endpoints.contenttype;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
+import com.fern.sdk.types.TypesObjectWithOptionalField;
 import java.lang.Void;
 import java.util.concurrent.CompletableFuture;
 
@@ -35,11 +35,11 @@ public class AsyncContentTypeClient {
     return this.rawClient.postJsonPatchContentType(requestOptions).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<Void> postJsonPatchContentType(ObjectWithOptionalField request) {
+  public CompletableFuture<Void> postJsonPatchContentType(TypesObjectWithOptionalField request) {
     return this.rawClient.postJsonPatchContentType(request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<Void> postJsonPatchContentType(ObjectWithOptionalField request,
+  public CompletableFuture<Void> postJsonPatchContentType(TypesObjectWithOptionalField request,
       RequestOptions requestOptions) {
     return this.rawClient.postJsonPatchContentType(request, requestOptions).thenApply(response -> response.body());
   }
@@ -54,12 +54,12 @@ public class AsyncContentTypeClient {
   }
 
   public CompletableFuture<Void> postJsonPatchContentWithCharsetType(
-      ObjectWithOptionalField request) {
+      TypesObjectWithOptionalField request) {
     return this.rawClient.postJsonPatchContentWithCharsetType(request).thenApply(response -> response.body());
   }
 
   public CompletableFuture<Void> postJsonPatchContentWithCharsetType(
-      ObjectWithOptionalField request, RequestOptions requestOptions) {
+      TypesObjectWithOptionalField request, RequestOptions requestOptions) {
     return this.rawClient.postJsonPatchContentWithCharsetType(request, requestOptions).thenApply(response -> response.body());
   }
 }

@@ -13,7 +13,7 @@ import { mergeHeaders } from "../../../../core/headers.mjs";
 import * as core from "../../../../core/index.mjs";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.mjs";
 import * as errors from "../../../../errors/index.mjs";
-import * as SeedExhaustive from "../../../index.mjs";
+import * as SeedApi from "../../../index.mjs";
 export class NoAuthClient {
     constructor(options) {
         this._options = normalizeClientOptions(options);
@@ -24,7 +24,7 @@ export class NoAuthClient {
      * @param {unknown} request
      * @param {NoAuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedExhaustive.BadRequestBody}
+     * @throws {@link SeedApi.BadRequestError}
      *
      * @example
      *     await client.noAuth.postWithNoAuth({
@@ -39,7 +39,7 @@ export class NoAuthClient {
             var _a, _b, _c, _d, _e, _f, _g, _h;
             const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/no-auth"),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "no-auth"),
                 method: "POST",
                 headers: _headers,
                 contentType: "application/json",
@@ -58,9 +58,9 @@ export class NoAuthClient {
             if (_response.error.reason === "status-code") {
                 switch (_response.error.statusCode) {
                     case 400:
-                        throw new SeedExhaustive.BadRequestBody(_response.error.body, _response.rawResponse);
+                        throw new SeedApi.BadRequestError(_response.error.body, _response.rawResponse);
                     default:
-                        throw new errors.SeedExhaustiveError({
+                        throw new errors.SeedApiError({
                             statusCode: _response.error.statusCode,
                             body: _response.error.body,
                             rawResponse: _response.rawResponse,

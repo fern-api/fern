@@ -6,7 +6,7 @@ package com.fern.sdk.resources.endpoints.union;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.types.union.types.Animal;
+import com.fern.sdk.types.TypesAnimal;
 
 public class UnionClient {
   protected final ClientOptions clientOptions;
@@ -25,11 +25,11 @@ public class UnionClient {
     return this.rawClient;
   }
 
-  public Animal getAndReturnUnion(Animal request) {
+  public TypesAnimal getAndReturnUnion(TypesAnimal request) {
     return this.rawClient.getAndReturnUnion(request).body();
   }
 
-  public Animal getAndReturnUnion(Animal request, RequestOptions requestOptions) {
+  public TypesAnimal getAndReturnUnion(TypesAnimal request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnUnion(request, requestOptions).body();
   }
 }

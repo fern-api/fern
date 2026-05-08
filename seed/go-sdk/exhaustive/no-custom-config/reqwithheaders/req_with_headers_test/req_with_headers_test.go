@@ -88,10 +88,9 @@ func TestReqWithHeadersGetWithCustomHeaderWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &fern.ReqWithHeaders{
-		XTestServiceHeader:  "X-TEST-SERVICE-HEADER",
-		XTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
-		Body:                "string",
+	request := &fern.GetWithCustomHeaderReqWithHeadersRequest{
+		TestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+		Body:               "string",
 	}
 	invocationErr := client.ReqWithHeaders.GetWithCustomHeader(
 		context.TODO(),

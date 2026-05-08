@@ -71,7 +71,7 @@ class PrimitiveClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/primitive/string",
+                    path: "primitive/string",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -118,7 +118,7 @@ class PrimitiveClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/primitive/integer",
+                    path: "primitive/integer",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -165,7 +165,7 @@ class PrimitiveClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/primitive/long",
+                    path: "primitive/long",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -212,7 +212,7 @@ class PrimitiveClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/primitive/double",
+                    path: "primitive/double",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -259,7 +259,7 @@ class PrimitiveClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/primitive/boolean",
+                    path: "primitive/boolean",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -306,7 +306,7 @@ class PrimitiveClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/primitive/datetime",
+                    path: "primitive/datetime",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeDateTime($request),
                 ),
@@ -353,7 +353,7 @@ class PrimitiveClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/primitive/date",
+                    path: "primitive/date",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeDate($request),
                 ),
@@ -400,7 +400,7 @@ class PrimitiveClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/primitive/uuid",
+                    path: "primitive/uuid",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -447,7 +447,7 @@ class PrimitiveClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/primitive/base64",
+                    path: "primitive/base64",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

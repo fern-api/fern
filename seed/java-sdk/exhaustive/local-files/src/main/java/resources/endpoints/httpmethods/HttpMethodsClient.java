@@ -6,8 +6,12 @@ package com.fern.sdk.resources.endpoints.httpmethods;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
-import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
+import com.fern.sdk.resources.endpoints.httpmethods.requests.TestDeleteHttpMethodsRequest;
+import com.fern.sdk.resources.endpoints.httpmethods.requests.TestGetHttpMethodsRequest;
+import com.fern.sdk.resources.endpoints.httpmethods.requests.TestPatchHttpMethodsRequest;
+import com.fern.sdk.resources.endpoints.httpmethods.requests.TestPutHttpMethodsRequest;
+import com.fern.sdk.types.TypesObjectWithOptionalField;
+import com.fern.sdk.types.TypesObjectWithRequiredField;
 import java.lang.String;
 
 public class HttpMethodsClient {
@@ -35,39 +39,22 @@ public class HttpMethodsClient {
     return this.rawClient.testGet(id, requestOptions).body();
   }
 
-  public ObjectWithOptionalField testPost(ObjectWithRequiredField request) {
-    return this.rawClient.testPost(request).body();
+  public String testGet(String id, TestGetHttpMethodsRequest request) {
+    return this.rawClient.testGet(id, request).body();
   }
 
-  public ObjectWithOptionalField testPost(ObjectWithRequiredField request,
+  public String testGet(String id, TestGetHttpMethodsRequest request,
       RequestOptions requestOptions) {
-    return this.rawClient.testPost(request, requestOptions).body();
+    return this.rawClient.testGet(id, request, requestOptions).body();
   }
 
-  public ObjectWithOptionalField testPut(String id, ObjectWithRequiredField request) {
+  public TypesObjectWithOptionalField testPut(String id, TestPutHttpMethodsRequest request) {
     return this.rawClient.testPut(id, request).body();
   }
 
-  public ObjectWithOptionalField testPut(String id, ObjectWithRequiredField request,
+  public TypesObjectWithOptionalField testPut(String id, TestPutHttpMethodsRequest request,
       RequestOptions requestOptions) {
     return this.rawClient.testPut(id, request, requestOptions).body();
-  }
-
-  public ObjectWithOptionalField testPatch(String id) {
-    return this.rawClient.testPatch(id).body();
-  }
-
-  public ObjectWithOptionalField testPatch(String id, RequestOptions requestOptions) {
-    return this.rawClient.testPatch(id, requestOptions).body();
-  }
-
-  public ObjectWithOptionalField testPatch(String id, ObjectWithOptionalField request) {
-    return this.rawClient.testPatch(id, request).body();
-  }
-
-  public ObjectWithOptionalField testPatch(String id, ObjectWithOptionalField request,
-      RequestOptions requestOptions) {
-    return this.rawClient.testPatch(id, request, requestOptions).body();
   }
 
   public boolean testDelete(String id) {
@@ -76,5 +63,32 @@ public class HttpMethodsClient {
 
   public boolean testDelete(String id, RequestOptions requestOptions) {
     return this.rawClient.testDelete(id, requestOptions).body();
+  }
+
+  public boolean testDelete(String id, TestDeleteHttpMethodsRequest request) {
+    return this.rawClient.testDelete(id, request).body();
+  }
+
+  public boolean testDelete(String id, TestDeleteHttpMethodsRequest request,
+      RequestOptions requestOptions) {
+    return this.rawClient.testDelete(id, request, requestOptions).body();
+  }
+
+  public TypesObjectWithOptionalField testPatch(String id, TestPatchHttpMethodsRequest request) {
+    return this.rawClient.testPatch(id, request).body();
+  }
+
+  public TypesObjectWithOptionalField testPatch(String id, TestPatchHttpMethodsRequest request,
+      RequestOptions requestOptions) {
+    return this.rawClient.testPatch(id, request, requestOptions).body();
+  }
+
+  public TypesObjectWithOptionalField testPost(TypesObjectWithRequiredField request) {
+    return this.rawClient.testPost(request).body();
+  }
+
+  public TypesObjectWithOptionalField testPost(TypesObjectWithRequiredField request,
+      RequestOptions requestOptions) {
+    return this.rawClient.testPost(request, requestOptions).body();
   }
 }

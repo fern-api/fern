@@ -4,6 +4,7 @@ import (
     context "context"
 
     client "github.com/exhaustive/fern/client"
+    endpoints "github.com/exhaustive/fern/endpoints"
     option "github.com/exhaustive/fern/option"
 )
 
@@ -16,7 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    client.NoReqBody.PostWithNoRequestBody(
+    request := &endpoints.ModifyWithPathParamsRequest{
+        Param: "param",
+        Body: "string",
+    }
+    client.Endpoints.Params.ModifyWithPath(
         context.TODO(),
+        request,
     )
 }

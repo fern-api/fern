@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
-import * as SeedExhaustive from "../../../../../index.js";
+import * as SeedApi from "../../../../../index.js";
 
 export declare namespace PutClient {
     export type Options = BaseClientOptions;
@@ -20,7 +20,7 @@ export class PutClient {
     }
 
     /**
-     * @param {SeedExhaustive.endpoints.PutRequest} request
+     * @param {SeedApi.endpoints.AddPutRequest} request
      * @param {PutClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -29,22 +29,16 @@ export class PutClient {
      *     })
      */
     public add(
-        request: SeedExhaustive.endpoints.PutRequest,
+        request: SeedApi.endpoints.AddPutRequest,
         requestOptions?: PutClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<SeedExhaustive.endpoints.PutResponse, SeedExhaustive.endpoints.put.add.Error>
-    > {
+    ): core.HttpResponsePromise<core.APIResponse<SeedApi.EndpointsPutResponse, SeedApi.endpoints.put.add.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__add(request, requestOptions));
     }
 
     private async __add(
-        request: SeedExhaustive.endpoints.PutRequest,
+        request: SeedApi.endpoints.AddPutRequest,
         requestOptions?: PutClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<SeedExhaustive.endpoints.PutResponse, SeedExhaustive.endpoints.put.add.Error>
-        >
-    > {
+    ): Promise<core.WithRawResponse<core.APIResponse<SeedApi.EndpointsPutResponse, SeedApi.endpoints.put.add.Error>>> {
         const { id } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -71,7 +65,7 @@ export class PutClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.endpoints.PutResponse,
+                    body: _response.body as SeedApi.EndpointsPutResponse,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -82,7 +76,7 @@ export class PutClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.put.add.Error._unknown(_response.error),
+                error: SeedApi.endpoints.put.add.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,

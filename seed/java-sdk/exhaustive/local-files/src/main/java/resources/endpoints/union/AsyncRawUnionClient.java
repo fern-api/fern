@@ -9,10 +9,10 @@ import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.core.SeedExhaustiveApiException;
-import com.fern.sdk.core.SeedExhaustiveException;
-import com.fern.sdk.core.SeedExhaustiveHttpResponse;
-import com.fern.sdk.resources.types.union.types.Animal;
+import com.fern.sdk.core.SeedApiApiException;
+import com.fern.sdk.core.SeedApiException;
+import com.fern.sdk.core.SeedApiHttpResponse;
+import com.fern.sdk.types.TypesAnimal;
 import java.io.IOException;
 import java.lang.Object;
 import java.lang.Override;
@@ -36,15 +36,16 @@ public class AsyncRawUnionClient {
     this.clientOptions = clientOptions;
   }
 
-  public CompletableFuture<SeedExhaustiveHttpResponse<Animal>> getAndReturnUnion(Animal request) {
+  public CompletableFuture<SeedApiHttpResponse<TypesAnimal>> getAndReturnUnion(
+      TypesAnimal request) {
     return getAndReturnUnion(request,null);
   }
 
-  public CompletableFuture<SeedExhaustiveHttpResponse<Animal>> getAndReturnUnion(Animal request,
+  public CompletableFuture<SeedApiHttpResponse<TypesAnimal>> getAndReturnUnion(TypesAnimal request,
       RequestOptions requestOptions) {
     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-      .addPathSegments("union")
-      ;if (requestOptions != null) {
+
+      .addPathSegments("union");if (requestOptions != null) {
         requestOptions.getQueryParameters().forEach((_key, _value) -> {
           httpUrl.addQueryParameter(_key, _value);
         } );
@@ -54,7 +55,7 @@ public class AsyncRawUnionClient {
         body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
       }
       catch(JsonProcessingException e) {
-        throw new SeedExhaustiveException("Failed to serialize request", e);
+        throw new SeedApiException("Failed to serialize request", e);
       }
       Request okhttpRequest = new Request.Builder()
         .url(httpUrl.build())
@@ -67,28 +68,28 @@ public class AsyncRawUnionClient {
       if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
         client = clientOptions.httpClientWithTimeout(requestOptions);
       }
-      CompletableFuture<SeedExhaustiveHttpResponse<Animal>> future = new CompletableFuture<>();
+      CompletableFuture<SeedApiHttpResponse<TypesAnimal>> future = new CompletableFuture<>();
       client.newCall(okhttpRequest).enqueue(new Callback() {
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
           try (ResponseBody responseBody = response.body()) {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
-              future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Animal.class), response));
+              future.complete(new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, TypesAnimal.class), response));
               return;
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+            future.completeExceptionally(new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response));
             return;
           }
           catch (IOException e) {
-            future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+            future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
           }
         }
 
         @Override
         public void onFailure(@NotNull Call call, @NotNull IOException e) {
-          future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+          future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
         }
       });
       return future;

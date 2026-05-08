@@ -1,8 +1,8 @@
 package com.snippets;
 
-import com.seed.exhaustive.Best;
-import com.seed.exhaustive.resources.types.union.types.Animal;
-import com.seed.exhaustive.resources.types.union.types.Dog;
+import com.seed.api.Best;
+import com.seed.api.types.TypesObjectWithUnknownField;
+import java.util.HashMap;
 
 public class Example55 {
     public static void main(String[] args) {
@@ -10,8 +10,13 @@ public class Example55 {
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
         client.endpoints()
-                .union()
-                .getAndReturnUnion(
-                        Animal.dog(Dog.builder().name("name").likesToWoof(true).build()));
+                .object()
+                .getAndReturnWithUnknownField(TypesObjectWithUnknownField.builder()
+                        .unknown(new HashMap<String, Object>() {
+                            {
+                                put("key", "value");
+                            }
+                        })
+                        .build());
     }
 }

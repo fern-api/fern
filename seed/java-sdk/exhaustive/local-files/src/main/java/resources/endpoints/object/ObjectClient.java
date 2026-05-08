@@ -6,16 +6,15 @@ package com.fern.sdk.resources.endpoints.object;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.types.object.types.NestedObjectWithOptionalField;
-import com.fern.sdk.resources.types.object.types.NestedObjectWithRequiredField;
-import com.fern.sdk.resources.types.object.types.ObjectWithDatetimeLikeString;
-import com.fern.sdk.resources.types.object.types.ObjectWithDocumentedUnknownType;
-import com.fern.sdk.resources.types.object.types.ObjectWithMapOfMap;
-import com.fern.sdk.resources.types.object.types.ObjectWithMixedRequiredAndOptionalFields;
-import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
-import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
-import com.fern.sdk.resources.types.object.types.ObjectWithRequiredNestedObject;
-import com.fern.sdk.resources.types.object.types.ObjectWithUnknownField;
+import com.fern.sdk.resources.endpoints.object.requests.GetAndReturnNestedWithRequiredFieldObjectRequest;
+import com.fern.sdk.types.TypesNestedObjectWithOptionalField;
+import com.fern.sdk.types.TypesNestedObjectWithRequiredField;
+import com.fern.sdk.types.TypesObjectWithDatetimeLikeString;
+import com.fern.sdk.types.TypesObjectWithDocumentedUnknownType;
+import com.fern.sdk.types.TypesObjectWithMapOfMap;
+import com.fern.sdk.types.TypesObjectWithOptionalField;
+import com.fern.sdk.types.TypesObjectWithRequiredField;
+import com.fern.sdk.types.TypesObjectWithUnknownField;
 import java.lang.Object;
 import java.lang.String;
 import java.util.List;
@@ -38,96 +37,99 @@ public class ObjectClient {
     return this.rawClient;
   }
 
-  public ObjectWithOptionalField getAndReturnWithOptionalField() {
+  public TypesObjectWithOptionalField getAndReturnWithOptionalField() {
     return this.rawClient.getAndReturnWithOptionalField().body();
   }
 
-  public ObjectWithOptionalField getAndReturnWithOptionalField(RequestOptions requestOptions) {
+  public TypesObjectWithOptionalField getAndReturnWithOptionalField(RequestOptions requestOptions) {
     return this.rawClient.getAndReturnWithOptionalField(requestOptions).body();
   }
 
-  public ObjectWithOptionalField getAndReturnWithOptionalField(ObjectWithOptionalField request) {
+  public TypesObjectWithOptionalField getAndReturnWithOptionalField(
+      TypesObjectWithOptionalField request) {
     return this.rawClient.getAndReturnWithOptionalField(request).body();
   }
 
-  public ObjectWithOptionalField getAndReturnWithOptionalField(ObjectWithOptionalField request,
-      RequestOptions requestOptions) {
+  public TypesObjectWithOptionalField getAndReturnWithOptionalField(
+      TypesObjectWithOptionalField request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnWithOptionalField(request, requestOptions).body();
   }
 
-  public ObjectWithRequiredField getAndReturnWithRequiredField(ObjectWithRequiredField request) {
+  public TypesObjectWithRequiredField getAndReturnWithRequiredField(
+      TypesObjectWithRequiredField request) {
     return this.rawClient.getAndReturnWithRequiredField(request).body();
   }
 
-  public ObjectWithRequiredField getAndReturnWithRequiredField(ObjectWithRequiredField request,
-      RequestOptions requestOptions) {
+  public TypesObjectWithRequiredField getAndReturnWithRequiredField(
+      TypesObjectWithRequiredField request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnWithRequiredField(request, requestOptions).body();
   }
 
-  public ObjectWithMapOfMap getAndReturnWithMapOfMap(ObjectWithMapOfMap request) {
+  public TypesObjectWithMapOfMap getAndReturnWithMapOfMap(TypesObjectWithMapOfMap request) {
     return this.rawClient.getAndReturnWithMapOfMap(request).body();
   }
 
-  public ObjectWithMapOfMap getAndReturnWithMapOfMap(ObjectWithMapOfMap request,
+  public TypesObjectWithMapOfMap getAndReturnWithMapOfMap(TypesObjectWithMapOfMap request,
       RequestOptions requestOptions) {
     return this.rawClient.getAndReturnWithMapOfMap(request, requestOptions).body();
   }
 
-  public NestedObjectWithOptionalField getAndReturnNestedWithOptionalField() {
+  public TypesNestedObjectWithOptionalField getAndReturnNestedWithOptionalField() {
     return this.rawClient.getAndReturnNestedWithOptionalField().body();
   }
 
-  public NestedObjectWithOptionalField getAndReturnNestedWithOptionalField(
+  public TypesNestedObjectWithOptionalField getAndReturnNestedWithOptionalField(
       RequestOptions requestOptions) {
     return this.rawClient.getAndReturnNestedWithOptionalField(requestOptions).body();
   }
 
-  public NestedObjectWithOptionalField getAndReturnNestedWithOptionalField(
-      NestedObjectWithOptionalField request) {
+  public TypesNestedObjectWithOptionalField getAndReturnNestedWithOptionalField(
+      TypesNestedObjectWithOptionalField request) {
     return this.rawClient.getAndReturnNestedWithOptionalField(request).body();
   }
 
-  public NestedObjectWithOptionalField getAndReturnNestedWithOptionalField(
-      NestedObjectWithOptionalField request, RequestOptions requestOptions) {
+  public TypesNestedObjectWithOptionalField getAndReturnNestedWithOptionalField(
+      TypesNestedObjectWithOptionalField request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnNestedWithOptionalField(request, requestOptions).body();
   }
 
-  public NestedObjectWithRequiredField getAndReturnNestedWithRequiredField(String string,
-      NestedObjectWithRequiredField request) {
-    return this.rawClient.getAndReturnNestedWithRequiredField(string, request).body();
+  public TypesNestedObjectWithRequiredField getAndReturnNestedWithRequiredField(String stringValue,
+      GetAndReturnNestedWithRequiredFieldObjectRequest request) {
+    return this.rawClient.getAndReturnNestedWithRequiredField(stringValue, request).body();
   }
 
-  public NestedObjectWithRequiredField getAndReturnNestedWithRequiredField(String string,
-      NestedObjectWithRequiredField request, RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnNestedWithRequiredField(string, request, requestOptions).body();
+  public TypesNestedObjectWithRequiredField getAndReturnNestedWithRequiredField(String stringValue,
+      GetAndReturnNestedWithRequiredFieldObjectRequest request, RequestOptions requestOptions) {
+    return this.rawClient.getAndReturnNestedWithRequiredField(stringValue, request, requestOptions).body();
   }
 
-  public NestedObjectWithRequiredField getAndReturnNestedWithRequiredFieldAsList(
-      List<NestedObjectWithRequiredField> request) {
+  public TypesNestedObjectWithRequiredField getAndReturnNestedWithRequiredFieldAsList(
+      List<TypesNestedObjectWithRequiredField> request) {
     return this.rawClient.getAndReturnNestedWithRequiredFieldAsList(request).body();
   }
 
-  public NestedObjectWithRequiredField getAndReturnNestedWithRequiredFieldAsList(
-      List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
+  public TypesNestedObjectWithRequiredField getAndReturnNestedWithRequiredFieldAsList(
+      List<TypesNestedObjectWithRequiredField> request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnNestedWithRequiredFieldAsList(request, requestOptions).body();
   }
 
-  public ObjectWithUnknownField getAndReturnWithUnknownField(ObjectWithUnknownField request) {
+  public TypesObjectWithUnknownField getAndReturnWithUnknownField(
+      TypesObjectWithUnknownField request) {
     return this.rawClient.getAndReturnWithUnknownField(request).body();
   }
 
-  public ObjectWithUnknownField getAndReturnWithUnknownField(ObjectWithUnknownField request,
-      RequestOptions requestOptions) {
+  public TypesObjectWithUnknownField getAndReturnWithUnknownField(
+      TypesObjectWithUnknownField request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnWithUnknownField(request, requestOptions).body();
   }
 
-  public ObjectWithDocumentedUnknownType getAndReturnWithDocumentedUnknownType(
-      ObjectWithDocumentedUnknownType request) {
+  public TypesObjectWithDocumentedUnknownType getAndReturnWithDocumentedUnknownType(
+      TypesObjectWithDocumentedUnknownType request) {
     return this.rawClient.getAndReturnWithDocumentedUnknownType(request).body();
   }
 
-  public ObjectWithDocumentedUnknownType getAndReturnWithDocumentedUnknownType(
-      ObjectWithDocumentedUnknownType request, RequestOptions requestOptions) {
+  public TypesObjectWithDocumentedUnknownType getAndReturnWithDocumentedUnknownType(
+      TypesObjectWithDocumentedUnknownType request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnWithDocumentedUnknownType(request, requestOptions).body();
   }
 
@@ -141,52 +143,12 @@ public class ObjectClient {
   }
 
   /**
-   * Tests that dynamic snippets include all required properties in the
-   * object initializer, even when the example omits some required fields.
-   */
-  public ObjectWithMixedRequiredAndOptionalFields getAndReturnWithMixedRequiredAndOptionalFields(
-      ObjectWithMixedRequiredAndOptionalFields request) {
-    return this.rawClient.getAndReturnWithMixedRequiredAndOptionalFields(request).body();
-  }
-
-  /**
-   * Tests that dynamic snippets include all required properties in the
-   * object initializer, even when the example omits some required fields.
-   */
-  public ObjectWithMixedRequiredAndOptionalFields getAndReturnWithMixedRequiredAndOptionalFields(
-      ObjectWithMixedRequiredAndOptionalFields request, RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnWithMixedRequiredAndOptionalFields(request, requestOptions).body();
-  }
-
-  /**
-   * Tests that dynamic snippets recursively construct default objects for
-   * required properties whose type is a named object. When the example
-   * omits the nested object, the generator should construct a default
-   * initializer with the nested object's required properties filled in.
-   */
-  public ObjectWithRequiredNestedObject getAndReturnWithRequiredNestedObject(
-      ObjectWithRequiredNestedObject request) {
-    return this.rawClient.getAndReturnWithRequiredNestedObject(request).body();
-  }
-
-  /**
-   * Tests that dynamic snippets recursively construct default objects for
-   * required properties whose type is a named object. When the example
-   * omits the nested object, the generator should construct a default
-   * initializer with the nested object's required properties filled in.
-   */
-  public ObjectWithRequiredNestedObject getAndReturnWithRequiredNestedObject(
-      ObjectWithRequiredNestedObject request, RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnWithRequiredNestedObject(request, requestOptions).body();
-  }
-
-  /**
    * Tests that string fields containing datetime-like values are NOT reformatted.
    * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
    * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
    */
-  public ObjectWithDatetimeLikeString getAndReturnWithDatetimeLikeString(
-      ObjectWithDatetimeLikeString request) {
+  public TypesObjectWithDatetimeLikeString getAndReturnWithDatetimeLikeString(
+      TypesObjectWithDatetimeLikeString request) {
     return this.rawClient.getAndReturnWithDatetimeLikeString(request).body();
   }
 
@@ -195,8 +157,8 @@ public class ObjectClient {
    * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
    * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
    */
-  public ObjectWithDatetimeLikeString getAndReturnWithDatetimeLikeString(
-      ObjectWithDatetimeLikeString request, RequestOptions requestOptions) {
+  public TypesObjectWithDatetimeLikeString getAndReturnWithDatetimeLikeString(
+      TypesObjectWithDatetimeLikeString request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnWithDatetimeLikeString(request, requestOptions).body();
   }
 }

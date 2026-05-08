@@ -1,21 +1,24 @@
 package com.snippets;
 
-import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.endpoints.types.GetWithMultipleQuery;
-import java.util.Arrays;
+import com.seed.api.SeedApiClient;
+import com.seed.api.endpoints.types.TestPutHttpMethodsRequest;
+import com.seed.api.types.TypesObjectWithRequiredField;
 
 public class Example36 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
         client.endpoints()
-                .params()
-                .getWithAllowMultipleQuery(GetWithMultipleQuery.builder()
-                        .query(Arrays.asList("query"))
-                        .number(Arrays.asList(1))
-                        .build());
+                .httpMethods()
+                .testPut(
+                        "id",
+                        TestPutHttpMethodsRequest.builder()
+                                .body(TypesObjectWithRequiredField.builder()
+                                        .string("string")
+                                        .build())
+                                .build());
     }
 }

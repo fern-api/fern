@@ -6,7 +6,7 @@ package com.fern.sdk.resources.endpoints.contenttype;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
+import com.fern.sdk.types.TypesObjectWithOptionalField;
 
 public class ContentTypeClient {
   protected final ClientOptions clientOptions;
@@ -33,11 +33,11 @@ public class ContentTypeClient {
     this.rawClient.postJsonPatchContentType(requestOptions).body();
   }
 
-  public void postJsonPatchContentType(ObjectWithOptionalField request) {
+  public void postJsonPatchContentType(TypesObjectWithOptionalField request) {
     this.rawClient.postJsonPatchContentType(request).body();
   }
 
-  public void postJsonPatchContentType(ObjectWithOptionalField request,
+  public void postJsonPatchContentType(TypesObjectWithOptionalField request,
       RequestOptions requestOptions) {
     this.rawClient.postJsonPatchContentType(request, requestOptions).body();
   }
@@ -50,11 +50,11 @@ public class ContentTypeClient {
     this.rawClient.postJsonPatchContentWithCharsetType(requestOptions).body();
   }
 
-  public void postJsonPatchContentWithCharsetType(ObjectWithOptionalField request) {
+  public void postJsonPatchContentWithCharsetType(TypesObjectWithOptionalField request) {
     this.rawClient.postJsonPatchContentWithCharsetType(request).body();
   }
 
-  public void postJsonPatchContentWithCharsetType(ObjectWithOptionalField request,
+  public void postJsonPatchContentWithCharsetType(TypesObjectWithOptionalField request,
       RequestOptions requestOptions) {
     this.rawClient.postJsonPatchContentWithCharsetType(request, requestOptions).body();
   }

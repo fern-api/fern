@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
-import type * as SeedExhaustive from "../../../../../index.js";
+import type * as SeedApi from "../../../../../index.js";
 
 export declare namespace PaginationClient {
     export type Options = BaseClientOptions;
@@ -24,79 +24,65 @@ export class PaginationClient {
     /**
      * List items with cursor pagination
      *
-     * @param {SeedExhaustive.ListItemsRequest} request
+     * @param {SeedApi.ListItemsPaginationRequest} request
      * @param {PaginationClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.pagination.listItems({
-     *         cursor: "cursor",
-     *         limit: 1
-     *     })
+     *     await client.endpoints.pagination.listItems()
      */
-    public async listItems(
-        request: SeedExhaustive.ListItemsRequest = {},
+    public listItems(
+        request: SeedApi.ListItemsPaginationRequest = {},
         requestOptions?: PaginationClient.RequestOptions,
-    ): Promise<core.Page<SeedExhaustive.types.ObjectWithRequiredField, SeedExhaustive.endpoints.PaginatedResponse>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedExhaustive.ListItemsRequest,
-            ): Promise<core.WithRawResponse<SeedExhaustive.endpoints.PaginatedResponse>> => {
-                const { cursor, limit } = request;
-                const _queryParams: Record<string, unknown> = {
-                    cursor,
-                    limit,
-                };
-                const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    _authRequest.headers,
-                    this._options?.headers,
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/pagination",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryString: core.url
-                        .queryBuilder()
-                        .addMany(_queryParams)
-                        .mergeAdditional(requestOptions?.queryParams)
-                        .build(),
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedExhaustive.endpoints.PaginatedResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/pagination");
-            },
+    ): core.HttpResponsePromise<SeedApi.EndpointsPaginatedResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listItems(request, requestOptions));
+    }
+
+    private async __listItems(
+        request: SeedApi.ListItemsPaginationRequest = {},
+        requestOptions?: PaginationClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.EndpointsPaginatedResponse>> {
+        const { cursor, limit } = request;
+        const _queryParams: Record<string, unknown> = {
+            cursor,
+            limit,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
         );
-        const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedExhaustive.types.ObjectWithRequiredField, SeedExhaustive.endpoints.PaginatedResponse>({
-            response: dataWithRawResponse.data,
-            rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.next != null && !(typeof response?.next === "string" && response?.next === ""),
-            getItems: (response) => response?.items ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "cursor", response?.next));
-            },
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "pagination",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.EndpointsPaginatedResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/pagination");
     }
 }

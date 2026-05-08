@@ -1,27 +1,23 @@
-using SeedExhaustive;
-using SeedExhaustive.Core;
-using SeedExhaustive.Endpoints;
+using SeedApi;
+using SeedApi.Core;
+using SeedApi.Endpoints;
 
 public partial class Examples
 {
     public async Task Example36() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
-            new GetWithMultipleQuery {
-                Query = new List<string>(){
-                    "query",
+        await client.Endpoints.HttpMethods.TestPutAsync(
+            new TestPutHttpMethodsRequest {
+                Id = "id",
+                Body = new TypesObjectWithRequiredField {
+                    String = "string"
                 }
-                ,
-                Number = new List<int>(){
-                    1,
-                }
-
             }
         );
     }

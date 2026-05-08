@@ -7,7 +7,7 @@ import * as core from "../../../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
 import * as serializers from "../../../../../../serialization/index.js";
-import type * as SeedExhaustive from "../../../../../index.js";
+import type * as SeedApi from "../../../../../index.js";
 
 export declare namespace ContainerClient {
     export type Options = BaseClientOptions;
@@ -27,7 +27,7 @@ export class ContainerClient {
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"])
+     *     await client.endpoints.container.getAndReturnListOfPrimitives(["string"])
      */
     public getAndReturnListOfPrimitives(
         request: string[],
@@ -50,7 +50,7 @@ export class ContainerClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/container/list-of-primitives",
+                "container/list-of-primitives",
             ),
             method: "POST",
             headers: _headers,
@@ -84,7 +84,7 @@ export class ContainerClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -100,27 +100,25 @@ export class ContainerClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
+     * @param {SeedApi.TypesObjectWithRequiredField[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.container.getAndReturnListOfObjects([{
      *             string: "string"
-     *         }, {
-     *             string: "string"
      *         }])
      */
     public getAndReturnListOfObjects(
-        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        request: SeedApi.TypesObjectWithRequiredField[],
         requestOptions?: ContainerClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
+    ): core.HttpResponsePromise<SeedApi.TypesObjectWithRequiredField[]> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnListOfObjects(request, requestOptions));
     }
 
     private async __getAndReturnListOfObjects(
-        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        request: SeedApi.TypesObjectWithRequiredField[],
         requestOptions?: ContainerClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField[]>> {
+    ): Promise<core.WithRawResponse<SeedApi.TypesObjectWithRequiredField[]>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -131,7 +129,7 @@ export class ContainerClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/container/list-of-objects",
+                "container/list-of-objects",
             ),
             method: "POST",
             headers: _headers,
@@ -162,7 +160,7 @@ export class ContainerClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -173,23 +171,23 @@ export class ContainerClient {
     }
 
     /**
-     * @param {Set<string>} request
+     * @param {string[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]))
+     *     await client.endpoints.container.getAndReturnSetOfPrimitives(["string"])
      */
     public getAndReturnSetOfPrimitives(
-        request: Set<string>,
+        request: string[],
         requestOptions?: ContainerClient.RequestOptions,
-    ): core.HttpResponsePromise<Set<string>> {
+    ): core.HttpResponsePromise<string[]> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnSetOfPrimitives(request, requestOptions));
     }
 
     private async __getAndReturnSetOfPrimitives(
-        request: Set<string>,
+        request: string[],
         requestOptions?: ContainerClient.RequestOptions,
-    ): Promise<core.WithRawResponse<Set<string>>> {
+    ): Promise<core.WithRawResponse<string[]>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -200,7 +198,7 @@ export class ContainerClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/container/set-of-primitives",
+                "container/set-of-primitives",
             ),
             method: "POST",
             headers: _headers,
@@ -234,7 +232,7 @@ export class ContainerClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -245,7 +243,7 @@ export class ContainerClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
+     * @param {SeedApi.TypesObjectWithRequiredField[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -254,16 +252,16 @@ export class ContainerClient {
      *         }])
      */
     public getAndReturnSetOfObjects(
-        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        request: SeedApi.TypesObjectWithRequiredField[],
         requestOptions?: ContainerClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
+    ): core.HttpResponsePromise<SeedApi.TypesObjectWithRequiredField[]> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnSetOfObjects(request, requestOptions));
     }
 
     private async __getAndReturnSetOfObjects(
-        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        request: SeedApi.TypesObjectWithRequiredField[],
         requestOptions?: ContainerClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField[]>> {
+    ): Promise<core.WithRawResponse<SeedApi.TypesObjectWithRequiredField[]>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -274,7 +272,7 @@ export class ContainerClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/container/set-of-objects",
+                "container/set-of-objects",
             ),
             method: "POST",
             headers: _headers,
@@ -305,7 +303,7 @@ export class ContainerClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -321,7 +319,7 @@ export class ContainerClient {
      *
      * @example
      *     await client.endpoints.container.getAndReturnMapPrimToPrim({
-     *         "string": "string"
+     *         "key": "value"
      *     })
      */
     public getAndReturnMapPrimToPrim(
@@ -345,7 +343,7 @@ export class ContainerClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/container/map-prim-to-prim",
+                "container/map-prim-to-prim",
             ),
             method: "POST",
             headers: _headers,
@@ -376,7 +374,7 @@ export class ContainerClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -387,27 +385,27 @@ export class ContainerClient {
     }
 
     /**
-     * @param {Record<string, SeedExhaustive.types.ObjectWithRequiredField>} request
+     * @param {Record<string, SeedApi.TypesObjectWithRequiredField>} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.container.getAndReturnMapOfPrimToObject({
-     *         "string": {
+     *         "key": {
      *             string: "string"
      *         }
      *     })
      */
     public getAndReturnMapOfPrimToObject(
-        request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+        request: Record<string, SeedApi.TypesObjectWithRequiredField>,
         requestOptions?: ContainerClient.RequestOptions,
-    ): core.HttpResponsePromise<Record<string, SeedExhaustive.types.ObjectWithRequiredField>> {
+    ): core.HttpResponsePromise<Record<string, SeedApi.TypesObjectWithRequiredField>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnMapOfPrimToObject(request, requestOptions));
     }
 
     private async __getAndReturnMapOfPrimToObject(
-        request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+        request: Record<string, SeedApi.TypesObjectWithRequiredField>,
         requestOptions?: ContainerClient.RequestOptions,
-    ): Promise<core.WithRawResponse<Record<string, SeedExhaustive.types.ObjectWithRequiredField>>> {
+    ): Promise<core.WithRawResponse<Record<string, SeedApi.TypesObjectWithRequiredField>>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -418,7 +416,7 @@ export class ContainerClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/container/map-prim-to-object",
+                "container/map-prim-to-object",
             ),
             method: "POST",
             headers: _headers,
@@ -452,7 +450,7 @@ export class ContainerClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -468,27 +466,27 @@ export class ContainerClient {
     }
 
     /**
-     * @param {Record<string, SeedExhaustive.types.MixedType>} request
+     * @param {Record<string, SeedApi.TypesMixedType>} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
-     *         "string": 1.1
+     *         "key": 1.1
      *     })
      */
     public getAndReturnMapOfPrimToUndiscriminatedUnion(
-        request: Record<string, SeedExhaustive.types.MixedType>,
+        request: Record<string, SeedApi.TypesMixedType>,
         requestOptions?: ContainerClient.RequestOptions,
-    ): core.HttpResponsePromise<Record<string, SeedExhaustive.types.MixedType>> {
+    ): core.HttpResponsePromise<Record<string, SeedApi.TypesMixedType>> {
         return core.HttpResponsePromise.fromPromise(
             this.__getAndReturnMapOfPrimToUndiscriminatedUnion(request, requestOptions),
         );
     }
 
     private async __getAndReturnMapOfPrimToUndiscriminatedUnion(
-        request: Record<string, SeedExhaustive.types.MixedType>,
+        request: Record<string, SeedApi.TypesMixedType>,
         requestOptions?: ContainerClient.RequestOptions,
-    ): Promise<core.WithRawResponse<Record<string, SeedExhaustive.types.MixedType>>> {
+    ): Promise<core.WithRawResponse<Record<string, SeedApi.TypesMixedType>>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -499,7 +497,7 @@ export class ContainerClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/container/map-prim-to-union",
+                "container/map-prim-to-union",
             ),
             method: "POST",
             headers: _headers,
@@ -533,7 +531,7 @@ export class ContainerClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -544,7 +542,7 @@ export class ContainerClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {SeedApi.TypesObjectWithRequiredField} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -553,16 +551,16 @@ export class ContainerClient {
      *     })
      */
     public getAndReturnOptional(
-        request?: SeedExhaustive.types.ObjectWithRequiredField,
+        request: SeedApi.TypesObjectWithRequiredField,
         requestOptions?: ContainerClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField | undefined> {
+    ): core.HttpResponsePromise<SeedApi.TypesObjectWithRequiredField> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnOptional(request, requestOptions));
     }
 
     private async __getAndReturnOptional(
-        request?: SeedExhaustive.types.ObjectWithRequiredField,
+        request: SeedApi.TypesObjectWithRequiredField,
         requestOptions?: ContainerClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField | undefined>> {
+    ): Promise<core.WithRawResponse<SeedApi.TypesObjectWithRequiredField>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -573,14 +571,14 @@ export class ContainerClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/container/opt-objects",
+                "container/opt-objects",
             ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: serializers.endpoints.container.getAndReturnOptional.Request.jsonOrThrow(request, {
+            body: serializers.TypesObjectWithRequiredField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
                 omitUndefined: true,
             }),
@@ -592,7 +590,7 @@ export class ContainerClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.container.getAndReturnOptional.Response.parseOrThrow(_response.body, {
+                data: serializers.TypesObjectWithRequiredField.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -604,7 +602,7 @@ export class ContainerClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

@@ -7,9 +7,9 @@ package com.fern.sdk.resources.endpoints.urls;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.core.SeedExhaustiveApiException;
-import com.fern.sdk.core.SeedExhaustiveException;
-import com.fern.sdk.core.SeedExhaustiveHttpResponse;
+import com.fern.sdk.core.SeedApiApiException;
+import com.fern.sdk.core.SeedApiException;
+import com.fern.sdk.core.SeedApiHttpResponse;
 import java.io.IOException;
 import java.lang.Object;
 import java.lang.String;
@@ -27,14 +27,14 @@ public class RawUrlsClient {
     this.clientOptions = clientOptions;
   }
 
-  public SeedExhaustiveHttpResponse<String> withMixedCase() {
+  public SeedApiHttpResponse<String> withMixedCase() {
     return withMixedCase(null);
   }
 
-  public SeedExhaustiveHttpResponse<String> withMixedCase(RequestOptions requestOptions) {
+  public SeedApiHttpResponse<String> withMixedCase(RequestOptions requestOptions) {
     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-      .addPathSegments("urls")
-      .addPathSegments("MixedCase");if (requestOptions != null) {
+
+      .addPathSegments("urls/MixedCase");if (requestOptions != null) {
         requestOptions.getQueryParameters().forEach((_key, _value) -> {
           httpUrl.addQueryParameter(_key, _value);
         } );
@@ -53,24 +53,24 @@ public class RawUrlsClient {
         ResponseBody responseBody = response.body();
         String responseBodyString = responseBody != null ? responseBody.string() : "{}";
         if (response.isSuccessful()) {
-          return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+          return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
         }
         Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-        throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+        throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
       }
       catch (IOException e) {
-        throw new SeedExhaustiveException("Network error executing HTTP request", e);
+        throw new SeedApiException("Network error executing HTTP request", e);
       }
     }
 
-    public SeedExhaustiveHttpResponse<String> noEndingSlash() {
+    public SeedApiHttpResponse<String> noEndingSlash() {
       return noEndingSlash(null);
     }
 
-    public SeedExhaustiveHttpResponse<String> noEndingSlash(RequestOptions requestOptions) {
+    public SeedApiHttpResponse<String> noEndingSlash(RequestOptions requestOptions) {
       HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-        .addPathSegments("urls")
-        .addPathSegments("no-ending-slash");if (requestOptions != null) {
+
+        .addPathSegments("urls/no-ending-slash");if (requestOptions != null) {
           requestOptions.getQueryParameters().forEach((_key, _value) -> {
             httpUrl.addQueryParameter(_key, _value);
           } );
@@ -89,24 +89,24 @@ public class RawUrlsClient {
           ResponseBody responseBody = response.body();
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           if (response.isSuccessful()) {
-            return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+            return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
           }
           Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+          throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
         }
         catch (IOException e) {
-          throw new SeedExhaustiveException("Network error executing HTTP request", e);
+          throw new SeedApiException("Network error executing HTTP request", e);
         }
       }
 
-      public SeedExhaustiveHttpResponse<String> withEndingSlash() {
+      public SeedApiHttpResponse<String> withEndingSlash() {
         return withEndingSlash(null);
       }
 
-      public SeedExhaustiveHttpResponse<String> withEndingSlash(RequestOptions requestOptions) {
+      public SeedApiHttpResponse<String> withEndingSlash(RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-          .addPathSegments("urls")
-          .addPathSegments("with-ending-slash");if (requestOptions != null) {
+
+          .addPathSegments("urls/with-ending-slash");if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
               httpUrl.addQueryParameter(_key, _value);
             } );
@@ -125,24 +125,24 @@ public class RawUrlsClient {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
-              return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+              return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+            throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
           }
           catch (IOException e) {
-            throw new SeedExhaustiveException("Network error executing HTTP request", e);
+            throw new SeedApiException("Network error executing HTTP request", e);
           }
         }
 
-        public SeedExhaustiveHttpResponse<String> withUnderscores() {
+        public SeedApiHttpResponse<String> withUnderscores() {
           return withUnderscores(null);
         }
 
-        public SeedExhaustiveHttpResponse<String> withUnderscores(RequestOptions requestOptions) {
+        public SeedApiHttpResponse<String> withUnderscores(RequestOptions requestOptions) {
           HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-            .addPathSegments("urls")
-            .addPathSegments("with_underscores");if (requestOptions != null) {
+
+            .addPathSegments("urls/with_underscores");if (requestOptions != null) {
               requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
               } );
@@ -161,13 +161,13 @@ public class RawUrlsClient {
               ResponseBody responseBody = response.body();
               String responseBodyString = responseBody != null ? responseBody.string() : "{}";
               if (response.isSuccessful()) {
-                return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+                return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
               }
               Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-              throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+              throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
             }
             catch (IOException e) {
-              throw new SeedExhaustiveException("Network error executing HTTP request", e);
+              throw new SeedApiException("Network error executing HTTP request", e);
             }
           }
         }

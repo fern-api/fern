@@ -10,4 +10,10 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->urls->withEndingSlash();
+$client->endpoints->object->getAndReturnMapOfDocumentedUnknownType(
+    [
+        'string' => [
+            'key' => "value",
+        ],
+    ],
+);

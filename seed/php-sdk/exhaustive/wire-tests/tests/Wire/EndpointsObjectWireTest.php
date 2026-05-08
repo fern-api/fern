@@ -4,17 +4,16 @@ namespace Seed\Tests;
 
 use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
-use Seed\Types\Object\Types\ObjectWithOptionalField;
+use Seed\Types\TypesObjectWithOptionalField;
+use Seed\Types\TypesObjectWithRequiredField;
+use Seed\Types\TypesObjectWithMapOfMap;
+use Seed\Types\TypesNestedObjectWithOptionalField;
+use Seed\Endpoints\Object\Requests\GetAndReturnNestedWithRequiredFieldObjectRequest;
+use Seed\Types\TypesNestedObjectWithRequiredField;
+use Seed\Types\TypesObjectWithUnknownField;
+use Seed\Types\TypesObjectWithDocumentedUnknownType;
+use Seed\Types\TypesObjectWithDatetimeLikeString;
 use DateTime;
-use Seed\Types\Object\Types\ObjectWithRequiredField;
-use Seed\Types\Object\Types\ObjectWithMapOfMap;
-use Seed\Types\Object\Types\NestedObjectWithOptionalField;
-use Seed\Types\Object\Types\NestedObjectWithRequiredField;
-use Seed\Types\Object\Types\ObjectWithUnknownField;
-use Seed\Types\Object\Types\ObjectWithDocumentedUnknownType;
-use Seed\Types\Object\Types\ObjectWithMixedRequiredAndOptionalFields;
-use Seed\Types\Object\Types\ObjectWithRequiredNestedObject;
-use Seed\Types\Object\Types\ObjectWithDatetimeLikeString;
 
 class EndpointsObjectWireTest extends WireMockTestCase
 {
@@ -28,28 +27,7 @@ class EndpointsObjectWireTest extends WireMockTestCase
     public function testGetAndReturnWithOptionalField(): void {
         $testId = 'endpoints.object.get_and_return_with_optional_field.0';
         $this->client->endpoints->object->getAndReturnWithOptionalField(
-            new ObjectWithOptionalField([
-                'string' => 'string',
-                'integer' => 1,
-                'long' => 1000000,
-                'double' => 1.1,
-                'bool' => true,
-                'datetime' => new DateTime('2024-01-15T09:30:00Z'),
-                'date' => new DateTime('2023-01-15'),
-                'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-                'base64' => 'SGVsbG8gd29ybGQh',
-                'list' => [
-                    'list',
-                    'list',
-                ],
-                'set' => [
-                    'set',
-                ],
-                'map' => [
-                    1 => 'map',
-                ],
-                'bigint' => '1000000',
-            ]),
+            new TypesObjectWithOptionalField([]),
             [
                 'headers' => [
                     'X-Test-Id' => 'endpoints.object.get_and_return_with_optional_field.0',
@@ -70,7 +48,7 @@ class EndpointsObjectWireTest extends WireMockTestCase
     public function testGetAndReturnWithRequiredField(): void {
         $testId = 'endpoints.object.get_and_return_with_required_field.0';
         $this->client->endpoints->object->getAndReturnWithRequiredField(
-            new ObjectWithRequiredField([
+            new TypesObjectWithRequiredField([
                 'string' => 'string',
             ]),
             [
@@ -93,10 +71,10 @@ class EndpointsObjectWireTest extends WireMockTestCase
     public function testGetAndReturnWithMapOfMap(): void {
         $testId = 'endpoints.object.get_and_return_with_map_of_map.0';
         $this->client->endpoints->object->getAndReturnWithMapOfMap(
-            new ObjectWithMapOfMap([
+            new TypesObjectWithMapOfMap([
                 'map' => [
-                    'map' => [
-                        'map' => 'map',
+                    'key' => [
+                        'key' => 'value',
                     ],
                 ],
             ]),
@@ -120,31 +98,7 @@ class EndpointsObjectWireTest extends WireMockTestCase
     public function testGetAndReturnNestedWithOptionalField(): void {
         $testId = 'endpoints.object.get_and_return_nested_with_optional_field.0';
         $this->client->endpoints->object->getAndReturnNestedWithOptionalField(
-            new NestedObjectWithOptionalField([
-                'string' => 'string',
-                'nestedObject' => new ObjectWithOptionalField([
-                    'string' => 'string',
-                    'integer' => 1,
-                    'long' => 1000000,
-                    'double' => 1.1,
-                    'bool' => true,
-                    'datetime' => new DateTime('2024-01-15T09:30:00Z'),
-                    'date' => new DateTime('2023-01-15'),
-                    'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-                    'base64' => 'SGVsbG8gd29ybGQh',
-                    'list' => [
-                        'list',
-                        'list',
-                    ],
-                    'set' => [
-                        'set',
-                    ],
-                    'map' => [
-                        1 => 'map',
-                    ],
-                    'bigint' => '1000000',
-                ]),
-            ]),
+            new TypesNestedObjectWithOptionalField([]),
             [
                 'headers' => [
                     'X-Test-Id' => 'endpoints.object.get_and_return_nested_with_optional_field.0',
@@ -166,29 +120,10 @@ class EndpointsObjectWireTest extends WireMockTestCase
         $testId = 'endpoints.object.get_and_return_nested_with_required_field.0';
         $this->client->endpoints->object->getAndReturnNestedWithRequiredField(
             'string',
-            new NestedObjectWithRequiredField([
-                'string' => 'string',
-                'nestedObject' => new ObjectWithOptionalField([
+            new GetAndReturnNestedWithRequiredFieldObjectRequest([
+                'body' => new TypesNestedObjectWithRequiredField([
                     'string' => 'string',
-                    'integer' => 1,
-                    'long' => 1000000,
-                    'double' => 1.1,
-                    'bool' => true,
-                    'datetime' => new DateTime('2024-01-15T09:30:00Z'),
-                    'date' => new DateTime('2023-01-15'),
-                    'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-                    'base64' => 'SGVsbG8gd29ybGQh',
-                    'list' => [
-                        'list',
-                        'list',
-                    ],
-                    'set' => [
-                        'set',
-                    ],
-                    'map' => [
-                        1 => 'map',
-                    ],
-                    'bigint' => '1000000',
+                    'nestedObject' => new TypesObjectWithOptionalField([]),
                 ]),
             ]),
             [
@@ -212,55 +147,9 @@ class EndpointsObjectWireTest extends WireMockTestCase
         $testId = 'endpoints.object.get_and_return_nested_with_required_field_as_list.0';
         $this->client->endpoints->object->getAndReturnNestedWithRequiredFieldAsList(
             [
-                new NestedObjectWithRequiredField([
+                new TypesNestedObjectWithRequiredField([
                     'string' => 'string',
-                    'nestedObject' => new ObjectWithOptionalField([
-                        'string' => 'string',
-                        'integer' => 1,
-                        'long' => 1000000,
-                        'double' => 1.1,
-                        'bool' => true,
-                        'datetime' => new DateTime('2024-01-15T09:30:00Z'),
-                        'date' => new DateTime('2023-01-15'),
-                        'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-                        'base64' => 'SGVsbG8gd29ybGQh',
-                        'list' => [
-                            'list',
-                            'list',
-                        ],
-                        'set' => [
-                            'set',
-                        ],
-                        'map' => [
-                            1 => 'map',
-                        ],
-                        'bigint' => '1000000',
-                    ]),
-                ]),
-                new NestedObjectWithRequiredField([
-                    'string' => 'string',
-                    'nestedObject' => new ObjectWithOptionalField([
-                        'string' => 'string',
-                        'integer' => 1,
-                        'long' => 1000000,
-                        'double' => 1.1,
-                        'bool' => true,
-                        'datetime' => new DateTime('2024-01-15T09:30:00Z'),
-                        'date' => new DateTime('2023-01-15'),
-                        'uuid' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-                        'base64' => 'SGVsbG8gd29ybGQh',
-                        'list' => [
-                            'list',
-                            'list',
-                        ],
-                        'set' => [
-                            'set',
-                        ],
-                        'map' => [
-                            1 => 'map',
-                        ],
-                        'bigint' => '1000000',
-                    ]),
+                    'nestedObject' => new TypesObjectWithOptionalField([]),
                 ]),
             ],
             [
@@ -283,9 +172,9 @@ class EndpointsObjectWireTest extends WireMockTestCase
     public function testGetAndReturnWithUnknownField(): void {
         $testId = 'endpoints.object.get_and_return_with_unknown_field.0';
         $this->client->endpoints->object->getAndReturnWithUnknownField(
-            new ObjectWithUnknownField([
+            new TypesObjectWithUnknownField([
                 'unknown' => [
-                    '$ref' => "https://example.com/schema",
+                    'key' => "value",
                 ],
             ]),
             [
@@ -308,7 +197,7 @@ class EndpointsObjectWireTest extends WireMockTestCase
     public function testGetAndReturnWithDocumentedUnknownType(): void {
         $testId = 'endpoints.object.get_and_return_with_documented_unknown_type.0';
         $this->client->endpoints->object->getAndReturnWithDocumentedUnknownType(
-            new ObjectWithDocumentedUnknownType([
+            new TypesObjectWithDocumentedUnknownType([
                 'documentedUnknownType' => [
                     'key' => "value",
                 ],
@@ -333,11 +222,7 @@ class EndpointsObjectWireTest extends WireMockTestCase
     public function testGetAndReturnMapOfDocumentedUnknownType(): void {
         $testId = 'endpoints.object.get_and_return_map_of_documented_unknown_type.0';
         $this->client->endpoints->object->getAndReturnMapOfDocumentedUnknownType(
-            [
-                'string' => [
-                    'key' => "value",
-                ],
-            ],
+            [],
             [
                 'headers' => [
                     'X-Test-Id' => 'endpoints.object.get_and_return_map_of_documented_unknown_type.0',
@@ -355,65 +240,12 @@ class EndpointsObjectWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetAndReturnWithMixedRequiredAndOptionalFields(): void {
-        $testId = 'endpoints.object.get_and_return_with_mixed_required_and_optional_fields.0';
-        $this->client->endpoints->object->getAndReturnWithMixedRequiredAndOptionalFields(
-            new ObjectWithMixedRequiredAndOptionalFields([
-                'requiredString' => 'hello',
-                'requiredInteger' => 0,
-                'optionalString' => 'world',
-                'requiredLong' => 0,
-            ]),
-            [
-                'headers' => [
-                    'X-Test-Id' => 'endpoints.object.get_and_return_with_mixed_required_and_optional_fields.0',
-                ],
-            ],
-        );
-        $this->verifyRequestCount(
-            $testId,
-            "POST",
-            "/object/get-and-return-with-mixed-required-and-optional-fields",
-            null,
-            1
-        );
-    }
-
-    /**
-     */
-    public function testGetAndReturnWithRequiredNestedObject(): void {
-        $testId = 'endpoints.object.get_and_return_with_required_nested_object.0';
-        $this->client->endpoints->object->getAndReturnWithRequiredNestedObject(
-            new ObjectWithRequiredNestedObject([
-                'requiredString' => 'hello',
-                'requiredObject' => new NestedObjectWithRequiredField([
-                    'string' => 'nested',
-                    'nestedObject' => new ObjectWithOptionalField([]),
-                ]),
-            ]),
-            [
-                'headers' => [
-                    'X-Test-Id' => 'endpoints.object.get_and_return_with_required_nested_object.0',
-                ],
-            ],
-        );
-        $this->verifyRequestCount(
-            $testId,
-            "POST",
-            "/object/get-and-return-with-required-nested-object",
-            null,
-            1
-        );
-    }
-
-    /**
-     */
     public function testGetAndReturnWithDatetimeLikeString(): void {
         $testId = 'endpoints.object.get_and_return_with_datetime_like_string.0';
         $this->client->endpoints->object->getAndReturnWithDatetimeLikeString(
-            new ObjectWithDatetimeLikeString([
-                'datetimeLikeString' => '2023-08-31T14:15:22Z',
-                'actualDatetime' => new DateTime('2023-08-31T14:15:22Z'),
+            new TypesObjectWithDatetimeLikeString([
+                'datetimeLikeString' => 'datetimeLikeString',
+                'actualDatetime' => new DateTime('2024-01-15T09:30:00Z'),
             ]),
             [
                 'headers' => [

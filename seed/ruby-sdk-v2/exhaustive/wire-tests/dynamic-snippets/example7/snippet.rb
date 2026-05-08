@@ -5,6 +5,4 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.container.get_and_return_optional(request: {
-  string: "string"
-})
+client.no_req_body.post_with_no_request_body

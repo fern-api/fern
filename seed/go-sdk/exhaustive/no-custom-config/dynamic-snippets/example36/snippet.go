@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     endpoints "github.com/exhaustive/fern/endpoints"
     option "github.com/exhaustive/fern/option"
@@ -17,15 +18,13 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.GetWithMultipleQuery{
-        Query: []string{
-            "query",
-        },
-        Number: []int{
-            1,
+    request := &endpoints.TestPutHTTPMethodsRequest{
+        ID: "id",
+        Body: &fern.TypesObjectWithRequiredField{
+            FieldString: "string",
         },
     }
-    client.Endpoints.Params.GetWithAllowMultipleQuery(
+    client.Endpoints.HTTPMethods.TestPut(
         context.TODO(),
         request,
     )

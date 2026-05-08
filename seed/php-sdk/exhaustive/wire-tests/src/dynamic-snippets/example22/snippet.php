@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\Object\Types\ObjectWithUnknownField;
+use Seed\Types\TypesObjectWithRequiredField;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,10 +11,10 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->object->getAndReturnWithUnknownField(
-    new ObjectWithUnknownField([
-        'unknown' => [
-            '$ref' => "https://example.com/schema",
-        ],
-    ]),
+$client->endpoints->container->getAndReturnMapOfPrimToObject(
+    [
+        'string' => new TypesObjectWithRequiredField([
+            'string' => 'string',
+        ]),
+    ],
 );

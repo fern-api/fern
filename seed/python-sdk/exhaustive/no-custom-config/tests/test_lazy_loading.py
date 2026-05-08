@@ -1,11 +1,11 @@
 import pytest
 from unittest.mock import patch, MagicMock
 from typing import Union
-from seed.client import AsyncSeedExhaustive, SeedExhaustive
+from seed.client import AsyncSeedApi, SeedApi
 
 
-@pytest.mark.parametrize("client", [SeedExhaustive(base_url="foo"), AsyncSeedExhaustive(base_url="foo")])
-def test_root_client_lazy_loading(client: Union[SeedExhaustive, AsyncSeedExhaustive]):
+@pytest.mark.parametrize("client", [SeedApi(base_url="foo"), AsyncSeedApi(base_url="foo")])
+def test_root_client_lazy_loading(client: Union[SeedApi, AsyncSeedApi]):
     """Test lazy loading for accounting client resources."""
     # Initially all private attributes should be None
     assert client._endpoints is None
@@ -31,8 +31,8 @@ def test_root_client_lazy_loading(client: Union[SeedExhaustive, AsyncSeedExhaust
     assert req_body is not None
     assert client._req_with_headers is not None
 
-@pytest.mark.parametrize("client", [SeedExhaustive(base_url="foo"), AsyncSeedExhaustive(base_url="foo")])
-def test_nested_client_lazy_loading(client: Union[SeedExhaustive, AsyncSeedExhaustive]):
+@pytest.mark.parametrize("client", [SeedApi(base_url="foo"), AsyncSeedApi(base_url="foo")])
+def test_nested_client_lazy_loading(client: Union[SeedApi, AsyncSeedApi]):
     """Test lazy loading for nested client resources."""
 
     # Initially all private attributes should be None
@@ -83,7 +83,7 @@ def test_nested_client_lazy_loading(client: Union[SeedExhaustive, AsyncSeedExhau
 @patch("seed.endpoints.container.client.ContainerClient")
 def test_lazy_loading_imports_correct_module(mock_container_client: MagicMock):
     """Test that lazy loading imports the correct module."""
-    client = SeedExhaustive(base_url="foo")
+    client = SeedApi(base_url="foo")
     mock_container_client.return_value = MagicMock()
     
     # Initially the private attribute should be None
@@ -99,7 +99,7 @@ def test_lazy_loading_imports_correct_module(mock_container_client: MagicMock):
 @patch("seed.endpoints.container.client.AsyncContainerClient")
 def test_lazy_loading_imports_correct_module_async(mock_container_client: MagicMock):
     """Test that lazy loading imports the correct module."""
-    client = AsyncSeedExhaustive(base_url="foo")
+    client = AsyncSeedApi(base_url="foo")
     mock_container_client.return_value = MagicMock()
     
     # Initially the private attribute should be None
@@ -112,8 +112,8 @@ def test_lazy_loading_imports_correct_module_async(mock_container_client: MagicM
     mock_container_client.assert_called_once()
     assert container is mock_container_client.return_value
 
-@pytest.mark.parametrize("client", [SeedExhaustive(base_url="foo"), AsyncSeedExhaustive(base_url="foo")])
-def test_cached_instances(client: Union[SeedExhaustive, AsyncSeedExhaustive]):
+@pytest.mark.parametrize("client", [SeedApi(base_url="foo"), AsyncSeedApi(base_url="foo")])
+def test_cached_instances(client: Union[SeedApi, AsyncSeedApi]):
     endpoints1 = client.endpoints
     endpoints2 = client.endpoints
     assert endpoints1 is endpoints2
@@ -122,8 +122,8 @@ def test_cached_instances(client: Union[SeedExhaustive, AsyncSeedExhaustive]):
     container2 = client.endpoints.container
     assert container1 is container2
 
-@pytest.mark.parametrize("client", [SeedExhaustive(base_url="foo"), AsyncSeedExhaustive(base_url="foo")])
-def test_lazy_loading_preserves_client_wrapper(client: Union[SeedExhaustive, AsyncSeedExhaustive]):
+@pytest.mark.parametrize("client", [SeedApi(base_url="foo"), AsyncSeedApi(base_url="foo")])
+def test_lazy_loading_preserves_client_wrapper(client: Union[SeedApi, AsyncSeedApi]):
     endpoints = client.endpoints
 
     assert endpoints._client_wrapper is client._client_wrapper

@@ -1,7 +1,7 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth } from "../../../../BaseClient.js";
 import * as core from "../../../../core/index.js";
-import type * as SeedExhaustive from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 export declare namespace NoReqBodyClient {
     type Options = BaseClientOptions;
     interface RequestOptions extends BaseRequestOptions {
@@ -16,7 +16,7 @@ export declare class NoReqBodyClient {
      * @example
      *     await client.noReqBody.getWithNoRequestBody()
      */
-    getWithNoRequestBody(requestOptions?: NoReqBodyClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
+    getWithNoRequestBody(requestOptions?: NoReqBodyClient.RequestOptions): core.HttpResponsePromise<SeedApi.TypesObjectWithOptionalField>;
     private __getWithNoRequestBody;
     /**
      * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.

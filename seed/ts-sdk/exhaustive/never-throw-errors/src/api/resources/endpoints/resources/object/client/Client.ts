@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
-import * as SeedExhaustive from "../../../../../index.js";
+import * as SeedApi from "../../../../../index.js";
 
 export declare namespace ObjectClient {
     export type Options = BaseClientOptions;
@@ -20,48 +20,32 @@ export class ObjectClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {SeedApi.TypesObjectWithOptionalField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.object.getAndReturnWithOptionalField({
-     *         string: "string",
-     *         integer: 1,
-     *         long: 1000000,
-     *         double: 1.1,
-     *         bool: true,
-     *         datetime: "2024-01-15T09:30:00Z",
-     *         date: "2023-01-15",
-     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *         base64: "SGVsbG8gd29ybGQh",
-     *         list: ["list", "list"],
-     *         set: ["set"],
-     *         map: {
-     *             1: "map"
-     *         },
-     *         bigint: "1000000"
-     *     })
+     *     await client.endpoints.object.getAndReturnWithOptionalField({})
      */
     public getAndReturnWithOptionalField(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
+        request: SeedApi.TypesObjectWithOptionalField,
         requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<
         core.APIResponse<
-            SeedExhaustive.types.ObjectWithOptionalField,
-            SeedExhaustive.endpoints.object.getAndReturnWithOptionalField.Error
+            SeedApi.TypesObjectWithOptionalField,
+            SeedApi.endpoints.object.getAndReturnWithOptionalField.Error
         >
     > {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithOptionalField(request, requestOptions));
     }
 
     private async __getAndReturnWithOptionalField(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
+        request: SeedApi.TypesObjectWithOptionalField,
         requestOptions?: ObjectClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
             core.APIResponse<
-                SeedExhaustive.types.ObjectWithOptionalField,
-                SeedExhaustive.endpoints.object.getAndReturnWithOptionalField.Error
+                SeedApi.TypesObjectWithOptionalField,
+                SeedApi.endpoints.object.getAndReturnWithOptionalField.Error
             >
         >
     > {
@@ -75,7 +59,7 @@ export class ObjectClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/object/get-and-return-with-optional-field",
+                "object/get-and-return-with-optional-field",
             ),
             method: "POST",
             headers: _headers,
@@ -93,7 +77,7 @@ export class ObjectClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                    body: _response.body as SeedApi.TypesObjectWithOptionalField,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -104,7 +88,7 @@ export class ObjectClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.object.getAndReturnWithOptionalField.Error._unknown(_response.error),
+                error: SeedApi.endpoints.object.getAndReturnWithOptionalField.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -112,7 +96,7 @@ export class ObjectClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {SeedApi.TypesObjectWithRequiredField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -121,25 +105,25 @@ export class ObjectClient {
      *     })
      */
     public getAndReturnWithRequiredField(
-        request: SeedExhaustive.types.ObjectWithRequiredField,
+        request: SeedApi.TypesObjectWithRequiredField,
         requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<
         core.APIResponse<
-            SeedExhaustive.types.ObjectWithRequiredField,
-            SeedExhaustive.endpoints.object.getAndReturnWithRequiredField.Error
+            SeedApi.TypesObjectWithRequiredField,
+            SeedApi.endpoints.object.getAndReturnWithRequiredField.Error
         >
     > {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithRequiredField(request, requestOptions));
     }
 
     private async __getAndReturnWithRequiredField(
-        request: SeedExhaustive.types.ObjectWithRequiredField,
+        request: SeedApi.TypesObjectWithRequiredField,
         requestOptions?: ObjectClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
             core.APIResponse<
-                SeedExhaustive.types.ObjectWithRequiredField,
-                SeedExhaustive.endpoints.object.getAndReturnWithRequiredField.Error
+                SeedApi.TypesObjectWithRequiredField,
+                SeedApi.endpoints.object.getAndReturnWithRequiredField.Error
             >
         >
     > {
@@ -153,7 +137,7 @@ export class ObjectClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/object/get-and-return-with-required-field",
+                "object/get-and-return-with-required-field",
             ),
             method: "POST",
             headers: _headers,
@@ -171,7 +155,7 @@ export class ObjectClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithRequiredField,
+                    body: _response.body as SeedApi.TypesObjectWithRequiredField,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -182,7 +166,7 @@ export class ObjectClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.object.getAndReturnWithRequiredField.Error._unknown(_response.error),
+                error: SeedApi.endpoints.object.getAndReturnWithRequiredField.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -190,39 +174,33 @@ export class ObjectClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithMapOfMap} request
+     * @param {SeedApi.TypesObjectWithMapOfMap} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithMapOfMap({
      *         map: {
-     *             "map": {
-     *                 "map": "map"
+     *             "key": {
+     *                 "key": "value"
      *             }
      *         }
      *     })
      */
     public getAndReturnWithMapOfMap(
-        request: SeedExhaustive.types.ObjectWithMapOfMap,
+        request: SeedApi.TypesObjectWithMapOfMap,
         requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedExhaustive.types.ObjectWithMapOfMap,
-            SeedExhaustive.endpoints.object.getAndReturnWithMapOfMap.Error
-        >
+        core.APIResponse<SeedApi.TypesObjectWithMapOfMap, SeedApi.endpoints.object.getAndReturnWithMapOfMap.Error>
     > {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithMapOfMap(request, requestOptions));
     }
 
     private async __getAndReturnWithMapOfMap(
-        request: SeedExhaustive.types.ObjectWithMapOfMap,
+        request: SeedApi.TypesObjectWithMapOfMap,
         requestOptions?: ObjectClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
-            core.APIResponse<
-                SeedExhaustive.types.ObjectWithMapOfMap,
-                SeedExhaustive.endpoints.object.getAndReturnWithMapOfMap.Error
-            >
+            core.APIResponse<SeedApi.TypesObjectWithMapOfMap, SeedApi.endpoints.object.getAndReturnWithMapOfMap.Error>
         >
     > {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
@@ -235,7 +213,7 @@ export class ObjectClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/object/get-and-return-with-map-of-map",
+                "object/get-and-return-with-map-of-map",
             ),
             method: "POST",
             headers: _headers,
@@ -253,7 +231,7 @@ export class ObjectClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithMapOfMap,
+                    body: _response.body as SeedApi.TypesObjectWithMapOfMap,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -264,7 +242,7 @@ export class ObjectClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.object.getAndReturnWithMapOfMap.Error._unknown(_response.error),
+                error: SeedApi.endpoints.object.getAndReturnWithMapOfMap.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -272,38 +250,19 @@ export class ObjectClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.NestedObjectWithOptionalField} request
+     * @param {SeedApi.TypesNestedObjectWithOptionalField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.object.getAndReturnNestedWithOptionalField({
-     *         string: "string",
-     *         NestedObject: {
-     *             string: "string",
-     *             integer: 1,
-     *             long: 1000000,
-     *             double: 1.1,
-     *             bool: true,
-     *             datetime: "2024-01-15T09:30:00Z",
-     *             date: "2023-01-15",
-     *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *             base64: "SGVsbG8gd29ybGQh",
-     *             list: ["list", "list"],
-     *             set: ["set"],
-     *             map: {
-     *                 1: "map"
-     *             },
-     *             bigint: "1000000"
-     *         }
-     *     })
+     *     await client.endpoints.object.getAndReturnNestedWithOptionalField({})
      */
     public getAndReturnNestedWithOptionalField(
-        request: SeedExhaustive.types.NestedObjectWithOptionalField,
+        request: SeedApi.TypesNestedObjectWithOptionalField,
         requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<
         core.APIResponse<
-            SeedExhaustive.types.NestedObjectWithOptionalField,
-            SeedExhaustive.endpoints.object.getAndReturnNestedWithOptionalField.Error
+            SeedApi.TypesNestedObjectWithOptionalField,
+            SeedApi.endpoints.object.getAndReturnNestedWithOptionalField.Error
         >
     > {
         return core.HttpResponsePromise.fromPromise(
@@ -312,13 +271,13 @@ export class ObjectClient {
     }
 
     private async __getAndReturnNestedWithOptionalField(
-        request: SeedExhaustive.types.NestedObjectWithOptionalField,
+        request: SeedApi.TypesNestedObjectWithOptionalField,
         requestOptions?: ObjectClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
             core.APIResponse<
-                SeedExhaustive.types.NestedObjectWithOptionalField,
-                SeedExhaustive.endpoints.object.getAndReturnNestedWithOptionalField.Error
+                SeedApi.TypesNestedObjectWithOptionalField,
+                SeedApi.endpoints.object.getAndReturnNestedWithOptionalField.Error
             >
         >
     > {
@@ -332,7 +291,7 @@ export class ObjectClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/object/get-and-return-nested-with-optional-field",
+                "object/get-and-return-nested-with-optional-field",
             ),
             method: "POST",
             headers: _headers,
@@ -350,7 +309,7 @@ export class ObjectClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.NestedObjectWithOptionalField,
+                    body: _response.body as SeedApi.TypesNestedObjectWithOptionalField,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -361,9 +320,7 @@ export class ObjectClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.object.getAndReturnNestedWithOptionalField.Error._unknown(
-                    _response.error,
-                ),
+                error: SeedApi.endpoints.object.getAndReturnNestedWithOptionalField.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -371,59 +328,44 @@ export class ObjectClient {
     }
 
     /**
-     * @param {string} string
-     * @param {SeedExhaustive.types.NestedObjectWithRequiredField} request
+     * @param {SeedApi.endpoints.GetAndReturnNestedWithRequiredFieldObjectRequest} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
-     *         string: "string",
-     *         NestedObject: {
+     *     await client.endpoints.object.getAndReturnNestedWithRequiredField({
+     *         stringValue: "string",
+     *         body: {
      *             string: "string",
-     *             integer: 1,
-     *             long: 1000000,
-     *             double: 1.1,
-     *             bool: true,
-     *             datetime: "2024-01-15T09:30:00Z",
-     *             date: "2023-01-15",
-     *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *             base64: "SGVsbG8gd29ybGQh",
-     *             list: ["list", "list"],
-     *             set: ["set"],
-     *             map: {
-     *                 1: "map"
-     *             },
-     *             bigint: "1000000"
+     *             NestedObject: {}
      *         }
      *     })
      */
     public getAndReturnNestedWithRequiredField(
-        string: string,
-        request: SeedExhaustive.types.NestedObjectWithRequiredField,
+        request: SeedApi.endpoints.GetAndReturnNestedWithRequiredFieldObjectRequest,
         requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<
         core.APIResponse<
-            SeedExhaustive.types.NestedObjectWithRequiredField,
-            SeedExhaustive.endpoints.object.getAndReturnNestedWithRequiredField.Error
+            SeedApi.TypesNestedObjectWithRequiredField,
+            SeedApi.endpoints.object.getAndReturnNestedWithRequiredField.Error
         >
     > {
         return core.HttpResponsePromise.fromPromise(
-            this.__getAndReturnNestedWithRequiredField(string, request, requestOptions),
+            this.__getAndReturnNestedWithRequiredField(request, requestOptions),
         );
     }
 
     private async __getAndReturnNestedWithRequiredField(
-        string: string,
-        request: SeedExhaustive.types.NestedObjectWithRequiredField,
+        request: SeedApi.endpoints.GetAndReturnNestedWithRequiredFieldObjectRequest,
         requestOptions?: ObjectClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
             core.APIResponse<
-                SeedExhaustive.types.NestedObjectWithRequiredField,
-                SeedExhaustive.endpoints.object.getAndReturnNestedWithRequiredField.Error
+                SeedApi.TypesNestedObjectWithRequiredField,
+                SeedApi.endpoints.object.getAndReturnNestedWithRequiredField.Error
             >
         >
     > {
+        const { stringValue, body: _body } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -434,14 +376,14 @@ export class ObjectClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/object/get-and-return-nested-with-required-field/${core.url.encodePathParam(string)}`,
+                `object/get-and-return-nested-with-required-field/${core.url.encodePathParam(stringValue)}`,
             ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -452,7 +394,7 @@ export class ObjectClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.NestedObjectWithRequiredField,
+                    body: _response.body as SeedApi.TypesNestedObjectWithRequiredField,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -463,9 +405,7 @@ export class ObjectClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.object.getAndReturnNestedWithRequiredField.Error._unknown(
-                    _response.error,
-                ),
+                error: SeedApi.endpoints.object.getAndReturnNestedWithRequiredField.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -473,57 +413,22 @@ export class ObjectClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.NestedObjectWithRequiredField[]} request
+     * @param {SeedApi.TypesNestedObjectWithRequiredField[]} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
      *             string: "string",
-     *             NestedObject: {
-     *                 string: "string",
-     *                 integer: 1,
-     *                 long: 1000000,
-     *                 double: 1.1,
-     *                 bool: true,
-     *                 datetime: "2024-01-15T09:30:00Z",
-     *                 date: "2023-01-15",
-     *                 uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *                 base64: "SGVsbG8gd29ybGQh",
-     *                 list: ["list", "list"],
-     *                 set: ["set"],
-     *                 map: {
-     *                     1: "map"
-     *                 },
-     *                 bigint: "1000000"
-     *             }
-     *         }, {
-     *             string: "string",
-     *             NestedObject: {
-     *                 string: "string",
-     *                 integer: 1,
-     *                 long: 1000000,
-     *                 double: 1.1,
-     *                 bool: true,
-     *                 datetime: "2024-01-15T09:30:00Z",
-     *                 date: "2023-01-15",
-     *                 uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *                 base64: "SGVsbG8gd29ybGQh",
-     *                 list: ["list", "list"],
-     *                 set: ["set"],
-     *                 map: {
-     *                     1: "map"
-     *                 },
-     *                 bigint: "1000000"
-     *             }
+     *             NestedObject: {}
      *         }])
      */
     public getAndReturnNestedWithRequiredFieldAsList(
-        request: SeedExhaustive.types.NestedObjectWithRequiredField[],
+        request: SeedApi.TypesNestedObjectWithRequiredField[],
         requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<
         core.APIResponse<
-            SeedExhaustive.types.NestedObjectWithRequiredField,
-            SeedExhaustive.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error
+            SeedApi.TypesNestedObjectWithRequiredField,
+            SeedApi.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error
         >
     > {
         return core.HttpResponsePromise.fromPromise(
@@ -532,13 +437,13 @@ export class ObjectClient {
     }
 
     private async __getAndReturnNestedWithRequiredFieldAsList(
-        request: SeedExhaustive.types.NestedObjectWithRequiredField[],
+        request: SeedApi.TypesNestedObjectWithRequiredField[],
         requestOptions?: ObjectClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
             core.APIResponse<
-                SeedExhaustive.types.NestedObjectWithRequiredField,
-                SeedExhaustive.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error
+                SeedApi.TypesNestedObjectWithRequiredField,
+                SeedApi.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error
             >
         >
     > {
@@ -552,7 +457,7 @@ export class ObjectClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/object/get-and-return-nested-with-required-field-list",
+                "object/get-and-return-nested-with-required-field-list",
             ),
             method: "POST",
             headers: _headers,
@@ -570,7 +475,7 @@ export class ObjectClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.NestedObjectWithRequiredField,
+                    body: _response.body as SeedApi.TypesNestedObjectWithRequiredField,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -581,7 +486,7 @@ export class ObjectClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error._unknown(
+                error: SeedApi.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error._unknown(
                     _response.error,
                 ),
                 rawResponse: _response.rawResponse,
@@ -591,36 +496,36 @@ export class ObjectClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithUnknownField} request
+     * @param {SeedApi.TypesObjectWithUnknownField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithUnknownField({
      *         unknown: {
-     *             "$ref": "https://example.com/schema"
+     *             "key": "value"
      *         }
      *     })
      */
     public getAndReturnWithUnknownField(
-        request: SeedExhaustive.types.ObjectWithUnknownField,
+        request: SeedApi.TypesObjectWithUnknownField,
         requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<
         core.APIResponse<
-            SeedExhaustive.types.ObjectWithUnknownField,
-            SeedExhaustive.endpoints.object.getAndReturnWithUnknownField.Error
+            SeedApi.TypesObjectWithUnknownField,
+            SeedApi.endpoints.object.getAndReturnWithUnknownField.Error
         >
     > {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithUnknownField(request, requestOptions));
     }
 
     private async __getAndReturnWithUnknownField(
-        request: SeedExhaustive.types.ObjectWithUnknownField,
+        request: SeedApi.TypesObjectWithUnknownField,
         requestOptions?: ObjectClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
             core.APIResponse<
-                SeedExhaustive.types.ObjectWithUnknownField,
-                SeedExhaustive.endpoints.object.getAndReturnWithUnknownField.Error
+                SeedApi.TypesObjectWithUnknownField,
+                SeedApi.endpoints.object.getAndReturnWithUnknownField.Error
             >
         >
     > {
@@ -634,7 +539,7 @@ export class ObjectClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/object/get-and-return-with-unknown-field",
+                "object/get-and-return-with-unknown-field",
             ),
             method: "POST",
             headers: _headers,
@@ -652,7 +557,7 @@ export class ObjectClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithUnknownField,
+                    body: _response.body as SeedApi.TypesObjectWithUnknownField,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -663,7 +568,7 @@ export class ObjectClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.object.getAndReturnWithUnknownField.Error._unknown(_response.error),
+                error: SeedApi.endpoints.object.getAndReturnWithUnknownField.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -671,7 +576,7 @@ export class ObjectClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithDocumentedUnknownType} request
+     * @param {SeedApi.TypesObjectWithDocumentedUnknownType} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -682,12 +587,12 @@ export class ObjectClient {
      *     })
      */
     public getAndReturnWithDocumentedUnknownType(
-        request: SeedExhaustive.types.ObjectWithDocumentedUnknownType,
+        request: SeedApi.TypesObjectWithDocumentedUnknownType,
         requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<
         core.APIResponse<
-            SeedExhaustive.types.ObjectWithDocumentedUnknownType,
-            SeedExhaustive.endpoints.object.getAndReturnWithDocumentedUnknownType.Error
+            SeedApi.TypesObjectWithDocumentedUnknownType,
+            SeedApi.endpoints.object.getAndReturnWithDocumentedUnknownType.Error
         >
     > {
         return core.HttpResponsePromise.fromPromise(
@@ -696,13 +601,13 @@ export class ObjectClient {
     }
 
     private async __getAndReturnWithDocumentedUnknownType(
-        request: SeedExhaustive.types.ObjectWithDocumentedUnknownType,
+        request: SeedApi.TypesObjectWithDocumentedUnknownType,
         requestOptions?: ObjectClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
             core.APIResponse<
-                SeedExhaustive.types.ObjectWithDocumentedUnknownType,
-                SeedExhaustive.endpoints.object.getAndReturnWithDocumentedUnknownType.Error
+                SeedApi.TypesObjectWithDocumentedUnknownType,
+                SeedApi.endpoints.object.getAndReturnWithDocumentedUnknownType.Error
             >
         >
     > {
@@ -716,7 +621,7 @@ export class ObjectClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/object/get-and-return-with-documented-unknown-type",
+                "object/get-and-return-with-documented-unknown-type",
             ),
             method: "POST",
             headers: _headers,
@@ -734,7 +639,7 @@ export class ObjectClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithDocumentedUnknownType,
+                    body: _response.body as SeedApi.TypesObjectWithDocumentedUnknownType,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -745,9 +650,7 @@ export class ObjectClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.object.getAndReturnWithDocumentedUnknownType.Error._unknown(
-                    _response.error,
-                ),
+                error: SeedApi.endpoints.object.getAndReturnWithDocumentedUnknownType.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -755,23 +658,19 @@ export class ObjectClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.MapOfDocumentedUnknownType} request
+     * @param {SeedApi.TypesMapOfDocumentedUnknownType} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType({
-     *         "string": {
-     *             "key": "value"
-     *         }
-     *     })
+     *     await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType({})
      */
     public getAndReturnMapOfDocumentedUnknownType(
-        request: SeedExhaustive.types.MapOfDocumentedUnknownType,
+        request: SeedApi.TypesMapOfDocumentedUnknownType,
         requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<
         core.APIResponse<
-            SeedExhaustive.types.MapOfDocumentedUnknownType,
-            SeedExhaustive.endpoints.object.getAndReturnMapOfDocumentedUnknownType.Error
+            SeedApi.TypesMapOfDocumentedUnknownType,
+            SeedApi.endpoints.object.getAndReturnMapOfDocumentedUnknownType.Error
         >
     > {
         return core.HttpResponsePromise.fromPromise(
@@ -780,13 +679,13 @@ export class ObjectClient {
     }
 
     private async __getAndReturnMapOfDocumentedUnknownType(
-        request: SeedExhaustive.types.MapOfDocumentedUnknownType,
+        request: SeedApi.TypesMapOfDocumentedUnknownType,
         requestOptions?: ObjectClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
             core.APIResponse<
-                SeedExhaustive.types.MapOfDocumentedUnknownType,
-                SeedExhaustive.endpoints.object.getAndReturnMapOfDocumentedUnknownType.Error
+                SeedApi.TypesMapOfDocumentedUnknownType,
+                SeedApi.endpoints.object.getAndReturnMapOfDocumentedUnknownType.Error
             >
         >
     > {
@@ -800,7 +699,7 @@ export class ObjectClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/object/get-and-return-map-of-documented-unknown-type",
+                "object/get-and-return-map-of-documented-unknown-type",
             ),
             method: "POST",
             headers: _headers,
@@ -818,7 +717,7 @@ export class ObjectClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.MapOfDocumentedUnknownType,
+                    body: _response.body as SeedApi.TypesMapOfDocumentedUnknownType,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -829,188 +728,7 @@ export class ObjectClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.object.getAndReturnMapOfDocumentedUnknownType.Error._unknown(
-                    _response.error,
-                ),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
-    }
-
-    /**
-     * Tests that dynamic snippets include all required properties in the
-     * object initializer, even when the example omits some required fields.
-     *
-     * @param {SeedExhaustive.types.ObjectWithMixedRequiredAndOptionalFields} request
-     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields({
-     *         requiredString: "hello",
-     *         requiredInteger: 0,
-     *         optionalString: "world",
-     *         requiredLong: 0
-     *     })
-     */
-    public getAndReturnWithMixedRequiredAndOptionalFields(
-        request: SeedExhaustive.types.ObjectWithMixedRequiredAndOptionalFields,
-        requestOptions?: ObjectClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedExhaustive.types.ObjectWithMixedRequiredAndOptionalFields,
-            SeedExhaustive.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields.Error
-        >
-    > {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getAndReturnWithMixedRequiredAndOptionalFields(request, requestOptions),
-        );
-    }
-
-    private async __getAndReturnWithMixedRequiredAndOptionalFields(
-        request: SeedExhaustive.types.ObjectWithMixedRequiredAndOptionalFields,
-        requestOptions?: ObjectClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<
-                SeedExhaustive.types.ObjectWithMixedRequiredAndOptionalFields,
-                SeedExhaustive.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields.Error
-            >
-        >
-    > {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/object/get-and-return-with-mixed-required-and-optional-fields",
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: {
-                    ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithMixedRequiredAndOptionalFields,
-                    headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        return {
-            data: {
-                ok: false,
-                error: SeedExhaustive.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields.Error._unknown(
-                    _response.error,
-                ),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
-    }
-
-    /**
-     * Tests that dynamic snippets recursively construct default objects for
-     * required properties whose type is a named object. When the example
-     * omits the nested object, the generator should construct a default
-     * initializer with the nested object's required properties filled in.
-     *
-     * @param {SeedExhaustive.types.ObjectWithRequiredNestedObject} request
-     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.object.getAndReturnWithRequiredNestedObject({
-     *         requiredString: "hello",
-     *         requiredObject: {
-     *             string: "nested",
-     *             NestedObject: {}
-     *         }
-     *     })
-     */
-    public getAndReturnWithRequiredNestedObject(
-        request: SeedExhaustive.types.ObjectWithRequiredNestedObject,
-        requestOptions?: ObjectClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedExhaustive.types.ObjectWithRequiredNestedObject,
-            SeedExhaustive.endpoints.object.getAndReturnWithRequiredNestedObject.Error
-        >
-    > {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getAndReturnWithRequiredNestedObject(request, requestOptions),
-        );
-    }
-
-    private async __getAndReturnWithRequiredNestedObject(
-        request: SeedExhaustive.types.ObjectWithRequiredNestedObject,
-        requestOptions?: ObjectClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<
-                SeedExhaustive.types.ObjectWithRequiredNestedObject,
-                SeedExhaustive.endpoints.object.getAndReturnWithRequiredNestedObject.Error
-            >
-        >
-    > {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/object/get-and-return-with-required-nested-object",
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: {
-                    ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithRequiredNestedObject,
-                    headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        return {
-            data: {
-                ok: false,
-                error: SeedExhaustive.endpoints.object.getAndReturnWithRequiredNestedObject.Error._unknown(
-                    _response.error,
-                ),
+                error: SeedApi.endpoints.object.getAndReturnMapOfDocumentedUnknownType.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -1022,35 +740,35 @@ export class ObjectClient {
      * The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
      * without being converted to "2023-08-31T14:15:22.000Z".
      *
-     * @param {SeedExhaustive.types.ObjectWithDatetimeLikeString} request
+     * @param {SeedApi.TypesObjectWithDatetimeLikeString} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithDatetimeLikeString({
-     *         datetimeLikeString: "2023-08-31T14:15:22Z",
-     *         actualDatetime: "2023-08-31T14:15:22Z"
+     *         datetimeLikeString: "datetimeLikeString",
+     *         actualDatetime: "2024-01-15T09:30:00Z"
      *     })
      */
     public getAndReturnWithDatetimeLikeString(
-        request: SeedExhaustive.types.ObjectWithDatetimeLikeString,
+        request: SeedApi.TypesObjectWithDatetimeLikeString,
         requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<
         core.APIResponse<
-            SeedExhaustive.types.ObjectWithDatetimeLikeString,
-            SeedExhaustive.endpoints.object.getAndReturnWithDatetimeLikeString.Error
+            SeedApi.TypesObjectWithDatetimeLikeString,
+            SeedApi.endpoints.object.getAndReturnWithDatetimeLikeString.Error
         >
     > {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithDatetimeLikeString(request, requestOptions));
     }
 
     private async __getAndReturnWithDatetimeLikeString(
-        request: SeedExhaustive.types.ObjectWithDatetimeLikeString,
+        request: SeedApi.TypesObjectWithDatetimeLikeString,
         requestOptions?: ObjectClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
             core.APIResponse<
-                SeedExhaustive.types.ObjectWithDatetimeLikeString,
-                SeedExhaustive.endpoints.object.getAndReturnWithDatetimeLikeString.Error
+                SeedApi.TypesObjectWithDatetimeLikeString,
+                SeedApi.endpoints.object.getAndReturnWithDatetimeLikeString.Error
             >
         >
     > {
@@ -1064,7 +782,7 @@ export class ObjectClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/object/get-and-return-with-datetime-like-string",
+                "object/get-and-return-with-datetime-like-string",
             ),
             method: "POST",
             headers: _headers,
@@ -1082,7 +800,7 @@ export class ObjectClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithDatetimeLikeString,
+                    body: _response.body as SeedApi.TypesObjectWithDatetimeLikeString,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -1093,9 +811,7 @@ export class ObjectClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.object.getAndReturnWithDatetimeLikeString.Error._unknown(
-                    _response.error,
-                ),
+                error: SeedApi.endpoints.object.getAndReturnWithDatetimeLikeString.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,

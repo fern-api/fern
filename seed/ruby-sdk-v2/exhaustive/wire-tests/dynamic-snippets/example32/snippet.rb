@@ -5,7 +5,4 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.pagination.list_items(
-  cursor: "cursor",
-  limit: 1
-)
+client.endpoints.enum.get_and_return_enum(request: "SUNNY")

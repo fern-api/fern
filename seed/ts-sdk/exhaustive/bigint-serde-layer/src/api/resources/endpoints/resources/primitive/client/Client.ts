@@ -49,7 +49,7 @@ export class PrimitiveClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/primitive/string",
+                "primitive/string",
             ),
             method: "POST",
             headers: _headers,
@@ -80,7 +80,7 @@ export class PrimitiveClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -118,7 +118,7 @@ export class PrimitiveClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/primitive/integer",
+                "primitive/integer",
             ),
             method: "POST",
             headers: _headers,
@@ -149,7 +149,7 @@ export class PrimitiveClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -187,7 +187,7 @@ export class PrimitiveClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/primitive/long",
+                "primitive/long",
             ),
             method: "POST",
             headers: _headers,
@@ -218,7 +218,7 @@ export class PrimitiveClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -256,7 +256,7 @@ export class PrimitiveClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/primitive/double",
+                "primitive/double",
             ),
             method: "POST",
             headers: _headers,
@@ -287,7 +287,7 @@ export class PrimitiveClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -325,7 +325,7 @@ export class PrimitiveClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/primitive/boolean",
+                "primitive/boolean",
             ),
             method: "POST",
             headers: _headers,
@@ -356,7 +356,7 @@ export class PrimitiveClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -394,7 +394,7 @@ export class PrimitiveClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/primitive/datetime",
+                "primitive/datetime",
             ),
             method: "POST",
             headers: _headers,
@@ -425,7 +425,7 @@ export class PrimitiveClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -463,7 +463,7 @@ export class PrimitiveClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/primitive/date",
+                "primitive/date",
             ),
             method: "POST",
             headers: _headers,
@@ -494,7 +494,7 @@ export class PrimitiveClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -509,7 +509,7 @@ export class PrimitiveClient {
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+     *     await client.endpoints.primitive.getAndReturnUuid("string")
      */
     public getAndReturnUuid(
         request: string,
@@ -532,7 +532,7 @@ export class PrimitiveClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/primitive/uuid",
+                "primitive/uuid",
             ),
             method: "POST",
             headers: _headers,
@@ -563,7 +563,7 @@ export class PrimitiveClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -578,7 +578,7 @@ export class PrimitiveClient {
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh")
+     *     await client.endpoints.primitive.getAndReturnBase64("string")
      */
     public getAndReturnBase64(
         request: string,
@@ -601,7 +601,7 @@ export class PrimitiveClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/primitive/base64",
+                "primitive/base64",
             ),
             method: "POST",
             headers: _headers,
@@ -632,7 +632,7 @@ export class PrimitiveClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

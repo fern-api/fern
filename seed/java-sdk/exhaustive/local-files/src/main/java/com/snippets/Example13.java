@@ -1,22 +1,24 @@
 package com.snippets;
 
-import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
+import com.fern.sdk.SeedApiClient;
+import com.fern.sdk.types.TypesObjectWithRequiredField;
+import java.util.Arrays;
 
 public class Example13 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().httpMethods().testPut(
-            "id",
-            ObjectWithRequiredField
-                .builder()
-                .string("string")
-                .build()
+        client.endpoints().container().getAndReturnListOfObjects(
+            Arrays.asList(
+                TypesObjectWithRequiredField
+                    .builder()
+                    .string("string")
+                    .build()
+            )
         );
     }
 }

@@ -6,7 +6,7 @@ package com.fern.sdk.resources.endpoints.enum_;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.types.enum_.types.WeatherReport;
+import com.fern.sdk.types.TypesWeatherReport;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncEnumClient {
@@ -26,11 +26,11 @@ public class AsyncEnumClient {
     return this.rawClient;
   }
 
-  public CompletableFuture<WeatherReport> getAndReturnEnum(WeatherReport request) {
+  public CompletableFuture<TypesWeatherReport> getAndReturnEnum(TypesWeatherReport request) {
     return this.rawClient.getAndReturnEnum(request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<WeatherReport> getAndReturnEnum(WeatherReport request,
+  public CompletableFuture<TypesWeatherReport> getAndReturnEnum(TypesWeatherReport request,
       RequestOptions requestOptions) {
     return this.rawClient.getAndReturnEnum(request, requestOptions).thenApply(response -> response.body());
   }

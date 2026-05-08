@@ -4,7 +4,7 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.enum.types.weather_report import WeatherReport
+from ...types.types_weather_report import TypesWeatherReport
 from .raw_client import AsyncRawEnumClient, RawEnumClient
 
 # this is used as the default value for optional parameters
@@ -27,19 +27,20 @@ class EnumClient:
         return self._raw_client
 
     def get_and_return_enum(
-        self, *, request: WeatherReport, request_options: typing.Optional[RequestOptions] = None
-    ) -> WeatherReport:
+        self, *, request: TypesWeatherReport, request_options: typing.Optional[RequestOptions] = None
+    ) -> TypesWeatherReport:
         """
         Parameters
         ----------
-        request : WeatherReport
+        request : TypesWeatherReport
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        WeatherReport
+        TypesWeatherReport
+
 
         Examples
         --------
@@ -73,19 +74,20 @@ class AsyncEnumClient:
         return self._raw_client
 
     async def get_and_return_enum(
-        self, *, request: WeatherReport, request_options: typing.Optional[RequestOptions] = None
-    ) -> WeatherReport:
+        self, *, request: TypesWeatherReport, request_options: typing.Optional[RequestOptions] = None
+    ) -> TypesWeatherReport:
         """
         Parameters
         ----------
-        request : WeatherReport
+        request : TypesWeatherReport
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        WeatherReport
+        TypesWeatherReport
+
 
         Examples
         --------

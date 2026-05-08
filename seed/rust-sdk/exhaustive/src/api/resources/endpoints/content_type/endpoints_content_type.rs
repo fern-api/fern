@@ -15,13 +15,13 @@ impl ContentTypeClient {
 
     pub async fn post_json_patch_content_type(
         &self,
-        request: &ObjectWithOptionalField,
+        request: &TypesObjectWithOptionalField,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/foo/bar",
+                "foo/bar",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -31,13 +31,13 @@ impl ContentTypeClient {
 
     pub async fn post_json_patch_content_with_charset_type(
         &self,
-        request: &ObjectWithOptionalField,
+        request: &TypesObjectWithOptionalField,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/foo/baz",
+                "foo/baz",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

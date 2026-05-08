@@ -5,10 +5,10 @@ package enum
 import (
 	context "context"
 
+	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
-	types "github.com/exhaustive/fern/types"
 )
 
 type Client struct {
@@ -35,9 +35,9 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) GetAndReturnEnum(
 	ctx context.Context,
-	request *types.WeatherReport,
+	request *fern.TypesWeatherReport,
 	opts ...option.RequestOption,
-) (*types.WeatherReport, error) {
+) (*fern.TypesWeatherReport, error) {
 	response, err := c.WithRawResponse.GetAndReturnEnum(
 		ctx,
 		request,

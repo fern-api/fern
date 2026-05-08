@@ -6,10 +6,10 @@ import (
 	context "context"
 	http "net/http"
 
+	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
-	types "github.com/exhaustive/fern/types"
 )
 
 type RawClient struct {
@@ -74,9 +74,9 @@ func (r *RawClient) GetAndReturnListOfPrimitives(
 
 func (r *RawClient) GetAndReturnListOfObjects(
 	ctx context.Context,
-	request []*types.ObjectWithRequiredField,
+	request []*fern.TypesObjectWithRequiredField,
 	opts ...option.RequestOption,
-) (*core.Response[[]*types.ObjectWithRequiredField], error) {
+) (*core.Response[[]*fern.TypesObjectWithRequiredField], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -88,7 +88,7 @@ func (r *RawClient) GetAndReturnListOfObjects(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response []*types.ObjectWithRequiredField
+	var response []*fern.TypesObjectWithRequiredField
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -106,7 +106,7 @@ func (r *RawClient) GetAndReturnListOfObjects(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[[]*types.ObjectWithRequiredField]{
+	return &core.Response[[]*fern.TypesObjectWithRequiredField]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -156,9 +156,9 @@ func (r *RawClient) GetAndReturnSetOfPrimitives(
 
 func (r *RawClient) GetAndReturnSetOfObjects(
 	ctx context.Context,
-	request []*types.ObjectWithRequiredField,
+	request []*fern.TypesObjectWithRequiredField,
 	opts ...option.RequestOption,
-) (*core.Response[[]*types.ObjectWithRequiredField], error) {
+) (*core.Response[[]*fern.TypesObjectWithRequiredField], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -170,7 +170,7 @@ func (r *RawClient) GetAndReturnSetOfObjects(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response []*types.ObjectWithRequiredField
+	var response []*fern.TypesObjectWithRequiredField
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -188,7 +188,7 @@ func (r *RawClient) GetAndReturnSetOfObjects(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[[]*types.ObjectWithRequiredField]{
+	return &core.Response[[]*fern.TypesObjectWithRequiredField]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -238,9 +238,9 @@ func (r *RawClient) GetAndReturnMapPrimToPrim(
 
 func (r *RawClient) GetAndReturnMapOfPrimToObject(
 	ctx context.Context,
-	request map[string]*types.ObjectWithRequiredField,
+	request map[string]*fern.TypesObjectWithRequiredField,
 	opts ...option.RequestOption,
-) (*core.Response[map[string]*types.ObjectWithRequiredField], error) {
+) (*core.Response[map[string]*fern.TypesObjectWithRequiredField], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -252,7 +252,7 @@ func (r *RawClient) GetAndReturnMapOfPrimToObject(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response map[string]*types.ObjectWithRequiredField
+	var response map[string]*fern.TypesObjectWithRequiredField
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -270,7 +270,7 @@ func (r *RawClient) GetAndReturnMapOfPrimToObject(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[map[string]*types.ObjectWithRequiredField]{
+	return &core.Response[map[string]*fern.TypesObjectWithRequiredField]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -279,9 +279,9 @@ func (r *RawClient) GetAndReturnMapOfPrimToObject(
 
 func (r *RawClient) GetAndReturnMapOfPrimToUndiscriminatedUnion(
 	ctx context.Context,
-	request map[string]*types.MixedType,
+	request map[string]*fern.TypesMixedType,
 	opts ...option.RequestOption,
-) (*core.Response[map[string]*types.MixedType], error) {
+) (*core.Response[map[string]*fern.TypesMixedType], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -293,7 +293,7 @@ func (r *RawClient) GetAndReturnMapOfPrimToUndiscriminatedUnion(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response map[string]*types.MixedType
+	var response map[string]*fern.TypesMixedType
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -311,7 +311,7 @@ func (r *RawClient) GetAndReturnMapOfPrimToUndiscriminatedUnion(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[map[string]*types.MixedType]{
+	return &core.Response[map[string]*fern.TypesMixedType]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -320,9 +320,9 @@ func (r *RawClient) GetAndReturnMapOfPrimToUndiscriminatedUnion(
 
 func (r *RawClient) GetAndReturnOptional(
 	ctx context.Context,
-	request *types.ObjectWithRequiredField,
+	request *fern.TypesObjectWithRequiredField,
 	opts ...option.RequestOption,
-) (*core.Response[*types.ObjectWithRequiredField], error) {
+) (*core.Response[*fern.TypesObjectWithRequiredField], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -334,7 +334,7 @@ func (r *RawClient) GetAndReturnOptional(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *types.ObjectWithRequiredField
+	var response *fern.TypesObjectWithRequiredField
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -352,7 +352,7 @@ func (r *RawClient) GetAndReturnOptional(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*types.ObjectWithRequiredField]{
+	return &core.Response[*fern.TypesObjectWithRequiredField]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

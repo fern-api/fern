@@ -6,13 +6,11 @@ package com.fern.sdk.resources.endpoints.container;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
-import com.fern.sdk.resources.types.union.types.MixedType;
+import com.fern.sdk.types.TypesMixedType;
+import com.fern.sdk.types.TypesObjectWithRequiredField;
 import java.lang.String;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncContainerClient {
@@ -41,32 +39,32 @@ public class AsyncContainerClient {
     return this.rawClient.getAndReturnListOfPrimitives(request, requestOptions).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<List<ObjectWithRequiredField>> getAndReturnListOfObjects(
-      List<ObjectWithRequiredField> request) {
+  public CompletableFuture<List<TypesObjectWithRequiredField>> getAndReturnListOfObjects(
+      List<TypesObjectWithRequiredField> request) {
     return this.rawClient.getAndReturnListOfObjects(request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<List<ObjectWithRequiredField>> getAndReturnListOfObjects(
-      List<ObjectWithRequiredField> request, RequestOptions requestOptions) {
+  public CompletableFuture<List<TypesObjectWithRequiredField>> getAndReturnListOfObjects(
+      List<TypesObjectWithRequiredField> request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnListOfObjects(request, requestOptions).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<Set<String>> getAndReturnSetOfPrimitives(Set<String> request) {
+  public CompletableFuture<List<String>> getAndReturnSetOfPrimitives(List<String> request) {
     return this.rawClient.getAndReturnSetOfPrimitives(request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<Set<String>> getAndReturnSetOfPrimitives(Set<String> request,
+  public CompletableFuture<List<String>> getAndReturnSetOfPrimitives(List<String> request,
       RequestOptions requestOptions) {
     return this.rawClient.getAndReturnSetOfPrimitives(request, requestOptions).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<Set<ObjectWithRequiredField>> getAndReturnSetOfObjects(
-      Set<ObjectWithRequiredField> request) {
+  public CompletableFuture<List<TypesObjectWithRequiredField>> getAndReturnSetOfObjects(
+      List<TypesObjectWithRequiredField> request) {
     return this.rawClient.getAndReturnSetOfObjects(request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<Set<ObjectWithRequiredField>> getAndReturnSetOfObjects(
-      Set<ObjectWithRequiredField> request, RequestOptions requestOptions) {
+  public CompletableFuture<List<TypesObjectWithRequiredField>> getAndReturnSetOfObjects(
+      List<TypesObjectWithRequiredField> request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnSetOfObjects(request, requestOptions).thenApply(response -> response.body());
   }
 
@@ -80,42 +78,33 @@ public class AsyncContainerClient {
     return this.rawClient.getAndReturnMapPrimToPrim(request, requestOptions).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<Map<String, ObjectWithRequiredField>> getAndReturnMapOfPrimToObject(
-      Map<String, ObjectWithRequiredField> request) {
+  public CompletableFuture<Map<String, TypesObjectWithRequiredField>> getAndReturnMapOfPrimToObject(
+      Map<String, TypesObjectWithRequiredField> request) {
     return this.rawClient.getAndReturnMapOfPrimToObject(request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<Map<String, ObjectWithRequiredField>> getAndReturnMapOfPrimToObject(
-      Map<String, ObjectWithRequiredField> request, RequestOptions requestOptions) {
+  public CompletableFuture<Map<String, TypesObjectWithRequiredField>> getAndReturnMapOfPrimToObject(
+      Map<String, TypesObjectWithRequiredField> request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnMapOfPrimToObject(request, requestOptions).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<Map<String, MixedType>> getAndReturnMapOfPrimToUndiscriminatedUnion(
-      Map<String, MixedType> request) {
+  public CompletableFuture<Map<String, TypesMixedType>> getAndReturnMapOfPrimToUndiscriminatedUnion(
+      Map<String, TypesMixedType> request) {
     return this.rawClient.getAndReturnMapOfPrimToUndiscriminatedUnion(request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<Map<String, MixedType>> getAndReturnMapOfPrimToUndiscriminatedUnion(
-      Map<String, MixedType> request, RequestOptions requestOptions) {
+  public CompletableFuture<Map<String, TypesMixedType>> getAndReturnMapOfPrimToUndiscriminatedUnion(
+      Map<String, TypesMixedType> request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnMapOfPrimToUndiscriminatedUnion(request, requestOptions).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<Optional<ObjectWithRequiredField>> getAndReturnOptional() {
-    return this.rawClient.getAndReturnOptional().thenApply(response -> response.body());
-  }
-
-  public CompletableFuture<Optional<ObjectWithRequiredField>> getAndReturnOptional(
-      RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnOptional(requestOptions).thenApply(response -> response.body());
-  }
-
-  public CompletableFuture<Optional<ObjectWithRequiredField>> getAndReturnOptional(
-      Optional<ObjectWithRequiredField> request) {
+  public CompletableFuture<TypesObjectWithRequiredField> getAndReturnOptional(
+      TypesObjectWithRequiredField request) {
     return this.rawClient.getAndReturnOptional(request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<Optional<ObjectWithRequiredField>> getAndReturnOptional(
-      Optional<ObjectWithRequiredField> request, RequestOptions requestOptions) {
+  public CompletableFuture<TypesObjectWithRequiredField> getAndReturnOptional(
+      TypesObjectWithRequiredField request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnOptional(request, requestOptions).thenApply(response -> response.body());
   }
 }

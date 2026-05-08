@@ -1,6 +1,6 @@
 from .conftest import get_client, verify_request_count
 
-from seed.types.union import Animal_Dog
+from seed import TypesAnimalZero
 
 
 def test_endpoints_union_get_and_return_union() -> None:
@@ -8,9 +8,10 @@ def test_endpoints_union_get_and_return_union() -> None:
     test_id = "endpoints.union.get_and_return_union.0"
     client = get_client(test_id)
     client.endpoints.union.get_and_return_union(
-        request=Animal_Dog(
+        request=TypesAnimalZero(
             name="name",
             likes_to_woof=True,
+            animal="dog",
         ),
     )
     verify_request_count(test_id, "POST", "/union", None, 1)

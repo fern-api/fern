@@ -1,18 +1,12 @@
 package com.snippets;
 
-import com.seed.exhaustive.Best;
-import com.seed.exhaustive.resources.types.union.types.MixedType;
-import java.util.HashMap;
+import com.seed.api.Best;
 
 public class Example6 {
     public static void main(String[] args) {
         Best client =
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.endpoints().container().getAndReturnMapOfPrimToUndiscriminatedUnion(new HashMap<String, MixedType>() {
-            {
-                put("string", MixedType.of(1.1));
-            }
-        });
+        client.noReqBody().getWithNoRequestBody();
     }
 }

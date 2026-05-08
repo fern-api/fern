@@ -16,7 +16,7 @@ if typing.TYPE_CHECKING:
     from .req_with_headers.client import AsyncReqWithHeadersClient, ReqWithHeadersClient
 
 
-class SeedExhaustive:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -49,9 +49,9 @@ class SeedExhaustive:
 
     Examples
     --------
-    from seed import SeedExhaustive
+    from seed import SeedApi
 
-    client = SeedExhaustive(
+    client = SeedApi(
         token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )
@@ -87,19 +87,11 @@ class SeedExhaustive:
             max_retries=_defaulted_max_retries,
             logging=logging,
         )
-        self._endpoints: typing.Optional[EndpointsClient] = None
         self._inlined_requests: typing.Optional[InlinedRequestsClient] = None
         self._no_auth: typing.Optional[NoAuthClient] = None
         self._no_req_body: typing.Optional[NoReqBodyClient] = None
         self._req_with_headers: typing.Optional[ReqWithHeadersClient] = None
-
-    @property
-    def endpoints(self):
-        if self._endpoints is None:
-            from .endpoints.client import EndpointsClient  # noqa: E402
-
-            self._endpoints = EndpointsClient(client_wrapper=self._client_wrapper)
-        return self._endpoints
+        self._endpoints: typing.Optional[EndpointsClient] = None
 
     @property
     def inlined_requests(self):
@@ -133,6 +125,14 @@ class SeedExhaustive:
             self._req_with_headers = ReqWithHeadersClient(client_wrapper=self._client_wrapper)
         return self._req_with_headers
 
+    @property
+    def endpoints(self):
+        if self._endpoints is None:
+            from .endpoints.client import EndpointsClient  # noqa: E402
+
+            self._endpoints = EndpointsClient(client_wrapper=self._client_wrapper)
+        return self._endpoints
+
 
 def _make_default_async_client(
     timeout: typing.Optional[float],
@@ -152,7 +152,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedExhaustive:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -188,9 +188,9 @@ class AsyncSeedExhaustive:
 
     Examples
     --------
-    from seed import AsyncSeedExhaustive
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedExhaustive(
+    client = AsyncSeedApi(
         token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )
@@ -226,19 +226,11 @@ class AsyncSeedExhaustive:
             max_retries=_defaulted_max_retries,
             logging=logging,
         )
-        self._endpoints: typing.Optional[AsyncEndpointsClient] = None
         self._inlined_requests: typing.Optional[AsyncInlinedRequestsClient] = None
         self._no_auth: typing.Optional[AsyncNoAuthClient] = None
         self._no_req_body: typing.Optional[AsyncNoReqBodyClient] = None
         self._req_with_headers: typing.Optional[AsyncReqWithHeadersClient] = None
-
-    @property
-    def endpoints(self):
-        if self._endpoints is None:
-            from .endpoints.client import AsyncEndpointsClient  # noqa: E402
-
-            self._endpoints = AsyncEndpointsClient(client_wrapper=self._client_wrapper)
-        return self._endpoints
+        self._endpoints: typing.Optional[AsyncEndpointsClient] = None
 
     @property
     def inlined_requests(self):
@@ -271,3 +263,11 @@ class AsyncSeedExhaustive:
 
             self._req_with_headers = AsyncReqWithHeadersClient(client_wrapper=self._client_wrapper)
         return self._req_with_headers
+
+    @property
+    def endpoints(self):
+        if self._endpoints is None:
+            from .endpoints.client import AsyncEndpointsClient  # noqa: E402
+
+            self._endpoints = AsyncEndpointsClient(client_wrapper=self._client_wrapper)
+        return self._endpoints

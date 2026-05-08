@@ -4,7 +4,7 @@ namespace Seed\Endpoints\ContentType;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Types\Object\Types\ObjectWithOptionalField;
+use Seed\Types\TypesObjectWithOptionalField;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -48,7 +48,7 @@ class ContentTypeClient
     }
 
     /**
-     * @param ObjectWithOptionalField $request
+     * @param TypesObjectWithOptionalField $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -60,14 +60,14 @@ class ContentTypeClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function postJsonPatchContentType(ObjectWithOptionalField $request, ?array $options = null): void
+    public function postJsonPatchContentType(TypesObjectWithOptionalField $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/foo/bar",
+                    path: "foo/bar",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -88,7 +88,7 @@ class ContentTypeClient
     }
 
     /**
-     * @param ObjectWithOptionalField $request
+     * @param TypesObjectWithOptionalField $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -100,14 +100,14 @@ class ContentTypeClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function postJsonPatchContentWithCharsetType(ObjectWithOptionalField $request, ?array $options = null): void
+    public function postJsonPatchContentWithCharsetType(TypesObjectWithOptionalField $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/foo/baz",
+                    path: "foo/baz",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

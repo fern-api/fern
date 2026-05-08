@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
-import * as SeedExhaustive from "../../../../../index.js";
+import * as SeedApi from "../../../../../index.js";
 
 export declare namespace ContainerClient {
     export type Options = BaseClientOptions;
@@ -24,13 +24,13 @@ export class ContainerClient {
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"])
+     *     await client.endpoints.container.getAndReturnListOfPrimitives(["string"])
      */
     public getAndReturnListOfPrimitives(
         request: string[],
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<string[], SeedExhaustive.endpoints.container.getAndReturnListOfPrimitives.Error>
+        core.APIResponse<string[], SeedApi.endpoints.container.getAndReturnListOfPrimitives.Error>
     > {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnListOfPrimitives(request, requestOptions));
     }
@@ -39,9 +39,7 @@ export class ContainerClient {
         request: string[],
         requestOptions?: ContainerClient.RequestOptions,
     ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<string[], SeedExhaustive.endpoints.container.getAndReturnListOfPrimitives.Error>
-        >
+        core.WithRawResponse<core.APIResponse<string[], SeedApi.endpoints.container.getAndReturnListOfPrimitives.Error>>
     > {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -53,7 +51,7 @@ export class ContainerClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/container/list-of-primitives",
+                "container/list-of-primitives",
             ),
             method: "POST",
             headers: _headers,
@@ -82,7 +80,7 @@ export class ContainerClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.container.getAndReturnListOfPrimitives.Error._unknown(_response.error),
+                error: SeedApi.endpoints.container.getAndReturnListOfPrimitives.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -90,36 +88,34 @@ export class ContainerClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
+     * @param {SeedApi.TypesObjectWithRequiredField[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.container.getAndReturnListOfObjects([{
      *             string: "string"
-     *         }, {
-     *             string: "string"
      *         }])
      */
     public getAndReturnListOfObjects(
-        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        request: SeedApi.TypesObjectWithRequiredField[],
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<
         core.APIResponse<
-            SeedExhaustive.types.ObjectWithRequiredField[],
-            SeedExhaustive.endpoints.container.getAndReturnListOfObjects.Error
+            SeedApi.TypesObjectWithRequiredField[],
+            SeedApi.endpoints.container.getAndReturnListOfObjects.Error
         >
     > {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnListOfObjects(request, requestOptions));
     }
 
     private async __getAndReturnListOfObjects(
-        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        request: SeedApi.TypesObjectWithRequiredField[],
         requestOptions?: ContainerClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
             core.APIResponse<
-                SeedExhaustive.types.ObjectWithRequiredField[],
-                SeedExhaustive.endpoints.container.getAndReturnListOfObjects.Error
+                SeedApi.TypesObjectWithRequiredField[],
+                SeedApi.endpoints.container.getAndReturnListOfObjects.Error
             >
         >
     > {
@@ -133,7 +129,7 @@ export class ContainerClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/container/list-of-objects",
+                "container/list-of-objects",
             ),
             method: "POST",
             headers: _headers,
@@ -151,7 +147,7 @@ export class ContainerClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
+                    body: _response.body as SeedApi.TypesObjectWithRequiredField[],
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -162,7 +158,7 @@ export class ContainerClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.container.getAndReturnListOfObjects.Error._unknown(_response.error),
+                error: SeedApi.endpoints.container.getAndReturnListOfObjects.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -180,7 +176,7 @@ export class ContainerClient {
         request: string[],
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<string[], SeedExhaustive.endpoints.container.getAndReturnSetOfPrimitives.Error>
+        core.APIResponse<string[], SeedApi.endpoints.container.getAndReturnSetOfPrimitives.Error>
     > {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnSetOfPrimitives(request, requestOptions));
     }
@@ -189,9 +185,7 @@ export class ContainerClient {
         request: string[],
         requestOptions?: ContainerClient.RequestOptions,
     ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<string[], SeedExhaustive.endpoints.container.getAndReturnSetOfPrimitives.Error>
-        >
+        core.WithRawResponse<core.APIResponse<string[], SeedApi.endpoints.container.getAndReturnSetOfPrimitives.Error>>
     > {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -203,7 +197,7 @@ export class ContainerClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/container/set-of-primitives",
+                "container/set-of-primitives",
             ),
             method: "POST",
             headers: _headers,
@@ -232,7 +226,7 @@ export class ContainerClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.container.getAndReturnSetOfPrimitives.Error._unknown(_response.error),
+                error: SeedApi.endpoints.container.getAndReturnSetOfPrimitives.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -240,7 +234,7 @@ export class ContainerClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
+     * @param {SeedApi.TypesObjectWithRequiredField[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -249,25 +243,25 @@ export class ContainerClient {
      *         }])
      */
     public getAndReturnSetOfObjects(
-        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        request: SeedApi.TypesObjectWithRequiredField[],
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<
         core.APIResponse<
-            SeedExhaustive.types.ObjectWithRequiredField[],
-            SeedExhaustive.endpoints.container.getAndReturnSetOfObjects.Error
+            SeedApi.TypesObjectWithRequiredField[],
+            SeedApi.endpoints.container.getAndReturnSetOfObjects.Error
         >
     > {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnSetOfObjects(request, requestOptions));
     }
 
     private async __getAndReturnSetOfObjects(
-        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        request: SeedApi.TypesObjectWithRequiredField[],
         requestOptions?: ContainerClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
             core.APIResponse<
-                SeedExhaustive.types.ObjectWithRequiredField[],
-                SeedExhaustive.endpoints.container.getAndReturnSetOfObjects.Error
+                SeedApi.TypesObjectWithRequiredField[],
+                SeedApi.endpoints.container.getAndReturnSetOfObjects.Error
             >
         >
     > {
@@ -281,7 +275,7 @@ export class ContainerClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/container/set-of-objects",
+                "container/set-of-objects",
             ),
             method: "POST",
             headers: _headers,
@@ -299,7 +293,7 @@ export class ContainerClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
+                    body: _response.body as SeedApi.TypesObjectWithRequiredField[],
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -310,7 +304,7 @@ export class ContainerClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.container.getAndReturnSetOfObjects.Error._unknown(_response.error),
+                error: SeedApi.endpoints.container.getAndReturnSetOfObjects.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -323,14 +317,14 @@ export class ContainerClient {
      *
      * @example
      *     await client.endpoints.container.getAndReturnMapPrimToPrim({
-     *         "string": "string"
+     *         "key": "value"
      *     })
      */
     public getAndReturnMapPrimToPrim(
         request: Record<string, string>,
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<Record<string, string>, SeedExhaustive.endpoints.container.getAndReturnMapPrimToPrim.Error>
+        core.APIResponse<Record<string, string>, SeedApi.endpoints.container.getAndReturnMapPrimToPrim.Error>
     > {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnMapPrimToPrim(request, requestOptions));
     }
@@ -340,7 +334,7 @@ export class ContainerClient {
         requestOptions?: ContainerClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
-            core.APIResponse<Record<string, string>, SeedExhaustive.endpoints.container.getAndReturnMapPrimToPrim.Error>
+            core.APIResponse<Record<string, string>, SeedApi.endpoints.container.getAndReturnMapPrimToPrim.Error>
         >
     > {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
@@ -353,7 +347,7 @@ export class ContainerClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/container/map-prim-to-prim",
+                "container/map-prim-to-prim",
             ),
             method: "POST",
             headers: _headers,
@@ -382,7 +376,7 @@ export class ContainerClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.container.getAndReturnMapPrimToPrim.Error._unknown(_response.error),
+                error: SeedApi.endpoints.container.getAndReturnMapPrimToPrim.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -390,36 +384,36 @@ export class ContainerClient {
     }
 
     /**
-     * @param {Record<string, SeedExhaustive.types.ObjectWithRequiredField>} request
+     * @param {Record<string, SeedApi.TypesObjectWithRequiredField>} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.container.getAndReturnMapOfPrimToObject({
-     *         "string": {
+     *         "key": {
      *             string: "string"
      *         }
      *     })
      */
     public getAndReturnMapOfPrimToObject(
-        request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+        request: Record<string, SeedApi.TypesObjectWithRequiredField>,
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<
         core.APIResponse<
-            Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
-            SeedExhaustive.endpoints.container.getAndReturnMapOfPrimToObject.Error
+            Record<string, SeedApi.TypesObjectWithRequiredField>,
+            SeedApi.endpoints.container.getAndReturnMapOfPrimToObject.Error
         >
     > {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnMapOfPrimToObject(request, requestOptions));
     }
 
     private async __getAndReturnMapOfPrimToObject(
-        request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+        request: Record<string, SeedApi.TypesObjectWithRequiredField>,
         requestOptions?: ContainerClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
             core.APIResponse<
-                Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
-                SeedExhaustive.endpoints.container.getAndReturnMapOfPrimToObject.Error
+                Record<string, SeedApi.TypesObjectWithRequiredField>,
+                SeedApi.endpoints.container.getAndReturnMapOfPrimToObject.Error
             >
         >
     > {
@@ -433,7 +427,7 @@ export class ContainerClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/container/map-prim-to-object",
+                "container/map-prim-to-object",
             ),
             method: "POST",
             headers: _headers,
@@ -451,7 +445,7 @@ export class ContainerClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+                    body: _response.body as Record<string, SeedApi.TypesObjectWithRequiredField>,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -462,7 +456,7 @@ export class ContainerClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.container.getAndReturnMapOfPrimToObject.Error._unknown(_response.error),
+                error: SeedApi.endpoints.container.getAndReturnMapOfPrimToObject.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -470,21 +464,21 @@ export class ContainerClient {
     }
 
     /**
-     * @param {Record<string, SeedExhaustive.types.MixedType>} request
+     * @param {Record<string, SeedApi.TypesMixedType>} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
-     *         "string": 1.1
+     *         "key": 1.1
      *     })
      */
     public getAndReturnMapOfPrimToUndiscriminatedUnion(
-        request: Record<string, SeedExhaustive.types.MixedType>,
+        request: Record<string, SeedApi.TypesMixedType>,
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<
         core.APIResponse<
-            Record<string, SeedExhaustive.types.MixedType>,
-            SeedExhaustive.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion.Error
+            Record<string, SeedApi.TypesMixedType>,
+            SeedApi.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion.Error
         >
     > {
         return core.HttpResponsePromise.fromPromise(
@@ -493,13 +487,13 @@ export class ContainerClient {
     }
 
     private async __getAndReturnMapOfPrimToUndiscriminatedUnion(
-        request: Record<string, SeedExhaustive.types.MixedType>,
+        request: Record<string, SeedApi.TypesMixedType>,
         requestOptions?: ContainerClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
             core.APIResponse<
-                Record<string, SeedExhaustive.types.MixedType>,
-                SeedExhaustive.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion.Error
+                Record<string, SeedApi.TypesMixedType>,
+                SeedApi.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion.Error
             >
         >
     > {
@@ -513,7 +507,7 @@ export class ContainerClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/container/map-prim-to-union",
+                "container/map-prim-to-union",
             ),
             method: "POST",
             headers: _headers,
@@ -531,7 +525,7 @@ export class ContainerClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as Record<string, SeedExhaustive.types.MixedType>,
+                    body: _response.body as Record<string, SeedApi.TypesMixedType>,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -542,7 +536,7 @@ export class ContainerClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion.Error._unknown(
+                error: SeedApi.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion.Error._unknown(
                     _response.error,
                 ),
                 rawResponse: _response.rawResponse,
@@ -552,7 +546,7 @@ export class ContainerClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {SeedApi.TypesObjectWithRequiredField} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -561,25 +555,22 @@ export class ContainerClient {
      *     })
      */
     public getAndReturnOptional(
-        request?: SeedExhaustive.types.ObjectWithRequiredField,
+        request: SeedApi.TypesObjectWithRequiredField,
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedExhaustive.types.ObjectWithRequiredField | undefined,
-            SeedExhaustive.endpoints.container.getAndReturnOptional.Error
-        >
+        core.APIResponse<SeedApi.TypesObjectWithRequiredField, SeedApi.endpoints.container.getAndReturnOptional.Error>
     > {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnOptional(request, requestOptions));
     }
 
     private async __getAndReturnOptional(
-        request?: SeedExhaustive.types.ObjectWithRequiredField,
+        request: SeedApi.TypesObjectWithRequiredField,
         requestOptions?: ContainerClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
             core.APIResponse<
-                SeedExhaustive.types.ObjectWithRequiredField | undefined,
-                SeedExhaustive.endpoints.container.getAndReturnOptional.Error
+                SeedApi.TypesObjectWithRequiredField,
+                SeedApi.endpoints.container.getAndReturnOptional.Error
             >
         >
     > {
@@ -593,7 +584,7 @@ export class ContainerClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/container/opt-objects",
+                "container/opt-objects",
             ),
             method: "POST",
             headers: _headers,
@@ -611,7 +602,7 @@ export class ContainerClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithRequiredField | undefined,
+                    body: _response.body as SeedApi.TypesObjectWithRequiredField,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -622,7 +613,7 @@ export class ContainerClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.container.getAndReturnOptional.Error._unknown(_response.error),
+                error: SeedApi.endpoints.container.getAndReturnOptional.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,

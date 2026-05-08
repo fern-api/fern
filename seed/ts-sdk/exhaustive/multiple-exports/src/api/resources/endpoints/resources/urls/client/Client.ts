@@ -41,7 +41,7 @@ export class UrlsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/urls/MixedCase",
+                "urls/MixedCase",
             ),
             method: "GET",
             headers: _headers,
@@ -57,7 +57,7 @@ export class UrlsClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -88,7 +88,7 @@ export class UrlsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/urls/no-ending-slash",
+                "urls/no-ending-slash",
             ),
             method: "GET",
             headers: _headers,
@@ -104,7 +104,7 @@ export class UrlsClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -135,7 +135,7 @@ export class UrlsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/urls/with-ending-slash/",
+                "urls/with-ending-slash/",
             ),
             method: "GET",
             headers: _headers,
@@ -151,7 +151,7 @@ export class UrlsClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -182,7 +182,7 @@ export class UrlsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/urls/with_underscores",
+                "urls/with_underscores",
             ),
             method: "GET",
             headers: _headers,
@@ -198,7 +198,7 @@ export class UrlsClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

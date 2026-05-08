@@ -1,20 +1,14 @@
 package com.snippets;
 
-import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.types.types.ObjectWithRequiredField;
-import java.util.HashMap;
+import com.seed.api.SeedApiClient;
 
 public class Example5 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints().container().getAndReturnMapOfPrimToObject(new HashMap<String, ObjectWithRequiredField>() {
-            {
-                put("string", ObjectWithRequiredField.builder().string("string").build());
-            }
-        });
+        client.noReqBody().getWithNoRequestBody();
     }
 }

@@ -4,11 +4,15 @@ namespace Seed\Endpoints\Union;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Types\Union\Types\Animal;
+use Seed\Types\TypesAnimalZero;
+use Seed\Types\TypesAnimalOne;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
+use Seed\Core\Json\JsonSerializer;
+use Seed\Core\Types\Union;
+use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -49,7 +53,10 @@ class UnionClient
     }
 
     /**
-     * @param Animal $request
+     * @param (
+     *    TypesAnimalZero
+     *   |TypesAnimalOne
+     * ) $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -58,20 +65,23 @@ class UnionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?Animal
+     * @return (
+     *    TypesAnimalZero
+     *   |TypesAnimalOne
+     * )|null
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnUnion(Animal $request, ?array $options = null): ?Animal
+    public function getAndReturnUnion(TypesAnimalZero|TypesAnimalOne $request, ?array $options = null): TypesAnimalZero|TypesAnimalOne|null
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/union",
+                    path: "union",
                     method: HttpMethod::POST,
-                    body: $request,
+                    body: JsonSerializer::serializeUnion($request, new Union(TypesAnimalZero::class, TypesAnimalOne::class)),
                 ),
                 $options,
             );
@@ -81,7 +91,7 @@ class UnionClient
                 if (empty($json)) {
                     return null;
                 }
-                return Animal::fromJson($json);
+                return JsonDecoder::decodeUnion($json, new Union(TypesAnimalZero::class, TypesAnimalOne::class)); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

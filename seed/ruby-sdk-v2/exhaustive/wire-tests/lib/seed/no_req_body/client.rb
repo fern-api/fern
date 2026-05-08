@@ -18,12 +18,12 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
+      # @return [Seed::Types::TypesObjectWithOptionalField]
       def get_with_no_request_body(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/no-req-body",
+          path: "no-req-body",
           request_options: request_options
         )
         begin
@@ -33,7 +33,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Object_::Types::ObjectWithOptionalField.load(response.body)
+          Seed::Types::TypesObjectWithOptionalField.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -53,7 +53,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "/no-req-body",
+          path: "no-req-body",
           request_options: request_options
         )
         begin

@@ -6,8 +6,8 @@ package com.fern.sdk.resources.endpoints.put;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.endpoints.put.requests.PutRequest;
-import com.fern.sdk.resources.endpoints.put.types.PutResponse;
+import com.fern.sdk.resources.endpoints.put.requests.AddPutRequest;
+import com.fern.sdk.types.EndpointsPutResponse;
 import java.lang.String;
 import java.util.concurrent.CompletableFuture;
 
@@ -28,19 +28,19 @@ public class AsyncPutClient {
     return this.rawClient;
   }
 
-  public CompletableFuture<PutResponse> add(String id) {
+  public CompletableFuture<EndpointsPutResponse> add(String id) {
     return this.rawClient.add(id).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<PutResponse> add(String id, RequestOptions requestOptions) {
+  public CompletableFuture<EndpointsPutResponse> add(String id, RequestOptions requestOptions) {
     return this.rawClient.add(id, requestOptions).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<PutResponse> add(String id, PutRequest request) {
+  public CompletableFuture<EndpointsPutResponse> add(String id, AddPutRequest request) {
     return this.rawClient.add(id, request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<PutResponse> add(String id, PutRequest request,
+  public CompletableFuture<EndpointsPutResponse> add(String id, AddPutRequest request,
       RequestOptions requestOptions) {
     return this.rawClient.add(id, request, requestOptions).thenApply(response -> response.body());
   }

@@ -88,7 +88,7 @@ func TestEndpointsPutAddWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &endpoints.PutRequest{
+	request := &endpoints.AddPutRequest{
 		ID: "id",
 	}
 	_, invocationErr := client.Endpoints.Put.Add(

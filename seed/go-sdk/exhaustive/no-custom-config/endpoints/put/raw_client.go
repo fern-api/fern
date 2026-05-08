@@ -6,6 +6,7 @@ import (
 	context "context"
 	http "net/http"
 
+	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
 	endpoints "github.com/exhaustive/fern/endpoints"
 	internal "github.com/exhaustive/fern/internal"
@@ -33,9 +34,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Add(
 	ctx context.Context,
-	request *endpoints.PutRequest,
+	request *endpoints.AddPutRequest,
 	opts ...option.RequestOption,
-) (*core.Response[*endpoints.PutResponse], error) {
+) (*core.Response[*fern.EndpointsPutResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -50,7 +51,7 @@ func (r *RawClient) Add(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *endpoints.PutResponse
+	var response *fern.EndpointsPutResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -67,7 +68,7 @@ func (r *RawClient) Add(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*endpoints.PutResponse]{
+	return &core.Response[*fern.EndpointsPutResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

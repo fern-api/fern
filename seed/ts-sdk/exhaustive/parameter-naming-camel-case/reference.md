@@ -1,4 +1,274 @@
 # Reference
+## InlinedRequests
+<details><summary><code>client.inlinedRequests.<a href="/src/api/resources/inlinedRequests/client/Client.ts">postWithObjectBodyandResponse</a>({ ...params }) -> SeedApi.TypesObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with custom object in request body, response is an object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inlinedRequests.postWithObjectBodyandResponse({
+    string: "string",
+    integer: 1,
+    NestedObject: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.PostWithObjectBodyandResponseInlinedRequestsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InlinedRequestsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## NoAuth
+<details><summary><code>client.noAuth.<a href="/src/api/resources/noAuth/client/Client.ts">postWithNoAuth</a>({ ...params }) -> boolean</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST request with no auth
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.noAuth.postWithNoAuth({
+    "key": "value"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `unknown` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NoAuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## NoReqBody
+<details><summary><code>client.noReqBody.<a href="/src/api/resources/noReqBody/client/Client.ts">getWithNoRequestBody</a>() -> SeedApi.TypesObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.noReqBody.getWithNoRequestBody();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NoReqBodyClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.noReqBody.<a href="/src/api/resources/noReqBody/client/Client.ts">postWithNoRequestBody</a>() -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.noReqBody.postWithNoRequestBody();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NoReqBodyClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ReqWithHeaders
+<details><summary><code>client.reqWithHeaders.<a href="/src/api/resources/reqWithHeaders/client/Client.ts">getWithCustomHeader</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.reqWithHeaders.getWithCustomHeader({
+    testEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+    body: "string"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.GetWithCustomHeaderReqWithHeadersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ReqWithHeadersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Container
 <details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnListOfPrimitives</a>({ ...params }) -> string[]</code></summary>
 <dl>
@@ -13,7 +283,7 @@
 <dd>
 
 ```typescript
-await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"]);
+await client.endpoints.container.getAndReturnListOfPrimitives(["string"]);
 
 ```
 </dd>
@@ -49,7 +319,7 @@ await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnListOfObjects</a>({ ...params }) -> SeedExhaustive.ObjectWithRequiredField[]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnListOfObjects</a>({ ...params }) -> SeedApi.TypesObjectWithRequiredField[]</code></summary>
 <dl>
 <dd>
 
@@ -63,8 +333,6 @@ await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string
 
 ```typescript
 await client.endpoints.container.getAndReturnListOfObjects([{
-        string: "string"
-    }, {
         string: "string"
     }]);
 
@@ -82,7 +350,7 @@ await client.endpoints.container.getAndReturnListOfObjects([{
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.ObjectWithRequiredField[]` 
+**request:** `SeedApi.TypesObjectWithRequiredField[]` 
     
 </dd>
 </dl>
@@ -151,7 +419,7 @@ await client.endpoints.container.getAndReturnSetOfPrimitives(["string"]);
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfObjects</a>({ ...params }) -> SeedExhaustive.ObjectWithRequiredField[]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfObjects</a>({ ...params }) -> SeedApi.TypesObjectWithRequiredField[]</code></summary>
 <dl>
 <dd>
 
@@ -182,7 +450,7 @@ await client.endpoints.container.getAndReturnSetOfObjects([{
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.ObjectWithRequiredField[]` 
+**request:** `SeedApi.TypesObjectWithRequiredField[]` 
     
 </dd>
 </dl>
@@ -216,7 +484,7 @@ await client.endpoints.container.getAndReturnSetOfObjects([{
 
 ```typescript
 await client.endpoints.container.getAndReturnMapPrimToPrim({
-    "string": "string"
+    "key": "value"
 });
 
 ```
@@ -253,7 +521,7 @@ await client.endpoints.container.getAndReturnMapPrimToPrim({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfPrimToObject</a>({ ...params }) -> Record&lt;string, SeedExhaustive.ObjectWithRequiredField&gt;</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfPrimToObject</a>({ ...params }) -> Record&lt;string, SeedApi.TypesObjectWithRequiredField&gt;</code></summary>
 <dl>
 <dd>
 
@@ -267,7 +535,7 @@ await client.endpoints.container.getAndReturnMapPrimToPrim({
 
 ```typescript
 await client.endpoints.container.getAndReturnMapOfPrimToObject({
-    "string": {
+    "key": {
         string: "string"
     }
 });
@@ -286,7 +554,7 @@ await client.endpoints.container.getAndReturnMapOfPrimToObject({
 <dl>
 <dd>
 
-**request:** `Record<string, SeedExhaustive.ObjectWithRequiredField>` 
+**request:** `Record<string, SeedApi.TypesObjectWithRequiredField>` 
     
 </dd>
 </dl>
@@ -306,7 +574,7 @@ await client.endpoints.container.getAndReturnMapOfPrimToObject({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfPrimToUndiscriminatedUnion</a>({ ...params }) -> Record&lt;string, SeedExhaustive.MixedType&gt;</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfPrimToUndiscriminatedUnion</a>({ ...params }) -> Record&lt;string, SeedApi.TypesMixedType&gt;</code></summary>
 <dl>
 <dd>
 
@@ -320,7 +588,7 @@ await client.endpoints.container.getAndReturnMapOfPrimToObject({
 
 ```typescript
 await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
-    "string": 1.1
+    "key": 1.1
 });
 
 ```
@@ -337,7 +605,7 @@ await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
 <dl>
 <dd>
 
-**request:** `Record<string, SeedExhaustive.MixedType>` 
+**request:** `Record<string, SeedApi.TypesMixedType>` 
     
 </dd>
 </dl>
@@ -357,7 +625,7 @@ await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnOptional</a>({ ...params }) -> SeedExhaustive.ObjectWithRequiredField | undefined</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnOptional</a>({ ...params }) -> SeedApi.TypesObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -388,7 +656,7 @@ await client.endpoints.container.getAndReturnOptional({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.ObjectWithRequiredField` 
+**request:** `SeedApi.TypesObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -422,23 +690,7 @@ await client.endpoints.container.getAndReturnOptional({
 <dd>
 
 ```typescript
-await client.endpoints.contentType.postJsonPatchContentType({
-    string: "string",
-    integer: 1,
-    long: 1000000,
-    double: 1.1,
-    bool: true,
-    datetime: "2024-01-15T09:30:00Z",
-    date: "2023-01-15",
-    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    base64: "SGVsbG8gd29ybGQh",
-    list: ["list", "list"],
-    set: ["set"],
-    map: {
-        1: "map"
-    },
-    bigint: "1000000"
-});
+await client.endpoints.contentType.postJsonPatchContentType({});
 
 ```
 </dd>
@@ -454,7 +706,7 @@ await client.endpoints.contentType.postJsonPatchContentType({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.ObjectWithOptionalField` 
+**request:** `SeedApi.TypesObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -487,23 +739,7 @@ await client.endpoints.contentType.postJsonPatchContentType({
 <dd>
 
 ```typescript
-await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
-    string: "string",
-    integer: 1,
-    long: 1000000,
-    double: 1.1,
-    bool: true,
-    datetime: "2024-01-15T09:30:00Z",
-    date: "2023-01-15",
-    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    base64: "SGVsbG8gd29ybGQh",
-    list: ["list", "list"],
-    set: ["set"],
-    map: {
-        1: "map"
-    },
-    bigint: "1000000"
-});
+await client.endpoints.contentType.postJsonPatchContentWithCharsetType({});
 
 ```
 </dd>
@@ -519,7 +755,7 @@ await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.ObjectWithOptionalField` 
+**request:** `SeedApi.TypesObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -540,7 +776,7 @@ await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
 </details>
 
 ## Endpoints Enum
-<details><summary><code>client.endpoints.enum.<a href="/src/api/resources/endpoints/resources/enum/client/Client.ts">getAndReturnEnum</a>({ ...params }) -> SeedExhaustive.WeatherReport</code></summary>
+<details><summary><code>client.endpoints.enum.<a href="/src/api/resources/endpoints/resources/enum/client/Client.ts">getAndReturnEnum</a>({ ...params }) -> SeedApi.TypesWeatherReport</code></summary>
 <dl>
 <dd>
 
@@ -569,7 +805,7 @@ await client.endpoints.enum.getAndReturnEnum("SUNNY");
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.WeatherReport` 
+**request:** `SeedApi.TypesWeatherReport` 
     
 </dd>
 </dl>
@@ -590,7 +826,7 @@ await client.endpoints.enum.getAndReturnEnum("SUNNY");
 </details>
 
 ## Endpoints HttpMethods
-<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testGet</a>(id) -> string</code></summary>
+<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testGet</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -603,7 +839,9 @@ await client.endpoints.enum.getAndReturnEnum("SUNNY");
 <dd>
 
 ```typescript
-await client.endpoints.httpMethods.testGet("id");
+await client.endpoints.httpMethods.testGet({
+    id: "id"
+});
 
 ```
 </dd>
@@ -619,7 +857,7 @@ await client.endpoints.httpMethods.testGet("id");
 <dl>
 <dd>
 
-**id:** `string` 
+**request:** `SeedApi.endpoints.TestGetHttpMethodsRequest` 
     
 </dd>
 </dl>
@@ -639,7 +877,164 @@ await client.endpoints.httpMethods.testGet("id");
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testPost</a>({ ...params }) -> SeedExhaustive.ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testPut</a>({ ...params }) -> SeedApi.TypesObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.httpMethods.testPut({
+    id: "id",
+    body: {
+        string: "string"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.endpoints.TestPutHttpMethodsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `HttpMethodsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testDelete</a>({ ...params }) -> boolean</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.httpMethods.testDelete({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.endpoints.TestDeleteHttpMethodsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `HttpMethodsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testPatch</a>({ ...params }) -> SeedApi.TypesObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.httpMethods.testPatch({
+    id: "id",
+    body: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.endpoints.TestPatchHttpMethodsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `HttpMethodsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testPost</a>({ ...params }) -> SeedApi.TypesObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -670,188 +1065,7 @@ await client.endpoints.httpMethods.testPost({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.ObjectWithRequiredField` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `HttpMethodsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testPut</a>(id, { ...params }) -> SeedExhaustive.ObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.endpoints.httpMethods.testPut("id", {
-    string: "string"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `SeedExhaustive.ObjectWithRequiredField` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `HttpMethodsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testPatch</a>(id, { ...params }) -> SeedExhaustive.ObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.endpoints.httpMethods.testPatch("id", {
-    string: "string",
-    integer: 1,
-    long: 1000000,
-    double: 1.1,
-    bool: true,
-    datetime: "2024-01-15T09:30:00Z",
-    date: "2023-01-15",
-    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    base64: "SGVsbG8gd29ybGQh",
-    list: ["list", "list"],
-    set: ["set"],
-    map: {
-        1: "map"
-    },
-    bigint: "1000000"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `SeedExhaustive.ObjectWithOptionalField` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `HttpMethodsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints.httpMethods.<a href="/src/api/resources/endpoints/resources/httpMethods/client/Client.ts">testDelete</a>(id) -> boolean</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.endpoints.httpMethods.testDelete("id");
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` 
+**request:** `SeedApi.TypesObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -872,7 +1086,7 @@ await client.endpoints.httpMethods.testDelete("id");
 </details>
 
 ## Endpoints Object
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithOptionalField</a>({ ...params }) -> SeedExhaustive.ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithOptionalField</a>({ ...params }) -> SeedApi.TypesObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -885,23 +1099,7 @@ await client.endpoints.httpMethods.testDelete("id");
 <dd>
 
 ```typescript
-await client.endpoints.object.getAndReturnWithOptionalField({
-    string: "string",
-    integer: 1,
-    long: 1000000,
-    double: 1.1,
-    bool: true,
-    datetime: "2024-01-15T09:30:00Z",
-    date: "2023-01-15",
-    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    base64: "SGVsbG8gd29ybGQh",
-    list: ["list", "list"],
-    set: ["set"],
-    map: {
-        1: "map"
-    },
-    bigint: "1000000"
-});
+await client.endpoints.object.getAndReturnWithOptionalField({});
 
 ```
 </dd>
@@ -917,7 +1115,7 @@ await client.endpoints.object.getAndReturnWithOptionalField({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.ObjectWithOptionalField` 
+**request:** `SeedApi.TypesObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -937,7 +1135,7 @@ await client.endpoints.object.getAndReturnWithOptionalField({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithRequiredField</a>({ ...params }) -> SeedExhaustive.ObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithRequiredField</a>({ ...params }) -> SeedApi.TypesObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -968,7 +1166,7 @@ await client.endpoints.object.getAndReturnWithRequiredField({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.ObjectWithRequiredField` 
+**request:** `SeedApi.TypesObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -988,7 +1186,7 @@ await client.endpoints.object.getAndReturnWithRequiredField({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithMapOfMap</a>({ ...params }) -> SeedExhaustive.ObjectWithMapOfMap</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithMapOfMap</a>({ ...params }) -> SeedApi.TypesObjectWithMapOfMap</code></summary>
 <dl>
 <dd>
 
@@ -1003,8 +1201,8 @@ await client.endpoints.object.getAndReturnWithRequiredField({
 ```typescript
 await client.endpoints.object.getAndReturnWithMapOfMap({
     map: {
-        "map": {
-            "map": "map"
+        "key": {
+            "key": "value"
         }
     }
 });
@@ -1023,7 +1221,7 @@ await client.endpoints.object.getAndReturnWithMapOfMap({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.ObjectWithMapOfMap` 
+**request:** `SeedApi.TypesObjectWithMapOfMap` 
     
 </dd>
 </dl>
@@ -1043,7 +1241,7 @@ await client.endpoints.object.getAndReturnWithMapOfMap({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithOptionalField</a>({ ...params }) -> SeedExhaustive.NestedObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithOptionalField</a>({ ...params }) -> SeedApi.TypesNestedObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -1056,24 +1254,60 @@ await client.endpoints.object.getAndReturnWithMapOfMap({
 <dd>
 
 ```typescript
-await client.endpoints.object.getAndReturnNestedWithOptionalField({
-    string: "string",
-    NestedObject: {
+await client.endpoints.object.getAndReturnNestedWithOptionalField({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesNestedObjectWithOptionalField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredField</a>({ ...params }) -> SeedApi.TypesNestedObjectWithRequiredField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.object.getAndReturnNestedWithRequiredField({
+    stringValue: "string",
+    body: {
         string: "string",
-        integer: 1,
-        long: 1000000,
-        double: 1.1,
-        bool: true,
-        datetime: "2024-01-15T09:30:00Z",
-        date: "2023-01-15",
-        uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        base64: "SGVsbG8gd29ybGQh",
-        list: ["list", "list"],
-        set: ["set"],
-        map: {
-            1: "map"
-        },
-        bigint: "1000000"
+        NestedObject: {}
     }
 });
 
@@ -1091,7 +1325,7 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.NestedObjectWithOptionalField` 
+**request:** `SeedApi.endpoints.GetAndReturnNestedWithRequiredFieldObjectRequest` 
     
 </dd>
 </dl>
@@ -1111,83 +1345,7 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredField</a>(string, { ...params }) -> SeedExhaustive.NestedObjectWithRequiredField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
-    string: "string",
-    NestedObject: {
-        string: "string",
-        integer: 1,
-        long: 1000000,
-        double: 1.1,
-        bool: true,
-        datetime: "2024-01-15T09:30:00Z",
-        date: "2023-01-15",
-        uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        base64: "SGVsbG8gd29ybGQh",
-        list: ["list", "list"],
-        set: ["set"],
-        map: {
-            1: "map"
-        },
-        bigint: "1000000"
-    }
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**string:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `SeedExhaustive.NestedObjectWithRequiredField` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ObjectClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredFieldAsList</a>({ ...params }) -> SeedExhaustive.NestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredFieldAsList</a>({ ...params }) -> SeedApi.TypesNestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1202,42 +1360,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
 ```typescript
 await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
         string: "string",
-        NestedObject: {
-            string: "string",
-            integer: 1,
-            long: 1000000,
-            double: 1.1,
-            bool: true,
-            datetime: "2024-01-15T09:30:00Z",
-            date: "2023-01-15",
-            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            base64: "SGVsbG8gd29ybGQh",
-            list: ["list", "list"],
-            set: ["set"],
-            map: {
-                1: "map"
-            },
-            bigint: "1000000"
-        }
-    }, {
-        string: "string",
-        NestedObject: {
-            string: "string",
-            integer: 1,
-            long: 1000000,
-            double: 1.1,
-            bool: true,
-            datetime: "2024-01-15T09:30:00Z",
-            date: "2023-01-15",
-            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            base64: "SGVsbG8gd29ybGQh",
-            list: ["list", "list"],
-            set: ["set"],
-            map: {
-                1: "map"
-            },
-            bigint: "1000000"
-        }
+        NestedObject: {}
     }]);
 
 ```
@@ -1254,7 +1377,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.NestedObjectWithRequiredField[]` 
+**request:** `SeedApi.TypesNestedObjectWithRequiredField[]` 
     
 </dd>
 </dl>
@@ -1274,7 +1397,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithUnknownField</a>({ ...params }) -> SeedExhaustive.ObjectWithUnknownField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithUnknownField</a>({ ...params }) -> SeedApi.TypesObjectWithUnknownField</code></summary>
 <dl>
 <dd>
 
@@ -1289,7 +1412,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
 ```typescript
 await client.endpoints.object.getAndReturnWithUnknownField({
     unknown: {
-        "$ref": "https://example.com/schema"
+        "key": "value"
     }
 });
 
@@ -1307,7 +1430,7 @@ await client.endpoints.object.getAndReturnWithUnknownField({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.ObjectWithUnknownField` 
+**request:** `SeedApi.TypesObjectWithUnknownField` 
     
 </dd>
 </dl>
@@ -1327,7 +1450,7 @@ await client.endpoints.object.getAndReturnWithUnknownField({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithDocumentedUnknownType</a>({ ...params }) -> SeedExhaustive.ObjectWithDocumentedUnknownType</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithDocumentedUnknownType</a>({ ...params }) -> SeedApi.TypesObjectWithDocumentedUnknownType</code></summary>
 <dl>
 <dd>
 
@@ -1360,7 +1483,7 @@ await client.endpoints.object.getAndReturnWithDocumentedUnknownType({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.ObjectWithDocumentedUnknownType` 
+**request:** `SeedApi.TypesObjectWithDocumentedUnknownType` 
     
 </dd>
 </dl>
@@ -1380,7 +1503,7 @@ await client.endpoints.object.getAndReturnWithDocumentedUnknownType({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnMapOfDocumentedUnknownType</a>({ ...params }) -> SeedExhaustive.MapOfDocumentedUnknownType</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnMapOfDocumentedUnknownType</a>({ ...params }) -> SeedApi.TypesMapOfDocumentedUnknownType</code></summary>
 <dl>
 <dd>
 
@@ -1393,11 +1516,7 @@ await client.endpoints.object.getAndReturnWithDocumentedUnknownType({
 <dd>
 
 ```typescript
-await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType({
-    "string": {
-        "key": "value"
-    }
-});
+await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType({});
 
 ```
 </dd>
@@ -1413,7 +1532,7 @@ await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.MapOfDocumentedUnknownType` 
+**request:** `SeedApi.TypesMapOfDocumentedUnknownType` 
     
 </dd>
 </dl>
@@ -1433,148 +1552,7 @@ await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithMixedRequiredAndOptionalFields</a>({ ...params }) -> SeedExhaustive.ObjectWithMixedRequiredAndOptionalFields</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Tests that dynamic snippets include all required properties in the
-object initializer, even when the example omits some required fields.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields({
-    requiredString: "hello",
-    requiredInteger: 0,
-    optionalString: "world",
-    requiredLong: 0
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedExhaustive.ObjectWithMixedRequiredAndOptionalFields` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ObjectClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithRequiredNestedObject</a>({ ...params }) -> SeedExhaustive.ObjectWithRequiredNestedObject</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Tests that dynamic snippets recursively construct default objects for
-required properties whose type is a named object. When the example
-omits the nested object, the generator should construct a default
-initializer with the nested object's required properties filled in.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.endpoints.object.getAndReturnWithRequiredNestedObject({
-    requiredString: "hello",
-    requiredObject: {
-        string: "nested",
-        NestedObject: {}
-    }
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedExhaustive.ObjectWithRequiredNestedObject` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ObjectClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithDatetimeLikeString</a>({ ...params }) -> SeedExhaustive.ObjectWithDatetimeLikeString</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/src/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithDatetimeLikeString</a>({ ...params }) -> SeedApi.TypesObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>
 
@@ -1604,8 +1582,8 @@ without being converted to "2023-08-31T14:15:22.000Z".
 
 ```typescript
 await client.endpoints.object.getAndReturnWithDatetimeLikeString({
-    datetimeLikeString: "2023-08-31T14:15:22Z",
-    actualDatetime: "2023-08-31T14:15:22Z"
+    datetimeLikeString: "datetimeLikeString",
+    actualDatetime: "2024-01-15T09:30:00Z"
 });
 
 ```
@@ -1622,7 +1600,7 @@ await client.endpoints.object.getAndReturnWithDatetimeLikeString({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.ObjectWithDatetimeLikeString` 
+**request:** `SeedApi.TypesObjectWithDatetimeLikeString` 
     
 </dd>
 </dl>
@@ -1643,7 +1621,7 @@ await client.endpoints.object.getAndReturnWithDatetimeLikeString({
 </details>
 
 ## Endpoints Pagination
-<details><summary><code>client.endpoints.pagination.<a href="/src/api/resources/endpoints/resources/pagination/client/Client.ts">listItems</a>({ ...params }) -> core.Page&lt;SeedExhaustive.ObjectWithRequiredField, SeedExhaustive.PaginatedResponse&gt;</code></summary>
+<details><summary><code>client.endpoints.pagination.<a href="/src/api/resources/endpoints/resources/pagination/client/Client.ts">listItems</a>({ ...params }) -> SeedApi.EndpointsPaginatedResponse</code></summary>
 <dl>
 <dd>
 
@@ -1670,25 +1648,7 @@ List items with cursor pagination
 <dd>
 
 ```typescript
-const pageableResponse = await client.endpoints.pagination.listItems({
-    cursor: "cursor",
-    limit: 1
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.endpoints.pagination.listItems({
-    cursor: "cursor",
-    limit: 1
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.endpoints.pagination.listItems();
 
 ```
 </dd>
@@ -1704,7 +1664,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.endpoints.ListItemsRequest` 
+**request:** `SeedApi.endpoints.ListItemsPaginationRequest` 
     
 </dd>
 </dl>
@@ -1725,7 +1685,7 @@ const response = page.response;
 </details>
 
 ## Endpoints Params
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithPath</a>(param) -> string</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithPath</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -1752,7 +1712,9 @@ GET with path param
 <dd>
 
 ```typescript
-await client.endpoints.params.getWithPath("param");
+await client.endpoints.params.getWithPath({
+    param: "param"
+});
 
 ```
 </dd>
@@ -1768,7 +1730,73 @@ await client.endpoints.params.getWithPath("param");
 <dl>
 <dd>
 
-**param:** `string` 
+**request:** `SeedApi.endpoints.GetWithPathParamsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">modifyWithPath</a>({ ...params }) -> string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+PUT to update with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.params.modifyWithPath({
+    param: "param",
+    body: "string"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.endpoints.ModifyWithPathParamsRequest` 
     
 </dd>
 </dl>
@@ -1833,349 +1861,7 @@ await client.endpoints.params.getWithInlinePath({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.endpoints.GetWithInlinePath` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ParamsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithQuery</a>({ ...params }) -> void</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-GET with query param
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.endpoints.params.getWithQuery({
-    query: "query",
-    number: 1
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedExhaustive.endpoints.GetWithQuery` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ParamsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithAllowMultipleQuery</a>({ ...params }) -> void</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-GET with multiple of same query param
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.endpoints.params.getWithAllowMultipleQuery({
-    query: "query",
-    number: 1
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedExhaustive.endpoints.GetWithMultipleQuery` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ParamsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithPathAndQuery</a>(param, { ...params }) -> void</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-GET with path and query params
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.endpoints.params.getWithPathAndQuery("param", {
-    query: "query"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**param:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `SeedExhaustive.endpoints.GetWithPathAndQuery` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ParamsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePathAndQuery</a>({ ...params }) -> void</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-GET with path and query params
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.endpoints.params.getWithInlinePathAndQuery({
-    param: "param",
-    query: "query"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedExhaustive.endpoints.GetWithInlinePathAndQuery` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ParamsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">modifyWithPath</a>(param, { ...params }) -> string</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-PUT to update with path param
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.endpoints.params.modifyWithPath("param", "string");
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**param:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `string` 
+**request:** `SeedApi.endpoints.GetWithInlinePathParamsRequest` 
     
 </dd>
 </dl>
@@ -2241,7 +1927,7 @@ await client.endpoints.params.modifyWithInlinePath({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.endpoints.ModifyResourceAtInlinedPath` 
+**request:** `SeedApi.endpoints.ModifyWithInlinePathParamsRequest` 
     
 </dd>
 </dl>
@@ -2261,7 +1947,7 @@ await client.endpoints.params.modifyWithInlinePath({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">uploadWithPath</a>(uploadable, param) -> SeedExhaustive.ObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithQuery</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -2273,7 +1959,7 @@ await client.endpoints.params.modifyWithInlinePath({
 <dl>
 <dd>
 
-POST bytes with path param returning object
+GET with query param
 </dd>
 </dl>
 </dd>
@@ -2288,7 +1974,10 @@ POST bytes with path param returning object
 <dd>
 
 ```typescript
-await client.endpoints.params.uploadWithPath(createReadStream("path/to/file"), "upload-path");
+await client.endpoints.params.getWithQuery({
+    query: "query",
+    number: 1
+});
 
 ```
 </dd>
@@ -2304,15 +1993,7 @@ await client.endpoints.params.uploadWithPath(createReadStream("path/to/file"), "
 <dl>
 <dd>
 
-**uploadable:** `core.file.Uploadable` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**param:** `string` 
+**request:** `SeedApi.endpoints.GetWithQueryParamsRequest` 
     
 </dd>
 </dl>
@@ -2332,7 +2013,7 @@ await client.endpoints.params.uploadWithPath(createReadStream("path/to/file"), "
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithBooleanPath</a>(param) -> string</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithAllowMultipleQuery</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -2344,7 +2025,7 @@ await client.endpoints.params.uploadWithPath(createReadStream("path/to/file"), "
 <dl>
 <dd>
 
-GET with boolean path param
+GET with multiple of same query param
 </dd>
 </dl>
 </dd>
@@ -2359,7 +2040,10 @@ GET with boolean path param
 <dd>
 
 ```typescript
-await client.endpoints.params.getWithBooleanPath(true);
+await client.endpoints.params.getWithAllowMultipleQuery({
+    query: ["query"],
+    number: [1]
+});
 
 ```
 </dd>
@@ -2375,7 +2059,7 @@ await client.endpoints.params.getWithBooleanPath(true);
 <dl>
 <dd>
 
-**param:** `boolean` 
+**request:** `SeedApi.endpoints.GetWithAllowMultipleQueryParamsRequest` 
     
 </dd>
 </dl>
@@ -2395,7 +2079,7 @@ await client.endpoints.params.getWithBooleanPath(true);
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithPathAndErrors</a>(param) -> string</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithPathAndQuery</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -2407,7 +2091,7 @@ await client.endpoints.params.getWithBooleanPath(true);
 <dl>
 <dd>
 
-GET with path param that can throw errors
+GET with path and query params
 </dd>
 </dl>
 </dd>
@@ -2422,7 +2106,10 @@ GET with path param that can throw errors
 <dd>
 
 ```typescript
-await client.endpoints.params.getWithPathAndErrors("param");
+await client.endpoints.params.getWithPathAndQuery({
+    param: "param",
+    query: "query"
+});
 
 ```
 </dd>
@@ -2438,7 +2125,73 @@ await client.endpoints.params.getWithPathAndErrors("param");
 <dl>
 <dd>
 
-**param:** `string` 
+**request:** `SeedApi.endpoints.GetWithPathAndQueryParamsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePathAndQuery</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path and query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.params.getWithInlinePathAndQuery({
+    param: "param",
+    query: "query"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.endpoints.GetWithInlinePathAndQueryParamsRequest` 
     
 </dd>
 </dl>
@@ -2815,7 +2568,7 @@ await client.endpoints.primitive.getAndReturnDate("2023-01-15");
 <dd>
 
 ```typescript
-await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+await client.endpoints.primitive.getAndReturnUuid("string");
 
 ```
 </dd>
@@ -2864,7 +2617,7 @@ await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7
 <dd>
 
 ```typescript
-await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");
+await client.endpoints.primitive.getAndReturnBase64("string");
 
 ```
 </dd>
@@ -2901,7 +2654,7 @@ await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");
 </details>
 
 ## Endpoints Put
-<details><summary><code>client.endpoints.put.<a href="/src/api/resources/endpoints/resources/put/client/Client.ts">add</a>({ ...params }) -> SeedExhaustive.PutResponse</code></summary>
+<details><summary><code>client.endpoints.put.<a href="/src/api/resources/endpoints/resources/put/client/Client.ts">add</a>({ ...params }) -> SeedApi.EndpointsPutResponse</code></summary>
 <dl>
 <dd>
 
@@ -2932,7 +2685,7 @@ await client.endpoints.put.add({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.endpoints.PutRequest` 
+**request:** `SeedApi.endpoints.AddPutRequest` 
     
 </dd>
 </dl>
@@ -2953,7 +2706,7 @@ await client.endpoints.put.add({
 </details>
 
 ## Endpoints Union
-<details><summary><code>client.endpoints.union.<a href="/src/api/resources/endpoints/resources/union/client/Client.ts">getAndReturnUnion</a>({ ...params }) -> SeedExhaustive.Animal</code></summary>
+<details><summary><code>client.endpoints.union.<a href="/src/api/resources/endpoints/resources/union/client/Client.ts">getAndReturnUnion</a>({ ...params }) -> SeedApi.TypesAnimal</code></summary>
 <dl>
 <dd>
 
@@ -2967,9 +2720,9 @@ await client.endpoints.put.add({
 
 ```typescript
 await client.endpoints.union.getAndReturnUnion({
-    animal: "dog",
     name: "name",
-    likesToWoof: true
+    likesToWoof: true,
+    animal: "dog"
 });
 
 ```
@@ -2986,7 +2739,7 @@ await client.endpoints.union.getAndReturnUnion({
 <dl>
 <dd>
 
-**request:** `SeedExhaustive.Animal` 
+**request:** `SeedApi.TypesAnimal` 
     
 </dd>
 </dl>
@@ -3160,293 +2913,6 @@ await client.endpoints.urls.withUnderscores();
 <dd>
 
 **requestOptions:** `UrlsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## InlinedRequests
-<details><summary><code>client.inlinedRequests.<a href="/src/api/resources/inlinedRequests/client/Client.ts">postWithObjectBodyandResponse</a>({ ...params }) -> SeedExhaustive.ObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-POST with custom object in request body, response is an object
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.inlinedRequests.postWithObjectBodyandResponse({
-    string: "string",
-    integer: 1,
-    NestedObject: {
-        string: "string",
-        integer: 1,
-        long: 1000000,
-        double: 1.1,
-        bool: true,
-        datetime: "2024-01-15T09:30:00Z",
-        date: "2023-01-15",
-        uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        base64: "SGVsbG8gd29ybGQh",
-        list: ["list", "list"],
-        set: ["set"],
-        map: {
-            1: "map"
-        },
-        bigint: "1000000"
-    }
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedExhaustive.PostWithObjectBody` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `InlinedRequestsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## NoAuth
-<details><summary><code>client.noAuth.<a href="/src/api/resources/noAuth/client/Client.ts">postWithNoAuth</a>({ ...params }) -> boolean</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-POST request with no auth
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.noAuth.postWithNoAuth({
-    "key": "value"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `unknown` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `NoAuthClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## NoReqBody
-<details><summary><code>client.noReqBody.<a href="/src/api/resources/noReqBody/client/Client.ts">getWithNoRequestBody</a>() -> SeedExhaustive.ObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.noReqBody.getWithNoRequestBody();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**requestOptions:** `NoReqBodyClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.noReqBody.<a href="/src/api/resources/noReqBody/client/Client.ts">postWithNoRequestBody</a>() -> string</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.noReqBody.postWithNoRequestBody();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**requestOptions:** `NoReqBodyClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ReqWithHeaders
-<details><summary><code>client.reqWithHeaders.<a href="/src/api/resources/reqWithHeaders/client/Client.ts">getWithCustomHeader</a>({ ...params }) -> void</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.reqWithHeaders.getWithCustomHeader({
-    xTestServiceHeader: "X-TEST-SERVICE-HEADER",
-    xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
-    body: "string"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedExhaustive.ReqWithHeaders` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ReqWithHeadersClient.RequestOptions` 
     
 </dd>
 </dl>

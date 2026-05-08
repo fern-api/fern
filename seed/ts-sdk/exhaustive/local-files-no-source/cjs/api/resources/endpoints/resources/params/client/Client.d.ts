@@ -1,7 +1,7 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import * as core from "../../../../../../core/index.js";
-import * as SeedExhaustive from "../../../../../index.js";
+import type * as SeedApi from "../../../../../index.js";
 export declare namespace ParamsClient {
     type Options = BaseClientOptions;
     interface RequestOptions extends BaseRequestOptions {
@@ -13,18 +13,43 @@ export declare class ParamsClient {
     /**
      * GET with path param
      *
-     * @param {string} param
+     * @param {SeedApi.endpoints.GetWithPathParamsRequest} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.params.getWithPath("param")
+     *     await client.endpoints.params.getWithPath({
+     *         param: "param"
+     *     })
      */
-    getWithPath(param: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
+    getWithPath(request: SeedApi.endpoints.GetWithPathParamsRequest, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
     private __getWithPath;
+    /**
+     * POST bytes with path param returning object
+     *
+     * @param {core.file.Uploadable} uploadable
+     * @param {string} param
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     */
+    uploadWithPath(uploadable: core.file.Uploadable, param: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<SeedApi.TypesObjectWithRequiredField>;
+    private __uploadWithPath;
+    /**
+     * PUT to update with path param
+     *
+     * @param {SeedApi.endpoints.ModifyWithPathParamsRequest} request
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.modifyWithPath({
+     *         param: "param",
+     *         body: "string"
+     *     })
+     */
+    modifyWithPath(request: SeedApi.endpoints.ModifyWithPathParamsRequest, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
+    private __modifyWithPath;
     /**
      * GET with path param
      *
-     * @param {SeedExhaustive.endpoints.GetWithInlinePath} request
+     * @param {SeedApi.endpoints.GetWithInlinePathParamsRequest} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -32,80 +57,12 @@ export declare class ParamsClient {
      *         param: "param"
      *     })
      */
-    getWithInlinePath(request: SeedExhaustive.endpoints.GetWithInlinePath, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
+    getWithInlinePath(request: SeedApi.endpoints.GetWithInlinePathParamsRequest, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
     private __getWithInlinePath;
     /**
-     * GET with query param
-     *
-     * @param {SeedExhaustive.endpoints.GetWithQuery} request
-     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.params.getWithQuery({
-     *         query: "query",
-     *         number: 1
-     *     })
-     */
-    getWithQuery(request: SeedExhaustive.endpoints.GetWithQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<void>;
-    private __getWithQuery;
-    /**
-     * GET with multiple of same query param
-     *
-     * @param {SeedExhaustive.endpoints.GetWithMultipleQuery} request
-     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.params.getWithAllowMultipleQuery({
-     *         query: "query",
-     *         number: 1
-     *     })
-     */
-    getWithAllowMultipleQuery(request: SeedExhaustive.endpoints.GetWithMultipleQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<void>;
-    private __getWithAllowMultipleQuery;
-    /**
-     * GET with path and query params
-     *
-     * @param {string} param
-     * @param {SeedExhaustive.endpoints.GetWithPathAndQuery} request
-     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.params.getWithPathAndQuery("param", {
-     *         query: "query"
-     *     })
-     */
-    getWithPathAndQuery(param: string, request: SeedExhaustive.endpoints.GetWithPathAndQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<void>;
-    private __getWithPathAndQuery;
-    /**
-     * GET with path and query params
-     *
-     * @param {SeedExhaustive.endpoints.GetWithInlinePathAndQuery} request
-     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.params.getWithInlinePathAndQuery({
-     *         param: "param",
-     *         query: "query"
-     *     })
-     */
-    getWithInlinePathAndQuery(request: SeedExhaustive.endpoints.GetWithInlinePathAndQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<void>;
-    private __getWithInlinePathAndQuery;
-    /**
      * PUT to update with path param
      *
-     * @param {string} param
-     * @param {string} request
-     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.params.modifyWithPath("param", "string")
-     */
-    modifyWithPath(param: string, request: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
-    private __modifyWithPath;
-    /**
-     * PUT to update with path param
-     *
-     * @param {SeedExhaustive.endpoints.ModifyResourceAtInlinedPath} request
+     * @param {SeedApi.endpoints.ModifyWithInlinePathParamsRequest} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -114,43 +71,62 @@ export declare class ParamsClient {
      *         body: "string"
      *     })
      */
-    modifyWithInlinePath(request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
+    modifyWithInlinePath(request: SeedApi.endpoints.ModifyWithInlinePathParamsRequest, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
     private __modifyWithInlinePath;
     /**
-     * POST bytes with path param returning object
+     * GET with query param
      *
-     * @param {core.file.Uploadable} uploadable
-     * @param {string} param
+     * @param {SeedApi.endpoints.GetWithQueryParamsRequest} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     import { createReadStream } from "fs";
-     *     await client.endpoints.params.uploadWithPath(createReadStream("path/to/file"), "upload-path")
+     *     await client.endpoints.params.getWithQuery({
+     *         query: "query",
+     *         number: 1
+     *     })
      */
-    uploadWithPath(uploadable: core.file.Uploadable, param: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField>;
-    private __uploadWithPath;
+    getWithQuery(request: SeedApi.endpoints.GetWithQueryParamsRequest, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<void>;
+    private __getWithQuery;
     /**
-     * GET with boolean path param
+     * GET with multiple of same query param
      *
-     * @param {boolean} param
+     * @param {SeedApi.endpoints.GetWithAllowMultipleQueryParamsRequest} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.params.getWithBooleanPath(true)
+     *     await client.endpoints.params.getWithAllowMultipleQuery({
+     *         query: ["query"],
+     *         number: [1]
+     *     })
      */
-    getWithBooleanPath(param: boolean, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
-    private __getWithBooleanPath;
+    getWithAllowMultipleQuery(request?: SeedApi.endpoints.GetWithAllowMultipleQueryParamsRequest, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<void>;
+    private __getWithAllowMultipleQuery;
     /**
-     * GET with path param that can throw errors
+     * GET with path and query params
      *
-     * @param {string} param
+     * @param {SeedApi.endpoints.GetWithPathAndQueryParamsRequest} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedExhaustive.BadRequestBody}
+     * @example
+     *     await client.endpoints.params.getWithPathAndQuery({
+     *         param: "param",
+     *         query: "query"
+     *     })
+     */
+    getWithPathAndQuery(request: SeedApi.endpoints.GetWithPathAndQueryParamsRequest, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<void>;
+    private __getWithPathAndQuery;
+    /**
+     * GET with path and query params
+     *
+     * @param {SeedApi.endpoints.GetWithInlinePathAndQueryParamsRequest} request
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.params.getWithPathAndErrors("param")
+     *     await client.endpoints.params.getWithInlinePathAndQuery({
+     *         param: "param",
+     *         query: "query"
+     *     })
      */
-    getWithPathAndErrors(param: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
-    private __getWithPathAndErrors;
+    getWithInlinePathAndQuery(request: SeedApi.endpoints.GetWithInlinePathAndQueryParamsRequest, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<void>;
+    private __getWithInlinePathAndQuery;
 }

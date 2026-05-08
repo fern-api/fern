@@ -54,27 +54,11 @@ class ContentTypeClient {
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
     }
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {SeedApi.TypesObjectWithOptionalField} request
      * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.contentType.postJsonPatchContentType({
-     *         string: "string",
-     *         integer: 1,
-     *         long: 1000000,
-     *         double: 1.1,
-     *         bool: true,
-     *         datetime: "2024-01-15T09:30:00Z",
-     *         date: "2023-01-15",
-     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *         base64: "SGVsbG8gd29ybGQh",
-     *         list: ["list", "list"],
-     *         set: ["set"],
-     *         map: {
-     *             1: "map"
-     *         },
-     *         bigint: "1000000"
-     *     })
+     *     await client.endpoints.contentType.postJsonPatchContentType({})
      */
     postJsonPatchContentType(request, requestOptions) {
         return core.HttpResponsePromise.fromPromise(this.__postJsonPatchContentType(request, requestOptions));
@@ -85,10 +69,10 @@ class ContentTypeClient {
             const _authRequest = yield this._options.authProvider.getAuthRequest();
             const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/foo/bar"),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "foo/bar"),
                 method: "POST",
                 headers: _headers,
-                contentType: "application/json-patch+json",
+                contentType: "application/json",
                 queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
                 requestType: "json",
                 body: request,
@@ -102,7 +86,7 @@ class ContentTypeClient {
                 return { data: undefined, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
+                throw new errors.SeedApiError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.body,
                     rawResponse: _response.rawResponse,
@@ -112,27 +96,11 @@ class ContentTypeClient {
         });
     }
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {SeedApi.TypesObjectWithOptionalField} request
      * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
-     *         string: "string",
-     *         integer: 1,
-     *         long: 1000000,
-     *         double: 1.1,
-     *         bool: true,
-     *         datetime: "2024-01-15T09:30:00Z",
-     *         date: "2023-01-15",
-     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *         base64: "SGVsbG8gd29ybGQh",
-     *         list: ["list", "list"],
-     *         set: ["set"],
-     *         map: {
-     *             1: "map"
-     *         },
-     *         bigint: "1000000"
-     *     })
+     *     await client.endpoints.contentType.postJsonPatchContentWithCharsetType({})
      */
     postJsonPatchContentWithCharsetType(request, requestOptions) {
         return core.HttpResponsePromise.fromPromise(this.__postJsonPatchContentWithCharsetType(request, requestOptions));
@@ -143,10 +111,10 @@ class ContentTypeClient {
             const _authRequest = yield this._options.authProvider.getAuthRequest();
             const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/foo/baz"),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "foo/baz"),
                 method: "POST",
                 headers: _headers,
-                contentType: "application/json-patch+json; charset=utf-8",
+                contentType: "application/json",
                 queryString: core.url.queryBuilder().mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams).build(),
                 requestType: "json",
                 body: request,
@@ -160,7 +128,7 @@ class ContentTypeClient {
                 return { data: undefined, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
+                throw new errors.SeedApiError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.body,
                     rawResponse: _response.rawResponse,

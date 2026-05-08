@@ -6,7 +6,6 @@ import (
     fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    types "github.com/exhaustive/fern/types"
 )
 
 func do() {
@@ -18,15 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &types.ObjectWithMixedRequiredAndOptionalFields{
-        RequiredString: "hello",
-        RequiredInteger: 0,
-        OptionalString: fern.String(
-            "world",
-        ),
-        RequiredLong: int64(0),
+    request := &fern.TypesObjectWithRequiredField{
+        FieldString: "string",
     }
-    client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFields(
+    client.Endpoints.Container.GetAndReturnOptional(
         context.TODO(),
         request,
     )

@@ -12,7 +12,7 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param params [Seed::Types::Object_::Types::ObjectWithOptionalField]
+        # @param params [Seed::Types::TypesObjectWithOptionalField]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -25,8 +25,8 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/foo/bar",
-            body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params).to_h,
+            path: "foo/bar",
+            body: Seed::Types::TypesObjectWithOptionalField.new(params).to_h,
             request_options: request_options
           )
           begin
@@ -42,7 +42,7 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param params [Seed::Types::Object_::Types::ObjectWithOptionalField]
+        # @param params [Seed::Types::TypesObjectWithOptionalField]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -55,8 +55,8 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
-            path: "/foo/baz",
-            body: Seed::Types::Object_::Types::ObjectWithOptionalField.new(params).to_h,
+            path: "foo/baz",
+            body: Seed::Types::TypesObjectWithOptionalField.new(params).to_h,
             request_options: request_options
           )
           begin

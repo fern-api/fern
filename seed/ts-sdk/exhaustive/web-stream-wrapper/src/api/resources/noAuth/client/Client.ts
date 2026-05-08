@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import * as SeedExhaustive from "../../../index.js";
+import * as SeedApi from "../../../index.js";
 
 export declare namespace NoAuthClient {
     export type Options = BaseClientOptions;
@@ -27,7 +27,7 @@ export class NoAuthClient {
      * @param {unknown} request
      * @param {NoAuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedExhaustive.BadRequestBody}
+     * @throws {@link SeedApi.BadRequestError}
      *
      * @example
      *     await client.noAuth.postWithNoAuth({
@@ -50,7 +50,7 @@ export class NoAuthClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/no-auth",
+                "no-auth",
             ),
             method: "POST",
             headers: _headers,
@@ -71,12 +71,12 @@ export class NoAuthClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new SeedExhaustive.BadRequestBody(
-                        _response.error.body as SeedExhaustive.BadObjectRequestInfo,
+                    throw new SeedApi.BadRequestError(
+                        _response.error.body as SeedApi.BadObjectRequestInfo,
                         _response.rawResponse,
                     );
                 default:
-                    throw new errors.SeedExhaustiveError({
+                    throw new errors.SeedApiError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                         rawResponse: _response.rawResponse,

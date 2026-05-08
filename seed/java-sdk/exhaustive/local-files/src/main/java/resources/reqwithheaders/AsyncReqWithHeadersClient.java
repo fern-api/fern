@@ -6,7 +6,7 @@ package com.fern.sdk.resources.reqwithheaders;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.reqwithheaders.requests.ReqWithHeaders;
+import com.fern.sdk.resources.reqwithheaders.requests.GetWithCustomHeaderReqWithHeadersRequest;
 import java.lang.Void;
 import java.util.concurrent.CompletableFuture;
 
@@ -27,12 +27,13 @@ public class AsyncReqWithHeadersClient {
     return this.rawClient;
   }
 
-  public CompletableFuture<Void> getWithCustomHeader(ReqWithHeaders request) {
+  public CompletableFuture<Void> getWithCustomHeader(
+      GetWithCustomHeaderReqWithHeadersRequest request) {
     return this.rawClient.getWithCustomHeader(request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<Void> getWithCustomHeader(ReqWithHeaders request,
-      RequestOptions requestOptions) {
+  public CompletableFuture<Void> getWithCustomHeader(
+      GetWithCustomHeaderReqWithHeadersRequest request, RequestOptions requestOptions) {
     return this.rawClient.getWithCustomHeader(request, requestOptions).thenApply(response -> response.body());
   }
 }

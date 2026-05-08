@@ -42,11 +42,12 @@ class NoAuthClient:
         -------
         bool
 
+
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import SeedApi
 
-        client = SeedExhaustive(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -90,13 +91,14 @@ class AsyncNoAuthClient:
         -------
         bool
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )

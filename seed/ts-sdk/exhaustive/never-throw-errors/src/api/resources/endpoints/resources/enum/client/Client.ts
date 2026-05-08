@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
-import * as SeedExhaustive from "../../../../../index.js";
+import * as SeedApi from "../../../../../index.js";
 
 export declare namespace EnumClient {
     export type Options = BaseClientOptions;
@@ -20,27 +20,27 @@ export class EnumClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.WeatherReport} request
+     * @param {SeedApi.TypesWeatherReport} request
      * @param {EnumClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.enum.getAndReturnEnum("SUNNY")
      */
     public getAndReturnEnum(
-        request: SeedExhaustive.types.WeatherReport,
+        request: SeedApi.TypesWeatherReport,
         requestOptions?: EnumClient.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<SeedExhaustive.types.WeatherReport, SeedExhaustive.endpoints.enum_.getAndReturnEnum.Error>
+        core.APIResponse<SeedApi.TypesWeatherReport, SeedApi.endpoints.enum_.getAndReturnEnum.Error>
     > {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnEnum(request, requestOptions));
     }
 
     private async __getAndReturnEnum(
-        request: SeedExhaustive.types.WeatherReport,
+        request: SeedApi.TypesWeatherReport,
         requestOptions?: EnumClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
-            core.APIResponse<SeedExhaustive.types.WeatherReport, SeedExhaustive.endpoints.enum_.getAndReturnEnum.Error>
+            core.APIResponse<SeedApi.TypesWeatherReport, SeedApi.endpoints.enum_.getAndReturnEnum.Error>
         >
     > {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
@@ -53,7 +53,7 @@ export class EnumClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/enum",
+                "enum",
             ),
             method: "POST",
             headers: _headers,
@@ -71,7 +71,7 @@ export class EnumClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.WeatherReport,
+                    body: _response.body as SeedApi.TypesWeatherReport,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -82,7 +82,7 @@ export class EnumClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.enum_.getAndReturnEnum.Error._unknown(_response.error),
+                error: SeedApi.endpoints.enum_.getAndReturnEnum.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,

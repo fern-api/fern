@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
 )
@@ -16,8 +17,14 @@ func do() {
             "<token>",
         ),
     )
-    request := 1.1
-    client.Endpoints.Primitive.GetAndReturnDouble(
+    request := &fern.TypesObjectWithMapOfMap{
+        Map: map[string]map[string]string{
+            "map": map[string]string{
+                "map": "map",
+            },
+        },
+    }
+    client.Endpoints.Object.GetAndReturnWithMapOfMap(
         context.TODO(),
         request,
     )

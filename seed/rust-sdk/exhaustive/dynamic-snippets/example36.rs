@@ -1,4 +1,4 @@
-use seed_exhaustive::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,14 +7,15 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .endpoints
-        .params
-        .get_with_allow_multiple_query(
-            &GetWithAllowMultipleQueryQueryRequest {
-                query: vec!["query".to_string()],
-                number: vec![1],
+        .http_methods
+        .test_put(
+            &"id".to_string(),
+            &TypesObjectWithRequiredField {
+                string: "string".to_string(),
+                ..Default::default()
             },
             None,
         )

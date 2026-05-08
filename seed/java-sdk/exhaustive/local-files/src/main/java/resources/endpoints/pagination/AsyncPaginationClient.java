@@ -6,9 +6,8 @@ package com.fern.sdk.resources.endpoints.pagination;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.core.pagination.SyncPagingIterable;
-import com.fern.sdk.resources.endpoints.pagination.requests.ListItemsRequest;
-import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
+import com.fern.sdk.resources.endpoints.pagination.requests.ListItemsPaginationRequest;
+import com.fern.sdk.types.EndpointsPaginatedResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncPaginationClient {
@@ -31,31 +30,30 @@ public class AsyncPaginationClient {
   /**
    * List items with cursor pagination
    */
-  public CompletableFuture<SyncPagingIterable<ObjectWithRequiredField>> listItems() {
+  public CompletableFuture<EndpointsPaginatedResponse> listItems() {
     return this.rawClient.listItems().thenApply(response -> response.body());
   }
 
   /**
    * List items with cursor pagination
    */
-  public CompletableFuture<SyncPagingIterable<ObjectWithRequiredField>> listItems(
-      RequestOptions requestOptions) {
+  public CompletableFuture<EndpointsPaginatedResponse> listItems(RequestOptions requestOptions) {
     return this.rawClient.listItems(requestOptions).thenApply(response -> response.body());
   }
 
   /**
    * List items with cursor pagination
    */
-  public CompletableFuture<SyncPagingIterable<ObjectWithRequiredField>> listItems(
-      ListItemsRequest request) {
+  public CompletableFuture<EndpointsPaginatedResponse> listItems(
+      ListItemsPaginationRequest request) {
     return this.rawClient.listItems(request).thenApply(response -> response.body());
   }
 
   /**
    * List items with cursor pagination
    */
-  public CompletableFuture<SyncPagingIterable<ObjectWithRequiredField>> listItems(
-      ListItemsRequest request, RequestOptions requestOptions) {
+  public CompletableFuture<EndpointsPaginatedResponse> listItems(ListItemsPaginationRequest request,
+      RequestOptions requestOptions) {
     return this.rawClient.listItems(request, requestOptions).thenApply(response -> response.body());
   }
 }

@@ -7,11 +7,11 @@ package com.fern.sdk.resources.endpoints.put;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.core.SeedExhaustiveApiException;
-import com.fern.sdk.core.SeedExhaustiveException;
-import com.fern.sdk.core.SeedExhaustiveHttpResponse;
-import com.fern.sdk.resources.endpoints.put.requests.PutRequest;
-import com.fern.sdk.resources.endpoints.put.types.PutResponse;
+import com.fern.sdk.core.SeedApiApiException;
+import com.fern.sdk.core.SeedApiException;
+import com.fern.sdk.core.SeedApiHttpResponse;
+import com.fern.sdk.resources.endpoints.put.requests.AddPutRequest;
+import com.fern.sdk.types.EndpointsPutResponse;
 import java.io.IOException;
 import java.lang.Object;
 import java.lang.String;
@@ -30,19 +30,19 @@ public class RawPutClient {
     this.clientOptions = clientOptions;
   }
 
-  public SeedExhaustiveHttpResponse<PutResponse> add(String id) {
-    return add(id,PutRequest.builder().build());
+  public SeedApiHttpResponse<EndpointsPutResponse> add(String id) {
+    return add(id,AddPutRequest.builder().build());
   }
 
-  public SeedExhaustiveHttpResponse<PutResponse> add(String id, RequestOptions requestOptions) {
-    return add(id,PutRequest.builder().build(),requestOptions);
+  public SeedApiHttpResponse<EndpointsPutResponse> add(String id, RequestOptions requestOptions) {
+    return add(id,AddPutRequest.builder().build(),requestOptions);
   }
 
-  public SeedExhaustiveHttpResponse<PutResponse> add(String id, PutRequest request) {
+  public SeedApiHttpResponse<EndpointsPutResponse> add(String id, AddPutRequest request) {
     return add(id,request,null);
   }
 
-  public SeedExhaustiveHttpResponse<PutResponse> add(String id, PutRequest request,
+  public SeedApiHttpResponse<EndpointsPutResponse> add(String id, AddPutRequest request,
       RequestOptions requestOptions) {
     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
 
@@ -66,13 +66,13 @@ public class RawPutClient {
         ResponseBody responseBody = response.body();
         String responseBodyString = responseBody != null ? responseBody.string() : "{}";
         if (response.isSuccessful()) {
-          return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, PutResponse.class), response);
+          return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, EndpointsPutResponse.class), response);
         }
         Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-        throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+        throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
       }
       catch (IOException e) {
-        throw new SeedExhaustiveException("Network error executing HTTP request", e);
+        throw new SeedApiException("Network error executing HTTP request", e);
       }
     }
   }

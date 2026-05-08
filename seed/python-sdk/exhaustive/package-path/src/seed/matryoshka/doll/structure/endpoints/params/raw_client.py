@@ -10,9 +10,7 @@ from ...core.jsonable_encoder import encode_path_param
 from ...core.parse_error import ParsingError
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
-from ...general_errors.errors.bad_request_body import BadRequestBody
-from ...general_errors.types.bad_object_request_info import BadObjectRequestInfo
-from ...types.object.types.object_with_required_field import ObjectWithRequiredField
+from ...types.types_object_with_required_field import TypesObjectWithRequiredField
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -39,11 +37,114 @@ class RawParamsClient:
         Returns
         -------
         HttpResponse[str]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             f"params/path/{encode_path_param(param)}",
             method="GET",
             request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def upload_with_path(
+        self,
+        param: str,
+        *,
+        request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[TypesObjectWithRequiredField]:
+        """
+        POST bytes with path param returning object
+
+        Parameters
+        ----------
+        param : str
+
+        request : typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[TypesObjectWithRequiredField]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"params/path/{encode_path_param(param)}",
+            method="POST",
+            content=request,
+            headers={
+                "content-type": "application/octet-stream",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    TypesObjectWithRequiredField,
+                    parse_obj_as(
+                        type_=TypesObjectWithRequiredField,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def modify_with_path(
+        self, param: str, *, request: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[str]:
+        """
+        PUT to update with path param
+
+        Parameters
+        ----------
+        param : str
+
+        request : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[str]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"params/path/{encode_path_param(param)}",
+            method="PUT",
+            json=request,
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -80,11 +181,61 @@ class RawParamsClient:
         Returns
         -------
         HttpResponse[str]
+
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"params/path/{encode_path_param(param)}",
+            f"params/inline-path/{encode_path_param(param)}",
             method="GET",
             request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def modify_with_inline_path(
+        self, param: str, *, request: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[str]:
+        """
+        PUT to update with path param
+
+        Parameters
+        ----------
+        param : str
+
+        request : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[str]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"params/inline-path/{encode_path_param(param)}",
+            method="PUT",
+            json=request,
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -148,8 +299,8 @@ class RawParamsClient:
     def get_with_allow_multiple_query(
         self,
         *,
-        query: typing.Union[str, typing.Sequence[str]],
-        number: typing.Union[int, typing.Sequence[int]],
+        query: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        number: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
         """
@@ -157,9 +308,9 @@ class RawParamsClient:
 
         Parameters
         ----------
-        query : typing.Union[str, typing.Sequence[str]]
+        query : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
-        number : typing.Union[int, typing.Sequence[int]]
+        number : typing.Optional[typing.Union[int, typing.Sequence[int]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -169,7 +320,7 @@ class RawParamsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "params",
+            "params/allow-multiple-query",
             method="GET",
             params={
                 "query": query,
@@ -248,7 +399,7 @@ class RawParamsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"params/path-query/{encode_path_param(param)}",
+            f"params/inline-path-query/{encode_path_param(param)}",
             method="GET",
             params={
                 "query": query,
@@ -258,238 +409,6 @@ class RawParamsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return HttpResponse(response=_response, data=None)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def modify_with_path(
-        self, param: str, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[str]:
-        """
-        PUT to update with path param
-
-        Parameters
-        ----------
-        param : str
-
-        request : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[str]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"params/path/{encode_path_param(param)}",
-            method="PUT",
-            json=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    str,
-                    parse_obj_as(
-                        type_=str,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def modify_with_inline_path(
-        self, param: str, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[str]:
-        """
-        PUT to update with path param
-
-        Parameters
-        ----------
-        param : str
-
-        request : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[str]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"params/path/{encode_path_param(param)}",
-            method="PUT",
-            json=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    str,
-                    parse_obj_as(
-                        type_=str,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def upload_with_path(
-        self,
-        param: str,
-        *,
-        request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]],
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[ObjectWithRequiredField]:
-        """
-        POST bytes with path param returning object
-
-        Parameters
-        ----------
-        param : str
-
-        request : typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[ObjectWithRequiredField]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"params/path/{encode_path_param(param)}",
-            method="POST",
-            content=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ObjectWithRequiredField,
-                    parse_obj_as(
-                        type_=ObjectWithRequiredField,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def get_with_boolean_path(
-        self, param: bool, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[str]:
-        """
-        GET with boolean path param
-
-        Parameters
-        ----------
-        param : bool
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[str]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"params/path-bool/{encode_path_param(param)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    str,
-                    parse_obj_as(
-                        type_=str,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def get_with_path_and_errors(
-        self, param: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[str]:
-        """
-        GET with path param that can throw errors
-
-        Parameters
-        ----------
-        param : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[str]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"params/path/{encode_path_param(param)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    str,
-                    parse_obj_as(
-                        type_=str,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise BadRequestBody(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        BadObjectRequestInfo,
-                        parse_obj_as(
-                            type_=BadObjectRequestInfo,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -520,11 +439,114 @@ class AsyncRawParamsClient:
         Returns
         -------
         AsyncHttpResponse[str]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"params/path/{encode_path_param(param)}",
             method="GET",
             request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def upload_with_path(
+        self,
+        param: str,
+        *,
+        request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[TypesObjectWithRequiredField]:
+        """
+        POST bytes with path param returning object
+
+        Parameters
+        ----------
+        param : str
+
+        request : typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[TypesObjectWithRequiredField]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"params/path/{encode_path_param(param)}",
+            method="POST",
+            content=request,
+            headers={
+                "content-type": "application/octet-stream",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    TypesObjectWithRequiredField,
+                    parse_obj_as(
+                        type_=TypesObjectWithRequiredField,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def modify_with_path(
+        self, param: str, *, request: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[str]:
+        """
+        PUT to update with path param
+
+        Parameters
+        ----------
+        param : str
+
+        request : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[str]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"params/path/{encode_path_param(param)}",
+            method="PUT",
+            json=request,
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -561,11 +583,61 @@ class AsyncRawParamsClient:
         Returns
         -------
         AsyncHttpResponse[str]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"params/path/{encode_path_param(param)}",
+            f"params/inline-path/{encode_path_param(param)}",
             method="GET",
             request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def modify_with_inline_path(
+        self, param: str, *, request: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[str]:
+        """
+        PUT to update with path param
+
+        Parameters
+        ----------
+        param : str
+
+        request : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[str]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"params/inline-path/{encode_path_param(param)}",
+            method="PUT",
+            json=request,
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -629,8 +701,8 @@ class AsyncRawParamsClient:
     async def get_with_allow_multiple_query(
         self,
         *,
-        query: typing.Union[str, typing.Sequence[str]],
-        number: typing.Union[int, typing.Sequence[int]],
+        query: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        number: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
         """
@@ -638,9 +710,9 @@ class AsyncRawParamsClient:
 
         Parameters
         ----------
-        query : typing.Union[str, typing.Sequence[str]]
+        query : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
-        number : typing.Union[int, typing.Sequence[int]]
+        number : typing.Optional[typing.Union[int, typing.Sequence[int]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -650,7 +722,7 @@ class AsyncRawParamsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "params",
+            "params/allow-multiple-query",
             method="GET",
             params={
                 "query": query,
@@ -729,7 +801,7 @@ class AsyncRawParamsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"params/path-query/{encode_path_param(param)}",
+            f"params/inline-path-query/{encode_path_param(param)}",
             method="GET",
             params={
                 "query": query,
@@ -739,238 +811,6 @@ class AsyncRawParamsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return AsyncHttpResponse(response=_response, data=None)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def modify_with_path(
-        self, param: str, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[str]:
-        """
-        PUT to update with path param
-
-        Parameters
-        ----------
-        param : str
-
-        request : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[str]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"params/path/{encode_path_param(param)}",
-            method="PUT",
-            json=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    str,
-                    parse_obj_as(
-                        type_=str,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def modify_with_inline_path(
-        self, param: str, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[str]:
-        """
-        PUT to update with path param
-
-        Parameters
-        ----------
-        param : str
-
-        request : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[str]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"params/path/{encode_path_param(param)}",
-            method="PUT",
-            json=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    str,
-                    parse_obj_as(
-                        type_=str,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def upload_with_path(
-        self,
-        param: str,
-        *,
-        request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]],
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ObjectWithRequiredField]:
-        """
-        POST bytes with path param returning object
-
-        Parameters
-        ----------
-        param : str
-
-        request : typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[ObjectWithRequiredField]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"params/path/{encode_path_param(param)}",
-            method="POST",
-            content=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ObjectWithRequiredField,
-                    parse_obj_as(
-                        type_=ObjectWithRequiredField,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def get_with_boolean_path(
-        self, param: bool, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[str]:
-        """
-        GET with boolean path param
-
-        Parameters
-        ----------
-        param : bool
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[str]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"params/path-bool/{encode_path_param(param)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    str,
-                    parse_obj_as(
-                        type_=str,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def get_with_path_and_errors(
-        self, param: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[str]:
-        """
-        GET with path param that can throw errors
-
-        Parameters
-        ----------
-        param : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[str]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"params/path/{encode_path_param(param)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    str,
-                    parse_obj_as(
-                        type_=str,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise BadRequestBody(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        BadObjectRequestInfo,
-                        parse_obj_as(
-                            type_=BadObjectRequestInfo,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

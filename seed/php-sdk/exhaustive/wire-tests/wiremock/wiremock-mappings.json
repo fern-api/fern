@@ -1,6 +1,152 @@
 {
   "mappings": [
     {
+      "id": "96cd31e8-7ede-4fe5-8bc0-4ce120882145",
+      "name": "postWithObjectBodyandResponse - default",
+      "request": {
+        "urlPathTemplate": "/req-bodies/object",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"uuid\",\n  \"base64\": \"base64\",\n  \"list\": [\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"key\": \"value\"\n  },\n  \"bigint\": 1\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "96cd31e8-7ede-4fe5-8bc0-4ce120882145",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "4e0cd1b0-63ed-4e50-8cd8-0127990eb257",
+      "name": "postWithNoAuth - default",
+      "request": {
+        "urlPathTemplate": "/no-auth",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "true",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "4e0cd1b0-63ed-4e50-8cd8-0127990eb257",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "2f536741-c4b7-4690-a4cd-2c2f742d018b",
+      "name": "getWithNoRequestBody - default",
+      "request": {
+        "urlPathTemplate": "/no-req-body",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"uuid\",\n  \"base64\": \"base64\",\n  \"list\": [\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"key\": \"value\"\n  },\n  \"bigint\": 1\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "2f536741-c4b7-4690-a4cd-2c2f742d018b",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "31c52f80-6e7c-4417-905d-29817ae61c69",
+      "name": "postWithNoRequestBody - default",
+      "request": {
+        "urlPathTemplate": "/no-req-body",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "31c52f80-6e7c-4417-905d-29817ae61c69",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "f30f9383-7a31-4875-9cfd-521c4a96b2ad",
+      "name": "getWithCustomHeader - default",
+      "request": {
+        "urlPathTemplate": "/test-headers/custom-header",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "f30f9383-7a31-4875-9cfd-521c4a96b2ad",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "864d58e6-0c08-4f38-b7e1-2638f8d7fd6d",
       "name": "getAndReturnListOfPrimitives - default",
       "request": {
@@ -14,7 +160,7 @@
       },
       "response": {
         "status": 200,
-        "body": "[\n  \"string\",\n  \"string\"\n]",
+        "body": "[\n  \"string\"\n]",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -45,7 +191,7 @@
       },
       "response": {
         "status": 200,
-        "body": "[\n  {\n    \"string\": \"string\"\n  },\n  {\n    \"string\": \"string\"\n  }\n]",
+        "body": "[\n  {\n    \"string\": \"string\"\n  }\n]",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -138,7 +284,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"string\": \"string\"\n}",
+        "body": "{\n  \"key\": \"value\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -169,7 +315,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"string\": {\n    \"string\": \"string\"\n  }\n}",
+        "body": "{\n  \"key\": {\n    \"string\": \"string\"\n  }\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -200,7 +346,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"string\": 1.1\n}",
+        "body": "{\n  \"key\": 1.1\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -249,7 +395,7 @@
       }
     },
     {
-      "id": "d19e1fbe-79cc-465c-962e-e1866ca2361b",
+      "id": "da803644-79fa-4d22-8be2-a07e122ebdf5",
       "name": "postJsonPatchContentType - default",
       "request": {
         "urlPathTemplate": "/foo/bar",
@@ -267,7 +413,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "d19e1fbe-79cc-465c-962e-e1866ca2361b",
+      "uuid": "da803644-79fa-4d22-8be2-a07e122ebdf5",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -280,7 +426,7 @@
       }
     },
     {
-      "id": "4a107cf5-6284-48f8-9ddb-99d944ba989b",
+      "id": "addaf5f7-38ee-44d7-8620-eb2e9ac2c63b",
       "name": "postJsonPatchContentWithCharsetType - default",
       "request": {
         "urlPathTemplate": "/foo/baz",
@@ -298,7 +444,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "4a107cf5-6284-48f8-9ddb-99d944ba989b",
+      "uuid": "addaf5f7-38ee-44d7-8620-eb2e9ac2c63b",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -342,7 +488,7 @@
       }
     },
     {
-      "id": "3d95c052-db6e-4eff-95f2-895666a5af54",
+      "id": "edb49ef7-a4bf-42b2-ab85-9d7e22343695",
       "name": "testGet - default",
       "request": {
         "urlPathTemplate": "/http-methods/{id}",
@@ -365,7 +511,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "3d95c052-db6e-4eff-95f2-895666a5af54",
+      "uuid": "edb49ef7-a4bf-42b2-ab85-9d7e22343695",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -378,38 +524,7 @@
       }
     },
     {
-      "id": "2552873f-9f1d-4557-a6c7-6c6b7a55b566",
-      "name": "testPost - default",
-      "request": {
-        "urlPathTemplate": "/http-methods",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "2552873f-9f1d-4557-a6c7-6c6b7a55b566",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "db42fbdf-5426-41b7-b7ea-28ed39a38e82",
+      "id": "421f33b2-3c12-4743-84a5-413bea45c9c2",
       "name": "testPut - default",
       "request": {
         "urlPathTemplate": "/http-methods/{id}",
@@ -427,12 +542,12 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
+        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"uuid\",\n  \"base64\": \"base64\",\n  \"list\": [\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"key\": \"value\"\n  },\n  \"bigint\": 1\n}",
         "headers": {
           "Content-Type": "application/json"
         }
       },
-      "uuid": "db42fbdf-5426-41b7-b7ea-28ed39a38e82",
+      "uuid": "421f33b2-3c12-4743-84a5-413bea45c9c2",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -445,43 +560,7 @@
       }
     },
     {
-      "id": "c9def317-32a0-4bc0-b9b6-5efae8ca44a6",
-      "name": "testPatch - default",
-      "request": {
-        "urlPathTemplate": "/http-methods/{id}",
-        "method": "PATCH",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
-        "pathParameters": {
-          "id": {
-            "equalTo": "id"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "c9def317-32a0-4bc0-b9b6-5efae8ca44a6",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "05333635-c9ce-4c1a-bb6d-95e8a0fb80dc",
+      "id": "176c1a14-354c-44cf-aa92-da0730d89d56",
       "name": "testDelete - default",
       "request": {
         "urlPathTemplate": "/http-methods/{id}",
@@ -504,7 +583,74 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "05333635-c9ce-4c1a-bb6d-95e8a0fb80dc",
+      "uuid": "176c1a14-354c-44cf-aa92-da0730d89d56",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "679460d3-bf03-4eac-844e-1899864cda02",
+      "name": "testPatch - default",
+      "request": {
+        "urlPathTemplate": "/http-methods/{id}",
+        "method": "PATCH",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "id": {
+            "equalTo": "id"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"uuid\",\n  \"base64\": \"base64\",\n  \"list\": [\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"key\": \"value\"\n  },\n  \"bigint\": 1\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "679460d3-bf03-4eac-844e-1899864cda02",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "91e41385-9d5a-4524-9ec5-1d34ad78b238",
+      "name": "testPost - default",
+      "request": {
+        "urlPathTemplate": "/http-methods",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"uuid\",\n  \"base64\": \"base64\",\n  \"list\": [\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"key\": \"value\"\n  },\n  \"bigint\": 1\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "91e41385-9d5a-4524-9ec5-1d34ad78b238",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -530,7 +676,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
+        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"uuid\",\n  \"base64\": \"base64\",\n  \"list\": [\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"key\": \"value\"\n  },\n  \"bigint\": 1\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -592,7 +738,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"map\": {\n    \"map\": {\n      \"map\": \"map\"\n    }\n  }\n}",
+        "body": "{\n  \"map\": {\n    \"key\": {\n      \"key\": \"value\"\n    }\n  }\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -623,7 +769,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"string\": \"string\",\n  \"NestedObject\": {\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n      \"list\",\n      \"list\"\n    ],\n    \"set\": [\n      \"set\"\n    ],\n    \"map\": {\n      \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n  }\n}",
+        "body": "{\n  \"string\": \"string\",\n  \"NestedObject\": {\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"uuid\",\n    \"base64\": \"base64\",\n    \"list\": [\n      \"list\"\n    ],\n    \"set\": [\n      \"set\"\n    ],\n    \"map\": {\n      \"key\": \"value\"\n    },\n    \"bigint\": 1\n  }\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -641,10 +787,10 @@
       }
     },
     {
-      "id": "169827d0-4247-4236-8cef-34b94d2659de",
+      "id": "9f6e2c77-8ee1-4734-ac4f-0ad6b7d2cd08",
       "name": "getAndReturnNestedWithRequiredField - default",
       "request": {
-        "urlPathTemplate": "/object/get-and-return-nested-with-required-field/{string}",
+        "urlPathTemplate": "/object/get-and-return-nested-with-required-field/{stringValue}",
         "method": "POST",
         "headers": {
           "Authorization": {
@@ -652,19 +798,19 @@
           }
         },
         "pathParameters": {
-          "string": {
+          "stringValue": {
             "equalTo": "string"
           }
         }
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"string\": \"string\",\n  \"NestedObject\": {\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n      \"list\",\n      \"list\"\n    ],\n    \"set\": [\n      \"set\"\n    ],\n    \"map\": {\n      \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n  }\n}",
+        "body": "{\n  \"string\": \"string\",\n  \"NestedObject\": {\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"uuid\",\n    \"base64\": \"base64\",\n    \"list\": [\n      \"list\"\n    ],\n    \"set\": [\n      \"set\"\n    ],\n    \"map\": {\n      \"key\": \"value\"\n    },\n    \"bigint\": 1\n  }\n}",
         "headers": {
           "Content-Type": "application/json"
         }
       },
-      "uuid": "169827d0-4247-4236-8cef-34b94d2659de",
+      "uuid": "9f6e2c77-8ee1-4734-ac4f-0ad6b7d2cd08",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -690,7 +836,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"string\": \"string\",\n  \"NestedObject\": {\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n      \"list\",\n      \"list\"\n    ],\n    \"set\": [\n      \"set\"\n    ],\n    \"map\": {\n      \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n  }\n}",
+        "body": "{\n  \"string\": \"string\",\n  \"NestedObject\": {\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"uuid\",\n    \"base64\": \"base64\",\n    \"list\": [\n      \"list\"\n    ],\n    \"set\": [\n      \"set\"\n    ],\n    \"map\": {\n      \"key\": \"value\"\n    },\n    \"bigint\": 1\n  }\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -708,8 +854,8 @@
       }
     },
     {
-      "id": "17b25d66-354e-4190-b305-39b7b33f7da8",
-      "name": "getAndReturnWithUnknownField - BackslashExample",
+      "id": "233729b0-81c8-4fb3-aa53-793afa48096a",
+      "name": "getAndReturnWithUnknownField - default",
       "request": {
         "urlPathTemplate": "/object/get-and-return-with-unknown-field",
         "method": "POST",
@@ -721,12 +867,12 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"unknown\": {\n    \"$ref\": \"https://example.com/schema\"\n  }\n}",
+        "body": "{\n  \"unknown\": {\n    \"key\": \"value\"\n  }\n}",
         "headers": {
           "Content-Type": "application/json"
         }
       },
-      "uuid": "17b25d66-354e-4190-b305-39b7b33f7da8",
+      "uuid": "233729b0-81c8-4fb3-aa53-793afa48096a",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -783,7 +929,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"string\": {\n    \"key\": \"value\"\n  }\n}",
+        "body": "{\n  \"key\": {\n    \"key\": \"value\"\n  }\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -801,70 +947,8 @@
       }
     },
     {
-      "id": "d1d11f31-5ad4-4275-8b59-064ee4a550fb",
-      "name": "getAndReturnWithMixedRequiredAndOptionalFields - PartialRequiredFields",
-      "request": {
-        "urlPathTemplate": "/object/get-and-return-with-mixed-required-and-optional-fields",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "{\n  \"requiredString\": \"hello\",\n  \"requiredInteger\": 0,\n  \"optionalString\": \"world\",\n  \"requiredLong\": 0\n}",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "d1d11f31-5ad4-4275-8b59-064ee4a550fb",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "7b973449-cd5b-4771-80f7-d39dbd6c1429",
-      "name": "getAndReturnWithRequiredNestedObject - NestedObjectMissing",
-      "request": {
-        "urlPathTemplate": "/object/get-and-return-with-required-nested-object",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "{\n  \"requiredString\": \"hello\",\n  \"requiredObject\": {\n    \"string\": \"nested\",\n    \"NestedObject\": {}\n  }\n}",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "7b973449-cd5b-4771-80f7-d39dbd6c1429",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "15cf06f4-31a9-4147-a8d4-88d5ad543d35",
-      "name": "getAndReturnWithDatetimeLikeString - DatetimeLikeStringExample",
+      "id": "e2cc3e92-6e37-4a50-9081-23952fdd73fe",
+      "name": "getAndReturnWithDatetimeLikeString - default",
       "request": {
         "urlPathTemplate": "/object/get-and-return-with-datetime-like-string",
         "method": "POST",
@@ -876,12 +960,12 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"datetimeLikeString\": \"2023-08-31T14:15:22Z\",\n  \"actualDatetime\": \"2023-08-31T14:15:22Z\"\n}",
+        "body": "{\n  \"datetimeLikeString\": \"datetimeLikeString\",\n  \"actualDatetime\": \"2024-01-15T09:30:00Z\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
       },
-      "uuid": "15cf06f4-31a9-4147-a8d4-88d5ad543d35",
+      "uuid": "e2cc3e92-6e37-4a50-9081-23952fdd73fe",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -903,19 +987,11 @@
           "Authorization": {
             "matches": "Bearer .+"
           }
-        },
-        "queryParameters": {
-          "cursor": {
-            "equalTo": "cursor"
-          },
-          "limit": {
-            "equalTo": "1"
-          }
         }
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"items\": [\n    {\n      \"string\": \"string\"\n    },\n    {\n      \"string\": \"string\"\n    }\n  ],\n  \"next\": \"next\"\n}",
+        "body": "{\n  \"items\": [\n    {\n      \"string\": \"string\"\n    }\n  ],\n  \"next\": \"next\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -970,10 +1046,46 @@
       }
     },
     {
-      "id": "711fc64f-4af9-4084-8c29-1e7a9e58be70",
-      "name": "getWithInlinePath - default",
+      "id": "046bf7d6-751b-48e9-bfc6-ff74a17e88e1",
+      "name": "modifyWithPath - default",
       "request": {
         "urlPathTemplate": "/params/path/{param}",
+        "method": "PUT",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "param": {
+            "equalTo": "param"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "046bf7d6-751b-48e9-bfc6-ff74a17e88e1",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "723efb9e-21d8-433f-955f-93445b707050",
+      "name": "getWithInlinePath - default",
+      "request": {
+        "urlPathTemplate": "/params/inline-path/{param}",
         "method": "GET",
         "headers": {
           "Authorization": {
@@ -993,7 +1105,43 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "711fc64f-4af9-4084-8c29-1e7a9e58be70",
+      "uuid": "723efb9e-21d8-433f-955f-93445b707050",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "9e966b08-cae3-4008-9080-9e07f461069e",
+      "name": "modifyWithInlinePath - default",
+      "request": {
+        "urlPathTemplate": "/params/inline-path/{param}",
+        "method": "PUT",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "param": {
+            "equalTo": "param"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "9e966b08-cae3-4008-9080-9e07f461069e",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -1046,10 +1194,10 @@
       "postServeActions": []
     },
     {
-      "id": "4125d349-732b-4ff7-948d-1eeb977ed13b",
+      "id": "a05c55f5-9bfc-4d3d-8805-afc7cb55d395",
       "name": "getWithAllowMultipleQuery - default",
       "request": {
-        "urlPathTemplate": "/params",
+        "urlPathTemplate": "/params/allow-multiple-query",
         "method": "GET",
         "headers": {
           "Authorization": {
@@ -1058,10 +1206,18 @@
         },
         "queryParameters": {
           "query": {
-            "equalTo": "query"
+            "hasExactly": [
+              {
+                "equalTo": "query"
+              }
+            ]
           },
           "number": {
-            "equalTo": "1"
+            "hasExactly": [
+              {
+                "equalTo": "1"
+              }
+            ]
           }
         }
       },
@@ -1072,7 +1228,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "4125d349-732b-4ff7-948d-1eeb977ed13b",
+      "uuid": "a05c55f5-9bfc-4d3d-8805-afc7cb55d395",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -1127,10 +1283,10 @@
       }
     },
     {
-      "id": "c4f5012a-fb3f-45ac-b695-beedc3353ad8",
+      "id": "0a90ba7f-9a0a-47fa-9a87-158c09b22373",
       "name": "getWithInlinePathAndQuery - default",
       "request": {
-        "urlPathTemplate": "/params/path-query/{param}",
+        "urlPathTemplate": "/params/inline-path-query/{param}",
         "method": "GET",
         "headers": {
           "Authorization": {
@@ -1155,151 +1311,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "c4f5012a-fb3f-45ac-b695-beedc3353ad8",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "046bf7d6-751b-48e9-bfc6-ff74a17e88e1",
-      "name": "modifyWithPath - default",
-      "request": {
-        "urlPathTemplate": "/params/path/{param}",
-        "method": "PUT",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
-        "pathParameters": {
-          "param": {
-            "equalTo": "param"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "\"string\"",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "046bf7d6-751b-48e9-bfc6-ff74a17e88e1",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "6bfc7195-b99c-4449-bf47-7c4f74f6f33b",
-      "name": "modifyWithInlinePath - default",
-      "request": {
-        "urlPathTemplate": "/params/path/{param}",
-        "method": "PUT",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
-        "pathParameters": {
-          "param": {
-            "equalTo": "param"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "\"string\"",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "6bfc7195-b99c-4449-bf47-7c4f74f6f33b",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "25a5031e-ad21-4379-8965-4732818bb823",
-      "name": "getWithBooleanPath - default",
-      "request": {
-        "urlPathTemplate": "/params/path-bool/{param}",
-        "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
-        "pathParameters": {
-          "param": {
-            "equalTo": "true"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "\"string\"",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "25a5031e-ad21-4379-8965-4732818bb823",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "6898aaa2-3e4b-403e-a91f-473b4eb84b93",
-      "name": "getWithPathAndErrors - default",
-      "request": {
-        "urlPathTemplate": "/params/path/{param}",
-        "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
-        "pathParameters": {
-          "param": {
-            "equalTo": "param"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "\"string\"",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "6898aaa2-3e4b-403e-a91f-473b4eb84b93",
+      "uuid": "0a90ba7f-9a0a-47fa-9a87-158c09b22373",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -1542,7 +1554,7 @@
       },
       "response": {
         "status": 200,
-        "body": "\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"",
+        "body": "\"string\"",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -1573,7 +1585,7 @@
       },
       "response": {
         "status": 200,
-        "body": "\"SGVsbG8gd29ybGQh\"",
+        "body": "\"string\"",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -1609,7 +1621,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"errors\": [\n    {\n      \"category\": \"API_ERROR\",\n      \"code\": \"INTERNAL_SERVER_ERROR\",\n      \"detail\": \"detail\",\n      \"field\": \"field\"\n    },\n    {\n      \"category\": \"API_ERROR\",\n      \"code\": \"INTERNAL_SERVER_ERROR\",\n      \"detail\": \"detail\",\n      \"field\": \"field\"\n    }\n  ]\n}",
+        "body": "{\n  \"errors\": [\n    {\n      \"category\": \"API_ERROR\",\n      \"code\": \"INTERNAL_SERVER_ERROR\",\n      \"detail\": \"detail\",\n      \"field\": \"field\"\n    }\n  ]\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -1640,7 +1652,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"animal\": \"dog\",\n  \"name\": \"name\",\n  \"likesToWoof\": true\n}",
+        "body": "{\n  \"name\": \"name\",\n  \"likesToWoof\": true,\n  \"animal\": \"dog\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -1784,155 +1796,9 @@
         }
       },
       "postServeActions": []
-    },
-    {
-      "id": "4a6d0aaa-05f2-47bb-9f40-6e3743b9d2bf",
-      "name": "postWithObjectBodyandResponse - default",
-      "request": {
-        "urlPathTemplate": "/req-bodies/object",
-        "method": "POST"
-      },
-      "response": {
-        "status": 200,
-        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "4a6d0aaa-05f2-47bb-9f40-6e3743b9d2bf",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "c6e7cc6c-b76f-4860-a9ad-52dc8f55b6e6",
-      "name": "postWithNoAuth - default",
-      "request": {
-        "urlPathTemplate": "/no-auth",
-        "method": "POST"
-      },
-      "response": {
-        "status": 200,
-        "body": "true",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "c6e7cc6c-b76f-4860-a9ad-52dc8f55b6e6",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "8098eeea-bc6b-4068-9601-566c2092f83f",
-      "name": "getWithNoRequestBody - default",
-      "request": {
-        "urlPathTemplate": "/no-req-body",
-        "method": "GET",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "8098eeea-bc6b-4068-9601-566c2092f83f",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      },
-      "postServeActions": []
-    },
-    {
-      "id": "7dd9f944-1b35-42e9-a5ed-e48214ac8e91",
-      "name": "postWithNoRequestBody - default",
-      "request": {
-        "urlPathTemplate": "/no-req-body",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "\"string\"",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "7dd9f944-1b35-42e9-a5ed-e48214ac8e91",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
-      "id": "d7b54168-aef4-4d68-a9c5-446e97dee2fc",
-      "name": "getWithCustomHeader - default",
-      "request": {
-        "urlPathTemplate": "/test-headers/custom-header",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "\"\"",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "d7b54168-aef4-4d68-a9c5-446e97dee2fc",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
     }
   ],
   "meta": {
-    "total": 59
+    "total": 55
   }
 }

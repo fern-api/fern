@@ -1,4 +1,4 @@
-use seed_exhaustive::prelude::*;
+use seed_api::prelude::*;
 
 mod wire_test_utils;
 
@@ -14,12 +14,12 @@ async fn test_endpoints_enum_get_and_return_enum_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
         .endpoints
         .enum_
-        .get_and_return_enum(&WeatherReport::Sunny, None)
+        .get_and_return_enum(&TypesWeatherReport::Sunny, None)
         .await;
 
     assert!(result.is_ok(), "Client method call should succeed");

@@ -5,4 +5,8 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.primitive.get_and_return_double(request: 1.1)
+client.endpoints.object.get_and_return_with_map_of_map(map: {
+  map: {
+    map: "map"
+  }
+})

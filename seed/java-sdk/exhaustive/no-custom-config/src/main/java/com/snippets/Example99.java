@@ -1,0 +1,23 @@
+package com.snippets;
+
+import com.seed.api.SeedApiClient;
+import com.seed.api.types.TypesAnimal;
+import com.seed.api.types.TypesAnimalZero;
+import com.seed.api.types.TypesAnimalZeroAnimal;
+
+public class Example99 {
+    public static void main(String[] args) {
+        SeedApiClient client = SeedApiClient.builder()
+                .token("<token>")
+                .url("https://api.fern.com")
+                .build();
+
+        client.endpoints()
+                .union()
+                .getAndReturnUnion(TypesAnimal.of(TypesAnimalZero.builder()
+                        .name("name")
+                        .likesToWoof(true)
+                        .animal(TypesAnimalZeroAnimal.DOG)
+                        .build()));
+    }
+}

@@ -15,13 +15,13 @@ impl EnumClient {
 
     pub async fn get_and_return_enum(
         &self,
-        request: &WeatherReport,
+        request: &TypesWeatherReport,
         options: Option<RequestOptions>,
-    ) -> Result<WeatherReport, ApiError> {
+    ) -> Result<TypesWeatherReport, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/enum",
+                "enum",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

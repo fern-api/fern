@@ -43,7 +43,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SeedExhaustiveClient = void 0;
+exports.SeedApiClient = void 0;
 const Client_js_1 = require("./api/resources/endpoints/client/Client.js");
 const Client_js_2 = require("./api/resources/inlinedRequests/client/Client.js");
 const Client_js_3 = require("./api/resources/noAuth/client/Client.js");
@@ -51,13 +51,9 @@ const Client_js_4 = require("./api/resources/noReqBody/client/Client.js");
 const Client_js_5 = require("./api/resources/reqWithHeaders/client/Client.js");
 const BaseClient_js_1 = require("./BaseClient.js");
 const core = __importStar(require("./core/index.js"));
-class SeedExhaustiveClient {
+class SeedApiClient {
     constructor(options) {
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
-    }
-    get endpoints() {
-        var _a;
-        return ((_a = this._endpoints) !== null && _a !== void 0 ? _a : (this._endpoints = new Client_js_1.EndpointsClient(this._options)));
     }
     get inlinedRequests() {
         var _a;
@@ -74,6 +70,10 @@ class SeedExhaustiveClient {
     get reqWithHeaders() {
         var _a;
         return ((_a = this._reqWithHeaders) !== null && _a !== void 0 ? _a : (this._reqWithHeaders = new Client_js_5.ReqWithHeadersClient(this._options)));
+    }
+    get endpoints() {
+        var _a;
+        return ((_a = this._endpoints) !== null && _a !== void 0 ? _a : (this._endpoints = new Client_js_1.EndpointsClient(this._options)));
     }
     /**
      * Make a passthrough request using the SDK's configured auth, retry, logging, etc.
@@ -100,4 +100,4 @@ class SeedExhaustiveClient {
         });
     }
 }
-exports.SeedExhaustiveClient = SeedExhaustiveClient;
+exports.SeedApiClient = SeedApiClient;

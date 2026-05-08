@@ -6,9 +6,8 @@ package com.fern.sdk.resources.endpoints.pagination;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.core.pagination.SyncPagingIterable;
-import com.fern.sdk.resources.endpoints.pagination.requests.ListItemsRequest;
-import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
+import com.fern.sdk.resources.endpoints.pagination.requests.ListItemsPaginationRequest;
+import com.fern.sdk.types.EndpointsPaginatedResponse;
 
 public class PaginationClient {
   protected final ClientOptions clientOptions;
@@ -30,28 +29,28 @@ public class PaginationClient {
   /**
    * List items with cursor pagination
    */
-  public SyncPagingIterable<ObjectWithRequiredField> listItems() {
+  public EndpointsPaginatedResponse listItems() {
     return this.rawClient.listItems().body();
   }
 
   /**
    * List items with cursor pagination
    */
-  public SyncPagingIterable<ObjectWithRequiredField> listItems(RequestOptions requestOptions) {
+  public EndpointsPaginatedResponse listItems(RequestOptions requestOptions) {
     return this.rawClient.listItems(requestOptions).body();
   }
 
   /**
    * List items with cursor pagination
    */
-  public SyncPagingIterable<ObjectWithRequiredField> listItems(ListItemsRequest request) {
+  public EndpointsPaginatedResponse listItems(ListItemsPaginationRequest request) {
     return this.rawClient.listItems(request).body();
   }
 
   /**
    * List items with cursor pagination
    */
-  public SyncPagingIterable<ObjectWithRequiredField> listItems(ListItemsRequest request,
+  public EndpointsPaginatedResponse listItems(ListItemsPaginationRequest request,
       RequestOptions requestOptions) {
     return this.rawClient.listItems(request, requestOptions).body();
   }

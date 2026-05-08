@@ -8,19 +8,19 @@ import (
 )
 
 var (
-	getWithMultipleQueryFieldQuery  = big.NewInt(1 << 0)
-	getWithMultipleQueryFieldNumber = big.NewInt(1 << 1)
+	getWithAllowMultipleQueryParamsRequestFieldQuery  = big.NewInt(1 << 0)
+	getWithAllowMultipleQueryParamsRequestFieldNumber = big.NewInt(1 << 1)
 )
 
-type GetWithMultipleQuery struct {
-	Query  []string `json:"-" url:"query"`
-	Number []int    `json:"-" url:"number"`
+type GetWithAllowMultipleQueryParamsRequest struct {
+	Query  []*string `json:"-" url:"query,omitempty"`
+	Number []*int    `json:"-" url:"number,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (g *GetWithMultipleQuery) require(field *big.Int) {
+func (g *GetWithAllowMultipleQueryParamsRequest) require(field *big.Int) {
 	if g.explicitFields == nil {
 		g.explicitFields = big.NewInt(0)
 	}
@@ -29,30 +29,30 @@ func (g *GetWithMultipleQuery) require(field *big.Int) {
 
 // SetQuery sets the Query field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetWithMultipleQuery) SetQuery(query []string) {
+func (g *GetWithAllowMultipleQueryParamsRequest) SetQuery(query []*string) {
 	g.Query = query
-	g.require(getWithMultipleQueryFieldQuery)
+	g.require(getWithAllowMultipleQueryParamsRequestFieldQuery)
 }
 
 // SetNumber sets the Number field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetWithMultipleQuery) SetNumber(number []int) {
+func (g *GetWithAllowMultipleQueryParamsRequest) SetNumber(number []*int) {
 	g.Number = number
-	g.require(getWithMultipleQueryFieldNumber)
+	g.require(getWithAllowMultipleQueryParamsRequestFieldNumber)
 }
 
 var (
-	getWithInlinePathFieldParam = big.NewInt(1 << 0)
+	getWithInlinePathParamsRequestFieldParam = big.NewInt(1 << 0)
 )
 
-type GetWithInlinePath struct {
+type GetWithInlinePathParamsRequest struct {
 	Param string `json:"-" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (g *GetWithInlinePath) require(field *big.Int) {
+func (g *GetWithInlinePathParamsRequest) require(field *big.Int) {
 	if g.explicitFields == nil {
 		g.explicitFields = big.NewInt(0)
 	}
@@ -61,17 +61,17 @@ func (g *GetWithInlinePath) require(field *big.Int) {
 
 // SetParam sets the Param field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetWithInlinePath) SetParam(param string) {
+func (g *GetWithInlinePathParamsRequest) SetParam(param string) {
 	g.Param = param
-	g.require(getWithInlinePathFieldParam)
+	g.require(getWithInlinePathParamsRequestFieldParam)
 }
 
 var (
-	getWithInlinePathAndQueryFieldParam = big.NewInt(1 << 0)
-	getWithInlinePathAndQueryFieldQuery = big.NewInt(1 << 1)
+	getWithInlinePathAndQueryParamsRequestFieldParam = big.NewInt(1 << 0)
+	getWithInlinePathAndQueryParamsRequestFieldQuery = big.NewInt(1 << 1)
 )
 
-type GetWithInlinePathAndQuery struct {
+type GetWithInlinePathAndQueryParamsRequest struct {
 	Param string `json:"-" url:"-"`
 	Query string `json:"-" url:"query"`
 
@@ -79,7 +79,7 @@ type GetWithInlinePathAndQuery struct {
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (g *GetWithInlinePathAndQuery) require(field *big.Int) {
+func (g *GetWithInlinePathAndQueryParamsRequest) require(field *big.Int) {
 	if g.explicitFields == nil {
 		g.explicitFields = big.NewInt(0)
 	}
@@ -88,49 +88,83 @@ func (g *GetWithInlinePathAndQuery) require(field *big.Int) {
 
 // SetParam sets the Param field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetWithInlinePathAndQuery) SetParam(param string) {
+func (g *GetWithInlinePathAndQueryParamsRequest) SetParam(param string) {
 	g.Param = param
-	g.require(getWithInlinePathAndQueryFieldParam)
+	g.require(getWithInlinePathAndQueryParamsRequestFieldParam)
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetWithInlinePathAndQuery) SetQuery(query string) {
+func (g *GetWithInlinePathAndQueryParamsRequest) SetQuery(query string) {
 	g.Query = query
-	g.require(getWithInlinePathAndQueryFieldQuery)
+	g.require(getWithInlinePathAndQueryParamsRequestFieldQuery)
 }
 
 var (
-	getWithPathAndQueryFieldQuery = big.NewInt(1 << 0)
+	getWithPathParamsRequestFieldParam = big.NewInt(1 << 0)
 )
 
-type GetWithPathAndQuery struct {
-	Query string `json:"-" url:"query"`
+type GetWithPathParamsRequest struct {
+	Param string `json:"-" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (g *GetWithPathAndQuery) require(field *big.Int) {
+func (g *GetWithPathParamsRequest) require(field *big.Int) {
 	if g.explicitFields == nil {
 		g.explicitFields = big.NewInt(0)
 	}
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetQuery sets the Query field and marks it as non-optional;
+// SetParam sets the Param field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetWithPathAndQuery) SetQuery(query string) {
-	g.Query = query
-	g.require(getWithPathAndQueryFieldQuery)
+func (g *GetWithPathParamsRequest) SetParam(param string) {
+	g.Param = param
+	g.require(getWithPathParamsRequestFieldParam)
 }
 
 var (
-	getWithQueryFieldQuery  = big.NewInt(1 << 0)
-	getWithQueryFieldNumber = big.NewInt(1 << 1)
+	getWithPathAndQueryParamsRequestFieldParam = big.NewInt(1 << 0)
+	getWithPathAndQueryParamsRequestFieldQuery = big.NewInt(1 << 1)
 )
 
-type GetWithQuery struct {
+type GetWithPathAndQueryParamsRequest struct {
+	Param string `json:"-" url:"-"`
+	Query string `json:"-" url:"query"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (g *GetWithPathAndQueryParamsRequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetParam sets the Param field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetWithPathAndQueryParamsRequest) SetParam(param string) {
+	g.Param = param
+	g.require(getWithPathAndQueryParamsRequestFieldParam)
+}
+
+// SetQuery sets the Query field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetWithPathAndQueryParamsRequest) SetQuery(query string) {
+	g.Query = query
+	g.require(getWithPathAndQueryParamsRequestFieldQuery)
+}
+
+var (
+	getWithQueryParamsRequestFieldQuery  = big.NewInt(1 << 0)
+	getWithQueryParamsRequestFieldNumber = big.NewInt(1 << 1)
+)
+
+type GetWithQueryParamsRequest struct {
 	Query  string `json:"-" url:"query"`
 	Number int    `json:"-" url:"number"`
 
@@ -138,7 +172,7 @@ type GetWithQuery struct {
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (g *GetWithQuery) require(field *big.Int) {
+func (g *GetWithQueryParamsRequest) require(field *big.Int) {
 	if g.explicitFields == nil {
 		g.explicitFields = big.NewInt(0)
 	}
@@ -147,23 +181,23 @@ func (g *GetWithQuery) require(field *big.Int) {
 
 // SetQuery sets the Query field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetWithQuery) SetQuery(query string) {
+func (g *GetWithQueryParamsRequest) SetQuery(query string) {
 	g.Query = query
-	g.require(getWithQueryFieldQuery)
+	g.require(getWithQueryParamsRequestFieldQuery)
 }
 
 // SetNumber sets the Number field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetWithQuery) SetNumber(number int) {
+func (g *GetWithQueryParamsRequest) SetNumber(number int) {
 	g.Number = number
-	g.require(getWithQueryFieldNumber)
+	g.require(getWithQueryParamsRequestFieldNumber)
 }
 
 var (
-	modifyResourceAtInlinedPathFieldParam = big.NewInt(1 << 0)
+	modifyWithInlinePathParamsRequestFieldParam = big.NewInt(1 << 0)
 )
 
-type ModifyResourceAtInlinedPath struct {
+type ModifyWithInlinePathParamsRequest struct {
 	Param string `json:"-" url:"-"`
 	Body  string `json:"-" url:"-"`
 
@@ -171,7 +205,7 @@ type ModifyResourceAtInlinedPath struct {
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (m *ModifyResourceAtInlinedPath) require(field *big.Int) {
+func (m *ModifyWithInlinePathParamsRequest) require(field *big.Int) {
 	if m.explicitFields == nil {
 		m.explicitFields = big.NewInt(0)
 	}
@@ -180,12 +214,12 @@ func (m *ModifyResourceAtInlinedPath) require(field *big.Int) {
 
 // SetParam sets the Param field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *ModifyResourceAtInlinedPath) SetParam(param string) {
+func (m *ModifyWithInlinePathParamsRequest) SetParam(param string) {
 	m.Param = param
-	m.require(modifyResourceAtInlinedPathFieldParam)
+	m.require(modifyWithInlinePathParamsRequestFieldParam)
 }
 
-func (m *ModifyResourceAtInlinedPath) UnmarshalJSON(data []byte) error {
+func (m *ModifyWithInlinePathParamsRequest) UnmarshalJSON(data []byte) error {
 	var body string
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
@@ -194,6 +228,45 @@ func (m *ModifyResourceAtInlinedPath) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (m *ModifyResourceAtInlinedPath) MarshalJSON() ([]byte, error) {
+func (m *ModifyWithInlinePathParamsRequest) MarshalJSON() ([]byte, error) {
+	return json.Marshal(m.Body)
+}
+
+var (
+	modifyWithPathParamsRequestFieldParam = big.NewInt(1 << 0)
+)
+
+type ModifyWithPathParamsRequest struct {
+	Param string `json:"-" url:"-"`
+	Body  string `json:"-" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (m *ModifyWithPathParamsRequest) require(field *big.Int) {
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
+	}
+	m.explicitFields.Or(m.explicitFields, field)
+}
+
+// SetParam sets the Param field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (m *ModifyWithPathParamsRequest) SetParam(param string) {
+	m.Param = param
+	m.require(modifyWithPathParamsRequestFieldParam)
+}
+
+func (m *ModifyWithPathParamsRequest) UnmarshalJSON(data []byte) error {
+	var body string
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	m.Body = body
+	return nil
+}
+
+func (m *ModifyWithPathParamsRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(m.Body)
 }

@@ -1,19 +1,20 @@
-using SeedExhaustive;
+using SeedApi;
+using SeedApi.Endpoints;
 
 public partial class Examples
 {
     public async Task Example62() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.NoAuth.PostWithNoAuthAsync(
-            new Dictionary<string, object>()
-            {
-                ["key"] = "value",
+        await client.Endpoints.Pagination.ListItemsAsync(
+            new ListItemsPaginationRequest {
+                Cursor = "cursor",
+                Limit = 1
             }
         );
     }

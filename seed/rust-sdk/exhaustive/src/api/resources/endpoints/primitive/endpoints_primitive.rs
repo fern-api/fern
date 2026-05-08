@@ -1,7 +1,6 @@
 use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use chrono::{DateTime, FixedOffset, NaiveDate};
 use reqwest::Method;
-use uuid::Uuid;
 
 pub struct PrimitiveClient {
     pub http_client: HttpClient,
@@ -22,7 +21,7 @@ impl PrimitiveClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/primitive/string",
+                "primitive/string",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -38,7 +37,7 @@ impl PrimitiveClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/primitive/integer",
+                "primitive/integer",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -54,7 +53,7 @@ impl PrimitiveClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/primitive/long",
+                "primitive/long",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -70,7 +69,7 @@ impl PrimitiveClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/primitive/double",
+                "primitive/double",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -86,7 +85,7 @@ impl PrimitiveClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/primitive/boolean",
+                "primitive/boolean",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -102,7 +101,7 @@ impl PrimitiveClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/primitive/datetime",
+                "primitive/datetime",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -118,7 +117,7 @@ impl PrimitiveClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/primitive/date",
+                "primitive/date",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -128,13 +127,13 @@ impl PrimitiveClient {
 
     pub async fn get_and_return_uuid(
         &self,
-        request: &Uuid,
+        request: &str,
         options: Option<RequestOptions>,
-    ) -> Result<Uuid, ApiError> {
+    ) -> Result<String, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/primitive/uuid",
+                "primitive/uuid",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -144,13 +143,13 @@ impl PrimitiveClient {
 
     pub async fn get_and_return_base64(
         &self,
-        request: &Vec<u8>,
+        request: &str,
         options: Option<RequestOptions>,
-    ) -> Result<Vec<u8>, ApiError> {
+    ) -> Result<String, ApiError> {
         self.http_client
-            .execute_request_base64(
+            .execute_request(
                 Method::POST,
-                "/primitive/base64",
+                "primitive/base64",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

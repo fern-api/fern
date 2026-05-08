@@ -3,6 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Endpoints\Pagination\Requests\ListItemsPaginationRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -10,8 +11,9 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->noAuth->postWithNoAuth(
-    [
-        'key' => "value",
-    ],
+$client->endpoints->pagination->listItems(
+    new ListItemsPaginationRequest([
+        'cursor' => 'cursor',
+        'limit' => 1,
+    ]),
 );

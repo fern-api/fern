@@ -4,8 +4,12 @@ namespace Seed\Tests;
 
 use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
-use Seed\Endpoints\Params\Requests\GetWithQuery;
-use Seed\Endpoints\Params\Requests\GetWithPathAndQuery;
+use Seed\Endpoints\Params\Requests\ModifyWithPathParamsRequest;
+use Seed\Endpoints\Params\Requests\ModifyWithInlinePathParamsRequest;
+use Seed\Endpoints\Params\Requests\GetWithQueryParamsRequest;
+use Seed\Endpoints\Params\Requests\GetWithAllowMultipleQueryParamsRequest;
+use Seed\Endpoints\Params\Requests\GetWithPathAndQueryParamsRequest;
+use Seed\Endpoints\Params\Requests\GetWithInlinePathAndQueryParamsRequest;
 
 class EndpointsParamsWireTest extends WireMockTestCase
 {
@@ -37,9 +41,33 @@ class EndpointsParamsWireTest extends WireMockTestCase
 
     /**
      */
+    public function testModifyWithPath(): void {
+        $testId = 'endpoints.params.modify_with_path.0';
+        $this->client->endpoints->params->modifyWithPath(
+            'param',
+            new ModifyWithPathParamsRequest([
+                'body' => 'string',
+            ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.params.modify_with_path.0',
+                ],
+            ],
+        );
+        $this->verifyRequestCount(
+            $testId,
+            "PUT",
+            "/params/path/param",
+            null,
+            1
+        );
+    }
+
+    /**
+     */
     public function testGetWithInlinePath(): void {
         $testId = 'endpoints.params.get_with_inline_path.0';
-        $this->client->endpoints->params->getWithPath(
+        $this->client->endpoints->params->getWithInlinePath(
             'param',
             [
                 'headers' => [
@@ -50,7 +78,31 @@ class EndpointsParamsWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "GET",
-            "/params/path/param",
+            "/params/inline-path/param",
+            null,
+            1
+        );
+    }
+
+    /**
+     */
+    public function testModifyWithInlinePath(): void {
+        $testId = 'endpoints.params.modify_with_inline_path.0';
+        $this->client->endpoints->params->modifyWithInlinePath(
+            'param',
+            new ModifyWithInlinePathParamsRequest([
+                'body' => 'string',
+            ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.params.modify_with_inline_path.0',
+                ],
+            ],
+        );
+        $this->verifyRequestCount(
+            $testId,
+            "PUT",
+            "/params/inline-path/param",
             null,
             1
         );
@@ -61,7 +113,7 @@ class EndpointsParamsWireTest extends WireMockTestCase
     public function testGetWithQuery(): void {
         $testId = 'endpoints.params.get_with_query.0';
         $this->client->endpoints->params->getWithQuery(
-            new GetWithQuery([
+            new GetWithQueryParamsRequest([
                 'query' => 'query',
                 'number' => 1,
             ]),
@@ -84,10 +136,14 @@ class EndpointsParamsWireTest extends WireMockTestCase
      */
     public function testGetWithAllowMultipleQuery(): void {
         $testId = 'endpoints.params.get_with_allow_multiple_query.0';
-        $this->client->endpoints->params->getWithQuery(
-            new GetWithQuery([
-                'query' => 'query',
-                'number' => 1,
+        $this->client->endpoints->params->getWithAllowMultipleQuery(
+            new GetWithAllowMultipleQueryParamsRequest([
+                'query' => [
+                    'query',
+                ],
+                'number' => [
+                    1,
+                ],
             ]),
             [
                 'headers' => [
@@ -98,7 +154,7 @@ class EndpointsParamsWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "GET",
-            "/params",
+            "/params/allow-multiple-query",
             ['query' => 'query', 'number' => '1'],
             1
         );
@@ -110,7 +166,7 @@ class EndpointsParamsWireTest extends WireMockTestCase
         $testId = 'endpoints.params.get_with_path_and_query.0';
         $this->client->endpoints->params->getWithPathAndQuery(
             'param',
-            new GetWithPathAndQuery([
+            new GetWithPathAndQueryParamsRequest([
                 'query' => 'query',
             ]),
             [
@@ -132,9 +188,9 @@ class EndpointsParamsWireTest extends WireMockTestCase
      */
     public function testGetWithInlinePathAndQuery(): void {
         $testId = 'endpoints.params.get_with_inline_path_and_query.0';
-        $this->client->endpoints->params->getWithPathAndQuery(
+        $this->client->endpoints->params->getWithInlinePathAndQuery(
             'param',
-            new GetWithPathAndQuery([
+            new GetWithInlinePathAndQueryParamsRequest([
                 'query' => 'query',
             ]),
             [
@@ -146,116 +202,8 @@ class EndpointsParamsWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "GET",
-            "/params/path-query/param",
+            "/params/inline-path-query/param",
             ['query' => 'query'],
-            1
-        );
-    }
-
-    /**
-     */
-    public function testModifyWithPath(): void {
-        $testId = 'endpoints.params.modify_with_path.0';
-        $this->client->endpoints->params->modifyWithPath(
-            'param',
-            'string',
-            [
-                'headers' => [
-                    'X-Test-Id' => 'endpoints.params.modify_with_path.0',
-                ],
-            ],
-        );
-        $this->verifyRequestCount(
-            $testId,
-            "PUT",
-            "/params/path/param",
-            null,
-            1
-        );
-    }
-
-    /**
-     */
-    public function testModifyWithInlinePath(): void {
-        $testId = 'endpoints.params.modify_with_inline_path.0';
-        $this->client->endpoints->params->modifyWithPath(
-            'param',
-            'string',
-            [
-                'headers' => [
-                    'X-Test-Id' => 'endpoints.params.modify_with_inline_path.0',
-                ],
-            ],
-        );
-        $this->verifyRequestCount(
-            $testId,
-            "PUT",
-            "/params/path/param",
-            null,
-            1
-        );
-    }
-
-    /**
-     */
-    public function testUploadWithPath(): void {
-        $testId = 'endpoints.params.upload_with_path.0';
-        $this->client->endpoints->params->uploadWithPath(
-            'upload-path',
-            ,
-            [
-                'headers' => [
-                    'X-Test-Id' => 'endpoints.params.upload_with_path.0',
-                ],
-            ],
-        );
-        $this->verifyRequestCount(
-            $testId,
-            "POST",
-            "/params/path/{param}",
-            null,
-            1
-        );
-    }
-
-    /**
-     */
-    public function testGetWithBooleanPath(): void {
-        $testId = 'endpoints.params.get_with_boolean_path.0';
-        $this->client->endpoints->params->getWithBooleanPath(
-            true,
-            [
-                'headers' => [
-                    'X-Test-Id' => 'endpoints.params.get_with_boolean_path.0',
-                ],
-            ],
-        );
-        $this->verifyRequestCount(
-            $testId,
-            "GET",
-            "/params/path-bool/true",
-            null,
-            1
-        );
-    }
-
-    /**
-     */
-    public function testGetWithPathAndErrors(): void {
-        $testId = 'endpoints.params.get_with_path_and_errors.0';
-        $this->client->endpoints->params->getWithPath(
-            'param',
-            [
-                'headers' => [
-                    'X-Test-Id' => 'endpoints.params.get_with_path_and_errors.0',
-                ],
-            ],
-        );
-        $this->verifyRequestCount(
-            $testId,
-            "GET",
-            "/params/path/param",
-            null,
             1
         );
     }

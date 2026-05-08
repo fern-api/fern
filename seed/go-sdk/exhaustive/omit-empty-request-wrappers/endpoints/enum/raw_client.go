@@ -6,10 +6,10 @@ import (
 	context "context"
 	http "net/http"
 
+	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
-	types "github.com/exhaustive/fern/types"
 )
 
 type RawClient struct {
@@ -33,9 +33,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) GetAndReturnEnum(
 	ctx context.Context,
-	request *types.WeatherReport,
+	request *fern.TypesWeatherReport,
 	opts ...option.RequestOption,
-) (*core.Response[*types.WeatherReport], error) {
+) (*core.Response[*fern.TypesWeatherReport], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -47,7 +47,7 @@ func (r *RawClient) GetAndReturnEnum(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *types.WeatherReport
+	var response *fern.TypesWeatherReport
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -65,7 +65,7 @@ func (r *RawClient) GetAndReturnEnum(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*types.WeatherReport]{
+	return &core.Response[*fern.TypesWeatherReport]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

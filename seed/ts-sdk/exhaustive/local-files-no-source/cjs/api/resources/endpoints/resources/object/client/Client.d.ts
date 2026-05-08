@@ -1,7 +1,7 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import * as core from "../../../../../../core/index.js";
-import type * as SeedExhaustive from "../../../../../index.js";
+import type * as SeedApi from "../../../../../index.js";
 export declare namespace ObjectClient {
     type Options = BaseClientOptions;
     interface RequestOptions extends BaseRequestOptions {
@@ -11,32 +11,16 @@ export declare class ObjectClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ObjectClient.Options>;
     constructor(options: ObjectClient.Options);
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {SeedApi.TypesObjectWithOptionalField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.object.getAndReturnWithOptionalField({
-     *         string: "string",
-     *         integer: 1,
-     *         long: 1000000,
-     *         double: 1.1,
-     *         bool: true,
-     *         datetime: "2024-01-15T09:30:00Z",
-     *         date: "2023-01-15",
-     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *         base64: "SGVsbG8gd29ybGQh",
-     *         list: ["list", "list"],
-     *         set: ["set"],
-     *         map: {
-     *             1: "map"
-     *         },
-     *         bigint: "1000000"
-     *     })
+     *     await client.endpoints.object.getAndReturnWithOptionalField({})
      */
-    getAndReturnWithOptionalField(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
+    getAndReturnWithOptionalField(request: SeedApi.TypesObjectWithOptionalField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedApi.TypesObjectWithOptionalField>;
     private __getAndReturnWithOptionalField;
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {SeedApi.TypesObjectWithRequiredField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -44,142 +28,74 @@ export declare class ObjectClient {
      *         string: "string"
      *     })
      */
-    getAndReturnWithRequiredField(request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField>;
+    getAndReturnWithRequiredField(request: SeedApi.TypesObjectWithRequiredField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedApi.TypesObjectWithRequiredField>;
     private __getAndReturnWithRequiredField;
     /**
-     * @param {SeedExhaustive.types.ObjectWithMapOfMap} request
+     * @param {SeedApi.TypesObjectWithMapOfMap} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithMapOfMap({
      *         map: {
-     *             "map": {
-     *                 "map": "map"
+     *             "key": {
+     *                 "key": "value"
      *             }
      *         }
      *     })
      */
-    getAndReturnWithMapOfMap(request: SeedExhaustive.types.ObjectWithMapOfMap, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithMapOfMap>;
+    getAndReturnWithMapOfMap(request: SeedApi.TypesObjectWithMapOfMap, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedApi.TypesObjectWithMapOfMap>;
     private __getAndReturnWithMapOfMap;
     /**
-     * @param {SeedExhaustive.types.NestedObjectWithOptionalField} request
+     * @param {SeedApi.TypesNestedObjectWithOptionalField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.object.getAndReturnNestedWithOptionalField({
-     *         string: "string",
-     *         NestedObject: {
-     *             string: "string",
-     *             integer: 1,
-     *             long: 1000000,
-     *             double: 1.1,
-     *             bool: true,
-     *             datetime: "2024-01-15T09:30:00Z",
-     *             date: "2023-01-15",
-     *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *             base64: "SGVsbG8gd29ybGQh",
-     *             list: ["list", "list"],
-     *             set: ["set"],
-     *             map: {
-     *                 1: "map"
-     *             },
-     *             bigint: "1000000"
-     *         }
-     *     })
+     *     await client.endpoints.object.getAndReturnNestedWithOptionalField({})
      */
-    getAndReturnNestedWithOptionalField(request: SeedExhaustive.types.NestedObjectWithOptionalField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithOptionalField>;
+    getAndReturnNestedWithOptionalField(request: SeedApi.TypesNestedObjectWithOptionalField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedApi.TypesNestedObjectWithOptionalField>;
     private __getAndReturnNestedWithOptionalField;
     /**
-     * @param {string} string
-     * @param {SeedExhaustive.types.NestedObjectWithRequiredField} request
+     * @param {SeedApi.endpoints.GetAndReturnNestedWithRequiredFieldObjectRequest} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
-     *         string: "string",
-     *         NestedObject: {
+     *     await client.endpoints.object.getAndReturnNestedWithRequiredField({
+     *         stringValue: "string",
+     *         body: {
      *             string: "string",
-     *             integer: 1,
-     *             long: 1000000,
-     *             double: 1.1,
-     *             bool: true,
-     *             datetime: "2024-01-15T09:30:00Z",
-     *             date: "2023-01-15",
-     *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *             base64: "SGVsbG8gd29ybGQh",
-     *             list: ["list", "list"],
-     *             set: ["set"],
-     *             map: {
-     *                 1: "map"
-     *             },
-     *             bigint: "1000000"
+     *             NestedObject: {}
      *         }
      *     })
      */
-    getAndReturnNestedWithRequiredField(string: string, request: SeedExhaustive.types.NestedObjectWithRequiredField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField>;
+    getAndReturnNestedWithRequiredField(request: SeedApi.endpoints.GetAndReturnNestedWithRequiredFieldObjectRequest, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedApi.TypesNestedObjectWithRequiredField>;
     private __getAndReturnNestedWithRequiredField;
     /**
-     * @param {SeedExhaustive.types.NestedObjectWithRequiredField[]} request
+     * @param {SeedApi.TypesNestedObjectWithRequiredField[]} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
      *             string: "string",
-     *             NestedObject: {
-     *                 string: "string",
-     *                 integer: 1,
-     *                 long: 1000000,
-     *                 double: 1.1,
-     *                 bool: true,
-     *                 datetime: "2024-01-15T09:30:00Z",
-     *                 date: "2023-01-15",
-     *                 uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *                 base64: "SGVsbG8gd29ybGQh",
-     *                 list: ["list", "list"],
-     *                 set: ["set"],
-     *                 map: {
-     *                     1: "map"
-     *                 },
-     *                 bigint: "1000000"
-     *             }
-     *         }, {
-     *             string: "string",
-     *             NestedObject: {
-     *                 string: "string",
-     *                 integer: 1,
-     *                 long: 1000000,
-     *                 double: 1.1,
-     *                 bool: true,
-     *                 datetime: "2024-01-15T09:30:00Z",
-     *                 date: "2023-01-15",
-     *                 uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *                 base64: "SGVsbG8gd29ybGQh",
-     *                 list: ["list", "list"],
-     *                 set: ["set"],
-     *                 map: {
-     *                     1: "map"
-     *                 },
-     *                 bigint: "1000000"
-     *             }
+     *             NestedObject: {}
      *         }])
      */
-    getAndReturnNestedWithRequiredFieldAsList(request: SeedExhaustive.types.NestedObjectWithRequiredField[], requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField>;
+    getAndReturnNestedWithRequiredFieldAsList(request: SeedApi.TypesNestedObjectWithRequiredField[], requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedApi.TypesNestedObjectWithRequiredField>;
     private __getAndReturnNestedWithRequiredFieldAsList;
     /**
-     * @param {SeedExhaustive.types.ObjectWithUnknownField} request
+     * @param {SeedApi.TypesObjectWithUnknownField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithUnknownField({
      *         unknown: {
-     *             "$ref": "https://example.com/schema"
+     *             "key": "value"
      *         }
      *     })
      */
-    getAndReturnWithUnknownField(request: SeedExhaustive.types.ObjectWithUnknownField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithUnknownField>;
+    getAndReturnWithUnknownField(request: SeedApi.TypesObjectWithUnknownField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedApi.TypesObjectWithUnknownField>;
     private __getAndReturnWithUnknownField;
     /**
-     * @param {SeedExhaustive.types.ObjectWithDocumentedUnknownType} request
+     * @param {SeedApi.TypesObjectWithDocumentedUnknownType} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -189,72 +105,31 @@ export declare class ObjectClient {
      *         }
      *     })
      */
-    getAndReturnWithDocumentedUnknownType(request: SeedExhaustive.types.ObjectWithDocumentedUnknownType, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithDocumentedUnknownType>;
+    getAndReturnWithDocumentedUnknownType(request: SeedApi.TypesObjectWithDocumentedUnknownType, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedApi.TypesObjectWithDocumentedUnknownType>;
     private __getAndReturnWithDocumentedUnknownType;
     /**
-     * @param {SeedExhaustive.types.MapOfDocumentedUnknownType} request
+     * @param {SeedApi.TypesMapOfDocumentedUnknownType} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType({
-     *         "string": {
-     *             "key": "value"
-     *         }
-     *     })
+     *     await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType({})
      */
-    getAndReturnMapOfDocumentedUnknownType(request: SeedExhaustive.types.MapOfDocumentedUnknownType, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.MapOfDocumentedUnknownType>;
+    getAndReturnMapOfDocumentedUnknownType(request: SeedApi.TypesMapOfDocumentedUnknownType, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedApi.TypesMapOfDocumentedUnknownType>;
     private __getAndReturnMapOfDocumentedUnknownType;
-    /**
-     * Tests that dynamic snippets include all required properties in the
-     * object initializer, even when the example omits some required fields.
-     *
-     * @param {SeedExhaustive.types.ObjectWithMixedRequiredAndOptionalFields} request
-     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields({
-     *         requiredString: "hello",
-     *         requiredInteger: 0,
-     *         optionalString: "world",
-     *         requiredLong: 0
-     *     })
-     */
-    getAndReturnWithMixedRequiredAndOptionalFields(request: SeedExhaustive.types.ObjectWithMixedRequiredAndOptionalFields, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithMixedRequiredAndOptionalFields>;
-    private __getAndReturnWithMixedRequiredAndOptionalFields;
-    /**
-     * Tests that dynamic snippets recursively construct default objects for
-     * required properties whose type is a named object. When the example
-     * omits the nested object, the generator should construct a default
-     * initializer with the nested object's required properties filled in.
-     *
-     * @param {SeedExhaustive.types.ObjectWithRequiredNestedObject} request
-     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.object.getAndReturnWithRequiredNestedObject({
-     *         requiredString: "hello",
-     *         requiredObject: {
-     *             string: "nested",
-     *             NestedObject: {}
-     *         }
-     *     })
-     */
-    getAndReturnWithRequiredNestedObject(request: SeedExhaustive.types.ObjectWithRequiredNestedObject, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredNestedObject>;
-    private __getAndReturnWithRequiredNestedObject;
     /**
      * Tests that string fields containing datetime-like values are NOT reformatted.
      * The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
      * without being converted to "2023-08-31T14:15:22.000Z".
      *
-     * @param {SeedExhaustive.types.ObjectWithDatetimeLikeString} request
+     * @param {SeedApi.TypesObjectWithDatetimeLikeString} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithDatetimeLikeString({
-     *         datetimeLikeString: "2023-08-31T14:15:22Z",
-     *         actualDatetime: "2023-08-31T14:15:22Z"
+     *         datetimeLikeString: "datetimeLikeString",
+     *         actualDatetime: "2024-01-15T09:30:00Z"
      *     })
      */
-    getAndReturnWithDatetimeLikeString(request: SeedExhaustive.types.ObjectWithDatetimeLikeString, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithDatetimeLikeString>;
+    getAndReturnWithDatetimeLikeString(request: SeedApi.TypesObjectWithDatetimeLikeString, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedApi.TypesObjectWithDatetimeLikeString>;
     private __getAndReturnWithDatetimeLikeString;
 }

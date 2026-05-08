@@ -9,8 +9,8 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
-from ..general_errors.errors.bad_request_body import BadRequestBody
-from ..general_errors.types.bad_object_request_info import BadObjectRequestInfo
+from ..errors.bad_request_error import BadRequestError
+from ..types.bad_object_request_info import BadObjectRequestInfo
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -37,11 +37,15 @@ class RawNoAuthClient:
         Returns
         -------
         HttpResponse[bool]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "no-auth",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -56,7 +60,7 @@ class RawNoAuthClient:
                 )
                 return HttpResponse(response=_response, data=_data)
             if _response.status_code == 400:
-                raise BadRequestBody(
+                raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         BadObjectRequestInfo,
@@ -96,11 +100,15 @@ class AsyncRawNoAuthClient:
         Returns
         -------
         AsyncHttpResponse[bool]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "no-auth",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -115,7 +123,7 @@ class AsyncRawNoAuthClient:
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 400:
-                raise BadRequestBody(
+                raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         BadObjectRequestInfo,

@@ -6,8 +6,8 @@ package com.fern.sdk.resources.inlinedrequests;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.inlinedrequests.requests.PostWithObjectBody;
-import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
+import com.fern.sdk.resources.inlinedrequests.requests.PostWithObjectBodyandResponseInlinedRequestsRequest;
+import com.fern.sdk.types.TypesObjectWithOptionalField;
 
 public class InlinedRequestsClient {
   protected final ClientOptions clientOptions;
@@ -29,15 +29,16 @@ public class InlinedRequestsClient {
   /**
    * POST with custom object in request body, response is an object
    */
-  public ObjectWithOptionalField postWithObjectBodyandResponse(PostWithObjectBody request) {
+  public TypesObjectWithOptionalField postWithObjectBodyandResponse(
+      PostWithObjectBodyandResponseInlinedRequestsRequest request) {
     return this.rawClient.postWithObjectBodyandResponse(request).body();
   }
 
   /**
    * POST with custom object in request body, response is an object
    */
-  public ObjectWithOptionalField postWithObjectBodyandResponse(PostWithObjectBody request,
-      RequestOptions requestOptions) {
+  public TypesObjectWithOptionalField postWithObjectBodyandResponse(
+      PostWithObjectBodyandResponseInlinedRequestsRequest request, RequestOptions requestOptions) {
     return this.rawClient.postWithObjectBodyandResponse(request, requestOptions).body();
   }
 }

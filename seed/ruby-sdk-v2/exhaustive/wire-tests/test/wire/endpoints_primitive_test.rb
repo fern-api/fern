@@ -163,7 +163,7 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
     test_id = "endpoints.primitive.get_and_return_uuid.0"
 
     @client.endpoints.primitive.get_and_return_uuid(
-      request: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      request: "string",
       request_options: {
         additional_headers: {
           "X-Test-Id" => "endpoints.primitive.get_and_return_uuid.0"
@@ -184,7 +184,7 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
     test_id = "endpoints.primitive.get_and_return_base64.0"
 
     @client.endpoints.primitive.get_and_return_base64(
-      request: "SGVsbG8gd29ybGQh",
+      request: "string",
       request_options: {
         additional_headers: {
           "X-Test-Id" => "endpoints.primitive.get_and_return_base64.0"

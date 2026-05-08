@@ -6,7 +6,7 @@ package com.fern.sdk.resources.noreqbody;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
+import com.fern.sdk.types.TypesObjectWithOptionalField;
 import java.lang.String;
 import java.util.concurrent.CompletableFuture;
 
@@ -27,11 +27,11 @@ public class AsyncNoReqBodyClient {
     return this.rawClient;
   }
 
-  public CompletableFuture<ObjectWithOptionalField> getWithNoRequestBody() {
+  public CompletableFuture<TypesObjectWithOptionalField> getWithNoRequestBody() {
     return this.rawClient.getWithNoRequestBody().thenApply(response -> response.body());
   }
 
-  public CompletableFuture<ObjectWithOptionalField> getWithNoRequestBody(
+  public CompletableFuture<TypesObjectWithOptionalField> getWithNoRequestBody(
       RequestOptions requestOptions) {
     return this.rawClient.getWithNoRequestBody(requestOptions).thenApply(response -> response.body());
   }

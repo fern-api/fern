@@ -3,7 +3,6 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\Object\Types\ObjectWithRequiredField;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,10 +10,4 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->container->getAndReturnMapOfPrimToObject(
-    [
-        'string' => new ObjectWithRequiredField([
-            'string' => 'string',
-        ]),
-    ],
-);
+$client->noReqBody->getWithNoRequestBody();

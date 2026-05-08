@@ -6,13 +6,15 @@ package com.fern.sdk.resources.endpoints.params;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.endpoints.params.requests.GetWithInlinePath;
-import com.fern.sdk.resources.endpoints.params.requests.GetWithInlinePathAndQuery;
-import com.fern.sdk.resources.endpoints.params.requests.GetWithMultipleQuery;
-import com.fern.sdk.resources.endpoints.params.requests.GetWithPathAndQuery;
-import com.fern.sdk.resources.endpoints.params.requests.GetWithQuery;
-import com.fern.sdk.resources.endpoints.params.requests.ModifyResourceAtInlinedPath;
-import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithAllowMultipleQueryParamsRequest;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithInlinePathAndQueryParamsRequest;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithInlinePathParamsRequest;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithPathAndQueryParamsRequest;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithPathParamsRequest;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithQueryParamsRequest;
+import com.fern.sdk.resources.endpoints.params.requests.ModifyWithInlinePathParamsRequest;
+import com.fern.sdk.resources.endpoints.params.requests.ModifyWithPathParamsRequest;
+import com.fern.sdk.types.TypesObjectWithRequiredField;
 import java.io.InputStream;
 import java.lang.String;
 
@@ -50,6 +52,66 @@ public class ParamsClient {
   /**
    * GET with path param
    */
+  public String getWithPath(String param, GetWithPathParamsRequest request) {
+    return this.rawClient.getWithPath(param, request).body();
+  }
+
+  /**
+   * GET with path param
+   */
+  public String getWithPath(String param, GetWithPathParamsRequest request,
+      RequestOptions requestOptions) {
+    return this.rawClient.getWithPath(param, request, requestOptions).body();
+  }
+
+  /**
+   * POST bytes with path param returning object
+   */
+  public TypesObjectWithRequiredField uploadWithPath(String param, InputStream request) {
+    return this.rawClient.uploadWithPath(param, request).body();
+  }
+
+  /**
+   * POST bytes with path param returning object
+   */
+  public TypesObjectWithRequiredField uploadWithPath(String param, InputStream request,
+      RequestOptions requestOptions) {
+    return this.rawClient.uploadWithPath(param, request, requestOptions).body();
+  }
+
+  /**
+   * POST bytes with path param returning object
+   */
+  public TypesObjectWithRequiredField uploadWithPath(String param, byte[] request) {
+    return this.rawClient.uploadWithPath(param, request).body();
+  }
+
+  /**
+   * POST bytes with path param returning object
+   */
+  public TypesObjectWithRequiredField uploadWithPath(String param, byte[] request,
+      RequestOptions requestOptions) {
+    return this.rawClient.uploadWithPath(param, request, requestOptions).body();
+  }
+
+  /**
+   * PUT to update with path param
+   */
+  public String modifyWithPath(String param, ModifyWithPathParamsRequest request) {
+    return this.rawClient.modifyWithPath(param, request).body();
+  }
+
+  /**
+   * PUT to update with path param
+   */
+  public String modifyWithPath(String param, ModifyWithPathParamsRequest request,
+      RequestOptions requestOptions) {
+    return this.rawClient.modifyWithPath(param, request, requestOptions).body();
+  }
+
+  /**
+   * GET with path param
+   */
   public String getWithInlinePath(String param) {
     return this.rawClient.getWithInlinePath(param).body();
   }
@@ -64,43 +126,72 @@ public class ParamsClient {
   /**
    * GET with path param
    */
-  public String getWithInlinePath(String param, GetWithInlinePath request) {
+  public String getWithInlinePath(String param, GetWithInlinePathParamsRequest request) {
     return this.rawClient.getWithInlinePath(param, request).body();
   }
 
   /**
    * GET with path param
    */
-  public String getWithInlinePath(String param, GetWithInlinePath request,
+  public String getWithInlinePath(String param, GetWithInlinePathParamsRequest request,
       RequestOptions requestOptions) {
     return this.rawClient.getWithInlinePath(param, request, requestOptions).body();
   }
 
   /**
+   * PUT to update with path param
+   */
+  public String modifyWithInlinePath(String param, ModifyWithInlinePathParamsRequest request) {
+    return this.rawClient.modifyWithInlinePath(param, request).body();
+  }
+
+  /**
+   * PUT to update with path param
+   */
+  public String modifyWithInlinePath(String param, ModifyWithInlinePathParamsRequest request,
+      RequestOptions requestOptions) {
+    return this.rawClient.modifyWithInlinePath(param, request, requestOptions).body();
+  }
+
+  /**
    * GET with query param
    */
-  public void getWithQuery(GetWithQuery request) {
+  public void getWithQuery(GetWithQueryParamsRequest request) {
     this.rawClient.getWithQuery(request).body();
   }
 
   /**
    * GET with query param
    */
-  public void getWithQuery(GetWithQuery request, RequestOptions requestOptions) {
+  public void getWithQuery(GetWithQueryParamsRequest request, RequestOptions requestOptions) {
     this.rawClient.getWithQuery(request, requestOptions).body();
   }
 
   /**
    * GET with multiple of same query param
    */
-  public void getWithAllowMultipleQuery(GetWithMultipleQuery request) {
+  public void getWithAllowMultipleQuery() {
+    this.rawClient.getWithAllowMultipleQuery().body();
+  }
+
+  /**
+   * GET with multiple of same query param
+   */
+  public void getWithAllowMultipleQuery(RequestOptions requestOptions) {
+    this.rawClient.getWithAllowMultipleQuery(requestOptions).body();
+  }
+
+  /**
+   * GET with multiple of same query param
+   */
+  public void getWithAllowMultipleQuery(GetWithAllowMultipleQueryParamsRequest request) {
     this.rawClient.getWithAllowMultipleQuery(request).body();
   }
 
   /**
    * GET with multiple of same query param
    */
-  public void getWithAllowMultipleQuery(GetWithMultipleQuery request,
+  public void getWithAllowMultipleQuery(GetWithAllowMultipleQueryParamsRequest request,
       RequestOptions requestOptions) {
     this.rawClient.getWithAllowMultipleQuery(request, requestOptions).body();
   }
@@ -108,14 +199,14 @@ public class ParamsClient {
   /**
    * GET with path and query params
    */
-  public void getWithPathAndQuery(String param, GetWithPathAndQuery request) {
+  public void getWithPathAndQuery(String param, GetWithPathAndQueryParamsRequest request) {
     this.rawClient.getWithPathAndQuery(param, request).body();
   }
 
   /**
    * GET with path and query params
    */
-  public void getWithPathAndQuery(String param, GetWithPathAndQuery request,
+  public void getWithPathAndQuery(String param, GetWithPathAndQueryParamsRequest request,
       RequestOptions requestOptions) {
     this.rawClient.getWithPathAndQuery(param, request, requestOptions).body();
   }
@@ -123,102 +214,16 @@ public class ParamsClient {
   /**
    * GET with path and query params
    */
-  public void getWithInlinePathAndQuery(String param, GetWithInlinePathAndQuery request) {
+  public void getWithInlinePathAndQuery(String param,
+      GetWithInlinePathAndQueryParamsRequest request) {
     this.rawClient.getWithInlinePathAndQuery(param, request).body();
   }
 
   /**
    * GET with path and query params
    */
-  public void getWithInlinePathAndQuery(String param, GetWithInlinePathAndQuery request,
-      RequestOptions requestOptions) {
+  public void getWithInlinePathAndQuery(String param,
+      GetWithInlinePathAndQueryParamsRequest request, RequestOptions requestOptions) {
     this.rawClient.getWithInlinePathAndQuery(param, request, requestOptions).body();
-  }
-
-  /**
-   * PUT to update with path param
-   */
-  public String modifyWithPath(String param, String request) {
-    return this.rawClient.modifyWithPath(param, request).body();
-  }
-
-  /**
-   * PUT to update with path param
-   */
-  public String modifyWithPath(String param, String request, RequestOptions requestOptions) {
-    return this.rawClient.modifyWithPath(param, request, requestOptions).body();
-  }
-
-  /**
-   * PUT to update with path param
-   */
-  public String modifyWithInlinePath(String param, ModifyResourceAtInlinedPath request) {
-    return this.rawClient.modifyWithInlinePath(param, request).body();
-  }
-
-  /**
-   * PUT to update with path param
-   */
-  public String modifyWithInlinePath(String param, ModifyResourceAtInlinedPath request,
-      RequestOptions requestOptions) {
-    return this.rawClient.modifyWithInlinePath(param, request, requestOptions).body();
-  }
-
-  /**
-   * POST bytes with path param returning object
-   */
-  public ObjectWithRequiredField uploadWithPath(String param, InputStream request) {
-    return this.rawClient.uploadWithPath(param, request).body();
-  }
-
-  /**
-   * POST bytes with path param returning object
-   */
-  public ObjectWithRequiredField uploadWithPath(String param, InputStream request,
-      RequestOptions requestOptions) {
-    return this.rawClient.uploadWithPath(param, request, requestOptions).body();
-  }
-
-  /**
-   * POST bytes with path param returning object
-   */
-  public ObjectWithRequiredField uploadWithPath(String param, byte[] request) {
-    return this.rawClient.uploadWithPath(param, request).body();
-  }
-
-  /**
-   * POST bytes with path param returning object
-   */
-  public ObjectWithRequiredField uploadWithPath(String param, byte[] request,
-      RequestOptions requestOptions) {
-    return this.rawClient.uploadWithPath(param, request, requestOptions).body();
-  }
-
-  /**
-   * GET with boolean path param
-   */
-  public String getWithBooleanPath(boolean param) {
-    return this.rawClient.getWithBooleanPath(param).body();
-  }
-
-  /**
-   * GET with boolean path param
-   */
-  public String getWithBooleanPath(boolean param, RequestOptions requestOptions) {
-    return this.rawClient.getWithBooleanPath(param, requestOptions).body();
-  }
-
-  /**
-   * GET with path param that can throw errors
-   */
-  public String getWithPathAndErrors(String param) {
-    return this.rawClient.getWithPathAndErrors(param).body();
-  }
-
-  /**
-   * GET with path param that can throw errors
-   */
-  public String getWithPathAndErrors(String param, RequestOptions requestOptions) {
-    return this.rawClient.getWithPathAndErrors(param, requestOptions).body();
   }
 }

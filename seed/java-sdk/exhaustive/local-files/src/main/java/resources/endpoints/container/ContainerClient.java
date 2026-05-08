@@ -6,13 +6,11 @@ package com.fern.sdk.resources.endpoints.container;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
-import com.fern.sdk.resources.types.union.types.MixedType;
+import com.fern.sdk.types.TypesMixedType;
+import com.fern.sdk.types.TypesObjectWithRequiredField;
 import java.lang.String;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 
 public class ContainerClient {
   protected final ClientOptions clientOptions;
@@ -40,32 +38,32 @@ public class ContainerClient {
     return this.rawClient.getAndReturnListOfPrimitives(request, requestOptions).body();
   }
 
-  public List<ObjectWithRequiredField> getAndReturnListOfObjects(
-      List<ObjectWithRequiredField> request) {
+  public List<TypesObjectWithRequiredField> getAndReturnListOfObjects(
+      List<TypesObjectWithRequiredField> request) {
     return this.rawClient.getAndReturnListOfObjects(request).body();
   }
 
-  public List<ObjectWithRequiredField> getAndReturnListOfObjects(
-      List<ObjectWithRequiredField> request, RequestOptions requestOptions) {
+  public List<TypesObjectWithRequiredField> getAndReturnListOfObjects(
+      List<TypesObjectWithRequiredField> request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnListOfObjects(request, requestOptions).body();
   }
 
-  public Set<String> getAndReturnSetOfPrimitives(Set<String> request) {
+  public List<String> getAndReturnSetOfPrimitives(List<String> request) {
     return this.rawClient.getAndReturnSetOfPrimitives(request).body();
   }
 
-  public Set<String> getAndReturnSetOfPrimitives(Set<String> request,
+  public List<String> getAndReturnSetOfPrimitives(List<String> request,
       RequestOptions requestOptions) {
     return this.rawClient.getAndReturnSetOfPrimitives(request, requestOptions).body();
   }
 
-  public Set<ObjectWithRequiredField> getAndReturnSetOfObjects(
-      Set<ObjectWithRequiredField> request) {
+  public List<TypesObjectWithRequiredField> getAndReturnSetOfObjects(
+      List<TypesObjectWithRequiredField> request) {
     return this.rawClient.getAndReturnSetOfObjects(request).body();
   }
 
-  public Set<ObjectWithRequiredField> getAndReturnSetOfObjects(Set<ObjectWithRequiredField> request,
-      RequestOptions requestOptions) {
+  public List<TypesObjectWithRequiredField> getAndReturnSetOfObjects(
+      List<TypesObjectWithRequiredField> request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnSetOfObjects(request, requestOptions).body();
   }
 
@@ -78,41 +76,32 @@ public class ContainerClient {
     return this.rawClient.getAndReturnMapPrimToPrim(request, requestOptions).body();
   }
 
-  public Map<String, ObjectWithRequiredField> getAndReturnMapOfPrimToObject(
-      Map<String, ObjectWithRequiredField> request) {
+  public Map<String, TypesObjectWithRequiredField> getAndReturnMapOfPrimToObject(
+      Map<String, TypesObjectWithRequiredField> request) {
     return this.rawClient.getAndReturnMapOfPrimToObject(request).body();
   }
 
-  public Map<String, ObjectWithRequiredField> getAndReturnMapOfPrimToObject(
-      Map<String, ObjectWithRequiredField> request, RequestOptions requestOptions) {
+  public Map<String, TypesObjectWithRequiredField> getAndReturnMapOfPrimToObject(
+      Map<String, TypesObjectWithRequiredField> request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnMapOfPrimToObject(request, requestOptions).body();
   }
 
-  public Map<String, MixedType> getAndReturnMapOfPrimToUndiscriminatedUnion(
-      Map<String, MixedType> request) {
+  public Map<String, TypesMixedType> getAndReturnMapOfPrimToUndiscriminatedUnion(
+      Map<String, TypesMixedType> request) {
     return this.rawClient.getAndReturnMapOfPrimToUndiscriminatedUnion(request).body();
   }
 
-  public Map<String, MixedType> getAndReturnMapOfPrimToUndiscriminatedUnion(
-      Map<String, MixedType> request, RequestOptions requestOptions) {
+  public Map<String, TypesMixedType> getAndReturnMapOfPrimToUndiscriminatedUnion(
+      Map<String, TypesMixedType> request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnMapOfPrimToUndiscriminatedUnion(request, requestOptions).body();
   }
 
-  public Optional<ObjectWithRequiredField> getAndReturnOptional() {
-    return this.rawClient.getAndReturnOptional().body();
-  }
-
-  public Optional<ObjectWithRequiredField> getAndReturnOptional(RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnOptional(requestOptions).body();
-  }
-
-  public Optional<ObjectWithRequiredField> getAndReturnOptional(
-      Optional<ObjectWithRequiredField> request) {
+  public TypesObjectWithRequiredField getAndReturnOptional(TypesObjectWithRequiredField request) {
     return this.rawClient.getAndReturnOptional(request).body();
   }
 
-  public Optional<ObjectWithRequiredField> getAndReturnOptional(
-      Optional<ObjectWithRequiredField> request, RequestOptions requestOptions) {
+  public TypesObjectWithRequiredField getAndReturnOptional(TypesObjectWithRequiredField request,
+      RequestOptions requestOptions) {
     return this.rawClient.getAndReturnOptional(request, requestOptions).body();
   }
 }

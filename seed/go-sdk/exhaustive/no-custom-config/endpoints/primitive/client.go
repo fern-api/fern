@@ -9,7 +9,6 @@ import (
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
-	uuid "github.com/google/uuid"
 )
 
 type Client struct {
@@ -148,32 +147,32 @@ func (c *Client) GetAndReturnDate(
 
 func (c *Client) GetAndReturnUUID(
 	ctx context.Context,
-	request uuid.UUID,
+	request string,
 	opts ...option.RequestOption,
-) (uuid.UUID, error) {
+) (string, error) {
 	response, err := c.WithRawResponse.GetAndReturnUUID(
 		ctx,
 		request,
 		opts...,
 	)
 	if err != nil {
-		return uuid.UUID{}, err
+		return "", err
 	}
 	return response.Body, nil
 }
 
 func (c *Client) GetAndReturnBase64(
 	ctx context.Context,
-	request []byte,
+	request string,
 	opts ...option.RequestOption,
-) ([]byte, error) {
+) (string, error) {
 	response, err := c.WithRawResponse.GetAndReturnBase64(
 		ctx,
 		request,
 		opts...,
 	)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 	return response.Body, nil
 }

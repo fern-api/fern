@@ -1,7 +1,7 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import * as core from "../../../../../../core/index.js";
-import type * as SeedExhaustive from "../../../../../index.js";
+import type * as SeedApi from "../../../../../index.js";
 export declare namespace PutClient {
     type Options = BaseClientOptions;
     interface RequestOptions extends BaseRequestOptions {
@@ -11,7 +11,7 @@ export declare class PutClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PutClient.Options>;
     constructor(options: PutClient.Options);
     /**
-     * @param {SeedExhaustive.endpoints.PutRequest} request
+     * @param {SeedApi.endpoints.AddPutRequest} request
      * @param {PutClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -19,6 +19,6 @@ export declare class PutClient {
      *         id: "id"
      *     })
      */
-    add(request: SeedExhaustive.endpoints.PutRequest, requestOptions?: PutClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.endpoints.PutResponse>;
+    add(request: SeedApi.endpoints.AddPutRequest, requestOptions?: PutClient.RequestOptions): core.HttpResponsePromise<SeedApi.EndpointsPutResponse>;
     private __add;
 }

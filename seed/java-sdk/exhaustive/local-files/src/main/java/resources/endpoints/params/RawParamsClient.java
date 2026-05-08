@@ -11,22 +11,21 @@ import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.QueryStringMapper;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.core.SeedExhaustiveApiException;
-import com.fern.sdk.core.SeedExhaustiveException;
-import com.fern.sdk.core.SeedExhaustiveHttpResponse;
-import com.fern.sdk.resources.endpoints.params.requests.GetWithInlinePath;
-import com.fern.sdk.resources.endpoints.params.requests.GetWithInlinePathAndQuery;
-import com.fern.sdk.resources.endpoints.params.requests.GetWithMultipleQuery;
-import com.fern.sdk.resources.endpoints.params.requests.GetWithPathAndQuery;
-import com.fern.sdk.resources.endpoints.params.requests.GetWithQuery;
-import com.fern.sdk.resources.endpoints.params.requests.ModifyResourceAtInlinedPath;
-import com.fern.sdk.resources.generalerrors.errors.BadRequestBody;
-import com.fern.sdk.resources.generalerrors.types.BadObjectRequestInfo;
-import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
+import com.fern.sdk.core.SeedApiApiException;
+import com.fern.sdk.core.SeedApiException;
+import com.fern.sdk.core.SeedApiHttpResponse;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithAllowMultipleQueryParamsRequest;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithInlinePathAndQueryParamsRequest;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithInlinePathParamsRequest;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithPathAndQueryParamsRequest;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithPathParamsRequest;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithQueryParamsRequest;
+import com.fern.sdk.resources.endpoints.params.requests.ModifyWithInlinePathParamsRequest;
+import com.fern.sdk.resources.endpoints.params.requests.ModifyWithPathParamsRequest;
+import com.fern.sdk.types.TypesObjectWithRequiredField;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.String;
 import java.lang.Void;
@@ -49,29 +48,43 @@ public class RawParamsClient {
   /**
    * GET with path param
    */
-  public SeedExhaustiveHttpResponse<String> getWithPath(String param) {
-    return getWithPath(param,null);
+  public SeedApiHttpResponse<String> getWithPath(String param) {
+    return getWithPath(param,GetWithPathParamsRequest.builder().build());
   }
 
   /**
    * GET with path param
    */
-  public SeedExhaustiveHttpResponse<String> getWithPath(String param,
+  public SeedApiHttpResponse<String> getWithPath(String param, RequestOptions requestOptions) {
+    return getWithPath(param,GetWithPathParamsRequest.builder().build(),requestOptions);
+  }
+
+  /**
+   * GET with path param
+   */
+  public SeedApiHttpResponse<String> getWithPath(String param, GetWithPathParamsRequest request) {
+    return getWithPath(param,request,null);
+  }
+
+  /**
+   * GET with path param
+   */
+  public SeedApiHttpResponse<String> getWithPath(String param, GetWithPathParamsRequest request,
       RequestOptions requestOptions) {
     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-      .addPathSegments("params")
-      .addPathSegments("path")
+
+      .addPathSegments("params/path")
       .addPathSegment(param);if (requestOptions != null) {
         requestOptions.getQueryParameters().forEach((_key, _value) -> {
           httpUrl.addQueryParameter(_key, _value);
         } );
       }
-      Request okhttpRequest = new Request.Builder()
+      Request.Builder _requestBuilder = new Request.Builder()
         .url(httpUrl.build())
         .method("GET", null)
         .headers(Headers.of(clientOptions.headers(requestOptions)))
-        .addHeader("Accept", "application/json")
-        .build();
+        .addHeader("Accept", "application/json");
+      Request okhttpRequest = _requestBuilder.build();
       OkHttpClient client = clientOptions.httpClient();
       if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
         client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -80,58 +93,43 @@ public class RawParamsClient {
         ResponseBody responseBody = response.body();
         String responseBodyString = responseBody != null ? responseBody.string() : "{}";
         if (response.isSuccessful()) {
-          return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+          return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
         }
         Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-        throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+        throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
       }
       catch (IOException e) {
-        throw new SeedExhaustiveException("Network error executing HTTP request", e);
+        throw new SeedApiException("Network error executing HTTP request", e);
       }
     }
 
     /**
-     * GET with path param
+     * POST bytes with path param returning object
      */
-    public SeedExhaustiveHttpResponse<String> getWithInlinePath(String param) {
-      return getWithInlinePath(param,GetWithInlinePath.builder().build());
+    public SeedApiHttpResponse<TypesObjectWithRequiredField> uploadWithPath(String param,
+        InputStream request) {
+      return uploadWithPath(param,request,null);
     }
 
     /**
-     * GET with path param
+     * POST bytes with path param returning object
      */
-    public SeedExhaustiveHttpResponse<String> getWithInlinePath(String param,
-        RequestOptions requestOptions) {
-      return getWithInlinePath(param,GetWithInlinePath.builder().build(),requestOptions);
-    }
-
-    /**
-     * GET with path param
-     */
-    public SeedExhaustiveHttpResponse<String> getWithInlinePath(String param,
-        GetWithInlinePath request) {
-      return getWithInlinePath(param,request,null);
-    }
-
-    /**
-     * GET with path param
-     */
-    public SeedExhaustiveHttpResponse<String> getWithInlinePath(String param,
-        GetWithInlinePath request, RequestOptions requestOptions) {
+    public SeedApiHttpResponse<TypesObjectWithRequiredField> uploadWithPath(String param,
+        InputStream request, RequestOptions requestOptions) {
       HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-        .addPathSegments("params")
-        .addPathSegments("path")
+
+        .addPathSegments("params/path")
         .addPathSegment(param);if (requestOptions != null) {
           requestOptions.getQueryParameters().forEach((_key, _value) -> {
             httpUrl.addQueryParameter(_key, _value);
           } );
         }
-        Request.Builder _requestBuilder = new Request.Builder()
+        RequestBody body = new InputStreamRequestBody(MediaType.parse("application/octet-stream"), request);
+        Request okhttpRequest = new Request.Builder()
           .url(httpUrl.build())
-          .method("GET", null)
+          .method("POST", body)
           .headers(Headers.of(clientOptions.headers(requestOptions)))
-          .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
+          .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
           client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -140,78 +138,117 @@ public class RawParamsClient {
           ResponseBody responseBody = response.body();
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           if (response.isSuccessful()) {
-            return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+            return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, TypesObjectWithRequiredField.class), response);
           }
           Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+          throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
         }
         catch (IOException e) {
-          throw new SeedExhaustiveException("Network error executing HTTP request", e);
+          throw new SeedApiException("Network error executing HTTP request", e);
         }
       }
 
       /**
-       * GET with query param
+       * POST bytes with path param returning object
        */
-      public SeedExhaustiveHttpResponse<Void> getWithQuery(GetWithQuery request) {
-        return getWithQuery(request,null);
+      public SeedApiHttpResponse<TypesObjectWithRequiredField> uploadWithPath(String param,
+          byte[] request) {
+        return uploadWithPath(param, new ByteArrayInputStream(request));
       }
 
       /**
-       * GET with query param
+       * POST bytes with path param returning object
        */
-      public SeedExhaustiveHttpResponse<Void> getWithQuery(GetWithQuery request,
-          RequestOptions requestOptions) {
+      public SeedApiHttpResponse<TypesObjectWithRequiredField> uploadWithPath(String param,
+          byte[] request, RequestOptions requestOptions) {
+        return uploadWithPath(param, new ByteArrayInputStream(request), requestOptions);
+      }
+
+      /**
+       * PUT to update with path param
+       */
+      public SeedApiHttpResponse<String> modifyWithPath(String param,
+          ModifyWithPathParamsRequest request) {
+        return modifyWithPath(param,request,null);
+      }
+
+      /**
+       * PUT to update with path param
+       */
+      public SeedApiHttpResponse<String> modifyWithPath(String param,
+          ModifyWithPathParamsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-          .addPathSegments("params")
-          ;QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
-          QueryStringMapper.addQueryParameter(httpUrl, "number", request.getNumber(), false);
-          if (requestOptions != null) {
+
+          .addPathSegments("params/path")
+          .addPathSegment(param);if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
               httpUrl.addQueryParameter(_key, _value);
             } );
           }
-          Request.Builder _requestBuilder = new Request.Builder()
+          RequestBody body;
+          try {
+            body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+          }
+          catch(JsonProcessingException e) {
+            throw new SeedApiException("Failed to serialize request", e);
+          }
+          Request okhttpRequest = new Request.Builder()
             .url(httpUrl.build())
-            .method("GET", null)
-            .headers(Headers.of(clientOptions.headers(requestOptions)));
-          Request okhttpRequest = _requestBuilder.build();
+            .method("PUT", body)
+            .headers(Headers.of(clientOptions.headers(requestOptions)))
+            .addHeader("Content-Type", "application/json")
+            .addHeader("Accept", "application/json")
+            .build();
           OkHttpClient client = clientOptions.httpClient();
           if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
           }
           try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-              return new SeedExhaustiveHttpResponse<>(null, response);
-            }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+              return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+            }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+            throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
           }
           catch (IOException e) {
-            throw new SeedExhaustiveException("Network error executing HTTP request", e);
+            throw new SeedApiException("Network error executing HTTP request", e);
           }
         }
 
         /**
-         * GET with multiple of same query param
+         * GET with path param
          */
-        public SeedExhaustiveHttpResponse<Void> getWithAllowMultipleQuery(
-            GetWithMultipleQuery request) {
-          return getWithAllowMultipleQuery(request,null);
+        public SeedApiHttpResponse<String> getWithInlinePath(String param) {
+          return getWithInlinePath(param,GetWithInlinePathParamsRequest.builder().build());
         }
 
         /**
-         * GET with multiple of same query param
+         * GET with path param
          */
-        public SeedExhaustiveHttpResponse<Void> getWithAllowMultipleQuery(
-            GetWithMultipleQuery request, RequestOptions requestOptions) {
+        public SeedApiHttpResponse<String> getWithInlinePath(String param,
+            RequestOptions requestOptions) {
+          return getWithInlinePath(param,GetWithInlinePathParamsRequest.builder().build(),requestOptions);
+        }
+
+        /**
+         * GET with path param
+         */
+        public SeedApiHttpResponse<String> getWithInlinePath(String param,
+            GetWithInlinePathParamsRequest request) {
+          return getWithInlinePath(param,request,null);
+        }
+
+        /**
+         * GET with path param
+         */
+        public SeedApiHttpResponse<String> getWithInlinePath(String param,
+            GetWithInlinePathParamsRequest request, RequestOptions requestOptions) {
           HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-            .addPathSegments("params")
-            ;QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), true);
-            QueryStringMapper.addQueryParameter(httpUrl, "number", request.getNumber(), true);
-            if (requestOptions != null) {
+
+            .addPathSegments("params/inline-path")
+            .addPathSegment(param);if (requestOptions != null) {
               requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
               } );
@@ -219,7 +256,8 @@ public class RawParamsClient {
             Request.Builder _requestBuilder = new Request.Builder()
               .url(httpUrl.build())
               .method("GET", null)
-              .headers(Headers.of(clientOptions.headers(requestOptions)));
+              .headers(Headers.of(clientOptions.headers(requestOptions)))
+              .addHeader("Accept", "application/json");
             Request okhttpRequest = _requestBuilder.build();
             OkHttpClient client = clientOptions.httpClient();
             if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -227,80 +265,87 @@ public class RawParamsClient {
             }
             try (Response response = client.newCall(okhttpRequest).execute()) {
               ResponseBody responseBody = response.body();
-              if (response.isSuccessful()) {
-                return new SeedExhaustiveHttpResponse<>(null, response);
-              }
               String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+              if (response.isSuccessful()) {
+                return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+              }
               Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-              throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+              throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
             }
             catch (IOException e) {
-              throw new SeedExhaustiveException("Network error executing HTTP request", e);
+              throw new SeedApiException("Network error executing HTTP request", e);
             }
           }
 
           /**
-           * GET with path and query params
+           * PUT to update with path param
            */
-          public SeedExhaustiveHttpResponse<Void> getWithPathAndQuery(String param,
-              GetWithPathAndQuery request) {
-            return getWithPathAndQuery(param,request,null);
+          public SeedApiHttpResponse<String> modifyWithInlinePath(String param,
+              ModifyWithInlinePathParamsRequest request) {
+            return modifyWithInlinePath(param,request,null);
           }
 
           /**
-           * GET with path and query params
+           * PUT to update with path param
            */
-          public SeedExhaustiveHttpResponse<Void> getWithPathAndQuery(String param,
-              GetWithPathAndQuery request, RequestOptions requestOptions) {
+          public SeedApiHttpResponse<String> modifyWithInlinePath(String param,
+              ModifyWithInlinePathParamsRequest request, RequestOptions requestOptions) {
             HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-              .addPathSegments("params")
-              .addPathSegments("path-query")
-              .addPathSegment(param);QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
-              if (requestOptions != null) {
+
+              .addPathSegments("params/inline-path")
+              .addPathSegment(param);if (requestOptions != null) {
                 requestOptions.getQueryParameters().forEach((_key, _value) -> {
                   httpUrl.addQueryParameter(_key, _value);
                 } );
               }
-              Request.Builder _requestBuilder = new Request.Builder()
+              RequestBody body;
+              try {
+                body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+              }
+              catch(JsonProcessingException e) {
+                throw new SeedApiException("Failed to serialize request", e);
+              }
+              Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)));
-              Request okhttpRequest = _requestBuilder.build();
+                .method("PUT", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
               OkHttpClient client = clientOptions.httpClient();
               if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
                 client = clientOptions.httpClientWithTimeout(requestOptions);
               }
               try (Response response = client.newCall(okhttpRequest).execute()) {
                 ResponseBody responseBody = response.body();
-                if (response.isSuccessful()) {
-                  return new SeedExhaustiveHttpResponse<>(null, response);
-                }
                 String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                if (response.isSuccessful()) {
+                  return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+                }
                 Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+                throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
               }
               catch (IOException e) {
-                throw new SeedExhaustiveException("Network error executing HTTP request", e);
+                throw new SeedApiException("Network error executing HTTP request", e);
               }
             }
 
             /**
-             * GET with path and query params
+             * GET with query param
              */
-            public SeedExhaustiveHttpResponse<Void> getWithInlinePathAndQuery(String param,
-                GetWithInlinePathAndQuery request) {
-              return getWithInlinePathAndQuery(param,request,null);
+            public SeedApiHttpResponse<Void> getWithQuery(GetWithQueryParamsRequest request) {
+              return getWithQuery(request,null);
             }
 
             /**
-             * GET with path and query params
+             * GET with query param
              */
-            public SeedExhaustiveHttpResponse<Void> getWithInlinePathAndQuery(String param,
-                GetWithInlinePathAndQuery request, RequestOptions requestOptions) {
+            public SeedApiHttpResponse<Void> getWithQuery(GetWithQueryParamsRequest request,
+                RequestOptions requestOptions) {
               HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-                .addPathSegments("params")
-                .addPathSegments("path-query")
-                .addPathSegment(param);QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
+
+                .addPathSegments("params");QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
+                QueryStringMapper.addQueryParameter(httpUrl, "number", request.getNumber(), false);
                 if (requestOptions != null) {
                   requestOptions.getQueryParameters().forEach((_key, _value) -> {
                     httpUrl.addQueryParameter(_key, _value);
@@ -318,277 +363,169 @@ public class RawParamsClient {
                 try (Response response = client.newCall(okhttpRequest).execute()) {
                   ResponseBody responseBody = response.body();
                   if (response.isSuccessful()) {
-                    return new SeedExhaustiveHttpResponse<>(null, response);
+                    return new SeedApiHttpResponse<>(null, response);
                   }
                   String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                   Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                  throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+                  throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
                 }
                 catch (IOException e) {
-                  throw new SeedExhaustiveException("Network error executing HTTP request", e);
+                  throw new SeedApiException("Network error executing HTTP request", e);
                 }
               }
 
               /**
-               * PUT to update with path param
+               * GET with multiple of same query param
                */
-              public SeedExhaustiveHttpResponse<String> modifyWithPath(String param,
-                  String request) {
-                return modifyWithPath(param,request,null);
+              public SeedApiHttpResponse<Void> getWithAllowMultipleQuery() {
+                return getWithAllowMultipleQuery(GetWithAllowMultipleQueryParamsRequest.builder().build());
               }
 
               /**
-               * PUT to update with path param
+               * GET with multiple of same query param
                */
-              public SeedExhaustiveHttpResponse<String> modifyWithPath(String param, String request,
+              public SeedApiHttpResponse<Void> getWithAllowMultipleQuery(
                   RequestOptions requestOptions) {
+                return getWithAllowMultipleQuery(GetWithAllowMultipleQueryParamsRequest.builder().build(),requestOptions);
+              }
+
+              /**
+               * GET with multiple of same query param
+               */
+              public SeedApiHttpResponse<Void> getWithAllowMultipleQuery(
+                  GetWithAllowMultipleQueryParamsRequest request) {
+                return getWithAllowMultipleQuery(request,null);
+              }
+
+              /**
+               * GET with multiple of same query param
+               */
+              public SeedApiHttpResponse<Void> getWithAllowMultipleQuery(
+                  GetWithAllowMultipleQueryParamsRequest request, RequestOptions requestOptions) {
                 HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-                  .addPathSegments("params")
-                  .addPathSegments("path")
-                  .addPathSegment(param);if (requestOptions != null) {
+
+                  .addPathSegments("params/allow-multiple-query");if (request.getQuery().isPresent()) {
+                    QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery().get(), true);
+                  }
+                  if (request.getNumber().isPresent()) {
+                    QueryStringMapper.addQueryParameter(httpUrl, "number", request.getNumber().get(), true);
+                  }
+                  if (requestOptions != null) {
                     requestOptions.getQueryParameters().forEach((_key, _value) -> {
                       httpUrl.addQueryParameter(_key, _value);
                     } );
                   }
-                  RequestBody body;
-                  try {
-                    body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-                  }
-                  catch(JsonProcessingException e) {
-                    throw new SeedExhaustiveException("Failed to serialize request", e);
-                  }
-                  Request okhttpRequest = new Request.Builder()
+                  Request.Builder _requestBuilder = new Request.Builder()
                     .url(httpUrl.build())
-                    .method("PUT", body)
-                    .headers(Headers.of(clientOptions.headers(requestOptions)))
-                    .addHeader("Content-Type", "application/json")
-                    .addHeader("Accept", "application/json")
-                    .build();
+                    .method("GET", null)
+                    .headers(Headers.of(clientOptions.headers(requestOptions)));
+                  Request okhttpRequest = _requestBuilder.build();
                   OkHttpClient client = clientOptions.httpClient();
                   if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
                     client = clientOptions.httpClientWithTimeout(requestOptions);
                   }
                   try (Response response = client.newCall(okhttpRequest).execute()) {
                     ResponseBody responseBody = response.body();
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                      return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+                      return new SeedApiHttpResponse<>(null, response);
                     }
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                    throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+                    throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
                   }
                   catch (IOException e) {
-                    throw new SeedExhaustiveException("Network error executing HTTP request", e);
+                    throw new SeedApiException("Network error executing HTTP request", e);
                   }
                 }
 
                 /**
-                 * PUT to update with path param
+                 * GET with path and query params
                  */
-                public SeedExhaustiveHttpResponse<String> modifyWithInlinePath(String param,
-                    ModifyResourceAtInlinedPath request) {
-                  return modifyWithInlinePath(param,request,null);
+                public SeedApiHttpResponse<Void> getWithPathAndQuery(String param,
+                    GetWithPathAndQueryParamsRequest request) {
+                  return getWithPathAndQuery(param,request,null);
                 }
 
                 /**
-                 * PUT to update with path param
+                 * GET with path and query params
                  */
-                public SeedExhaustiveHttpResponse<String> modifyWithInlinePath(String param,
-                    ModifyResourceAtInlinedPath request, RequestOptions requestOptions) {
+                public SeedApiHttpResponse<Void> getWithPathAndQuery(String param,
+                    GetWithPathAndQueryParamsRequest request, RequestOptions requestOptions) {
                   HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-                    .addPathSegments("params")
-                    .addPathSegments("path")
-                    .addPathSegment(param);if (requestOptions != null) {
+
+                    .addPathSegments("params/path-query")
+                    .addPathSegment(param);QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
+                    if (requestOptions != null) {
                       requestOptions.getQueryParameters().forEach((_key, _value) -> {
                         httpUrl.addQueryParameter(_key, _value);
                       } );
                     }
-                    RequestBody body;
-                    try {
-                      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
-                    }
-                    catch(JsonProcessingException e) {
-                      throw new SeedExhaustiveException("Failed to serialize request", e);
-                    }
-                    Request okhttpRequest = new Request.Builder()
+                    Request.Builder _requestBuilder = new Request.Builder()
                       .url(httpUrl.build())
-                      .method("PUT", body)
-                      .headers(Headers.of(clientOptions.headers(requestOptions)))
-                      .addHeader("Content-Type", "application/json")
-                      .addHeader("Accept", "application/json")
-                      .build();
+                      .method("GET", null)
+                      .headers(Headers.of(clientOptions.headers(requestOptions)));
+                    Request okhttpRequest = _requestBuilder.build();
                     OkHttpClient client = clientOptions.httpClient();
                     if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
                       client = clientOptions.httpClientWithTimeout(requestOptions);
                     }
                     try (Response response = client.newCall(okhttpRequest).execute()) {
                       ResponseBody responseBody = response.body();
-                      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                       if (response.isSuccessful()) {
-                        return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+                        return new SeedApiHttpResponse<>(null, response);
                       }
+                      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                       Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+                      throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
                     }
                     catch (IOException e) {
-                      throw new SeedExhaustiveException("Network error executing HTTP request", e);
+                      throw new SeedApiException("Network error executing HTTP request", e);
                     }
                   }
 
                   /**
-                   * POST bytes with path param returning object
+                   * GET with path and query params
                    */
-                  public SeedExhaustiveHttpResponse<ObjectWithRequiredField> uploadWithPath(
-                      String param, InputStream request) {
-                    return uploadWithPath(param,request,null);
+                  public SeedApiHttpResponse<Void> getWithInlinePathAndQuery(String param,
+                      GetWithInlinePathAndQueryParamsRequest request) {
+                    return getWithInlinePathAndQuery(param,request,null);
                   }
 
                   /**
-                   * POST bytes with path param returning object
+                   * GET with path and query params
                    */
-                  public SeedExhaustiveHttpResponse<ObjectWithRequiredField> uploadWithPath(
-                      String param, InputStream request, RequestOptions requestOptions) {
+                  public SeedApiHttpResponse<Void> getWithInlinePathAndQuery(String param,
+                      GetWithInlinePathAndQueryParamsRequest request,
+                      RequestOptions requestOptions) {
                     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-                      .addPathSegments("params")
-                      .addPathSegments("path")
-                      .addPathSegment(param);if (requestOptions != null) {
+
+                      .addPathSegments("params/inline-path-query")
+                      .addPathSegment(param);QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
+                      if (requestOptions != null) {
                         requestOptions.getQueryParameters().forEach((_key, _value) -> {
                           httpUrl.addQueryParameter(_key, _value);
                         } );
                       }
-                      RequestBody body = new InputStreamRequestBody(MediaType.parse("application/octet-stream"), request);
-                      Request okhttpRequest = new Request.Builder()
+                      Request.Builder _requestBuilder = new Request.Builder()
                         .url(httpUrl.build())
-                        .method("POST", body)
-                        .headers(Headers.of(clientOptions.headers(requestOptions)))
-                        .build();
+                        .method("GET", null)
+                        .headers(Headers.of(clientOptions.headers(requestOptions)));
+                      Request okhttpRequest = _requestBuilder.build();
                       OkHttpClient client = clientOptions.httpClient();
                       if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
                         client = clientOptions.httpClientWithTimeout(requestOptions);
                       }
                       try (Response response = client.newCall(okhttpRequest).execute()) {
                         ResponseBody responseBody = response.body();
-                        String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                         if (response.isSuccessful()) {
-                          return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithRequiredField.class), response);
+                          return new SeedApiHttpResponse<>(null, response);
                         }
+                        String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                         Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                        throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+                        throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
                       }
                       catch (IOException e) {
-                        throw new SeedExhaustiveException("Network error executing HTTP request", e);
+                        throw new SeedApiException("Network error executing HTTP request", e);
                       }
                     }
-
-                    /**
-                     * POST bytes with path param returning object
-                     */
-                    public SeedExhaustiveHttpResponse<ObjectWithRequiredField> uploadWithPath(
-                        String param, byte[] request) {
-                      return uploadWithPath(param, new ByteArrayInputStream(request));
-                    }
-
-                    /**
-                     * POST bytes with path param returning object
-                     */
-                    public SeedExhaustiveHttpResponse<ObjectWithRequiredField> uploadWithPath(
-                        String param, byte[] request, RequestOptions requestOptions) {
-                      return uploadWithPath(param, new ByteArrayInputStream(request), requestOptions);
-                    }
-
-                    /**
-                     * GET with boolean path param
-                     */
-                    public SeedExhaustiveHttpResponse<String> getWithBooleanPath(boolean param) {
-                      return getWithBooleanPath(param,null);
-                    }
-
-                    /**
-                     * GET with boolean path param
-                     */
-                    public SeedExhaustiveHttpResponse<String> getWithBooleanPath(boolean param,
-                        RequestOptions requestOptions) {
-                      HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-                        .addPathSegments("params")
-                        .addPathSegments("path-bool")
-                        .addPathSegment(Boolean.toString(param));if (requestOptions != null) {
-                          requestOptions.getQueryParameters().forEach((_key, _value) -> {
-                            httpUrl.addQueryParameter(_key, _value);
-                          } );
-                        }
-                        Request okhttpRequest = new Request.Builder()
-                          .url(httpUrl.build())
-                          .method("GET", null)
-                          .headers(Headers.of(clientOptions.headers(requestOptions)))
-                          .addHeader("Accept", "application/json")
-                          .build();
-                        OkHttpClient client = clientOptions.httpClient();
-                        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                          client = clientOptions.httpClientWithTimeout(requestOptions);
-                        }
-                        try (Response response = client.newCall(okhttpRequest).execute()) {
-                          ResponseBody responseBody = response.body();
-                          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                          if (response.isSuccessful()) {
-                            return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
-                          }
-                          Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
-                        }
-                        catch (IOException e) {
-                          throw new SeedExhaustiveException("Network error executing HTTP request", e);
-                        }
-                      }
-
-                      /**
-                       * GET with path param that can throw errors
-                       */
-                      public SeedExhaustiveHttpResponse<String> getWithPathAndErrors(String param) {
-                        return getWithPathAndErrors(param,null);
-                      }
-
-                      /**
-                       * GET with path param that can throw errors
-                       */
-                      public SeedExhaustiveHttpResponse<String> getWithPathAndErrors(String param,
-                          RequestOptions requestOptions) {
-                        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-                          .addPathSegments("params")
-                          .addPathSegments("path")
-                          .addPathSegment(param);if (requestOptions != null) {
-                            requestOptions.getQueryParameters().forEach((_key, _value) -> {
-                              httpUrl.addQueryParameter(_key, _value);
-                            } );
-                          }
-                          Request okhttpRequest = new Request.Builder()
-                            .url(httpUrl.build())
-                            .method("GET", null)
-                            .headers(Headers.of(clientOptions.headers(requestOptions)))
-                            .addHeader("Accept", "application/json")
-                            .build();
-                          OkHttpClient client = clientOptions.httpClient();
-                          if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                            client = clientOptions.httpClientWithTimeout(requestOptions);
-                          }
-                          try (Response response = client.newCall(okhttpRequest).execute()) {
-                            ResponseBody responseBody = response.body();
-                            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                            if (response.isSuccessful()) {
-                              return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
-                            }
-                            try {
-                              if (response.code() == 400) {
-                                throw new BadRequestBody(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BadObjectRequestInfo.class), response);
-                              }
-                            }
-                            catch (JsonProcessingException ignored) {
-                              // unable to map error response, throwing generic error
-                            }
-                            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                            throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
-                          }
-                          catch (IOException e) {
-                            throw new SeedExhaustiveException("Network error executing HTTP request", e);
-                          }
-                        }
-                      }
+                  }

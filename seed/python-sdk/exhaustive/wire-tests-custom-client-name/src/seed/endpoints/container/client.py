@@ -4,8 +4,8 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.object.types.object_with_required_field import ObjectWithRequiredField
-from ...types.union.types.mixed_type import MixedType
+from ...types.types_mixed_type import TypesMixedType
+from ...types.types_object_with_required_field import TypesObjectWithRequiredField
 from .raw_client import AsyncRawContainerClient, RawContainerClient
 
 # this is used as the default value for optional parameters
@@ -42,6 +42,7 @@ class ContainerClient:
         -------
         typing.List[str]
 
+
         Examples
         --------
         from seed import Exhaustive
@@ -51,7 +52,7 @@ class ContainerClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.container.get_and_return_list_of_primitives(
-            request=["string", "string"],
+            request=["string"],
         )
         """
         _response = self._raw_client.get_and_return_list_of_primitives(request=request, request_options=request_options)
@@ -60,25 +61,25 @@ class ContainerClient:
     def get_and_return_list_of_objects(
         self,
         *,
-        request: typing.Sequence[ObjectWithRequiredField],
+        request: typing.Sequence[TypesObjectWithRequiredField],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[ObjectWithRequiredField]:
+    ) -> typing.List[TypesObjectWithRequiredField]:
         """
         Parameters
         ----------
-        request : typing.Sequence[ObjectWithRequiredField]
+        request : typing.Sequence[TypesObjectWithRequiredField]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[ObjectWithRequiredField]
+        typing.List[TypesObjectWithRequiredField]
+
 
         Examples
         --------
-        from seed import Exhaustive
-        from seed.types.object import ObjectWithRequiredField
+        from seed import Exhaustive, TypesObjectWithRequiredField
 
         client = Exhaustive(
             token="YOUR_TOKEN",
@@ -86,12 +87,9 @@ class ContainerClient:
         )
         client.endpoints.container.get_and_return_list_of_objects(
             request=[
-                ObjectWithRequiredField(
+                TypesObjectWithRequiredField(
                     string="string",
-                ),
-                ObjectWithRequiredField(
-                    string="string",
-                ),
+                )
             ],
         )
         """
@@ -99,19 +97,20 @@ class ContainerClient:
         return _response.data
 
     def get_and_return_set_of_primitives(
-        self, *, request: typing.Set[str], request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Set[str]:
+        self, *, request: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[str]:
         """
         Parameters
         ----------
-        request : typing.Set[str]
+        request : typing.Sequence[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.Set[str]
+        typing.List[str]
+
 
         Examples
         --------
@@ -122,7 +121,7 @@ class ContainerClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.container.get_and_return_set_of_primitives(
-            request={"string"},
+            request=["string"],
         )
         """
         _response = self._raw_client.get_and_return_set_of_primitives(request=request, request_options=request_options)
@@ -131,25 +130,25 @@ class ContainerClient:
     def get_and_return_set_of_objects(
         self,
         *,
-        request: typing.Sequence[ObjectWithRequiredField],
+        request: typing.Sequence[TypesObjectWithRequiredField],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[ObjectWithRequiredField]:
+    ) -> typing.List[TypesObjectWithRequiredField]:
         """
         Parameters
         ----------
-        request : typing.Sequence[ObjectWithRequiredField]
+        request : typing.Sequence[TypesObjectWithRequiredField]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[ObjectWithRequiredField]
+        typing.List[TypesObjectWithRequiredField]
+
 
         Examples
         --------
-        from seed import Exhaustive
-        from seed.types.object import ObjectWithRequiredField
+        from seed import Exhaustive, TypesObjectWithRequiredField
 
         client = Exhaustive(
             token="YOUR_TOKEN",
@@ -157,7 +156,7 @@ class ContainerClient:
         )
         client.endpoints.container.get_and_return_set_of_objects(
             request=[
-                ObjectWithRequiredField(
+                TypesObjectWithRequiredField(
                     string="string",
                 )
             ],
@@ -181,6 +180,7 @@ class ContainerClient:
         -------
         typing.Dict[str, str]
 
+
         Examples
         --------
         from seed import Exhaustive
@@ -190,7 +190,7 @@ class ContainerClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.container.get_and_return_map_prim_to_prim(
-            request={"string": "string"},
+            request={"key": "value"},
         )
         """
         _response = self._raw_client.get_and_return_map_prim_to_prim(request=request, request_options=request_options)
@@ -199,25 +199,25 @@ class ContainerClient:
     def get_and_return_map_of_prim_to_object(
         self,
         *,
-        request: typing.Dict[str, ObjectWithRequiredField],
+        request: typing.Dict[str, TypesObjectWithRequiredField],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Dict[str, ObjectWithRequiredField]:
+    ) -> typing.Dict[str, TypesObjectWithRequiredField]:
         """
         Parameters
         ----------
-        request : typing.Dict[str, ObjectWithRequiredField]
+        request : typing.Dict[str, TypesObjectWithRequiredField]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.Dict[str, ObjectWithRequiredField]
+        typing.Dict[str, TypesObjectWithRequiredField]
+
 
         Examples
         --------
-        from seed import Exhaustive
-        from seed.types.object import ObjectWithRequiredField
+        from seed import Exhaustive, TypesObjectWithRequiredField
 
         client = Exhaustive(
             token="YOUR_TOKEN",
@@ -225,7 +225,7 @@ class ContainerClient:
         )
         client.endpoints.container.get_and_return_map_of_prim_to_object(
             request={
-                "string": ObjectWithRequiredField(
+                "key": TypesObjectWithRequiredField(
                     string="string",
                 )
             },
@@ -237,19 +237,20 @@ class ContainerClient:
         return _response.data
 
     def get_and_return_map_of_prim_to_undiscriminated_union(
-        self, *, request: typing.Dict[str, MixedType], request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Dict[str, MixedType]:
+        self, *, request: typing.Dict[str, TypesMixedType], request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Dict[str, TypesMixedType]:
         """
         Parameters
         ----------
-        request : typing.Dict[str, MixedType]
+        request : typing.Dict[str, TypesMixedType]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.Dict[str, MixedType]
+        typing.Dict[str, TypesMixedType]
+
 
         Examples
         --------
@@ -260,7 +261,7 @@ class ContainerClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
-            request={"string": 1.1},
+            request={"key": 1.1},
         )
         """
         _response = self._raw_client.get_and_return_map_of_prim_to_undiscriminated_union(
@@ -269,39 +270,34 @@ class ContainerClient:
         return _response.data
 
     def get_and_return_optional(
-        self,
-        *,
-        request: typing.Optional[ObjectWithRequiredField] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[ObjectWithRequiredField]:
+        self, *, string: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> TypesObjectWithRequiredField:
         """
         Parameters
         ----------
-        request : typing.Optional[ObjectWithRequiredField]
+        string : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.Optional[ObjectWithRequiredField]
+        TypesObjectWithRequiredField
+
 
         Examples
         --------
         from seed import Exhaustive
-        from seed.types.object import ObjectWithRequiredField
 
         client = Exhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.container.get_and_return_optional(
-            request=ObjectWithRequiredField(
-                string="string",
-            ),
+            string="string",
         )
         """
-        _response = self._raw_client.get_and_return_optional(request=request, request_options=request_options)
+        _response = self._raw_client.get_and_return_optional(string=string, request_options=request_options)
         return _response.data
 
 
@@ -335,6 +331,7 @@ class AsyncContainerClient:
         -------
         typing.List[str]
 
+
         Examples
         --------
         import asyncio
@@ -349,7 +346,7 @@ class AsyncContainerClient:
 
         async def main() -> None:
             await client.endpoints.container.get_and_return_list_of_primitives(
-                request=["string", "string"],
+                request=["string"],
             )
 
 
@@ -363,27 +360,27 @@ class AsyncContainerClient:
     async def get_and_return_list_of_objects(
         self,
         *,
-        request: typing.Sequence[ObjectWithRequiredField],
+        request: typing.Sequence[TypesObjectWithRequiredField],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[ObjectWithRequiredField]:
+    ) -> typing.List[TypesObjectWithRequiredField]:
         """
         Parameters
         ----------
-        request : typing.Sequence[ObjectWithRequiredField]
+        request : typing.Sequence[TypesObjectWithRequiredField]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[ObjectWithRequiredField]
+        typing.List[TypesObjectWithRequiredField]
+
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncExhaustive
-        from seed.types.object import ObjectWithRequiredField
+        from seed import AsyncExhaustive, TypesObjectWithRequiredField
 
         client = AsyncExhaustive(
             token="YOUR_TOKEN",
@@ -394,12 +391,9 @@ class AsyncContainerClient:
         async def main() -> None:
             await client.endpoints.container.get_and_return_list_of_objects(
                 request=[
-                    ObjectWithRequiredField(
+                    TypesObjectWithRequiredField(
                         string="string",
-                    ),
-                    ObjectWithRequiredField(
-                        string="string",
-                    ),
+                    )
                 ],
             )
 
@@ -412,19 +406,20 @@ class AsyncContainerClient:
         return _response.data
 
     async def get_and_return_set_of_primitives(
-        self, *, request: typing.Set[str], request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Set[str]:
+        self, *, request: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[str]:
         """
         Parameters
         ----------
-        request : typing.Set[str]
+        request : typing.Sequence[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.Set[str]
+        typing.List[str]
+
 
         Examples
         --------
@@ -440,7 +435,7 @@ class AsyncContainerClient:
 
         async def main() -> None:
             await client.endpoints.container.get_and_return_set_of_primitives(
-                request={"string"},
+                request=["string"],
             )
 
 
@@ -454,27 +449,27 @@ class AsyncContainerClient:
     async def get_and_return_set_of_objects(
         self,
         *,
-        request: typing.Sequence[ObjectWithRequiredField],
+        request: typing.Sequence[TypesObjectWithRequiredField],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[ObjectWithRequiredField]:
+    ) -> typing.List[TypesObjectWithRequiredField]:
         """
         Parameters
         ----------
-        request : typing.Sequence[ObjectWithRequiredField]
+        request : typing.Sequence[TypesObjectWithRequiredField]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[ObjectWithRequiredField]
+        typing.List[TypesObjectWithRequiredField]
+
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncExhaustive
-        from seed.types.object import ObjectWithRequiredField
+        from seed import AsyncExhaustive, TypesObjectWithRequiredField
 
         client = AsyncExhaustive(
             token="YOUR_TOKEN",
@@ -485,7 +480,7 @@ class AsyncContainerClient:
         async def main() -> None:
             await client.endpoints.container.get_and_return_set_of_objects(
                 request=[
-                    ObjectWithRequiredField(
+                    TypesObjectWithRequiredField(
                         string="string",
                     )
                 ],
@@ -514,6 +509,7 @@ class AsyncContainerClient:
         -------
         typing.Dict[str, str]
 
+
         Examples
         --------
         import asyncio
@@ -528,7 +524,7 @@ class AsyncContainerClient:
 
         async def main() -> None:
             await client.endpoints.container.get_and_return_map_prim_to_prim(
-                request={"string": "string"},
+                request={"key": "value"},
             )
 
 
@@ -542,27 +538,27 @@ class AsyncContainerClient:
     async def get_and_return_map_of_prim_to_object(
         self,
         *,
-        request: typing.Dict[str, ObjectWithRequiredField],
+        request: typing.Dict[str, TypesObjectWithRequiredField],
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Dict[str, ObjectWithRequiredField]:
+    ) -> typing.Dict[str, TypesObjectWithRequiredField]:
         """
         Parameters
         ----------
-        request : typing.Dict[str, ObjectWithRequiredField]
+        request : typing.Dict[str, TypesObjectWithRequiredField]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.Dict[str, ObjectWithRequiredField]
+        typing.Dict[str, TypesObjectWithRequiredField]
+
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncExhaustive
-        from seed.types.object import ObjectWithRequiredField
+        from seed import AsyncExhaustive, TypesObjectWithRequiredField
 
         client = AsyncExhaustive(
             token="YOUR_TOKEN",
@@ -573,7 +569,7 @@ class AsyncContainerClient:
         async def main() -> None:
             await client.endpoints.container.get_and_return_map_of_prim_to_object(
                 request={
-                    "string": ObjectWithRequiredField(
+                    "key": TypesObjectWithRequiredField(
                         string="string",
                     )
                 },
@@ -588,19 +584,20 @@ class AsyncContainerClient:
         return _response.data
 
     async def get_and_return_map_of_prim_to_undiscriminated_union(
-        self, *, request: typing.Dict[str, MixedType], request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Dict[str, MixedType]:
+        self, *, request: typing.Dict[str, TypesMixedType], request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Dict[str, TypesMixedType]:
         """
         Parameters
         ----------
-        request : typing.Dict[str, MixedType]
+        request : typing.Dict[str, TypesMixedType]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.Dict[str, MixedType]
+        typing.Dict[str, TypesMixedType]
+
 
         Examples
         --------
@@ -616,7 +613,7 @@ class AsyncContainerClient:
 
         async def main() -> None:
             await client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
-                request={"string": 1.1},
+                request={"key": 1.1},
             )
 
 
@@ -628,29 +625,26 @@ class AsyncContainerClient:
         return _response.data
 
     async def get_and_return_optional(
-        self,
-        *,
-        request: typing.Optional[ObjectWithRequiredField] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[ObjectWithRequiredField]:
+        self, *, string: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> TypesObjectWithRequiredField:
         """
         Parameters
         ----------
-        request : typing.Optional[ObjectWithRequiredField]
+        string : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.Optional[ObjectWithRequiredField]
+        TypesObjectWithRequiredField
+
 
         Examples
         --------
         import asyncio
 
         from seed import AsyncExhaustive
-        from seed.types.object import ObjectWithRequiredField
 
         client = AsyncExhaustive(
             token="YOUR_TOKEN",
@@ -660,13 +654,11 @@ class AsyncContainerClient:
 
         async def main() -> None:
             await client.endpoints.container.get_and_return_optional(
-                request=ObjectWithRequiredField(
-                    string="string",
-                ),
+                string="string",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_and_return_optional(request=request, request_options=request_options)
+        _response = await self._raw_client.get_and_return_optional(string=string, request_options=request_options)
         return _response.data

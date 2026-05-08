@@ -1,16 +1,63 @@
 package com.snippets;
 
-import com.fern.sdk.SeedExhaustiveClient;
-import java.util.UUID;
+import com.fern.sdk.SeedApiClient;
+import com.fern.sdk.resources.endpoints.object.requests.GetAndReturnNestedWithRequiredFieldObjectRequest;
+import com.fern.sdk.types.TypesNestedObjectWithRequiredField;
+import com.fern.sdk.types.TypesObjectWithOptionalField;
+import java.time.OffsetDateTime;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Optional;
 
 public class Example52 {
     public static void main(String[] args) {
-        SeedExhaustiveClient client = SeedExhaustiveClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().primitive().getAndReturnUuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"));
+        client.endpoints().object().getAndReturnNestedWithRequiredField(
+            GetAndReturnNestedWithRequiredFieldObjectRequest
+                .builder()
+                .stringValue("stringValue")
+                .body(
+                    TypesNestedObjectWithRequiredField
+                        .builder()
+                        .string("string")
+                        .nestedObject(
+                            TypesObjectWithOptionalField
+                                .builder()
+                                .string("string")
+                                .integer(1)
+                                .long_(1000000L)
+                                .double_(1.1)
+                                .bool(true)
+                                .datetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                                .date("2023-01-15")
+                                .uuid("uuid")
+                                .base64("base64")
+                                .list(
+                                    Optional.of(
+                                        Arrays.asList("list", "list")
+                                    )
+                                )
+                                .set(
+                                    Optional.of(
+                                        Arrays.asList("set", "set")
+                                    )
+                                )
+                                .map(
+                                    new HashMap<String, Optional<String>>() {{
+                                        put("map", Optional.of("map"));
+                                    }}
+                                )
+                                .bigint(1)
+                                .build()
+                        )
+                        .build()
+                )
+                .build()
+        );
     }
 }

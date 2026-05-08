@@ -1,19 +1,19 @@
-using SeedExhaustive;
-using SeedExhaustive.Types.Object;
+using SeedApi;
 
 public partial class Examples
 {
     public async Task Example12() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Endpoints.HttpMethods.TestPostAsync(
-            new ObjectWithRequiredField {
-                String = "string"
+        await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(
+            new List<string>(){
+                "string",
+                "string",
             }
         );
     }

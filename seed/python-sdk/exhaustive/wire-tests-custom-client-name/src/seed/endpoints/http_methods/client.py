@@ -2,11 +2,10 @@
 
 import datetime as dt
 import typing
-import uuid
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.object.types.object_with_optional_field import ObjectWithOptionalField
+from ...types.types_object_with_optional_field import TypesObjectWithOptionalField
 from .raw_client import AsyncRawHttpMethodsClient, RawHttpMethodsClient
 
 # this is used as the default value for optional parameters
@@ -41,6 +40,7 @@ class HttpMethodsClient:
         -------
         str
 
+
         Examples
         --------
         from seed import Exhaustive
@@ -56,39 +56,9 @@ class HttpMethodsClient:
         _response = self._raw_client.test_get(id, request_options=request_options)
         return _response.data
 
-    def test_post(
-        self, *, string: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> ObjectWithOptionalField:
-        """
-        Parameters
-        ----------
-        string : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ObjectWithOptionalField
-
-        Examples
-        --------
-        from seed import Exhaustive
-
-        client = Exhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.endpoints.http_methods.test_post(
-            string="string",
-        )
-        """
-        _response = self._raw_client.test_post(string=string, request_options=request_options)
-        return _response.data
-
     def test_put(
         self, id: str, *, string: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> ObjectWithOptionalField:
+    ) -> TypesObjectWithOptionalField:
         """
         Parameters
         ----------
@@ -101,7 +71,8 @@ class HttpMethodsClient:
 
         Returns
         -------
-        ObjectWithOptionalField
+        TypesObjectWithOptionalField
+
 
         Examples
         --------
@@ -119,6 +90,35 @@ class HttpMethodsClient:
         _response = self._raw_client.test_put(id, string=string, request_options=request_options)
         return _response.data
 
+    def test_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
+        """
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+
+
+        Examples
+        --------
+        from seed import Exhaustive
+
+        client = Exhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.http_methods.test_delete(
+            id="id",
+        )
+        """
+        _response = self._raw_client.test_delete(id, request_options=request_options)
+        return _response.data
+
     def test_patch(
         self,
         id: str,
@@ -130,14 +130,14 @@ class HttpMethodsClient:
         bool_: typing.Optional[bool] = OMIT,
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
-        uuid_: typing.Optional[uuid.UUID] = OMIT,
+        uuid_: typing.Optional[str] = OMIT,
         base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
-        set_: typing.Optional[typing.Set[str]] = OMIT,
-        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
-        bigint: typing.Optional[str] = OMIT,
+        set_: typing.Optional[typing.Sequence[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        bigint: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ObjectWithOptionalField:
+    ) -> TypesObjectWithOptionalField:
         """
         Parameters
         ----------
@@ -158,30 +158,28 @@ class HttpMethodsClient:
 
         date : typing.Optional[dt.date]
 
-        uuid_ : typing.Optional[uuid.UUID]
+        uuid_ : typing.Optional[str]
 
         base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
-        set_ : typing.Optional[typing.Set[str]]
+        set_ : typing.Optional[typing.Sequence[str]]
 
-        map_ : typing.Optional[typing.Dict[int, str]]
+        map_ : typing.Optional[typing.Dict[str, typing.Optional[str]]]
 
-        bigint : typing.Optional[str]
+        bigint : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ObjectWithOptionalField
+        TypesObjectWithOptionalField
+
 
         Examples
         --------
-        import datetime
-        import uuid
-
         from seed import Exhaustive
 
         client = Exhaustive(
@@ -190,25 +188,6 @@ class HttpMethodsClient:
         )
         client.endpoints.http_methods.test_patch(
             id="id",
-            string="string",
-            integer=1,
-            long_=1000000,
-            double=1.1,
-            bool_=True,
-            datetime=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            date=datetime.date.fromisoformat(
-                "2023-01-15",
-            ),
-            uuid_=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            base64="SGVsbG8gd29ybGQh",
-            list_=["list", "list"],
-            set_={"set"},
-            map_={1: "map"},
-            bigint=1000000,
         )
         """
         _response = self._raw_client.test_patch(
@@ -230,18 +209,21 @@ class HttpMethodsClient:
         )
         return _response.data
 
-    def test_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
+    def test_post(
+        self, *, string: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> TypesObjectWithOptionalField:
         """
         Parameters
         ----------
-        id : str
+        string : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        bool
+        TypesObjectWithOptionalField
+
 
         Examples
         --------
@@ -251,11 +233,11 @@ class HttpMethodsClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.endpoints.http_methods.test_delete(
-            id="id",
+        client.endpoints.http_methods.test_post(
+            string="string",
         )
         """
-        _response = self._raw_client.test_delete(id, request_options=request_options)
+        _response = self._raw_client.test_post(string=string, request_options=request_options)
         return _response.data
 
 
@@ -287,6 +269,7 @@ class AsyncHttpMethodsClient:
         -------
         str
 
+
         Examples
         --------
         import asyncio
@@ -310,47 +293,9 @@ class AsyncHttpMethodsClient:
         _response = await self._raw_client.test_get(id, request_options=request_options)
         return _response.data
 
-    async def test_post(
-        self, *, string: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> ObjectWithOptionalField:
-        """
-        Parameters
-        ----------
-        string : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ObjectWithOptionalField
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncExhaustive
-
-        client = AsyncExhaustive(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.endpoints.http_methods.test_post(
-                string="string",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.test_post(string=string, request_options=request_options)
-        return _response.data
-
     async def test_put(
         self, id: str, *, string: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> ObjectWithOptionalField:
+    ) -> TypesObjectWithOptionalField:
         """
         Parameters
         ----------
@@ -363,7 +308,8 @@ class AsyncHttpMethodsClient:
 
         Returns
         -------
-        ObjectWithOptionalField
+        TypesObjectWithOptionalField
+
 
         Examples
         --------
@@ -389,6 +335,43 @@ class AsyncHttpMethodsClient:
         _response = await self._raw_client.test_put(id, string=string, request_options=request_options)
         return _response.data
 
+    async def test_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
+        """
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncExhaustive
+
+        client = AsyncExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.endpoints.http_methods.test_delete(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.test_delete(id, request_options=request_options)
+        return _response.data
+
     async def test_patch(
         self,
         id: str,
@@ -400,14 +383,14 @@ class AsyncHttpMethodsClient:
         bool_: typing.Optional[bool] = OMIT,
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
-        uuid_: typing.Optional[uuid.UUID] = OMIT,
+        uuid_: typing.Optional[str] = OMIT,
         base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
-        set_: typing.Optional[typing.Set[str]] = OMIT,
-        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
-        bigint: typing.Optional[str] = OMIT,
+        set_: typing.Optional[typing.Sequence[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        bigint: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ObjectWithOptionalField:
+    ) -> TypesObjectWithOptionalField:
         """
         Parameters
         ----------
@@ -428,30 +411,29 @@ class AsyncHttpMethodsClient:
 
         date : typing.Optional[dt.date]
 
-        uuid_ : typing.Optional[uuid.UUID]
+        uuid_ : typing.Optional[str]
 
         base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
-        set_ : typing.Optional[typing.Set[str]]
+        set_ : typing.Optional[typing.Sequence[str]]
 
-        map_ : typing.Optional[typing.Dict[int, str]]
+        map_ : typing.Optional[typing.Dict[str, typing.Optional[str]]]
 
-        bigint : typing.Optional[str]
+        bigint : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ObjectWithOptionalField
+        TypesObjectWithOptionalField
+
 
         Examples
         --------
         import asyncio
-        import datetime
-        import uuid
 
         from seed import AsyncExhaustive
 
@@ -464,25 +446,6 @@ class AsyncHttpMethodsClient:
         async def main() -> None:
             await client.endpoints.http_methods.test_patch(
                 id="id",
-                string="string",
-                integer=1,
-                long_=1000000,
-                double=1.1,
-                bool_=True,
-                datetime=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                date=datetime.date.fromisoformat(
-                    "2023-01-15",
-                ),
-                uuid_=uuid.UUID(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-                base64="SGVsbG8gd29ybGQh",
-                list_=["list", "list"],
-                set_={"set"},
-                map_={1: "map"},
-                bigint=1000000,
             )
 
 
@@ -507,18 +470,21 @@ class AsyncHttpMethodsClient:
         )
         return _response.data
 
-    async def test_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
+    async def test_post(
+        self, *, string: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> TypesObjectWithOptionalField:
         """
         Parameters
         ----------
-        id : str
+        string : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        bool
+        TypesObjectWithOptionalField
+
 
         Examples
         --------
@@ -533,12 +499,12 @@ class AsyncHttpMethodsClient:
 
 
         async def main() -> None:
-            await client.endpoints.http_methods.test_delete(
-                id="id",
+            await client.endpoints.http_methods.test_post(
+                string="string",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.test_delete(id, request_options=request_options)
+        _response = await self._raw_client.test_post(string=string, request_options=request_options)
         return _response.data

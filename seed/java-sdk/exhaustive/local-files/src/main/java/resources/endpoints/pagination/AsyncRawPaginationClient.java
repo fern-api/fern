@@ -8,23 +8,16 @@ import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.QueryStringMapper;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.core.SeedExhaustiveApiException;
-import com.fern.sdk.core.SeedExhaustiveException;
-import com.fern.sdk.core.SeedExhaustiveHttpResponse;
-import com.fern.sdk.core.pagination.SyncPagingIterable;
-import com.fern.sdk.resources.endpoints.pagination.requests.ListItemsRequest;
-import com.fern.sdk.resources.endpoints.pagination.types.PaginatedResponse;
-import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
+import com.fern.sdk.core.SeedApiApiException;
+import com.fern.sdk.core.SeedApiException;
+import com.fern.sdk.core.SeedApiHttpResponse;
+import com.fern.sdk.resources.endpoints.pagination.requests.ListItemsPaginationRequest;
+import com.fern.sdk.types.EndpointsPaginatedResponse;
 import java.io.IOException;
-import java.lang.InterruptedException;
 import java.lang.Object;
 import java.lang.Override;
-import java.lang.RuntimeException;
 import java.lang.String;
-import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Headers;
@@ -45,35 +38,34 @@ public class AsyncRawPaginationClient {
   /**
    * List items with cursor pagination
    */
-  public CompletableFuture<SeedExhaustiveHttpResponse<SyncPagingIterable<ObjectWithRequiredField>>> listItems(
-      ) {
-    return listItems(ListItemsRequest.builder().build());
+  public CompletableFuture<SeedApiHttpResponse<EndpointsPaginatedResponse>> listItems() {
+    return listItems(ListItemsPaginationRequest.builder().build());
   }
 
   /**
    * List items with cursor pagination
    */
-  public CompletableFuture<SeedExhaustiveHttpResponse<SyncPagingIterable<ObjectWithRequiredField>>> listItems(
+  public CompletableFuture<SeedApiHttpResponse<EndpointsPaginatedResponse>> listItems(
       RequestOptions requestOptions) {
-    return listItems(ListItemsRequest.builder().build(),requestOptions);
+    return listItems(ListItemsPaginationRequest.builder().build(),requestOptions);
   }
 
   /**
    * List items with cursor pagination
    */
-  public CompletableFuture<SeedExhaustiveHttpResponse<SyncPagingIterable<ObjectWithRequiredField>>> listItems(
-      ListItemsRequest request) {
+  public CompletableFuture<SeedApiHttpResponse<EndpointsPaginatedResponse>> listItems(
+      ListItemsPaginationRequest request) {
     return listItems(request,null);
   }
 
   /**
    * List items with cursor pagination
    */
-  public CompletableFuture<SeedExhaustiveHttpResponse<SyncPagingIterable<ObjectWithRequiredField>>> listItems(
-      ListItemsRequest request, RequestOptions requestOptions) {
+  public CompletableFuture<SeedApiHttpResponse<EndpointsPaginatedResponse>> listItems(
+      ListItemsPaginationRequest request, RequestOptions requestOptions) {
     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-      .addPathSegments("pagination")
-      ;if (request.getCursor().isPresent()) {
+
+      .addPathSegments("pagination");if (request.getCursor().isPresent()) {
         QueryStringMapper.addQueryParameter(httpUrl, "cursor", request.getCursor().get(), false);
       }
       if (request.getLimit().isPresent()) {
@@ -94,40 +86,28 @@ public class AsyncRawPaginationClient {
       if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
         client = clientOptions.httpClientWithTimeout(requestOptions);
       }
-      CompletableFuture<SeedExhaustiveHttpResponse<SyncPagingIterable<ObjectWithRequiredField>>> future = new CompletableFuture<>();
+      CompletableFuture<SeedApiHttpResponse<EndpointsPaginatedResponse>> future = new CompletableFuture<>();
       client.newCall(okhttpRequest).enqueue(new Callback() {
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
           try (ResponseBody responseBody = response.body()) {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
-              PaginatedResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(responseBodyString, PaginatedResponse.class);
-              Optional<String> startingAfter = parsedResponse.getNext();
-              ListItemsRequest nextRequest = ListItemsRequest.builder().from(request).cursor(startingAfter).build();
-              List<ObjectWithRequiredField> result = parsedResponse.getItems();
-              future.complete(new SeedExhaustiveHttpResponse<>(new SyncPagingIterable<ObjectWithRequiredField>(startingAfter.isPresent(), result, parsedResponse, () -> {
-                    try {
-                      return listItems(nextRequest, requestOptions).get().body();
-                    }
-                    catch (InterruptedException | ExecutionException e) {
-                      throw new RuntimeException(e);
-                    }
-                  }
-                  ), response));
+              future.complete(new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, EndpointsPaginatedResponse.class), response));
               return;
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+            future.completeExceptionally(new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response));
             return;
           }
           catch (IOException e) {
-            future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+            future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
           }
         }
 
         @Override
         public void onFailure(@NotNull Call call, @NotNull IOException e) {
-          future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+          future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
         }
       });
       return future;

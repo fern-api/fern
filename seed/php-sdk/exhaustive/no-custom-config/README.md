@@ -11,7 +11,6 @@ The Seed PHP library provides convenient access to the Seed APIs from PHP.
 - [Installation](#installation)
 - [Usage](#usage)
 - [Exception Handling](#exception-handling)
-- [Pagination](#pagination)
 - [Advanced](#advanced)
   - [Custom Client](#custom-client)
   - [Retries](#retries)
@@ -38,15 +37,18 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\InlinedRequests\Requests\PostWithObjectBodyandResponseInlinedRequestsRequest;
+use Seed\Types\TypesObjectWithOptionalField;
 
 $client = new SeedClient(
     token: '<token>',
 );
-$client->endpoints->container->getAndReturnListOfPrimitives(
-    [
-        'string',
-        'string',
-    ],
+$client->inlinedRequests->postWithObjectBodyandResponse(
+    new PostWithObjectBodyandResponseInlinedRequestsRequest([
+        'string' => 'string',
+        'integer' => 1,
+        'nestedObject' => new TypesObjectWithOptionalField([]),
+    ]),
 );
 
 ```
@@ -60,7 +62,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->endpoints->container->getAndReturnListOfPrimitives(...);
+    $response = $client->inlinedRequests->postWithObjectBodyandResponse(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -68,35 +70,6 @@ try {
     // Optionally, rethrow the exception or handle accordingly.
 }
 ```
-
-## Pagination
-
-List endpoints return a `Pager<T>` which lets you loop over all items and the SDK will automatically make multiple HTTP requests for you.
-
-```php
-use Seed\SeedClient;
-
-$client = new SeedClient(
-    '<YOUR_TOKEN>',
-    ['baseUrl' => 'https://api.example.com'],
-);
-
-$items = $client->endpoints->pagination->listItems(['limit' => 10]);
-
-foreach ($items as $item) {
-    var_dump($item);
-}
-```
-You can also iterate page-by-page:
-
-```php
-foreach ($items->getPages() as $page) {
-    foreach ($page->getItems() as $pageItem) {
-        var_dump($pageItem);
-    }
-}
-```
-
 
 ## Advanced
 
@@ -148,7 +121,7 @@ The `retryStatusCodes` configuration controls which [5XX](https://developer.mozi
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->endpoints->container->getAndReturnListOfPrimitives(
+$response = $client->inlinedRequests->postWithObjectBodyandResponse(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -161,7 +134,7 @@ $response = $client->endpoints->container->getAndReturnListOfPrimitives(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->endpoints->container->getAndReturnListOfPrimitives(
+$response = $client->inlinedRequests->postWithObjectBodyandResponse(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level

@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
-import * as SeedExhaustive from "../../../../../index.js";
+import * as SeedApi from "../../../../../index.js";
 
 export declare namespace PrimitiveClient {
     export type Options = BaseClientOptions;
@@ -29,16 +29,14 @@ export class PrimitiveClient {
     public getAndReturnString(
         request: string,
         requestOptions?: PrimitiveClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnString.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<string, SeedApi.endpoints.primitive.getAndReturnString.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnString(request, requestOptions));
     }
 
     private async __getAndReturnString(
         request: string,
         requestOptions?: PrimitiveClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnString.Error>>
-    > {
+    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedApi.endpoints.primitive.getAndReturnString.Error>>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -49,7 +47,7 @@ export class PrimitiveClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/primitive/string",
+                "primitive/string",
             ),
             method: "POST",
             headers: _headers,
@@ -78,7 +76,7 @@ export class PrimitiveClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.primitive.getAndReturnString.Error._unknown(_response.error),
+                error: SeedApi.endpoints.primitive.getAndReturnString.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -95,16 +93,14 @@ export class PrimitiveClient {
     public getAndReturnInt(
         request: number,
         requestOptions?: PrimitiveClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<number, SeedExhaustive.endpoints.primitive.getAndReturnInt.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<number, SeedApi.endpoints.primitive.getAndReturnInt.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnInt(request, requestOptions));
     }
 
     private async __getAndReturnInt(
         request: number,
         requestOptions?: PrimitiveClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<core.APIResponse<number, SeedExhaustive.endpoints.primitive.getAndReturnInt.Error>>
-    > {
+    ): Promise<core.WithRawResponse<core.APIResponse<number, SeedApi.endpoints.primitive.getAndReturnInt.Error>>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -115,7 +111,7 @@ export class PrimitiveClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/primitive/integer",
+                "primitive/integer",
             ),
             method: "POST",
             headers: _headers,
@@ -144,7 +140,7 @@ export class PrimitiveClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.primitive.getAndReturnInt.Error._unknown(_response.error),
+                error: SeedApi.endpoints.primitive.getAndReturnInt.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -161,16 +157,14 @@ export class PrimitiveClient {
     public getAndReturnLong(
         request: number,
         requestOptions?: PrimitiveClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<number, SeedExhaustive.endpoints.primitive.getAndReturnLong.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<number, SeedApi.endpoints.primitive.getAndReturnLong.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnLong(request, requestOptions));
     }
 
     private async __getAndReturnLong(
         request: number,
         requestOptions?: PrimitiveClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<core.APIResponse<number, SeedExhaustive.endpoints.primitive.getAndReturnLong.Error>>
-    > {
+    ): Promise<core.WithRawResponse<core.APIResponse<number, SeedApi.endpoints.primitive.getAndReturnLong.Error>>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -181,7 +175,7 @@ export class PrimitiveClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/primitive/long",
+                "primitive/long",
             ),
             method: "POST",
             headers: _headers,
@@ -210,7 +204,7 @@ export class PrimitiveClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.primitive.getAndReturnLong.Error._unknown(_response.error),
+                error: SeedApi.endpoints.primitive.getAndReturnLong.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -227,16 +221,14 @@ export class PrimitiveClient {
     public getAndReturnDouble(
         request: number,
         requestOptions?: PrimitiveClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<number, SeedExhaustive.endpoints.primitive.getAndReturnDouble.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<number, SeedApi.endpoints.primitive.getAndReturnDouble.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnDouble(request, requestOptions));
     }
 
     private async __getAndReturnDouble(
         request: number,
         requestOptions?: PrimitiveClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<core.APIResponse<number, SeedExhaustive.endpoints.primitive.getAndReturnDouble.Error>>
-    > {
+    ): Promise<core.WithRawResponse<core.APIResponse<number, SeedApi.endpoints.primitive.getAndReturnDouble.Error>>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -247,7 +239,7 @@ export class PrimitiveClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/primitive/double",
+                "primitive/double",
             ),
             method: "POST",
             headers: _headers,
@@ -276,7 +268,7 @@ export class PrimitiveClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.primitive.getAndReturnDouble.Error._unknown(_response.error),
+                error: SeedApi.endpoints.primitive.getAndReturnDouble.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -293,16 +285,14 @@ export class PrimitiveClient {
     public getAndReturnBool(
         request: boolean,
         requestOptions?: PrimitiveClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<boolean, SeedExhaustive.endpoints.primitive.getAndReturnBool.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<boolean, SeedApi.endpoints.primitive.getAndReturnBool.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnBool(request, requestOptions));
     }
 
     private async __getAndReturnBool(
         request: boolean,
         requestOptions?: PrimitiveClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<core.APIResponse<boolean, SeedExhaustive.endpoints.primitive.getAndReturnBool.Error>>
-    > {
+    ): Promise<core.WithRawResponse<core.APIResponse<boolean, SeedApi.endpoints.primitive.getAndReturnBool.Error>>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -313,7 +303,7 @@ export class PrimitiveClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/primitive/boolean",
+                "primitive/boolean",
             ),
             method: "POST",
             headers: _headers,
@@ -342,7 +332,7 @@ export class PrimitiveClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.primitive.getAndReturnBool.Error._unknown(_response.error),
+                error: SeedApi.endpoints.primitive.getAndReturnBool.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -359,18 +349,14 @@ export class PrimitiveClient {
     public getAndReturnDatetime(
         request: string,
         requestOptions?: PrimitiveClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnDatetime.Error>
-    > {
+    ): core.HttpResponsePromise<core.APIResponse<string, SeedApi.endpoints.primitive.getAndReturnDatetime.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnDatetime(request, requestOptions));
     }
 
     private async __getAndReturnDatetime(
         request: string,
         requestOptions?: PrimitiveClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnDatetime.Error>>
-    > {
+    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedApi.endpoints.primitive.getAndReturnDatetime.Error>>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -381,7 +367,7 @@ export class PrimitiveClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/primitive/datetime",
+                "primitive/datetime",
             ),
             method: "POST",
             headers: _headers,
@@ -410,7 +396,7 @@ export class PrimitiveClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.primitive.getAndReturnDatetime.Error._unknown(_response.error),
+                error: SeedApi.endpoints.primitive.getAndReturnDatetime.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -427,16 +413,14 @@ export class PrimitiveClient {
     public getAndReturnDate(
         request: string,
         requestOptions?: PrimitiveClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnDate.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<string, SeedApi.endpoints.primitive.getAndReturnDate.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnDate(request, requestOptions));
     }
 
     private async __getAndReturnDate(
         request: string,
         requestOptions?: PrimitiveClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnDate.Error>>
-    > {
+    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedApi.endpoints.primitive.getAndReturnDate.Error>>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -447,7 +431,7 @@ export class PrimitiveClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/primitive/date",
+                "primitive/date",
             ),
             method: "POST",
             headers: _headers,
@@ -476,7 +460,7 @@ export class PrimitiveClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.primitive.getAndReturnDate.Error._unknown(_response.error),
+                error: SeedApi.endpoints.primitive.getAndReturnDate.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -488,21 +472,19 @@ export class PrimitiveClient {
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+     *     await client.endpoints.primitive.getAndReturnUuid("string")
      */
     public getAndReturnUuid(
         request: string,
         requestOptions?: PrimitiveClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnUuid.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<string, SeedApi.endpoints.primitive.getAndReturnUuid.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnUuid(request, requestOptions));
     }
 
     private async __getAndReturnUuid(
         request: string,
         requestOptions?: PrimitiveClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnUuid.Error>>
-    > {
+    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedApi.endpoints.primitive.getAndReturnUuid.Error>>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -513,7 +495,7 @@ export class PrimitiveClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/primitive/uuid",
+                "primitive/uuid",
             ),
             method: "POST",
             headers: _headers,
@@ -542,7 +524,7 @@ export class PrimitiveClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.primitive.getAndReturnUuid.Error._unknown(_response.error),
+                error: SeedApi.endpoints.primitive.getAndReturnUuid.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -554,21 +536,19 @@ export class PrimitiveClient {
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh")
+     *     await client.endpoints.primitive.getAndReturnBase64("string")
      */
     public getAndReturnBase64(
         request: string,
         requestOptions?: PrimitiveClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnBase64.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<string, SeedApi.endpoints.primitive.getAndReturnBase64.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnBase64(request, requestOptions));
     }
 
     private async __getAndReturnBase64(
         request: string,
         requestOptions?: PrimitiveClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnBase64.Error>>
-    > {
+    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedApi.endpoints.primitive.getAndReturnBase64.Error>>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -579,7 +559,7 @@ export class PrimitiveClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/primitive/base64",
+                "primitive/base64",
             ),
             method: "POST",
             headers: _headers,
@@ -608,7 +588,7 @@ export class PrimitiveClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.primitive.getAndReturnBase64.Error._unknown(_response.error),
+                error: SeedApi.endpoints.primitive.getAndReturnBase64.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,

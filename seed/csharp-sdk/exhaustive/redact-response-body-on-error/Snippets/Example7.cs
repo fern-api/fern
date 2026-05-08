@@ -1,21 +1,16 @@
-using SeedExhaustive;
-using SeedExhaustive.Types;
+using SeedApi;
 
 public partial class Examples
 {
     public async Task Example7() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Endpoints.Container.GetAndReturnOptionalAsync(
-            new ObjectWithRequiredField {
-                String = "string"
-            }
-        );
+        await client.NoReqBody.PostWithNoRequestBodyAsync();
     }
 
 }

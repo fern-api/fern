@@ -3,6 +3,8 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\InlinedRequests\Requests\PostWithObjectBodyandResponseInlinedRequestsRequest;
+use Seed\Types\TypesObjectWithOptionalField;
 
 $client = new SeedClient(
     token: '<token>',
@@ -10,9 +12,10 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->container->getAndReturnListOfPrimitives(
-    [
-        'string',
-        'string',
-    ],
+$client->inlinedRequests->postWithObjectBodyandResponse(
+    new PostWithObjectBodyandResponseInlinedRequestsRequest([
+        'string' => 'string',
+        'integer' => 1,
+        'nestedObject' => new TypesObjectWithOptionalField([]),
+    ]),
 );

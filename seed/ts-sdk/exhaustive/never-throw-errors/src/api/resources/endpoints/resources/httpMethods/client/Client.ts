@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
-import * as SeedExhaustive from "../../../../../index.js";
+import * as SeedApi from "../../../../../index.js";
 
 export declare namespace HttpMethodsClient {
     export type Options = BaseClientOptions;
@@ -20,23 +20,26 @@ export class HttpMethodsClient {
     }
 
     /**
-     * @param {string} id
+     * @param {SeedApi.endpoints.TestGetHttpMethodsRequest} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.httpMethods.testGet("id")
+     *     await client.endpoints.httpMethods.testGet({
+     *         id: "id"
+     *     })
      */
     public testGet(
-        id: string,
+        request: SeedApi.endpoints.TestGetHttpMethodsRequest,
         requestOptions?: HttpMethodsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.httpMethods.testGet.Error>> {
-        return core.HttpResponsePromise.fromPromise(this.__testGet(id, requestOptions));
+    ): core.HttpResponsePromise<core.APIResponse<string, SeedApi.endpoints.httpMethods.testGet.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__testGet(request, requestOptions));
     }
 
     private async __testGet(
-        id: string,
+        request: SeedApi.endpoints.TestGetHttpMethodsRequest,
         requestOptions?: HttpMethodsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.httpMethods.testGet.Error>>> {
+    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedApi.endpoints.httpMethods.testGet.Error>>> {
+        const { id } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -47,7 +50,7 @@ export class HttpMethodsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${core.url.encodePathParam(id)}`,
+                `http-methods/${core.url.encodePathParam(id)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -73,7 +76,7 @@ export class HttpMethodsClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.httpMethods.testGet.Error._unknown(_response.error),
+                error: SeedApi.endpoints.httpMethods.testGet.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -81,122 +84,35 @@ export class HttpMethodsClient {
     }
 
     /**
-     * @deprecated
-     *
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {SeedApi.endpoints.TestPutHttpMethodsRequest} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.httpMethods.testPost({
-     *         string: "string"
-     *     })
-     */
-    public testPost(
-        request: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: HttpMethodsClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedExhaustive.types.ObjectWithOptionalField,
-            SeedExhaustive.endpoints.httpMethods.testPost.Error
-        >
-    > {
-        return core.HttpResponsePromise.fromPromise(this.__testPost(request, requestOptions));
-    }
-
-    private async __testPost(
-        request: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: HttpMethodsClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<
-                SeedExhaustive.types.ObjectWithOptionalField,
-                SeedExhaustive.endpoints.httpMethods.testPost.Error
-            >
-        >
-    > {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/http-methods",
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: {
-                    ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
-                    headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        return {
-            data: {
-                ok: false,
-                error: SeedExhaustive.endpoints.httpMethods.testPost.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
-    }
-
-    /**
-     * @deprecated Use testPatch instead.
-     *
-     * @param {string} id
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
-     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.httpMethods.testPut("id", {
-     *         string: "string"
+     *     await client.endpoints.httpMethods.testPut({
+     *         id: "id",
+     *         body: {
+     *             string: "string"
+     *         }
      *     })
      */
     public testPut(
-        id: string,
-        request: SeedExhaustive.types.ObjectWithRequiredField,
+        request: SeedApi.endpoints.TestPutHttpMethodsRequest,
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedExhaustive.types.ObjectWithOptionalField,
-            SeedExhaustive.endpoints.httpMethods.testPut.Error
-        >
+        core.APIResponse<SeedApi.TypesObjectWithOptionalField, SeedApi.endpoints.httpMethods.testPut.Error>
     > {
-        return core.HttpResponsePromise.fromPromise(this.__testPut(id, request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__testPut(request, requestOptions));
     }
 
     private async __testPut(
-        id: string,
-        request: SeedExhaustive.types.ObjectWithRequiredField,
+        request: SeedApi.endpoints.TestPutHttpMethodsRequest,
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
-            core.APIResponse<
-                SeedExhaustive.types.ObjectWithOptionalField,
-                SeedExhaustive.endpoints.httpMethods.testPut.Error
-            >
+            core.APIResponse<SeedApi.TypesObjectWithOptionalField, SeedApi.endpoints.httpMethods.testPut.Error>
         >
     > {
+        const { id, body: _body } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -207,14 +123,14 @@ export class HttpMethodsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${core.url.encodePathParam(id)}`,
+                `http-methods/${core.url.encodePathParam(id)}`,
             ),
             method: "PUT",
             headers: _headers,
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -225,7 +141,7 @@ export class HttpMethodsClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                    body: _response.body as SeedApi.TypesObjectWithOptionalField,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -236,7 +152,7 @@ export class HttpMethodsClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.httpMethods.testPut.Error._unknown(_response.error),
+                error: SeedApi.endpoints.httpMethods.testPut.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -244,122 +160,26 @@ export class HttpMethodsClient {
     }
 
     /**
-     * @beta This endpoint is in pre-release and may change.
-     *
-     * @param {string} id
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {SeedApi.endpoints.TestDeleteHttpMethodsRequest} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.httpMethods.testPatch("id", {
-     *         string: "string",
-     *         integer: 1,
-     *         long: 1000000,
-     *         double: 1.1,
-     *         bool: true,
-     *         datetime: "2024-01-15T09:30:00Z",
-     *         date: "2023-01-15",
-     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *         base64: "SGVsbG8gd29ybGQh",
-     *         list: ["list", "list"],
-     *         set: ["set"],
-     *         map: {
-     *             1: "map"
-     *         },
-     *         bigint: "1000000"
+     *     await client.endpoints.httpMethods.testDelete({
+     *         id: "id"
      *     })
      */
-    public testPatch(
-        id: string,
-        request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: HttpMethodsClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedExhaustive.types.ObjectWithOptionalField,
-            SeedExhaustive.endpoints.httpMethods.testPatch.Error
-        >
-    > {
-        return core.HttpResponsePromise.fromPromise(this.__testPatch(id, request, requestOptions));
-    }
-
-    private async __testPatch(
-        id: string,
-        request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: HttpMethodsClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<
-                SeedExhaustive.types.ObjectWithOptionalField,
-                SeedExhaustive.endpoints.httpMethods.testPatch.Error
-            >
-        >
-    > {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${core.url.encodePathParam(id)}`,
-            ),
-            method: "PATCH",
-            headers: _headers,
-            contentType: "application/json",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: {
-                    ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
-                    headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        return {
-            data: {
-                ok: false,
-                error: SeedExhaustive.endpoints.httpMethods.testPatch.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
-    }
-
-    /**
-     * @beta This endpoint is in development and may change.
-     *
-     * @param {string} id
-     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.endpoints.httpMethods.testDelete("id")
-     */
     public testDelete(
-        id: string,
+        request: SeedApi.endpoints.TestDeleteHttpMethodsRequest,
         requestOptions?: HttpMethodsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<boolean, SeedExhaustive.endpoints.httpMethods.testDelete.Error>> {
-        return core.HttpResponsePromise.fromPromise(this.__testDelete(id, requestOptions));
+    ): core.HttpResponsePromise<core.APIResponse<boolean, SeedApi.endpoints.httpMethods.testDelete.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__testDelete(request, requestOptions));
     }
 
     private async __testDelete(
-        id: string,
+        request: SeedApi.endpoints.TestDeleteHttpMethodsRequest,
         requestOptions?: HttpMethodsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<boolean, SeedExhaustive.endpoints.httpMethods.testDelete.Error>>> {
+    ): Promise<core.WithRawResponse<core.APIResponse<boolean, SeedApi.endpoints.httpMethods.testDelete.Error>>> {
+        const { id } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -370,7 +190,7 @@ export class HttpMethodsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${core.url.encodePathParam(id)}`,
+                `http-methods/${core.url.encodePathParam(id)}`,
             ),
             method: "DELETE",
             headers: _headers,
@@ -396,7 +216,153 @@ export class HttpMethodsClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.httpMethods.testDelete.Error._unknown(_response.error),
+                error: SeedApi.endpoints.httpMethods.testDelete.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
+        };
+    }
+
+    /**
+     * @param {SeedApi.endpoints.TestPatchHttpMethodsRequest} request
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testPatch({
+     *         id: "id",
+     *         body: {}
+     *     })
+     */
+    public testPatch(
+        request: SeedApi.endpoints.TestPatchHttpMethodsRequest,
+        requestOptions?: HttpMethodsClient.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<SeedApi.TypesObjectWithOptionalField, SeedApi.endpoints.httpMethods.testPatch.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__testPatch(request, requestOptions));
+    }
+
+    private async __testPatch(
+        request: SeedApi.endpoints.TestPatchHttpMethodsRequest,
+        requestOptions?: HttpMethodsClient.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<SeedApi.TypesObjectWithOptionalField, SeedApi.endpoints.httpMethods.testPatch.Error>
+        >
+    > {
+        const { id, body: _body } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `http-methods/${core.url.encodePathParam(id)}`,
+            ),
+            method: "PATCH",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: _body,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: {
+                    ok: true,
+                    body: _response.body as SeedApi.TypesObjectWithOptionalField,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        return {
+            data: {
+                ok: false,
+                error: SeedApi.endpoints.httpMethods.testPatch.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
+        };
+    }
+
+    /**
+     * @param {SeedApi.TypesObjectWithRequiredField} request
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.httpMethods.testPost({
+     *         string: "string"
+     *     })
+     */
+    public testPost(
+        request: SeedApi.TypesObjectWithRequiredField,
+        requestOptions?: HttpMethodsClient.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<SeedApi.TypesObjectWithOptionalField, SeedApi.endpoints.httpMethods.testPost.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__testPost(request, requestOptions));
+    }
+
+    private async __testPost(
+        request: SeedApi.TypesObjectWithRequiredField,
+        requestOptions?: HttpMethodsClient.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<SeedApi.TypesObjectWithOptionalField, SeedApi.endpoints.httpMethods.testPost.Error>
+        >
+    > {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "http-methods",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: {
+                    ok: true,
+                    body: _response.body as SeedApi.TypesObjectWithOptionalField,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        return {
+            data: {
+                ok: false,
+                error: SeedApi.endpoints.httpMethods.testPost.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,

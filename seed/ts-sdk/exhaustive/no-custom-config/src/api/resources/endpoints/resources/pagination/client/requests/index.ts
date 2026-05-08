@@ -1,1 +1,1 @@
-export type { ListItemsRequest } from "./ListItemsRequest.js";
+export type { ListItemsPaginationRequest } from "./ListItemsPaginationRequest.js";

@@ -2,7 +2,6 @@
 
 import datetime as dt
 import typing
-import uuid
 from json.decoder import JSONDecodeError
 
 from ...core.api_error import ApiError
@@ -12,7 +11,7 @@ from ...core.jsonable_encoder import encode_path_param
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
-from ...types.object.types.object_with_optional_field import ObjectWithOptionalField
+from ...types.types_object_with_optional_field import TypesObjectWithOptionalField
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -35,6 +34,7 @@ class RawHttpMethodsClient:
         Returns
         -------
         HttpResponse[str]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             f"http-methods/{encode_path_param(id)}",
@@ -60,52 +60,9 @@ class RawHttpMethodsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def test_post(
-        self, *, string: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[ObjectWithOptionalField]:
-        """
-        Parameters
-        ----------
-        string : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[ObjectWithOptionalField]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "http-methods",
-            method="POST",
-            json={
-                "string": string,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ObjectWithOptionalField,
-                    construct_type(
-                        type_=ObjectWithOptionalField,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
     def test_put(
         self, id: str, *, string: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[ObjectWithOptionalField]:
+    ) -> HttpResponse[TypesObjectWithOptionalField]:
         """
         Parameters
         ----------
@@ -118,7 +75,8 @@ class RawHttpMethodsClient:
 
         Returns
         -------
-        HttpResponse[ObjectWithOptionalField]
+        HttpResponse[TypesObjectWithOptionalField]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             f"http-methods/{encode_path_param(id)}",
@@ -126,103 +84,8 @@ class RawHttpMethodsClient:
             json={
                 "string": string,
             },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ObjectWithOptionalField,
-                    construct_type(
-                        type_=ObjectWithOptionalField,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def test_patch(
-        self,
-        id: str,
-        *,
-        string: typing.Optional[str] = OMIT,
-        integer: typing.Optional[int] = OMIT,
-        long_: typing.Optional[int] = OMIT,
-        double: typing.Optional[float] = OMIT,
-        bool_: typing.Optional[bool] = OMIT,
-        datetime: typing.Optional[dt.datetime] = OMIT,
-        date: typing.Optional[dt.date] = OMIT,
-        uuid_: typing.Optional[uuid.UUID] = OMIT,
-        base64: typing.Optional[str] = OMIT,
-        list_: typing.Optional[typing.Sequence[str]] = OMIT,
-        set_: typing.Optional[typing.Set[str]] = OMIT,
-        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
-        bigint: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[ObjectWithOptionalField]:
-        """
-        Parameters
-        ----------
-        id : str
-
-        string : typing.Optional[str]
-            This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
-
-        integer : typing.Optional[int]
-
-        long_ : typing.Optional[int]
-
-        double : typing.Optional[float]
-
-        bool_ : typing.Optional[bool]
-
-        datetime : typing.Optional[dt.datetime]
-
-        date : typing.Optional[dt.date]
-
-        uuid_ : typing.Optional[uuid.UUID]
-
-        base64 : typing.Optional[str]
-
-        list_ : typing.Optional[typing.Sequence[str]]
-
-        set_ : typing.Optional[typing.Set[str]]
-
-        map_ : typing.Optional[typing.Dict[int, str]]
-
-        bigint : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[ObjectWithOptionalField]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"http-methods/{encode_path_param(id)}",
-            method="PATCH",
-            json={
-                "string": string,
-                "integer": integer,
-                "long": long_,
-                "double": double,
-                "bool": bool_,
-                "datetime": datetime,
-                "date": date,
-                "uuid": uuid_,
-                "base64": base64,
-                "list": list_,
-                "set": set_,
-                "map": map_,
-                "bigint": bigint,
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -230,9 +93,9 @@ class RawHttpMethodsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ObjectWithOptionalField,
+                    TypesObjectWithOptionalField,
                     construct_type(
-                        type_=ObjectWithOptionalField,  # type: ignore
+                        type_=TypesObjectWithOptionalField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -258,6 +121,7 @@ class RawHttpMethodsClient:
         Returns
         -------
         HttpResponse[bool]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             f"http-methods/{encode_path_param(id)}",
@@ -270,6 +134,155 @@ class RawHttpMethodsClient:
                     bool,
                     construct_type(
                         type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def test_patch(
+        self,
+        id: str,
+        *,
+        string: typing.Optional[str] = OMIT,
+        integer: typing.Optional[int] = OMIT,
+        long_: typing.Optional[int] = OMIT,
+        double: typing.Optional[float] = OMIT,
+        bool_: typing.Optional[bool] = OMIT,
+        datetime: typing.Optional[dt.datetime] = OMIT,
+        date: typing.Optional[dt.date] = OMIT,
+        uuid_: typing.Optional[str] = OMIT,
+        base64: typing.Optional[str] = OMIT,
+        list_: typing.Optional[typing.Sequence[str]] = OMIT,
+        set_: typing.Optional[typing.Sequence[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        bigint: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[TypesObjectWithOptionalField]:
+        """
+        Parameters
+        ----------
+        id : str
+
+        string : typing.Optional[str]
+            This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
+
+        integer : typing.Optional[int]
+
+        long_ : typing.Optional[int]
+
+        double : typing.Optional[float]
+
+        bool_ : typing.Optional[bool]
+
+        datetime : typing.Optional[dt.datetime]
+
+        date : typing.Optional[dt.date]
+
+        uuid_ : typing.Optional[str]
+
+        base64 : typing.Optional[str]
+
+        list_ : typing.Optional[typing.Sequence[str]]
+
+        set_ : typing.Optional[typing.Sequence[str]]
+
+        map_ : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+
+        bigint : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[TypesObjectWithOptionalField]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"http-methods/{encode_path_param(id)}",
+            method="PATCH",
+            json={
+                "string": string,
+                "integer": integer,
+                "long": long_,
+                "double": double,
+                "bool": bool_,
+                "datetime": datetime,
+                "date": date,
+                "uuid": uuid_,
+                "base64": base64,
+                "list": list_,
+                "set": set_,
+                "map": map_,
+                "bigint": bigint,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    TypesObjectWithOptionalField,
+                    construct_type(
+                        type_=TypesObjectWithOptionalField,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def test_post(
+        self, *, string: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[TypesObjectWithOptionalField]:
+        """
+        Parameters
+        ----------
+        string : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[TypesObjectWithOptionalField]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "http-methods",
+            method="POST",
+            json={
+                "string": string,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    TypesObjectWithOptionalField,
+                    construct_type(
+                        type_=TypesObjectWithOptionalField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -302,6 +315,7 @@ class AsyncRawHttpMethodsClient:
         Returns
         -------
         AsyncHttpResponse[str]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"http-methods/{encode_path_param(id)}",
@@ -327,52 +341,9 @@ class AsyncRawHttpMethodsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def test_post(
-        self, *, string: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[ObjectWithOptionalField]:
-        """
-        Parameters
-        ----------
-        string : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[ObjectWithOptionalField]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "http-methods",
-            method="POST",
-            json={
-                "string": string,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ObjectWithOptionalField,
-                    construct_type(
-                        type_=ObjectWithOptionalField,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
     async def test_put(
         self, id: str, *, string: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[ObjectWithOptionalField]:
+    ) -> AsyncHttpResponse[TypesObjectWithOptionalField]:
         """
         Parameters
         ----------
@@ -385,7 +356,8 @@ class AsyncRawHttpMethodsClient:
 
         Returns
         -------
-        AsyncHttpResponse[ObjectWithOptionalField]
+        AsyncHttpResponse[TypesObjectWithOptionalField]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"http-methods/{encode_path_param(id)}",
@@ -393,103 +365,8 @@ class AsyncRawHttpMethodsClient:
             json={
                 "string": string,
             },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ObjectWithOptionalField,
-                    construct_type(
-                        type_=ObjectWithOptionalField,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def test_patch(
-        self,
-        id: str,
-        *,
-        string: typing.Optional[str] = OMIT,
-        integer: typing.Optional[int] = OMIT,
-        long_: typing.Optional[int] = OMIT,
-        double: typing.Optional[float] = OMIT,
-        bool_: typing.Optional[bool] = OMIT,
-        datetime: typing.Optional[dt.datetime] = OMIT,
-        date: typing.Optional[dt.date] = OMIT,
-        uuid_: typing.Optional[uuid.UUID] = OMIT,
-        base64: typing.Optional[str] = OMIT,
-        list_: typing.Optional[typing.Sequence[str]] = OMIT,
-        set_: typing.Optional[typing.Set[str]] = OMIT,
-        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
-        bigint: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ObjectWithOptionalField]:
-        """
-        Parameters
-        ----------
-        id : str
-
-        string : typing.Optional[str]
-            This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
-
-        integer : typing.Optional[int]
-
-        long_ : typing.Optional[int]
-
-        double : typing.Optional[float]
-
-        bool_ : typing.Optional[bool]
-
-        datetime : typing.Optional[dt.datetime]
-
-        date : typing.Optional[dt.date]
-
-        uuid_ : typing.Optional[uuid.UUID]
-
-        base64 : typing.Optional[str]
-
-        list_ : typing.Optional[typing.Sequence[str]]
-
-        set_ : typing.Optional[typing.Set[str]]
-
-        map_ : typing.Optional[typing.Dict[int, str]]
-
-        bigint : typing.Optional[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[ObjectWithOptionalField]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"http-methods/{encode_path_param(id)}",
-            method="PATCH",
-            json={
-                "string": string,
-                "integer": integer,
-                "long": long_,
-                "double": double,
-                "bool": bool_,
-                "datetime": datetime,
-                "date": date,
-                "uuid": uuid_,
-                "base64": base64,
-                "list": list_,
-                "set": set_,
-                "map": map_,
-                "bigint": bigint,
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -497,9 +374,9 @@ class AsyncRawHttpMethodsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ObjectWithOptionalField,
+                    TypesObjectWithOptionalField,
                     construct_type(
-                        type_=ObjectWithOptionalField,  # type: ignore
+                        type_=TypesObjectWithOptionalField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -527,6 +404,7 @@ class AsyncRawHttpMethodsClient:
         Returns
         -------
         AsyncHttpResponse[bool]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"http-methods/{encode_path_param(id)}",
@@ -539,6 +417,155 @@ class AsyncRawHttpMethodsClient:
                     bool,
                     construct_type(
                         type_=bool,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def test_patch(
+        self,
+        id: str,
+        *,
+        string: typing.Optional[str] = OMIT,
+        integer: typing.Optional[int] = OMIT,
+        long_: typing.Optional[int] = OMIT,
+        double: typing.Optional[float] = OMIT,
+        bool_: typing.Optional[bool] = OMIT,
+        datetime: typing.Optional[dt.datetime] = OMIT,
+        date: typing.Optional[dt.date] = OMIT,
+        uuid_: typing.Optional[str] = OMIT,
+        base64: typing.Optional[str] = OMIT,
+        list_: typing.Optional[typing.Sequence[str]] = OMIT,
+        set_: typing.Optional[typing.Sequence[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        bigint: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[TypesObjectWithOptionalField]:
+        """
+        Parameters
+        ----------
+        id : str
+
+        string : typing.Optional[str]
+            This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
+
+        integer : typing.Optional[int]
+
+        long_ : typing.Optional[int]
+
+        double : typing.Optional[float]
+
+        bool_ : typing.Optional[bool]
+
+        datetime : typing.Optional[dt.datetime]
+
+        date : typing.Optional[dt.date]
+
+        uuid_ : typing.Optional[str]
+
+        base64 : typing.Optional[str]
+
+        list_ : typing.Optional[typing.Sequence[str]]
+
+        set_ : typing.Optional[typing.Sequence[str]]
+
+        map_ : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+
+        bigint : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[TypesObjectWithOptionalField]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"http-methods/{encode_path_param(id)}",
+            method="PATCH",
+            json={
+                "string": string,
+                "integer": integer,
+                "long": long_,
+                "double": double,
+                "bool": bool_,
+                "datetime": datetime,
+                "date": date,
+                "uuid": uuid_,
+                "base64": base64,
+                "list": list_,
+                "set": set_,
+                "map": map_,
+                "bigint": bigint,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    TypesObjectWithOptionalField,
+                    construct_type(
+                        type_=TypesObjectWithOptionalField,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def test_post(
+        self, *, string: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[TypesObjectWithOptionalField]:
+        """
+        Parameters
+        ----------
+        string : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[TypesObjectWithOptionalField]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "http-methods",
+            method="POST",
+            json={
+                "string": string,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    TypesObjectWithOptionalField,
+                    construct_type(
+                        type_=TypesObjectWithOptionalField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

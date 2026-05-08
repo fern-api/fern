@@ -58,7 +58,7 @@ class BearerAuthProvider {
         return __awaiter(this, arguments, void 0, function* ({ endpointMetadata, } = {}) {
             const token = yield core.Supplier.get(this.options[TOKEN_PARAM]);
             if (token == null) {
-                throw new errors.SeedExhaustiveError({
+                throw new errors.SeedApiError({
                     message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
                 });
             }

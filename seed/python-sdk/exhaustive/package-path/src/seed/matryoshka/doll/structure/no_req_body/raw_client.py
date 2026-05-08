@@ -9,7 +9,7 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..types.object.types.object_with_optional_field import ObjectWithOptionalField
+from ..types.types_object_with_optional_field import TypesObjectWithOptionalField
 from pydantic import ValidationError
 
 
@@ -19,7 +19,7 @@ class RawNoReqBodyClient:
 
     def get_with_no_request_body(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[ObjectWithOptionalField]:
+    ) -> HttpResponse[TypesObjectWithOptionalField]:
         """
         Parameters
         ----------
@@ -28,7 +28,8 @@ class RawNoReqBodyClient:
 
         Returns
         -------
-        HttpResponse[ObjectWithOptionalField]
+        HttpResponse[TypesObjectWithOptionalField]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "no-req-body",
@@ -38,9 +39,9 @@ class RawNoReqBodyClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ObjectWithOptionalField,
+                    TypesObjectWithOptionalField,
                     parse_obj_as(
-                        type_=ObjectWithOptionalField,  # type: ignore
+                        type_=TypesObjectWithOptionalField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -66,6 +67,7 @@ class RawNoReqBodyClient:
         Returns
         -------
         HttpResponse[str]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "no-req-body",
@@ -98,7 +100,7 @@ class AsyncRawNoReqBodyClient:
 
     async def get_with_no_request_body(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[ObjectWithOptionalField]:
+    ) -> AsyncHttpResponse[TypesObjectWithOptionalField]:
         """
         Parameters
         ----------
@@ -107,7 +109,8 @@ class AsyncRawNoReqBodyClient:
 
         Returns
         -------
-        AsyncHttpResponse[ObjectWithOptionalField]
+        AsyncHttpResponse[TypesObjectWithOptionalField]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "no-req-body",
@@ -117,9 +120,9 @@ class AsyncRawNoReqBodyClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ObjectWithOptionalField,
+                    TypesObjectWithOptionalField,
                     parse_obj_as(
-                        type_=ObjectWithOptionalField,  # type: ignore
+                        type_=TypesObjectWithOptionalField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -145,6 +148,7 @@ class AsyncRawNoReqBodyClient:
         Returns
         -------
         AsyncHttpResponse[str]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "no-req-body",

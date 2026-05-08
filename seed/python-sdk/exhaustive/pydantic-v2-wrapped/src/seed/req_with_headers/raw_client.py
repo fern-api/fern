@@ -19,19 +19,12 @@ class RawReqWithHeadersClient:
         self._client_wrapper = client_wrapper
 
     def get_with_custom_header(
-        self,
-        *,
-        x_test_service_header: str,
-        x_test_endpoint_header: str,
-        request: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, test_endpoint_header: str, request: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
         Parameters
         ----------
-        x_test_service_header : str
-
-        x_test_endpoint_header : str
+        test_endpoint_header : str
 
         request : str
 
@@ -47,8 +40,8 @@ class RawReqWithHeadersClient:
             method="POST",
             json=request,
             headers={
-                "X-TEST-SERVICE-HEADER": str(x_test_service_header) if x_test_service_header is not None else None,
-                "X-TEST-ENDPOINT-HEADER": str(x_test_endpoint_header) if x_test_endpoint_header is not None else None,
+                "content-type": "application/json",
+                "X-TEST-ENDPOINT-HEADER": str(test_endpoint_header) if test_endpoint_header is not None else None,
             },
             request_options=request_options,
             omit=OMIT,
@@ -71,19 +64,12 @@ class AsyncRawReqWithHeadersClient:
         self._client_wrapper = client_wrapper
 
     async def get_with_custom_header(
-        self,
-        *,
-        x_test_service_header: str,
-        x_test_endpoint_header: str,
-        request: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, test_endpoint_header: str, request: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
         Parameters
         ----------
-        x_test_service_header : str
-
-        x_test_endpoint_header : str
+        test_endpoint_header : str
 
         request : str
 
@@ -99,8 +85,8 @@ class AsyncRawReqWithHeadersClient:
             method="POST",
             json=request,
             headers={
-                "X-TEST-SERVICE-HEADER": str(x_test_service_header) if x_test_service_header is not None else None,
-                "X-TEST-ENDPOINT-HEADER": str(x_test_endpoint_header) if x_test_endpoint_header is not None else None,
+                "content-type": "application/json",
+                "X-TEST-ENDPOINT-HEADER": str(test_endpoint_header) if test_endpoint_header is not None else None,
             },
             request_options=request_options,
             omit=OMIT,

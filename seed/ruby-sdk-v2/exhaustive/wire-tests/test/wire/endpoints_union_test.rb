@@ -15,11 +15,16 @@ class EndpointsUnionWireTest < WireMockTestCase
   def test_endpoints_union_get_and_return_union_with_wiremock
     test_id = "endpoints.union.get_and_return_union.0"
 
-    @client.endpoints.union.get_and_return_union(request_options: {
-      additional_headers: {
-        "X-Test-Id" => "endpoints.union.get_and_return_union.0"
+    @client.endpoints.union.get_and_return_union(
+      name: "name",
+      likes_to_woof: true,
+      animal: "dog",
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "endpoints.union.get_and_return_union.0"
+        }
       }
-    })
+    )
 
     verify_request_count(
       test_id: test_id,

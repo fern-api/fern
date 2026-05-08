@@ -17,7 +17,7 @@ import pytest
 _STARTED: bool = False
 _EXTERNAL: bool = False  # True when using an external WireMock instance (skip container lifecycle)
 _WIREMOCK_URL: str = "http://localhost:8080"  # Default, will be updated after container starts
-_PROJECT_NAME: str = "seed-exhaustive"
+_PROJECT_NAME: str = "seed-api"
 
 # This file lives at tests/conftest.py, so the project root is one level up.
 _PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))

@@ -2,7 +2,6 @@
 
 import datetime as dt
 import typing
-import uuid
 from json.decoder import JSONDecodeError
 
 from ...core.api_error import ApiError
@@ -35,11 +34,15 @@ class RawPrimitiveClient:
         Returns
         -------
         HttpResponse[str]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "primitive/string",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -76,11 +79,15 @@ class RawPrimitiveClient:
         Returns
         -------
         HttpResponse[int]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "primitive/integer",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -117,11 +124,15 @@ class RawPrimitiveClient:
         Returns
         -------
         HttpResponse[int]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "primitive/long",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -158,11 +169,15 @@ class RawPrimitiveClient:
         Returns
         -------
         HttpResponse[float]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "primitive/double",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -199,11 +214,15 @@ class RawPrimitiveClient:
         Returns
         -------
         HttpResponse[bool]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "primitive/boolean",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -240,11 +259,15 @@ class RawPrimitiveClient:
         Returns
         -------
         HttpResponse[dt.datetime]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "primitive/datetime",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -281,11 +304,15 @@ class RawPrimitiveClient:
         Returns
         -------
         HttpResponse[dt.date]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "primitive/date",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -309,33 +336,37 @@ class RawPrimitiveClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_and_return_uuid(
-        self, *, request: uuid.UUID, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[uuid.UUID]:
+        self, *, request: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[str]:
         """
         Parameters
         ----------
-        request : uuid.UUID
+        request : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[uuid.UUID]
+        HttpResponse[str]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "primitive/uuid",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    uuid.UUID,
+                    str,
                     parse_obj_as(
-                        type_=uuid.UUID,  # type: ignore
+                        type_=str,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -363,11 +394,15 @@ class RawPrimitiveClient:
         Returns
         -------
         HttpResponse[str]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "primitive/base64",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -409,11 +444,15 @@ class AsyncRawPrimitiveClient:
         Returns
         -------
         AsyncHttpResponse[str]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/string",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -450,11 +489,15 @@ class AsyncRawPrimitiveClient:
         Returns
         -------
         AsyncHttpResponse[int]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/integer",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -491,11 +534,15 @@ class AsyncRawPrimitiveClient:
         Returns
         -------
         AsyncHttpResponse[int]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/long",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -532,11 +579,15 @@ class AsyncRawPrimitiveClient:
         Returns
         -------
         AsyncHttpResponse[float]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/double",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -573,11 +624,15 @@ class AsyncRawPrimitiveClient:
         Returns
         -------
         AsyncHttpResponse[bool]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/boolean",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -614,11 +669,15 @@ class AsyncRawPrimitiveClient:
         Returns
         -------
         AsyncHttpResponse[dt.datetime]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/datetime",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -655,11 +714,15 @@ class AsyncRawPrimitiveClient:
         Returns
         -------
         AsyncHttpResponse[dt.date]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/date",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -683,33 +746,37 @@ class AsyncRawPrimitiveClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_and_return_uuid(
-        self, *, request: uuid.UUID, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[uuid.UUID]:
+        self, *, request: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[str]:
         """
         Parameters
         ----------
-        request : uuid.UUID
+        request : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[uuid.UUID]
+        AsyncHttpResponse[str]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/uuid",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    uuid.UUID,
+                    str,
                     parse_obj_as(
-                        type_=uuid.UUID,  # type: ignore
+                        type_=str,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -737,11 +804,15 @@ class AsyncRawPrimitiveClient:
         Returns
         -------
         AsyncHttpResponse[str]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "primitive/base64",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )

@@ -55,8 +55,9 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.exhaustive.Best;
-import java.util.Arrays;
+import com.seed.api.Best;
+import com.seed.api.resources.inlinedrequests.requests.PostWithObjectBodyandResponseInlinedRequestsRequest;
+import com.seed.api.types.TypesObjectWithOptionalField;
 
 public class Example {
     public static void main(String[] args) {
@@ -65,8 +66,17 @@ public class Example {
             .token("<token>")
             .build();
 
-        client.endpoints().container().getAndReturnListOfPrimitives(
-            Arrays.asList("string", "string")
+        client.inlinedRequests().postWithObjectBodyandResponse(
+            PostWithObjectBodyandResponseInlinedRequestsRequest
+                .builder()
+                .string("string")
+                .integer(1)
+                .nestedObject(
+                    TypesObjectWithOptionalField
+                        .builder()
+                        .build()
+                )
+                .build()
         );
     }
 }
@@ -77,7 +87,7 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.exhaustive.Best;
+import com.seed.api.Best;
 
 Best client = Best
     .builder()
@@ -90,10 +100,10 @@ Best client = Best
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.exhaustive.core.BestApiException;
+import com.seed.api.core.BestApiException;
 
 try{
-    client.endpoints().container().getAndReturnListOfPrimitives(...);
+    client.inlinedRequests().postWithObjectBodyandResponse(...);
 } catch (BestApiException e){
     // Do something with the API exception...
 }
@@ -107,7 +117,7 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.exhaustive.Best;
+import com.seed.api.Best;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
@@ -143,7 +153,7 @@ Which status codes are retried depends on the `retry-status-codes` generator con
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.exhaustive.Best;
+import com.seed.api.Best;
 
 Best client = Best
     .builder()
@@ -155,8 +165,8 @@ Best client = Best
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.exhaustive.Best;
-import com.seed.exhaustive.core.RequestOptions;
+import com.seed.api.Best;
+import com.seed.api.core.RequestOptions;
 
 // Client level
 Best client = Best
@@ -165,7 +175,7 @@ Best client = Best
     .build();
 
 // Request level
-client.endpoints().container().getAndReturnListOfPrimitives(
+client.inlinedRequests().postWithObjectBodyandResponse(
     ...,
     RequestOptions
         .builder()
@@ -179,8 +189,8 @@ client.endpoints().container().getAndReturnListOfPrimitives(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.exhaustive.Best;
-import com.seed.exhaustive.core.RequestOptions;
+import com.seed.api.Best;
+import com.seed.api.core.RequestOptions;
 
 // Client level
 Best client = Best
@@ -191,7 +201,7 @@ Best client = Best
 ;
 
 // Request level
-client.endpoints().container().getAndReturnListOfPrimitives(
+client.inlinedRequests().postWithObjectBodyandResponse(
     ...,
     RequestOptions
         .builder()
@@ -207,7 +217,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-BestHttpResponse response = client.endpoints().container().withRawResponse().getAndReturnListOfPrimitives(...);
+BestHttpResponse response = client.inlinedRequests().withRawResponse().postWithObjectBodyandResponse(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

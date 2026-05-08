@@ -29,7 +29,7 @@ impl NoAuthClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/no-auth",
+                "no-auth",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

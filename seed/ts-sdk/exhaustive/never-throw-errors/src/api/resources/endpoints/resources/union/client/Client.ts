@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
-import * as SeedExhaustive from "../../../../../index.js";
+import * as SeedApi from "../../../../../index.js";
 
 export declare namespace UnionClient {
     export type Options = BaseClientOptions;
@@ -20,32 +20,30 @@ export class UnionClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.Animal} request
+     * @param {SeedApi.TypesAnimal} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.union.getAndReturnUnion({
-     *         animal: "dog",
      *         name: "name",
-     *         likesToWoof: true
+     *         likesToWoof: true,
+     *         animal: "dog"
      *     })
      */
     public getAndReturnUnion(
-        request: SeedExhaustive.types.Animal,
+        request: SeedApi.TypesAnimal,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<SeedExhaustive.types.Animal, SeedExhaustive.endpoints.union.getAndReturnUnion.Error>
+        core.APIResponse<SeedApi.TypesAnimal, SeedApi.endpoints.union.getAndReturnUnion.Error>
     > {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnUnion(request, requestOptions));
     }
 
     private async __getAndReturnUnion(
-        request: SeedExhaustive.types.Animal,
+        request: SeedApi.TypesAnimal,
         requestOptions?: UnionClient.RequestOptions,
     ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<SeedExhaustive.types.Animal, SeedExhaustive.endpoints.union.getAndReturnUnion.Error>
-        >
+        core.WithRawResponse<core.APIResponse<SeedApi.TypesAnimal, SeedApi.endpoints.union.getAndReturnUnion.Error>>
     > {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -57,7 +55,7 @@ export class UnionClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/union",
+                "union",
             ),
             method: "POST",
             headers: _headers,
@@ -75,7 +73,7 @@ export class UnionClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.Animal,
+                    body: _response.body as SeedApi.TypesAnimal,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -86,7 +84,7 @@ export class UnionClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.union.getAndReturnUnion.Error._unknown(_response.error),
+                error: SeedApi.endpoints.union.getAndReturnUnion.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,

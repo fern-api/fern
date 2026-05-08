@@ -4,7 +4,7 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.union.types.animal import Animal
+from ...types.types_animal import TypesAnimal
 from .raw_client import AsyncRawUnionClient, RawUnionClient
 
 # this is used as the default value for optional parameters
@@ -27,33 +27,34 @@ class UnionClient:
         return self._raw_client
 
     def get_and_return_union(
-        self, *, request: Animal, request_options: typing.Optional[RequestOptions] = None
-    ) -> Animal:
+        self, *, request: TypesAnimal, request_options: typing.Optional[RequestOptions] = None
+    ) -> TypesAnimal:
         """
         Parameters
         ----------
-        request : Animal
+        request : TypesAnimal
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Animal
+        TypesAnimal
+
 
         Examples
         --------
-        from seed import Exhaustive
-        from seed.types.union import Animal_Dog
+        from seed import Exhaustive, TypesAnimalZero
 
         client = Exhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.union.get_and_return_union(
-            request=Animal_Dog(
+            request=TypesAnimalZero(
                 name="name",
                 likes_to_woof=True,
+                animal="dog",
             ),
         )
         """
@@ -77,26 +78,26 @@ class AsyncUnionClient:
         return self._raw_client
 
     async def get_and_return_union(
-        self, *, request: Animal, request_options: typing.Optional[RequestOptions] = None
-    ) -> Animal:
+        self, *, request: TypesAnimal, request_options: typing.Optional[RequestOptions] = None
+    ) -> TypesAnimal:
         """
         Parameters
         ----------
-        request : Animal
+        request : TypesAnimal
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Animal
+        TypesAnimal
+
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncExhaustive
-        from seed.types.union import Animal_Dog
+        from seed import AsyncExhaustive, TypesAnimalZero
 
         client = AsyncExhaustive(
             token="YOUR_TOKEN",
@@ -106,9 +107,10 @@ class AsyncUnionClient:
 
         async def main() -> None:
             await client.endpoints.union.get_and_return_union(
-                request=Animal_Dog(
+                request=TypesAnimalZero(
                     name="name",
                     likes_to_woof=True,
+                    animal="dog",
                 ),
             )
 

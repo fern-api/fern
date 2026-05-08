@@ -26,19 +26,12 @@ class ReqWithHeadersClient:
         return self._raw_client
 
     def get_with_custom_header(
-        self,
-        *,
-        x_test_service_header: str,
-        x_test_endpoint_header: str,
-        request: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, test_endpoint_header: str, request: str, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters
         ----------
-        x_test_service_header : str
-
-        x_test_endpoint_header : str
+        test_endpoint_header : str
 
         request : str
 
@@ -51,23 +44,19 @@ class ReqWithHeadersClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import SeedApi
 
-        client = SeedExhaustive(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         client.req_with_headers.get_with_custom_header(
-            x_test_service_header="X-TEST-SERVICE-HEADER",
-            x_test_endpoint_header="X-TEST-ENDPOINT-HEADER",
+            test_endpoint_header="X-TEST-ENDPOINT-HEADER",
             request="string",
         )
         """
         _response = self._raw_client.get_with_custom_header(
-            x_test_service_header=x_test_service_header,
-            x_test_endpoint_header=x_test_endpoint_header,
-            request=request,
-            request_options=request_options,
+            test_endpoint_header=test_endpoint_header, request=request, request_options=request_options
         )
         return _response.data
 
@@ -88,19 +77,12 @@ class AsyncReqWithHeadersClient:
         return self._raw_client
 
     async def get_with_custom_header(
-        self,
-        *,
-        x_test_service_header: str,
-        x_test_endpoint_header: str,
-        request: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, test_endpoint_header: str, request: str, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters
         ----------
-        x_test_service_header : str
-
-        x_test_endpoint_header : str
+        test_endpoint_header : str
 
         request : str
 
@@ -115,9 +97,9 @@ class AsyncReqWithHeadersClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -125,8 +107,7 @@ class AsyncReqWithHeadersClient:
 
         async def main() -> None:
             await client.req_with_headers.get_with_custom_header(
-                x_test_service_header="X-TEST-SERVICE-HEADER",
-                x_test_endpoint_header="X-TEST-ENDPOINT-HEADER",
+                test_endpoint_header="X-TEST-ENDPOINT-HEADER",
                 request="string",
             )
 
@@ -134,9 +115,6 @@ class AsyncReqWithHeadersClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get_with_custom_header(
-            x_test_service_header=x_test_service_header,
-            x_test_endpoint_header=x_test_endpoint_header,
-            request=request,
-            request_options=request_options,
+            test_endpoint_header=test_endpoint_header, request=request, request_options=request_options
         )
         return _response.data

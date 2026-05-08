@@ -6,7 +6,7 @@ package com.fern.sdk.resources.reqwithheaders;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.reqwithheaders.requests.ReqWithHeaders;
+import com.fern.sdk.resources.reqwithheaders.requests.GetWithCustomHeaderReqWithHeadersRequest;
 
 public class ReqWithHeadersClient {
   protected final ClientOptions clientOptions;
@@ -25,11 +25,12 @@ public class ReqWithHeadersClient {
     return this.rawClient;
   }
 
-  public void getWithCustomHeader(ReqWithHeaders request) {
+  public void getWithCustomHeader(GetWithCustomHeaderReqWithHeadersRequest request) {
     this.rawClient.getWithCustomHeader(request).body();
   }
 
-  public void getWithCustomHeader(ReqWithHeaders request, RequestOptions requestOptions) {
+  public void getWithCustomHeader(GetWithCustomHeaderReqWithHeadersRequest request,
+      RequestOptions requestOptions) {
     this.rawClient.getWithCustomHeader(request, requestOptions).body();
   }
 }

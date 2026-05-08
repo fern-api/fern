@@ -1,1 +1,1 @@
-export type { PostWithObjectBody } from "./PostWithObjectBody.js";
+export type { PostWithObjectBodyandResponseInlinedRequestsRequest } from "./PostWithObjectBodyandResponseInlinedRequestsRequest.js";

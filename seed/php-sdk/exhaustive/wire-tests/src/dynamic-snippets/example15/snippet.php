@@ -10,6 +10,8 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->httpMethods->testDelete(
-    'id',
+$client->endpoints->container->getAndReturnSetOfPrimitives(
+    [
+        'string',
+    ],
 );

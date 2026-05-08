@@ -28,15 +28,15 @@ impl PaginationClient {
         &self,
         request: &ListItemsQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<PaginatedResponse, ApiError> {
+    ) -> Result<EndpointsPaginatedResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/pagination",
+                "pagination",
                 None,
                 QueryBuilder::new()
-                    .string("cursor", request.cursor.clone())
-                    .int("limit", request.limit.clone())
+                    .serialize("cursor", request.cursor.clone())
+                    .serialize("limit", request.limit.clone())
                     .build(),
                 options,
             )

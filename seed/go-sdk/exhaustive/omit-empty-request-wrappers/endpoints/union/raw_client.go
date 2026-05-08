@@ -6,10 +6,10 @@ import (
 	context "context"
 	http "net/http"
 
+	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
-	types "github.com/exhaustive/fern/types"
 )
 
 type RawClient struct {
@@ -33,9 +33,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) GetAndReturnUnion(
 	ctx context.Context,
-	request *types.Animal,
+	request *fern.TypesAnimal,
 	opts ...option.RequestOption,
-) (*core.Response[*types.Animal], error) {
+) (*core.Response[*fern.TypesAnimal], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -47,7 +47,7 @@ func (r *RawClient) GetAndReturnUnion(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *types.Animal
+	var response *fern.TypesAnimal
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -65,7 +65,7 @@ func (r *RawClient) GetAndReturnUnion(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*types.Animal]{
+	return &core.Response[*fern.TypesAnimal]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

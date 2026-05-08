@@ -1,9 +1,8 @@
 package com.snippets;
 
-import com.seed.exhaustive.Best;
-import com.seed.exhaustive.resources.types.object.types.ObjectWithMapOfMap;
-import java.util.HashMap;
-import java.util.Map;
+import com.seed.api.Best;
+import com.seed.api.types.TypesObjectWithRequiredField;
+import java.util.Arrays;
 
 public class Example18 {
     public static void main(String[] args) {
@@ -11,17 +10,9 @@ public class Example18 {
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
         client.endpoints()
-                .object()
-                .getAndReturnWithMapOfMap(ObjectWithMapOfMap.builder()
-                        .map(new HashMap<String, Map<String, String>>() {
-                            {
-                                put("map", new HashMap<String, String>() {
-                                    {
-                                        put("map", "map");
-                                    }
-                                });
-                            }
-                        })
-                        .build());
+                .container()
+                .getAndReturnSetOfObjects(Arrays.asList(
+                        TypesObjectWithRequiredField.builder().string("string").build(),
+                        TypesObjectWithRequiredField.builder().string("string").build()));
     }
 }

@@ -1,18 +1,23 @@
-using SeedExhaustive;
-using SeedExhaustive.Core;
+using SeedApi;
+using SeedApi.Core;
 
 public partial class Examples
 {
     public async Task Example53() {
-        var client = new SeedExhaustiveClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnBase64Async(
-            "SGVsbG8gd29ybGQh"
+        await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(
+            new List<TypesNestedObjectWithRequiredField>(){
+                new TypesNestedObjectWithRequiredField {
+                    String = "string",
+                    NestedObject = new TypesObjectWithOptionalField()
+                },
+            }
         );
     }
 

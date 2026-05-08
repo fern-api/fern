@@ -3,9 +3,9 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    types "github.com/exhaustive/fern/types"
 )
 
 func do() {
@@ -17,12 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := map[string]types.DocumentedUnknownType{
-        "string": map[string]any{
-            "key": "value",
-        },
+    request := &fern.TypesObjectWithRequiredField{
+        FieldString: "string",
     }
-    client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownType(
+    client.Endpoints.Container.GetAndReturnOptional(
         context.TODO(),
         request,
     )

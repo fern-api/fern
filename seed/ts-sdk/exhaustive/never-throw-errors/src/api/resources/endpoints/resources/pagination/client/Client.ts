@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
-import * as SeedExhaustive from "../../../../../index.js";
+import * as SeedApi from "../../../../../index.js";
 
 export declare namespace PaginationClient {
     export type Options = BaseClientOptions;
@@ -22,36 +22,27 @@ export class PaginationClient {
     /**
      * List items with cursor pagination
      *
-     * @param {SeedExhaustive.endpoints.ListItemsRequest} request
+     * @param {SeedApi.endpoints.ListItemsPaginationRequest} request
      * @param {PaginationClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.pagination.listItems({
-     *         cursor: "cursor",
-     *         limit: 1
-     *     })
+     *     await client.endpoints.pagination.listItems()
      */
     public listItems(
-        request: SeedExhaustive.endpoints.ListItemsRequest = {},
+        request: SeedApi.endpoints.ListItemsPaginationRequest = {},
         requestOptions?: PaginationClient.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedExhaustive.endpoints.PaginatedResponse,
-            SeedExhaustive.endpoints.pagination.listItems.Error
-        >
+        core.APIResponse<SeedApi.EndpointsPaginatedResponse, SeedApi.endpoints.pagination.listItems.Error>
     > {
         return core.HttpResponsePromise.fromPromise(this.__listItems(request, requestOptions));
     }
 
     private async __listItems(
-        request: SeedExhaustive.endpoints.ListItemsRequest = {},
+        request: SeedApi.endpoints.ListItemsPaginationRequest = {},
         requestOptions?: PaginationClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
-            core.APIResponse<
-                SeedExhaustive.endpoints.PaginatedResponse,
-                SeedExhaustive.endpoints.pagination.listItems.Error
-            >
+            core.APIResponse<SeedApi.EndpointsPaginatedResponse, SeedApi.endpoints.pagination.listItems.Error>
         >
     > {
         const { cursor, limit } = request;
@@ -69,7 +60,7 @@ export class PaginationClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/pagination",
+                "pagination",
             ),
             method: "GET",
             headers: _headers,
@@ -88,7 +79,7 @@ export class PaginationClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.endpoints.PaginatedResponse,
+                    body: _response.body as SeedApi.EndpointsPaginatedResponse,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -99,7 +90,7 @@ export class PaginationClient {
         return {
             data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.pagination.listItems.Error._unknown(_response.error),
+                error: SeedApi.endpoints.pagination.listItems.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,

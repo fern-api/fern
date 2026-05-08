@@ -1,1 +1,1 @@
-export type { ReqWithHeaders } from "./ReqWithHeaders.js";
+export type { GetWithCustomHeaderReqWithHeadersRequest } from "./GetWithCustomHeaderReqWithHeadersRequest.js";

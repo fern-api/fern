@@ -1,4 +1,4 @@
-use seed_exhaustive::prelude::*;
+use seed_api::prelude::*;
 
 mod wire_test_utils;
 
@@ -14,12 +14,12 @@ async fn test_endpoints_container_get_and_return_list_of_primitives_with_wiremoc
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
         .endpoints
         .container
-        .get_and_return_list_of_primitives(&vec!["string".to_string(), "string".to_string()], None)
+        .get_and_return_list_of_primitives(&vec!["string".to_string()], None)
         .await;
 
     assert!(result.is_ok(), "Client method call should succeed");
@@ -41,22 +41,16 @@ async fn test_endpoints_container_get_and_return_list_of_objects_with_wiremock()
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
         .endpoints
         .container
         .get_and_return_list_of_objects(
-            &vec![
-                ObjectWithRequiredField {
-                    string: "string".to_string(),
-                    ..Default::default()
-                },
-                ObjectWithRequiredField {
-                    string: "string".to_string(),
-                    ..Default::default()
-                },
-            ],
+            &vec![TypesObjectWithRequiredField {
+                string: "string".to_string(),
+                ..Default::default()
+            }],
             None,
         )
         .await;
@@ -80,12 +74,12 @@ async fn test_endpoints_container_get_and_return_set_of_primitives_with_wiremock
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
         .endpoints
         .container
-        .get_and_return_set_of_primitives(&HashSet::from(["string".to_string()]), None)
+        .get_and_return_set_of_primitives(&vec!["string".to_string()], None)
         .await;
 
     assert!(result.is_ok(), "Client method call should succeed");
@@ -107,16 +101,16 @@ async fn test_endpoints_container_get_and_return_set_of_objects_with_wiremock() 
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
         .endpoints
         .container
         .get_and_return_set_of_objects(
-            &HashSet::from([ObjectWithRequiredField {
+            &vec![TypesObjectWithRequiredField {
                 string: "string".to_string(),
                 ..Default::default()
-            }]),
+            }],
             None,
         )
         .await;
@@ -140,13 +134,13 @@ async fn test_endpoints_container_get_and_return_map_prim_to_prim_with_wiremock(
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
         .endpoints
         .container
         .get_and_return_map_prim_to_prim(
-            &HashMap::from([("string".to_string(), "string".to_string())]),
+            &HashMap::from([("key".to_string(), "value".to_string())]),
             None,
         )
         .await;
@@ -170,15 +164,15 @@ async fn test_endpoints_container_get_and_return_map_of_prim_to_object_with_wire
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
         .endpoints
         .container
         .get_and_return_map_of_prim_to_object(
             &HashMap::from([(
-                "string".to_string(),
-                ObjectWithRequiredField {
+                "key".to_string(),
+                TypesObjectWithRequiredField {
                     string: "string".to_string(),
                     ..Default::default()
                 },
@@ -207,13 +201,13 @@ async fn test_endpoints_container_get_and_return_map_of_prim_to_undiscriminated_
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
         .endpoints
         .container
         .get_and_return_map_of_prim_to_undiscriminated_union(
-            &HashMap::from([("string".to_string(), MixedType::Double(1.1))]),
+            &HashMap::from([("key".to_string(), TypesMixedType::Double(1.1))]),
             None,
         )
         .await;
@@ -237,16 +231,16 @@ async fn test_endpoints_container_get_and_return_optional_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
         .endpoints
         .container
         .get_and_return_optional(
-            &Some(ObjectWithRequiredField {
+            &TypesObjectWithRequiredField {
                 string: "string".to_string(),
                 ..Default::default()
-            }),
+            },
             None,
         )
         .await;

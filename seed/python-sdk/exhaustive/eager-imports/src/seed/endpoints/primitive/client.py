@@ -2,7 +2,6 @@
 
 import datetime as dt
 import typing
-import uuid
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
@@ -40,11 +39,12 @@ class PrimitiveClient:
         -------
         str
 
+
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import SeedApi
 
-        client = SeedExhaustive(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -68,11 +68,12 @@ class PrimitiveClient:
         -------
         int
 
+
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import SeedApi
 
-        client = SeedExhaustive(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -96,11 +97,12 @@ class PrimitiveClient:
         -------
         int
 
+
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import SeedApi
 
-        client = SeedExhaustive(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -126,11 +128,12 @@ class PrimitiveClient:
         -------
         float
 
+
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import SeedApi
 
-        client = SeedExhaustive(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -154,11 +157,12 @@ class PrimitiveClient:
         -------
         bool
 
+
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import SeedApi
 
-        client = SeedExhaustive(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -184,13 +188,14 @@ class PrimitiveClient:
         -------
         dt.datetime
 
+
         Examples
         --------
         import datetime
 
-        from seed import SeedExhaustive
+        from seed import SeedApi
 
-        client = SeedExhaustive(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -218,13 +223,14 @@ class PrimitiveClient:
         -------
         dt.date
 
+
         Examples
         --------
         import datetime
 
-        from seed import SeedExhaustive
+        from seed import SeedApi
 
-        client = SeedExhaustive(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -237,35 +243,30 @@ class PrimitiveClient:
         _response = self._raw_client.get_and_return_date(request=request, request_options=request_options)
         return _response.data
 
-    def get_and_return_uuid(
-        self, *, request: uuid.UUID, request_options: typing.Optional[RequestOptions] = None
-    ) -> uuid.UUID:
+    def get_and_return_uuid(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------
-        request : uuid.UUID
+        request : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        uuid.UUID
+        str
+
 
         Examples
         --------
-        import uuid
+        from seed import SeedApi
 
-        from seed import SeedExhaustive
-
-        client = SeedExhaustive(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.primitive.get_and_return_uuid(
-            request=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
+            request="string",
         )
         """
         _response = self._raw_client.get_and_return_uuid(request=request, request_options=request_options)
@@ -284,16 +285,17 @@ class PrimitiveClient:
         -------
         str
 
+
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import SeedApi
 
-        client = SeedExhaustive(
+        client = SeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.primitive.get_and_return_base64(
-            request="SGVsbG8gd29ybGQh",
+            request="string",
         )
         """
         _response = self._raw_client.get_and_return_base64(request=request, request_options=request_options)
@@ -330,13 +332,14 @@ class AsyncPrimitiveClient:
         -------
         str
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -366,13 +369,14 @@ class AsyncPrimitiveClient:
         -------
         int
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -404,13 +408,14 @@ class AsyncPrimitiveClient:
         -------
         int
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -442,13 +447,14 @@ class AsyncPrimitiveClient:
         -------
         float
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -480,13 +486,14 @@ class AsyncPrimitiveClient:
         -------
         bool
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -518,14 +525,15 @@ class AsyncPrimitiveClient:
         -------
         dt.datetime
 
+
         Examples
         --------
         import asyncio
         import datetime
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -559,14 +567,15 @@ class AsyncPrimitiveClient:
         -------
         dt.date
 
+
         Examples
         --------
         import asyncio
         import datetime
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -586,28 +595,28 @@ class AsyncPrimitiveClient:
         return _response.data
 
     async def get_and_return_uuid(
-        self, *, request: uuid.UUID, request_options: typing.Optional[RequestOptions] = None
-    ) -> uuid.UUID:
+        self, *, request: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> str:
         """
         Parameters
         ----------
-        request : uuid.UUID
+        request : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        uuid.UUID
+        str
+
 
         Examples
         --------
         import asyncio
-        import uuid
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -615,9 +624,7 @@ class AsyncPrimitiveClient:
 
         async def main() -> None:
             await client.endpoints.primitive.get_and_return_uuid(
-                request=uuid.UUID(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
+                request="string",
             )
 
 
@@ -641,13 +648,14 @@ class AsyncPrimitiveClient:
         -------
         str
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -655,7 +663,7 @@ class AsyncPrimitiveClient:
 
         async def main() -> None:
             await client.endpoints.primitive.get_and_return_base64(
-                request="SGVsbG8gd29ybGQh",
+                request="string",
             )
 
 

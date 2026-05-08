@@ -7,7 +7,7 @@ import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedExhaustive from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace ReqWithHeadersClient {
     export type Options = BaseClientOptions;
@@ -23,43 +23,39 @@ export class ReqWithHeadersClient {
     }
 
     /**
-     * @param {SeedExhaustive.ReqWithHeaders} request
+     * @param {SeedApi.GetWithCustomHeaderReqWithHeadersRequest} request
      * @param {ReqWithHeadersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.reqWithHeaders.getWithCustomHeader({
-     *         xTestServiceHeader: "X-TEST-SERVICE-HEADER",
-     *         xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+     *         testEndpointHeader: "X-TEST-ENDPOINT-HEADER",
      *         body: "string"
      *     })
      */
     public getWithCustomHeader(
-        request: SeedExhaustive.ReqWithHeaders,
+        request: SeedApi.GetWithCustomHeaderReqWithHeadersRequest,
         requestOptions?: ReqWithHeadersClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__getWithCustomHeader(request, requestOptions));
     }
 
     private async __getWithCustomHeader(
-        request: SeedExhaustive.ReqWithHeaders,
+        request: SeedApi.GetWithCustomHeaderReqWithHeadersRequest,
         requestOptions?: ReqWithHeadersClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const { xTestServiceHeader, xTestEndpointHeader, body: _body } = request;
+        const { testEndpointHeader, body: _body } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-TEST-SERVICE-HEADER": xTestServiceHeader,
-                "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
-            }),
+            mergeOnlyDefinedHeaders({ "X-TEST-ENDPOINT-HEADER": testEndpointHeader }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/test-headers/custom-header",
+                "test-headers/custom-header",
             ),
             method: "POST",
             headers: _headers,
@@ -81,7 +77,7 @@ export class ReqWithHeadersClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

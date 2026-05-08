@@ -20,7 +20,7 @@ impl ReqWithHeadersClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/test-headers/custom-header",
+                "test-headers/custom-header",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

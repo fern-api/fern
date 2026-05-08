@@ -1,4 +1,4 @@
-from seed.types import OptionalAlias
+from seed.types import TypesOptionalAlias as OptionalAlias
 from seed.core import parse_obj_as
 
 def test_alias_serialization():
