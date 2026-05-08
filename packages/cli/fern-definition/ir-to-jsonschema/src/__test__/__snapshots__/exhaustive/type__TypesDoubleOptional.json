@@ -4,7 +4,7 @@
     "optionalAlias": {
       "oneOf": [
         {
-          "$ref": "#/definitions/types.object.OptionalAlias"
+          "$ref": "#/definitions/TypesOptionalAlias"
         },
         {
           "type": "null"
@@ -14,7 +14,7 @@
   },
   "additionalProperties": false,
   "definitions": {
-    "types.object.OptionalAlias": {
+    "TypesOptionalAlias": {
       "oneOf": [
         {
           "type": "string"

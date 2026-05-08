@@ -5,7 +5,7 @@
       "type": "string"
     },
     "NestedObject": {
-      "$ref": "#/definitions/types.object.ObjectWithOptionalField"
+      "$ref": "#/definitions/TypesObjectWithOptionalField"
     }
   },
   "required": [
@@ -14,7 +14,7 @@
   ],
   "additionalProperties": false,
   "definitions": {
-    "types.object.ObjectWithOptionalField": {
+    "TypesObjectWithOptionalField": {
       "type": "object",
       "properties": {
         "string": {
@@ -92,8 +92,7 @@
         "uuid": {
           "oneOf": [
             {
-              "type": "string",
-              "format": "uuid"
+              "type": "string"
             },
             {
               "type": "null"
@@ -103,8 +102,7 @@
         "base64": {
           "oneOf": [
             {
-              "type": "string",
-              "contentEncoding": "base64"
+              "type": "string"
             },
             {
               "type": "null"
@@ -130,8 +128,7 @@
               "type": "array",
               "items": {
                 "type": "string"
-              },
-              "uniqueItems": true
+              }
             },
             {
               "type": "null"
@@ -143,7 +140,14 @@
             {
               "type": "object",
               "additionalProperties": {
-                "type": "string"
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               }
             },
             {
@@ -154,8 +158,7 @@
         "bigint": {
           "oneOf": [
             {
-              "type": "string",
-              "pattern": "^-?[0-9]+$"
+              "type": "integer"
             },
             {
               "type": "null"

@@ -1,10 +1,10 @@
 {
   "type": "object",
   "additionalProperties": {
-    "$ref": "#/definitions/types.object.DocumentedUnknownType"
+    "$ref": "#/definitions/TypesDocumentedUnknownType"
   },
   "definitions": {
-    "types.object.DocumentedUnknownType": {
+    "TypesDocumentedUnknownType": {
       "type": [
         "string",
         "number",

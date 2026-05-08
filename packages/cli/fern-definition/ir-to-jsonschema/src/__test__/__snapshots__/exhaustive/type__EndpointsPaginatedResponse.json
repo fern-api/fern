@@ -4,7 +4,7 @@
     "items": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/types.object.ObjectWithRequiredField"
+        "$ref": "#/definitions/TypesObjectWithRequiredField"
       }
     },
     "next": {
@@ -23,7 +23,7 @@
   ],
   "additionalProperties": false,
   "definitions": {
-    "types.object.ObjectWithRequiredField": {
+    "TypesObjectWithRequiredField": {
       "type": "object",
       "properties": {
         "string": {

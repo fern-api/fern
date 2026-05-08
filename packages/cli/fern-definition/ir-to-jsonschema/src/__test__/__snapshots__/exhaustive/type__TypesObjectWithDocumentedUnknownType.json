@@ -2,7 +2,7 @@
   "type": "object",
   "properties": {
     "documentedUnknownType": {
-      "$ref": "#/definitions/types.object.DocumentedUnknownType"
+      "$ref": "#/definitions/TypesDocumentedUnknownType"
     }
   },
   "required": [
@@ -10,7 +10,7 @@
   ],
   "additionalProperties": false,
   "definitions": {
-    "types.object.DocumentedUnknownType": {
+    "TypesDocumentedUnknownType": {
       "type": [
         "string",
         "number",
