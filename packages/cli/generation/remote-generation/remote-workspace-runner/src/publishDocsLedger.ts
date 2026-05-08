@@ -1,4 +1,4 @@
-import type { DocsV1Write } from "@fern-api/fdr-sdk";
+import type { APIV1Write, DocsV1Write } from "@fern-api/fdr-sdk";
 import { createDocsLedgerClient, type DocsPublishInput } from "@fern-api/fdr-sdk/orpc-client";
 import type { TaskContext } from "@fern-api/task-context";
 import { createHash } from "crypto";
@@ -44,13 +44,15 @@ export function buildLedgerInput({
     organization,
     domain,
     basepath,
-    previewId
+    previewId,
+    apiDefinitions
 }: {
     docsDefinition: DocsDefinition;
     organization: string;
     domain: string;
     basepath: string | undefined;
     previewId: string | undefined;
+    apiDefinitions: Map<string, APIV1Write.ApiDefinition>;
 }): { input: DocsPublishInput; blobs: Map<string, Buffer> } {
     const blobs = new Map<string, Buffer>();
 
@@ -70,6 +72,15 @@ export function buildLedgerInput({
     const configBlob = jsonBlobRef(docsDefinition.config);
     blobs.set(configBlob.hash, configBlob.buf);
 
+    // API manifest: serialize all API definitions as a single JSON blob.
+    let apiManifestRef: BlobRef | null = null;
+    if (apiDefinitions.size > 0) {
+        const manifestObj = Object.fromEntries(apiDefinitions);
+        const manifestBlob = jsonBlobRef(manifestObj);
+        blobs.set(manifestBlob.hash, manifestBlob.buf);
+        apiManifestRef = manifestBlob.ref;
+    }
+
     const input: DocsPublishInput = {
         orgId: organization,
         domain,
@@ -78,7 +89,7 @@ export function buildLedgerInput({
         root: docsDefinition.config.root ?? docsDefinition.config.navigation,
         pages,
         config: configBlob.ref,
-        apiManifest: null,
+        apiManifest: apiManifestRef,
         files: null,
         redirects: null,
         locale: "en"
@@ -109,7 +120,8 @@ export async function publishDocsViaLedger({
     token,
     fdrOrigin,
     headers,
-    context
+    context,
+    apiDefinitions
 }: {
     docsDefinition: DocsDefinition;
     organization: string;
@@ -120,13 +132,15 @@ export async function publishDocsViaLedger({
     fdrOrigin: string;
     headers: Record<string, string>;
     context: TaskContext;
+    apiDefinitions: Map<string, APIV1Write.ApiDefinition>;
 }): Promise<LedgerPublishResult> {
     const { input, blobs } = buildLedgerInput({
         docsDefinition,
         organization,
         domain,
         basepath,
-        previewId
+        previewId,
+        apiDefinitions
     });
 
     const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers });
@@ -146,14 +160,18 @@ export async function publishDocsViaLedger({
         context.logger.debug(`[ledger] Uploading ${registerResult.missingContent.length} missing blobs...`);
         const uploadStart = performance.now();
 
-        const results = await asyncPool(UPLOAD_CONCURRENCY, registerResult.missingContent, async ({ hash, uploadUrl }) => {
-            const blob = blobs.get(hash);
-            if (blob == null) {
-                context.logger.warn(`[ledger] Server requested blob ${hash} but we don't have it — skipping`);
-                return "skipped" as const;
+        const results = await asyncPool(
+            UPLOAD_CONCURRENCY,
+            registerResult.missingContent,
+            async ({ hash, uploadUrl }) => {
+                const blob = blobs.get(hash);
+                if (blob == null) {
+                    context.logger.warn(`[ledger] Server requested blob ${hash} but we don't have it — skipping`);
+                    return "skipped" as const;
+                }
+                return uploadBlobWithRetry(blob, uploadUrl, hash, context);
             }
-            return uploadBlobWithRetry(blob, uploadUrl, hash, context);
-        });
+        );
 
         const uploaded = results.filter((r) => r === "uploaded").length;
         const alreadyExisted = results.filter((r) => r === "already_exists").length;
@@ -189,7 +207,12 @@ type UploadResult = "uploaded" | "already_exists";
  * Fails fast on 403 (expired/invalid presigned URL) and 400 (content integrity
  * mismatch) since these are not recoverable by retrying.
  */
-async function uploadBlobWithRetry(blob: Buffer, uploadUrl: string, hash: string, context: TaskContext): Promise<UploadResult> {
+async function uploadBlobWithRetry(
+    blob: Buffer,
+    uploadUrl: string,
+    hash: string,
+    context: TaskContext
+): Promise<UploadResult> {
     const body = blob.buffer.slice(blob.byteOffset, blob.byteOffset + blob.byteLength) as ArrayBuffer;
 
     for (let attempt = 0; attempt <= UPLOAD_MAX_RETRIES; attempt++) {

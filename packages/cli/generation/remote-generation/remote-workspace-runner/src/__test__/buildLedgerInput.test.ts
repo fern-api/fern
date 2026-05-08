@@ -1,3 +1,4 @@
+import type { APIV1Write } from "@fern-api/fdr-sdk";
 import { createHash } from "crypto";
 import { describe, expect, it } from "vitest";
 import { buildLedgerInput } from "../publishDocsLedger.js";
@@ -39,7 +40,8 @@ describe("buildLedgerInput", () => {
             organization: "acme",
             domain: "docs.acme.com",
             basepath: undefined,
-            previewId: undefined
+            previewId: undefined,
+            apiDefinitions: new Map()
         });
 
         const expectedHash = sha256(markdown);
@@ -58,7 +60,8 @@ describe("buildLedgerInput", () => {
             organization: "acme",
             domain: "docs.acme.com",
             basepath: undefined,
-            previewId: undefined
+            previewId: undefined,
+            apiDefinitions: new Map()
         });
 
         expect(Object.keys(input.pages)).toHaveLength(0);
@@ -70,15 +73,16 @@ describe("buildLedgerInput", () => {
             organization: "acme",
             domain: "docs.acme.com",
             basepath: undefined,
-            previewId: undefined
+            previewId: undefined,
+            apiDefinitions: new Map()
         });
 
         expect(input.config).toBeDefined();
-        expect(input.config!.contentType).toBe("application/json");
+        expect(input.config?.contentType).toBe("application/json");
         // The blob should exist and round-trip back to the config.
-        const configBuf = blobs.get(input.config!.hash);
+        const configBuf = blobs.get(input.config?.hash ?? "");
         expect(configBuf).toBeDefined();
-        expect(JSON.parse(configBuf!.toString("utf-8"))).toEqual({ root: MINIMAL_ROOT });
+        expect(JSON.parse(configBuf?.toString("utf-8") ?? "")).toEqual({ root: MINIMAL_ROOT });
     });
 
     it("passes through org, domain, basepath, previewId", () => {
@@ -87,7 +91,8 @@ describe("buildLedgerInput", () => {
             organization: "acme",
             domain: "docs.acme.com",
             basepath: "/v2",
-            previewId: "pr-42"
+            previewId: "pr-42",
+            apiDefinitions: new Map()
         });
 
         expect(input.orgId).toBe("acme");
@@ -102,7 +107,8 @@ describe("buildLedgerInput", () => {
             organization: "acme",
             domain: "docs.acme.com",
             basepath: undefined,
-            previewId: undefined
+            previewId: undefined,
+            apiDefinitions: new Map()
         });
 
         expect(input.basepath).toBe("");
@@ -116,7 +122,8 @@ describe("buildLedgerInput", () => {
             organization: "acme",
             domain: "docs.acme.com",
             basepath: undefined,
-            previewId: undefined
+            previewId: undefined,
+            apiDefinitions: new Map()
         });
 
         expect(input.root).toEqual(MINIMAL_ROOT);
@@ -134,7 +141,8 @@ describe("buildLedgerInput", () => {
             organization: "acme",
             domain: "docs.acme.com",
             basepath: undefined,
-            previewId: undefined
+            previewId: undefined,
+            apiDefinitions: new Map()
         });
 
         // Two pages with the same content should produce one blob (content-addressed).
@@ -146,5 +154,59 @@ describe("buildLedgerInput", () => {
         // The blobs map is keyed by hash, so duplicate content = one entry.
         const markdownHash = sha256(markdown);
         expect(blobs.get(markdownHash)?.toString("utf-8")).toBe(markdown);
+    });
+
+    it("sets apiManifest to null when apiDefinitions is empty", () => {
+        const { input } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            apiDefinitions: new Map()
+        });
+
+        expect(input.apiManifest).toBeNull();
+    });
+
+    it("serializes apiManifest as a JSON blob ref when apiDefinitions is non-empty", () => {
+        const minimalApiDefinition: APIV1Write.ApiDefinition = {
+            types: {},
+            subpackages: {},
+            rootPackage: {
+                endpoints: [],
+                types: [],
+                subpackages: [],
+                websockets: [],
+                webhooks: []
+            },
+            auth: undefined,
+            snippetsConfiguration: {},
+            globalHeaders: []
+        };
+
+        const apiDefinitions = new Map<string, APIV1Write.ApiDefinition>();
+        apiDefinitions.set("api-def-1", minimalApiDefinition);
+
+        const { input, blobs } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            apiDefinitions
+        });
+
+        expect(input.apiManifest).not.toBeNull();
+        expect(input.apiManifest?.contentType).toBe("application/json");
+        expect(input.apiManifest?.contentLength).toBeGreaterThan(0);
+
+        // The blob should exist in the blob map.
+        const manifestBuf = blobs.get(input.apiManifest?.hash ?? "");
+        expect(manifestBuf).toBeDefined();
+
+        // Round-trip: the blob content should deserialize to match the input map.
+        const parsed = JSON.parse(manifestBuf?.toString("utf-8") ?? "");
+        expect(parsed).toEqual({ "api-def-1": minimalApiDefinition });
     });
 });

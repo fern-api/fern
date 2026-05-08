@@ -264,6 +264,9 @@ export async function publishDocs({
             taskContext: context
         });
 
+        // Collect API definitions (keyed by FDR definition ID) for the ledger manifest.
+        const apiDefinitionCollector = new Map<string, APIV1Write.ApiDefinition>();
+
         const resolver = new DocsDefinitionResolver({
             domain,
             docsWorkspace: effectiveWorkspace,
@@ -582,6 +585,7 @@ export async function publishDocs({
                 }
 
                 context.logger.debug(`Registered API Definition ${apiName}: ${response.apiDefinitionId}`);
+                apiDefinitionCollector.set(response.apiDefinitionId, apiDefinition);
 
                 if (response.dynamicIRs && dynamicIRsByLanguage) {
                     if (skipUpload) {
@@ -667,7 +671,8 @@ export async function publishDocs({
                     token: token.value,
                     fdrOrigin,
                     headers,
-                    context
+                    context,
+                    apiDefinitions: apiDefinitionCollector
                 });
                 context.logger.info(
                     `[ledger] Deployment ${ledgerResult.reusedDeployment ? "reused" : "created"}: ${ledgerResult.deploymentId}`
