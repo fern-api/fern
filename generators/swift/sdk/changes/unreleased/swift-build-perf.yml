@@ -6,6 +6,6 @@
     as part of the test target instead of standalone executables).
   type: fix
 - summary: |
-    Combine build and test into single `swift test -c release` invocation to avoid
-    redundant recompilation in seed scripts.
+    Align Docker and local seed scripts to both use release mode for build and test,
+    avoiding redundant debug recompilation.
   type: chore

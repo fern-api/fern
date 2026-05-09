@@ -96,16 +96,26 @@ export class DynamicSnippetsSwiftTestGenerator {
      * every generated snippet compiles against the SDK.
      */
     private wrapSnippetAsLibrary(snippet: string, enumName: string): string {
+        const FUNC_DECL = "private func main() async throws {";
+        const FUNC_INVOCATION = "try await main()";
+
+        if (!snippet.includes(FUNC_DECL)) {
+            this.context.logger.warn(
+                `Snippet ${enumName} does not match expected format (missing '${FUNC_DECL}'). Writing raw snippet.`
+            );
+            return snippet;
+        }
+
         const lines = snippet.trimEnd().split("\n");
         const result: string[] = [];
         let insideFunc = false;
 
         for (const line of lines) {
-            if (line === "private func main() async throws {") {
+            if (line === FUNC_DECL) {
                 result.push(`enum ${enumName} {`);
                 result.push("    static func snippet() async throws {");
                 insideFunc = true;
-            } else if (line === "try await main()") {
+            } else if (line === FUNC_INVOCATION) {
                 // Skip top-level invocation — not needed in library style
             } else if (insideFunc) {
                 result.push(line === "" ? "" : `    ${line}`);
