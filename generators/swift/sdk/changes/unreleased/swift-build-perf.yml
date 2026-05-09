@@ -2,7 +2,8 @@
 
 - summary: |
     Fix SPM auto-compiling dynamic snippet files as 650+ separate executables by
-    renaming output directory from Snippets/ to .snippets/ (hidden from SPM discovery).
+    moving snippets into Tests/Snippets/ and wrapping them as library code (compiled
+    as part of the test target instead of standalone executables).
   type: fix
 - summary: |
     Combine build and test into single `swift test -c release` invocation to avoid

@@ -63,7 +63,10 @@ export class DynamicSnippetsSwiftTestGenerator {
                     idx
                 });
                 await mkdir(path.dirname(dynamicSnippetFilePath), { recursive: true });
-                await writeFile(dynamicSnippetFilePath, response.snippet);
+                await writeFile(
+                    dynamicSnippetFilePath,
+                    this.wrapSnippetAsLibrary(response.snippet, `Example${idx}`)
+                );
             } catch (error) {
                 this.context.logger.error(
                     `Failed to generate dynamic snippet for endpoint ${JSON.stringify(request.endpoint)}: ${error}`
@@ -74,7 +77,7 @@ export class DynamicSnippetsSwiftTestGenerator {
     }
 
     private async initializeProject(outputDir: AbsoluteFilePath): Promise<AbsoluteFilePath> {
-        const absolutePathToOutputDir = join(outputDir, RelativeFilePath.of(".snippets"));
+        const absolutePathToOutputDir = join(outputDir, RelativeFilePath.of("Tests/Snippets"));
         await mkdir(absolutePathToOutputDir, { recursive: true });
         return absolutePathToOutputDir;
     }
@@ -87,5 +90,40 @@ export class DynamicSnippetsSwiftTestGenerator {
         idx: number;
     }): AbsoluteFilePath {
         return join(absolutePathToOutputDir, RelativeFilePath.of(`Example${idx}.swift`));
+    }
+
+    /**
+     * Wraps a runnable snippet in an enum so it compiles as library code (part of the
+     * test target) rather than a standalone executable. This prevents SPM from treating
+     * each snippet file as a separate executable target while still validating that
+     * every generated snippet compiles against the SDK.
+     */
+    private wrapSnippetAsLibrary(snippet: string, enumName: string): string {
+        const lines = snippet.trimEnd().split("\n");
+        const result: string[] = [];
+        let insideFunc = false;
+
+        for (const line of lines) {
+            if (line === "private func main() async throws {") {
+                result.push(`enum ${enumName} {`);
+                result.push("    static func snippet() async throws {");
+                insideFunc = true;
+            } else if (line === "try await main()") {
+                // Skip top-level invocation — not needed in library style
+            } else if (insideFunc) {
+                result.push(line === "" ? "" : `    ${line}`);
+            } else {
+                result.push(line);
+            }
+        }
+
+        // Remove trailing empty lines before closing enum brace
+        while (result.length > 0 && result[result.length - 1] === "") {
+            result.pop();
+        }
+        result.push("}");
+        result.push("");
+
+        return result.join("\n");
     }
 }
