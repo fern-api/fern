@@ -63,10 +63,7 @@ export class DynamicSnippetsSwiftTestGenerator {
                     idx
                 });
                 await mkdir(path.dirname(dynamicSnippetFilePath), { recursive: true });
-                await writeFile(
-                    dynamicSnippetFilePath,
-                    this.wrapSnippetAsLibrary(response.snippet, `Example${idx}`)
-                );
+                await writeFile(dynamicSnippetFilePath, this.wrapSnippetAsLibrary(response.snippet, `Example${idx}`));
             } catch (error) {
                 this.context.logger.error(
                     `Failed to generate dynamic snippet for endpoint ${JSON.stringify(request.endpoint)}: ${error}`
