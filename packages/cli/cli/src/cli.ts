@@ -10,8 +10,8 @@ import {
     LinkCheckError,
     LinkCheckFormatter,
     ProgressRenderer,
-    SourceResolver,
-    runCliV2
+    runCliV2,
+    SourceResolver
 } from "@fern-api/cli-v2";
 import {
     correctIncorrectDockerOrg,
