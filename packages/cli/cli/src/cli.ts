@@ -4,7 +4,8 @@ import type { ReadStream, WriteStream } from "node:tty";
 import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
 import { getOrCreateFernRunId } from "@fern-api/cli-telemetry";
-import { runCliV2 } from "@fern-api/cli-v2";
+import { LinkCheckClient, LinkCheckError, LinkCheckFormatter, ProgressRenderer, runCliV2 } from "@fern-api/cli-v2";
+import type { OutputFormat } from "@fern-api/cli-v2";
 import {
     correctIncorrectDockerOrg,
     GENERATORS_CONFIGURATION_FILENAME,
@@ -1779,6 +1780,7 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("docs", "Commands for managing your docs", (yargs) => {
         addDocsDevCommand(yargs, cliContext);
         addDocsBrokenLinksCommand(yargs, cliContext);
+        addDocsLinkCommand(yargs, cliContext);
         addDocsPreviewCommand(yargs, cliContext);
         addDocsDiffCommand(yargs, cliContext);
         addDocsMdCommand(yargs, cliContext);
@@ -2137,6 +2139,137 @@ function addDocsBrokenLinksCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
                 errorOnBrokenLinks: argv.strict
             });
         }
+    );
+}
+
+function addDocsLinkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("link", "Manage and validate links on live docs sites", (yargs) => {
+        addDocsLinkCheckCommand(yargs, cliContext);
+        return yargs;
+    });
+}
+
+function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "check",
+        "Check for broken links on a live docs site",
+        (yargs) =>
+            yargs
+                .option("url", {
+                    type: "string",
+                    description: "Docs site URL to check (e.g. buildwithfern.com/learn)"
+                })
+                .option("output", {
+                    type: "string",
+                    description: "Output format: text, json, or csv",
+                    choices: ["text", "json", "csv"] as const,
+                    default: "text" as const
+                }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern docs link check" });
+
+            const domain = await resolveDocsLinkCheckDomain(cliContext, argv.url);
+            const dashboardUrl = process.env.FERN_DASHBOARD_URL ?? "https://dashboard.buildwithfern.com";
+
+            const token = await cliContext.runTask((context) => askToLogin(context));
+
+            cliContext.logger.info(`Checking links on ${domain}...`);
+
+            const client = new LinkCheckClient({
+                dashboardUrl,
+                token
+            });
+
+            const progress = new ProgressRenderer(process.stderr);
+
+            try {
+                const result = await client.run(domain, {
+                    onSitemapFetched: (data) => {
+                        progress.onSitemapFetched(data.pageCount);
+                    },
+                    onPageScraped: (data) => {
+                        progress.onPageScraped(data.pagesScraped, data.totalPages);
+                    },
+                    onLinkChecked: (data) => {
+                        progress.onLinkChecked(data.linksChecked, data.totalLinks);
+                    },
+                    onError: (message) => {
+                        progress.finish();
+                        cliContext.logger.error(message);
+                    }
+                });
+
+                progress.finish();
+
+                const formatter = new LinkCheckFormatter();
+                const output = formatter.format(result, argv.output as OutputFormat);
+
+                if (argv.output === "json" || argv.output === "csv") {
+                    process.stdout.write(output + "\n");
+                } else {
+                    process.stderr.write(output + "\n");
+                }
+
+                if (result.brokenLinks.length > 0) {
+                    cliContext.failAndThrow("Broken links found", undefined, {
+                        code: CliError.Code.ValidationError
+                    });
+                } else if (result.blockedLinks.length === 0) {
+                    cliContext.logger.info("All links valid");
+                }
+            } catch (error) {
+                if (error instanceof LinkCheckError) {
+                    cliContext.failAndThrow(error.message, error, {
+                        code:
+                            error.statusCode === 401 || error.statusCode === 403
+                                ? CliError.Code.AuthError
+                                : CliError.Code.InternalError
+                    });
+                }
+                throw error;
+            }
+        }
+    );
+}
+
+async function resolveDocsLinkCheckDomain(cliContext: CliContext, url: string | undefined): Promise<string> {
+    const normalizeDomain = (u: string): string => u.replace(/^https?:\/\//, "").replace(/\/$/, "");
+
+    if (url != null) {
+        return normalizeDomain(url);
+    }
+
+    const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+        commandLineApiWorkspace: undefined,
+        defaultToAllApiWorkspaces: true
+    });
+
+    if (project.docsWorkspaces == null) {
+        return cliContext.failAndThrow(
+            "No docs configuration found.\n\n  Either add a 'docs:' section to your fern.yml, or use --url <url>.",
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+
+    const instances = project.docsWorkspaces.docsInstances;
+    if (instances == null || instances.length === 0) {
+        return cliContext.failAndThrow(
+            "No docs instances configured.\n\n  Add an instance to the 'docs:' section of your fern.yml, or use --url <url>.",
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+
+    if (instances.length === 1 && instances[0] != null) {
+        return normalizeDomain(instances[0].url);
+    }
+
+    const available = instances.map((i) => `  - ${i.url}`).join("\n");
+    return cliContext.failAndThrow(
+        `Multiple docs instances configured. Please specify which one to check.\n\nAvailable instances:\n${available}\n\n  Use --url <url> to select one.`,
+        undefined,
+        { code: CliError.Code.ConfigError }
     );
 }
 
