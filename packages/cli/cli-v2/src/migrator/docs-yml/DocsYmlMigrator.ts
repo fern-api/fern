@@ -1,6 +1,6 @@
 import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration";
-import path from "path";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import path from "path";
 
 export interface DocsYmlMigratorResult {
     /** If docs.yml exists, a `$ref` pointer to include in fern.yml. */

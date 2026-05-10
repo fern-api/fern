@@ -1,8 +1,8 @@
 import type { schemas } from "@fern-api/config";
-import { APIS_DIRECTORY, DEFINITION_DIRECTORY, generatorsYml } from "@fern-api/configuration";
-import path from "path";
+import { DEFINITION_DIRECTORY, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readdir } from "fs/promises";
+import path from "path";
 import type { MigratorWarning } from "../types/index.js";
 import { convertOpenApiSpecSettings } from "./convertSettings.js";
 
