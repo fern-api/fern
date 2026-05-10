@@ -5,7 +5,14 @@ import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
 import { getOrCreateFernRunId } from "@fern-api/cli-telemetry";
 import type { OutputFormat } from "@fern-api/cli-v2";
-import { LinkCheckClient, LinkCheckError, LinkCheckFormatter, ProgressRenderer, runCliV2 } from "@fern-api/cli-v2";
+import {
+    LinkCheckClient,
+    LinkCheckError,
+    LinkCheckFormatter,
+    ProgressRenderer,
+    SourceResolver,
+    runCliV2
+} from "@fern-api/cli-v2";
 import {
     correctIncorrectDockerOrg,
     GENERATORS_CONFIGURATION_FILENAME,
@@ -2198,8 +2205,12 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     }
                 });
 
+                const docsAbsolutePath = await resolveDocsConfigPath(cliContext);
+                const resolver = new SourceResolver();
+                const resolved = await resolver.resolve(result, docsAbsolutePath);
+
                 const formatter = new LinkCheckFormatter();
-                const output = formatter.format(result, argv.output as OutputFormat);
+                const output = formatter.format(resolved, argv.output as OutputFormat);
 
                 if (argv.output === "json" || argv.output === "csv") {
                     process.stdout.write(output + "\n");
@@ -2207,11 +2218,11 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     process.stderr.write(output + "\n");
                 }
 
-                if (result.brokenLinks.length > 0) {
+                if (resolved.brokenLinks.length > 0) {
                     cliContext.failAndThrow("Broken links found", undefined, {
                         code: CliError.Code.ValidationError
                     });
-                } else if (result.blockedLinks.length === 0) {
+                } else if (resolved.blockedLinks.length === 0) {
                     cliContext.logger.info("All links valid");
                 }
             } catch (error) {
@@ -2270,6 +2281,21 @@ async function resolveDocsLinkCheckDomain(cliContext: CliContext, url: string | 
         undefined,
         { code: CliError.Code.ConfigError }
     );
+}
+
+async function resolveDocsConfigPath(cliContext: CliContext): Promise<string | undefined> {
+    try {
+        const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+            commandLineApiWorkspace: undefined,
+            defaultToAllApiWorkspaces: true
+        });
+        if (project.docsWorkspaces == null) {
+            return undefined;
+        }
+        return project.docsWorkspaces.absoluteFilepathToDocsConfig;
+    } catch {
+        return undefined;
+    }
 }
 
 function addDocsMdCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {

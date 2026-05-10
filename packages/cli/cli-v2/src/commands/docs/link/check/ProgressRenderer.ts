@@ -1,14 +1,20 @@
 import chalk from "chalk";
+import cliProgress from "cli-progress";
+
+const DOCS_PREFIX = chalk.cyan("[docs]:");
+const LABEL_WIDTH = "Checking links".length;
+const formatLabel = (label: string): string => label.padEnd(LABEL_WIDTH, " ");
 
 /**
  * Renders real-time progress for link checking in the terminal.
- * Updates in-place using carriage return for a clean progress bar experience.
+ * Uses cli-progress bars matching the style of `fern docs dev` bundle download.
  */
 export class ProgressRenderer {
     private readonly stream: NodeJS.WriteStream;
     private readonly isTTY: boolean;
-    private phase: "scraping" | "checking" = "scraping";
-    private lastLineLength = 0;
+    private scrapeBar: cliProgress.SingleBar | undefined;
+    private checkBar: cliProgress.SingleBar | undefined;
+    private phase: "idle" | "scraping" | "checking" = "idle";
 
     constructor(stream: NodeJS.WriteStream) {
         this.stream = stream;
@@ -16,63 +22,73 @@ export class ProgressRenderer {
     }
 
     public onSitemapFetched(totalPages: number): void {
-        if (this.isTTY) {
-            this.clearLine();
-        }
         this.stream.write(`  ${chalk.cyan("●")} Found ${totalPages} pages in sitemap\n`);
+
+        if (this.isTTY) {
+            this.scrapeBar = new cliProgress.SingleBar(
+                {
+                    format: `  ${DOCS_PREFIX} ${formatLabel("Scraping pages")} [{bar}] {percentage}% | {value}/{total}`,
+                    barCompleteChar: "\u2588",
+                    barIncompleteChar: "\u2591",
+                    hideCursor: true,
+                    stream: this.stream
+                },
+                cliProgress.Presets.shades_classic
+            );
+            this.scrapeBar.start(totalPages, 0);
+        }
         this.phase = "scraping";
     }
 
     public onPageScraped(pageIndex: number, totalPages: number): void {
-        this.phase = "scraping";
         const pagesScraped = pageIndex + 1;
-        const bar = this.renderBar(pagesScraped, totalPages);
-        const line = `  ${bar} ${pagesScraped}/${totalPages} pages scraped`;
-        this.writeLine(line);
+        if (this.scrapeBar != null) {
+            this.scrapeBar.setTotal(totalPages);
+            this.scrapeBar.update(pagesScraped);
+        } else if (!this.isTTY && pagesScraped === totalPages) {
+            this.stream.write(`  ${DOCS_PREFIX} Scraped ${totalPages} pages\n`);
+        }
     }
 
     public onLinkChecked(linksChecked: number, totalLinks: number): void {
         if (this.phase === "scraping") {
-            if (this.isTTY) {
-                this.clearLine();
+            if (this.scrapeBar != null) {
+                this.scrapeBar.stop();
+                this.scrapeBar = undefined;
             }
             this.stream.write("\n");
             this.phase = "checking";
+
+            if (this.isTTY) {
+                this.checkBar = new cliProgress.SingleBar(
+                    {
+                        format: `  ${DOCS_PREFIX} ${formatLabel("Checking links")} [{bar}] {percentage}% | {value}/{total}`,
+                        barCompleteChar: "\u2588",
+                        barIncompleteChar: "\u2591",
+                        hideCursor: true,
+                        stream: this.stream
+                    },
+                    cliProgress.Presets.shades_classic
+                );
+                this.checkBar.start(totalLinks, linksChecked);
+            }
         }
-        const bar = this.renderBar(linksChecked, totalLinks);
-        const line = `  ${bar} ${linksChecked}/${totalLinks} links checked`;
-        this.writeLine(line);
+
+        if (this.checkBar != null) {
+            this.checkBar.setTotal(totalLinks);
+            this.checkBar.update(linksChecked);
+        }
     }
 
     public finish(): void {
-        if (this.isTTY) {
-            this.clearLine();
+        if (this.scrapeBar != null) {
+            this.scrapeBar.stop();
+            this.scrapeBar = undefined;
+        }
+        if (this.checkBar != null) {
+            this.checkBar.stop();
+            this.checkBar = undefined;
         }
         this.stream.write("\n");
-    }
-
-    private writeLine(line: string): void {
-        if (this.isTTY) {
-            this.clearLine();
-            this.stream.write(`\r${line}`);
-            this.lastLineLength = line.length;
-        }
-        // In non-TTY, skip progress updates to avoid flooding CI logs
-    }
-
-    private clearLine(): void {
-        if (this.lastLineLength > 0) {
-            this.stream.write(`\r${" ".repeat(this.lastLineLength)}\r`);
-            this.lastLineLength = 0;
-        }
-    }
-
-    private renderBar(current: number, total: number): string {
-        const width = 20;
-        const fraction = total > 0 ? Math.min(current / total, 1) : 0;
-        const filled = Math.round(width * fraction);
-        const empty = width - filled;
-        const bar = "=".repeat(filled) + (filled < width ? ">" : "") + " ".repeat(Math.max(0, empty - 1));
-        return chalk.cyan(`[${bar}]`);
     }
 }

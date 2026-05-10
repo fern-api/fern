@@ -9,6 +9,7 @@ import { command } from "../../../_internal/command.js";
 import { LinkCheckClient, LinkCheckError } from "./LinkCheckClient.js";
 import { LinkCheckFormatter, type OutputFormat } from "./LinkCheckFormatter.js";
 import { ProgressRenderer } from "./ProgressRenderer.js";
+import { SourceResolver } from "./SourceResolver.js";
 
 const DASHBOARD_BASE_URL = process.env.FERN_DASHBOARD_URL ?? "https://dashboard.buildwithfern.com";
 
@@ -52,8 +53,12 @@ export class LinkCheckCommand {
                 }
             });
 
+            const docsAbsolutePath = await this.getDocsConfigPath(context);
+            const resolver = new SourceResolver();
+            const resolved = await resolver.resolve(result, docsAbsolutePath);
+
             const formatter = new LinkCheckFormatter();
-            const output = formatter.format(result, args.output);
+            const output = formatter.format(resolved, args.output);
 
             if (args.output === "json" || args.output === "csv") {
                 context.stdout.info(output);
@@ -61,9 +66,9 @@ export class LinkCheckCommand {
                 context.stderr.info(output);
             }
 
-            if (result.brokenLinks.length > 0) {
+            if (resolved.brokenLinks.length > 0) {
                 throw new CliError({ code: CliError.Code.ValidationError });
-            } else if (result.blockedLinks.length === 0) {
+            } else if (resolved.blockedLinks.length === 0) {
                 context.stderr.info(`${Icons.success} ${chalk.green("All links valid")}`);
             }
         } catch (error) {
@@ -73,6 +78,22 @@ export class LinkCheckCommand {
             throw error;
         } finally {
             progress.finish();
+        }
+    }
+
+    private async getDocsConfigPath(context: Context): Promise<string | undefined> {
+        try {
+            const workspaceResult = await context.loadWorkspace();
+            if (workspaceResult == null || !workspaceResult.success) {
+                return undefined;
+            }
+            const docsConfig = workspaceResult.workspace.docs;
+            if (docsConfig?.absoluteFilePath != null) {
+                return docsConfig.absoluteFilePath;
+            }
+            return undefined;
+        } catch {
+            return undefined;
         }
     }
 

@@ -4,3 +4,9 @@ export { LinkCheckClient, LinkCheckError } from "./commands/docs/link/check/Link
 export type { OutputFormat } from "./commands/docs/link/check/LinkCheckFormatter.js";
 export { LinkCheckFormatter } from "./commands/docs/link/check/LinkCheckFormatter.js";
 export { ProgressRenderer } from "./commands/docs/link/check/ProgressRenderer.js";
+export type {
+    ResolvedBrokenLink,
+    ResolvedLinkCheckResult,
+    ResolvedReference
+} from "./commands/docs/link/check/SourceResolver.js";
+export { SourceResolver } from "./commands/docs/link/check/SourceResolver.js";
