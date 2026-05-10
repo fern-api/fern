@@ -2177,7 +2177,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
 
             const client = new LinkCheckClient({
                 dashboardUrl,
-                token
+                token: token.value
             });
 
             const progress = new ProgressRenderer(process.stderr);
@@ -2251,7 +2251,7 @@ async function resolveDocsLinkCheckDomain(cliContext: CliContext, url: string | 
         );
     }
 
-    const instances = project.docsWorkspaces.docsInstances;
+    const instances = project.docsWorkspaces.config.instances;
     if (instances == null || instances.length === 0) {
         return cliContext.failAndThrow(
             "No docs instances configured.\n\n  Add an instance to the 'docs:' section of your fern.yml, or use --url <url>.",
@@ -2264,7 +2264,7 @@ async function resolveDocsLinkCheckDomain(cliContext: CliContext, url: string | 
         return normalizeDomain(instances[0].url);
     }
 
-    const available = instances.map((i) => `  - ${i.url}`).join("\n");
+    const available = instances.map((inst) => `  - ${inst.url}`).join("\n");
     return cliContext.failAndThrow(
         `Multiple docs instances configured. Please specify which one to check.\n\nAvailable instances:\n${available}\n\n  Use --url <url> to select one.`,
         undefined,
