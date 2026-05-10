@@ -1,0 +1,5 @@
+- summary: |
+    Add `fern docs check --links` command to validate links on live documentation sites.
+    Supports text, JSON, and CSV output formats via `--output` flag.
+    Use `--instance <url>` to specify which docs site to check, or auto-detect from fern.yml.
+  type: feat
