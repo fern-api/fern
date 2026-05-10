@@ -66,9 +66,7 @@ export class LinkCheckCommand {
 
             if (result.brokenLinks.length > 0) {
                 throw new CliError({ code: CliError.Code.ValidationError });
-            }
-
-            if (result.brokenLinks.length === 0 && result.blockedLinks.length === 0) {
+            } else if (result.blockedLinks.length === 0) {
                 context.stderr.info(`${Icons.success} ${chalk.green("All links valid")}`);
             }
         } catch (error) {
