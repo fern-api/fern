@@ -128,7 +128,7 @@ export class DocsChecker {
         const mdxValidator = new MdxParseValidator({ context: this.context, task: this.task });
         const mdxResult = await mdxValidator.validate({ workspace: docsWorkspace });
 
-        const mdValidateSeverity = docsWorkspace.config.check?.rules?.mdValidate ?? "warn";
+        const mdValidateSeverity = docsWorkspace.config.check?.rules?.mdValidate ?? "error";
         const mdxErrorsAreErrors = mdValidateSeverity === "error";
 
         const counts = this.countViolations(resolvedViolations);
