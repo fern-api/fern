@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.22.0
+  changelogEntry:
+    - summary: |
+        Add `fern sdk list` command to list configured and available SDK generators.
+        Displays configured SDKs from local fern.yml and available generators from the
+        Fern registry. Supports `--language`, `--type`, and `--json` flags.
+      type: feat
+  createdAt: "2026-05-10"
+  irVersion: 66
 - version: 5.21.1
   changelogEntry:
     - summary: |
