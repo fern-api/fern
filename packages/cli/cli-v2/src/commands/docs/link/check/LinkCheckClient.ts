@@ -8,10 +8,8 @@
 
 export interface BrokenLink {
     url: string;
-    status: number;
-    statusText: string;
-    type: "internal" | "external";
-    classification: "broken" | "blocked";
+    statusCode: number | null;
+    isInternal: boolean;
     sourcePages: string[];
     error?: string;
 }
@@ -32,15 +30,9 @@ export interface LinkCheckResult {
 }
 
 export interface LinkCheckCallbacks {
-    onSitemapFetched?: (data: { pageCount: number }) => void;
-    onPageScraped?: (data: { url: string; linksFound: number; pagesScraped: number; totalPages: number }) => void;
-    onLinkChecked?: (data: {
-        url: string;
-        status: number;
-        ok: boolean;
-        linksChecked: number;
-        totalLinks: number;
-    }) => void;
+    onSitemapFetched?: (data: { totalPages: number }) => void;
+    onPageScraped?: (data: { pageUrl: string; linksFound: number; pageIndex: number; totalPages: number }) => void;
+    onLinkChecked?: (data: { linksChecked: number; totalLinks: number }) => void;
     onError?: (message: string) => void;
 }
 
@@ -113,66 +105,48 @@ export class LinkCheckClient {
 
                 switch (event.type) {
                     case "sitemap_fetched": {
-                        const data = event.data as { pageCount: number };
-                        totalPages = data.pageCount;
+                        const data = event.data as { totalPages: number };
+                        totalPages = data.totalPages;
                         callbacks.onSitemapFetched?.(data);
                         break;
                     }
                     case "page_scraped": {
                         const data = event.data as {
-                            url: string;
+                            pageUrl: string;
                             linksFound: number;
-                            pagesScraped: number;
+                            pageIndex: number;
                             totalPages: number;
                         };
                         totalPages = data.totalPages;
                         callbacks.onPageScraped?.(data);
                         break;
                     }
+                    case "links_check_started": {
+                        const data = event.data as { totalLinks: number };
+                        totalLinks = data.totalLinks;
+                        break;
+                    }
+                    case "link_check_progress": {
+                        const data = event.data as { linksChecked: number; totalLinks: number };
+                        totalLinks = data.totalLinks;
+                        callbacks.onLinkChecked?.(data);
+                        break;
+                    }
                     case "link_checked": {
                         const data = event.data as {
                             url: string;
-                            status: number;
-                            statusText: string;
-                            ok: boolean;
-                            type: "internal" | "external";
-                            classification: "working" | "broken" | "blocked";
+                            statusCode: number | null;
+                            isInternal: boolean;
                             sourcePages: string[];
-                            linksChecked: number;
-                            totalLinks: number;
                             error?: string;
                         };
-                        totalLinks = data.totalLinks;
-                        callbacks.onLinkChecked?.({
+                        brokenLinks.push({
                             url: data.url,
-                            status: data.status,
-                            ok: data.ok,
-                            linksChecked: data.linksChecked,
-                            totalLinks: data.totalLinks
+                            statusCode: data.statusCode,
+                            isInternal: data.isInternal,
+                            sourcePages: data.sourcePages,
+                            error: data.error
                         });
-                        if (data.classification === "broken") {
-                            brokenLinks.push({
-                                url: data.url,
-                                status: data.status,
-                                statusText: data.statusText,
-                                type: data.type,
-                                classification: "broken",
-                                sourcePages: data.sourcePages,
-                                error: data.error
-                            });
-                        } else if (data.classification === "blocked") {
-                            blockedLinks.push({
-                                url: data.url,
-                                status: data.status,
-                                statusText: data.statusText,
-                                type: data.type,
-                                classification: "blocked",
-                                sourcePages: data.sourcePages,
-                                error: data.error
-                            });
-                        } else {
-                            workingLinks++;
-                        }
                         break;
                     }
                     case "complete": {
@@ -180,10 +154,16 @@ export class LinkCheckClient {
                             totalPages: number;
                             totalLinks: number;
                             workingLinks: number;
+                            brokenLinks: BrokenLink[];
+                            blockedLinks: BrokenLink[];
                         };
                         totalPages = data.totalPages;
                         totalLinks = data.totalLinks;
                         workingLinks = data.workingLinks;
+                        brokenLinks.length = 0;
+                        brokenLinks.push(...data.brokenLinks);
+                        blockedLinks.length = 0;
+                        blockedLinks.push(...data.blockedLinks);
                         break;
                     }
                     case "error": {

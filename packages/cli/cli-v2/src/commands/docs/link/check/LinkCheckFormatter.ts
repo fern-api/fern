@@ -27,17 +27,15 @@ export class LinkCheckFormatter {
                 },
                 brokenLinks: result.brokenLinks.map((link) => ({
                     url: link.url,
-                    status: link.status,
-                    statusText: link.statusText,
-                    type: link.type,
+                    statusCode: link.statusCode,
+                    isInternal: link.isInternal,
                     sourcePages: link.sourcePages,
                     error: link.error
                 })),
                 blockedLinks: result.blockedLinks.map((link) => ({
                     url: link.url,
-                    status: link.status,
-                    statusText: link.statusText,
-                    type: link.type,
+                    statusCode: link.statusCode,
+                    isInternal: link.isInternal,
                     sourcePages: link.sourcePages
                 }))
             },
@@ -47,7 +45,7 @@ export class LinkCheckFormatter {
     }
 
     private formatCsv(result: LinkCheckResult): string {
-        const rows: string[] = ["url,status,statusText,type,classification,sourcePages,error"];
+        const rows: string[] = ["url,statusCode,isInternal,sourcePages,error"];
 
         for (const link of [...result.brokenLinks, ...result.blockedLinks]) {
             const sourcePages = link.sourcePages.join("; ");
@@ -55,10 +53,8 @@ export class LinkCheckFormatter {
             rows.push(
                 [
                     this.escapeCsv(link.url),
-                    link.status.toString(),
-                    this.escapeCsv(link.statusText),
-                    link.type,
-                    link.classification,
+                    String(link.statusCode ?? ""),
+                    link.isInternal ? "internal" : "external",
                     this.escapeCsv(sourcePages),
                     this.escapeCsv(error)
                 ].join(",")
@@ -85,8 +81,8 @@ export class LinkCheckFormatter {
         }
 
         if (result.brokenLinks.length > 0) {
-            const internal = result.brokenLinks.filter((l) => l.type === "internal");
-            const external = result.brokenLinks.filter((l) => l.type === "external");
+            const internal = result.brokenLinks.filter((l) => l.isInternal);
+            const external = result.brokenLinks.filter((l) => !l.isInternal);
 
             if (internal.length > 0) {
                 lines.push("");
@@ -115,7 +111,8 @@ export class LinkCheckFormatter {
 
     private appendLinkDetails(lines: string[], links: BrokenLink[]): void {
         for (const link of links) {
-            lines.push(`    - ${link.url} (${link.status} ${link.statusText})`);
+            const status = link.statusCode != null ? ` (${link.statusCode})` : "";
+            lines.push(`    - ${link.url}${status}`);
             for (const page of link.sourcePages) {
                 lines.push(`        ---> Referenced by ${page}`);
             }

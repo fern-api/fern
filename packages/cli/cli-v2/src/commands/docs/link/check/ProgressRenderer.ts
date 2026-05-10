@@ -15,16 +15,17 @@ export class ProgressRenderer {
         this.isTTY = stream.isTTY === true;
     }
 
-    public onSitemapFetched(pageCount: number): void {
+    public onSitemapFetched(totalPages: number): void {
         if (this.isTTY) {
             this.clearLine();
         }
-        this.stream.write(`  ${chalk.cyan("●")} Found ${pageCount} pages in sitemap\n`);
+        this.stream.write(`  ${chalk.cyan("●")} Found ${totalPages} pages in sitemap\n`);
         this.phase = "scraping";
     }
 
-    public onPageScraped(pagesScraped: number, totalPages: number): void {
+    public onPageScraped(pageIndex: number, totalPages: number): void {
         this.phase = "scraping";
+        const pagesScraped = pageIndex + 1;
         const bar = this.renderBar(pagesScraped, totalPages);
         const line = `  ${bar} ${pagesScraped}/${totalPages} pages scraped`;
         this.writeLine(line);

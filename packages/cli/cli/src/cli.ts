@@ -2185,10 +2185,10 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
             try {
                 const result = await client.run(domain, {
                     onSitemapFetched: (data) => {
-                        progress.onSitemapFetched(data.pageCount);
+                        progress.onSitemapFetched(data.totalPages);
                     },
                     onPageScraped: (data) => {
-                        progress.onPageScraped(data.pagesScraped, data.totalPages);
+                        progress.onPageScraped(data.pageIndex, data.totalPages);
                     },
                     onLinkChecked: (data) => {
                         progress.onLinkChecked(data.linksChecked, data.totalLinks);
