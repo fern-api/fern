@@ -12,8 +12,6 @@ import { offerAiFixes } from "../../../docs/fixer/offerAiFixes.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
 import { type JsonOutput, toJsonViolation } from "../../_internal/toJsonViolation.js";
-import { LinkCheckCommand } from "./link-check/index.js";
-import type { OutputFormat } from "./link-check/LinkCheckFormatter.js";
 
 export declare namespace CheckCommand {
     export interface Args extends GlobalArgs {
@@ -23,25 +21,11 @@ export declare namespace CheckCommand {
         json: boolean;
         /** Automatically fix issues that have a known resolution */
         fix: boolean;
-        /** Run link checker on live docs site */
-        links: boolean;
-        /** Docs instance URL to check links on */
-        instance?: string;
-        /** Output format for link check results */
-        output: OutputFormat;
     }
 }
 
 export class CheckCommand {
     public async handle(context: Context, args: CheckCommand.Args): Promise<void> {
-        if (args.links) {
-            const linkCheckCmd = new LinkCheckCommand();
-            return linkCheckCmd.handle(context, {
-                instance: args.instance,
-                output: args.output
-            });
-        }
-
         const workspace = await context.loadWorkspaceOrThrow();
 
         if (workspace.docs == null) {
@@ -216,21 +200,6 @@ export function addCheckCommand(cli: Argv<GlobalArgs>): void {
                     type: "boolean",
                     description: "Automatically fix issues that have a known resolution",
                     default: false
-                })
-                .option("links", {
-                    type: "boolean",
-                    description: "Check for broken links on the live docs site",
-                    default: false
-                })
-                .option("instance", {
-                    type: "string",
-                    description: "Docs instance URL to check links on (used with --links)"
-                })
-                .option("output", {
-                    type: "string",
-                    description: "Output format for link check results: text, json, or csv",
-                    choices: ["text", "json", "csv"] as const,
-                    default: "text" as const
                 })
     );
 }

@@ -1,23 +1,29 @@
 import { CliError } from "@fern-api/task-context";
 
 import chalk from "chalk";
+import type { Argv } from "yargs";
 import type { Context } from "../../../../context/Context.js";
+import type { GlobalArgs } from "../../../../context/GlobalArgs.js";
 import { Icons } from "../../../../ui/format.js";
+import { command } from "../../../_internal/command.js";
 import { LinkCheckClient, LinkCheckError } from "./LinkCheckClient.js";
 import { LinkCheckFormatter, type OutputFormat } from "./LinkCheckFormatter.js";
 import { ProgressRenderer } from "./ProgressRenderer.js";
 
 const DASHBOARD_BASE_URL = process.env.FERN_DASHBOARD_URL ?? "https://dashboard.buildwithfern.com";
 
+export declare namespace LinkCheckCommand {
+    export interface Args extends GlobalArgs {
+        /** Docs URL to check links on */
+        url?: string;
+        /** Output format for link check results */
+        output: OutputFormat;
+    }
+}
+
 export class LinkCheckCommand {
-    public async handle(
-        context: Context,
-        options: {
-            instance?: string;
-            output: OutputFormat;
-        }
-    ): Promise<void> {
-        const domain = await this.resolveDomain(context, options.instance);
+    public async handle(context: Context, args: LinkCheckCommand.Args): Promise<void> {
+        const domain = await this.resolveDomain(context, args.url);
         const token = await context.getTokenOrPrompt();
 
         context.stderr.info(`${Icons.info} Checking links on ${chalk.cyan(domain)}...`);
@@ -50,9 +56,9 @@ export class LinkCheckCommand {
             progress.finish();
 
             const formatter = new LinkCheckFormatter();
-            const output = formatter.format(result, options.output);
+            const output = formatter.format(result, args.output);
 
-            if (options.output === "json" || options.output === "csv") {
+            if (args.output === "json" || args.output === "csv") {
                 context.stdout.info(output);
             } else {
                 context.stderr.info(output);
@@ -73,9 +79,9 @@ export class LinkCheckCommand {
         }
     }
 
-    private async resolveDomain(context: Context, instance: string | undefined): Promise<string> {
-        if (instance != null) {
-            return this.normalizeDomain(instance);
+    private async resolveDomain(context: Context, url: string | undefined): Promise<string> {
+        if (url != null) {
+            return this.normalizeDomain(url);
         }
 
         const workspace = await context.loadWorkspaceOrThrow();
@@ -83,7 +89,7 @@ export class LinkCheckCommand {
             throw new CliError({
                 message:
                     "No docs configuration found.\n\n" +
-                    "  Either add a 'docs:' section to your fern.yml, or use --instance <url>.",
+                    "  Either add a 'docs:' section to your fern.yml, or use --url <url>.",
                 code: CliError.Code.ConfigError
             });
         }
@@ -93,7 +99,7 @@ export class LinkCheckCommand {
             throw new CliError({
                 message:
                     "No docs instances configured.\n\n" +
-                    "  Add an instance to the 'docs:' section of your fern.yml, or use --instance <url>.",
+                    "  Add an instance to the 'docs:' section of your fern.yml, or use --url <url>.",
                 code: CliError.Code.ConfigError
             });
         }
@@ -102,13 +108,12 @@ export class LinkCheckCommand {
             return this.normalizeDomain(instances[0].url);
         }
 
-        // Multiple instances — require explicit selection
         const available = instances.map((i) => `  - ${i.url}`).join("\n");
         throw new CliError({
             message:
-                "Multiple docs instances configured. Please specify which instance to check.\n\n" +
+                "Multiple docs instances configured. Please specify which one to check.\n\n" +
                 `Available instances:\n${available}\n\n` +
-                "  Use --instance <url> to select one.",
+                "  Use --url <url> to select one.",
             code: CliError.Code.ConfigError
         });
     }
@@ -141,4 +146,26 @@ export class LinkCheckCommand {
                 });
         }
     }
+}
+
+export function addLinkCheckCommand(cli: Argv<GlobalArgs>): void {
+    const cmd = new LinkCheckCommand();
+    command(
+        cli,
+        "check",
+        "Check for broken links on a live docs site",
+        (context, args) => cmd.handle(context, args as LinkCheckCommand.Args),
+        (yargs) =>
+            yargs
+                .option("url", {
+                    type: "string",
+                    description: "Docs site URL to check (e.g. buildwithfern.com/learn)"
+                })
+                .option("output", {
+                    type: "string",
+                    description: "Output format: text, json, or csv",
+                    choices: ["text", "json", "csv"] as const,
+                    default: "text" as const
+                })
+    );
 }
