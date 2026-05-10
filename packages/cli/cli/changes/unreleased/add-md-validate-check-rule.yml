@@ -1,0 +1,9 @@
+- summary: |
+    Add `md-validate` check rule to `docs.yml` for configuring MDX/Markdown parse validation severity.
+    The default severity is `warn`. Set `md-validate: error` under `check.rules` to treat MDX parse
+    errors as blocking errors.
+  type: feat
+- summary: |
+    Deprecate `fern docs md check` command in favour of `fern check` which now includes
+    MDX validation with configurable severity via `docs.yml`.
+  type: chore

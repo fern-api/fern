@@ -70,11 +70,13 @@ export class MdxParseError {
      * fix: icon=<Icon name="star" /> → icon={<Icon name="star" />}
      * see: https://buildwithfern.com/learn/docs/errors/E0301
      * ```
+     *
+     * @param severity - Override the display severity label. Defaults to `"error"`.
      */
-    public toString(): string {
+    public toString(severity: "error" | "warning" = "error"): string {
         const lines: string[] = [];
 
-        lines.push(this.formatHeader());
+        lines.push(this.formatHeader(severity));
         lines.push(this.formatLocationLine());
 
         const gutterWidth = this.computeGutterWidth();
@@ -108,7 +110,10 @@ export class MdxParseError {
         return lines.join("\n");
     }
 
-    private formatHeader(): string {
+    private formatHeader(severity: "error" | "warning"): string {
+        if (severity === "warning") {
+            return `${chalk.yellow.bold(`warning[${this.code.code}]`)}${chalk.bold(":")} ${chalk.bold(this.code.title)}`;
+        }
         return `${chalk.red.bold(`error[${this.code.code}]`)}${chalk.bold(":")} ${chalk.bold(this.code.title)}`;
     }
 

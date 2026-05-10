@@ -4902,6 +4902,16 @@
               "type": "null"
             }
           ]
+        },
+        "md-validate": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

@@ -91,7 +91,7 @@ export class CheckCommand {
         let totalFixedCount = 0;
 
         if (docsCheckResult.mdxParseErrors.length > 0) {
-            this.displayMdxParseErrors(context, docsCheckResult.mdxParseErrors);
+            this.displayMdxParseErrors(context, docsCheckResult.mdxParseErrors, docsCheckResult.mdxParseErrorSeverity);
 
             if (args.fix) {
                 totalFixedCount += await applyMdxFixes(context, docsCheckResult.mdxParseErrors);
@@ -178,11 +178,13 @@ export class CheckCommand {
         }
     }
 
-    private displayMdxParseErrors(context: Context, errors: DocsChecker.Result["mdxParseErrors"]): void {
+    private displayMdxParseErrors(
+        context: Context,
+        errors: DocsChecker.Result["mdxParseErrors"],
+        severity: DocsChecker.Result["mdxParseErrorSeverity"]
+    ): void {
         for (const error of errors) {
-            // The rich, multi-line Rust-style render lives on `toString`.
-            // Surround each error with blank lines so they're visually distinct.
-            context.stderr.info(`\n${error.toString()}\n`);
+            context.stderr.info(`\n${error.toString(severity)}\n`);
         }
     }
 
@@ -216,7 +218,7 @@ export class CheckCommand {
             results.docs = [
                 ...filteredDocsViolations.map((v) => toJsonViolation(v)),
                 ...docsCheckResult.mdxParseErrors.map((e) => ({
-                    severity: "error",
+                    severity: docsCheckResult.mdxParseErrorSeverity === "error" ? "error" : "warning",
                     rule: e.code.code,
                     filepath: e.displayRelativeFilepath,
                     ...(e.line != null ? { line: e.line } : {}),

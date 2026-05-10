@@ -160,11 +160,13 @@ export async function validateMdxFiles({
 export function logMdxValidationResults({
     errors,
     totalFiles,
-    context
+    context,
+    severity = "error"
 }: {
     errors: MdxValidationError[];
     totalFiles: number;
     context: TaskContext;
+    severity?: "warn" | "error";
 }): void {
     if (errors.length === 0) {
         context.logger.info(chalk.green(`\n✓ All ${totalFiles} MDX files are valid`));
@@ -172,6 +174,10 @@ export function logMdxValidationResults({
     }
 
     for (const error of errors) {
-        context.logger.error(error.toString());
+        if (severity === "warn") {
+            context.logger.warn(error.toString());
+        } else {
+            context.logger.error(error.toString());
+        }
     }
 }

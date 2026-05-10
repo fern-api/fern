@@ -2114,11 +2114,15 @@ function addDocsBrokenLinksCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
 function addDocsMdCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "check",
-        "Validate MDX syntax in your docs",
+        false, // hidden — deprecated in favour of `fern check`
         () => {
             // No additional options for this command
         },
         async () => {
+            cliContext.logger.warn(
+                "fern docs md check is deprecated. Use `fern check` instead — MDX validation is now included automatically and configurable via docs.yml `check.rules.md-validate`."
+            );
+
             cliContext.instrumentPostHogEvent({
                 command: "fern docs md check"
             });
@@ -2133,21 +2137,23 @@ function addDocsMdCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
             }
 
             const docsWorkspace = project.docsWorkspaces;
-            let hasErrors = false;
+            const mdValidateSeverity = docsWorkspace.config.check?.rules?.mdValidate ?? "warn";
+
+            let hasIssues = false;
             await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
                 const { errors, totalFiles } = await validateMdxFiles({
                     workspace: docsWorkspace,
                     context
                 });
 
-                logMdxValidationResults({ errors, totalFiles, context });
+                logMdxValidationResults({ errors, totalFiles, context, severity: mdValidateSeverity });
 
                 if (errors.length > 0) {
-                    hasErrors = true;
+                    hasIssues = true;
                 }
             });
 
-            if (hasErrors) {
+            if (hasIssues && mdValidateSeverity === "error") {
                 cliContext.failWithoutThrowing(undefined, undefined, { code: CliError.Code.ValidationError });
             }
         }
