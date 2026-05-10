@@ -4,8 +4,8 @@ import type { ReadStream, WriteStream } from "node:tty";
 import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
 import { getOrCreateFernRunId } from "@fern-api/cli-telemetry";
-import { LinkCheckClient, LinkCheckError, LinkCheckFormatter, ProgressRenderer, runCliV2 } from "@fern-api/cli-v2";
 import type { OutputFormat } from "@fern-api/cli-v2";
+import { LinkCheckClient, LinkCheckError, LinkCheckFormatter, ProgressRenderer, runCliV2 } from "@fern-api/cli-v2";
 import {
     correctIncorrectDockerOrg,
     GENERATORS_CONFIGURATION_FILENAME,
@@ -2194,12 +2194,9 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                         progress.onLinkChecked(data.linksChecked, data.totalLinks);
                     },
                     onError: (message) => {
-                        progress.finish();
                         cliContext.logger.error(message);
                     }
                 });
-
-                progress.finish();
 
                 const formatter = new LinkCheckFormatter();
                 const output = formatter.format(result, argv.output as OutputFormat);
@@ -2227,6 +2224,8 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     });
                 }
                 throw error;
+            } finally {
+                progress.finish();
             }
         }
     );

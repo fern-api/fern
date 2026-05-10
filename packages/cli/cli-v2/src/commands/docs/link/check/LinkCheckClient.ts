@@ -60,6 +60,7 @@ export class LinkCheckClient {
         let totalPages = 0;
         let totalLinks = 0;
         let workingLinks = 0;
+        let serverError: string | undefined;
 
         const url = `${this.baseUrl}?${new URLSearchParams({ domain }).toString()}`;
         const response = await fetch(url, {
@@ -187,11 +188,16 @@ export class LinkCheckClient {
                     }
                     case "error": {
                         const data = event.data as { message: string };
+                        serverError = data.message;
                         callbacks.onError?.(data.message);
                         break;
                     }
                 }
             }
+        }
+
+        if (serverError != null) {
+            throw new LinkCheckError(0, serverError);
         }
 
         return {

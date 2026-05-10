@@ -48,12 +48,9 @@ export class LinkCheckCommand {
                     progress.onLinkChecked(data.linksChecked, data.totalLinks);
                 },
                 onError: (message) => {
-                    progress.finish();
                     context.stderr.error(`${Icons.error} ${chalk.red(message)}`);
                 }
             });
-
-            progress.finish();
 
             const formatter = new LinkCheckFormatter();
             const output = formatter.format(result, args.output);
@@ -74,6 +71,8 @@ export class LinkCheckCommand {
                 this.handleApiError(error);
             }
             throw error;
+        } finally {
+            progress.finish();
         }
     }
 
