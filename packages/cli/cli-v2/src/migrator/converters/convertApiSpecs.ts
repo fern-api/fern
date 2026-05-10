@@ -1,5 +1,6 @@
 import type { schemas } from "@fern-api/config";
 import { APIS_DIRECTORY, DEFINITION_DIRECTORY, FERN_DIRECTORY, generatorsYml } from "@fern-api/configuration";
+import path from "path";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readdir } from "fs/promises";
 import type { MigratorWarning } from "../types/index.js";
@@ -61,7 +62,8 @@ export async function convertSingleApi(options: ConvertSingleApiOptions): Promis
         warnings.push(...result.warnings);
 
         if (result.specs.length > 0) {
-            return { api: { specs: result.specs }, warnings };
+            const adjustedSpecs = adjustSpecPathsForSingleApi(result.specs);
+            return { api: { specs: adjustedSpecs }, warnings };
         }
     }
 
@@ -203,14 +205,12 @@ function adjustSpecPaths(specs: schemas.ApiSpecSchema[], apiName: string): schem
     });
 }
 
-function adjustPath(path: string, apiName: string): string {
-    if (path.startsWith("/")) {
-        return path;
+function adjustPath(filePath: string, apiName: string): string {
+    if (filePath.startsWith("/")) {
+        return filePath;
     }
-    if (path.startsWith("./")) {
-        return `./${FERN_DIRECTORY}/${APIS_DIRECTORY}/${apiName}/${path.slice(2)}`;
-    }
-    return `./${FERN_DIRECTORY}/${APIS_DIRECTORY}/${apiName}/${path}`;
+    const rawPath = filePath.startsWith("./") ? filePath.slice(2) : filePath;
+    return `./${normalizePosixPath(`${FERN_DIRECTORY}/${APIS_DIRECTORY}/${apiName}/${rawPath}`)}`;
 }
 
 function adjustPathOrPaths(paths: string | string[], apiName: string): string | string[] {
@@ -218,6 +218,91 @@ function adjustPathOrPaths(paths: string | string[], apiName: string): string | 
         return paths.map((p) => adjustPath(p, apiName));
     }
     return adjustPath(paths, apiName);
+}
+
+/**
+ * Adjusts spec paths for single-API projects to be relative from the project root.
+ * Paths in generators.yml are relative to the fern/ directory, but fern.yml is
+ * created at the project root, so paths need to be re-rooted.
+ */
+function adjustSpecPathsForSingleApi(specs: schemas.ApiSpecSchema[]): schemas.ApiSpecSchema[] {
+    return specs.map((spec) => {
+        if ("openapi" in spec) {
+            return {
+                ...spec,
+                openapi: adjustPathForSingleApi(spec.openapi),
+                overrides: spec.overrides != null ? adjustPathOrPathsForSingleApi(spec.overrides) : undefined,
+                overlays: spec.overlays != null ? adjustPathForSingleApi(spec.overlays) : undefined
+            };
+        }
+        if ("asyncapi" in spec) {
+            return {
+                ...spec,
+                asyncapi: adjustPathForSingleApi(spec.asyncapi),
+                overrides: spec.overrides != null ? adjustPathOrPathsForSingleApi(spec.overrides) : undefined
+            };
+        }
+        if ("fern" in spec) {
+            return {
+                ...spec,
+                fern: adjustPathForSingleApi(spec.fern)
+            };
+        }
+        if ("conjure" in spec) {
+            return {
+                ...spec,
+                conjure: adjustPathForSingleApi(spec.conjure)
+            };
+        }
+        if ("openrpc" in spec) {
+            return {
+                ...spec,
+                openrpc: adjustPathForSingleApi(spec.openrpc),
+                overrides: spec.overrides != null ? adjustPathOrPathsForSingleApi(spec.overrides) : undefined
+            };
+        }
+        if ("graphql" in spec) {
+            return {
+                ...spec,
+                graphql: adjustPathForSingleApi(spec.graphql),
+                overrides: spec.overrides != null ? adjustPathOrPathsForSingleApi(spec.overrides) : undefined
+            };
+        }
+        if ("proto" in spec) {
+            return {
+                ...spec,
+                proto: {
+                    ...spec.proto,
+                    root: adjustPathForSingleApi(spec.proto.root),
+                    overrides:
+                        spec.proto.overrides != null ? adjustPathOrPathsForSingleApi(spec.proto.overrides) : undefined
+                }
+            };
+        }
+        return spec;
+    });
+}
+
+function adjustPathForSingleApi(filePath: string): string {
+    if (filePath.startsWith("/")) {
+        return filePath;
+    }
+    const rawPath = filePath.startsWith("./") ? filePath.slice(2) : filePath;
+    return `./${normalizePosixPath(`${FERN_DIRECTORY}/${rawPath}`)}`;
+}
+
+function adjustPathOrPathsForSingleApi(paths: string | string[]): string | string[] {
+    if (Array.isArray(paths)) {
+        return paths.map((p) => adjustPathForSingleApi(p));
+    }
+    return adjustPathForSingleApi(paths);
+}
+
+/**
+ * Normalizes a POSIX path by resolving `.` and `..` segments.
+ */
+function normalizePosixPath(p: string): string {
+    return path.posix.normalize(p);
 }
 
 /**

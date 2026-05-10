@@ -28,14 +28,14 @@ describe("migrateDocsYml", () => {
         await writeFile(join(testDir, "docs.yml"), "title: My Docs\nnavigation:\n  - page: Home\n");
         const result = await migrateDocsYml(AbsoluteFilePath.of(testDir));
         expect(result.found).toBe(true);
-        expect(result.docsRef).toEqual({ $ref: "./docs.yml" });
+        expect(result.docsRef).toEqual({ $ref: "./fern/docs.yml" });
     });
 
     it("returns a $ref pointer even when docs.yml is empty", async () => {
         await writeFile(join(testDir, "docs.yml"), "");
         const result = await migrateDocsYml(AbsoluteFilePath.of(testDir));
         expect(result.found).toBe(true);
-        expect(result.docsRef).toEqual({ $ref: "./docs.yml" });
+        expect(result.docsRef).toEqual({ $ref: "./fern/docs.yml" });
     });
 
     it("returns a $ref pointer when docs.yml contains complex content with $ref references", async () => {
@@ -45,7 +45,7 @@ describe("migrateDocsYml", () => {
         );
         const result = await migrateDocsYml(AbsoluteFilePath.of(testDir));
         expect(result.found).toBe(true);
-        expect(result.docsRef).toEqual({ $ref: "./docs.yml" });
+        expect(result.docsRef).toEqual({ $ref: "./fern/docs.yml" });
     });
 
     it("does not resolve or inline any content from docs.yml", async () => {
@@ -53,7 +53,7 @@ describe("migrateDocsYml", () => {
         const result = await migrateDocsYml(AbsoluteFilePath.of(testDir));
         // The result should only contain a $ref pointer, never parsed content
         expect(result.docsRef).toBeDefined();
-        expect(result.docsRef).toEqual({ $ref: "./docs.yml" });
+        expect(result.docsRef).toEqual({ $ref: "./fern/docs.yml" });
         expect(result.docsRef).toBeDefined();
         expect(Object.keys(result.docsRef ?? {})).toEqual(["$ref"]);
     });

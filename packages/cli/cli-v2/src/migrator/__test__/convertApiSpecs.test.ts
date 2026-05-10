@@ -211,7 +211,7 @@ describe("convertSingleApi", () => {
             fernDir: AbsoluteFilePath.of(testDir),
             generatorsYmlApi: { specs: [{ openapi: "./openapi.yml" }] }
         });
-        expect(result.api?.specs[0]).toMatchObject({ openapi: "./openapi.yml" });
+        expect(result.api?.specs[0]).toMatchObject({ openapi: "./fern/openapi.yml" });
     });
 
     it("uses Fern definition directory when it exists (takes precedence over generators.yml specs)", async () => {
