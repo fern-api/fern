@@ -7,12 +7,12 @@ import tmp from "tmp-promise";
 import { FixtureConfigurations } from "../../config/api/index.js";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
 import { Semaphore } from "../../Semaphore.js";
+import { printTestCases } from "../test/printTestCases.js";
 import { ContainerScriptRunner } from "../test/script-runner/ContainerScriptRunner.js";
 import { LocalScriptRunner } from "../test/script-runner/LocalScriptRunner.js";
 import { ScriptRunner } from "../test/script-runner/ScriptRunner.js";
-import { ContainerTestRunner, LocalTestRunner, TestRunner } from "../test/test-runner/index.js";
 import { TaskContextFactory } from "../test/TaskContextFactory.js";
-import { printTestCases } from "../test/printTestCases.js";
+import { ContainerTestRunner, LocalTestRunner, TestRunner } from "../test/test-runner/index.js";
 import { buildVirtualWorkspace } from "./buildVirtualWorkspace.js";
 import { discoverMegaFixtures, MegaFixture } from "./discoverMegaFixtures.js";
 import { filterFixtures } from "./filterFixtures.js";
@@ -84,8 +84,7 @@ export async function runMegaTest(args: MegaTestArgs): Promise<MegaTestSummary> 
     }
 
     const workspaceDir =
-        args.workspaceDir ??
-        AbsoluteFilePath.of((await tmp.dir({ prefix: "fern-seed-mega-test-workspace-" })).path);
+        args.workspaceDir ?? AbsoluteFilePath.of((await tmp.dir({ prefix: "fern-seed-mega-test-workspace-" })).path);
     const outputDir =
         args.outputDir ?? AbsoluteFilePath.of((await tmp.dir({ prefix: "fern-seed-mega-test-output-" })).path);
 
@@ -117,14 +116,7 @@ export async function runMegaTest(args: MegaTestArgs): Promise<MegaTestSummary> 
     if (!args.skipScripts) {
         scriptRunner = args.local
             ? new LocalScriptRunner(args.workspace, args.skipScripts, taskContext, args.logLevel)
-            : new ContainerScriptRunner(
-                  args.workspace,
-                  args.skipScripts,
-                  taskContext,
-                  args.logLevel,
-                  undefined,
-                  1
-              );
+            : new ContainerScriptRunner(args.workspace, args.skipScripts, taskContext, args.logLevel, undefined, 1);
     }
 
     let testRunner: TestRunner;
@@ -245,14 +237,11 @@ function printMegaSummary({
     printTestCases(rows);
 
     const mode = local ? "local" : "docker";
-    const status =
-        result.type === "success" ? chalk.green("PASSED") : chalk.red(`FAILED (${result.cause})`);
+    const status = result.type === "success" ? chalk.green("PASSED") : chalk.red(`FAILED (${result.cause})`);
     // eslint-disable-next-line no-console
     console.log(
         chalk.bold(
-            `\n[mega-test] ${status} for ${fixtures.length} fixture${
-                fixtures.length === 1 ? "" : "s"
-            } in ${mode} mode`
+            `\n[mega-test] ${status} for ${fixtures.length} fixture${fixtures.length === 1 ? "" : "s"} in ${mode} mode`
         )
     );
     // eslint-disable-next-line no-console

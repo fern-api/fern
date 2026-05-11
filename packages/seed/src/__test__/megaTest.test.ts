@@ -5,26 +5,15 @@ import os from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
-import {
-    buildVirtualWorkspace,
-    constructVirtualGeneratorsYml
-} from "../commands/mega-test/buildVirtualWorkspace";
-import {
-    discoverMegaFixtures,
-    extractOpenApiSpecs,
-    MegaFixture
-} from "../commands/mega-test/discoverMegaFixtures";
+import { buildVirtualWorkspace, constructVirtualGeneratorsYml } from "../commands/mega-test/buildVirtualWorkspace";
+import { discoverMegaFixtures, extractOpenApiSpecs, MegaFixture } from "../commands/mega-test/discoverMegaFixtures";
 import { filterFixtures } from "../commands/mega-test/filterFixtures";
 
 function makeTempDir(prefix: string): AbsoluteFilePath {
     return AbsoluteFilePath.of(fs.mkdtempSync(path.join(os.tmpdir(), prefix)));
 }
 
-function makeFixture(
-    rootDir: AbsoluteFilePath,
-    name: string,
-    overrides?: Partial<MegaFixture>
-): MegaFixture {
+function makeFixture(rootDir: AbsoluteFilePath, name: string, overrides?: Partial<MegaFixture>): MegaFixture {
     const fixtureDir = AbsoluteFilePath.of(path.join(rootDir, name));
     fs.mkdirSync(fixtureDir, { recursive: true });
     const openApiPath = AbsoluteFilePath.of(path.join(fixtureDir, "openapi.yml"));
@@ -144,9 +133,9 @@ describe("constructVirtualGeneratorsYml", () => {
         fixtures[1]!.name = "imdb";
 
         const workspaceDir = AbsoluteFilePath.of(path.join(rootDir, "workspace"));
-        expect(() =>
-            constructVirtualGeneratorsYml({ fixtures, absolutePathToWorkspaceDir: workspaceDir })
-        ).toThrow(/duplicate fixture namespace "imdb"/);
+        expect(() => constructVirtualGeneratorsYml({ fixtures, absolutePathToWorkspaceDir: workspaceDir })).toThrow(
+            /duplicate fixture namespace "imdb"/
+        );
     });
 });
 

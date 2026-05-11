@@ -51,7 +51,9 @@ function getTestDefinitionsApisDir(): AbsoluteFilePath {
  */
 export function discoverMegaFixtures({
     apisDir = getTestDefinitionsApisDir()
-}: { apisDir?: AbsoluteFilePath } = {}): MegaFixture[] {
+}: {
+    apisDir?: AbsoluteFilePath;
+} = {}): MegaFixture[] {
     const fixtures: MegaFixture[] = [];
 
     for (const entry of fs.readdirSync(apisDir, { withFileTypes: true })) {
@@ -139,9 +141,10 @@ export function extractOpenApiSpecs(parsed: unknown, fixtureDir: AbsoluteFilePat
         const absolutePathToOverlays =
             typeof overlaysRaw === "string" ? resolveRelativeToFixture(fixtureDir, overlaysRaw) : undefined;
 
-        const origin = typeof (spec as { origin?: unknown }).origin === "string"
-            ? ((spec as { origin?: string }).origin)
-            : undefined;
+        const origin =
+            typeof (spec as { origin?: unknown }).origin === "string"
+                ? (spec as { origin?: string }).origin
+                : undefined;
 
         const settings = (spec as { settings?: unknown }).settings;
 

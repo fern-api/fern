@@ -82,9 +82,7 @@ export function constructVirtualGeneratorsYml({
 
     for (const fixture of fixtures) {
         if (seenNamespaces.has(fixture.name)) {
-            throw new Error(
-                `Mega-test: duplicate fixture namespace "${fixture.name}" — fixture names must be unique.`
-            );
+            throw new Error(`Mega-test: duplicate fixture namespace "${fixture.name}" — fixture names must be unique.`);
         }
         seenNamespaces.add(fixture.name);
 
