@@ -1,5 +1,5 @@
 # Stage 1: Copy Node.js from official image
-FROM node:24.15.0-bookworm-slim AS node
+FROM node:24.15.0-trixie-slim AS node
 
 # Stage 2: Base Python image with dependencies
 FROM python:3.13.7-slim AS python-base

@@ -2,9 +2,14 @@
 
 - summary: |
     Bump the Java SDK generator container's Node base image from
-    `node:24.14.1-bookworm` to `node:24.15.0-bookworm`. Aligns the generator
+    `node:24.14.1-bookworm` to `node:24.15.0-trixie`. Aligns the generator
     with the rest of the Fern generator containers on a single Node patch
-    version (24.15.0). The bundled npm 11.12.1 in `node:24.15.0` already ships
+    version (24.15.0) and a single Debian release (trixie). Trixie ships
+    patched versions of glibc, dpkg, nghttp2, libcap2, systemd, libgcrypt20,
+    krb5, curl, and expat that are not available on bookworm, clearing the
+    AWS Inspector findings that dist-upgrade alone could not. The non-slim
+    variant is intentional because the Node-stage patch steps shell out to
+    `curl` and `tar`. The bundled npm 11.12.1 in `node:24.15.0` already ships
     patched `glob@13.0.6`, `minimatch@10.2.4`, `tar@7.5.11`, and
     `brace-expansion@5.0.4`, so those tarball-replacement patch steps are
     removed. The `ip-address` and `picomatch` patches are retained because the

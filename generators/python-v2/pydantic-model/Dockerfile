@@ -7,7 +7,7 @@
 # Bundled npm globals are removed below so the npm-bundled JS dependencies (cross-spawn, glob,
 # minimatch, tar, brace-expansion, ip-address, diff) cannot be flagged or invoked at runtime — this
 # image only runs the bundled CLI directly via node.
-FROM node:24.15.0-bookworm-slim
+FROM node:24.15.0-trixie-slim
 RUN apt-get update \
     && apt-get -y --no-install-recommends dist-upgrade \
     && apt-get install -y --no-install-recommends ca-certificates curl \

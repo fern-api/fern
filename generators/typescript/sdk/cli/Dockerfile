@@ -1,8 +1,16 @@
-FROM node:24.14-slim
+FROM node:24.15.0-trixie-slim
 
+# Apply latest Debian security updates so that grype-tracked OS package
+# vulnerabilities (glibc, dpkg, nghttp2, libcap2, systemd, libgcrypt20,
+# krb5, etc.) are resolved on top of the base image. trixie ships
+# patched versions of these packages that are not available on bookworm
+# (bookworm publishes the upstream fixes only via the next-stable
+# branch), so the base-image choice — not just dist-upgrade — is what
+# clears the AWS Inspector findings.
 RUN apt-get update \
     && apt-get -y --no-install-recommends dist-upgrade \
     && apt-get install -y --no-install-recommends ca-certificates git zip \
+    && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/*
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
