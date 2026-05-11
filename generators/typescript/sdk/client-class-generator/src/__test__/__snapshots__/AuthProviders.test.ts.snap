@@ -640,6 +640,7 @@ exports[`HeaderAuthProviderGenerator > getAuthOptionsProperties() > returns requ
 exports[`HeaderAuthProviderGenerator > writeToFile() > generates header auth provider with custom header name and prefix 1`] = `
 "const PARAM_KEY = "authorization" as const;
 const HEADER_NAME = "Authorization" as const;
+const HEADER_PREFIX = "Bearer " as const;
 
 export class HeaderAuthProvider implements core.AuthProvider {
     private readonly options: HeaderAuthProvider.Options;
@@ -664,7 +665,7 @@ export class HeaderAuthProvider implements core.AuthProvider {
                 }
 
                 return {
-                    headers: { [HEADER_NAME]: headerValue },
+                    headers: { [HEADER_NAME]: \`\${HEADER_PREFIX}\${headerValue}\` },
                 };
                 
     }

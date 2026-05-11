@@ -35,6 +35,7 @@ export function convertStreamingOperation({
                 context,
                 streamFormat: streamingExtension.format,
                 streamTerminator: streamingExtension.terminator,
+                streamResumable: streamingExtension.resumable,
                 source: context.source
             });
             return {
@@ -94,6 +95,7 @@ export function convertStreamingOperation({
                 context,
                 streamFormat: streamingExtension.format,
                 streamTerminator: streamingExtension.terminator,
+                streamResumable: streamingExtension.resumable,
                 suffix: STREAM_SUFFIX,
                 source: context.source,
                 streamRequestNameOverride: autoStreamRequestName

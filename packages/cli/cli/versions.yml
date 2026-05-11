@@ -1,4 +1,39 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.22.0
+  changelogEntry:
+    - summary: |
+        Add `fern sdk list` command to list configured and available SDK generators.
+        Displays configured SDKs from local fern.yml and available generators from the
+        Fern registry. Supports `--language`, `--type`, and `--json` flags.
+      type: feat
+  createdAt: "2026-05-10"
+  irVersion: 66
+- version: 5.21.1
+  changelogEntry:
+    - summary: |
+        Bump IR to 67.2.0 to publish the optional `resumable` field added to
+        `SseStreamChunk` in PR #15795. Without the IR version bump, no new
+        `@fern-fern/ir-sdk` minor was published and the field stayed invisible
+        to downstream consumers.
+      type: chore
+  createdAt: "2026-05-08"
+  irVersion: 66
+- version: 5.21.0
+  changelogEntry:
+    - summary: |
+        Add a new `resumable` sub-property to the `x-fern-streaming` OpenAPI extension
+        (and a corresponding `resumable` field on Fern Definition `response-stream`
+        blocks). When set on an SSE endpoint, the IR carries `resumable: true` on
+        the SSE chunk so generators can emit a client-side reconnect loop using
+        standard SSE primitives (`Last-Event-ID`, `retry:`).
+
+        The flag is inheritable: setting `x-fern-streaming.resumable: true` at the
+        OpenAPI document level applies to every SSE endpoint unless an operation
+        overrides it (silent fallback). Defaults to `false`. The IR field is
+        optional, so generators that don't read it are unaffected.
+      type: feat
+  createdAt: "2026-05-08"
+  irVersion: 66
 - version: 5.20.1
   changelogEntry:
     - summary: |

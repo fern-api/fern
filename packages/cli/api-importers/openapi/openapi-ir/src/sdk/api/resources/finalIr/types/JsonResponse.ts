@@ -9,4 +9,10 @@ export interface JsonResponse
     schema: FernOpenapiIr.Schema;
     responseProperty: string | undefined;
     terminator: string | undefined;
+    /**
+     * For `streamingSse` responses, when true, the endpoint participates in
+     * client-side reconnection using SSE primitives (`Last-Event-ID` /
+     * `retry:`). Unset/false on non-SSE variants.
+     */
+    resumable: boolean | undefined;
 }

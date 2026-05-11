@@ -57,7 +57,7 @@ blockExoticSubdeps: true
 
 catalog:
   "@babel/core": ^7.29.0
-  "@babel/preset-env": ^7.29.2
+  "@babel/preset-env": ^7.29.5
   "@babel/preset-typescript": ^7.28.5
   "@biomejs/biome": 2.4.10
   "@blueprintjs/eslint-plugin": ^6.1.24

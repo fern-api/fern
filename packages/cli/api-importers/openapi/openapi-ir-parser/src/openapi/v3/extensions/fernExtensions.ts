@@ -8,7 +8,8 @@ export const XFernStreaming: NodeType = {
     properties: {
         "stream-condition": { type: "string" },
         response: "Schema",
-        "response-stream": "Schema"
+        "response-stream": "Schema",
+        resumable: { type: "boolean" }
     },
     required: ["stream-condition", "response", "response-stream"],
     extensionsPrefix: "x-"
@@ -165,6 +166,22 @@ export const FernOpenAPIExtension = {
      *           $ref: ./path/to/response/type.yaml
      *         response-stream:
      *           $ref: ./path/to/response-stream/type.yaml
+     *
+     * For SSE endpoints, `resumable: true` opts the endpoint into
+     * client-side reconnection using `Last-Event-ID` / `retry:`. The
+     * default is `false`. The flag is inheritable: setting
+     * `x-fern-streaming.resumable: true` at the document level applies
+     * to all SSE endpoints unless an operation overrides it explicitly.
+     *
+     * Example usage:
+     *   x-fern-streaming:
+     *     resumable: true
+     *
+     *   paths:
+     *     /path/to/my/endpoint:
+     *       x-fern-streaming:
+     *         format: sse
+     *         resumable: false # overrides the document default
      */
     STREAMING: "x-fern-streaming",
 
