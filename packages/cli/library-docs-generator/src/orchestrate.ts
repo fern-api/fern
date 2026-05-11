@@ -1,11 +1,10 @@
+import { readFile } from "node:fs/promises";
 import { docsYml } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
 import { CliError, type TaskContext } from "@fern-api/task-context";
-
 import chalk from "chalk";
-import { readFile } from "node:fs/promises";
 
 import { generateCpp } from "./CppDocsGenerator.js";
 import { generate } from "./PythonDocsGenerator.js";
@@ -201,14 +200,15 @@ export async function runLibraryDocsGeneration({
         context.logger.error(chalk.red(extractErrorMessage(failure.reason)));
     }
 
-    if (failures.length > 0) {
+    const firstFailure = failures[0];
+    if (firstFailure != null) {
         // Surface the first specific failure so the caller exits with a useful message.
-        const first = failures[0]!.reason;
-        if (first instanceof CliError) {
-            throw first;
+        const reason = firstFailure.reason;
+        if (reason instanceof CliError) {
+            throw reason;
         }
         throw new CliError({
-            message: extractErrorMessage(first),
+            message: extractErrorMessage(reason),
             code: CliError.Code.InternalError
         });
     }
