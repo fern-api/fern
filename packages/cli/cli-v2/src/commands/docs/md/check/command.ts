@@ -28,18 +28,17 @@ export class CheckCommand {
 
         const adapter = new LegacyProjectAdapter({ context });
         const project = await adapter.adapt(workspace);
-        const docsWorkspace = project.docsWorkspaces;
-        if (docsWorkspace == null) {
+        // workspace.docs != null is guaranteed by the guard above,
+        // so LegacyProjectAdapter always produces a defined docsWorkspaces here.
+        if (project.docsWorkspaces == null) {
             throw new CliError({
-                message:
-                    "No docs configuration found in fern.yml.\n\n" +
-                    "  Add a 'docs:' section to your fern.yml to get started.",
-                code: CliError.Code.ConfigError
+                message: "Unexpected internal error: docs workspace is missing despite docs config being present.",
+                code: CliError.Code.InternalError
             });
         }
 
         const validator = new MdxParseValidator({ context });
-        const { errors, totalFiles } = await validator.validate({ workspace: docsWorkspace });
+        const { errors, totalFiles } = await validator.validate({ workspace: project.docsWorkspaces });
 
         for (const error of errors) {
             context.stderr.info(`\n${error.toString()}\n`);
