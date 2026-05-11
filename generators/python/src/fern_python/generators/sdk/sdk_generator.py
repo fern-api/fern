@@ -1,3 +1,4 @@
+import os
 import sys
 from typing import Literal, Optional, Sequence, Tuple, Union, cast
 
@@ -22,6 +23,7 @@ from .error_generator.error_generator import ErrorGenerator
 from .v2.generator import PythonV2Generator
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import AST, Project
+from fern_python.codegen.project import ProjectConfig
 from fern_python.codegen.filepath import Filepath
 from fern_python.codegen.module_manager import ModuleExport
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
@@ -88,6 +90,20 @@ class SdkGenerator(AbstractGenerator):
             )
             if custom_config.use_api_name_in_package
             else (cleaned_org_name,)
+        )
+
+    def _get_relative_path_for_project(
+        self,
+        *,
+        generator_config: GeneratorConfig,
+        ir: ir_types.IntermediateRepresentation,
+        project_config: Optional[ProjectConfig],
+    ) -> str:
+        return os.path.join(
+            *self.get_relative_path_to_project_for_publish(
+                generator_config=generator_config,
+                ir=ir,
+            )
         )
 
     def run(
