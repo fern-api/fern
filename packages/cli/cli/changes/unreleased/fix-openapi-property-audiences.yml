@@ -1,0 +1,11 @@
+- summary: |
+    Apply property-level `x-fern-audiences` filtering when generating IR from
+    OpenAPI specs. Previously, the OpenAPI / OSSWorkspace conversion path only
+    filtered endpoints, webhooks, and websocket channels and silently kept
+    object properties tagged with non-matching audiences. As a result, fields
+    tagged `x-fern-audiences: [internal]` still rendered in the docs UI for
+    instances configured with a non-overlapping audience (e.g. `[simba]`).
+    The OpenAPI path now reuses the shared
+    `filterIntermediateRepresentationForAudiences` filter introduced in
+    PR #15789, matching the Fern Definition pipeline.
+  type: fix

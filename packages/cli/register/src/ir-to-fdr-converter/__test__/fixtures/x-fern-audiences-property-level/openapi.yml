@@ -1,0 +1,62 @@
+openapi: 3.0.3
+info:
+  title: Property-level x-fern-audiences fixture
+  version: 1.0.0
+  description: |
+    Reproduces the docs UI bug where property-level `x-fern-audiences` were not
+    filtered when generating IR from an OpenAPI spec via the OSSWorkspace path.
+paths:
+  /agents:
+    post:
+      operationId: createAgent
+      summary: Create an agent
+      x-fern-audiences: ["internal", "simba"]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateAgentRequest"
+      responses:
+        "200":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Agent"
+components:
+  schemas:
+    CreateAgentRequest:
+      type: object
+      required: [name, voice_id]
+      properties:
+        name:
+          type: string
+        prompt:
+          type: string
+        voice_id:
+          type: string
+        temperature:
+          type: number
+          format: float
+          default: 0.7
+          x-fern-audiences: ["internal"]
+        config:
+          type: object
+          additionalProperties: true
+          x-fern-audiences: ["internal"]
+        memory_enabled:
+          type: boolean
+          default: false
+          x-fern-audiences: ["internal"]
+    Agent:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        debug_info:
+          type: string
+          x-fern-audiences: ["internal"]

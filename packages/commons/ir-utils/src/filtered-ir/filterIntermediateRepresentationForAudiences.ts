@@ -8,6 +8,7 @@ import {
 } from "@fern-api/ir-sdk";
 import { mapValues, pickBy } from "lodash-es";
 
+import { IdGenerator } from "../utils/IdGenerator.js";
 import { getWireValue } from "../utils/namesUtils.js";
 import { FilteredIr } from "./FilteredIr.js";
 import { filterEndpointExample, filterExampleType, filterWebhookExamplePayload } from "./filterExamples.js";
@@ -27,9 +28,15 @@ export function filterIntermediateRepresentationForAudiences(
             typeDeclaration.userProvidedExamples = typeDeclaration.userProvidedExamples
                 .map((example) => filterExampleType({ filteredIr, exampleType: example }))
                 .filter((ex) => ex !== undefined) as ExampleType[];
+            // Use the canonical type id derived from the type declaration. The key in
+            // `intermediateRepresentation.types` is owned by the producer (Fern Definition
+            // IR uses `IdGenerator.generateTypeId(name)` while OpenAPI / OSSWorkspace uses
+            // the namespaced schema id), but `excludedProperties` is always keyed by the
+            // canonical id, so we recompute it here for consistent property lookups.
+            const canonicalTypeId = IdGenerator.generateTypeId(typeDeclaration.name);
             if (typeDeclaration.shape.type === "object") {
                 for (const property of typeDeclaration.shape.properties) {
-                    const hasProperty = filteredIr.hasProperty(typeId, getWireValue(property.name));
+                    const hasProperty = filteredIr.hasProperty(canonicalTypeId, getWireValue(property.name));
                     if (hasProperty) {
                         filteredProperties.push(property);
                     }

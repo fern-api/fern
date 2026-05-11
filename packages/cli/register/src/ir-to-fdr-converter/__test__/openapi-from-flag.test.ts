@@ -3366,4 +3366,87 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         expect(ir).toBeDefined();
         expect(ir.services).toBeDefined();
     });
+
+    it("should filter property-level x-fern-audiences when generating IR from OpenAPI", async () => {
+        // Regression: properties tagged with `x-fern-audiences: [internal]` on a top-level
+        // component schema were being retained in the IR produced by the OpenAPI / OSSWorkspace
+        // path, so the docs UI (which reads from that IR) still rendered them on instances
+        // configured with a non-overlapping audience like Simba (`audiences: [simba]`).
+        //
+        // PR #15789 introduced `filterIntermediateRepresentationForAudiences` and wired it into
+        // the Fern Definition IR pipeline. This test ensures the OpenAPI / OSSWorkspace path
+        // applies the same filter, so the rendered docs UI honours property-level audience tags.
+        const fixturePath = join(
+            AbsoluteFilePath.of(__dirname),
+            RelativeFilePath.of("fixtures/x-fern-audiences-property-level")
+        );
+
+        const loadFilteredIr = async (
+            audiences: Parameters<OSSWorkspace["getIntermediateRepresentation"]>[0]["audiences"]
+        ) => {
+            const context = createMockTaskContext();
+            const workspace = await loadAPIWorkspace({
+                absolutePathToWorkspace: fixturePath,
+                context,
+                cliVersion: "0.0.0",
+                workspaceName: "x-fern-audiences-property-level"
+            });
+            expect(workspace.didSucceed).toBe(true);
+            assert(workspace.didSucceed);
+
+            if (!(workspace.workspace instanceof OSSWorkspace)) {
+                throw new Error(`Expected OSSWorkspace, got ${workspace.workspace.constructor.name}`);
+            }
+
+            return workspace.workspace.getIntermediateRepresentation({
+                context,
+                audiences,
+                enableUniqueErrorsPerEndpoint: true,
+                generateV1Examples: false,
+                logWarnings: false
+            });
+        };
+
+        const originalName = (name: string | { originalName: string }): string =>
+            typeof name === "string" ? name : name.originalName;
+
+        const propertyWireNames = (ir: Awaited<ReturnType<typeof loadFilteredIr>>, typeName: string): string[] => {
+            const declaration = Object.values(ir.types).find((type) => originalName(type.name.name) === typeName);
+            if (declaration == null) {
+                const found = Object.values(ir.types).map((t) => originalName(t.name.name));
+                throw new Error(`Expected to find type ${typeName} in IR; found: ${found.join(", ")}`);
+            }
+            if (declaration.shape.type !== "object") {
+                throw new Error(`Expected ${typeName} to be an object type, got ${declaration.shape.type}`);
+            }
+            return declaration.shape.properties.map((property) =>
+                typeof property.name === "string" ? property.name : property.name.wireValue
+            );
+        };
+
+        // Baseline: with audiences "all" (no filtering), every property is present.
+        const unfilteredIr = await loadFilteredIr({ type: "all" });
+        expect(propertyWireNames(unfilteredIr, "CreateAgentRequest").sort()).toEqual(
+            ["config", "memory_enabled", "name", "prompt", "temperature", "voice_id"].sort()
+        );
+        expect(propertyWireNames(unfilteredIr, "Agent").sort()).toEqual(["debug_info", "id", "name"].sort());
+
+        // Filtered: with audiences `[simba]`, properties tagged only `[internal]` must be excluded.
+        const simbaIr = await loadFilteredIr({ type: "select", audiences: ["simba"] });
+        const createAgentProps = propertyWireNames(simbaIr, "CreateAgentRequest").sort();
+        expect(createAgentProps).toEqual(["name", "prompt", "voice_id"].sort());
+        expect(createAgentProps).not.toContain("temperature");
+        expect(createAgentProps).not.toContain("config");
+        expect(createAgentProps).not.toContain("memory_enabled");
+
+        const agentProps = propertyWireNames(simbaIr, "Agent").sort();
+        expect(agentProps).toEqual(["id", "name"].sort());
+        expect(agentProps).not.toContain("debug_info");
+
+        // Endpoints tagged `[internal, simba]` should still be present for `[simba]`.
+        const visibleEndpoints = Object.values(simbaIr.services).flatMap((service) =>
+            service.endpoints.map((endpoint) => endpoint.id)
+        );
+        expect(visibleEndpoints.length).toBeGreaterThan(0);
+    });
 });
