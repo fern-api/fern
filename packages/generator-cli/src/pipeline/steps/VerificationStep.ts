@@ -1,7 +1,6 @@
 import { ContainerRunner, extractErrorMessage } from "@fern-api/core-utils";
 import { copyToContainer, execInContainer, startContainer, stopContainer } from "@fern-api/docker-utils";
-import type { Logger } from "@fern-api/logger";
-import { LogLevel } from "@fern-api/logger";
+import { createLogger, LogLevel } from "@fern-api/logger";
 import { existsSync } from "fs";
 import { join } from "path";
 import type { PipelineLogger } from "../PipelineLogger";
@@ -15,8 +14,8 @@ const VERIFY_SCRIPT_CONTAINER_PATH = `${CONTAINER_WORKSPACE_PATH}/${VERIFY_SCRIP
 /**
  * Runs `.fern/verify.sh` (when emitted by the generator) inside a language-specific
  * validator container. The validator image follows the convention
- * `{generatorImage}-validator:{version}` — for `fernapi/fern-typescript-sdk:0.42.1`
- * the validator is `fernapi/fern-typescript-sdk-validator:0.42.1`.
+ * `{generatorImage}-validator:{version}` — for `fernapi/fern-typescript-sdk:3.70.2`
+ * the validator is `fernapi/fern-typescript-sdk-validator:3.70.2`.
  *
  * No-ops when `.fern/verify.sh` is absent (only the TypeScript SDK generator emits
  * it today; other languages will follow up via FER-9681). When the script runs and
@@ -155,65 +154,25 @@ export class VerificationStep extends BaseStep {
     }
 }
 
-/**
- * Bridges the pipeline's narrow `PipelineLogger` shape to `@fern-api/logger`'s
- * richer `Logger` interface so it can be passed to the docker-utils functions
- * (which require a real `Logger`, not the pipeline abstraction).
- */
-function createDockerLoggerAdapter(pipelineLogger: PipelineLogger): Logger {
-    let enabled = true;
-    const logger: Logger = {
-        disable: () => {
-            enabled = false;
-        },
-        enable: () => {
-            enabled = true;
-        },
-        trace: (...args) => {
-            if (enabled) {
-                pipelineLogger.debug(args.join(" "));
-            }
-        },
-        debug: (...args) => {
-            if (enabled) {
-                pipelineLogger.debug(args.join(" "));
-            }
-        },
-        info: (...args) => {
-            if (enabled) {
-                pipelineLogger.info(args.join(" "));
-            }
-        },
-        warn: (...args) => {
-            if (enabled) {
-                pipelineLogger.warn(args.join(" "));
-            }
-        },
-        error: (...args) => {
-            if (enabled) {
-                pipelineLogger.error(args.join(" "));
-            }
-        },
-        log: (level, ...args) => {
-            if (!enabled) {
+// Bridges the pipeline's narrow `PipelineLogger` shape to `@fern-api/logger`'s
+// richer `Logger` interface so it can be passed to the docker-utils functions.
+function createDockerLoggerAdapter(pipelineLogger: PipelineLogger) {
+    return createLogger((level, ...args) => {
+        const message = args.join(" ");
+        switch (level) {
+            case LogLevel.Trace:
+            case LogLevel.Debug:
+                pipelineLogger.debug(message);
                 return;
-            }
-            switch (level) {
-                case LogLevel.Trace:
-                case LogLevel.Debug:
-                    pipelineLogger.debug(args.join(" "));
-                    return;
-                case LogLevel.Info:
-                    pipelineLogger.info(args.join(" "));
-                    return;
-                case LogLevel.Warn:
-                    pipelineLogger.warn(args.join(" "));
-                    return;
-                case LogLevel.Error:
-                    pipelineLogger.error(args.join(" "));
-                    return;
-            }
+            case LogLevel.Info:
+                pipelineLogger.info(message);
+                return;
+            case LogLevel.Warn:
+                pipelineLogger.warn(message);
+                return;
+            case LogLevel.Error:
+                pipelineLogger.error(message);
+                return;
         }
-    };
-    return logger;
+    });
 }

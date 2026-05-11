@@ -59,31 +59,31 @@ function emptyContext(): PipelineContext {
 
 const baseConfig: VerifyStepConfig = { enabled: true };
 const generatorName = "fernapi/fern-typescript-sdk";
-const generatorVersions = { [generatorName]: "0.42.1" };
-const expectedValidatorImage = `${generatorName}-validator:0.42.1`;
+const generatorVersions = { [generatorName]: "3.70.2" };
+const expectedValidatorImage = `${generatorName}-validator:3.70.2`;
+
+let workspace: tmp.DirectoryResult;
+let workspacePath: string;
+
+beforeEach(async () => {
+    workspace = await tmp.dir({ unsafeCleanup: true });
+    workspacePath = workspace.path;
+    mockStartContainer.mockReset();
+    mockStopContainer.mockReset();
+    mockCopyToContainer.mockReset();
+    mockExecInContainer.mockReset();
+});
+
+afterEach(async () => {
+    await workspace.cleanup();
+});
+
+function writeVerifyScript(): void {
+    mkdirSync(join(workspacePath, ".fern"), { recursive: true });
+    writeFileSync(join(workspacePath, ".fern", "verify.sh"), "#!/usr/bin/env bash\necho ok\n");
+}
 
 describe("VerificationStep.execute()", () => {
-    let workspace: tmp.DirectoryResult;
-    let workspacePath: string;
-
-    beforeEach(async () => {
-        workspace = await tmp.dir({ unsafeCleanup: true });
-        workspacePath = workspace.path;
-        mockStartContainer.mockReset();
-        mockStopContainer.mockReset();
-        mockCopyToContainer.mockReset();
-        mockExecInContainer.mockReset();
-    });
-
-    afterEach(async () => {
-        await workspace.cleanup();
-    });
-
-    function writeVerifyScript(): void {
-        mkdirSync(join(workspacePath, ".fern"), { recursive: true });
-        writeFileSync(join(workspacePath, ".fern", "verify.sh"), "#!/usr/bin/env bash\necho ok\n");
-    }
-
     it("no-ops with skipped=true when .fern/verify.sh is absent", async () => {
         const logger = makeLogger();
         const step = new VerificationStep(workspacePath, logger, baseConfig, generatorName, generatorVersions);
@@ -267,27 +267,6 @@ describe("VerificationStep.execute()", () => {
 });
 
 describe("PostGenerationPipeline integration with VerificationStep", () => {
-    let workspace: tmp.DirectoryResult;
-    let workspacePath: string;
-
-    beforeEach(async () => {
-        workspace = await tmp.dir({ unsafeCleanup: true });
-        workspacePath = workspace.path;
-        mockStartContainer.mockReset();
-        mockStopContainer.mockReset();
-        mockCopyToContainer.mockReset();
-        mockExecInContainer.mockReset();
-    });
-
-    afterEach(async () => {
-        await workspace.cleanup();
-    });
-
-    function writeVerifyScript(): void {
-        mkdirSync(join(workspacePath, ".fern"), { recursive: true });
-        writeFileSync(join(workspacePath, ".fern", "verify.sh"), "#!/usr/bin/env bash\necho ok\n");
-    }
-
     const silentLogger: PipelineLogger = {
         debug: () => undefined,
         info: () => undefined,
