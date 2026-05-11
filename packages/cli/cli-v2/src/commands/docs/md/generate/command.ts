@@ -147,14 +147,12 @@ export class GenerateCommand {
             });
         }
 
-        const librariesToGenerate =
-            args.library != null ? { [args.library]: libraries[args.library] } : libraries;
+        const librariesToGenerate = args.library != null ? { [args.library]: libraries[args.library] } : libraries;
 
         const token = await context.getTokenOrPrompt();
         await context.verifyOrgAccess({ organization: workspace.org, token });
 
-        const docsAbsoluteFilePath =
-            workspace.docs.absoluteFilePath ?? workspace.absoluteFilePath ?? context.cwd;
+        const docsAbsoluteFilePath = workspace.docs.absoluteFilePath ?? workspace.absoluteFilePath ?? context.cwd;
 
         const results = await Promise.all(
             Object.entries(librariesToGenerate).map(async ([name, config]) => {
@@ -181,9 +179,7 @@ export class GenerateCommand {
                     });
                 } catch (error) {
                     context.stderr.error(
-                        `${Icons.error} ${chalk.red(
-                            `Library '${name}': ${extractErrorMessage(error)}`
-                        )}`
+                        `${Icons.error} ${chalk.red(`Library '${name}': ${extractErrorMessage(error)}`)}`
                     );
                     return false;
                 }
@@ -347,11 +343,7 @@ export class GenerateCommand {
         }
     }
 
-    private async pollForCompletion(
-        client: LibraryDocsClient,
-        jobId: string,
-        libraryName: string
-    ): Promise<void> {
+    private async pollForCompletion(client: LibraryDocsClient, jobId: string, libraryName: string): Promise<void> {
         const deadline = Date.now() + POLL_TIMEOUT_MS;
 
         while (Date.now() < deadline) {
@@ -363,8 +355,7 @@ export class GenerateCommand {
             } catch (error) {
                 throw new CliError({
                     message:
-                        `Failed to check generation status for library '${libraryName}': ` +
-                        extractErrorMessage(error),
+                        `Failed to check generation status for library '${libraryName}': ` + extractErrorMessage(error),
                     code: CliError.Code.NetworkError
                 });
             }
@@ -409,8 +400,7 @@ export class GenerateCommand {
         } catch (error) {
             throw new CliError({
                 message:
-                    `Failed to fetch generation result for library '${libraryName}': ` +
-                    extractErrorMessage(error),
+                    `Failed to fetch generation result for library '${libraryName}': ` + extractErrorMessage(error),
                 code: CliError.Code.NetworkError
             });
         }

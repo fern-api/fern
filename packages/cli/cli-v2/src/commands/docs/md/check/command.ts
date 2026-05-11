@@ -60,10 +60,7 @@ export class CheckCommand {
 
 export function addCheckCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new CheckCommand();
-    command(
-        cli,
-        "check",
-        "Validate MDX syntax in your docs",
-        (context, args) => cmd.handle(context, args as CheckCommand.Args)
+    command(cli, "check", "Validate MDX syntax in your docs", (context, args) =>
+        cmd.handle(context, args as CheckCommand.Args)
     );
 }
