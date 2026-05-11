@@ -918,7 +918,15 @@ def pytest_collection_modifyitems(config: pytest.Config, items: list) -> None:
         context: SdkGeneratorContext,
         project: Project,
     ) -> None:
-        package_name = project._project_config.package_name if project._project_config is not None else "package"
+        if project._project_config is not None:
+            package_name = project._project_config.package_name
+        else:
+            package_name = ".".join(
+                self.get_relative_path_to_project_for_publish(
+                    generator_config=context.generator_config,
+                    ir=context.ir,
+                )
+            )
         filepath = Filepath(
             directories=(),
             file=Filepath.FilepathPart(module_name="_default_clients"),
