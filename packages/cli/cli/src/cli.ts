@@ -107,6 +107,9 @@ if (
         env: { ...process.env, UV_USE_IO_URING: "0" },
         stdio: "inherit"
     });
+    if (result.signal) {
+        process.kill(process.pid, result.signal);
+    }
     process.exit(result.status ?? 1);
 }
 
