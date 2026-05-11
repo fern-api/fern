@@ -1,4 +1,4 @@
-FROM node:22.22-alpine3.23
+FROM node:24.15-alpine3.23
 
 RUN apk update && apk upgrade --no-cache
 

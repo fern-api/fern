@@ -1,4 +1,4 @@
-FROM node:22.22-trixie-slim
+FROM node:24.15-trixie-slim
 
 # Apply latest Debian security updates so that grype-tracked OS package
 # vulnerabilities (glibc, dpkg, nghttp2, libcap2, systemd, libgcrypt20,

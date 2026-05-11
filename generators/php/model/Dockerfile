@@ -1,4 +1,4 @@
-FROM node:22.22-alpine3.23 AS node
+FROM node:24.15-alpine3.23 AS node
 FROM composer:2.9.7
 
 ENV YARN_CACHE_FOLDER=/.yarn

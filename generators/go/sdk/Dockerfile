@@ -1,5 +1,5 @@
 # Stage 1: Build Node CLI
-FROM node:22.22-alpine3.23 AS node
+FROM node:24.15-alpine3.23 AS node
 
 RUN apk --no-cache add git zip
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
