@@ -141,9 +141,20 @@ export class SourceResolver {
                     break;
                 }
 
-                // Validate that this match is within a link context, not a prefix of a longer path
+                // Validate boundaries: char before must be a link-context delimiter
+                const charBefore = col > 0 ? line[col - 1] : undefined;
+                const validPrefix =
+                    charBefore === undefined ||
+                    charBefore === "(" ||
+                    charBefore === '"' ||
+                    charBefore === "'" ||
+                    charBefore === " " ||
+                    charBefore === "\t" ||
+                    charBefore === ">";
+
+                // Char after must not continue the path/word
                 const charAfter = line[col + pattern.length];
-                const isAtBoundary =
+                const validSuffix =
                     charAfter === undefined ||
                     charAfter === ")" ||
                     charAfter === '"' ||
@@ -153,7 +164,7 @@ export class SourceResolver {
                     charAfter === ">" ||
                     charAfter === "#";
 
-                if (isAtBoundary) {
+                if (validPrefix && validSuffix) {
                     return col;
                 }
 
@@ -165,7 +176,7 @@ export class SourceResolver {
 
     /**
      * Generate search patterns for a broken URL.
-     * Searches for the full URL, the pathname, and the pathname without leading slash.
+     * Searches for the full URL and the pathname component.
      */
     private getSearchPatterns(url: string): string[] {
         const patterns: string[] = [url];
@@ -175,10 +186,6 @@ export class SourceResolver {
             const pathname = parsed.pathname;
             if (pathname !== "/" && pathname !== url) {
                 patterns.push(pathname);
-                // Also try without leading slash for relative links
-                if (pathname.startsWith("/")) {
-                    patterns.push(pathname.slice(1));
-                }
             }
         } catch {
             // not a valid URL, just use the raw string
@@ -218,6 +225,7 @@ export class SourceResolver {
         try {
             entries = await readdir(dir);
         } catch {
+            // Directory unreadable or does not exist; skip this subtree
             return;
         }
 

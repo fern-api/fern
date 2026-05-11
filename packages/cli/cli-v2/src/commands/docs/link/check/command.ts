@@ -93,6 +93,7 @@ export class LinkCheckCommand {
             }
             return undefined;
         } catch {
+            // Workspace loading may fail outside a Fern project; fall back to URL-only references
             return undefined;
         }
     }

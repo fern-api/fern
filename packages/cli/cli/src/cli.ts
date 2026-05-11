@@ -2227,12 +2227,15 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                 }
             } catch (error) {
                 if (error instanceof LinkCheckError) {
-                    cliContext.failAndThrow(error.message, error, {
-                        code:
-                            error.statusCode === 401 || error.statusCode === 403
-                                ? CliError.Code.AuthError
-                                : CliError.Code.InternalError
-                    });
+                    let code: CliError.Code;
+                    if (error.statusCode === 401 || error.statusCode === 403) {
+                        code = CliError.Code.AuthError;
+                    } else if (error.statusCode === 404) {
+                        code = CliError.Code.ConfigError;
+                    } else {
+                        code = CliError.Code.InternalError;
+                    }
+                    cliContext.failAndThrow(error.message, error, { code });
                 }
                 throw error;
             } finally {
