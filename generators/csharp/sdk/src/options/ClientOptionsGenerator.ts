@@ -306,7 +306,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkGenerat
                 }
             ];
         } else if (scheme.type === "oauth") {
-            if (this.settings.authClassHierarchy) {
+            if (this.settings.typedAuth) {
                 // OAuth credentials and any token-endpoint custom properties are carried by
                 // `Auth.ClientCredentials` (or replaced by `Auth.Bearer`); ClientOptions only
                 // exposes a single `required Auth` property for the caller to populate.

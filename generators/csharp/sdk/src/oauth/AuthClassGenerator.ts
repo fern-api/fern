@@ -21,7 +21,7 @@ interface ClientCredentialsParam {
 
 /**
  * Generates the public `Auth` abstract class hierarchy used by the root client
- * when the `auth-class-hierarchy` feature flag is enabled.
+ * when the `typed-auth` feature flag is enabled.
  *
  * The generated file contains:
  *   - `Auth`: abstract base with a private constructor that prevents external

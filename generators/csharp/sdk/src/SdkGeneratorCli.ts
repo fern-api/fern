@@ -269,7 +269,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
             });
             context.project.addSourceFiles(oauthTokenProvider.generate());
 
-            if (context.settings.authClassHierarchy) {
+            if (context.settings.typedAuth) {
                 const authClass = new AuthClassGenerator({
                     context,
                     scheme: oauth

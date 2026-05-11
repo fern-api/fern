@@ -1,5 +1,5 @@
 - summary: |
-    Add experimental `auth-class-hierarchy` custom config flag that, when enabled on an
+    Add experimental `typed-auth` custom config flag that, when enabled on an
     OAuth-protected API, generates a public `Auth` abstract class with sealed
     `Auth.ClientCredentials` and `Auth.Bearer` subclasses. The root client takes a
     single `Auth` parameter (or a `required Auth` property on `ClientOptions` in unified

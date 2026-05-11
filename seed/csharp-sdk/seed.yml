@@ -291,12 +291,12 @@ fixtures:
         unified-client-options: true
       outputFolder: unified-client-options
     - customConfig:
-        auth-class-hierarchy: true
-      outputFolder: auth-class-hierarchy
+        typed-auth: true
+      outputFolder: typed-auth
     - customConfig:
-        auth-class-hierarchy: true
+        typed-auth: true
         unified-client-options: true
-      outputFolder: auth-class-hierarchy-unified
+      outputFolder: typed-auth-unified
   bearer-token-environment-variable:
     - customConfig: null
       outputFolder: no-custom-config

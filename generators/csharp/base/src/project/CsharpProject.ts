@@ -663,7 +663,7 @@ dotnet_diagnostic.IDE0005.severity = error
 
         // Auth fields are required when isAuthMandatory is false (confusingly named)
         const isOptional = this.context.ir.sdkConfig.isAuthMandatory;
-        const authClassHierarchy = this.context.generation.settings.authClassHierarchy;
+        const typedAuth = this.context.generation.settings.typedAuth;
         if (!isOptional) {
             for (const scheme of this.context.ir.auth.schemes) {
                 if (scheme.type === "bearer") {
@@ -674,8 +674,8 @@ dotnet_diagnostic.IDE0005.severity = error
                 } else if (scheme.type === "header") {
                     parts.push(`${this.context.case.pascalSafe(scheme.name)} = "test"`);
                 } else if (scheme.type === "oauth") {
-                    if (authClassHierarchy) {
-                        // When the auth-class-hierarchy flag is on, ClientOptions has a single
+                    if (typedAuth) {
+                        // When the typed-auth flag is on, ClientOptions has a single
                         // required `Auth` property instead of separate ClientId/ClientSecret
                         // fields. The fully qualified name (with `global::`) is used because the
                         // test project may declare a sibling `Auth` namespace that would

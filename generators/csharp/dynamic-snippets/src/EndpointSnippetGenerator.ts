@@ -451,8 +451,8 @@ export class EndpointSnippetGenerator extends WithGeneration {
         auth: FernIr.dynamic.OAuth;
         values: FernIr.dynamic.OAuthValues;
     }): NamedArgument[] {
-        if (this.settings.authClassHierarchy) {
-            // With the auth-class-hierarchy flag enabled, OAuth credentials are wrapped in
+        if (this.settings.typedAuth) {
+            // With the typed-auth flag enabled, OAuth credentials are wrapped in
             // a single `Auth.ClientCredentials` instance instead of separate clientId/clientSecret args.
             return [
                 {

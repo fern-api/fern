@@ -80,13 +80,13 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     }
 
     /**
-     * True when the `auth-class-hierarchy` feature flag is on AND the API has
+     * True when the `typed-auth` feature flag is on AND the API has
      * an OAuth scheme. Drives the alternate constructor and snippet code paths
      * that take a single `Auth` parameter instead of separate `clientId` /
      * `clientSecret` arguments.
      */
-    private isAuthClassHierarchyEnabled(): boolean {
-        return this.settings.authClassHierarchy && this.oauth != null;
+    private isTypedAuthEnabled(): boolean {
+        return this.settings.typedAuth && this.oauth != null;
     }
 
     private members = lazy({
@@ -210,22 +210,22 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     private getConstructorMethod() {
         const { requiredParameters, optionalParameters, literalParameters } = this.getConstructorParameters();
         const unified = this.settings.unifiedClientOptions;
-        const useAuthClassHierarchy = this.isAuthClassHierarchyEnabled();
+        const useTypedAuth = this.isTypedAuthEnabled();
         const parameters: ast.Parameter[] = [];
 
         // In unified mode, check if any ClientOptions fields are truly required.
         // This includes auth params (non-optional, no env var) and BaseUrl when there's no default environment.
         // If so, ClientOptions itself must be required (non-nullable, no default).
-        // When the auth-class-hierarchy flag is on, the unified ClientOptions exposes a
+        // When the typed-auth flag is on, the unified ClientOptions exposes a
         // `required Auth Auth` property which also forces ClientOptions to be required.
         const hasRequiredUnifiedFields =
             unified &&
             (requiredParameters.some((p) => p.environmentVariable == null) ||
                 this.context.ir.environments?.defaultEnvironment == null ||
-                useAuthClassHierarchy);
+                useTypedAuth);
 
         if (!unified) {
-            if (useAuthClassHierarchy) {
+            if (useTypedAuth) {
                 parameters.push(
                     this.csharp.parameter({
                         name: "auth",
@@ -571,7 +571,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         ];
                         const oauthAdditionalParams = this.getOAuthAdditionalParamNames();
 
-                        if (useAuthClassHierarchy) {
+                        if (useTypedAuth) {
                             // The `auth` parameter (or `clientOptions.Auth` in unified mode) is a
                             // sealed Auth subclass. Pattern-match to either set the bearer token
                             // directly or fall back to the OAuth token provider for client-credentials.
@@ -751,13 +751,13 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         // Use the same parameter ordering as the constructor
         const { requiredParameters, optionalParameters } = this.getConstructorParameters();
         const allParameters = [...requiredParameters, ...optionalParameters];
-        const useAuthClassHierarchy = this.isAuthClassHierarchyEnabled();
+        const useTypedAuth = this.isTypedAuthEnabled();
 
         if (this.settings.unifiedClientOptions) {
             // In unified mode, auth params become named properties inside ClientOptions
             const clientOptionsFields: Array<{ name: string; assignment: ast.CodeBlock | ast.AstNode }> = [];
 
-            if (useAuthClassHierarchy) {
+            if (useTypedAuth) {
                 clientOptionsFields.push({
                     name: "Auth",
                     assignment: this.buildAuthClientCredentialsExample()
@@ -802,7 +802,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 );
             }
         } else {
-            if (useAuthClassHierarchy) {
+            if (useTypedAuth) {
                 arguments_.push(this.buildAuthClientCredentialsExample());
             }
 
@@ -999,7 +999,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             }
         } else if (scheme.type === "oauth") {
             if (this.oauth !== null) {
-                if (this.isAuthClassHierarchyEnabled()) {
+                if (this.isTypedAuthEnabled()) {
                     // OAuth credentials and any extra token-endpoint properties are carried
                     // by `Auth.ClientCredentials`; the root client constructor takes a single
                     // `Auth auth` parameter instead. See `getConstructorMethod`.

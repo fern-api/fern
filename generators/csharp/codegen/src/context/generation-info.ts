@@ -246,7 +246,7 @@ export class Generation {
          * The token override path is exposed as the harder-to-find `Auth.Bearer` subclass.
          * Default: false.
          */
-        authClassHierarchy: () => this.customConfig["auth-class-hierarchy"] ?? false,
+        typedAuth: () => this.customConfig["typed-auth"] ?? false,
         /** When true, uses PascalCase for environment names (e.g., "Production" instead of "production"). Default: true. */
         pascalCaseEnvironments: () => this.customConfig["pascal-case-environments"] ?? true,
         /** Solution file format: "sln" generates both .sln and .slnx, "slnx" (default) generates only .slnx. */

@@ -116,7 +116,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
         const snippets: Record<FernGeneratorCli.FeatureId, string[]> = {};
         snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
-        if (this.context.settings.authClassHierarchy && this.context.getOauth() != null) {
+        if (this.context.settings.typedAuth && this.context.getOauth() != null) {
             snippets[ReadmeSnippetBuilder.AUTHENTICATION_FEATURE_ID] = this.buildAuthenticationSnippets();
         }
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
