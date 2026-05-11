@@ -61,11 +61,18 @@ interface AlreadyUpToDateEntry {
     version: string;
 }
 
+interface PrSuggestion {
+    title: string;
+    body: string;
+    commitMessage: string;
+}
+
 export interface AutomationsUpgradeResult {
     cli: CliUpgradeResult;
     generators: GeneratorUpgradeEntry[];
     skippedMajor: SkippedMajorEntry[];
     alreadyUpToDate: AlreadyUpToDateEntry[];
+    pr: PrSuggestion | null;
 }
 
 /**
@@ -108,7 +115,12 @@ async function getCurrentCliVersion(cliContext: CliContext): Promise<string> {
  *       }
  *     ],
  *     "skippedMajor": [{ "name": "...", "current": "...", "latest": "..." }],
- *     "alreadyUpToDate": [{ "name": "...", "version": "..." }]
+ *     "alreadyUpToDate": [{ "name": "...", "version": "..." }],
+ *     "pr": {
+ *       "title": "chore(fern): upgrade CLI 4.66.0 → 4.96.0 and 2 generators",
+ *       "body": "## Fern Upgrade\n...",
+ *       "commitMessage": "chore: upgrade fern cli 4.66.0 -> 4.96.0, ..."
+ *     }
  *   }
  */
 export async function executeAutomationsUpgrade({
@@ -155,15 +167,21 @@ export async function executeAutomationsUpgrade({
     });
 
     // 4. Build the structured result
+    const cliResult: CliUpgradeResult = {
+        from: cliVersionBefore,
+        to: cliVersionAfter,
+        upgraded: cliUpgraded
+    };
+
+    const hasChanges = cliUpgraded || generatorResults.generators.length > 0;
+    const pr = hasChanges ? buildPrSuggestion({ cli: cliResult, generators: generatorResults.generators }) : null;
+
     const result: AutomationsUpgradeResult = {
-        cli: {
-            from: cliVersionBefore,
-            to: cliVersionAfter,
-            upgraded: cliUpgraded
-        },
+        cli: cliResult,
         generators: generatorResults.generators,
         skippedMajor: generatorResults.skippedMajor,
-        alreadyUpToDate: generatorResults.alreadyUpToDate
+        alreadyUpToDate: generatorResults.alreadyUpToDate,
+        pr
     };
 
     return result;
@@ -255,4 +273,112 @@ async function upgradeGeneratorsForAllWorkspaces({
     alreadyUpToDate.sort((a, b) => a.name.localeCompare(b.name));
 
     return { generators, skippedMajor, alreadyUpToDate };
+}
+
+// ---------------------------------------------------------------------------
+// PR formatting helpers
+// ---------------------------------------------------------------------------
+
+/**
+ * Strips the Docker org prefix from a generator name.
+ * "fernapi/fern-typescript-sdk" → "typescript-sdk"
+ */
+export function getShortGeneratorName(name: string): string {
+    return name.replace(/^fernapi\/fern-/, "");
+}
+
+/**
+ * Builds a suggested PR title from the upgrade results.
+ */
+export function buildPrTitle({
+    cli,
+    generators
+}: {
+    cli: CliUpgradeResult;
+    generators: readonly GeneratorUpgradeEntry[];
+}): string {
+    const parts: string[] = [];
+
+    if (cli.upgraded) {
+        parts.push(`CLI ${cli.from} → ${cli.to}`);
+    }
+
+    if (generators.length > 0) {
+        parts.push(`${generators.length} generator${generators.length === 1 ? "" : "s"}`);
+    }
+
+    return `chore(fern): upgrade ${parts.join(" and ")}`;
+}
+
+/**
+ * Builds a suggested PR body (markdown) from the upgrade results.
+ */
+export function buildPrBody({
+    cli,
+    generators
+}: {
+    cli: CliUpgradeResult;
+    generators: readonly GeneratorUpgradeEntry[];
+}): string {
+    const sections: string[] = ["## Fern Upgrade\n"];
+
+    if (cli.upgraded) {
+        sections.push(`### CLI\n- \`${cli.from}\` → \`${cli.to}\`\n`);
+    }
+
+    if (generators.length > 0) {
+        sections.push("### Generators");
+        sections.push("| Generator | From | To | Changelog |");
+        sections.push("|-----------|------|----|-----------|");
+
+        for (const g of generators) {
+            const link = g.changelog != null ? `[View](${g.changelog})` : "—";
+            sections.push(`| ${g.name} | ${g.from} | ${g.to} | ${link} |`);
+        }
+        sections.push("");
+    }
+
+    sections.push(
+        "---\n🤖 This PR was automatically created by " +
+            "[fern-upgrade](https://github.com/fern-api/actions/tree/main/upgrade)"
+    );
+
+    return sections.join("\n");
+}
+
+/**
+ * Builds a one-line commit message summarising all version changes.
+ */
+export function buildCommitMessage({
+    cli,
+    generators
+}: {
+    cli: CliUpgradeResult;
+    generators: readonly GeneratorUpgradeEntry[];
+}): string {
+    const parts: string[] = [];
+
+    if (cli.upgraded) {
+        parts.push(`cli ${cli.from} -> ${cli.to}`);
+    }
+
+    for (const g of generators) {
+        parts.push(`${getShortGeneratorName(g.name)} ${g.from} -> ${g.to}`);
+    }
+
+    return `chore: upgrade fern ${parts.join(", ")}`;
+}
+
+function buildPrSuggestion({
+    cli,
+    generators
+}: {
+    cli: CliUpgradeResult;
+    generators: readonly GeneratorUpgradeEntry[];
+}): PrSuggestion {
+    return {
+        title: buildPrTitle({ cli, generators }),
+        body: buildPrBody({ cli, generators }),
+        commitMessage: buildCommitMessage({ cli, generators })
+    };
 }

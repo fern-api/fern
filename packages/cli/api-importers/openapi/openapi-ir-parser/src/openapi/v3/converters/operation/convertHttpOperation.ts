@@ -35,6 +35,7 @@ export function convertHttpOperation({
     suffix,
     streamFormat,
     streamTerminator,
+    streamResumable,
     source,
     streamRequestNameOverride
 }: {
@@ -44,6 +45,7 @@ export function convertHttpOperation({
     suffix?: string;
     streamFormat: "sse" | "json" | undefined;
     streamTerminator?: string;
+    streamResumable?: boolean;
     source: Source;
     streamRequestNameOverride?: string;
 }): EndpointWithExample[] {
@@ -309,6 +311,7 @@ export function convertHttpOperation({
         operationContext,
         streamFormat,
         streamTerminator,
+        streamResumable,
         responses: operation.responses,
         context,
         responseBreadcrumbs,

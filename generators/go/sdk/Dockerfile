@@ -1,5 +1,5 @@
 # Stage 1: Build Node CLI
-FROM node:22.22-alpine3.22 AS node
+FROM node:22.22-alpine3.23 AS node
 
 RUN apk --no-cache add git zip
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
@@ -28,6 +28,7 @@ FROM golang:1.26.2-alpine3.23
 
 WORKDIR /workspace
 
+RUN apk update && apk upgrade --no-cache
 RUN apk add --no-cache ca-certificates git libstdc++
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"

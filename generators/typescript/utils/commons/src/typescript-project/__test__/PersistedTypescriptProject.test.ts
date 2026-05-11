@@ -311,4 +311,16 @@ describe("PersistedTypescriptProject", () => {
             expect(logContent).toBe("all checks passed");
         });
     });
+
+    describe("getPackageManager", () => {
+        it("returns pnpm when constructed with pnpm", () => {
+            const project = makeProject({ packageManager: "pnpm" });
+            expect(project.getPackageManager()).toBe("pnpm");
+        });
+
+        it("returns yarn when constructed with yarn", () => {
+            const project = makeProject({ packageManager: "yarn" });
+            expect(project.getPackageManager()).toBe("yarn");
+        });
+    });
 });

@@ -10,4 +10,10 @@ export interface JsonResponseWithExample
     responseProperty: string | undefined;
     terminator: string | undefined;
     fullExamples: FernOpenapiIr.NamedFullExample[] | undefined;
+    /**
+     * For `streamingSse` responses, when true, the endpoint participates in
+     * client-side reconnection using SSE primitives (`Last-Event-ID` /
+     * `retry:`). Unset/false on non-SSE variants.
+     */
+    resumable: boolean | undefined;
 }

@@ -879,17 +879,17 @@ files = [
 
 [[package]]
 name = "langchain"
-version = "1.2.17"
+version = "1.2.18"
 description = "Building applications with LLMs through composability"
 optional = false
 python-versions = "<4.0.0,>=3.10.0"
 files = [
-    {file = "langchain-1.2.17-py3-none-any.whl", hash = "sha256:ff881cdfbe90e0b6afac42eea7999657c282cc73db059c910d803f4e9f8ff305"},
-    {file = "langchain-1.2.17.tar.gz", hash = "sha256:c30b578c0eebbde8bec9247dbbbae1a791128557b99b65c8be1e007040975d09"},
+    {file = "langchain-1.2.18-py3-none-any.whl", hash = "sha256:8432d43a65540845ed6f1a783d38d869c4659a6b9405f9a510169ad40d2f7bae"},
+    {file = "langchain-1.2.18.tar.gz", hash = "sha256:7e829dbf117affadfd2067a0e97b4af20222f535f30fb812a28472d842c1074c"},
 ]
 
 [package.dependencies]
-langchain-core = ">=1.3.2,<2.0.0"
+langchain-core = ">=1.3.3,<2.0.0"
 langgraph = ">=1.1.10,<1.2.0"
 pydantic = ">=2.7.4,<3.0.0"
 
@@ -898,6 +898,7 @@ anthropic = ["langchain-anthropic"]
 aws = ["langchain-aws"]
 azure-ai = ["langchain-azure-ai"]
 baseten = ["langchain-baseten (>=0.2.0)"]
+cohere = ["langchain-cohere"]
 community = ["langchain-community"]
 deepseek = ["langchain-deepseek"]
 fireworks = ["langchain-fireworks"]
@@ -1030,13 +1031,13 @@ orjson = ">=3.11.5"
 
 [[package]]
 name = "langsmith"
-version = "0.8.1"
+version = "0.8.3"
 description = "Client library to connect to the LangSmith Observability and Evaluation Platform."
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "langsmith-0.8.1-py3-none-any.whl", hash = "sha256:8809f43d44d53ac3f21127f61fff7f8bbc23e64f164c29d2df8c475ec41be6c3"},
-    {file = "langsmith-0.8.1.tar.gz", hash = "sha256:63171ca4fccd6a3209539a7fef4d0e7edc6437d142f6740a6a383bee911bd17e"},
+    {file = "langsmith-0.8.3-py3-none-any.whl", hash = "sha256:b2e40e308222fa0beb2dccee3b4b30bfee9062d7a4f20a3e3e93df3c51a08ab4"},
+    {file = "langsmith-0.8.3.tar.gz", hash = "sha256:767ff7a8d136ed42926bf99059ac631dc6883542d6e3104b32e71c7625e1fa05"},
 ]
 
 [package.dependencies]
@@ -1285,13 +1286,13 @@ files = [
 
 [[package]]
 name = "openai"
-version = "2.35.0"
+version = "2.36.0"
 description = "The official Python library for the openai API"
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "openai-2.35.0-py3-none-any.whl", hash = "sha256:164fd0477d001e784369f7cd81ccadb8db3c22f16b33973d8f95e3095c7f71d8"},
-    {file = "openai-2.35.0.tar.gz", hash = "sha256:607f62257d6be167240c6b82db052fabf940e3c4d9ad3e8629364e837a601395"},
+    {file = "openai-2.36.0-py3-none-any.whl", hash = "sha256:143f6194b548dbc2c921af1f1b03b9f14c85fed8a75b5b516f5bcc11a2a50c63"},
+    {file = "openai-2.36.0.tar.gz", hash = "sha256:139dea0edd2f1b30c33d46ae1a6929e03906254140318e4608e98fe8c566f2e7"},
 ]
 
 [package.dependencies]
@@ -2336,13 +2337,13 @@ telegram = ["requests"]
 
 [[package]]
 name = "types-python-dateutil"
-version = "2.9.0.20260408"
+version = "2.9.0.20260508"
 description = "Typing stubs for python-dateutil"
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "types_python_dateutil-2.9.0.20260408-py3-none-any.whl", hash = "sha256:473139d514a71c9d1fbd8bb328974bedcb1cc3dba57aad04ffa4157f483c216f"},
-    {file = "types_python_dateutil-2.9.0.20260408.tar.gz", hash = "sha256:8b056ec01568674235f64ecbcef928972a5fac412f5aab09c516dfa2acfbb582"},
+    {file = "types_python_dateutil-2.9.0.20260508-py3-none-any.whl", hash = "sha256:bfc6fd2d81aa86e5ac97206a64304f6bd247426eedbca9b98619bbc48c6a1c10"},
+    {file = "types_python_dateutil-2.9.0.20260508.tar.gz", hash = "sha256:596a6d63d81f587bf04c8254fb78df9d2344e915ce67948d7400512e3a6206d5"},
 ]
 
 [[package]]
@@ -2372,13 +2373,13 @@ typing-extensions = ">=4.12.0"
 
 [[package]]
 name = "urllib3"
-version = "2.6.3"
+version = "2.7.0"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 optional = false
-python-versions = ">=3.9"
+python-versions = ">=3.10"
 files = [
-    {file = "urllib3-2.6.3-py3-none-any.whl", hash = "sha256:bf272323e553dfb2e87d9bfd225ca7b0f467b919d7bbd355436d3fd37cb0acd4"},
-    {file = "urllib3-2.6.3.tar.gz", hash = "sha256:1b62b6884944a57dbe321509ab94fd4d3b307075e0c2eae991ac71ee15ad38ed"},
+    {file = "urllib3-2.7.0-py3-none-any.whl", hash = "sha256:9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897"},
+    {file = "urllib3-2.7.0.tar.gz", hash = "sha256:231e0ec3b63ceb14667c67be60f2f2c40a518cb38b03af60abc813da26505f4c"},
 ]
 
 [package.extras]

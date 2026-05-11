@@ -4,10 +4,10 @@ FROM node:24.15.0-trixie-slim
 # vulnerabilities (glibc, dpkg, nghttp2, libcap2, systemd, libgcrypt20,
 # krb5, etc.) are resolved on top of the base image.
 RUN apt-get update \
-  && apt-get -y upgrade \
-  && apt-get install -y --no-install-recommends ca-certificates git zip \
-  && apt-get -y autoremove \
-  && rm -rf /var/lib/apt/lists/*
+    && apt-get -y --no-install-recommends dist-upgrade \
+    && apt-get install -y --no-install-recommends ca-certificates git zip \
+    && apt-get -y autoremove \
+    && rm -rf /var/lib/apt/lists/*
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
 
@@ -43,11 +43,11 @@ RUN pnpm add -g typescript@~5.9.3 \
   @biomejs/biome@2.4.10 \
   oxlint@1.63.0 \
   oxlint-tsgolint@0.22.1 \
-  @types/node@^18.19.70 \
+  @types/node@^20.0.0 \
   ts-loader@^9.5.4 \
   webpack@^5.105.4 \
   msw@2.12.14 \
-  vitest@^3.2.4
+  vitest@^4.1.1
 
 COPY generators/typescript/sdk/cli/dist/ /
 

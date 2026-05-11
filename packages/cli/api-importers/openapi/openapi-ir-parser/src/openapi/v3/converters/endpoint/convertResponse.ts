@@ -32,11 +32,13 @@ export function convertResponse({
     responseStatusCode,
     streamFormat,
     streamTerminator,
+    streamResumable,
     source
 }: {
     operationContext: OperationContext;
     streamFormat: "sse" | "json" | undefined;
     streamTerminator?: string;
+    streamResumable?: boolean;
     responses: OpenAPIV3.ResponsesObject;
     context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
@@ -67,6 +69,7 @@ export function convertResponse({
                 responseBreadcrumbs,
                 streamFormat,
                 streamTerminator,
+                streamResumable,
                 source,
                 namespace: context.namespace,
                 statusCode: statusCodeNum
@@ -124,6 +127,7 @@ export function convertResponse({
             responseBreadcrumbs,
             streamFormat,
             streamTerminator,
+            streamResumable,
             source,
             namespace: context.namespace
         });
@@ -165,6 +169,7 @@ function convertResolvedResponse({
     operationContext,
     streamFormat,
     streamTerminator,
+    streamResumable,
     response,
     context,
     responseBreadcrumbs,
@@ -175,6 +180,7 @@ function convertResolvedResponse({
     operationContext: OperationContext;
     streamFormat: "sse" | "json" | undefined;
     streamTerminator?: string;
+    streamResumable?: boolean;
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.ResponseObject;
     context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
@@ -220,6 +226,7 @@ function convertResolvedResponse({
                         FernOpenAPIExtension.RESPONSE_PROPERTY
                     ),
                     terminator: streamTerminator,
+                    resumable: undefined,
                     fullExamples: textEventStreamObject.examples,
                     schema: convertSchema(
                         textEventStreamObject.schema,
@@ -237,6 +244,7 @@ function convertResolvedResponse({
                     description: resolvedResponse.description,
                     responseProperty: undefined,
                     terminator: streamTerminator,
+                    resumable: streamResumable,
                     fullExamples: textEventStreamObject.examples,
                     schema: convertSchema(
                         textEventStreamObject.schema,
@@ -265,6 +273,7 @@ function convertResolvedResponse({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
                         terminator: streamTerminator,
+                        resumable: undefined,
                         fullExamples: jsonMediaObject.examples,
                         schema: convertSchema(
                             jsonMediaObject.schema,
@@ -283,6 +292,7 @@ function convertResolvedResponse({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
                         terminator: streamTerminator,
+                        resumable: streamResumable,
                         fullExamples: jsonMediaObject.examples,
                         schema: convertSchema(
                             jsonMediaObject.schema,
@@ -311,6 +321,7 @@ function convertResolvedResponse({
             ),
             responseProperty: getExtension<string>(operationContext.operation, FernOpenAPIExtension.RESPONSE_PROPERTY),
             terminator: undefined,
+            resumable: undefined,
             fullExamples: jsonMediaObject.examples,
             source,
             statusCode

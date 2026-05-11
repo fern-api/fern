@@ -1002,18 +1002,22 @@ jobs:
 
           BASELINE_RUNS_TO_FETCH=5
 
-          # Fetch the last N successful runs of benchmark-baseline.yml on main
-          RUNS=$(gh api "repos/${{ github.repository }}/actions/workflows/benchmark-baseline.yml/runs?status=success&per_page=${BASELINE_RUNS_TO_FETCH}&branch=main" \
-            --jq '.workflow_runs' 2>/dev/null || echo "[]")
+          # Fetch the last N completed runs of benchmark-baseline.yml on main.
+          # Use status=completed (not status=success) so we include runs where
+          # some generators failed but others produced valid artifacts. A single
+          # failing E2E job marks the whole workflow as "failure", which would
+          # hide valid baseline data from every other generator.
+          RUNS=$(gh api "repos/${{ github.repository }}/actions/workflows/benchmark-baseline.yml/runs?status=completed&per_page=20&branch=main" \
+            --jq '[.workflow_runs[] | select(.conclusion == "success" or .conclusion == "failure")] | .['":${BASELINE_RUNS_TO_FETCH}"']' 2>/dev/null || echo "[]")
 
           RUN_COUNT=$(echo "$RUNS" | jq 'length')
           if [ "$RUN_COUNT" -eq 0 ]; then
-            echo "::warning::No successful nightly baseline runs found. Report will show N/A for main timings."
+            echo "::warning::No completed nightly baseline runs found. Report will show N/A for main timings."
             echo "Trigger the benchmark-baseline workflow manually to generate initial baselines."
             exit 0
           fi
 
-          echo "Found ${RUN_COUNT} successful nightly baseline run(s)"
+          echo "Found ${RUN_COUNT} nightly baseline run(s)"
 
           # Save metadata from the latest run for the report footer
           LATEST_DATE=$(echo "$RUNS" | jq -r '.[0].created_at')
@@ -1260,17 +1264,19 @@ jobs:
 
           BASELINE_RUNS_TO_FETCH=5
 
-          # Fetch the last N successful runs of benchmark-baseline.yml on main
-          RUNS=$(gh api "repos/${{ github.repository }}/actions/workflows/benchmark-baseline.yml/runs?status=success&per_page=${BASELINE_RUNS_TO_FETCH}&branch=main" \
-            --jq '.workflow_runs' 2>/dev/null || echo "[]")
+          # Fetch the last N completed runs of benchmark-baseline.yml on main.
+          # Use status=completed (not status=success) — see SDK benchmark step
+          # comment for rationale.
+          RUNS=$(gh api "repos/${{ github.repository }}/actions/workflows/benchmark-baseline.yml/runs?status=completed&per_page=20&branch=main" \
+            --jq '[.workflow_runs[] | select(.conclusion == "success" or .conclusion == "failure")] | .['":${BASELINE_RUNS_TO_FETCH}"']' 2>/dev/null || echo "[]")
 
           RUN_COUNT=$(echo "$RUNS" | jq 'length')
           if [ "$RUN_COUNT" -eq 0 ]; then
-            echo "::warning::No successful nightly baseline runs found. Report will show N/A for main timings."
+            echo "::warning::No completed nightly baseline runs found. Report will show N/A for main timings."
             exit 0
           fi
 
-          echo "Found ${RUN_COUNT} successful nightly baseline run(s)"
+          echo "Found ${RUN_COUNT} nightly baseline run(s)"
 
           # Save metadata from the latest run for the report footer
           LATEST_DATE=$(echo "$RUNS" | jq -r '.[0].created_at')
