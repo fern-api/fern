@@ -2,12 +2,12 @@
 
 - summary: |
     Bump the C# SDK and C# model generator containers' Node base image from
-    `node:22.22-alpine3.23` to `node:24.15.0-alpine3.23`. Aligns the generators
+    `node:22.22-alpine3.23` to `node:24.15-alpine3.23`. Aligns the generators
     with the rest of the Fern generator containers on a single Node major
     version (Node 24) and picks up Node 24's CVE patches. The bundled npm
-    11.12.1 in `node:24.15.0` already ships patched `brace-expansion@5.0.4`, so
+    11.12.1 in `node:24.15` already ships patched `brace-expansion@5.0.4`, so
     the C# SDK's `brace-expansion 2.0.3` replacement step is removed. The
     `ip-address` and `picomatch` patches are retained because the bundled
-    versions in `node:24.15.0` (10.1.0 and 4.0.3 respectively) are still
+    versions in `node:24.15` (10.1.0 and 4.0.3 respectively) are still
     vulnerable.
   type: chore

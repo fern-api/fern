@@ -1,6 +1,6 @@
 # Stage 1: Java V2
 # Non-slim trixie because the patch RUN steps below shell out to curl and tar.
-FROM node:24.15.0-trixie AS node
+FROM node:24.15-trixie AS node
 COPY generators/java-v2/sdk/dist/cli.cjs /dist/cli.cjs
 COPY generators/java-v2/sdk/features.yml /assets/features.yml
 

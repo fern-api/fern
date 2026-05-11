@@ -8,7 +8,7 @@ RUN rustup component add rustfmt \
     && cp "$RUSTFMT" /rustfmt/rustfmt \
     && cp "$(dirname "$RUSTFMT")/../lib"/librustc_driver-*.so /rustfmt/lib/
 
-FROM node:24.15.0-alpine3.23
+FROM node:24.15-alpine3.23
 
 RUN apk update && apk upgrade --no-cache
 

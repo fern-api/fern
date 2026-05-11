@@ -1,6 +1,6 @@
 # Bundled npm globals are removed below so npm's JS dependencies cannot be
 # flagged or invoked at runtime — this image only runs the bundled CLI via node.
-FROM node:24.15.0-trixie-slim
+FROM node:24.15-trixie-slim
 RUN apt-get update \
     && apt-get -y --no-install-recommends dist-upgrade \
     && apt-get install -y --no-install-recommends ca-certificates curl \

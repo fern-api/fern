@@ -1,4 +1,4 @@
-FROM node:24.15.0-trixie-slim
+FROM node:24.15-trixie-slim
 RUN apt-get update \
     && apt-get -y --no-install-recommends dist-upgrade \
     && apt-get install -y --no-install-recommends ca-certificates curl \
