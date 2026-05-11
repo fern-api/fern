@@ -5,21 +5,32 @@ RUN apk add --no-cache curl && \
     curl -sL "https://github.com/google/go-containerregistry/releases/download/v0.21.2/go-containerregistry_Linux_${ARCH}.tar.gz" | tar xz -C /usr/local/bin crane && \
     crane pull wiremock/wiremock:3.9.1 /wiremock.tar
 
-# Stage 2: Pull statically-linked containerd v2.3.0 to overlay on the DinD base
-# (ships v2.2.3) and clear grpc / otel / go-jose CVEs in containerd binaries.
-FROM alpine:3.23 AS overlay-binaries
+# Stage 2: Build containerd v2.3.0 + runc v1.3.5 from source with go1.26.3 and
+# golang.org/x/net v0.53.0 to clear stdlib + x/net CVEs the upstream prebuilts
+# (still go1.26.2 / x/net <0.53) carry, and pick up the grpc / otel / go-jose
+# bumps in containerd v2.3.0.
+FROM golang:1.26.3-alpine3.23 AS overlay-binaries
 ARG CONTAINERD_VERSION=2.3.0
-RUN apk add --no-cache curl tar && \
-    ARCH=$(uname -m) && \
-    case "$ARCH" in \
-      x86_64) GOARCH=amd64 ;; \
-      aarch64) GOARCH=arm64 ;; \
-      *) echo "Unsupported arch: $ARCH"; exit 1 ;; \
-    esac && \
-    mkdir -p /overlay/usr/local/bin && \
-    curl -fsSL "https://github.com/containerd/containerd/releases/download/v${CONTAINERD_VERSION}/containerd-static-${CONTAINERD_VERSION}-linux-${GOARCH}.tar.gz" \
-      | tar -xz -C /overlay/usr/local --no-same-owner \
-        bin/containerd bin/containerd-shim-runc-v2 bin/ctr
+ARG RUNC_VERSION=1.3.5
+ARG XNET_VERSION=0.53.0
+RUN apk add --no-cache git make gcc musl-dev linux-headers libseccomp-dev libseccomp-static bash ca-certificates && \
+    mkdir -p /overlay/usr/local/bin
+RUN git clone --depth 1 --branch v${CONTAINERD_VERSION} https://github.com/containerd/containerd.git /src/containerd && \
+    cd /src/containerd && \
+    go get golang.org/x/net@v${XNET_VERSION} && \
+    go mod tidy && \
+    go mod vendor && \
+    for cmd in containerd ctr containerd-shim-runc-v2; do \
+      CGO_ENABLED=0 go build -tags "osusergo netgo static_build" -trimpath -ldflags "-s -w" \
+        -o /overlay/usr/local/bin/$cmd ./cmd/$cmd ; \
+    done
+RUN git clone --depth 1 --branch v${RUNC_VERSION} https://github.com/opencontainers/runc.git /src/runc && \
+    cd /src/runc && \
+    go get golang.org/x/net@v${XNET_VERSION} && \
+    go mod tidy && \
+    go mod vendor && \
+    make static EXTRA_LDFLAGS="-s -w" && \
+    cp runc /overlay/usr/local/bin/runc
 
 # Stage 3: Build the seed image
 FROM docker:29.4.1-dind-alpine3.23
@@ -27,7 +38,7 @@ FROM docker:29.4.1-dind-alpine3.23
 # Apply latest APK security patches
 RUN apk update && apk upgrade --no-cache --available
 
-# Overlay containerd v2.3.0 binaries (see stage 2).
+# Overlay rebuilt containerd + runc binaries (see stage 2).
 COPY --from=overlay-binaries /overlay/ /
 
 # Drop unused docker CLI plugins (buildx, compose) that ship vulnerable
