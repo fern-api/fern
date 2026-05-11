@@ -483,11 +483,11 @@ export class DocsDefinitionResolver {
                     filesToUploadSet.add(filepath);
                 }
             } catch (error) {
-                this.taskContext.logger.error(`Failed to parse ${relativePath}: ${extractErrorMessage(error)}`);
-                throw new CliError({
-                    message: `Failed to parse markdown file ${relativePath}: ${extractErrorMessage(error)}`,
-                    code: CliError.Code.ParseError
-                });
+                this.taskContext.logger.warn(`Failed to parse ${relativePath}: ${extractErrorMessage(error)}`);
+                // Continue processing other files rather than aborting the
+                // entire resolution. The dedicated MDX validation step
+                // (md-validate) will report these errors with configurable
+                // severity.
             }
         }
         const imageParseTime = performance.now() - imageParseStart;
