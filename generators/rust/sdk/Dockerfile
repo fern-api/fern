@@ -2,7 +2,7 @@
 # publishing to crates.io and running tests.
 # Using the official Rust image handles multi-arch (amd64/arm64) automatically.
 # See: https://hub.docker.com/_/rust
-FROM rust:1.82-alpine3.23 AS rust
+FROM rust:1.82-alpine3.20 AS rust
 RUN rustup component add rustfmt
 
 FROM node:22.22-alpine3.23
