@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump the Go SDK and Go model generator containers' Node base image from
+    `node:22.22-alpine3.23` to `node:24.15.0-alpine3.23`. Aligns the generators
+    with the rest of the Fern generator containers on a single Node major
+    version (Node 24) and picks up Node 24's CVE patches. The existing
+    `npm pack <pkg>@latest` loop that swaps in patched `ip-address`,
+    `brace-expansion`, and `picomatch` is retained because `npm pack @latest`
+    continues to resolve the same fixed releases on Node 24.
+  type: chore

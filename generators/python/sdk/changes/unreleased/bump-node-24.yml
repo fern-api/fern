@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump the Python SDK generator container's Node base image from
+    `node:22.22-bookworm-slim` to `node:24.15.0-bookworm-slim`. Aligns the
+    generator with the rest of the Fern generator containers on a single Node
+    major version (Node 24) and picks up Node 24's CVE patches.
+  type: chore
