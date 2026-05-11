@@ -7885,6 +7885,12 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../commons/core-utils
+      '@fern-api/docker-utils':
+        specifier: workspace:*
+        version: link:../cli/generation/local-generation/docker-utils
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../cli/logger
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../commons/logging-execa

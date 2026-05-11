@@ -771,6 +771,13 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     hidden: true,
                     description: "Run replay after generation (use --no-replay to skip)"
                 })
+                .option("verify", {
+                    boolean: true,
+                    default: false,
+                    hidden: true,
+                    description:
+                        "Run the generator's verify.sh script in a validator container after generation (local generation only)"
+                })
                 .option("retry-rate-limited", {
                     boolean: true,
                     default: false,
@@ -904,6 +911,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     dynamicIrOnly: argv["dynamic-ir-only"],
                     outputDir: argv.output,
                     noReplay: !argv.replay,
+                    verify: argv.verify,
                     retryRateLimited: argv["retry-rate-limited"],
                     requireEnvVars: argv["require-env-vars"],
                     skipIfNoDiff: argv["skip-if-no-diff"]
@@ -965,6 +973,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 dynamicIrOnly: argv["dynamic-ir-only"],
                 outputDir: argv.output,
                 noReplay: !argv.replay,
+                verify: argv.verify,
                 retryRateLimited: argv["retry-rate-limited"],
                 requireEnvVars: argv["require-env-vars"],
                 skipIfNoDiff: argv["skip-if-no-diff"]
