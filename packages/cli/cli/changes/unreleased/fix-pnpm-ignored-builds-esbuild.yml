@@ -1,6 +1,0 @@
-- summary: |
-    Fix `fern docs dev` failing on pnpm 10+ where `pnpm i esbuild` exits with
-    ERR_PNPM_IGNORED_BUILDS because build scripts are blocked by default. The
-    esbuild package is installed successfully; the error is now treated as
-    non-fatal since `install-esbuild.js` handles binary setup separately.
-  type: fix
