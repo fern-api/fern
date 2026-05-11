@@ -93,8 +93,11 @@ runs:
         # fallback above, that can pin CI to a stale seed image for days after
         # a fix has shipped via .github/workflows/seed-dockers.yml. Force a
         # re-pull so the manifest digest matches what's currently on Docker Hub.
+        # awk (not grep) so an empty match returns 0 under `set -o pipefail` —
+        # shards like openapi never load a *-seed:* image and would otherwise
+        # fail the step before anything actually ran.
         docker images --format '{{.Repository}}:{{.Tag}}' \
-          | grep -E '^[^/]+/[^:]+-seed:' \
+          | awk '/^[^/]+\/[^:]+-seed:/' \
           | sort -u \
           | while read -r img; do
               echo "Refreshing $img"
