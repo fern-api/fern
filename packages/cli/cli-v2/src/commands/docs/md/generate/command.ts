@@ -1,5 +1,6 @@
 import { AbsoluteFilePath, dirname } from "@fern-api/fs-utils";
 import { runLibraryDocsGeneration } from "@fern-api/library-docs-generator";
+import { LogLevel } from "@fern-api/logger";
 import { CliError } from "@fern-api/task-context";
 
 import type { Argv } from "yargs";
@@ -45,7 +46,7 @@ export class GenerateCommand {
         const docsFilePath = workspace.docs.absoluteFilePath ?? workspace.absoluteFilePath ?? context.cwd;
         const docsDirectoryPath = AbsoluteFilePath.of(dirname(docsFilePath));
 
-        const taskContext = new TaskContextAdapter({ context });
+        const taskContext = new TaskContextAdapter({ context, logLevel: LogLevel.Info });
         // Orchestrator throws if any library fails, so a non-throwing return
         // means everything succeeded.
         await runLibraryDocsGeneration({
