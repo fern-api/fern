@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump the Swift model generator container's Node base image from
+    `node:22.22-alpine3.23` to `node:24.15.0-alpine3.23`. Aligns the generator
+    with the other Fern generator containers on a single Node major version
+    and picks up Node 24's CVE patches.
+  type: chore
