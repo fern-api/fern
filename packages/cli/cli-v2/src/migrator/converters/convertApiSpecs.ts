@@ -223,6 +223,9 @@ function rebasePath(filePath: string, sourcePrefix: string): string {
         return filePath;
     }
     const rawPath = filePath.startsWith("./") ? filePath.slice(2) : filePath;
+    if (sourcePrefix === "") {
+        return `./${rawPath}`;
+    }
     return `./${path.posix.normalize(`${sourcePrefix}/${rawPath}`)}`;
 }
 

@@ -232,6 +232,18 @@ describe("convertSingleApi", () => {
         expect(result.warnings.some((w) => w.message.includes("Fern definition"))).toBe(true);
     });
 
+    it("handles spec paths when fernDir equals projectRoot (empty sourcePrefix)", async () => {
+        // generators.yml is at projectRoot itself — sourcePrefix would be ""
+        const result = await convertSingleApi({
+            projectRoot: AbsoluteFilePath.of(projectDir),
+            fernDir: AbsoluteFilePath.of(projectDir),
+            generatorsYmlApi: { specs: [{ openapi: "./openapi.yml", overrides: "overrides.yml" }] }
+        });
+        const spec = result.api?.specs[0] as { openapi: string; overrides: string } | undefined;
+        expect(spec?.openapi).toBe("./openapi.yml");
+        expect(spec?.overrides).toBe("./overrides.yml");
+    });
+
     it("emits no warning when definition dir exists but generators.yml has no specs", async () => {
         await mkdir(join(fernDir, "definition"), { recursive: true });
         const result = await convertSingleApi({
