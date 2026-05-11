@@ -4777,6 +4777,9 @@ importers:
       '@fern-api/docs-validator':
         specifier: workspace:*
         version: link:../yaml/docs-validator
+      '@fern-api/fdr-sdk':
+        specifier: 1.2.4-f661387fb2
+        version: 1.2.4-f661387fb2(@opentelemetry/api@1.9.1)(typescript@5.9.3)
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../fern-definition/schema
@@ -4804,6 +4807,9 @@ importers:
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
         version: link:../workspace/lazy-fern-workspace
+      '@fern-api/library-docs-generator':
+        specifier: workspace:*
+        version: link:../library-docs-generator
       '@fern-api/local-workspace-runner':
         specifier: workspace:*
         version: link:../generation/local-generation/local-workspace-runner
