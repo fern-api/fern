@@ -293,6 +293,10 @@ describe("GenerateCommand", () => {
         );
 
         const promise = cmd.handle(context, {} as GenerateCommand.Args);
+        // Attach a no-op handler so the rejection is never "unhandled" while
+        // we advance fake timers below. The actual assertion still runs on
+        // the original promise via `expect(...).rejects.toThrow(...)`.
+        promise.catch(() => undefined);
         await vi.advanceTimersByTimeAsync(3000);
         await expect(promise).rejects.toThrow(CliError);
         expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("Bad syntax"));
@@ -393,6 +397,9 @@ describe("GenerateCommand", () => {
         );
 
         const promise = cmd.handle(context, {} as GenerateCommand.Args);
+        // Attach a no-op handler so the rejection is never "unhandled" while
+        // we advance fake timers below.
+        promise.catch(() => undefined);
         // Advance past the 3-minute timeout (3 * 60 * 1000 ms)
         await vi.advanceTimersByTimeAsync(3 * 60 * 1000 + 3000);
         await expect(promise).rejects.toThrow(CliError);
