@@ -41,10 +41,9 @@ RUN apk update && apk upgrade --no-cache --available
 # Overlay rebuilt containerd + runc binaries (see stage 2).
 COPY --from=overlay-binaries /overlay/ /
 
-# Drop unused buildx CLI plugin that ships vulnerable embedded Go modules.
-# Keep docker-compose: wire-test bootstraps in generators/php/sdk run
-# `docker compose -f …` to start WireMock alongside generated SDK tests.
-RUN rm -f /usr/local/libexec/docker/cli-plugins/docker-buildx
+# Drop unused docker CLI plugins (buildx, compose) that ship vulnerable
+# embedded Go modules; seed only uses `docker load` and `docker run`.
+RUN rm -rf /usr/local/libexec/docker/cli-plugins /usr/local/bin/docker-compose
 
 # Copy pre-pulled wiremock image
 COPY --from=wiremock-pull /wiremock.tar /wiremock.tar
