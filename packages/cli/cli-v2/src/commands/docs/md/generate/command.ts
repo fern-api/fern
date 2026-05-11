@@ -2,7 +2,7 @@ import type { FernToken } from "@fern-api/auth";
 import { docsYml } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import type { CppLibraryDocsIr } from "@fern-api/library-docs-generator";
 import { generate, generateCpp } from "@fern-api/library-docs-generator";
 import { CliError } from "@fern-api/task-context";
@@ -152,7 +152,8 @@ export class GenerateCommand {
         const token = await context.getTokenOrPrompt();
         await context.verifyOrgAccess({ organization: workspace.org, token });
 
-        const docsAbsoluteFilePath = workspace.docs.absoluteFilePath ?? workspace.absoluteFilePath ?? context.cwd;
+        const docsFilePath = workspace.docs.absoluteFilePath ?? workspace.absoluteFilePath ?? context.cwd;
+        const docsAbsoluteFilePath = AbsoluteFilePath.of(dirname(docsFilePath));
 
         const results = await Promise.all(
             Object.entries(librariesToGenerate).map(async ([name, config]) => {
