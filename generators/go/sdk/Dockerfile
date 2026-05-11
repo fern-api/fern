@@ -19,12 +19,26 @@ RUN set -eux; \
         mkdir -p "${NPM_NM}/${pkg}"; \
         tar -xzf "${TARBALL}" -C "${NPM_NM}/${pkg}" --strip-components=1; \
     done; \
+    # npm 11.12.1 also vendors a nested picomatch under tinyglobby; patch it too.
+    for nested in "${NPM_NM}/tinyglobby/node_modules/picomatch"; do \
+        if [ -d "${nested}" ]; then \
+            TARBALL="$(npm pack picomatch@latest --silent)"; \
+            rm -rf "${nested}"; \
+            mkdir -p "${nested}"; \
+            tar -xzf "${TARBALL}" -C "${nested}" --strip-components=1; \
+        fi; \
+    done; \
     cd / && rm -rf /tmp/pkg-fix /root/.npm
 
 COPY generators/go-v2/sdk/dist/ /dist/
 
 # Stage 2: Final Go image
-FROM golang:1.26.2-alpine3.23
+# Built with Go 1.26.3 (vs. golang:1.26.2 previously) so that the resulting
+# /fern-go-sdk binary embeds the Go 1.26.3 stdlib, which fixes the unpatched
+# stdlib CVEs reported against go/stdlib:1.26.2 (CVE-2026-33811,
+# CVE-2026-33814, CVE-2026-39820, CVE-2026-39836, CVE-2026-42499) and the
+# Go toolchain (CVE-2026-42501).
+FROM golang:1.26.3-alpine3.23
 
 WORKDIR /workspace
 
@@ -34,11 +48,13 @@ RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github
     git config --global user.name "fern-api"
 
 COPY generators/go/go.mod generators/go/go.sum /workspace/
-RUN go mod download
-
 COPY generators/go/cmd /workspace/cmd
 COPY generators/go/internal /workspace/internal
 COPY generators/go/version.go /workspace/version.go
+# Bump golang.org/x/net to v0.53.0 (fixes CVE-2026-33814 HTTP/2 server
+# header smuggling). x/net is a transitive of golang.org/x/tools and is
+# normally pulled at v0.39.0; this forces the patched build.
+RUN go get golang.org/x/net@v0.53.0 && go mod tidy && go mod download
 
 COPY generators/go-v2/sdk/features.yml /assets/features.yml
 

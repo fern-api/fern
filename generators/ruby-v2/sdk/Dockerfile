@@ -39,8 +39,13 @@ RUN apk --no-cache upgrade && \
     gem install --no-document \
         erb:4.0.3.1 \
         net-imap:0.4.24 && \
+    # Remove both the stale gemspecs and the legacy gem directories. Without
+    # removing the directories, grype reports the unpatched versions even
+    # though Ruby is loading the patched 4.0.3.1 / 0.4.24 copies.
     rm -f /usr/local/lib/ruby/gems/3.3.0/specifications/default/erb-*.gemspec \
           /usr/local/lib/ruby/gems/3.3.0/specifications/net-imap-0.4.21.gemspec && \
+    rm -rf /usr/local/lib/ruby/gems/3.3.0/gems/erb-4.0.3 \
+           /usr/local/lib/ruby/gems/3.3.0/gems/net-imap-0.4.21 && \
     gem install --no-document 'rubocop:~> 1.21' rubocop-minitest && \
     apk del .build-deps
 

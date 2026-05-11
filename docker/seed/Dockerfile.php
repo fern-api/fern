@@ -5,14 +5,22 @@ RUN apk add --no-cache curl && \
     curl -sL "https://github.com/google/go-containerregistry/releases/download/v0.21.2/go-containerregistry_Linux_${ARCH}.tar.gz" | tar xz -C /usr/local/bin crane && \
     crane pull wiremock/wiremock:3.9.1 /wiremock.tar
 
-# Stage 2: Build containerd v2.3.0 + runc v1.3.5 from source with go1.26.3 and
-# golang.org/x/net v0.53.0 to clear stdlib + x/net CVEs the upstream prebuilts
-# (still go1.26.2 / x/net <0.53) carry, and pick up the grpc / otel / go-jose
-# bumps in containerd v2.3.0.
+# Stage 2: Rebuild containerd v2.3.0 + runc v1.3.5 + moby (dockerd, docker-proxy)
+# + docker CLI from source with go1.26.3 and golang.org/x/net v0.53.0.
+# Upstream `docker:29.4.3-dind-alpine3.23` ships dockerd / docker / docker-proxy
+# built with go1.26.2, which grype flags for the unpatched go/stdlib 1.26.2
+# CVEs (CVE-2026-33811, CVE-2026-33814, CVE-2026-39820, CVE-2026-39836,
+# CVE-2026-42499). Rebuilding under GOTOOLCHAIN=go1.26.3 swaps the embedded
+# stdlib without changing functionality. The containerd/runc rebuild also
+# picks up the grpc / otel / go-jose bumps from the v2.3.0 release line.
 FROM golang:1.26.3-alpine3.23 AS overlay-binaries
 ARG CONTAINERD_VERSION=2.3.0
 ARG RUNC_VERSION=1.3.5
+ARG MOBY_VERSION=29.4.3
+ARG DOCKER_CLI_VERSION=29.4.3
+ARG COMPOSE_VERSION=5.1.3
 ARG XNET_VERSION=0.53.0
+ENV GOTOOLCHAIN=go1.26.3
 RUN apk add --no-cache git make gcc musl-dev linux-headers libseccomp-dev libseccomp-static bash ca-certificates && \
     mkdir -p /overlay/usr/local/bin
 RUN git clone --depth 1 --branch v${CONTAINERD_VERSION} https://github.com/containerd/containerd.git /src/containerd && \
@@ -31,14 +39,45 @@ RUN git clone --depth 1 --branch v${RUNC_VERSION} https://github.com/opencontain
     go mod vendor && \
     make static EXTRA_LDFLAGS="-s -w" && \
     cp runc /overlay/usr/local/bin/runc
+RUN git clone --depth 1 --branch docker-v${MOBY_VERSION} https://github.com/moby/moby.git /src/moby && \
+    cd /src/moby && \
+    CGO_ENABLED=0 go build \
+      -tags "osusergo netgo static_build exclude_graphdriver_btrfs exclude_graphdriver_devicemapper" \
+      -trimpath -ldflags "-s -w" \
+      -o /overlay/usr/local/bin/dockerd ./cmd/dockerd && \
+    CGO_ENABLED=0 go build \
+      -tags "osusergo netgo static_build" \
+      -trimpath -ldflags "-s -w" \
+      -o /overlay/usr/local/bin/docker-proxy ./cmd/docker-proxy
+RUN git clone --depth 1 --branch v${DOCKER_CLI_VERSION} https://github.com/docker/cli.git /src/docker-cli && \
+    cd /src/docker-cli && \
+    cp vendor.mod go.mod && cp vendor.sum go.sum && \
+    CGO_ENABLED=0 go build -mod=vendor \
+      -tags "osusergo netgo static_build pkcs11" \
+      -trimpath -ldflags "-s -w" \
+      -o /overlay/usr/local/bin/docker ./cmd/docker
+# Rebuild docker-compose to clear golang.org/x/net <0.53 CVEs the upstream
+# v5.1.3 prebuilt vendors. github.com/docker/docker v28.5.2 remains as a
+# residual since compose has not yet migrated to github.com/moby/moby/v2;
+# the daemon we overlay above is moby v29.4.3 so the CVE-2026-34040 /
+# CVE-2026-33997 code paths are unreachable at runtime.
+RUN mkdir -p /overlay/usr/local/libexec/docker/cli-plugins && \
+    git clone --depth 1 --branch v${COMPOSE_VERSION} https://github.com/docker/compose.git /src/compose && \
+    cd /src/compose && \
+    echo "require golang.org/x/net v${XNET_VERSION}" >> go.mod && \
+    go mod tidy && \
+    CGO_ENABLED=0 go build \
+      -trimpath -ldflags "-s -w -X github.com/docker/compose/v5/internal.Version=v${COMPOSE_VERSION}" \
+      -o /overlay/usr/local/libexec/docker/cli-plugins/docker-compose ./cmd
 
 # Stage 3: Build the seed image
-FROM docker:29.4.1-dind-alpine3.23
+FROM docker:29.4.3-dind-alpine3.23
 
 # Apply latest APK security patches
 RUN apk update && apk upgrade --no-cache --available
 
-# Overlay rebuilt containerd + runc binaries (see stage 2).
+# Overlay rebuilt containerd + runc + moby (dockerd, docker-proxy) + docker CLI
+# binaries (see stage 2). These replace the upstream go1.26.2 builds.
 COPY --from=overlay-binaries /overlay/ /
 
 # Drop unused buildx CLI plugin that ships vulnerable embedded Go modules.
