@@ -1,4 +1,26 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.41.0
+  changelogEntry:
+    - summary: |
+        Add a `With<AuthToken>Func` option for bearer auth that accepts a `func() (string, error)` callable.
+        The callable is evaluated at request time when no static token is set, matching the callable
+        auth behavior available in the Python and TypeScript SDK generators.
+      type: feat
+  createdAt: "2026-05-11"
+  irVersion: 66
+- version: 1.40.4
+  changelogEntry:
+    - summary: |
+        Bump the Go SDK and Go model generator containers' Node base image from
+        `node:22.22-alpine3.23` to `node:24.15-alpine3.23`. Aligns the generators
+        with the rest of the Fern generator containers on a single Node major
+        version (Node 24) and picks up Node 24's CVE patches. The existing
+        `npm pack <pkg>@latest` loop that swaps in patched `ip-address`,
+        `brace-expansion`, and `picomatch` is retained because `npm pack @latest`
+        continues to resolve the same fixed releases on Node 24.
+      type: chore
+  createdAt: "2026-05-11"
+  irVersion: 66
 - version: 1.40.3
   changelogEntry:
     - summary: |

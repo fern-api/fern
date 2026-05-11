@@ -1,4 +1,4 @@
-FROM node:22.22-alpine3.23 AS node
+FROM node:24.15-alpine3.23 AS node
 FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine
 
 ENV YARN_CACHE_FOLDER=/.yarn

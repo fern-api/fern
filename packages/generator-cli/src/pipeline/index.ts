@@ -14,5 +14,7 @@ export type {
     PipelineResult,
     ReplayStepConfig,
     ReplayStepResult,
-    StepResult
+    StepResult,
+    VerificationStepResult,
+    VerifyStepConfig
 } from "./types";
