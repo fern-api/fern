@@ -1,5 +1,5 @@
-import { readdir, readFile, stat } from "fs/promises";
-import path from "path";
+import { readdir, readFile, stat } from "node:fs/promises";
+import path from "node:path";
 
 import type { BrokenLink, LinkCheckResult } from "./LinkCheckClient.js";
 
@@ -60,7 +60,9 @@ export class SourceResolver {
         let fileCache: Map<string, FileContent> | undefined;
 
         if (docsAbsolutePath != null) {
-            fileCache = await this.buildFileCache(docsAbsolutePath);
+            // docsAbsolutePath is the path to docs.yml file; walk its parent directory
+            const docsDir = path.dirname(docsAbsolutePath);
+            fileCache = await this.buildFileCache(docsDir);
         }
 
         const brokenLinks = await Promise.all(result.brokenLinks.map((link) => this.resolveLink(link, fileCache)));
@@ -109,19 +111,16 @@ export class SourceResolver {
                 if (line == null) {
                     continue;
                 }
-                for (const pattern of searchPatterns) {
-                    const col = line.indexOf(pattern);
-                    if (col !== -1) {
-                        const lineNum = lineIdx + 1;
-                        const colNum = col + 1;
-                        references.push({
-                            display: `${relPath}:${lineNum}:${colNum}`,
-                            filePath: relPath,
-                            line: lineNum,
-                            column: colNum
-                        });
-                        break;
-                    }
+                const match = this.findLinkMatch(line, searchPatterns);
+                if (match != null) {
+                    const lineNum = lineIdx + 1;
+                    const colNum = match + 1;
+                    references.push({
+                        display: `${relPath}:${lineNum}:${colNum}`,
+                        filePath: relPath,
+                        line: lineNum,
+                        column: colNum
+                    });
                 }
             }
         }
@@ -130,20 +129,56 @@ export class SourceResolver {
     }
 
     /**
+     * Search a line for a link pattern, requiring it to appear within markdown link syntax
+     * or as a standalone path (not as a substring of a longer path).
+     */
+    private findLinkMatch(line: string, patterns: string[]): number | undefined {
+        for (const pattern of patterns) {
+            let startIdx = 0;
+            while (startIdx < line.length) {
+                const col = line.indexOf(pattern, startIdx);
+                if (col === -1) {
+                    break;
+                }
+
+                // Validate that this match is within a link context, not a prefix of a longer path
+                const charAfter = line[col + pattern.length];
+                const isAtBoundary =
+                    charAfter === undefined ||
+                    charAfter === ")" ||
+                    charAfter === '"' ||
+                    charAfter === "'" ||
+                    charAfter === "]" ||
+                    charAfter === " " ||
+                    charAfter === ">" ||
+                    charAfter === "#";
+
+                if (isAtBoundary) {
+                    return col;
+                }
+
+                startIdx = col + 1;
+            }
+        }
+        return undefined;
+    }
+
+    /**
      * Generate search patterns for a broken URL.
-     * Searches for both the full URL and just the pathname, since markdown
-     * links may use either form.
+     * Searches for the full URL, the pathname, and the pathname without leading slash.
      */
     private getSearchPatterns(url: string): string[] {
-        const patterns: string[] = [];
-
-        patterns.push(url);
+        const patterns: string[] = [url];
 
         try {
             const parsed = new URL(url.startsWith("http") ? url : `https://${url}`);
             const pathname = parsed.pathname;
             if (pathname !== "/" && pathname !== url) {
                 patterns.push(pathname);
+                // Also try without leading slash for relative links
+                if (pathname.startsWith("/")) {
+                    patterns.push(pathname.slice(1));
+                }
             }
         } catch {
             // not a valid URL, just use the raw string

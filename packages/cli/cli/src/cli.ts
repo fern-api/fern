@@ -2200,8 +2200,8 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     onLinkChecked: (data) => {
                         progress.onLinkChecked(data.linksChecked, data.totalLinks);
                     },
-                    onError: (message) => {
-                        cliContext.logger.error(message);
+                    onError: () => {
+                        // Error is thrown after stream ends; no need to print here
                     }
                 });
 
@@ -2213,9 +2213,9 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                 const output = formatter.format(resolved, argv.output as OutputFormat);
 
                 if (argv.output === "json" || argv.output === "csv") {
-                    process.stdout.write(output + "\n");
+                    await writeAndDrain(process.stdout, output + "\n");
                 } else {
-                    process.stderr.write(output + "\n");
+                    await writeAndDrain(process.stderr, output + "\n");
                 }
 
                 if (resolved.brokenLinks.length > 0) {
@@ -2281,6 +2281,16 @@ async function resolveDocsLinkCheckDomain(cliContext: CliContext, url: string | 
         undefined,
         { code: CliError.Code.ConfigError }
     );
+}
+
+function writeAndDrain(stream: NodeJS.WriteStream, data: string): Promise<void> {
+    return new Promise((resolve) => {
+        if (stream.write(data)) {
+            resolve();
+        } else {
+            stream.once("drain", resolve);
+        }
+    });
 }
 
 async function resolveDocsConfigPath(cliContext: CliContext): Promise<string | undefined> {

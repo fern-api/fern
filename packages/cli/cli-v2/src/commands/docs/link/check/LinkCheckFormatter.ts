@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import chalk from "chalk";
 
 import type { ResolvedBrokenLink, ResolvedLinkCheckResult } from "./SourceResolver.js";
@@ -13,6 +14,8 @@ export class LinkCheckFormatter {
                 return this.formatCsv(result);
             case "text":
                 return this.formatText(result);
+            default:
+                assertNever(outputFormat);
         }
     }
 
@@ -48,7 +51,8 @@ export class LinkCheckFormatter {
                         ...(ref.filePath != null ? { localFile: ref.filePath } : {}),
                         ...(ref.line != null ? { line: ref.line } : {}),
                         ...(ref.column != null ? { column: ref.column } : {})
-                    }))
+                    })),
+                    error: link.error
                 }))
             },
             null,

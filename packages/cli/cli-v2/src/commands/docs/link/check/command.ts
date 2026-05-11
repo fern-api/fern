@@ -48,8 +48,8 @@ export class LinkCheckCommand {
                 onLinkChecked: (data) => {
                     progress.onLinkChecked(data.linksChecked, data.totalLinks);
                 },
-                onError: (message) => {
-                    context.stderr.error(`${Icons.error} ${chalk.red(message)}`);
+                onError: () => {
+                    // Error is thrown after stream ends; no need to print here
                 }
             });
 

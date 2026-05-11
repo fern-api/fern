@@ -41,11 +41,10 @@ export class ProgressRenderer {
     }
 
     public onPageScraped(pageIndex: number, totalPages: number): void {
-        const pagesScraped = pageIndex + 1;
         if (this.scrapeBar != null) {
             this.scrapeBar.setTotal(totalPages);
-            this.scrapeBar.update(pagesScraped);
-        } else if (!this.isTTY && pagesScraped === totalPages) {
+            this.scrapeBar.update(Math.min(pageIndex, totalPages));
+        } else if (!this.isTTY && pageIndex >= totalPages) {
             this.stream.write(`  ${DOCS_PREFIX} Scraped ${totalPages} pages\n`);
         }
     }

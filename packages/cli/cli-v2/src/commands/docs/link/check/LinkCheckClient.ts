@@ -14,7 +14,7 @@ export interface BrokenLink {
     error?: string;
 }
 
-export interface LinkCheckProgress {
+interface SseEvent {
     type: string;
     data: Record<string, unknown>;
     timestamp: string;
@@ -53,6 +53,7 @@ export class LinkCheckClient {
         let totalLinks = 0;
         let workingLinks = 0;
         let serverError: string | undefined;
+        let sawComplete = false;
 
         const url = `${this.baseUrl}?${new URLSearchParams({ domain }).toString()}`;
         const response = await fetch(url, {
@@ -96,80 +97,72 @@ export class LinkCheckClient {
                     continue;
                 }
 
-                let event: LinkCheckProgress;
+                let event: SseEvent;
                 try {
-                    event = JSON.parse(line.slice(6)) as LinkCheckProgress;
+                    event = JSON.parse(line.slice(6)) as SseEvent;
                 } catch {
+                    // SSE lines that aren't valid JSON (comments, partial chunks) are skipped
                     continue;
                 }
 
                 switch (event.type) {
                     case "sitemap_fetched": {
-                        const data = event.data as { totalPages: number };
-                        totalPages = data.totalPages;
-                        callbacks.onSitemapFetched?.(data);
+                        if (isSitemapFetchedData(event.data)) {
+                            totalPages = event.data.totalPages;
+                            callbacks.onSitemapFetched?.({ totalPages: event.data.totalPages });
+                        }
                         break;
                     }
                     case "page_scraped": {
-                        const data = event.data as {
-                            pageUrl: string;
-                            linksFound: number;
-                            pageIndex: number;
-                            totalPages: number;
-                        };
-                        totalPages = data.totalPages;
-                        callbacks.onPageScraped?.(data);
+                        if (isPageScrapedData(event.data)) {
+                            totalPages = event.data.totalPages;
+                            callbacks.onPageScraped?.(event.data);
+                        }
                         break;
                     }
                     case "links_check_started": {
-                        const data = event.data as { totalLinks: number };
-                        totalLinks = data.totalLinks;
+                        if (isLinksCheckStartedData(event.data)) {
+                            totalLinks = event.data.totalLinks;
+                        }
                         break;
                     }
                     case "link_check_progress": {
-                        const data = event.data as { linksChecked: number; totalLinks: number };
-                        totalLinks = data.totalLinks;
-                        callbacks.onLinkChecked?.(data);
+                        if (isLinkCheckProgressData(event.data)) {
+                            totalLinks = event.data.totalLinks;
+                            callbacks.onLinkChecked?.(event.data);
+                        }
                         break;
                     }
                     case "link_checked": {
-                        const data = event.data as {
-                            url: string;
-                            statusCode: number | null;
-                            isInternal: boolean;
-                            sourcePages: string[];
-                            error?: string;
-                        };
-                        brokenLinks.push({
-                            url: data.url,
-                            statusCode: data.statusCode,
-                            isInternal: data.isInternal,
-                            sourcePages: data.sourcePages,
-                            error: data.error
-                        });
+                        // Intermediate broken-link events are collected but overwritten by `complete`
+                        if (isLinkCheckedData(event.data)) {
+                            brokenLinks.push({
+                                url: event.data.url,
+                                statusCode: event.data.statusCode ?? null,
+                                isInternal: event.data.isInternal ?? false,
+                                sourcePages: event.data.sourcePages ?? [],
+                                error: event.data.error
+                            });
+                        }
                         break;
                     }
                     case "complete": {
-                        const data = event.data as {
-                            totalPages: number;
-                            totalLinks: number;
-                            workingLinks: number;
-                            brokenLinks: BrokenLink[];
-                            blockedLinks: BrokenLink[];
-                        };
-                        totalPages = data.totalPages;
-                        totalLinks = data.totalLinks;
-                        workingLinks = data.workingLinks;
-                        brokenLinks.length = 0;
-                        brokenLinks.push(...data.brokenLinks);
-                        blockedLinks.length = 0;
-                        blockedLinks.push(...data.blockedLinks);
+                        if (isCompleteData(event.data)) {
+                            sawComplete = true;
+                            totalPages = event.data.totalPages;
+                            totalLinks = event.data.totalLinks;
+                            workingLinks = event.data.workingLinks;
+                            brokenLinks.length = 0;
+                            brokenLinks.push(...event.data.brokenLinks);
+                            blockedLinks.length = 0;
+                            blockedLinks.push(...event.data.blockedLinks);
+                        }
                         break;
                     }
                     case "error": {
-                        const data = event.data as { message: string };
-                        serverError = data.message;
-                        callbacks.onError?.(data.message);
+                        if (isErrorData(event.data)) {
+                            serverError = event.data.message;
+                        }
                         break;
                     }
                 }
@@ -178,6 +171,10 @@ export class LinkCheckClient {
 
         if (serverError != null) {
             throw new LinkCheckError(0, serverError);
+        }
+
+        if (!sawComplete) {
+            throw new LinkCheckError(0, "Link check stream ended unexpectedly without a completion event.");
         }
 
         return {
@@ -189,6 +186,57 @@ export class LinkCheckClient {
             durationMs: Date.now() - startTime
         };
     }
+}
+
+// Type guards for SSE event data
+
+function isSitemapFetchedData(data: Record<string, unknown>): data is { totalPages: number } {
+    return typeof data.totalPages === "number";
+}
+
+function isPageScrapedData(
+    data: Record<string, unknown>
+): data is { pageUrl: string; linksFound: number; pageIndex: number; totalPages: number } {
+    return (
+        typeof data.pageUrl === "string" &&
+        typeof data.linksFound === "number" &&
+        typeof data.pageIndex === "number" &&
+        typeof data.totalPages === "number"
+    );
+}
+
+function isLinksCheckStartedData(data: Record<string, unknown>): data is { totalLinks: number } {
+    return typeof data.totalLinks === "number";
+}
+
+function isLinkCheckProgressData(data: Record<string, unknown>): data is { linksChecked: number; totalLinks: number } {
+    return typeof data.linksChecked === "number" && typeof data.totalLinks === "number";
+}
+
+function isLinkCheckedData(
+    data: Record<string, unknown>
+): data is { url: string; statusCode: number | null; isInternal: boolean; sourcePages: string[]; error?: string } {
+    return typeof data.url === "string" && Array.isArray(data.sourcePages);
+}
+
+function isCompleteData(data: Record<string, unknown>): data is {
+    totalPages: number;
+    totalLinks: number;
+    workingLinks: number;
+    brokenLinks: BrokenLink[];
+    blockedLinks: BrokenLink[];
+} {
+    return (
+        typeof data.totalPages === "number" &&
+        typeof data.totalLinks === "number" &&
+        typeof data.workingLinks === "number" &&
+        Array.isArray(data.brokenLinks) &&
+        Array.isArray(data.blockedLinks)
+    );
+}
+
+function isErrorData(data: Record<string, unknown>): data is { message: string } {
+    return typeof data.message === "string";
 }
 
 export class LinkCheckError extends Error {
