@@ -1,7 +1,12 @@
 FROM node:22.22-bookworm-slim
 
+# Apply latest Debian security updates so that grype-tracked OS package
+# vulnerabilities (glibc, dpkg, nghttp2, libcap2, systemd, libgcrypt20,
+# krb5, etc.) are resolved on top of the base image.
 RUN apt-get update \
+    && apt-get -y --no-install-recommends dist-upgrade \
     && apt-get install -y --no-install-recommends ca-certificates git \
+    && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/*
 
 # Enable corepack so both pnpm and yarn resolve from each project's
