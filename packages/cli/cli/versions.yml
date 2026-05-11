@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.22.1
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` failing with pnpm 11 due to esbuild build scripts being blocked by default.
+        Writes `onlyBuiltDependencies` config to the bundle folder before installing esbuild.
+      type: fix
+  createdAt: "2026-05-11"
+  irVersion: 66
 - version: 5.22.0
   changelogEntry:
     - summary: |
