@@ -527,6 +527,11 @@ export async function downloadBundle({
                 });
             }
 
+            const workspaceConfigPath = path.join(absolutePathToBundleFolder, "pnpm-workspace.yaml");
+            if (!existsSync(workspaceConfigPath)) {
+                await writeFile(workspaceConfigPath, "onlyBuiltDependencies:\n  - esbuild\n");
+            }
+
             try {
                 // install esbuild
                 logger.debug("Installing esbuild");
