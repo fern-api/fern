@@ -1092,8 +1092,21 @@ export async function runAppPreviewServer({
 
     // Now start Next.js after backend is ready
 
+    // Node.js >= 26 on Linux enables io_uring by default in libuv, which has a
+    // busy-loop bug: worker threads spin on an internal eventfd, starving the
+    // main event loop and causing the server to hang during startup.
+    // Setting UV_USE_IO_URING=0 falls back to epoll and avoids the hang.
+    const nodeMajor = parseInt(process.versions.node.split(".")[0] ?? "0", 10);
+    const needsIoUringWorkaround = process.platform === "linux" && nodeMajor >= 26;
+    if (needsIoUringWorkaround) {
+        context.logger.debug(
+            `Node.js v${process.versions.node} on Linux detected — disabling io_uring to avoid libuv busy-loop`
+        );
+    }
+
     const env = {
         ...process.env,
+        ...(needsIoUringWorkaround ? { UV_USE_IO_URING: "0" } : {}),
         PORT: port.toString(),
         HOSTNAME: "0.0.0.0",
         NEXT_PUBLIC_FDR_ORIGIN_PORT: backendPort.toString(),
