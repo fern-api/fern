@@ -27,6 +27,7 @@ import { publishCli } from "./commands/publish/publishCli.js";
 import { publishGenerator } from "./commands/publish/publishGenerator.js";
 import { registerCliRelease } from "./commands/register/registerCliRelease.js";
 import { registerGenerator } from "./commands/register/registerGenerator.js";
+import { runMegaTest } from "./commands/mega-test/index.js";
 import { runWithCustomFixture } from "./commands/run/runWithCustomFixture.js";
 import { ContainerScriptRunner, LocalScriptRunner, ScriptRunner } from "./commands/test/index.js";
 import { TaskContextFactory } from "./commands/test/TaskContextFactory.js";
@@ -70,6 +71,7 @@ export async function tryRunCli(): Promise<void> {
         });
 
     addTestCommand(cli);
+    addMegaTestCommand(cli);
     addTestRemoteLocalCommand(cli);
     addRunCommand(cli);
     addImgCommand(cli);
@@ -397,6 +399,103 @@ function addTestCommand(cli: Argv) {
 
             // If any of the tests failed and allow-unexpected-failures is false, exit with a non-zero status code
             if (results.includes(false) && !argv["allow-unexpected-failures"]) {
+                process.exit(1);
+            }
+        }
+    );
+}
+
+function addMegaTestCommand(cli: Argv) {
+    cli.command(
+        "mega-test",
+        "Compose every migrated OpenAPI-backed fixture into ONE virtual generators.yml, generate a single mega SDK, and run its build+test scripts once. Reports per-fixture rows plus overall wall-clock time. ts-sdk only for now.",
+        (yargs) =>
+            yargs
+                .option("generator", {
+                    type: "string",
+                    demandOption: true,
+                    alias: ["g", "sdk"],
+                    description:
+                        "The generator to run the mega-test for (e.g. 'ts-sdk'). Only ts-sdk is supported in this PR."
+                })
+                .option("include", {
+                    type: "array",
+                    string: true,
+                    demandOption: false,
+                    description:
+                        "Glob(s) of fixture names to include (e.g. 'imdb*'). Default: all migrated OpenAPI fixtures."
+                })
+                .option("exclude", {
+                    type: "array",
+                    string: true,
+                    demandOption: false,
+                    description: "Glob(s) of fixture names to exclude."
+                })
+                .option("local", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    alias: "l",
+                    description: "Run the generator natively via test.local (faster). Otherwise runs in Docker."
+                })
+                .option("keepContainer", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description: "Keep the docker container after the mega-test finishes",
+                    alias: ["keepDocker"]
+                })
+                .option("skip-scripts", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    alias: "ss",
+                    description: "Skip the build/test scripts after generation"
+                })
+                .option("inspect", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    alias: "i"
+                })
+                .option("output", {
+                    type: "string",
+                    demandOption: false,
+                    description: "Optional output directory for the mega SDK (defaults to a temp dir)"
+                })
+                .option("log-level", {
+                    default: LogLevel.Info,
+                    choices: LOG_LEVELS
+                }),
+        async (argv) => {
+            const generators = await loadGeneratorWorkspaces();
+            const generatorName = normalizeGeneratorName(argv.generator, generators);
+            const workspace = generators.find((g) => g.workspaceName === generatorName);
+            if (workspace == null) {
+                throw new Error(
+                    `Generator "${argv.generator}" not found. Available: ${generators
+                        .map((g) => g.workspaceName)
+                        .join(", ")}`
+                );
+            }
+
+            const summary = await runMegaTest({
+                workspace,
+                include: argv.include,
+                exclude: argv.exclude,
+                local: argv.local,
+                keepContainer: argv.keepContainer,
+                logLevel: argv["log-level"],
+                inspect: argv.inspect,
+                skipScripts: argv["skip-scripts"],
+                outputDir: argv.output
+                    ? argv.output.startsWith("/")
+                        ? AbsoluteFilePath.of(argv.output)
+                        : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv.output))
+                    : undefined
+            });
+
+            if (summary.result.type === "failure") {
                 process.exit(1);
             }
         }
