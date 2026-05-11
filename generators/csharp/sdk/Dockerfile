@@ -1,8 +1,4 @@
 # Stage 1: Node.js
-# Pinned to 24.15.0-alpine3.23 alongside the other Fern generator containers.
-# node:24.15.0 already bundles patched glob (13.0.6), minimatch (10.2.4),
-# tar (7.5.11), brace-expansion (5.0.4), and diff (8.0.3); the only npm-
-# bundled deps that still need patching below are ip-address and picomatch.
 FROM node:24.15.0-alpine3.23 AS node
 
 FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine

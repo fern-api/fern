@@ -1,16 +1,5 @@
 # Stage 1: Java V2
-# Updated: WebSocket feature support added
-# Pinned to node:24.15.0-trixie alongside the other Fern generator containers.
-# Trixie ships patched versions of glibc, dpkg, nghttp2, libcap2, systemd,
-# libgcrypt20, krb5, curl, and expat that are not available on bookworm,
-# so the base-image choice clears AWS Inspector findings that dist-upgrade
-# alone could not. The non-slim variant is intentional — the patch RUN
-# steps below shell out to `curl` and `tar`, which are not preinstalled on
-# the *-slim image.
-# node:24.15.0 already bundles patched glob (13.0.6), minimatch (10.2.4), tar
-# (7.5.11), and brace-expansion (5.0.4), so those patch steps below are dropped.
-# ip-address (10.1.0) and picomatch (4.0.3) bundled with this npm release are
-# still vulnerable and continue to be patched below.
+# Non-slim trixie because the patch RUN steps below shell out to curl and tar.
 FROM node:24.15.0-trixie AS node
 COPY generators/java-v2/sdk/dist/cli.cjs /dist/cli.cjs
 COPY generators/java-v2/sdk/features.yml /assets/features.yml
