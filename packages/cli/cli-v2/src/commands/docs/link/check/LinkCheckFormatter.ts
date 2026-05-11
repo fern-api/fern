@@ -149,6 +149,11 @@ export class LinkCheckFormatter {
             this.appendBlockedLinkDetails(lines, result.blockedLinks);
         }
 
+        if (result.brokenLinks.length > 0) {
+            lines.push("");
+            lines.push(chalk.red("Broken links found"));
+        }
+
         lines.push("");
         return lines.join("\n");
     }

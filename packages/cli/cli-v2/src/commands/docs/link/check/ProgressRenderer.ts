@@ -15,6 +15,7 @@ export class ProgressRenderer {
     private scrapeBar: cliProgress.SingleBar | undefined;
     private checkBar: cliProgress.SingleBar | undefined;
     private phase: "idle" | "scraping" | "checking" = "idle";
+    private finished = false;
 
     constructor(stream: NodeJS.WriteStream) {
         this.stream = stream;
@@ -27,7 +28,7 @@ export class ProgressRenderer {
         if (this.isTTY) {
             this.scrapeBar = new cliProgress.SingleBar(
                 {
-                    format: `  ${DOCS_PREFIX} ${formatLabel("Scraping pages")} [{bar}] {percentage}% | {value}/{total}`,
+                    format: `    ${DOCS_PREFIX} ${formatLabel("Scraping pages")} [{bar}] {percentage}% | {value}/{total}`,
                     barCompleteChar: "\u2588",
                     barIncompleteChar: "\u2591",
                     hideCursor: true,
@@ -45,7 +46,7 @@ export class ProgressRenderer {
             this.scrapeBar.setTotal(totalPages);
             this.scrapeBar.update(Math.min(pageIndex, totalPages));
         } else if (!this.isTTY && pageIndex >= totalPages) {
-            this.stream.write(`  ${DOCS_PREFIX} Scraped ${totalPages} pages\n`);
+            this.stream.write(`    ${DOCS_PREFIX} Scraped ${totalPages} pages\n`);
         }
     }
 
@@ -61,7 +62,7 @@ export class ProgressRenderer {
             if (this.isTTY) {
                 this.checkBar = new cliProgress.SingleBar(
                     {
-                        format: `  ${DOCS_PREFIX} ${formatLabel("Checking links")} [{bar}] {percentage}% | {value}/{total}`,
+                        format: `    ${DOCS_PREFIX} ${formatLabel("Checking links")} [{bar}] {percentage}% | {value}/{total}`,
                         barCompleteChar: "\u2588",
                         barIncompleteChar: "\u2591",
                         hideCursor: true,
@@ -80,6 +81,10 @@ export class ProgressRenderer {
     }
 
     public finish(): void {
+        if (this.finished) {
+            return;
+        }
+        this.finished = true;
         if (this.scrapeBar != null) {
             this.scrapeBar.stop();
             this.scrapeBar = undefined;

@@ -57,6 +57,8 @@ export class LinkCheckCommand {
             const resolver = new SourceResolver();
             const resolved = await resolver.resolve(result, docsAbsolutePath);
 
+            progress.finish();
+
             const formatter = new LinkCheckFormatter();
             const output = formatter.format(resolved, args.output);
 

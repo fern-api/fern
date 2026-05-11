@@ -2175,7 +2175,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
         async (argv) => {
             cliContext.instrumentPostHogEvent({ command: "fern docs link check" });
 
-            const domain = await resolveDocsLinkCheckDomain(cliContext, argv.url);
+            const { domain, docsAbsolutePath } = await resolveDocsLinkCheckContext(cliContext, argv.url);
             const dashboardUrl = process.env.FERN_DASHBOARD_URL ?? "https://dashboard.buildwithfern.com";
 
             const token = await cliContext.runTask((context) => askToLogin(context));
@@ -2205,9 +2205,10 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     }
                 });
 
-                const docsAbsolutePath = await resolveDocsConfigPath(cliContext);
                 const resolver = new SourceResolver();
                 const resolved = await resolver.resolve(result, docsAbsolutePath);
+
+                progress.finish();
 
                 const formatter = new LinkCheckFormatter();
                 const output = formatter.format(resolved, argv.output as OutputFormat);
@@ -2219,7 +2220,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                 }
 
                 if (resolved.brokenLinks.length > 0) {
-                    cliContext.failAndThrow("Broken links found", undefined, {
+                    cliContext.failWithoutThrowing(undefined, undefined, {
                         code: CliError.Code.ValidationError
                     });
                 } else if (resolved.blockedLinks.length === 0) {
@@ -2245,11 +2246,20 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
     );
 }
 
-async function resolveDocsLinkCheckDomain(cliContext: CliContext, url: string | undefined): Promise<string> {
+interface DocsLinkCheckContext {
+    domain: string;
+    docsAbsolutePath: string | undefined;
+}
+
+async function resolveDocsLinkCheckContext(
+    cliContext: CliContext,
+    url: string | undefined
+): Promise<DocsLinkCheckContext> {
     const normalizeDomain = (u: string): string => u.replace(/^https?:\/\//, "").replace(/\/$/, "");
 
     if (url != null) {
-        return normalizeDomain(url);
+        const docsAbsolutePath = await resolveDocsConfigPath(cliContext);
+        return { domain: normalizeDomain(url), docsAbsolutePath };
     }
 
     const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -2274,8 +2284,10 @@ async function resolveDocsLinkCheckDomain(cliContext: CliContext, url: string | 
         );
     }
 
+    const docsAbsolutePath = project.docsWorkspaces.absoluteFilepathToDocsConfig;
+
     if (instances.length === 1 && instances[0] != null) {
-        return normalizeDomain(instances[0].url);
+        return { domain: normalizeDomain(instances[0].url), docsAbsolutePath };
     }
 
     const available = instances.map((inst) => `  - ${inst.url}`).join("\n");
@@ -2307,6 +2319,7 @@ async function resolveDocsConfigPath(cliContext: CliContext): Promise<string | u
         }
         return project.docsWorkspaces.absoluteFilepathToDocsConfig;
     } catch {
+        // Workspace loading may fail outside a Fern project; fall back to URL-only references
         return undefined;
     }
 }
