@@ -5,21 +5,14 @@ import { TaskContext } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
-import { ScriptCommands } from "../../../config/api/index.js";
 import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces.js";
+import { resolveScriptPhaseCommands } from "../../../utils/resolveScriptPhaseCommands.js";
 import { resolveLocalScripts } from "../../../utils/resolveScriptsConfiguration.js";
 import { ScriptRunner } from "./ScriptRunner.js";
 
 interface InternalScriptResult {
     type: "success" | "failure";
     message?: string;
-}
-
-function getCommandsForPhase(commands: ScriptCommands, phase: "build" | "test"): string[] {
-    if (Array.isArray(commands)) {
-        return phase === "build" ? commands : [];
-    }
-    return commands[phase] ?? [];
 }
 
 /**
@@ -60,7 +53,11 @@ export class LocalScriptRunner extends ScriptRunner {
                 continue;
             }
 
-            const buildCommands = getCommandsForPhase(script.commands, "build");
+            const buildCommands = resolveScriptPhaseCommands({
+                commands: script.commands,
+                phase: "build",
+                outputDir
+            });
             if (buildCommands.length > 0) {
                 if (!anyBuildCommands) {
                     taskContext.logger.info(`Running build scripts for ${id}...`);
@@ -95,7 +92,11 @@ export class LocalScriptRunner extends ScriptRunner {
                 continue;
             }
 
-            const testCommands = getCommandsForPhase(script.commands, "test");
+            const testCommands = resolveScriptPhaseCommands({
+                commands: script.commands,
+                phase: "test",
+                outputDir
+            });
             if (testCommands.length > 0) {
                 if (!anyTestCommands) {
                     taskContext.logger.info(`Running test scripts for ${id}...`);
