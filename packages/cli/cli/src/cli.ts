@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { spawnSync } from "node:child_process";
 import type { ReadStream, WriteStream } from "node:tty";
 import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
@@ -92,6 +93,22 @@ import { FERN_CWD_ENV_VAR } from "./cwd.js";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
 import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
+
+// Node 26+ on Linux enables io_uring in libuv, which has a busy-loop bug that
+// hangs the process. UV_USE_IO_URING must be set before Node starts (libuv
+// reads it at init), so re-exec with it set. spawnSync doesn't use the event
+// loop, so the broken io_uring backend cannot stall the re-exec.
+if (
+    process.platform === "linux" &&
+    parseInt(process.versions.node.split(".")[0] ?? "0", 10) >= 26 &&
+    process.env.UV_USE_IO_URING !== "0"
+) {
+    const result = spawnSync(process.execPath, process.argv.slice(1), {
+        env: { ...process.env, UV_USE_IO_URING: "0" },
+        stdio: "inherit"
+    });
+    process.exit(result.status ?? 1);
+}
 
 void runCli();
 
