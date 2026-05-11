@@ -1,4 +1,4 @@
-FROM node:22.22-alpine3.23
+FROM node:24.15.0-alpine3.23
 
 RUN apk update && apk upgrade --no-cache
 RUN apk --no-cache add bash curl git zip
