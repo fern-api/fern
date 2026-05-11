@@ -85,22 +85,6 @@ runs:
           [ -f "$f" ] && docker load -i "$f" || true
         done
 
-    - name: Refresh cached seed images from Docker Hub
-      shell: bash
-      run: |
-        # `docker load` rebinds tags like fernapi/<lang>-seed:latest to whatever
-        # was captured in the cached tarball. Combined with the restore-keys
-        # fallback above, that can pin CI to a stale seed image for days after
-        # a fix has shipped via .github/workflows/seed-dockers.yml. Force a
-        # re-pull so the manifest digest matches what's currently on Docker Hub.
-        docker images --format '{{.Repository}}:{{.Tag}}' \
-          | grep -E '^[^/]+/[^:]+-seed:' \
-          | sort -u \
-          | while read -r img; do
-              echo "Refreshing $img"
-              docker pull "$img" || true
-            done
-
     - name: Record pre-existing Docker images
       shell: bash
       run: docker images -q | sort -u > /tmp/docker-images-before.txt
