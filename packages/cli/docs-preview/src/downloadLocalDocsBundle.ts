@@ -30,6 +30,7 @@ const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
 // Const for windows post-processing
 const INSTRUMENTATION_PATH = "packages/fern-docs/bundle/.next/server/instrumentation.js";
 const COREPACK_MISSING_KEYID_ERROR_MESSAGE = 'Cannot find matching keyid: {"signatures":';
+const PNPM_IGNORED_BUILDS_ERROR = "ERR_PNPM_IGNORED_BUILDS";
 
 interface SymlinkEntry {
     path: string;
@@ -541,11 +542,18 @@ export async function downloadBundle({
                 });
             } catch (error) {
                 if (error instanceof Error) {
-                    // If error message contains "Cannot find matching keyid:", try to upgrade corepack
-                    if (
+                    // pnpm 10+ blocks build scripts by default. esbuild is installed
+                    // but its postinstall is skipped — install-esbuild.js handles the
+                    // binary setup separately, so this error is non-fatal.
+                    if (typeof error?.message === "string" && error.message.includes(PNPM_IGNORED_BUILDS_ERROR)) {
+                        logger.debug(
+                            "pnpm blocked esbuild build scripts (ERR_PNPM_IGNORED_BUILDS) — continuing, install-esbuild.js will handle binary setup"
+                        );
+                    } else if (
                         typeof error?.message === "string" &&
                         error.message.includes(COREPACK_MISSING_KEYID_ERROR_MESSAGE)
                     ) {
+                        // If error message contains "Cannot find matching keyid:", try to upgrade corepack
                         logger.debug("Detected corepack missing keyid error. Attempting to upgrade corepack");
                         try {
                             await loggingExeca(logger, "npm", ["install", "-g", "corepack@latest"], {
