@@ -28,8 +28,6 @@ export class CheckCommand {
 
         const adapter = new LegacyProjectAdapter({ context });
         const project = await adapter.adapt(workspace);
-        // workspace.docs != null is guaranteed by the guard above,
-        // so LegacyProjectAdapter always produces a defined docsWorkspaces here.
         if (project.docsWorkspaces == null) {
             throw new CliError({
                 message: "Unexpected internal error: docs workspace is missing despite docs config being present.",

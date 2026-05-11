@@ -8,11 +8,10 @@ import { addPreviewCommand } from "./preview/index.js";
 import { addPublishCommand } from "./publish/index.js";
 
 export function addDocsCommand(cli: Argv<GlobalArgs>): void {
-    commandGroup(cli, "docs", "Configure, edit, preview, and publish your documentation.", [
-        addCheckCommand,
-        addDevCommand,
-        addMdCommand,
-        addPreviewCommand,
-        addPublishCommand
-    ]);
+    commandGroup({
+        cli,
+        name: "docs",
+        description: "Configure, edit, preview, and publish your documentation.",
+        subcommands: [addCheckCommand, addDevCommand, addMdCommand, addPreviewCommand, addPublishCommand]
+    });
 }

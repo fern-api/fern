@@ -6,24 +6,31 @@ type CommandAdder = (cli: Argv<GlobalArgs>) => void;
 /**
  * Registers a command group with subcommands.
  *
- * Pass `false` for `description` to hide the group from the top-level help
- * output (useful for beta/experimental groups).
+ * Omit `description` to hide the group from the top-level help output
+ * (useful for beta/experimental groups).
  *
  * @example
  * ```ts
- * commandGroup(cli, "auth", "Authenticate fern", [
- *     addLoginCommand,
- *     addLogoutCommand,
- * ]);
+ * commandGroup({
+ *     cli,
+ *     name: "auth",
+ *     description: "Authenticate fern",
+ *     subcommands: [addLoginCommand, addLogoutCommand],
+ * });
  * ```
  */
-export function commandGroup(
-    cli: Argv<GlobalArgs>,
-    name: string,
-    description: string | false,
-    subcommands: CommandAdder[]
-): void {
-    const usageText = description === false ? name : description;
+export function commandGroup({
+    cli,
+    name,
+    description,
+    subcommands
+}: {
+    cli: Argv<GlobalArgs>;
+    name: string;
+    description?: string;
+    subcommands: CommandAdder[];
+}): void {
+    const usageText = description ?? name;
     const builder = (yargs: Argv<GlobalArgs>): Argv<GlobalArgs> => {
         for (const add of subcommands) {
             add(yargs);
@@ -44,7 +51,7 @@ export function commandGroup(
             });
     };
 
-    if (description === false) {
+    if (description == null) {
         cli.command(name, false, builder);
     } else {
         cli.command(name, description, builder);
