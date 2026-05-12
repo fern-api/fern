@@ -41,7 +41,7 @@ import {
     loadOpenAPIFromUrl
 } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
-import { DASHBOARD_BASE_URL, askToLogin, login, logout } from "@fern-api/login";
+import { askToLogin, DASHBOARD_BASE_URL, login, logout } from "@fern-api/login";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
 import { CliError } from "@fern-api/task-context";
 import getPort from "get-port";
