@@ -15,7 +15,9 @@ import { SourceResolver } from "./SourceResolver.js";
 // process.env.FERN_DASHBOARD_URL is replaced at build time by tsup.
 // Bracket notation avoids compile-time replacement, allowing runtime override.
 const DASHBOARD_BASE_URL =
-    process.env["FERN_DASHBOARD_URL_OVERRIDE"] ?? process.env.FERN_DASHBOARD_URL ?? "https://dashboard.buildwithfern.com";
+    process.env["FERN_DASHBOARD_URL_OVERRIDE"] ??
+    process.env.FERN_DASHBOARD_URL ??
+    "https://dashboard.buildwithfern.com";
 
 export declare namespace LinkCheckCommand {
     export interface Args extends GlobalArgs {
