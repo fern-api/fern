@@ -6,6 +6,14 @@ import type { ResolvedBrokenLink, ResolvedLinkCheckResult } from "./SourceResolv
 export type OutputFormat = "text" | "json" | "csv";
 
 export class LinkCheckFormatter {
+    private readonly basePath: string;
+
+    constructor(domain: string) {
+        // Extract base path from domain (e.g., "you.com/docs" -> "/docs")
+        const pathStart = domain.indexOf("/");
+        this.basePath = pathStart >= 0 ? domain.substring(pathStart) : "";
+    }
+
     public format(result: ResolvedLinkCheckResult, outputFormat: OutputFormat): string {
         switch (outputFormat) {
             case "json":
@@ -35,7 +43,7 @@ export class LinkCheckFormatter {
                     statusCode: link.statusCode,
                     isInternal: link.isInternal,
                     references: link.references.map((ref) => ({
-                        display: ref.display,
+                        display: this.toRelativePath(ref.display),
                         ...(ref.filePath != null ? { localFile: ref.filePath } : {}),
                         ...(ref.line != null ? { line: ref.line } : {}),
                         ...(ref.column != null ? { column: ref.column } : {})
@@ -47,7 +55,7 @@ export class LinkCheckFormatter {
                     statusCode: link.statusCode,
                     isInternal: link.isInternal,
                     references: link.references.map((ref) => ({
-                        display: ref.display,
+                        display: this.toRelativePath(ref.display),
                         ...(ref.filePath != null ? { localFile: ref.filePath } : {}),
                         ...(ref.line != null ? { line: ref.line } : {}),
                         ...(ref.column != null ? { column: ref.column } : {})
@@ -110,42 +118,53 @@ export class LinkCheckFormatter {
         const lines: string[] = [];
         const duration = this.formatDuration(result.durationMs);
 
+        lines.push(`Finished in ${duration}`);
         lines.push("");
-        lines.push(`  Finished in ${duration}.`);
-        lines.push("");
-        lines.push(`  Total pages:    ${result.totalPages}`);
-        lines.push(`  Total links:    ${result.totalLinks}`);
-        lines.push(`  Working links:  ${chalk.green(result.workingLinks)}`);
-        lines.push(
-            `  Broken links:   ${result.brokenLinks.length > 0 ? chalk.red(result.brokenLinks.length) : result.brokenLinks.length}`
-        );
+        lines.push("Summary");
+        lines.push(`  Pages scanned     ${result.totalPages}`);
+        lines.push(`  Links checked     ${result.totalLinks}`);
+        lines.push(`  ${chalk.green("✓")} Working         ${result.workingLinks}`);
+
+        const internalCount = result.brokenLinks.filter((l) => l.isInternal).length;
+        const externalCount = result.brokenLinks.filter((l) => !l.isInternal).length;
+        let brokenDetail = "";
+        if (internalCount > 0 && externalCount > 0) {
+            brokenDetail = ` (${internalCount} internal, ${externalCount} external)`;
+        } else if (internalCount > 0) {
+            brokenDetail = " (internal)";
+        } else if (externalCount > 0) {
+            brokenDetail = " (external)";
+        }
+
+        lines.push(`  ${chalk.red("✗")} Broken          ${result.brokenLinks.length}${brokenDetail}`);
 
         if (result.blockedLinks.length > 0) {
-            lines.push(`  Blocked links:  ${chalk.yellow(result.blockedLinks.length)}`);
+            lines.push(`  ${chalk.yellow("⚠")} Blocked         ${result.blockedLinks.length}`);
         }
 
         const internal = result.brokenLinks.filter((l) => l.isInternal);
         const external = result.brokenLinks.filter((l) => !l.isInternal);
 
+        if (internal.length > 0 || external.length > 0 || result.blockedLinks.length > 0) {
+            lines.push("");
+            lines.push(chalk.dim("──────────────────────────────────────────────────────────"));
+        }
+
         if (internal.length > 0) {
             lines.push("");
-            lines.push(chalk.red(`  ${internal.length} internal broken link${internal.length === 1 ? "" : "s"}`));
-            this.appendBrokenLinkDetails(lines, internal, chalk.red);
+            lines.push(chalk.bold(`Internal Broken Links (${internal.length})`));
+            this.appendBrokenLinkDetails(lines, internal, true);
         }
 
         if (external.length > 0) {
             lines.push("");
-            lines.push(chalk.red(`  ${external.length} external broken link${external.length === 1 ? "" : "s"}`));
-            this.appendBrokenLinkDetails(lines, external, chalk.red);
+            lines.push(chalk.bold(`External Broken Links (${external.length})`));
+            this.appendBrokenLinkDetails(lines, external, false);
         }
 
         if (result.blockedLinks.length > 0) {
             lines.push("");
-            lines.push(
-                chalk.yellow(
-                    `  ${result.blockedLinks.length} blocked link${result.blockedLinks.length === 1 ? "" : "s"} (bot detection)`
-                )
-            );
+            lines.push(chalk.bold(`Blocked Links (${result.blockedLinks.length})`));
             this.appendBlockedLinkDetails(lines, result.blockedLinks);
         }
 
@@ -153,13 +172,16 @@ export class LinkCheckFormatter {
         return lines.join("\n");
     }
 
-    private appendBrokenLinkDetails(lines: string[], links: ResolvedBrokenLink[], color: (s: string) => string): void {
+    private appendBrokenLinkDetails(lines: string[], links: ResolvedBrokenLink[], isInternal: boolean): void {
         for (const link of links) {
-            const status = link.statusCode != null ? `returned ${link.statusCode}` : "unreachable";
             lines.push("");
-            lines.push(color(`  [docs]: ${link.url} ${status}`));
+            const displayUrl = isInternal ? this.toRelativePath(link.url) : link.url;
+            const status = link.statusCode != null ? link.statusCode : "unreachable";
+            lines.push(`  ${chalk.red("✗")} ${chalk.cyan(displayUrl)} ${chalk.dim("→")} ${chalk.red(status)}`);
+
+            // Show all references as relative paths (will be file:line:column in the future)
             for (const ref of link.references) {
-                lines.push(chalk.dim(`    ${ref.display}`));
+                lines.push(chalk.dim(`    ${this.toRelativePath(ref.display)}`));
             }
         }
     }
@@ -167,10 +189,31 @@ export class LinkCheckFormatter {
     private appendBlockedLinkDetails(lines: string[], links: ResolvedBrokenLink[]): void {
         for (const link of links) {
             lines.push("");
-            lines.push(chalk.yellow(`  [docs]: ${link.url} (blocked by bot detection)`));
+            lines.push(`  ${chalk.yellow("⚠")} ${chalk.cyan(link.url)}`);
             for (const ref of link.references) {
-                lines.push(chalk.dim(`    ${ref.display}`));
+                lines.push(chalk.dim(`    ${this.toRelativePath(ref.display)}`));
             }
+        }
+    }
+
+    private toRelativePath(url: string): string {
+        try {
+            const parsed = new URL(url);
+            let path = parsed.pathname + (parsed.search || "") + (parsed.hash || "");
+
+            // Strip base path if present (e.g., "/docs/quickstart" -> "/quickstart" when basePath is "/docs")
+            if (this.basePath && path.startsWith(this.basePath)) {
+                path = path.substring(this.basePath.length);
+                // Ensure we always have a leading slash
+                if (!path.startsWith("/")) {
+                    path = "/" + path;
+                }
+            }
+
+            return path;
+        } catch {
+            // If URL parsing fails, return as-is
+            return url;
         }
     }
 

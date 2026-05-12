@@ -58,7 +58,7 @@ export class LinkCheckCommand {
 
             progress.finish();
 
-            const formatter = new LinkCheckFormatter();
+            const formatter = new LinkCheckFormatter(domain);
             const output = formatter.format(resolved, args.output);
 
             if (args.output === "json" || args.output === "csv") {
@@ -162,11 +162,11 @@ export function addLinkCheckCommand(cli: Argv<GlobalArgs>): void {
             yargs
                 .option("url", {
                     type: "string",
-                    description: "Docs site URL to check (e.g. buildwithfern.com/learn)"
+                    description: "Docs site URL to check"
                 })
                 .option("output", {
                     type: "string",
-                    description: "Output format: text, json, or csv",
+                    description: "Output format",
                     choices: ["text", "json", "csv"] as const,
                     default: "text" as const
                 })

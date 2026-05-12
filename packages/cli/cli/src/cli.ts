@@ -2210,7 +2210,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
 
                 progress.finish();
 
-                const formatter = new LinkCheckFormatter();
+                const formatter = new LinkCheckFormatter(domain);
                 const output = formatter.format(resolved, argv.output as OutputFormat);
 
                 if (argv.output === "json" || argv.output === "csv") {

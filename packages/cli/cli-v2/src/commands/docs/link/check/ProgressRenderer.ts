@@ -1,7 +1,5 @@
-import chalk from "chalk";
 import cliProgress from "cli-progress";
 
-const DOCS_PREFIX = chalk.cyan("[docs]:");
 const LABEL_WIDTH = "Checking links".length;
 const formatLabel = (label: string): string => label.padEnd(LABEL_WIDTH, " ");
 
@@ -23,12 +21,11 @@ export class ProgressRenderer {
     }
 
     public onSitemapFetched(totalPages: number): void {
-        this.stream.write(`  ${chalk.cyan("●")} Found ${totalPages} pages in sitemap\n`);
-
+        this.stream.write("\n");
         if (this.isTTY) {
             this.scrapeBar = new cliProgress.SingleBar(
                 {
-                    format: `    ${DOCS_PREFIX} ${formatLabel("Scraping pages")} [{bar}] {percentage}% | {value}/{total}`,
+                    format: `  ${formatLabel("Scraping pages")} [{bar}] {percentage}% | {value}/{total}`,
                     barCompleteChar: "\u2588",
                     barIncompleteChar: "\u2591",
                     hideCursor: true,
@@ -46,7 +43,7 @@ export class ProgressRenderer {
             this.scrapeBar.setTotal(totalPages);
             this.scrapeBar.update(Math.min(pageIndex, totalPages));
         } else if (!this.isTTY && pageIndex >= totalPages) {
-            this.stream.write(`    ${DOCS_PREFIX} Scraped ${totalPages} pages\n`);
+            this.stream.write(`  Scraped ${totalPages} pages\n`);
         }
     }
 
@@ -62,7 +59,7 @@ export class ProgressRenderer {
             if (this.isTTY) {
                 this.checkBar = new cliProgress.SingleBar(
                     {
-                        format: `    ${DOCS_PREFIX} ${formatLabel("Checking links")} [{bar}] {percentage}% | {value}/{total}`,
+                        format: `  ${formatLabel("Checking links")} [{bar}] {percentage}% | {value}/{total}`,
                         barCompleteChar: "\u2588",
                         barIncompleteChar: "\u2591",
                         hideCursor: true,
