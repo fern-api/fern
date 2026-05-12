@@ -117,24 +117,7 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
 
         if (
             singleRef != null &&
-            inlineElements.every(
-                (s) =>
-                    !s.properties &&
-                    !s.enum &&
-                    !s.oneOf &&
-                    !s.anyOf &&
-                    !s.allOf &&
-                    !s.format &&
-                    !("items" in s) &&
-                    !s.pattern &&
-                    s.minLength == null &&
-                    s.maxLength == null &&
-                    s.minimum == null &&
-                    s.maximum == null &&
-                    s.exclusiveMinimum == null &&
-                    s.exclusiveMaximum == null &&
-                    s.multipleOf == null
-            ) &&
+            inlineElements.every((s) => isMetadataOnlySchema(s)) &&
             !inlineElements.some((s) => s.type === "null" || (Array.isArray(s.type) && s.type.includes("null")))
         ) {
             const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
@@ -227,4 +210,29 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
     private wrapInNullable(type: TypeReference): TypeReference {
         return TypeReference.container(ContainerType.nullable(type));
     }
+}
+
+/**
+ * Fields that carry no structural or validation meaning in an allOf element.
+ * If an inline element contains ONLY these fields, it's safe to skip the merge
+ * and short-circuit to the $ref. Any field NOT in this set is assumed to carry
+ * meaningful content (validation constraints, composition keywords, etc.) and
+ * forces a proper merge.
+ */
+const METADATA_ONLY_FIELDS = new Set([
+    "type",
+    "description",
+    "title",
+    "nullable",
+    "deprecated",
+    "readOnly",
+    "writeOnly",
+    "xml",
+    "externalDocs",
+    "x-fern-type",
+    "x-fern-type-name"
+]);
+
+function isMetadataOnlySchema(schema: OpenAPIV3_1.SchemaObject): boolean {
+    return Object.keys(schema).every((key) => METADATA_ONLY_FIELDS.has(key));
 }

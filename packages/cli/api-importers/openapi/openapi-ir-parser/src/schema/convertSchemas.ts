@@ -1359,50 +1359,16 @@ export function convertSchemaObject(
                 // Before short-circuiting, merge any constraints from filtered-out primitive
                 // allOf elements (e.g. pattern, format, minLength) into the remaining element.
                 let elementToConvert: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject = filteredAllOfObjects[0];
-                if (filteredOutPrimitiveElements.length > 0 && isReferenceObject(elementToConvert)) {
-                    const resolvedRef = context.resolveSchemaReference(elementToConvert);
-                    const mergedSchema: OpenAPIV3.SchemaObject = { ...resolvedRef };
+                if (filteredOutPrimitiveElements.length > 0) {
+                    // Merge all fields from filtered-out elements into the remaining
+                    // schema. Later elements win (standard allOf semantics).
+                    const base = isReferenceObject(elementToConvert)
+                        ? { ...context.resolveSchemaReference(elementToConvert) }
+                        : { ...elementToConvert };
                     for (const primitiveElement of filteredOutPrimitiveElements) {
-                        // Merge primitive constraints: override wins (like allOf semantics)
-                        if (primitiveElement.pattern != null) {
-                            mergedSchema.pattern = primitiveElement.pattern;
-                        }
-                        if (primitiveElement.format != null) {
-                            mergedSchema.format = primitiveElement.format;
-                        }
-                        if (primitiveElement.minLength != null) {
-                            mergedSchema.minLength = primitiveElement.minLength;
-                        }
-                        if (primitiveElement.maxLength != null) {
-                            mergedSchema.maxLength = primitiveElement.maxLength;
-                        }
-                        if (primitiveElement.minimum != null) {
-                            mergedSchema.minimum = primitiveElement.minimum;
-                        }
-                        if (primitiveElement.maximum != null) {
-                            mergedSchema.maximum = primitiveElement.maximum;
-                        }
-                        if (primitiveElement.exclusiveMinimum != null) {
-                            mergedSchema.exclusiveMinimum = primitiveElement.exclusiveMinimum;
-                        }
-                        if (primitiveElement.exclusiveMaximum != null) {
-                            mergedSchema.exclusiveMaximum = primitiveElement.exclusiveMaximum;
-                        }
-                        if (primitiveElement.multipleOf != null) {
-                            mergedSchema.multipleOf = primitiveElement.multipleOf;
-                        }
-                        if (primitiveElement.description != null) {
-                            mergedSchema.description = primitiveElement.description;
-                        }
-                        if (primitiveElement.default != null) {
-                            mergedSchema.default = primitiveElement.default;
-                        }
+                        Object.assign(base, primitiveElement);
                     }
-                    elementToConvert = mergedSchema;
-                } else if (filteredOutPrimitiveElements.length > 0 && !isReferenceObject(elementToConvert)) {
-                    for (const primitiveElement of filteredOutPrimitiveElements) {
-                        elementToConvert = { ...elementToConvert, ...primitiveElement };
-                    }
+                    elementToConvert = base;
                 }
                 const convertedSchema = convertSchema(
                     elementToConvert,
