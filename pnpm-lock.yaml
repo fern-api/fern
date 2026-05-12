@@ -4219,9 +4219,18 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../configs
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../../configuration
       '@fern-api/ir-generator':
         specifier: workspace:*
         version: link:../../generation/ir-generator
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../../ir-sdk
+      '@fern-api/ir-utils':
+        specifier: workspace:*
+        version: link:../../../commons/ir-utils
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
