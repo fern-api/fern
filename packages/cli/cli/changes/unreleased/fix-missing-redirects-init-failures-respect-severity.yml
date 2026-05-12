@@ -1,0 +1,8 @@
+- summary: |
+    Fix `missing-redirects` causing `fern check` to exit with code 1 even when
+    the rule is configured at `warn`. Rule initialization failures now honor
+    the configured severity (`warn` emits a warning, `error` emits an error)
+    instead of always being reported as fatal. The `missing-redirects` rule
+    also degrades to a warning when the local docs navigation fails to
+    resolve, and non-`Error` throws no longer surface as `[object Object]`.
+  type: fix

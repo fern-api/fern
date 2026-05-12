@@ -20,6 +20,7 @@ import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints/index.js";
 import { ValidLocalReferencesRule } from "./rules/valid-local-references/index.js";
 import { ValidMarkdownLinks } from "./rules/valid-markdown-link/index.js";
 import { ValidOpenApiExamples } from "./rules/valid-openapi-examples/index.js";
+import { formatInitError } from "./formatInitError.js";
 import { ValidationViolation } from "./ValidationViolation.js";
 
 function toSeverityOverride(severity: docsYml.RawSchemas.CheckRuleSeverity): SeverityOverride {
@@ -127,17 +128,24 @@ export async function runRulesOnDocsWorkspace({
     const allRulesWithVisitors: RuleWithVisitor[] = [];
     for (const result of ruleCreationResults) {
         if ("error" in result) {
-            const message = result.error instanceof Error ? result.error.message : String(result.error);
+            const message = formatInitError(result.error);
+            const severityOverride = severityOverrides.get(result.ruleName);
+            // Honor the user's configured severity for init failures. When a
+            // rule is configured at `warn` we should surface the failure as a
+            // warning rather than a fatal — otherwise the override is
+            // silently bypassed whenever the rule throws during setup.
+            const severity: ValidationViolation["severity"] =
+                severityOverride === "warning" ? "warning" : severityOverride === "error" ? "error" : "fatal";
             violations.push({
                 name: result.ruleName,
-                severity: "fatal",
+                severity,
                 relativeFilepath: RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME),
                 nodePath: [],
                 message: `Rule "${result.ruleName}" failed to initialize: ${message}`
             });
             context.logger.debug(
                 `Rule "${result.ruleName}" failed to initialize: ${
-                    result.error instanceof Error ? (result.error.stack ?? result.error.message) : String(result.error)
+                    result.error instanceof Error ? (result.error.stack ?? result.error.message) : message
                 }`
             );
         } else {

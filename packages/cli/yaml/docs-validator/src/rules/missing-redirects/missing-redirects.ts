@@ -28,6 +28,7 @@ type FetchResult =
     | { type: "no-token" }
     | { type: "no-instance-url" }
     | { type: "fetch-failed"; reason: string }
+    | { type: "resolve-failed"; reason: string }
     | { type: "first-publish" };
 
 /**
@@ -103,28 +104,35 @@ export const MissingRedirectsRule: Rule = {
             return makeSkipVisitor({ type: "first-publish" });
         }
 
-        const docsDefinitionResolver = new DocsDefinitionResolver({
-            domain: url,
-            docsWorkspace: workspace,
-            ossWorkspaces,
-            apiWorkspaces,
-            taskContext: NOOP_CONTEXT,
-            editThisPage: undefined,
-            uploadFiles: undefined,
-            registerApi: undefined,
-            targetAudiences: undefined
-        });
+        let removedSlugs: ReturnType<typeof findRemovedSlugs>;
+        try {
+            const docsDefinitionResolver = new DocsDefinitionResolver({
+                domain: url,
+                docsWorkspace: workspace,
+                ossWorkspaces,
+                apiWorkspaces,
+                taskContext: NOOP_CONTEXT,
+                editThisPage: undefined,
+                uploadFiles: undefined,
+                registerApi: undefined,
+                targetAudiences: undefined
+            });
 
-        const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
-        const configRoot = resolvedDocsDefinition.config.root;
-        if (!configRoot || !isV1RootNode(configRoot)) {
-            return {};
+            const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
+            const configRoot = resolvedDocsDefinition.config.root;
+            if (!configRoot || !isV1RootNode(configRoot)) {
+                return {};
+            }
+
+            const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(configRoot);
+            const localPageIdToSlug = buildPageIdToSlugMap(root);
+            const latestEntries = keepLatestEntryPerPageId(result.entries);
+            removedSlugs = findRemovedSlugs(latestEntries, localPageIdToSlug);
+        } catch (error) {
+            const reason = error instanceof Error ? (error.message ?? String(error)) : String(error);
+            logger.debug(`[missing-redirects] Failed to resolve local docs navigation: ${reason}`);
+            return makeSkipVisitor({ type: "resolve-failed", reason });
         }
-
-        const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(configRoot);
-        const localPageIdToSlug = buildPageIdToSlugMap(root);
-        const latestEntries = keepLatestEntryPerPageId(result.entries);
-        const removedSlugs = findRemovedSlugs(latestEntries, localPageIdToSlug);
 
         if (removedSlugs.length === 0) {
             return {};
@@ -175,6 +183,17 @@ function makeSkipVisitor(fetchResult: Exclude<FetchResult, { type: "success" }>)
                         message:
                             `Missing redirects check skipped: could not reach FDR (${fetchResult.reason}). ` +
                             "The check requires network access to compare against previously published docs."
+                    }
+                ]
+            };
+        case "resolve-failed":
+            return {
+                file: () => [
+                    {
+                        severity: "warning",
+                        message:
+                            `Missing redirects check skipped: failed to resolve local docs navigation (${fetchResult.reason}). ` +
+                            "Run `fern check --log-level=debug` for more detail."
                     }
                 ]
             };
