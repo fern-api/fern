@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.8.6
+  changelogEntry:
+    - summary: |
+        Patch Java SDK generator container CVEs flagged in the AWS ECR / grype
+        scan. Patch npm's bundled `brace-expansion@5.0.4 -> 5.0.5` (GHSA-f886-m6hf-6m8v)
+        via tarball replacement so the published image no longer ships the vulnerable
+        bundled JS dependency that grype flags on `dev/java-sdk-generator`.
+      type: chore
+  createdAt: "2026-05-12"
+  irVersion: 66
 - version: 4.8.5
   changelogEntry:
     - summary: |
