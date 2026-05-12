@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.12.5
+  changelogEntry:
+    - summary: |
+        Patch Python SDK generator container CVEs flagged in the AWS ECR / grype
+        scan. Patch npm's bundled `picomatch@4.0.3 -> 4.0.4`
+        (GHSA-c2c7-rcm5-vvqj, GHSA-3v7f-55p6-f55p) and
+        `brace-expansion@5.0.4 -> 5.0.5` (CVE-2026-33750) via tarball replacement
+        so the published image no longer ships the vulnerable bundled JS
+        dependencies that grype flags.
+      type: chore
+  createdAt: "2026-05-12"
+  irVersion: 66
 - version: 5.12.4
   changelogEntry:
     - summary: |
