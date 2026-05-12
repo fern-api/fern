@@ -4,7 +4,6 @@
     Use `--url <url>` to specify which docs site to check, or auto-detect from fern.yml.
   type: feat
 - summary: |
-    Improve link check output formatting with colored `[broken-link]`/`[blocked-link]` prefixes,
-    local file:line:column resolution for source references, and cli-progress progress bars
-    matching the `fern docs dev` bundle download style.
+    Add progress bars matching `fern docs dev` style and `[docs]:` prefixed output
+    for broken/blocked link details in `fern docs link check`.
   type: feat

@@ -24,7 +24,7 @@ export declare namespace LinkCheckCommand {
 
 export class LinkCheckCommand {
     public async handle(context: Context, args: LinkCheckCommand.Args): Promise<void> {
-        const domain = await this.resolveDomain(context, args.url);
+        const { domain } = await this.resolveContext(context, args.url);
         const token = await context.getTokenOrPrompt();
 
         context.stderr.info(`${Icons.info} Checking links on ${chalk.cyan(domain)}...`);
@@ -47,9 +47,6 @@ export class LinkCheckCommand {
                 },
                 onLinkChecked: (data) => {
                     progress.onLinkChecked(data.linksChecked, data.totalLinks);
-                },
-                onError: () => {
-                    // Error is thrown after stream ends; no need to print here
                 }
             });
 
@@ -82,9 +79,9 @@ export class LinkCheckCommand {
         }
     }
 
-    private async resolveDomain(context: Context, url: string | undefined): Promise<string> {
+    private async resolveContext(context: Context, url: string | undefined): Promise<{ domain: string }> {
         if (url != null) {
-            return this.normalizeDomain(url);
+            return { domain: this.normalizeDomain(url) };
         }
 
         const workspace = await context.loadWorkspaceOrThrow();
@@ -108,7 +105,7 @@ export class LinkCheckCommand {
         }
 
         if (instances.length === 1 && instances[0] != null) {
-            return this.normalizeDomain(instances[0].url);
+            return { domain: this.normalizeDomain(instances[0].url) };
         }
 
         const available = instances.map((i) => `  - ${i.url}`).join("\n");

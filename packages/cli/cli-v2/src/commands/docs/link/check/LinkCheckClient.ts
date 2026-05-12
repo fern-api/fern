@@ -33,7 +33,6 @@ export interface LinkCheckCallbacks {
     onSitemapFetched?: (data: { totalPages: number }) => void;
     onPageScraped?: (data: { pageUrl: string; linksFound: number; pageIndex: number; totalPages: number }) => void;
     onLinkChecked?: (data: { linksChecked: number; totalLinks: number }) => void;
-    onError?: (message: string) => void;
 }
 
 export class LinkCheckClient {
@@ -216,7 +215,14 @@ function isLinkCheckProgressData(data: Record<string, unknown>): data is { links
 function isLinkCheckedData(
     data: Record<string, unknown>
 ): data is { url: string; statusCode: number | null; isInternal: boolean; sourcePages: string[]; error?: string } {
-    return typeof data.url === "string" && Array.isArray(data.sourcePages);
+    return (
+        typeof data.url === "string" &&
+        (data.statusCode === null || data.statusCode === undefined || typeof data.statusCode === "number") &&
+        (data.isInternal === undefined || typeof data.isInternal === "boolean") &&
+        Array.isArray(data.sourcePages) &&
+        data.sourcePages.every((page: unknown) => typeof page === "string") &&
+        (data.error === undefined || typeof data.error === "string")
+    );
 }
 
 function isCompleteData(data: Record<string, unknown>): data is {

@@ -2180,7 +2180,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
 
             const token = await cliContext.runTask((context) => askToLogin(context));
 
-            cliContext.logger.info(`Checking links on ${domain}...`);
+            cliContext.stderr.info(`Checking links on ${domain}...`);
 
             const client = new LinkCheckClient({
                 dashboardUrl,
@@ -2199,9 +2199,6 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     },
                     onLinkChecked: (data) => {
                         progress.onLinkChecked(data.linksChecked, data.totalLinks);
-                    },
-                    onError: () => {
-                        // Error is thrown after stream ends; no need to print here
                     }
                 });
 
@@ -2224,7 +2221,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                         code: CliError.Code.ValidationError
                     });
                 } else if (resolved.blockedLinks.length === 0) {
-                    cliContext.logger.info("All links valid");
+                    cliContext.stderr.info("All links valid");
                 }
             } catch (error) {
                 if (error instanceof LinkCheckError) {
@@ -2236,7 +2233,8 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     } else {
                         code = CliError.Code.InternalError;
                     }
-                    cliContext.failAndThrow(error.message, undefined, { code });
+                    cliContext.stderr.error(error.message);
+                    cliContext.failAndThrow(undefined, undefined, { code });
                 }
                 throw error;
             } finally {

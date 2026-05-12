@@ -90,6 +90,8 @@ export class ProgressRenderer {
             this.checkBar.stop();
             this.checkBar = undefined;
         }
-        this.stream.write("\n");
+        if (this.phase !== "idle") {
+            this.stream.write("\n");
+        }
     }
 }
