@@ -519,14 +519,6 @@ fixtures:
     - outputFolder: no-custom-config
       customConfig: null
 
-# NOTE: The build/test commands below are retained as a *fallback* only.
-# The TypeScript SDK generator emits `.fern/verify.sh` alongside every
-# fixture (PR #15718). The seed runner detects that script and prefers it
-# over the commands declared here, mirroring `fern generate --verify`
-# end-to-end (FER-10455). These commands run only if `.fern/verify.sh` is
-# missing for a given fixture (e.g. a generation that fails before the
-# script is written). Once FER-9681 migrates the remaining generators,
-# this block can be deleted.
 scripts:
   - image: fernapi/ts-seed
     commands:

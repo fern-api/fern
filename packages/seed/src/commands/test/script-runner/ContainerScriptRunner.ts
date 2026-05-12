@@ -6,9 +6,8 @@ import { TaskContext } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
-import { ContainerScriptConfig } from "../../../config/api/index.js";
+import { ContainerScriptConfig, ScriptCommands } from "../../../config/api/index.js";
 import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces.js";
-import { resolveScriptPhaseCommands } from "../../../utils/resolveScriptPhaseCommands.js";
 import { resolveContainerScripts } from "../../../utils/resolveScriptsConfiguration.js";
 import { ScriptRunner } from "./ScriptRunner.js";
 
@@ -27,6 +26,13 @@ interface ContainerSlot {
 interface InternalScriptResult {
     type: "success" | "failure";
     message?: string;
+}
+
+function getCommandsForPhase(commands: ScriptCommands, phase: "build" | "test"): string[] {
+    if (Array.isArray(commands)) {
+        return phase === "build" ? commands : [];
+    }
+    return commands[phase] ?? [];
 }
 
 /**
@@ -154,11 +160,7 @@ export class ContainerScriptRunner extends ScriptRunner {
                 continue;
             }
 
-            const buildCommands = resolveScriptPhaseCommands({
-                commands: script.commands,
-                phase: "build",
-                outputDir
-            });
+            const buildCommands = getCommandsForPhase(script.commands, "build");
             if (buildCommands.length > 0) {
                 if (!anyBuildCommands) {
                     taskContext.logger.info(`Running build scripts for ${id}...`);
@@ -194,11 +196,7 @@ export class ContainerScriptRunner extends ScriptRunner {
                 continue;
             }
 
-            const testCommands = resolveScriptPhaseCommands({
-                commands: script.commands,
-                phase: "test",
-                outputDir
-            });
+            const testCommands = getCommandsForPhase(script.commands, "test");
             if (testCommands.length > 0) {
                 if (!anyTestCommands) {
                     taskContext.logger.info(`Running test scripts for ${id}...`);
