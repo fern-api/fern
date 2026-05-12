@@ -2236,7 +2236,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     } else {
                         code = CliError.Code.InternalError;
                     }
-                    cliContext.failAndThrow(error.message, error, { code });
+                    cliContext.failAndThrow(error.message, undefined, { code });
                 }
                 throw error;
             } finally {
