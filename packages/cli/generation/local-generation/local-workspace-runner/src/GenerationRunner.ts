@@ -15,6 +15,7 @@ import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { CliError, TaskAbortSignal, TaskContext } from "@fern-api/task-context";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import chalk from "chalk";
+import { assertVerifyPipelineSucceeded } from "./assertVerifyPipelineSucceeded.js";
 import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests.js";
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
@@ -316,13 +317,5 @@ async function runVerifyPipeline({
     );
 
     const pipelineResult = await pipeline.run();
-    const verifyResult = pipelineResult.steps.verify;
-
-    if (verifyResult != null && verifyResult.executed && !verifyResult.skipped && !verifyResult.success) {
-        const detail = verifyResult.errorMessage ?? verifyResult.stderr ?? "verification failed";
-        throw new CliError({
-            message: `Verification failed for ${generatorName}: ${detail}`,
-            code: CliError.Code.InternalError
-        });
-    }
+    assertVerifyPipelineSucceeded(pipelineResult, generatorName);
 }
