@@ -129,6 +129,20 @@ RUN for dir in \
       fi; \
     done
 
+# Patch brace-expansion to 5.0.5 to fix GHSA-f886-m6hf-6m8v
+# (zero-step sequence DoS; bundled by npm 11.12.1 at 5.0.4).
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/brace-expansion; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.5.tgz -o brace-expansion-5.0.5.tgz && \
+        tar -xzf brace-expansion-5.0.5.tgz && \
+        mv package brace-expansion && \
+        rm brace-expansion-5.0.5.tgz; \
+      fi; \
+    done
+
 # Patch ip-address to 10.2.0 to fix GHSA-v2v4-37r5-5v8g (CVE-2026-42338)
 # (XSS in Address6 HTML-emitting methods; fixed in 10.1.1)
 # Location: npm bundles its own copy via socks-proxy-agent -> socks -> ip-address
