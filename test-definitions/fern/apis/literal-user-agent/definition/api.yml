@@ -3,4 +3,4 @@ docs: Test fixture for literal User-Agent header in api.headers config.
 headers:
   user-agent:
     name: userAgent
-    type: literal<"frameio-py">
+    type: literal<"my-sdk">
