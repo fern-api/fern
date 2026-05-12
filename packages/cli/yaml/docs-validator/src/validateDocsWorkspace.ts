@@ -10,6 +10,7 @@ import {
     type SeverityOverride
 } from "./createDocsConfigFileAstVisitorForRules.js";
 import { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileYamlAst.js";
+import { formatInitError } from "./formatInitError.js";
 import { getAllRules } from "./getAllRules.js";
 import { Rule } from "./Rule.js";
 import { MissingRedirectsRule } from "./rules/missing-redirects/index.js";
@@ -20,7 +21,6 @@ import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints/index.js";
 import { ValidLocalReferencesRule } from "./rules/valid-local-references/index.js";
 import { ValidMarkdownLinks } from "./rules/valid-markdown-link/index.js";
 import { ValidOpenApiExamples } from "./rules/valid-openapi-examples/index.js";
-import { formatInitError } from "./formatInitError.js";
 import { ValidationViolation } from "./ValidationViolation.js";
 
 function toSeverityOverride(severity: docsYml.RawSchemas.CheckRuleSeverity): SeverityOverride {
