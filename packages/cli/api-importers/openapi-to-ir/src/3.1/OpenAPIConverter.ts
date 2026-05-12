@@ -262,7 +262,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                     webhook: convertedWebHook.webhook,
                     operationId,
                     audiences: convertedWebHook.audiences,
-                    group: convertedWebHook.group
+                    group: convertedWebHook.group,
+                    inlinedPayloadPropertiesByAudience: convertedWebHook.inlinedPayloadPropertiesByAudience
                 });
                 this.addTypesToIr(convertedWebHook.inlinedTypes);
             }
@@ -296,7 +297,9 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                             endpoint: endpoint.streamEndpoint,
                             audiences: endpoint.audiences,
                             endpointGroup: endpoint.group,
-                            endpointGroupDisplayName: endpoint.groupDisplayName
+                            endpointGroupDisplayName: endpoint.groupDisplayName,
+                            inlinedRequestPropertiesByAudience: endpoint.inlinedRequestPropertiesByAudience,
+                            queryParametersByAudience: endpoint.queryParametersByAudience
                         });
                     }
 
@@ -304,7 +307,9 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                         endpoint: endpoint.endpoint,
                         audiences: endpoint.audiences,
                         endpointGroup: endpoint.group,
-                        endpointGroupDisplayName: endpoint.groupDisplayName
+                        endpointGroupDisplayName: endpoint.groupDisplayName,
+                        inlinedRequestPropertiesByAudience: endpoint.inlinedRequestPropertiesByAudience,
+                        queryParametersByAudience: endpoint.queryParametersByAudience
                     });
 
                     if (endpoint.servers) {
@@ -337,7 +342,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                         webhook: webhook.webhook,
                         operationId: group.join("."),
                         group,
-                        audiences: webhook.audiences
+                        audiences: webhook.audiences,
+                        inlinedPayloadPropertiesByAudience: webhook.inlinedPayloadPropertiesByAudience
                     });
                 }
                 this.addTypesToIr(convertedPath.inlinedTypes);
