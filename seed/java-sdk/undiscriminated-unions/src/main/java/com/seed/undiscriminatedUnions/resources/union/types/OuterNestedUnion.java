@@ -82,10 +82,6 @@ public final class OuterNestedUnion {
         @java.lang.Override
         public OuterNestedUnion deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
-            } catch (RuntimeException e) {
-            }
             if (value instanceof Map<?, ?>
                     && ((Map<?, ?>) value).containsKey("inner")
                     && ((Map<?, ?>) value).containsKey("label")) {
@@ -93,6 +89,10 @@ public final class OuterNestedUnion {
                     return of(ObjectMappers.JSON_MAPPER.convertValue(value, WrapperObject.class));
                 } catch (RuntimeException e) {
                 }
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
+            } catch (RuntimeException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }
