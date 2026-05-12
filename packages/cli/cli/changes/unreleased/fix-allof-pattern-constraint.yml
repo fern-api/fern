@@ -1,3 +1,6 @@
 - summary: |
-    Fix allOf schema conversion dropping validation constraints (pattern, minLength, maxLength, minimum, maximum, exclusiveMinimum, exclusiveMaximum, multipleOf) when merging a $ref with inline primitive elements. Previously, the short-circuit path returned only the $ref and discarded the inline constraints.
+    Fix allOf schema conversion dropping validation constraints (pattern, minLength, maxLength, minimum, maximum, exclusiveMinimum, exclusiveMaximum, multipleOf) when merging a $ref with inline primitive elements.
+  type: fix
+- summary: |
+    Fix example generation for objects using allOf with property overrides. Direct properties now take precedence over inherited allOf properties, so overridden fields like `results` render with the correct typed example instead of an empty object.
   type: fix
