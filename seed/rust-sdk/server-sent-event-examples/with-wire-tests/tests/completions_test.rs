@@ -12,7 +12,6 @@ async fn test_completions_stream_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
-    config.environment = None;
     let client = ServerSentEventsClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -42,7 +41,6 @@ async fn test_completions_stream_events_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
-    config.environment = None;
     let client = ServerSentEventsClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -72,7 +70,6 @@ async fn test_completions_stream_events_discriminant_in_data_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
-    config.environment = None;
     let client = ServerSentEventsClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -102,7 +99,6 @@ async fn test_completions_stream_events_context_protocol_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
-    config.environment = None;
     let client = ServerSentEventsClient::new(config).expect("Failed to build client");
 
     let result = client
