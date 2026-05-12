@@ -41,7 +41,7 @@ import {
     loadOpenAPIFromUrl
 } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
-import { askToLogin, login, logout } from "@fern-api/login";
+import { DASHBOARD_BASE_URL, askToLogin, login, logout } from "@fern-api/login";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
 import { CliError } from "@fern-api/task-context";
 import getPort from "get-port";
@@ -2176,12 +2176,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
             cliContext.instrumentPostHogEvent({ command: "fern docs link check" });
 
             const { domain, docsConfigDir } = await resolveDocsLinkCheckContext(cliContext, argv.url);
-            // process.env.FERN_DASHBOARD_URL is replaced at build time by tsup.
-            // Bracket notation avoids compile-time replacement, allowing runtime override.
-            const dashboardUrl =
-                process.env["FERN_DASHBOARD_URL_OVERRIDE"] ??
-                process.env.FERN_DASHBOARD_URL ??
-                "https://dashboard.buildwithfern.com";
+            const dashboardUrl = DASHBOARD_BASE_URL;
 
             const token = await cliContext.runTask((context) => askToLogin(context));
 

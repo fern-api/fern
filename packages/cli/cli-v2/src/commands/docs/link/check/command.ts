@@ -1,3 +1,4 @@
+import { DASHBOARD_BASE_URL } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
 
 import chalk from "chalk";
@@ -11,13 +12,6 @@ import { LinkCheckClient, LinkCheckError } from "./LinkCheckClient.js";
 import { LinkCheckFormatter, type OutputFormat } from "./LinkCheckFormatter.js";
 import { ProgressRenderer } from "./ProgressRenderer.js";
 import { SourceResolver } from "./SourceResolver.js";
-
-// process.env.FERN_DASHBOARD_URL is replaced at build time by tsup.
-// Bracket notation avoids compile-time replacement, allowing runtime override.
-const DASHBOARD_BASE_URL =
-    process.env["FERN_DASHBOARD_URL_OVERRIDE"] ??
-    process.env.FERN_DASHBOARD_URL ??
-    "https://dashboard.buildwithfern.com";
 
 export declare namespace LinkCheckCommand {
     export interface Args extends GlobalArgs {
