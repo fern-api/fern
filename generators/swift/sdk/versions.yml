@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.35.6
+  changelogEntry:
+    - summary: |
+        Patch Swift SDK + Swift model generator container CVEs flagged in the AWS
+        ECR / grype scan. Patch npm's bundled `picomatch@4.0.3 -> 4.0.4` and
+        `brace-expansion@5.0.4 -> 5.0.5` via tarball replacement so the published
+        image no longer ships the vulnerable bundled JS dependencies that grype
+        flags.
+      type: chore
+  createdAt: "2026-05-12"
+  irVersion: 66
 - version: 0.35.5
   changelogEntry:
     - summary: |
