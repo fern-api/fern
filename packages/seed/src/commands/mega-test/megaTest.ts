@@ -157,7 +157,7 @@ export async function runMegaTest(args: MegaTestArgs): Promise<MegaTestSummary> 
 
     let result: TestRunner.TestResult;
     try {
-        await testRunner.build();
+        // run() lazily triggers build() via buildInvocation; do not call build() here.
         result = await testRunner.run({
             fixture: "mega",
             configuration,

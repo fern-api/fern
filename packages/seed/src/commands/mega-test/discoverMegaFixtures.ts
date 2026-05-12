@@ -76,6 +76,7 @@ export function discoverMegaFixtures({
         try {
             parsed = yaml.load(raw);
         } catch {
+            // Malformed generators.yml — skip.
             continue;
         }
 
