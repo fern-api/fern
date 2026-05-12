@@ -19,12 +19,17 @@ ARG RUNC_VERSION=1.3.5
 ARG MOBY_VERSION=29.4.3
 ARG DOCKER_CLI_VERSION=29.4.3
 ARG XNET_VERSION=0.53.0
+ARG OTEL_SDK_VERSION=1.43.0
 ENV GOTOOLCHAIN=go1.26.3
 RUN apk add --no-cache git make gcc musl-dev linux-headers libseccomp-dev libseccomp-static bash ca-certificates && \
     mkdir -p /overlay/usr/local/bin
 RUN git clone --depth 1 --branch v${CONTAINERD_VERSION} https://github.com/containerd/containerd.git /src/containerd && \
     cd /src/containerd && \
-    go get golang.org/x/net@v${XNET_VERSION} && \
+    go get golang.org/x/net@v${XNET_VERSION} \
+           go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/trace@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/metric@v${OTEL_SDK_VERSION} && \
     go mod tidy && \
     go mod vendor && \
     for cmd in containerd ctr containerd-shim-runc-v2; do \
@@ -40,17 +45,32 @@ RUN git clone --depth 1 --branch v${RUNC_VERSION} https://github.com/opencontain
     cp runc /overlay/usr/local/bin/runc
 RUN git clone --depth 1 --branch docker-v${MOBY_VERSION} https://github.com/moby/moby.git /src/moby && \
     cd /src/moby && \
-    CGO_ENABLED=0 go build \
+    # Force the patched golang.org/x/net (HTTP/2 server header smuggling,
+    # CVE-2026-33814) and patched otel/sdk (CVE-2026-39883 PATH hijacking
+    # on BSD/Solaris) before vendoring + building dockerd/docker-proxy.
+    go get golang.org/x/net@v${XNET_VERSION} \
+           go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/trace@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/metric@v${OTEL_SDK_VERSION} && \
+    go mod tidy && \
+    go mod vendor && \
+    CGO_ENABLED=0 go build -mod=vendor \
       -tags "osusergo netgo static_build exclude_graphdriver_btrfs exclude_graphdriver_devicemapper" \
       -trimpath -ldflags "-s -w" \
       -o /overlay/usr/local/bin/dockerd ./cmd/dockerd && \
-    CGO_ENABLED=0 go build \
+    CGO_ENABLED=0 go build -mod=vendor \
       -tags "osusergo netgo static_build" \
       -trimpath -ldflags "-s -w" \
       -o /overlay/usr/local/bin/docker-proxy ./cmd/docker-proxy
 RUN git clone --depth 1 --branch v${DOCKER_CLI_VERSION} https://github.com/docker/cli.git /src/docker-cli && \
     cd /src/docker-cli && \
     cp vendor.mod go.mod && cp vendor.sum go.sum && \
+    # docker CLI's vendor.mod pins x/net <0.53; bump it (and re-vendor)
+    # so the built /usr/local/bin/docker also clears CVE-2026-33814.
+    go get golang.org/x/net@v${XNET_VERSION} && \
+    go mod tidy && \
+    go mod vendor && \
     CGO_ENABLED=0 go build -mod=vendor \
       -tags "osusergo netgo static_build pkcs11" \
       -trimpath -ldflags "-s -w" \

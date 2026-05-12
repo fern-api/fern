@@ -1,3 +1,17 @@
+# Stage 1: Rebuild oxlint-tsgolint from source under go1.26.3 so the embedded
+# go/stdlib clears the go1.26.2 CVEs (CVE-2026-33811, CVE-2026-33814,
+# CVE-2026-39820, CVE-2026-39836, CVE-2026-42499). The published
+# @oxlint-tsgolint/linux-{x64,arm64} binaries are still compiled with the
+# upstream go1.26.2 toolchain.
+FROM golang:1.26.3-trixie AS tsgolint-rebuild
+ARG TSGOLINT_VERSION=0.22.1
+ENV GOTOOLCHAIN=go1.26.3
+RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN git clone --depth 1 --branch v${TSGOLINT_VERSION} https://github.com/oxc-project/tsgolint.git /src/tsgolint && \
+    cd /src/tsgolint && \
+    CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o /out/tsgolint ./cmd/tsgolint && \
+    ls -la /out/tsgolint
+
 FROM node:24.15.0-trixie-slim
 
 ENV PNPM_STORE_PATH=/.pnpm-cache
@@ -42,6 +56,25 @@ RUN pnpm add -g typescript@~5.7.2 \
   webpack@^5.97.1 \
   msw@2.11.2 \
   vitest@^3.2.4
+
+# Replace the prebuilt @oxlint-tsgolint/linux-* binary with the locally
+# rebuilt one (go1.26.3). pnpm installs the platform-specific binary at
+# {pnpm-global-store}/.pnpm/@oxlint-tsgolint+linux-{arch}@.../node_modules/@oxlint-tsgolint/linux-{arch}/tsgolint.
+COPY --from=tsgolint-rebuild /out/tsgolint /tmp/tsgolint-rebuilt
+RUN chmod +x /tmp/tsgolint-rebuilt && \
+    set -eux; \
+    found=0; \
+    for f in $(find / -type f -name tsgolint -path '*@oxlint-tsgolint*' 2>/dev/null); do \
+        cp /tmp/tsgolint-rebuilt "$f"; \
+        chmod +x "$f"; \
+        found=1; \
+        echo "Replaced tsgolint binary at $f"; \
+    done; \
+    if [ "$found" = "0" ]; then \
+        echo "::error::Could not find any tsgolint binary to replace"; \
+        exit 1; \
+    fi; \
+    rm /tmp/tsgolint-rebuilt
 
 WORKDIR /
 

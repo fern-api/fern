@@ -47,6 +47,30 @@ RUN apk --no-cache upgrade && \
     rm -rf /usr/local/lib/ruby/gems/3.3.0/gems/erb-4.0.3 \
            /usr/local/lib/ruby/gems/3.3.0/gems/net-imap-0.4.21 && \
     gem install --no-document 'rubocop:~> 1.21' rubocop-minitest && \
+    # rubocop's dep graph pulls in vulnerable addressable + rexml versions:
+    # - addressable 2.8.5 (CVE-2026-35611 ReDoS in template expansion;
+    #   fixed in 2.8.10)
+    # - rexml 3.2.5 and 3.2.6 (CVE-2024-41123, CVE-2024-41946 DoS via
+    #   crafted XML; CVE-2024-49761 ReDoS via SGML doctype; fixed in 3.3.6)
+    # Install patched versions and `rm -rf` the unpatched gem directories
+    # so grype stops scanning them. Order matters: install the new gems
+    # first, then remove the old gem dirs so the live load path keeps
+    # working.
+    gem install --no-document \
+        addressable:2.8.10 \
+        rexml:3.4.4 && \
+    rm -rf /usr/local/bundle/gems/addressable-2.8.5 \
+           /usr/local/bundle/gems/rexml-3.2.5 \
+           /usr/local/bundle/gems/rexml-3.2.6 \
+           /usr/local/lib/ruby/gems/3.3.0/gems/addressable-2.8.5 \
+           /usr/local/lib/ruby/gems/3.3.0/gems/rexml-3.2.5 \
+           /usr/local/lib/ruby/gems/3.3.0/gems/rexml-3.2.6 && \
+    rm -f /usr/local/bundle/specifications/addressable-2.8.5.gemspec \
+          /usr/local/bundle/specifications/rexml-3.2.5.gemspec \
+          /usr/local/bundle/specifications/rexml-3.2.6.gemspec \
+          /usr/local/lib/ruby/gems/3.3.0/specifications/addressable-2.8.5.gemspec \
+          /usr/local/lib/ruby/gems/3.3.0/specifications/rexml-3.2.5.gemspec \
+          /usr/local/lib/ruby/gems/3.3.0/specifications/rexml-3.2.6.gemspec && \
     apk del .build-deps
 
 # Patch npm's bundled vulnerable packages. Following the same pattern used in

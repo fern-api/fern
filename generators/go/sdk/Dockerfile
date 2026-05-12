@@ -70,6 +70,20 @@ RUN mv /bin/cli.cjs /bin/go-v2 && chmod +x /bin/go-v2
 
 RUN CGO_ENABLED=0 go build -ldflags "-s -w" -trimpath -buildvcs=false -o /fern-go-sdk ./cmd/fern-go-sdk
 
+# Drop build-time artifacts that grype scans as SBOM sources but that
+# the runtime image doesn't need:
+#   - /workspace/internal/testdata/** ships test fixture go.sum files
+#     that list a very old gopkg.in/yaml.v3 v3.0.0-20200313102051
+#     pseudo-version in the /go.mod hashes (CVE-2022-28948), even though
+#     the runtime never resolves that version.
+#   - /go/pkg/mod and /root/.cache/go-build hold downloaded module
+#     sources (golang.org/x/net v0.39.0 transitively from
+#     golang.org/x/tools v0.32.0) that grype scans even though the
+#     compiled /fern-go-sdk binary does not link x/net.
+RUN rm -rf /workspace/internal/testdata && \
+    go clean -modcache && \
+    rm -rf /root/.cache/go-build
+
 RUN test -f /bin/go-v2 || echo "go-v2 CLI not found or not executable"
 
 ENTRYPOINT ["/fern-go-sdk"]
