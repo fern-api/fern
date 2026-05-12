@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.23.2
+  changelogEntry:
+    - summary: |
+        Suppress Fern's platform `User-Agent` header in generated SDKs when the API definition
+        declares a global `User-Agent` header (case-insensitive) under `api.headers`. This
+        allows customers to fully override the SDK User-Agent via their Fern Definition without
+        the auto-generated `<package>/<version>` value also being emitted.
+      type: fix
+  createdAt: "2026-05-12"
+  irVersion: 66
 - version: 5.23.1
   changelogEntry:
     - summary: |
