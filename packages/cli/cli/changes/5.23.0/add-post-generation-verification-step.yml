@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add an opt-in `VerificationStep` to the post-generation pipeline that runs
+    `.fern/verify.sh` (when emitted by the generator) inside a language-specific
+    `{generatorImage}-validator` container after replay and before any GitHub
+    push. A failing script aborts the pipeline before opening a PR and surfaces
+    raw stderr through the pipeline logger; a missing script is a silent no-op.
+
+    The step is gated on a hidden `--verify` flag for `fern generate`; when
+    passed (with `--local` or `--runner`), the local workspace runner sets
+    `config.verify.enabled = true` on the pipeline and the configured container
+    runtime (`docker` or `podman`) is forwarded to the validator container.
+    Remote/Fiddle generation does not honor this flag yet.
+  type: internal
