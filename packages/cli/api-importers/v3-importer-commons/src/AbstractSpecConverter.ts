@@ -434,12 +434,15 @@ export abstract class AbstractSpecConverter<
         audiences?: Record<string, string[]>;
     }): void {
         this.ir.environments = environmentConfig;
-        if (audiences == null) {
+        if (environmentConfig == null) {
             return;
         }
-        for (const [environmentId, environment] of Object.entries(environmentConfig ?? {})) {
-            if (audiences[environmentId] != null) {
-                this.irGraph.markEnvironmentForAudiences(environment, audiences[environmentId]);
+        for (const environment of environmentConfig.environments.environments) {
+            const envAudiences = audiences?.[environment.id];
+            if (envAudiences != null) {
+                this.irGraph.markEnvironmentForAudiences(environment, envAudiences);
+            } else {
+                this.irGraph.markEnvironmentForAudiences(environment, [], true);
             }
         }
     }
