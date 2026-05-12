@@ -85,7 +85,8 @@ export class LinkCheckCommand {
         url: string | undefined
     ): Promise<{ domain: string; docsConfigDir?: string }> {
         if (url != null) {
-            return { domain: this.normalizeDomain(url) };
+            const docsConfigDir = await this.tryResolveDocsConfigDir(context);
+            return { domain: this.normalizeDomain(url), docsConfigDir };
         }
 
         const workspace = await context.loadWorkspaceOrThrow();
@@ -122,6 +123,15 @@ export class LinkCheckCommand {
                 "  Use --url <url> to select one.",
             code: CliError.Code.ConfigError
         });
+    }
+
+    private async tryResolveDocsConfigDir(context: Context): Promise<string | undefined> {
+        try {
+            const workspace = await context.loadWorkspaceOrThrow();
+            return this.resolveDocsConfigDir(workspace);
+        } catch {
+            return undefined;
+        }
     }
 
     private resolveDocsConfigDir(workspace: {
