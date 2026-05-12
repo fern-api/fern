@@ -2256,7 +2256,17 @@ async function resolveDocsLinkCheckContext(
     const normalizeDomain = (u: string): string => u.replace(/^https?:\/\//, "").replace(/\/$/, "");
 
     if (url != null) {
-        return { domain: normalizeDomain(url) };
+        let docsConfigDir: string | undefined;
+        try {
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+            docsConfigDir = project.docsWorkspaces?.absoluteFilePath;
+        } catch {
+            // Not in a fern project — that's fine, just skip local file resolution
+        }
+        return { domain: normalizeDomain(url), docsConfigDir };
     }
 
     const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
