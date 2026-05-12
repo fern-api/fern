@@ -2,5 +2,5 @@
     Fix allOf schema conversion dropping validation constraints (pattern, minLength, maxLength, minimum, maximum, exclusiveMinimum, exclusiveMaximum, multipleOf) when merging a $ref with inline primitive elements.
   type: fix
 - summary: |
-    Fix example generation for objects using allOf with property overrides. Direct properties now take precedence over inherited allOf properties, so overridden fields like `results` render with the correct typed example instead of an empty object.
+    Fix example generation for allOf compositions to use merged property schemas. When an allOf override specifies only `items` (without `type: array`), the base schema's `type: array` is now correctly inherited, producing properly typed array examples instead of null.
   type: fix

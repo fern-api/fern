@@ -752,7 +752,13 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         const exampleObj =
             typeof this.example !== "object" || this.example == null ? {} : (this.example as Record<string, unknown>);
 
-        const resultsByKey = Object.entries(resolvedSchema.properties ?? {}).map(([key, property]) => {
+        // Merge allOf base properties into direct properties so that overrides
+        // inherit type information (e.g. `type: array`) from the base schema.
+        // Without this, a property override that only specifies `items` but not
+        // `type: array` would fail to generate a proper array example.
+        const { mergedProperties, mergedRequired } = this.mergeAllOfProperties(resolvedSchema);
+
+        const resultsByKey = Object.entries(mergedProperties).map(([key, property]) => {
             if (typeof property !== "object") {
                 return {
                     key,
@@ -833,7 +839,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 !(key in exampleObj) ||
                 (!propertyAllowsNull && exampleObj[key] == null) ||
                 (propertyAllowsNull && exampleObj[key] === undefined);
-            const propertyIsOptional = !resolvedSchema.required?.includes(key);
+            const propertyIsOptional = !mergedRequired.includes(key);
 
             if (propertyIsOmittedFromExample && propertyIsOptional) {
                 if (this.example === undefined && this.generateOptionalProperties) {
@@ -930,10 +936,14 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         for (const result of allOfResults) {
             if (typeof result.validExample === "object" && result.validExample !== null) {
                 const validExampleObj = result.validExample as Record<string, unknown>;
-                example = {
-                    ...Object.fromEntries(Object.entries(validExampleObj).filter(([_, value]) => value !== undefined)),
-                    ...example
-                };
+                const filteredAllOf = Object.fromEntries(
+                    Object.entries(validExampleObj).filter(([_, value]) => value !== undefined)
+                );
+                for (const [key, value] of Object.entries(filteredAllOf)) {
+                    if (!(key in example) || example[key] == null) {
+                        example[key] = value;
+                    }
+                }
             }
         }
 
@@ -1335,6 +1345,83 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         }
 
         return undefined;
+    }
+
+    /**
+     * Merges properties from allOf base schemas with the direct properties on
+     * resolvedSchema. For each direct property, if the same property exists in
+     * an allOf base schema, the base's fields (e.g. `type`, `format`) are used
+     * as defaults — the direct property's fields take precedence.
+     *
+     * This ensures that an override like `{ items: $ref }` inherits `type: array`
+     * from the base, so the example generator can produce a proper array example.
+     */
+    private mergeAllOfProperties(resolvedSchema: OpenAPIV3_1.SchemaObject): {
+        mergedProperties: Record<string, OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject>;
+        mergedRequired: string[];
+    } {
+        const directProps = resolvedSchema.properties ?? {};
+        const directRequired = resolvedSchema.required ?? [];
+        if (resolvedSchema.allOf == null || resolvedSchema.allOf.length === 0) {
+            return { mergedProperties: directProps, mergedRequired: directRequired };
+        }
+
+        const baseProps: Record<string, OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject> = {};
+        const baseRequired = new Set<string>(directRequired);
+        for (const subSchema of resolvedSchema.allOf) {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: subSchema,
+                breadcrumbs: this.breadcrumbs,
+                skipErrorCollector: true
+            });
+            if (resolved == null) {
+                continue;
+            }
+            if (resolved.required != null) {
+                for (const req of resolved.required) {
+                    baseRequired.add(req);
+                }
+            }
+            if (resolved.properties != null) {
+                for (const [key, value] of Object.entries(resolved.properties)) {
+                    if (typeof value === "object" && value !== null) {
+                        const existing = baseProps[key];
+                        if (existing != null && isInlineSchema(existing) && isInlineSchema(value)) {
+                            baseProps[key] = { ...existing, ...value };
+                        } else {
+                            baseProps[key] = value;
+                        }
+                    }
+                }
+            }
+        }
+
+        const merged: Record<string, OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject> = { ...directProps };
+        for (const [key, directProp] of Object.entries(merged)) {
+            const baseProp = baseProps[key];
+            if (baseProp == null || !isInlineSchema(directProp)) {
+                continue;
+            }
+            const resolvedBase =
+                "$ref" in baseProp
+                    ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                          schemaOrReference: baseProp,
+                          breadcrumbs: this.breadcrumbs,
+                          skipErrorCollector: true
+                      })
+                    : baseProp;
+            if (resolvedBase != null) {
+                merged[key] = { ...resolvedBase, ...directProp };
+            }
+        }
+
+        for (const [key, baseProp] of Object.entries(baseProps)) {
+            if (!(key in merged)) {
+                merged[key] = baseProp;
+            }
+        }
+
+        return { mergedProperties: merged, mergedRequired: [...baseRequired] };
     }
 
     /**
