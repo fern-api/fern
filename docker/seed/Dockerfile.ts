@@ -9,13 +9,15 @@ ENV GOTOOLCHAIN=go1.26.3
 RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates && rm -rf /var/lib/apt/lists/*
 RUN git config --global user.email "build@example.com" && \
     git config --global user.name "Build" && \
-    git clone --recurse-submodules --shallow-submodules \
-        --branch v${TSGOLINT_VERSION} \
+    git clone --depth 1 --branch v${TSGOLINT_VERSION} \
         https://github.com/oxc-project/tsgolint.git /src/tsgolint && \
     cd /src/tsgolint && \
-    # Equivalent of `just init`: apply patches to the typescript-go
-    # submodule and copy internal/collections so internal/utils can
+    # Equivalent of `just init`: init the typescript-go submodule
+    # (NOT recursively — typescript-go's own microsoft/TypeScript
+    # sub-submodule is huge and not needed for tsgolint's build),
+    # apply patches, copy internal/collections so internal/utils can
     # import it (the file comment explains the duplication).
+    git submodule update --init --depth 1 typescript-go && \
     cd typescript-go && \
     git am --3way --no-gpg-sign ../patches/*.patch && \
     cd .. && \
