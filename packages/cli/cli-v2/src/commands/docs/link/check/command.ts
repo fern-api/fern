@@ -53,9 +53,8 @@ export class LinkCheckCommand {
                 }
             });
 
-            const docsAbsolutePath = await this.getDocsConfigPath(context);
             const resolver = new SourceResolver();
-            const resolved = await resolver.resolve(result, docsAbsolutePath);
+            const resolved = resolver.resolve(result);
 
             progress.finish();
 
@@ -80,23 +79,6 @@ export class LinkCheckCommand {
             throw error;
         } finally {
             progress.finish();
-        }
-    }
-
-    private async getDocsConfigPath(context: Context): Promise<string | undefined> {
-        try {
-            const workspaceResult = await context.loadWorkspace();
-            if (workspaceResult == null || !workspaceResult.success) {
-                return undefined;
-            }
-            const docsConfig = workspaceResult.workspace.docs;
-            if (docsConfig?.absoluteFilePath != null) {
-                return docsConfig.absoluteFilePath;
-            }
-            return undefined;
-        } catch {
-            // Workspace loading may fail outside a Fern project; fall back to URL-only references
-            return undefined;
         }
     }
 

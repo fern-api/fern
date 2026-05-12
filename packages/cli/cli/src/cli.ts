@@ -2175,7 +2175,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
         async (argv) => {
             cliContext.instrumentPostHogEvent({ command: "fern docs link check" });
 
-            const { domain, docsAbsolutePath } = await resolveDocsLinkCheckContext(cliContext, argv.url);
+            const { domain } = await resolveDocsLinkCheckContext(cliContext, argv.url);
             const dashboardUrl = process.env.FERN_DASHBOARD_URL ?? "https://dashboard.buildwithfern.com";
 
             const token = await cliContext.runTask((context) => askToLogin(context));
@@ -2206,7 +2206,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                 });
 
                 const resolver = new SourceResolver();
-                const resolved = await resolver.resolve(result, docsAbsolutePath);
+                const resolved = resolver.resolve(result);
 
                 progress.finish();
 
@@ -2248,7 +2248,6 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
 
 interface DocsLinkCheckContext {
     domain: string;
-    docsAbsolutePath: string | undefined;
 }
 
 async function resolveDocsLinkCheckContext(
@@ -2258,8 +2257,7 @@ async function resolveDocsLinkCheckContext(
     const normalizeDomain = (u: string): string => u.replace(/^https?:\/\//, "").replace(/\/$/, "");
 
     if (url != null) {
-        const docsAbsolutePath = await resolveDocsConfigPath(cliContext);
-        return { domain: normalizeDomain(url), docsAbsolutePath };
+        return { domain: normalizeDomain(url) };
     }
 
     const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -2284,10 +2282,8 @@ async function resolveDocsLinkCheckContext(
         );
     }
 
-    const docsAbsolutePath = project.docsWorkspaces.absoluteFilepathToDocsConfig;
-
     if (instances.length === 1 && instances[0] != null) {
-        return { domain: normalizeDomain(instances[0].url), docsAbsolutePath };
+        return { domain: normalizeDomain(instances[0].url) };
     }
 
     const available = instances.map((inst) => `  - ${inst.url}`).join("\n");
@@ -2306,22 +2302,6 @@ function writeAndDrain(stream: NodeJS.WriteStream, data: string): Promise<void> 
             stream.once("drain", resolve);
         }
     });
-}
-
-async function resolveDocsConfigPath(cliContext: CliContext): Promise<string | undefined> {
-    try {
-        const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-            commandLineApiWorkspace: undefined,
-            defaultToAllApiWorkspaces: true
-        });
-        if (project.docsWorkspaces == null) {
-            return undefined;
-        }
-        return project.docsWorkspaces.absoluteFilepathToDocsConfig;
-    } catch {
-        // Workspace loading may fail outside a Fern project; fall back to URL-only references
-        return undefined;
-    }
 }
 
 function addDocsMdCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {

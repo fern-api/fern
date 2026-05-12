@@ -149,11 +149,6 @@ export class LinkCheckFormatter {
             this.appendBlockedLinkDetails(lines, result.blockedLinks);
         }
 
-        if (result.brokenLinks.length > 0) {
-            lines.push("");
-            lines.push(chalk.red("Broken links found"));
-        }
-
         lines.push("");
         return lines.join("\n");
     }
@@ -162,7 +157,7 @@ export class LinkCheckFormatter {
         for (const link of links) {
             const status = link.statusCode != null ? `returned ${link.statusCode}` : "unreachable";
             lines.push("");
-            lines.push(color(`  [broken-link]: ${link.url} ${status}`));
+            lines.push(color(`  [docs]: ${link.url} ${status}`));
             for (const ref of link.references) {
                 lines.push(chalk.dim(`    ${ref.display}`));
             }
@@ -172,7 +167,7 @@ export class LinkCheckFormatter {
     private appendBlockedLinkDetails(lines: string[], links: ResolvedBrokenLink[]): void {
         for (const link of links) {
             lines.push("");
-            lines.push(chalk.yellow(`  [blocked-link]: ${link.url} (blocked by bot detection)`));
+            lines.push(chalk.yellow(`  [docs]: ${link.url} (blocked by bot detection)`));
             for (const ref of link.references) {
                 lines.push(chalk.dim(`    ${ref.display}`));
             }
