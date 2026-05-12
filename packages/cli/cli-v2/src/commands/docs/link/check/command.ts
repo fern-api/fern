@@ -1,6 +1,7 @@
 import { CliError } from "@fern-api/task-context";
 
 import chalk from "chalk";
+import path from "path";
 import type { Argv } from "yargs";
 import type { Context } from "../../../../context/Context.js";
 import type { GlobalArgs } from "../../../../context/GlobalArgs.js";
@@ -24,7 +25,7 @@ export declare namespace LinkCheckCommand {
 
 export class LinkCheckCommand {
     public async handle(context: Context, args: LinkCheckCommand.Args): Promise<void> {
-        const { domain } = await this.resolveContext(context, args.url);
+        const { domain, docsConfigDir } = await this.resolveContext(context, args.url);
         const token = await context.getTokenOrPrompt();
 
         context.stderr.info(`${Icons.info} Checking links on ${chalk.cyan(domain)}...`);
@@ -50,7 +51,7 @@ export class LinkCheckCommand {
                 }
             });
 
-            const resolver = new SourceResolver();
+            const resolver = new SourceResolver(docsConfigDir);
             const resolved = resolver.resolve(result);
 
             progress.finish();
@@ -79,7 +80,10 @@ export class LinkCheckCommand {
         }
     }
 
-    private async resolveContext(context: Context, url: string | undefined): Promise<{ domain: string }> {
+    private async resolveContext(
+        context: Context,
+        url: string | undefined
+    ): Promise<{ domain: string; docsConfigDir?: string }> {
         if (url != null) {
             return { domain: this.normalizeDomain(url) };
         }
@@ -104,8 +108,10 @@ export class LinkCheckCommand {
             });
         }
 
+        const docsConfigDir = this.resolveDocsConfigDir(workspace);
+
         if (instances.length === 1 && instances[0] != null) {
-            return { domain: this.normalizeDomain(instances[0].url) };
+            return { domain: this.normalizeDomain(instances[0].url), docsConfigDir };
         }
 
         const available = instances.map((i) => `  - ${i.url}`).join("\n");
@@ -116,6 +122,21 @@ export class LinkCheckCommand {
                 "  Use --url <url> to select one.",
             code: CliError.Code.ConfigError
         });
+    }
+
+    private resolveDocsConfigDir(workspace: {
+        docs?: { absoluteFilePath?: string };
+        absoluteFilePath?: string;
+    }): string | undefined {
+        const docsFilePath = workspace.docs?.absoluteFilePath;
+        if (docsFilePath != null) {
+            return path.dirname(docsFilePath);
+        }
+        const fernYmlPath = workspace.absoluteFilePath;
+        if (fernYmlPath != null) {
+            return path.dirname(fernYmlPath);
+        }
+        return undefined;
     }
 
     private normalizeDomain(url: string): string {

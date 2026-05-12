@@ -11,6 +11,7 @@ export interface BrokenLink {
     statusCode: number | null;
     isInternal: boolean;
     sourcePages: string[];
+    sourcePageIds?: string[];
     error?: string;
 }
 
@@ -140,6 +141,7 @@ export class LinkCheckClient {
                                 statusCode: event.data.statusCode ?? null,
                                 isInternal: event.data.isInternal ?? false,
                                 sourcePages: event.data.sourcePages ?? [],
+                                sourcePageIds: event.data.sourcePageIds,
                                 error: event.data.error
                             });
                         }
@@ -212,15 +214,22 @@ function isLinkCheckProgressData(data: Record<string, unknown>): data is { links
     return typeof data.linksChecked === "number" && typeof data.totalLinks === "number";
 }
 
-function isLinkCheckedData(
-    data: Record<string, unknown>
-): data is { url: string; statusCode: number | null; isInternal: boolean; sourcePages: string[]; error?: string } {
+function isLinkCheckedData(data: Record<string, unknown>): data is {
+    url: string;
+    statusCode: number | null;
+    isInternal: boolean;
+    sourcePages: string[];
+    sourcePageIds?: string[];
+    error?: string;
+} {
     return (
         typeof data.url === "string" &&
         (data.statusCode === null || data.statusCode === undefined || typeof data.statusCode === "number") &&
         (data.isInternal === undefined || typeof data.isInternal === "boolean") &&
         Array.isArray(data.sourcePages) &&
         data.sourcePages.every((page: unknown) => typeof page === "string") &&
+        (data.sourcePageIds === undefined ||
+            (Array.isArray(data.sourcePageIds) && data.sourcePageIds.every((id: unknown) => typeof id === "string"))) &&
         (data.error === undefined || typeof data.error === "string")
     );
 }

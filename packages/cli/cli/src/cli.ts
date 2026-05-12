@@ -2175,7 +2175,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
         async (argv) => {
             cliContext.instrumentPostHogEvent({ command: "fern docs link check" });
 
-            const { domain } = await resolveDocsLinkCheckContext(cliContext, argv.url);
+            const { domain, docsConfigDir } = await resolveDocsLinkCheckContext(cliContext, argv.url);
             const dashboardUrl = process.env.FERN_DASHBOARD_URL ?? "https://dashboard.buildwithfern.com";
 
             const token = await cliContext.runTask((context) => askToLogin(context));
@@ -2202,7 +2202,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     }
                 });
 
-                const resolver = new SourceResolver();
+                const resolver = new SourceResolver(docsConfigDir);
                 const resolved = resolver.resolve(result);
 
                 progress.finish();
@@ -2246,6 +2246,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
 
 interface DocsLinkCheckContext {
     domain: string;
+    docsConfigDir?: string;
 }
 
 async function resolveDocsLinkCheckContext(
@@ -2280,8 +2281,10 @@ async function resolveDocsLinkCheckContext(
         );
     }
 
+    const docsConfigDir = project.docsWorkspaces.absoluteFilePath;
+
     if (instances.length === 1 && instances[0] != null) {
-        return { domain: normalizeDomain(instances[0].url) };
+        return { domain: normalizeDomain(instances[0].url), docsConfigDir };
     }
 
     const available = instances.map((inst) => `  - ${inst.url}`).join("\n");

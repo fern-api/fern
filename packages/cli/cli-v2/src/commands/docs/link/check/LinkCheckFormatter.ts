@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import chalk from "chalk";
 
-import type { ResolvedBrokenLink, ResolvedLinkCheckResult } from "./SourceResolver.js";
+import type { ResolvedBrokenLink, ResolvedLinkCheckResult, ResolvedReference } from "./SourceResolver.js";
 
 export type OutputFormat = "text" | "json" | "csv";
 
@@ -42,24 +42,14 @@ export class LinkCheckFormatter {
                     url: link.url,
                     statusCode: link.statusCode,
                     isInternal: link.isInternal,
-                    references: link.references.map((ref) => ({
-                        display: this.toRelativePath(ref.display),
-                        ...(ref.filePath != null ? { localFile: ref.filePath } : {}),
-                        ...(ref.line != null ? { line: ref.line } : {}),
-                        ...(ref.column != null ? { column: ref.column } : {})
-                    })),
+                    references: link.references.map((ref) => this.formatJsonReference(ref)),
                     error: link.error
                 })),
                 blockedLinks: result.blockedLinks.map((link) => ({
                     url: link.url,
                     statusCode: link.statusCode,
                     isInternal: link.isInternal,
-                    references: link.references.map((ref) => ({
-                        display: this.toRelativePath(ref.display),
-                        ...(ref.filePath != null ? { localFile: ref.filePath } : {}),
-                        ...(ref.line != null ? { line: ref.line } : {}),
-                        ...(ref.column != null ? { column: ref.column } : {})
-                    })),
+                    references: link.references.map((ref) => this.formatJsonReference(ref)),
                     error: link.error
                 }))
             },
@@ -179,9 +169,8 @@ export class LinkCheckFormatter {
             const status = link.statusCode != null ? link.statusCode : "unreachable";
             lines.push(`  ${chalk.red("✗")} ${chalk.cyan(displayUrl)} ${chalk.dim("→")} ${chalk.red(status)}`);
 
-            // Show all references as relative paths (will be file:line:column in the future)
             for (const ref of link.references) {
-                lines.push(chalk.dim(`    ${this.toRelativePath(ref.display)}`));
+                lines.push(chalk.dim(`    ${this.formatReference(ref)}`));
             }
         }
     }
@@ -191,9 +180,25 @@ export class LinkCheckFormatter {
             lines.push("");
             lines.push(`  ${chalk.yellow("⚠")} ${chalk.cyan(link.url)}`);
             for (const ref of link.references) {
-                lines.push(chalk.dim(`    ${this.toRelativePath(ref.display)}`));
+                lines.push(chalk.dim(`    ${this.formatReference(ref)}`));
             }
         }
+    }
+
+    private formatReference(ref: ResolvedReference): string {
+        if (ref.filePath != null) {
+            return ref.display;
+        }
+        return this.toRelativePath(ref.display);
+    }
+
+    private formatJsonReference(ref: ResolvedReference): Record<string, unknown> {
+        return {
+            display: this.formatReference(ref),
+            ...(ref.filePath != null ? { localFile: ref.filePath } : {}),
+            ...(ref.line != null ? { line: ref.line } : {}),
+            ...(ref.column != null ? { column: ref.column } : {})
+        };
     }
 
     private toRelativePath(url: string): string {

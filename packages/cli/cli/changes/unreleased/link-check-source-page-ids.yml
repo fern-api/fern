@@ -1,0 +1,3 @@
+- summary: |
+    The `fern docs link check` command now resolves broken link sources to local file paths with line:column when the server provides `sourcePageIds`.
+  type: feat
