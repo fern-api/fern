@@ -25,6 +25,7 @@ type RequestOptions struct {
 	MaxAttempts     uint
 	MaxBufSize      int
 	Token           string
+	TokenFunc       func() (string, error)
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -49,6 +50,10 @@ func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
 	if r.Token != "" {
 		header.Set("Authorization", "Bearer "+r.Token)
+	} else if r.TokenFunc != nil {
+		if token, err := r.TokenFunc(); err == nil && token != "" {
+			header.Set("Authorization", "Bearer "+token)
+		}
 	}
 	return header
 }
@@ -164,4 +169,17 @@ func (t *TokenOption) applyRequestOptions(opts *RequestOptions) {
 
 func (t *TokenOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
 	opts.Token = t.Token
+}
+
+// TokenFuncOption implements the RequestOption interface.
+type TokenFuncOption struct {
+	TokenFunc func() (string, error)
+}
+
+func (t *TokenFuncOption) applyRequestOptions(opts *RequestOptions) {
+	opts.TokenFunc = t.TokenFunc
+}
+
+func (t *TokenFuncOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
+	opts.TokenFunc = t.TokenFunc
 }

@@ -1,22 +1,18 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0
 
-# Patch OS-level packages flagged by the 2026-05-06 grype scan against the
-# csharp-seed container. The base image is Ubuntu 24.04 (noble); upgrading to
-# the latest patch versions of the affected debs clears the reported CVEs:
+# Patch OS-level packages flagged by grype against the csharp-seed container.
+# The base image is Ubuntu 24.04 (noble). dist-upgrade pulls every available
+# noble-updates / noble-security fix on top of the base image, including:
 #   curl / libcurl3t64-gnutls / libcurl4t64
 #       (CVE-2026-5545, CVE-2026-6253, CVE-2026-6429, CVE-2026-7168,
 #        CVE-2026-4873, CVE-2026-5773, CVE-2026-6276)
 #   libnghttp2-14   (CVE-2026-27135)
 #   libcap2         (CVE-2026-4878)
 #   sed             (CVE-2026-5958)
+#   dpkg            (CVE-2026-2219)
 RUN apt-get update && \
-    apt-get install -y --only-upgrade --no-install-recommends \
-        curl \
-        libcurl3t64-gnutls \
-        libcurl4t64 \
-        libnghttp2-14 \
-        libcap2 \
-        sed && \
+    apt-get -y --no-install-recommends dist-upgrade && \
+    apt-get -y autoremove && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -24,6 +20,13 @@ ENV PATH="$PATH:/root/.dotnet/tools"
 ENV DOTNET_NOLOGO=1
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 ENV DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+
+# PowerShell ships with the .NET SDK image but is not used by csharp-seed.
+# It vendors copies of System.Net.Http and System.Security.Cryptography.Xml
+# at vulnerable versions (System.Security.Cryptography.Xml 10.0.5 with
+# GHSA-37gx-xxp4-5rgx and GHSA-w3x6-4m5h-cxqf). Removing the PowerShell
+# install drops those DLLs without affecting seed functionality.
+RUN rm -rf /usr/share/powershell /usr/bin/pwsh
 
 WORKDIR /dotnet-warmup
 
@@ -39,7 +42,12 @@ RUN dotnet new console --output cli --no-restore && \
     dotnet build test --no-restore && \
     dotnet run --project cli --no-restore --no-build && \
     dotnet test test --no-restore --no-build && \
-    rm -rf cli lib test
+    rm -rf cli lib test && \
+    # The warm-up nunit template transitively pulls in System.Net.Http 4.3.0
+    # (CVE-2018-8292 DoS). The patched System.Net.Http [4.3.4,) is pinned
+    # in /dependencies.csproj below, so the 4.3.0 copy in the cache is dead
+    # weight that only causes grype to flag the image.
+    rm -rf /root/.nuget/packages/system.net.http/4.3.0
 
 WORKDIR /
 
@@ -110,6 +118,13 @@ RUN dotnet tool install -g csharpier --version "1.2.6" && \
   </ItemGroup> \
 </Project>' > /dependencies.csproj && \
     dotnet restore /dependencies.csproj && \
-    rm /dependencies.csproj
+    rm /dependencies.csproj && \
+    # The /dependencies.csproj restore pulls System.Net.Http 4.3.0 back into
+    # the NuGet cache via transitive resolution metadata, even though
+    # System.Net.Http is pinned to [4.3.4,) for actual use. The cached 4.3.0
+    # package contains the netstandard1.x reference assembly (CVE-2018-8292)
+    # and is only kept around for graph resolution -- safe to remove
+    # post-restore.
+    rm -rf /root/.nuget/packages/system.net.http/4.3.0
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]

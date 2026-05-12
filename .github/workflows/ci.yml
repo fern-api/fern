@@ -417,7 +417,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: "20.x"
+          node-version: 24
 
       - name: Assert docs are generated
         env:
@@ -454,7 +454,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: "20.x"
+          node-version: 24
 
       - name: Check API definition is valid
         env:

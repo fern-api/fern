@@ -1,8 +1,6 @@
 # Stage 1: Java V2
-# Updated: WebSocket feature support added
-# Updated Node.js to 24.14.1 to fix CVE-2026-21710, CVE-2026-21717, CVE-2026-21713,
-# CVE-2026-21714, CVE-2026-21712, CVE-2026-21715, CVE-2026-21716
-FROM node:24.14.1-bookworm AS node
+# Non-slim trixie because the patch RUN steps below shell out to curl and tar.
+FROM node:24.15-trixie AS node
 COPY generators/java-v2/sdk/dist/cli.cjs /dist/cli.cjs
 COPY generators/java-v2/sdk/features.yml /assets/features.yml
 
@@ -116,43 +114,6 @@ COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
-# Update npm and glob to fix CVE-2025-64756 (glob vulnerability requires 11.1.0+)
-RUN npm install -g npm@11.12.0 && npm install -g glob@11.1.0
-
-# Patch npm's bundled glob to 11.1.0 (npm bundles its own copy at node_modules/npm/node_modules/glob)
-RUN cd /usr/local/lib/node_modules/npm/node_modules && \
-    rm -rf glob && \
-    npm pack glob@11.1.0 && \
-    tar -xzf glob-11.1.0.tgz && \
-    mv package glob && \
-    rm glob-11.1.0.tgz
-
-# Patch npm's bundled tar to 7.5.11 to fix GHSA-34x7-hfp2-rc4v, GHSA-r6q2-hw4h-h46w, GHSA-83g3-92jg-28cx,
-# GHSA-qffp-2rhf-9h96 (Hardlink Path Traversal via Drive-Relative Linkpath)
-# Note: We use curl instead of npm pack because npm pack depends on tar itself
-RUN cd /usr/local/lib/node_modules/npm/node_modules && \
-    rm -rf tar && \
-    curl -sL https://registry.npmjs.org/tar/-/tar-7.5.11.tgz -o tar-7.5.11.tgz && \
-    tar -xzf tar-7.5.11.tgz && \
-    mv package tar && \
-    rm tar-7.5.11.tgz
-
-# Patch minimatch to 10.2.3 to fix GHSA-7r86-cg39-jmmj, GHSA-23c5-xmqv-rm74
-# (ReDoS via combinatorial backtracking in matchOne() and nested *() extglobs)
-RUN for dir in \
-      /usr/local/lib/node_modules/glob/node_modules/minimatch \
-      /usr/local/lib/node_modules/npm/node_modules/minimatch \
-      /usr/local/lib/node_modules/npm/node_modules/glob/node_modules/minimatch; do \
-      if [ -d "$dir" ]; then \
-        rm -rf "$dir" && \
-        cd "$(dirname "$dir")" && \
-        curl -sL https://registry.npmjs.org/minimatch/-/minimatch-10.2.3.tgz -o minimatch-10.2.3.tgz && \
-        tar -xzf minimatch-10.2.3.tgz && \
-        mv package minimatch && \
-        rm minimatch-10.2.3.tgz; \
-      fi; \
-    done
-
 # Patch picomatch to 4.0.4 to fix GHSA-c2c7-rcm5-vvqj (ReDoS via extglob quantifiers),
 # GHSA-3v7f-55p6-f55p (Method Injection in POSIX Character Classes)
 # Location: npm's bundled tinyglobby depends on picomatch
@@ -169,8 +130,7 @@ RUN for dir in \
     done
 
 # Patch brace-expansion to 5.0.5 to fix GHSA-f886-m6hf-6m8v
-# (Zero-step sequence causes process hang and memory exhaustion)
-# Location: npm bundles its own copy of brace-expansion
+# (zero-step sequence DoS; bundled by npm 11.12.1 at 5.0.4).
 RUN for dir in \
       /usr/local/lib/node_modules/npm/node_modules/brace-expansion; do \
       if [ -d "$dir" ]; then \
