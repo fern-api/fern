@@ -1,3 +1,4 @@
+export { parseAllowedFailures } from "./allowedFailures.js";
 export type { VirtualGeneratorsYml, VirtualWorkspace } from "./buildVirtualWorkspace.js";
 export {
     buildVirtualWorkspace,

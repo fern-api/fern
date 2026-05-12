@@ -13,6 +13,7 @@ import { LocalScriptRunner } from "../test/script-runner/LocalScriptRunner.js";
 import { ScriptRunner } from "../test/script-runner/ScriptRunner.js";
 import { TaskContextFactory } from "../test/TaskContextFactory.js";
 import { ContainerTestRunner, LocalTestRunner, TestRunner } from "../test/test-runner/index.js";
+import { parseAllowedFailures } from "./allowedFailures.js";
 import { buildVirtualWorkspace } from "./buildVirtualWorkspace.js";
 import { discoverMegaFixtures, MegaFixture } from "./discoverMegaFixtures.js";
 import { filterFixtures } from "./filterFixtures.js";
@@ -68,8 +69,22 @@ export async function runMegaTest(args: MegaTestArgs): Promise<MegaTestSummary> 
     const allFixtures = discoverMegaFixtures();
     const generatorName = args.workspace.workspaceName;
 
+    const allowedFailures = parseAllowedFailures(args.workspace.workspaceConfig.allowedFailures);
+    const afterAllowedFailures = allFixtures.filter((fixture) => !allowedFailures.has(fixture.name));
+    const skippedByAllowedFailures = allFixtures
+        .filter((fixture) => allowedFailures.has(fixture.name))
+        .map((fixture) => fixture.name);
+    if (skippedByAllowedFailures.length > 0) {
+        // eslint-disable-next-line no-console
+        console.log(
+            `[mega-test] Skipping ${skippedByAllowedFailures.length} fixture${
+                skippedByAllowedFailures.length === 1 ? "" : "s"
+            } on allowedFailures list: ${skippedByAllowedFailures.join(", ")}`
+        );
+    }
+
     const selected = filterFixtures({
-        fixtures: allFixtures,
+        fixtures: afterAllowedFailures,
         include: args.include,
         exclude: args.exclude,
         generatorName

@@ -5,6 +5,7 @@ import os from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
+import { parseAllowedFailures } from "../commands/mega-test/allowedFailures";
 import { buildVirtualWorkspace, constructVirtualGeneratorsYml } from "../commands/mega-test/buildVirtualWorkspace";
 import { discoverMegaFixtures, extractOpenApiSpecs, MegaFixture } from "../commands/mega-test/discoverMegaFixtures";
 import { filterFixtures } from "../commands/mega-test/filterFixtures";
@@ -191,5 +192,30 @@ describe("filterFixtures", () => {
     it("filters out fixtures whose prefix doesn't match the generator's language", () => {
         const filtered = filterFixtures({ fixtures: all, generatorName: "python-sdk" });
         expect(filtered.map((f) => f.name).sort()).toEqual(["allof-inline", "imdb", "python-only-fixture"]);
+    });
+});
+
+describe("parseAllowedFailures", () => {
+    it("returns an empty set for undefined or empty input", () => {
+        expect(parseAllowedFailures(undefined).size).toBe(0);
+        expect(parseAllowedFailures([]).size).toBe(0);
+    });
+
+    it("parses fixtureName entries", () => {
+        const names = parseAllowedFailures(["server-sent-events-openapi", "query-param-name-conflict"]);
+        expect(names.has("server-sent-events-openapi")).toBe(true);
+        expect(names.has("query-param-name-conflict")).toBe(true);
+        expect(names.size).toBe(2);
+    });
+
+    it("strips :outputFolder suffix from configured-fixture entries", () => {
+        const names = parseAllowedFailures(["exhaustive:no-custom-config", "exhaustive:some-other-config"]);
+        expect(names.has("exhaustive")).toBe(true);
+        expect(names.size).toBe(1);
+    });
+
+    it("ignores empty / whitespace entries", () => {
+        const names = parseAllowedFailures(["", "   ", "imdb", ":no-fixture-name"]);
+        expect(Array.from(names).sort()).toEqual(["imdb"]);
     });
 });
