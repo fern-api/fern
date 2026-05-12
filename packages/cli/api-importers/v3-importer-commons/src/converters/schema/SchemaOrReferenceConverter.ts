@@ -115,11 +115,7 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         );
         const singleRef = refElements.length === 1 ? refElements[0] : undefined;
 
-        if (
-            singleRef != null &&
-            inlineElements.every((s) => isMetadataOnlySchema(s)) &&
-            !inlineElements.some((s) => s.type === "null" || (Array.isArray(s.type) && s.type.includes("null")))
-        ) {
+        if (singleRef != null && inlineElements.every((s) => isMetadataOnlySchema(s))) {
             const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                 schemaOrReference: singleRef,
                 breadcrumbs: this.breadcrumbs
@@ -218,9 +214,13 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
  * the type shape, so we short-circuit to the $ref directly. Any field NOT in
  * this set (e.g. properties, pattern, enum) is assumed to carry meaningful
  * content and forces a proper allOf merge.
+ *
+ * Notably, `type` is excluded: it can express nullability (e.g. `type: "null"`
+ * or `type: ["string", "null"]`) which changes the semantics of the allOf.
+ * Since `type` is not in this set, any inline element that carries nullability
+ * will always fail this check and force a full merge.
  */
 const METADATA_ONLY_FIELDS = new Set([
-    "type",
     "description",
     "title",
     "deprecated",

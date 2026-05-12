@@ -1348,13 +1348,22 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     /**
-     * Merges properties from allOf base schemas with the direct properties on
-     * resolvedSchema. For each direct property, if the same property exists in
-     * an allOf base schema, the base's fields (e.g. `type`, `format`) are used
-     * as defaults — the direct property's fields take precedence.
+     * Handles allOf schemas where one element provides a base object and another
+     * overrides specific properties. For example, given:
      *
-     * This ensures that an override like `{ items: $ref }` inherits `type: array`
-     * from the base, so the example generator can produce a proper array example.
+     *   allOf:
+     *     - $ref: GenericSearchResponse   # base: { results: { type: array, items: {} } }
+     *     - properties:                    # override: just replaces items
+     *         results:
+     *           items:
+     *             $ref: SpecificModel
+     *
+     * The override's `results` only has `{ items: $ref }` — it's missing `type: array`
+     * because the base already defined that. This function merges the two so the final
+     * `results` property gets `{ type: array, items: $ref SpecificModel }`, letting the
+     * example generator know it should produce an array, not a generic object.
+     *
+     * Precedence: the override's fields win; the base's fields fill in anything missing.
      */
     private mergeAllOfProperties(resolvedSchema: OpenAPIV3_1.SchemaObject): {
         mergedProperties: Record<string, OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject>;
