@@ -7,8 +7,20 @@ FROM golang:1.26.3-trixie AS tsgolint-rebuild
 ARG TSGOLINT_VERSION=0.22.1
 ENV GOTOOLCHAIN=go1.26.3
 RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates && rm -rf /var/lib/apt/lists/*
-RUN git clone --depth 1 --branch v${TSGOLINT_VERSION} https://github.com/oxc-project/tsgolint.git /src/tsgolint && \
+RUN git config --global user.email "build@example.com" && \
+    git config --global user.name "Build" && \
+    git clone --recurse-submodules --shallow-submodules \
+        --branch v${TSGOLINT_VERSION} \
+        https://github.com/oxc-project/tsgolint.git /src/tsgolint && \
     cd /src/tsgolint && \
+    # Equivalent of `just init`: apply patches to the typescript-go
+    # submodule and copy internal/collections so internal/utils can
+    # import it (the file comment explains the duplication).
+    cd typescript-go && \
+    git am --3way --no-gpg-sign ../patches/*.patch && \
+    cd .. && \
+    mkdir -p internal/collections && \
+    find ./typescript-go/internal/collections -type f ! -name '*_test.go' -exec cp {} internal/collections/ \; && \
     CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o /out/tsgolint ./cmd/tsgolint && \
     ls -la /out/tsgolint
 
