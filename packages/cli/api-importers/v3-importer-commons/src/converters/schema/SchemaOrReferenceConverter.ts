@@ -213,23 +213,21 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
 }
 
 /**
- * Fields that carry no structural or validation meaning in an allOf element.
- * If an inline element contains ONLY these fields, it's safe to skip the merge
- * and short-circuit to the $ref. Any field NOT in this set is assumed to carry
- * meaningful content (validation constraints, composition keywords, etc.) and
- * forces a proper merge.
+ * When an allOf has a single $ref to a non-object type (e.g. an enum or
+ * primitive), these annotation-only fields on the inline sibling cannot alter
+ * the type shape, so we short-circuit to the $ref directly. Any field NOT in
+ * this set (e.g. properties, pattern, enum) is assumed to carry meaningful
+ * content and forces a proper allOf merge.
  */
 const METADATA_ONLY_FIELDS = new Set([
     "type",
     "description",
     "title",
-    "nullable",
     "deprecated",
     "readOnly",
     "writeOnly",
     "xml",
     "externalDocs",
-    "x-fern-type",
     "x-fern-type-name"
 ]);
 
