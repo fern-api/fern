@@ -1243,8 +1243,7 @@ export async function runAppPreviewServer({
                 try {
                     // Expand the list of files to include pages that depend on changed snippets
                     const filesToReload = snippetTracker.getFilesToReload(editedAbsoluteFilepaths);
-                    const hasSnippetDependencies =
-                        snippetTracker.hasSnippetDependencies(editedAbsoluteFilepaths);
+                    const hasSnippetDependencies = snippetTracker.hasSnippetDependencies(editedAbsoluteFilepaths);
 
                     if (hasSnippetDependencies) {
                         context.logger.info(
@@ -1263,18 +1262,14 @@ export async function runAppPreviewServer({
                     // so the backend serves fresh data when the browser refreshes.
                     if (reloadedPreviewResult != null) {
                         // Detect slug changes before updating the docs definition
-                        const slugChanges = slugTracker.updateAndDetectChanges(
-                            reloadedPreviewResult.docsDefinition
-                        );
+                        const slugChanges = slugTracker.updateAndDetectChanges(reloadedPreviewResult.docsDefinition);
 
                         previewResult = reloadedPreviewResult;
 
                         // Recompute translated definitions
                         translatedDefinitions = await computeTranslatedDefinitions(reloadedPreviewResult);
                         if (translatedDefinitions.size > 0) {
-                            context.logger.debug(
-                                `Recomputed translations for ${translatedDefinitions.size} locale(s)`
-                            );
+                            context.logger.debug(`Recomputed translations for ${translatedDefinitions.size} locale(s)`);
                         }
 
                         sendData({
