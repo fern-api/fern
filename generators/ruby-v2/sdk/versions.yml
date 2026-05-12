@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.12.8
+  changelogEntry:
+    - summary: |
+        Fix `Layout/EmptyComment` RuboCop offense emitted for types with no
+        description. The AST `Comment` node now skips writing when `docs` is
+        empty or whitespace-only, so undocumented model classes no longer
+        produce a bare `#` line above their class definition.
+      type: fix
+  createdAt: "2026-05-12"
+  irVersion: 66
 - version: 1.12.7
   changelogEntry:
     - summary: |
