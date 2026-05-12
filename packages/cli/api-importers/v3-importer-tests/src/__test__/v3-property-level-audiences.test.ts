@@ -298,4 +298,96 @@ describe("OpenAPI 3.1 → IR property-level audience filtering (regression cover
             expect(findTypeProperties(ir, "User")?.sort()).toEqual(["id", "password_hash", "username"].sort());
         }, 90_000);
     });
+
+    // The shared filter prunes any IR field whose backing `IrGraph` collection is empty
+    // (environments, services, endpoints, types, webhooks, channels, errors). If the V3
+    // import path forgets to register a collection, that field silently disappears once
+    // an audience filter is active — exactly the regression that stripped every `servers:`
+    // URL and caused docs to render `POST /users` instead of `POST https://api.example.com/users`.
+    //
+    // The tests below pin down the structural contract: anything the V3 path does NOT
+    // audience-tag (environments, auth, top-level headers, idempotency headers, base path,
+    // path parameters, API name/display name/version, errors referenced by a surviving
+    // endpoint) MUST be byte-for-byte identical between the unfiltered IR and any
+    // audience-filtered IR.
+    describe("structural invariants (regression coverage for untagged top-level fields)", () => {
+        // `toEqual` chokes on IR objects that mix plain values with non-plain prototypes
+        // (e.g. classes from `@fern-api/ir-sdk` ↔ casing-generator outputs). Comparing the
+        // JSON-serialized projection is exactly what the IR ships as on disk and is what
+        // the docs/SDK pipeline consumes downstream, so it's the strongest contract we
+        // can pin down here.
+        function project<T>(value: T): unknown {
+            const serialized = JSON.stringify(value);
+            return serialized === undefined ? undefined : JSON.parse(serialized);
+        }
+
+        it("environments survive intact across every audience filter mode", async () => {
+            const [unfiltered, publicOnly, both] = await Promise.all([
+                getIRForFixture({ type: "all" }),
+                getIRForFixture({ type: "select", audiences: ["public"] }),
+                getIRForFixture({ type: "select", audiences: ["public", "internal"] })
+            ]);
+            const baseline = unfiltered.environments;
+            expect(baseline, "fixture must declare at least one server").toBeDefined();
+            expect(baseline?.environments.environments.length).toBeGreaterThan(0);
+            expect(project(publicOnly.environments)).toEqual(project(baseline));
+            expect(project(both.environments)).toEqual(project(baseline));
+
+            // Belt-and-braces: the customer-visible default URL field must round-trip too.
+            expect(publicOnly.environments?.defaultEnvironment).toBe(baseline?.defaultEnvironment);
+            expect(both.environments?.defaultEnvironment).toBe(baseline?.defaultEnvironment);
+        }, 90_000);
+
+        it("untagged top-level fields are structurally identical between unfiltered and filtered IRs", async () => {
+            const [unfiltered, filtered] = await Promise.all([
+                getIRForFixture({ type: "all" }),
+                getIRForFixture({ type: "select", audiences: ["public"] })
+            ]);
+
+            // Every field below is either audience-agnostic on the V3 path or
+            // intentionally global. If the shared filter ever starts pruning one,
+            // this assertion fails before the regression reaches a customer.
+            const untouchedKeys = [
+                "environments",
+                "auth",
+                "headers",
+                "idempotencyHeaders",
+                "apiVersion",
+                "apiDisplayName",
+                "apiName",
+                "apiDocs",
+                "basePath",
+                "pathParameters",
+                "variables",
+                "errorDiscriminationStrategy"
+            ] as const satisfies readonly (keyof typeof unfiltered)[];
+
+            for (const key of untouchedKeys) {
+                expect(project(filtered[key]), `top-level field "${key}" must survive audience filtering`).toEqual(
+                    project(unfiltered[key])
+                );
+            }
+        }, 90_000);
+
+        it("endpoints surviving the filter retain their environment-aware url, headers, and path parameters", async () => {
+            // Sanity check that endpoint-level structural fields (not just the
+            // top-level `environments` map) keep referencing the unfiltered base URL.
+            // This is what the docs renderer actually uses to display `POST <base-url>/users`.
+            const [unfiltered, filtered] = await Promise.all([
+                getIRForFixture({ type: "all" }),
+                getIRForFixture({ type: "select", audiences: ["public"] })
+            ]);
+
+            const unfilteredEndpoint = findEndpointByOperationId(unfiltered, "createUser");
+            const filteredEndpoint = findEndpointByOperationId(filtered, "createUser");
+            expect(unfilteredEndpoint).toBeDefined();
+            expect(filteredEndpoint).toBeDefined();
+
+            expect(project(filteredEndpoint?.fullPath)).toEqual(project(unfilteredEndpoint?.fullPath));
+            expect(project(filteredEndpoint?.path)).toEqual(project(unfilteredEndpoint?.path));
+            expect(project(filteredEndpoint?.baseUrl)).toEqual(project(unfilteredEndpoint?.baseUrl));
+            expect(project(filteredEndpoint?.headers)).toEqual(project(unfilteredEndpoint?.headers));
+            expect(project(filteredEndpoint?.pathParameters)).toEqual(project(unfilteredEndpoint?.pathParameters));
+        }, 90_000);
+    });
 });
