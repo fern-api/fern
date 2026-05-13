@@ -86,7 +86,7 @@ client.create_rule(
 <dl>
 <dd>
 
-**execution_context:** `Seed::Types::RuleExecutionContext` 
+**execution_context:** `Seed::Types::RuleCreateRequestExecutionContext` — Execution context for the rule, excluding the prod environment.
     
 </dd>
 </dl>

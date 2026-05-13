@@ -174,7 +174,7 @@ describe("allOf edge cases", () => {
             expect(prop).toBeDefined();
         });
 
-        it("executionContext should reference RuleExecutionContext, not be unknown or empty", () => {
+        it("executionContext should reference a merged type, not be unknown or empty", () => {
             // biome-ignore lint/style/noNonNullAssertion: verified by prior test
             const type = findType(ir, "RuleCreateRequest")!;
             const prop = findProperty(type, "executionContext");
@@ -185,27 +185,23 @@ describe("allOf edge cases", () => {
             // biome-ignore lint/style/noNonNullAssertion: verified by prior expect
             expect(getContainerType(prop!)).not.toBe("optional");
 
-            // The property should reference the RuleExecutionContext enum.
-            // It should NOT be: unknown, an empty object, or a named reference
-            // to a synthetic type with zero properties.
+            // The allOf merges $ref(RuleExecutionContext) with inline {pattern: ...},
+            // so the result is a merged type (RuleCreateRequestExecutionContext) that
+            // preserves validation constraints from both elements.
             // biome-ignore lint/style/noNonNullAssertion: verified by prior expect
             const outerType = getOuterType(prop!);
             expect(outerType).not.toBe("unknown");
 
-            // If it's a named reference, check it points to RuleExecutionContext
-            // (not a synthetic empty object type)
             if (outerType === "named") {
                 // biome-ignore lint/style/noNonNullAssertion: verified by prior expect
-                expect(prop!.valueType.name).toBe("RuleExecutionContext");
+                expect(prop!.valueType.name).toBe("RuleCreateRequestExecutionContext");
             } else if (outerType === "container") {
-                // Could be optional<named:RuleExecutionContext> since the enum
-                // doesn't have a default — but the inner type must still reference it
                 // biome-ignore lint/style/noNonNullAssertion: verified by prior expect
                 const container = prop!.valueType.container!;
                 if (container._type === "optional") {
                     const inner = container.optional as Record<string, unknown>;
                     expect(inner?._type).toBe("named");
-                    expect(inner?.name).toBe("RuleExecutionContext");
+                    expect(inner?.name).toBe("RuleCreateRequestExecutionContext");
                 }
             }
         });

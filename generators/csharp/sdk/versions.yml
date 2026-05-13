@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.66.3
+  changelogEntry:
+    - summary: |
+        Bump WireMock.Net from 2.2.0 to 2.6.0 in generated test projects to resolve Snyk
+        vulnerability reports flagging the older version.
+      type: fix
+  createdAt: "2026-05-13"
+  irVersion: 66
 - version: 2.66.2
   changelogEntry:
     - summary: |

@@ -374,7 +374,11 @@ public partial class SeedApiClient : ISeedApiClient
 
     /// <example><code>
     /// await client.CreateRuleAsync(
-    ///     new RuleCreateRequest { Name = "name", ExecutionContext = RuleExecutionContext.Prod }
+    ///     new RuleCreateRequest
+    ///     {
+    ///         Name = "name",
+    ///         ExecutionContext = RuleCreateRequestExecutionContext.Prod,
+    ///     }
     /// );
     /// </code></example>
     public WithRawResponseTask<RuleResponse> CreateRuleAsync(
