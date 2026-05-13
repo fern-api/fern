@@ -69,8 +69,7 @@ export async function validateWorkspaces({
             // Run MDX parse validation (md-validate rule)
             try {
                 const { errors } = await validateMdxFiles({ workspace: docsWorkspace, context });
-                const severity: ValidationViolation["severity"] =
-                    mdValidateSeverity === "error" ? "error" : "warning";
+                const severity: ValidationViolation["severity"] = mdValidateSeverity === "error" ? "error" : "warning";
                 for (const error of errors) {
                     mdxViolations.push({
                         name: "md-validate",
