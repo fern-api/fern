@@ -27,6 +27,7 @@ Fern is a platform that transforms your API definitions into production-ready SD
 
 With Fern, you can offer your users:
 
+
 - 🧩 **Type-safe SDKs** in multiple languages, including TypeScript, Python, Java, Go, Ruby, PHP, and C#
 - 📘 **Developer documentation** featuring an interactive UI and auto-generated API + SDK references
 - ✨ **AI Search** powered by an assistant trained on your docs, APIs, and SDKs that can instantly answer a developer's questions
