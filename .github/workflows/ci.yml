@@ -397,6 +397,11 @@ jobs:
           FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
           AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
           AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+          # Also exercise `fern generate --docs` against the bundled docs
+          # fixture so the Linux docs path is covered in CI (previously only
+          # tested on Windows). The fixture lives at `windows/` for historical
+          # reasons — it is OS-agnostic.
+          DOCS_FIXTURE_DIR: ${{ github.workspace }}/windows
         run: |
           pnpm turbo run dist:cli:dev --filter @fern-api/cli
           cli_path="$(pwd)/packages/cli/cli/dist/dev/cli.cjs" 
