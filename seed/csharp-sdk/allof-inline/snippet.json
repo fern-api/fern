@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.CreateRuleAsync(\n    new RuleCreateRequest { Name = \"name\", ExecutionContext = RuleExecutionContext.Prod }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.CreateRuleAsync(\n    new RuleCreateRequest\n    {\n        Name = \"name\",\n        ExecutionContext = RuleCreateRequestExecutionContext.Prod,\n    }\n);\n"
             }
         },
         {
