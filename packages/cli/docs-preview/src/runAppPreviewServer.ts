@@ -1240,6 +1240,11 @@ export async function runAppPreviewServer({
             void (async () => {
                 isReloading = true;
 
+                sendData({
+                    version: 1,
+                    type: "startReload"
+                });
+
                 try {
                     // Expand the list of files to include pages that depend on changed snippets
                     const filesToReload = snippetTracker.getFilesToReload(editedAbsoluteFilepaths);
@@ -1250,11 +1255,6 @@ export async function runAppPreviewServer({
                             `Snippet dependencies detected. Reloading ${filesToReload.length} files (${editedAbsoluteFilepaths.length} changed, ${filesToReload.length - editedAbsoluteFilepaths.length} dependent pages)`
                         );
                     }
-
-                    sendData({
-                        version: 1,
-                        type: "startReload"
-                    });
 
                     const reloadedPreviewResult = await reloadDocsDefinition(filesToReload);
 
