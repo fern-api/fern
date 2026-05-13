@@ -264,6 +264,7 @@ catalog:
   zod: ^3.22.3
 overrides:
   ajv: 8.18.0
+  cross-spawn: ^7.0.6
   node-fetch@2.x>whatwg-url: ^14.0.0
   minimatch: '>=10.2.3'
   qs: 6.15.0
