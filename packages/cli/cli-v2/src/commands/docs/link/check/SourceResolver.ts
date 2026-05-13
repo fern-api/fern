@@ -68,7 +68,7 @@ export class SourceResolver {
                 if (pageId == null) {
                     continue;
                 }
-                const resolved = this.resolvePageId(pageId);
+                const resolved = this.resolvePageId(pageId, link.sourcePages[i]);
                 if (resolved != null) {
                     references.push(resolved);
                 }
@@ -84,9 +84,9 @@ export class SourceResolver {
         };
     }
 
-    private resolvePageId(pageId: string): ResolvedReference | undefined {
+    private resolvePageId(pageId: string, sourcePageUrl: string | undefined): ResolvedReference | undefined {
         if (!this.isUserAuthoredPage(pageId)) {
-            return undefined;
+            return this.fallbackToSlug(sourcePageUrl);
         }
 
         if (this.docsConfigDir != null) {
@@ -105,9 +105,24 @@ export class SourceResolver {
     }
 
     /**
+     * For auto-generated pages (API reference), fall back to showing the URL
+     * slug derived from the source page URL.
+     */
+    private fallbackToSlug(sourcePageUrl: string | undefined): ResolvedReference | undefined {
+        if (sourcePageUrl == null) {
+            return undefined;
+        }
+        try {
+            const parsed = new URL(sourcePageUrl);
+            return { display: parsed.pathname };
+        } catch {
+            return { display: sourcePageUrl };
+        }
+    }
+
+    /**
      * Auto-generated API reference pages (e.g. "tag-plant.md") have no directory
-     * component and don't correspond to user-authored files. Filter them out so
-     * only real source files like "docs/pages/welcome.mdx" are shown.
+     * component and don't correspond to user-authored files.
      */
     private isUserAuthoredPage(pageId: string): boolean {
         return pageId.includes("/");
