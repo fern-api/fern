@@ -47,22 +47,18 @@ RUN apk --no-cache upgrade && \
     rm -rf /usr/local/lib/ruby/gems/3.3.0/gems/erb-4.0.3 \
            /usr/local/lib/ruby/gems/3.3.0/gems/net-imap-0.4.21 && \
     gem install --no-document 'rubocop:~> 1.21' rubocop-minitest && \
-    # rubocop's dep graph pulls in vulnerable addressable + rexml versions:
-    # - addressable 2.8.10 (CVE-2026-35611 ReDoS in template expansion;
-    #   fixed in 2.9.0). 2.8.10 is the latest 2.8.x; in #15840 we installed
-    #   `addressable:2.8.10` expecting it to be patched, but the scan still
-    #   flags 2.8.10. Install 2.9.0 explicitly and `gem cleanup` to remove
-    #   the older 2.8.x copy rubocop's deps drag in.
-    # - rexml 3.2.5 / 3.2.6 reports are stale in the scan; the published
-    #   image only ships rexml 3.4.4 (past the 3.3.6 fix for CVE-2024-49761,
-    #   CVE-2024-41123, CVE-2024-41946). Reinstall 3.4.4 here for parity
-    #   and to make the patched version explicit alongside addressable.
-    # `gem cleanup` keeps the highest installed version of each named gem
-    # and removes any older sibling versions plus their gemspecs.
+    # Install patched addressable 2.9.0 (CVE-2026-35611) + rexml 3.4.4
+    # (CVE-2024-49761 / CVE-2024-41123 / CVE-2024-41946) and `gem cleanup`
+    # to drop the older sibling versions rubocop's deps drag in. Then strip
+    # vendored Gemfile.lock files from cached gems (lint_roller, rbs,
+    # unicode-emoji, typeprof) so grype stops reading their pinned rexml /
+    # rdoc / addressable versions as installed packages.
     gem install --no-document \
         addressable:2.9.0 \
         rexml:3.4.4 && \
     gem cleanup addressable rexml && \
+    find /usr/local/bundle/gems /usr/local/lib/ruby/gems \
+        -name 'Gemfile.lock' -delete && \
     apk del .build-deps
 
 # Patch npm's bundled vulnerable packages. Following the same pattern used in

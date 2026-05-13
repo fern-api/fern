@@ -16,12 +16,8 @@ RUN apk add --no-cache curl && \
 FROM golang:1.26.3-alpine3.23 AS overlay-binaries
 ARG CONTAINERD_VERSION=2.3.0
 ARG RUNC_VERSION=1.3.5
-# Bumped from docker-v29.4.3 (which maps to moby module pseudo-version
-# v2.0.0-20260506155126-56be73107b38) to docker-v29.5.0-rc.1 (== moby module
-# tag v2.0.0-beta.12). v2.0.0-beta.8 is the upstream-fix version for
-# CVE-2026-33997 and CVE-2026-34040 (github.com/moby/moby/v2), so bumping
-# past beta.8 clears both findings from the rebuilt dockerd / docker-proxy
-# binaries we overlay onto docker:29.4.3-dind-alpine3.23.
+# moby v2.0.0-beta.12 (docker v29.5.0-rc.1) is past the v2.0.0-beta.8
+# upstream fix for CVE-2026-33997 / CVE-2026-34040.
 ARG MOBY_VERSION=29.5.0-rc.1
 ARG DOCKER_CLI_VERSION=29.5.0-rc.1
 ARG XNET_VERSION=0.53.0
@@ -111,6 +107,12 @@ RUN set -eux; \
     wget -q "https://go.dev/dl/go${GO_VERSION}.linux-${GOARCH}.tar.gz" \
     && tar -C /usr/local -xzf "go${GO_VERSION}.linux-${GOARCH}.tar.gz" \
     && rm "go${GO_VERSION}.linux-${GOARCH}.tar.gz"
+
+# Go 1.26.3 ships the CVE-2026-33814 fix in h2_bundle.go but src/go.mod
+# still pins x/net v0.47.1; bump SBOM files to v0.53.0 to match the code.
+RUN sed -i 's|golang.org/x/net v0.47.1-[^ ]*|golang.org/x/net v0.53.0|' \
+        /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
+    sed -i '/golang.org\/x\/net v0.47.1-/d' /usr/local/go/src/go.sum
 
 ENV PATH="/usr/local/go/bin:${PATH}" \
     GOPATH="/go" \
