@@ -172,14 +172,11 @@ function createLockReleaser(lockPath: string, logger: Logger): () => Promise<voi
  * file operations to prevent concurrent processes from corrupting the cache. All file replacements
  * use write-to-temp + atomic rename.
  *
- * @param cacheDir - Optional cache directory override. If provided, binaries are stored here
- *   instead of the default `~/.fern/bin/`. CLI v2 uses this to store binaries under
- *   XDG-compliant cache paths (e.g. `~/.cache/fern/v1/bin/`).
  * @returns The absolute path to the buf binary, or `undefined` if download fails.
  */
-export async function resolveBuf(logger: Logger, cacheDir?: AbsoluteFilePath): Promise<AbsoluteFilePath | undefined> {
+export async function resolveBuf(logger: Logger): Promise<AbsoluteFilePath | undefined> {
     try {
-        const resolvedCacheDir = cacheDir ?? getDefaultCacheDir();
+        const resolvedCacheDir = getDefaultCacheDir();
         await mkdir(resolvedCacheDir, { recursive: true });
 
         const releaseLock = await acquireLock(logger, resolvedCacheDir);
