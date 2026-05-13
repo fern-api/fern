@@ -34,14 +34,29 @@ const (
 const (
 	defaultMaxBufSize  = 1024 * 1024 // 1MB
 	defaultInitBufSize = 4096        // Initial buffer allocation; grows as needed up to maxBufSize.
+
+	// defaultMaxStreamReconnectAttempts is used when WithReconnect is supplied
+	// without an explicit maxAttempts. Bounded so a misbehaving server cannot
+	// cause an unbounded reconnect loop.
+	defaultMaxStreamReconnectAttempts = 5
 )
 
 // Stream represents a stream of messages sent from a server.
 type Stream[T any] struct {
-	reader   streamReader
-	closer   *onceCloser
-	stopFunc func() bool
+	ctx               context.Context
+	reader            streamReader
+	sseReader         sseEventReader // non-nil iff reader is an sseEventReader; cached at construction
+	closer            *onceCloser
+	stopFunc          func() bool
+	options           *streamOptions
+	lastEventID       string // snapshot of sseReader.LastEventID() taken just before each reconnect; survives the reader swap
+	reconnectAttempts uint
 }
+
+// ReconnectFunc is invoked when the underlying SSE response body reaches EOF
+// before the configured terminator is observed and reconnection is enabled.
+// It must return a fresh *http.Response with the same SSE semantics.
+type ReconnectFunc func(ctx context.Context, lastEventID string) (*http.Response, error)
 
 // StreamOption adapts the behavior of the Stream.
 type StreamOption func(*streamOptions)
@@ -105,6 +120,18 @@ func WithMaxBufSize(size int) StreamOption {
 	}
 }
 
+// WithReconnect enables transparent mid-stream reconnection for SSE streams.
+// fn is invoked on premature io.EOF (before the configured terminator) with
+// the most recent SSE event ID; the returned *http.Response continues the
+// iteration. maxAttempts caps reconnects; 0 falls back to the package default.
+// No effect on non-SSE streams.
+func WithReconnect(fn ReconnectFunc, maxAttempts uint) StreamOption {
+	return func(opts *streamOptions) {
+		opts.reconnectFn = fn
+		opts.reconnectMax = maxAttempts
+	}
+}
+
 // SseEventMeta holds SSE metadata fields shared by StreamEvent and StreamEventRaw.
 type SseEventMeta struct {
 	ID    string
@@ -132,14 +159,22 @@ func NewStream[T any](ctx context.Context, response *http.Response, opts ...Stre
 	for _, opt := range opts {
 		opt(options)
 	}
+	if options.reconnectFn != nil && options.reconnectMax == 0 {
+		options.reconnectMax = defaultMaxStreamReconnectAttempts
+	}
 	closer := newOnceCloser(response.Body)
 	stop := context.AfterFunc(ctx, func() {
 		_ = closer.Close()
 	})
+	reader := newStreamReader(response.Body, options)
+	sseReader, _ := reader.(sseEventReader)
 	return &Stream[T]{
-		reader:   newStreamReader(response.Body, options),
-		closer:   closer,
-		stopFunc: stop,
+		ctx:       ctx,
+		reader:    reader,
+		sseReader: sseReader,
+		closer:    closer,
+		stopFunc:  stop,
+		options:   options,
 	}
 }
 
@@ -147,7 +182,7 @@ func NewStream[T any](ctx context.Context, response *http.Response, opts ...Stre
 // all the messages have been read.
 func (s *Stream[T]) Recv() (T, error) {
 	var value T
-	bytes, err := s.reader.ReadFromStream()
+	bytes, err := readWithReconnect(s, func() ([]byte, error) { return s.reader.ReadFromStream() })
 	if err != nil {
 		return value, err
 	}
@@ -159,14 +194,27 @@ func (s *Stream[T]) Recv() (T, error) {
 
 // RecvRaw reads a raw message from the stream without JSON unmarshaling,
 // returning io.EOF when all the messages have been read.
-// This is useful when the stream may contain data that requires custom
-// parsing or error handling.
 func (s *Stream[T]) RecvRaw() ([]byte, error) {
-	bytes, err := s.reader.ReadFromStream()
-	if err != nil {
-		return nil, err
+	return readWithReconnect(s, func() ([]byte, error) { return s.reader.ReadFromStream() })
+}
+
+// readWithReconnect drives a per-event read against the underlying reader,
+// transparently reconnecting on premature io.EOF when WithReconnect is
+// configured and the terminator has not yet been observed. Generic so it
+// can be reused by both byte-payload and *SseEvent paths.
+func readWithReconnect[V any, T any](s *Stream[T], read func() (V, error)) (V, error) {
+	if s.options.reconnectFn == nil {
+		return read()
 	}
-	return bytes, nil
+	for {
+		v, err := read()
+		if err == nil || !s.shouldReconnectOnError(err) {
+			return v, err
+		}
+		if rerr := s.reconnect(); rerr != nil {
+			return v, rerr
+		}
+	}
 }
 
 // Close closes the Stream.
@@ -180,14 +228,16 @@ func (s *Stream[T]) Close() error {
 // recvSseEvent reads the next SSE event with metadata, falling back to
 // ReadFromStream for non-SSE readers.
 func (s *Stream[T]) recvSseEvent() (*SseEvent, error) {
-	if reader, ok := s.reader.(sseEventReader); ok {
-		return reader.ReadEvent()
-	}
-	data, err := s.reader.ReadFromStream()
-	if err != nil {
-		return nil, err
-	}
-	return &SseEvent{Data: data}, nil
+	return readWithReconnect(s, func() (*SseEvent, error) {
+		if s.sseReader != nil {
+			return s.sseReader.ReadEvent()
+		}
+		data, err := s.reader.ReadFromStream()
+		if err != nil {
+			return nil, err
+		}
+		return &SseEvent{Data: data}, nil
+	})
 }
 
 // RecvEvent reads the next event from the stream, including SSE metadata
@@ -221,17 +271,61 @@ func (s *Stream[T]) RecvEventRaw() (StreamEventRaw, error) {
 	return result, nil
 }
 
-// LastEventID returns the most recently received non-empty event ID.
-// Per the SSE spec, the last event ID persists across events and should
-// be sent as the Last-Event-ID header when reconnecting.
+// LastEventID returns the most recently received event ID. Per the SSE spec,
+// the last event ID persists across events (until explicitly reset by an
+// `id:` line with an empty value) and should be sent as the Last-Event-ID
+// header when reconnecting.
 //
-// This works regardless of whether Recv or RecvEvent is used to consume
-// the stream — the ID is tracked at the reader level.
+// When WithReconnect is configured, the value persists across reconnects:
+// each new reader starts with no ID, so callers see the pre-reconnect
+// snapshot until the resumed stream emits an `id:` field of its own.
 func (s *Stream[T]) LastEventID() string {
-	if reader, ok := s.reader.(sseEventReader); ok {
-		return reader.LastEventID()
+	if s.sseReader != nil {
+		if id := s.sseReader.LastEventID(); id != "" {
+			return id
+		}
 	}
-	return ""
+	return s.lastEventID
+}
+
+// shouldReconnectOnError reports whether the given error from the underlying
+// reader should trigger a reconnect attempt.
+func (s *Stream[T]) shouldReconnectOnError(err error) bool {
+	if s.reconnectAttempts >= s.options.reconnectMax {
+		return false
+	}
+	if !errors.Is(err, io.EOF) {
+		return false
+	}
+	if s.sseReader != nil && s.sseReader.TerminatorSeen() {
+		return false
+	}
+	return true
+}
+
+// reconnect closes the current response body and re-issues the request via
+// the configured ReconnectFunc, swapping the underlying reader to the new
+// response body. lastEventID is snapshotted before the swap so it survives.
+func (s *Stream[T]) reconnect() error {
+	if s.sseReader != nil {
+		s.lastEventID = s.sseReader.LastEventID()
+	}
+	resp, err := s.options.reconnectFn(s.ctx, s.lastEventID)
+	if err != nil {
+		return err
+	}
+	_ = s.closer.Close()
+	s.closer = newOnceCloser(resp.Body)
+	if s.stopFunc != nil {
+		s.stopFunc()
+	}
+	s.stopFunc = context.AfterFunc(s.ctx, func() {
+		_ = s.closer.Close()
+	})
+	s.reader = newStreamReader(resp.Body, s.options)
+	s.sseReader, _ = s.reader.(sseEventReader)
+	s.reconnectAttempts++
+	return nil
 }
 
 // streamReader reads data from a stream.
@@ -244,6 +338,7 @@ type sseEventReader interface {
 	streamReader
 	ReadEvent() (*SseEvent, error)
 	LastEventID() string
+	TerminatorSeen() bool
 }
 
 // newStreamReader returns a new streamReader based on the given
@@ -358,6 +453,8 @@ type streamOptions struct {
 	format             StreamFormat
 	maxBufSize         int
 	eventDiscriminator string
+	reconnectFn        ReconnectFunc
+	reconnectMax       uint
 }
 
 func (s *streamOptions) isEmpty() bool {
@@ -391,9 +488,10 @@ func (o *onceCloser) Close() error {
 }
 
 type SseStreamReader struct {
-	scanner     *bufio.Scanner
-	options     *streamOptions
-	lastEventID string
+	scanner        *bufio.Scanner
+	options        *streamOptions
+	lastEventID    string
+	terminatorSeen bool
 
 	// Precomputed discriminator injection patterns (empty if no discriminator configured).
 	discriminatorQuotedField []byte // e.g. `"type"`
@@ -488,6 +586,7 @@ func (s *SseStreamReader) ReadEvent() (*SseEvent, error) {
 			return nil, err
 		}
 		if s.options.isTerminated(event.Data) {
+			s.terminatorSeen = true
 			return nil, io.EOF
 		}
 		if len(event.Data) == 0 {
@@ -511,6 +610,13 @@ func (s *SseStreamReader) ReadFromStream() ([]byte, error) {
 // LastEventID returns the most recently received event ID.
 func (s *SseStreamReader) LastEventID() string {
 	return s.lastEventID
+}
+
+// TerminatorSeen reports whether the configured terminator was observed by
+// this reader. Used by Stream to suppress reconnection after natural
+// termination.
+func (s *SseStreamReader) TerminatorSeen() bool {
+	return s.terminatorSeen
 }
 
 func (s *SseStreamReader) parseSseLine(line []byte, event *SseEvent) {
