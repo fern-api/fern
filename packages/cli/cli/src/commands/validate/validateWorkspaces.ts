@@ -1,14 +1,17 @@
 import { collectAPIWorkspaceViolations } from "@fern-api/api-workspace-validator";
 import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/configuration-loader";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
+import { ValidationViolation } from "@fern-api/fern-definition-validator";
 import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
 import { CliError } from "@fern-api/task-context";
+import path from "path";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { buildCheckJsonResult } from "./buildCheckJsonResult.js";
 import { ApiValidationResult, DocsValidationResult, printCheckReport } from "./printCheckReport.js";
 import { collectDocsWorkspaceViolations } from "./validateDocsWorkspaceAndLogIssues.js";
+import { validateMdxFiles } from "./validateMdx.js";
 
 export async function validateWorkspaces({
     project,
@@ -49,8 +52,10 @@ export async function validateWorkspaces({
     if (docsWorkspace != null) {
         const excludeRules = brokenLinks || errorOnBrokenLinks ? [] : ["valid-markdown-links"];
         const ossWorkspaces = await filterOssWorkspaces(project);
+        const mdValidateSeverity = docsWorkspace.config.check?.rules?.mdValidate ?? "warn";
 
         let collected: Awaited<ReturnType<typeof collectDocsWorkspaceViolations>> | undefined;
+        const mdxViolations: ValidationViolation[] = [];
         await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
             collected = await collectDocsWorkspaceViolations({
                 workspace: docsWorkspace,
@@ -60,15 +65,30 @@ export async function validateWorkspaces({
                 errorOnBrokenLinks,
                 excludeRules
             });
+
+            // Run MDX parse validation (md-validate rule)
+            const { errors } = await validateMdxFiles({ workspace: docsWorkspace, context });
+            const severity: ValidationViolation["severity"] = mdValidateSeverity === "error" ? "error" : "warning";
+            for (const error of errors) {
+                mdxViolations.push({
+                    name: "md-validate",
+                    severity,
+                    relativeFilepath: RelativeFilePath.of(
+                        path.relative(docsWorkspace.absoluteFilePath, error.filepath)
+                    ),
+                    nodePath: [],
+                    message: error.message
+                });
+            }
         });
 
-        if (collected != null) {
+        if (collected != null || mdxViolations.length > 0) {
             docsResult = {
-                violations: collected.violations,
-                elapsedMillis: collected.elapsedMillis
+                violations: [...(collected?.violations ?? []), ...mdxViolations],
+                elapsedMillis: collected?.elapsedMillis ?? 0
             };
 
-            if (collected.hasErrors) {
+            if (collected?.hasErrors || (mdValidateSeverity === "error" && mdxViolations.length > 0)) {
                 hasAnyErrors = true;
             }
         }
