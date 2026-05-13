@@ -8,7 +8,7 @@ import path from "path";
 const PROTOC_GEN_OPENAPI_VERSION = "v0.1.13";
 const GITHUB_RELEASE_URL_BASE = "https://github.com/fern-api/protoc-gen-openapi/releases/download";
 const BINARY_NAME = "protoc-gen-openapi";
-const CACHE_DIR_NAME = ".fern";
+const DEFAULT_CACHE_DIR_NAME = ".fern";
 const BIN_DIR_NAME = "bin";
 const LOCK_TIMEOUT_MS = 120_000;
 const LOCK_RETRY_INTERVAL_MS = 200;
@@ -57,30 +57,26 @@ function getPlatformInfo(): PlatformInfo {
     };
 }
 
-function getCacheDir(): AbsoluteFilePath {
+function getDefaultCacheDir(): AbsoluteFilePath {
     const homeDir = os.homedir();
-    return AbsoluteFilePath.of(path.join(homeDir, CACHE_DIR_NAME, BIN_DIR_NAME));
+    return AbsoluteFilePath.of(path.join(homeDir, DEFAULT_CACHE_DIR_NAME, BIN_DIR_NAME));
 }
 
-function getVersionedBinaryPath(): AbsoluteFilePath {
+function getVersionedBinaryPath(cacheDir: AbsoluteFilePath): AbsoluteFilePath {
     const { extension } = getPlatformInfo();
-    const cacheDir = getCacheDir();
     return join(cacheDir, RelativeFilePath.of(`${BINARY_NAME}-${PROTOC_GEN_OPENAPI_VERSION}${extension}`));
 }
 
-function getCanonicalBinaryPath(): AbsoluteFilePath {
+function getCanonicalBinaryPath(cacheDir: AbsoluteFilePath): AbsoluteFilePath {
     const { extension } = getPlatformInfo();
-    const cacheDir = getCacheDir();
     return join(cacheDir, RelativeFilePath.of(`${BINARY_NAME}${extension}`));
 }
 
-function getVersionMarkerPath(): AbsoluteFilePath {
-    const cacheDir = getCacheDir();
+function getVersionMarkerPath(cacheDir: AbsoluteFilePath): AbsoluteFilePath {
     return join(cacheDir, RelativeFilePath.of(`${BINARY_NAME}.version`));
 }
 
-function getLockDirPath(): string {
-    const cacheDir = getCacheDir();
+function getLockDirPath(cacheDir: AbsoluteFilePath): string {
     return path.join(cacheDir, `${BINARY_NAME}.lock`);
 }
 
@@ -104,8 +100,8 @@ async function fileExists(filePath: AbsoluteFilePath): Promise<boolean> {
  * If the lock cannot be acquired within LOCK_TIMEOUT_MS, force-breaks it
  * (assumes the holder crashed) and retries once.
  */
-async function acquireLock(logger: Logger): Promise<() => Promise<void>> {
-    const lockPath = getLockDirPath();
+async function acquireLock(logger: Logger, cacheDir: AbsoluteFilePath): Promise<() => Promise<void>> {
+    const lockPath = getLockDirPath(cacheDir);
     const deadline = Date.now() + LOCK_TIMEOUT_MS;
 
     while (Date.now() < deadline) {
@@ -170,16 +166,22 @@ function createLockReleaser(lockPath: string, logger: Logger): () => Promise<voi
  * file operations to prevent concurrent processes from corrupting the cache. All file replacements
  * use write-to-temp + atomic rename.
  *
+ * @param cacheDir - Optional cache directory override. If provided, binaries are stored here
+ *   instead of the default `~/.fern/bin/`. CLI v2 uses this to store binaries under
+ *   XDG-compliant cache paths (e.g. `~/.cache/fern/v1/bin/`).
  * @returns The directory containing the binary (for PATH injection), or `undefined` if download fails.
  */
-export async function resolveProtocGenOpenAPI(logger: Logger): Promise<AbsoluteFilePath | undefined> {
+export async function resolveProtocGenOpenAPI(
+    logger: Logger,
+    cacheDir?: AbsoluteFilePath
+): Promise<AbsoluteFilePath | undefined> {
     try {
-        const cacheDir = getCacheDir();
-        await mkdir(cacheDir, { recursive: true });
+        const resolvedCacheDir = cacheDir ?? getDefaultCacheDir();
+        await mkdir(resolvedCacheDir, { recursive: true });
 
-        const releaseLock = await acquireLock(logger);
+        const releaseLock = await acquireLock(logger, resolvedCacheDir);
         try {
-            return await resolveUnderLock(logger);
+            return await resolveUnderLock(logger, resolvedCacheDir);
         } finally {
             await releaseLock();
         }
@@ -189,23 +191,22 @@ export async function resolveProtocGenOpenAPI(logger: Logger): Promise<AbsoluteF
     }
 }
 
-async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | undefined> {
-    const versionedPath = getVersionedBinaryPath();
-    const canonicalPath = getCanonicalBinaryPath();
-    const versionMarkerPath = getVersionMarkerPath();
+async function resolveUnderLock(logger: Logger, cacheDir: AbsoluteFilePath): Promise<AbsoluteFilePath | undefined> {
+    const versionedPath = getVersionedBinaryPath(cacheDir);
+    const canonicalPath = getCanonicalBinaryPath(cacheDir);
+    const versionMarkerPath = getVersionMarkerPath(cacheDir);
 
     // Fast path: versioned binary already downloaded
     if (await fileExists(versionedPath)) {
         const currentMarker = await readVersionMarker(versionMarkerPath, logger);
         if (currentMarker === PROTOC_GEN_OPENAPI_VERSION && (await fileExists(canonicalPath))) {
             logger.info(`Using cached protoc-gen-openapi ${PROTOC_GEN_OPENAPI_VERSION}`);
-            return getCacheDir();
+            return cacheDir;
         }
-        // Version marker is stale or canonical binary is missing — refresh atomically
         await atomicCopyBinary(versionedPath, canonicalPath);
         await writeFile(versionMarkerPath, PROTOC_GEN_OPENAPI_VERSION);
         logger.info(`Updated protoc-gen-openapi to ${PROTOC_GEN_OPENAPI_VERSION}`);
-        return getCacheDir();
+        return cacheDir;
     }
 
     // Download the binary
@@ -232,7 +233,7 @@ async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | unde
         await writeFile(versionMarkerPath, PROTOC_GEN_OPENAPI_VERSION);
 
         logger.info(`Downloaded protoc-gen-openapi ${PROTOC_GEN_OPENAPI_VERSION}`);
-        return getCacheDir();
+        return cacheDir;
     } catch (error) {
         logger.debug(
             `Failed to download protoc-gen-openapi: ${error instanceof Error ? error.message : String(error)}`

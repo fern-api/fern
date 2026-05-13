@@ -16,6 +16,7 @@ const CACHE_VERSION = "v1";
  * %LOCALAPPDATA%/fern/cache   # Windows
  *
  * ├── v1/                     # Cache schema version
+ * │   ├── bin/                # Downloaded tool binaries (buf, protoc-gen-openapi)
  * │   ├── ir/
  * │   │   ├── v63/
  * │   │   │   └── sha256/
@@ -66,6 +67,9 @@ export class Cache {
     /** Directory for downloaded generator migration packages. */
     public readonly migrations: { absoluteFilePath: AbsoluteFilePath };
 
+    /** Directory for downloaded tool binaries (buf, protoc-gen-openapi). */
+    public readonly bin: { absoluteFilePath: AbsoluteFilePath };
+
     constructor({ logger }: { logger?: Logger } = {}) {
         this.absoluteFilePath = this.resolveAbsoluteFilePath();
         this.ir = new IrCache({
@@ -76,6 +80,9 @@ export class Cache {
         this.logs = new LogsCache({ absoluteFilePath: join(this.getVersionedPath(), RelativeFilePath.of("logs")) });
         this.migrations = {
             absoluteFilePath: join(this.getVersionedPath(), RelativeFilePath.of("migrations"))
+        };
+        this.bin = {
+            absoluteFilePath: join(this.getVersionedPath(), RelativeFilePath.of("bin"))
         };
     }
 

@@ -150,7 +150,7 @@ export async function detectAirGappedModeForProtobuf(
  * Returns the command string to use ("buf" if on PATH, or the full path to the cached binary).
  * Throws via failAndThrow if buf cannot be found or downloaded.
  */
-export async function ensureBufCommand(logger: Logger): Promise<string> {
+export async function ensureBufCommand(logger: Logger, cacheDir?: AbsoluteFilePath): Promise<string> {
     const which = createLoggingExecutable("which", {
         cwd: AbsoluteFilePath.of(process.cwd()),
         logger: undefined,
@@ -168,7 +168,7 @@ export async function ensureBufCommand(logger: Logger): Promise<string> {
         return "buf";
     } catch {
         logger.debug("buf not found on PATH, attempting auto-download");
-        const downloadedBufPath = await resolveBuf(logger);
+        const downloadedBufPath = await resolveBuf(logger, cacheDir);
         if (downloadedBufPath != null) {
             logger.debug(`Using auto-downloaded buf: ${downloadedBufPath}`);
             return downloadedBufPath;

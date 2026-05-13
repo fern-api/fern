@@ -1,0 +1,7 @@
+- summary: |
+    Migrate `buf` and `protoc-gen-openapi` installer cache paths to support
+    CLI v2's centralized XDG-compliant cache directory. Binary downloaders
+    now accept an optional `cacheDir` parameter; CLI v2 stores binaries under
+    `~/.cache/fern/v1/bin/` while CLI v1 retains the existing `~/.fern/bin/`
+    default for backward compatibility.
+  type: chore

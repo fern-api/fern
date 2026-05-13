@@ -10,11 +10,14 @@ import { LegacyApiSpecAdapter, partitionV1Specs } from "./LegacyApiSpecAdapter.j
 /**
  * Shared adapter for constructing OSSWorkspace instances from an ApiDefinition.
  */
+
 export class LegacyOSSWorkspaceAdapter {
     private readonly specAdapter: LegacyApiSpecAdapter;
+    private readonly binCacheDir: AbsoluteFilePath;
 
     constructor({ context }: { context: Context }) {
         this.specAdapter = new LegacyApiSpecAdapter({ context });
+        this.binCacheDir = context.cache.bin.absoluteFilePath;
     }
 
     /**
@@ -60,7 +63,8 @@ export class LegacyOSSWorkspaceAdapter {
             cliVersion,
             generatorsConfiguration,
             workspaceName,
-            changelog: undefined
+            changelog: undefined,
+            cacheDir: this.binCacheDir
         });
     }
 }

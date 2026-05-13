@@ -75,9 +75,11 @@ export class ProtobufIRGenerator {
     private context: TaskContext;
     private isAirGapped: boolean | undefined;
     private resolvedBufCommand: string | undefined;
+    private cacheDir: AbsoluteFilePath | undefined;
 
-    constructor({ context }: { context: TaskContext }) {
+    constructor({ context, cacheDir }: { context: TaskContext; cacheDir?: AbsoluteFilePath }) {
         this.context = context;
+        this.cacheDir = cacheDir;
     }
 
     public async generate({
@@ -334,7 +336,7 @@ export class ProtobufIRGenerator {
         }
 
         try {
-            this.resolvedBufCommand = await ensureBufCommand(this.context.logger);
+            this.resolvedBufCommand = await ensureBufCommand(this.context.logger, this.cacheDir);
         } catch (error) {
             this.context.failAndThrow(error instanceof Error ? error.message : String(error), undefined, {
                 code: CliError.Code.EnvironmentError
