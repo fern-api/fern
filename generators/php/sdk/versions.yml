@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.9.6
+  changelogEntry:
+    - summary: |
+        Stop launching WireMock with `--global-response-templating` in generated
+        wire-test `docker-compose.test.yml`. Response examples containing literal
+        `{{...}}` are now served verbatim instead of being passed through
+        WireMock's Handlebars transformer, which would fail to resolve them as
+        helpers and return 500.
+      type: fix
+  createdAt: "2026-05-13"
+  irVersion: 66
 - version: 2.9.5
   changelogEntry:
     - summary: |
