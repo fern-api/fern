@@ -1,5 +1,6 @@
 import { docsYml } from "@fern-api/configuration";
 import { FernNavigation } from "@fern-api/fdr-sdk";
+import { TaskContext } from "@fern-api/task-context";
 
 /**
  * Applies translated navigation overlays to the resolved nav tree.
@@ -16,17 +17,20 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
  * - Variants: matched by variant slug first, then positionally among
  *   overlays without an explicit slug; the matched overlay's `layout:`
  *   becomes the scoped navigation context for the variant's children
- * - Sections/Pages: matched by slug first, then positionally within the
- *   currently scoped overlay's navigation items
+ * - Sections/Pages: matched by slug first, then positionally only among
+ *   overlay entries that omit `slug:`. Overlay entries whose `slug:` is set
+ *   but does not match any sibling tree node are reported via `context.logger`
+ *   so authors can fix drifted overlays instead of silently falling through.
  */
 export function applyTranslatedNavigationOverlays(
     root: FernNavigation.V1.RootNode | undefined,
-    overlay: docsYml.TranslationNavigationOverlay
+    overlay: docsYml.TranslationNavigationOverlay,
+    context?: TaskContext
 ): FernNavigation.V1.RootNode | undefined {
     if (root == null) {
         return undefined;
     }
-    const result = walkAndApply(root, overlay) as FernNavigation.V1.RootNode;
+    const result = walkAndApply(root, overlay, context) as FernNavigation.V1.RootNode;
     return result;
 }
 
@@ -40,12 +44,16 @@ export function getTranslatedAnnouncement(overlay: docsYml.TranslationNavigation
     return undefined;
 }
 
-function walkAndApply(node: unknown, overlay: docsYml.TranslationNavigationOverlay): unknown {
+function walkAndApply(
+    node: unknown,
+    overlay: docsYml.TranslationNavigationOverlay,
+    context: TaskContext | undefined
+): unknown {
     if (node == null || typeof node !== "object") {
         return node;
     }
     if (Array.isArray(node)) {
-        return node.map((item) => walkAndApply(item, overlay));
+        return node.map((item) => walkAndApply(item, overlay, context));
     }
 
     const obj = node as Record<string, unknown>;
@@ -53,9 +61,9 @@ function walkAndApply(node: unknown, overlay: docsYml.TranslationNavigationOverl
 
     for (const [k, v] of Object.entries(obj)) {
         if (k === "children" && Array.isArray(v)) {
-            updated[k] = applyChildOverlays(v, obj, overlay);
+            updated[k] = applyChildOverlays(v, obj, overlay, context);
         } else {
-            updated[k] = walkAndApply(v, overlay);
+            updated[k] = walkAndApply(v, overlay, context);
         }
     }
 
@@ -65,7 +73,8 @@ function walkAndApply(node: unknown, overlay: docsYml.TranslationNavigationOverl
 function applyChildOverlays(
     children: unknown[],
     parent: Record<string, unknown>,
-    overlay: docsYml.TranslationNavigationOverlay
+    overlay: docsYml.TranslationNavigationOverlay,
+    context: TaskContext | undefined
 ): unknown[] {
     const parentType = parent["type"] as string | undefined;
 
@@ -74,7 +83,7 @@ function applyChildOverlays(
         return children.map((child, index) => {
             const childObj = child as Record<string, unknown> | null;
             if (childObj == null || typeof childObj !== "object") {
-                return walkAndApply(child, overlay);
+                return walkAndApply(child, overlay, context);
             }
             const productOverlay = findProductOverlay(childObj, overlay.products ?? [], index);
             if (productOverlay != null) {
@@ -87,10 +96,10 @@ function applyChildOverlays(
                     navigation: productOverlay.navigation ?? overlay.navigation,
                     navbarLinks: overlay.navbarLinks
                 };
-                const walked = walkAndApply(child, scopedOverlay) as Record<string, unknown>;
+                const walked = walkAndApply(child, scopedOverlay, context) as Record<string, unknown>;
                 return applyProductOverlayToNode(walked, productOverlay);
             }
-            return walkAndApply(child, overlay);
+            return walkAndApply(child, overlay, context);
         });
     }
 
@@ -99,7 +108,7 @@ function applyChildOverlays(
         return children.map((child, index) => {
             const childObj = child as Record<string, unknown> | null;
             if (childObj == null || typeof childObj !== "object") {
-                return walkAndApply(child, overlay);
+                return walkAndApply(child, overlay, context);
             }
             const versionOverlay = findVersionOverlay(childObj, overlay.versions ?? [], index);
             if (versionOverlay != null) {
@@ -112,10 +121,10 @@ function applyChildOverlays(
                     navigation: versionOverlay.navigation ?? overlay.navigation,
                     navbarLinks: overlay.navbarLinks
                 };
-                const walked = walkAndApply(child, scopedOverlay) as Record<string, unknown>;
+                const walked = walkAndApply(child, scopedOverlay, context) as Record<string, unknown>;
                 return applyVersionOverlayToNode(walked, versionOverlay);
             }
-            return walkAndApply(child, overlay);
+            return walkAndApply(child, overlay, context);
         });
     }
 
@@ -129,14 +138,14 @@ function applyChildOverlays(
         return children.map((child) => {
             const childObj = child as Record<string, unknown> | null;
             if (childObj == null || typeof childObj !== "object") {
-                return walkAndApply(child, overlay);
+                return walkAndApply(child, overlay, context);
             }
             if (childObj["type"] === "tab") {
                 const positionalTabId = orderedTabIds[tabIndex];
                 tabIndex++;
-                return applyTabOverlayToNode(childObj, overlay, positionalTabId);
+                return applyTabOverlayToNode(childObj, overlay, positionalTabId, context);
             }
-            return walkAndApply(child, overlay);
+            return walkAndApply(child, overlay, context);
         });
     }
 
@@ -145,7 +154,7 @@ function applyChildOverlays(
     if (parentType === "varianted") {
         const variantOverlays = collectVariantOverlaysFromTabLayout(overlay);
         if (variantOverlays != null && variantOverlays.length > 0) {
-            return applyVariantOverlays(children, variantOverlays, overlay);
+            return applyVariantOverlays(children, variantOverlays, overlay, context);
         }
     }
 
@@ -153,7 +162,7 @@ function applyChildOverlays(
     if (parentType === "sidebarRoot") {
         const navOverlays = collectFlatNavigationOverlays(overlay);
         if (navOverlays.length > 0) {
-            return applySidebarChildOverlays(children, navOverlays, overlay);
+            return applySidebarChildOverlays(children, navOverlays, overlay, context);
         }
     }
 
@@ -162,7 +171,7 @@ function applyChildOverlays(
     if (parentType === "sidebarGroup") {
         const navOverlays = collectFlatNavigationOverlays(overlay);
         if (navOverlays.length > 0) {
-            return applySidebarChildOverlays(children, navOverlays, overlay);
+            return applySidebarChildOverlays(children, navOverlays, overlay, context);
         }
     }
 
@@ -170,10 +179,10 @@ function applyChildOverlays(
     if (parentType === "section") {
         // Section children are handled via the section overlay's contents
         // This is managed through the section overlay propagation
-        return children.map((child) => walkAndApply(child, overlay));
+        return children.map((child) => walkAndApply(child, overlay, context));
     }
 
-    return children.map((child) => walkAndApply(child, overlay));
+    return children.map((child) => walkAndApply(child, overlay, context));
 }
 
 function findProductOverlay(
@@ -270,7 +279,8 @@ function applyVersionOverlayToNode(
 function applyTabOverlayToNode(
     node: Record<string, unknown>,
     overlay: docsYml.TranslationNavigationOverlay,
-    positionalTabId?: string
+    positionalTabId: string | undefined,
+    context: TaskContext | undefined
 ): unknown {
     const tabSlug = extractLastSlugSegment(node["slug"] as string | undefined);
 
@@ -332,11 +342,11 @@ function applyTabOverlayToNode(
             // new tree (children too); the title override we just set on
             // `out` is preserved because walkAndApply does not touch the
             // "title" key.
-            return walkAndApply(out, scopedOverlay);
+            return walkAndApply(out, scopedOverlay, context);
         }
     }
 
-    return walkAndApply(out, overlay);
+    return walkAndApply(out, overlay, context);
 }
 
 /**
@@ -439,15 +449,20 @@ function collectFlatNavigationOverlays(overlay: docsYml.TranslationNavigationOve
 function applySidebarChildOverlays(
     children: unknown[],
     navOverlays: docsYml.NavigationItemOverlay[],
-    overlay: docsYml.TranslationNavigationOverlay
+    overlay: docsYml.TranslationNavigationOverlay,
+    context: TaskContext | undefined
 ): unknown[] {
     let sectionIdx = 0;
     let pageIdx = 0;
 
-    return children.map((child) => {
+    // Track which overlay entries actually matched a tree node so we can
+    // warn on slug-bearing overlays that didn't line up with any sibling.
+    const matchedOverlays = new Set<docsYml.NavigationItemOverlay>();
+
+    const result = children.map((child) => {
         const childObj = child as Record<string, unknown> | null;
         if (childObj == null || typeof childObj !== "object") {
-            return walkAndApply(child, overlay);
+            return walkAndApply(child, overlay, context);
         }
 
         const childType = childObj["type"] as string | undefined;
@@ -460,7 +475,8 @@ function applySidebarChildOverlays(
             sectionIdx++;
 
             if (matched != null) {
-                const walked = walkAndApply(child, overlay) as Record<string, unknown>;
+                matchedOverlays.add(matched);
+                const walked = walkAndApply(child, overlay, context) as Record<string, unknown>;
                 if (matched.title != null) {
                     walked["title"] = matched.title;
                 }
@@ -468,12 +484,12 @@ function applySidebarChildOverlays(
                     // Re-apply section content overlays recursively
                     const childArray = walked["children"] as unknown[] | undefined;
                     if (childArray != null) {
-                        walked["children"] = applySidebarChildOverlays(childArray, matched.contents, overlay);
+                        walked["children"] = applySidebarChildOverlays(childArray, matched.contents, overlay, context);
                     }
                 }
                 return walked;
             }
-            return walkAndApply(child, overlay);
+            return walkAndApply(child, overlay, context);
         }
 
         if (childType === "page" || childType === "landingPage") {
@@ -483,16 +499,53 @@ function applySidebarChildOverlays(
             const matched = matchPageOverlay(childObj, pageOverlays, pageIdx);
             pageIdx++;
 
-            if (matched?.title != null) {
-                const walked = walkAndApply(child, overlay) as Record<string, unknown>;
-                walked["title"] = matched.title;
-                return walked;
+            if (matched != null) {
+                matchedOverlays.add(matched);
+                if (matched.title != null) {
+                    const walked = walkAndApply(child, overlay, context) as Record<string, unknown>;
+                    walked["title"] = matched.title;
+                    return walked;
+                }
             }
-            return walkAndApply(child, overlay);
+            return walkAndApply(child, overlay, context);
         }
 
-        return walkAndApply(child, overlay);
+        return walkAndApply(child, overlay, context);
     });
+
+    warnOnUnmatchedSlugOverlays(navOverlays, matchedOverlays, context);
+    return result;
+}
+
+/**
+ * Emits a warning for each overlay entry that has a `slug:` set but did not
+ * match any sibling tree node. Overlays with no `slug:` are intentionally
+ * positional and not subject to the warning.
+ */
+function warnOnUnmatchedSlugOverlays(
+    overlays: docsYml.NavigationItemOverlay[],
+    matched: Set<docsYml.NavigationItemOverlay>,
+    context: TaskContext | undefined
+): void {
+    if (context == null) {
+        return;
+    }
+    for (const o of overlays) {
+        if (matched.has(o)) {
+            continue;
+        }
+        if (o.type !== "section" && o.type !== "page") {
+            continue;
+        }
+        const slug = (o as { slug?: string }).slug;
+        if (slug == null) {
+            continue;
+        }
+        const titleSuffix = o.title != null ? ` (title: "${o.title}")` : "";
+        context.logger.warn(
+            `Translation overlay ${o.type} with slug "${slug}"${titleSuffix} did not match any sibling navigation entry; the overlay was ignored.`
+        );
+    }
 }
 
 function matchSectionOverlay(
@@ -509,17 +562,13 @@ function matchSectionOverlay(
         }
     }
 
-    // Positional fallback: prefer overlays without a slug (those are meant to
-    // match by position) and fall back to all overlays positionally so that
-    // overlay files mirroring the source navigation structure still resolve
-    // when slugs don't line up exactly (e.g. tree slug `home` vs. overlay
-    // slug `/`).
+    // Positional fallback: only match against overlays that omit `slug:`.
+    // Overlays with a `slug:` that didn't match by slug are NOT silently
+    // re-attached by position — they're reported via `warnOnUnmatchedSlugOverlays`
+    // so authors can fix drifted overlays.
     const noSlugOverlays = overlays.filter((o) => o.slug == null);
     if (positionIndex < noSlugOverlays.length) {
         return noSlugOverlays[positionIndex];
-    }
-    if (noSlugOverlays.length === 0 && positionIndex < overlays.length) {
-        return overlays[positionIndex];
     }
     return undefined;
 }
@@ -538,17 +587,13 @@ function matchPageOverlay(
         }
     }
 
-    // Positional fallback: prefer overlays without a slug (those are meant to
-    // match by position) and fall back to all overlays positionally so that
-    // overlay files mirroring the source navigation structure still resolve
-    // when slugs don't line up exactly (e.g. tree slug `home` vs. overlay
-    // slug `/`).
+    // Positional fallback: only match against overlays that omit `slug:`.
+    // Overlays with a `slug:` that didn't match by slug are NOT silently
+    // re-attached by position — they're reported via `warnOnUnmatchedSlugOverlays`
+    // so authors can fix drifted overlays.
     const noSlugOverlays = overlays.filter((o) => o.slug == null);
     if (positionIndex < noSlugOverlays.length) {
         return noSlugOverlays[positionIndex];
-    }
-    if (noSlugOverlays.length === 0 && positionIndex < overlays.length) {
-        return overlays[positionIndex];
     }
     return undefined;
 }
@@ -591,7 +636,8 @@ function normalizeOverlaySlug(slug: string): string {
 function applyVariantOverlays(
     variants: unknown[],
     overlays: docsYml.VariantOverlay[],
-    parentOverlay: docsYml.TranslationNavigationOverlay
+    parentOverlay: docsYml.TranslationNavigationOverlay,
+    context: TaskContext | undefined
 ): unknown[] {
     const consumedNoSlugIndices = new Set<number>();
     let noSlugCursor = 0;
@@ -633,7 +679,7 @@ function applyVariantOverlays(
         }
 
         if (matchedOverlay == null) {
-            return walkAndApply(variant, parentOverlay);
+            return walkAndApply(variant, parentOverlay, context);
         }
 
         const result: Record<string, unknown> = { ...variantObj };
@@ -664,10 +710,15 @@ function applyVariantOverlays(
                 navigation: matchedOverlay.layout,
                 navbarLinks: undefined
             };
-            result["children"] = applySidebarChildOverlays(children, matchedOverlay.layout, variantScopedOverlay);
+            result["children"] = applySidebarChildOverlays(
+                children,
+                matchedOverlay.layout,
+                variantScopedOverlay,
+                context
+            );
             return result;
         }
 
-        return walkAndApply(result, parentOverlay);
+        return walkAndApply(result, parentOverlay, context);
     });
 }

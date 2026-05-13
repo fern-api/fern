@@ -843,7 +843,7 @@ export async function runAppPreviewServer({
                 let translatedAnnouncement = docsDefinition.config.announcement;
                 let translatedNavbarLinks = docsDefinition.config.navbarLinks;
                 if (localeNavOverlay != null) {
-                    updatedRoot = applyTranslatedNavigationOverlays(updatedRoot, localeNavOverlay);
+                    updatedRoot = applyTranslatedNavigationOverlays(updatedRoot, localeNavOverlay, context);
                     translatedAnnouncement = getTranslatedAnnouncement(localeNavOverlay) ?? translatedAnnouncement;
                     if (localeNavOverlay.navbarLinks != null) {
                         translatedNavbarLinks = localeNavOverlay.navbarLinks;

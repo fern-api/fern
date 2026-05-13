@@ -1,8 +1,28 @@
 import { docsYml } from "@fern-api/configuration";
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { describe, expect, it } from "vitest";
+import { TaskContext } from "@fern-api/task-context";
+import { describe, expect, it, vi } from "vitest";
 
 import { applyTranslatedNavigationOverlays, getTranslatedAnnouncement } from "../applyTranslatedNavigationOverlays.js";
+
+function makeContextWithWarn(): { context: TaskContext; warn: ReturnType<typeof vi.fn> } {
+    const warn = vi.fn();
+    const noop = (): void => undefined;
+    // Minimal stub: only `logger.warn` is exercised by the matcher.
+    const context = {
+        logger: {
+            disable: noop,
+            enable: noop,
+            trace: noop,
+            debug: noop,
+            info: noop,
+            warn,
+            error: noop,
+            log: noop
+        }
+    } as unknown as TaskContext;
+    return { context, warn };
+}
 
 function asRoot(obj: unknown): FernNavigation.V1.RootNode {
     return obj as FernNavigation.V1.RootNode;
@@ -691,6 +711,77 @@ describe("applyTranslatedNavigationOverlays", () => {
         const modelsChildren = models.children as Array<Record<string, unknown>>;
         expect(modelsChildren[0]?.title).toBe("W&B Modèles");
         expect(modelsChildren[1]?.title).toBe("Gérer les secrets");
+    });
+
+    it("does not apply an overlay entry whose slug does not match any sibling tree node", () => {
+        // Stricter slug matching: overlays that specify `slug:` are matched
+        // only by slug. They are NOT silently re-attached positionally when
+        // no sibling tree node has that slug — instead the overlay is ignored
+        // and a warning is emitted so authors can fix drifted overlays.
+        const root = {
+            type: "root",
+            child: {
+                type: "sidebarRoot",
+                children: [
+                    { type: "page", title: "Getting Started", slug: "getting-started" },
+                    { type: "page", title: "Reference", slug: "reference" }
+                ]
+            }
+        };
+        const overlay: docsYml.TranslationNavigationOverlay = {
+            ...emptyOverlay(),
+            navigation: [
+                { type: "page", title: "Mise en route", slug: "getting-started" },
+                // This entry's slug doesn't match any sibling in the tree.
+                // Previously the positional fallback would silently apply it
+                // to whichever tree page sat at position 1 ("reference"). The
+                // stricter matcher leaves "Reference" untranslated and warns.
+                { type: "page", title: "Référence des SDK", slug: "sdk-reference" }
+            ]
+        };
+
+        const { context, warn } = makeContextWithWarn();
+        const result = applyTranslatedNavigationOverlays(asRoot(root), overlay, context) as unknown as Record<
+            string,
+            unknown
+        >;
+
+        const sidebarRoot = result.child as Record<string, unknown>;
+        const pages = sidebarRoot.children as Array<Record<string, unknown>>;
+        expect(pages[0]?.title).toBe("Mise en route");
+        expect(pages[1]?.title).toBe("Reference");
+
+        expect(warn).toHaveBeenCalledTimes(1);
+        const [warning] = warn.mock.calls[0] ?? [];
+        expect(warning).toContain("sdk-reference");
+        expect(warning).toContain("page");
+    });
+
+    it("does not warn when an overlay omits slug and matches positionally", () => {
+        // Overlays without `slug:` are intentionally positional. They should
+        // not trigger the unmatched-slug warning.
+        const root = {
+            type: "root",
+            child: {
+                type: "sidebarRoot",
+                children: [{ type: "page", title: "Getting Started", slug: "getting-started" }]
+            }
+        };
+        const overlay: docsYml.TranslationNavigationOverlay = {
+            ...emptyOverlay(),
+            navigation: [{ type: "page", title: "Mise en route", slug: undefined }]
+        };
+
+        const { context, warn } = makeContextWithWarn();
+        const result = applyTranslatedNavigationOverlays(asRoot(root), overlay, context) as unknown as Record<
+            string,
+            unknown
+        >;
+
+        const sidebarRoot = result.child as Record<string, unknown>;
+        const pages = sidebarRoot.children as Array<Record<string, unknown>>;
+        expect(pages[0]?.title).toBe("Mise en route");
+        expect(warn).not.toHaveBeenCalled();
     });
 });
 

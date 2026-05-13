@@ -4,11 +4,14 @@
     Support translating section and page titles inside variant layouts.
     Translation overlays for `tab` navigation items can now provide a
     per-variant `layout:` whose section/page titles override the resolved
-    navigation tree. Overlay slugs are also matched leniently so that
-    relative slugs (e.g. `smtp`) and absolute slugs (e.g. `/`) line up with
-    the tree's resolved last-segment slug. When a variant overlay sets
-    `title:`, the variant's `variantId` is also updated so downstream
-    renderers that key off the typed variant identifier (such as custom
-    navbar dropdowns built directly from the navigation tree) display the
-    translated label.
+    navigation tree. Overlay slugs are matched leniently against the tree's
+    resolved last-segment slug so that relative (`smtp`) and absolute
+    (`/path/to/smtp`) forms both work. Section/page overlay entries whose
+    `slug:` does not match any sibling tree node are now ignored and reported
+    via a CLI warning instead of being silently re-attached positionally, so
+    drifted overlays surface during `fern check` / `fern generate` instead of
+    producing mistranslated navigation. When a variant overlay sets `title:`,
+    the variant's `variantId` is also updated so downstream renderers that
+    key off the typed variant identifier (such as custom navbar dropdowns
+    built directly from the navigation tree) display the translated label.
   type: fix
