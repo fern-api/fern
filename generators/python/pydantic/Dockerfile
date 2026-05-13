@@ -9,8 +9,9 @@ RUN apt-get update \
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 ENV _TYPER_STANDARD_TRACEBACK=1
 
-# Keep in sync with the poetry-core version in pyproject.toml
-RUN pip3 install poetry==1.8.5
+# Keep in sync with the poetry-core version in pyproject.toml.
+# Clears CVE-2026-34591 (poetry <2.3.3 cleartext credential storage).
+RUN pip3 install poetry==2.4.1
 RUN poetry config virtualenvs.create false
 
 # Copy dependency files first to leverage caching
