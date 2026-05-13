@@ -13,7 +13,12 @@ export enum AsIsFiles {
     RetryDecoratingClient = "Client/RetryDecoratingClient.Template.php",
     HttpClientBuilder = "Client/HttpClientBuilder.Template.php",
     RawClientTest = "Client/RawClientTest.Template.php",
+    StreamTest = "Client/StreamTest.Template.php",
     MockHttpClient = "Client/MockHttpClient.Template.php",
+    Stream = "Client/Stream.Template.php",
+    SseStream = "Client/SseStream.Template.php",
+    JsonStream = "Client/JsonStream.Template.php",
+    TextStream = "Client/TextStream.Template.php",
 
     // Core/Json files.
     JsonApiRequest = "Json/JsonApiRequest.Template.php",

@@ -760,7 +760,50 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     );
                     writer.dedent();
                 },
-                streaming: () => this.context.logger.error("Streaming not supported"),
+                streaming: (streamingResponse) => {
+                    streamingResponse._visit({
+                        sse: (sseChunk) => {
+                            const payloadType = this.context.phpTypeMapper.convert({ reference: sseChunk.payload });
+                            this.writeStreamingReturn({
+                                writer,
+                                streamClassReference: this.context.getSseStreamClassReference(payloadType),
+                                payloadType,
+                                terminator: sseChunk.terminator
+                            });
+                        },
+                        json: (jsonChunk) => {
+                            const payloadType = this.context.phpTypeMapper.convert({ reference: jsonChunk.payload });
+                            this.writeStreamingReturn({
+                                writer,
+                                streamClassReference: this.context.getJsonStreamClassReference(payloadType),
+                                payloadType,
+                                terminator: jsonChunk.terminator
+                            });
+                        },
+                        text: () => {
+                            writer.controlFlow(
+                                "if",
+                                php.codeblock(
+                                    `${STATUS_CODE_VARIABLE_NAME} >= 200 && ${STATUS_CODE_VARIABLE_NAME} < 400`
+                                )
+                            );
+                            writer.write("return ");
+                            writer.writeNodeStatement(
+                                php.instantiateClass({
+                                    classReference: this.context.getTextStreamClassReference(),
+                                    arguments_: [
+                                        {
+                                            name: "response",
+                                            assignment: php.codeblock(RESPONSE_VARIABLE_NAME)
+                                        }
+                                    ]
+                                })
+                            );
+                            writer.endControlFlow();
+                        },
+                        _other: () => undefined
+                    });
+                },
                 text: () => {
                     writer.controlFlow(
                         "if",
@@ -772,6 +815,123 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 _other: () => undefined
             });
         });
+    }
+
+    private writeStreamingReturn({
+        writer,
+        streamClassReference,
+        payloadType,
+        terminator
+    }: {
+        writer: php.Writer;
+        streamClassReference: php.ClassReference;
+        payloadType: php.Type;
+        terminator: string | undefined;
+    }): void {
+        writer.controlFlow(
+            "if",
+            php.codeblock(`${STATUS_CODE_VARIABLE_NAME} >= 200 && ${STATUS_CODE_VARIABLE_NAME} < 400`)
+        );
+        const deserializerVarName = "$data";
+        const deserializerBody = this.buildStreamDeserializerBody({
+            payloadType,
+            variableName: deserializerVarName
+        });
+        const terminatorLiteral = terminator != null ? `'${terminator.replace(/'/g, "\\'")}'` : "null";
+        writer.write("return ");
+        writer.writeNodeStatement(
+            php.instantiateClass({
+                classReference: streamClassReference,
+                arguments_: [
+                    {
+                        name: "response",
+                        assignment: php.codeblock(RESPONSE_VARIABLE_NAME)
+                    },
+                    {
+                        name: "deserializer",
+                        assignment: php.codeblock((w) => {
+                            w.write(`fn(string ${deserializerVarName}) => `);
+                            w.writeNode(deserializerBody);
+                        })
+                    },
+                    {
+                        name: "terminator",
+                        assignment: php.codeblock(terminatorLiteral)
+                    }
+                ]
+            })
+        );
+        writer.endControlFlow();
+    }
+
+    /**
+     * Builds the expression that deserializes a single stream frame's raw string into
+     * the typed payload. Mirrors the dispatch in decodeJsonResponse, but emits a bare
+     * expression (no statement terminator) suitable for an arrow-function body.
+     */
+    private buildStreamDeserializerBody({
+        payloadType,
+        variableName
+    }: {
+        payloadType: php.Type;
+        variableName: string;
+    }): php.CodeBlock {
+        const internalType = payloadType.underlyingType().internalType;
+        const argument: UnnamedArgument[] = [php.codeblock(variableName)];
+        switch (internalType.type) {
+            case "reference":
+                return php.codeblock((writer) => {
+                    writer.writeNode(
+                        php.invokeMethod({
+                            on: internalType.value,
+                            method: "fromJson",
+                            arguments_: argument,
+                            static_: true
+                        })
+                    );
+                });
+            case "int":
+            case "float":
+            case "string":
+            case "bool":
+            case "date":
+            case "dateTime":
+            case "mixed":
+            case "literal":
+                return php.codeblock((writer) => {
+                    writer.writeNode(
+                        php.invokeMethod({
+                            on: this.context.getJsonDecoderClassReference(),
+                            method: `decode${upperFirst(internalType.type)}`,
+                            arguments_: argument,
+                            static_: true
+                        })
+                    );
+                });
+            case "enumString":
+                return php.codeblock((writer) => {
+                    writer.writeNode(
+                        php.invokeMethod({
+                            on: this.context.getJsonDecoderClassReference(),
+                            method: "decodeString",
+                            arguments_: argument,
+                            static_: true
+                        })
+                    );
+                });
+            case "array":
+            case "map":
+            case "union":
+            case "object":
+            case "optional":
+            case "null":
+            case "typeDict":
+                throw GeneratorError.internalError(
+                    `Internal error; '${internalType.type}' type is not a supported streaming payload type`
+                );
+            default:
+                assertNever(internalType);
+        }
     }
 
     private decodeJsonResponse(return_: php.Type | undefined): php.CodeBlock {
