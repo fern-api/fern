@@ -87,6 +87,11 @@ seed/python-sdk/**/output.prof
 # Superpowers
 docs/superpowers/
 
+# Site management
+domains.txt
+domains-*.txt
+!domains-example.txt
+
 # Preview
 **/.preview/
 

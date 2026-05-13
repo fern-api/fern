@@ -1,0 +1,10 @@
+# Example domains file for manual site addition
+# One domain per line, without protocol (http:// or https://)
+# Lines starting with # are treated as comments
+
+# Example domains:
+# docs.example.com
+# api-docs.acme.com
+# developer.mycompany.io
+
+# Add your domains below:

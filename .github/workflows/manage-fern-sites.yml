@@ -1,0 +1,94 @@
+name: Manage Fern Sites
+
+on:
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: "Operation to perform"
+        required: false
+        type: choice
+        default: "all"
+        options:
+          - all
+          - add-vercel
+          - add-database
+          - validate
+          - list
+      domains_file:
+        description: "Path to domains file (for add-file operation)"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  manage-sites:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: |
+          npm install -g tsx
+
+      - name: Determine operation
+        id: operation
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "op=${{ github.event.inputs.operation }}" >> $GITHUB_OUTPUT
+          else
+            echo "op=all" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run site management
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          if [ "${{ steps.operation.outputs.op }}" = "add-file" ] && [ -n "${{ github.event.inputs.domains_file }}" ]; then
+            tsx scripts/manage-sites.ts add-file "${{ github.event.inputs.domains_file }}"
+          else
+            tsx scripts/manage-sites.ts ${{ steps.operation.outputs.op }}
+          fi
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --exit-code sites.csv || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push if changed
+        if: steps.git-check.outputs.changed == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add sites.csv
+          git commit -m "chore(docs): update sites.csv - $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          git push
+
+      - name: Create summary
+        if: always()
+        run: |
+          echo "## Site Management Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Operation**: ${{ steps.operation.outputs.op }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Sites changed**: ${{ steps.git-check.outputs.changed == 'true' && 'Yes' || 'No' }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Current Sites Count" >> $GITHUB_STEP_SUMMARY
+          if [ -f sites.csv ]; then
+            count=$(tail -n +2 sites.csv | grep -v '^$' | wc -l)
+            echo "Total sites: $count" >> $GITHUB_STEP_SUMMARY
+          fi
