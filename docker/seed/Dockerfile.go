@@ -22,16 +22,22 @@ ARG MOBY_VERSION=29.5.0-rc.1
 ARG DOCKER_CLI_VERSION=29.5.0-rc.1
 ARG XNET_VERSION=0.53.0
 ARG OTEL_SDK_VERSION=1.43.0
+ARG IN_TOTO_VERSION=0.11.0
 ENV GOTOOLCHAIN=go1.26.3
 RUN apk add --no-cache git make gcc musl-dev linux-headers libseccomp-dev libseccomp-static bash ca-certificates && \
     mkdir -p /overlay/usr/local/bin
+# Bump in-toto-golang to v0.11.0 (GHSA-pmwq-pjrm-6p5r) and pin the OTLP
+# HTTP exporters to v${OTEL_SDK_VERSION} (CVE-2026-39882).
 RUN git clone --depth 1 --branch v${CONTAINERD_VERSION} https://github.com/containerd/containerd.git /src/containerd && \
     cd /src/containerd && \
     go get golang.org/x/net@v${XNET_VERSION} \
+           github.com/in-toto/in-toto-golang@v${IN_TOTO_VERSION} \
            go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel/trace@v${OTEL_SDK_VERSION} \
-           go.opentelemetry.io/otel/metric@v${OTEL_SDK_VERSION} && \
+           go.opentelemetry.io/otel/metric@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp@v${OTEL_SDK_VERSION} && \
     go mod tidy && \
     go mod vendor && \
     for cmd in containerd ctr containerd-shim-runc-v2; do \
@@ -47,14 +53,15 @@ RUN git clone --depth 1 --branch v${RUNC_VERSION} https://github.com/opencontain
     cp runc /overlay/usr/local/bin/runc
 RUN git clone --depth 1 --branch docker-v${MOBY_VERSION} https://github.com/moby/moby.git /src/moby && \
     cd /src/moby && \
-    # Force the patched golang.org/x/net (HTTP/2 server header smuggling,
-    # CVE-2026-33814) and patched otel/sdk (CVE-2026-39883 PATH hijacking
-    # on BSD/Solaris) before vendoring + building dockerd/docker-proxy.
+    # Force patched x/net (CVE-2026-33814), otel SDK + OTLP HTTP exporters
+    # (CVE-2026-39882, CVE-2026-39883) before vendoring dockerd/docker-proxy.
     go get golang.org/x/net@v${XNET_VERSION} \
            go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel/trace@v${OTEL_SDK_VERSION} \
-           go.opentelemetry.io/otel/metric@v${OTEL_SDK_VERSION} && \
+           go.opentelemetry.io/otel/metric@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp@v${OTEL_SDK_VERSION} && \
     go mod tidy && \
     go mod vendor && \
     CGO_ENABLED=0 go build -mod=vendor \
