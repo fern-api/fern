@@ -16,8 +16,9 @@ var (
 )
 
 type RuleCreateRequest struct {
-	Name             string               `json:"name" url:"-"`
-	ExecutionContext RuleExecutionContext `json:"executionContext" url:"-"`
+	Name string `json:"name" url:"-"`
+	// Execution context for the rule, excluding the prod environment.
+	ExecutionContext RuleCreateRequestExecutionContext `json:"executionContext" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -39,7 +40,7 @@ func (r *RuleCreateRequest) SetName(name string) {
 
 // SetExecutionContext sets the ExecutionContext field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *RuleCreateRequest) SetExecutionContext(executionContext RuleExecutionContext) {
+func (r *RuleCreateRequest) SetExecutionContext(executionContext RuleCreateRequestExecutionContext) {
 	r.ExecutionContext = executionContext
 	r.require(ruleCreateRequestFieldExecutionContext)
 }
@@ -1407,6 +1408,32 @@ func (p *PagingCursors) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", p)
+}
+
+// Execution context for the rule, excluding the prod environment.
+type RuleCreateRequestExecutionContext string
+
+const (
+	RuleCreateRequestExecutionContextProd    RuleCreateRequestExecutionContext = "prod"
+	RuleCreateRequestExecutionContextStaging RuleCreateRequestExecutionContext = "staging"
+	RuleCreateRequestExecutionContextDev     RuleCreateRequestExecutionContext = "dev"
+)
+
+func NewRuleCreateRequestExecutionContextFromString(s string) (RuleCreateRequestExecutionContext, error) {
+	switch s {
+	case "prod":
+		return RuleCreateRequestExecutionContextProd, nil
+	case "staging":
+		return RuleCreateRequestExecutionContextStaging, nil
+	case "dev":
+		return RuleCreateRequestExecutionContextDev, nil
+	}
+	var t RuleCreateRequestExecutionContext
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (r RuleCreateRequestExecutionContext) Ptr() *RuleCreateRequestExecutionContext {
+	return &r
 }
 
 // Execution environment for a rule.
