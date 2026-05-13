@@ -85,6 +85,10 @@ export class SourceResolver {
     }
 
     private resolvePageId(pageId: string): ResolvedReference | undefined {
+        if (!this.isUserAuthoredPage(pageId)) {
+            return undefined;
+        }
+
         if (this.docsConfigDir != null) {
             const filePath = path.join(this.docsConfigDir, pageId);
             if (!existsSync(filePath)) {
@@ -98,5 +102,14 @@ export class SourceResolver {
         }
 
         return { display: pageId };
+    }
+
+    /**
+     * Auto-generated API reference pages (e.g. "tag-plant.md") have no directory
+     * component and don't correspond to user-authored files. Filter them out so
+     * only real source files like "docs/pages/welcome.mdx" are shown.
+     */
+    private isUserAuthoredPage(pageId: string): boolean {
+        return pageId.includes("/");
     }
 }
