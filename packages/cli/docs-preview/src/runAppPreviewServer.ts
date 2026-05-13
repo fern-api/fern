@@ -15,6 +15,7 @@ import {
     AbsoluteFilePath,
     dirname,
     doesPathExist,
+    join,
     listFiles,
     RelativeFilePath,
     relative,
@@ -489,7 +490,8 @@ export async function runAppPreviewServer({
     port,
     bundlePath,
     backendPort,
-    forceDownload
+    forceDownload,
+    cacheDir
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
@@ -499,9 +501,10 @@ export async function runAppPreviewServer({
     bundlePath?: string;
     backendPort: number;
     forceDownload?: boolean;
+    cacheDir?: AbsoluteFilePath;
 }): Promise<void> {
     if (forceDownload) {
-        const appPreviewFolder = getPathToPreviewFolder({ app: true });
+        const appPreviewFolder = getPathToPreviewFolder({ app: true, cacheDir });
         if (await doesPathExist(appPreviewFolder)) {
             context.logger.info("Force download requested. Deleting cached bundle...");
             await rm(appPreviewFolder, { recursive: true });
@@ -524,7 +527,8 @@ export async function runAppPreviewServer({
                 logger: context.logger,
                 preferCached: true,
                 app: true,
-                tryTar: true
+                tryTar: true,
+                cacheDir
             });
         } catch (err) {
             if (err instanceof Error) {
@@ -547,10 +551,11 @@ export async function runAppPreviewServer({
                     logger: context.logger,
                     preferCached: true,
                     app: true,
-                    tryTar: false
+                    tryTar: false,
+                    cacheDir
                 });
             } catch (err) {
-                if (await doesPathExist(getPathToBundleFolder({ app: true }))) {
+                if (await doesPathExist(getPathToBundleFolder({ app: true, cacheDir }))) {
                     context.logger.warn("Falling back to cached bundle...");
                 } else {
                     context.logger.warn("Please reach out to support@buildwithfern.com.");
@@ -560,17 +565,20 @@ export async function runAppPreviewServer({
         }
     }
 
-    const bundleRoot = bundlePath || getPathToBundleFolder({ app: true });
+    const bundleRoot = bundlePath || getPathToBundleFolder({ app: true, cacheDir });
     const serverPath = path.join(bundleRoot, "standalone/packages/fern-docs/bundle/server.js");
 
     const absoluteFilePathToFern = dirname(initialProject.config._absolutePath);
 
     // Initialize the debug logger for metrics collection
     const debugLogger = new DebugLogger();
-    await debugLogger.initialize({
-        debug: (msg) => context.logger.debug(msg),
-        info: (msg) => context.logger.info(msg)
-    });
+    await debugLogger.initialize(
+        {
+            debug: (msg) => context.logger.debug(msg),
+            info: (msg) => context.logger.info(msg)
+        },
+        cacheDir != null ? join(cacheDir, RelativeFilePath.of("logs")) : undefined
+    );
     const debugLogPath = debugLogger.getLogFilePath();
     if (debugLogPath) {
         context.logger.info(chalk.dim(`Debug log: ${debugLogPath}`));
@@ -1219,8 +1227,8 @@ export async function runAppPreviewServer({
     // Attach the watcher event handler
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
-        // Ignore changes to .fern/logs/ directory (contains debug logs)
-        if (targetPath.includes(".fern/logs/") || targetPath.includes(".fern\\logs\\")) {
+        // Ignore changes to log directories (contains debug logs)
+        if (targetPath.includes("/logs/") || targetPath.includes("\\logs\\")) {
             return;
         }
 

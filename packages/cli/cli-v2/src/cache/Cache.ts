@@ -2,6 +2,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import type { Logger } from "@fern-api/logger";
 import os from "os";
 import { FernRcSchemaLoader } from "../config/fern-rc/FernRcSchemaLoader.js";
+import { DocsPreviewCache } from "./docs-preview/index.js";
 import { IrCache } from "./ir/index.js";
 import { LogsCache } from "./logs/index.js";
 
@@ -22,7 +23,11 @@ const CACHE_VERSION = "v1";
  * │   │   │       └── 0a/
  * │   │   │           └── 0a3f9c2e4a7d1b...json
  * │   │   └── v62/
- * │   └── logs/
+ * │   ├── logs/
+ * │   ├── migrations/
+ * │   └── docs-preview/
+ * │       ├── app-preview/     # Next.js docs bundle
+ * │       └── preview/         # Legacy docs bundle
  * └── tmp/                    # Atomic write staging
  * ```
  */
@@ -35,6 +40,8 @@ export declare namespace Cache {
         ir: IrCache.Stats;
         /** Logs statistics */
         logs: LogsCache.Stats;
+        /** Docs preview cache statistics */
+        docsPreview: DocsPreviewCache.Stats;
     }
 
     /** Options for clearing cache entries */
@@ -43,6 +50,8 @@ export declare namespace Cache {
         ir?: boolean;
         /** Clear log files */
         logs?: boolean;
+        /** Clear docs preview bundles */
+        docsPreview?: boolean;
         /** Preview what would be cleared without actually deleting */
         dryRun?: boolean;
     }
@@ -62,18 +71,30 @@ export class Cache {
     public readonly absoluteFilePath: AbsoluteFilePath;
     public readonly ir: IrCache;
     public readonly logs: LogsCache;
+    public readonly docsPreview: DocsPreviewCache;
 
     /** Directory for downloaded generator migration packages. */
     public readonly migrations: { absoluteFilePath: AbsoluteFilePath };
 
+    /**
+     * Resolve the cache root path without creating a full Cache instance.
+     * Useful when only the path is needed (e.g. for telemetry ID storage).
+     */
+    public static resolveRootPath(): AbsoluteFilePath {
+        return Cache.resolveAbsoluteFilePathStatic();
+    }
+
     constructor({ logger }: { logger?: Logger } = {}) {
-        this.absoluteFilePath = this.resolveAbsoluteFilePath();
+        this.absoluteFilePath = Cache.resolveAbsoluteFilePathStatic();
         this.ir = new IrCache({
             absoluteFilePath: join(this.getVersionedPath(), RelativeFilePath.of("ir")),
             tempPath: this.getTempPath(),
             logger
         });
         this.logs = new LogsCache({ absoluteFilePath: join(this.getVersionedPath(), RelativeFilePath.of("logs")) });
+        this.docsPreview = new DocsPreviewCache({
+            absoluteFilePath: join(this.getVersionedPath(), RelativeFilePath.of("docs-preview"))
+        });
         this.migrations = {
             absoluteFilePath: join(this.getVersionedPath(), RelativeFilePath.of("migrations"))
         };
@@ -100,11 +121,13 @@ export class Cache {
     public async getStats(): Promise<Cache.Stats> {
         const irStats = await this.ir.getStats();
         const logsStats = await this.logs.getStats();
+        const docsPreviewStats = await this.docsPreview.getStats();
 
         return {
-            totalSize: irStats.totalSize + logsStats.totalSize,
+            totalSize: irStats.totalSize + logsStats.totalSize + docsPreviewStats.totalSize,
             ir: irStats,
-            logs: logsStats
+            logs: logsStats,
+            docsPreview: docsPreviewStats
         };
     }
 
@@ -117,18 +140,27 @@ export class Cache {
         let deletedCount = 0;
         let freedSize = 0;
 
-        const clearIr = options?.ir ?? options?.logs == null;
+        const hasSpecificFilter = options?.ir != null || options?.logs != null || options?.docsPreview != null;
+
+        const clearIr = options?.ir ?? !hasSpecificFilter;
         if (clearIr) {
             const irResult = await this.ir.clear({ dryRun });
             deletedCount += irResult.deletedCount;
             freedSize += irResult.freedSize;
         }
 
-        const clearLogs = options?.logs ?? options?.ir == null;
+        const clearLogs = options?.logs ?? !hasSpecificFilter;
         if (clearLogs) {
             const logsResult = await this.logs.clear(dryRun);
             deletedCount += logsResult.deletedCount;
             freedSize += logsResult.freedSize;
+        }
+
+        const clearDocsPreview = options?.docsPreview ?? !hasSpecificFilter;
+        if (clearDocsPreview) {
+            const docsPreviewResult = await this.docsPreview.clear(dryRun);
+            deletedCount += docsPreviewResult.deletedCount;
+            freedSize += docsPreviewResult.freedSize;
         }
 
         return { deletedCount, freedSize, dryRun };
@@ -143,15 +175,15 @@ export class Cache {
      *  2. The configured cache path in ~/.fernrc
      *  3. Platform defaults (XDG on macOS/Linux, LOCALAPPDATA on Windows)
      */
-    private resolveAbsoluteFilePath(): AbsoluteFilePath {
+    private static resolveAbsoluteFilePathStatic(): AbsoluteFilePath {
         const envCacheDir = process.env.FERN_CACHE_DIR;
         if (envCacheDir != null && envCacheDir.length > 0) {
-            return AbsoluteFilePath.of(this.expandPath(envCacheDir));
+            return AbsoluteFilePath.of(Cache.expandPath(envCacheDir));
         }
 
         const fernRcCachePath = new FernRcSchemaLoader().loadCachePathSync();
         if (fernRcCachePath != null && fernRcCachePath.length > 0) {
-            return AbsoluteFilePath.of(this.expandPath(fernRcCachePath));
+            return AbsoluteFilePath.of(Cache.expandPath(fernRcCachePath));
         }
 
         const homeDir = AbsoluteFilePath.of(os.homedir());
@@ -178,7 +210,7 @@ export class Cache {
     /**
      * Expand `~` prefix to the user's home directory.
      */
-    private expandPath(path: string): string {
+    private static expandPath(path: string): string {
         if (path.startsWith("~/") || path === "~") {
             return path.replace("~", os.homedir());
         }

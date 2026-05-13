@@ -56,7 +56,8 @@ export class Context {
         logLevel?: LogLevel;
     }): Promise<Context> {
         const ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
-        const telemetry = await TelemetryClient.create({ isTTY: ttyAwareLogger.isTTY });
+        const cacheDir = Cache.resolveRootPath();
+        const telemetry = await TelemetryClient.create({ isTTY: ttyAwareLogger.isTTY, cacheDir });
         return new Context({ stdout, stderr, cwd, logLevel, ttyAwareLogger, telemetry });
     }
 

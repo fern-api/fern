@@ -1,0 +1,5 @@
+- summary: |
+    Move docs preview bundles, debug logs, and telemetry ID to the new XDG-based cache
+    location (`~/.cache/fern/`). These are now discoverable and clearable via `fern cache show`
+    and `fern cache clear --docs-preview`.
+  type: feat

@@ -21,8 +21,14 @@ export class TelemetryClient {
     private readonly accumulatedTags: Tags = {};
     private readonly distinctId: string;
 
-    public static async create({ isTTY }: { isTTY: boolean }): Promise<TelemetryClient> {
-        const distinctId = await TelemetryClient.getDistinctId();
+    public static async create({
+        isTTY,
+        cacheDir
+    }: {
+        isTTY: boolean;
+        cacheDir?: AbsoluteFilePath;
+    }): Promise<TelemetryClient> {
+        const distinctId = await TelemetryClient.getDistinctId(cacheDir);
         return new TelemetryClient({ isTTY, distinctId });
     }
 
@@ -163,8 +169,8 @@ export class TelemetryClient {
         await Promise.all(promises);
     }
 
-    private static async getDistinctId(): Promise<string> {
-        const distinctIdFilepath = TelemetryClient.getDistinctIdFilepath();
+    private static async getDistinctId(cacheDir?: AbsoluteFilePath): Promise<string> {
+        const distinctIdFilepath = TelemetryClient.getDistinctIdFilepath(cacheDir);
         let distinctId: string | null = null;
 
         try {
@@ -193,12 +199,18 @@ export class TelemetryClient {
     }
 
     /**
-     * The file that stores the distinct ID for the user (stored in ~/.fern/id).
+     * The file that stores the distinct ID for the user.
+     *
+     * When a cache directory is provided, the ID file is stored at `<cacheDir>/id`
+     * (e.g. `~/.cache/fern/id`). Otherwise falls back to the legacy `~/.fern/id`.
      *
      * Note that all telemetry is anonymous, but we still use a shared distinct ID
      * to correlate metrics from the same user/machine across multiple CLI invocations.
      */
-    private static getDistinctIdFilepath(): AbsoluteFilePath {
+    private static getDistinctIdFilepath(cacheDir?: AbsoluteFilePath): AbsoluteFilePath {
+        if (cacheDir != null) {
+            return join(cacheDir, RelativeFilePath.of("id"));
+        }
         return join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(".fern"), RelativeFilePath.of("id"));
     }
 
