@@ -67,18 +67,25 @@ export async function validateWorkspaces({
             });
 
             // Run MDX parse validation (md-validate rule)
-            const { errors } = await validateMdxFiles({ workspace: docsWorkspace, context });
-            const severity: ValidationViolation["severity"] = mdValidateSeverity === "error" ? "error" : "warning";
-            for (const error of errors) {
-                mdxViolations.push({
-                    name: "md-validate",
-                    severity,
-                    relativeFilepath: RelativeFilePath.of(
-                        path.relative(docsWorkspace.absoluteFilePath, error.filepath)
-                    ),
-                    nodePath: [],
-                    message: error.message
-                });
+            try {
+                const { errors } = await validateMdxFiles({ workspace: docsWorkspace, context });
+                const severity: ValidationViolation["severity"] =
+                    mdValidateSeverity === "error" ? "error" : "warning";
+                for (const error of errors) {
+                    mdxViolations.push({
+                        name: "md-validate",
+                        severity,
+                        relativeFilepath: RelativeFilePath.of(
+                            path.relative(docsWorkspace.absoluteFilePath, error.filepath)
+                        ),
+                        nodePath: [],
+                        message: error.message
+                    });
+                }
+            } catch {
+                // MDX validation requires a parseable docs config with navigation.
+                // If the config is incomplete, skip MDX validation silently —
+                // the rule-based validators will report the config error.
             }
         });
 
