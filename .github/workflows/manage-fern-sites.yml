@@ -11,12 +11,15 @@ on:
         required: false
         type: choice
         default: "all"
+
         options:
           - all
           - add-vercel
           - add-database
+          - add-file
           - validate
           - list
+
       domains_file:
         description: "Path to domains file (for add-file operation)"
         required: false
