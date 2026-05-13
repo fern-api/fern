@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.23.5
+  changelogEntry:
+    - summary: |
+        Fix SDK generation crashing with `fatal: <sha> is not a valid object`
+        when the prior fern-bot PR was squash-merged and its branch deleted.
+        The stale `fern-generation-base` tag update is now skipped with a
+        warning; the SDK PR still opens.
+      type: fix
+  createdAt: "2026-05-13"
+  irVersion: 66
 - version: 5.23.4
   changelogEntry:
     - summary: |
