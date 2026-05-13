@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern login` now opens the Fern dashboard's `/cli-login` page, which adds
+    email-based enterprise SSO alongside the existing GitHub / Google / Postman
+    options. The dashboard resolves the email to an Auth0 connection and
+    redirects back to Auth0 with the CLI's localhost callback, so the token
+    exchange is unchanged.
+
+    `fern login --email <email>` and `fern login --device-code` continue to go
+    straight to Auth0.
+  type: feat

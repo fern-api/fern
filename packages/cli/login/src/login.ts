@@ -67,7 +67,8 @@ export async function getTokenFromAuth0(
             auth0Domain: AUTH0_DOMAIN,
             auth0ClientId: AUTH0_CLIENT_ID,
             audience: VENUS_AUDIENCE,
-            forceReauth
+            forceReauth,
+            dashboardBaseUrl: DASHBOARD_BASE_URL
         });
     } catch {
         return await doAuth0DeviceAuthorizationFlow({

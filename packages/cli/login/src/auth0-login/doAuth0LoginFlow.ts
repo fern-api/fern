@@ -3,6 +3,7 @@ import axios from "axios";
 import { IncomingMessage, Server } from "http";
 import open from "open";
 import { LOGIN_SUCCESS_PAGE } from "../pages/login-success-page.js";
+import { constructDashboardLoginUrl } from "./constructDashboardLoginUrl.js";
 import { createServer } from "./createServer.js";
 
 /**
@@ -23,7 +24,8 @@ export async function doAuth0LoginFlow({
     auth0ClientId,
     audience,
     forceReauth = false,
-    connection
+    connection,
+    dashboardBaseUrl
 }: {
     auth0Domain: string;
     auth0ClientId: string;
@@ -32,9 +34,26 @@ export async function doAuth0LoginFlow({
     forceReauth?: boolean;
     /** If set, passes the connection parameter to Auth0 to route directly to a specific IdP. */
     connection?: string;
+    /**
+     * If set and `connection` is not, the browser is sent to the dashboard's
+     * `/cli-login` page (instead of Auth0 directly) so the user can pick from
+     * the same set of auth methods the web dashboard offers. The dashboard
+     * then redirects to Auth0 with the appropriate `connection`, which
+     * redirects back to the CLI's local server with a code.
+     */
+    dashboardBaseUrl?: string;
 }): Promise<Auth0TokenResponse> {
     const { origin, server } = await createServer();
-    const { code } = await getCode({ server, auth0Domain, auth0ClientId, origin, audience, forceReauth, connection });
+    const { code } = await getCode({
+        server,
+        auth0Domain,
+        auth0ClientId,
+        origin,
+        audience,
+        forceReauth,
+        connection,
+        dashboardBaseUrl
+    });
     server.close();
     return await getTokenFromCode({ auth0Domain, auth0ClientId, code, origin });
 }
@@ -46,7 +65,8 @@ function getCode({
     origin,
     audience,
     forceReauth,
-    connection
+    connection,
+    dashboardBaseUrl
 }: {
     server: Server;
     auth0Domain: string;
@@ -55,6 +75,7 @@ function getCode({
     audience: string;
     forceReauth: boolean;
     connection?: string;
+    dashboardBaseUrl?: string;
 }) {
     return new Promise<{ code: string }>((resolve) => {
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -70,7 +91,20 @@ function getCode({
             }
         });
 
-        void open(constructAuth0Url({ auth0ClientId, auth0Domain, origin, audience, forceReauth, connection }));
+        // When `connection` is set the CLI already knows which IdP to use
+        // (e.g. `--email <email>` flow), so go straight to Auth0 and skip
+        // the dashboard picker.
+        const useDashboard = dashboardBaseUrl != null && connection == null;
+        const url = useDashboard
+            ? constructDashboardLoginUrl({
+                  dashboardBaseUrl,
+                  auth0ClientId,
+                  redirectUri: origin,
+                  audience,
+                  prompt: forceReauth ? "login" : undefined
+              })
+            : constructAuth0Url({ auth0ClientId, auth0Domain, origin, audience, forceReauth, connection });
+        void open(url);
     });
 }
 
