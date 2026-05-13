@@ -31,10 +31,11 @@ public class RetriesTests
                 HttpClient = _httpClient,
                 MaxRetries = MaxRetries,
                 BaseUrl = "http://localhost",
-                Auth = new global::SeedOauthClientCredentialsMandatoryAuth.Auth.ClientCredentials(
-                    "test",
-                    "test"
-                ),
+                Auth = new global::SeedOauthClientCredentialsMandatoryAuth.Auth.ClientCredentials
+                {
+                    ClientId = "test",
+                    ClientSecret = "test",
+                },
             }
         )
         {

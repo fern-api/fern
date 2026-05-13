@@ -664,24 +664,38 @@ dotnet_diagnostic.IDE0005.severity = error
         // Auth fields are required when isAuthMandatory is false (confusingly named)
         const isOptional = this.context.ir.sdkConfig.isAuthMandatory;
         const typedAuth = this.context.generation.settings.typedAuth;
+        // Under the typed-auth flag, ClientOptions exposes a single required `Auth`
+        // property whose value is a sealed `Auth` subclass instantiated via
+        // object initializer syntax (matching the `required init` properties).
+        // The fully qualified name (with `global::`) is used because the test
+        // project may declare a sibling `Auth` namespace that would otherwise
+        // shadow the SDK `Auth` type (CS0234).
+        const authQualifier = `global::${this.namespaces.publicCore}.Auth`;
         if (!isOptional) {
             for (const scheme of this.context.ir.auth.schemes) {
                 if (scheme.type === "bearer") {
-                    parts.push(`${this.context.case.pascalSafe(scheme.token)} = "test"`);
+                    if (typedAuth) {
+                        parts.push(`Auth = new ${authQualifier}.Bearer { Token = "test" }`);
+                    } else {
+                        parts.push(`${this.context.case.pascalSafe(scheme.token)} = "test"`);
+                    }
                 } else if (scheme.type === "basic") {
-                    parts.push(`${this.context.case.pascalSafe(scheme.username)} = "test"`);
-                    parts.push(`${this.context.case.pascalSafe(scheme.password)} = "test"`);
+                    if (typedAuth) {
+                        parts.push(`Auth = new ${authQualifier}.Basic { Username = "test", Password = "test" }`);
+                    } else {
+                        parts.push(`${this.context.case.pascalSafe(scheme.username)} = "test"`);
+                        parts.push(`${this.context.case.pascalSafe(scheme.password)} = "test"`);
+                    }
                 } else if (scheme.type === "header") {
-                    parts.push(`${this.context.case.pascalSafe(scheme.name)} = "test"`);
+                    if (typedAuth) {
+                        parts.push(`Auth = new ${authQualifier}.ApiKey { Value = "test" }`);
+                    } else {
+                        parts.push(`${this.context.case.pascalSafe(scheme.name)} = "test"`);
+                    }
                 } else if (scheme.type === "oauth") {
                     if (typedAuth) {
-                        // When the typed-auth flag is on, ClientOptions has a single
-                        // required `Auth` property instead of separate ClientId/ClientSecret
-                        // fields. The fully qualified name (with `global::`) is used because the
-                        // test project may declare a sibling `Auth` namespace that would
-                        // otherwise shadow the SDK `Auth` type (CS0234).
                         parts.push(
-                            `Auth = new global::${this.namespaces.publicCore}.Auth.ClientCredentials("test", "test")`
+                            `Auth = new ${authQualifier}.ClientCredentials { ClientId = "test", ClientSecret = "test" }`
                         );
                     } else {
                         parts.push(`ClientId = "test"`);
