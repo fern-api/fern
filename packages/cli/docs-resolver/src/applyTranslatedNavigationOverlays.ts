@@ -26,7 +26,6 @@ export function applyTranslatedNavigationOverlays(
     if (root == null) {
         return undefined;
     }
-
     const result = walkAndApply(root, overlay) as FernNavigation.V1.RootNode;
     return result;
 }
@@ -275,6 +274,9 @@ function applyTabOverlayToNode(
 ): unknown {
     const tabSlug = extractLastSlugSegment(node["slug"] as string | undefined);
 
+    // Shallow-copy so we never mutate the input tree.
+    const out: Record<string, unknown> = { ...node };
+
     // Look up tab display-name override from overlay.tabs.
     // Match precedence: slug-based match → positional fallback (covers
     // skip-slug tabs that collapse into the parent slug and therefore can't
@@ -284,7 +286,7 @@ function applyTabOverlayToNode(
         for (const [tabId, tabOverlay] of Object.entries(overlay.tabs)) {
             const isMatch = tabId === tabSlug || (tabOverlay.slug != null && tabOverlay.slug === tabSlug);
             if (isMatch && tabOverlay.displayName != null) {
-                node["title"] = tabOverlay.displayName;
+                out["title"] = tabOverlay.displayName;
                 appliedTabId = tabId;
                 break;
             }
@@ -293,7 +295,7 @@ function applyTabOverlayToNode(
     if (appliedTabId == null && positionalTabId != null && overlay.tabs != null) {
         const tabOverlayEntry = overlay.tabs[positionalTabId];
         if (tabOverlayEntry?.displayName != null) {
-            node["title"] = tabOverlayEntry.displayName;
+            out["title"] = tabOverlayEntry.displayName;
             appliedTabId = positionalTabId;
         }
     }
@@ -306,7 +308,7 @@ function applyTabOverlayToNode(
         if (overlay.tabs != null && appliedTabId == null) {
             const tabOverlayEntry = overlay.tabs[tabNavOverlay.tabId];
             if (tabOverlayEntry?.displayName != null) {
-                node["title"] = tabOverlayEntry.displayName;
+                out["title"] = tabOverlayEntry.displayName;
             }
         }
 
@@ -326,11 +328,15 @@ function applyTabOverlayToNode(
             navbarLinks: undefined
         };
         if (scopedOverlay.navigation != null) {
-            return walkAndApply(node, scopedOverlay);
+            // walkAndApply iterates over keys of `out` and produces a fully
+            // new tree (children too); the title override we just set on
+            // `out` is preserved because walkAndApply does not touch the
+            // "title" key.
+            return walkAndApply(out, scopedOverlay);
         }
     }
 
-    return walkAndApply(node, overlay);
+    return walkAndApply(out, overlay);
 }
 
 /**
@@ -633,6 +639,12 @@ function applyVariantOverlays(
         const result: Record<string, unknown> = { ...variantObj };
         if (matchedOverlay.title != null) {
             result["title"] = matchedOverlay.title;
+            // Also override variantId so downstream renderers that key off the
+            // typed variant identifier (e.g. custom dropdowns built from the
+            // navigation tree) display the translated label. The original
+            // variantId mirrors the source `title` (see DocsDefinitionResolver
+            // toVariantNode), so it is safe to keep these in sync per locale.
+            result["variantId"] = matchedOverlay.title;
         }
         if (matchedOverlay.subtitle != null) {
             result["subtitle"] = matchedOverlay.subtitle;

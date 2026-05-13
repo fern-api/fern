@@ -578,6 +578,7 @@ describe("applyTranslatedNavigationOverlays", () => {
                                         {
                                             type: "variant",
                                             title: "Home",
+                                            variantId: "Home",
                                             slug: "products",
                                             children: [
                                                 {
@@ -602,6 +603,7 @@ describe("applyTranslatedNavigationOverlays", () => {
                                         {
                                             type: "variant",
                                             title: "W&B Models",
+                                            variantId: "W&B Models",
                                             slug: "products/models",
                                             children: [
                                                 {
@@ -673,6 +675,9 @@ describe("applyTranslatedNavigationOverlays", () => {
 
         const home = variants[0] as Record<string, unknown>;
         expect(home.title).toBe("Accueil");
+        // variantId is also translated so downstream renderers (custom dropdowns,
+        // navigation state) display the translated label rather than the source.
+        expect(home.variantId).toBe("Accueil");
         const homeChildren = home.children as Array<Record<string, unknown>>;
         expect(homeChildren[0]?.title).toBe("Documentation FR");
         const platformSection = homeChildren[1] as Record<string, unknown>;
@@ -682,6 +687,7 @@ describe("applyTranslatedNavigationOverlays", () => {
 
         const models = variants[1] as Record<string, unknown>;
         expect(models.title).toBe("W&B Modèles");
+        expect(models.variantId).toBe("W&B Modèles");
         const modelsChildren = models.children as Array<Record<string, unknown>>;
         expect(modelsChildren[0]?.title).toBe("W&B Modèles");
         expect(modelsChildren[1]?.title).toBe("Gérer les secrets");
