@@ -44,16 +44,10 @@ client = Acme(
 
 client.service.create_big_entity(
     cast_member={
-        "id": "john.doe",
-        "name": "John Doe"
+        "name": "John Doe",
+        "id": "john.doe"
     },
     extended_movie={
-        "cast": [
-            "John Travolta",
-            "Samuel L. Jackson",
-            "Uma Thurman",
-            "Bruce Willis"
-        ],
         "id": "movie-sda231x",
         "title": "Pulp Fiction",
         "from": "Quentin Tarantino",
@@ -65,7 +59,13 @@ client.service.create_big_entity(
             "releaseDate": "2023-12-08",
             "ratings": {"rottenTomatoes": 97, "imdb": 7.6}
         },
-        "revenue": 1000000
+        "revenue": 1000000,
+        "cast": [
+            "John Travolta",
+            "Samuel L. Jackson",
+            "Uma Thurman",
+            "Bruce Willis"
+        ]
     },
     event_info={
         "type": "metadata",
@@ -466,6 +466,21 @@ client.nullable.get_users(
 "
 `;
 
+exports[`snippets (use_typeddict_requests) > path-parameters > 'GET /{tenant_id}/user/{user_id}/speci…' 1`] = `
+"from acme import Acme
+
+client = Acme(
+    tenant_id="my_tenant",
+)
+
+client.user.get_user_specifics(
+    user_id="my_user",
+    version=7,
+    thought="my_thought",
+)
+"
+`;
+
 exports[`snippets (use_typeddict_requests) > read-write-only > 'Body properties' 1`] = `
 "from acme import Acme
 
@@ -638,16 +653,10 @@ client = Acme(
 
 client.service.create_big_entity(
     cast_member=Actor(
-        id="john.doe",
         name="John Doe",
+        id="john.doe",
     ),
     extended_movie=ExtendedMovie(
-        cast=[
-            "John Travolta",
-            "Samuel L. Jackson",
-            "Uma Thurman",
-            "Bruce Willis"
-        ],
         id="movie-sda231x",
         title="Pulp Fiction",
         from="Quentin Tarantino",
@@ -660,6 +669,12 @@ client.service.create_big_entity(
             "ratings": {"rottenTomatoes": 97, "imdb": 7.6}
         },
         revenue=1000000,
+        cast=[
+            "John Travolta",
+            "Samuel L. Jackson",
+            "Uma Thurman",
+            "Bruce Willis"
+        ],
     ),
     event_info=EventInfo_Metadata(
         id="event-12345",
@@ -1057,6 +1072,21 @@ client.nullable.get_users(
         None
     ],
     extra=None,
+)
+"
+`;
+
+exports[`snippets > path-parameters > 'GET /{tenant_id}/user/{user_id}/speci…' 1`] = `
+"from acme import Acme
+
+client = Acme(
+    tenant_id="my_tenant",
+)
+
+client.user.get_user_specifics(
+    user_id="my_user",
+    version=7,
+    thought="my_thought",
 )
 "
 `;

@@ -473,6 +473,24 @@ try await main()
 "
 `;
 
+exports[`snippets (default) > path-parameters > 'GET /{tenant_id}/user/{user_id}/speci…' 1`] = `
+"import Foundation
+import Acme
+
+private func main() async throws {
+    let client = AcmeClient()
+
+    _ = try await client.user.getUserSpecifics(
+        userID: "my_user",
+        version: 7,
+        thought: "my_thought"
+    )
+}
+
+try await main()
+"
+`;
+
 exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
 "import Foundation
 import Acme

@@ -58,17 +58,10 @@ var client = new AcmeClient(
 await client.Service.CreateBigEntityAsync(
     new BigEntity {
         CastMember = new Actor {
-            ID = "john.doe",
-            Name = "John Doe"
+            Name = "John Doe",
+            ID = "john.doe"
         },
         ExtendedMovie = new ExtendedMovie {
-            Cast = new List<string>(){
-                "John Travolta",
-                "Samuel L. Jackson",
-                "Uma Thurman",
-                "Bruce Willis",
-            }
-            ,
             ID = "movie-sda231x",
             Title = "Pulp Fiction",
             From = "Quentin Tarantino",
@@ -86,7 +79,14 @@ await client.Service.CreateBigEntityAsync(
                 ,
             }
             ,
-            Revenue = 1000000L
+            Revenue = 1000000L,
+            Cast = new List<string>(){
+                "John Travolta",
+                "Samuel L. Jackson",
+                "Uma Thurman",
+                "Bruce Willis",
+            }
+
         },
         EventInfo = new EventInfo(
             new Metadata {
@@ -554,6 +554,23 @@ await client.Nullable.GetUsersAsync(
         }
         ,
         Extra = null
+    }
+);
+"
+`;
+
+exports[`snippets (default) > path-parameters > 'GET /{tenant_id}/user/{user_id}/speci…' 1`] = `
+"using Acme;
+using Acme.User;
+
+var client = new AcmeClient();
+
+await client.User.GetUserSpecificsAsync(
+    new GetUserSpecificsRequest {
+        TenantID = "my_tenant",
+        UserID = "my_user",
+        Version = 7,
+        Thought = "my_thought"
     }
 );
 "

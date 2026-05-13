@@ -67,16 +67,10 @@ $client = new AcmeClient(
 $client->service->createBigEntity(
     new BigEntity([
         'castMember' => new Actor([
-            'id' => 'john.doe',
             'name' => 'John Doe',
+            'id' => 'john.doe',
         ]),
         'extendedMovie' => new ExtendedMovie([
-            'cast' => [
-                'John Travolta',
-                'Samuel L. Jackson',
-                'Uma Thurman',
-                'Bruce Willis',
-            ],
             'id' => 'movie-sda231x',
             'title' => 'Pulp Fiction',
             'from' => 'Quentin Tarantino',
@@ -92,6 +86,12 @@ $client->service->createBigEntity(
                 ],
             ],
             'revenue' => 1000000,
+            'cast' => [
+                'John Travolta',
+                'Samuel L. Jackson',
+                'Uma Thurman',
+                'Bruce Willis',
+            ],
         ]),
         'eventInfo' => EventInfo::metadata(new Metadata([
             'id' => 'event-12345',
@@ -559,6 +559,23 @@ $client->nullable->getUsers(
         ],
         'extra' => null,
     ]),
+);
+"
+`;
+
+exports[`snippets (default) > path-parameters > 'GET /{tenant_id}/user/{user_id}/speci…' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+
+$client = new AcmeClient();
+$client->user->getUserSpecifics(
+    'my_tenant',
+    'my_user',
+    7,
+    'my_thought',
 );
 "
 `;
