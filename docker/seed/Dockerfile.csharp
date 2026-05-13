@@ -125,6 +125,21 @@ RUN dotnet tool install -g csharpier --version "1.2.6" && \
     # package contains the netstandard1.x reference assembly (CVE-2018-8292)
     # and is only kept around for graph resolution -- safe to remove
     # post-restore.
-    rm -rf /root/.nuget/packages/system.net.http/4.3.0
+    rm -rf /root/.nuget/packages/system.net.http/4.3.0 && \
+    # WireMock.Net 2.2.0 transitively pulls in JmesPath.Net.Parser 1.1.0,
+    # whose netstandard1.3 build ships a JmePath.Net.Parser.deps.json that
+    # declares "System.Net.Http/4.3.0" (CVE-2018-8292) as a transitive
+    # dependency. The seed image only ever loads the package's
+    # netstandard2.0 / netstandard2.1 builds at runtime, so the
+    # netstandard1.3 lib directory is dead weight that grype still scans.
+    # Sweep the cache for any other deps.json files that drag in the same
+    # vulnerable transitive reference and drop their containing lib/<tfm>/
+    # directory wholesale, so similar findings from future transitive
+    # packages get cleaned up automatically. The packages' newer-TFM lib
+    # directories and .nuspec stay intact, leaving the cache functionally
+    # valid for downstream restores.
+    find /root/.nuget/packages -name '*.deps.json' \
+        -exec grep -l '"System.Net.Http/4.3.0"' {} + 2>/dev/null \
+        | xargs -r dirname | sort -u | xargs -r rm -rf
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
