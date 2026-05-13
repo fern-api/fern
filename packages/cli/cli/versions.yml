@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.23.6
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` hot reload not working for .mdx file changes. The backend
+        now updates the docs definition before notifying the browser to refresh, and
+        the reload handler properly recovers from errors instead of silently blocking
+        all future reloads.
+      type: fix
+  createdAt: "2026-05-13"
+  irVersion: 66
 - version: 5.23.5
   changelogEntry:
     - summary: |
