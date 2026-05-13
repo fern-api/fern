@@ -54,6 +54,7 @@ export async function runRemoteGenerationForGenerator({
     automationMode,
     autoMerge,
     skipIfNoDiff,
+    verify,
     noReplay,
     disableTelemetry,
     loginCommand
@@ -86,6 +87,12 @@ export async function runRemoteGenerationForGenerator({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    /**
+     * Whether the user passed `--verify`. When true, Fiddle runs the generator-cli
+     * pipeline's VerificationStep against the language-specific validator after the
+     * generator emits SDK files. Forwarded to {@link createAndStartJob}. Default: false.
+     */
+    verify?: boolean;
     /**
      * Whether the user passed `--no-replay`. Currently a no-op on the cloud path
      * (Fiddle doesn't honor it yet — FER-10343 out-of-scope), but plumbed through
@@ -332,6 +339,7 @@ export async function runRemoteGenerationForGenerator({
         automationMode,
         autoMerge,
         skipIfNoDiff,
+        verify,
         loginCommand
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);

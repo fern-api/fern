@@ -47,6 +47,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     automationMode,
     autoMerge,
     skipIfNoDiff,
+    verify,
     noReplay,
     disableTelemetry,
     automation,
@@ -85,6 +86,13 @@ export async function runRemoteGenerationForAPIWorkspace({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    /**
+     * `--verify` CLI flag. When true, Fiddle runs the generator-cli pipeline's
+     * VerificationStep against the language-specific validator after the generator
+     * emits SDK files. Forwarded per-generator to {@link runRemoteGenerationForGenerator}.
+     * Default: false.
+     */
+    verify?: boolean;
     /** `--no-replay` CLI flag. Cloud doesn't honor it yet (FER-10343), plumbed for telemetry parity. */
     noReplay?: boolean;
     /** Suppresses replay PostHog event when true. Honors FERN_DISABLE_TELEMETRY. */
@@ -156,6 +164,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                     automationMode,
                     autoMerge,
                     skipIfNoDiff,
+                    verify,
                     noReplay,
                     disableTelemetry,
                     automation,
@@ -212,6 +221,7 @@ async function generateOne({
     automationMode,
     autoMerge,
     skipIfNoDiff,
+    verify,
     noReplay,
     disableTelemetry,
     automation,
@@ -246,6 +256,7 @@ async function generateOne({
     automationMode: boolean | undefined;
     autoMerge: boolean | undefined;
     skipIfNoDiff: boolean | undefined;
+    verify: boolean | undefined;
     noReplay: boolean | undefined;
     disableTelemetry: boolean | undefined;
     automation: AutomationRunOptions | undefined;
@@ -332,6 +343,7 @@ async function generateOne({
             automationMode,
             autoMerge,
             skipIfNoDiff,
+            verify,
             noReplay,
             disableTelemetry,
             loginCommand
