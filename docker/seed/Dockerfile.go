@@ -16,8 +16,14 @@ RUN apk add --no-cache curl && \
 FROM golang:1.26.3-alpine3.23 AS overlay-binaries
 ARG CONTAINERD_VERSION=2.3.0
 ARG RUNC_VERSION=1.3.5
-ARG MOBY_VERSION=29.4.3
-ARG DOCKER_CLI_VERSION=29.4.3
+# Bumped from docker-v29.4.3 (which maps to moby module pseudo-version
+# v2.0.0-20260506155126-56be73107b38) to docker-v29.5.0-rc.1 (== moby module
+# tag v2.0.0-beta.12). v2.0.0-beta.8 is the upstream-fix version for
+# CVE-2026-33997 and CVE-2026-34040 (github.com/moby/moby/v2), so bumping
+# past beta.8 clears both findings from the rebuilt dockerd / docker-proxy
+# binaries we overlay onto docker:29.4.3-dind-alpine3.23.
+ARG MOBY_VERSION=29.5.0-rc.1
+ARG DOCKER_CLI_VERSION=29.5.0-rc.1
 ARG XNET_VERSION=0.53.0
 ARG OTEL_SDK_VERSION=1.43.0
 ENV GOTOOLCHAIN=go1.26.3
