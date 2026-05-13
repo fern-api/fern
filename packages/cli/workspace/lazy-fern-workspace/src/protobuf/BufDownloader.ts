@@ -8,7 +8,7 @@ import path from "path";
 const BUF_VERSION = "v1.50.0";
 const GITHUB_RELEASE_URL_BASE = "https://github.com/bufbuild/buf/releases/download";
 const BINARY_NAME = "buf";
-const DEFAULT_CACHE_DIR_NAME = ".fern";
+const CACHE_DIR_NAME = ".fern";
 const BIN_DIR_NAME = "bin";
 const LOCK_TIMEOUT_MS = 120_000;
 const LOCK_RETRY_INTERVAL_MS = 200;
@@ -63,26 +63,30 @@ function getPlatformInfo(): PlatformInfo {
     };
 }
 
-function getDefaultCacheDir(): AbsoluteFilePath {
+function getCacheDir(): AbsoluteFilePath {
     const homeDir = os.homedir();
-    return AbsoluteFilePath.of(path.join(homeDir, DEFAULT_CACHE_DIR_NAME, BIN_DIR_NAME));
+    return AbsoluteFilePath.of(path.join(homeDir, CACHE_DIR_NAME, BIN_DIR_NAME));
 }
 
-function getVersionedBinaryPath(cacheDir: AbsoluteFilePath): AbsoluteFilePath {
+function getVersionedBinaryPath(): AbsoluteFilePath {
     const { extension } = getPlatformInfo();
+    const cacheDir = getCacheDir();
     return join(cacheDir, RelativeFilePath.of(`${BINARY_NAME}-${BUF_VERSION}${extension}`));
 }
 
-function getCanonicalBinaryPath(cacheDir: AbsoluteFilePath): AbsoluteFilePath {
+function getCanonicalBinaryPath(): AbsoluteFilePath {
     const { extension } = getPlatformInfo();
+    const cacheDir = getCacheDir();
     return join(cacheDir, RelativeFilePath.of(`${BINARY_NAME}${extension}`));
 }
 
-function getVersionMarkerPath(cacheDir: AbsoluteFilePath): AbsoluteFilePath {
+function getVersionMarkerPath(): AbsoluteFilePath {
+    const cacheDir = getCacheDir();
     return join(cacheDir, RelativeFilePath.of(`${BINARY_NAME}.version`));
 }
 
-function getLockDirPath(cacheDir: AbsoluteFilePath): string {
+function getLockDirPath(): string {
+    const cacheDir = getCacheDir();
     return path.join(cacheDir, `${BINARY_NAME}.lock`);
 }
 
@@ -106,8 +110,8 @@ async function fileExists(filePath: AbsoluteFilePath): Promise<boolean> {
  * If the lock cannot be acquired within LOCK_TIMEOUT_MS, force-breaks it
  * (assumes the holder crashed) and retries once.
  */
-async function acquireLock(logger: Logger, cacheDir: AbsoluteFilePath): Promise<() => Promise<void>> {
-    const lockPath = getLockDirPath(cacheDir);
+async function acquireLock(logger: Logger): Promise<() => Promise<void>> {
+    const lockPath = getLockDirPath();
     const deadline = Date.now() + LOCK_TIMEOUT_MS;
 
     while (Date.now() < deadline) {
@@ -176,12 +180,12 @@ function createLockReleaser(lockPath: string, logger: Logger): () => Promise<voi
  */
 export async function resolveBuf(logger: Logger): Promise<AbsoluteFilePath | undefined> {
     try {
-        const resolvedCacheDir = getDefaultCacheDir();
-        await mkdir(resolvedCacheDir, { recursive: true });
+        const cacheDir = getCacheDir();
+        await mkdir(cacheDir, { recursive: true });
 
-        const releaseLock = await acquireLock(logger, resolvedCacheDir);
+        const releaseLock = await acquireLock(logger);
         try {
-            return await resolveUnderLock(logger, resolvedCacheDir);
+            return await resolveUnderLock(logger);
         } finally {
             await releaseLock();
         }
@@ -191,10 +195,10 @@ export async function resolveBuf(logger: Logger): Promise<AbsoluteFilePath | und
     }
 }
 
-async function resolveUnderLock(logger: Logger, cacheDir: AbsoluteFilePath): Promise<AbsoluteFilePath | undefined> {
-    const versionedPath = getVersionedBinaryPath(cacheDir);
-    const canonicalPath = getCanonicalBinaryPath(cacheDir);
-    const versionMarkerPath = getVersionMarkerPath(cacheDir);
+async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | undefined> {
+    const versionedPath = getVersionedBinaryPath();
+    const canonicalPath = getCanonicalBinaryPath();
+    const versionMarkerPath = getVersionMarkerPath();
 
     // Fast path: versioned binary already downloaded
     if (await fileExists(versionedPath)) {
@@ -203,6 +207,7 @@ async function resolveUnderLock(logger: Logger, cacheDir: AbsoluteFilePath): Pro
             logger.info(`Using cached buf ${BUF_VERSION}`);
             return canonicalPath;
         }
+        // Version marker is stale or canonical binary is missing — refresh atomically
         await atomicCopyBinary(versionedPath, canonicalPath);
         await writeFile(versionMarkerPath, BUF_VERSION);
         logger.info(`Updated buf to ${BUF_VERSION}`);
