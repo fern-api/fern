@@ -1,4 +1,4 @@
-import { readFileSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import path from "path";
 
 import type { BrokenLink, LinkCheckResult } from "./LinkCheckClient.js";
@@ -65,10 +65,20 @@ export class SourceResolver {
 
     private resolveLink(link: BrokenLink): ResolvedBrokenLink {
         if (link.sourcePageIds != null && link.sourcePageIds.length > 0) {
-            return {
-                ...link,
-                references: link.sourcePageIds.map((pageId) => this.resolvePageId(pageId, link.url))
-            };
+            const references: ResolvedReference[] = [];
+            for (let i = 0; i < link.sourcePageIds.length; i++) {
+                const pageId = link.sourcePageIds[i];
+                if (pageId == null) {
+                    continue;
+                }
+                const resolved = this.resolvePageId(pageId, link.url);
+                if (resolved != null) {
+                    references.push(resolved);
+                }
+            }
+            if (references.length > 0) {
+                return { ...link, references };
+            }
         }
 
         return {
@@ -77,9 +87,12 @@ export class SourceResolver {
         };
     }
 
-    private resolvePageId(pageId: string, brokenUrl: string): ResolvedReference {
+    private resolvePageId(pageId: string, brokenUrl: string): ResolvedReference | undefined {
         if (this.docsConfigDir != null) {
             const filePath = path.join(this.docsConfigDir, pageId);
+            if (!existsSync(filePath)) {
+                return undefined;
+            }
             const relativeDisplay = path.relative(process.cwd(), filePath);
             const location = this.findLinkInFile(filePath, brokenUrl);
             if (location != null) {
