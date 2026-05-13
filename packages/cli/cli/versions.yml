@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.23.5
+  changelogEntry:
+    - summary: |
+        Fix SDK generation crashing with `fatal: <sha> is not a valid object`
+        when the prior fern-bot PR was squash-merged and its branch deleted.
+        The stale `fern-generation-base` tag update is now skipped with a
+        warning; the SDK PR still opens.
+      type: fix
+  createdAt: "2026-05-13"
+  irVersion: 66
+- version: 5.23.4
+  changelogEntry:
+    - summary: |
+        Fix allOf composition so inline elements with real constraints (e.g. `pattern`, `minLength`) produce a properly merged type instead of being silently dropped. Also refactored the allOf shortcircuit logic to use a metadata allowlist, which is safer against new OpenAPI fields.
+      type: fix
+    - summary: |
+        Fix example generation for allOf compositions to merge base schema fields into property overrides. When an allOf override specifies only `items` without `type: array`, the base schema's type is now correctly inherited, producing properly typed examples instead of null.
+      type: fix
+  createdAt: "2026-05-13"
+  irVersion: 66
 - version: 5.23.3
   changelogEntry:
     - summary: |

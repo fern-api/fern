@@ -102,7 +102,7 @@ client.create_rule(
 <dl>
 <dd>
 
-**execution_context:** `RuleExecutionContext` 
+**execution_context:** `RuleCreateRequestExecutionContext` — Execution context for the rule, excluding the prod environment.
     
 </dd>
 </dl>

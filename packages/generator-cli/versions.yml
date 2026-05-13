@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix `createReplayBranch` crashing with `fatal: <sha> is not a valid object`
+        when the lockfile's `previousGenerationSha` is unreachable (squash-merged
+        and deleted prior PR branch). Tag update is skipped with a warning; the
+        SDK PR still opens.
+      type: fix
+  createdAt: "2026-05-13"
+  version: 0.9.27
+
+- changelogEntry:
+    - summary: |
         Bump @fern-api/replay to 0.15.0.
       type: chore
   createdAt: "2026-05-06"
