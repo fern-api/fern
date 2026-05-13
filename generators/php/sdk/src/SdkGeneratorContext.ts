@@ -623,7 +623,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         if (!this.hasStreaming()) {
             return [];
         }
-        return [AsIsFiles.Stream, AsIsFiles.SseStream, AsIsFiles.JsonStream, AsIsFiles.TextStream];
+        return [AsIsFiles.Stream, AsIsFiles.SseStream, AsIsFiles.SseEvent, AsIsFiles.JsonStream, AsIsFiles.TextStream];
     }
 
     private getCorePagerAsIsFiles(): string[] {

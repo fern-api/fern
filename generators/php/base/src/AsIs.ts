@@ -17,6 +17,7 @@ export enum AsIsFiles {
     MockHttpClient = "Client/MockHttpClient.Template.php",
     Stream = "Client/Stream.Template.php",
     SseStream = "Client/SseStream.Template.php",
+    SseEvent = "Client/SseEvent.Template.php",
     JsonStream = "Client/JsonStream.Template.php",
     TextStream = "Client/TextStream.Template.php",
 

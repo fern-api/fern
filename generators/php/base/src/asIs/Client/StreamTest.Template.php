@@ -4,7 +4,9 @@ namespace <%= namespace%>;
 
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
+use RuntimeException;
 use <%= coreNamespace%>\Client\JsonStream;
+use <%= coreNamespace%>\Client\SseEvent;
 use <%= coreNamespace%>\Client\SseStream;
 use <%= coreNamespace%>\Client\Stream;
 use <%= coreNamespace%>\Client\TextStream;
@@ -76,6 +78,120 @@ class StreamTest extends TestCase
         $this->assertSame([['n' => 1], ['n' => 2]], iterator_to_array($stream, false));
     }
 
+    public function testSseEventsExposesEventIdAndRetryMetadata(): void
+    {
+        $body = "event: chat\nid: msg-1\nretry: 5000\ndata: hi\n\n";
+        $stream = new SseStream(self::response($body), fn (string $d): string => $d, null);
+
+        $events = iterator_to_array($stream->events(), false);
+
+        $this->assertCount(1, $events);
+        $this->assertInstanceOf(SseEvent::class, $events[0]);
+        $this->assertSame('hi', $events[0]->data);
+        $this->assertSame('chat', $events[0]->event);
+        $this->assertSame('msg-1', $events[0]->id);
+        $this->assertSame(5000, $events[0]->retry);
+    }
+
+    public function testSseEventsPersistsLastEventIdAcrossEventsPerSpec(): void
+    {
+        // Per WHATWG SSE: once an `id:` is set it persists across subsequent
+        // events until explicitly overridden.
+        $body = "id: persistent\ndata: a\n\ndata: b\n\nid: replaced\ndata: c\n\n";
+        $stream = new SseStream(self::response($body), fn (string $d): string => $d, null);
+
+        $events = iterator_to_array($stream->events(), false);
+
+        $this->assertSame(['persistent', 'persistent', 'replaced'], array_map(fn (SseEvent $e) => $e->id, $events));
+    }
+
+    public function testSseEventsIgnoresIdContainingNullByte(): void
+    {
+        $body = "id: ok\ndata: first\n\nid: bad\0id\ndata: second\n\n";
+        $stream = new SseStream(self::response($body), fn (string $d): string => $d, null);
+
+        $events = iterator_to_array($stream->events(), false);
+
+        // Second event's malformed id is rejected; previous id persists per spec.
+        $this->assertSame(['ok', 'ok'], array_map(fn (SseEvent $e) => $e->id, $events));
+    }
+
+    public function testSseEventsIgnoresNonIntegerRetry(): void
+    {
+        $body = "retry: not-a-number\ndata: hi\n\n";
+        $stream = new SseStream(self::response($body), fn (string $d): string => $d, null);
+
+        $events = iterator_to_array($stream->events(), false);
+
+        $this->assertNull($events[0]->retry);
+    }
+
+    public function testSseConstructorRejectsNonSseContentType(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessageMatches('/text\/event-stream/');
+
+        new SseStream(
+            self::response('data: x\n\n', contentType: 'application/json'),
+            fn (string $d): string => $d,
+            null,
+        );
+    }
+
+    public function testSseConstructorRejectsNonUtf8Charset(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessageMatches('/charset/i');
+
+        new SseStream(
+            self::response('data: x\n\n', contentType: 'text/event-stream; charset=iso-8859-1'),
+            fn (string $d): string => $d,
+            null,
+        );
+    }
+
+    public function testSseConstructorAcceptsUtf8CharsetParameter(): void
+    {
+        // No exception: UTF-8 charset parameter is the spec-mandated value.
+        $stream = new SseStream(
+            self::response("data: hi\n\n", contentType: 'text/event-stream; charset=UTF-8'),
+            fn (string $d): string => $d,
+            null,
+        );
+
+        $this->assertSame(['hi'], iterator_to_array($stream, false));
+    }
+
+    public function testSseConstructorToleratesMissingContentTypeHeader(): void
+    {
+        // Some streaming servers omit the header; we don't reject — we just
+        // can't validate. (The wire format check is best-effort.)
+        $response = \Http\Discovery\Psr17FactoryDiscovery::findResponseFactory()
+            ->createResponse(200)
+            ->withBody(\Http\Discovery\Psr17FactoryDiscovery::findStreamFactory()->createStream("data: hi\n\n"));
+
+        $stream = new SseStream($response, fn (string $d): string => $d, null);
+
+        $this->assertSame(['hi'], iterator_to_array($stream, false));
+    }
+
+    public function testStreamThrowsWhenLineBufferExceedsMaxSize(): void
+    {
+        // A single unterminated "line" larger than the cap must abort iteration.
+        $bigLine = str_repeat('A', 200) . "\n";
+        $stream = new SseStream(
+            self::response("data: " . $bigLine . "\n"),
+            fn (string $d): string => $d,
+            terminator: null,
+            maxBufferSize: 64,
+        );
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessageMatches('/buffer/i');
+
+        iterator_to_array($stream, false);
+    }
+
     public function testJsonStreamYieldsOnePerLine(): void
     {
         $body = "{\"n\":1}\n{\"n\":2}\n{\"n\":3}\n";
@@ -129,13 +245,17 @@ class StreamTest extends TestCase
     }
 
     /**
-     * Build a PSR-7 ResponseInterface with the given body string, using auto-discovery
-     * so we don't depend on any specific implementation.
+     * Build a PSR-7 ResponseInterface with the given body. The Content-Type
+     * defaults to `text/event-stream` so SSE tests just work; pass an override
+     * for the validation-error cases.
      */
-    private static function response(string $body): ResponseInterface
-    {
+    private static function response(
+        string $body,
+        string $contentType = 'text/event-stream',
+    ): ResponseInterface {
         return \Http\Discovery\Psr17FactoryDiscovery::findResponseFactory()
             ->createResponse(200)
+            ->withHeader('Content-Type', $contentType)
             ->withBody(
                 \Http\Discovery\Psr17FactoryDiscovery::findStreamFactory()
                     ->createStream($body),

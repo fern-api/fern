@@ -7,6 +7,7 @@ use Generator;
 use IteratorAggregate;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
+use RuntimeException;
 
 enum StreamFormat: string
 {
@@ -29,17 +30,23 @@ enum StreamFormat: string
  * When `$terminator` is set, an event whose payload equals the terminator
  * ends iteration cleanly (e.g. `[DONE]` for SSE).
  *
+ * A `$maxBufferSize` cap (default 1 MiB) guards against malformed streams that
+ * never emit a frame boundary: if the line buffer or a single event's data
+ * exceeds the cap, iteration aborts with `RuntimeException`.
+ *
  * @template T
  * @implements IteratorAggregate<int, T>
  */
 class Stream implements IteratorAggregate
 {
+    public const DEFAULT_MAX_BUFFER_SIZE = 1048576;
+
     private const READ_CHUNK_SIZE = 8192;
 
     private StreamInterface $body;
 
     /** @var Closure(string): T */
-    private Closure $deserializer;
+    protected Closure $deserializer;
 
     /**
      * @param ResponseInterface $response The HTTP response to stream from.
@@ -48,18 +55,25 @@ class Stream implements IteratorAggregate
      * @param StreamFormat $format Framing strategy for the stream.
      * @param ?string $terminator Optional sentinel value that ends the stream when matched
      *   against the raw frame payload (e.g. '[DONE]').
+     * @param int $maxBufferSize Maximum size in bytes for the line buffer or a single SSE
+     *   event's accumulated `data` field. Exceeding this throws `RuntimeException` to
+     *   guard against pathological streams. Defaults to 1 MiB.
      */
     public function __construct(
         ResponseInterface $response,
         Closure $deserializer,
         private readonly StreamFormat $format = StreamFormat::Sse,
         private readonly ?string $terminator = null,
+        private readonly int $maxBufferSize = self::DEFAULT_MAX_BUFFER_SIZE,
     ) {
         $this->body = $response->getBody();
         $this->deserializer = $deserializer;
     }
 
     /**
+     * Iteration is one-shot: PSR-7 bodies are forward-only, so re-iterating the
+     * same `Stream` instance yields nothing useful.
+     *
      * @return Generator<int, T>
      */
     public function getIterator(): Generator
@@ -72,35 +86,57 @@ class Stream implements IteratorAggregate
     }
 
     /**
-     * WHATWG-compliant SSE frame parser.
-     *
      * @return Generator<int, T>
      */
     private function iterateSse(): Generator
     {
+        foreach ($this->iterateRawSseEvents() as $raw) {
+            yield ($this->deserializer)($raw['data']);
+        }
+    }
+
+    /**
+     * Iterates the SSE stream yielding raw envelopes with WHATWG metadata fields
+     * intact. Yields plain associative arrays — not `SseEvent` objects — so the
+     * data-only iteration path doesn't pay the allocation cost; `SseStream::events()`
+     * constructs the public `SseEvent<T>` on top.
+     *
+     * Per WHATWG: the `id:` field persists across events within this iteration;
+     * the configured `terminator`, if present, ends iteration when matched against
+     * `data`.
+     *
+     * @internal
+     * @return Generator<int, array{data: string, event: string, id: string, retry: ?int}>
+     */
+    protected function iterateRawSseEvents(): Generator
+    {
         $dataBuffer = '';
+        $eventType = '';
+        $lastEventId = '';
+        $retry = null;
         foreach ($this->readLines() as $line) {
             if ($line === '') {
-                // Blank line dispatches the accumulated event.
                 if ($dataBuffer === '') {
                     continue;
                 }
-                // Strip the single trailing "\n" added by the field append step.
+                // Strip the single trailing "\n" added by the field-append step.
                 $payload = substr($dataBuffer, 0, -1);
+                $this->assertBufferWithinCap(strlen($payload));
                 $dataBuffer = '';
                 if ($this->terminator !== null && $payload === $this->terminator) {
                     return;
                 }
-                yield ($this->deserializer)($payload);
+                yield ['data' => $payload, 'event' => $eventType, 'id' => $lastEventId, 'retry' => $retry];
+                // Per WHATWG: do NOT reset lastEventId between events.
+                $eventType = '';
+                $retry = null;
                 continue;
             }
             if (str_starts_with($line, ':')) {
-                // SSE comment — ignored per spec.
                 continue;
             }
             $colonPos = strpos($line, ':');
             if ($colonPos === false) {
-                // Line is a field name with empty value; only `data` is meaningful for us.
                 if ($line === 'data') {
                     $dataBuffer .= "\n";
                 }
@@ -111,23 +147,38 @@ class Stream implements IteratorAggregate
             if (str_starts_with($value, ' ')) {
                 $value = substr($value, 1);
             }
-            // Only `data` is yielded; `event`/`id`/`retry` are accepted but unused here.
-            if ($field === 'data') {
-                $dataBuffer .= $value . "\n";
+            switch ($field) {
+                case 'data':
+                    $dataBuffer .= $value . "\n";
+                    break;
+                case 'event':
+                    $eventType = $value;
+                    break;
+                case 'id':
+                    // WHATWG: ignore IDs that contain a NULL byte.
+                    if (!str_contains($value, "\0")) {
+                        $lastEventId = $value;
+                    }
+                    break;
+                case 'retry':
+                    // WHATWG: ignore the value if it isn't a base-10 integer.
+                    if ($value !== '' && ctype_digit($value)) {
+                        $retry = (int) $value;
+                    }
+                    break;
             }
         }
         // Stream ended mid-event (no terminating blank line). Dispatch whatever we have.
         if ($dataBuffer !== '') {
             $payload = substr($dataBuffer, 0, -1);
+            $this->assertBufferWithinCap(strlen($payload));
             if ($this->terminator === null || $payload !== $this->terminator) {
-                yield ($this->deserializer)($payload);
+                yield ['data' => $payload, 'event' => $eventType, 'id' => $lastEventId, 'retry' => $retry];
             }
         }
     }
 
     /**
-     * Newline-delimited frames (NDJSON, line-by-line).
-     *
      * @return Generator<int, T>
      */
     private function iterateDelimited(): Generator
@@ -144,8 +195,6 @@ class Stream implements IteratorAggregate
     }
 
     /**
-     * Raw newline-delimited text frames.
-     *
      * @return Generator<int, T>
      */
     private function iterateText(): Generator
@@ -159,6 +208,10 @@ class Stream implements IteratorAggregate
      * Reads the response body and yields complete lines, normalizing CRLF/CR
      * to LF per the WHATWG SSE spec. Trailing partial content (without a
      * terminating newline) is emitted as a final line.
+     *
+     * Throws `RuntimeException` if the accumulated buffer exceeds the configured
+     * cap — that means we've read more than `maxBufferSize` bytes without ever
+     * seeing a line break, which indicates a malformed or hostile stream.
      *
      * @return Generator<int, string>
      */
@@ -180,6 +233,7 @@ class Stream implements IteratorAggregate
             // Normalize line endings on just this chunk: "\r\n" and lone "\r" -> "\n".
             $chunk = str_replace(["\r\n", "\r"], "\n", $chunk);
             $buffer .= $chunk;
+            $this->assertBufferWithinCap(strlen($buffer));
             while (($lfPos = strpos($buffer, "\n")) !== false) {
                 yield substr($buffer, 0, $lfPos);
                 $buffer = substr($buffer, $lfPos + 1);
@@ -187,6 +241,15 @@ class Stream implements IteratorAggregate
         }
         if ($buffer !== '') {
             yield $buffer;
+        }
+    }
+
+    private function assertBufferWithinCap(int $size): void
+    {
+        if ($size > $this->maxBufferSize) {
+            throw new RuntimeException(
+                "Stream buffer exceeded maximum size of {$this->maxBufferSize} bytes",
+            );
         }
     }
 
