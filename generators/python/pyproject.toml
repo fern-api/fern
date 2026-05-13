@@ -16,11 +16,7 @@ fern-fern-generator-cli-sdk = { version = "^0.1.1", source = "fern-prod" }
 fern_fern_ir_v66 = { version = "0.0.7", source = "fern-prod" }
 black = "^26.3.1"
 isort = "^6.0.1"
-# Pinned to ^2.0.0 because the Dockerfile uses `virtualenvs.create false`,
-# which installs dependencies into the same environment as Poetry itself.
-# Poetry 2.4.1 (installed in the Dockerfile) ships poetry-core 2.4.0; keeping
-# this in lockstep avoids the resolver attempting to swap poetry-core under
-# Poetry's feet during `poetry install`.
+# Keep in sync with the Poetry version in the Dockerfile.
 poetry-core = "^2.0.0"
 
 [tool.poetry.group.dev.dependencies]

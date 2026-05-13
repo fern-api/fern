@@ -54,10 +54,6 @@ ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 ENV _TYPER_STANDARD_TRACEBACK=1
 
 # Keep in sync with the poetry-core version in pyproject.toml.
-# Poetry 2.4.1 ships poetry-core 2.4.0; pyproject.toml pins poetry-core ^2.0.0
-# so the in-env install path used by `virtualenvs.create false` stays
-# self-consistent. Clears CVE-2026-34591 (poetry <2.3.3 cleartext credential
-# storage in keyring fallback).
 RUN pip3 install poetry==2.4.1
 RUN poetry config virtualenvs.create false
 
