@@ -41,6 +41,7 @@ interface ConvertedRequestBody {
     requestBody: HttpRequestBody;
     streamRequestBody: HttpRequestBody | undefined;
     examples?: Record<string, OpenAPIV3_1.ExampleObject>;
+    inlinedPropertiesByAudience?: Record<string, Set<string>>;
 }
 
 export abstract class AbstractOperationConverter extends AbstractConverter<
@@ -238,7 +239,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 convertedRequestBodies.push({
                     requestBody: convertedRequestBody.requestBody,
                     streamRequestBody: convertedRequestBody.streamRequestBody,
-                    examples: convertedRequestBody.examples
+                    examples: convertedRequestBody.examples,
+                    inlinedPropertiesByAudience: convertedRequestBody.inlinedPropertiesByAudience
                 });
             }
         }

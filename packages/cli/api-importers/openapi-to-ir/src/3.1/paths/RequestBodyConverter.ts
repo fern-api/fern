@@ -28,6 +28,13 @@ export declare namespace RequestBodyConverter {
     export interface Output extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Output {
         requestBody: HttpRequestBody;
         streamRequestBody: HttpRequestBody | undefined;
+        /**
+         * Audience name → wire names of inline request body properties under that
+         * audience. Only populated for `inlinedRequestBody` outputs; `undefined`
+         * (or absent) means no inline property-level audience info to mark on the
+         * IR filter graph.
+         */
+        inlinedPropertiesByAudience?: Record<string, Set<string>>;
     }
 }
 
@@ -180,7 +187,8 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                 inlinedTypes: this.context.removeSchemaFromInlinedTypes({
                     id: this.schemaId,
                     inlinedTypes: convertedSchema.inlinedTypes
-                })
+                }),
+                inlinedPropertiesByAudience: convertedSchema.schema?.propertiesByAudience
             };
         } else {
             return {

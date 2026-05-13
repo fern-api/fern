@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.41.1
+  changelogEntry:
+    - summary: |
+        Patch Go SDK + Go model generator container CVEs flagged in the AWS ECR /
+        grype scan. Bump the Go base image to `golang:1.26.3-alpine3.23`, refresh
+        `apk upgrade`, and patch npm's bundled `picomatch@4.0.3 -> 4.0.4` and
+        `brace-expansion@5.0.4 -> 5.0.5` via tarball replacement so the published
+        image no longer ships the vulnerable bundled JS dependencies that grype
+        flags. Also drop the `internal/testdata/**` test fixtures and clear the
+        `/go/pkg/mod` + `/root/.cache/go-build` build caches from the runtime
+        image so grype no longer scans them as a source of stale `yaml.v3` and
+        `golang.org/x/net` pseudo-versions that are not actually linked into
+        `/fern-go-sdk`.
+      type: chore
+  createdAt: "2026-05-12"
+  irVersion: 66
 - version: 1.41.0
   changelogEntry:
     - summary: |

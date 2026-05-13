@@ -1,3 +1,31 @@
+# Stage 1: Rebuild oxlint-tsgolint from source under go1.26.3 so the embedded
+# go/stdlib clears the go1.26.2 CVEs (CVE-2026-33811, CVE-2026-33814,
+# CVE-2026-39820, CVE-2026-39836, CVE-2026-42499). The published
+# @oxlint-tsgolint/linux-{x64,arm64} binaries are still compiled with the
+# upstream go1.26.2 toolchain.
+FROM golang:1.26.3-trixie AS tsgolint-rebuild
+ARG TSGOLINT_VERSION=0.22.1
+ENV GOTOOLCHAIN=go1.26.3
+RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN git config --global user.email "build@example.com" && \
+    git config --global user.name "Build" && \
+    git clone --depth 1 --branch v${TSGOLINT_VERSION} \
+        https://github.com/oxc-project/tsgolint.git /src/tsgolint && \
+    cd /src/tsgolint && \
+    # Equivalent of `just init`: init the typescript-go submodule
+    # (NOT recursively — typescript-go's own microsoft/TypeScript
+    # sub-submodule is huge and not needed for tsgolint's build),
+    # apply patches, copy internal/collections so internal/utils can
+    # import it (the file comment explains the duplication).
+    git submodule update --init --depth 1 typescript-go && \
+    cd typescript-go && \
+    git am --3way --no-gpg-sign ../patches/*.patch && \
+    cd .. && \
+    mkdir -p internal/collections && \
+    find ./typescript-go/internal/collections -type f ! -name '*_test.go' -exec cp {} internal/collections/ \; && \
+    CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o /out/tsgolint ./cmd/tsgolint && \
+    ls -la /out/tsgolint
+
 FROM node:24.15-trixie-slim
 
 # Apply latest Debian security updates so that grype-tracked OS package
@@ -52,6 +80,25 @@ RUN pnpm add -g typescript@~5.9.3 \
   webpack@^5.105.4 \
   msw@2.12.14 \
   vitest@^4.1.1
+
+# Replace the prebuilt @oxlint-tsgolint/linux-* binary with the locally
+# rebuilt one (go1.26.3). pnpm installs the platform-specific binary at
+# {pnpm-global-store}/.pnpm/@oxlint-tsgolint+linux-{arch}@.../node_modules/@oxlint-tsgolint/linux-{arch}/tsgolint.
+COPY --from=tsgolint-rebuild /out/tsgolint /tmp/tsgolint-rebuilt
+RUN chmod +x /tmp/tsgolint-rebuilt && \
+    set -eux; \
+    found=0; \
+    for f in $(find / -type f -name tsgolint -path '*@oxlint-tsgolint*' 2>/dev/null); do \
+        cp /tmp/tsgolint-rebuilt "$f"; \
+        chmod +x "$f"; \
+        found=1; \
+        echo "Replaced tsgolint binary at $f"; \
+    done; \
+    if [ "$found" = "0" ]; then \
+        echo "::error::Could not find any tsgolint binary to replace"; \
+        exit 1; \
+    fi; \
+    rm /tmp/tsgolint-rebuilt
 
 COPY generators/typescript/sdk/cli/dist/ /
 

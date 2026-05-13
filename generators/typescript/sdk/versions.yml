@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.70.6
+  changelogEntry:
+    - summary: |
+        Patch TypeScript SDK generator container CVEs flagged in the AWS ECR /
+        grype scan. Rebuild the embedded `oxlint-tsgolint@0.22.1` Go binary from
+        source under `GOTOOLCHAIN=go1.26.3` so the published image no longer
+        ships the upstream go1.26.2 binary that grype flags for CVE-2026-33811,
+        CVE-2026-33814, CVE-2026-39820, CVE-2026-39836, and CVE-2026-42499.
+      type: chore
+  createdAt: "2026-05-12"
+  irVersion: 66
 - version: 3.70.5
   changelogEntry:
     - summary: |
