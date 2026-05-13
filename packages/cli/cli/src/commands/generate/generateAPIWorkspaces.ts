@@ -1,4 +1,4 @@
-import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
+import { createOrganizationIfDoesNotExist, FernToken, getToken } from "@fern-api/auth";
 import { ContainerRunner, Values } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
@@ -100,6 +100,10 @@ export async function generateAPIWorkspaces({
             });
         }
         token = currentToken;
+    } else {
+        // Local generation: non-interactively pick up FERN_TOKEN or a saved login token.
+        // Auth is optional for local generation, so leave token undefined if neither is set.
+        token = (await getToken()) ?? undefined;
     }
 
     await confirmOutputDirectoriesForEligibleGenerators({

@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Resolve the Fern token non-interactively (via `FERN_TOKEN` or a saved login token)
+    when running `fern generate --local`, so Venus requests are authenticated. Auth
+    remains optional for local generation, so the command does not hard-fail if no
+    token is available.
+  type: fix
