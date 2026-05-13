@@ -4730,6 +4730,9 @@ importers:
 
   packages/cli/cli-v2:
     dependencies:
+      cli-progress:
+        specifier: 'catalog:'
+        version: 3.12.0
       dotenv:
         specifier: ^16.0.0
         version: 16.6.1
@@ -4863,6 +4866,9 @@ importers:
       '@sentry/node':
         specifier: ^10.45.0
         version: 10.49.0
+      '@types/cli-progress':
+        specifier: 'catalog:'
+        version: 3.11.6
       '@types/inquirer':
         specifier: 'catalog:'
         version: 9.0.9
