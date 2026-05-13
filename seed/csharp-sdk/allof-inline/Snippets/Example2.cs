@@ -12,7 +12,7 @@ public partial class Examples
         await client.CreateRuleAsync(
             new RuleCreateRequest {
                 Name = "name",
-                ExecutionContext = RuleExecutionContext.Prod
+                ExecutionContext = RuleCreateRequestExecutionContext.Prod
             }
         );
     }
