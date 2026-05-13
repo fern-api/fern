@@ -59,6 +59,8 @@ export class LinkCheckClient {
         let totalPages = 0;
         let totalLinks = 0;
         let workingLinks = 0;
+        let pagesScrapedSoFar = 0;
+        let linksCheckedSoFar = 0;
         let serverError: string | undefined;
         let sawComplete = false;
 
@@ -123,6 +125,7 @@ export class LinkCheckClient {
                     case "page_scraped": {
                         if (isPageScrapedData(event.data)) {
                             totalPages = event.data.totalPages;
+                            pagesScrapedSoFar = event.data.pageIndex + 1;
                             callbacks.onPageScraped?.(event.data);
                         }
                         break;
@@ -136,6 +139,7 @@ export class LinkCheckClient {
                     case "link_check_progress": {
                         if (isLinkCheckProgressData(event.data)) {
                             totalLinks = event.data.totalLinks;
+                            linksCheckedSoFar = event.data.linksChecked;
                             callbacks.onLinkChecked?.(event.data);
                         }
                         break;
@@ -182,15 +186,13 @@ export class LinkCheckClient {
         }
 
         if (!sawComplete) {
-            const phase = totalLinks > 0 ? "checking links" : totalPages > 0 ? "scraping pages" : "connecting";
-            const pagesScraped = totalPages;
-            const linksChecked = brokenLinks.length + blockedLinks.length;
+            const phase = linksCheckedSoFar > 0 ? "checking links" : pagesScrapedSoFar > 0 ? "scraping pages" : "connecting";
 
             callbacks.onStreamInterrupted?.({
                 phase,
-                pagesScraped,
+                pagesScraped: pagesScrapedSoFar,
                 totalPages,
-                linksChecked,
+                linksChecked: linksCheckedSoFar,
                 totalLinks
             });
 
@@ -208,7 +210,7 @@ export class LinkCheckClient {
             const detail =
                 phase === "connecting"
                     ? "The server closed the connection before sending any data. This may indicate a timeout or network issue."
-                    : `The connection was lost while ${phase} (${pagesScraped} pages scraped, ${linksChecked}/${totalLinks} links checked). This is usually caused by a server timeout.`;
+                    : `The connection was lost while ${phase} (${pagesScrapedSoFar} pages scraped, ${linksCheckedSoFar}/${totalLinks} links checked). This is usually caused by a server timeout.`;
             throw new LinkCheckError(0, detail);
         }
 

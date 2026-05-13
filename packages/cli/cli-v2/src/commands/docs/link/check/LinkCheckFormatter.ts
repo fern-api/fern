@@ -59,7 +59,7 @@ export class LinkCheckFormatter {
     }
 
     private formatCsv(result: ResolvedLinkCheckResult): string {
-        const rows: string[] = ["type,url,statusCode,isInternal,localFile,error"];
+        const rows: string[] = ["type,url,statusCode,isInternal,source,error"];
 
         for (const link of result.brokenLinks) {
             this.appendCsvRows(rows, "broken", link);
@@ -93,7 +93,7 @@ export class LinkCheckFormatter {
                     this.escapeCsv(link.url),
                     String(link.statusCode ?? ""),
                     link.isInternal ? "internal" : "external",
-                    this.escapeCsv(ref.filePath ?? ref.display),
+                    this.escapeCsv(ref.filePath ?? this.stripBasePath(ref.slug)),
                     this.escapeCsv(link.error ?? "")
                 ].join(",")
             );
@@ -183,37 +183,37 @@ export class LinkCheckFormatter {
 
     private formatReference(ref: ResolvedReference): string {
         if (ref.filePath != null) {
-            return ref.display;
+            return ref.filePath;
         }
-        return this.toRelativePath(ref.display);
+        return this.stripBasePath(ref.slug);
     }
 
-    private formatJsonReference(ref: ResolvedReference): Record<string, unknown> {
-        return {
-            display: this.formatReference(ref),
-            ...(ref.filePath != null ? { localFile: ref.filePath } : {})
-        };
+    private formatJsonReference(ref: ResolvedReference): Record<string, string> {
+        if (ref.filePath != null) {
+            return { filePath: ref.filePath };
+        }
+        return { slug: this.stripBasePath(ref.slug) };
     }
 
     private toRelativePath(url: string): string {
         try {
             const parsed = new URL(url);
-            let path = parsed.pathname + (parsed.search || "") + (parsed.hash || "");
-
-            // Strip base path if present (e.g., "/docs/quickstart" -> "/quickstart" when basePath is "/docs")
-            if (this.basePath && path.startsWith(this.basePath)) {
-                path = path.substring(this.basePath.length);
-                // Ensure we always have a leading slash
-                if (!path.startsWith("/")) {
-                    path = "/" + path;
-                }
-            }
-
-            return path;
+            const path = parsed.pathname + (parsed.search || "") + (parsed.hash || "");
+            return this.stripBasePath(path);
         } catch {
-            // If URL parsing fails, return as-is
-            return url;
+            return this.stripBasePath(url);
         }
+    }
+
+    private stripBasePath(pathname: string): string {
+        if (this.basePath && pathname.startsWith(this.basePath)) {
+            let stripped = pathname.substring(this.basePath.length);
+            if (!stripped.startsWith("/")) {
+                stripped = "/" + stripped;
+            }
+            return stripped;
+        }
+        return pathname;
     }
 
     private formatDuration(ms: number): string {

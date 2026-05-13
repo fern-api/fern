@@ -5,12 +5,12 @@ import type { BrokenLink, LinkCheckResult } from "./LinkCheckClient.js";
 
 /**
  * A resolved source reference pointing to a local file path,
- * or falling back to a source page URL.
+ * or falling back to a URL slug for auto-generated pages.
  */
 export interface ResolvedReference {
-    /** Display string: relative file path or source page URL */
-    display: string;
-    /** Relative file path, if resolved locally */
+    /** URL slug (e.g. "/api-reference/users") for auto-generated pages, or relative file path */
+    slug: string;
+    /** Relative file path when resolved locally */
     filePath?: string;
 }
 
@@ -80,28 +80,27 @@ export class SourceResolver {
 
         return {
             ...link,
-            references: link.sourcePages.map((url) => ({ display: url }))
+            references: link.sourcePages.map((url) => ({ slug: url }))
         };
     }
 
     private resolvePageId(pageId: string, sourcePageUrl: string | undefined): ResolvedReference | undefined {
+        if (this.docsConfigDir != null) {
+            const filePath = path.join(this.docsConfigDir, pageId);
+            if (existsSync(filePath)) {
+                const relativePath = path.relative(process.cwd(), filePath);
+                return {
+                    slug: relativePath,
+                    filePath: relativePath
+                };
+            }
+        }
+
         if (!this.isUserAuthoredPage(pageId)) {
             return this.fallbackToSlug(sourcePageUrl);
         }
 
-        if (this.docsConfigDir != null) {
-            const filePath = path.join(this.docsConfigDir, pageId);
-            if (!existsSync(filePath)) {
-                return undefined;
-            }
-            const relativeDisplay = path.relative(process.cwd(), filePath);
-            return {
-                display: relativeDisplay,
-                filePath: relativeDisplay
-            };
-        }
-
-        return { display: pageId };
+        return { slug: pageId };
     }
 
     /**
@@ -114,9 +113,9 @@ export class SourceResolver {
         }
         try {
             const parsed = new URL(sourcePageUrl);
-            return { display: parsed.pathname };
+            return { slug: parsed.pathname };
         } catch {
-            return { display: sourcePageUrl };
+            return { slug: sourcePageUrl };
         }
     }
 
