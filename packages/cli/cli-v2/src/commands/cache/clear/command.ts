@@ -9,6 +9,7 @@ export declare namespace ClearCommand {
         all?: boolean;
         ir?: boolean;
         logs?: boolean;
+        versions?: boolean;
         "dry-run"?: boolean;
     }
 }
@@ -19,11 +20,14 @@ export class ClearCommand {
 
         const dryRun = args["dry-run"] ?? false;
 
-        // If --all is specified or neither --ir nor --logs is specified, clear everything.
-        const clearAll = args.all || (!args.ir && !args.logs);
+        // Default (no flags) clears `ir` and `logs` but never `versions`.
+        // --all is opt-in for the destructive everything-including-installed-CLIs path.
+        const anyExplicit = args.ir === true || args.logs === true || args.versions === true;
+        const clearAll = args.all === true;
         const clearOptions = {
-            ir: clearAll || args.ir,
-            logs: clearAll || args.logs,
+            ir: clearAll || (anyExplicit ? args.ir === true : true),
+            logs: clearAll || (anyExplicit ? args.logs === true : true),
+            versions: clearAll || (anyExplicit ? args.versions === true : false),
             dryRun
         };
 
@@ -59,7 +63,7 @@ export function addClearCommand(cli: Argv<GlobalArgs>): void {
             yargs
                 .option("all", {
                     type: "boolean",
-                    description: "Clear all cache entries (default behavior)",
+                    description: "Clear all cache entries including installed CLI versions",
                     default: false
                 })
                 .option("ir", {
@@ -70,6 +74,11 @@ export function addClearCommand(cli: Argv<GlobalArgs>): void {
                 .option("logs", {
                     type: "boolean",
                     description: "Clear only log files",
+                    default: false
+                })
+                .option("versions", {
+                    type: "boolean",
+                    description: "Clear only installed CLI versions from the versions cache",
                     default: false
                 })
                 .option("dry-run", {

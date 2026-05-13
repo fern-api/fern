@@ -4,6 +4,7 @@ import os from "os";
 import { FernRcSchemaLoader } from "../config/fern-rc/FernRcSchemaLoader.js";
 import { IrCache } from "./ir/index.js";
 import { LogsCache } from "./logs/index.js";
+import { VersionsCache } from "./versions/index.js";
 
 const CACHE_VERSION = "v1";
 
@@ -22,7 +23,12 @@ const CACHE_VERSION = "v1";
  * │   │   │       └── 0a/
  * │   │   │           └── 0a3f9c2e4a7d1b...json
  * │   │   └── v62/
- * │   └── logs/
+ * │   ├── logs/
+ * │   └── versions/            # CLI binaries installed via `fern update`
+ * │       ├── 1.2.3/
+ * │       │   └── fern
+ * │       └── 1.2.4/
+ * │           └── fern
  * └── tmp/                    # Atomic write staging
  * ```
  */
@@ -35,6 +41,8 @@ export declare namespace Cache {
         ir: IrCache.Stats;
         /** Logs statistics */
         logs: LogsCache.Stats;
+        /** Versions cache statistics */
+        versions: VersionsCache.Stats;
     }
 
     /** Options for clearing cache entries */
@@ -43,6 +51,11 @@ export declare namespace Cache {
         ir?: boolean;
         /** Clear log files */
         logs?: boolean;
+        /**
+         * Clear installed CLI binaries from the versions cache. Opt-in only;
+         * `clear()` will never touch versions unless this is explicitly true.
+         */
+        versions?: boolean;
         /** Preview what would be cleared without actually deleting */
         dryRun?: boolean;
     }
@@ -62,6 +75,7 @@ export class Cache {
     public readonly absoluteFilePath: AbsoluteFilePath;
     public readonly ir: IrCache;
     public readonly logs: LogsCache;
+    public readonly versions: VersionsCache;
 
     /** Directory for downloaded generator migration packages. */
     public readonly migrations: { absoluteFilePath: AbsoluteFilePath };
@@ -74,6 +88,9 @@ export class Cache {
             logger
         });
         this.logs = new LogsCache({ absoluteFilePath: join(this.getVersionedPath(), RelativeFilePath.of("logs")) });
+        this.versions = new VersionsCache({
+            absoluteFilePath: join(this.getVersionedPath(), RelativeFilePath.of("versions"))
+        });
         this.migrations = {
             absoluteFilePath: join(this.getVersionedPath(), RelativeFilePath.of("migrations"))
         };
@@ -100,16 +117,22 @@ export class Cache {
     public async getStats(): Promise<Cache.Stats> {
         const irStats = await this.ir.getStats();
         const logsStats = await this.logs.getStats();
+        const versionsStats = await this.versions.getStats();
 
         return {
-            totalSize: irStats.totalSize + logsStats.totalSize,
+            totalSize: irStats.totalSize + logsStats.totalSize + versionsStats.totalSize,
             ir: irStats,
-            logs: logsStats
+            logs: logsStats,
+            versions: versionsStats
         };
     }
 
     /**
-     * Clear cache entries. If no specific subsystem is specified, clears everything.
+     * Clear cache entries.
+     *
+     * - When neither `ir`, `logs`, nor `versions` is set, clears `ir` and `logs`
+     *   but NOT `versions` (binaries installed via `fern update` must be opted in).
+     * - When any subset is specified, only those categories are cleared.
      */
     public async clear(options?: Cache.ClearOptions): Promise<Cache.ClearResult> {
         const dryRun = options?.dryRun ?? false;
@@ -117,18 +140,27 @@ export class Cache {
         let deletedCount = 0;
         let freedSize = 0;
 
-        const clearIr = options?.ir ?? options?.logs == null;
+        const noneSpecified = options?.ir == null && options?.logs == null && options?.versions == null;
+
+        const clearIr = options?.ir ?? noneSpecified;
         if (clearIr) {
             const irResult = await this.ir.clear({ dryRun });
             deletedCount += irResult.deletedCount;
             freedSize += irResult.freedSize;
         }
 
-        const clearLogs = options?.logs ?? options?.ir == null;
+        const clearLogs = options?.logs ?? noneSpecified;
         if (clearLogs) {
             const logsResult = await this.logs.clear(dryRun);
             deletedCount += logsResult.deletedCount;
             freedSize += logsResult.freedSize;
+        }
+
+        const clearVersions = options?.versions ?? false;
+        if (clearVersions) {
+            const versionsResult = await this.versions.clear(dryRun);
+            deletedCount += versionsResult.deletedCount;
+            freedSize += versionsResult.freedSize;
         }
 
         return { deletedCount, freedSize, dryRun };
