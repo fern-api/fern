@@ -9,7 +9,7 @@
         and the pip install error message contained a hardcoded literal "package"
         instead of the actual package name.
       type: fix
-  createdAt: "2026-05-11"
+  createdAt: "2026-05-13"
   irVersion: 66
 - version: 5.12.6
   changelogEntry:
