@@ -633,4 +633,10 @@ export interface VariantOverlay {
     title: string | undefined;
     subtitle: string | undefined;
     slug: string | undefined;
+    /**
+     * Per-variant navigation overlays. When a tab declares variants, each variant
+     * has its own layout in the source navigation; this field mirrors that shape
+     * so translations can override section and page titles inside each variant.
+     */
+    layout: NavigationItemOverlay[] | undefined;
 }

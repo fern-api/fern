@@ -2500,7 +2500,8 @@ function parseVariantOverlays(variants: unknown[]): docsYml.VariantOverlay[] {
         result.push({
             title: typeof obj.title === "string" ? obj.title : undefined,
             subtitle: typeof obj.subtitle === "string" ? obj.subtitle : undefined,
-            slug: typeof obj.slug === "string" ? obj.slug : undefined
+            slug: typeof obj.slug === "string" ? obj.slug : undefined,
+            layout: Array.isArray(obj.layout) ? parseNavigationItemOverlays(obj.layout) : undefined
         });
     }
     return result;

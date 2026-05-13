@@ -13,7 +13,11 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
  * - Products: matched positionally against the overlay's products array
  * - Versions: matched positionally against the overlay's versions array
  * - Tabs: matched by looking up the tab slug in the overlay's `tabs` map
- * - Sections/Pages: matched positionally within the overlay's navigation items
+ * - Variants: matched by variant slug first, then positionally among
+ *   overlays without an explicit slug; the matched overlay's `layout:`
+ *   becomes the scoped navigation context for the variant's children
+ * - Sections/Pages: matched by slug first, then positionally within the
+ *   currently scoped overlay's navigation items
  */
 export function applyTranslatedNavigationOverlays(
     root: FernNavigation.V1.RootNode | undefined,
@@ -131,11 +135,19 @@ function applyChildOverlays(
             if (childObj["type"] === "tab") {
                 const positionalTabId = orderedTabIds[tabIndex];
                 tabIndex++;
-                const walked = walkAndApply(child, overlay) as Record<string, unknown>;
-                return applyTabOverlayToNode(walked, overlay, positionalTabId);
+                return applyTabOverlayToNode(childObj, overlay, positionalTabId);
             }
             return walkAndApply(child, overlay);
         });
+    }
+
+    // Varianted children → match each variant with overlay.variants, then
+    // recurse with the per-variant layout scoped as the navigation overlay.
+    if (parentType === "varianted") {
+        const variantOverlays = collectVariantOverlaysFromTabLayout(overlay);
+        if (variantOverlays != null && variantOverlays.length > 0) {
+            return applyVariantOverlays(children, variantOverlays, overlay);
+        }
     }
 
     // SidebarRoot children → match sections/pages with overlay.navigation
@@ -298,32 +310,47 @@ function applyTabOverlayToNode(
             }
         }
 
-        // Handle tab variants if present
-        if (tabNavOverlay.variants != null && tabNavOverlay.variants.length > 0) {
-            const tabChild = node["child"] as Record<string, unknown> | undefined;
-            if (tabChild != null && tabChild["type"] === "variants") {
-                const variantsChildren = tabChild["children"] as unknown[] | undefined;
-                if (variantsChildren != null) {
-                    tabChild["children"] = applyVariantOverlays(variantsChildren, tabNavOverlay.variants);
-                }
-            }
-        }
-
-        // Create a scoped overlay for this tab's children
-        if (tabNavOverlay.layout != null) {
-            const scopedOverlay: docsYml.TranslationNavigationOverlay = {
-                tabs: undefined,
-                products: undefined,
-                versions: undefined,
-                announcement: undefined,
-                navigation: tabNavOverlay.layout,
-                navbarLinks: undefined
-            };
+        // Build a scoped overlay carrying both this tab's flat layout (for
+        // non-variant tabs) and its variants (for variant tabs). Variants
+        // are discovered downstream via the `varianted` parent-type branch.
+        const scopedOverlay: docsYml.TranslationNavigationOverlay = {
+            tabs: undefined,
+            products: undefined,
+            versions: undefined,
+            announcement: undefined,
+            navigation:
+                tabNavOverlay.layout ??
+                (tabNavOverlay.variants != null && tabNavOverlay.variants.length > 0
+                    ? [{ type: "tab", tabId: tabNavOverlay.tabId, layout: undefined, variants: tabNavOverlay.variants }]
+                    : undefined),
+            navbarLinks: undefined
+        };
+        if (scopedOverlay.navigation != null) {
             return walkAndApply(node, scopedOverlay);
         }
     }
 
     return walkAndApply(node, overlay);
+}
+
+/**
+ * Collects the variant overlays for the current scoped overlay. Inside a
+ * tab's scoped overlay we surface variants via a synthetic Tab navigation
+ * entry (see `applyTabOverlayToNode`); this helper unwraps that entry so
+ * the `varianted` traversal can match variants positionally / by slug.
+ */
+function collectVariantOverlaysFromTabLayout(
+    overlay: docsYml.TranslationNavigationOverlay
+): docsYml.VariantOverlay[] | undefined {
+    if (overlay.navigation == null) {
+        return undefined;
+    }
+    for (const item of overlay.navigation) {
+        if (item.type === "tab" && item.variants != null && item.variants.length > 0) {
+            return item.variants;
+        }
+    }
+    return undefined;
 }
 
 function findTabNavOverlay(
@@ -471,16 +498,22 @@ function matchSectionOverlay(
 
     // First, try to match by slug
     for (const o of overlays) {
-        if (o.slug != null && o.slug === sectionSlug) {
+        if (o.slug != null && normalizeOverlaySlug(o.slug) === sectionSlug) {
             return o;
         }
     }
 
-    // Positional fallback: only use overlays that don't have a slug defined,
-    // to avoid incorrectly applying a slug-targeted overlay to the wrong sibling.
+    // Positional fallback: prefer overlays without a slug (those are meant to
+    // match by position) and fall back to all overlays positionally so that
+    // overlay files mirroring the source navigation structure still resolve
+    // when slugs don't line up exactly (e.g. tree slug `home` vs. overlay
+    // slug `/`).
     const noSlugOverlays = overlays.filter((o) => o.slug == null);
     if (positionIndex < noSlugOverlays.length) {
         return noSlugOverlays[positionIndex];
+    }
+    if (noSlugOverlays.length === 0 && positionIndex < overlays.length) {
+        return overlays[positionIndex];
     }
     return undefined;
 }
@@ -494,16 +527,22 @@ function matchPageOverlay(
 
     // First, try to match by slug
     for (const o of overlays) {
-        if (o.slug != null && o.slug === pageSlug) {
+        if (o.slug != null && normalizeOverlaySlug(o.slug) === pageSlug) {
             return o;
         }
     }
 
-    // Positional fallback: only use overlays that don't have a slug defined,
-    // to avoid incorrectly applying a slug-targeted overlay to the wrong sibling.
+    // Positional fallback: prefer overlays without a slug (those are meant to
+    // match by position) and fall back to all overlays positionally so that
+    // overlay files mirroring the source navigation structure still resolve
+    // when slugs don't line up exactly (e.g. tree slug `home` vs. overlay
+    // slug `/`).
     const noSlugOverlays = overlays.filter((o) => o.slug == null);
     if (positionIndex < noSlugOverlays.length) {
         return noSlugOverlays[positionIndex];
+    }
+    if (noSlugOverlays.length === 0 && positionIndex < overlays.length) {
+        return overlays[positionIndex];
     }
     return undefined;
 }
@@ -517,11 +556,45 @@ function extractLastSlugSegment(slug: string | undefined): string | undefined {
 }
 
 /**
- * Applies variant overlays to tab variant children.
- * Matches variants by slug first, then falls back to positional matching.
+ * Normalises an overlay's `slug:` value for slug-based matching against a
+ * tree node's resolved last-segment slug. Overlays mirror the docs.yml
+ * syntax, where slugs can be absolute (`/`, `/path`) or relative (`leaf`).
+ * The tree's slug, by contrast, is always the resolved final segment.
  */
-function applyVariantOverlays(variants: unknown[], overlays: docsYml.VariantOverlay[]): unknown[] {
-    return variants.map((variant, index) => {
+function normalizeOverlaySlug(slug: string): string {
+    if (slug === "/" || slug === "") {
+        return "";
+    }
+    const trimmed = slug.startsWith("/") ? slug.slice(1) : slug;
+    const parts = trimmed.split("/");
+    return parts[parts.length - 1] ?? "";
+}
+
+/**
+ * Applies variant overlays to tab variant children.
+ *
+ * Matching strategy:
+ * - First tries to match by slug.
+ * - Falls back to positional matching among overlays that have no slug,
+ *   skipping noSlug overlays already consumed by an earlier sibling.
+ *
+ * For each matched variant the title/subtitle override is applied, and the
+ * variant's children are walked with the overlay's `layout:` scoped as the
+ * navigation context so nested sections/pages can be translated.
+ */
+function applyVariantOverlays(
+    variants: unknown[],
+    overlays: docsYml.VariantOverlay[],
+    parentOverlay: docsYml.TranslationNavigationOverlay
+): unknown[] {
+    const consumedNoSlugIndices = new Set<number>();
+    let noSlugCursor = 0;
+    const noSlugOverlayIndices = overlays
+        .map((o, idx) => ({ o, idx }))
+        .filter(({ o }) => o.slug == null)
+        .map(({ idx }) => idx);
+
+    return variants.map((variant) => {
         const variantObj = variant as Record<string, unknown> | null;
         if (variantObj == null || typeof variantObj !== "object") {
             return variant;
@@ -535,25 +608,54 @@ function applyVariantOverlays(variants: unknown[], overlays: docsYml.VariantOver
             matchedOverlay = overlays.find((o) => o.slug != null && o.slug === variantSlug);
         }
 
-        // Positional fallback: only use overlays that don't have a slug defined
+        // Positional fallback: walk through noSlug overlays in declaration
+        // order, skipping any already consumed by an earlier variant.
         if (matchedOverlay == null) {
-            const noSlugOverlays = overlays.filter((o) => o.slug == null);
-            if (index < noSlugOverlays.length) {
-                matchedOverlay = noSlugOverlays[index];
+            while (noSlugCursor < noSlugOverlayIndices.length) {
+                const overlayIdx = noSlugOverlayIndices[noSlugCursor];
+                if (overlayIdx === undefined) {
+                    break;
+                }
+                noSlugCursor++;
+                if (consumedNoSlugIndices.has(overlayIdx)) {
+                    continue;
+                }
+                consumedNoSlugIndices.add(overlayIdx);
+                matchedOverlay = overlays[overlayIdx];
+                break;
             }
         }
 
-        if (matchedOverlay != null) {
-            const result = { ...variantObj };
-            if (matchedOverlay.title != null) {
-                result["title"] = matchedOverlay.title;
-            }
-            if (matchedOverlay.subtitle != null) {
-                result["subtitle"] = matchedOverlay.subtitle;
-            }
+        if (matchedOverlay == null) {
+            return walkAndApply(variant, parentOverlay);
+        }
+
+        const result: Record<string, unknown> = { ...variantObj };
+        if (matchedOverlay.title != null) {
+            result["title"] = matchedOverlay.title;
+        }
+        if (matchedOverlay.subtitle != null) {
+            result["subtitle"] = matchedOverlay.subtitle;
+        }
+
+        // Scope the per-variant layout for the variant's children so nested
+        // sections and pages get translated against the variant's overlay.
+        // The variant node directly owns pages/sections (no sidebarRoot
+        // wrapper) so we apply the layout overlays straight to its children.
+        const children = Array.isArray(result["children"]) ? (result["children"] as unknown[]) : undefined;
+        if (matchedOverlay.layout != null && children != null) {
+            const variantScopedOverlay: docsYml.TranslationNavigationOverlay = {
+                tabs: undefined,
+                products: undefined,
+                versions: undefined,
+                announcement: undefined,
+                navigation: matchedOverlay.layout,
+                navbarLinks: undefined
+            };
+            result["children"] = applySidebarChildOverlays(children, matchedOverlay.layout, variantScopedOverlay);
             return result;
         }
 
-        return variant;
+        return walkAndApply(result, parentOverlay);
     });
 }

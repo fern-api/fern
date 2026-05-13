@@ -556,6 +556,136 @@ describe("applyTranslatedNavigationOverlays", () => {
         const origTab = (origTabbed[0]?.children as Array<Record<string, unknown>>)[0];
         expect(origTab?.title).toBe("Documentation");
     });
+
+    it("translates a variant tab's title, variant titles, and per-variant section/page titles", () => {
+        // Tree shape mirrors what DocsDefinitionResolver produces for a tab
+        // with variants: tab → sidebarRoot → varianted → variant → children.
+        const root = {
+            type: "root",
+            child: {
+                type: "tabbed",
+                children: [
+                    {
+                        type: "tab",
+                        title: "Products",
+                        slug: "products",
+                        child: {
+                            type: "sidebarRoot",
+                            children: [
+                                {
+                                    type: "varianted",
+                                    children: [
+                                        {
+                                            type: "variant",
+                                            title: "Home",
+                                            slug: "products",
+                                            children: [
+                                                {
+                                                    type: "page",
+                                                    title: "Documentation",
+                                                    slug: "products"
+                                                },
+                                                {
+                                                    type: "section",
+                                                    title: "Platform Details",
+                                                    slug: "products/platform-details",
+                                                    children: [
+                                                        {
+                                                            type: "page",
+                                                            title: "Configure SMTP",
+                                                            slug: "products/platform-details/smtp"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            type: "variant",
+                                            title: "W&B Models",
+                                            slug: "products/models",
+                                            children: [
+                                                {
+                                                    type: "page",
+                                                    title: "W&B Models",
+                                                    slug: "products/models"
+                                                },
+                                                {
+                                                    type: "page",
+                                                    title: "Manage secrets",
+                                                    slug: "products/models/secrets"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        };
+
+        const overlay: docsYml.TranslationNavigationOverlay = {
+            ...emptyOverlay(),
+            tabs: { products: { displayName: "Produits", slug: undefined } },
+            navigation: [
+                {
+                    type: "tab",
+                    tabId: "products",
+                    layout: undefined,
+                    variants: [
+                        {
+                            title: "Accueil",
+                            subtitle: undefined,
+                            slug: undefined,
+                            layout: [
+                                { type: "page", title: "Documentation FR", slug: undefined },
+                                {
+                                    type: "section",
+                                    title: "Détails de la plateforme",
+                                    slug: "platform-details",
+                                    contents: [{ type: "page", title: "Configurer SMTP", slug: "smtp" }]
+                                }
+                            ]
+                        },
+                        {
+                            title: "W&B Modèles",
+                            subtitle: undefined,
+                            slug: "models",
+                            layout: [
+                                { type: "page", title: "W&B Modèles", slug: undefined },
+                                { type: "page", title: "Gérer les secrets", slug: "secrets" }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        const result = applyTranslatedNavigationOverlays(asRoot(root), overlay) as unknown as Record<string, unknown>;
+        const tabbed = (result.child as Record<string, unknown>).children as Array<Record<string, unknown>>;
+        const tab = tabbed[0] as Record<string, unknown>;
+        expect(tab.title).toBe("Produits");
+
+        const sidebarRoot = tab.child as Record<string, unknown>;
+        const varianted = (sidebarRoot.children as Array<Record<string, unknown>>)[0] as Record<string, unknown>;
+        const variants = varianted.children as Array<Record<string, unknown>>;
+
+        const home = variants[0] as Record<string, unknown>;
+        expect(home.title).toBe("Accueil");
+        const homeChildren = home.children as Array<Record<string, unknown>>;
+        expect(homeChildren[0]?.title).toBe("Documentation FR");
+        const platformSection = homeChildren[1] as Record<string, unknown>;
+        expect(platformSection.title).toBe("Détails de la plateforme");
+        const platformChildren = platformSection.children as Array<Record<string, unknown>>;
+        expect(platformChildren[0]?.title).toBe("Configurer SMTP");
+
+        const models = variants[1] as Record<string, unknown>;
+        expect(models.title).toBe("W&B Modèles");
+        const modelsChildren = models.children as Array<Record<string, unknown>>;
+        expect(modelsChildren[0]?.title).toBe("W&B Modèles");
+        expect(modelsChildren[1]?.title).toBe("Gérer les secrets");
+    });
 });
 
 describe("getTranslatedAnnouncement", () => {

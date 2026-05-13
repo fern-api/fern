@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Support translating section and page titles inside variant layouts.
+    Translation overlays for `tab` navigation items can now provide a
+    per-variant `layout:` whose section/page titles override the resolved
+    navigation tree. Overlay slugs are also matched leniently so that
+    relative slugs (e.g. `smtp`) and absolute slugs (e.g. `/`) line up with
+    the tree's resolved last-segment slug.
+  type: fix
