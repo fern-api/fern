@@ -1,5 +1,5 @@
 # Stage 1: Copy Node.js from official image
-FROM node:22.22-bookworm-slim AS node
+FROM node:24.15-trixie-slim AS node
 
 # Stage 2: Base Python image with dependencies
 FROM python:3.13.7-slim AS python-base
@@ -17,6 +17,33 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 RUN node --version
 RUN npm --version
+
+# Patch npm's bundled picomatch@4.0.3 -> 4.0.4 (GHSA-c2c7-rcm5-vvqj,
+# GHSA-3v7f-55p6-f55p) and brace-expansion@5.0.4 -> 5.0.5
+# (GHSA-f886-m6hf-6m8v) copied from the node stage.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/picomatch \
+      /usr/local/lib/node_modules/npm/node_modules/tinyglobby/node_modules/picomatch; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/picomatch/-/picomatch-4.0.4.tgz -o picomatch-4.0.4.tgz && \
+        tar -xzf picomatch-4.0.4.tgz && \
+        mv package picomatch && \
+        rm picomatch-4.0.4.tgz; \
+      fi; \
+    done && \
+    for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/brace-expansion; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.5.tgz -o brace-expansion-5.0.5.tgz && \
+        tar -xzf brace-expansion-5.0.5.tgz && \
+        mv package brace-expansion && \
+        rm brace-expansion-5.0.5.tgz; \
+      fi; \
+    done
 
 # Install ruff.
 RUN pip install ruff==0.15.7

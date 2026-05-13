@@ -559,7 +559,7 @@ mod tests {
         let client = make_http_client();
         let mut paginator = SyncPaginator::<String>::new(
             client,
-            |_client, _cursor| Err(ApiError::Serialization("test error".to_string())),
+            |_client, _cursor| Err(ApiError::Configuration("test error".to_string())),
             None,
         )
         .unwrap();
@@ -573,7 +573,7 @@ mod tests {
         let client = make_http_client();
         let mut paginator = SyncPaginator::<String>::new(
             client,
-            |_client, _cursor| Err(ApiError::Serialization("test error".to_string())),
+            |_client, _cursor| Err(ApiError::Configuration("test error".to_string())),
             None,
         )
         .unwrap();

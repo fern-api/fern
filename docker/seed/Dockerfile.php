@@ -5,54 +5,119 @@ RUN apk add --no-cache curl && \
     curl -sL "https://github.com/google/go-containerregistry/releases/download/v0.21.2/go-containerregistry_Linux_${ARCH}.tar.gz" | tar xz -C /usr/local/bin crane && \
     crane pull wiremock/wiremock:3.9.1 /wiremock.tar
 
-# Stage 2: Download a newer containerd build to address CVEs in the Go-module
-# deps baked into docker:29.4.1-dind-alpine3.23 (which ships containerd v2.2.3).
-#
-# containerd v2.3.0 bumps grpc v1.78.0 -> v1.80.0, otel v1.38.0 -> v1.43.0,
-# otel/sdk v1.38.0 -> v1.43.0, go-jose v4.1.3 -> v4.1.4 in the /usr/local/bin
-# containerd / ctr / containerd-shim-runc-v2 binaries. The dockerd binary in
-# 29.4.1 talks to containerd over the stable gRPC plugin protocol so newer
-# minor versions of containerd are wire-compatible.
-#
-# We use the `containerd-static-*` archive (statically linked) because the
-# default release tarball is dynamically linked against glibc and won't run
-# on Alpine's musl libc.
-#
-# We deliberately do NOT overlay runc here: the upstream runc v1.4.2 release
-# was built with go1.25.8, which has unfixed stdlib CVEs (CVE-2026-27143 et
-# al.), while the runc v1.3.5 already shipped in the base image was built
-# with the patched go1.26.2 toolchain. Bumping runc would trade two
-# golang.org/x/net findings for several Critical/High stdlib findings, which
-# is a regression.
-FROM alpine:3.23 AS overlay-binaries
+# Stage 2: Rebuild containerd v2.3.0 + runc v1.3.5 + moby (dockerd, docker-proxy)
+# + docker CLI from source with go1.26.3 and golang.org/x/net v0.53.0.
+# Upstream `docker:29.4.3-dind-alpine3.23` ships dockerd / docker / docker-proxy
+# built with go1.26.2, which grype flags for the unpatched go/stdlib 1.26.2
+# CVEs (CVE-2026-33811, CVE-2026-33814, CVE-2026-39820, CVE-2026-39836,
+# CVE-2026-42499). Rebuilding under GOTOOLCHAIN=go1.26.3 swaps the embedded
+# stdlib without changing functionality. The containerd/runc rebuild also
+# picks up the grpc / otel / go-jose bumps from the v2.3.0 release line.
+FROM golang:1.26.3-alpine3.23 AS overlay-binaries
 ARG CONTAINERD_VERSION=2.3.0
-RUN apk add --no-cache curl tar && \
-    ARCH=$(uname -m) && \
-    case "$ARCH" in \
-      x86_64) GOARCH=amd64 ;; \
-      aarch64) GOARCH=arm64 ;; \
-      *) echo "Unsupported arch: $ARCH"; exit 1 ;; \
-    esac && \
-    mkdir -p /overlay/usr/local/bin && \
-    curl -fsSL "https://github.com/containerd/containerd/releases/download/v${CONTAINERD_VERSION}/containerd-static-${CONTAINERD_VERSION}-linux-${GOARCH}.tar.gz" \
-      | tar -xz -C /overlay/usr/local --no-same-owner \
-        bin/containerd bin/containerd-shim-runc-v2 bin/ctr
+ARG RUNC_VERSION=1.3.5
+ARG MOBY_VERSION=29.4.3
+ARG DOCKER_CLI_VERSION=29.4.3
+ARG COMPOSE_VERSION=5.1.3
+ARG XNET_VERSION=0.53.0
+ARG OTEL_SDK_VERSION=1.43.0
+ENV GOTOOLCHAIN=go1.26.3
+RUN apk add --no-cache git make gcc musl-dev linux-headers libseccomp-dev libseccomp-static bash ca-certificates && \
+    mkdir -p /overlay/usr/local/bin
+RUN git clone --depth 1 --branch v${CONTAINERD_VERSION} https://github.com/containerd/containerd.git /src/containerd && \
+    cd /src/containerd && \
+    go get golang.org/x/net@v${XNET_VERSION} \
+           go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/trace@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/metric@v${OTEL_SDK_VERSION} && \
+    go mod tidy && \
+    go mod vendor && \
+    for cmd in containerd ctr containerd-shim-runc-v2; do \
+      CGO_ENABLED=0 go build -tags "osusergo netgo static_build" -trimpath -ldflags "-s -w" \
+        -o /overlay/usr/local/bin/$cmd ./cmd/$cmd ; \
+    done
+RUN git clone --depth 1 --branch v${RUNC_VERSION} https://github.com/opencontainers/runc.git /src/runc && \
+    cd /src/runc && \
+    go get golang.org/x/net@v${XNET_VERSION} && \
+    go mod tidy && \
+    go mod vendor && \
+    make static EXTRA_LDFLAGS="-s -w" && \
+    cp runc /overlay/usr/local/bin/runc
+RUN git clone --depth 1 --branch docker-v${MOBY_VERSION} https://github.com/moby/moby.git /src/moby && \
+    cd /src/moby && \
+    # Force the patched golang.org/x/net (HTTP/2 server header smuggling,
+    # CVE-2026-33814) and patched otel/sdk (CVE-2026-39883 PATH hijacking
+    # on BSD/Solaris) before vendoring + building dockerd/docker-proxy.
+    go get golang.org/x/net@v${XNET_VERSION} \
+           go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/trace@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/metric@v${OTEL_SDK_VERSION} && \
+    go mod tidy && \
+    go mod vendor && \
+    CGO_ENABLED=0 go build -mod=vendor \
+      -tags "osusergo netgo static_build exclude_graphdriver_btrfs exclude_graphdriver_devicemapper" \
+      -trimpath -ldflags "-s -w" \
+      -o /overlay/usr/local/bin/dockerd ./cmd/dockerd && \
+    CGO_ENABLED=0 go build -mod=vendor \
+      -tags "osusergo netgo static_build" \
+      -trimpath -ldflags "-s -w" \
+      -o /overlay/usr/local/bin/docker-proxy ./cmd/docker-proxy
+RUN git clone --depth 1 --branch v${DOCKER_CLI_VERSION} https://github.com/docker/cli.git /src/docker-cli && \
+    cd /src/docker-cli && \
+    cp vendor.mod go.mod && cp vendor.sum go.sum && \
+    # docker CLI's vendor.mod pins x/net <0.53; bump it (and re-vendor)
+    # so the built /usr/local/bin/docker also clears CVE-2026-33814.
+    go get golang.org/x/net@v${XNET_VERSION} && \
+    go mod tidy && \
+    go mod vendor && \
+    CGO_ENABLED=0 go build -mod=vendor \
+      -tags "osusergo netgo static_build pkcs11" \
+      -trimpath -ldflags "-s -w" \
+      -o /overlay/usr/local/bin/docker ./cmd/docker
+# Rebuild docker-compose to clear golang.org/x/net <0.53 CVEs the upstream
+# v5.1.3 prebuilt vendors. github.com/docker/docker v28.5.2 remains as a
+# residual since compose has not yet migrated to github.com/moby/moby/v2;
+# the daemon we overlay above is moby v29.4.3 so the CVE-2026-34040 /
+# CVE-2026-33997 code paths are unreachable at runtime.
+RUN mkdir -p /overlay/usr/local/libexec/docker/cli-plugins && \
+    git clone --depth 1 --branch v${COMPOSE_VERSION} https://github.com/docker/compose.git /src/compose && \
+    cd /src/compose && \
+    # Compose still vendors github.com/docker/docker v28.5.2+incompatible
+    # (legacy module path) rather than github.com/moby/moby/v2 -- bump x/net,
+    # otel/sdk, and docker/docker so the embedded SBOM matches the daemon
+    # version we overlay.
+    go get golang.org/x/net@v${XNET_VERSION} \
+           go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/trace@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/metric@v${OTEL_SDK_VERSION} && \
+    go mod tidy && \
+    CGO_ENABLED=0 go build \
+      -trimpath -ldflags "-s -w -X github.com/docker/compose/v5/internal.Version=v${COMPOSE_VERSION}" \
+      -o /overlay/usr/local/libexec/docker/cli-plugins/docker-compose ./cmd
 
 # Stage 3: Build the seed image
-FROM docker:29.4.1-dind-alpine3.23
+FROM docker:29.4.3-dind-alpine3.23
 
-# Apply latest security patches to base image packages (libssl3, libcrypto3, libcurl, etc.)
-RUN apk upgrade --no-cache
+# Apply latest APK security patches
+RUN apk update && apk upgrade --no-cache --available
 
-# Overlay newer containerd binaries (see overlay-binaries stage above).
+# Overlay rebuilt containerd + runc + moby (dockerd, docker-proxy) + docker CLI
+# binaries (see stage 2). These replace the upstream go1.26.2 builds.
 COPY --from=overlay-binaries /overlay/ /
+
+# Drop unused buildx CLI plugin that ships vulnerable embedded Go modules.
+# Keep docker-compose: wire-test bootstraps in generators/php/sdk run
+# `docker compose -f …` to start WireMock alongside generated SDK tests.
+RUN rm -f /usr/local/libexec/docker/cli-plugins/docker-buildx
 
 # Copy pre-pulled wiremock image
 COPY --from=wiremock-pull /wiremock.tar /wiremock.tar
 
-# Install PHP, Composer, and required extensions
-# alpine 3.23's composer package depends on php84, so php84 is the runtime here.
-# This is forward-compatible with the generated SDK templates (which require php: ^8.1).
+# Install PHP, Composer, and required extensions. alpine 3.23's composer pulls
+# in php84 (forward-compatible with generated SDK templates requiring php: ^8.1).
 RUN apk add --no-cache \
     php84 \
     php84-phar \

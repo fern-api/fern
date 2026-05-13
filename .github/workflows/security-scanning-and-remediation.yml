@@ -130,6 +130,21 @@ jobs:
             const repo = context.repo.repo;
             const baseBranch = 'main';
 
+            // Sanitize text from upstream advisories (GHSA, NVD) so that
+            // @-mentions embedded in third-party descriptions do not auto-tag
+            // unrelated GitHub users when rendered in PR bodies.
+            const ALLOWED_MENTIONS = new Set(['devin-ai-integration', 'davidkonigsberg']);
+            const sanitizeMentions = (text) => {
+              if (text == null) return text;
+              return String(text).replace(
+                /(^|[^A-Za-z0-9`])@([A-Za-z0-9](?:[A-Za-z0-9-]{0,38})?)/g,
+                (match, pre, handle) =>
+                  ALLOWED_MENTIONS.has(handle.toLowerCase())
+                    ? match
+                    : `${pre}\`@${handle}\``
+              );
+            };
+
             const alertsFile = process.env.ALERTS_FILE;
             const alerts = fs.existsSync(alertsFile)
               ? JSON.parse(fs.readFileSync(alertsFile, 'utf8'))
@@ -238,8 +253,8 @@ jobs:
               const patchedVersions = alert.security_vulnerability?.first_patched_version?.identifier || 'No patch available';
               const cveId = alert.security_advisory?.cve_id || 'N/A';
               const ghsaId = alert.security_advisory?.ghsa_id || 'N/A';
-              const summary = alert.security_advisory?.summary || 'No summary available';
-              const description = alert.security_advisory?.description || 'No description available';
+              const summary = sanitizeMentions(alert.security_advisory?.summary) || 'No summary available';
+              const description = sanitizeMentions(alert.security_advisory?.description) || 'No description available';
               const manifestPath = alert.dependency?.manifest_path || 'unknown';
 
               const branchName = `dependabot-alert-${alert.number}-devin`;
