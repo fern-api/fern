@@ -42,6 +42,7 @@ export async function generateWorkspace({
     skipFernignore,
     dynamicIrOnly,
     noReplay,
+    verify,
     retryRateLimited,
     requireEnvVars,
     automationMode,
@@ -74,6 +75,7 @@ export async function generateWorkspace({
     skipFernignore: boolean;
     dynamicIrOnly: boolean;
     noReplay: boolean;
+    verify: boolean;
     retryRateLimited: boolean;
     requireEnvVars: boolean;
     automationMode?: boolean;
@@ -167,6 +169,7 @@ export async function generateWorkspace({
                         automationMode,
                         autoMerge,
                         skipIfNoDiff,
+                        verify,
                         disableTelemetry: isTelemetryDisabled()
                     });
                 } else if (token != null) {

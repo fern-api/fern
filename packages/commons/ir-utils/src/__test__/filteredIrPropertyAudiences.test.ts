@@ -204,3 +204,59 @@ describe("IrGraph.build() property exclusion (integration)", () => {
         expect(filteredIr.hasProperty(typeId, "password_hash")).toBe(true);
     });
 });
+
+// The V3 OpenAPI importer must register environments with the IR graph even when the
+// spec carries no per-environment `x-fern-audiences` tagging (the common `servers:`
+// case). The contract it relies on is `markEnvironmentForAudiences(env, [], true)` →
+// environment id is present in the filtered IR even under an active audience filter.
+// If this contract ever breaks, every server URL silently disappears from the IR and
+// docs render `POST /users` instead of `POST https://api.example.com/users`.
+describe("IrGraph.markEnvironmentForAudiences (contract for untagged servers)", () => {
+    function makeSingleBaseUrlEnvironment(id: string) {
+        return {
+            id,
+            name: {
+                originalName: id,
+                camelCase: { unsafeName: id, safeName: id },
+                snakeCase: { unsafeName: id, safeName: id },
+                screamingSnakeCase: { unsafeName: id, safeName: id },
+                pascalCase: { unsafeName: id, safeName: id }
+            },
+            url: `https://${id}.example.com`,
+            audiences: undefined,
+            defaultUrl: undefined,
+            urlTemplate: undefined,
+            urlVariables: undefined,
+            docs: undefined
+        };
+    }
+
+    it("preserves the environment under an audience filter when ignoreAudiences=true", () => {
+        const graph = new IrGraph({ type: "select", audiences: ["public"] });
+        const env = makeSingleBaseUrlEnvironment("prod");
+        graph.markEnvironmentForAudiences(env, [], true);
+        expect(graph.build().hasEnvironmentId("prod")).toBe(true);
+    });
+
+    it("preserves the environment under an audience filter when its audiences overlap the filter", () => {
+        const graph = new IrGraph({ type: "select", audiences: ["public"] });
+        const env = makeSingleBaseUrlEnvironment("prod");
+        graph.markEnvironmentForAudiences(env, ["public"]);
+        expect(graph.build().hasEnvironmentId("prod")).toBe(true);
+    });
+
+    it("drops the environment under an audience filter when its audiences don't overlap and ignoreAudiences is false", () => {
+        const graph = new IrGraph({ type: "select", audiences: ["public"] });
+        const env = makeSingleBaseUrlEnvironment("prod");
+        graph.markEnvironmentForAudiences(env, ["internal"]);
+        expect(graph.build().hasEnvironmentId("prod")).toBe(false);
+    });
+
+    it("regression guard: a totally unregistered environment is reported as absent", () => {
+        // This is the failure mode my V3 fix has to compensate for — if the importer
+        // never calls `markEnvironmentForAudiences`, the env id is NOT in the filtered
+        // IR and the shared filter prunes the entire `servers:` block.
+        const graph = new IrGraph({ type: "select", audiences: ["public"] });
+        expect(graph.build().hasEnvironmentId("prod")).toBe(false);
+    });
+});

@@ -43,6 +43,7 @@ export async function generateAPIWorkspaces({
     dynamicIrOnly,
     outputDir,
     noReplay,
+    verify,
     retryRateLimited,
     requireEnvVars,
     automationMode,
@@ -72,6 +73,7 @@ export async function generateAPIWorkspaces({
     dynamicIrOnly: boolean;
     outputDir: string | undefined;
     noReplay: boolean;
+    verify: boolean;
     retryRateLimited: boolean;
     requireEnvVars: boolean;
     automationMode?: boolean;
@@ -170,6 +172,7 @@ export async function generateAPIWorkspaces({
                     skipFernignore,
                     dynamicIrOnly,
                     noReplay,
+                    verify,
                     retryRateLimited,
                     requireEnvVars,
                     automationMode,

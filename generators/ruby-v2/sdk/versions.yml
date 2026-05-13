@@ -1,4 +1,47 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.12.9
+  changelogEntry:
+    - summary: |
+        Stop launching WireMock with `--global-response-templating` in generated
+        wire-test `docker-compose.test.yml`. Response examples containing literal
+        `{{...}}` are now served verbatim instead of being passed through
+        WireMock's Handlebars transformer, which would fail to resolve them as
+        helpers and return 500.
+      type: fix
+  createdAt: "2026-05-13"
+  irVersion: 66
+- version: 1.12.8
+  changelogEntry:
+    - summary: |
+        Fix `Layout/EmptyComment` RuboCop offense emitted for types with no
+        description. The AST `Comment` node now skips writing when `docs` is
+        empty or whitespace-only, so undocumented model classes no longer
+        produce a bare `#` line above their class definition.
+      type: fix
+  createdAt: "2026-05-12"
+  irVersion: 66
+- version: 1.12.7
+  changelogEntry:
+    - summary: |
+        Fix `Layout/EmptyComment` RuboCop offense emitted for types with no
+        description. The AST `Comment` node now skips writing when `docs` is
+        empty or whitespace-only, so undocumented model classes no longer
+        produce a bare `#` line above their class definition.
+      type: fix
+  createdAt: "2026-05-12"
+  irVersion: 66
+- version: 1.12.6
+  changelogEntry:
+    - summary: |
+        Patch Ruby SDK generator container CVEs flagged in the AWS ECR / grype
+        scan. Remove the unused `erb-4.0.3`, `net-imap-0.4.21`, `addressable-2.8.5`,
+        `rexml-3.2.5`, and `rexml-3.2.6` gem directories (in addition to the
+        gemspec stubs) and install patched `addressable-2.8.10` + `rexml-3.4.4`,
+        so grype no longer reports the vulnerable versions vendored alongside
+        Ruby 3.3's default gems and the rubocop dependency graph.
+      type: chore
+  createdAt: "2026-05-12"
+  irVersion: 66
 - version: 1.12.5
   changelogEntry:
     - summary: |

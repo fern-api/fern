@@ -1,4 +1,82 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.23.5
+  changelogEntry:
+    - summary: |
+        Fix SDK generation crashing with `fatal: <sha> is not a valid object`
+        when the prior fern-bot PR was squash-merged and its branch deleted.
+        The stale `fern-generation-base` tag update is now skipped with a
+        warning; the SDK PR still opens.
+      type: fix
+  createdAt: "2026-05-13"
+  irVersion: 66
+- version: 5.23.4
+  changelogEntry:
+    - summary: |
+        Fix allOf composition so inline elements with real constraints (e.g. `pattern`, `minLength`) produce a properly merged type instead of being silently dropped. Also refactored the allOf shortcircuit logic to use a metadata allowlist, which is safer against new OpenAPI fields.
+      type: fix
+    - summary: |
+        Fix example generation for allOf compositions to merge base schema fields into property overrides. When an allOf override specifies only `items` without `type: array`, the base schema's type is now correctly inherited, producing properly typed examples instead of null.
+      type: fix
+  createdAt: "2026-05-13"
+  irVersion: 66
+- version: 5.23.3
+  changelogEntry:
+    - summary: |
+        Property-level `x-fern-audiences` filtering now also applies on the V3 OpenAPI / AsyncAPI /
+        OpenRPC import path used by `fern docs dev` and `fern generate --from-openapi`. Inline
+        request-body properties, query parameters, inline webhook payload properties, named-type
+        properties, `v2RequestBodies`, and the docs `v2Examples` blocks (type-level, request body,
+        response body, endpoint-level, `v2Responses`, and webhook payload examples) are now scrubbed
+        using the same exclusion semantics as the Fern Definition path. Untagged elements remain
+        universal and are never silently removed.
+      type: fix
+  createdAt: "2026-05-12"
+  irVersion: 66
+- version: 5.23.2
+  changelogEntry:
+    - summary: |
+        Suppress Fern's platform `User-Agent` header in generated SDKs when the API definition
+        declares a global `User-Agent` header (case-insensitive) under `api.headers`. This
+        allows customers to fully override the SDK User-Agent via their Fern Definition without
+        the auto-generated `<package>/<version>` value also being emitted.
+      type: fix
+  createdAt: "2026-05-12"
+  irVersion: 66
+- version: 5.23.1
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` hanging indefinitely on Node.js v26+ on Linux by disabling
+        io_uring in the child server process. Node 26 enables io_uring by default in
+        libuv, which has a busy-loop bug where worker threads spin on an internal
+        eventfd, starving the main event loop.
+      type: fix
+  createdAt: "2026-05-11"
+  irVersion: 66
+- version: 5.23.0
+  changelogEntry:
+    - summary: |
+        Add an opt-in `VerificationStep` to the post-generation pipeline that runs
+        `.fern/verify.sh` (when emitted by the generator) inside a language-specific
+        `{generatorImage}-validator` container after replay and before any GitHub
+        push. A failing script aborts the pipeline before opening a PR and surfaces
+        raw stderr through the pipeline logger; a missing script is a silent no-op.
+
+        The step is gated on a hidden `--verify` flag for `fern generate`; when
+        passed (with `--local` or `--runner`), the local workspace runner sets
+        `config.verify.enabled = true` on the pipeline and the configured container
+        runtime (`docker` or `podman`) is forwarded to the validator container.
+        Remote/Fiddle generation does not honor this flag yet.
+      type: internal
+  createdAt: "2026-05-11"
+  irVersion: 66
+- version: 5.22.1
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` failing with pnpm 11 due to esbuild build scripts being blocked by default.
+        Writes `onlyBuiltDependencies` config to the bundle folder before installing esbuild.
+      type: fix
+  createdAt: "2026-05-11"
+  irVersion: 66
 - version: 5.22.0
   changelogEntry:
     - summary: |

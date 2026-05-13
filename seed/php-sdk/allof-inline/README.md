@@ -39,13 +39,13 @@ namespace Example;
 
 use Seed\SeedClient;
 use Seed\Requests\RuleCreateRequest;
-use Seed\Types\RuleExecutionContext;
+use Seed\Types\RuleCreateRequestExecutionContext;
 
 $client = new SeedClient();
 $client->createRule(
     new RuleCreateRequest([
         'name' => 'name',
-        'executionContext' => RuleExecutionContext::Prod->value,
+        'executionContext' => RuleCreateRequestExecutionContext::Prod->value,
     ]),
 );
 

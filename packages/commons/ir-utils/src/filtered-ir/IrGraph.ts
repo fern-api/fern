@@ -379,6 +379,31 @@ export class IrGraph {
         }
     }
 
+    /**
+     * Registers inline request body audience info for importers that don't pass a raw Fern
+     * Definition (e.g. OpenAPI V3). Properties absent from every audience set are universal.
+     */
+    public markInlinedRequestPropertiesForAudiences(
+        endpointId: EndpointId,
+        propertiesByAudience: Record<AudienceId, Set<string>>
+    ): void {
+        this.requestProperties[endpointId] = { endpointId, propertiesByAudience };
+    }
+
+    public markQueryParametersForAudiences(
+        endpointId: EndpointId,
+        parametersByAudience: Record<AudienceId, Set<string>>
+    ): void {
+        this.queryParameters[endpointId] = { endpointId, parametersByAudience };
+    }
+
+    public markInlinedWebhookPayloadPropertiesForAudiences(
+        webhookId: WebhookId,
+        propertiesByAudience: Record<AudienceId, Set<string>>
+    ): void {
+        this.webhookProperties[webhookId] = { webhookId, propertiesByAudience };
+    }
+
     public addChannel(
         filepath: FernFilepath,
         channelId: string,
@@ -463,8 +488,7 @@ export class IrGraph {
             this.addReferencedTypes(typeIds, channelNode.referencedTypes);
         }
 
-        // Property-level filtering is exclusion-based: a property is excluded iff it has
-        // at least one declared audience and none of those overlap the active filter.
+        // Property filtering is exclusion-based: drop only if declared audiences don't overlap.
         const excludedProperties: Record<TypeId, Set<string> | undefined> = {};
         const excludedRequestProperties: Record<EndpointId, Set<string> | undefined> = {};
         const excludedQueryParameters: Record<EndpointId, Set<string> | undefined> = {};

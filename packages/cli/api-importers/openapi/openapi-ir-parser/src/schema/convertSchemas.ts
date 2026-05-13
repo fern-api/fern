@@ -1335,13 +1335,18 @@ export function convertSchemaObject(
 
             // Now that we've handled the single-element allOf case, filter the
             // allOfs down to just the objects.
-            const filteredAllOfObjects = filteredAllOfs.filter((allOf) => {
-                const valid = isValidAllOfObject(allOf);
-                if (!valid) {
+            const filteredAllOfObjects: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[] = [];
+            const filteredOutPrimitiveElements: OpenAPIV3.SchemaObject[] = [];
+            for (const allOf of filteredAllOfs) {
+                if (isValidAllOfObject(allOf)) {
+                    filteredAllOfObjects.push(allOf);
+                } else {
                     context.logger.debug(`Skipping non-object allOf element: ${JSON.stringify(allOf)}`);
+                    if (!isReferenceObject(allOf)) {
+                        filteredOutPrimitiveElements.push(allOf);
+                    }
                 }
-                return valid;
-            });
+            }
 
             if (
                 (schema.properties == null || hasNoProperties(schema)) &&
@@ -1351,8 +1356,22 @@ export function convertSchemaObject(
             ) {
                 // Try to short-circuit again.
                 // We don't short-circuit if additionalProperties is set, as we'd lose that information.
+                // Before short-circuiting, merge any constraints from filtered-out primitive
+                // allOf elements (e.g. pattern, format, minLength) into the remaining element.
+                let elementToConvert: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject = filteredAllOfObjects[0];
+                if (filteredOutPrimitiveElements.length > 0) {
+                    // Merge all fields from filtered-out elements into the remaining
+                    // schema. Later elements win (standard allOf semantics).
+                    const base = isReferenceObject(elementToConvert)
+                        ? { ...context.resolveSchemaReference(elementToConvert) }
+                        : { ...elementToConvert };
+                    for (const primitiveElement of filteredOutPrimitiveElements) {
+                        Object.assign(base, primitiveElement);
+                    }
+                    elementToConvert = base;
+                }
                 const convertedSchema = convertSchema(
-                    filteredAllOfObjects[0],
+                    elementToConvert,
                     wrapAsOptional,
                     wrapAsNullable,
                     context,
