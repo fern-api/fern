@@ -485,8 +485,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     // basic-auth headers are emitted by the switch dispatch below
                     // instead of a dedicated block, so the standalone block is
                     // suppressed.
-                    const hasBasicAuth =
-                        this.context.ir.auth.schemes.some((s) => s.type === "basic") && !useTypedAuth;
+                    const hasBasicAuth = this.context.ir.auth.schemes.some((s) => s.type === "basic") && !useTypedAuth;
 
                     // Only clone clientOptions if we have auth headers or OAuth/inferred auth/basic auth/typed-auth
                     const needsAuthHeaders =
@@ -910,9 +909,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         if (bearerScheme != null || this.oauth != null) {
             writer.writeLine(`case ${this.Types.AuthBearer.scopedName} bearer:`);
             writer.indent();
-            writer.writeTextStatement(
-                'clientOptionsWithAuth.Headers["Authorization"] = $"Bearer {bearer.Token}"'
-            );
+            writer.writeTextStatement('clientOptionsWithAuth.Headers["Authorization"] = $"Bearer {bearer.Token}"');
             writer.writeTextStatement("break");
             writer.dedent();
         }
@@ -953,9 +950,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             const headerValueExpr = prefix != null ? `$"${prefix} {apiKey.Value}"` : "apiKey.Value";
             writer.writeLine(`case ${this.Types.AuthApiKey.scopedName} apiKey:`);
             writer.indent();
-            writer.writeTextStatement(
-                `clientOptionsWithAuth.Headers["${headerName}"] = ${headerValueExpr}`
-            );
+            writer.writeTextStatement(`clientOptionsWithAuth.Headers["${headerName}"] = ${headerValueExpr}`);
             writer.writeTextStatement("break");
             writer.dedent();
         }
@@ -1034,7 +1029,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         // by the `auth` parameter (an `Auth` subclass) instead of separate
         // positional arguments. Skip the per-scheme positional params so the
         // root client constructor exposes a single `Auth auth` parameter.
-        if (this.isTypedAuthEnabled() && (scheme.type === "bearer" || scheme.type === "basic" || scheme.type === "header")) {
+        if (
+            this.isTypedAuthEnabled() &&
+            (scheme.type === "bearer" || scheme.type === "basic" || scheme.type === "header")
+        ) {
             return [];
         }
         if (scheme.type === "header") {
