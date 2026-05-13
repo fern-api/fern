@@ -58,7 +58,7 @@ package com.example.usage;
 
 import com.seed.api.SeedApiClient;
 import com.seed.api.requests.RuleCreateRequest;
-import com.seed.api.types.RuleExecutionContext;
+import com.seed.api.types.RuleCreateRequestExecutionContext;
 
 public class Example {
     public static void main(String[] args) {
@@ -70,7 +70,7 @@ public class Example {
             RuleCreateRequest
                 .builder()
                 .name("name")
-                .executionContext(RuleExecutionContext.PROD)
+                .executionContext(RuleCreateRequestExecutionContext.PROD)
                 .build()
         );
     }

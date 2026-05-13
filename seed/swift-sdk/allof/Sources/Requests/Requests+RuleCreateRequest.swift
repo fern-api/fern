@@ -3,13 +3,14 @@ import Foundation
 extension Requests {
     public struct RuleCreateRequest: Codable, Hashable, Sendable {
         public let name: String
-        public let executionContext: RuleExecutionContext
+        /// Execution context for the rule, excluding the prod environment.
+        public let executionContext: RuleCreateRequestExecutionContext
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
             name: String,
-            executionContext: RuleExecutionContext,
+            executionContext: RuleCreateRequestExecutionContext,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.name = name
@@ -20,7 +21,7 @@ extension Requests {
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.name = try container.decode(String.self, forKey: .name)
-            self.executionContext = try container.decode(RuleExecutionContext.self, forKey: .executionContext)
+            self.executionContext = try container.decode(RuleCreateRequestExecutionContext.self, forKey: .executionContext)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

@@ -71,7 +71,10 @@ paths:
                   examples:
                     - name
                 executionContext:
-                  $ref: '#/components/schemas/RuleExecutionContext'
+                  $ref: '#/components/schemas/RuleCreateRequestExecutionContext'
+                  description: >-
+                    Execution context for the rule, excluding the prod
+                    environment.
               required:
                 - name
                 - executionContext
@@ -148,6 +151,14 @@ paths:
       summary: Get an organization with merged object-typed properties
 components:
   schemas:
+    RuleCreateRequestExecutionContext:
+      title: RuleCreateRequestExecutionContext
+      type: string
+      enum:
+        - prod
+        - staging
+        - dev
+      description: Execution context for the rule, excluding the prod environment.
     PaginatedResult:
       title: PaginatedResult
       type: object
