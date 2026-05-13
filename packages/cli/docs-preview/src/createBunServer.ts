@@ -40,6 +40,12 @@ export interface BunServerOptions {
      * E.g., "/fr/getting-started" -> "fr", "/getting-started" -> undefined
      */
     extractLocaleFromPath?(urlPath: string | undefined): string | undefined;
+    /**
+     * Callback to revalidate locale translations.
+     * If locale is undefined, revalidates all locales.
+     * Returns an array of revalidated locale codes.
+     */
+    onRevalidate?(locale?: string): Promise<string[]>;
 }
 
 export interface BunServer {
@@ -57,7 +63,7 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
         return undefined;
     }
 
-    const { port, debugLogger, getDocsLoadResponse, extractLocaleFromPath } = options;
+    const { port, debugLogger, getDocsLoadResponse, extractLocaleFromPath, onRevalidate } = options;
 
     type WsData = { connectionId: string };
     const connections = new Map<BunServerWebSocket<WsData>, { pingInterval: NodeJS.Timeout; lastPong: number }>();
@@ -109,6 +115,33 @@ export function createBunServer(options: BunServerOptions): BunServer | undefine
                     return new Response(JSON.stringify(getDocsLoadResponse()), {
                         headers: { "Content-Type": "application/json", ...CORS_HEADERS }
                     });
+                }
+            }
+
+            // POST /api/revalidate
+            if (req.method === "POST" && url.pathname === "/api/revalidate") {
+                if (onRevalidate == null) {
+                    return new Response(JSON.stringify({ error: "Revalidation not supported" }), {
+                        status: 501,
+                        headers: { "Content-Type": "application/json", ...CORS_HEADERS }
+                    });
+                }
+                try {
+                    const body = (await req.json()) as { locale?: string } | undefined;
+                    const revalidatedLocales = await onRevalidate(body?.locale);
+                    return new Response(JSON.stringify({ revalidated: revalidatedLocales }), {
+                        headers: { "Content-Type": "application/json", ...CORS_HEADERS }
+                    });
+                } catch (error) {
+                    return new Response(
+                        JSON.stringify({
+                            error: error instanceof Error ? error.message : "Failed to revalidate locales"
+                        }),
+                        {
+                            status: 500,
+                            headers: { "Content-Type": "application/json", ...CORS_HEADERS }
+                        }
+                    );
                 }
             }
 

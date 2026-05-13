@@ -1056,6 +1056,43 @@ export async function runAppPreviewServer({
         }
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    app.post("/api/revalidate", async (req, res) => {
+        try {
+            const requestBody = req.body as { locale?: string } | undefined;
+            const specificLocale = requestBody?.locale;
+
+            if (previewResult == null) {
+                context.logger.warn("Cannot revalidate: no docs definition loaded");
+                return res.status(503).json({ error: "No docs definition loaded" });
+            }
+
+            // Revalidate all locales by default, or just the specified locale
+            if (specificLocale != null) {
+                context.logger.info(`Revalidating locale: ${specificLocale}`);
+                const singleLocaleMap = await computeTranslatedDefinitions(previewResult);
+                const revalidatedDefinition = singleLocaleMap.get(specificLocale);
+                if (revalidatedDefinition != null) {
+                    translatedDefinitions.set(specificLocale, revalidatedDefinition);
+                    return res.json({ revalidated: [specificLocale] });
+                } else {
+                    return res.status(404).json({ error: `Locale '${specificLocale}' not found` });
+                }
+            } else {
+                context.logger.info("Revalidating all locales");
+                translatedDefinitions = await computeTranslatedDefinitions(previewResult);
+                const revalidatedLocales = Array.from(translatedDefinitions.keys());
+                return res.json({
+                    revalidated: revalidatedLocales.length > 0 ? revalidatedLocales : ["default"]
+                });
+            }
+        } catch (error) {
+            context.logger.error("Error revalidating locales", (error as Error).message);
+            context.logger.error("Stack trace:", (error as Error).stack ?? "");
+            res.status(500).json({ error: "Failed to revalidate locales" });
+        }
+    });
+
     app.get(/^\/_local\/(.*)/, (req, res) => {
         return res.sendFile(`/${req.params[0]}`);
     });
@@ -1068,7 +1105,29 @@ export async function runAppPreviewServer({
         port: backendPort,
         debugLogger,
         getDocsLoadResponse: buildDocsLoadResponse,
-        extractLocaleFromPath
+        extractLocaleFromPath,
+        onRevalidate: async (locale?: string): Promise<string[]> => {
+            if (previewResult == null) {
+                throw new Error("No docs definition loaded");
+            }
+
+            if (locale != null) {
+                context.logger.info(`Revalidating locale: ${locale}`);
+                const singleLocaleMap = await computeTranslatedDefinitions(previewResult);
+                const revalidatedDefinition = singleLocaleMap.get(locale);
+                if (revalidatedDefinition != null) {
+                    translatedDefinitions.set(locale, revalidatedDefinition);
+                    return [locale];
+                } else {
+                    throw new Error(`Locale '${locale}' not found`);
+                }
+            } else {
+                context.logger.info("Revalidating all locales");
+                translatedDefinitions = await computeTranslatedDefinitions(previewResult);
+                const revalidatedLocales = Array.from(translatedDefinitions.keys());
+                return revalidatedLocales.length > 0 ? revalidatedLocales : ["default"];
+            }
+        }
     });
     if (bunHandle != null) {
         sendData = bunHandle.sendData;

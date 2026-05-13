@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `/api/revalidate` endpoint to docs preview server that revalidates all locales by default.
+    When no `locale` parameter is provided, the endpoint recomputes translations for all configured locales.
+    When a specific `locale` parameter is provided (e.g., `{"locale": "fr"}`), only that locale is revalidated.
+  type: feat
