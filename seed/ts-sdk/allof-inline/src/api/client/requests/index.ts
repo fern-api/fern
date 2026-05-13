@@ -1,2 +1,2 @@
-export type { RuleCreateRequest } from "./RuleCreateRequest.js";
+export { RuleCreateRequest } from "./RuleCreateRequest.js";
 export type { SearchRuleTypesRequest } from "./SearchRuleTypesRequest.js";

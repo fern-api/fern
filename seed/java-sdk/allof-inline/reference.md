@@ -60,7 +60,7 @@ client.createRule(
     RuleCreateRequest
         .builder()
         .name("name")
-        .executionContext(RuleExecutionContext.PROD)
+        .executionContext(RuleCreateRequestExecutionContext.PROD)
         .build()
 );
 ```
@@ -85,7 +85,7 @@ client.createRule(
 <dl>
 <dd>
 
-**executionContext:** `RuleExecutionContext` 
+**executionContext:** `RuleCreateRequestExecutionContext` — Execution context for the rule, excluding the prod environment.
     
 </dd>
 </dl>
