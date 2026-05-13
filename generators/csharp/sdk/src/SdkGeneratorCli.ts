@@ -268,14 +268,16 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                 scheme: oauth
             });
             context.project.addSourceFiles(oauthTokenProvider.generate());
+        }
 
-            if (context.settings.typedAuth) {
-                const authClass = new AuthClassGenerator({
-                    context,
-                    scheme: oauth
-                });
-                context.project.addSourceFiles(authClass.generate());
-            }
+        // Emit the `Auth` class hierarchy whenever `typed-auth` is enabled and
+        // the IR declares at least one supported scheme. Schemes are bearer,
+        // basic, header (api-key), and oauth — inferred is not supported.
+        if (context.settings.typedAuth && context.hasTypedAuthSupportedScheme()) {
+            const authClass = new AuthClassGenerator({
+                context
+            });
+            context.project.addSourceFiles(authClass.generate());
         }
 
         const inferred = context.getInferredAuth();

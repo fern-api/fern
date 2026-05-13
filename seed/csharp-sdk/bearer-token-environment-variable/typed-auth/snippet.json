@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/apiKey",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getWithBearerToken"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedBearerTokenEnvironmentVariable;\n\nvar client = new SeedBearerTokenEnvironmentVariableClient(\n    new SeedBearerTokenEnvironmentVariable.Auth.Bearer { Token = \"<token>\" }\n);\nawait client.Service.GetWithBearerTokenAsync();\n"
+            }
+        }
+    ]
+}

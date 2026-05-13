@@ -394,6 +394,25 @@ export class EndpointSnippetGenerator extends WithGeneration {
         const authRecord = auth as unknown as Record<string, unknown>;
         const usernameOmitted = !!authRecord.usernameOmit;
         const passwordOmitted = !!authRecord.passwordOmit;
+
+        if (this.settings.typedAuth) {
+            // typed-auth: wrap username/password in an `Auth.Basic` instance.
+            const args: NamedArgument[] = [];
+            if (!usernameOmitted) {
+                args.push({
+                    name: "Username",
+                    assignment: this.csharp.codeblock(`"${values.username ?? ""}"`)
+                });
+            }
+            if (!passwordOmitted) {
+                args.push({
+                    name: "Password",
+                    assignment: this.csharp.codeblock(`"${values.password ?? ""}"`)
+                });
+            }
+            return [this.buildTypedAuthArg(this.Types.AuthBasic, args)];
+        }
+
         const args: NamedArgument[] = [];
         if (!usernameOmitted) {
             args.push({
@@ -417,6 +436,17 @@ export class EndpointSnippetGenerator extends WithGeneration {
         auth: FernIr.dynamic.BearerAuth;
         values: FernIr.dynamic.BearerAuthValues;
     }): NamedArgument[] {
+        if (this.settings.typedAuth) {
+            // typed-auth: wrap the token in an `Auth.Bearer` instance.
+            return [
+                this.buildTypedAuthArg(this.Types.AuthBearer, [
+                    {
+                        name: "Token",
+                        assignment: this.csharp.codeblock(`"${values.token ?? ""}"`)
+                    }
+                ])
+            ];
+        }
         return [
             {
                 name: this.context.getParameterName(auth.token),
@@ -432,6 +462,21 @@ export class EndpointSnippetGenerator extends WithGeneration {
         auth: FernIr.dynamic.HeaderAuth;
         values: FernIr.dynamic.HeaderAuthValues;
     }): NamedArgument[] {
+        if (this.settings.typedAuth) {
+            // typed-auth: wrap the api-key value in an `Auth.ApiKey` instance.
+            return [
+                this.buildTypedAuthArg(this.Types.AuthApiKey, [
+                    {
+                        name: "Value",
+                        assignment: this.context.dynamicLiteralMapper.convert({
+                            typeReference: auth.header.typeReference,
+                            value: values.value,
+                            fallbackToDefault: auth.header.name.wireValue
+                        })
+                    }
+                ])
+            ];
+        }
         return [
             {
                 name: this.context.getParameterName(auth.header.name.name),
@@ -442,6 +487,18 @@ export class EndpointSnippetGenerator extends WithGeneration {
                 })
             }
         ];
+    }
+
+    private buildTypedAuthArg(classReference: ast.ClassReference, args: NamedArgument[]): NamedArgument {
+        return {
+            name: "auth",
+            assignment: this.csharp.Literal.reference(
+                this.csharp.instantiateClass({
+                    classReference,
+                    arguments_: args
+                })
+            )
+        };
     }
 
     private getConstructorOAuthArgs({

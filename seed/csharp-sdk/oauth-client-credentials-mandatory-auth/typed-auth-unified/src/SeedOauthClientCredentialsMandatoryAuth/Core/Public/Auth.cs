@@ -2,7 +2,7 @@ namespace SeedOauthClientCredentialsMandatoryAuth;
 
 /// <summary>
 /// Authentication option for the SDK.
-/// Use `Auth.ClientCredentials` for the OAuth client-credentials flow (recommended) or `Auth.Bearer` to supply a pre-fetched bearer token.
+/// Pass one of the sealed `Auth` subclasses (`Auth.ClientCredentials`, `Auth.Bearer`, `Auth.ApiKey`, `Auth.Basic`) appropriate to the API's auth scheme.
 /// </summary>
 public abstract class Auth
 {
@@ -38,8 +38,7 @@ public abstract class Auth
     }
 
     /// <summary>
-    /// Authenticate using a pre-fetched bearer token, bypassing the OAuth flow.
-    /// Use this when callers manage token acquisition out-of-band; the SDK will not refresh the token.
+    /// Authenticate using a pre-fetched bearer token sent in the Authorization header.
     /// </summary>
     public sealed class Bearer : Auth
     {

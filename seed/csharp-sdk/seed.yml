@@ -284,6 +284,9 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: wire-tests
+    - customConfig:
+        typed-auth: true
+      outputFolder: typed-auth
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config
@@ -303,6 +306,9 @@ fixtures:
     - customConfig:
         unified-client-options: true
       outputFolder: unified-client-options
+    - customConfig:
+        typed-auth: true
+      outputFolder: typed-auth
   oauth-client-credentials:
     - customConfig: null
       outputFolder: no-custom-config

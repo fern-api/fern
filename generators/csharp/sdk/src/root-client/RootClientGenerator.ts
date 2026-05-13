@@ -80,13 +80,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     }
 
     /**
-     * True when the `typed-auth` feature flag is on AND the API has
-     * an OAuth scheme. Drives the alternate constructor and snippet code paths
-     * that take a single `Auth` parameter instead of separate `clientId` /
-     * `clientSecret` arguments.
+     * True when the `typed-auth` feature flag is on AND the IR declares at
+     * least one auth scheme that the flag can represent (bearer, basic, header,
+     * or oauth). Drives the alternate constructor and snippet code paths that
+     * take a single `Auth` parameter instead of per-scheme positional
+     * credentials.
      */
     private isTypedAuthEnabled(): boolean {
-        return this.settings.typedAuth && this.oauth != null;
+        return this.settings.typedAuth && this.context.hasTypedAuthSupportedScheme();
     }
 
     private members = lazy({
@@ -230,7 +231,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     this.csharp.parameter({
                         name: "auth",
                         type: this.Types.Auth,
-                        docs: "OAuth authentication. Use `Auth.ClientCredentials` for the standard OAuth client-credentials flow, or `Auth.Bearer` to provide a pre-fetched access token."
+                        docs: "Authentication. Pass an `Auth` subclass (`Auth.ClientCredentials`, `Auth.Bearer`, `Auth.ApiKey`, or `Auth.Basic`) appropriate to the API's auth scheme."
                     })
                 );
             }
@@ -480,12 +481,20 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     innerWriter.endControlFlow();
                     innerWriter.endControlFlow();
 
-                    // Check if any auth scheme is basic auth
-                    const hasBasicAuth = this.context.ir.auth.schemes.some((s) => s.type === "basic");
+                    // Check if any auth scheme is basic auth. With typed-auth on,
+                    // basic-auth headers are emitted by the switch dispatch below
+                    // instead of a dedicated block, so the standalone block is
+                    // suppressed.
+                    const hasBasicAuth =
+                        this.context.ir.auth.schemes.some((s) => s.type === "basic") && !useTypedAuth;
 
-                    // Only clone clientOptions if we have auth headers or OAuth/inferred auth/basic auth
+                    // Only clone clientOptions if we have auth headers or OAuth/inferred auth/basic auth/typed-auth
                     const needsAuthHeaders =
-                        authHeaderEntries.length > 0 || this.oauth != null || this.inferred != null || hasBasicAuth;
+                        authHeaderEntries.length > 0 ||
+                        this.oauth != null ||
+                        this.inferred != null ||
+                        hasBasicAuth ||
+                        useTypedAuth;
                     const clientOptionsVariable = needsAuthHeaders ? "clientOptionsWithAuth" : "clientOptions";
 
                     if (needsAuthHeaders) {
@@ -558,7 +567,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }
                     }
 
-                    if (this.oauth != null) {
+                    if (useTypedAuth) {
+                        this.emitTypedAuthSwitch(innerWriter, unified);
+                    } else if (this.oauth != null) {
                         const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
                             this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
                         );
@@ -571,70 +582,27 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         ];
                         const oauthAdditionalParams = this.getOAuthAdditionalParamNames();
 
-                        if (useTypedAuth) {
-                            // The `auth` parameter (or `clientOptions.Auth` in unified mode) is a
-                            // sealed Auth subclass. Pattern-match to either set the bearer token
-                            // directly or fall back to the OAuth token provider for client-credentials.
-                            const authAccess = unified ? "clientOptions.Auth" : "auth";
-                            innerWriter.controlFlow("switch", this.csharp.codeblock(authAccess));
-                            innerWriter.writeLine(`case ${this.Types.AuthBearer.scopedName} bearer:`);
-                            innerWriter.indent();
-                            innerWriter.writeTextStatement(
-                                `clientOptionsWithAuth.Headers["Authorization"] = $"Bearer {bearer.Token}"`
-                            );
-                            innerWriter.writeTextStatement("break");
-                            innerWriter.dedent();
-                            innerWriter.writeLine(`case ${this.Types.AuthClientCredentials.scopedName} creds:`);
-                            innerWriter.indent();
-                            innerWriter.write(
-                                "var tokenProvider = new OAuthTokenProvider(creds.ClientId, creds.ClientSecret, "
-                            );
-                            for (const param of oauthAdditionalParams) {
-                                innerWriter.write(`creds.${this.toPascalCase(param)}, `);
-                            }
-                            innerWriter.writeNode(
-                                this.csharp.instantiateClass({
-                                    classReference: authClientClassReference,
-                                    arguments_,
-                                    forceUseConstructor: true
-                                })
-                            );
-                            innerWriter.writeTextStatement(")");
-                            innerWriter.writeTextStatement(
-                                `clientOptionsWithAuth.Headers["Authorization"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => await tokenProvider.${this.names.methods.getAccessTokenAsync}().ConfigureAwait(false))`
-                            );
-                            innerWriter.writeTextStatement("break");
-                            innerWriter.dedent();
-                            innerWriter.writeLine("default:");
-                            innerWriter.indent();
-                            innerWriter.writeTextStatement(
-                                `throw new ArgumentException($"Unsupported Auth type: {${authAccess}.GetType().Name}", nameof(${unified ? "clientOptions" : "auth"}))`
-                            );
-                            innerWriter.dedent();
-                            innerWriter.endControlFlow();
-                        } else {
-                            const clientIdAccess = unified ? "clientOptions.ClientId" : "clientId";
-                            const clientSecretAccess = unified ? "clientOptions.ClientSecret" : "clientSecret";
-                            innerWriter.write(
-                                `var tokenProvider = new OAuthTokenProvider(${clientIdAccess}, ${clientSecretAccess}, `
-                            );
-                            for (const param of oauthAdditionalParams) {
-                                const paramRef = unified ? `clientOptions.${this.toPascalCase(param)}` : param;
-                                innerWriter.write(`${paramRef}, `);
-                            }
-                            innerWriter.writeNode(
-                                this.csharp.instantiateClass({
-                                    classReference: authClientClassReference,
-                                    arguments_,
-                                    forceUseConstructor: true
-                                })
-                            );
-                            innerWriter.writeTextStatement(")");
-
-                            innerWriter.writeTextStatement(
-                                `clientOptionsWithAuth.Headers["Authorization"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => await tokenProvider.${this.names.methods.getAccessTokenAsync}().ConfigureAwait(false))`
-                            );
+                        const clientIdAccess = unified ? "clientOptions.ClientId" : "clientId";
+                        const clientSecretAccess = unified ? "clientOptions.ClientSecret" : "clientSecret";
+                        innerWriter.write(
+                            `var tokenProvider = new OAuthTokenProvider(${clientIdAccess}, ${clientSecretAccess}, `
+                        );
+                        for (const param of oauthAdditionalParams) {
+                            const paramRef = unified ? `clientOptions.${this.toPascalCase(param)}` : param;
+                            innerWriter.write(`${paramRef}, `);
                         }
+                        innerWriter.writeNode(
+                            this.csharp.instantiateClass({
+                                classReference: authClientClassReference,
+                                arguments_,
+                                forceUseConstructor: true
+                            })
+                        );
+                        innerWriter.writeTextStatement(")");
+
+                        innerWriter.writeTextStatement(
+                            `clientOptionsWithAuth.Headers["Authorization"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => await tokenProvider.${this.names.methods.getAccessTokenAsync}().ConfigureAwait(false))`
+                        );
                     }
 
                     if (this.inferred != null) {
@@ -833,33 +801,182 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     }
 
     /**
-     * Build `new Auth.ClientCredentials { ClientId = "client_id", ClientSecret = "client_secret", ... }` for snippets.
-     * Includes example values for any extra OAuth token-endpoint properties (audience, scopes, ...).
+     * Build a fully-qualified `Auth` subclass example for snippets. OAuth APIs
+     * use `Auth.ClientCredentials`; non-OAuth APIs use the first matching
+     * sealed subclass (`Auth.Bearer`, `Auth.ApiKey`, `Auth.Basic`).
      *
      * Always emits a fully-qualified type name so the snippet compiles even when the
      * surrounding scope (e.g. a test namespace) declares a sibling `Auth` sub-namespace
      * (CS0234), which would otherwise shadow the SDK `Auth` type.
      */
     private buildAuthClientCredentialsExample(): ast.CodeBlock {
-        const extraParams = this.getOAuthAdditionalParamNames();
-        const args: Array<{ name: string; assignment: ast.CodeBlock }> = [
-            { name: "ClientId", assignment: this.csharp.codeblock('"client_id"') },
-            { name: "ClientSecret", assignment: this.csharp.codeblock('"client_secret"') }
-        ];
-        for (const param of extraParams) {
-            args.push({
-                name: this.toPascalCase(param),
-                assignment: this.csharp.codeblock(`"${param}"`)
+        const oauth = this.findOAuthScheme();
+        if (oauth != null) {
+            const extraParams = this.getOAuthAdditionalParamNames();
+            const args: Array<{ name: string; assignment: ast.CodeBlock }> = [
+                { name: "ClientId", assignment: this.csharp.codeblock('"client_id"') },
+                { name: "ClientSecret", assignment: this.csharp.codeblock('"client_secret"') }
+            ];
+            for (const param of extraParams) {
+                args.push({
+                    name: this.toPascalCase(param),
+                    assignment: this.csharp.codeblock(`"${param}"`)
+                });
+            }
+            return this.csharp.codeblock((writer) => {
+                writer.writeNode(
+                    this.csharp.instantiateClass({
+                        classReference: this.Types.AuthClientCredentials.asFullyQualified(),
+                        arguments_: args
+                    })
+                );
             });
         }
+        // Non-OAuth: pick the first supported scheme on the API to drive the example.
+        for (const scheme of this.context.ir.auth.schemes) {
+            switch (scheme.type) {
+                case "bearer":
+                    return this.buildAuthExample(this.Types.AuthBearer.asFullyQualified(), [
+                        { name: "Token", assignment: this.csharp.codeblock('"<token>"') }
+                    ]);
+                case "header":
+                    return this.buildAuthExample(this.Types.AuthApiKey.asFullyQualified(), [
+                        { name: "Value", assignment: this.csharp.codeblock('"<value>"') }
+                    ]);
+                case "basic":
+                    return this.buildAuthExample(this.Types.AuthBasic.asFullyQualified(), [
+                        { name: "Username", assignment: this.csharp.codeblock('"<username>"') },
+                        { name: "Password", assignment: this.csharp.codeblock('"<password>"') }
+                    ]);
+                case "oauth":
+                case "inferred":
+                    break;
+                default:
+                    break;
+            }
+        }
+        // Fallback: should be unreachable because typed-auth requires a supported scheme,
+        // but emit ClientCredentials defaults to keep the snippet self-consistent.
         return this.csharp.codeblock((writer) => {
             writer.writeNode(
                 this.csharp.instantiateClass({
                     classReference: this.Types.AuthClientCredentials.asFullyQualified(),
+                    arguments_: []
+                })
+            );
+        });
+    }
+
+    private buildAuthExample(
+        classReference: ast.ClassReference,
+        args: Array<{ name: string; assignment: ast.CodeBlock }>
+    ): ast.CodeBlock {
+        return this.csharp.codeblock((writer) => {
+            writer.writeNode(
+                this.csharp.instantiateClass({
+                    classReference,
                     arguments_: args
                 })
             );
         });
+    }
+
+    private findOAuthScheme(): FernIr.OAuthScheme | undefined {
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "oauth") {
+                return scheme;
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Emit the typed-auth dispatch switch. Pattern-matches on the `auth`
+     * parameter (or `clientOptions.Auth` in unified mode) and emits one case
+     * per `Auth` subclass declared in the IR.
+     */
+    private emitTypedAuthSwitch(writer: ast.Writer, unified: boolean): void {
+        const authAccess = unified ? "clientOptions.Auth" : "auth";
+        const nameOfTarget = unified ? "clientOptions" : "auth";
+        writer.controlFlow("switch", this.csharp.codeblock(authAccess));
+
+        const bearerScheme = this.context.ir.auth.schemes.find((s) => s.type === "bearer");
+        const headerScheme = this.context.ir.auth.schemes.find((s) => s.type === "header");
+        const basicScheme = this.context.ir.auth.schemes.find((s) => s.type === "basic");
+
+        // Bearer case: emitted when the API has a bearer scheme OR an OAuth
+        // scheme (in which case `Auth.Bearer` is the OAuth escape hatch for a
+        // pre-fetched access token).
+        if (bearerScheme != null || this.oauth != null) {
+            writer.writeLine(`case ${this.Types.AuthBearer.scopedName} bearer:`);
+            writer.indent();
+            writer.writeTextStatement(
+                'clientOptionsWithAuth.Headers["Authorization"] = $"Bearer {bearer.Token}"'
+            );
+            writer.writeTextStatement("break");
+            writer.dedent();
+        }
+
+        if (this.oauth != null) {
+            const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
+                this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
+            );
+            const oauthAdditionalParams = this.getOAuthAdditionalParamNames();
+            writer.writeLine(`case ${this.Types.AuthClientCredentials.scopedName} creds:`);
+            writer.indent();
+            writer.write("var tokenProvider = new OAuthTokenProvider(creds.ClientId, creds.ClientSecret, ");
+            for (const param of oauthAdditionalParams) {
+                writer.write(`creds.${this.toPascalCase(param)}, `);
+            }
+            writer.writeNode(
+                this.csharp.instantiateClass({
+                    classReference: authClientClassReference,
+                    arguments_: [
+                        this.generation.Types.RawClient.new({
+                            arguments_: [this.csharp.codeblock("clientOptions")]
+                        })
+                    ],
+                    forceUseConstructor: true
+                })
+            );
+            writer.writeTextStatement(")");
+            writer.writeTextStatement(
+                `clientOptionsWithAuth.Headers["Authorization"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => await tokenProvider.${this.names.methods.getAccessTokenAsync}().ConfigureAwait(false))`
+            );
+            writer.writeTextStatement("break");
+            writer.dedent();
+        }
+
+        if (headerScheme != null && headerScheme.type === "header") {
+            const headerName = getWireValue(headerScheme.name);
+            const prefix = headerScheme.prefix;
+            const headerValueExpr = prefix != null ? `$"${prefix} {apiKey.Value}"` : "apiKey.Value";
+            writer.writeLine(`case ${this.Types.AuthApiKey.scopedName} apiKey:`);
+            writer.indent();
+            writer.writeTextStatement(
+                `clientOptionsWithAuth.Headers["${headerName}"] = ${headerValueExpr}`
+            );
+            writer.writeTextStatement("break");
+            writer.dedent();
+        }
+
+        if (basicScheme != null) {
+            writer.writeLine(`case ${this.Types.AuthBasic.scopedName} basic:`);
+            writer.indent();
+            writer.writeTextStatement(
+                'clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{basic.Username}:{basic.Password}"))}"'
+            );
+            writer.writeTextStatement("break");
+            writer.dedent();
+        }
+
+        writer.writeLine("default:");
+        writer.indent();
+        writer.writeTextStatement(
+            `throw new ArgumentException($"Unsupported Auth type: {${authAccess}.GetType().Name}", nameof(${nameOfTarget}))`
+        );
+        writer.dedent();
+        writer.endControlFlow();
     }
 
     private getConstructorParameters(authOnly = false): {
@@ -913,6 +1030,13 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
     private getParameterFromAuthScheme(scheme: AuthScheme): ConstructorParameter[] {
         const isOptional = this.context.ir.sdkConfig.isAuthMandatory;
+        // When typed-auth is on, bearer / basic / header credentials are carried
+        // by the `auth` parameter (an `Auth` subclass) instead of separate
+        // positional arguments. Skip the per-scheme positional params so the
+        // root client constructor exposes a single `Auth auth` parameter.
+        if (this.isTypedAuthEnabled() && (scheme.type === "bearer" || scheme.type === "basic" || scheme.type === "header")) {
+            return [];
+        }
         if (scheme.type === "header") {
             {
                 const name = this.case.camelSafe(scheme.name);

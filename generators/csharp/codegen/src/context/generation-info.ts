@@ -788,6 +788,18 @@ export class Generation {
                 name: "Bearer",
                 enclosingType: this.Types.Auth
             }),
+        /** `Auth.ApiKey` sealed subclass for header-based API key auth. */
+        AuthApiKey: () =>
+            this.csharp.classReference({
+                name: "ApiKey",
+                enclosingType: this.Types.Auth
+            }),
+        /** `Auth.Basic` sealed subclass for HTTP basic auth. */
+        AuthBasic: () =>
+            this.csharp.classReference({
+                name: "Basic",
+                enclosingType: this.Types.Auth
+            }),
         /** Inferred auth token provider for authentication */
         InferredAuthTokenProvider: () =>
             this.csharp.classReference({

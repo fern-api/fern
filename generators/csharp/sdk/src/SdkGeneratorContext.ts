@@ -358,6 +358,32 @@ export class SdkGeneratorContext extends GeneratorContext {
         return undefined;
     }
 
+    /**
+     * True iff the IR declares at least one auth scheme that the typed-auth
+     * feature flag can represent. Bearer, basic, header (api-key), and oauth
+     * schemes all map onto an `Auth` subclass; inferred auth does not.
+     */
+    public hasTypedAuthSupportedScheme(): boolean {
+        for (const scheme of this.ir.auth.schemes) {
+            switch (scheme.type) {
+                case "bearer":
+                case "basic":
+                case "header":
+                    return true;
+                case "oauth":
+                    if (this.config.generateOauthClients) {
+                        return true;
+                    }
+                    break;
+                case "inferred":
+                    break;
+                default:
+                    break;
+            }
+        }
+        return false;
+    }
+
     public resolveEndpoint(service: FernIr.HttpService, endpointId: FernIr.EndpointId): FernIr.HttpEndpoint {
         const httpEndpoint = service.endpoints.find((endpoint) => endpoint.id === endpointId);
         if (httpEndpoint == null) {

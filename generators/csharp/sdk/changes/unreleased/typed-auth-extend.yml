@@ -1,0 +1,16 @@
+- summary: |
+    Extend the `typed-auth` feature flag to emit `Auth.ApiKey`, `Auth.Basic`, and
+    `Auth.Bearer` sealed subclasses in addition to `Auth.ClientCredentials` for OAuth.
+    Each subclass uses the `required init` pattern so callers construct authentication
+    options via named property initializers, e.g.:
+
+    ```csharp
+    new SeedClient(new Auth.Basic { Username = "...", Password = "..." });
+    new SeedClient(new Auth.Bearer { Token = "..." });
+    new SeedClient(new Auth.ApiKey { Value = "..." });
+    ```
+
+    The root client constructor now accepts a single `Auth auth` parameter and
+    dispatches on the runtime subclass to apply the appropriate authorization
+    header. Dynamic snippets and README examples are updated accordingly.
+  type: feat

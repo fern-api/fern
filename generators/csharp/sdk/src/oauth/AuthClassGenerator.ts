@@ -1,5 +1,6 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
+import { assertNeverNoThrow } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -7,7 +8,6 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace AuthClassGenerator {
     interface Args {
-        scheme: FernIr.OAuthScheme;
         context: SdkGeneratorContext;
     }
 }
@@ -23,25 +23,26 @@ interface ClientCredentialsParam {
  * Generates the public `Auth` abstract class hierarchy used by the root client
  * when the `typed-auth` feature flag is enabled.
  *
- * The generated file contains:
- *   - `Auth`: abstract base with a private constructor that prevents external
- *     subclassing (only the nested sealed subclasses can derive from it).
- *   - `Auth.ClientCredentials`: sealed subclass for the OAuth client-credentials
- *     flow. The SDK fetches and refreshes tokens automatically.
- *   - `Auth.Bearer`: sealed subclass for a pre-fetched bearer token, bypassing
- *     OAuth entirely. This is the harder-to-find escape hatch.
+ * The generated file contains an abstract `Auth` base with a private constructor
+ * that prevents external subclassing (only the nested sealed subclasses can
+ * derive from it), plus one sealed subclass per auth scheme declared in the IR:
+ *   - `Auth.ClientCredentials` for the OAuth client-credentials flow. The SDK
+ *     fetches and refreshes tokens automatically. Required, non-literal custom
+ *     properties on the OAuth token endpoint (e.g. `audience`, `scopes`) are
+ *     surfaced as additional required init-only properties.
+ *   - `Auth.Bearer` for a pre-fetched bearer token (the OAuth escape hatch, or
+ *     a stand-alone bearer scheme).
+ *   - `Auth.ApiKey` for a header-based API key.
+ *   - `Auth.Basic` for HTTP basic auth.
  *
- * Any required, non-literal custom properties on the OAuth token endpoint
- * (e.g. `audience`, `scopes`) are propagated as additional constructor
- * parameters and read-only properties on `Auth.ClientCredentials`.
+ * All subclasses use `required init` properties so callers construct via
+ * object-initializer syntax (`new Auth.ApiKey { Value = "..." }`).
  */
 export class AuthClassGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
-    private readonly scheme: FernIr.OAuthScheme;
     private readonly classReference: ast.ClassReference;
 
-    constructor({ context, scheme }: AuthClassGenerator.Args) {
+    constructor({ context }: AuthClassGenerator.Args) {
         super(context);
-        this.scheme = scheme;
         this.classReference = this.Types.Auth;
     }
 
@@ -51,7 +52,7 @@ export class AuthClassGenerator extends FileGenerator<CSharpFile, SdkGeneratorCo
             access: ast.Access.Public,
             abstract_: true,
             summary:
-                "Authentication option for the SDK.\nUse `Auth.ClientCredentials` for the OAuth client-credentials flow (recommended) or `Auth.Bearer` to supply a pre-fetched bearer token."
+                "Authentication option for the SDK.\nPass one of the sealed `Auth` subclasses (`Auth.ClientCredentials`, `Auth.Bearer`, `Auth.ApiKey`, `Auth.Basic`) appropriate to the API's auth scheme."
         });
 
         // Private constructor: nested types have full access to the enclosing
@@ -62,8 +63,39 @@ export class AuthClassGenerator extends FileGenerator<CSharpFile, SdkGeneratorCo
             access: ast.Access.Private
         });
 
-        this.addClientCredentialsClass(class_);
-        this.addBearerClass(class_);
+        const oauthScheme = this.findOAuthScheme();
+        let emittedBearer = false;
+
+        if (oauthScheme != null) {
+            this.addClientCredentialsClass(class_, oauthScheme);
+            this.addBearerClass(class_);
+            emittedBearer = true;
+        }
+
+        for (const scheme of this.context.ir.auth.schemes) {
+            switch (scheme.type) {
+                case "bearer":
+                    if (!emittedBearer) {
+                        this.addBearerClass(class_);
+                        emittedBearer = true;
+                    }
+                    break;
+                case "basic":
+                    this.addBasicClass(class_);
+                    break;
+                case "header":
+                    this.addApiKeyClass(class_);
+                    break;
+                case "oauth":
+                case "inferred":
+                    // oauth handled above; inferred is not supported by typed-auth.
+                    break;
+                default:
+                    // Forward-compatible: ignore unknown scheme variants.
+                    assertNeverNoThrow(scheme);
+                    break;
+            }
+        }
 
         return new CSharpFile({
             clazz: class_,
@@ -79,15 +111,24 @@ export class AuthClassGenerator extends FileGenerator<CSharpFile, SdkGeneratorCo
         return join(this.constants.folders.publicCoreFiles, RelativeFilePath.of(`${this.classReference.name}.cs`));
     }
 
+    private findOAuthScheme(): FernIr.OAuthScheme | undefined {
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "oauth") {
+                return scheme;
+            }
+        }
+        return undefined;
+    }
+
     /**
      * Custom properties (other than clientId/clientSecret) that are required to
      * fetch a token. Literal-valued properties are skipped because they are
      * hard-coded in the request class. Optional properties are skipped to keep
      * the constructor focused on required inputs.
      */
-    public getClientCredentialsExtraParams(): ClientCredentialsParam[] {
+    public getClientCredentialsExtraParams(scheme: FernIr.OAuthScheme): ClientCredentialsParam[] {
         const params: ClientCredentialsParam[] = [];
-        for (const customProperty of this.scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
+        for (const customProperty of scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
             if (
                 customProperty.property.valueType.type === "container" &&
                 customProperty.property.valueType.container.type === "literal"
@@ -110,7 +151,7 @@ export class AuthClassGenerator extends FileGenerator<CSharpFile, SdkGeneratorCo
         return params;
     }
 
-    private addClientCredentialsClass(parent: ast.Class): void {
+    private addClientCredentialsClass(parent: ast.Class, scheme: FernIr.OAuthScheme): void {
         const subClass = this.csharp.class_({
             name: this.Types.AuthClientCredentials.name,
             enclosingType: parent.reference,
@@ -121,7 +162,7 @@ export class AuthClassGenerator extends FileGenerator<CSharpFile, SdkGeneratorCo
                 "Authenticate using OAuth client credentials.\nThe SDK exchanges the client id/secret for an access token automatically and refreshes it as needed."
         });
 
-        const extraParams = this.getClientCredentialsExtraParams();
+        const extraParams = this.getClientCredentialsExtraParams(scheme);
 
         // Required init-only properties: callers populate via object initializer
         // syntax (`new Auth.ClientCredentials { ClientId = ..., ClientSecret = ... }`).
@@ -165,8 +206,7 @@ export class AuthClassGenerator extends FileGenerator<CSharpFile, SdkGeneratorCo
             access: ast.Access.Public,
             sealed: true,
             parentClassReference: parent.reference,
-            summary:
-                "Authenticate using a pre-fetched bearer token, bypassing the OAuth flow.\nUse this when callers manage token acquisition out-of-band; the SDK will not refresh the token."
+            summary: "Authenticate using a pre-fetched bearer token sent in the Authorization header."
         });
 
         subClass.addField({
@@ -177,6 +217,61 @@ export class AuthClassGenerator extends FileGenerator<CSharpFile, SdkGeneratorCo
             init: true,
             useRequired: true,
             summary: "The bearer token sent in the Authorization header."
+        });
+
+        parent.addNestedClass(subClass);
+    }
+
+    private addApiKeyClass(parent: ast.Class): void {
+        const subClass = this.csharp.class_({
+            name: this.Types.AuthApiKey.name,
+            enclosingType: parent.reference,
+            access: ast.Access.Public,
+            sealed: true,
+            parentClassReference: parent.reference,
+            summary: "Authenticate using a header-based API key."
+        });
+
+        subClass.addField({
+            name: "Value",
+            access: ast.Access.Public,
+            type: this.Primitive.string,
+            get: true,
+            init: true,
+            useRequired: true,
+            summary: "The API key value sent in the auth header."
+        });
+
+        parent.addNestedClass(subClass);
+    }
+
+    private addBasicClass(parent: ast.Class): void {
+        const subClass = this.csharp.class_({
+            name: this.Types.AuthBasic.name,
+            enclosingType: parent.reference,
+            access: ast.Access.Public,
+            sealed: true,
+            parentClassReference: parent.reference,
+            summary: "Authenticate using HTTP basic auth (username + password)."
+        });
+
+        subClass.addField({
+            name: "Username",
+            access: ast.Access.Public,
+            type: this.Primitive.string,
+            get: true,
+            init: true,
+            useRequired: true,
+            summary: "The username used for HTTP basic auth."
+        });
+        subClass.addField({
+            name: "Password",
+            access: ast.Access.Public,
+            type: this.Primitive.string,
+            get: true,
+            init: true,
+            useRequired: true,
+            summary: "The password used for HTTP basic auth."
         });
 
         parent.addNestedClass(subClass);
