@@ -186,7 +186,8 @@ export class LinkCheckClient {
         }
 
         if (!sawComplete) {
-            const phase = linksCheckedSoFar > 0 ? "checking links" : pagesScrapedSoFar > 0 ? "scraping pages" : "connecting";
+            const phase =
+                linksCheckedSoFar > 0 ? "checking links" : pagesScrapedSoFar > 0 ? "scraping pages" : "connecting";
 
             callbacks.onStreamInterrupted?.({
                 phase,
