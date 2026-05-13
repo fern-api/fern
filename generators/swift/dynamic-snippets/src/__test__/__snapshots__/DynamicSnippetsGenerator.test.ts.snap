@@ -481,6 +481,7 @@ private func main() async throws {
     let client = AcmeClient()
 
     _ = try await client.user.getUserSpecifics(
+        tenantID: "my_tenant",
         userID: "my_user",
         version: 7,
         thought: "my_thought"

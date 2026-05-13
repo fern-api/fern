@@ -320,6 +320,7 @@ exports[`snippets (default) > path-parameters > 'GET /{tenant_id}/user/{user_id}
 client = Acme::Client.new
 
 client.user.get_user_specifics(
+  tenant_id: "my_tenant",
   user_id: "my_user",
   version: 7,
   thought: "my_thought"

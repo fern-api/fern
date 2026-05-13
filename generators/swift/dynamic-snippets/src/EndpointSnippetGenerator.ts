@@ -388,11 +388,15 @@ export class EndpointSnippetGenerator {
     }): swift.FunctionArgument[] {
         const args: swift.FunctionArgument[] = [];
         this.context.errors.scope(Scope.PathParameters);
+        // Generated Swift SDKs surface both root-level and endpoint-level path parameters
+        // as labelled arguments on the endpoint method, so merge them here in IR / URL
+        // order before rendering (mirroring `getEndpointMethodArgsForBodyRequest`).
+        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
         const pathParameterFields: swift.FunctionArgument[] = [];
-        if (request.pathParameters != null) {
+        if (pathParameters.length > 0) {
             pathParameterFields.push(
                 ...this.getEndpointMethodPathParameters({
-                    namedParameters: request.pathParameters,
+                    namedParameters: pathParameters,
                     snippet
                 })
             );
