@@ -14,21 +14,27 @@ public abstract class Auth
     /// </summary>
     public sealed class ClientCredentials : Auth
     {
-        public ClientCredentials(string clientId, string clientSecret)
-        {
-            ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
-            ClientSecret = clientSecret ?? throw new ArgumentNullException(nameof(clientSecret));
-        }
-
         /// <summary>
         /// The clientId used to fetch OAuth access tokens.
         /// </summary>
-        public string ClientId { get; }
+        public required string ClientId { get;
+#if NET5_0_OR_GREATER
+            init;
+#else
+            set;
+#endif
+        }
 
         /// <summary>
         /// The clientSecret used to fetch OAuth access tokens.
         /// </summary>
-        public string ClientSecret { get; }
+        public required string ClientSecret { get;
+#if NET5_0_OR_GREATER
+            init;
+#else
+            set;
+#endif
+        }
     }
 
     /// <summary>
@@ -37,14 +43,15 @@ public abstract class Auth
     /// </summary>
     public sealed class Bearer : Auth
     {
-        public Bearer(string token)
-        {
-            Token = token ?? throw new ArgumentNullException(nameof(token));
-        }
-
         /// <summary>
         /// The bearer token sent in the Authorization header.
         /// </summary>
-        public string Token { get; }
+        public required string Token { get;
+#if NET5_0_OR_GREATER
+            init;
+#else
+            set;
+#endif
+        }
     }
 }

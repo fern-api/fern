@@ -833,7 +833,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     }
 
     /**
-     * Build `new Auth.ClientCredentials("client_id", "client_secret", ...)` for snippets.
+     * Build `new Auth.ClientCredentials { ClientId = "client_id", ClientSecret = "client_secret", ... }` for snippets.
      * Includes example values for any extra OAuth token-endpoint properties (audience, scopes, ...).
      *
      * Always emits a fully-qualified type name so the snippet compiles even when the
@@ -842,9 +842,15 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
      */
     private buildAuthClientCredentialsExample(): ast.CodeBlock {
         const extraParams = this.getOAuthAdditionalParamNames();
-        const args: ast.CodeBlock[] = [this.csharp.codeblock('"client_id"'), this.csharp.codeblock('"client_secret"')];
+        const args: Array<{ name: string; assignment: ast.CodeBlock }> = [
+            { name: "ClientId", assignment: this.csharp.codeblock('"client_id"') },
+            { name: "ClientSecret", assignment: this.csharp.codeblock('"client_secret"') }
+        ];
         for (const param of extraParams) {
-            args.push(this.csharp.codeblock(`"${param}"`));
+            args.push({
+                name: this.toPascalCase(param),
+                assignment: this.csharp.codeblock(`"${param}"`)
+            });
         }
         return this.csharp.codeblock((writer) => {
             writer.writeNode(

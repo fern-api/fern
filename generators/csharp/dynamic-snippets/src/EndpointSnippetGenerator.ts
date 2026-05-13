@@ -453,7 +453,9 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }): NamedArgument[] {
         if (this.settings.typedAuth) {
             // With the typed-auth flag enabled, OAuth credentials are wrapped in
-            // a single `Auth.ClientCredentials` instance instead of separate clientId/clientSecret args.
+            // a single `Auth.ClientCredentials` instance built via object
+            // initializer syntax (matching the `required init` properties on
+            // the generated class).
             return [
                 {
                     name: "auth",
@@ -461,10 +463,15 @@ export class EndpointSnippetGenerator extends WithGeneration {
                         this.csharp.instantiateClass({
                             classReference: this.Types.AuthClientCredentials,
                             arguments_: [
-                                this.csharp.codeblock(`"${values.clientId}"`),
-                                this.csharp.codeblock(`"${values.clientSecret}"`)
-                            ],
-                            forceUseConstructor: true
+                                {
+                                    name: "ClientId",
+                                    assignment: this.csharp.codeblock(`"${values.clientId}"`)
+                                },
+                                {
+                                    name: "ClientSecret",
+                                    assignment: this.csharp.codeblock(`"${values.clientSecret}"`)
+                                }
+                            ]
                         })
                     )
                 }

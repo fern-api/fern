@@ -43,7 +43,11 @@ Instantiate and use the client with the following:
 using SeedOauthClientCredentialsMandatoryAuth;
 
 var client = new SeedOauthClientCredentialsMandatoryAuthClient(
-    new SeedOauthClientCredentialsMandatoryAuth.Auth.ClientCredentials("client_id", "client_secret")
+    new SeedOauthClientCredentialsMandatoryAuth.Auth.ClientCredentials
+    {
+        ClientId = "client_id",
+        ClientSecret = "client_secret",
+    }
 );
 await client.Auth.GetTokenWithClientCredentialsAsync(
     new GetTokenRequest
@@ -68,10 +72,10 @@ bearer token; the SDK will not refresh it.
 using SeedOauthClientCredentialsMandatoryAuth;
 
 // Option 1: OAuth client credentials (recommended). The SDK fetches and refreshes tokens automatically.
-var client = new SeedOauthClientCredentialsMandatoryAuthClient(new Auth.ClientCredentials("client_id", "client_secret"));
+var client = new SeedOauthClientCredentialsMandatoryAuthClient(new Auth.ClientCredentials { ClientId = "client_id", ClientSecret = "client_secret" });
 
 // Option 2: Pre-fetched bearer token. Use this when you manage token acquisition out-of-band.
-var clientWithToken = new SeedOauthClientCredentialsMandatoryAuthClient(new Auth.Bearer("my-token"));
+var clientWithToken = new SeedOauthClientCredentialsMandatoryAuthClient(new Auth.Bearer { Token = "my-token" });
 ```
 
 ## Exception Handling

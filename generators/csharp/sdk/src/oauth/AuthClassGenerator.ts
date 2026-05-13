@@ -123,12 +123,15 @@ export class AuthClassGenerator extends FileGenerator<CSharpFile, SdkGeneratorCo
 
         const extraParams = this.getClientCredentialsExtraParams();
 
-        // Read-only properties for each constructor parameter.
+        // Required init-only properties: callers populate via object initializer
+        // syntax (`new Auth.ClientCredentials { ClientId = ..., ClientSecret = ... }`).
         subClass.addField({
             name: "ClientId",
             access: ast.Access.Public,
             type: this.Primitive.string,
             get: true,
+            init: true,
+            useRequired: true,
             summary: "The clientId used to fetch OAuth access tokens."
         });
         subClass.addField({
@@ -136,6 +139,8 @@ export class AuthClassGenerator extends FileGenerator<CSharpFile, SdkGeneratorCo
             access: ast.Access.Public,
             type: this.Primitive.string,
             get: true,
+            init: true,
+            useRequired: true,
             summary: "The clientSecret used to fetch OAuth access tokens."
         });
         for (const param of extraParams) {
@@ -144,33 +149,11 @@ export class AuthClassGenerator extends FileGenerator<CSharpFile, SdkGeneratorCo
                 access: ast.Access.Public,
                 type: param.type,
                 get: true,
+                init: true,
+                useRequired: true,
                 summary: param.docs
             });
         }
-
-        subClass.addConstructor({
-            access: ast.Access.Public,
-            parameters: [
-                this.csharp.parameter({ name: "clientId", type: this.Primitive.string }),
-                this.csharp.parameter({ name: "clientSecret", type: this.Primitive.string }),
-                ...extraParams.map((param) => this.csharp.parameter({ name: param.name, type: param.type }))
-            ],
-            body: this.csharp.codeblock((writer) => {
-                writer.writeTextStatement("ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId))");
-                writer.writeTextStatement(
-                    "ClientSecret = clientSecret ?? throw new ArgumentNullException(nameof(clientSecret))"
-                );
-                for (const param of extraParams) {
-                    if (this.isReferenceTypeForNullCheck(param.type)) {
-                        writer.writeTextStatement(
-                            `${param.propertyName} = ${param.name} ?? throw new ArgumentNullException(nameof(${param.name}))`
-                        );
-                    } else {
-                        writer.writeTextStatement(`${param.propertyName} = ${param.name}`);
-                    }
-                }
-            })
-        });
 
         parent.addNestedClass(subClass);
     }
@@ -191,26 +174,11 @@ export class AuthClassGenerator extends FileGenerator<CSharpFile, SdkGeneratorCo
             access: ast.Access.Public,
             type: this.Primitive.string,
             get: true,
+            init: true,
+            useRequired: true,
             summary: "The bearer token sent in the Authorization header."
         });
 
-        subClass.addConstructor({
-            access: ast.Access.Public,
-            parameters: [this.csharp.parameter({ name: "token", type: this.Primitive.string })],
-            body: this.csharp.codeblock((writer) => {
-                writer.writeTextStatement("Token = token ?? throw new ArgumentNullException(nameof(token))");
-            })
-        });
-
         parent.addNestedClass(subClass);
-    }
-
-    /**
-     * Returns true when the type is a reference type and therefore eligible for
-     * a `?? throw new ArgumentNullException(...)` null check. Value types (int,
-     * bool, etc.) are non-nullable in C# and don't need the guard.
-     */
-    private isReferenceTypeForNullCheck(type: ast.Type): boolean {
-        return type.isReferenceType !== false;
     }
 }

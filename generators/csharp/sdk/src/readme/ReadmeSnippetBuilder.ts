@@ -184,10 +184,10 @@ var response = await ${this.getMethodCall(timeoutEndpoint)}(
 using ${this.namespaces.root};
 
 // Option 1: OAuth client credentials (recommended). The SDK fetches and refreshes tokens automatically.
-var client = new ${this.Types.RootClient.name}(new ${this.Types.Auth.name}.${this.Types.AuthClientCredentials.name}("client_id", "client_secret"));
+var client = new ${this.Types.RootClient.name}(new ${this.Types.Auth.name}.${this.Types.AuthClientCredentials.name} { ClientId = "client_id", ClientSecret = "client_secret" });
 
 // Option 2: Pre-fetched bearer token. Use this when you manage token acquisition out-of-band.
-var clientWithToken = new ${this.Types.RootClient.name}(new ${this.Types.Auth.name}.${this.Types.AuthBearer.name}("my-token"));
+var clientWithToken = new ${this.Types.RootClient.name}(new ${this.Types.Auth.name}.${this.Types.AuthBearer.name} { Token = "my-token" });
 `)
         ];
     }

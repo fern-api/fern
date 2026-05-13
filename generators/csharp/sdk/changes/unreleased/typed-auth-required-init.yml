@@ -1,0 +1,11 @@
+- summary: |
+    Refactor the typed-auth `Auth` subclasses (`Auth.ClientCredentials`,
+    `Auth.Bearer`) to use C# `required init` properties instead of positional
+    constructor parameters. Callers now construct with named-property
+    initializer syntax (e.g. `new Auth.ClientCredentials { ClientId = "...",
+    ClientSecret = "..." }`), which aligns with the broader `required init`
+    pattern already used for `ClientOptions` and makes the call sites
+    self-documenting. This is a breaking change to the still-experimental
+    `typed-auth` surface — APIs that do not opt into `typed-auth` are
+    unaffected.
+  type: feat

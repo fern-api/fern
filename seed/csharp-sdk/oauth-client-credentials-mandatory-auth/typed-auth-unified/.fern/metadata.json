@@ -3,7 +3,7 @@
   "generatorName": "fernapi/fern-csharp-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
-    "auth-class-hierarchy": true,
+    "typed-auth": true,
     "unified-client-options": true
   },
   "originGitCommit": "DUMMY",
