@@ -118,7 +118,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     // validateOSSWorkspace() need the same OpenAPI specs.
     private openApiSpecsCache: Map<string, Promise<OpenAPISpec[]>> = new Map();
 
-    private cacheDir: AbsoluteFilePath | undefined;
+    private readonly cacheDir: AbsoluteFilePath | undefined;
 
     constructor({ allSpecs, specs, cacheDir, ...superArgs }: OSSWorkspace.Args) {
         const openapiSpecs = specs.filter((spec) => spec.type === "openapi" && spec.source.type === "openapi");

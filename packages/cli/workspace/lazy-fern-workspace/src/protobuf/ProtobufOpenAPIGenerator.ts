@@ -26,7 +26,7 @@ export class ProtobufOpenAPIGenerator {
     private protocGenOpenAPIBinDir: AbsoluteFilePath | undefined;
     private protocGenOpenAPIResolved = false;
     private resolvedBufCommand: string | undefined;
-    private cacheDir: AbsoluteFilePath | undefined;
+    private readonly cacheDir: AbsoluteFilePath | undefined;
 
     constructor({ context, cacheDir }: { context: TaskContext; cacheDir?: AbsoluteFilePath }) {
         this.context = context;
