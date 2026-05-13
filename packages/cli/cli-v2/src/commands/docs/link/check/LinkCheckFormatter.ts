@@ -59,7 +59,7 @@ export class LinkCheckFormatter {
     }
 
     private formatCsv(result: ResolvedLinkCheckResult): string {
-        const rows: string[] = ["type,url,statusCode,isInternal,localFile,line,column,error"];
+        const rows: string[] = ["type,url,statusCode,isInternal,localFile,error"];
 
         for (const link of result.brokenLinks) {
             this.appendCsvRows(rows, "broken", link);
@@ -80,8 +80,6 @@ export class LinkCheckFormatter {
                     String(link.statusCode ?? ""),
                     link.isInternal ? "internal" : "external",
                     "",
-                    "",
-                    "",
                     this.escapeCsv(link.error ?? "")
                 ].join(",")
             );
@@ -96,8 +94,6 @@ export class LinkCheckFormatter {
                     String(link.statusCode ?? ""),
                     link.isInternal ? "internal" : "external",
                     this.escapeCsv(ref.filePath ?? ref.display),
-                    String(ref.line ?? ""),
-                    String(ref.column ?? ""),
                     this.escapeCsv(link.error ?? "")
                 ].join(",")
             );
@@ -195,9 +191,7 @@ export class LinkCheckFormatter {
     private formatJsonReference(ref: ResolvedReference): Record<string, unknown> {
         return {
             display: this.formatReference(ref),
-            ...(ref.filePath != null ? { localFile: ref.filePath } : {}),
-            ...(ref.line != null ? { line: ref.line } : {}),
-            ...(ref.column != null ? { column: ref.column } : {})
+            ...(ref.filePath != null ? { localFile: ref.filePath } : {})
         };
     }
 

@@ -1,21 +1,17 @@
-import { existsSync, readFileSync } from "fs";
+import { existsSync } from "fs";
 import path from "path";
 
 import type { BrokenLink, LinkCheckResult } from "./LinkCheckClient.js";
 
 /**
- * A resolved source reference pointing to a local file with line:column,
+ * A resolved source reference pointing to a local file path,
  * or falling back to a source page URL.
  */
 export interface ResolvedReference {
-    /** Display string: "file:line:column" or source page URL */
+    /** Display string: relative file path or source page URL */
     display: string;
     /** Relative file path, if resolved locally */
     filePath?: string;
-    /** 1-based line number */
-    line?: number;
-    /** 1-based column number */
-    column?: number;
 }
 
 /**
@@ -42,8 +38,9 @@ export interface ResolvedLinkCheckResult {
  * Resolves source page URLs/pageIds from the link checker to display references.
  *
  * When the server provides sourcePageIds (relative file paths like "pages/welcome.mdx"),
- * resolves them to local file paths with line:column by searching for the broken URL
- * in the file content. Falls back to source page URLs when pageIds are not available.
+ * resolves them to local file paths. Only includes files that exist locally — auto-generated
+ * API reference pages are filtered out. Falls back to source page URLs when no local files
+ * are found.
  */
 export class SourceResolver {
     private readonly docsConfigDir: string | undefined;
@@ -71,7 +68,7 @@ export class SourceResolver {
                 if (pageId == null) {
                     continue;
                 }
-                const resolved = this.resolvePageId(pageId, link.url);
+                const resolved = this.resolvePageId(pageId);
                 if (resolved != null) {
                     references.push(resolved);
                 }
@@ -87,22 +84,13 @@ export class SourceResolver {
         };
     }
 
-    private resolvePageId(pageId: string, brokenUrl: string): ResolvedReference | undefined {
+    private resolvePageId(pageId: string): ResolvedReference | undefined {
         if (this.docsConfigDir != null) {
             const filePath = path.join(this.docsConfigDir, pageId);
             if (!existsSync(filePath)) {
                 return undefined;
             }
             const relativeDisplay = path.relative(process.cwd(), filePath);
-            const location = this.findLinkInFile(filePath, brokenUrl);
-            if (location != null) {
-                return {
-                    display: `${relativeDisplay}:${location.line}:${location.column}`,
-                    filePath: relativeDisplay,
-                    line: location.line,
-                    column: location.column
-                };
-            }
             return {
                 display: relativeDisplay,
                 filePath: relativeDisplay
@@ -110,41 +98,5 @@ export class SourceResolver {
         }
 
         return { display: pageId };
-    }
-
-    private findLinkInFile(filePath: string, brokenUrl: string): { line: number; column: number } | undefined {
-        let content: string;
-        try {
-            content = readFileSync(filePath, "utf-8");
-        } catch {
-            return undefined;
-        }
-
-        const lines = content.split("\n");
-
-        // Try full URL first
-        const fullUrlResult = this.searchLines(lines, brokenUrl);
-        if (fullUrlResult != null) {
-            return fullUrlResult;
-        }
-
-        // Try just the pathname
-        try {
-            const parsed = new URL(brokenUrl);
-            const pathname = parsed.pathname + (parsed.search || "") + (parsed.hash || "");
-            return this.searchLines(lines, pathname);
-        } catch {
-            return undefined;
-        }
-    }
-
-    private searchLines(lines: string[], needle: string): { line: number; column: number } | undefined {
-        for (let i = 0; i < lines.length; i++) {
-            const col = lines[i]?.indexOf(needle);
-            if (col != null && col >= 0) {
-                return { line: i + 1, column: col + 1 };
-            }
-        }
-        return undefined;
     }
 }
