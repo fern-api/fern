@@ -24,6 +24,9 @@ ARG COMPOSE_VERSION=5.1.3
 ARG XNET_VERSION=0.53.0
 ARG OTEL_SDK_VERSION=1.43.0
 ARG IN_TOTO_VERSION=0.11.0
+# Latest 28.x backport of CVE-2026-33997/34040 (compose v5.1.3's legacy
+# github.com/docker/docker indirect dep is frozen at v28.5.2).
+ARG DOCKER_LEGACY_VERSION=v28.5.3-0.20260325154711-31a1689cb0a1+incompatible
 ENV GOTOOLCHAIN=go1.26.3
 RUN apk add --no-cache git make gcc musl-dev linux-headers libseccomp-dev libseccomp-static bash ca-certificates && \
     mkdir -p /overlay/usr/local/bin
@@ -85,12 +88,16 @@ RUN git clone --depth 1 --branch v${DOCKER_CLI_VERSION} https://github.com/docke
       -tags "osusergo netgo static_build pkcs11" \
       -trimpath -ldflags "-s -w" \
       -o /overlay/usr/local/bin/docker ./cmd/docker
-# Rebuild docker-compose to clear x/net <0.53 + OTLP HTTP exporter <1.43.0
-# (CVE-2026-39882) CVEs the v5.1.3 upstream prebuilt vendors.
+# Rebuild docker-compose to clear x/net <0.53, OTLP HTTP exporter <1.43.0
+# (CVE-2026-39882), in-toto-golang <0.11.0 (GHSA-pmwq-pjrm-6p5r), and the
+# legacy github.com/docker/docker v28.5.2 (CVE-2026-33997/34040) that the
+# v5.1.3 upstream prebuilt vendors.
 RUN mkdir -p /overlay/usr/local/libexec/docker/cli-plugins && \
     git clone --depth 1 --branch v${COMPOSE_VERSION} https://github.com/docker/compose.git /src/compose && \
     cd /src/compose && \
     go get golang.org/x/net@v${XNET_VERSION} \
+           github.com/in-toto/in-toto-golang@v${IN_TOTO_VERSION} \
+           github.com/docker/docker@${DOCKER_LEGACY_VERSION} \
            go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel/trace@v${OTEL_SDK_VERSION} \
