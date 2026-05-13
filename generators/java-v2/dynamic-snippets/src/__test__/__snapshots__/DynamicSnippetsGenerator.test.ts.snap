@@ -420,13 +420,19 @@ exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 "package com.example.usage;
 
 import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.types.GetMovieImdbRequest;
 
 AcmeAcmeClient client = AcmeAcmeClient
     .builder()
     .token("<YOUR_API_KEY>")
     .build();
 
-client.imdb().getMovie("movie_xyz");
+client.imdb().getMovie(
+    "movie_xyz",
+    GetMovieImdbRequest
+        .builder()
+        .build()
+);
 "
 `;
 

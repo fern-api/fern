@@ -388,7 +388,7 @@ exports[`snippets (default) > imdb > 'POST /movies/create-movie (simple)' 1`] = 
 namespace Example;
 
 use Acme\\AcmeClient;
-use Acme\\Imdb\\Types\\CreateMovieRequest;
+use Acme\\Imdb\\Requests\\CreateMovieRequest;
 
 $client = new AcmeClient(
     token: '<YOUR_API_KEY>',
