@@ -34,6 +34,13 @@ export interface LinkCheckCallbacks {
     onSitemapFetched?: (data: { totalPages: number }) => void;
     onPageScraped?: (data: { pageUrl: string; linksFound: number; pageIndex: number; totalPages: number }) => void;
     onLinkChecked?: (data: { linksChecked: number; totalLinks: number }) => void;
+    onStreamInterrupted?: (data: {
+        phase: string;
+        pagesScraped: number;
+        totalPages: number;
+        linksChecked: number;
+        totalLinks: number;
+    }) => void;
 }
 
 export class LinkCheckClient {
@@ -175,7 +182,34 @@ export class LinkCheckClient {
         }
 
         if (!sawComplete) {
-            throw new LinkCheckError(0, "Link check stream ended unexpectedly without a completion event.");
+            const phase = totalLinks > 0 ? "checking links" : totalPages > 0 ? "scraping pages" : "connecting";
+            const pagesScraped = totalPages;
+            const linksChecked = brokenLinks.length + blockedLinks.length;
+
+            callbacks.onStreamInterrupted?.({
+                phase,
+                pagesScraped,
+                totalPages,
+                linksChecked,
+                totalLinks
+            });
+
+            if (brokenLinks.length > 0 || blockedLinks.length > 0) {
+                return {
+                    totalPages,
+                    totalLinks,
+                    workingLinks,
+                    brokenLinks,
+                    blockedLinks,
+                    durationMs: Date.now() - startTime
+                };
+            }
+
+            const detail =
+                phase === "connecting"
+                    ? "The server closed the connection before sending any data. This may indicate a timeout or network issue."
+                    : `The connection was lost while ${phase} (${pagesScraped} pages scraped, ${linksChecked}/${totalLinks} links checked). This is usually caused by a server timeout.`;
+            throw new LinkCheckError(0, detail);
         }
 
         return {

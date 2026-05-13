@@ -37,6 +37,8 @@ export class LinkCheckCommand {
 
         const progress = new ProgressRenderer(process.stderr);
 
+        let streamInterrupted = false;
+
         try {
             const result = await client.run(domain, {
                 onSitemapFetched: (data) => {
@@ -47,6 +49,16 @@ export class LinkCheckCommand {
                 },
                 onLinkChecked: (data) => {
                     progress.onLinkChecked(data.linksChecked, data.totalLinks);
+                },
+                onStreamInterrupted: (data) => {
+                    streamInterrupted = true;
+                    progress.finish();
+                    context.stderr.info("");
+                    context.stderr.info(
+                        `${Icons.warning} ${chalk.yellow("Connection lost")} while ${data.phase} ` +
+                            `(${data.pagesScraped} pages scraped, ${data.linksChecked}/${data.totalLinks} links checked). ` +
+                            "Showing partial results."
+                    );
                 }
             });
 
