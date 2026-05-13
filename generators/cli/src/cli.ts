@@ -2,16 +2,10 @@ import {
     ExitStatusUpdate,
     GeneratorNotificationService,
     GeneratorUpdate,
-    parseGeneratorConfig,
-    parseIR
+    parseGeneratorConfig
 } from "@fern-api/base-generator";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { FernIr } from "@fern-fern/ir-sdk";
-import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
-import { mkdir, writeFile } from "fs/promises";
+import { cp, mkdir } from "fs/promises";
 import path from "path";
-
-import { CLI_TEMPLATE } from "./templates/cli-template.js";
 
 const pathToConfig = process.argv[process.argv.length - 1];
 if (pathToConfig == null) {
@@ -32,17 +26,10 @@ async function generate(configPath: string): Promise<void> {
                 })
             );
 
-            const ir = await parseIR<FernIr.IntermediateRepresentation>({
-                absolutePathToIR: AbsoluteFilePath.of(config.irFilepath),
-                parse: IrSerialization.IntermediateRepresentation.parse
-            });
-
             const outputDir = config.output.path;
             await mkdir(outputDir, { recursive: true });
 
-            const apiName = typeof ir.apiName === "string" ? ir.apiName : ir.apiName.originalName;
-            const rendered = CLI_TEMPLATE.replaceAll("{{apiName}}", apiName);
-            await writeFile(path.join(outputDir, "cli.ts"), rendered);
+            await cp(path.join(__dirname, "sdk"), outputDir, { recursive: true });
 
             await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful({})));
         } catch (e) {
