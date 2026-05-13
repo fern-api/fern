@@ -7,15 +7,13 @@ import { ProtobufOpenAPIGenerator } from "../protobuf/ProtobufOpenAPIGenerator.j
 export async function getAllOpenAPISpecs({
     context,
     specs,
-    relativePathToDependency,
-    cacheDir
+    relativePathToDependency
 }: {
     context: TaskContext;
     specs: Spec[];
     relativePathToDependency?: RelativeFilePath;
-    cacheDir?: AbsoluteFilePath;
 }): Promise<OpenAPISpec[]> {
-    const generator = new ProtobufOpenAPIGenerator({ context, cacheDir });
+    const generator = new ProtobufOpenAPIGenerator({ context });
     const openApiSpecs: OpenAPISpec[] = specs
         .filter((spec): spec is OpenAPISpec => spec.type === "openapi")
         .map((spec) => {

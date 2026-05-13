@@ -26,11 +26,9 @@ export class ProtobufOpenAPIGenerator {
     private protocGenOpenAPIBinDir: AbsoluteFilePath | undefined;
     private protocGenOpenAPIResolved = false;
     private resolvedBufCommand: string | undefined;
-    private readonly cacheDir: AbsoluteFilePath | undefined;
 
-    constructor({ context, cacheDir }: { context: TaskContext; cacheDir?: AbsoluteFilePath }) {
+    constructor({ context }: { context: TaskContext }) {
         this.context = context;
-        this.cacheDir = cacheDir;
     }
 
     public async generate({
@@ -365,7 +363,7 @@ export class ProtobufOpenAPIGenerator {
         // A user may have the original Google/gnostic protoc-gen-openapi on
         // PATH, which does not support fern-specific flags like flatten_oneofs.
         this.context.logger.debug("Resolving protoc-gen-openapi (preferring auto-downloaded fern fork)");
-        this.protocGenOpenAPIBinDir = await resolveProtocGenOpenAPI(this.context.logger, this.cacheDir);
+        this.protocGenOpenAPIBinDir = await resolveProtocGenOpenAPI(this.context.logger);
 
         if (this.protocGenOpenAPIBinDir != null) {
             this.protocGenOpenAPIResolved = true;
@@ -404,7 +402,7 @@ export class ProtobufOpenAPIGenerator {
         }
 
         try {
-            this.resolvedBufCommand = await ensureBufCommand(this.context.logger, this.cacheDir);
+            this.resolvedBufCommand = await ensureBufCommand(this.context.logger);
         } catch (error) {
             this.context.failAndThrow(error instanceof Error ? error.message : String(error), undefined, {
                 code: CliError.Code.EnvironmentError

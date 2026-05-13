@@ -145,8 +145,7 @@ export class ApiDefinitionValidator {
             cliVersion: this.cliVersion,
             changelog: undefined,
             generatorsConfiguration: undefined,
-            workspaceName: undefined,
-            cacheDir: this.context.cache.bin.absoluteFilePath
+            workspaceName: undefined
         });
 
         const fernWorkspace: FernWorkspace = await ossWorkspace.toFernWorkspace({ context: this.taskContext });

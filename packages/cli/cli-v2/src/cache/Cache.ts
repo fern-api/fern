@@ -1,6 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import type { Logger } from "@fern-api/logger";
 import os from "os";
+import path from "path";
 import { FernRcSchemaLoader } from "../config/fern-rc/FernRcSchemaLoader.js";
 import { IrCache } from "./ir/index.js";
 import { LogsCache } from "./logs/index.js";
@@ -16,7 +17,6 @@ const CACHE_VERSION = "v1";
  * %LOCALAPPDATA%/fern/cache   # Windows
  *
  * ├── v1/                     # Cache schema version
- * │   ├── bin/                # Downloaded tool binaries (buf, protoc-gen-openapi)
  * │   ├── ir/
  * │   │   ├── v63/
  * │   │   │   └── sha256/
@@ -82,7 +82,8 @@ export class Cache {
             absoluteFilePath: join(this.getVersionedPath(), RelativeFilePath.of("migrations"))
         };
         this.bin = {
-            absoluteFilePath: join(this.getVersionedPath(), RelativeFilePath.of("bin"))
+            // Points to ~/.fern/bin/ to share the binary cache with CLI v1.
+            absoluteFilePath: AbsoluteFilePath.of(path.join(os.homedir(), ".fern", "bin"))
         };
     }
 

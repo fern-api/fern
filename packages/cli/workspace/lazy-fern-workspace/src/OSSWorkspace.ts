@@ -43,7 +43,6 @@ export declare namespace OSSWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
         allSpecs: Spec[];
         specs: (OpenAPISpec | ProtobufSpec)[];
-        cacheDir?: AbsoluteFilePath;
     }
 
     export type Settings = BaseOpenAPIWorkspace.Settings;
@@ -118,9 +117,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     // validateOSSWorkspace() need the same OpenAPI specs.
     private openApiSpecsCache: Map<string, Promise<OpenAPISpec[]>> = new Map();
 
-    private readonly cacheDir: AbsoluteFilePath | undefined;
-
-    constructor({ allSpecs, specs, cacheDir, ...superArgs }: OSSWorkspace.Args) {
+    constructor({ allSpecs, specs, ...superArgs }: OSSWorkspace.Args) {
         const openapiSpecs = specs.filter((spec) => spec.type === "openapi" && spec.source.type === "openapi");
         super({
             ...superArgs,
@@ -174,7 +171,6 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         });
         this.specs = specs;
         this.allSpecs = allSpecs;
-        this.cacheDir = cacheDir;
         this.sources = this.convertSpecsToIdentifiableSources(specs);
         this.loader = new OpenAPILoader(this.absoluteFilePath);
         this.groupMultiApiEnvironments = this.specs.some((spec) => spec.settings?.groupMultiApiEnvironments);
@@ -262,8 +258,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             cached = getAllOpenAPISpecs({
                 context,
                 specs: this.specs,
-                relativePathToDependency,
-                cacheDir: this.cacheDir
+                relativePathToDependency
             });
             this.openApiSpecsCache.set(key, cached);
         }
@@ -533,7 +528,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         const results: IntermediateRepresentation[] = [];
         for (const spec of protobufSpecs) {
             try {
-                const protobufIRGenerator = new ProtobufIRGenerator({ context, cacheDir: this.cacheDir });
+                const protobufIRGenerator = new ProtobufIRGenerator({ context });
                 const protobufIRFilepath = await protobufIRGenerator.generate({
                     absoluteFilepathToProtobufRoot: spec.absoluteFilepathToProtobufRoot,
                     absoluteFilepathToProtobufTarget: spec.absoluteFilepathToProtobufTarget,
