@@ -11,7 +11,7 @@ import { CliContext } from "../../cli-context/CliContext.js";
 import { buildCheckJsonResult } from "./buildCheckJsonResult.js";
 import { ApiValidationResult, DocsValidationResult, printCheckReport } from "./printCheckReport.js";
 import { collectDocsWorkspaceViolations } from "./validateDocsWorkspaceAndLogIssues.js";
-import { validateMdxFiles, type MdxValidationError } from "./validateMdx.js";
+import { type MdxValidationError, validateMdxFiles } from "./validateMdx.js";
 
 export async function validateWorkspaces({
     project,
