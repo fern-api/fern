@@ -946,6 +946,7 @@
       },
       "referencedTypes": Set {
         "EventResponseStatus",
+        "EventRequest",
       },
       "shape": {
         "_visit": [Function],
