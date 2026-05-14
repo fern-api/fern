@@ -664,7 +664,6 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): swift.FunctionArgument[] {
         const args: swift.FunctionArgument[] = [];
-        const moduleSymbol = this.context.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
         this.context.errors.scope(Scope.PathParameters);
         const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
         if (pathParameters.length > 0) {
