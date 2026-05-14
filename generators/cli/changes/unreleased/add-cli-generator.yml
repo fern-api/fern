@@ -1,0 +1,3 @@
+- summary: |
+    Add CLI generator infrastructure and registration.
+  type: feat

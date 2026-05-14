@@ -122,6 +122,10 @@ function getGeneratorMetadataFromName(generatorName: string, context?: TaskConte
         case "fern-swift-model":
             return "swift-model";
 
+        // CLI
+        case "fern-cli":
+            return "cli";
+
         default: {
             context?.logger.warn(`Unrecognized generator name found, attempting to parse manually: ${generatorName}`);
             if (generatorName.startsWith("fern-")) {
