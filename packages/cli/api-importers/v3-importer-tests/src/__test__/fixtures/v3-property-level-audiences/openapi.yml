@@ -1,0 +1,127 @@
+openapi: 3.0.3
+info:
+  title: Property-level audience filtering regression fixture
+  version: 1.0.0
+  description: |
+    Mirrors the structure of the customer-reported V3 OpenAPI audience bug:
+    inline request body properties, query parameters, and inline webhook
+    payload properties carry `x-fern-audiences`, and we want to verify the
+    shared IR filter scrubs the right ones — and ONLY the right ones — when
+    the V3 OpenAPI converter is in use.
+servers:
+  - url: https://api.example.com
+paths:
+  /users:
+    post:
+      operationId: createUser
+      x-fern-audiences: ["public"]
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: internal_ref
+          x-fern-audiences: ["internal"]
+          schema:
+            type: string
+        - in: query
+          name: dual_audience_param
+          x-fern-audiences: ["public", "internal"]
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                # Untagged properties must always survive any filter.
+                name:
+                  type: string
+                email:
+                  type: string
+                ip_address:
+                  type: string
+                # Tagged internal-only — must be scrubbed by the "public" filter.
+                force_verify:
+                  type: boolean
+                  x-fern-audiences: ["internal"]
+                custom_id:
+                  type: string
+                  x-fern-audiences: ["internal"]
+                # Tagged with both audiences — must survive a "public" filter.
+                dual_audience_field:
+                  type: string
+                  x-fern-audiences: ["public", "internal"]
+      responses:
+        "201":
+          description: ok
+
+    get:
+      operationId: listUsers
+      x-fern-audiences: ["internal"]
+      responses:
+        "200":
+          description: internal-only listing
+
+  /admins:
+    get:
+      operationId: listAdmins
+      # No audience tag — must survive any audience filter (universal endpoint).
+      responses:
+        "200":
+          description: ok
+
+  /users/{id}:
+    get:
+      operationId: getUser
+      x-fern-audiences: ["public"]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+webhooks:
+  userCreated:
+    post:
+      operationId: userCreated
+      x-fern-audiences: ["public"]
+      x-fern-webhook: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                internal_reason:
+                  type: string
+                  x-fern-audiences: ["internal"]
+      responses:
+        "200":
+          description: ok
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        password_hash:
+          type: string
+          x-fern-audiences: ["internal"]

@@ -2,11 +2,13 @@
   "type": "object",
   "properties": {
     "datetimeLikeString": {
-      "type": "string"
+      "type": "string",
+      "description": "A string field that happens to contain a datetime-like value"
     },
     "actualDatetime": {
       "type": "string",
-      "format": "date-time"
+      "format": "date-time",
+      "description": "An actual datetime field for comparison"
     }
   },
   "required": [
@@ -14,5 +16,6 @@
     "actualDatetime"
   ],
   "additionalProperties": false,
+  "description": "This type tests that string fields containing datetime-like values\nare NOT reformatted by the wire test generator. The string field\nshould preserve its exact value even if it looks like a datetime.",
   "definitions": {}
 }

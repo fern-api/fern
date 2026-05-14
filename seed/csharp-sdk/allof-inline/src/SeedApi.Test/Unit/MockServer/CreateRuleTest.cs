@@ -44,7 +44,11 @@ public class CreateRuleTest : BaseMockServerTest
             );
 
         var response = await Client.CreateRuleAsync(
-            new RuleCreateRequest { Name = "name", ExecutionContext = RuleExecutionContext.Prod }
+            new RuleCreateRequest
+            {
+                Name = "name",
+                ExecutionContext = RuleCreateRequestExecutionContext.Prod,
+            }
         );
         JsonAssert.AreEqual(response, mockResponse);
     }
@@ -85,7 +89,11 @@ public class CreateRuleTest : BaseMockServerTest
             );
 
         var response = await Client.CreateRuleAsync(
-            new RuleCreateRequest { Name = "name", ExecutionContext = RuleExecutionContext.Prod }
+            new RuleCreateRequest
+            {
+                Name = "name",
+                ExecutionContext = RuleCreateRequestExecutionContext.Prod,
+            }
         );
         JsonAssert.AreEqual(response, mockResponse);
     }

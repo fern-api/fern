@@ -526,7 +526,7 @@ mod tests {
     fn test_sync_paginator_error_propagation() {
         let client = make_http_client();
         let mut paginator = SyncPaginator::<String>::new(client, |_client, _cursor| {
-            Err(ApiError::Serialization("test error".to_string()))
+            Err(ApiError::Configuration("test error".to_string()))
         }, None).unwrap();
 
         let result = paginator.next_page();
@@ -537,7 +537,7 @@ mod tests {
     fn test_sync_paginator_iterator_error() {
         let client = make_http_client();
         let mut paginator = SyncPaginator::<String>::new(client, |_client, _cursor| {
-            Err(ApiError::Serialization("test error".to_string()))
+            Err(ApiError::Configuration("test error".to_string()))
         }, None).unwrap();
 
         let item = paginator.next();

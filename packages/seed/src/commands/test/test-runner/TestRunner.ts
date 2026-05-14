@@ -10,6 +10,7 @@ import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces.js";
 import { Semaphore } from "../../../Semaphore.js";
 import { Stopwatch } from "../../../Stopwatch.js";
 import { convertGeneratorWorkspaceToFernWorkspace } from "../../../utils/convertSeedWorkspaceToFernWorkspace.js";
+import { generatorEmitsVerifyScript } from "../../../utils/generatorEmitsVerifyScript.js";
 import { ParsedDockerName, parseDockerOrThrow } from "../../../utils/parseDockerOrThrow.js";
 import { workspaceShouldGenerateDynamicSnippetTests } from "../../../workspaceShouldGenerateDynamicSnippetTests.js";
 import { ScriptRunner } from "../index.js";
@@ -337,6 +338,24 @@ export abstract class TestRunner {
             lockAcquired = false;
 
             if (this.skipScripts) {
+                return {
+                    type: "success",
+                    id: fixture,
+                    outputFolder,
+                    metrics
+                };
+            }
+
+            // For generators that emit `.fern/verify.sh`, `runGenerator` above already
+            // ran `PostGenerationPipeline` + `VerificationStep` against the output
+            // directory — the exact same code path that `fern generate --local --verify`
+            // and Fiddle execute in production. Re-running the seed.yml `scripts` block
+            // would just duplicate that work with a different (less-faithful) runner,
+            // so we skip it here. The `scripts` block stays in seed.yml as a fallback
+            // for any fixture that fails to emit `verify.sh` and as the canonical
+            // build/test recipe until FER-9681 extends self-verification to every
+            // language SDK generator.
+            if (generatorEmitsVerifyScript(this.getParsedDockerImageName().name)) {
                 return {
                     type: "success",
                     id: fixture,

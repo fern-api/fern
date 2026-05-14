@@ -721,7 +721,7 @@ describe("HeaderAuthProviderGenerator", () => {
                 createHeaderAuthScheme({
                     name: "authorization",
                     wireValue: "Authorization",
-                    prefix: "Bearer "
+                    prefix: "Bearer"
                 })
             );
             const ir = createMinimalIR({ authSchemes: [authScheme] });

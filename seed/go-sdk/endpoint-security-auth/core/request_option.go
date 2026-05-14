@@ -34,6 +34,7 @@ type RequestOptions struct {
 	DisableRetries             bool
 	tokenGetter                TokenGetter
 	Token                      string
+	TokenFunc                  func() (string, error)
 	APIKey                     string
 	ClientID                   string
 	ClientSecret               string
@@ -63,6 +64,10 @@ func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
 	if r.Token != "" {
 		header.Set("Authorization", "Bearer "+r.Token)
+	} else if r.TokenFunc != nil {
+		if token, err := r.TokenFunc(); err == nil && token != "" {
+			header.Set("Authorization", "Bearer "+token)
+		}
 	}
 	if r.APIKey != "" {
 		header.Set("X-API-Key", fmt.Sprintf("%v", r.APIKey))
@@ -180,6 +185,15 @@ type TokenOption struct {
 
 func (t *TokenOption) applyRequestOptions(opts *RequestOptions) {
 	opts.Token = t.Token
+}
+
+// TokenFuncOption implements the RequestOption interface.
+type TokenFuncOption struct {
+	TokenFunc func() (string, error)
+}
+
+func (t *TokenFuncOption) applyRequestOptions(opts *RequestOptions) {
+	opts.TokenFunc = t.TokenFunc
 }
 
 // APIKeyOption implements the RequestOption interface.

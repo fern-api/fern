@@ -1,4 +1,5 @@
 {
   "type": "string",
+  "description": "An alias for type IDs.",
   "definitions": {}
 }

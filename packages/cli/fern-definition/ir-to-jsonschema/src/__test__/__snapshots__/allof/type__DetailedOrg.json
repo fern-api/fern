@@ -18,7 +18,8 @@
       "type": "object",
       "properties": {
         "region": {
-          "type": "string"
+          "type": "string",
+          "description": "Deployment region from DetailedOrg."
         },
         "domain": {
           "oneOf": [
@@ -28,7 +29,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Custom domain name."
         }
       },
       "required": [

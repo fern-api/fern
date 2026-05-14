@@ -1,6 +1,103 @@
 {
     "version": "1.0.0",
     "types": {
+        "type_:RuleCreateRequestExecutionContext": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "RuleCreateRequestExecutionContext",
+                    "camelCase": {
+                        "unsafeName": "ruleCreateRequestExecutionContext",
+                        "safeName": "ruleCreateRequestExecutionContext"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "rule_create_request_execution_context",
+                        "safeName": "rule_create_request_execution_context"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "RULE_CREATE_REQUEST_EXECUTION_CONTEXT",
+                        "safeName": "RULE_CREATE_REQUEST_EXECUTION_CONTEXT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "RuleCreateRequestExecutionContext",
+                        "safeName": "RuleCreateRequestExecutionContext"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "prod",
+                    "name": {
+                        "originalName": "prod",
+                        "camelCase": {
+                            "unsafeName": "prod",
+                            "safeName": "prod"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "prod",
+                            "safeName": "prod"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PROD",
+                            "safeName": "PROD"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Prod",
+                            "safeName": "Prod"
+                        }
+                    }
+                },
+                {
+                    "wireValue": "staging",
+                    "name": {
+                        "originalName": "staging",
+                        "camelCase": {
+                            "unsafeName": "staging",
+                            "safeName": "staging"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "staging",
+                            "safeName": "staging"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STAGING",
+                            "safeName": "STAGING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Staging",
+                            "safeName": "Staging"
+                        }
+                    }
+                },
+                {
+                    "wireValue": "dev",
+                    "name": {
+                        "originalName": "dev",
+                        "camelCase": {
+                            "unsafeName": "dev",
+                            "safeName": "dev"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "dev",
+                            "safeName": "dev"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DEV",
+                            "safeName": "DEV"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Dev",
+                            "safeName": "Dev"
+                        }
+                    }
+                }
+            ]
+        },
         "type_:PaginatedResult": {
             "type": "object",
             "declaration": {
@@ -2493,7 +2590,7 @@
                             },
                             "typeReference": {
                                 "type": "named",
-                                "value": "type_:RuleExecutionContext"
+                                "value": "type_:RuleCreateRequestExecutionContext"
                             },
                             "propertyAccess": null,
                             "variable": null

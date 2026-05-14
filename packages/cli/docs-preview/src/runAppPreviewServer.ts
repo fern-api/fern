@@ -1092,8 +1092,21 @@ export async function runAppPreviewServer({
 
     // Now start Next.js after backend is ready
 
+    // Node.js >= 26 on Linux enables io_uring by default in libuv, which has a
+    // busy-loop bug: worker threads spin on an internal eventfd, starving the
+    // main event loop and causing the server to hang during startup.
+    // Setting UV_USE_IO_URING=0 falls back to epoll and avoids the hang.
+    const nodeMajor = parseInt(process.versions.node.split(".")[0] ?? "0", 10);
+    const needsIoUringWorkaround = process.platform === "linux" && nodeMajor >= 26;
+    if (needsIoUringWorkaround) {
+        context.logger.debug(
+            `Node.js v${process.versions.node} on Linux detected — disabling io_uring to avoid libuv busy-loop`
+        );
+    }
+
     const env = {
         ...process.env,
+        ...(needsIoUringWorkaround ? { UV_USE_IO_URING: "0" } : {}),
         PORT: port.toString(),
         HOSTNAME: "0.0.0.0",
         NEXT_PUBLIC_FDR_ORIGIN_PORT: backendPort.toString(),
@@ -1227,57 +1240,71 @@ export async function runAppPreviewServer({
             void (async () => {
                 isReloading = true;
 
-                // Expand the list of files to include pages that depend on changed snippets
-                const filesToReload = snippetTracker.getFilesToReload(editedAbsoluteFilepaths);
-                const hasSnippetDependencies = snippetTracker.hasSnippetDependencies(editedAbsoluteFilepaths);
-
-                if (hasSnippetDependencies) {
-                    context.logger.info(
-                        `Snippet dependencies detected. Reloading ${filesToReload.length} files (${editedAbsoluteFilepaths.length} changed, ${filesToReload.length - editedAbsoluteFilepaths.length} dependent pages)`
-                    );
-                }
-
                 sendData({
                     version: 1,
                     type: "startReload"
                 });
 
-                const reloadedPreviewResult = await reloadDocsDefinition(filesToReload);
+                try {
+                    // Expand the list of files to include pages that depend on changed snippets
+                    const filesToReload = snippetTracker.getFilesToReload(editedAbsoluteFilepaths);
+                    const hasSnippetDependencies = snippetTracker.hasSnippetDependencies(editedAbsoluteFilepaths);
 
-                editedAbsoluteFilepaths.length = 0;
-
-                isReloading = false;
-
-                sendData({
-                    version: 1,
-                    type: "finishReload"
-                });
-
-                if (reloadedPreviewResult != null) {
-                    // Detect slug changes before updating the docs definition
-                    const slugChanges = slugTracker.updateAndDetectChanges(reloadedPreviewResult.docsDefinition);
-
-                    previewResult = reloadedPreviewResult;
-
-                    // Recompute translated definitions
-                    translatedDefinitions = await computeTranslatedDefinitions(reloadedPreviewResult);
-                    if (translatedDefinitions.size > 0) {
-                        context.logger.debug(`Recomputed translations for ${translatedDefinitions.size} locale(s)`);
+                    if (hasSnippetDependencies) {
+                        context.logger.info(
+                            `Snippet dependencies detected. Reloading ${filesToReload.length} files (${editedAbsoluteFilepaths.length} changed, ${filesToReload.length - editedAbsoluteFilepaths.length} dependent pages)`
+                        );
                     }
 
-                    // Send navigateToSlug events for any slug changes
-                    if (slugChanges.length > 0) {
-                        slugChanges.forEach((change) => {
-                            const eventData = {
-                                version: 1,
-                                type: "navigateToSlug",
-                                oldSlug: change.oldSlug,
-                                newSlug: change.newSlug
-                            };
+                    const reloadedPreviewResult = await reloadDocsDefinition(filesToReload);
 
-                            sendData(eventData);
+                    // Update the docs definition BEFORE notifying the browser,
+                    // so the backend serves fresh data when the browser refreshes.
+                    if (reloadedPreviewResult != null) {
+                        // Detect slug changes before updating the docs definition
+                        const slugChanges = slugTracker.updateAndDetectChanges(reloadedPreviewResult.docsDefinition);
+
+                        previewResult = reloadedPreviewResult;
+
+                        // Recompute translated definitions
+                        translatedDefinitions = await computeTranslatedDefinitions(reloadedPreviewResult);
+                        if (translatedDefinitions.size > 0) {
+                            context.logger.debug(`Recomputed translations for ${translatedDefinitions.size} locale(s)`);
+                        }
+
+                        sendData({
+                            version: 1,
+                            type: "finishReload"
+                        });
+
+                        // Send navigateToSlug events for any slug changes
+                        if (slugChanges.length > 0) {
+                            slugChanges.forEach((change) => {
+                                const eventData = {
+                                    version: 1,
+                                    type: "navigateToSlug",
+                                    oldSlug: change.oldSlug,
+                                    newSlug: change.newSlug
+                                };
+
+                                sendData(eventData);
+                            });
+                        }
+                    } else {
+                        sendData({
+                            version: 1,
+                            type: "finishReload"
                         });
                     }
+                } catch (err) {
+                    context.logger.error(`Reload failed: ${extractErrorMessage(err)}`);
+                    sendData({
+                        version: 1,
+                        type: "finishReload"
+                    });
+                } finally {
+                    editedAbsoluteFilepaths.length = 0;
+                    isReloading = false;
                 }
             })();
         }, RELOAD_DEBOUNCE_MS);

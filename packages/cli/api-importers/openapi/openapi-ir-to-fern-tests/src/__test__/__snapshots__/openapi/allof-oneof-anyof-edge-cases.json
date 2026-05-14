@@ -350,9 +350,20 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "executionContext": "optional<RuleExecutionContext>",
+              "executionContext": "optional<RuleConfigExecutionContext>",
               "name": "optional<string>",
             },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "RuleConfigExecutionContext": {
+            "enum": [
+              "prod",
+              "staging",
+              "dev",
+            ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -588,10 +599,18 @@ types:
       - dev
     source:
       openapi: ../openapi.yml
+  RuleConfigExecutionContext:
+    enum:
+      - prod
+      - staging
+      - dev
+    inline: true
+    source:
+      openapi: ../openapi.yml
   RuleConfig:
     properties:
       name: optional<string>
-      executionContext: optional<RuleExecutionContext>
+      executionContext: optional<RuleConfigExecutionContext>
     source:
       openapi: ../openapi.yml
   PaginatedList:

@@ -102,3 +102,10 @@ func WithAPIKey(apiKey string) *core.APIKeyOption {
 		APIKey: apiKey,
 	}
 }
+
+// WithAPIKeyFunc sets a function that returns the 'Authorization: Bearer' token at request time.
+func WithAPIKeyFunc(fn func() (string, error)) *core.APIKeyFuncOption {
+	return &core.APIKeyFuncOption{
+		APIKeyFunc: fn,
+	}
+}

@@ -364,6 +364,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 		if authScheme.Bearer != nil {
 			name := authScheme.Bearer.Token.PascalCase.UnsafeName
 			f.P(name, " string")
+			f.P(name, "Func func() (string, error)")
 			declaredFields[name] = true
 		}
 		if authScheme.Basic != nil {
@@ -463,8 +464,13 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("header := r.cloneHeader()")
 	for _, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
-			f.P("if r.", authScheme.Bearer.Token.PascalCase.UnsafeName, ` != "" { `)
-			f.P(`header.Set("Authorization", `, `"Bearer " + r.`, authScheme.Bearer.Token.PascalCase.UnsafeName, ")")
+			name := authScheme.Bearer.Token.PascalCase.UnsafeName
+			f.P("if r.", name, ` != "" {`)
+			f.P(`header.Set("Authorization", "Bearer " + r.`, name, ")")
+			f.P("} else if r.", name, "Func != nil {")
+			f.P("if token, err := r.", name, `Func(); err == nil && token != "" {`)
+			f.P(`header.Set("Authorization", "Bearer " + token)`)
+			f.P("}")
 			f.P("}")
 		}
 		if authScheme.Basic != nil {
@@ -691,7 +697,11 @@ func (f *fileWriter) writeRequestOptionStructs(
 				if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
 					return err
 				}
-					declaredOptionStructs[pascalCase] = true
+				declaredOptionStructs[pascalCase] = true
+
+				if err := f.writeOptionStruct(pascalCase+"Func", "func() (string, error)", true, asIdempotentRequestOption); err != nil {
+					return err
+				}
 			}
 			if authScheme.Basic != nil {
 				usernameOmitted := isBasicAuthUsernameOmitted(authScheme.Basic)
@@ -1077,6 +1087,16 @@ func (f *fileWriter) WriteRequestOptions(
 			f.P("}")
 			f.P()
 			declaredPublicOptions[optionName] = true
+
+			funcOptionName := fmt.Sprintf("With%sFunc", pascalCase)
+			funcTypeName := "core." + pascalCase + "FuncOption"
+			f.P("// ", funcOptionName, " sets a function that returns the 'Authorization: Bearer' token at request time.")
+			f.P("func ", funcOptionName, "(fn func() (string, error)) *", funcTypeName, " {")
+			f.P("return &", funcTypeName, "{")
+			f.P(pascalCase, "Func: fn,")
+			f.P("}")
+			f.P("}")
+			f.P()
 		}
 		if authScheme.Basic != nil {
 			usernameOmitted := isBasicAuthUsernameOmitted(authScheme.Basic)

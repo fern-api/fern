@@ -1,5 +1,5 @@
 # Stage 1: Copy Node.js from official image
-FROM node:22.22-bookworm-slim AS node
+FROM node:24.15-trixie-slim AS node
 
 # Stage 2: Base Python image with dependencies
 FROM python:3.13.7-slim AS python-base
@@ -18,6 +18,47 @@ RUN apt-get update \
 RUN node --version
 RUN npm --version
 
+# Patch npm's bundled picomatch@4.0.3 -> 4.0.4 (GHSA-c2c7-rcm5-vvqj,
+# GHSA-3v7f-55p6-f55p) and brace-expansion@5.0.4 -> 5.0.5
+# (GHSA-f886-m6hf-6m8v) copied from the node stage.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/picomatch \
+      /usr/local/lib/node_modules/npm/node_modules/tinyglobby/node_modules/picomatch; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/picomatch/-/picomatch-4.0.4.tgz -o picomatch-4.0.4.tgz && \
+        tar -xzf picomatch-4.0.4.tgz && \
+        mv package picomatch && \
+        rm picomatch-4.0.4.tgz; \
+      fi; \
+    done && \
+    for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/brace-expansion; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.5.tgz -o brace-expansion-5.0.5.tgz && \
+        tar -xzf brace-expansion-5.0.5.tgz && \
+        mv package brace-expansion && \
+        rm brace-expansion-5.0.5.tgz; \
+      fi; \
+    done
+
+# Patch ip-address to 10.2.0 to fix CVE-2026-42338 / GHSA-v2v4-37r5-5v8g
+# (XSS in Address6 HTML-emitting methods). npm bundles ip-address via socks.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/ip-address; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/ip-address/-/ip-address-10.2.0.tgz -o ip-address-10.2.0.tgz && \
+        tar -xzf ip-address-10.2.0.tgz && \
+        mv package ip-address && \
+        rm ip-address-10.2.0.tgz; \
+      fi; \
+    done
+
 # Install ruff.
 RUN pip install ruff==0.15.7
 RUN ruff --version
@@ -26,8 +67,11 @@ RUN ruff --version
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 ENV _TYPER_STANDARD_TRACEBACK=1
 
-# Keep in sync with the poetry-core version in pyproject.toml
-RUN pip3 install poetry==1.8.5
+# Upgrade pip to 26.1+ to address CVE-2025-8869, CVE-2026-3219, CVE-2026-6357,
+# and CVE-2026-1703 (self-update flaw running after wheel install).
+RUN pip3 install --upgrade pip==26.1
+# Keep in sync with the poetry-core version in pyproject.toml.
+RUN pip3 install poetry==2.4.1
 RUN poetry config virtualenvs.create false
 
 # Copy dependency files first to leverage caching
