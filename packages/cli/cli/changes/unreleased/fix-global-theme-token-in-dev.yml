@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `fern docs dev` failing to load global themes when the local dev stack is active.
+    The stored `fern login` token is now preferred over the `FERN_TOKEN` env var, which
+    is often set to a mock token by the local dev stack.
+  type: fix
