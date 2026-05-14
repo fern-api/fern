@@ -169,12 +169,8 @@
         {
           "type": "null"
         }
-<<<<<<< HEAD
       ],
       "description": "Name of a global theme stored in Fern's cloud to apply to this documentation site.\nTheme values override local branding configuration (colors, typography, logo, fonts, JS, CSS, etc.).\nUpload a theme first with: fern beta docs theme upload --name <theme-name>"
-=======
-      ]
->>>>>>> fbc8a46155a (chore(cli): regenerate docs-yml jsonschema after rebase)
     },
     "experimental": {
       "oneOf": [
@@ -221,12 +217,8 @@
         {
           "type": "null"
         }
-<<<<<<< HEAD
       ],
       "description": "Configuration for multi-language documentation. Each entry defines a locale\nthat the documentation supports. Use the `translations/` directory alongside\n`docs.yml` to provide per-language content.\n\nExample (object syntax):\n```yaml\ntranslations:\n  - lang: en\n    default: true\n  - lang: ja\n  - lang: fr\n```\n\nExample (simplified syntax):\n```yaml\ntranslations:\n  - en\n  - ja\n  - fr\n```\n\nYou can mix both syntaxes:\n```yaml\ntranslations:\n  - lang: en\n    default: true\n  - ja\n  - fr\n```"
-=======
-      ]
->>>>>>> fbc8a46155a (chore(cli): regenerate docs-yml jsonschema after rebase)
     },
     "ai-chat": {
       "oneOf": [
@@ -4268,10 +4260,6 @@
           ],
           "description": "Controls the \"Open in Claude\" button, which sends the page content to Claude for further\nexploration and Q&A. Set to `false` to hide it.\n\n@default: true"
         },
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> fbc8a46155a (chore(cli): regenerate docs-yml jsonschema after rebase)
         "claude-code": {
           "oneOf": [
             {
@@ -4280,16 +4268,9 @@
             {
               "type": "null"
             }
-<<<<<<< HEAD
           ],
           "description": "Controls the \"Connect to Claude Code\" button, which copies a `claude mcp add` command to the\nclipboard so users can register this docs site's MCP server with Claude Code. The button only\nrenders on docs sites that have Ask AI enabled; set to `false` to hide it on those sites.\n\n@default: true"
         },
-=======
->>>>>>> d2b2b02bc02 (feat(cli): add settings.search.prioritize-current-product and default-filter-by-current-product)
-=======
-          ]
-        },
->>>>>>> fbc8a46155a (chore(cli): regenerate docs-yml jsonschema after rebase)
         "cursor": {
           "oneOf": [
             {
@@ -4490,10 +4471,6 @@
       "type": "string",
       "description": "A BCP 47 language tag identifying a docs locale. Common shorthand codes\nlike \"en\", \"es\", \"ja\" are accepted, as well as regional variants such as\n\"ja-JP\", \"pt-BR\", \"zh-Hans\", and \"zh-Hans-CN\". See RFC 5646 for the full\ngrammar."
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> fbc8a46155a (chore(cli): regenerate docs-yml jsonschema after rebase)
     "docs.TranslationConfigObject": {
       "type": "object",
       "properties": {
@@ -4508,12 +4485,8 @@
             {
               "type": "null"
             }
-<<<<<<< HEAD
           ],
           "description": "Whether this language is the default. At most one entry should be marked as default."
-=======
-          ]
->>>>>>> fbc8a46155a (chore(cli): regenerate docs-yml jsonschema after rebase)
         }
       },
       "required": [
@@ -4529,16 +4502,9 @@
         {
           "$ref": "#/definitions/docs.TranslationConfigObject"
         }
-<<<<<<< HEAD
       ],
       "description": "Translation configuration can be either a language code string or an object with additional options.\nWhen using a string, it's equivalent to `{ lang: <string> }`."
     },
-=======
->>>>>>> d2b2b02bc02 (feat(cli): add settings.search.prioritize-current-product and default-filter-by-current-product)
-=======
-      ]
-    },
->>>>>>> fbc8a46155a (chore(cli): regenerate docs-yml jsonschema after rebase)
     "docs.AIChatModel": {
       "type": "string",
       "enum": [
@@ -4953,10 +4919,6 @@
           ],
           "description": "A custom background image for dynamically generated OG images. Can be a URL or a file path."
         },
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> fbc8a46155a (chore(cli): regenerate docs-yml jsonschema after rebase)
         "og:dynamic:text-color": {
           "oneOf": [
             {
@@ -4965,12 +4927,8 @@
             {
               "type": "null"
             }
-<<<<<<< HEAD
           ],
           "description": "Override the text color for dynamically generated OG images. Accepts any valid CSS color value (e.g., \"#1a1a1a\")."
-=======
-          ]
->>>>>>> fbc8a46155a (chore(cli): regenerate docs-yml jsonschema after rebase)
         },
         "og:dynamic:background-color": {
           "oneOf": [
@@ -4980,12 +4938,8 @@
             {
               "type": "null"
             }
-<<<<<<< HEAD
           ],
           "description": "Override the background color for dynamically generated OG images. Accepts any valid CSS color value (e.g., \"#ffffff\")."
-=======
-          ]
->>>>>>> fbc8a46155a (chore(cli): regenerate docs-yml jsonschema after rebase)
         },
         "og:dynamic:logo-color": {
           "oneOf": [
@@ -4995,12 +4949,8 @@
             {
               "type": "null"
             }
-<<<<<<< HEAD
           ],
           "description": "Choose which logo variant from docs.yml to render in dynamically generated OG images. Defaults to `dark`."
-=======
-          ]
->>>>>>> fbc8a46155a (chore(cli): regenerate docs-yml jsonschema after rebase)
         },
         "og:dynamic:show-logo": {
           "oneOf": [
@@ -5010,12 +4960,8 @@
             {
               "type": "null"
             }
-<<<<<<< HEAD
           ],
           "description": "Toggle visibility of the logo in dynamically generated OG images. Defaults to true when og:dynamic is enabled."
-=======
-          ]
->>>>>>> fbc8a46155a (chore(cli): regenerate docs-yml jsonschema after rebase)
         },
         "og:dynamic:show-section": {
           "oneOf": [
@@ -5025,12 +4971,8 @@
             {
               "type": "null"
             }
-<<<<<<< HEAD
           ],
           "description": "Toggle visibility of the section title in dynamically generated OG images. Defaults to true when og:dynamic is enabled."
-=======
-          ]
->>>>>>> fbc8a46155a (chore(cli): regenerate docs-yml jsonschema after rebase)
         },
         "og:dynamic:show-description": {
           "oneOf": [
@@ -5040,12 +4982,8 @@
             {
               "type": "null"
             }
-<<<<<<< HEAD
           ],
           "description": "Toggle visibility of the page description in dynamically generated OG images. Defaults to true when og:dynamic is enabled."
-=======
-          ]
->>>>>>> fbc8a46155a (chore(cli): regenerate docs-yml jsonschema after rebase)
         },
         "og:dynamic:show-url": {
           "oneOf": [
@@ -5055,12 +4993,8 @@
             {
               "type": "null"
             }
-<<<<<<< HEAD
           ],
           "description": "Toggle visibility of the page URL in dynamically generated OG images. Defaults to true when og:dynamic is enabled."
-=======
-          ]
->>>>>>> fbc8a46155a (chore(cli): regenerate docs-yml jsonschema after rebase)
         },
         "og:dynamic:show-gradient": {
           "oneOf": [
@@ -5070,16 +5004,9 @@
             {
               "type": "null"
             }
-<<<<<<< HEAD
           ],
           "description": "Toggle visibility of the accent gradient overlay in dynamically generated OG images. Defaults to true when og:dynamic is enabled."
         },
-=======
->>>>>>> d2b2b02bc02 (feat(cli): add settings.search.prioritize-current-product and default-filter-by-current-product)
-=======
-          ]
-        },
->>>>>>> fbc8a46155a (chore(cli): regenerate docs-yml jsonschema after rebase)
         "canonical-host": {
           "oneOf": [
             {
@@ -6005,7 +5932,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If set to true, search results from the current product/version are\nboosted in Algolia's ranking (via `optionalFilters`) without excluding\nresults from other products/versions.\n\n@default: false"
         },
         "default-filter-by-current-product": {
           "oneOf": [
@@ -6015,7 +5943,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If set to true, the current product is automatically selected as a\nfacet filter, so only results from the current product are shown by\ndefault. Equivalent to the legacy `settings.default-search-filters`\nsetting, which is preserved as an alias for backwards compatibility.\n\n@default: false"
         }
       },
       "additionalProperties": false
@@ -6100,7 +6029,7 @@
               "type": "null"
             }
           ],
-          "description": "By default (`false`), search will display results for pages across all products and versions.\nIf set to true, search will display results for pages within the current product and version.\n\n@default: false"
+          "description": "By default (`false`), search will display results for pages across all products and versions.\nIf set to true, search will display results for pages within the current product and version.\n\nPreserved for backwards compatibility. Equivalent to\n`search.default-filter-by-current-product`.\n\n@default: false"
         },
         "search": {
           "oneOf": [
@@ -6110,7 +6039,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls product-aware search behavior. See `SearchSettingsConfig` for\nindividual options."
         },
         "http-snippets": {
           "oneOf": [
@@ -6206,7 +6136,6 @@
             {
               "type": "null"
             }
-<<<<<<< HEAD
           ],
           "description": "When true, substitutes ${ENV_VAR} expressions using environment variables across all files in the docs bundle,\nincluding markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.\nUse \\$\\{VAR\\} to escape and output literal ${VAR} without substitution.\n\n@default: false"
         },
@@ -6220,22 +6149,6 @@
             }
           ],
           "description": "Controls how WebSocket messages with oneOf bodies are displayed in the API Reference.\n- `flat` (default): Each variant in the oneOf is shown as a separate top-level entry.\n- `grouped`: Messages are shown as a single parent entry with nested variants.\n\n@default: flat"
-=======
-          ]
-<<<<<<< HEAD
->>>>>>> d2b2b02bc02 (feat(cli): add settings.search.prioritize-current-product and default-filter-by-current-product)
-=======
-        },
-        "websocket-oneof-display": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.WebSocketOneofDisplay"
-            },
-            {
-              "type": "null"
-            }
-          ]
->>>>>>> fbc8a46155a (chore(cli): regenerate docs-yml jsonschema after rebase)
         }
       },
       "additionalProperties": false
