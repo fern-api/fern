@@ -68,10 +68,10 @@ export class LinkCheckCommand {
             progress.finish();
 
             const formatter = new LinkCheckFormatter(domain);
-            const output = formatter.format(resolved, args.output);
+            const output = formatter.format(resolved, args.output, { interrupted: streamInterrupted });
 
             if (args.output === "json" || args.output === "csv") {
-                context.stdout.info(output);
+                process.stdout.write(output + "\n");
             } else {
                 context.stderr.info(output);
             }

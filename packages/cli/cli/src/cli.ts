@@ -2189,6 +2189,8 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
 
             const progress = new ProgressRenderer(process.stderr);
 
+            let streamInterrupted = false;
+
             try {
                 const result = await client.run(domain, {
                     onSitemapFetched: (data) => {
@@ -2199,6 +2201,15 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     },
                     onLinkChecked: (data) => {
                         progress.onLinkChecked(data.linksChecked, data.totalLinks);
+                    },
+                    onStreamInterrupted: (data) => {
+                        streamInterrupted = true;
+                        progress.finish();
+                        cliContext.stderr.info(
+                            `\u26a0 Connection lost while ${data.phase} ` +
+                                `(${data.pagesScraped} pages scraped, ${data.linksChecked}/${data.totalLinks} links checked). ` +
+                                "Showing partial results."
+                        );
                     }
                 });
 
@@ -2208,7 +2219,9 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                 progress.finish();
 
                 const formatter = new LinkCheckFormatter(domain);
-                const output = formatter.format(resolved, argv.output as OutputFormat);
+                const output = formatter.format(resolved, argv.output as OutputFormat, {
+                    interrupted: streamInterrupted
+                });
 
                 if (argv.output === "json" || argv.output === "csv") {
                     await writeAndDrain(process.stdout, output + "\n");
@@ -2220,7 +2233,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     cliContext.failWithoutThrowing(undefined, undefined, {
                         code: CliError.Code.ValidationError
                     });
-                } else if (resolved.blockedLinks.length === 0) {
+                } else if (resolved.blockedLinks.length === 0 && !streamInterrupted) {
                     cliContext.stderr.info("All links valid");
                 }
             } catch (error) {
@@ -2233,7 +2246,9 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     } else {
                         code = CliError.Code.InternalError;
                     }
-                    cliContext.stderr.error(error.message);
+                    const message =
+                        code === CliError.Code.InternalError ? `Link check failed: ${error.message}` : error.message;
+                    cliContext.stderr.error(message);
                     cliContext.failAndThrow(undefined, undefined, { code });
                 }
                 throw error;
@@ -2275,20 +2290,18 @@ async function resolveDocsLinkCheckContext(
     });
 
     if (project.docsWorkspaces == null) {
-        return cliContext.failAndThrow(
-            "No docs configuration found.\n\n  Either add a 'docs:' section to your fern.yml, or use --url <url>.",
-            undefined,
-            { code: CliError.Code.ConfigError }
+        cliContext.stderr.error(
+            "No docs configuration found.\n\n  Either add a 'docs:' section to your fern.yml, or use --url <url>."
         );
+        return cliContext.failAndThrow(undefined, undefined, { code: CliError.Code.ConfigError });
     }
 
     const instances = project.docsWorkspaces.config.instances;
     if (instances == null || instances.length === 0) {
-        return cliContext.failAndThrow(
-            "No docs instances configured.\n\n  Add an instance to the 'docs:' section of your fern.yml, or use --url <url>.",
-            undefined,
-            { code: CliError.Code.ConfigError }
+        cliContext.stderr.error(
+            "No docs instances configured.\n\n  Add an instance to the 'docs:' section of your fern.yml, or use --url <url>."
         );
+        return cliContext.failAndThrow(undefined, undefined, { code: CliError.Code.ConfigError });
     }
 
     const docsConfigDir = project.docsWorkspaces.absoluteFilePath;
@@ -2298,11 +2311,10 @@ async function resolveDocsLinkCheckContext(
     }
 
     const available = instances.map((inst) => `  - ${inst.url}`).join("\n");
-    return cliContext.failAndThrow(
-        `Multiple docs instances configured. Please specify which one to check.\n\nAvailable instances:\n${available}\n\n  Use --url <url> to select one.`,
-        undefined,
-        { code: CliError.Code.ConfigError }
+    cliContext.stderr.error(
+        `Multiple docs instances configured. Please specify which one to check.\n\nAvailable instances:\n${available}\n\n  Use --url <url> to select one.`
     );
+    return cliContext.failAndThrow(undefined, undefined, { code: CliError.Code.ConfigError });
 }
 
 function writeAndDrain(stream: NodeJS.WriteStream, data: string): Promise<void> {

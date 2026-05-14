@@ -91,6 +91,86 @@ export class LinkCheckClient {
         const decoder = new TextDecoder();
         let buffer = "";
 
+        const processLine = (line: string): void => {
+            if (!line.startsWith("data: ")) {
+                return;
+            }
+
+            let event: SseEvent;
+            try {
+                event = JSON.parse(line.slice(6)) as SseEvent;
+            } catch {
+                return;
+            }
+
+            switch (event.type) {
+                case "sitemap_fetched": {
+                    if (isSitemapFetchedData(event.data)) {
+                        totalPages = event.data.totalPages;
+                        callbacks.onSitemapFetched?.({ totalPages: event.data.totalPages });
+                    }
+                    break;
+                }
+                case "page_scraped": {
+                    if (isPageScrapedData(event.data)) {
+                        totalPages = event.data.totalPages;
+                        pagesScrapedSoFar = event.data.pageIndex + 1;
+                        callbacks.onPageScraped?.({
+                            ...event.data,
+                            pageIndex: event.data.pageIndex + 1
+                        });
+                    }
+                    break;
+                }
+                case "links_check_started": {
+                    if (isLinksCheckStartedData(event.data)) {
+                        totalLinks = event.data.totalLinks;
+                    }
+                    break;
+                }
+                case "link_check_progress": {
+                    if (isLinkCheckProgressData(event.data)) {
+                        totalLinks = event.data.totalLinks;
+                        linksCheckedSoFar = event.data.linksChecked;
+                        callbacks.onLinkChecked?.(event.data);
+                    }
+                    break;
+                }
+                case "link_checked": {
+                    if (isLinkCheckedData(event.data)) {
+                        brokenLinks.push({
+                            url: event.data.url,
+                            statusCode: event.data.statusCode ?? null,
+                            isInternal: event.data.isInternal ?? false,
+                            sourcePages: event.data.sourcePages ?? [],
+                            sourcePageIds: event.data.sourcePageIds,
+                            error: event.data.error
+                        });
+                    }
+                    break;
+                }
+                case "complete": {
+                    if (isCompleteData(event.data)) {
+                        sawComplete = true;
+                        totalPages = event.data.totalPages;
+                        totalLinks = event.data.totalLinks;
+                        workingLinks = event.data.workingLinks;
+                        brokenLinks.length = 0;
+                        brokenLinks.push(...event.data.brokenLinks);
+                        blockedLinks.length = 0;
+                        blockedLinks.push(...event.data.blockedLinks);
+                    }
+                    break;
+                }
+                case "error": {
+                    if (isErrorData(event.data)) {
+                        serverError = event.data.message;
+                    }
+                    break;
+                }
+            }
+        };
+
         while (true) {
             const { done, value } = await reader.read();
             if (done) {
@@ -102,82 +182,15 @@ export class LinkCheckClient {
             buffer = lines.pop() ?? "";
 
             for (const line of lines) {
-                if (!line.startsWith("data: ")) {
-                    continue;
-                }
+                processLine(line);
+            }
+        }
 
-                let event: SseEvent;
-                try {
-                    event = JSON.parse(line.slice(6)) as SseEvent;
-                } catch {
-                    // SSE lines that aren't valid JSON (comments, partial chunks) are skipped
-                    continue;
-                }
-
-                switch (event.type) {
-                    case "sitemap_fetched": {
-                        if (isSitemapFetchedData(event.data)) {
-                            totalPages = event.data.totalPages;
-                            callbacks.onSitemapFetched?.({ totalPages: event.data.totalPages });
-                        }
-                        break;
-                    }
-                    case "page_scraped": {
-                        if (isPageScrapedData(event.data)) {
-                            totalPages = event.data.totalPages;
-                            pagesScrapedSoFar = event.data.pageIndex + 1;
-                            callbacks.onPageScraped?.(event.data);
-                        }
-                        break;
-                    }
-                    case "links_check_started": {
-                        if (isLinksCheckStartedData(event.data)) {
-                            totalLinks = event.data.totalLinks;
-                        }
-                        break;
-                    }
-                    case "link_check_progress": {
-                        if (isLinkCheckProgressData(event.data)) {
-                            totalLinks = event.data.totalLinks;
-                            linksCheckedSoFar = event.data.linksChecked;
-                            callbacks.onLinkChecked?.(event.data);
-                        }
-                        break;
-                    }
-                    case "link_checked": {
-                        // Intermediate broken-link events are collected but overwritten by `complete`
-                        if (isLinkCheckedData(event.data)) {
-                            brokenLinks.push({
-                                url: event.data.url,
-                                statusCode: event.data.statusCode ?? null,
-                                isInternal: event.data.isInternal ?? false,
-                                sourcePages: event.data.sourcePages ?? [],
-                                sourcePageIds: event.data.sourcePageIds,
-                                error: event.data.error
-                            });
-                        }
-                        break;
-                    }
-                    case "complete": {
-                        if (isCompleteData(event.data)) {
-                            sawComplete = true;
-                            totalPages = event.data.totalPages;
-                            totalLinks = event.data.totalLinks;
-                            workingLinks = event.data.workingLinks;
-                            brokenLinks.length = 0;
-                            brokenLinks.push(...event.data.brokenLinks);
-                            blockedLinks.length = 0;
-                            blockedLinks.push(...event.data.blockedLinks);
-                        }
-                        break;
-                    }
-                    case "error": {
-                        if (isErrorData(event.data)) {
-                            serverError = event.data.message;
-                        }
-                        break;
-                    }
-                }
+        // Flush remaining decoder bytes and process any trailing buffer content
+        buffer += decoder.decode();
+        if (buffer.length > 0) {
+            for (const line of buffer.split("\n")) {
+                processLine(line);
             }
         }
 
@@ -189,19 +202,19 @@ export class LinkCheckClient {
             const phase =
                 linksCheckedSoFar > 0 ? "checking links" : pagesScrapedSoFar > 0 ? "scraping pages" : "connecting";
 
-            callbacks.onStreamInterrupted?.({
-                phase,
-                pagesScraped: pagesScrapedSoFar,
-                totalPages,
-                linksChecked: linksCheckedSoFar,
-                totalLinks
-            });
-
             if (brokenLinks.length > 0 || blockedLinks.length > 0) {
-                return {
+                callbacks.onStreamInterrupted?.({
+                    phase,
+                    pagesScraped: pagesScrapedSoFar,
                     totalPages,
-                    totalLinks,
-                    workingLinks,
+                    linksChecked: linksCheckedSoFar,
+                    totalLinks
+                });
+
+                return {
+                    totalPages: pagesScrapedSoFar,
+                    totalLinks: linksCheckedSoFar,
+                    workingLinks: Math.max(0, linksCheckedSoFar - brokenLinks.length - blockedLinks.length),
                     brokenLinks,
                     blockedLinks,
                     durationMs: Date.now() - startTime

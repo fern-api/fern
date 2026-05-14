@@ -61,7 +61,7 @@ export class SourceResolver {
     }
 
     private resolveLink(link: BrokenLink): ResolvedBrokenLink {
-        if (link.sourcePageIds != null && link.sourcePageIds.length > 0) {
+        if (this.docsConfigDir != null && link.sourcePageIds != null && link.sourcePageIds.length > 0) {
             const references: ResolvedReference[] = [];
             for (let i = 0; i < link.sourcePageIds.length; i++) {
                 const pageId = link.sourcePageIds[i];

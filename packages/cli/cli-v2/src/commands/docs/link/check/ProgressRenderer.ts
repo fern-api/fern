@@ -38,11 +38,11 @@ export class ProgressRenderer {
         this.phase = "scraping";
     }
 
-    public onPageScraped(pageIndex: number, totalPages: number): void {
+    public onPageScraped(pagesScraped: number, totalPages: number): void {
         if (this.scrapeBar != null) {
             this.scrapeBar.setTotal(totalPages);
-            this.scrapeBar.update(Math.min(pageIndex, totalPages));
-        } else if (!this.isTTY && pageIndex >= totalPages) {
+            this.scrapeBar.update(Math.min(pagesScraped, totalPages));
+        } else if (!this.isTTY && pagesScraped >= totalPages) {
             this.stream.write(`  Scraped ${totalPages} pages\n`);
         }
     }

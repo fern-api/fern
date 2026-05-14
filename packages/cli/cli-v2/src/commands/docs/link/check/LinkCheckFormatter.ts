@@ -14,14 +14,18 @@ export class LinkCheckFormatter {
         this.basePath = pathStart >= 0 ? domain.substring(pathStart) : "";
     }
 
-    public format(result: ResolvedLinkCheckResult, outputFormat: OutputFormat): string {
+    public format(
+        result: ResolvedLinkCheckResult,
+        outputFormat: OutputFormat,
+        options?: { interrupted?: boolean }
+    ): string {
         switch (outputFormat) {
             case "json":
                 return this.formatJson(result);
             case "csv":
                 return this.formatCsv(result);
             case "text":
-                return this.formatText(result);
+                return this.formatText(result, options?.interrupted === true);
             default:
                 assertNever(outputFormat);
         }
@@ -59,7 +63,7 @@ export class LinkCheckFormatter {
     }
 
     private formatCsv(result: ResolvedLinkCheckResult): string {
-        const rows: string[] = ["type,url,statusCode,isInternal,source,error"];
+        const rows: string[] = ["type,url,statusCode,scope,source,error"];
 
         for (const link of result.brokenLinks) {
             this.appendCsvRows(rows, "broken", link);
@@ -93,18 +97,22 @@ export class LinkCheckFormatter {
                     this.escapeCsv(link.url),
                     String(link.statusCode ?? ""),
                     link.isInternal ? "internal" : "external",
-                    this.escapeCsv(ref.filePath ?? this.stripBasePath(ref.slug)),
+                    this.escapeCsv(ref.filePath ?? this.toRelativePath(ref.slug)),
                     this.escapeCsv(link.error ?? "")
                 ].join(",")
             );
         }
     }
 
-    private formatText(result: ResolvedLinkCheckResult): string {
+    private formatText(result: ResolvedLinkCheckResult, interrupted: boolean): string {
         const lines: string[] = [];
         const duration = this.formatDuration(result.durationMs);
 
-        lines.push(`Finished in ${duration}`);
+        if (interrupted) {
+            lines.push(`Interrupted after ${duration} — showing partial results`);
+        } else {
+            lines.push(`Finished in ${duration}`);
+        }
         lines.push("");
         lines.push("Summary");
         lines.push(`  Pages scanned     ${result.totalPages}`);
@@ -165,6 +173,10 @@ export class LinkCheckFormatter {
             const status = link.statusCode != null ? link.statusCode : "unreachable";
             lines.push(`  ${chalk.red("✗")} ${chalk.cyan(displayUrl)} ${chalk.dim("→")} ${chalk.red(status)}`);
 
+            if (link.error != null && link.error.length > 0) {
+                lines.push(chalk.dim(`    ${link.error}`));
+            }
+
             for (const ref of link.references) {
                 lines.push(chalk.dim(`    ${this.formatReference(ref)}`));
             }
@@ -174,7 +186,13 @@ export class LinkCheckFormatter {
     private appendBlockedLinkDetails(lines: string[], links: ResolvedBrokenLink[]): void {
         for (const link of links) {
             lines.push("");
-            lines.push(`  ${chalk.yellow("⚠")} ${chalk.cyan(link.url)}`);
+            const status = link.statusCode != null ? link.statusCode : "blocked";
+            lines.push(`  ${chalk.yellow("⚠")} ${chalk.cyan(link.url)} ${chalk.dim("→")} ${chalk.yellow(status)}`);
+
+            if (link.error != null && link.error.length > 0) {
+                lines.push(chalk.dim(`    ${link.error}`));
+            }
+
             for (const ref of link.references) {
                 lines.push(chalk.dim(`    ${this.formatReference(ref)}`));
             }
@@ -185,14 +203,14 @@ export class LinkCheckFormatter {
         if (ref.filePath != null) {
             return ref.filePath;
         }
-        return this.stripBasePath(ref.slug);
+        return this.toRelativePath(ref.slug);
     }
 
     private formatJsonReference(ref: ResolvedReference): Record<string, string> {
         if (ref.filePath != null) {
             return { filePath: ref.filePath };
         }
-        return { slug: this.stripBasePath(ref.slug) };
+        return { slug: this.toRelativePath(ref.slug) };
     }
 
     private toRelativePath(url: string): string {

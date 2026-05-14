@@ -4,6 +4,7 @@
     Use `--url <url>` to specify which docs site to check, or auto-detect from fern.yml.
   type: feat
 - summary: |
-    Add progress bars matching `fern docs dev` style and `[docs]:` prefixed output
-    for broken/blocked link details in `fern docs link check`.
+    Add progress bars matching `fern docs dev` style for `fern docs link check`.
+    Broken links show status codes, blocked links show diagnostic details,
+    and error messages include actionable context.
   type: feat
