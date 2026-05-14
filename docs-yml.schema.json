@@ -5158,7 +5158,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Severity for MDX/Markdown parse validation. Default is error for `fern check` (cli-v2) and warn for `fern docs md check` (cli-v1)."
         }
       },
       "additionalProperties": false
