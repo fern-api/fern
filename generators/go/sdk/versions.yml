@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.41.3
+  changelogEntry:
+    - summary: |
+        Patch `/usr/local/go/src/go.mod`, `vendor/modules.txt`, and `go.sum` in
+        the go-sdk + go-model containers so they declare `golang.org/x/net
+        v0.53.0`. Go 1.26.3 already ships the CVE-2026-33814 fix in its bundled
+        `h2_bundle.go` (the HTTP/2 SETTINGS_MAX_FRAME_SIZE validation moved to
+        the top of `ForeachSetting`), but the stdlib SBOM still pins the
+        pre-fix x/net pseudo-version `v0.47.1-0.20260417*`. Bumping the SBOM
+        metadata to v0.53.0 makes grype reflect the patched code instead of
+        flagging the toolchain as vulnerable.
+      type: chore
+  createdAt: "2026-05-14"
+  irVersion: 66
 - version: 1.41.2
   changelogEntry:
     - summary: |
