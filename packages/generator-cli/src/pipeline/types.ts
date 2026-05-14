@@ -152,6 +152,11 @@ export interface GithubStepConfig {
     runId?: string;
     /** GitHub API base URL for GitHub Enterprise (e.g. "https://github.intuit.com/api/v3"). Omit for github.com. */
     apiBaseUrl?: string;
+    /** Override the commit author/committer identity for API-created commits. Defaults to the Fern bot identity. */
+    author?: {
+        name: string;
+        email: string;
+    };
 }
 
 export interface PipelineResult {
