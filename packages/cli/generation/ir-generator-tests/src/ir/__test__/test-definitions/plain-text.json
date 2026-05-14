@@ -70,6 +70,7 @@
                     "response": {
                         "body": {
                             "type": "text",
+                            "contentType": null,
                             "docs": null,
                             "v2Examples": null
                         },
