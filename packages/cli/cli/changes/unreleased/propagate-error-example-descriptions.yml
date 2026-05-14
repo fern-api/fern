@@ -1,0 +1,4 @@
+- summary: |
+    Propagate per-example descriptions from OpenAPI error examples through to FDR,
+    enabling docs to display description text for individual error response examples.
+  type: fix

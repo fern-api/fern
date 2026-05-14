@@ -166,6 +166,9 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
     /**
      * Converts error examples from the media type object, using the summary field
      * as the example name when available (similar to how endpoint examples work).
+     *
+     * Stores full OpenAPI ExampleObjects (with summary, description, value) rather than
+     * just the resolved value, so that per-example descriptions can be propagated to FDR.
      */
     private convertErrorExamples({
         mediaTypeObject
@@ -186,7 +189,6 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
         const result: Record<string, OpenAPIV3_1.ExampleObject> = {};
 
         for (const [key, example] of examples) {
-            const resolvedExample = this.context.resolveExampleWithValue(example);
             const resolvedExampleObject = this.context.resolveExampleRecursively({
                 example,
                 breadcrumbs: this.breadcrumbs
@@ -194,8 +196,8 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
             const exampleName = this.getIdForErrorExample({ key, example: resolvedExampleObject, usedExampleNames });
             usedExampleNames.add(exampleName);
 
-            if (resolvedExample != null) {
-                result[exampleName] = resolvedExample as OpenAPIV3_1.ExampleObject;
+            if (resolvedExampleObject != null) {
+                result[exampleName] = resolvedExampleObject;
             }
         }
 
