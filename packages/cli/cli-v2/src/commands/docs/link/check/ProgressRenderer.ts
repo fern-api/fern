@@ -74,6 +74,8 @@ export class ProgressRenderer {
         if (this.checkBar != null) {
             this.checkBar.setTotal(totalLinks);
             this.checkBar.update(linksChecked);
+        } else if (!this.isTTY && linksChecked >= totalLinks && totalLinks > 0) {
+            this.stream.write(`  Checked ${totalLinks} links\n`);
         }
     }
 

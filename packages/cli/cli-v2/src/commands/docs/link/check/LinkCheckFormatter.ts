@@ -19,22 +19,24 @@ export class LinkCheckFormatter {
         outputFormat: OutputFormat,
         options?: { interrupted?: boolean }
     ): string {
+        const interrupted = options?.interrupted === true;
         switch (outputFormat) {
             case "json":
-                return this.formatJson(result);
+                return this.formatJson(result, interrupted);
             case "csv":
-                return this.formatCsv(result);
+                return this.formatCsv(result, interrupted);
             case "text":
-                return this.formatText(result, options?.interrupted === true);
+                return this.formatText(result, interrupted);
             default:
                 assertNever(outputFormat);
         }
     }
 
-    private formatJson(result: ResolvedLinkCheckResult): string {
+    private formatJson(result: ResolvedLinkCheckResult, interrupted: boolean): string {
         return JSON.stringify(
             {
                 summary: {
+                    status: interrupted ? "interrupted" : "complete",
                     totalPages: result.totalPages,
                     totalLinks: result.totalLinks,
                     workingLinks: result.workingLinks,
@@ -62,8 +64,11 @@ export class LinkCheckFormatter {
         );
     }
 
-    private formatCsv(result: ResolvedLinkCheckResult): string {
-        const rows: string[] = ["type,url,statusCode,scope,source,error"];
+    private formatCsv(result: ResolvedLinkCheckResult, interrupted: boolean): string {
+        const rows: string[] = [
+            `# status: ${interrupted ? "interrupted" : "complete"}`,
+            "type,url,statusCode,scope,source,error"
+        ];
 
         for (const link of result.brokenLinks) {
             this.appendCsvRows(rows, "broken", link);
