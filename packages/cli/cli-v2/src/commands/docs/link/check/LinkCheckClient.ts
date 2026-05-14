@@ -75,9 +75,21 @@ export class LinkCheckClient {
         if (!response.ok) {
             let errorMessage: string;
             try {
-                const body = (await response.json()) as { message?: string; error?: string };
-                errorMessage = body.message ?? body.error ?? response.statusText;
+                const body: unknown = await response.json();
+                if (typeof body === "object" && body != null) {
+                    const obj = body as Record<string, unknown>;
+                    if (typeof obj.message === "string") {
+                        errorMessage = obj.message;
+                    } else if (typeof obj.error === "string") {
+                        errorMessage = obj.error;
+                    } else {
+                        errorMessage = response.statusText;
+                    }
+                } else {
+                    errorMessage = response.statusText;
+                }
             } catch {
+                // JSON parse failed — fall back to HTTP status text
                 errorMessage = response.statusText;
             }
             throw new LinkCheckError(response.status, errorMessage);
