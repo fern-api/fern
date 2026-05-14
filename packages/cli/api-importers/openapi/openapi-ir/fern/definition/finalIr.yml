@@ -698,6 +698,10 @@ types:
       - commons.WithDescription
       - commons.WithSource
       - commons.WithStatusCode
+    properties:
+      contentType:
+        type: optional<string>
+        docs: The original media type (e.g. text/csv, text/xml). Defaults to text/plain.
 
   JsonResponse:
     extends:

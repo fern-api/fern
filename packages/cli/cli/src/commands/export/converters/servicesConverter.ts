@@ -441,10 +441,11 @@ function convertResponse({
             }
         };
     } else if (httpResponse?.body?.type === "text") {
+        const textContentType = httpResponse.body.contentType ?? "text/plain";
         responseByStatusCode[String(httpResponse.statusCode ?? 200)] = {
             description: httpResponse.body.docs ?? "",
             content: {
-                "text/plain": {
+                [textContentType]: {
                     schema: {
                         type: "string"
                     }

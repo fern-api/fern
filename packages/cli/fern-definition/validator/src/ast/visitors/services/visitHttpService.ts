@@ -267,7 +267,8 @@ function visitEndpoint({
                         }
                     },
                     property: noop,
-                    "status-code": noop
+                    "status-code": noop,
+                    "content-type": noop
                 });
             }
         },

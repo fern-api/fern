@@ -169,7 +169,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
             }
             if (this.shouldReturnTextResponse(contentType)) {
                 return this.returnTextResponse({
-                    mediaTypeObject
+                    mediaTypeObject,
+                    contentType
                 });
             }
         }
@@ -387,9 +388,11 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
     }
 
     private returnTextResponse({
-        mediaTypeObject
+        mediaTypeObject,
+        contentType
     }: {
         mediaTypeObject: OpenAPIV3_1.MediaTypeObject;
+        contentType: string;
     }): ResponseBodyConverter.Output {
         return {
             responseBody: HttpResponseBody.text({
@@ -398,7 +401,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                     mediaTypeObject,
                     generateOptionalProperties: true,
                     exampleGenerationStrategy: "response"
-                })
+                }),
+                contentType: contentType !== "text/plain" ? contentType : undefined
             }),
             streamResponseBody: undefined,
             inlinedTypes: {},

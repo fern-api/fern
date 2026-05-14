@@ -290,7 +290,8 @@ function convertWebhookResponseBody({
         } else if (parseRawTextType(responseType) != null) {
             return HttpResponseBody.text({
                 docs,
-                v2Examples: undefined
+                v2Examples: undefined,
+                contentType: undefined
             });
         } else if (parseRawBytesType(responseType) != null) {
             return HttpResponseBody.bytes({

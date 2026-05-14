@@ -13,6 +13,7 @@ export const HttpResponseSchemaDetailed: core.serialization.ObjectSchema<
         type: core.serialization.string().optional(),
         property: core.serialization.string().optional(),
         "status-code": core.serialization.number().optional(),
+        "content-type": core.serialization.string().optional(),
     })
     .extend(WithDocsSchema);
 
@@ -21,5 +22,6 @@ export declare namespace HttpResponseSchemaDetailed {
         type?: string | null;
         property?: string | null;
         "status-code"?: number | null;
+        "content-type"?: string | null;
     }
 }
