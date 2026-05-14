@@ -73,11 +73,10 @@ func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
 	}
 }
 
-// WithMaxStreamReconnectAttempts configures the maximum number of mid-stream
-// reconnect attempts on SSE endpoints whose Fern definition sets
-// `x-fern-streaming.resumable: true`. The reconnect loop uses Last-Event-ID
-// and any server-sent `retry:` directives. Has no effect on non-resumable
-// endpoints.
+// WithMaxStreamReconnectAttempts caps the number of transparent mid-stream
+// reconnect attempts on streaming endpoints that support resumption. The
+// reconnect loop honors Last-Event-ID and any server-sent `retry:` directives.
+// Has no effect on endpoints that don't support resumption.
 func WithMaxStreamReconnectAttempts(attempts uint) *core.MaxStreamReconnectAttemptsOption {
 	return &core.MaxStreamReconnectAttemptsOption{
 		MaxStreamReconnectAttempts: attempts,

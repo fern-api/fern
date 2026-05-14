@@ -36,19 +36,14 @@ const (
 	defaultMaxBufSize  = 1024 * 1024 // 1MB
 	defaultInitBufSize = 4096        // Initial buffer allocation; grows as needed up to maxBufSize.
 
-	// defaultMaxStreamReconnectAttempts is used when WithReconnect is supplied
-	// without an explicit maxAttempts. Bounded so a misbehaving server cannot
-	// cause an unbounded reconnect loop.
+	// Bounded so a misbehaving server cannot cause an unbounded reconnect loop.
 	defaultMaxStreamReconnectAttempts = 5
 )
 
 // Stream represents a stream of messages sent from a server.
 //
-// Stream is not safe for concurrent use by multiple goroutines.
-//
-// ctx is stored intentionally: Recv and friends take no context argument, so
-// the long-lived stream needs its own reference for AfterFunc registration
-// and ReconnectFunc invocation. Cancelling ctx tears the stream down.
+// Stream is not safe for concurrent use by multiple goroutines. Cancel the
+// context passed to NewStream to tear the stream down.
 type Stream[T any] struct {
 	ctx               context.Context
 	reader            streamReader
@@ -211,8 +206,7 @@ func (s *Stream[T]) RecvRaw() ([]byte, error) {
 
 // readWithReconnect drives a per-event read against the underlying reader,
 // transparently reconnecting on premature io.EOF when WithReconnect is
-// configured and the terminator has not yet been observed. Generic so it
-// can be reused by both byte-payload and *SseEvent paths.
+// configured and the terminator has not yet been observed.
 func readWithReconnect[V any, T any](s *Stream[T], read func() (V, error)) (V, error) {
 	if s.options.reconnectFn == nil {
 		return read()
@@ -651,8 +645,7 @@ func (s *SseStreamReader) LastRetryMs() int {
 }
 
 // TerminatorSeen reports whether the configured terminator was observed by
-// this reader. Used by Stream to suppress reconnection after natural
-// termination.
+// this reader.
 func (s *SseStreamReader) TerminatorSeen() bool {
 	return s.terminatorSeen
 }
