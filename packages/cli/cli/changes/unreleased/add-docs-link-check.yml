@@ -1,0 +1,3 @@
+- summary: |
+    Add `fern docs link check` command for live site link validation
+  type: feat
