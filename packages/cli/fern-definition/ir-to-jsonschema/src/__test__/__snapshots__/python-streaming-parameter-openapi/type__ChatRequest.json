@@ -2,7 +2,8 @@
   "type": "object",
   "properties": {
     "prompt": {
-      "type": "string"
+      "type": "string",
+      "description": "The user's message"
     },
     "stream": {
       "oneOf": [

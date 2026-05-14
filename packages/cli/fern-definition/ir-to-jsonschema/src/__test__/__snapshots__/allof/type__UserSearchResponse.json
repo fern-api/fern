@@ -12,7 +12,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Current page of results from the requested resource."
     },
     "paging": {
       "$ref": "#/definitions/PagingCursors"
@@ -43,7 +44,8 @@
       "type": "object",
       "properties": {
         "next": {
-          "type": "string"
+          "type": "string",
+          "description": "Cursor for the next page of results."
         },
         "previous": {
           "oneOf": [
@@ -53,7 +55,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Cursor for the previous page of results."
         }
       },
       "required": [

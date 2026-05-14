@@ -34,7 +34,8 @@
   "additionalProperties": false,
   "definitions": {
     "docs.RoleId": {
-      "type": "string"
+      "type": "string",
+      "description": "ID of role which is used to filter the content shown in Fern Docs."
     },
     "docs.Role": {
       "anyOf": [
@@ -47,13 +48,15 @@
             "$ref": "#/definitions/docs.RoleId"
           }
         }
-      ]
+      ],
+      "description": "Audience can either be a string or list of strings\ni.e. `audience: internal` or `audience: [internal, beta]`"
     },
     "docs.FeatureFlag": {
       "type": "object",
       "properties": {
         "flag": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the feature flag to check."
         },
         "fallback-value": {
           "oneOf": [
@@ -70,7 +73,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The default value to use if the feature flag is not set. If not specified, defaults to false."
         },
         "match": {
           "oneOf": [
@@ -87,7 +91,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The value that the feature flag should match for the content to be shown. If not specified, content is shown when the flag is true."
         }
       },
       "required": [
@@ -124,7 +129,8 @@
       ]
     },
     "docs.ChangelogFolderRelativePath": {
-      "type": "string"
+      "type": "string",
+      "description": "The relative path to a folder containing markdown files broken down by date.\n\nExample:\n```\nchangelog: \"changelog\"\n```\n\nThis will look for markdown files in the `/fern/changelog` directory, which should contain files named like\n- `/fern/changelog/2024-04-29.mdx`.\n- `/fern/changelog/2023-01-02.mdx`."
     },
     "docs.TabConfig": {
       "type": "object",
@@ -147,7 +153,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -210,7 +217,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If `href` is set, clicking on the tab will redirect to the given URL.\n\nTabs with `href` must not have children in the navigation config."
         },
         "target": {
           "oneOf": [
@@ -273,7 +281,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -385,7 +394,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -408,7 +418,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The relative path to the markdown file that will be displayed when the section is clicked."
         },
         "contents": {
           "type": "array",
@@ -424,7 +435,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Deprecated. Use `collapsible` and `collapsed-by-default` instead."
         },
         "collapsible": {
           "oneOf": [
@@ -434,7 +446,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether the section can be expanded/collapsed by the user."
         },
         "collapsed-by-default": {
           "oneOf": [
@@ -444,7 +457,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether the section starts collapsed. Only meaningful when `collapsible` is true. Defaults to false (starts open)."
         },
         "slug": {
           "oneOf": [
@@ -504,7 +518,8 @@
       "additionalProperties": false
     },
     "docs.AudienceId": {
-      "type": "string"
+      "type": "string",
+      "description": "ID of audience which is used to filter the API spec."
     },
     "docs.Audience": {
       "anyOf": [
@@ -517,7 +532,8 @@
             "$ref": "#/definitions/docs.AudienceId"
           }
         }
-      ]
+      ],
+      "description": "Audience can either be a string or list of strings\ni.e. `audiences: internal` or `audiences: [internal, beta]`"
     },
     "docs.VersionedSnippetLanguageConfiguration": {
       "type": "object",
@@ -543,7 +559,8 @@
         {
           "$ref": "#/definitions/docs.VersionedSnippetLanguageConfiguration"
         }
-      ]
+      ],
+      "description": "This snippets config object is meant to allow users to specify a specific package for the snippets,\nand optionally a version for that package. If you pass in a string, that should be the name of the package."
     },
     "docs.SnippetsConfiguration": {
       "type": "object",
@@ -681,7 +698,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "A list of environment IDs that are allowed to be used in the playground. If not provided, all environments are allowed. And if the provided list is empty, the playground should be disabled."
         },
         "button": {
           "oneOf": [
@@ -711,7 +729,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The maximum number of websocket messages per connection in the playground."
         }
       },
       "additionalProperties": false
@@ -737,7 +756,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -767,7 +787,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Relative path to the markdown file. This summary is displayed at the top of the API section."
         },
         "contents": {
           "oneOf": [
@@ -840,7 +861,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Settings for the api playground that is applied only to descendants of this api package."
         }
       },
       "additionalProperties": false
@@ -879,7 +901,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -892,7 +915,8 @@
           ]
         },
         "section": {
-          "type": "string"
+          "type": "string",
+          "description": "The title of the api package that will be displayed in the sidebar."
         },
         "referenced-packages": {
           "oneOf": [
@@ -905,7 +929,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "This section will inherit the endpoints from the specified subpackage(s). If multiple packages are specified, they will be merged."
         },
         "summary": {
           "oneOf": [
@@ -915,7 +940,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Relative path to the markdown file."
         },
         "contents": {
           "oneOf": [
@@ -978,7 +1004,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Deprecated. Use `collapsible` and `collapsed-by-default` instead."
         },
         "collapsible": {
           "oneOf": [
@@ -988,7 +1015,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether the section can be expanded/collapsed by the user in the sidebar."
         },
         "collapsed-by-default": {
           "oneOf": [
@@ -998,7 +1026,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether the section starts collapsed. Only meaningful when collapsible is true."
         },
         "availability": {
           "oneOf": [
@@ -1018,7 +1047,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Settings for the api playground that affects all endpoints."
         }
       },
       "required": [
@@ -1047,7 +1077,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -1120,7 +1151,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Settings for the api playground that affect this endpoint specifically."
         }
       },
       "required": [
@@ -1149,7 +1181,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -1208,7 +1241,8 @@
       "required": [
         "operation"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Defines a GraphQL-native schema for selecting operations (REST -> Endpoint === GraphQL -> Operation)"
     },
     "docs.LinkConfiguration": {
       "type": "object",
@@ -1274,7 +1308,8 @@
         {
           "$ref": "#/definitions/docs.LinkConfiguration"
         }
-      ]
+      ],
+      "description": "Use the `layout` object to customize the order that your API endpoints\nare displayed in the docs site."
     },
     "docs.ApiReferenceConfiguration": {
       "type": "object",
@@ -1297,7 +1332,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -1320,7 +1356,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Name of API that we are referencing"
         },
         "openrpc": {
           "oneOf": [
@@ -1330,7 +1367,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Path to an openrpc spec."
         },
         "audiences": {
           "oneOf": [
@@ -1350,7 +1388,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Defaults to false"
         },
         "tag-description-pages": {
           "oneOf": [
@@ -1360,7 +1399,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, a page will be created for each tag in the OpenAPI spec that contains a description."
         },
         "snippets": {
           "oneOf": [
@@ -1380,7 +1420,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "URL to a Postman collection for this API reference"
         },
         "summary": {
           "oneOf": [
@@ -1390,7 +1431,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Relative path to the markdown file"
         },
         "layout": {
           "oneOf": [
@@ -1403,7 +1445,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Advanced usage: when specified, this object will be used to customize the order that your API endpoints are displayed in the docs site, including subpackages, and additional markdown pages (to be rendered in between API endpoints). If not specified, the order will be inferred from the OpenAPI Spec or Fern Definition."
         },
         "collapsed": {
           "oneOf": [
@@ -1473,7 +1516,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If `alphabetized` is set to true, packages and endpoints will be sorted alphabetically, unless explicitly ordered in the `layout` object."
         },
         "flattened": {
           "oneOf": [
@@ -1483,7 +1527,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If `flattened` is set to true, the title specified in `api` will be hidden, and its endpoints and subpackages won't be grouped under it.\n\nThis setting is useful if the API reference is short and you want to display all endpoints at the top level."
         },
         "paginated": {
           "oneOf": [
@@ -1493,7 +1538,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, the API reference will be paginated rather than displayed in a single page (long-scrolling)."
         },
         "playground": {
           "oneOf": [
@@ -1503,7 +1549,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Settings for the api playground that affects all endpoints."
         }
       },
       "required": [
@@ -1512,7 +1559,8 @@
       "additionalProperties": false
     },
     "docs.LibraryName": {
-      "type": "string"
+      "type": "string",
+      "description": "The name identifier for a library. Used to reference the library in navigation."
     },
     "docs.LibraryReferenceConfiguration": {
       "type": "object",
@@ -1535,7 +1583,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -1548,7 +1597,8 @@
           ]
         },
         "library": {
-          "$ref": "#/definitions/docs.LibraryName"
+          "$ref": "#/definitions/docs.LibraryName",
+          "description": "The name of the library to reference (must match a key in the `libraries` section)."
         },
         "title": {
           "oneOf": [
@@ -1558,7 +1608,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override the display title for this library reference."
         },
         "slug": {
           "oneOf": [
@@ -1568,13 +1619,15 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override the URL slug for this library reference."
         }
       },
       "required": [
         "library"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "References a library defined in the `libraries` section.\nThe library's generated navigation will be injected at this point."
     },
     "docs.ChangelogConfiguration": {
       "type": "object",
@@ -1597,7 +1650,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -1686,7 +1740,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -1699,7 +1754,8 @@
           ]
         },
         "folder": {
-          "type": "string"
+          "type": "string",
+          "description": "The relative path to a folder containing markdown files. Fern will automatically discover and add all markdown files from this folder to the navigation."
         },
         "title": {
           "oneOf": [
@@ -1709,7 +1765,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The title to display for this folder section. If not provided, the folder name will be used."
         },
         "title-source": {
           "oneOf": [
@@ -1719,7 +1776,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Determines how page titles are derived for files in this folder. Options are `frontmatter` (use the `title` field from the file's frontmatter) or `filename` (derive title from the file name). Defaults to `filename`."
         },
         "slug": {
           "oneOf": [
@@ -1769,7 +1827,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Deprecated. Use `collapsible` and `collapsed-by-default` instead."
         },
         "collapsible": {
           "oneOf": [
@@ -1779,7 +1838,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether the section can be expanded/collapsed by the user."
         },
         "collapsed-by-default": {
           "oneOf": [
@@ -1789,7 +1849,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether the section starts collapsed. Only meaningful when `collapsible` is true. Defaults to false (starts open)."
         },
         "availability": {
           "oneOf": [
@@ -1858,7 +1919,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If `href` is set, `layout` must be null."
         }
       },
       "required": [
@@ -1887,7 +1949,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [

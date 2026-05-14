@@ -20,5 +20,6 @@
       "uniqueItems": true
     }
   ],
+  "description": "Duplicate types.",
   "definitions": {}
 }
