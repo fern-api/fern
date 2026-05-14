@@ -92,13 +92,18 @@ export class LinkCheckClient {
         let buffer = "";
 
         const processLine = (line: string): void => {
-            if (!line.startsWith("data: ")) {
+            let payload: string;
+            if (line.startsWith("data: ")) {
+                payload = line.slice(6);
+            } else if (line.startsWith("data:")) {
+                payload = line.slice(5);
+            } else {
                 return;
             }
 
             let event: ParsedSseEvent;
             try {
-                const parsed: unknown = JSON.parse(line.slice(6));
+                const parsed: unknown = JSON.parse(payload);
                 if (
                     parsed == null ||
                     typeof parsed !== "object" ||
@@ -164,12 +169,18 @@ export class LinkCheckClient {
                         workingLinks = event.data.workingLinks;
                         brokenLinks.length = 0;
                         for (const link of event.data.brokenLinks) {
+                            if (typeof link !== "object" || link == null) {
+                                continue;
+                            }
                             if (isLinkCheckedData(link as Record<string, unknown>)) {
                                 brokenLinks.push(toBrokenLink(link as Record<string, unknown>));
                             }
                         }
                         blockedLinks.length = 0;
                         for (const link of event.data.blockedLinks) {
+                            if (typeof link !== "object" || link == null) {
+                                continue;
+                            }
                             if (isLinkCheckedData(link as Record<string, unknown>)) {
                                 blockedLinks.push(toBrokenLink(link as Record<string, unknown>));
                             }
