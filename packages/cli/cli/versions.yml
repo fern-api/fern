@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.26.1
+  changelogEntry:
+    - summary: |
+        Forward `--verify` through the remote (Fiddle) generation path. Previously the
+        CLI-level `--verify` flag only worked for local generation; on remote runs the
+        value was silently dropped before reaching `CreateJobRequestV2.verify`. The
+        flag now plumbs through `runRemoteGenerationForAPIWorkspace` →
+        `runRemoteGenerationForGenerator` → `createAndStartJob` and is set on the
+        Fiddle job request, enabling the generator-cli pipeline's VerificationStep
+        against the language-specific validator on opted-in runs.
+      type: fix
+  createdAt: "2026-05-14"
+  irVersion: 66
 - version: 5.26.0
   changelogEntry:
     - summary: |
