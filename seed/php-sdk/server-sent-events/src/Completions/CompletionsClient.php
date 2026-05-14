@@ -5,6 +5,8 @@ namespace Seed\Completions;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Completions\Requests\StreamCompletionRequest;
+use Seed\Core\Client\SseStream;
+use Seed\Completions\Types\StreamedCompletion;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -58,10 +60,11 @@ class CompletionsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
+     * @return SseStream<StreamedCompletion>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function stream(StreamCompletionRequest $request, ?array $options = null): void
+    public function stream(StreamCompletionRequest $request, ?array $options = null): SseStream
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -75,6 +78,9 @@ class CompletionsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return new SseStream(response: $response, deserializer: fn (string $data) => StreamedCompletion::fromJson($data), terminator: '[[DONE]]');
+            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -95,10 +101,11 @@ class CompletionsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
+     * @return SseStream<StreamedCompletion>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function streamWithoutTerminator(StreamCompletionRequestWithoutTerminator $request, ?array $options = null): void
+    public function streamWithoutTerminator(StreamCompletionRequestWithoutTerminator $request, ?array $options = null): SseStream
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -112,6 +119,9 @@ class CompletionsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return new SseStream(response: $response, deserializer: fn (string $data) => StreamedCompletion::fromJson($data), terminator: null);
+            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
