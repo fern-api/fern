@@ -112,7 +112,6 @@ class StreamTest extends TestCase
 
         $events = iterator_to_array($stream->events(), false);
 
-        // Second event's malformed id is rejected; previous id persists per spec.
         $this->assertSame(['ok', 'ok'], array_map(fn (SseEvent $e) => $e->id, $events));
     }
 
@@ -152,7 +151,6 @@ class StreamTest extends TestCase
 
     public function testSseConstructorAcceptsUtf8CharsetParameter(): void
     {
-        // No exception: UTF-8 charset parameter is the spec-mandated value.
         $stream = new SseStream(
             self::response("data: hi\n\n", contentType: 'text/event-stream; charset=UTF-8'),
             fn (string $d): string => $d,
@@ -164,8 +162,6 @@ class StreamTest extends TestCase
 
     public function testSseConstructorToleratesMissingContentTypeHeader(): void
     {
-        // Some streaming servers omit the header; we don't reject — we just
-        // can't validate. (The wire format check is best-effort.)
         $response = \Http\Discovery\Psr17FactoryDiscovery::findResponseFactory()
             ->createResponse(200)
             ->withBody(\Http\Discovery\Psr17FactoryDiscovery::findStreamFactory()->createStream("data: hi\n\n"));
@@ -177,7 +173,6 @@ class StreamTest extends TestCase
 
     public function testStreamThrowsWhenLineBufferExceedsMaxSize(): void
     {
-        // A single unterminated "line" larger than the cap must abort iteration.
         $bigLine = str_repeat('A', 200) . "\n";
         $stream = new SseStream(
             self::response("data: " . $bigLine . "\n"),
@@ -194,17 +189,14 @@ class StreamTest extends TestCase
 
     public function testStreamThrowsBeforeAccumulatingPastMaxBufferOnLongRunningSseEvent(): void
     {
-        // The cap must fire during accumulation, not just at dispatch. A hostile
-        // stream sending many small `data:` lines without a closing blank line
-        // would otherwise grow $dataBuffer past the configured limit. Each line
-        // here is well under the 64-byte cap, but their cumulative `data:`
-        // append should trip the check before allocation balloons.
+        // Each line is well under the 64-byte cap; the cumulative `data:`
+        // append must trip the check before the buffer balloons.
         $manyDataLines = '';
         for ($i = 0; $i < 50; $i++) {
             $manyDataLines .= "data: chunk-$i\n";
         }
         $stream = new SseStream(
-            self::response($manyDataLines),  // no terminating "\n\n"
+            self::response($manyDataLines),
             fn (string $d): string => $d,
             terminator: null,
             maxBufferSize: 64,
@@ -218,8 +210,7 @@ class StreamTest extends TestCase
 
     public function testSseStripsUtf8BomFromStartOfStream(): void
     {
-        // WHATWG §9.2.4: a leading U+FEFF BOM must be stripped from the stream
-        // so the first field-name match isn't poisoned.
+        // WHATWG §9.2.4 requires a leading U+FEFF to be dropped.
         $body = "\xEF\xBB\xBFdata: hello\n\n";
         $stream = new SseStream(self::response($body), fn (string $d): string => $d, null);
 
@@ -228,7 +219,6 @@ class StreamTest extends TestCase
 
     public function testSseStripsBomOnlyAtVeryStart(): void
     {
-        // A BOM-looking sequence that appears mid-stream must NOT be stripped.
         $body = "data: first\n\ndata: \xEF\xBB\xBFsecond\n\n";
         $stream = new SseStream(self::response($body), fn (string $d): string => $d, null);
 

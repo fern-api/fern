@@ -23,15 +23,12 @@ use RuntimeException;
  * When `$terminator` is set, an event whose payload equals the terminator
  * ends iteration cleanly (e.g. `[DONE]` for SSE).
  *
- * A `$maxBufferSize` cap (default 1 MiB) guards against malformed streams that
- * never emit a frame boundary: if the line buffer or a single event's data
- * exceeds the cap, iteration aborts with `RuntimeException`. The cap is
- * enforced *before* allocation, not after — a hostile stream cannot drive us
- * past the limit and then trip the check.
+ * A `$maxBufferSize` cap (default 1 MiB) guards against malformed streams
+ * that never emit a frame boundary: if the line buffer or a single event's
+ * data exceeds the cap, iteration aborts with `RuntimeException`.
  *
- * Direct instantiation of `Stream` is not supported; use `SseStream`,
- * `JsonStream`, or `TextStream` instead. The constructor is `protected` to
- * enforce this.
+ * Direct instantiation is not supported; use `SseStream`, `JsonStream`, or
+ * `TextStream`.
  *
  * @template T
  * @implements IteratorAggregate<int, T>
@@ -131,7 +128,6 @@ class Stream implements IteratorAggregate
                 if ($dataBuffer === '') {
                     continue;
                 }
-                // Strip the single trailing "\n" added by the field-append step.
                 $payload = substr($dataBuffer, 0, -1);
                 $dataBuffer = '';
                 if ($this->terminator !== null && $payload === $this->terminator) {
@@ -160,9 +156,6 @@ class Stream implements IteratorAggregate
             }
             switch ($field) {
                 case 'data':
-                    // Enforce the cap before allocation: a hostile stream emitting
-                    // many `data:` lines without a dispatching blank line cannot
-                    // drive us past the limit and then trip the check.
                     $dataBuffer = $this->appendWithinCap($dataBuffer, $value . "\n");
                     break;
                 case 'event':
@@ -182,7 +175,7 @@ class Stream implements IteratorAggregate
                     break;
             }
         }
-        // Stream ended mid-event (no terminating blank line). Dispatch whatever we have.
+        // Flush a trailing event that lacked a closing blank line.
         if ($dataBuffer !== '') {
             $payload = substr($dataBuffer, 0, -1);
             if ($this->terminator === null || $payload !== $this->terminator) {
@@ -266,10 +259,8 @@ class Stream implements IteratorAggregate
     }
 
     /**
-     * Appends $suffix to $buffer, throwing `RuntimeException` if the result
-     * would exceed `maxBufferSize`. The cap is enforced before the
-     * concatenation allocates, so a runaway stream is bounded by the configured
-     * limit rather than by available memory.
+     * Appends $suffix to $buffer, throwing `RuntimeException` if the resulting
+     * size would exceed `maxBufferSize`.
      */
     private function appendWithinCap(string $buffer, string $suffix): string
     {
