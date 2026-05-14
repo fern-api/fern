@@ -38,6 +38,10 @@ const (
 
 	// Bounded so a misbehaving server cannot cause an unbounded reconnect loop.
 	defaultMaxStreamReconnectAttempts = 5
+
+	// Upper bound on server-sent `retry:` directives. Without this, a server
+	// advertising a multi-day reconnection interval could stall the client.
+	maxReconnectBackoff = 30 * time.Second
 )
 
 // Stream represents a stream of messages sent from a server.
@@ -296,31 +300,40 @@ func (s *Stream[T]) LastEventID() string {
 // shouldReconnectOnError reports whether the given error from the underlying
 // reader should trigger a reconnect attempt.
 func (s *Stream[T]) shouldReconnectOnError(err error) bool {
+	if s.ctx.Err() != nil {
+		return false
+	}
+	if s.sseReader == nil {
+		return false
+	}
 	if s.reconnectAttempts >= s.options.reconnectMax {
 		return false
 	}
 	if err != io.EOF {
 		return false
 	}
-	if s.sseReader != nil && s.sseReader.TerminatorSeen() {
+	if s.sseReader.TerminatorSeen() {
 		return false
 	}
 	return true
 }
 
-// reconnect closes the current response body and re-issues the request via
-// the configured ReconnectFunc, swapping the underlying reader to the new
-// response body. lastEventID is snapshotted before the swap (only when
-// non-empty, so a resumed reader that hasn't yet seen an `id:` doesn't
-// clobber the carried value), and any server-sent `retry:` directive gates
-// the delay before re-issuing.
+// reconnect re-issues the request via ReconnectFunc and swaps the underlying
+// reader. The lastEventID snapshot only updates on non-empty values so the
+// carried ID survives across reconnects whose resumed reader hasn't yet
+// emitted an `id:`. A server-sent `retry:` directive gates the delay before
+// re-issuing, clamped to maxReconnectBackoff.
 func (s *Stream[T]) reconnect() error {
 	if s.sseReader != nil {
 		if id := s.sseReader.LastEventID(); id != "" {
 			s.lastEventID = id
 		}
 		if ms := s.sseReader.LastRetryMs(); ms > 0 {
-			timer := time.NewTimer(time.Duration(ms) * time.Millisecond)
+			delay := time.Duration(ms) * time.Millisecond
+			if delay > maxReconnectBackoff {
+				delay = maxReconnectBackoff
+			}
+			timer := time.NewTimer(delay)
 			select {
 			case <-timer.C:
 			case <-s.ctx.Done():
