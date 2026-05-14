@@ -2268,7 +2268,7 @@ async function resolveDocsLinkCheckContext(
     cliContext: CliContext,
     url: string | undefined
 ): Promise<DocsLinkCheckContext> {
-    const normalizeDomain = (u: string): string => u.replace(/^https?:\/\//, "").replace(/\/$/, "");
+    const normalizeDomain = (u: string): string => u.replace(/^https?:\/\//i, "").replace(/\/$/, "");
 
     if (url != null) {
         let docsConfigDir: string | undefined;
@@ -2318,11 +2318,20 @@ async function resolveDocsLinkCheckContext(
 }
 
 function writeAndDrain(stream: NodeJS.WriteStream, data: string): Promise<void> {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
+        const onError = (err: Error): void => {
+            stream.removeListener("drain", onDrain);
+            reject(err);
+        };
+        const onDrain = (): void => {
+            stream.removeListener("error", onError);
+            resolve();
+        };
         if (stream.write(data)) {
             resolve();
         } else {
-            stream.once("drain", resolve);
+            stream.once("error", onError);
+            stream.once("drain", onDrain);
         }
     });
 }

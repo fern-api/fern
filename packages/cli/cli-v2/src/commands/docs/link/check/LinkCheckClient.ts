@@ -48,7 +48,8 @@ export class LinkCheckClient {
     private readonly token: string;
 
     constructor({ dashboardUrl, token }: { dashboardUrl: string; token: string }) {
-        this.baseUrl = `${dashboardUrl}/api/link-checker/cli`;
+        const base = dashboardUrl.replace(/\/+$/, "");
+        this.baseUrl = `${base}/api/link-checker/cli`;
         this.token = token;
     }
 

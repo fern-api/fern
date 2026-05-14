@@ -65,22 +65,20 @@ export class LinkCheckFormatter {
     }
 
     private formatCsv(result: ResolvedLinkCheckResult, interrupted: boolean): string {
-        const rows: string[] = [
-            `# status: ${interrupted ? "interrupted" : "complete"}`,
-            "type,url,statusCode,scope,source,error"
-        ];
+        const status = interrupted ? "interrupted" : "complete";
+        const rows: string[] = ["type,url,statusCode,scope,source,error,runStatus"];
 
         for (const link of result.brokenLinks) {
-            this.appendCsvRows(rows, "broken", link);
+            this.appendCsvRows(rows, "broken", link, status);
         }
         for (const link of result.blockedLinks) {
-            this.appendCsvRows(rows, "blocked", link);
+            this.appendCsvRows(rows, "blocked", link, status);
         }
 
         return rows.join("\n");
     }
 
-    private appendCsvRows(rows: string[], type: string, link: ResolvedBrokenLink): void {
+    private appendCsvRows(rows: string[], type: string, link: ResolvedBrokenLink, status: string): void {
         if (link.references.length === 0) {
             rows.push(
                 [
@@ -89,7 +87,8 @@ export class LinkCheckFormatter {
                     String(link.statusCode ?? ""),
                     link.isInternal ? "internal" : "external",
                     "",
-                    this.escapeCsv(link.error ?? "")
+                    this.escapeCsv(link.error ?? ""),
+                    status
                 ].join(",")
             );
             return;
@@ -103,7 +102,8 @@ export class LinkCheckFormatter {
                     String(link.statusCode ?? ""),
                     link.isInternal ? "internal" : "external",
                     this.escapeCsv(ref.filePath ?? this.toRelativePath(ref.slug)),
-                    this.escapeCsv(link.error ?? "")
+                    this.escapeCsv(link.error ?? ""),
+                    status
                 ].join(",")
             );
         }

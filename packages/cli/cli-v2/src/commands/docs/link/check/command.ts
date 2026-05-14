@@ -141,6 +141,7 @@ export class LinkCheckCommand {
             const workspace = await context.loadWorkspaceOrThrow();
             return this.resolveDocsConfigDir(workspace);
         } catch {
+            // Not in a Fern project — skip local file resolution
             return undefined;
         }
     }
@@ -161,7 +162,7 @@ export class LinkCheckCommand {
     }
 
     private normalizeDomain(url: string): string {
-        return url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+        return url.replace(/^https?:\/\//i, "").replace(/\/$/, "");
     }
 
     private handleApiError(error: LinkCheckError): never {
