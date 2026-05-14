@@ -68,7 +68,7 @@ describe("buildLedgerInput", () => {
         expect(Object.keys(input.pages)).toHaveLength(0);
     });
 
-    it("passes config through inline (not a CAS blob)", () => {
+    it("omits config (TODO: Track B mapping)", () => {
         const { input } = buildLedgerInput({
             docsDefinition: makeDocsDefinition(),
             organization: "acme",
@@ -78,11 +78,11 @@ describe("buildLedgerInput", () => {
             apiDefinitions: new Map()
         });
 
-        // Per the docs-ledger contract, config is sent inline as a permissive
-        // object (not a BlobRef). The DocsConfig shape passes through; the
-        // server transform extracts only the LedgerConfig-shaped fields.
-        expect(input.config).toBeDefined();
-        expect(input.config).toEqual({ root: MINIMAL_ROOT });
+        // DocsConfig → LedgerConfig mapping is Track B in the PRD. Until that
+        // lands, we send `config: undefined` so the publish passes FDR's
+        // LedgerConfigSchema validation. FDR's transform handles missing
+        // config gracefully.
+        expect(input.config).toBeUndefined();
     });
 
     it("passes through org, domain, basepath, previewId", () => {

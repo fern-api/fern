@@ -108,7 +108,11 @@ export function buildLedgerInput({
         previewId: previewId ?? null,
         root: docsDefinition.config.root ?? docsDefinition.config.navigation,
         pages,
-        config: docsDefinition.config as unknown as DocsPublishInput["config"],
+        // TODO: map DocsConfig → LedgerConfig (Track B). The two schemas have
+        // diverged — DocsConfig.colorsV3.dark.logo is a string, LedgerConfig
+        // expects an ImageRef object. Sending undefined for now lets the publish
+        // through; FDR transform handles missing config gracefully.
+        config: undefined,
         apiManifest: apiManifestRef,
         fileManifest,
         redirects: null,
