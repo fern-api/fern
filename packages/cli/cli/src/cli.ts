@@ -22,6 +22,7 @@ import {
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
+import chalk from "chalk";
 import { getFiddleOrigin } from "@fern-api/core";
 import {
     ContainerRunner,
@@ -2180,7 +2181,8 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
 
             const token = await cliContext.runTask((context) => askToLogin(context));
 
-            cliContext.stderr.info(`Checking links on ${domain}...`);
+            cliContext.stderr.info(`${chalk.cyan("\u25c6")} Checking links on ${chalk.cyan(domain)}...`);
+            cliContext.stderr.info("");
 
             const client = new LinkCheckClient({
                 dashboardUrl,
@@ -2234,7 +2236,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                         code: CliError.Code.ValidationError
                     });
                 } else if (resolved.blockedLinks.length === 0 && !streamInterrupted) {
-                    cliContext.stderr.info("All links valid");
+                    cliContext.stderr.info(`${chalk.green("\u2713")} ${chalk.green("All links valid")}`);
                 }
             } catch (error) {
                 progress.finish();
