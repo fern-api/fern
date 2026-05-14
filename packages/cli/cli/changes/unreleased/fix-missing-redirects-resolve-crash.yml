@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix the missing-redirects check crashing when the docs definition
+    resolver fails (e.g. after a major CLI version upgrade that changes
+    how API types are named). The rule now emits a warning and skips
+    gracefully instead of causing `fern check` to fail with a fatal error.
+  type: fix

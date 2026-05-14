@@ -28,7 +28,8 @@ type FetchResult =
     | { type: "no-token" }
     | { type: "no-instance-url" }
     | { type: "fetch-failed"; reason: string }
-    | { type: "first-publish" };
+    | { type: "first-publish" }
+    | { type: "resolve-failed"; reason: string };
 
 /**
  * Fetches the currently published markdown entries from FDR's slug table.
@@ -115,14 +116,22 @@ export const MissingRedirectsRule: Rule = {
             targetAudiences: undefined
         });
 
-        const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
-        const configRoot = resolvedDocsDefinition.config.root;
-        if (!configRoot || !isV1RootNode(configRoot)) {
-            return {};
+        let localPageIdToSlug: Map<string, string>;
+        try {
+            const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
+            const configRoot = resolvedDocsDefinition.config.root;
+            if (!configRoot || !isV1RootNode(configRoot)) {
+                return {};
+            }
+
+            const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(configRoot);
+            localPageIdToSlug = buildPageIdToSlugMap(root);
+        } catch (error) {
+            const reason = error instanceof Error ? error.message : String(error);
+            logger.debug(`[missing-redirects] Failed to resolve docs definition: ${reason}`);
+            return makeSkipVisitor({ type: "resolve-failed", reason });
         }
 
-        const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(configRoot);
-        const localPageIdToSlug = buildPageIdToSlugMap(root);
         const latestEntries = keepLatestEntryPerPageId(result.entries);
         const removedSlugs = findRemovedSlugs(latestEntries, localPageIdToSlug);
 
@@ -175,6 +184,18 @@ function makeSkipVisitor(fetchResult: Exclude<FetchResult, { type: "success" }>)
                         message:
                             `Missing redirects check skipped: could not reach FDR (${fetchResult.reason}). ` +
                             "The check requires network access to compare against previously published docs."
+                    }
+                ]
+            };
+        case "resolve-failed":
+            return {
+                file: () => [
+                    {
+                        severity: "warning",
+                        message:
+                            `Missing redirects check skipped: failed to resolve docs definition (${fetchResult.reason}). ` +
+                            "This can happen after a major CLI version upgrade that changes how API types are named. " +
+                            "The check will work correctly after the next successful publish."
                     }
                 ]
             };
