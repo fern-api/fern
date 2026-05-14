@@ -1,3 +1,4 @@
+import { getUserToken } from "@fern-api/auth";
 import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import {
     isValidRelativeSlug,
@@ -419,7 +420,9 @@ async function applyGlobalThemeIfNeeded(
     if (themeName == null) {
         return docsWorkspace;
     }
-    const token = process.env.FERN_TOKEN;
+    // Prefer the stored fern login token; fall back to env var (used in CI).
+    const storedToken = await getUserToken();
+    const token = storedToken?.value ?? process.env.FERN_TOKEN;
     if (token == null) {
         context.logger.warn(
             `docs.yml declares global-theme "${themeName}" but FERN_TOKEN is not set — ` +
