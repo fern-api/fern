@@ -16,21 +16,32 @@ RUN apk add --no-cache curl && \
 FROM golang:1.26.3-alpine3.23 AS overlay-binaries
 ARG CONTAINERD_VERSION=2.3.0
 ARG RUNC_VERSION=1.3.5
-ARG MOBY_VERSION=29.4.3
-ARG DOCKER_CLI_VERSION=29.4.3
+# moby v2.0.0-beta.12 (docker v29.5.0-rc.1) is past the v2.0.0-beta.8
+# upstream fix for CVE-2026-33997 / CVE-2026-34040.
+ARG MOBY_VERSION=29.5.0-rc.1
+ARG DOCKER_CLI_VERSION=29.5.0-rc.1
 ARG COMPOSE_VERSION=5.1.3
 ARG XNET_VERSION=0.53.0
 ARG OTEL_SDK_VERSION=1.43.0
+ARG IN_TOTO_VERSION=0.11.0
+# Latest 28.x backport of CVE-2026-33997/34040 (compose v5.1.3's legacy
+# github.com/docker/docker indirect dep is frozen at v28.5.2).
+ARG DOCKER_LEGACY_VERSION=v28.5.3-0.20260325154711-31a1689cb0a1+incompatible
 ENV GOTOOLCHAIN=go1.26.3
 RUN apk add --no-cache git make gcc musl-dev linux-headers libseccomp-dev libseccomp-static bash ca-certificates && \
     mkdir -p /overlay/usr/local/bin
+# Bump in-toto-golang to v0.11.0 (GHSA-pmwq-pjrm-6p5r) and pin the OTLP
+# HTTP exporters to v${OTEL_SDK_VERSION} (CVE-2026-39882).
 RUN git clone --depth 1 --branch v${CONTAINERD_VERSION} https://github.com/containerd/containerd.git /src/containerd && \
     cd /src/containerd && \
     go get golang.org/x/net@v${XNET_VERSION} \
+           github.com/in-toto/in-toto-golang@v${IN_TOTO_VERSION} \
            go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel/trace@v${OTEL_SDK_VERSION} \
-           go.opentelemetry.io/otel/metric@v${OTEL_SDK_VERSION} && \
+           go.opentelemetry.io/otel/metric@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp@v${OTEL_SDK_VERSION} && \
     go mod tidy && \
     go mod vendor && \
     for cmd in containerd ctr containerd-shim-runc-v2; do \
@@ -46,14 +57,15 @@ RUN git clone --depth 1 --branch v${RUNC_VERSION} https://github.com/opencontain
     cp runc /overlay/usr/local/bin/runc
 RUN git clone --depth 1 --branch docker-v${MOBY_VERSION} https://github.com/moby/moby.git /src/moby && \
     cd /src/moby && \
-    # Force the patched golang.org/x/net (HTTP/2 server header smuggling,
-    # CVE-2026-33814) and patched otel/sdk (CVE-2026-39883 PATH hijacking
-    # on BSD/Solaris) before vendoring + building dockerd/docker-proxy.
+    # Force patched x/net (CVE-2026-33814), otel SDK + OTLP HTTP exporters
+    # (CVE-2026-39882, CVE-2026-39883) before vendoring dockerd/docker-proxy.
     go get golang.org/x/net@v${XNET_VERSION} \
            go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel/trace@v${OTEL_SDK_VERSION} \
-           go.opentelemetry.io/otel/metric@v${OTEL_SDK_VERSION} && \
+           go.opentelemetry.io/otel/metric@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp@v${OTEL_SDK_VERSION} && \
     go mod tidy && \
     go mod vendor && \
     CGO_ENABLED=0 go build -mod=vendor \
@@ -76,23 +88,22 @@ RUN git clone --depth 1 --branch v${DOCKER_CLI_VERSION} https://github.com/docke
       -tags "osusergo netgo static_build pkcs11" \
       -trimpath -ldflags "-s -w" \
       -o /overlay/usr/local/bin/docker ./cmd/docker
-# Rebuild docker-compose to clear golang.org/x/net <0.53 CVEs the upstream
-# v5.1.3 prebuilt vendors. github.com/docker/docker v28.5.2 remains as a
-# residual since compose has not yet migrated to github.com/moby/moby/v2;
-# the daemon we overlay above is moby v29.4.3 so the CVE-2026-34040 /
-# CVE-2026-33997 code paths are unreachable at runtime.
+# Rebuild docker-compose to clear x/net <0.53, OTLP HTTP exporter <1.43.0
+# (CVE-2026-39882), in-toto-golang <0.11.0 (GHSA-pmwq-pjrm-6p5r), and the
+# legacy github.com/docker/docker v28.5.2 (CVE-2026-33997/34040) that the
+# v5.1.3 upstream prebuilt vendors.
 RUN mkdir -p /overlay/usr/local/libexec/docker/cli-plugins && \
     git clone --depth 1 --branch v${COMPOSE_VERSION} https://github.com/docker/compose.git /src/compose && \
     cd /src/compose && \
-    # Compose still vendors github.com/docker/docker v28.5.2+incompatible
-    # (legacy module path) rather than github.com/moby/moby/v2 -- bump x/net,
-    # otel/sdk, and docker/docker so the embedded SBOM matches the daemon
-    # version we overlay.
     go get golang.org/x/net@v${XNET_VERSION} \
+           github.com/in-toto/in-toto-golang@v${IN_TOTO_VERSION} \
+           github.com/docker/docker@${DOCKER_LEGACY_VERSION} \
            go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel/trace@v${OTEL_SDK_VERSION} \
-           go.opentelemetry.io/otel/metric@v${OTEL_SDK_VERSION} && \
+           go.opentelemetry.io/otel/metric@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp@v${OTEL_SDK_VERSION} && \
     go mod tidy && \
     CGO_ENABLED=0 go build \
       -trimpath -ldflags "-s -w -X github.com/docker/compose/v5/internal.Version=v${COMPOSE_VERSION}" \

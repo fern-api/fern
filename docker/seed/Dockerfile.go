@@ -16,20 +16,28 @@ RUN apk add --no-cache curl && \
 FROM golang:1.26.3-alpine3.23 AS overlay-binaries
 ARG CONTAINERD_VERSION=2.3.0
 ARG RUNC_VERSION=1.3.5
-ARG MOBY_VERSION=29.4.3
-ARG DOCKER_CLI_VERSION=29.4.3
+# moby v2.0.0-beta.12 (docker v29.5.0-rc.1) is past the v2.0.0-beta.8
+# upstream fix for CVE-2026-33997 / CVE-2026-34040.
+ARG MOBY_VERSION=29.5.0-rc.1
+ARG DOCKER_CLI_VERSION=29.5.0-rc.1
 ARG XNET_VERSION=0.53.0
 ARG OTEL_SDK_VERSION=1.43.0
+ARG IN_TOTO_VERSION=0.11.0
 ENV GOTOOLCHAIN=go1.26.3
 RUN apk add --no-cache git make gcc musl-dev linux-headers libseccomp-dev libseccomp-static bash ca-certificates && \
     mkdir -p /overlay/usr/local/bin
+# Bump in-toto-golang to v0.11.0 (GHSA-pmwq-pjrm-6p5r) and pin the OTLP
+# HTTP exporters to v${OTEL_SDK_VERSION} (CVE-2026-39882).
 RUN git clone --depth 1 --branch v${CONTAINERD_VERSION} https://github.com/containerd/containerd.git /src/containerd && \
     cd /src/containerd && \
     go get golang.org/x/net@v${XNET_VERSION} \
+           github.com/in-toto/in-toto-golang@v${IN_TOTO_VERSION} \
            go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel/trace@v${OTEL_SDK_VERSION} \
-           go.opentelemetry.io/otel/metric@v${OTEL_SDK_VERSION} && \
+           go.opentelemetry.io/otel/metric@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp@v${OTEL_SDK_VERSION} && \
     go mod tidy && \
     go mod vendor && \
     for cmd in containerd ctr containerd-shim-runc-v2; do \
@@ -45,14 +53,15 @@ RUN git clone --depth 1 --branch v${RUNC_VERSION} https://github.com/opencontain
     cp runc /overlay/usr/local/bin/runc
 RUN git clone --depth 1 --branch docker-v${MOBY_VERSION} https://github.com/moby/moby.git /src/moby && \
     cd /src/moby && \
-    # Force the patched golang.org/x/net (HTTP/2 server header smuggling,
-    # CVE-2026-33814) and patched otel/sdk (CVE-2026-39883 PATH hijacking
-    # on BSD/Solaris) before vendoring + building dockerd/docker-proxy.
+    # Force patched x/net (CVE-2026-33814), otel SDK + OTLP HTTP exporters
+    # (CVE-2026-39882, CVE-2026-39883) before vendoring dockerd/docker-proxy.
     go get golang.org/x/net@v${XNET_VERSION} \
            go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel/trace@v${OTEL_SDK_VERSION} \
-           go.opentelemetry.io/otel/metric@v${OTEL_SDK_VERSION} && \
+           go.opentelemetry.io/otel/metric@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp@v${OTEL_SDK_VERSION} && \
     go mod tidy && \
     go mod vendor && \
     CGO_ENABLED=0 go build -mod=vendor \
@@ -105,6 +114,12 @@ RUN set -eux; \
     wget -q "https://go.dev/dl/go${GO_VERSION}.linux-${GOARCH}.tar.gz" \
     && tar -C /usr/local -xzf "go${GO_VERSION}.linux-${GOARCH}.tar.gz" \
     && rm "go${GO_VERSION}.linux-${GOARCH}.tar.gz"
+
+# Go 1.26.3 ships the CVE-2026-33814 fix in h2_bundle.go but src/go.mod
+# still pins x/net v0.47.1; bump SBOM files to v0.53.0 to match the code.
+RUN sed -i 's|golang.org/x/net v0.47.1-[^ ]*|golang.org/x/net v0.53.0|' \
+        /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
+    sed -i '/golang.org\/x\/net v0.47.1-/d' /usr/local/go/src/go.sum
 
 ENV PATH="/usr/local/go/bin:${PATH}" \
     GOPATH="/go" \

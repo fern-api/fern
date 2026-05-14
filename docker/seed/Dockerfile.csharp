@@ -119,12 +119,12 @@ RUN dotnet tool install -g csharpier --version "1.2.6" && \
 </Project>' > /dependencies.csproj && \
     dotnet restore /dependencies.csproj && \
     rm /dependencies.csproj && \
-    # The /dependencies.csproj restore pulls System.Net.Http 4.3.0 back into
-    # the NuGet cache via transitive resolution metadata, even though
-    # System.Net.Http is pinned to [4.3.4,) for actual use. The cached 4.3.0
-    # package contains the netstandard1.x reference assembly (CVE-2018-8292)
-    # and is only kept around for graph resolution -- safe to remove
-    # post-restore.
-    rm -rf /root/.nuget/packages/system.net.http/4.3.0
+    # Drop System.Net.Http 4.3.0 (CVE-2018-8292): the cached package and any
+    # transitive deps.json referencing it (e.g. JmesPath.Net.Parser 1.1.0's
+    # netstandard1.3 build). Runtime only loads the newer-TFM builds.
+    rm -rf /root/.nuget/packages/system.net.http/4.3.0 && \
+    find /root/.nuget/packages -name '*.deps.json' \
+        -exec grep -l '"System.Net.Http/4.3.0"' {} + 2>/dev/null \
+        | xargs -r dirname | sort -u | xargs -r rm -rf
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
