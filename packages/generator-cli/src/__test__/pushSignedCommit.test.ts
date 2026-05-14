@@ -102,7 +102,9 @@ describe("pushSignedCommit", () => {
             repo: "acme-sdk",
             message: "SDK Generation",
             tree: "tree-sha",
-            parents: ["parent-sha"]
+            parents: ["parent-sha"],
+            author: { name: "fern-api", email: "115122769+fern-api[bot]@users.noreply.github.com" },
+            committer: { name: "fern-api", email: "115122769+fern-api[bot]@users.noreply.github.com" }
         });
         expect(octokit.git.updateRef).toHaveBeenCalledWith({
             owner: "acme",
@@ -226,7 +228,9 @@ describe("pushSignedCommit", () => {
             repo: "acme-sdk",
             message: "SDK Generation",
             tree: "tree-sha-2",
-            parents: ["parent-sha-2"]
+            parents: ["parent-sha-2"],
+            author: { name: "fern-api", email: "115122769+fern-api[bot]@users.noreply.github.com" },
+            committer: { name: "fern-api", email: "115122769+fern-api[bot]@users.noreply.github.com" }
         });
         // Temp ref re-push on the rebase retry must force, because the rebased commit
         // is not a descendant of the original tempRef tip.

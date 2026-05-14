@@ -47,6 +47,7 @@ func (r *RawClient) CreateMovie(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response fern.MovieID
 	raw, err := r.caller.Call(
 		ctx,
@@ -74,7 +75,7 @@ func (r *RawClient) CreateMovie(
 
 func (r *RawClient) GetMovie(
 	ctx context.Context,
-	movieID fern.MovieID,
+	request *fern.GetMovieImdbRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.Movie], error) {
 	options := core.NewRequestOptions(opts...)
@@ -85,7 +86,7 @@ func (r *RawClient) GetMovie(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/movies/%v",
-		movieID,
+		request.MovieID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

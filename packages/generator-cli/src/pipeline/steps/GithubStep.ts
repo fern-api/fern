@@ -197,6 +197,7 @@ export class GithubStep extends BaseStep {
                 repo,
                 branch: prBranch,
                 force: isUpdatingExistingPR,
+                author: this.config.author,
                 logger: this.logger
             });
             const pushedBranch = await repository.getCurrentBranch();
@@ -342,6 +343,7 @@ export class GithubStep extends BaseStep {
                 branch: baseBranch,
                 force: false,
                 rebaseOnConflict: true,
+                author: this.config.author,
                 logger: this.logger
             });
 

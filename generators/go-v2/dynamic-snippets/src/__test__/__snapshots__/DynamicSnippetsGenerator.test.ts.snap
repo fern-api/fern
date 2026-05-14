@@ -521,6 +521,7 @@ exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 import (
 	context "context"
 
+	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 	option "github.com/acme/acme-go/option"
 )
@@ -531,9 +532,12 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acme.GetMovieImdbRequest{
+		MovieID: "movie_xyz",
+	}
 	client.Imdb.GetMovie(
 		context.TODO(),
-		"movie_xyz",
+		request,
 	)
 }
 "
@@ -1493,6 +1497,7 @@ exports[`snippets (exportAllRequestsAtRoot) > imdb > 'GET /movies/{movieId} (sim
 import (
 	context "context"
 
+	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 	option "github.com/acme/acme-go/option"
 )
@@ -1503,9 +1508,12 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acme.GetMovieImdbRequest{
+		MovieID: "movie_xyz",
+	}
 	client.Imdb.GetMovie(
 		context.TODO(),
-		"movie_xyz",
+		request,
 	)
 }
 "
@@ -2465,6 +2473,7 @@ exports[`snippets (exportedClientName) > imdb > 'GET /movies/{movieId} (simple)'
 import (
 	context "context"
 
+	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 	option "github.com/acme/acme-go/option"
 )
@@ -2475,9 +2484,12 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acme.GetMovieImdbRequest{
+		MovieID: "movie_xyz",
+	}
 	client.Imdb.GetMovie(
 		context.TODO(),
-		"movie_xyz",
+		request,
 	)
 }
 "

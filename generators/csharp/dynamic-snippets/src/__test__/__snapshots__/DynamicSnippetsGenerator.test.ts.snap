@@ -379,13 +379,16 @@ await client.Service.JustFileWithQueryParamsAsync(
 
 exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 "using Acme;
+using Acme.Imdb;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
 );
 
 await client.Imdb.GetMovieAsync(
-    "movie_xyz"
+    new GetMovieImdbRequest {
+        MovieID = "movie_xyz"
+    }
 );
 "
 `;
