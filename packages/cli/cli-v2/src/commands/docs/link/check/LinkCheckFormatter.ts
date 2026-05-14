@@ -55,8 +55,7 @@ export class LinkCheckFormatter {
                     url: link.url,
                     statusCode: link.statusCode,
                     isInternal: link.isInternal,
-                    references: link.references.map((ref) => this.formatJsonReference(ref)),
-                    error: link.error
+                    references: link.references.map((ref) => this.formatJsonReference(ref))
                 }))
             },
             null,
@@ -194,10 +193,6 @@ export class LinkCheckFormatter {
             const displayUrl = link.isInternal ? this.toRelativePath(link.url) : link.url;
             const status = link.statusCode != null ? link.statusCode : "blocked";
             lines.push(`  ${chalk.yellow("⚠")} ${chalk.cyan(displayUrl)} ${chalk.dim("→")} ${chalk.yellow(status)}`);
-
-            if (link.error != null && link.error.length > 0) {
-                lines.push(chalk.dim(`    ${link.error}`));
-            }
 
             for (const ref of link.references) {
                 lines.push(chalk.dim(`    ${this.formatReference(ref)}`));
