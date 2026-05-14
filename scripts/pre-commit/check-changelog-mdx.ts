@@ -42,9 +42,13 @@ function checkChangelogMdx(): void {
 
         const lines = content.split("\n");
         for (let i = 0; i < lines.length; i++) {
-            const stripped = stripBacktickSpans(lines[i]!);
+            const line = lines[i];
+            if (line == null) {
+                continue;
+            }
+            const stripped = stripBacktickSpans(line);
             if (BARE_ANGLE_BRACKET.test(stripped)) {
-                errors.push(`  ${file}:${i + 1}: ${lines[i]!.trim()}`);
+                errors.push(`  ${file}:${i + 1}: ${line.trim()}`);
             }
         }
     }
