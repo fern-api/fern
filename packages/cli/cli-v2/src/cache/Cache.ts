@@ -12,9 +12,9 @@ const CACHE_VERSION = "v1";
  *
  * Directory structure:
  * ```
- * ~/.cache/fern               # Linux and macOS (XDG_CACHE_HOME/fern)
- * %LOCALAPPDATA%/fern/cache   # Windows
+ * ~/.fern/                    # All platforms (shared with CLI v1)
  *
+ * ├── bin/                    # Downloaded tool binaries (buf, protoc-gen-openapi)
  * ├── v1/                     # Cache schema version
  * │   ├── ir/
  * │   │   ├── v63/
@@ -22,7 +22,8 @@ const CACHE_VERSION = "v1";
  * │   │   │       └── 0a/
  * │   │   │           └── 0a3f9c2e4a7d1b...json
  * │   │   └── v62/
- * │   └── logs/
+ * │   ├── logs/
+ * │   └── migrations/
  * └── tmp/                    # Atomic write staging
  * ```
  */
@@ -66,6 +67,9 @@ export class Cache {
     /** Directory for downloaded generator migration packages. */
     public readonly migrations: { absoluteFilePath: AbsoluteFilePath };
 
+    /** Directory for downloaded tool binaries (buf, protoc-gen-openapi). Shared with CLI v1. */
+    public readonly bin: { absoluteFilePath: AbsoluteFilePath };
+
     constructor({ logger }: { logger?: Logger } = {}) {
         this.absoluteFilePath = this.resolveAbsoluteFilePath();
         this.ir = new IrCache({
@@ -76,6 +80,9 @@ export class Cache {
         this.logs = new LogsCache({ absoluteFilePath: join(this.getVersionedPath(), RelativeFilePath.of("logs")) });
         this.migrations = {
             absoluteFilePath: join(this.getVersionedPath(), RelativeFilePath.of("migrations"))
+        };
+        this.bin = {
+            absoluteFilePath: join(this.absoluteFilePath, RelativeFilePath.of("bin"))
         };
     }
 
@@ -141,7 +148,7 @@ export class Cache {
      * Priority order:
      *  1. FERN_CACHE_DIR environment variable
      *  2. The configured cache path in ~/.fernrc
-     *  3. Platform defaults (XDG on macOS/Linux, LOCALAPPDATA on Windows)
+     *  3. ~/.fern (shared with CLI v1)
      */
     private resolveAbsoluteFilePath(): AbsoluteFilePath {
         const envCacheDir = process.env.FERN_CACHE_DIR;
@@ -155,24 +162,7 @@ export class Cache {
         }
 
         const homeDir = AbsoluteFilePath.of(os.homedir());
-
-        const platform = process.platform;
-        if (platform === "win32") {
-            // Windows: %LOCALAPPDATA%/fern/cache
-            const localAppData =
-                process.env.LOCALAPPDATA != null
-                    ? AbsoluteFilePath.of(process.env.LOCALAPPDATA)
-                    : join(homeDir, RelativeFilePath.of("AppData/Local"));
-            return join(localAppData, RelativeFilePath.of("fern/cache"));
-        }
-
-        // For macOS and Linux, follow the XDG Base Directory Specification.
-        // For details, see: https://specifications.freedesktop.org/basedir/latest
-        const xdgCacheHome =
-            process.env.XDG_CACHE_HOME != null
-                ? AbsoluteFilePath.of(process.env.XDG_CACHE_HOME)
-                : join(homeDir, RelativeFilePath.of(".cache"));
-        return join(xdgCacheHome, RelativeFilePath.of("fern"));
+        return join(homeDir, RelativeFilePath.of(".fern"));
     }
 
     /**

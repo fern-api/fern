@@ -1,0 +1,6 @@
+- summary: |
+    Migrate CLI v2 cache directory from XDG-compliant paths (~/.cache/fern/) to
+    ~/.fern/ so all Fern-related files live under a single directory shared with
+    CLI v1. Add bin/ cache property for downloaded tool binaries (buf,
+    protoc-gen-openapi).
+  type: chore
