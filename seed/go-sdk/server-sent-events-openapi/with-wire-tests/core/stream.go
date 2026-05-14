@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"strconv"
 	"sync"
+	"time"
 )
 
 type StreamFormat string
@@ -42,6 +43,12 @@ const (
 )
 
 // Stream represents a stream of messages sent from a server.
+//
+// Stream is not safe for concurrent use by multiple goroutines.
+//
+// ctx is stored intentionally: Recv and friends take no context argument, so
+// the long-lived stream needs its own reference for AfterFunc registration
+// and ReconnectFunc invocation. Cancelling ctx tears the stream down.
 type Stream[T any] struct {
 	ctx               context.Context
 	reader            streamReader
@@ -178,11 +185,15 @@ func NewStream[T any](ctx context.Context, response *http.Response, opts ...Stre
 	}
 }
 
+func (s *Stream[T]) readBytes() ([]byte, error) {
+	return s.reader.ReadFromStream()
+}
+
 // Recv reads a message from the stream, returning io.EOF when
 // all the messages have been read.
 func (s *Stream[T]) Recv() (T, error) {
 	var value T
-	bytes, err := readWithReconnect(s, func() ([]byte, error) { return s.reader.ReadFromStream() })
+	bytes, err := readWithReconnect(s, s.readBytes)
 	if err != nil {
 		return value, err
 	}
@@ -195,7 +206,7 @@ func (s *Stream[T]) Recv() (T, error) {
 // RecvRaw reads a raw message from the stream without JSON unmarshaling,
 // returning io.EOF when all the messages have been read.
 func (s *Stream[T]) RecvRaw() ([]byte, error) {
-	return readWithReconnect(s, func() ([]byte, error) { return s.reader.ReadFromStream() })
+	return readWithReconnect(s, s.readBytes)
 }
 
 // readWithReconnect drives a per-event read against the underlying reader,
@@ -294,7 +305,7 @@ func (s *Stream[T]) shouldReconnectOnError(err error) bool {
 	if s.reconnectAttempts >= s.options.reconnectMax {
 		return false
 	}
-	if !errors.Is(err, io.EOF) {
+	if err != io.EOF {
 		return false
 	}
 	if s.sseReader != nil && s.sseReader.TerminatorSeen() {
@@ -305,22 +316,41 @@ func (s *Stream[T]) shouldReconnectOnError(err error) bool {
 
 // reconnect closes the current response body and re-issues the request via
 // the configured ReconnectFunc, swapping the underlying reader to the new
-// response body. lastEventID is snapshotted before the swap so it survives.
+// response body. lastEventID is snapshotted before the swap (only when
+// non-empty, so a resumed reader that hasn't yet seen an `id:` doesn't
+// clobber the carried value), and any server-sent `retry:` directive gates
+// the delay before re-issuing.
 func (s *Stream[T]) reconnect() error {
 	if s.sseReader != nil {
-		s.lastEventID = s.sseReader.LastEventID()
+		if id := s.sseReader.LastEventID(); id != "" {
+			s.lastEventID = id
+		}
+		if ms := s.sseReader.LastRetryMs(); ms > 0 {
+			timer := time.NewTimer(time.Duration(ms) * time.Millisecond)
+			select {
+			case <-timer.C:
+			case <-s.ctx.Done():
+				timer.Stop()
+				return s.ctx.Err()
+			}
+		}
 	}
 	resp, err := s.options.reconnectFn(s.ctx, s.lastEventID)
 	if err != nil {
 		return err
 	}
-	_ = s.closer.Close()
-	s.closer = newOnceCloser(resp.Body)
+	// Stop the previous AfterFunc and swap closers atomically from the
+	// stream's perspective. Each AfterFunc captures its specific closer in
+	// its closure, so a stale AfterFunc firing concurrently with reconnect
+	// can only close its own (old) body, never the freshly-issued one.
 	if s.stopFunc != nil {
 		s.stopFunc()
 	}
+	_ = s.closer.Close()
+	newCloser := newOnceCloser(resp.Body)
+	s.closer = newCloser
 	s.stopFunc = context.AfterFunc(s.ctx, func() {
-		_ = s.closer.Close()
+		_ = newCloser.Close()
 	})
 	s.reader = newStreamReader(resp.Body, s.options)
 	s.sseReader, _ = s.reader.(sseEventReader)
@@ -338,6 +368,7 @@ type sseEventReader interface {
 	streamReader
 	ReadEvent() (*SseEvent, error)
 	LastEventID() string
+	LastRetryMs() int
 	TerminatorSeen() bool
 }
 
@@ -491,6 +522,7 @@ type SseStreamReader struct {
 	scanner        *bufio.Scanner
 	options        *streamOptions
 	lastEventID    string
+	lastRetryMs    int
 	terminatorSeen bool
 
 	// Precomputed discriminator injection patterns (empty if no discriminator configured).
@@ -612,6 +644,12 @@ func (s *SseStreamReader) LastEventID() string {
 	return s.lastEventID
 }
 
+// LastRetryMs returns the most recently parsed `retry:` directive value in
+// milliseconds, or 0 if the stream has not advertised one.
+func (s *SseStreamReader) LastRetryMs() int {
+	return s.lastRetryMs
+}
+
 // TerminatorSeen reports whether the configured terminator was observed by
 // this reader. Used by Stream to suppress reconnection after natural
 // termination.
@@ -638,6 +676,7 @@ func (s *SseStreamReader) parseSseLine(line []byte, event *SseEvent) {
 	} else if value, ok := s.tryParseField(line, sseRetryPrefix, sseRetryPrefixNoSpace); ok {
 		if n, err := strconv.Atoi(string(bytes.TrimSpace(value))); err == nil && n >= 0 {
 			event.Retry = n
+			s.lastRetryMs = n
 		}
 	}
 }

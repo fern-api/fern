@@ -94,8 +94,9 @@ func (s *Streamer[T]) streamOnce(
 	headers := params.Headers
 	if lastEventID != "" {
 		// Clone so reconnect attempts don't mutate the caller's header map.
-		headers = headers.Clone()
-		if headers == nil {
+		if headers != nil {
+			headers = headers.Clone()
+		} else {
 			headers = http.Header{}
 		}
 		headers.Set("Last-Event-ID", lastEventID)
