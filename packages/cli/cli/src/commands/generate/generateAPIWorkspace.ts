@@ -198,6 +198,7 @@ export async function generateWorkspace({
                         occurrenceTracker,
                         skipIfNoDiff,
                         noReplay,
+                        verify,
                         disableTelemetry: isTelemetryDisabled()
                     });
                 }
