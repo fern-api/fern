@@ -214,6 +214,7 @@
     "updated_at"
   ],
   "additionalProperties": false,
+  "description": "User object similar to Auth0 users",
   "definitions": {
     "types.Identity": {
       "type": "object",

@@ -15,7 +15,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "User's age"
     }
   },
   "required": [
@@ -23,5 +24,6 @@
     "email"
   ],
   "additionalProperties": false,
+  "description": "User data for creation/update",
   "definitions": {}
 }

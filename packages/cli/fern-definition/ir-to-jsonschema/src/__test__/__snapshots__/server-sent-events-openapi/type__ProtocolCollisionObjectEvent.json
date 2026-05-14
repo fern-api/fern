@@ -20,7 +20,8 @@
           "type": "string"
         },
         "event": {
-          "type": "string"
+          "type": "string",
+          "description": "An event type field inside the data payload that collides with the SSE envelope's event field used for discrimination."
         }
       },
       "required": [

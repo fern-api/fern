@@ -2,10 +2,12 @@
   "type": "object",
   "properties": {
     "client_id": {
-      "type": "string"
+      "type": "string",
+      "description": "Client identifier"
     },
     "client_secret": {
-      "type": "string"
+      "type": "string",
+      "description": "Client secret"
     }
   },
   "required": [
