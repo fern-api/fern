@@ -199,8 +199,7 @@ export class LinkCheckClient {
         }
 
         if (!sawComplete) {
-            const phase =
-                linksCheckedSoFar > 0 ? "checking links" : pagesScrapedSoFar > 0 ? "scraping pages" : "connecting";
+            const phase = totalLinks > 0 ? "checking links" : pagesScrapedSoFar > 0 ? "scraping pages" : "connecting";
 
             if (brokenLinks.length > 0 || blockedLinks.length > 0) {
                 callbacks.onStreamInterrupted?.({
