@@ -1,4 +1,5 @@
 import { getToken } from "@fern-api/auth";
+import { assertNever } from "@fern-api/core-utils";
 import { DocsDefinitionResolver } from "@fern-api/docs-resolver";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { createLogger, type LogLevel } from "@fern-api/logger";
@@ -219,5 +220,7 @@ function makeSkipVisitor(fetchResult: Exclude<FetchResult, { type: "success" }>)
                     }
                 ]
             };
+        default:
+            assertNever(fetchResult);
     }
 }
