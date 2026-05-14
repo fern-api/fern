@@ -898,27 +898,19 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             case "dateTime":
             case "mixed":
             case "literal":
+            case "enumString": {
+                const methodSuffix = internalType.type === "enumString" ? "String" : upperFirst(internalType.type);
                 return php.codeblock((writer) => {
                     writer.writeNode(
                         php.invokeMethod({
                             on: this.context.getJsonDecoderClassReference(),
-                            method: `decode${upperFirst(internalType.type)}`,
+                            method: `decode${methodSuffix}`,
                             arguments_: argument,
                             static_: true
                         })
                     );
                 });
-            case "enumString":
-                return php.codeblock((writer) => {
-                    writer.writeNode(
-                        php.invokeMethod({
-                            on: this.context.getJsonDecoderClassReference(),
-                            method: "decodeString",
-                            arguments_: argument,
-                            static_: true
-                        })
-                    );
-                });
+            }
             case "array":
             case "map":
             case "union":

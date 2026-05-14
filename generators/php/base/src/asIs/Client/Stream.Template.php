@@ -235,8 +235,12 @@ class Stream implements IteratorAggregate
             if ($pendingCr && $chunk[0] === "\n") {
                 $chunk = substr($chunk, 1);
             }
-            $pendingCr = str_ends_with($chunk, "\r");
-            $chunk = str_replace(["\r\n", "\r"], "\n", $chunk);
+            if (str_contains($chunk, "\r")) {
+                $pendingCr = str_ends_with($chunk, "\r");
+                $chunk = str_replace(["\r\n", "\r"], "\n", $chunk);
+            } else {
+                $pendingCr = false;
+            }
             $buffer = $this->appendWithinCap($buffer, $chunk);
             if (!$bomChecked && strlen($buffer) >= 3) {
                 $bomChecked = true;
