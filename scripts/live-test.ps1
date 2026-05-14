@@ -39,8 +39,15 @@ try {
     # `--verify` was silently dropped on the remote (Fiddle) path until PR #15892
     # wired it through. Re-running the same generate with `--verify` ensures the
     # end-to-end flag forwarding stays healthy.
+    #
+    # PowerShell's `$ErrorActionPreference = "Stop"` does not propagate non-zero
+    # exits from native executables, so we explicitly check `$LASTEXITCODE` after
+    # each newly-added assertion. Without this, a regression in these code paths
+    # would silently pass — defeating the entire point of adding the test.
     & node $cli_path generate --verify --log-level debug
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
     & node $cli_path generate --group ts-sdk --log-level debug
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
     
     $DebugPreference = "SilentlyContinue"
     & node $cli_path register --log-level debug
