@@ -42,6 +42,12 @@ FROM golang:1.26.3-alpine3.23
 
 WORKDIR /workspace
 
+# Go 1.26.3 ships the CVE-2026-33814 fix in h2_bundle.go but src/go.mod
+# still pins x/net v0.47.1; bump SBOM files to v0.53.0 to match the code.
+RUN sed -i 's|golang.org/x/net v0.47.1-[^ ]*|golang.org/x/net v0.53.0|' \
+        /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
+    sed -i '/golang.org\/x\/net v0.47.1-/d' /usr/local/go/src/go.sum
+
 RUN apk update && apk upgrade --no-cache
 RUN apk add --no-cache ca-certificates git libstdc++
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
