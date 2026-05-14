@@ -54,6 +54,10 @@ echo "Testing fern upgrade command..."
 node "$cli_path" upgrade --yes --log-level debug
 
 node "$cli_path" generate --log-level debug
+# `--verify` was silently dropped on the remote (Fiddle) path until PR #15892
+# wired it through. Re-running the same generate with `--verify` ensures the
+# end-to-end flag forwarding stays healthy.
+node "$cli_path" generate --verify --log-level debug
 node "$cli_path" generate --group ts-sdk --log-level debug
 
 set +x
