@@ -8,7 +8,7 @@ import { readFileSync } from "fs";
 import grayMatter from "gray-matter";
 import path from "path";
 
-interface ContextLine {
+export interface ContextLine {
     lineNumber: number;
     content: string;
     isErrorLine: boolean;
@@ -22,7 +22,7 @@ function calculateVisualColumn(text: string, charIndex: number, tabWidth = 4): n
     return visualColumn;
 }
 
-class MdxValidationError {
+export class MdxValidationError {
     constructor(
         public readonly filepath: AbsoluteFilePath,
         public readonly message: string,

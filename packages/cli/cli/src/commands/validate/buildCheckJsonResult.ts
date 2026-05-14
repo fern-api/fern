@@ -5,6 +5,9 @@ export interface CheckJsonViolation {
     severity: string;
     rule?: string;
     message: string;
+    filepath?: string;
+    line?: number;
+    column?: number;
 }
 
 export interface CheckJsonResult {
@@ -53,6 +56,19 @@ export function buildCheckJsonResult({
             };
             if (violation.name != null) {
                 entry.rule = violation.name;
+            }
+            if (violation.relativeFilepath !== "") {
+                const filePath = violation.relativeFilepath;
+                const lineColMatch = filePath.match(/^(.+?):(\d+)(?::(\d+))?$/);
+                if (lineColMatch != null) {
+                    entry.filepath = lineColMatch[1];
+                    entry.line = parseInt(lineColMatch[2]!, 10);
+                    if (lineColMatch[3] != null) {
+                        entry.column = parseInt(lineColMatch[3], 10);
+                    }
+                } else {
+                    entry.filepath = filePath;
+                }
             }
             docs.push(entry);
         }

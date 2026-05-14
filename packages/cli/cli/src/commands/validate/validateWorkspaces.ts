@@ -11,7 +11,7 @@ import { CliContext } from "../../cli-context/CliContext.js";
 import { buildCheckJsonResult } from "./buildCheckJsonResult.js";
 import { ApiValidationResult, DocsValidationResult, printCheckReport } from "./printCheckReport.js";
 import { collectDocsWorkspaceViolations } from "./validateDocsWorkspaceAndLogIssues.js";
-import { validateMdxFiles } from "./validateMdx.js";
+import { validateMdxFiles, type MdxValidationError } from "./validateMdx.js";
 
 export async function validateWorkspaces({
     project,
@@ -71,14 +71,20 @@ export async function validateWorkspaces({
                 const { errors } = await validateMdxFiles({ workspace: docsWorkspace, context });
                 const severity: ValidationViolation["severity"] = mdValidateSeverity === "error" ? "error" : "warning";
                 for (const error of errors) {
+                    const relPath = path.relative(docsWorkspace.absoluteFilePath, error.filepath);
+                    const pathWithLocation =
+                        error.line != null
+                            ? error.column != null
+                                ? `${relPath}:${error.line}:${error.column}`
+                                : `${relPath}:${error.line}`
+                            : relPath;
+
                     mdxViolations.push({
                         name: "md-validate",
                         severity,
-                        relativeFilepath: RelativeFilePath.of(
-                            path.relative(docsWorkspace.absoluteFilePath, error.filepath)
-                        ),
+                        relativeFilepath: RelativeFilePath.of(pathWithLocation),
                         nodePath: [],
-                        message: error.message
+                        message: formatMdxErrorMessage(error)
                     });
                 }
             } catch {
@@ -187,4 +193,31 @@ export async function validateWorkspaces({
     if (hasErrors || hasAnyErrors) {
         cliContext.failAndThrow(undefined, undefined, { code: CliError.Code.ValidationError });
     }
+}
+
+function formatMdxErrorMessage(error: MdxValidationError): string {
+    let message = error.message;
+
+    if (error.contextLines != null && error.contextLines.length > 0) {
+        const maxLineNum = Math.max(...error.contextLines.map((ctx) => ctx.lineNumber));
+        const lineNumWidth = String(maxLineNum).length;
+
+        message += "\n";
+        for (const ctx of error.contextLines) {
+            const lineNumStr = String(ctx.lineNumber).padStart(lineNumWidth, " ");
+            const displayContent = ctx.content.replace(/\t/g, "    ");
+
+            if (ctx.isErrorLine) {
+                message += `\n  ${lineNumStr} | ${displayContent}`;
+                if (error.column != null && error.column > 0) {
+                    const padding = " ".repeat(lineNumWidth + 3 + error.column - 1);
+                    message += `\n  ${padding}^`;
+                }
+            } else {
+                message += `\n  ${lineNumStr} | ${displayContent}`;
+            }
+        }
+    }
+
+    return message;
 }
