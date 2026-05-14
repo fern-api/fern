@@ -276,6 +276,7 @@
           "type": "openapi"
         },
         "statusCode": 200,
+        "contentType": "text/csv",
         "type": "text"
       },
       "errors": {},
