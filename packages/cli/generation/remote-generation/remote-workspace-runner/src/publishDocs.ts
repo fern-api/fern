@@ -17,6 +17,7 @@ import {
     wrapWithHttps
 } from "@fern-api/docs-resolver";
 import { APIV1Write, FdrAPI as CjsFdrSdk, DocsV1Write, DocsV2Write, FdrClient } from "@fern-api/fdr-sdk";
+import type { FileManifestEntry } from "@fern-api/fdr-sdk/orpc-client";
 
 type DynamicIr = APIV1Write.DynamicIr;
 type DynamicIRUpload = APIV1Write.DynamicIRUpload;
@@ -44,6 +45,7 @@ import { createHash } from "crypto";
 import { readFile } from "fs/promises";
 import { chunk } from "lodash-es";
 import * as mime from "mime-types";
+import { basename } from "path";
 import terminalLink from "terminal-link";
 import { getDocsDeployMode } from "./docsDeployMode.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
@@ -114,6 +116,17 @@ interface FileWithSanitizedPathAndMimeType extends FileWithMimeType {
 export async function calculateFileHash(absoluteFilePath: AbsoluteFilePath | string): Promise<string> {
     const fileBuffer = await readFile(absoluteFilePath);
     return createHash("sha256").update(new Uint8Array(fileBuffer)).digest("hex");
+}
+
+/**
+ * Read a file once and return its bytes + sha256 hash. Avoids the double-read
+ * we'd otherwise do for files that need both hashing (legacy register) and
+ * inclusion in the ledger CAS blob map (publishDocsViaLedger).
+ */
+async function readAndHashFile(absoluteFilePath: AbsoluteFilePath | string): Promise<{ buffer: Buffer; hash: string }> {
+    const buffer = await readFile(absoluteFilePath);
+    const hash = createHash("sha256").update(new Uint8Array(buffer)).digest("hex");
+    return { buffer, hash };
 }
 
 export function sanitizeRelativePathForS3(relativeFilePath: RelativeFilePath): RelativeFilePath {
@@ -267,6 +280,13 @@ export async function publishDocs({
         // Collect API definitions (keyed by FDR definition ID) for the ledger manifest.
         const apiDefinitionCollector = new Map<string, APIV1Write.ApiDefinition>();
 
+        // Collect per-file manifest entries + raw bytes for the ledger publish.
+        // The manifest is keyed by `sanitizedPath` (fern-host-relative file path),
+        // which matches the `fullPath` used by the FDR register handler when
+        // routing fileManifest entries to file artifacts.
+        const ledgerFileManifest: Record<string, FileManifestEntry> = {};
+        const ledgerFileBlobs = new Map<string, Buffer>();
+
         const resolver = new DocsDefinitionResolver({
             domain,
             docsWorkspace: effectiveWorkspace,
@@ -317,6 +337,23 @@ export async function publishDocs({
                         }
 
                         const sanitizedPath = filePath.sanitizedPath;
+                        const { buffer, hash } = await readAndHashFile(filePath.absoluteFilePath);
+
+                        // Populate the ledger file manifest entry for this image.
+                        // mediaType is guaranteed non-false here because the file passed
+                        // the mime.lookup filter upstream; fall back defensively anyway.
+                        const contentType = mime.lookup(filePath.absoluteFilePath) || "application/octet-stream";
+                        ledgerFileManifest[sanitizedPath] = {
+                            hash,
+                            contentType,
+                            contentLength: buffer.byteLength,
+                            filename: basename(filePath.sanitizedPath),
+                            width: image.width,
+                            height: image.height
+                            // blurDataURL: not populated yet (caching is a separate concern)
+                        };
+                        ledgerFileBlobs.set(hash, buffer);
+
                         const obj = {
                             filePath: CjsFdrSdk.docs.v1.write.FilePath(
                                 convertToFernHostRelativeFilePath(sanitizedPath)
@@ -325,7 +362,7 @@ export async function publishDocs({
                             height: image.height,
                             blurDataUrl: image.blurDataUrl,
                             alt: undefined,
-                            fileHash: await calculateFileHash(filePath.absoluteFilePath)
+                            fileHash: hash
                         } as DocsV2Write.ImageFilePath;
                         return obj;
                     }
@@ -349,11 +386,27 @@ export async function publishDocs({
                     HASH_CONCURRENCY,
                     nonImageFiles,
                     async (file) => {
+                        const { buffer, hash } = await readAndHashFile(file.absoluteFilePath);
+
+                        // Populate the ledger file manifest entry for this non-image file.
+                        // If mime.lookup fails (unknown extension), fall back to
+                        // application/octet-stream — both S3 and the docs CDN accept it,
+                        // and the manifest only needs *some* content-type for routing.
+                        const contentType = mime.lookup(file.absoluteFilePath) || "application/octet-stream";
+                        ledgerFileManifest[file.sanitizedPath] = {
+                            hash,
+                            contentType,
+                            contentLength: buffer.byteLength,
+                            filename: basename(file.sanitizedPath)
+                            // width/height/blurDataURL omitted: non-image
+                        };
+                        ledgerFileBlobs.set(hash, buffer);
+
                         return {
                             path: CjsFdrSdk.docs.v1.write.FilePath(
                                 convertToFernHostRelativeFilePath(file.sanitizedPath)
                             ),
-                            fileHash: await calculateFileHash(file.absoluteFilePath)
+                            fileHash: hash
                         };
                     }
                 );
@@ -672,7 +725,9 @@ export async function publishDocs({
                     fdrOrigin,
                     headers,
                     context,
-                    apiDefinitions: apiDefinitionCollector
+                    apiDefinitions: apiDefinitionCollector,
+                    fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
+                    fileBlobs: ledgerFileBlobs.size > 0 ? ledgerFileBlobs : undefined
                 });
                 context.logger.info(
                     `[ledger] Deployment ${ledgerResult.reusedDeployment ? "reused" : "created"}: ${ledgerResult.deploymentId}`

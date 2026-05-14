@@ -1,4 +1,5 @@
 import type { APIV1Write } from "@fern-api/fdr-sdk";
+import type { FileManifestEntry } from "@fern-api/fdr-sdk/orpc-client";
 import { createHash } from "crypto";
 import { describe, expect, it } from "vitest";
 import { buildLedgerInput } from "../publishDocsLedger.js";
@@ -208,5 +209,71 @@ describe("buildLedgerInput", () => {
         // Round-trip: the blob content should deserialize to match the input map.
         const parsed = JSON.parse(manifestBuf?.toString("utf-8") ?? "");
         expect(parsed).toEqual({ "api-def-1": minimalApiDefinition });
+    });
+
+    it("forwards fileManifest unchanged and merges fileBlobs into the blob map", () => {
+        // Image entry — exercises width/height fields.
+        const imageBytes = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]); // PNG header
+        const imageHash = createHash("sha256").update(new Uint8Array(imageBytes)).digest("hex");
+        const imageEntry: FileManifestEntry = {
+            hash: imageHash,
+            contentType: "image/png",
+            contentLength: imageBytes.byteLength,
+            filename: "logo.png",
+            width: 200,
+            height: 100
+        };
+
+        // Non-image entry — no width/height.
+        const docBytes = Buffer.from("hello world", "utf-8");
+        const docHash = createHash("sha256").update(new Uint8Array(docBytes)).digest("hex");
+        const docEntry: FileManifestEntry = {
+            hash: docHash,
+            contentType: "text/plain",
+            contentLength: docBytes.byteLength,
+            filename: "notes.txt"
+        };
+
+        const fileManifest: Record<string, FileManifestEntry> = {
+            "assets/logo.png": imageEntry,
+            "docs/notes.txt": docEntry
+        };
+        const fileBlobs = new Map<string, Buffer>([
+            [imageHash, imageBytes],
+            [docHash, docBytes]
+        ]);
+
+        const { input, blobs } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            apiDefinitions: new Map(),
+            fileManifest,
+            fileBlobs
+        });
+
+        // fileManifest round-trips unchanged.
+        expect(input.fileManifest).toEqual(fileManifest);
+
+        // File hashes show up in the returned blobs map alongside page/config blobs.
+        expect(blobs.get(imageHash)).toEqual(imageBytes);
+        expect(blobs.get(docHash)).toEqual(docBytes);
+    });
+
+    it("legacy behaviour: omitting fileManifest still works", () => {
+        const { input, blobs } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition({ pages: { "page-1": { markdown: "# hi" } } }),
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            apiDefinitions: new Map()
+        });
+
+        expect(input.fileManifest).toBeUndefined();
+        // Blob map still contains the page + config blobs.
+        expect(blobs.size).toBeGreaterThan(0);
     });
 });

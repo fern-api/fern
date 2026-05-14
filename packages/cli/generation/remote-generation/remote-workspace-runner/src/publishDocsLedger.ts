@@ -1,5 +1,5 @@
 import type { APIV1Write, DocsV1Write } from "@fern-api/fdr-sdk";
-import { createDocsLedgerClient, type DocsPublishInput } from "@fern-api/fdr-sdk/orpc-client";
+import { createDocsLedgerClient, type DocsPublishInput, type FileManifestEntry } from "@fern-api/fdr-sdk/orpc-client";
 import type { TaskContext } from "@fern-api/task-context";
 import { createHash } from "crypto";
 
@@ -38,6 +38,14 @@ function jsonBlobRef(value: unknown): { ref: BlobRef; hash: string; buf: Buffer 
 /**
  * Build a DocsPublishInput from a resolved DocsDefinition and collect
  * all content blobs that may need uploading.
+ *
+ * If `fileManifest` and `fileBlobs` are provided, they are merged into the
+ * resulting input: the manifest is forwarded as-is, and the per-file blobs
+ * are folded into the returned blob map so the upload step can stream them
+ * to the docs bucket. The manifest's keys MUST be the same string the FDR
+ * register handler treats as `fullPath` (see {@link makeFileArtifact} in
+ * docsPublishTransform.ts) — the CLI uses sanitizedPath (fern-host-relative)
+ * which maps 1:1 to fullPath.
  */
 export function buildLedgerInput({
     docsDefinition,
@@ -45,7 +53,9 @@ export function buildLedgerInput({
     domain,
     basepath,
     previewId,
-    apiDefinitions
+    apiDefinitions,
+    fileManifest,
+    fileBlobs
 }: {
     docsDefinition: DocsDefinition;
     organization: string;
@@ -53,6 +63,8 @@ export function buildLedgerInput({
     basepath: string | undefined;
     previewId: string | undefined;
     apiDefinitions: Map<string, APIV1Write.ApiDefinition>;
+    fileManifest?: Record<string, FileManifestEntry>;
+    fileBlobs?: Map<string, Buffer>;
 }): { input: DocsPublishInput; blobs: Map<string, Buffer> } {
     const blobs = new Map<string, Buffer>();
 
@@ -81,6 +93,16 @@ export function buildLedgerInput({
         apiManifestRef = manifestBlob.ref;
     }
 
+    // Merge per-file blobs into the CAS blob map so they get uploaded by the
+    // ledger flow alongside pages/config/apiManifest. Each entry in
+    // `fileManifest` references a blob by SHA-256 hash that the server will
+    // request via the register response's `missingContent` list.
+    if (fileBlobs != null) {
+        for (const [hash, buf] of fileBlobs) {
+            blobs.set(hash, buf);
+        }
+    }
+
     const input: DocsPublishInput = {
         orgId: organization,
         domain,
@@ -90,7 +112,7 @@ export function buildLedgerInput({
         pages,
         config: configBlob.ref,
         apiManifest: apiManifestRef,
-        files: null,
+        fileManifest,
         redirects: null,
         locale: "en"
     };
@@ -121,7 +143,9 @@ export async function publishDocsViaLedger({
     fdrOrigin,
     headers,
     context,
-    apiDefinitions
+    apiDefinitions,
+    fileManifest,
+    fileBlobs
 }: {
     docsDefinition: DocsDefinition;
     organization: string;
@@ -133,6 +157,8 @@ export async function publishDocsViaLedger({
     headers: Record<string, string>;
     context: TaskContext;
     apiDefinitions: Map<string, APIV1Write.ApiDefinition>;
+    fileManifest?: Record<string, FileManifestEntry>;
+    fileBlobs?: Map<string, Buffer>;
 }): Promise<LedgerPublishResult> {
     const { input, blobs } = buildLedgerInput({
         docsDefinition,
@@ -140,7 +166,9 @@ export async function publishDocsViaLedger({
         domain,
         basepath,
         previewId,
-        apiDefinitions
+        apiDefinitions,
+        fileManifest,
+        fileBlobs
     });
 
     const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers });
