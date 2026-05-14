@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.12.10
+  changelogEntry:
+    - summary: |
+        Bump `addressable` from 2.8.10 to 2.9.0 in the ruby-v2 SDK generator
+        container to clear CVE-2026-35611 (ReDoS in URI template expansion).
+        Switch the post-install cleanup to `gem cleanup` so older 2.8.x copies
+        dragged in by rubocop's dependency graph are dropped from the final
+        image. `rexml` stays pinned at 3.4.4 (past the 3.3.6 CVE-2024-49761
+        fix). Also strip the vendored `Gemfile.lock` files inside cached
+        gems (lint_roller, rbs, typeprof, unicode-emoji) so grype stops
+        reading their pinned rexml / rdoc / addressable versions as
+        installed packages.
+      type: chore
+  createdAt: "2026-05-14"
+  irVersion: 66
 - version: 1.12.9
   changelogEntry:
     - summary: |
