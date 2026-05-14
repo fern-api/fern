@@ -53,8 +53,8 @@ export class LinkCheckCommand {
                 onStreamInterrupted: (data) => {
                     streamInterrupted = true;
                     progress.finish();
-                    context.stderr.info("");
-                    context.stderr.info(
+                    context.stderr.warn("");
+                    context.stderr.warn(
                         `${Icons.warning} ${chalk.yellow("Connection lost")} while ${data.phase} ` +
                             `(${data.pagesScraped} pages scraped, ${data.linksChecked}/${data.totalLinks} links checked). ` +
                             "Showing partial results."

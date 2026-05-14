@@ -125,6 +125,6 @@ export class SourceResolver {
      * component and don't correspond to user-authored files.
      */
     private isUserAuthoredPage(pageId: string): boolean {
-        return pageId.includes("/") || pageId.endsWith(".mdx") || pageId.endsWith(".md");
+        return pageId.includes("/");
     }
 }

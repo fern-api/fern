@@ -2205,7 +2205,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     onStreamInterrupted: (data) => {
                         streamInterrupted = true;
                         progress.finish();
-                        cliContext.stderr.info(
+                        cliContext.stderr.warn(
                             `\u26a0 Connection lost while ${data.phase} ` +
                                 `(${data.pagesScraped} pages scraped, ${data.linksChecked}/${data.totalLinks} links checked). ` +
                                 "Showing partial results."
