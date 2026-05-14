@@ -5,6 +5,7 @@
 import { MINIMUM_SUPPORTED_IR_VERSION } from "./constants.js";
 
 export const GENERATOR_MINIMUM_VERSIONS: Record<string, string> = {
+    "fernapi/fern-cli": "0.0.1",
     "fernapi/fern-csharp-model": "0.0.2",
     "fernapi/fern-csharp-sdk": "0.5.0",
     "fernapi/fern-express": "0.17.3",

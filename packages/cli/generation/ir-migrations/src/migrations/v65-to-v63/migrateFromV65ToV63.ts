@@ -3,7 +3,11 @@ import { mapValues } from "lodash-es";
 import { IrMigrationContext } from "../../IrMigrationContext";
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
-import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration";
 
 export const V65_TO_V63_MIGRATION: IrMigration<
     IrVersions.V65.ir.IntermediateRepresentation,
@@ -38,7 +42,8 @@ export const V65_TO_V63_MIGRATION: IrMigration<
         [GeneratorName.PHP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PHP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUST_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUST_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
+        [GeneratorName.RUST_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.CLI]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V63.IntermediateRepresentation.jsonOrThrow(ir, {
