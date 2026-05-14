@@ -2,13 +2,16 @@
   "type": "object",
   "properties": {
     "timeZoneOffset": {
-      "type": "string"
+      "type": "string",
+      "description": "Format is UTC &plus; offset notation (e.g., &plus;05:30)"
     },
     "mathExpression": {
-      "type": "string"
+      "type": "string",
+      "description": "Expression: A &plus; B &minus; C &times; D &divide; E"
     },
     "validEntity": {
-      "type": "string"
+      "type": "string",
+      "description": "This uses valid XML entity: A &lt; B &amp; C &gt; D"
     },
     "specialChars": {
       "oneOf": [
@@ -18,7 +21,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Special characters: &nbsp; &hellip; &middot; &copy;"
     }
   },
   "required": [
@@ -27,5 +31,6 @@
     "validEntity"
   ],
   "additionalProperties": false,
+  "description": "Model demonstrating HTML entity bug in C# XML documentation.\nThis description contains HTML entities that are not valid in XML.",
   "definitions": {}
 }

@@ -172,6 +172,7 @@
     "twentythree"
   ],
   "additionalProperties": false,
+  "description": "Exercises all of the built-in types.",
   "definitions": {
     "Name": {
       "type": "object",

@@ -2,7 +2,8 @@
   "type": "object",
   "properties": {
     "query": {
-      "type": "string"
+      "type": "string",
+      "description": "The prompt or query to complete."
     },
     "stream": {
       "oneOf": [
@@ -12,7 +13,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Whether to stream the response."
     }
   },
   "required": [

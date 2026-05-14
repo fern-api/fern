@@ -7,6 +7,7 @@
       "$ref": "#/definitions/union.LeafTypeB"
     }
   ],
+  "description": "Inner union with two object variants that have disjoint required keys.\nTests that required-key guards work correctly inside nested union contexts.",
   "definitions": {
     "union.LeafTypeA": {
       "type": "object",

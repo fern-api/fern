@@ -9,15 +9,18 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Whether to stream the response."
     },
     "prompt": {
-      "type": "string"
+      "type": "string",
+      "description": "The input prompt."
     }
   },
   "required": [
     "prompt"
   ],
   "additionalProperties": false,
+  "description": "Cancels the current operation. Inherits stream_response from base.",
   "definitions": {}
 }

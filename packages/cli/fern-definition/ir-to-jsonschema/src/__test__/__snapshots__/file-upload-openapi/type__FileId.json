@@ -1,4 +1,5 @@
 {
   "type": "string",
+  "description": "The unique identifier for a File in the database",
   "definitions": {}
 }

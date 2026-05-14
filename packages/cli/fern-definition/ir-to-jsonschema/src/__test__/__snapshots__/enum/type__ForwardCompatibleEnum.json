@@ -4,5 +4,6 @@
     "active",
     "inactive"
   ],
+  "description": "Tests forward-compatible enums that accept\nboth known values and arbitrary strings.",
   "definitions": {}
 }

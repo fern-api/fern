@@ -9,7 +9,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Display name from Describable."
     },
     "summary": {
       "oneOf": [
@@ -19,7 +20,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "A short summary."
     }
   },
   "additionalProperties": false,
