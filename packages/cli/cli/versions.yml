@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.26.0
+  changelogEntry:
+    - summary: |
+        Add `fern docs link check` command to validate links on live documentation sites.
+        Supports text, JSON, and CSV output formats via `--output` flag.
+        Use `--url <url>` to specify which docs site to check, or auto-detect from fern.yml.
+      type: feat
+    - summary: |
+        Add progress bars matching `fern docs dev` style for `fern docs link check`.
+        Broken links show status codes, blocked links show diagnostic details,
+        and error messages include actionable context.
+      type: feat
+    - summary: |
+        The `fern docs link check` command now resolves broken link sources to local file paths when the server provides `sourcePageIds` and a Fern workspace is available.
+      type: feat
+  createdAt: "2026-05-14"
+  irVersion: 66
 - version: 5.25.0
   changelogEntry:
     - summary: |
