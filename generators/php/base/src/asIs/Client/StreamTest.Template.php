@@ -192,6 +192,49 @@ class StreamTest extends TestCase
         iterator_to_array($stream, false);
     }
 
+    public function testStreamThrowsBeforeAccumulatingPastMaxBufferOnLongRunningSseEvent(): void
+    {
+        // The cap must fire during accumulation, not just at dispatch. A hostile
+        // stream sending many small `data:` lines without a closing blank line
+        // would otherwise grow $dataBuffer past the configured limit. Each line
+        // here is well under the 64-byte cap, but their cumulative `data:`
+        // append should trip the check before allocation balloons.
+        $manyDataLines = '';
+        for ($i = 0; $i < 50; $i++) {
+            $manyDataLines .= "data: chunk-$i\n";
+        }
+        $stream = new SseStream(
+            self::response($manyDataLines),  // no terminating "\n\n"
+            fn (string $d): string => $d,
+            terminator: null,
+            maxBufferSize: 64,
+        );
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessageMatches('/buffer/i');
+
+        iterator_to_array($stream, false);
+    }
+
+    public function testSseStripsUtf8BomFromStartOfStream(): void
+    {
+        // WHATWG §9.2.4: a leading U+FEFF BOM must be stripped from the stream
+        // so the first field-name match isn't poisoned.
+        $body = "\xEF\xBB\xBFdata: hello\n\n";
+        $stream = new SseStream(self::response($body), fn (string $d): string => $d, null);
+
+        $this->assertSame(['hello'], iterator_to_array($stream, false));
+    }
+
+    public function testSseStripsBomOnlyAtVeryStart(): void
+    {
+        // A BOM-looking sequence that appears mid-stream must NOT be stripped.
+        $body = "data: first\n\ndata: \xEF\xBB\xBFsecond\n\n";
+        $stream = new SseStream(self::response($body), fn (string $d): string => $d, null);
+
+        $this->assertSame(['first', "\xEF\xBB\xBFsecond"], iterator_to_array($stream, false));
+    }
+
     public function testJsonStreamYieldsOnePerLine(): void
     {
         $body = "{\"n\":1}\n{\"n\":2}\n{\"n\":3}\n";

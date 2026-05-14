@@ -9,13 +9,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
 
-enum StreamFormat: string
-{
-    case Sse = 'sse';
-    case Json = 'json';
-    case Text = 'text';
-}
-
 /**
  * Iterates a streaming HTTP response body frame-by-frame.
  *
@@ -32,21 +25,28 @@ enum StreamFormat: string
  *
  * A `$maxBufferSize` cap (default 1 MiB) guards against malformed streams that
  * never emit a frame boundary: if the line buffer or a single event's data
- * exceeds the cap, iteration aborts with `RuntimeException`.
+ * exceeds the cap, iteration aborts with `RuntimeException`. The cap is
+ * enforced *before* allocation, not after — a hostile stream cannot drive us
+ * past the limit and then trip the check.
+ *
+ * Direct instantiation of `Stream` is not supported; use `SseStream`,
+ * `JsonStream`, or `TextStream` instead. The constructor is `protected` to
+ * enforce this.
  *
  * @template T
  * @implements IteratorAggregate<int, T>
  */
 class Stream implements IteratorAggregate
 {
-    public const DEFAULT_MAX_BUFFER_SIZE = 1048576;
+    public const DEFAULT_MAX_BUFFER_SIZE = 1_048_576;
 
     private const READ_CHUNK_SIZE = 8192;
+    private const UTF8_BOM = "\xEF\xBB\xBF";
 
     private StreamInterface $body;
 
     /** @var Closure(string): T */
-    protected Closure $deserializer;
+    private Closure $deserializer;
 
     /**
      * @param ResponseInterface $response The HTTP response to stream from.
@@ -59,7 +59,7 @@ class Stream implements IteratorAggregate
      *   event's accumulated `data` field. Exceeding this throws `RuntimeException` to
      *   guard against pathological streams. Defaults to 1 MiB.
      */
-    public function __construct(
+    protected function __construct(
         ResponseInterface $response,
         Closure $deserializer,
         private readonly StreamFormat $format = StreamFormat::Sse,
@@ -83,6 +83,18 @@ class Stream implements IteratorAggregate
             StreamFormat::Json => $this->iterateDelimited(),
             StreamFormat::Text => $this->iterateText(),
         };
+    }
+
+    /**
+     * Applies the configured deserializer to a single raw frame payload.
+     * Available to subclasses (notably `SseStream::events()`) so they can
+     * construct typed envelopes without accessing the closure directly.
+     *
+     * @return T
+     */
+    protected function deserialize(string $raw): mixed
+    {
+        return ($this->deserializer)($raw);
     }
 
     /**
@@ -121,7 +133,6 @@ class Stream implements IteratorAggregate
                 }
                 // Strip the single trailing "\n" added by the field-append step.
                 $payload = substr($dataBuffer, 0, -1);
-                $this->assertBufferWithinCap(strlen($payload));
                 $dataBuffer = '';
                 if ($this->terminator !== null && $payload === $this->terminator) {
                     return;
@@ -138,7 +149,7 @@ class Stream implements IteratorAggregate
             $colonPos = strpos($line, ':');
             if ($colonPos === false) {
                 if ($line === 'data') {
-                    $dataBuffer .= "\n";
+                    $dataBuffer = $this->appendWithinCap($dataBuffer, "\n");
                 }
                 continue;
             }
@@ -149,7 +160,10 @@ class Stream implements IteratorAggregate
             }
             switch ($field) {
                 case 'data':
-                    $dataBuffer .= $value . "\n";
+                    // Enforce the cap before allocation: a hostile stream emitting
+                    // many `data:` lines without a dispatching blank line cannot
+                    // drive us past the limit and then trip the check.
+                    $dataBuffer = $this->appendWithinCap($dataBuffer, $value . "\n");
                     break;
                 case 'event':
                     $eventType = $value;
@@ -171,7 +185,6 @@ class Stream implements IteratorAggregate
         // Stream ended mid-event (no terminating blank line). Dispatch whatever we have.
         if ($dataBuffer !== '') {
             $payload = substr($dataBuffer, 0, -1);
-            $this->assertBufferWithinCap(strlen($payload));
             if ($this->terminator === null || $payload !== $this->terminator) {
                 yield ['data' => $payload, 'event' => $eventType, 'id' => $lastEventId, 'retry' => $retry];
             }
@@ -206,12 +219,13 @@ class Stream implements IteratorAggregate
 
     /**
      * Reads the response body and yields complete lines, normalizing CRLF/CR
-     * to LF per the WHATWG SSE spec. Trailing partial content (without a
-     * terminating newline) is emitted as a final line.
+     * to LF per the WHATWG SSE spec. Strips a single UTF-8 BOM if present at
+     * the start of the stream (WHATWG §9.2.4). Trailing partial content
+     * (without a terminating newline) is emitted as a final line.
      *
-     * Throws `RuntimeException` if the accumulated buffer exceeds the configured
-     * cap — that means we've read more than `maxBufferSize` bytes without ever
-     * seeing a line break, which indicates a malformed or hostile stream.
+     * `$pendingCr` tracks whether the prior chunk's last byte was `\r`, so a
+     * `\r\n` sequence split across a read boundary collapses to one terminator
+     * instead of two.
      *
      * @return Generator<int, string>
      */
@@ -219,38 +233,52 @@ class Stream implements IteratorAggregate
     {
         $buffer = '';
         $pendingCr = false;
+        $bomChecked = false;
         while (!$this->body->eof()) {
             $chunk = $this->body->read(self::READ_CHUNK_SIZE);
             if ($chunk === '') {
                 continue;
             }
-            // If the previous chunk ended on "\r", swallow a leading "\n" so we don't
-            // emit a spurious blank line for a "\r\n" sequence split across chunks.
             if ($pendingCr && $chunk[0] === "\n") {
                 $chunk = substr($chunk, 1);
             }
             $pendingCr = str_ends_with($chunk, "\r");
-            // Normalize line endings on just this chunk: "\r\n" and lone "\r" -> "\n".
             $chunk = str_replace(["\r\n", "\r"], "\n", $chunk);
-            $buffer .= $chunk;
-            $this->assertBufferWithinCap(strlen($buffer));
+            $buffer = $this->appendWithinCap($buffer, $chunk);
+            if (!$bomChecked && strlen($buffer) >= 3) {
+                $bomChecked = true;
+                if (str_starts_with($buffer, self::UTF8_BOM)) {
+                    $buffer = substr($buffer, 3);
+                }
+            }
             while (($lfPos = strpos($buffer, "\n")) !== false) {
                 yield substr($buffer, 0, $lfPos);
                 $buffer = substr($buffer, $lfPos + 1);
             }
+        }
+        // BOM may not have been checked yet if the entire body was < 3 bytes.
+        if (!$bomChecked && str_starts_with($buffer, self::UTF8_BOM)) {
+            $buffer = substr($buffer, 3);
         }
         if ($buffer !== '') {
             yield $buffer;
         }
     }
 
-    private function assertBufferWithinCap(int $size): void
+    /**
+     * Appends $suffix to $buffer, throwing `RuntimeException` if the result
+     * would exceed `maxBufferSize`. The cap is enforced before the
+     * concatenation allocates, so a runaway stream is bounded by the configured
+     * limit rather than by available memory.
+     */
+    private function appendWithinCap(string $buffer, string $suffix): string
     {
-        if ($size > $this->maxBufferSize) {
+        if (strlen($buffer) + strlen($suffix) > $this->maxBufferSize) {
             throw new RuntimeException(
-                "Stream buffer exceeded maximum size of {$this->maxBufferSize} bytes",
+                "Stream buffer would exceed maximum size of {$this->maxBufferSize} bytes",
             );
         }
+        return $buffer . $suffix;
     }
 
     public function __destruct()

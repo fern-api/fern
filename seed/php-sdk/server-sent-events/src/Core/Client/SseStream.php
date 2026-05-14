@@ -56,7 +56,7 @@ class SseStream extends Stream
     {
         foreach ($this->iterateRawSseEvents() as $raw) {
             yield new SseEvent(
-                data: ($this->deserializer)($raw['data']),
+                data: $this->deserialize($raw['data']),
                 event: $raw['event'],
                 id: $raw['id'],
                 retry: $raw['retry'],
