@@ -62,9 +62,13 @@ export function buildCheckJsonResult({
                 const lineColMatch = filePath.match(/^(.+?):(\d+)(?::(\d+))?$/);
                 if (lineColMatch != null) {
                     entry.filepath = lineColMatch[1];
-                    entry.line = parseInt(lineColMatch[2]!, 10);
-                    if (lineColMatch[3] != null) {
-                        entry.column = parseInt(lineColMatch[3], 10);
+                    const lineStr = lineColMatch[2];
+                    if (lineStr != null) {
+                        entry.line = parseInt(lineStr, 10);
+                    }
+                    const colStr = lineColMatch[3];
+                    if (colStr != null) {
+                        entry.column = parseInt(colStr, 10);
                     }
                 } else {
                     entry.filepath = filePath;
