@@ -68,7 +68,7 @@ describe("buildLedgerInput", () => {
         expect(Object.keys(input.pages)).toHaveLength(0);
     });
 
-    it("omits config (TODO: Track B mapping)", () => {
+    it("maps a minimal DocsConfig to a LedgerConfig shape (mostly empty fields)", () => {
         const { input } = buildLedgerInput({
             docsDefinition: makeDocsDefinition(),
             organization: "acme",
@@ -78,11 +78,107 @@ describe("buildLedgerInput", () => {
             apiDefinitions: new Map()
         });
 
-        // DocsConfig → LedgerConfig mapping is Track B in the PRD. Until that
-        // lands, we send `config: undefined` so the publish passes FDR's
-        // LedgerConfigSchema validation. FDR's transform handles missing
-        // config gracefully.
-        expect(input.config).toBeUndefined();
+        // With only `root` set on the source DocsConfig every LedgerConfig
+        // field is `undefined` — but `input.config` itself is the populated
+        // ledger object (not `undefined`), unlike the prior workaround.
+        expect(input.config).toBeDefined();
+        expect(input.config?.title).toBeUndefined();
+        expect(input.config?.colorsV3).toBeUndefined();
+        expect(input.config?.metadata).toBeUndefined();
+        expect(input.config?.redirects).toBeUndefined();
+    });
+
+    it("translates a DocsConfig logo FileId into a LedgerConfig ImageRef using fileManifest dimensions", () => {
+        // Source DocsConfig: colorsV3.dark.logo points to a FileId that
+        // matches a fileManifest entry's fullPath (current FDR behaviour).
+        const docsDefinition = {
+            pages: {},
+            config: {
+                root: MINIMAL_ROOT,
+                colorsV3: {
+                    type: "dark" as const,
+                    accentPrimary: { r: 1, g: 2, b: 3 },
+                    logo: "assets/logo.png"
+                }
+            }
+        } as unknown as Parameters<typeof buildLedgerInput>[0]["docsDefinition"];
+
+        const fileManifest: Record<string, FileManifestEntry> = {
+            "assets/logo.png": {
+                hash: "deadbeef",
+                contentType: "image/png",
+                contentLength: 1234,
+                filename: "logo.png",
+                width: 320,
+                height: 160
+            }
+        };
+
+        const { input } = buildLedgerInput({
+            docsDefinition,
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            apiDefinitions: new Map(),
+            fileManifest,
+            // Identity map: fileId === sanitizedPath in the current FDR flow.
+            fileIdToPath: new Map([["assets/logo.png", "assets/logo.png"]])
+        });
+
+        expect(input.config?.colorsV3).toEqual({
+            type: "dark",
+            accentPrimary: { r: 1, g: 2, b: 3 },
+            logo: { path: "assets/logo.png", width: 320, height: 160 }
+        });
+    });
+
+    it("drops a logo ImageRef when the file is not measured (no width/height in manifest)", () => {
+        const docsDefinition = {
+            pages: {},
+            config: {
+                root: MINIMAL_ROOT,
+                colorsV3: {
+                    type: "light" as const,
+                    accentPrimary: { r: 4, g: 5, b: 6 },
+                    logo: "assets/unmeasured.svg"
+                }
+            }
+        } as unknown as Parameters<typeof buildLedgerInput>[0]["docsDefinition"];
+
+        const fileManifest: Record<string, FileManifestEntry> = {
+            "assets/unmeasured.svg": {
+                hash: "cafef00d",
+                contentType: "image/svg+xml",
+                contentLength: 42,
+                filename: "unmeasured.svg"
+                // width/height intentionally omitted
+            }
+        };
+
+        const { input } = buildLedgerInput({
+            docsDefinition,
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            apiDefinitions: new Map(),
+            fileManifest,
+            fileIdToPath: new Map([["assets/unmeasured.svg", "assets/unmeasured.svg"]])
+        });
+
+        // Logo absent rather than emitted with placeholder dimensions.
+        expect(input.config?.colorsV3).toEqual({
+            type: "light",
+            accentPrimary: { r: 4, g: 5, b: 6 },
+            logo: undefined,
+            backgroundImage: undefined,
+            background: undefined,
+            border: undefined,
+            sidebarBackground: undefined,
+            headerBackground: undefined,
+            cardBackground: undefined
+        });
     });
 
     it("passes through org, domain, basepath, previewId", () => {

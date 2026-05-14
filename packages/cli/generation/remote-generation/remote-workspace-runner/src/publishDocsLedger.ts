@@ -3,6 +3,7 @@ import { createDocsLedgerClient, type DocsPublishInput, type FileManifestEntry }
 import type { TaskContext } from "@fern-api/task-context";
 import { createHash } from "crypto";
 
+import { mapDocsConfigToLedgerConfig } from "./mapDocsConfigToLedgerConfig.js";
 import { asyncPool } from "./utils/asyncPool.js";
 
 const UPLOAD_CONCURRENCY = 10;
@@ -55,7 +56,8 @@ export function buildLedgerInput({
     previewId,
     apiDefinitions,
     fileManifest,
-    fileBlobs
+    fileBlobs,
+    fileIdToPath
 }: {
     docsDefinition: DocsDefinition;
     organization: string;
@@ -65,6 +67,14 @@ export function buildLedgerInput({
     apiDefinitions: Map<string, APIV1Write.ApiDefinition>;
     fileManifest?: Record<string, FileManifestEntry>;
     fileBlobs?: Map<string, Buffer>;
+    /**
+     * Map from FileId (as returned by FDR's legacy startDocsRegister
+     * `uploadUrls`) to the `fullPath` string used to key `fileManifest`.
+     * Used by {@link mapDocsConfigToLedgerConfig} to translate DocsConfig's
+     * FileId-based references (e.g. `colorsV3.dark.logo`) into LedgerConfig's
+     * path-based references (e.g. `ImageRef { path, width, height }`).
+     */
+    fileIdToPath?: Map<string, string>;
 }): { input: DocsPublishInput; blobs: Map<string, Buffer> } {
     const blobs = new Map<string, Buffer>();
 
@@ -80,7 +90,14 @@ export function buildLedgerInput({
         blobs.set(hash, buf);
     }
 
-    // Config is sent inline (not a CAS blob) per the docs-ledger contract — Track B from the PRD. The schema is permissive (most fields .optional() / .unknown()) so the DocsConfig shape passes through; FDR's transform extracts only the LedgerConfig-shaped fields.
+    // Config is sent inline (not a CAS blob) per the docs-ledger contract.
+    // DocsConfig (FileId-based) is translated to LedgerConfig (path-based)
+    // up front so the wire payload is already in the schema FDR validates.
+    const ledgerConfig = mapDocsConfigToLedgerConfig({
+        docsConfig: docsDefinition.config,
+        fileManifest,
+        fileIdToPath
+    });
 
     // API manifest: serialize all API definitions as a single JSON blob.
     let apiManifestRef: BlobRef | null = null;
@@ -108,11 +125,7 @@ export function buildLedgerInput({
         previewId: previewId ?? null,
         root: docsDefinition.config.root ?? docsDefinition.config.navigation,
         pages,
-        // TODO: map DocsConfig → LedgerConfig (Track B). The two schemas have
-        // diverged — DocsConfig.colorsV3.dark.logo is a string, LedgerConfig
-        // expects an ImageRef object. Sending undefined for now lets the publish
-        // through; FDR transform handles missing config gracefully.
-        config: undefined,
+        config: ledgerConfig,
         apiManifest: apiManifestRef,
         fileManifest,
         redirects: null,
@@ -147,7 +160,8 @@ export async function publishDocsViaLedger({
     context,
     apiDefinitions,
     fileManifest,
-    fileBlobs
+    fileBlobs,
+    fileIdToPath
 }: {
     docsDefinition: DocsDefinition;
     organization: string;
@@ -161,6 +175,7 @@ export async function publishDocsViaLedger({
     apiDefinitions: Map<string, APIV1Write.ApiDefinition>;
     fileManifest?: Record<string, FileManifestEntry>;
     fileBlobs?: Map<string, Buffer>;
+    fileIdToPath?: Map<string, string>;
 }): Promise<LedgerPublishResult> {
     const { input, blobs } = buildLedgerInput({
         docsDefinition,
@@ -170,7 +185,8 @@ export async function publishDocsViaLedger({
         previewId,
         apiDefinitions,
         fileManifest,
-        fileBlobs
+        fileBlobs,
+        fileIdToPath
     });
 
     const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers });

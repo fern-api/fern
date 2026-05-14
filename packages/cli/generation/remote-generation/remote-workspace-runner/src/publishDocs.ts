@@ -286,6 +286,11 @@ export async function publishDocs({
         // routing fileManifest entries to file artifacts.
         const ledgerFileManifest: Record<string, FileManifestEntry> = {};
         const ledgerFileBlobs = new Map<string, Buffer>();
+        // FileId → fullPath lookup used by mapDocsConfigToLedgerConfig to
+        // translate DocsConfig's FileId-based references (e.g. colorsV3.dark.logo)
+        // into LedgerConfig path strings. Populated from FDR's startDocsRegister
+        // response in the uploadFiles callback below.
+        const ledgerFileIdToPath = new Map<string, string>();
 
         const resolver = new DocsDefinitionResolver({
             domain,
@@ -457,11 +462,18 @@ export async function publishDocs({
                             context.logger.debug(`No files to upload (all ${skippedCount} up to date)`);
                         }
                     }
-                    return convertToFilePathPairs(
+                    const uploadedFiles = convertToFilePathPairs(
                         startDocsRegisterResponse.uploadUrls,
                         docsWorkspace.absoluteFilePath,
                         sanitizedToAbsoluteMap
                     );
+                    for (const uploaded of uploadedFiles) {
+                        const sanitizedPath = filesMap.get(uploaded.absoluteFilePath)?.sanitizedPath;
+                        if (sanitizedPath != null) {
+                            ledgerFileIdToPath.set(uploaded.fileId, sanitizedPath);
+                        }
+                    }
+                    return uploadedFiles;
                 } else {
                     let startDocsRegisterResponse;
                     try {
@@ -513,11 +525,18 @@ export async function publishDocs({
                             context.logger.info("No files to upload (all up to date)");
                         }
                     }
-                    return convertToFilePathPairs(
+                    const uploadedFiles = convertToFilePathPairs(
                         startDocsRegisterResponse.uploadUrls,
                         docsWorkspace.absoluteFilePath,
                         sanitizedToAbsoluteMap
                     );
+                    for (const uploaded of uploadedFiles) {
+                        const sanitizedPath = filesMap.get(uploaded.absoluteFilePath)?.sanitizedPath;
+                        if (sanitizedPath != null) {
+                            ledgerFileIdToPath.set(uploaded.fileId, sanitizedPath);
+                        }
+                    }
+                    return uploadedFiles;
                 }
             },
             registerApi: async ({
@@ -727,7 +746,8 @@ export async function publishDocs({
                     context,
                     apiDefinitions: apiDefinitionCollector,
                     fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
-                    fileBlobs: ledgerFileBlobs.size > 0 ? ledgerFileBlobs : undefined
+                    fileBlobs: ledgerFileBlobs.size > 0 ? ledgerFileBlobs : undefined,
+                    fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined
                 });
                 context.logger.info(
                     `[ledger] Deployment ${ledgerResult.reusedDeployment ? "reused" : "created"}: ${ledgerResult.deploymentId}`
