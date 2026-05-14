@@ -35,10 +35,21 @@ vi.mock("@sentry/node", () => ({
 import { CliError } from "@fern-api/task-context";
 import { SentryClient } from "../SentryClient.js";
 
+function createSentryClient({ isLocal = false }: { isLocal?: boolean } = {}): SentryClient {
+    return new SentryClient({
+        release: "cli@1.2.3",
+        telemetry: {
+            cliName: "fern",
+            packageVersion: "1.2.3",
+            isLocal
+        }
+    });
+}
+
 describe("SentryClient (cli-v1)", () => {
     beforeEach(() => {
         process.env.SENTRY_DSN = "https://example@sentry.io/123";
-        process.env.SENTRY_ENVIRONMENT = "test";
+        process.env.SENTRY_ENVIRONMENT = "production";
         delete process.env.FERN_DISABLE_TELEMETRY;
         mockSentryCaptureException.mockClear();
         mockSentryFlush.mockClear();
@@ -56,14 +67,19 @@ describe("SentryClient (cli-v1)", () => {
     it("does not initialize Sentry when telemetry is disabled", () => {
         process.env.FERN_DISABLE_TELEMETRY = "true";
 
-        // eslint-disable-next-line no-new
-        new SentryClient({ release: "cli@1.2.3" });
+        createSentryClient();
+
+        expect(mockSentryInit).not.toHaveBeenCalled();
+    });
+
+    it("does not initialize Sentry when running local generation", () => {
+        createSentryClient({ isLocal: true });
 
         expect(mockSentryInit).not.toHaveBeenCalled();
     });
 
     it("captures exceptions with Sentry when enabled", async () => {
-        const client = new SentryClient({ release: "cli@1.2.3" });
+        const client = createSentryClient();
 
         await client.captureException(new Error("boom"));
 
@@ -73,7 +89,7 @@ describe("SentryClient (cli-v1)", () => {
     });
 
     it("sets tags on a Sentry scope when provided", () => {
-        const client = new SentryClient({ release: "cli@1.2.3" });
+        const client = createSentryClient();
         const error = new Error("something broke");
 
         client.captureException(error, { tags: { "error.code": CliError.Code.InternalError } });
@@ -83,7 +99,7 @@ describe("SentryClient (cli-v1)", () => {
     });
 
     it("sets context on a Sentry scope when provided", () => {
-        const client = new SentryClient({ release: "cli@1.2.3" });
+        const client = createSentryClient();
         const error = new Error("something broke");
 
         client.captureException(error, {
@@ -97,7 +113,7 @@ describe("SentryClient (cli-v1)", () => {
     });
 
     it("flushes the Sentry client", async () => {
-        const client = new SentryClient({ release: "cli@1.2.3" });
+        const client = createSentryClient();
 
         await client.flush();
 

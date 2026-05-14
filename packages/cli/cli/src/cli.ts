@@ -102,6 +102,7 @@ import { FERN_CWD_ENV_VAR } from "./cwd.js";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
 import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
+import { installProcessHandlers } from "./telemetry/processHandlers.js";
 
 // Node 26+ on Linux enables io_uring in libuv, which has a busy-loop bug that
 // hangs the process. UV_USE_IO_URING must be set before Node starts (libuv
@@ -141,6 +142,10 @@ async function runCli() {
     if (isCompletion) {
         cliContext.suppressUpgradeMessage();
     }
+
+    // In packaged CLI runs, escaped errors (uncaughtException, unhandledRejection)
+    // would otherwise exit without firing and flushing telemetry.
+    installProcessHandlers(cliContext, { isLocal });
 
     const exit = async () => {
         await cliContext.exit();
