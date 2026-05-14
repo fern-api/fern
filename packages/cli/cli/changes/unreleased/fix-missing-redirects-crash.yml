@@ -1,0 +1,5 @@
+- summary: |
+    Fix `missing-redirects` rule crashing during initialization when the docs
+    definition resolver throws (e.g. when upgrading between major Fern versions).
+    The rule now gracefully skips with a warning instead of causing a fatal error.
+  type: fix

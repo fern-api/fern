@@ -115,7 +115,25 @@ export const MissingRedirectsRule: Rule = {
             targetAudiences: undefined
         });
 
-        const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
+        let resolvedDocsDefinition;
+        try {
+            resolvedDocsDefinition = await docsDefinitionResolver.resolve();
+        } catch (error) {
+            const message = error instanceof Error ? error.message : String(error);
+            logger.debug(`[missing-redirects] Failed to resolve docs definition: ${message}`);
+            return {
+                file: () => [
+                    {
+                        severity: "warning",
+                        message:
+                            `Missing redirects check skipped: failed to resolve docs definition (${message}). ` +
+                            "This can happen when upgrading between major Fern versions. " +
+                            "The check will run successfully once the docs are published with the current configuration."
+                    }
+                ]
+            };
+        }
+
         const configRoot = resolvedDocsDefinition.config.root;
         if (!configRoot || !isV1RootNode(configRoot)) {
             return {};
