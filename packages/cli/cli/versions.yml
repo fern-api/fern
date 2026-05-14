@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.26.2
+  changelogEntry:
+    - summary: |
+        Fix commit author attribution for GitHub Enterprise: API-created commits now
+        use the Fern bot identity instead of the PAT-owning user, matching the git CLI
+        behavior of Fern 3.x generators.
+      type: fix
+    - summary: |
+        Authenticate Venus calls during local Docker generation (`fern generate --local`)
+        by silently picking up an existing `FERN_TOKEN` env var or saved login token,
+        matching the remote generation path. Previously, `useLocalDocker` skipped the
+        auth flow entirely, leaving Venus calls (e.g. `GET /organizations/{org_id}`)
+        unauthenticated.
+      type: fix
+  createdAt: "2026-05-14"
+  irVersion: 66
 - version: 5.26.1
   changelogEntry:
     - summary: |
