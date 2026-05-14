@@ -5,6 +5,7 @@ exports[`jsonschema > works with latest version 1`] = `
   "additionalProperties": false,
   "definitions": {
     "imdb.MovieId": {
+      "description": "The unique identifier for a Movie in the database",
       "type": "string",
     },
   },
@@ -13,6 +14,7 @@ exports[`jsonschema > works with latest version 1`] = `
       "$ref": "#/definitions/imdb.MovieId",
     },
     "rating": {
+      "description": "The rating scale out of ten stars",
       "type": "number",
     },
     "title": {
