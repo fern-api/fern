@@ -68,8 +68,8 @@ describe("buildLedgerInput", () => {
         expect(Object.keys(input.pages)).toHaveLength(0);
     });
 
-    it("serializes config as a JSON blob ref", () => {
-        const { input, blobs } = buildLedgerInput({
+    it("passes config through inline (not a CAS blob)", () => {
+        const { input } = buildLedgerInput({
             docsDefinition: makeDocsDefinition(),
             organization: "acme",
             domain: "docs.acme.com",
@@ -78,12 +78,11 @@ describe("buildLedgerInput", () => {
             apiDefinitions: new Map()
         });
 
+        // Per the docs-ledger contract, config is sent inline as a permissive
+        // object (not a BlobRef). The DocsConfig shape passes through; the
+        // server transform extracts only the LedgerConfig-shaped fields.
         expect(input.config).toBeDefined();
-        expect(input.config?.contentType).toBe("application/json");
-        // The blob should exist and round-trip back to the config.
-        const configBuf = blobs.get(input.config?.hash ?? "");
-        expect(configBuf).toBeDefined();
-        expect(JSON.parse(configBuf?.toString("utf-8") ?? "")).toEqual({ root: MINIMAL_ROOT });
+        expect(input.config).toEqual({ root: MINIMAL_ROOT });
     });
 
     it("passes through org, domain, basepath, previewId", () => {

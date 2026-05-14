@@ -478,10 +478,11 @@ async function uploadDynamicIRForSdkGeneration({
     // Get presigned upload URLs from FDR
     let uploadUrlsResponse;
     try {
+        // TODO: thread snippetConfigWithVersions into FDR call — current shape change broke the integration.
         uploadUrlsResponse = await fdr.api.register.getSdkDynamicIrUploadUrls({
             orgId: FdrAPI.OrgId(organization),
-            apiId: "",
-            irVersions: []
+            version: "",
+            snippetConfiguration: {}
         });
     } catch (error) {
         // Log warning but don't fail the generation - dynamic IR upload is optional

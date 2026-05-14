@@ -1280,10 +1280,10 @@ async function checkAndDownloadExistingSdkDynamicIRs({
     }
 
     try {
+        // TODO: thread snippetConfigWithVersions into FDR call — current shape change broke the integration.
         const response = await fdr.api.register.checkSdkDynamicIrExists({
             orgId: CjsFdrSdk.OrgId(organization),
-            apiId: "",
-            irVersions: []
+            snippetConfiguration: {}
         });
 
         const existingDynamicIrs = response.existingDynamicIrs ?? {};

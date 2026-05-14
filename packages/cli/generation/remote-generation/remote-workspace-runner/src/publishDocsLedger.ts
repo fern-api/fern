@@ -80,9 +80,7 @@ export function buildLedgerInput({
         blobs.set(hash, buf);
     }
 
-    // Config: serialize the entire config as a JSON blob.
-    const configBlob = jsonBlobRef(docsDefinition.config);
-    blobs.set(configBlob.hash, configBlob.buf);
+    // Config is sent inline (not a CAS blob) per the docs-ledger contract — Track B from the PRD. The schema is permissive (most fields .optional() / .unknown()) so the DocsConfig shape passes through; FDR's transform extracts only the LedgerConfig-shaped fields.
 
     // API manifest: serialize all API definitions as a single JSON blob.
     let apiManifestRef: BlobRef | null = null;
@@ -110,7 +108,7 @@ export function buildLedgerInput({
         previewId: previewId ?? null,
         root: docsDefinition.config.root ?? docsDefinition.config.navigation,
         pages,
-        config: configBlob.ref,
+        config: docsDefinition.config as unknown as DocsPublishInput["config"],
         apiManifest: apiManifestRef,
         fileManifest,
         redirects: null,
