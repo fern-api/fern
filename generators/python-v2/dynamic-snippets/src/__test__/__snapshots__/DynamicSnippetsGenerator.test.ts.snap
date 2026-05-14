@@ -469,11 +469,10 @@ client.nullable.get_users(
 exports[`snippets (use_typeddict_requests) > path-parameters > 'GET /{tenant_id}/user/{user_id}/speci…' 1`] = `
 "from acme import Acme
 
-client = Acme(
-    tenant_id="my_tenant",
-)
+client = Acme()
 
 client.user.get_user_specifics(
+    tenant_id="my_tenant",
     user_id="my_user",
     version=7,
     thought="my_thought",
@@ -1079,11 +1078,10 @@ client.nullable.get_users(
 exports[`snippets > path-parameters > 'GET /{tenant_id}/user/{user_id}/speci…' 1`] = `
 "from acme import Acme
 
-client = Acme(
-    tenant_id="my_tenant",
-)
+client = Acme()
 
 client.user.get_user_specifics(
+    tenant_id="my_tenant",
     user_id="my_user",
     version=7,
     thought="my_thought",
