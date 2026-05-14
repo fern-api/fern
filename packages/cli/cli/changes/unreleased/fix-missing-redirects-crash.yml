@@ -1,0 +1,6 @@
+- summary: |
+    Fix missing-redirects rule crashing during initialization when the docs
+    definition resolver fails (e.g. after a major CLI upgrade that changes
+    type naming). The rule now gracefully skips with a warning instead of
+    producing a fatal violation.
+  type: fix

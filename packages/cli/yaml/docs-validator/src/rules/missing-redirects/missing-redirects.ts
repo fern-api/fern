@@ -19,7 +19,7 @@ import {
  * Captures the last `error`-level message routed through the mock task context
  * so we can surface it in the warning when `DocsDefinitionResolver.resolve()`
  * aborts via `failAndThrow`. The mock's `failAndThrow` throws a
- * `TaskAbortSignal` (a non-Error class) and logs the actual reason — without
+ * `TaskAbortSignal` (a non-Error sentinel class) and logs the actual reason — without
  * this capture the rule would only see `[object Object]`.
  */
 function createResolverContext(): { context: TaskContext; getLastErrorMessage: () => string | undefined } {
