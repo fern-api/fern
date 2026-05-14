@@ -3,8 +3,14 @@ import type { ClonedRepository } from "@fern-api/github";
 import type { Octokit } from "@octokit/rest";
 
 import type { PipelineLogger } from "../PipelineLogger";
+import { FERN_BOT_EMAIL, FERN_BOT_NAME } from "./constants";
 
 const MAX_CONCURRENT_PUSH_RETRIES = 3;
+
+export interface CommitAuthor {
+    name: string;
+    email: string;
+}
 
 export interface PushSignedCommitOptions {
     repository: ClonedRepository;
@@ -26,6 +32,11 @@ export interface PushSignedCommitOptions {
      * remote changes) is only safe for bot-owned branches and is therefore never done here.
      */
     rebaseOnConflict?: boolean;
+    /**
+     * Override the commit author and committer identity.
+     * Defaults to the Fern bot identity (fern-api / fern-api[bot] noreply email).
+     */
+    author?: CommitAuthor;
     logger: PipelineLogger;
 }
 
@@ -48,6 +59,7 @@ export async function pushSignedCommit({
     branch,
     force,
     rebaseOnConflict = false,
+    author,
     logger
 }: PushSignedCommitOptions): Promise<string> {
     const tempRef = `refs/temp/fern-${Date.now()}`;
@@ -65,12 +77,18 @@ export async function pushSignedCommit({
         tempRefPushed = true;
 
         for (let attempt = 0; attempt < MAX_CONCURRENT_PUSH_RETRIES; attempt++) {
+            const commitAuthor = {
+                name: author?.name ?? FERN_BOT_NAME,
+                email: author?.email ?? FERN_BOT_EMAIL
+            };
             const { data: signedCommit } = await octokit.git.createCommit({
                 owner,
                 repo,
                 message,
                 tree: treeSha,
-                parents
+                parents,
+                author: commitAuthor,
+                committer: commitAuthor
             });
             const signedSha = signedCommit.sha;
 
