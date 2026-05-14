@@ -12,7 +12,8 @@ const CACHE_VERSION = "v1";
  *
  * Directory structure:
  * ```
- * ~/.fern/                    # All platforms (shared with CLI v1)
+ * ~/.fern/                    # macOS and Linux (shared with CLI v1)
+ * %LOCALAPPDATA%/fern/cache   # Windows
  *
  * ├── bin/                    # Downloaded tool binaries (buf, protoc-gen-openapi)
  * ├── v1/                     # Cache schema version
@@ -148,7 +149,9 @@ export class Cache {
      * Priority order:
      *  1. FERN_CACHE_DIR environment variable
      *  2. The configured cache path in ~/.fernrc
-     *  3. ~/.fern (shared with CLI v1)
+     *  3. Platform defaults:
+     *     - Windows: %LOCALAPPDATA%/fern/cache
+     *     - macOS/Linux: ~/.fern (shared with CLI v1)
      */
     private resolveAbsoluteFilePath(): AbsoluteFilePath {
         const envCacheDir = process.env.FERN_CACHE_DIR;
@@ -162,6 +165,17 @@ export class Cache {
         }
 
         const homeDir = AbsoluteFilePath.of(os.homedir());
+
+        const platform = process.platform;
+        if (platform === "win32") {
+            // Windows: %LOCALAPPDATA%/fern/cache
+            const localAppData =
+                process.env.LOCALAPPDATA != null
+                    ? AbsoluteFilePath.of(process.env.LOCALAPPDATA)
+                    : join(homeDir, RelativeFilePath.of("AppData/Local"));
+            return join(localAppData, RelativeFilePath.of("fern/cache"));
+        }
+
         return join(homeDir, RelativeFilePath.of(".fern"));
     }
 
