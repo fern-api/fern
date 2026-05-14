@@ -210,6 +210,17 @@ function printViolation({
     const severityLabel = getSeverityLabel(violation.severity);
     const path = formatViolationPath(violation);
 
+    // md-validate violations use a rich format matching `fern docs md check`
+    if (violation.name === "md-validate" && path !== "") {
+        context.logger.info(`${indent}${chalk.blue(path)}`);
+        const messageLines = violation.message.split("\n");
+        for (const line of messageLines) {
+            context.logger.info(`${indent}    ${line}`);
+        }
+        context.logger.info("");
+        return;
+    }
+
     // If path is empty, print issue on same line as severity label
     if (path === "") {
         context.logger.info(`${indent}${severityLabel} ${violation.message}`);

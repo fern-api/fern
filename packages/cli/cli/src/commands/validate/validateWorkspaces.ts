@@ -207,14 +207,10 @@ function formatMdxErrorMessage(error: MdxValidationError): string {
             const lineNumStr = String(ctx.lineNumber).padStart(lineNumWidth, " ");
             const displayContent = ctx.content.replace(/\t/g, "    ");
 
-            if (ctx.isErrorLine) {
-                message += `\n  ${lineNumStr} | ${displayContent}`;
-                if (error.column != null && error.column > 0) {
-                    const padding = " ".repeat(lineNumWidth + 3 + error.column - 1);
-                    message += `\n  ${padding}^`;
-                }
-            } else {
-                message += `\n  ${lineNumStr} | ${displayContent}`;
+            message += `\n${lineNumStr} | ${displayContent}`;
+            if (ctx.isErrorLine && error.column != null && error.column > 0) {
+                const caretPadding = " ".repeat(lineNumWidth + 3 + error.column - 1);
+                message += `\n${caretPadding}^`;
             }
         }
     }
