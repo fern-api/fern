@@ -22,7 +22,6 @@ import {
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
-import chalk from "chalk";
 import { getFiddleOrigin } from "@fern-api/core";
 import {
     ContainerRunner,
@@ -45,6 +44,7 @@ import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, getDashboardBaseUrl, login, logout } from "@fern-api/login";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
 import { CliError } from "@fern-api/task-context";
+import chalk from "chalk";
 import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
