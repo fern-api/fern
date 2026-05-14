@@ -1,4 +1,4 @@
-import { DASHBOARD_BASE_URL } from "@fern-api/login";
+import { getDashboardBaseUrl } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
 
 import chalk from "chalk";
@@ -31,7 +31,7 @@ export class LinkCheckCommand {
         context.stderr.info("");
 
         const client = new LinkCheckClient({
-            dashboardUrl: DASHBOARD_BASE_URL,
+            dashboardUrl: getDashboardBaseUrl(),
             token: token.value
         });
 
@@ -73,7 +73,7 @@ export class LinkCheckCommand {
             if (args.output === "json" || args.output === "csv") {
                 process.stdout.write(output + "\n");
             } else {
-                context.stderr.info(output);
+                process.stderr.write(output + "\n");
             }
 
             if (resolved.brokenLinks.length > 0) {

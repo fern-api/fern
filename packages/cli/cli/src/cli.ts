@@ -41,7 +41,7 @@ import {
     loadOpenAPIFromUrl
 } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
-import { askToLogin, DASHBOARD_BASE_URL, login, logout } from "@fern-api/login";
+import { askToLogin, getDashboardBaseUrl, login, logout } from "@fern-api/login";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
 import { CliError } from "@fern-api/task-context";
 import getPort from "get-port";
@@ -2176,7 +2176,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
             cliContext.instrumentPostHogEvent({ command: "fern docs link check" });
 
             const { domain, docsConfigDir } = await resolveDocsLinkCheckContext(cliContext, argv.url);
-            const dashboardUrl = DASHBOARD_BASE_URL;
+            const dashboardUrl = getDashboardBaseUrl();
 
             const token = await cliContext.runTask((context) => askToLogin(context));
 
