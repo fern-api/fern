@@ -318,7 +318,9 @@ async function main() {
     const client = new AcmeClient({
         token: "<YOUR_API_KEY>",
     });
-    await client.imdb.getMovie("movie_xyz");
+    await client.imdb.getMovie({
+        movieID: "movie_xyz",
+    });
 }
 main();
 "
