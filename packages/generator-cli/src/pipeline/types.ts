@@ -5,6 +5,7 @@ export interface PipelineConfig {
     replay?: ReplayStepConfig;
     autoVersion?: AutoVersionStepConfig;
     fernignore?: FernignoreStepConfig; // PHASE 2: not implemented yet
+    verify?: VerifyStepConfig;
     github?: GithubStepConfig;
 
     // Global metadata
@@ -19,6 +20,7 @@ export interface PipelineContext {
         replay?: ReplayStepResult;
         autoVersion?: AutoVersionStepResult;
         fernignore?: FernignoreStepResult;
+        verify?: VerificationStepResult;
     };
 }
 
@@ -95,6 +97,12 @@ export interface FernignoreStepConfig {
     customContents?: string;
 }
 
+export interface VerifyStepConfig {
+    enabled: boolean;
+    /** Container runtime to use. Defaults to "docker". */
+    runner?: "docker" | "podman";
+}
+
 export interface GithubStepConfig {
     enabled: boolean;
     /** GitHub repository URI (e.g. "owner/repo") */
@@ -153,6 +161,7 @@ export interface PipelineResult {
         replay?: ReplayStepResult;
         autoVersion?: AutoVersionStepResult;
         fernignore?: FernignoreStepResult;
+        verify?: VerificationStepResult;
         github?: GithubStepResult;
     };
     errors?: string[];
@@ -215,6 +224,13 @@ export interface ReplayStepResult extends StepResult {
 
 export interface FernignoreStepResult extends StepResult {
     pathsPreserved?: string[];
+}
+
+export interface VerificationStepResult extends StepResult {
+    /** True when no `.fern/verify.sh` was emitted by the generator — the step short-circuits silently. */
+    skipped: boolean;
+    /** Captured stderr from the verification script when it fails. */
+    stderr?: string;
 }
 
 export interface AutoVersionStepResult extends StepResult {

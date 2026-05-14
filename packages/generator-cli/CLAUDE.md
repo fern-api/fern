@@ -41,7 +41,7 @@ Thin, typed wrappers re-exported from `src/api.ts`. Modules: `generate-readme.ts
 
 Sequential step orchestration. `PostGenerationPipeline` instantiates enabled steps from `PipelineConfig` and runs them in order.
 
-**Step execution order**: ReplayStep → (FernignoreStep, Phase 2 placeholder) → GithubStep
+**Step execution order**: ReplayStep → (FernignoreStep, Phase 2 placeholder) → VerificationStep (opt-in) → GithubStep
 
 ### Key Files
 
@@ -51,6 +51,7 @@ Pipeline core:
 - `src/pipeline/steps/ReplayStep.ts` — Thin wrapper around `replayRun()`
 - `src/pipeline/steps/GithubStep.ts` — Commit/push/PR/conflict visualization
 - `src/pipeline/steps/FernignoreStep.ts` — Phase 2 placeholder (not yet implemented)
+- `src/pipeline/steps/VerificationStep.ts` — Opt-in step that runs `.fern/verify.sh` inside a `{generatorImage}-validator:{version}` container; failure aborts the pipeline before GithubStep
 - `src/pipeline/replay-summary.ts` — PR body formatting, conflict reason mapping
 
 Replay integration:
@@ -82,6 +83,8 @@ Configuration:
 ## Pipeline Behavior
 
 `PostGenerationPipeline` runs steps sequentially. Each step receives a `PipelineContext` with results from prior steps. Step failure marks the pipeline as failed but does not abort — subsequent steps still run. Replay errors return null report rather than failing generation.
+
+**Exception — VerificationStep aborts on failure**: VerificationStep is the one step whose semantic purpose is to gate the pipeline. When it returns `success: false` (or throws), the orchestrator `break`s the loop so `GithubStep` does not run — we never want to open a PR for an SDK that failed compile-time verification. This asymmetry is intentional and covered by integration tests in `src/__test__/verification-step.test.ts`.
 
 **Key invariant**: `skipCommit` means replay already committed — GithubStep must NOT `commitAllChanges()` again.
 
@@ -129,5 +132,5 @@ Generators pick up new generator-cli versions **lazily** — the next time a gen
 - `skipCommit` means replay already committed — GithubStep must NOT `commitAllChanges()` again
 - Force push required when updating existing PR with replay commits (replay rewrites branch history)
 - `baseBranchHead` is always on main's lineage (survives squash merges), unlike `previousGenerationSha` which may be on a dead branch
-- Pipeline continues on step failure — replay errors return null report to not fail generation
+- Pipeline continues on step failure — replay errors return null report to not fail generation. **Exception**: VerificationStep failure aborts the pipeline so GithubStep is skipped (broken SDK never gets a PR).
 - Generator name sanitization: `/` replaced with `--` for tag names and commit status context

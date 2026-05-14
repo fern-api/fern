@@ -7,6 +7,7 @@ import { BaseStep } from "./steps/BaseStep";
 import { GenerationCommitStep } from "./steps/GenerationCommitStep";
 import { GithubStep } from "./steps/GithubStep";
 import { ReplayStep } from "./steps/ReplayStep";
+import { VerificationStep } from "./steps/VerificationStep";
 import type {
     AutoVersionStepResult,
     FernignoreStepResult,
@@ -15,7 +16,8 @@ import type {
     PipelineConfig,
     PipelineContext,
     PipelineResult,
-    ReplayStepResult
+    ReplayStepResult,
+    VerificationStepResult
 } from "./types";
 
 export class PostGenerationPipeline {
@@ -90,6 +92,21 @@ export class PostGenerationPipeline {
         //   this.steps.push(new FernignoreStep(config.outputDir, this.logger));
         // }
 
+        // VerificationStep runs after replay and before GithubStep so a failing
+        // verify aborts the pipeline before we open a PR. Wired only when the
+        // generator emitted `.fern/verify.sh` (no-ops otherwise).
+        if (config.verify?.enabled) {
+            this.steps.push(
+                new VerificationStep(
+                    config.outputDir,
+                    this.logger,
+                    config.verify,
+                    config.generatorName,
+                    config.generatorVersions
+                )
+            );
+        }
+
         if (config.github?.enabled) {
             this.steps.push(new GithubStep(config.outputDir, this.logger, config.github));
         }
@@ -139,6 +156,10 @@ export class PostGenerationPipeline {
                     pipelineContext.previousStepResults.autoVersion = stepResult as AutoVersionStepResult;
                 } else if (step.name === "fernignore") {
                     result.steps.fernignore = stepResult as FernignoreStepResult;
+                } else if (step.name === "verify") {
+                    const verifyResult = stepResult as VerificationStepResult;
+                    result.steps.verify = verifyResult;
+                    pipelineContext.previousStepResults.verify = verifyResult;
                 } else if (step.name === "github") {
                     result.steps.github = stepResult as GithubStepResult;
                 }
@@ -146,6 +167,17 @@ export class PostGenerationPipeline {
                 if (!stepResult.success) {
                     result.success = false;
                     result.errors = result.errors ?? [];
+                    if (step.name === "verify") {
+                        const verifyResult = stepResult as VerificationStepResult;
+                        if (verifyResult.stderr != null && verifyResult.stderr.length > 0) {
+                            result.errors.push(verifyResult.stderr);
+                        } else {
+                            result.errors.push(verifyResult.errorMessage ?? `${step.name} step failed`);
+                        }
+                        // Skip remaining steps (e.g. GithubStep) when verify fails — surface the failure
+                        // before opening a PR or pushing a broken SDK.
+                        break;
+                    }
                     result.errors.push(stepResult.errorMessage ?? `${step.name} step failed`);
                 }
             } catch (error) {
@@ -153,6 +185,12 @@ export class PostGenerationPipeline {
                 result.errors = result.errors ?? [];
                 const errorMessage = extractErrorMessage(error);
                 result.errors.push(`${step.name} step error: ${errorMessage}`);
+                // Defense-in-depth: an unhandled throw inside VerificationStep should still
+                // abort the pipeline so a broken SDK never makes it to GithubStep, mirroring
+                // the success: false branch above.
+                if (step.name === "verify") {
+                    break;
+                }
             }
         }
 

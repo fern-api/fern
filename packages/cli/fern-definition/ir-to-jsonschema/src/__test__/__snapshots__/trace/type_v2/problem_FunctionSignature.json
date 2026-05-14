@@ -68,7 +68,8 @@
         "type",
         "parameters",
         "actualResultType"
-      ]
+      ],
+      "description": "Useful when specifying custom grading for a testcase where actualResult is defined."
     }
   ],
   "definitions": {
@@ -161,7 +162,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false."
             }
           },
           "required": [

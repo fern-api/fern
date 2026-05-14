@@ -7,6 +7,7 @@ import path from "path";
 import { LocalBuildInfo } from "../../../config/api/index.js";
 import { runScript } from "../../../runScript.js";
 import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from "../../../utils/constants.js";
+import { generatorEmitsVerifyScript } from "../../../utils/generatorEmitsVerifyScript.js";
 import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation.js";
 import { TestRunner } from "./TestRunner.js";
 
@@ -84,6 +85,9 @@ export class LocalTestRunner extends TestRunner {
             ]
         };
 
+        const generatorName = this.getParsedDockerImageName().name;
+        const verifyEnabled = generatorEmitsVerifyScript(generatorName);
+
         await runNativeGenerationForSeed(
             {
                 organization: organization ?? DUMMY_ORGANIZATION,
@@ -97,7 +101,12 @@ export class LocalTestRunner extends TestRunner {
                 skipUnstableDynamicSnippetTests: true,
                 inspect,
                 ai: undefined,
-                skipAutogenerationIfManualExamplesExist
+                skipAutogenerationIfManualExamplesExist,
+                verify: verifyEnabled,
+                // Generator runs at :local but the validator image isn't built locally;
+                // pull the published :latest validator. This mirrors what a customer's
+                // `fern generate --local --verify` would do against a published generator.
+                verifyValidatorVersion: verifyEnabled ? "latest" : undefined
             },
             commands,
             this.generator.workspaceConfig.test.local?.workingDirectory,

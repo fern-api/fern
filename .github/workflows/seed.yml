@@ -1791,7 +1791,7 @@ jobs:
 
       - name: Post to PostHog
         # https://github.com/PostHog/posthog-github-action
-        uses: PostHog/posthog-github-action@v0.1
+        uses: PostHog/posthog-github-action@v1
         with:
           posthog-token: ${{ secrets.POSTHOG_API_KEY }}
           event: "gh-actions-seed-test-metrics-event"

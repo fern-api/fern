@@ -232,6 +232,7 @@
     "nullableListOfUnions"
   ],
   "additionalProperties": false,
+  "description": "Test object with nullable enums, unions, and arrays",
   "definitions": {
     "nullable-optional.UserRole": {
       "type": "string",
@@ -240,7 +241,8 @@
         "USER",
         "GUEST",
         "MODERATOR"
-      ]
+      ],
+      "description": "Test enum for nullable enum fields"
     },
     "nullable-optional.UserStatus": {
       "type": "string",
@@ -249,7 +251,8 @@
         "inactive",
         "suspended",
         "deleted"
-      ]
+      ],
+      "description": "Test enum with values for optional enum fields"
     },
     "nullable-optional.NotificationMethod": {
       "type": "object",
@@ -352,7 +355,8 @@
             "body"
           ]
         }
-      ]
+      ],
+      "description": "Discriminated union for testing nullable unions"
     },
     "nullable-optional.NullableUserId": {
       "oneOf": [
@@ -362,7 +366,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "An alias for a nullable user ID"
     },
     "nullable-optional.OptionalUserId": {
       "oneOf": [
@@ -372,7 +377,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "An alias for an optional user ID"
     },
     "nullable-optional.Address": {
       "type": "object",
@@ -426,7 +432,8 @@
         "zipCode",
         "buildingId"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Nested object for testing"
     },
     "nullable-optional.SearchResult": {
       "type": "object",
@@ -592,7 +599,8 @@
             "author"
           ]
         }
-      ]
+      ],
+      "description": "Undiscriminated union for testing"
     }
   }
 }

@@ -39,9 +39,26 @@ RUN apk --no-cache upgrade && \
     gem install --no-document \
         erb:4.0.3.1 \
         net-imap:0.4.24 && \
+    # Remove both the stale gemspecs and the legacy gem directories. Without
+    # removing the directories, grype reports the unpatched versions even
+    # though Ruby is loading the patched 4.0.3.1 / 0.4.24 copies.
     rm -f /usr/local/lib/ruby/gems/3.3.0/specifications/default/erb-*.gemspec \
           /usr/local/lib/ruby/gems/3.3.0/specifications/net-imap-0.4.21.gemspec && \
+    rm -rf /usr/local/lib/ruby/gems/3.3.0/gems/erb-4.0.3 \
+           /usr/local/lib/ruby/gems/3.3.0/gems/net-imap-0.4.21 && \
     gem install --no-document 'rubocop:~> 1.21' rubocop-minitest && \
+    # Install patched addressable 2.9.0 (CVE-2026-35611) + rexml 3.4.4
+    # (CVE-2024-49761 / CVE-2024-41123 / CVE-2024-41946) and `gem cleanup`
+    # to drop the older sibling versions rubocop's deps drag in. Then strip
+    # vendored Gemfile.lock files from cached gems (lint_roller, rbs,
+    # unicode-emoji, typeprof) so grype stops reading their pinned rexml /
+    # rdoc / addressable versions as installed packages.
+    gem install --no-document \
+        addressable:2.9.0 \
+        rexml:3.4.4 && \
+    gem cleanup addressable rexml && \
+    find /usr/local/bundle/gems /usr/local/lib/ruby/gems \
+        -name 'Gemfile.lock' -delete && \
     apk del .build-deps
 
 # Patch npm's bundled vulnerable packages. Following the same pattern used in

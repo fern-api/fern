@@ -1,9 +1,52 @@
-FROM node:22.22-alpine3.23
+FROM node:24.15-alpine3.23
 
 RUN apk update && apk upgrade --no-cache
 RUN apk --no-cache add bash curl git zip
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
+
+# Patch picomatch to 4.0.4 (GHSA-c2c7-rcm5-vvqj ReDoS via extglob quantifiers,
+# GHSA-3v7f-55p6-f55p method injection in POSIX character classes) and
+# brace-expansion to 5.0.5 (GHSA-f886-m6hf-6m8v zero-step sequence hangs)
+# in npm's bundled node_modules. node:24.15 ships npm 11.12.1 with
+# picomatch@4.0.3 and brace-expansion@5.0.4.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/picomatch \
+      /usr/local/lib/node_modules/npm/node_modules/tinyglobby/node_modules/picomatch; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/picomatch/-/picomatch-4.0.4.tgz -o picomatch-4.0.4.tgz && \
+        tar -xzf picomatch-4.0.4.tgz && \
+        mv package picomatch && \
+        rm picomatch-4.0.4.tgz; \
+      fi; \
+    done && \
+    for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/brace-expansion; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.5.tgz -o brace-expansion-5.0.5.tgz && \
+        tar -xzf brace-expansion-5.0.5.tgz && \
+        mv package brace-expansion && \
+        rm brace-expansion-5.0.5.tgz; \
+      fi; \
+    done
+
+# Patch ip-address to 10.2.0 to fix CVE-2026-42338 / GHSA-v2v4-37r5-5v8g
+# (XSS in Address6 HTML-emitting methods). npm bundles ip-address via socks.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/ip-address; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/ip-address/-/ip-address-10.2.0.tgz -o ip-address-10.2.0.tgz && \
+        tar -xzf ip-address-10.2.0.tgz && \
+        mv package ip-address && \
+        rm ip-address-10.2.0.tgz; \
+      fi; \
+    done
 
 ARG SENTRY_DSN
 ARG SENTRY_ENVIRONMENT=production

@@ -9,7 +9,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Force the model to perform in a given mode."
     },
     "function_name": {
       "oneOf": [
@@ -19,7 +20,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Force the model to call a particular function."
     }
   },
   "additionalProperties": false,

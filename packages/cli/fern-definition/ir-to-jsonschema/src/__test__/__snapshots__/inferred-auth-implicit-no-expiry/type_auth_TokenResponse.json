@@ -19,5 +19,6 @@
     "access_token"
   ],
   "additionalProperties": false,
+  "description": "An OAuth token response.",
   "definitions": {}
 }

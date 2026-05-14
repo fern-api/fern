@@ -34,6 +34,7 @@
     "length"
   ],
   "additionalProperties": false,
+  "description": "Response with pagination info like Auth0",
   "definitions": {
     "types.Identity": {
       "type": "object",
@@ -294,7 +295,8 @@
         "created_at",
         "updated_at"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "User object similar to Auth0 users"
     }
   }
 }

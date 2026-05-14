@@ -80,7 +80,7 @@ async fn main() {
         .create_rule(
             &RuleCreateRequest {
                 name: "name".to_string(),
-                execution_context: RuleExecutionContext::Prod,
+                execution_context: RuleCreateRequestExecutionContext::Prod,
             },
             None,
         )
@@ -108,7 +108,7 @@ async fn main() {
 <dl>
 <dd>
 
-**execution_context:** `RuleExecutionContext` 
+**execution_context:** `RuleCreateRequestExecutionContext` — Execution context for the rule, excluding the prod environment.
     
 </dd>
 </dl>

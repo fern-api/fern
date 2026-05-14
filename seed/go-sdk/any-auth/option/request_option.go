@@ -79,6 +79,13 @@ func WithToken(token string) *core.TokenOption {
 	}
 }
 
+// WithTokenFunc sets a function that returns the 'Authorization: Bearer' token at request time.
+func WithTokenFunc(fn func() (string, error)) *core.TokenFuncOption {
+	return &core.TokenFuncOption{
+		TokenFunc: fn,
+	}
+}
+
 // WithAPIKey sets the apiKey auth request header.
 func WithAPIKey(apiKey string) *core.APIKeyOption {
 	return &core.APIKeyOption{

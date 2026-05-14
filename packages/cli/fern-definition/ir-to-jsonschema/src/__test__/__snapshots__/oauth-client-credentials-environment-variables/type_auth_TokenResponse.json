@@ -23,5 +23,6 @@
     "expires_in"
   ],
   "additionalProperties": false,
+  "description": "An OAuth token response.",
   "definitions": {}
 }

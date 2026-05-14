@@ -41,7 +41,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/allof-inline/fern\"\n\tfernclient \"github.com/allof-inline/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.CreateRule(\n\tcontext.TODO(),\n\t\u0026fern.RuleCreateRequest{\n\t\tName:             \"name\",\n\t\tExecutionContext: fern.RuleExecutionContextProd,\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/allof-inline/fern\"\n\tfernclient \"github.com/allof-inline/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.CreateRule(\n\tcontext.TODO(),\n\t\u0026fern.RuleCreateRequest{\n\t\tName:             \"name\",\n\t\tExecutionContext: fern.RuleCreateRequestExecutionContextProd,\n\t},\n)\n"
             }
         },
         {

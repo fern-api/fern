@@ -36,7 +36,8 @@
       "required": [
         "type",
         "name"
-      ]
+      ],
+      "description": "This is a bar field."
     }
   ],
   "definitions": {}
