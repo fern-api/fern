@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.24.2
+  changelogEntry:
+    - summary: |
+        Fix `fern config migrate` producing wrong file path references in the generated `fern.yml`. Paths from `generators.yml` (relative to the `fern/` directory) are now correctly re-rooted to be relative to the project root where `fern.yml` is created. This also fixes the `docs` `$ref` pointer to use `./fern/docs.yml` instead of `./docs.yml`.
+      type: fix
+  createdAt: "2026-05-14"
+  irVersion: 66
 - version: 5.24.1
   changelogEntry:
     - summary: |
