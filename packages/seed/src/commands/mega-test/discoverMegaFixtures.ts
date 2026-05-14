@@ -80,7 +80,15 @@ export function discoverMegaFixtures({
             continue;
         }
 
-        const openApiSpecs = extractOpenApiSpecs(parsed, absolutePathToFixture);
+        let openApiSpecs = extractOpenApiSpecs(parsed, absolutePathToFixture);
+
+        // Fallback: if generators.yml doesn't wire an OpenAPI spec via api.specs, check for a
+        // top-level openapi.yml on disk. Many Fern-definition-first fixtures have a generated
+        // OpenAPI spec at their root that isn't referenced in generators.yml.
+        if (openApiSpecs.length === 0) {
+            openApiSpecs = fallbackTopLevelOpenApi(absolutePathToFixture);
+        }
+
         if (openApiSpecs.length === 0) {
             continue;
         }
@@ -162,6 +170,27 @@ export function extractOpenApiSpecs(parsed: unknown, fixtureDir: AbsoluteFilePat
     }
 
     return result;
+}
+
+/**
+ * Fallback discovery: if a fixture's generators.yml doesn't declare OpenAPI specs via
+ * api.specs, check for a top-level `openapi.yml` file in the fixture directory. If present,
+ * return it as a single spec entry with optional overrides from `openapi-overrides.yml`.
+ */
+function fallbackTopLevelOpenApi(fixtureDir: AbsoluteFilePath): ResolvedOpenApiSpec[] {
+    const openapiPath = path.join(fixtureDir, "openapi.yml");
+    if (!fs.existsSync(openapiPath)) {
+        return [];
+    }
+
+    const absolutePathToOpenApi = AbsoluteFilePath.of(openapiPath);
+
+    const overridesPath = path.join(fixtureDir, "openapi-overrides.yml");
+    const absolutePathToOverrides = fs.existsSync(overridesPath)
+        ? AbsoluteFilePath.of(overridesPath)
+        : undefined;
+
+    return [{ absolutePathToOpenApi, absolutePathToOverrides }];
 }
 
 function resolveRelativeToFixture(fixtureDir: AbsoluteFilePath, relativePath: string): AbsoluteFilePath {
