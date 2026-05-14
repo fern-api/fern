@@ -41,6 +41,10 @@ generators/csharp/playground/**/obj/
 next-env.d.ts
 .vercel
 
+# python virtual envs (local dev tooling)
+.venv/
+**/.venv/
+
 # misc
 .DS_Store
 *.swp
