@@ -15,12 +15,6 @@ export interface BrokenLink {
     error?: string;
 }
 
-interface SseEvent {
-    type: string;
-    data: Record<string, unknown>;
-    timestamp: string;
-}
-
 export interface LinkCheckResult {
     totalPages: number;
     totalLinks: number;
@@ -41,6 +35,11 @@ export interface LinkCheckCallbacks {
         linksChecked: number;
         totalLinks: number;
     }) => void;
+}
+
+interface ParsedSseEvent {
+    type: string;
+    data: Record<string, unknown>;
 }
 
 export class LinkCheckClient {
@@ -97,10 +96,16 @@ export class LinkCheckClient {
                 return;
             }
 
-            let event: SseEvent;
+            let event: ParsedSseEvent;
             try {
-                event = JSON.parse(line.slice(6)) as SseEvent;
+                const parsed: unknown = JSON.parse(line.slice(6));
+                if (parsed == null || typeof parsed !== "object" || !("type" in parsed)) {
+                    // Malformed SSE payload (null, primitive, or missing type field)
+                    return;
+                }
+                event = parsed as ParsedSseEvent;
             } catch {
+                // Skip non-JSON SSE lines (comments, partial chunks)
                 return;
             }
 

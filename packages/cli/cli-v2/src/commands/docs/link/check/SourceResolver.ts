@@ -115,6 +115,7 @@ export class SourceResolver {
             const parsed = new URL(sourcePageUrl);
             return { slug: parsed.pathname };
         } catch {
+            // Not a valid URL — use raw value as slug
             return { slug: sourcePageUrl };
         }
     }
@@ -124,6 +125,6 @@ export class SourceResolver {
      * component and don't correspond to user-authored files.
      */
     private isUserAuthoredPage(pageId: string): boolean {
-        return pageId.includes("/");
+        return pageId.includes("/") || pageId.endsWith(".mdx") || pageId.endsWith(".md");
     }
 }

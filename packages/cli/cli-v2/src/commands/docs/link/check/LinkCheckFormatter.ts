@@ -191,8 +191,9 @@ export class LinkCheckFormatter {
     private appendBlockedLinkDetails(lines: string[], links: ResolvedBrokenLink[]): void {
         for (const link of links) {
             lines.push("");
+            const displayUrl = link.isInternal ? this.toRelativePath(link.url) : link.url;
             const status = link.statusCode != null ? link.statusCode : "blocked";
-            lines.push(`  ${chalk.yellow("⚠")} ${chalk.cyan(link.url)} ${chalk.dim("→")} ${chalk.yellow(status)}`);
+            lines.push(`  ${chalk.yellow("⚠")} ${chalk.cyan(displayUrl)} ${chalk.dim("→")} ${chalk.yellow(status)}`);
 
             if (link.error != null && link.error.length > 0) {
                 lines.push(chalk.dim(`    ${link.error}`));
@@ -208,14 +209,14 @@ export class LinkCheckFormatter {
         if (ref.filePath != null) {
             return ref.filePath;
         }
-        return this.toRelativePath(ref.slug);
+        return ref.slug;
     }
 
     private formatJsonReference(ref: ResolvedReference): Record<string, string> {
         if (ref.filePath != null) {
             return { filePath: ref.filePath };
         }
-        return { slug: this.toRelativePath(ref.slug) };
+        return { slug: ref.slug };
     }
 
     private toRelativePath(url: string): string {
@@ -230,11 +231,14 @@ export class LinkCheckFormatter {
 
     private stripBasePath(pathname: string): string {
         if (this.basePath && pathname.startsWith(this.basePath)) {
-            let stripped = pathname.substring(this.basePath.length);
-            if (!stripped.startsWith("/")) {
-                stripped = "/" + stripped;
+            const charAfter = pathname[this.basePath.length];
+            if (charAfter === undefined || charAfter === "/" || charAfter === "?" || charAfter === "#") {
+                let stripped = pathname.substring(this.basePath.length);
+                if (!stripped.startsWith("/")) {
+                    stripped = "/" + stripped;
+                }
+                return stripped;
             }
-            return stripped;
         }
         return pathname;
     }
@@ -251,7 +255,13 @@ export class LinkCheckFormatter {
     }
 
     private escapeCsv(value: string): string {
-        if (value.includes(",") || value.includes('"') || value.includes("\n") || value.includes("\r")) {
+        if (
+            value.includes(",") ||
+            value.includes('"') ||
+            value.includes("\n") ||
+            value.includes("\r") ||
+            value.includes("\r\n")
+        ) {
             return `"${value.replace(/"/g, '""')}"`;
         }
         return value;
