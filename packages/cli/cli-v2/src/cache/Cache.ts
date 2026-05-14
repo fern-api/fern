@@ -12,9 +12,9 @@ const CACHE_VERSION = "v1";
  *
  * Directory structure:
  * ```
- * ~/.fern/                    # All platforms (shared with CLI v1)
+ * ~/.cache/fern               # Linux and macOS (XDG_CACHE_HOME/fern)
+ * %LOCALAPPDATA%/fern/cache   # Windows
  *
- * ├── bin/                    # Downloaded tool binaries (buf, protoc-gen-openapi)
  * ├── v1/                     # Cache schema version
  * │   ├── ir/
  * │   │   ├── v63/
@@ -22,9 +22,10 @@ const CACHE_VERSION = "v1";
  * │   │   │       └── 0a/
  * │   │   │           └── 0a3f9c2e4a7d1b...json
  * │   │   └── v62/
- * │   ├── logs/
- * │   └── migrations/
+ * │   └── logs/
  * └── tmp/                    # Atomic write staging
+ *
+ * ~/.fern/bin/                # Shared tool binaries (buf, protoc-gen-openapi)
  * ```
  */
 export declare namespace Cache {
@@ -82,7 +83,11 @@ export class Cache {
             absoluteFilePath: join(this.getVersionedPath(), RelativeFilePath.of("migrations"))
         };
         this.bin = {
-            absoluteFilePath: join(this.absoluteFilePath, RelativeFilePath.of("bin"))
+            absoluteFilePath: join(
+                AbsoluteFilePath.of(os.homedir()),
+                RelativeFilePath.of(".fern"),
+                RelativeFilePath.of("bin")
+            )
         };
     }
 
@@ -148,7 +153,7 @@ export class Cache {
      * Priority order:
      *  1. FERN_CACHE_DIR environment variable
      *  2. The configured cache path in ~/.fernrc
-     *  3. ~/.fern (shared with CLI v1)
+     *  3. Platform defaults (XDG on macOS/Linux, LOCALAPPDATA on Windows)
      */
     private resolveAbsoluteFilePath(): AbsoluteFilePath {
         const envCacheDir = process.env.FERN_CACHE_DIR;
@@ -162,7 +167,24 @@ export class Cache {
         }
 
         const homeDir = AbsoluteFilePath.of(os.homedir());
-        return join(homeDir, RelativeFilePath.of(".fern"));
+
+        const platform = process.platform;
+        if (platform === "win32") {
+            // Windows: %LOCALAPPDATA%/fern/cache
+            const localAppData =
+                process.env.LOCALAPPDATA != null
+                    ? AbsoluteFilePath.of(process.env.LOCALAPPDATA)
+                    : join(homeDir, RelativeFilePath.of("AppData/Local"));
+            return join(localAppData, RelativeFilePath.of("fern/cache"));
+        }
+
+        // For macOS and Linux, follow the XDG Base Directory Specification.
+        // For details, see: https://specifications.freedesktop.org/basedir/latest
+        const xdgCacheHome =
+            process.env.XDG_CACHE_HOME != null
+                ? AbsoluteFilePath.of(process.env.XDG_CACHE_HOME)
+                : join(homeDir, RelativeFilePath.of(".cache"));
+        return join(xdgCacheHome, RelativeFilePath.of("fern"));
     }
 
     /**
