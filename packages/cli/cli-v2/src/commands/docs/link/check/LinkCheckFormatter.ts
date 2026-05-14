@@ -101,7 +101,7 @@ export class LinkCheckFormatter {
                     this.escapeCsv(link.url),
                     String(link.statusCode ?? ""),
                     link.isInternal ? "internal" : "external",
-                    this.escapeCsv(ref.filePath ?? this.toRelativePath(ref.slug)),
+                    this.escapeCsv(ref.filePath ?? ref.slug),
                     this.escapeCsv(link.error ?? ""),
                     status
                 ].join(",")

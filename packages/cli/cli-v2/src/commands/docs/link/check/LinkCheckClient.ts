@@ -99,8 +99,16 @@ export class LinkCheckClient {
             let event: ParsedSseEvent;
             try {
                 const parsed: unknown = JSON.parse(line.slice(6));
-                if (parsed == null || typeof parsed !== "object" || !("type" in parsed)) {
-                    // Malformed SSE payload (null, primitive, or missing type field)
+                if (
+                    parsed == null ||
+                    typeof parsed !== "object" ||
+                    !("type" in parsed) ||
+                    typeof (parsed as Record<string, unknown>).type !== "string" ||
+                    !("data" in parsed) ||
+                    typeof (parsed as Record<string, unknown>).data !== "object" ||
+                    (parsed as Record<string, unknown>).data == null
+                ) {
+                    // Malformed SSE payload (null, primitive, or missing type/data fields)
                     return;
                 }
                 event = parsed as ParsedSseEvent;
@@ -144,14 +152,7 @@ export class LinkCheckClient {
                 }
                 case "link_checked": {
                     if (isLinkCheckedData(event.data)) {
-                        brokenLinks.push({
-                            url: event.data.url,
-                            statusCode: event.data.statusCode ?? null,
-                            isInternal: event.data.isInternal ?? false,
-                            sourcePages: event.data.sourcePages ?? [],
-                            sourcePageIds: event.data.sourcePageIds,
-                            error: event.data.error
-                        });
+                        brokenLinks.push(toBrokenLink(event.data));
                     }
                     break;
                 }
@@ -162,9 +163,17 @@ export class LinkCheckClient {
                         totalLinks = event.data.totalLinks;
                         workingLinks = event.data.workingLinks;
                         brokenLinks.length = 0;
-                        brokenLinks.push(...event.data.brokenLinks);
+                        for (const link of event.data.brokenLinks) {
+                            if (isLinkCheckedData(link as Record<string, unknown>)) {
+                                brokenLinks.push(toBrokenLink(link as Record<string, unknown>));
+                            }
+                        }
                         blockedLinks.length = 0;
-                        blockedLinks.push(...event.data.blockedLinks);
+                        for (const link of event.data.blockedLinks) {
+                            if (isLinkCheckedData(link as Record<string, unknown>)) {
+                                blockedLinks.push(toBrokenLink(link as Record<string, unknown>));
+                            }
+                        }
                     }
                     break;
                 }
@@ -289,12 +298,12 @@ function isLinkCheckedData(data: Record<string, unknown>): data is {
     );
 }
 
-function isCompleteData(data: Record<string, unknown>): data is {
+function isCompleteData(data: Record<string, unknown>): data is Record<string, unknown> & {
     totalPages: number;
     totalLinks: number;
     workingLinks: number;
-    brokenLinks: BrokenLink[];
-    blockedLinks: BrokenLink[];
+    brokenLinks: unknown[];
+    blockedLinks: unknown[];
 } {
     return (
         typeof data.totalPages === "number" &&
@@ -307,6 +316,17 @@ function isCompleteData(data: Record<string, unknown>): data is {
 
 function isErrorData(data: Record<string, unknown>): data is { message: string } {
     return typeof data.message === "string";
+}
+
+function toBrokenLink(data: Record<string, unknown>): BrokenLink {
+    return {
+        url: data.url as string,
+        statusCode: (data.statusCode as number | null) ?? null,
+        isInternal: (data.isInternal as boolean | undefined) ?? false,
+        sourcePages: (data.sourcePages as string[] | undefined) ?? [],
+        sourcePageIds: data.sourcePageIds as string[] | undefined,
+        error: data.error as string | undefined
+    };
 }
 
 export class LinkCheckError extends Error {

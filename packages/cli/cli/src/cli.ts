@@ -2237,6 +2237,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     cliContext.stderr.info("All links valid");
                 }
             } catch (error) {
+                progress.finish();
                 if (error instanceof LinkCheckError) {
                     let code: CliError.Code;
                     if (error.statusCode === 401 || error.statusCode === 403) {
