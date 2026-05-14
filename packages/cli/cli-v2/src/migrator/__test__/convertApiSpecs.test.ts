@@ -186,20 +186,23 @@ describe("convertApiSpecs", () => {
 // ---------------------------------------------------------------------------
 
 describe("convertSingleApi", () => {
-    let testDir: string;
+    let projectDir: string;
+    let fernDir: string;
 
     beforeEach(async () => {
-        testDir = join(tmpdir(), `convert-single-api-test-${randomUUID()}`);
-        await mkdir(testDir, { recursive: true });
+        projectDir = join(tmpdir(), `convert-single-api-test-${randomUUID()}`);
+        fernDir = join(projectDir, "fern");
+        await mkdir(fernDir, { recursive: true });
     });
 
     afterEach(async () => {
-        await rm(testDir, { recursive: true, force: true });
+        await rm(projectDir, { recursive: true, force: true });
     });
 
     it("returns undefined api when no generatorsYmlApi and no definition dir", async () => {
         const result = await convertSingleApi({
-            fernDir: AbsoluteFilePath.of(testDir),
+            projectRoot: AbsoluteFilePath.of(projectDir),
+            fernDir: AbsoluteFilePath.of(fernDir),
             generatorsYmlApi: undefined
         });
         expect(result.api).toBeUndefined();
@@ -208,16 +211,18 @@ describe("convertSingleApi", () => {
 
     it("uses generators.yml specs when no definition directory exists", async () => {
         const result = await convertSingleApi({
-            fernDir: AbsoluteFilePath.of(testDir),
+            projectRoot: AbsoluteFilePath.of(projectDir),
+            fernDir: AbsoluteFilePath.of(fernDir),
             generatorsYmlApi: { specs: [{ openapi: "./openapi.yml" }] }
         });
-        expect(result.api?.specs[0]).toMatchObject({ openapi: "./openapi.yml" });
+        expect(result.api?.specs[0]).toMatchObject({ openapi: "./fern/openapi.yml" });
     });
 
     it("uses Fern definition directory when it exists (takes precedence over generators.yml specs)", async () => {
-        await mkdir(join(testDir, "definition"), { recursive: true });
+        await mkdir(join(fernDir, "definition"), { recursive: true });
         const result = await convertSingleApi({
-            fernDir: AbsoluteFilePath.of(testDir),
+            projectRoot: AbsoluteFilePath.of(projectDir),
+            fernDir: AbsoluteFilePath.of(fernDir),
             generatorsYmlApi: { specs: [{ openapi: "./openapi.yml" }] }
         });
         // Definition takes precedence
@@ -227,10 +232,23 @@ describe("convertSingleApi", () => {
         expect(result.warnings.some((w) => w.message.includes("Fern definition"))).toBe(true);
     });
 
-    it("emits no warning when definition dir exists but generators.yml has no specs", async () => {
-        await mkdir(join(testDir, "definition"), { recursive: true });
+    it("handles spec paths when fernDir equals projectRoot (empty sourcePrefix)", async () => {
+        // generators.yml is at projectRoot itself — sourcePrefix would be ""
         const result = await convertSingleApi({
-            fernDir: AbsoluteFilePath.of(testDir),
+            projectRoot: AbsoluteFilePath.of(projectDir),
+            fernDir: AbsoluteFilePath.of(projectDir),
+            generatorsYmlApi: { specs: [{ openapi: "./openapi.yml", overrides: "overrides.yml" }] }
+        });
+        const spec = result.api?.specs[0] as { openapi: string; overrides: string } | undefined;
+        expect(spec?.openapi).toBe("./openapi.yml");
+        expect(spec?.overrides).toBe("./overrides.yml");
+    });
+
+    it("emits no warning when definition dir exists but generators.yml has no specs", async () => {
+        await mkdir(join(fernDir, "definition"), { recursive: true });
+        const result = await convertSingleApi({
+            projectRoot: AbsoluteFilePath.of(projectDir),
+            fernDir: AbsoluteFilePath.of(fernDir),
             generatorsYmlApi: undefined
         });
         const spec = result.api?.specs[0] as { fern: string } | undefined;
@@ -262,6 +280,7 @@ describe("convertMultiApi", () => {
         await mkdir(join(apisDir, "grpc"), { recursive: true });
 
         const result = await convertMultiApi({
+            projectRoot: AbsoluteFilePath.of(testDir),
             fernDir: AbsoluteFilePath.of(join(testDir, "fern")),
             apisDir: AbsoluteFilePath.of(apisDir),
             generatorsYmlApis: {
@@ -278,6 +297,7 @@ describe("convertMultiApi", () => {
         await mkdir(join(apisDir, "rest"), { recursive: true });
 
         const result = await convertMultiApi({
+            projectRoot: AbsoluteFilePath.of(testDir),
             fernDir: AbsoluteFilePath.of(join(testDir, "fern")),
             apisDir: AbsoluteFilePath.of(apisDir),
             generatorsYmlApis: {
@@ -300,6 +320,7 @@ describe("convertMultiApi", () => {
         await mkdir(join(apisDir, "rest", "definition"), { recursive: true });
 
         const result = await convertMultiApi({
+            projectRoot: AbsoluteFilePath.of(testDir),
             fernDir: AbsoluteFilePath.of(join(testDir, "fern")),
             apisDir: AbsoluteFilePath.of(apisDir),
             generatorsYmlApis: {
@@ -317,6 +338,7 @@ describe("convertMultiApi", () => {
         await mkdir(join(apisDir, "empty-api"), { recursive: true });
 
         const result = await convertMultiApi({
+            projectRoot: AbsoluteFilePath.of(testDir),
             fernDir: AbsoluteFilePath.of(join(testDir, "fern")),
             apisDir: AbsoluteFilePath.of(apisDir),
             generatorsYmlApis: {}
@@ -330,6 +352,7 @@ describe("convertMultiApi", () => {
         await mkdir(join(apisDir, "rest"), { recursive: true });
 
         const result = await convertMultiApi({
+            projectRoot: AbsoluteFilePath.of(testDir),
             fernDir: AbsoluteFilePath.of(join(testDir, "fern")),
             apisDir: AbsoluteFilePath.of(apisDir),
             generatorsYmlApis: {
