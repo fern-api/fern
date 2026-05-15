@@ -832,7 +832,8 @@ async function convertOutputMode({
         const mode = generator.github.mode ?? "release";
         switch (mode) {
             case "commit":
-            case "release": {
+            case "release":
+            case "commit-and-release": {
                 const releaseConfig = generator.github as generatorsYml.GithubCommitAndReleaseSchema;
                 const commitAndReleaseValue = {
                     owner,

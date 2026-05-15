@@ -110,7 +110,7 @@ export interface GithubStepConfig {
     /** GitHub auth token */
     token: string;
     /** Output mode */
-    mode: "push" | "pull-request";
+    mode: "push" | "pull-request" | "commit-and-release";
     /** Target branch (base branch for PRs, push target for push mode) */
     branch?: string;
     /** Commit message for the generation */
@@ -268,6 +268,8 @@ export interface GithubStepResult extends StepResult {
     skippedNoDiff?: boolean;
     /** True when automerge was enabled on the PR */
     autoMergeEnabled?: boolean;
+    /** URL of the GitHub release created in commit-and-release mode */
+    releaseUrl?: string;
 }
 
 export interface StepResult {
