@@ -5,5 +5,6 @@ export class JsonError extends Error {
     constructor(public readonly errors: ValidationError[]) {
         super(errors.map(stringifyValidationError).join("; "));
         Object.setPrototypeOf(this, JsonError.prototype);
+        this.name = "JsonError";
     }
 }
