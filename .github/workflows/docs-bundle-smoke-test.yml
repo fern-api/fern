@@ -28,6 +28,9 @@ env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
 
+permissions:
+  contents: read
+
 jobs:
   build-cli:
     runs-on: ubuntu-latest

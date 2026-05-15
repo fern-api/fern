@@ -17,6 +17,9 @@ env:
   TURBO_NO_UPDATE_NOTIFIER: "1"
   TURBO_DAEMON: "false"
 
+permissions:
+  contents: read
+
 jobs:
   fix-lint:
     runs-on: ubuntu-latest

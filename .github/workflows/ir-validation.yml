@@ -16,6 +16,9 @@ on:
 env:
   DO_NOT_TRACK: "1"
 
+permissions:
+  contents: read
+
 jobs:
   run:
     runs-on: ubuntu-latest

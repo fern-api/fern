@@ -45,8 +45,7 @@ concurrency:
 
 # These scope secrets.GITHUB_TOKEN
 permissions:
-  pull-requests: write
-  contents: write
+  contents: read
 
 env:
   DO_NOT_TRACK: "1"
@@ -953,6 +952,8 @@ jobs:
   # Use always() to ensure this runs even if stages from needs are skipped.
   # By default, block on failures. If commit-on-failure is true, continue even if some seed runs fail.
   commit-seed-changes-by-push:
+    permissions:
+      contents: write # EndBug/add-and-commit pushes seed snapshots back to the branch
     if: >-
       ${{
         always() && !cancelled() && needs.setup.outputs.update-by-push == 'true' &&

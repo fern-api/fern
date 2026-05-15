@@ -47,6 +47,9 @@ env:
   DO_NOT_TRACK: "1"
   DOCKER_BUILDKIT: 1
 
+permissions:
+  contents: read
+
 jobs:
   changes:
     runs-on: ubuntu-latest

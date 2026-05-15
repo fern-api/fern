@@ -5,9 +5,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  pull-requests: write
-  contents: write
-  issues: write
+  contents: read
 
 env:
   DO_NOT_TRACK: "1"
@@ -15,6 +13,9 @@ env:
 jobs:
   stale-prs-and-issues:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
     steps:
       - uses: actions/stale@b5d41d4e1d5dceea10e7104786b73624c18a190f # v10
         with:
@@ -30,6 +31,10 @@ jobs:
 
   stale-branch:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: read
     steps:
       - uses: crs-k/stale-branches@865501af01284d43aef267d4b9aab0f9f1734b12 # v8.2.2
         with:

@@ -18,6 +18,9 @@ env:
   TURBO_NO_UPDATE_NOTIFIER: "1"
   TURBO_DAEMON: "false"
 
+permissions:
+  contents: read
+
 jobs:
   # Fetch specs once and share via artifact (avoids 9x redundant downloads)
   fetch-specs:

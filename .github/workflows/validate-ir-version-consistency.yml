@@ -25,6 +25,9 @@ concurrency:
 env:
   DO_NOT_TRACK: "1"
 
+permissions:
+  contents: read
+
 jobs:
   validate-ir-versions:
     name: Validate IR Version Consistency

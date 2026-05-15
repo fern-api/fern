@@ -7,6 +7,9 @@ on:
 env:
   DO_NOT_TRACK: "1"
 
+permissions:
+  contents: read
+
 jobs:
   validate:
     name: Validate versions.yml files

@@ -20,8 +20,7 @@ on:
         type: string
 
 permissions:
-  contents: read # Required for checkout
-  id-token: write # Required for OIDC
+  contents: read
 
 env:
   DO_NOT_TRACK: "1"
@@ -59,6 +58,9 @@ jobs:
       group: publish-cli-dev
       cancel-in-progress: true
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # OIDC trusted publishing to npm
     env:
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
@@ -128,6 +130,9 @@ jobs:
       group: publish-cli-release
       cancel-in-progress: false
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # OIDC trusted publishing to npm
     env:
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
@@ -184,6 +189,9 @@ jobs:
     concurrency:
       group: publish-cli-release
       cancel-in-progress: false
+    permissions:
+      contents: read
+      id-token: write # OIDC trusted publishing to npm
     env:
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}

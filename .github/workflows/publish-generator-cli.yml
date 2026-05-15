@@ -18,7 +18,6 @@ env:
   GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
 
 permissions:
-  id-token: write # Required for OIDC
   contents: read
 
 jobs:
@@ -73,6 +72,9 @@ jobs:
     needs: check-version
     if: needs.check-version.outputs.has_new_version == 'true'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # OIDC trusted publishing to npm
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:

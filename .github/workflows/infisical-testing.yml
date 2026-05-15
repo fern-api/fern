@@ -5,6 +5,9 @@ name: Infisical-testing
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   check-admin:
     runs-on: ubuntu-latest

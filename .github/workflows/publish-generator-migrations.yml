@@ -23,7 +23,6 @@ env:
   TURBO_DAEMON: "false"
 
 permissions:
-  id-token: write # Required for OIDC
   contents: read
 
 jobs:
@@ -77,6 +76,9 @@ jobs:
     needs: check-version
     if: needs.check-version.outputs.should_publish == 'true'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # OIDC trusted publishing to npm
     steps:
       - name: Checkout repo
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
