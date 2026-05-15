@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
-  title: pagination-custom
-  version: ""
+  title: pagination
+  version: 0.0.0
 paths:
   /users:
     get:
@@ -14,20 +14,24 @@ paths:
           description: The maximum number of results to return.
           required: false
           schema:
-            type: integer
+            type:
+              - integer
+              - 'null'
         - name: starting_after
           in: query
           description: The cursor used for pagination.
           required: false
           schema:
-            type: string
+            type:
+              - string
+              - 'null'
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UsersListResponse"
+                $ref: '#/components/schemas/UsersListResponse'
 components:
   schemas:
     UsersListResponse:
@@ -35,15 +39,21 @@ components:
       type: object
       properties:
         limit:
-          type: integer
+          type:
+            - integer
+            - 'null'
         count:
-          type: integer
+          type:
+            - integer
+            - 'null'
         has_more:
-          type: boolean
+          type:
+            - boolean
+            - 'null'
         links:
           type: array
           items:
-            $ref: "#/components/schemas/Link"
+            $ref: '#/components/schemas/Link'
         data:
           type: array
           items:
@@ -66,6 +76,6 @@ components:
         - method
         - href
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer

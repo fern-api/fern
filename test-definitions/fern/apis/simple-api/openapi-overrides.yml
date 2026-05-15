@@ -1,0 +1,6 @@
+paths:
+  /users/{id}:
+    get:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: get

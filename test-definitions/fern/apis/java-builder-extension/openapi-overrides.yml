@@ -1,0 +1,6 @@
+paths:
+  /api/hello:
+    get:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: hello

@@ -1,17 +1,17 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: extends
-  version: ""
+  version: 0.0.0
 paths:
   /extends/extended-inline-request-body:
     post:
       operationId: extendedInlineRequestBody
       tags:
-        - ""
+        - ''
       parameters: []
       responses:
-        "204":
-          description: ""
+        '204':
+          description: No content
       requestBody:
         required: true
         content:
@@ -24,7 +24,7 @@ paths:
               required:
                 - unique
               allOf:
-                - $ref: "#/components/schemas/ExampleType"
+                - $ref: '#/components/schemas/ExampleType'
 components:
   schemas:
     ExampleType:
@@ -33,26 +33,32 @@ components:
       properties:
         name:
           type: string
+          examples:
+            - Example
       required:
         - name
       allOf:
-        - $ref: "#/components/schemas/Docs"
+        - $ref: '#/components/schemas/Docs'
     NestedType:
       title: NestedType
       type: object
       properties:
         name:
           type: string
+          examples:
+            - NestedExample
       required:
         - name
       allOf:
-        - $ref: "#/components/schemas/JSON"
+        - $ref: '#/components/schemas/JSON'
     Docs:
       title: Docs
       type: object
       properties:
         docs:
           type: string
+          examples:
+            - Types extend this type to include a docs property.
       required:
         - docs
     JSON:
@@ -61,8 +67,10 @@ components:
       properties:
         raw:
           type: string
+          examples:
+            - '{"docs": true, "json": true}'
       required:
         - raw
       allOf:
-        - $ref: "#/components/schemas/Docs"
+        - $ref: '#/components/schemas/Docs'
   securitySchemes: {}

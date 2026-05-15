@@ -1,0 +1,6 @@
+paths:
+  /{id}:
+    get:
+      x-fern-sdk-group-name:
+      - singleProperty
+      x-fern-sdk-method-name: doThing

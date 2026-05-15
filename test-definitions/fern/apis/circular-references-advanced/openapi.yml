@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
-  title: circular-references-advanced
-  version: ""
+  title: api
+  version: 0.0.0
 paths: {}
 components:
   schemas:
@@ -10,8 +10,9 @@ components:
       type: object
       properties:
         a:
-          $ref: "#/components/schemas/A"
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/A'
+            - type: 'null'
     RootType:
       title: RootType
       type: object
@@ -25,28 +26,28 @@ components:
       type: object
       properties: {}
       allOf:
-        - $ref: "#/components/schemas/RootType"
+        - $ref: '#/components/schemas/RootType'
     Animal:
       title: Animal
       oneOf:
-        - $ref: "#/components/schemas/Cat"
-        - $ref: "#/components/schemas/Dog"
+        - $ref: '#/components/schemas/Cat'
+        - $ref: '#/components/schemas/Dog'
     Fruit:
       title: Fruit
       oneOf:
-        - $ref: "#/components/schemas/Acai"
-        - $ref: "#/components/schemas/Fig"
+        - $ref: '#/components/schemas/Acai'
+        - $ref: '#/components/schemas/Fig'
     Node:
       title: Node
       oneOf:
-        - $ref: "#/components/schemas/BranchNode"
-        - $ref: "#/components/schemas/LeafNode"
+        - $ref: '#/components/schemas/BranchNode'
+        - $ref: '#/components/schemas/LeafNode'
     Cat:
       title: Cat
       type: object
       properties:
         fruit:
-          $ref: "#/components/schemas/Fruit"
+          $ref: '#/components/schemas/Fruit'
       required:
         - fruit
     Dog:
@@ -54,7 +55,7 @@ components:
       type: object
       properties:
         fruit:
-          $ref: "#/components/schemas/Fruit"
+          $ref: '#/components/schemas/Fruit'
       required:
         - fruit
     Acai:
@@ -62,13 +63,13 @@ components:
       type: object
       properties: {}
       allOf:
-        - $ref: "#/components/schemas/Berry"
+        - $ref: '#/components/schemas/Berry'
     Fig:
       title: Fig
       type: object
       properties:
         animal:
-          $ref: "#/components/schemas/Animal"
+          $ref: '#/components/schemas/Animal'
       required:
         - animal
     Berry:
@@ -76,7 +77,7 @@ components:
       type: object
       properties:
         animal:
-          $ref: "#/components/schemas/Animal"
+          $ref: '#/components/schemas/Animal'
       required:
         - animal
     BranchNode:
@@ -86,7 +87,7 @@ components:
         children:
           type: array
           items:
-            $ref: "#/components/schemas/Node"
+            $ref: '#/components/schemas/Node'
       required:
         - children
     LeafNode:
@@ -102,7 +103,7 @@ components:
           items:
             type: array
             items:
-              $ref: "#/components/schemas/Node"
+              $ref: '#/components/schemas/Node'
       required:
         - nodes
     ContainerValue:
@@ -112,23 +113,22 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - list
+              const: list
             value:
               type: array
               items:
-                $ref: "#/components/schemas/FieldValue"
+                $ref: '#/components/schemas/FieldValue'
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - optional
+              const: optional
             value:
-              $ref: "#/components/schemas/FieldValue"
-              nullable: true
+              anyOf:
+                - $ref: '#/components/schemas/FieldValue'
+                - type: 'null'
           required:
             - type
     PrimitiveValue:
@@ -151,10 +151,9 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - primitive_value
+              const: primitive_value
             value:
-              $ref: "#/components/schemas/PrimitiveValue"
+              $ref: '#/components/schemas/PrimitiveValue'
           required:
             - type
         - type: object
@@ -163,19 +162,17 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - object_value
-            - $ref: "#/components/schemas/ObjectValue"
+                  const: object_value
+            - $ref: '#/components/schemas/ObjectValue'
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - container_value
+              const: container_value
             value:
-              $ref: "#/components/schemas/ContainerValue"
+              $ref: '#/components/schemas/ContainerValue'
           required:
             - type
     ObjectFieldValue:
@@ -186,9 +183,9 @@ components:
         FieldValue).
       properties:
         name:
-          $ref: "#/components/schemas/FieldName"
+          $ref: '#/components/schemas/FieldName'
         value:
-          $ref: "#/components/schemas/FieldValue"
+          $ref: '#/components/schemas/FieldValue'
       required:
         - name
         - value

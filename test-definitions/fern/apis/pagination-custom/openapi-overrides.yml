@@ -1,0 +1,6 @@
+paths:
+  /users:
+    get:
+      x-fern-sdk-group-name:
+      - users
+      x-fern-sdk-method-name: listWithCustomPager

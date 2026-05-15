@@ -1,0 +1,11 @@
+paths:
+  /ec2/boot:
+    post:
+      x-fern-sdk-group-name:
+      - ec2
+      x-fern-sdk-method-name: bootInstance
+  /s3/presigned-url:
+    post:
+      x-fern-sdk-group-name:
+      - s3
+      x-fern-sdk-method-name: getPresignedUrl

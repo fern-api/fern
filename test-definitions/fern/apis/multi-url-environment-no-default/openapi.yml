@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: multi-url-environment-no-default
-  version: ""
+  version: 0.0.0
 paths:
   /ec2/boot:
     post:
@@ -10,13 +10,13 @@ paths:
         - Ec2
       parameters: []
       responses:
-        "204":
-          description: ""
+        '204':
+          description: No content
       servers:
         - url: https://ec2.aws.com
         - url: https://staging.ec2.aws.com
-      security: &ref_0
-        - BearerAuth: []
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -35,8 +35,8 @@ paths:
         - S3
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
@@ -44,7 +44,8 @@ paths:
       servers:
         - url: https://s3.aws.com
         - url: https://staging.s3.aws.com
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -59,6 +60,6 @@ paths:
 components:
   schemas: {}
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer

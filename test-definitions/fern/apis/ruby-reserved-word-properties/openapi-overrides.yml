@@ -1,0 +1,6 @@
+paths:
+  /ruby-reserved-word-properties/getFoo:
+    get:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: get

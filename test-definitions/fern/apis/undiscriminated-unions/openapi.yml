@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: undiscriminated-unions
-  version: ""
+  version: 0.0.0
 paths:
   /:
     post:
@@ -10,18 +10,18 @@ paths:
         - Union
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MyUnion"
+                $ref: '#/components/schemas/MyUnion'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/MyUnion"
+              $ref: '#/components/schemas/MyUnion'
   /metadata:
     get:
       operationId: union_getMetadata
@@ -29,30 +29,44 @@ paths:
         - Union
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Metadata"
+                $ref: '#/components/schemas/Metadata'
+              examples:
+                Example1:
+                  value:
+                    name: exampleName
+                    value: exampleValue
+                    default: exampleDefault
     put:
       operationId: union_updateMetadata
       tags:
         - Union
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
                 type: boolean
+              examples:
+                Example1:
+                  value: true
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/MetadataUnion"
+              $ref: '#/components/schemas/MetadataUnion'
+            examples:
+              Example1:
+                value:
+                  string:
+                    key: value
   /call:
     post:
       operationId: union_call
@@ -60,18 +74,27 @@ paths:
         - Union
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
                 type: boolean
+              examples:
+                Example1:
+                  value: true
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Request"
+              $ref: '#/components/schemas/Request'
+            examples:
+              Example1:
+                value:
+                  union:
+                    string:
+                      key: value
   /duplicate:
     post:
       operationId: union_duplicateTypesUnion
@@ -79,18 +102,18 @@ paths:
         - Union
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UnionWithDuplicateTypes"
+                $ref: '#/components/schemas/UnionWithDuplicateTypes'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UnionWithDuplicateTypes"
+              $ref: '#/components/schemas/UnionWithDuplicateTypes'
   /nested:
     post:
       operationId: union_nestedUnions
@@ -98,8 +121,8 @@ paths:
         - Union
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
@@ -109,7 +132,45 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/NestedUnionRoot"
+              $ref: '#/components/schemas/NestedUnionRoot'
+  /nested-objects:
+    post:
+      operationId: union_nestedObjectUnions
+      tags:
+        - Union
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OuterNestedUnion'
+  /aliased-object:
+    post:
+      operationId: union_aliasedObjectUnion
+      tags:
+        - Union
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AliasedObjectUnion'
   /with-base-properties:
     post:
       operationId: union_getWithBaseProperties
@@ -117,18 +178,18 @@ paths:
         - Union
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UnionWithBaseProperties"
+                $ref: '#/components/schemas/UnionWithBaseProperties'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UnionWithBaseProperties"
+              $ref: '#/components/schemas/UnionWithBaseProperties'
   /camel-case:
     post:
       operationId: union_testCamelCaseProperties
@@ -136,12 +197,15 @@ paths:
         - Union
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
                 type: string
+              examples:
+                Example1:
+                  value: success
       requestBody:
         required: true
         content:
@@ -150,9 +214,15 @@ paths:
               type: object
               properties:
                 paymentMethod:
-                  $ref: "#/components/schemas/PaymentMethodUnion"
+                  $ref: '#/components/schemas/PaymentMethodUnion'
               required:
                 - paymentMethod
+            examples:
+              Example1:
+                value:
+                  paymentMethod:
+                    method: card
+                    cardNumber: '1234567890123456'
 components:
   schemas:
     Request:
@@ -160,15 +230,17 @@ components:
       type: object
       properties:
         union:
-          $ref: "#/components/schemas/MetadataUnion"
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/MetadataUnion'
+            - type: 'null'
     TypeWithOptionalUnion:
       title: TypeWithOptionalUnion
       type: object
       properties:
         myUnion:
-          $ref: "#/components/schemas/MyUnion"
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/MyUnion'
+            - type: 'null'
     MyUnion:
       title: MyUnion
       oneOf:
@@ -210,7 +282,7 @@ components:
         - type: array
           items:
             type: string
-        - $ref: "#/components/schemas/NestedUnionL2"
+        - $ref: '#/components/schemas/NestedUnionL2'
       description: Nested layer 1.
     NestedUnionRoot:
       title: NestedUnionRoot
@@ -219,7 +291,7 @@ components:
         - type: array
           items:
             type: string
-        - $ref: "#/components/schemas/NestedUnionL1"
+        - $ref: '#/components/schemas/NestedUnionL1'
       description: Nested union root.
     UnionWithDuplicateTypes:
       title: UnionWithDuplicateTypes
@@ -236,8 +308,8 @@ components:
     MetadataUnion:
       title: MetadataUnion
       oneOf:
-        - $ref: "#/components/schemas/OptionalMetadata"
-        - $ref: "#/components/schemas/NamedMetadata"
+        - $ref: '#/components/schemas/OptionalMetadata'
+        - $ref: '#/components/schemas/NamedMetadata'
     NamedMetadata:
       title: NamedMetadata
       type: object
@@ -246,15 +318,14 @@ components:
           type: string
         value:
           type: object
-          additionalProperties: true
       required:
         - name
         - value
     OptionalMetadata:
       title: OptionalMetadata
-      type: object
-      additionalProperties: true
-      nullable: true
+      type:
+        - object
+        - 'null'
     Metadata:
       title: Metadata
       type: object
@@ -267,7 +338,7 @@ components:
     Key:
       title: Key
       oneOf:
-        - $ref: "#/components/schemas/KeyType"
+        - $ref: '#/components/schemas/KeyType'
         - type: string
           const: default
     KeyType:
@@ -278,17 +349,9 @@ components:
         - value
     UnionWithBaseProperties:
       title: UnionWithBaseProperties
-      type: object
-      properties:
-        id:
-          type: string
-        category:
-          type: string
-      required:
-        - id
       oneOf:
-        - $ref: "#/components/schemas/OptionalMetadata"
-        - $ref: "#/components/schemas/NamedMetadata"
+        - $ref: '#/components/schemas/NamedMetadata'
+        - $ref: '#/components/schemas/OptionalMetadata'
       description: |-
         Tests that base-properties on an undiscriminated union are correctly
         represented in the IR and generated code.
@@ -310,8 +373,8 @@ components:
     PaymentMethodUnion:
       title: PaymentMethodUnion
       oneOf:
-        - $ref: "#/components/schemas/TokenizeCard"
-        - $ref: "#/components/schemas/ConvertToken"
+        - $ref: '#/components/schemas/TokenizeCard'
+        - $ref: '#/components/schemas/ConvertToken'
       description: |-
         Tests that nested properties with camelCase wire names are properly
         converted from snake_case Ruby keys when passed as Hash values.
@@ -360,8 +423,8 @@ components:
       title: UnionWithTypeAliases
       oneOf:
         - type: string
-        - $ref: "#/components/schemas/UserId"
-        - $ref: "#/components/schemas/Name"
+        - $ref: '#/components/schemas/UserId'
+        - $ref: '#/components/schemas/Name'
       description: >-
         Union with multiple named type aliases that all resolve to the same C#
         type (string).
@@ -371,4 +434,96 @@ components:
           public static implicit operator UnionWithTypeAliases(string value) => ...
           public static implicit operator UnionWithTypeAliases(string value) => ...
         causing CS0557 compiler error.
+    LeafTypeA:
+      title: LeafTypeA
+      type: object
+      properties:
+        alpha:
+          type: string
+        beta:
+          type: integer
+      required:
+        - alpha
+        - beta
+    LeafTypeB:
+      title: LeafTypeB
+      type: object
+      properties:
+        gamma:
+          type: string
+      required:
+        - gamma
+    NestedObjectUnion:
+      title: NestedObjectUnion
+      oneOf:
+        - $ref: '#/components/schemas/LeafTypeA'
+        - $ref: '#/components/schemas/LeafTypeB'
+      description: >-
+        Inner union with two object variants that have disjoint required keys.
+
+        Tests that required-key guards work correctly inside nested union
+        contexts.
+    WrapperObject:
+      title: WrapperObject
+      type: object
+      properties:
+        inner:
+          $ref: '#/components/schemas/NestedObjectUnion'
+        label:
+          type: string
+      required:
+        - inner
+        - label
+    OuterNestedUnion:
+      title: OuterNestedUnion
+      oneOf:
+        - type: string
+        - $ref: '#/components/schemas/WrapperObject'
+      description: >-
+        Outer union where one variant is an object containing a nested union
+        field.
+
+        Tests that the deserializer correctly handles transitive union
+        deserialization.
+    AliasedLeafA:
+      title: AliasedLeafA
+      $ref: '#/components/schemas/LeafObjectA'
+      description: An alias around LeafObjectA.
+    AliasedLeafB:
+      title: AliasedLeafB
+      $ref: '#/components/schemas/AliasToLeafB'
+      description: >-
+        An alias around an alias around LeafObjectB, to exercise the alias-walk
+        loop.
+    AliasToLeafB:
+      title: AliasToLeafB
+      $ref: '#/components/schemas/LeafObjectB'
+    LeafObjectA:
+      title: LeafObjectA
+      type: object
+      properties:
+        onlyInA:
+          type: string
+        sharedNumber:
+          type: integer
+      required:
+        - onlyInA
+        - sharedNumber
+    LeafObjectB:
+      title: LeafObjectB
+      type: object
+      properties:
+        onlyInB:
+          type: string
+      required:
+        - onlyInB
+    AliasedObjectUnion:
+      title: AliasedObjectUnion
+      oneOf:
+        - $ref: '#/components/schemas/AliasedLeafA'
+        - $ref: '#/components/schemas/AliasedLeafB'
+      description: |-
+        Undiscriminated union whose members are named aliases of object types
+        (including an alias-of-alias). Required keys are disjoint, so a correct
+        deserializer must emit containsKey() guards for each alias variant.
   securitySchemes: {}

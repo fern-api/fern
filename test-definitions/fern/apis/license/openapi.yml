@@ -1,17 +1,17 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: license
-  version: ""
+  version: 0.0.0
 paths:
   /:
     get:
       operationId: get
       tags:
-        - ""
+        - ''
       parameters: []
       responses:
-        "204":
-          description: ""
+        '204':
+          description: No content
 components:
   schemas:
     Type:

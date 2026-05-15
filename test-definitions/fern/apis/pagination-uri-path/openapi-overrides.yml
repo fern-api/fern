@@ -1,0 +1,11 @@
+paths:
+  /users/uri:
+    get:
+      x-fern-sdk-group-name:
+      - users
+      x-fern-sdk-method-name: listWithUriPagination
+  /users/path:
+    get:
+      x-fern-sdk-group-name:
+      - users
+      x-fern-sdk-method-name: listWithPathPagination

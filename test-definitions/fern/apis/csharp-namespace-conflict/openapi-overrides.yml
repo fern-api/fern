@@ -1,0 +1,6 @@
+paths:
+  /hello:
+    get:
+      x-fern-sdk-group-name:
+      - tasktest
+      x-fern-sdk-method-name: hello

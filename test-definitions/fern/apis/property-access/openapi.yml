@@ -1,27 +1,27 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: property-access
-  version: ""
+  version: 0.0.0
 paths:
   /users:
     post:
       operationId: createUser
       tags:
-        - ""
+        - ''
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                $ref: '#/components/schemas/User'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/User"
+              $ref: '#/components/schemas/User'
 components:
   schemas:
     User:
@@ -39,7 +39,7 @@ components:
           type: string
           description: The password for the user.
         profile:
-          $ref: "#/components/schemas/UserProfile"
+          $ref: '#/components/schemas/UserProfile'
           description: User profile object
       required:
         - id
@@ -55,7 +55,7 @@ components:
           type: string
           description: The name of the user.
         verification:
-          $ref: "#/components/schemas/UserProfileVerification"
+          $ref: '#/components/schemas/UserProfileVerification'
           description: User profile verification object
         ssn:
           type: string
@@ -77,8 +77,8 @@ components:
     UserOrAdmin:
       title: UserOrAdmin
       oneOf:
-        - $ref: "#/components/schemas/User"
-        - $ref: "#/components/schemas/Admin"
+        - $ref: '#/components/schemas/User'
+        - $ref: '#/components/schemas/Admin'
       description: Example of an undiscriminated union
     Admin:
       title: Admin
@@ -91,7 +91,7 @@ components:
       required:
         - adminLevel
       allOf:
-        - $ref: "#/components/schemas/User"
+        - $ref: '#/components/schemas/User'
     UserOrAdminDiscriminated:
       title: UserOrAdminDiscriminated
       oneOf:
@@ -101,27 +101,24 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - user
-            - $ref: "#/components/schemas/User"
+                  const: user
+            - $ref: '#/components/schemas/User'
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - admin
+              const: admin
             admin:
-              $ref: "#/components/schemas/Admin"
+              $ref: '#/components/schemas/Admin'
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - empty
+              const: empty
           required:
             - type
       description: Example of an discriminated union
@@ -132,7 +129,7 @@ components:
         normal:
           type: string
         foo:
-          $ref: "#/components/schemas/Foo"
+          $ref: '#/components/schemas/Foo'
     Foo:
       title: Foo
       type: object

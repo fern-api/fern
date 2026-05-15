@@ -1,0 +1,6 @@
+paths:
+  /:
+    post:
+      x-fern-sdk-group-name:
+      - package
+      x-fern-sdk-method-name: test

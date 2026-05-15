@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: python-positional-single-property
-  version: ""
+  version: 0.0.0
   description: |-
     Test definition for positional single-property constructors in Python SDK.
     This tests the ability to use positional arguments for types with a single
@@ -11,15 +11,18 @@ paths:
     post:
       operationId: create
       tags:
-        - ""
+        - ''
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
                 type: string
+              examples:
+                Example1:
+                  value: created
       requestBody:
         required: true
         content:
@@ -28,12 +31,24 @@ paths:
               type: object
               properties:
                 instrument:
-                  $ref: "#/components/schemas/BondSingleLeg"
+                  $ref: '#/components/schemas/BondSingleLeg'
                 taker:
-                  $ref: "#/components/schemas/TakerParty"
+                  $ref: '#/components/schemas/TakerParty'
               required:
                 - instrument
                 - taker
+            examples:
+              Example1:
+                value:
+                  instrument:
+                    identifier:
+                      isin: US0378331005
+                    quantity:
+                      quantity: 10000
+                      type: QUANTITY
+                  taker:
+                    trader:
+                      uuid_: 1234567
 components:
   schemas:
     Isin:
@@ -87,8 +102,9 @@ components:
         required_field:
           type: string
         optional_field:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - required_field
     MultipleDiscriminators:
@@ -120,7 +136,7 @@ components:
       type: object
       properties:
         trader:
-          $ref: "#/components/schemas/Trader"
+          $ref: '#/components/schemas/Trader'
       required:
         - trader
     BondSingleLeg:
@@ -128,9 +144,9 @@ components:
       type: object
       properties:
         identifier:
-          $ref: "#/components/schemas/Isin"
+          $ref: '#/components/schemas/Isin'
         quantity:
-          $ref: "#/components/schemas/Quantity"
+          $ref: '#/components/schemas/Quantity'
       required:
         - identifier
         - quantity
@@ -143,9 +159,8 @@ components:
               properties:
                 identifier_type:
                   type: string
-                  enum:
-                    - isin
-            - $ref: "#/components/schemas/Isin"
+                  const: isin
+            - $ref: '#/components/schemas/Isin'
           required:
             - identifier_type
         - type: object
@@ -154,9 +169,8 @@ components:
               properties:
                 identifier_type:
                   type: string
-                  enum:
-                    - cusip
-            - $ref: "#/components/schemas/Cusip"
+                  const: cusip
+            - $ref: '#/components/schemas/Cusip'
           required:
             - identifier_type
     Cusip:

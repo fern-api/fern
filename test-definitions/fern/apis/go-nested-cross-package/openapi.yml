@@ -1,0 +1,32 @@
+openapi: 3.1.0
+info:
+  title: go-nested-cross-package
+  version: 0.0.0
+paths: {}
+components:
+  schemas:
+    commonfooBaseType:
+      title: commonfooBaseType
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type:
+            - integer
+            - 'null'
+      required:
+        - name
+    consumerResult:
+      title: consumerResult
+      type: object
+      properties:
+        data:
+          anyOf:
+            - $ref: '#/components/schemas/commonfooBaseType'
+            - type: 'null'
+        label:
+          type: string
+      required:
+        - label
+  securitySchemes: {}

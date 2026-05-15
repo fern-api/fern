@@ -1,0 +1,16 @@
+paths:
+  /foo1:
+    post:
+      x-fern-sdk-group-name:
+      - simple
+      x-fern-sdk-method-name: fooWithoutEndpointError
+  /foo2:
+    post:
+      x-fern-sdk-group-name:
+      - simple
+      x-fern-sdk-method-name: foo
+  /foo3:
+    post:
+      x-fern-sdk-group-name:
+      - simple
+      x-fern-sdk-method-name: fooWithExamples

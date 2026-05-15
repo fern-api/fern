@@ -26,11 +26,11 @@ service:
   endpoints:
     createUser:
       method: POST
-      path: ""
+      path: /create-user
       request: User
       response: User
     createTask:
       method: POST
-      path: ""
+      path: /create-task
       request: Task
       response: Task

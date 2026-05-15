@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: oauth-client-credentials-default
-  version: ""
+  version: 0.0.0
 paths:
   /token:
     post:
@@ -10,12 +10,12 @@ paths:
         - Auth
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TokenResponse"
+                $ref: '#/components/schemas/TokenResponse'
       requestBody:
         required: true
         content:
@@ -38,22 +38,22 @@ paths:
     get:
       operationId: nestedNoAuth_api_getSomething
       tags:
-        - NestedNoAuthApi
+        - NestedNoAuthAPI
       parameters: []
       responses:
-        "204":
-          description: ""
+        '204':
+          description: No content
   /nested/get-something:
     get:
       operationId: nested_api_getSomething
       tags:
-        - NestedApi
+        - NestedAPI
       parameters: []
       responses:
-        "204":
-          description: ""
-      security: &ref_0
-        - BearerAuth: []
+        '204':
+          description: No content
+      security:
+        - OAuthScheme: []
   /get-something:
     get:
       operationId: simple_getSomething
@@ -61,9 +61,10 @@ paths:
         - Simple
       parameters: []
       responses:
-        "204":
-          description: ""
-      security: *ref_0
+        '204':
+          description: No content
+      security:
+        - OAuthScheme: []
 components:
   schemas:
     TokenResponse:
@@ -79,6 +80,6 @@ components:
         - access_token
         - expires_in
   securitySchemes:
-    BearerAuth:
+    OAuthScheme:
       type: http
       scheme: bearer

@@ -1,0 +1,26 @@
+paths:
+  /headers:
+    post:
+      x-fern-sdk-group-name:
+      - headers
+      x-fern-sdk-method-name: send
+  /inlined:
+    post:
+      x-fern-sdk-group-name:
+      - inlined
+      x-fern-sdk-method-name: send
+  /path/{id}:
+    post:
+      x-fern-sdk-group-name:
+      - path
+      x-fern-sdk-method-name: send
+  /query:
+    post:
+      x-fern-sdk-group-name:
+      - query
+      x-fern-sdk-method-name: send
+  /reference:
+    post:
+      x-fern-sdk-group-name:
+      - reference
+      x-fern-sdk-method-name: send

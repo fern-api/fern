@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: java-streaming-accept-header
-  version: ""
+  version: 0.0.0
 paths:
   /generate-stream:
     post:
@@ -10,19 +10,14 @@ paths:
         - Dummy
       parameters: []
       responses:
-        "200":
-          description: ""
-          content:
-            application/jsonl:
-              schema:
-                type: string
-                format: binary
-        "400":
-          description: ""
+        '204':
+          description: No content
+        '400':
+          description: BadRequestError
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorBody"
+                $ref: '#/components/schemas/ErrorBody'
       requestBody:
         required: true
         content:
@@ -41,18 +36,23 @@ paths:
         - Dummy
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StreamResponse"
-        "400":
-          description: ""
+                $ref: '#/components/schemas/StreamResponse'
+              examples:
+                Default:
+                  value:
+                    id: id
+                    name: name
+        '400':
+          description: BadRequestError
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorBody"
+                $ref: '#/components/schemas/ErrorBody'
       requestBody:
         required: true
         content:
@@ -62,8 +62,14 @@ paths:
               properties:
                 num_events:
                   type: integer
+                  examples:
+                    - 5
               required:
                 - num_events
+            examples:
+              Default:
+                value:
+                  num_events: 5
 components:
   schemas:
     ErrorBody:
@@ -80,9 +86,12 @@ components:
       properties:
         id:
           type: string
+          examples:
+            - id
         name:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - id
   securitySchemes: {}

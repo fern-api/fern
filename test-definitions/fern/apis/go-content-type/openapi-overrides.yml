@@ -1,0 +1,6 @@
+paths:
+  /movies/create-movie:
+    post:
+      x-fern-sdk-group-name:
+      - imdb
+      x-fern-sdk-method-name: createMovie

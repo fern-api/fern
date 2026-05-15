@@ -3,7 +3,7 @@ service:
   base-path: /
   endpoints:
     post:
-      path: ""
+      path: /post
       method: POST
       request:
         name: MyRequest
@@ -103,7 +103,7 @@ service:
               style: form
 
     withFormEncodedContainers:
-      path: ""
+      path: /with-form-encoded-containers
       method: POST
       request:
         name: MyOtherRequest

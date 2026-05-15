@@ -1,0 +1,11 @@
+paths:
+  /movies/create-movie:
+    post:
+      x-fern-sdk-group-name:
+      - imdb
+      x-fern-sdk-method-name: create_movie
+  /movies/{movie_id}:
+    get:
+      x-fern-sdk-group-name:
+      - imdb
+      x-fern-sdk-method-name: get_movie

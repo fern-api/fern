@@ -1,0 +1,11 @@
+paths:
+  /token:
+    post:
+      x-fern-sdk-group-name:
+      - auth
+      x-fern-sdk-method-name: getTokenWithClientCredentials
+  /token/refresh:
+    post:
+      x-fern-sdk-group-name:
+      - auth
+      x-fern-sdk-method-name: refreshToken

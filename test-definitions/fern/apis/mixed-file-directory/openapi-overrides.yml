@@ -1,0 +1,24 @@
+paths:
+  /organizations/:
+    post:
+      x-fern-sdk-group-name:
+      - organization
+      x-fern-sdk-method-name: create
+  /users/:
+    get:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: list
+  /users/events/:
+    get:
+      x-fern-sdk-group-name:
+      - user
+      - events
+      x-fern-sdk-method-name: listEvents
+  /users/events/metadata/:
+    get:
+      x-fern-sdk-group-name:
+      - user
+      - events
+      - metadata
+      x-fern-sdk-method-name: getMetadata

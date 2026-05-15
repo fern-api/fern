@@ -1,0 +1,21 @@
+paths:
+  /user/username:
+    post:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: createUsername
+  /user/username-referenced:
+    post:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: createUsernameWithReferencedType
+  /user/username-optional:
+    post:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: createUsernameOptional
+  /user:
+    get:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: getUsername

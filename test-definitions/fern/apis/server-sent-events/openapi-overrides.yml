@@ -1,0 +1,11 @@
+paths:
+  /stream:
+    post:
+      x-fern-sdk-group-name:
+      - completions
+      x-fern-sdk-method-name: stream
+  /stream-no-terminator:
+    post:
+      x-fern-sdk-group-name:
+      - completions
+      x-fern-sdk-method-name: streamWithoutTerminator

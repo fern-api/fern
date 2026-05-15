@@ -1,0 +1,11 @@
+paths:
+  /resource/{ResourceID}:
+    get:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: getResource
+  /resource:
+    get:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: listResources

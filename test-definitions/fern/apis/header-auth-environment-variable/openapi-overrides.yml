@@ -1,0 +1,6 @@
+paths:
+  /apiKey:
+    get:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: getWithBearerToken

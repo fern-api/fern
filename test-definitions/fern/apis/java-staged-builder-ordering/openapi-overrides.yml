@@ -1,0 +1,26 @@
+paths:
+  /staged-builder/simple:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: createSimple
+  /staged-builder/medium:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: createMedium
+  /staged-builder/complex:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: createComplex
+  /staged-builder/mixed:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: createMixed
+  /staged-builder/parent:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: createParent

@@ -1,0 +1,11 @@
+paths:
+  /snippet:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: simple
+  /:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: downloadFile

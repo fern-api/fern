@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: multi-line-docs
-  version: ""
+  version: 0.0.0
 paths:
   /users/{userId}:
     get:
@@ -21,8 +21,8 @@ paths:
           schema:
             type: string
       responses:
-        "204":
-          description: ""
+        '204':
+          description: No content
   /users:
     post:
       description: |-
@@ -33,12 +33,12 @@ paths:
         - User
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                $ref: '#/components/schemas/User'
       requestBody:
         required: true
         content:
@@ -52,8 +52,9 @@ paths:
                     The name of the user to create.
                     This name is unique to each user.
                 age:
-                  type: integer
-                  nullable: true
+                  type:
+                    - integer
+                    - 'null'
                   description: |-
                     The age of the user.
                     This property is not required.
@@ -65,8 +66,8 @@ components:
       title: Operand
       type: string
       enum:
-        - ">"
-        - "="
+        - '>'
+        - '='
         - less_than
       description: |-
         Tests enum name and value can be 
@@ -90,8 +91,9 @@ components:
              - Bob
              - Charlie
         age:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
           description: The user's age.
       required:
         - id

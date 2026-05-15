@@ -1,0 +1,26 @@
+paths:
+  /token:
+    post:
+      x-fern-sdk-group-name:
+      - auth
+      x-fern-sdk-method-name: getTokenWithClientCredentials
+  /token/refresh:
+    post:
+      x-fern-sdk-group-name:
+      - auth
+      x-fern-sdk-method-name: refreshToken
+  /nested-no-auth/get-something:
+    get:
+      x-fern-sdk-group-name:
+      - nestedNoAuthAPI
+      x-fern-sdk-method-name: nestedNoAuth_api_getSomething
+  /nested/get-something:
+    get:
+      x-fern-sdk-group-name:
+      - nestedAPI
+      x-fern-sdk-method-name: nested_api_getSomething
+  /get-something:
+    get:
+      x-fern-sdk-group-name:
+      - simple
+      x-fern-sdk-method-name: getSomething

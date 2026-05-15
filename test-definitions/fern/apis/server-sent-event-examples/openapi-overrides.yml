@@ -1,0 +1,21 @@
+paths:
+  /stream:
+    post:
+      x-fern-sdk-group-name:
+      - completions
+      x-fern-sdk-method-name: stream
+  /stream-events:
+    post:
+      x-fern-sdk-group-name:
+      - completions
+      x-fern-sdk-method-name: streamEvents
+  /stream-events-discriminant-in-data:
+    post:
+      x-fern-sdk-group-name:
+      - completions
+      x-fern-sdk-method-name: streamEventsDiscriminantInData
+  /stream-events-context-protocol:
+    post:
+      x-fern-sdk-group-name:
+      - completions
+      x-fern-sdk-method-name: streamEventsContextProtocol

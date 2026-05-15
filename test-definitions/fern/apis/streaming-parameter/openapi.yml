@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
-  title: streaming-parameter
-  version: ""
+  title: streaming
+  version: 0.0.0
 paths:
   /generate:
     post:
@@ -10,8 +10,8 @@ paths:
         - Dummy
       parameters: []
       responses:
-        "204":
-          description: ""
+        '204':
+          description: No content
       requestBody:
         required: true
         content:
@@ -21,11 +21,20 @@ paths:
               properties:
                 stream:
                   type: boolean
+                  examples:
+                    - false
                 num_events:
                   type: integer
+                  examples:
+                    - 5
               required:
                 - stream
                 - num_events
+            examples:
+              Default:
+                value:
+                  stream: false
+                  num_events: 5
 components:
   schemas:
     RegularResponse:
@@ -35,8 +44,9 @@ components:
         id:
           type: string
         name:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - id
     StreamResponse:
@@ -46,8 +56,9 @@ components:
         id:
           type: string
         name:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - id
   securitySchemes: {}

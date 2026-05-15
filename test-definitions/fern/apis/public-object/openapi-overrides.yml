@@ -1,0 +1,6 @@
+paths:
+  /helloworld.txt:
+    get:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: get

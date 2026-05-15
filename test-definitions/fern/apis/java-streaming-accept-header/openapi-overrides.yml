@@ -1,0 +1,11 @@
+paths:
+  /generate-stream:
+    post:
+      x-fern-sdk-group-name:
+      - dummy
+      x-fern-sdk-method-name: generate-stream
+  /generate:
+    post:
+      x-fern-sdk-group-name:
+      - dummy
+      x-fern-sdk-method-name: generate

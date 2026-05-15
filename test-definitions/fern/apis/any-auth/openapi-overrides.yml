@@ -1,0 +1,16 @@
+paths:
+  /token:
+    post:
+      x-fern-sdk-group-name:
+      - auth
+      x-fern-sdk-method-name: getToken
+  /users:
+    post:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: get
+  /admins:
+    get:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: getAdmins

@@ -1,0 +1,6 @@
+paths:
+  /dummy:
+    get:
+      x-fern-sdk-group-name:
+      - dummy
+      x-fern-sdk-method-name: getDummy

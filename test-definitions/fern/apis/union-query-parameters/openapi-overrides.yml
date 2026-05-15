@@ -1,0 +1,6 @@
+paths:
+  /events:
+    get:
+      x-fern-sdk-group-name:
+      - events
+      x-fern-sdk-method-name: subscribe

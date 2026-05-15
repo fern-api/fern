@@ -1,0 +1,45 @@
+paths:
+  /{tenant_id}/organizations/{organization_id}/:
+    get:
+      x-fern-sdk-group-name:
+      - organizations
+      x-fern-sdk-method-name: getOrganization
+  /{tenant_id}/organizations/{organization_id}/users/{user_id}:
+    get:
+      x-fern-sdk-group-name:
+      - organizations
+      x-fern-sdk-method-name: getOrganizationUser
+  /{tenant_id}/organizations/{organization_id}/search:
+    get:
+      x-fern-sdk-group-name:
+      - organizations
+      x-fern-sdk-method-name: searchOrganizations
+  /{tenant_id}/user/{user_id}:
+    get:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: getUser
+    patch:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: updateUser
+  /{tenant_id}/user/:
+    post:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: createUser
+  /{tenant_id}/user/{user_id}/search:
+    get:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: searchUsers
+  /{tenant_id}/user/{user_id}/metadata/v{version}:
+    get:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: getUserMetadata
+  /{tenant_id}/user/{user_id}/specifics/{version}/{thought}:
+    get:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: getUserSpecifics

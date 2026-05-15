@@ -1,0 +1,63 @@
+paths:
+  /api/users/{userId}:
+    get:
+      x-fern-sdk-group-name:
+      - nullableOptional
+      x-fern-sdk-method-name: getUser
+    patch:
+      x-fern-sdk-group-name:
+      - nullableOptional
+      x-fern-sdk-method-name: updateUser
+  /api/users:
+    post:
+      x-fern-sdk-group-name:
+      - nullableOptional
+      x-fern-sdk-method-name: createUser
+    get:
+      x-fern-sdk-group-name:
+      - nullableOptional
+      x-fern-sdk-method-name: listUsers
+  /api/users/search:
+    get:
+      x-fern-sdk-group-name:
+      - nullableOptional
+      x-fern-sdk-method-name: searchUsers
+  /api/profiles/complex:
+    post:
+      x-fern-sdk-group-name:
+      - nullableOptional
+      x-fern-sdk-method-name: createComplexProfile
+  /api/profiles/complex/{profileId}:
+    get:
+      x-fern-sdk-group-name:
+      - nullableOptional
+      x-fern-sdk-method-name: getComplexProfile
+    patch:
+      x-fern-sdk-group-name:
+      - nullableOptional
+      x-fern-sdk-method-name: updateComplexProfile
+  /api/test/deserialization:
+    post:
+      x-fern-sdk-group-name:
+      - nullableOptional
+      x-fern-sdk-method-name: testDeserialization
+  /api/users/filter:
+    get:
+      x-fern-sdk-group-name:
+      - nullableOptional
+      x-fern-sdk-method-name: filterByRole
+  /api/users/{userId}/notifications:
+    get:
+      x-fern-sdk-group-name:
+      - nullableOptional
+      x-fern-sdk-method-name: getNotificationSettings
+  /api/users/{userId}/tags:
+    put:
+      x-fern-sdk-group-name:
+      - nullableOptional
+      x-fern-sdk-method-name: updateTags
+  /api/search:
+    post:
+      x-fern-sdk-group-name:
+      - nullableOptional
+      x-fern-sdk-method-name: getSearchResults

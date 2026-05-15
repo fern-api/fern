@@ -1,0 +1,6 @@
+paths:
+  /property-based-error:
+    get:
+      x-fern-sdk-group-name:
+      - propertyBasedError
+      x-fern-sdk-method-name: ThrowError

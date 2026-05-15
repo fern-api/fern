@@ -1,0 +1,17 @@
+paths:
+  /:
+    get:
+      x-fern-sdk-group-name:
+      - folderA
+      - service
+      x-fern-sdk-method-name: getDirectThread
+    post:
+      x-fern-sdk-group-name:
+      - foo
+      x-fern-sdk-method-name: find
+  /partner-path:
+    get:
+      x-fern-sdk-group-name:
+      - folderD
+      - service
+      x-fern-sdk-method-name: getDirectThread

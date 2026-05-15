@@ -1,0 +1,11 @@
+paths:
+  /token:
+    post:
+      x-fern-sdk-group-name:
+      - auth
+      x-fern-sdk-method-name: getToken
+  /get-something:
+    get:
+      x-fern-sdk-group-name:
+      - simple
+      x-fern-sdk-method-name: getSomething

@@ -1,0 +1,16 @@
+paths:
+  /send-optional-body:
+    post:
+      x-fern-sdk-group-name:
+      - optional
+      x-fern-sdk-method-name: sendOptionalBody
+  /send-optional-typed-body:
+    post:
+      x-fern-sdk-group-name:
+      - optional
+      x-fern-sdk-method-name: sendOptionalTypedBody
+  /deploy/{actionId}/versions/{id}:
+    post:
+      x-fern-sdk-group-name:
+      - optional
+      x-fern-sdk-method-name: sendOptionalNullableWithAllOptionalProperties

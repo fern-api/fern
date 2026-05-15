@@ -1,0 +1,6 @@
+paths:
+  /rerank:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: rerank

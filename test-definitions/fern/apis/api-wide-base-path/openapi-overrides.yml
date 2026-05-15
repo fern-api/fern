@@ -1,0 +1,6 @@
+paths:
+  /test/{pathParam}/{serviceParam}/{endpointParam}/{resourceParam}:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: post

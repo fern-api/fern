@@ -1,0 +1,56 @@
+openapi: 3.1.0
+info:
+  title: go-subpackage-collision
+  version: 0.0.0
+paths: {}
+components:
+  schemas:
+    acommonMetadata:
+      title: acommonMetadata
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type:
+            - string
+            - 'null'
+      required:
+        - name
+    aResponse:
+      title: aResponse
+      type: object
+      properties:
+        metadata:
+          anyOf:
+            - $ref: '#/components/schemas/acommonMetadata'
+            - type: 'null'
+        status:
+          type: string
+      required:
+        - status
+    bcommonMetadata:
+      title: bcommonMetadata
+      type: object
+      properties:
+        key:
+          type: string
+        count:
+          type:
+            - integer
+            - 'null'
+      required:
+        - key
+    bResponse:
+      title: bResponse
+      type: object
+      properties:
+        metadata:
+          anyOf:
+            - $ref: '#/components/schemas/bcommonMetadata'
+            - type: 'null'
+        tag:
+          type: string
+      required:
+        - tag
+  securitySchemes: {}

@@ -1,0 +1,31 @@
+paths:
+  /headers:
+    post:
+      x-fern-sdk-group-name:
+      - headers
+      x-fern-sdk-method-name: send
+  /inlined:
+    post:
+      x-fern-sdk-group-name:
+      - inlinedRequest
+      x-fern-sdk-method-name: send
+  /multipart:
+    post:
+      x-fern-sdk-group-name:
+      - multipartForm
+      x-fern-sdk-method-name: multipartForm
+  /path/{operand}/{operandOrColor}:
+    post:
+      x-fern-sdk-group-name:
+      - pathParam
+      x-fern-sdk-method-name: send
+  /query:
+    post:
+      x-fern-sdk-group-name:
+      - queryParam
+      x-fern-sdk-method-name: send
+  /query-list:
+    post:
+      x-fern-sdk-group-name:
+      - queryParam
+      x-fern-sdk-method-name: sendList

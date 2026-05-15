@@ -1,0 +1,11 @@
+paths:
+  /:
+    post:
+      x-fern-sdk-group-name:
+      - unknown
+      x-fern-sdk-method-name: post
+  /with-object:
+    post:
+      x-fern-sdk-group-name:
+      - unknown
+      x-fern-sdk-method-name: postObject

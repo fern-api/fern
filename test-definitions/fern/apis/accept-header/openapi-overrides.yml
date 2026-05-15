@@ -1,0 +1,6 @@
+paths:
+  /container/:
+    delete:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: endpoint

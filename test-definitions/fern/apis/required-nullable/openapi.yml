@@ -1,54 +1,70 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: Required nullable example
-  version: ""
+  version: 0.0.0
 paths:
   /foo:
     get:
       operationId: getFoo
       tags:
-        - ""
+        - ''
       parameters:
         - name: optional_baz
           in: query
           description: An optional baz
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: optional_nullable_baz
           in: query
           description: An optional baz
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: required_baz
           in: query
           description: A required baz
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: required_baz
         - name: required_nullable_baz
           in: query
           description: A required baz
           required: true
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
+          examples:
+            Example1:
+              value: required_nullable_baz
       responses:
-        "200":
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Foo"
+                $ref: '#/components/schemas/Foo'
+              examples:
+                Example1:
+                  value:
+                    bar: bar
+                    nullable_bar: nullable_bar
+                    nullable_required_bar: nullable_required_bar
+                    required_bar: required_bar
       summary: Get foo
   /foo/{id}:
     patch:
       operationId: updateFoo
       tags:
-        - ""
+        - ''
       parameters:
         - name: id
           in: path
@@ -61,12 +77,12 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Foo"
+                $ref: '#/components/schemas/Foo'
       summary: Update foo
       requestBody:
         required: true
@@ -76,17 +92,20 @@ paths:
               type: object
               properties:
                 nullable_text:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                   description: Can be explicitly set to null to clear the value
                 nullable_number:
-                  type: number
+                  type:
+                    - number
+                    - 'null'
                   format: double
-                  nullable: true
                   description: Can be explicitly set to null to clear the value
                 non_nullable_text:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                   description: Regular non-nullable field
 components:
   schemas:
@@ -95,16 +114,21 @@ components:
       type: object
       properties:
         bar:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         nullable_bar:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         nullable_required_bar:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         required_bar:
           type: string
+          examples:
+            - required_bar
       required:
         - nullable_required_bar
         - required_bar

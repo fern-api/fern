@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: request-parameters
-  version: ""
+  version: 0.0.0
 paths:
   /user/username:
     post:
@@ -17,8 +17,8 @@ paths:
             items:
               type: string
       responses:
-        "204":
-          description: ""
+        '204':
+          description: No content
       requestBody:
         required: true
         content:
@@ -50,14 +50,14 @@ paths:
             items:
               type: string
       responses:
-        "204":
-          description: ""
+        '204':
+          description: No content
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateUsernameBody"
+              $ref: '#/components/schemas/CreateUsernameBody'
   /user/username-optional:
     post:
       operationId: user_createUsernameOptional
@@ -65,15 +65,19 @@ paths:
         - User
       parameters: []
       responses:
-        "204":
-          description: ""
+        '204':
+          description: No content
       requestBody:
         required: false
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateUsernameBodyOptionalProperties"
-              nullable: true
+              anyOf:
+                - $ref: '#/components/schemas/CreateUsernameBodyOptionalProperties'
+                - type: 'null'
+            examples:
+              empty-object:
+                value: {}
   /user:
     get:
       operationId: user_getUsername
@@ -113,21 +117,22 @@ paths:
           in: query
           required: true
           schema:
-            $ref: "#/components/schemas/User"
+            $ref: '#/components/schemas/User'
         - name: userList
           in: query
           required: true
           schema:
             type: array
             items:
-              $ref: "#/components/schemas/User"
+              $ref: '#/components/schemas/User'
         - name: optionalDeadline
           in: query
           required: false
           schema:
-            type: string
+            type:
+              - string
+              - 'null'
             format: date-time
-            nullable: true
         - name: keyValue
           in: query
           required: true
@@ -139,26 +144,28 @@ paths:
           in: query
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: nestedUser
           in: query
           required: true
           schema:
-            $ref: "#/components/schemas/NestedUser"
+            $ref: '#/components/schemas/NestedUser'
         - name: optionalUser
           in: query
           required: false
           schema:
-            $ref: "#/components/schemas/User"
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/User'
+              - type: 'null'
         - name: excludeUser
           in: query
           required: true
           schema:
             type: array
             items:
-              $ref: "#/components/schemas/User"
+              $ref: '#/components/schemas/User'
         - name: filter
           in: query
           required: true
@@ -179,12 +186,12 @@ paths:
             type: integer
             format: bigint
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                $ref: '#/components/schemas/User'
 components:
   schemas:
     User:
@@ -207,7 +214,7 @@ components:
         name:
           type: string
         user:
-          $ref: "#/components/schemas/User"
+          $ref: '#/components/schemas/User'
       required:
         - name
         - user
@@ -230,12 +237,15 @@ components:
       type: object
       properties:
         username:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         password:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         name:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
   securitySchemes: {}

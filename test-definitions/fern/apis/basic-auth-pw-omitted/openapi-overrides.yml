@@ -1,0 +1,10 @@
+paths:
+  /basic-auth:
+    get:
+      x-fern-sdk-group-name:
+      - basicAuth
+      x-fern-sdk-method-name: getWithBasicAuth
+    post:
+      x-fern-sdk-group-name:
+      - basicAuth
+      x-fern-sdk-method-name: postWithBasicAuth

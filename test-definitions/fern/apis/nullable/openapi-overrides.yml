@@ -1,0 +1,14 @@
+paths:
+  /users:
+    get:
+      x-fern-sdk-group-name:
+      - nullable
+      x-fern-sdk-method-name: getUsers
+    post:
+      x-fern-sdk-group-name:
+      - nullable
+      x-fern-sdk-method-name: createUser
+    delete:
+      x-fern-sdk-group-name:
+      - nullable
+      x-fern-sdk-method-name: deleteUser

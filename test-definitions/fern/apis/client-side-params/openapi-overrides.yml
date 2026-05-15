@@ -1,0 +1,58 @@
+paths:
+  /api/resources:
+    get:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: listResources
+  /api/resources/{resourceId}:
+    get:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: getResource
+  /api/resources/search:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: searchResources
+  /api/users:
+    get:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: listUsers
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: createUser
+  /api/users/{userId}:
+    get:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: getUserById
+    patch:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: updateUser
+    delete:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: deleteUser
+  /api/connections:
+    get:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: listConnections
+  /api/connections/{connectionId}:
+    get:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: getConnection
+  /api/clients:
+    get:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: listClients
+  /api/clients/{clientId}:
+    get:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: getClient

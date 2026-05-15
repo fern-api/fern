@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: server-sent-events
-  version: ""
+  version: 0.0.0
 paths:
   /stream:
     post:
@@ -10,13 +10,8 @@ paths:
         - Completions
       parameters: []
       responses:
-        "200":
-          description: ""
-          content:
-            text/event-stream:
-              schema:
-                type: string
-                format: binary
+        '204':
+          description: No content
       requestBody:
         required: true
         content:
@@ -26,8 +21,14 @@ paths:
               properties:
                 query:
                   type: string
+                  examples:
+                    - foo
               required:
                 - query
+            examples:
+              Stream completions:
+                value:
+                  query: foo
   /stream-no-terminator:
     post:
       operationId: completions_streamWithoutTerminator
@@ -35,13 +36,8 @@ paths:
         - Completions
       parameters: []
       responses:
-        "200":
-          description: ""
-          content:
-            text/event-stream:
-              schema:
-                type: string
-                format: binary
+        '204':
+          description: No content
       requestBody:
         required: true
         content:
@@ -51,8 +47,14 @@ paths:
               properties:
                 query:
                   type: string
+                  examples:
+                    - query
               required:
                 - query
+            examples:
+              Stream without terminator:
+                value:
+                  query: query
 components:
   schemas:
     StreamedCompletion:
@@ -62,8 +64,9 @@ components:
         delta:
           type: string
         tokens:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
       required:
         - delta
   securitySchemes: {}

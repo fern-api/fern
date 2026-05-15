@@ -1,0 +1,6 @@
+paths:
+  /users:
+    get:
+      x-fern-sdk-group-name:
+      - retries
+      x-fern-sdk-method-name: getUsers

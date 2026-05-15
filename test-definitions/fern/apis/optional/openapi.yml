@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
-  title: optional
-  version: ""
+  title: objects-with-imports
+  version: 0.0.0
 paths:
   /send-optional-body:
     post:
@@ -10,7 +10,7 @@ paths:
         - Optional
       parameters: []
       responses:
-        "200":
+        '200':
           description: Id of the created resource
           content:
             application/json:
@@ -21,9 +21,9 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              additionalProperties: true
-              nullable: true
+              type:
+                - object
+                - 'null'
   /send-optional-typed-body:
     post:
       operationId: optional_sendOptionalTypedBody
@@ -31,7 +31,7 @@ paths:
         - Optional
       parameters: []
       responses:
-        "200":
+        '200':
           description: Id of the created resource
           content:
             application/json:
@@ -42,8 +42,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SendOptionalBodyRequest"
-              nullable: true
+              anyOf:
+                - $ref: '#/components/schemas/SendOptionalBodyRequest'
+                - type: 'null'
   /deploy/{actionId}/versions/{id}:
     post:
       description: >-
@@ -66,19 +67,20 @@ paths:
           schema:
             type: string
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DeployResponse"
+                $ref: '#/components/schemas/DeployResponse'
       requestBody:
         required: false
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/DeployParams"
-              nullable: true
+              anyOf:
+                - $ref: '#/components/schemas/DeployParams'
+                - type: 'null'
 components:
   schemas:
     SendOptionalBodyRequest:
@@ -94,8 +96,9 @@ components:
       type: object
       properties:
         updateDraft:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
     DeployResponse:
       title: DeployResponse
       type: object

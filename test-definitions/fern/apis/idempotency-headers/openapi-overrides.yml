@@ -1,0 +1,11 @@
+paths:
+  /payment:
+    post:
+      x-fern-sdk-group-name:
+      - payment
+      x-fern-sdk-method-name: create
+  /payment/{paymentId}:
+    delete:
+      x-fern-sdk-group-name:
+      - payment
+      x-fern-sdk-method-name: delete

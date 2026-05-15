@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
-  title: accept-header
-  version: ""
+  title: accept
+  version: 0.0.0
 paths:
   /container/:
     delete:
@@ -10,18 +10,18 @@ paths:
         - Service
       parameters: []
       responses:
-        "204":
-          description: ""
-        "404":
-          description: ""
+        '204':
+          description: No content
+        '404':
+          description: NotFoundError
           content:
             application/json:
               schema: {}
       security:
-        - BearerAuth: []
+        - Bearer: []
 components:
   schemas: {}
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer

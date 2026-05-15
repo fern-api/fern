@@ -1,0 +1,10 @@
+paths:
+  /users:
+    head:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: head
+    get:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: list

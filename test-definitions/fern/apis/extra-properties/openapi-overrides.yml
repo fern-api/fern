@@ -1,0 +1,6 @@
+paths:
+  /user:
+    post:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: createUser

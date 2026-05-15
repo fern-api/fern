@@ -1,0 +1,11 @@
+paths:
+  /snippet:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: simple
+  /download-content/{id}:
+    get:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: download

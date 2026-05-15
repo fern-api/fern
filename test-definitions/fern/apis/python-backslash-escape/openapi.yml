@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: python-backslash-escape
-  version: ""
+  version: 0.0.0
 paths:
   /users/{id}:
     get:
@@ -28,15 +28,16 @@ paths:
             Example: CORP\username or DOMAIN\user
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                $ref: '#/components/schemas/User'
 components:
   schemas:
     User:

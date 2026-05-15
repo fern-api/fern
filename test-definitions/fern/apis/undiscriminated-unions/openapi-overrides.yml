@@ -1,0 +1,50 @@
+paths:
+  /:
+    post:
+      x-fern-sdk-group-name:
+      - union
+      x-fern-sdk-method-name: get
+  /metadata:
+    get:
+      x-fern-sdk-group-name:
+      - union
+      x-fern-sdk-method-name: getMetadata
+    put:
+      x-fern-sdk-group-name:
+      - union
+      x-fern-sdk-method-name: updateMetadata
+  /call:
+    post:
+      x-fern-sdk-group-name:
+      - union
+      x-fern-sdk-method-name: call
+  /duplicate:
+    post:
+      x-fern-sdk-group-name:
+      - union
+      x-fern-sdk-method-name: duplicateTypesUnion
+  /nested:
+    post:
+      x-fern-sdk-group-name:
+      - union
+      x-fern-sdk-method-name: nestedUnions
+  /nested-objects:
+    post:
+      x-fern-sdk-group-name:
+      - union
+      x-fern-sdk-method-name: nestedObjectUnions
+  /aliased-object:
+    post:
+      x-fern-sdk-group-name:
+      - union
+      x-fern-sdk-method-name: aliasedObjectUnion
+  /with-base-properties:
+    post:
+      x-fern-sdk-group-name:
+      - union
+      x-fern-sdk-method-name: getWithBaseProperties
+  /camel-case:
+    post:
+      x-fern-sdk-group-name:
+      - union
+      x-fern-sdk-method-name: testCamelCaseProperties

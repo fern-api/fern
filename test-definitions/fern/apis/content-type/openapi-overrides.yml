@@ -1,0 +1,26 @@
+paths:
+  /:
+    patch:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: patch
+  /complex/{id}:
+    patch:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: patchComplex
+  /named-mixed/{id}:
+    patch:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: namedPatchWithMixed
+  /optional-merge-patch-test:
+    patch:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: optionalMergePatchTest
+  /regular/{id}:
+    patch:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: regularPatch
