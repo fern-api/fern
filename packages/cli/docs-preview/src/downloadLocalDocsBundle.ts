@@ -529,8 +529,16 @@ export async function downloadBundle({
             }
 
             const workspaceConfigPath = path.join(absolutePathToBundleFolder, "pnpm-workspace.yaml");
+            const workspaceConfigContent = "packages:\n  - '.'\nonlyBuiltDependencies:\n  - esbuild\n";
             if (!existsSync(workspaceConfigPath)) {
-                await writeFile(workspaceConfigPath, "onlyBuiltDependencies:\n  - esbuild\n");
+                await writeFile(workspaceConfigPath, workspaceConfigContent);
+            } else {
+                // Ensure existing workspace config has the required `packages` field
+                // (pnpm 10+ errors with "packages field missing or empty" without it)
+                const existing = (await readFile(workspaceConfigPath)).toString();
+                if (!existing.includes("packages:")) {
+                    await writeFile(workspaceConfigPath, workspaceConfigContent);
+                }
             }
 
             try {
