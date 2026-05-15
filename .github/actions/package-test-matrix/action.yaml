@@ -22,10 +22,10 @@ runs:
       shell: bash
       run: |
         # Unpacked JSON array for processing
-        PARSED_NAME=$(echo '${{ inputs.full-fixture-matrix }}' | jq -r '.[]')
+        PARSED_NAME=$(echo '${INPUTS_FULL_FIXTURE_MATRIX}' | jq -r '.[]')
         echo "Parsed name: $PARSED_NAME"
 
-        PACKAGE_AMOUNT=${{ inputs.package-amount }}
+        PACKAGE_AMOUNT=${INPUTS_PACKAGE_AMOUNT}
 
         # UNPACKED
 
@@ -75,3 +75,6 @@ runs:
 
         echo "Final packaged matrix: $PACKAGED_MATRIX"
         echo "packaged=$PACKAGED_MATRIX" >> $GITHUB_OUTPUT
+      env:
+        INPUTS_FULL_FIXTURE_MATRIX: ${{ inputs.full-fixture-matrix }}
+        INPUTS_PACKAGE_AMOUNT: ${{ inputs.package-amount }}

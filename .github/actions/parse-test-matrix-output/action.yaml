@@ -23,12 +23,12 @@ runs:
       shell: bash
       run: |
         INCLUDE_OUTPUT_FOLDERS_OPTION=""
-        if [[ "${{inputs.include-output-folders}}" == "true" ]]; then
+        if [[ "${INPUTS_INCLUDE_OUTPUT_FOLDERS}" == "true" ]]; then
           INCLUDE_OUTPUT_FOLDERS_OPTION="--include-output-folders"
         fi
 
         # Get JSON output from get-available-fixtures command
-        COMMAND_OUTPUT=$(pnpm seed get-available-fixtures --generator ${{inputs.generator-name}} $INCLUDE_OUTPUT_FOLDERS_OPTION)
+        COMMAND_OUTPUT=$(pnpm seed get-available-fixtures --generator ${INPUTS_GENERATOR_NAME} $INCLUDE_OUTPUT_FOLDERS_OPTION)
 
         echo "${COMMAND_OUTPUT}"
 
@@ -42,3 +42,6 @@ runs:
         echo "$FIXTURES_FLAT_JSON" | jq .
 
         echo "fixture_list=$FIXTURES_FLAT_JSON" >> $GITHUB_OUTPUT
+      env:
+        INPUTS_INCLUDE_OUTPUT_FOLDERS: ${{inputs.include-output-folders}}
+        INPUTS_GENERATOR_NAME: ${{inputs.generator-name}}

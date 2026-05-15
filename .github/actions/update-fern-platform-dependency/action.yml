@@ -16,7 +16,7 @@ runs:
   using: composite
   steps:
     - name: Setup Node.js
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
       with:
         node-version: "24"
 
@@ -30,7 +30,7 @@ runs:
       shell: bash
       run: |
         # Clone fern-platform repo
-        git clone https://x-access-token:${{ inputs.github-token }}@github.com/fern-api/fern-platform.git fern-platform-repo
+        git clone https://x-access-token:${INPUTS_GITHUB_TOKEN}@github.com/fern-api/fern-platform.git fern-platform-repo
         cd fern-platform-repo
 
         # Configure git
@@ -38,18 +38,18 @@ runs:
         git config user.email "bot@buildwithfern.com"
 
         # Configure git to use the token for push operations
-        git remote set-url origin https://x-access-token:${{ inputs.github-token }}@github.com/fern-api/fern-platform.git
+        git remote set-url origin https://x-access-token:${INPUTS_GITHUB_TOKEN}@github.com/fern-api/fern-platform.git
 
         # Sanitize package name for branch name (replace special characters)
-        SANITIZED_PKG=$(echo "${{ inputs.package-name }}" | sed 's/[^a-zA-Z0-9._-]/-/g')
+        SANITIZED_PKG=$(echo "${INPUTS_PACKAGE_NAME}" | sed 's/[^a-zA-Z0-9._-]/-/g')
 
         # Create branch
-        BRANCH_NAME="devin/update-${SANITIZED_PKG}-to-${{ inputs.version }}"
+        BRANCH_NAME="devin/update-${SANITIZED_PKG}-to-${INPUTS_VERSION}"
         git checkout -b "$BRANCH_NAME"
 
         # Update the dependency in the snippets package
         cd packages/snippets
-        pnpm add "${{ inputs.package-name }}@${{ inputs.version }}"
+        pnpm add "${INPUTS_PACKAGE_NAME}@${INPUTS_VERSION}"
 
         # Install dependencies and update tests
         cd ../..
@@ -66,18 +66,21 @@ runs:
 
         # Commit and push (include lockfile and any test snapshot changes)
         git add packages/snippets/package.json pnpm-lock.yaml packages/snippets/src/__test__/
-        git commit -m "chore: update ${{ inputs.package-name }} to ${{ inputs.version }}"
+        git commit -m "chore: update ${INPUTS_PACKAGE_NAME} to ${INPUTS_VERSION}"
         git push origin "$BRANCH_NAME"
 
         # Create PR using GitHub CLI
-        PR_BODY="This PR updates \`${{ inputs.package-name }}\` to version \`${{ inputs.version }}\` in the \`@fern-api/snippets\` package.
+        PR_BODY="This PR updates \`${INPUTS_PACKAGE_NAME}\` to version \`${INPUTS_VERSION}\` in the \`@fern-api/snippets\` package.
 
-        This PR was automatically created after publishing ${{ inputs.package-name }}@${{ inputs.version }}."
+        This PR was automatically created after publishing ${INPUTS_PACKAGE_NAME}@${INPUTS_VERSION}."
 
         gh pr create \
-          --title "chore: update ${{ inputs.package-name }} to ${{ inputs.version }}" \
+          --title "chore: update ${INPUTS_PACKAGE_NAME} to ${INPUTS_VERSION}" \
           --body "$PR_BODY" \
           --base main \
           --head "$BRANCH_NAME"
       env:
         GH_TOKEN: ${{ inputs.github-token }}
+        INPUTS_GITHUB_TOKEN: ${{ inputs.github-token }}
+        INPUTS_PACKAGE_NAME: ${{ inputs.package-name }}
+        INPUTS_VERSION: ${{ inputs.version }}

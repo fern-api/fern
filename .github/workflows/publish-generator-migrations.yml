@@ -34,9 +34,10 @@ jobs:
       should_publish: ${{ steps.determine_version.outputs.should_publish }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 10
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -44,9 +45,9 @@ jobs:
       - name: Determine version
         id: determine_version
         run: |
-          if [ -n "${{ inputs.version }}" ]; then
+          if [ -n "${INPUTS_VERSION}" ]; then
             # Manual workflow dispatch with explicit version
-            NEW_VERSION="${{ inputs.version }}"
+            NEW_VERSION="${INPUTS_VERSION}"
             SHOULD_PUBLISH="true"
           else
             # Automatic publish - check if package files changed
@@ -69,6 +70,8 @@ jobs:
           echo "version=${NEW_VERSION}" >> $GITHUB_OUTPUT
           echo "should_publish=${SHOULD_PUBLISH}" >> $GITHUB_OUTPUT
           echo "Will publish version: ${NEW_VERSION} (should_publish=${SHOULD_PUBLISH})"
+        env:
+          INPUTS_VERSION: ${{ inputs.version }}
 
   publish-package:
     needs: check-version
@@ -76,7 +79,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -87,7 +92,7 @@ jobs:
           pnpm turbo run test --filter=${{ env.PACKAGE_NAME }}
 
       - name: Setup Node for npm publish
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org

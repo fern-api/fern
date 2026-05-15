@@ -42,7 +42,7 @@ jobs:
           COMMIT_MSG: ${{ github.event.head_commit.message }}
         run: |
           # Only consider skipping for pushes to main. PRs and dispatches always run CI.
-          if [[ "${{ github.event_name }}" != "push" || "${{ github.ref }}" != "refs/heads/main" ]]; then
+          if [[ "${{ github.event_name }}" != "push" || "${GITHUB_REF}" != "refs/heads/main" ]]; then
             echo "should-skip=false" >> $GITHUB_OUTPUT
             exit 0
           fi
@@ -62,7 +62,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             /*
@@ -71,6 +71,7 @@ jobs:
             packages/seed/**
             docker/seed/**
           sparse-checkout-cone-mode: false
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -84,7 +85,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             /*
@@ -93,6 +94,7 @@ jobs:
             packages/seed/**
             docker/seed/**
           sparse-checkout-cone-mode: false
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -106,7 +108,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             /*
@@ -115,6 +117,7 @@ jobs:
             packages/seed/**
             docker/seed/**
           sparse-checkout-cone-mode: false
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -128,7 +131,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             /*
@@ -137,6 +140,7 @@ jobs:
             packages/seed/**
             docker/seed/**
           sparse-checkout-cone-mode: false
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -150,7 +154,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             /*
@@ -159,6 +163,7 @@ jobs:
             packages/seed/**
             docker/seed/**
           sparse-checkout-cone-mode: false
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -186,7 +191,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             /*
@@ -195,6 +200,7 @@ jobs:
             packages/seed/**
             docker/seed/**
           sparse-checkout-cone-mode: false
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -209,15 +215,16 @@ jobs:
     timeout-minutes: 25
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           lfs: true
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
 
       - name: Cache Fern bin dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
         with:
           path: ~/.fern/bin
           key: ${{ runner.os }}-fern-bin-${{ hashFiles('packages/cli/workspace/lazy-fern-workspace/src/protobuf/BufDownloader.ts', 'packages/cli/workspace/lazy-fern-workspace/src/protobuf/ProtocGenOpenAPIDownloader.ts') }}
@@ -269,14 +276,16 @@ jobs:
     timeout-minutes: 25
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
 
       - name: Log in to Docker Hub
         if: ${{ env.DOCKERHUB_USERNAME != '' }}
-        uses: docker/login-action@v4
+        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
         with:
@@ -288,7 +297,7 @@ jobs:
 
       - name: Cache Docker images
         id: docker-cache
-        uses: actions/cache@v5
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
         with:
           path: /tmp/docker-cache
           key: ${{ runner.os }}-docker-ete-${{ hashFiles('**/Dockerfile*') }}
@@ -305,7 +314,7 @@ jobs:
         run: docker images -q | sort -u > /tmp/docker-images-before.txt
 
       - name: Cache Fern bin dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
         with:
           path: ~/.fern/bin
           key: ${{ runner.os }}-fern-bin-${{ hashFiles('packages/cli/workspace/lazy-fern-workspace/src/protobuf/BufDownloader.ts', 'packages/cli/workspace/lazy-fern-workspace/src/protobuf/ProtocGenOpenAPIDownloader.ts') }}
@@ -386,7 +395,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -409,13 +420,15 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
 
       - name: Set up Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: 24
 
@@ -446,13 +459,15 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
 
       - name: Set up Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: 24
 

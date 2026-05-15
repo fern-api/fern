@@ -34,11 +34,11 @@ runs:
     - name: Install
       uses: ./.github/actions/install
 
-    - uses: bufbuild/buf-setup-action@v1.50.0
+    - uses: bufbuild/buf-setup-action@a47c93e0b1648d5651a065437926377d060baa99 # v1.50.0
       with:
         github_token: ${{ github.token }}
 
-    - uses: actions/setup-go@v6
+    - uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6
       with:
         go-version: "stable"
 
@@ -57,18 +57,21 @@ runs:
       id: determine-test-setups
       shell: bash
       run: |
-        if [[ "${{inputs.package-alphabetically}}" == "false" || \
-        "${{ inputs.sdk-name }}" == "fastapi" || \
-        "${{ inputs.sdk-name }}" == "go-model" || \
-        "${{ inputs.sdk-name }}" == "openapi" || \
-        "${{ inputs.sdk-name }}" == "php-model" || \
-        "${{ inputs.sdk-name }}" == "ruby-sdk-v2" || \
-        "${{ inputs.sdk-name }}" == "rust-model" || \
+        if [[ "${INPUTS_PACKAGE_ALPHABETICALLY}" == "false" || \
+        "${INPUTS_SDK_NAME}" == "fastapi" || \
+        "${INPUTS_SDK_NAME}" == "go-model" || \
+        "${INPUTS_SDK_NAME}" == "openapi" || \
+        "${INPUTS_SDK_NAME}" == "php-model" || \
+        "${INPUTS_SDK_NAME}" == "ruby-sdk-v2" || \
+        "${INPUTS_SDK_NAME}" == "rust-model" || \
         false ]]; then
           echo "split-tests=false" >> $GITHUB_OUTPUT
         else
           echo "split-tests=true" >> $GITHUB_OUTPUT
         fi
+      env:
+        INPUTS_PACKAGE_ALPHABETICALLY: ${{inputs.package-alphabetically}}
+        INPUTS_SDK_NAME: ${{ inputs.sdk-name }}
 
     - name: Get test matrix for ${{ inputs.sdk-name }}
       if: (steps.determine-test-setups.outputs.split-tests == 'true' && inputs.package-alphabetically == 'true') || inputs.package-alphabetically == 'false'

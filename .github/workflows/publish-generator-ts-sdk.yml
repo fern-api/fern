@@ -26,10 +26,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo at current ref
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           ref: main
           fetch-depth: 10
+          persist-credentials: false
 
       # Pre-flight: build the validator image locally (single-arch, no push)
       # before publishing the generator. Docker Hub has no transactional
@@ -81,12 +82,14 @@ jobs:
         shell: bash
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            VERSION="${{ inputs.version }}"
+            VERSION="${INPUTS_VERSION}"
           else
             VERSION=$(grep -m1 "^- version:" generators/typescript/sdk/versions.yml | sed 's/- version: //' | tr -d '"' | tr -d "'")
           fi
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "Validator image version: $VERSION"
+        env:
+          INPUTS_VERSION: ${{ inputs.version }}
 
       - name: Build and publish validator image
         if: ${{ steps.validator-version.outputs.version != '' }}

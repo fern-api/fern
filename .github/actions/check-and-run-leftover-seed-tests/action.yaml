@@ -20,11 +20,11 @@ runs:
     - name: Install
       uses: ./.github/actions/install
 
-    - uses: bufbuild/buf-setup-action@v1.50.0
+    - uses: bufbuild/buf-setup-action@a47c93e0b1648d5651a065437926377d060baa99 # v1.50.0
       with:
         github_token: ${{ github.token }}
 
-    - uses: actions/setup-go@v6
+    - uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6
       with:
         go-version: "stable"
 
@@ -49,10 +49,10 @@ runs:
       shell: bash
       run: |
         # Get the test set for the given generator from the command get-available-fixtures (will be current)
-        TESTS_FROM_CMD='${{ steps.parse-test-matrices.outputs.parsed }}'
+        TESTS_FROM_CMD='${STEPS_PARSE_TEST_MATRICES_OUTPUTS_PARSED}'
 
         # Get the test set for the given generator from the seed group JSON files (will only be synced to the latest successful nightly update)
-        TESTS_FROM_FILE=$(jq '[.groups[].fixtures[]] | unique | sort' .github/workflow-resource-files/seed-groups/${{ inputs.sdk-name }}-seed-groups.json)
+        TESTS_FROM_FILE=$(jq '[.groups[].fixtures[]] | unique | sort' .github/workflow-resource-files/seed-groups/${INPUTS_SDK_NAME}-seed-groups.json)
 
         # Determine which tests are only in one or the other. Only in cmd = newly added test. Only in file = newly removed test.
         # Note: file is parsed as JSON object, cmd line is parsed as JSON array
@@ -67,3 +67,6 @@ runs:
 
         echo "leftover-tests-to-run=$(echo "$ONLY_IN_CMD" | jq -c -s .)" >> $GITHUB_OUTPUT
         echo "tests-to-remove=$(echo "$ONLY_IN_FILE" | jq -c -s .)" >> $GITHUB_OUTPUT
+      env:
+        STEPS_PARSE_TEST_MATRICES_OUTPUTS_PARSED: ${{ steps.parse-test-matrices.outputs.parsed }}
+        INPUTS_SDK_NAME: ${{ inputs.sdk-name }}

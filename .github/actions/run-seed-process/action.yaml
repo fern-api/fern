@@ -62,21 +62,27 @@ runs:
 
     - name: Echo package
       shell: bash
-      run: echo '${{ inputs.fixtures-to-run }}' | jq .
+      run: echo '${INPUTS_FIXTURES_TO_RUN}' | jq .
+      env:
+        INPUTS_FIXTURES_TO_RUN: ${{ inputs.fixtures-to-run }}
 
     # Format for seed tests
     - name: JSON to String
       id: json-to-string
       shell: bash
       run: |
-        json_data='${{ inputs.fixtures-to-run }}'
+        json_data='${INPUTS_FIXTURES_TO_RUN}'
         # Convert JSON array to space-separated string
         string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
         echo "Generated string: '$string_result'"
         echo "as-string=$string_result" >> $GITHUB_OUTPUT
+      env:
+        INPUTS_FIXTURES_TO_RUN: ${{ inputs.fixtures-to-run }}
 
     - name: Checkout repo
-      uses: actions/checkout@v6
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      with:
+        persist-credentials: false
 
     - name: Run seed
       uses: ./.github/actions/cached-seed
@@ -98,7 +104,7 @@ runs:
           # Find string including new, unexpected failures
           UNEXPECTED_FAILURES=$(tail -n 200 output.log | tac | grep -m 1 "unexpected failures, including:" | sed -n 's/.*unexpected failures, including: \(.*\)\./\1/p' || echo "")
           if [ -n "$UNEXPECTED_FAILURES" ]; then
-            echo "**❌ ${{ inputs.sdk-name }} Unexpected Test Failures:** ${UNEXPECTED_FAILURES}" >> $GITHUB_STEP_SUMMARY
+            echo "**❌ ${INPUTS_SDK_NAME} Unexpected Test Failures:** ${UNEXPECTED_FAILURES}" >> $GITHUB_STEP_SUMMARY
           else
             echo "No unexpected errors parsed from output"
           fi
@@ -106,13 +112,15 @@ runs:
           # Find string including passing fixtures that are still in allowedFailures list
           UNEXPECTEDLY_PASSING=$(tail -n 200 output.log | tac | grep -m 1 "Consider removing the following fixtures from allowedFailures:" | sed -n 's/.*Consider removing the following fixtures from allowedFailures: \(.*\)\./\1/p' || echo "")
           if [ -n "$UNEXPECTEDLY_PASSING" ]; then
-            echo "**⚠️ ${{ inputs.sdk-name }} Passing Tests in Allowed Failures List:** ${UNEXPECTEDLY_PASSING}" >> $GITHUB_STEP_SUMMARY
+            echo "**⚠️ ${INPUTS_SDK_NAME} Passing Tests in Allowed Failures List:** ${UNEXPECTEDLY_PASSING}" >> $GITHUB_STEP_SUMMARY
           else
             echo "No passing tests found in allowedFailures list from output"
           fi 
         else 
           echo "No output available to parse for test group"
         fi
+      env:
+        INPUTS_SDK_NAME: ${{ inputs.sdk-name }}
 
     - name: Record end time
       id: end-seed-timer

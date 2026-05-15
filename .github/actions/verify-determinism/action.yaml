@@ -20,7 +20,7 @@ runs:
       shell: bash
       run: |
         # Parse JSON array and build exclude arguments
-        JSON_INPUT='${{ inputs.determinism-exclude-paths }}'
+        JSON_INPUT='${INPUTS_DETERMINISM_EXCLUDE_PATHS}'
         echo "Input JSON:"
         echo ${JSON_INPUT} | jq .
 
@@ -44,3 +44,5 @@ runs:
           git --no-pager diff -- "${EXCLUDE_ARGS[@]}" | head -50 || true
           echo "deterministic=false" >> $GITHUB_OUTPUT
         fi
+      env:
+        INPUTS_DETERMINISM_EXCLUDE_PATHS: ${{ inputs.determinism-exclude-paths }}
