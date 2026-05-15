@@ -1,4 +1,0 @@
-export * from "./organizations/client/requests/index.js";
-export * as organizations from "./organizations/index.js";
-export * from "./user/client/requests/index.js";
-export * as user from "./user/index.js";
