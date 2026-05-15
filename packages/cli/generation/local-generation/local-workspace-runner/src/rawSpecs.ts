@@ -1,7 +1,7 @@
 import { Spec } from "@fern-api/api-workspace-commons";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { copyFile, mkdir } from "fs/promises";
+import { cp, mkdir } from "fs/promises";
 import path from "path";
 
 export interface RawSpecsManifestEntry {
@@ -99,8 +99,8 @@ async function copySpecFiles({
         case "openapi":
         case "openrpc":
         case "graphql": {
-            const specPath = await copyFilePreservingStructure({
-                absoluteFilePath: spec.absoluteFilepath,
+            const specPath = await copyPathPreservingStructure({
+                absolutePath: spec.absoluteFilepath,
                 commonRoot,
                 hostOutputDir
             });
@@ -111,8 +111,8 @@ async function copySpecFiles({
                     ? spec.absoluteFilepathToOverrides
                     : [spec.absoluteFilepathToOverrides];
                 for (const overridePath of overrides) {
-                    const copied = await copyFilePreservingStructure({
-                        absoluteFilePath: overridePath,
+                    const copied = await copyPathPreservingStructure({
+                        absolutePath: overridePath,
                         commonRoot,
                         hostOutputDir
                     });
@@ -122,8 +122,8 @@ async function copySpecFiles({
 
             let overlayPath: string | undefined;
             if (spec.type === "openapi" && spec.absoluteFilepathToOverlays != null) {
-                const copied = await copyFilePreservingStructure({
-                    absoluteFilePath: spec.absoluteFilepathToOverlays,
+                const copied = await copyPathPreservingStructure({
+                    absolutePath: spec.absoluteFilepathToOverlays,
                     commonRoot,
                     hostOutputDir
                 });
@@ -143,10 +143,11 @@ async function copySpecFiles({
             return entry;
         }
         case "protobuf": {
-            const specPath = await copyFilePreservingStructure({
-                absoluteFilePath: spec.absoluteFilepathToProtobufRoot,
+            const specPath = await copyPathPreservingStructure({
+                absolutePath: spec.absoluteFilepathToProtobufRoot,
                 commonRoot,
-                hostOutputDir
+                hostOutputDir,
+                isDirectory: true
             });
 
             const overridePaths: string[] = [];
@@ -155,8 +156,8 @@ async function copySpecFiles({
                     ? spec.absoluteFilepathToOverrides
                     : [spec.absoluteFilepathToOverrides];
                 for (const overridePath of overrides) {
-                    const copied = await copyFilePreservingStructure({
-                        absoluteFilePath: overridePath,
+                    const copied = await copyPathPreservingStructure({
+                        absolutePath: overridePath,
                         commonRoot,
                         hostOutputDir
                     });
@@ -177,22 +178,28 @@ async function copySpecFiles({
 }
 
 /**
- * Copies a single file into hostOutputDir, preserving its path relative to commonRoot.
- * Returns the relative path (from hostOutputDir) of the copied file.
+ * Copies a file or directory into hostOutputDir, preserving its path relative to commonRoot.
+ * Returns the relative path (from hostOutputDir) of the copied entry.
  */
-async function copyFilePreservingStructure({
-    absoluteFilePath,
+async function copyPathPreservingStructure({
+    absolutePath,
     commonRoot,
-    hostOutputDir
+    hostOutputDir,
+    isDirectory
 }: {
-    absoluteFilePath: string;
+    absolutePath: string;
     commonRoot: string;
     hostOutputDir: AbsoluteFilePath;
+    isDirectory?: boolean;
 }): Promise<string> {
-    const relativePath = path.relative(commonRoot, absoluteFilePath);
+    const relativePath = path.relative(commonRoot, absolutePath);
     const destPath = path.join(hostOutputDir, relativePath);
-    await mkdir(path.dirname(destPath), { recursive: true });
-    await copyFile(absoluteFilePath, destPath);
+    if (isDirectory) {
+        await cp(absolutePath, destPath, { recursive: true });
+    } else {
+        await mkdir(path.dirname(destPath), { recursive: true });
+        await cp(absolutePath, destPath);
+    }
     return relativePath;
 }
 
