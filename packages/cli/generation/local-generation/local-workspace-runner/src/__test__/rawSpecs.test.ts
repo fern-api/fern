@@ -131,7 +131,11 @@ describe("collectRawSpecs", () => {
                     absoluteFilepath: AbsoluteFilePath.of(specFile),
                     absoluteFilepathToOverrides: undefined,
                     absoluteFilepathToOverlays: undefined,
-                    source: { type: "openapi", file: specFile, relativePathToDependency: undefined }
+                    source: {
+                        type: "openapi",
+                        file: AbsoluteFilePath.of(specFile),
+                        relativePathToDependency: undefined
+                    }
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
@@ -171,7 +175,11 @@ describe("collectRawSpecs", () => {
                     absoluteFilepath: AbsoluteFilePath.of(specFile),
                     absoluteFilepathToOverrides: AbsoluteFilePath.of(overrideFile),
                     absoluteFilepathToOverlays: AbsoluteFilePath.of(overlayFile),
-                    source: { type: "openapi", file: specFile, relativePathToDependency: undefined }
+                    source: {
+                        type: "openapi",
+                        file: AbsoluteFilePath.of(specFile),
+                        relativePathToDependency: undefined
+                    }
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
@@ -211,7 +219,11 @@ describe("collectRawSpecs", () => {
                     absoluteFilepath: AbsoluteFilePath.of(specFile),
                     absoluteFilepathToOverrides: [AbsoluteFilePath.of(override1), AbsoluteFilePath.of(override2)],
                     absoluteFilepathToOverlays: undefined,
-                    source: { type: "openapi", file: specFile, relativePathToDependency: undefined }
+                    source: {
+                        type: "openapi",
+                        file: AbsoluteFilePath.of(specFile),
+                        relativePathToDependency: undefined
+                    }
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
@@ -329,14 +341,14 @@ describe("collectRawSpecs", () => {
                     absoluteFilepath: AbsoluteFilePath.of(spec1),
                     absoluteFilepathToOverrides: undefined,
                     absoluteFilepathToOverlays: undefined,
-                    source: { type: "openapi", file: spec1, relativePathToDependency: undefined }
+                    source: { type: "openapi", file: AbsoluteFilePath.of(spec1), relativePathToDependency: undefined }
                 },
                 {
                     type: "openapi",
                     absoluteFilepath: AbsoluteFilePath.of(spec2),
                     absoluteFilepathToOverrides: undefined,
                     absoluteFilepathToOverlays: undefined,
-                    source: { type: "openapi", file: spec2, relativePathToDependency: undefined }
+                    source: { type: "openapi", file: AbsoluteFilePath.of(spec2), relativePathToDependency: undefined }
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
@@ -367,7 +379,11 @@ describe("collectRawSpecs", () => {
                     absoluteFilepath: AbsoluteFilePath.of(specFile),
                     absoluteFilepathToOverrides: undefined,
                     absoluteFilepathToOverlays: undefined,
-                    source: { type: "openapi", file: specFile, relativePathToDependency: undefined }
+                    source: {
+                        type: "openapi",
+                        file: AbsoluteFilePath.of(specFile),
+                        relativePathToDependency: undefined
+                    }
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
@@ -410,7 +426,11 @@ describe("collectRawSpecs", () => {
                     absoluteFilepath: AbsoluteFilePath.of(specFile),
                     absoluteFilepathToOverrides: undefined,
                     absoluteFilepathToOverlays: undefined,
-                    source: { type: "openapi", file: specFile, relativePathToDependency: undefined }
+                    source: {
+                        type: "openapi",
+                        file: AbsoluteFilePath.of(specFile),
+                        relativePathToDependency: undefined
+                    }
                 },
                 {
                     type: "protobuf",
