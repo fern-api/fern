@@ -23,11 +23,27 @@ interface BlobRef {
 }
 
 /**
- * Serializes a value to a JSON buffer and returns a BlobRef + the raw bytes,
- * keyed by content hash for later upload.
+ * `JSON.stringify` with deterministic key ordering at every level. Arrays
+ * keep their original ordering (positions are meaningful); object keys are
+ * sorted lexicographically via the replacer. Two inputs that differ only by
+ * key insertion order serialize identically — required so the apiManifest
+ * blob hash is stable across publishes (cf. FDR `stableStringify`).
+ */
+function stableStringify(value: unknown): string {
+    return JSON.stringify(value, (_key, val) => {
+        if (val != null && typeof val === "object" && !Array.isArray(val)) {
+            return Object.fromEntries(Object.entries(val).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)));
+        }
+        return val;
+    });
+}
+
+/**
+ * Serializes a value to a JSON buffer using {@link stableStringify} and
+ * returns a BlobRef + the raw bytes, keyed by content hash for later upload.
  */
 function jsonBlobRef(value: unknown): { ref: BlobRef; hash: string; buf: Buffer } {
-    const buf = Buffer.from(JSON.stringify(value), "utf-8");
+    const buf = Buffer.from(stableStringify(value), "utf-8");
     const hash = sha256(buf);
     return {
         ref: { hash, contentType: "application/json", contentLength: buf.length },
@@ -100,6 +116,16 @@ export function buildLedgerInput({
     });
 
     // API manifest: serialize all API definitions as a single JSON blob.
+    //
+    // `apiDefinitions` is populated by the `registerApi` callback inside a
+    // `Promise.all`, so the Map's insertion order reflects whichever HTTP
+    // round-trip completed first — non-deterministic across publishes.
+    // {@link jsonBlobRef} uses {@link stableStringify}, which sorts object
+    // keys at every level, so the resulting bytes are stable regardless
+    // of Map iteration order. Combined with the FDR-side
+    // `(orgId, apiName, contentHash)` dedup on `api_definitions_v2`, this
+    // makes the docs-ledger deployment hash deterministic for byte-identical
+    // publishes.
     let apiManifestRef: BlobRef | null = null;
     if (apiDefinitions.size > 0) {
         const manifestObj = Object.fromEntries(apiDefinitions);

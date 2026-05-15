@@ -265,6 +265,58 @@ describe("buildLedgerInput", () => {
         expect(input.apiManifest).toBeNull();
     });
 
+    it("apiManifest blob hash is stable across Map insertion order (determinism guard)", () => {
+        // Reproduces the docs-ledger deterministic-hash bug: `apiDefinitions`
+        // is built by `Promise.all` of /api/register calls in CLI, so its Map
+        // insertion order is whichever round-trip completed first. Without
+        // `stableStringify`, byte-identical content would hash differently
+        // across publishes and the docs-ledger "no-op republish" fast-path
+        // would never fire. The two manifests below have identical entries
+        // inserted in opposite orders and MUST produce the same blob hash.
+        const minimalApiDefinition: APIV1Write.ApiDefinition = {
+            types: {},
+            subpackages: {},
+            rootPackage: {
+                endpoints: [],
+                types: [],
+                subpackages: [],
+                websockets: [],
+                webhooks: []
+            },
+            auth: undefined,
+            snippetsConfiguration: {},
+            globalHeaders: []
+        };
+
+        const forward = new Map<string, APIV1Write.ApiDefinition>();
+        forward.set("api-def-a", minimalApiDefinition);
+        forward.set("api-def-b", minimalApiDefinition);
+
+        const reverse = new Map<string, APIV1Write.ApiDefinition>();
+        reverse.set("api-def-b", minimalApiDefinition);
+        reverse.set("api-def-a", minimalApiDefinition);
+
+        const { input: inForward } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            apiDefinitions: forward
+        });
+        const { input: inReverse } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            apiDefinitions: reverse
+        });
+
+        expect(inForward.apiManifest?.hash).toBe(inReverse.apiManifest?.hash);
+        expect(inForward.apiManifest?.contentLength).toBe(inReverse.apiManifest?.contentLength);
+    });
+
     it("serializes apiManifest as a JSON blob ref when apiDefinitions is non-empty", () => {
         const minimalApiDefinition: APIV1Write.ApiDefinition = {
             types: {},
