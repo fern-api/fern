@@ -375,9 +375,13 @@ export async function downloadBundle({
         }
         if (currentETag != null && currentETag === eTag) {
             logger.debug("ETag matches. Using already downloaded bundle");
+
             // Strip packageManager from cached bundle to prevent corepack conflicts
             const cachedBundleFolder = getPathToBundleFolder({ app });
             await stripPackageManagerField(cachedBundleFolder, logger);
+            const cachedStandaloneDir = path.join(cachedBundleFolder, STANDALONE_FOLDER_NAME);
+            await stripPackageManagerField(cachedStandaloneDir, logger);
+
             return {
                 type: "success"
             };
