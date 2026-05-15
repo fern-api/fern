@@ -1,3 +1,2 @@
-export * from "./client/index.js";
-export * from "./client/requests/index.js";
-export * as  from "./index.js";
+export * from "./multipleRequestBodies/client/requests/index.js";
+export * as multipleRequestBodies from "./multipleRequestBodies/index.js";

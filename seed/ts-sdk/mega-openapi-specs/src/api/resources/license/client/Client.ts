@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { LicenseClient as LicenseClient_ } from "../resources/license/client/Client.js";
 
 export declare namespace LicenseClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,13 @@ export declare namespace LicenseClient {
 
 export class LicenseClient {
     protected readonly _options: NormalizedClientOptions<LicenseClient.Options>;
-    protected _: Client | undefined;
+    protected _license: LicenseClient_ | undefined;
 
     constructor(options: LicenseClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get license(): LicenseClient_ {
+        return (this._license ??= new LicenseClient_(this._options));
     }
 }

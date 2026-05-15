@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { LiteralUserAgentClient as LiteralUserAgentClient_ } from "../resources/literalUserAgent/client/Client.js";
 
 export declare namespace LiteralUserAgentClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,13 @@ export declare namespace LiteralUserAgentClient {
 
 export class LiteralUserAgentClient {
     protected readonly _options: NormalizedClientOptions<LiteralUserAgentClient.Options>;
-    protected _: Client | undefined;
+    protected _literalUserAgent: LiteralUserAgentClient_ | undefined;
 
     constructor(options: LiteralUserAgentClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get literalUserAgent(): LiteralUserAgentClient_ {
+        return (this._literalUserAgent ??= new LiteralUserAgentClient_(this._options));
     }
 }

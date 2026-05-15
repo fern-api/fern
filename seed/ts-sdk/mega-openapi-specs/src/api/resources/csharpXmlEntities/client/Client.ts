@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { CsharpXmlEntitiesClient as CsharpXmlEntitiesClient_ } from "../resources/csharpXmlEntities/client/Client.js";
 
 export declare namespace CsharpXmlEntitiesClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,13 @@ export declare namespace CsharpXmlEntitiesClient {
 
 export class CsharpXmlEntitiesClient {
     protected readonly _options: NormalizedClientOptions<CsharpXmlEntitiesClient.Options>;
-    protected _: Client | undefined;
+    protected _csharpXmlEntities: CsharpXmlEntitiesClient_ | undefined;
 
     constructor(options: CsharpXmlEntitiesClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get csharpXmlEntities(): CsharpXmlEntitiesClient_ {
+        return (this._csharpXmlEntities ??= new CsharpXmlEntitiesClient_(this._options));
     }
 }

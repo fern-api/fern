@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { ValidationClient as ValidationClient_ } from "../resources/validation/client/Client.js";
 
 export declare namespace ValidationClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,13 @@ export declare namespace ValidationClient {
 
 export class ValidationClient {
     protected readonly _options: NormalizedClientOptions<ValidationClient.Options>;
-    protected _: Client | undefined;
+    protected _validation: ValidationClient_ | undefined;
 
     constructor(options: ValidationClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get validation(): ValidationClient_ {
+        return (this._validation ??= new ValidationClient_(this._options));
     }
 }

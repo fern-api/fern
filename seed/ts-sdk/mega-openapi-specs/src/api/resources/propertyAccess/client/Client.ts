@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { PropertyAccessClient as PropertyAccessClient_ } from "../resources/propertyAccess/client/Client.js";
 
 export declare namespace PropertyAccessClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,13 @@ export declare namespace PropertyAccessClient {
 
 export class PropertyAccessClient {
     protected readonly _options: NormalizedClientOptions<PropertyAccessClient.Options>;
-    protected _: Client | undefined;
+    protected _propertyAccess: PropertyAccessClient_ | undefined;
 
     constructor(options: PropertyAccessClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get propertyAccess(): PropertyAccessClient_ {
+        return (this._propertyAccess ??= new PropertyAccessClient_(this._options));
     }
 }

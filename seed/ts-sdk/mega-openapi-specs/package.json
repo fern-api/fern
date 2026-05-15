@@ -46,47 +46,25 @@
         },
         "./alias": {
             "import": {
-                "types": "./dist/esm/api/resources/alias/exports.d.mts",
-                "default": "./dist/esm/api/resources/alias/exports.mjs"
+                "types": "./dist/esm/api/resources/alias/resources/alias/exports.d.mts",
+                "default": "./dist/esm/api/resources/alias/resources/alias/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/alias/exports.d.ts",
-                "default": "./dist/cjs/api/resources/alias/exports.js"
+                "types": "./dist/cjs/api/resources/alias/resources/alias/exports.d.ts",
+                "default": "./dist/cjs/api/resources/alias/resources/alias/exports.js"
             },
-            "default": "./dist/cjs/api/resources/alias/exports.js"
-        },
-        "./alias/": {
-            "import": {
-                "types": "./dist/esm/api/resources/alias/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/alias/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/alias/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/alias/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/alias/resources/exports.js"
+            "default": "./dist/cjs/api/resources/alias/resources/alias/exports.js"
         },
         "./aliasExtends": {
             "import": {
-                "types": "./dist/esm/api/resources/aliasExtends/exports.d.mts",
-                "default": "./dist/esm/api/resources/aliasExtends/exports.mjs"
+                "types": "./dist/esm/api/resources/aliasExtends/resources/aliasExtends/exports.d.mts",
+                "default": "./dist/esm/api/resources/aliasExtends/resources/aliasExtends/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/aliasExtends/exports.d.ts",
-                "default": "./dist/cjs/api/resources/aliasExtends/exports.js"
+                "types": "./dist/cjs/api/resources/aliasExtends/resources/aliasExtends/exports.d.ts",
+                "default": "./dist/cjs/api/resources/aliasExtends/resources/aliasExtends/exports.js"
             },
-            "default": "./dist/cjs/api/resources/aliasExtends/exports.js"
-        },
-        "./aliasExtends/": {
-            "import": {
-                "types": "./dist/esm/api/resources/aliasExtends/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/aliasExtends/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/aliasExtends/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/aliasExtends/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/aliasExtends/resources/exports.js"
+            "default": "./dist/cjs/api/resources/aliasExtends/resources/aliasExtends/exports.js"
         },
         "./allof": {
             "import": {
@@ -453,157 +431,58 @@
         },
         "./csharpInlineTypes": {
             "import": {
-                "types": "./dist/esm/api/resources/csharpInlineTypes/exports.d.mts",
-                "default": "./dist/esm/api/resources/csharpInlineTypes/exports.mjs"
+                "types": "./dist/esm/api/resources/csharpInlineTypes/resources/csharpInlineTypes/exports.d.mts",
+                "default": "./dist/esm/api/resources/csharpInlineTypes/resources/csharpInlineTypes/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/csharpInlineTypes/exports.d.ts",
-                "default": "./dist/cjs/api/resources/csharpInlineTypes/exports.js"
+                "types": "./dist/cjs/api/resources/csharpInlineTypes/resources/csharpInlineTypes/exports.d.ts",
+                "default": "./dist/cjs/api/resources/csharpInlineTypes/resources/csharpInlineTypes/exports.js"
             },
-            "default": "./dist/cjs/api/resources/csharpInlineTypes/exports.js"
-        },
-        "./csharpInlineTypes/": {
-            "import": {
-                "types": "./dist/esm/api/resources/csharpInlineTypes/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/csharpInlineTypes/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/csharpInlineTypes/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/csharpInlineTypes/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/csharpInlineTypes/resources/exports.js"
-        },
-        "./csharpNamespaceCollision": {
-            "import": {
-                "types": "./dist/esm/api/resources/csharpNamespaceCollision/exports.d.mts",
-                "default": "./dist/esm/api/resources/csharpNamespaceCollision/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/csharpNamespaceCollision/exports.d.ts",
-                "default": "./dist/cjs/api/resources/csharpNamespaceCollision/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/csharpNamespaceCollision/exports.js"
-        },
-        "./csharpNamespaceCollision/": {
-            "import": {
-                "types": "./dist/esm/api/resources/csharpNamespaceCollision/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/csharpNamespaceCollision/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/csharpNamespaceCollision/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/csharpNamespaceCollision/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/csharpNamespaceCollision/resources/exports.js"
+            "default": "./dist/cjs/api/resources/csharpInlineTypes/resources/csharpInlineTypes/exports.js"
         },
         "./csharpPropertyNameCollision": {
             "import": {
-                "types": "./dist/esm/api/resources/csharpPropertyNameCollision/exports.d.mts",
-                "default": "./dist/esm/api/resources/csharpPropertyNameCollision/exports.mjs"
+                "types": "./dist/esm/api/resources/csharpPropertyNameCollision/resources/csharpPropertyNameCollision/exports.d.mts",
+                "default": "./dist/esm/api/resources/csharpPropertyNameCollision/resources/csharpPropertyNameCollision/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/csharpPropertyNameCollision/exports.d.ts",
-                "default": "./dist/cjs/api/resources/csharpPropertyNameCollision/exports.js"
+                "types": "./dist/cjs/api/resources/csharpPropertyNameCollision/resources/csharpPropertyNameCollision/exports.d.ts",
+                "default": "./dist/cjs/api/resources/csharpPropertyNameCollision/resources/csharpPropertyNameCollision/exports.js"
             },
-            "default": "./dist/cjs/api/resources/csharpPropertyNameCollision/exports.js"
-        },
-        "./csharpPropertyNameCollision/": {
-            "import": {
-                "types": "./dist/esm/api/resources/csharpPropertyNameCollision/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/csharpPropertyNameCollision/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/csharpPropertyNameCollision/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/csharpPropertyNameCollision/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/csharpPropertyNameCollision/resources/exports.js"
+            "default": "./dist/cjs/api/resources/csharpPropertyNameCollision/resources/csharpPropertyNameCollision/exports.js"
         },
         "./csharpReadonlyRequest": {
             "import": {
-                "types": "./dist/esm/api/resources/csharpReadonlyRequest/exports.d.mts",
-                "default": "./dist/esm/api/resources/csharpReadonlyRequest/exports.mjs"
+                "types": "./dist/esm/api/resources/csharpReadonlyRequest/resources/csharpReadonlyRequest/exports.d.mts",
+                "default": "./dist/esm/api/resources/csharpReadonlyRequest/resources/csharpReadonlyRequest/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/csharpReadonlyRequest/exports.d.ts",
-                "default": "./dist/cjs/api/resources/csharpReadonlyRequest/exports.js"
+                "types": "./dist/cjs/api/resources/csharpReadonlyRequest/resources/csharpReadonlyRequest/exports.d.ts",
+                "default": "./dist/cjs/api/resources/csharpReadonlyRequest/resources/csharpReadonlyRequest/exports.js"
             },
-            "default": "./dist/cjs/api/resources/csharpReadonlyRequest/exports.js"
-        },
-        "./csharpReadonlyRequest/": {
-            "import": {
-                "types": "./dist/esm/api/resources/csharpReadonlyRequest/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/csharpReadonlyRequest/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/csharpReadonlyRequest/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/csharpReadonlyRequest/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/csharpReadonlyRequest/resources/exports.js"
+            "default": "./dist/cjs/api/resources/csharpReadonlyRequest/resources/csharpReadonlyRequest/exports.js"
         },
         "./csharpSystemCollision": {
             "import": {
-                "types": "./dist/esm/api/resources/csharpSystemCollision/exports.d.mts",
-                "default": "./dist/esm/api/resources/csharpSystemCollision/exports.mjs"
+                "types": "./dist/esm/api/resources/csharpSystemCollision/resources/csharpSystemCollision/exports.d.mts",
+                "default": "./dist/esm/api/resources/csharpSystemCollision/resources/csharpSystemCollision/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/csharpSystemCollision/exports.d.ts",
-                "default": "./dist/cjs/api/resources/csharpSystemCollision/exports.js"
+                "types": "./dist/cjs/api/resources/csharpSystemCollision/resources/csharpSystemCollision/exports.d.ts",
+                "default": "./dist/cjs/api/resources/csharpSystemCollision/resources/csharpSystemCollision/exports.js"
             },
-            "default": "./dist/cjs/api/resources/csharpSystemCollision/exports.js"
-        },
-        "./csharpSystemCollision/": {
-            "import": {
-                "types": "./dist/esm/api/resources/csharpSystemCollision/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/csharpSystemCollision/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/csharpSystemCollision/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/csharpSystemCollision/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/csharpSystemCollision/resources/exports.js"
+            "default": "./dist/cjs/api/resources/csharpSystemCollision/resources/csharpSystemCollision/exports.js"
         },
         "./csharpXmlEntities": {
             "import": {
-                "types": "./dist/esm/api/resources/csharpXmlEntities/exports.d.mts",
-                "default": "./dist/esm/api/resources/csharpXmlEntities/exports.mjs"
+                "types": "./dist/esm/api/resources/csharpXmlEntities/resources/csharpXmlEntities/exports.d.mts",
+                "default": "./dist/esm/api/resources/csharpXmlEntities/resources/csharpXmlEntities/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/csharpXmlEntities/exports.d.ts",
-                "default": "./dist/cjs/api/resources/csharpXmlEntities/exports.js"
+                "types": "./dist/cjs/api/resources/csharpXmlEntities/resources/csharpXmlEntities/exports.d.ts",
+                "default": "./dist/cjs/api/resources/csharpXmlEntities/resources/csharpXmlEntities/exports.js"
             },
-            "default": "./dist/cjs/api/resources/csharpXmlEntities/exports.js"
-        },
-        "./csharpXmlEntities/": {
-            "import": {
-                "types": "./dist/esm/api/resources/csharpXmlEntities/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/csharpXmlEntities/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/csharpXmlEntities/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/csharpXmlEntities/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/csharpXmlEntities/resources/exports.js"
-        },
-        "./csharpNamespaceCollision/sCimConfiguration": {
-            "import": {
-                "types": "./dist/esm/api/resources/csharpNamespaceCollision/resources/sCimConfiguration/exports.d.mts",
-                "default": "./dist/esm/api/resources/csharpNamespaceCollision/resources/sCimConfiguration/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/csharpNamespaceCollision/resources/sCimConfiguration/exports.d.ts",
-                "default": "./dist/cjs/api/resources/csharpNamespaceCollision/resources/sCimConfiguration/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/csharpNamespaceCollision/resources/sCimConfiguration/exports.js"
-        },
-        "./csharpNamespaceCollision/system": {
-            "import": {
-                "types": "./dist/esm/api/resources/csharpNamespaceCollision/resources/system/exports.d.mts",
-                "default": "./dist/esm/api/resources/csharpNamespaceCollision/resources/system/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/csharpNamespaceCollision/resources/system/exports.d.ts",
-                "default": "./dist/cjs/api/resources/csharpNamespaceCollision/resources/system/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/csharpNamespaceCollision/resources/system/exports.js"
+            "default": "./dist/cjs/api/resources/csharpXmlEntities/resources/csharpXmlEntities/exports.js"
         },
         "./csharpNamespaceConflict": {
             "import": {
@@ -772,25 +651,14 @@
         },
         "./examples": {
             "import": {
-                "types": "./dist/esm/api/resources/examples/exports.d.mts",
-                "default": "./dist/esm/api/resources/examples/exports.mjs"
+                "types": "./dist/esm/api/resources/examples/resources/examples/exports.d.mts",
+                "default": "./dist/esm/api/resources/examples/resources/examples/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/examples/exports.d.ts",
-                "default": "./dist/cjs/api/resources/examples/exports.js"
+                "types": "./dist/cjs/api/resources/examples/resources/examples/exports.d.ts",
+                "default": "./dist/cjs/api/resources/examples/resources/examples/exports.js"
             },
-            "default": "./dist/cjs/api/resources/examples/exports.js"
-        },
-        "./examples/": {
-            "import": {
-                "types": "./dist/esm/api/resources/examples/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/examples/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/examples/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/examples/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/examples/resources/exports.js"
+            "default": "./dist/cjs/api/resources/examples/resources/examples/exports.js"
         },
         "./examples/service": {
             "import": {
@@ -1058,25 +926,14 @@
         },
         "./extends_": {
             "import": {
-                "types": "./dist/esm/api/resources/extends/exports.d.mts",
-                "default": "./dist/esm/api/resources/extends/exports.mjs"
+                "types": "./dist/esm/api/resources/extends/resources/extends/exports.d.mts",
+                "default": "./dist/esm/api/resources/extends/resources/extends/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/extends/exports.d.ts",
-                "default": "./dist/cjs/api/resources/extends/exports.js"
+                "types": "./dist/cjs/api/resources/extends/resources/extends/exports.d.ts",
+                "default": "./dist/cjs/api/resources/extends/resources/extends/exports.js"
             },
-            "default": "./dist/cjs/api/resources/extends/exports.js"
-        },
-        "./extends_/": {
-            "import": {
-                "types": "./dist/esm/api/resources/extends/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/extends/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/extends/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/extends/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/extends/resources/exports.js"
+            "default": "./dist/cjs/api/resources/extends/resources/extends/exports.js"
         },
         "./extraProperties": {
             "import": {
@@ -1146,25 +1003,14 @@
         },
         "./folders": {
             "import": {
-                "types": "./dist/esm/api/resources/folders/exports.d.mts",
-                "default": "./dist/esm/api/resources/folders/exports.mjs"
+                "types": "./dist/esm/api/resources/folders/resources/folders/exports.d.mts",
+                "default": "./dist/esm/api/resources/folders/resources/folders/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/folders/exports.d.ts",
-                "default": "./dist/cjs/api/resources/folders/exports.js"
+                "types": "./dist/cjs/api/resources/folders/resources/folders/exports.d.ts",
+                "default": "./dist/cjs/api/resources/folders/resources/folders/exports.js"
             },
-            "default": "./dist/cjs/api/resources/folders/exports.js"
-        },
-        "./folders/": {
-            "import": {
-                "types": "./dist/esm/api/resources/folders/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/folders/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/folders/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/folders/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/folders/resources/exports.js"
+            "default": "./dist/cjs/api/resources/folders/resources/folders/exports.js"
         },
         "./folders/aB": {
             "import": {
@@ -1212,25 +1058,14 @@
         },
         "./goOptionalLiteralAlias": {
             "import": {
-                "types": "./dist/esm/api/resources/goOptionalLiteralAlias/exports.d.mts",
-                "default": "./dist/esm/api/resources/goOptionalLiteralAlias/exports.mjs"
+                "types": "./dist/esm/api/resources/goOptionalLiteralAlias/resources/goOptionalLiteralAlias/exports.d.mts",
+                "default": "./dist/esm/api/resources/goOptionalLiteralAlias/resources/goOptionalLiteralAlias/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/goOptionalLiteralAlias/exports.d.ts",
-                "default": "./dist/cjs/api/resources/goOptionalLiteralAlias/exports.js"
+                "types": "./dist/cjs/api/resources/goOptionalLiteralAlias/resources/goOptionalLiteralAlias/exports.d.ts",
+                "default": "./dist/cjs/api/resources/goOptionalLiteralAlias/resources/goOptionalLiteralAlias/exports.js"
             },
-            "default": "./dist/cjs/api/resources/goOptionalLiteralAlias/exports.js"
-        },
-        "./goOptionalLiteralAlias/": {
-            "import": {
-                "types": "./dist/esm/api/resources/goOptionalLiteralAlias/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/goOptionalLiteralAlias/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/goOptionalLiteralAlias/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/goOptionalLiteralAlias/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/goOptionalLiteralAlias/resources/exports.js"
+            "default": "./dist/cjs/api/resources/goOptionalLiteralAlias/resources/goOptionalLiteralAlias/exports.js"
         },
         "./goBytesRequest": {
             "import": {
@@ -1517,50 +1352,6 @@
                 "default": "./dist/cjs/api/resources/goUndiscriminatedUnionWireTests/resources/service/exports.js"
             },
             "default": "./dist/cjs/api/resources/goUndiscriminatedUnionWireTests/resources/service/exports.js"
-        },
-        "./headerAuth": {
-            "import": {
-                "types": "./dist/esm/api/resources/headerAuth/exports.d.mts",
-                "default": "./dist/esm/api/resources/headerAuth/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/headerAuth/exports.d.ts",
-                "default": "./dist/cjs/api/resources/headerAuth/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/headerAuth/exports.js"
-        },
-        "./headerAuth/service": {
-            "import": {
-                "types": "./dist/esm/api/resources/headerAuth/resources/service/exports.d.mts",
-                "default": "./dist/esm/api/resources/headerAuth/resources/service/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/headerAuth/resources/service/exports.d.ts",
-                "default": "./dist/cjs/api/resources/headerAuth/resources/service/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/headerAuth/resources/service/exports.js"
-        },
-        "./headerAuthEnvironmentVariable": {
-            "import": {
-                "types": "./dist/esm/api/resources/headerAuthEnvironmentVariable/exports.d.mts",
-                "default": "./dist/esm/api/resources/headerAuthEnvironmentVariable/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/headerAuthEnvironmentVariable/exports.d.ts",
-                "default": "./dist/cjs/api/resources/headerAuthEnvironmentVariable/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/headerAuthEnvironmentVariable/exports.js"
-        },
-        "./headerAuthEnvironmentVariable/service": {
-            "import": {
-                "types": "./dist/esm/api/resources/headerAuthEnvironmentVariable/resources/service/exports.d.mts",
-                "default": "./dist/esm/api/resources/headerAuthEnvironmentVariable/resources/service/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/headerAuthEnvironmentVariable/resources/service/exports.d.ts",
-                "default": "./dist/cjs/api/resources/headerAuthEnvironmentVariable/resources/service/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/headerAuthEnvironmentVariable/resources/service/exports.js"
         },
         "./httpHead": {
             "import": {
@@ -1894,102 +1685,47 @@
         },
         "./javaDefaultTimeout": {
             "import": {
-                "types": "./dist/esm/api/resources/javaDefaultTimeout/exports.d.mts",
-                "default": "./dist/esm/api/resources/javaDefaultTimeout/exports.mjs"
+                "types": "./dist/esm/api/resources/javaDefaultTimeout/resources/javaDefaultTimeout/exports.d.mts",
+                "default": "./dist/esm/api/resources/javaDefaultTimeout/resources/javaDefaultTimeout/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/javaDefaultTimeout/exports.d.ts",
-                "default": "./dist/cjs/api/resources/javaDefaultTimeout/exports.js"
+                "types": "./dist/cjs/api/resources/javaDefaultTimeout/resources/javaDefaultTimeout/exports.d.ts",
+                "default": "./dist/cjs/api/resources/javaDefaultTimeout/resources/javaDefaultTimeout/exports.js"
             },
-            "default": "./dist/cjs/api/resources/javaDefaultTimeout/exports.js"
-        },
-        "./javaDefaultTimeout/": {
-            "import": {
-                "types": "./dist/esm/api/resources/javaDefaultTimeout/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/javaDefaultTimeout/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/javaDefaultTimeout/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/javaDefaultTimeout/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/javaDefaultTimeout/resources/exports.js"
+            "default": "./dist/cjs/api/resources/javaDefaultTimeout/resources/javaDefaultTimeout/exports.js"
         },
         "./javaInlineTypes": {
             "import": {
-                "types": "./dist/esm/api/resources/javaInlineTypes/exports.d.mts",
-                "default": "./dist/esm/api/resources/javaInlineTypes/exports.mjs"
+                "types": "./dist/esm/api/resources/javaInlineTypes/resources/javaInlineTypes/exports.d.mts",
+                "default": "./dist/esm/api/resources/javaInlineTypes/resources/javaInlineTypes/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/javaInlineTypes/exports.d.ts",
-                "default": "./dist/cjs/api/resources/javaInlineTypes/exports.js"
+                "types": "./dist/cjs/api/resources/javaInlineTypes/resources/javaInlineTypes/exports.d.ts",
+                "default": "./dist/cjs/api/resources/javaInlineTypes/resources/javaInlineTypes/exports.js"
             },
-            "default": "./dist/cjs/api/resources/javaInlineTypes/exports.js"
-        },
-        "./javaInlineTypes/": {
-            "import": {
-                "types": "./dist/esm/api/resources/javaInlineTypes/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/javaInlineTypes/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/javaInlineTypes/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/javaInlineTypes/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/javaInlineTypes/resources/exports.js"
-        },
-        "./javaNullableNamedRequestTypes": {
-            "import": {
-                "types": "./dist/esm/api/resources/javaNullableNamedRequestTypes/exports.d.mts",
-                "default": "./dist/esm/api/resources/javaNullableNamedRequestTypes/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/javaNullableNamedRequestTypes/exports.d.ts",
-                "default": "./dist/cjs/api/resources/javaNullableNamedRequestTypes/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/javaNullableNamedRequestTypes/exports.js"
+            "default": "./dist/cjs/api/resources/javaInlineTypes/resources/javaInlineTypes/exports.js"
         },
         "./javaOptionalNullableQueryParams": {
             "import": {
-                "types": "./dist/esm/api/resources/javaOptionalNullableQueryParams/exports.d.mts",
-                "default": "./dist/esm/api/resources/javaOptionalNullableQueryParams/exports.mjs"
+                "types": "./dist/esm/api/resources/javaOptionalNullableQueryParams/resources/javaOptionalNullableQueryParams/exports.d.mts",
+                "default": "./dist/esm/api/resources/javaOptionalNullableQueryParams/resources/javaOptionalNullableQueryParams/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/javaOptionalNullableQueryParams/exports.d.ts",
-                "default": "./dist/cjs/api/resources/javaOptionalNullableQueryParams/exports.js"
+                "types": "./dist/cjs/api/resources/javaOptionalNullableQueryParams/resources/javaOptionalNullableQueryParams/exports.d.ts",
+                "default": "./dist/cjs/api/resources/javaOptionalNullableQueryParams/resources/javaOptionalNullableQueryParams/exports.js"
             },
-            "default": "./dist/cjs/api/resources/javaOptionalNullableQueryParams/exports.js"
-        },
-        "./javaOptionalNullableQueryParams/": {
-            "import": {
-                "types": "./dist/esm/api/resources/javaOptionalNullableQueryParams/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/javaOptionalNullableQueryParams/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/javaOptionalNullableQueryParams/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/javaOptionalNullableQueryParams/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/javaOptionalNullableQueryParams/resources/exports.js"
+            "default": "./dist/cjs/api/resources/javaOptionalNullableQueryParams/resources/javaOptionalNullableQueryParams/exports.js"
         },
         "./javaOptionalQueryParamsOverloads": {
             "import": {
-                "types": "./dist/esm/api/resources/javaOptionalQueryParamsOverloads/exports.d.mts",
-                "default": "./dist/esm/api/resources/javaOptionalQueryParamsOverloads/exports.mjs"
+                "types": "./dist/esm/api/resources/javaOptionalQueryParamsOverloads/resources/javaOptionalQueryParamsOverloads/exports.d.mts",
+                "default": "./dist/esm/api/resources/javaOptionalQueryParamsOverloads/resources/javaOptionalQueryParamsOverloads/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/javaOptionalQueryParamsOverloads/exports.d.ts",
-                "default": "./dist/cjs/api/resources/javaOptionalQueryParamsOverloads/exports.js"
+                "types": "./dist/cjs/api/resources/javaOptionalQueryParamsOverloads/resources/javaOptionalQueryParamsOverloads/exports.d.ts",
+                "default": "./dist/cjs/api/resources/javaOptionalQueryParamsOverloads/resources/javaOptionalQueryParamsOverloads/exports.js"
             },
-            "default": "./dist/cjs/api/resources/javaOptionalQueryParamsOverloads/exports.js"
-        },
-        "./javaOptionalQueryParamsOverloads/": {
-            "import": {
-                "types": "./dist/esm/api/resources/javaOptionalQueryParamsOverloads/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/javaOptionalQueryParamsOverloads/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/javaOptionalQueryParamsOverloads/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/javaOptionalQueryParamsOverloads/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/javaOptionalQueryParamsOverloads/resources/exports.js"
+            "default": "./dist/cjs/api/resources/javaOptionalQueryParamsOverloads/resources/javaOptionalQueryParamsOverloads/exports.js"
         },
         "./javaPathParamKeyConflict": {
             "import": {
@@ -2004,25 +1740,14 @@
         },
         "./javaRequiredBodyOptionalHeaders": {
             "import": {
-                "types": "./dist/esm/api/resources/javaRequiredBodyOptionalHeaders/exports.d.mts",
-                "default": "./dist/esm/api/resources/javaRequiredBodyOptionalHeaders/exports.mjs"
+                "types": "./dist/esm/api/resources/javaRequiredBodyOptionalHeaders/resources/javaRequiredBodyOptionalHeaders/exports.d.mts",
+                "default": "./dist/esm/api/resources/javaRequiredBodyOptionalHeaders/resources/javaRequiredBodyOptionalHeaders/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/javaRequiredBodyOptionalHeaders/exports.d.ts",
-                "default": "./dist/cjs/api/resources/javaRequiredBodyOptionalHeaders/exports.js"
+                "types": "./dist/cjs/api/resources/javaRequiredBodyOptionalHeaders/resources/javaRequiredBodyOptionalHeaders/exports.d.ts",
+                "default": "./dist/cjs/api/resources/javaRequiredBodyOptionalHeaders/resources/javaRequiredBodyOptionalHeaders/exports.js"
             },
-            "default": "./dist/cjs/api/resources/javaRequiredBodyOptionalHeaders/exports.js"
-        },
-        "./javaRequiredBodyOptionalHeaders/": {
-            "import": {
-                "types": "./dist/esm/api/resources/javaRequiredBodyOptionalHeaders/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/javaRequiredBodyOptionalHeaders/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/javaRequiredBodyOptionalHeaders/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/javaRequiredBodyOptionalHeaders/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/javaRequiredBodyOptionalHeaders/resources/exports.js"
+            "default": "./dist/cjs/api/resources/javaRequiredBodyOptionalHeaders/resources/javaRequiredBodyOptionalHeaders/exports.js"
         },
         "./javaBuilderExtension": {
             "import": {
@@ -2180,25 +1905,14 @@
         },
         "./license": {
             "import": {
-                "types": "./dist/esm/api/resources/license/exports.d.mts",
-                "default": "./dist/esm/api/resources/license/exports.mjs"
+                "types": "./dist/esm/api/resources/license/resources/license/exports.d.mts",
+                "default": "./dist/esm/api/resources/license/resources/license/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/license/exports.d.ts",
-                "default": "./dist/cjs/api/resources/license/exports.js"
+                "types": "./dist/cjs/api/resources/license/resources/license/exports.d.ts",
+                "default": "./dist/cjs/api/resources/license/resources/license/exports.js"
             },
-            "default": "./dist/cjs/api/resources/license/exports.js"
-        },
-        "./license/": {
-            "import": {
-                "types": "./dist/esm/api/resources/license/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/license/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/license/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/license/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/license/resources/exports.js"
+            "default": "./dist/cjs/api/resources/license/resources/license/exports.js"
         },
         "./literal": {
             "import": {
@@ -2268,25 +1982,14 @@
         },
         "./literalUserAgent": {
             "import": {
-                "types": "./dist/esm/api/resources/literalUserAgent/exports.d.mts",
-                "default": "./dist/esm/api/resources/literalUserAgent/exports.mjs"
+                "types": "./dist/esm/api/resources/literalUserAgent/resources/literalUserAgent/exports.d.mts",
+                "default": "./dist/esm/api/resources/literalUserAgent/resources/literalUserAgent/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/literalUserAgent/exports.d.ts",
-                "default": "./dist/cjs/api/resources/literalUserAgent/exports.js"
+                "types": "./dist/cjs/api/resources/literalUserAgent/resources/literalUserAgent/exports.d.ts",
+                "default": "./dist/cjs/api/resources/literalUserAgent/resources/literalUserAgent/exports.js"
             },
-            "default": "./dist/cjs/api/resources/literalUserAgent/exports.js"
-        },
-        "./literalUserAgent/": {
-            "import": {
-                "types": "./dist/esm/api/resources/literalUserAgent/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/literalUserAgent/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/literalUserAgent/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/literalUserAgent/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/literalUserAgent/resources/exports.js"
+            "default": "./dist/cjs/api/resources/literalUserAgent/resources/literalUserAgent/exports.js"
         },
         "./mixedCase": {
             "import": {
@@ -2499,25 +2202,14 @@
         },
         "./multipleRequestBodies": {
             "import": {
-                "types": "./dist/esm/api/resources/multipleRequestBodies/exports.d.mts",
-                "default": "./dist/esm/api/resources/multipleRequestBodies/exports.mjs"
+                "types": "./dist/esm/api/resources/multipleRequestBodies/resources/multipleRequestBodies/exports.d.mts",
+                "default": "./dist/esm/api/resources/multipleRequestBodies/resources/multipleRequestBodies/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/multipleRequestBodies/exports.d.ts",
-                "default": "./dist/cjs/api/resources/multipleRequestBodies/exports.js"
+                "types": "./dist/cjs/api/resources/multipleRequestBodies/resources/multipleRequestBodies/exports.d.ts",
+                "default": "./dist/cjs/api/resources/multipleRequestBodies/resources/multipleRequestBodies/exports.js"
             },
-            "default": "./dist/cjs/api/resources/multipleRequestBodies/exports.js"
-        },
-        "./multipleRequestBodies/": {
-            "import": {
-                "types": "./dist/esm/api/resources/multipleRequestBodies/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/multipleRequestBodies/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/multipleRequestBodies/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/multipleRequestBodies/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/multipleRequestBodies/resources/exports.js"
+            "default": "./dist/cjs/api/resources/multipleRequestBodies/resources/multipleRequestBodies/exports.js"
         },
         "./noContentResponse": {
             "import": {
@@ -3179,39 +2871,6 @@
             },
             "default": "./dist/cjs/api/resources/optional/resources/optional/exports.js"
         },
-        "./packageYml": {
-            "import": {
-                "types": "./dist/esm/api/resources/packageYml/exports.d.mts",
-                "default": "./dist/esm/api/resources/packageYml/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/packageYml/exports.d.ts",
-                "default": "./dist/cjs/api/resources/packageYml/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/packageYml/exports.js"
-        },
-        "./packageYml/": {
-            "import": {
-                "types": "./dist/esm/api/resources/packageYml/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/packageYml/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/packageYml/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/packageYml/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/packageYml/resources/exports.js"
-        },
-        "./packageYml/service": {
-            "import": {
-                "types": "./dist/esm/api/resources/packageYml/resources/service/exports.d.mts",
-                "default": "./dist/esm/api/resources/packageYml/resources/service/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/packageYml/resources/service/exports.d.ts",
-                "default": "./dist/cjs/api/resources/packageYml/resources/service/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/packageYml/resources/service/exports.js"
-        },
         "./pagination": {
             "import": {
                 "types": "./dist/esm/api/resources/pagination/exports.d.mts",
@@ -3357,25 +3016,14 @@
         },
         "./propertyAccess": {
             "import": {
-                "types": "./dist/esm/api/resources/propertyAccess/exports.d.mts",
-                "default": "./dist/esm/api/resources/propertyAccess/exports.mjs"
+                "types": "./dist/esm/api/resources/propertyAccess/resources/propertyAccess/exports.d.mts",
+                "default": "./dist/esm/api/resources/propertyAccess/resources/propertyAccess/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/propertyAccess/exports.d.ts",
-                "default": "./dist/cjs/api/resources/propertyAccess/exports.js"
+                "types": "./dist/cjs/api/resources/propertyAccess/resources/propertyAccess/exports.d.ts",
+                "default": "./dist/cjs/api/resources/propertyAccess/resources/propertyAccess/exports.js"
             },
-            "default": "./dist/cjs/api/resources/propertyAccess/exports.js"
-        },
-        "./propertyAccess/": {
-            "import": {
-                "types": "./dist/esm/api/resources/propertyAccess/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/propertyAccess/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/propertyAccess/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/propertyAccess/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/propertyAccess/resources/exports.js"
+            "default": "./dist/cjs/api/resources/propertyAccess/resources/propertyAccess/exports.js"
         },
         "./publicObject": {
             "import": {
@@ -3401,36 +3049,14 @@
         },
         "./pythonPositionalSingleProperty": {
             "import": {
-                "types": "./dist/esm/api/resources/pythonPositionalSingleProperty/exports.d.mts",
-                "default": "./dist/esm/api/resources/pythonPositionalSingleProperty/exports.mjs"
+                "types": "./dist/esm/api/resources/pythonPositionalSingleProperty/resources/pythonPositionalSingleProperty/exports.d.mts",
+                "default": "./dist/esm/api/resources/pythonPositionalSingleProperty/resources/pythonPositionalSingleProperty/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/pythonPositionalSingleProperty/exports.d.ts",
-                "default": "./dist/cjs/api/resources/pythonPositionalSingleProperty/exports.js"
+                "types": "./dist/cjs/api/resources/pythonPositionalSingleProperty/resources/pythonPositionalSingleProperty/exports.d.ts",
+                "default": "./dist/cjs/api/resources/pythonPositionalSingleProperty/resources/pythonPositionalSingleProperty/exports.js"
             },
-            "default": "./dist/cjs/api/resources/pythonPositionalSingleProperty/exports.js"
-        },
-        "./pythonPositionalSingleProperty/": {
-            "import": {
-                "types": "./dist/esm/api/resources/pythonPositionalSingleProperty/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/pythonPositionalSingleProperty/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/pythonPositionalSingleProperty/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/pythonPositionalSingleProperty/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/pythonPositionalSingleProperty/resources/exports.js"
-        },
-        "./pythonStreamingParameterOpenapi": {
-            "import": {
-                "types": "./dist/esm/api/resources/pythonStreamingParameterOpenapi/exports.d.mts",
-                "default": "./dist/esm/api/resources/pythonStreamingParameterOpenapi/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/pythonStreamingParameterOpenapi/exports.d.ts",
-                "default": "./dist/cjs/api/resources/pythonStreamingParameterOpenapi/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/pythonStreamingParameterOpenapi/exports.js"
+            "default": "./dist/cjs/api/resources/pythonPositionalSingleProperty/resources/pythonPositionalSingleProperty/exports.js"
         },
         "./pythonBackslashEscape": {
             "import": {
@@ -3509,17 +3135,6 @@
             },
             "default": "./dist/cjs/api/resources/pythonReservedKeywordSubpackages/resources/automations/resources/export/exports.js"
         },
-        "./queryParamNameConflict": {
-            "import": {
-                "types": "./dist/esm/api/resources/queryParamNameConflict/exports.d.mts",
-                "default": "./dist/esm/api/resources/queryParamNameConflict/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/queryParamNameConflict/exports.d.ts",
-                "default": "./dist/cjs/api/resources/queryParamNameConflict/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/queryParamNameConflict/exports.js"
-        },
         "./queryParametersOpenapi": {
             "import": {
                 "types": "./dist/esm/api/resources/queryParametersOpenapi/exports.d.mts",
@@ -3577,25 +3192,14 @@
         },
         "./requiredNullable": {
             "import": {
-                "types": "./dist/esm/api/resources/requiredNullable/exports.d.mts",
-                "default": "./dist/esm/api/resources/requiredNullable/exports.mjs"
+                "types": "./dist/esm/api/resources/requiredNullable/resources/requiredNullable/exports.d.mts",
+                "default": "./dist/esm/api/resources/requiredNullable/resources/requiredNullable/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/requiredNullable/exports.d.ts",
-                "default": "./dist/cjs/api/resources/requiredNullable/exports.js"
+                "types": "./dist/cjs/api/resources/requiredNullable/resources/requiredNullable/exports.d.ts",
+                "default": "./dist/cjs/api/resources/requiredNullable/resources/requiredNullable/exports.js"
             },
-            "default": "./dist/cjs/api/resources/requiredNullable/exports.js"
-        },
-        "./requiredNullable/": {
-            "import": {
-                "types": "./dist/esm/api/resources/requiredNullable/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/requiredNullable/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/requiredNullable/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/requiredNullable/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/requiredNullable/resources/exports.js"
+            "default": "./dist/cjs/api/resources/requiredNullable/resources/requiredNullable/exports.js"
         },
         "./reservedKeywords": {
             "import": {
@@ -3674,17 +3278,6 @@
             },
             "default": "./dist/cjs/api/resources/schemalessRequestBodyExamples/exports.js"
         },
-        "./serverSentEventsOpenapi": {
-            "import": {
-                "types": "./dist/esm/api/resources/serverSentEventsOpenapi/exports.d.mts",
-                "default": "./dist/esm/api/resources/serverSentEventsOpenapi/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/serverSentEventsOpenapi/exports.d.ts",
-                "default": "./dist/cjs/api/resources/serverSentEventsOpenapi/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/serverSentEventsOpenapi/exports.js"
-        },
         "./serverUrlTemplating": {
             "import": {
                 "types": "./dist/esm/api/resources/serverUrlTemplating/exports.d.mts",
@@ -3742,25 +3335,14 @@
         },
         "./simpleFhir": {
             "import": {
-                "types": "./dist/esm/api/resources/simpleFhir/exports.d.mts",
-                "default": "./dist/esm/api/resources/simpleFhir/exports.mjs"
+                "types": "./dist/esm/api/resources/simpleFhir/resources/simpleFhir/exports.d.mts",
+                "default": "./dist/esm/api/resources/simpleFhir/resources/simpleFhir/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/simpleFhir/exports.d.ts",
-                "default": "./dist/cjs/api/resources/simpleFhir/exports.js"
+                "types": "./dist/cjs/api/resources/simpleFhir/resources/simpleFhir/exports.d.ts",
+                "default": "./dist/cjs/api/resources/simpleFhir/resources/simpleFhir/exports.js"
             },
-            "default": "./dist/cjs/api/resources/simpleFhir/exports.js"
-        },
-        "./simpleFhir/": {
-            "import": {
-                "types": "./dist/esm/api/resources/simpleFhir/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/simpleFhir/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/simpleFhir/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/simpleFhir/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/simpleFhir/resources/exports.js"
+            "default": "./dist/cjs/api/resources/simpleFhir/resources/simpleFhir/exports.js"
         },
         "./simpleApi": {
             "import": {
@@ -4017,25 +3599,14 @@
         },
         "./tsInlineTypes": {
             "import": {
-                "types": "./dist/esm/api/resources/tsInlineTypes/exports.d.mts",
-                "default": "./dist/esm/api/resources/tsInlineTypes/exports.mjs"
+                "types": "./dist/esm/api/resources/tsInlineTypes/resources/tsInlineTypes/exports.d.mts",
+                "default": "./dist/esm/api/resources/tsInlineTypes/resources/tsInlineTypes/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/tsInlineTypes/exports.d.ts",
-                "default": "./dist/cjs/api/resources/tsInlineTypes/exports.js"
+                "types": "./dist/cjs/api/resources/tsInlineTypes/resources/tsInlineTypes/exports.d.ts",
+                "default": "./dist/cjs/api/resources/tsInlineTypes/resources/tsInlineTypes/exports.js"
             },
-            "default": "./dist/cjs/api/resources/tsInlineTypes/exports.js"
-        },
-        "./tsInlineTypes/": {
-            "import": {
-                "types": "./dist/esm/api/resources/tsInlineTypes/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/tsInlineTypes/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/tsInlineTypes/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/tsInlineTypes/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/tsInlineTypes/resources/exports.js"
+            "default": "./dist/cjs/api/resources/tsInlineTypes/resources/tsInlineTypes/exports.js"
         },
         "./tsExpressCasing": {
             "import": {
@@ -4061,25 +3632,14 @@
         },
         "./undiscriminatedUnionWithResponseProperty": {
             "import": {
-                "types": "./dist/esm/api/resources/undiscriminatedUnionWithResponseProperty/exports.d.mts",
-                "default": "./dist/esm/api/resources/undiscriminatedUnionWithResponseProperty/exports.mjs"
+                "types": "./dist/esm/api/resources/undiscriminatedUnionWithResponseProperty/resources/undiscriminatedUnionWithResponseProperty/exports.d.mts",
+                "default": "./dist/esm/api/resources/undiscriminatedUnionWithResponseProperty/resources/undiscriminatedUnionWithResponseProperty/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/undiscriminatedUnionWithResponseProperty/exports.d.ts",
-                "default": "./dist/cjs/api/resources/undiscriminatedUnionWithResponseProperty/exports.js"
+                "types": "./dist/cjs/api/resources/undiscriminatedUnionWithResponseProperty/resources/undiscriminatedUnionWithResponseProperty/exports.d.ts",
+                "default": "./dist/cjs/api/resources/undiscriminatedUnionWithResponseProperty/resources/undiscriminatedUnionWithResponseProperty/exports.js"
             },
-            "default": "./dist/cjs/api/resources/undiscriminatedUnionWithResponseProperty/exports.js"
-        },
-        "./undiscriminatedUnionWithResponseProperty/": {
-            "import": {
-                "types": "./dist/esm/api/resources/undiscriminatedUnionWithResponseProperty/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/undiscriminatedUnionWithResponseProperty/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/undiscriminatedUnionWithResponseProperty/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/undiscriminatedUnionWithResponseProperty/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/undiscriminatedUnionWithResponseProperty/resources/exports.js"
+            "default": "./dist/cjs/api/resources/undiscriminatedUnionWithResponseProperty/resources/undiscriminatedUnionWithResponseProperty/exports.js"
         },
         "./undiscriminatedUnions": {
             "import": {
@@ -4226,25 +3786,14 @@
         },
         "./validation": {
             "import": {
-                "types": "./dist/esm/api/resources/validation/exports.d.mts",
-                "default": "./dist/esm/api/resources/validation/exports.mjs"
+                "types": "./dist/esm/api/resources/validation/resources/validation/exports.d.mts",
+                "default": "./dist/esm/api/resources/validation/resources/validation/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/validation/exports.d.ts",
-                "default": "./dist/cjs/api/resources/validation/exports.js"
+                "types": "./dist/cjs/api/resources/validation/resources/validation/exports.d.ts",
+                "default": "./dist/cjs/api/resources/validation/resources/validation/exports.js"
             },
-            "default": "./dist/cjs/api/resources/validation/exports.js"
-        },
-        "./validation/": {
-            "import": {
-                "types": "./dist/esm/api/resources/validation/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/validation/resources/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/validation/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/validation/resources/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/validation/resources/exports.js"
+            "default": "./dist/cjs/api/resources/validation/resources/validation/exports.js"
         },
         "./variables": {
             "import": {

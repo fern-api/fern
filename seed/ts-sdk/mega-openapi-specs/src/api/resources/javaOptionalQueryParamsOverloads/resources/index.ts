@@ -1,3 +1,2 @@
-export * from "./client/index.js";
-export * from "./client/requests/index.js";
-export * as  from "./index.js";
+export * from "./javaOptionalQueryParamsOverloads/client/requests/index.js";
+export * as javaOptionalQueryParamsOverloads from "./javaOptionalQueryParamsOverloads/index.js";

@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { JavaDefaultTimeoutClient as JavaDefaultTimeoutClient_ } from "../resources/javaDefaultTimeout/client/Client.js";
 
 export declare namespace JavaDefaultTimeoutClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,13 @@ export declare namespace JavaDefaultTimeoutClient {
 
 export class JavaDefaultTimeoutClient {
     protected readonly _options: NormalizedClientOptions<JavaDefaultTimeoutClient.Options>;
-    protected _: Client | undefined;
+    protected _javaDefaultTimeout: JavaDefaultTimeoutClient_ | undefined;
 
     constructor(options: JavaDefaultTimeoutClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get javaDefaultTimeout(): JavaDefaultTimeoutClient_ {
+        return (this._javaDefaultTimeout ??= new JavaDefaultTimeoutClient_(this._options));
     }
 }

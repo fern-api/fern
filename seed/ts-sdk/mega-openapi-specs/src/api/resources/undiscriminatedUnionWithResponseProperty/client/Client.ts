@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { UndiscriminatedUnionWithResponsePropertyClient as UndiscriminatedUnionWithResponsePropertyClient_ } from "../resources/undiscriminatedUnionWithResponseProperty/client/Client.js";
 
 export declare namespace UndiscriminatedUnionWithResponsePropertyClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,15 @@ export declare namespace UndiscriminatedUnionWithResponsePropertyClient {
 
 export class UndiscriminatedUnionWithResponsePropertyClient {
     protected readonly _options: NormalizedClientOptions<UndiscriminatedUnionWithResponsePropertyClient.Options>;
-    protected _: Client | undefined;
+    protected _undiscriminatedUnionWithResponseProperty: UndiscriminatedUnionWithResponsePropertyClient_ | undefined;
 
     constructor(options: UndiscriminatedUnionWithResponsePropertyClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get undiscriminatedUnionWithResponseProperty(): UndiscriminatedUnionWithResponsePropertyClient_ {
+        return (this._undiscriminatedUnionWithResponseProperty ??= new UndiscriminatedUnionWithResponsePropertyClient_(
+            this._options,
+        ));
     }
 }

@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { CsharpInlineTypesClient as CsharpInlineTypesClient_ } from "../resources/csharpInlineTypes/client/Client.js";
 
 export declare namespace CsharpInlineTypesClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,13 @@ export declare namespace CsharpInlineTypesClient {
 
 export class CsharpInlineTypesClient {
     protected readonly _options: NormalizedClientOptions<CsharpInlineTypesClient.Options>;
-    protected _: Client | undefined;
+    protected _csharpInlineTypes: CsharpInlineTypesClient_ | undefined;
 
     constructor(options: CsharpInlineTypesClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get csharpInlineTypes(): CsharpInlineTypesClient_ {
+        return (this._csharpInlineTypes ??= new CsharpInlineTypesClient_(this._options));
     }
 }

@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { AliasClient as AliasClient_ } from "../resources/alias/client/Client.js";
 
 export declare namespace AliasClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,13 @@ export declare namespace AliasClient {
 
 export class AliasClient {
     protected readonly _options: NormalizedClientOptions<AliasClient.Options>;
-    protected _: Client | undefined;
+    protected _alias: AliasClient_ | undefined;
 
     constructor(options: AliasClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get alias(): AliasClient_ {
+        return (this._alias ??= new AliasClient_(this._options));
     }
 }

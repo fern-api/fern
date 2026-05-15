@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { TsInlineTypesClient as TsInlineTypesClient_ } from "../resources/tsInlineTypes/client/Client.js";
 
 export declare namespace TsInlineTypesClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,13 @@ export declare namespace TsInlineTypesClient {
 
 export class TsInlineTypesClient {
     protected readonly _options: NormalizedClientOptions<TsInlineTypesClient.Options>;
-    protected _: Client | undefined;
+    protected _tsInlineTypes: TsInlineTypesClient_ | undefined;
 
     constructor(options: TsInlineTypesClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get tsInlineTypes(): TsInlineTypesClient_ {
+        return (this._tsInlineTypes ??= new TsInlineTypesClient_(this._options));
     }
 }

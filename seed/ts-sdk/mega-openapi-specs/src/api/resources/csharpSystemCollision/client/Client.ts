@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { CsharpSystemCollisionClient as CsharpSystemCollisionClient_ } from "../resources/csharpSystemCollision/client/Client.js";
 
 export declare namespace CsharpSystemCollisionClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,13 @@ export declare namespace CsharpSystemCollisionClient {
 
 export class CsharpSystemCollisionClient {
     protected readonly _options: NormalizedClientOptions<CsharpSystemCollisionClient.Options>;
-    protected _: Client | undefined;
+    protected _csharpSystemCollision: CsharpSystemCollisionClient_ | undefined;
 
     constructor(options: CsharpSystemCollisionClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get csharpSystemCollision(): CsharpSystemCollisionClient_ {
+        return (this._csharpSystemCollision ??= new CsharpSystemCollisionClient_(this._options));
     }
 }

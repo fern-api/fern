@@ -17,7 +17,6 @@ import { ClientSideParamsClient } from "./api/resources/clientSideParams/client/
 import { ContentTypeClient } from "./api/resources/contentType/client/Client.js";
 import { CrossPackageTypeNamesClient } from "./api/resources/crossPackageTypeNames/client/Client.js";
 import { CsharpInlineTypesClient } from "./api/resources/csharpInlineTypes/client/Client.js";
-import { CsharpNamespaceCollisionClient } from "./api/resources/csharpNamespaceCollision/client/Client.js";
 import { CsharpNamespaceConflictClient } from "./api/resources/csharpNamespaceConflict/client/Client.js";
 import { CsharpPropertyNameCollisionClient } from "./api/resources/csharpPropertyNameCollision/client/Client.js";
 import { CsharpReadonlyRequestClient } from "./api/resources/csharpReadonlyRequest/client/Client.js";
@@ -39,8 +38,6 @@ import { GoContentTypeClient } from "./api/resources/goContentType/client/Client
 import { GoDeterministicOrderingClient } from "./api/resources/goDeterministicOrdering/client/Client.js";
 import { GoOptionalLiteralAliasClient } from "./api/resources/goOptionalLiteralAlias/client/Client.js";
 import { GoUndiscriminatedUnionWireTestsClient } from "./api/resources/goUndiscriminatedUnionWireTests/client/Client.js";
-import { HeaderAuthClient } from "./api/resources/headerAuth/client/Client.js";
-import { HeaderAuthEnvironmentVariableClient } from "./api/resources/headerAuthEnvironmentVariable/client/Client.js";
 import { HttpHeadClient } from "./api/resources/httpHead/client/Client.js";
 import { IdempotencyHeadersClient } from "./api/resources/idempotencyHeaders/client/Client.js";
 import { ImdbClient } from "./api/resources/imdb/client/Client.js";
@@ -53,7 +50,6 @@ import { JavaBuilderExtensionClient } from "./api/resources/javaBuilderExtension
 import { JavaCustomPackagePrefixClient } from "./api/resources/javaCustomPackagePrefix/client/Client.js";
 import { JavaDefaultTimeoutClient } from "./api/resources/javaDefaultTimeout/client/Client.js";
 import { JavaInlineTypesClient } from "./api/resources/javaInlineTypes/client/Client.js";
-import { JavaNullableNamedRequestTypesClient } from "./api/resources/javaNullableNamedRequestTypes/client/Client.js";
 import { JavaOptionalNullableQueryParamsClient } from "./api/resources/javaOptionalNullableQueryParams/client/Client.js";
 import { JavaOptionalQueryParamsOverloadsClient } from "./api/resources/javaOptionalQueryParamsOverloads/client/Client.js";
 import { JavaOutputDirectoryClient } from "./api/resources/javaOutputDirectory/client/Client.js";
@@ -92,7 +88,6 @@ import { OauthClientCredentialsReferenceClient } from "./api/resources/oauthClie
 import { OauthClientCredentialsWithVariablesClient } from "./api/resources/oauthClientCredentialsWithVariables/client/Client.js";
 import { OpenapiRequestBodyRefClient } from "./api/resources/openapiRequestBodyRef/client/Client.js";
 import { OptionalClient } from "./api/resources/optional/client/Client.js";
-import { PackageYmlClient } from "./api/resources/packageYml/client/Client.js";
 import { PaginationClient } from "./api/resources/pagination/client/Client.js";
 import { PaginationCustomClient } from "./api/resources/paginationCustom/client/Client.js";
 import { PaginationUriPathClient } from "./api/resources/paginationUriPath/client/Client.js";
@@ -103,10 +98,8 @@ import { PublicObjectClient } from "./api/resources/publicObject/client/Client.j
 import { PythonBackslashEscapeClient } from "./api/resources/pythonBackslashEscape/client/Client.js";
 import { PythonPositionalSinglePropertyClient } from "./api/resources/pythonPositionalSingleProperty/client/Client.js";
 import { PythonReservedKeywordSubpackagesClient } from "./api/resources/pythonReservedKeywordSubpackages/client/Client.js";
-import { PythonStreamingParameterOpenapiClient } from "./api/resources/pythonStreamingParameterOpenapi/client/Client.js";
 import { QueryParametersClient } from "./api/resources/queryParameters/client/Client.js";
 import { QueryParametersOpenapiClient } from "./api/resources/queryParametersOpenapi/client/Client.js";
-import { QueryParamNameConflictClient } from "./api/resources/queryParamNameConflict/client/Client.js";
 import { RequestParametersClient } from "./api/resources/requestParameters/client/Client.js";
 import { RequiredNullableClient } from "./api/resources/requiredNullable/client/Client.js";
 import { ReservedKeywordsClient } from "./api/resources/reservedKeywords/client/Client.js";
@@ -115,7 +108,6 @@ import { RubyReservedWordPropertiesClient } from "./api/resources/rubyReservedWo
 import { SchemalessRequestBodyExamplesClient } from "./api/resources/schemalessRequestBodyExamples/client/Client.js";
 import { ServerSentEventExamplesClient } from "./api/resources/serverSentEventExamples/client/Client.js";
 import { ServerSentEventsClient } from "./api/resources/serverSentEvents/client/Client.js";
-import { ServerSentEventsOpenapiClient } from "./api/resources/serverSentEventsOpenapi/client/Client.js";
 import { ServerUrlTemplatingClient } from "./api/resources/serverUrlTemplating/client/Client.js";
 import { SimpleApiClient } from "./api/resources/simpleApi/client/Client.js";
 import { SimpleFhirClient } from "./api/resources/simpleFhir/client/Client.js";
@@ -170,12 +162,10 @@ export class SeedApiClient {
     protected _contentType: ContentTypeClient | undefined;
     protected _crossPackageTypeNames: CrossPackageTypeNamesClient | undefined;
     protected _csharpInlineTypes: CsharpInlineTypesClient | undefined;
-    protected _csharpNamespaceCollision: CsharpNamespaceCollisionClient | undefined;
     protected _csharpPropertyNameCollision: CsharpPropertyNameCollisionClient | undefined;
     protected _csharpReadonlyRequest: CsharpReadonlyRequestClient | undefined;
     protected _csharpSystemCollision: CsharpSystemCollisionClient | undefined;
     protected _csharpXmlEntities: CsharpXmlEntitiesClient | undefined;
-    protected _csharpNamespaceCollision: CsharpNamespaceCollisionClient | undefined;
     protected _csharpNamespaceConflict: CsharpNamespaceConflictClient | undefined;
     protected _endpointSecurityAuth: EndpointSecurityAuthClient | undefined;
     protected _enum: EnumClient | undefined;
@@ -193,8 +183,6 @@ export class SeedApiClient {
     protected _goContentType: GoContentTypeClient | undefined;
     protected _goDeterministicOrdering: GoDeterministicOrderingClient | undefined;
     protected _goUndiscriminatedUnionWireTests: GoUndiscriminatedUnionWireTestsClient | undefined;
-    protected _headerAuth: HeaderAuthClient | undefined;
-    protected _headerAuthEnvironmentVariable: HeaderAuthEnvironmentVariableClient | undefined;
     protected _httpHead: HttpHeadClient | undefined;
     protected _idempotencyHeaders: IdempotencyHeadersClient | undefined;
     protected _imdb: ImdbClient | undefined;
@@ -205,7 +193,6 @@ export class SeedApiClient {
     protected _inferredAuthImplicitReference: InferredAuthImplicitReferenceClient | undefined;
     protected _javaDefaultTimeout: JavaDefaultTimeoutClient | undefined;
     protected _javaInlineTypes: JavaInlineTypesClient | undefined;
-    protected _javaNullableNamedRequestTypes: JavaNullableNamedRequestTypesClient | undefined;
     protected _javaOptionalNullableQueryParams: JavaOptionalNullableQueryParamsClient | undefined;
     protected _javaOptionalQueryParamsOverloads: JavaOptionalQueryParamsOverloadsClient | undefined;
     protected _javaPathParamKeyConflict: JavaPathParamKeyConflictClient | undefined;
@@ -246,8 +233,6 @@ export class SeedApiClient {
     protected _oauthClientCredentialsWithVariables: OauthClientCredentialsWithVariablesClient | undefined;
     protected _openapiRequestBodyRef: OpenapiRequestBodyRefClient | undefined;
     protected _optional: OptionalClient | undefined;
-    protected _packageYml: PackageYmlClient | undefined;
-    protected _packageYml: PackageYmlClient | undefined;
     protected _pagination: PaginationClient | undefined;
     protected _paginationCustom: PaginationCustomClient | undefined;
     protected _paginationUriPath: PaginationUriPathClient | undefined;
@@ -256,10 +241,8 @@ export class SeedApiClient {
     protected _propertyAccess: PropertyAccessClient | undefined;
     protected _publicObject: PublicObjectClient | undefined;
     protected _pythonPositionalSingleProperty: PythonPositionalSinglePropertyClient | undefined;
-    protected _pythonStreamingParameterOpenapi: PythonStreamingParameterOpenapiClient | undefined;
     protected _pythonBackslashEscape: PythonBackslashEscapeClient | undefined;
     protected _pythonReservedKeywordSubpackages: PythonReservedKeywordSubpackagesClient | undefined;
-    protected _queryParamNameConflict: QueryParamNameConflictClient | undefined;
     protected _queryParametersOpenapi: QueryParametersOpenapiClient | undefined;
     protected _queryParameters: QueryParametersClient | undefined;
     protected _requestParameters: RequestParametersClient | undefined;
@@ -268,7 +251,6 @@ export class SeedApiClient {
     protected _responseProperty: ResponsePropertyClient | undefined;
     protected _rubyReservedWordProperties: RubyReservedWordPropertiesClient | undefined;
     protected _schemalessRequestBodyExamples: SchemalessRequestBodyExamplesClient | undefined;
-    protected _serverSentEventsOpenapi: ServerSentEventsOpenapiClient | undefined;
     protected _serverUrlTemplating: ServerUrlTemplatingClient | undefined;
     protected _serverSentEventExamples: ServerSentEventExamplesClient | undefined;
     protected _serverSentEvents: ServerSentEventsClient | undefined;
@@ -368,10 +350,6 @@ export class SeedApiClient {
         return (this._csharpInlineTypes ??= new CsharpInlineTypesClient(this._options));
     }
 
-    public get csharpNamespaceCollision(): CsharpNamespaceCollisionClient {
-        return (this._csharpNamespaceCollision ??= new CsharpNamespaceCollisionClient(this._options));
-    }
-
     public get csharpPropertyNameCollision(): CsharpPropertyNameCollisionClient {
         return (this._csharpPropertyNameCollision ??= new CsharpPropertyNameCollisionClient(this._options));
     }
@@ -386,10 +364,6 @@ export class SeedApiClient {
 
     public get csharpXmlEntities(): CsharpXmlEntitiesClient {
         return (this._csharpXmlEntities ??= new CsharpXmlEntitiesClient(this._options));
-    }
-
-    public get csharpNamespaceCollision(): CsharpNamespaceCollisionClient {
-        return (this._csharpNamespaceCollision ??= new CsharpNamespaceCollisionClient(this._options));
     }
 
     public get csharpNamespaceConflict(): CsharpNamespaceConflictClient {
@@ -460,14 +434,6 @@ export class SeedApiClient {
         return (this._goUndiscriminatedUnionWireTests ??= new GoUndiscriminatedUnionWireTestsClient(this._options));
     }
 
-    public get headerAuth(): HeaderAuthClient {
-        return (this._headerAuth ??= new HeaderAuthClient(this._options));
-    }
-
-    public get headerAuthEnvironmentVariable(): HeaderAuthEnvironmentVariableClient {
-        return (this._headerAuthEnvironmentVariable ??= new HeaderAuthEnvironmentVariableClient(this._options));
-    }
-
     public get httpHead(): HttpHeadClient {
         return (this._httpHead ??= new HttpHeadClient(this._options));
     }
@@ -506,10 +472,6 @@ export class SeedApiClient {
 
     public get javaInlineTypes(): JavaInlineTypesClient {
         return (this._javaInlineTypes ??= new JavaInlineTypesClient(this._options));
-    }
-
-    public get javaNullableNamedRequestTypes(): JavaNullableNamedRequestTypesClient {
-        return (this._javaNullableNamedRequestTypes ??= new JavaNullableNamedRequestTypesClient(this._options));
     }
 
     public get javaOptionalNullableQueryParams(): JavaOptionalNullableQueryParamsClient {
@@ -677,14 +639,6 @@ export class SeedApiClient {
         return (this._optional ??= new OptionalClient(this._options));
     }
 
-    public get packageYml(): PackageYmlClient {
-        return (this._packageYml ??= new PackageYmlClient(this._options));
-    }
-
-    public get packageYml(): PackageYmlClient {
-        return (this._packageYml ??= new PackageYmlClient(this._options));
-    }
-
     public get pagination(): PaginationClient {
         return (this._pagination ??= new PaginationClient(this._options));
     }
@@ -717,20 +671,12 @@ export class SeedApiClient {
         return (this._pythonPositionalSingleProperty ??= new PythonPositionalSinglePropertyClient(this._options));
     }
 
-    public get pythonStreamingParameterOpenapi(): PythonStreamingParameterOpenapiClient {
-        return (this._pythonStreamingParameterOpenapi ??= new PythonStreamingParameterOpenapiClient(this._options));
-    }
-
     public get pythonBackslashEscape(): PythonBackslashEscapeClient {
         return (this._pythonBackslashEscape ??= new PythonBackslashEscapeClient(this._options));
     }
 
     public get pythonReservedKeywordSubpackages(): PythonReservedKeywordSubpackagesClient {
         return (this._pythonReservedKeywordSubpackages ??= new PythonReservedKeywordSubpackagesClient(this._options));
-    }
-
-    public get queryParamNameConflict(): QueryParamNameConflictClient {
-        return (this._queryParamNameConflict ??= new QueryParamNameConflictClient(this._options));
     }
 
     public get queryParametersOpenapi(): QueryParametersOpenapiClient {
@@ -763,10 +709,6 @@ export class SeedApiClient {
 
     public get schemalessRequestBodyExamples(): SchemalessRequestBodyExamplesClient {
         return (this._schemalessRequestBodyExamples ??= new SchemalessRequestBodyExamplesClient(this._options));
-    }
-
-    public get serverSentEventsOpenapi(): ServerSentEventsOpenapiClient {
-        return (this._serverSentEventsOpenapi ??= new ServerSentEventsOpenapiClient(this._options));
     }
 
     public get serverUrlTemplating(): ServerUrlTemplatingClient {

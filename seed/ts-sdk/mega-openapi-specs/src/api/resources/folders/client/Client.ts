@@ -4,8 +4,8 @@ import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { ABClient } from "../resources/aB/client/Client.js";
 import { ACClient } from "../resources/aC/client/Client.js";
-import { Client } from "../resources/client/Client.js";
 import { FolderClient } from "../resources/folder/client/Client.js";
+import { FoldersClient as FoldersClient_ } from "../resources/folders/client/Client.js";
 
 export declare namespace FoldersClient {
     export type Options = BaseClientOptions;
@@ -13,7 +13,7 @@ export declare namespace FoldersClient {
 
 export class FoldersClient {
     protected readonly _options: NormalizedClientOptions<FoldersClient.Options>;
-    protected _: Client | undefined;
+    protected _folders: FoldersClient_ | undefined;
     protected _aB: ABClient | undefined;
     protected _aC: ACClient | undefined;
     protected _folder: FolderClient | undefined;
@@ -22,8 +22,8 @@ export class FoldersClient {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get folders(): FoldersClient_ {
+        return (this._folders ??= new FoldersClient_(this._options));
     }
 
     public get aB(): ABClient {

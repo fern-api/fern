@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { JavaRequiredBodyOptionalHeadersClient as JavaRequiredBodyOptionalHeadersClient_ } from "../resources/javaRequiredBodyOptionalHeaders/client/Client.js";
 
 export declare namespace JavaRequiredBodyOptionalHeadersClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,13 @@ export declare namespace JavaRequiredBodyOptionalHeadersClient {
 
 export class JavaRequiredBodyOptionalHeadersClient {
     protected readonly _options: NormalizedClientOptions<JavaRequiredBodyOptionalHeadersClient.Options>;
-    protected _: Client | undefined;
+    protected _javaRequiredBodyOptionalHeaders: JavaRequiredBodyOptionalHeadersClient_ | undefined;
 
     constructor(options: JavaRequiredBodyOptionalHeadersClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get javaRequiredBodyOptionalHeaders(): JavaRequiredBodyOptionalHeadersClient_ {
+        return (this._javaRequiredBodyOptionalHeaders ??= new JavaRequiredBodyOptionalHeadersClient_(this._options));
     }
 }

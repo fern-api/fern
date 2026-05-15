@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { SimpleFhirClient as SimpleFhirClient_ } from "../resources/simpleFhir/client/Client.js";
 
 export declare namespace SimpleFhirClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,13 @@ export declare namespace SimpleFhirClient {
 
 export class SimpleFhirClient {
     protected readonly _options: NormalizedClientOptions<SimpleFhirClient.Options>;
-    protected _: Client | undefined;
+    protected _simpleFhir: SimpleFhirClient_ | undefined;
 
     constructor(options: SimpleFhirClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get simpleFhir(): SimpleFhirClient_ {
+        return (this._simpleFhir ??= new SimpleFhirClient_(this._options));
     }
 }

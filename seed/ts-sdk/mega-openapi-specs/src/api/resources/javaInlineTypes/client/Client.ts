@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { JavaInlineTypesClient as JavaInlineTypesClient_ } from "../resources/javaInlineTypes/client/Client.js";
 
 export declare namespace JavaInlineTypesClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,13 @@ export declare namespace JavaInlineTypesClient {
 
 export class JavaInlineTypesClient {
     protected readonly _options: NormalizedClientOptions<JavaInlineTypesClient.Options>;
-    protected _: Client | undefined;
+    protected _javaInlineTypes: JavaInlineTypesClient_ | undefined;
 
     constructor(options: JavaInlineTypesClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get javaInlineTypes(): JavaInlineTypesClient_ {
+        return (this._javaInlineTypes ??= new JavaInlineTypesClient_(this._options));
     }
 }

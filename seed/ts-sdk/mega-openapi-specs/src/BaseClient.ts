@@ -17,8 +17,6 @@ export type BaseClientOptions = {
     baseUrl?: core.Supplier<string>;
     /** Override the X-API-Version header */
     apiVersion?: core.Supplier<string | undefined>;
-    /** Override the X-API-Key header */
-    apiKey: core.Supplier<string>;
     /** Override the x-api-key header */
     apiKey: core.Supplier<string>;
     /** Additional headers to include in requests. */
@@ -44,8 +42,6 @@ export interface BaseRequestOptions {
     abortSignal?: AbortSignal;
     /** Override the X-API-Version header */
     apiVersion?: string | undefined;
-    /** Override the X-API-Key header */
-    apiKey?: string;
     /** Override the x-api-key header */
     apiKey?: string;
     /** Additional query string parameters to include in the request. */
@@ -76,7 +72,6 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
             "X-Fern-Runtime": core.RUNTIME.type,
             "X-Fern-Runtime-Version": core.RUNTIME.version,
             "X-API-Version": options?.apiVersion ?? "2024-02-08",
-            "X-API-Key": options?.apiKey,
             "x-api-key": options?.apiKey,
         },
         options?.headers,

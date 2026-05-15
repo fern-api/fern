@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { CsharpReadonlyRequestClient as CsharpReadonlyRequestClient_ } from "../resources/csharpReadonlyRequest/client/Client.js";
 
 export declare namespace CsharpReadonlyRequestClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,13 @@ export declare namespace CsharpReadonlyRequestClient {
 
 export class CsharpReadonlyRequestClient {
     protected readonly _options: NormalizedClientOptions<CsharpReadonlyRequestClient.Options>;
-    protected _: Client | undefined;
+    protected _csharpReadonlyRequest: CsharpReadonlyRequestClient_ | undefined;
 
     constructor(options: CsharpReadonlyRequestClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get csharpReadonlyRequest(): CsharpReadonlyRequestClient_ {
+        return (this._csharpReadonlyRequest ??= new CsharpReadonlyRequestClient_(this._options));
     }
 }

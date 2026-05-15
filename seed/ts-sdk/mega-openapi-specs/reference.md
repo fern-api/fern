@@ -41,8 +41,8 @@ await client.acceptHeader.service.endpoint();
 </dl>
 </details>
 
-## Alias 
-<details><summary><code>client.alias..<a href="/src/api/resources/alias/resources/client/Client.ts">get</a>({ ...params }) -> void</code></summary>
+## Alias Alias
+<details><summary><code>client.alias.alias.<a href="/src/api/resources/alias/resources/alias/client/Client.ts">get</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -55,7 +55,7 @@ await client.acceptHeader.service.endpoint();
 <dd>
 
 ```typescript
-await client.alias..get({
+await client.alias.alias.get({
     typeId: "typeId"
 });
 
@@ -81,7 +81,7 @@ await client.alias..get({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `AliasClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -93,8 +93,8 @@ await client.alias..get({
 </dl>
 </details>
 
-## AliasExtends 
-<details><summary><code>client.aliasExtends..<a href="/src/api/resources/aliasExtends/resources/client/Client.ts">extendedInlineRequestBody</a>({ ...params }) -> void</code></summary>
+## AliasExtends AliasExtends
+<details><summary><code>client.aliasExtends.aliasExtends.<a href="/src/api/resources/aliasExtends/resources/aliasExtends/client/Client.ts">extendedInlineRequestBody</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -107,7 +107,7 @@ await client.alias..get({
 <dd>
 
 ```typescript
-await client.aliasExtends..extendedInlineRequestBody({
+await client.aliasExtends.aliasExtends.extendedInlineRequestBody({
     child: "child"
 });
 
@@ -133,7 +133,7 @@ await client.aliasExtends..extendedInlineRequestBody({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `AliasExtendsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2455,8 +2455,8 @@ await client.crossPackageTypeNames.folderD.service.getDirectThread();
 </dl>
 </details>
 
-## CsharpInlineTypes 
-<details><summary><code>client.csharpInlineTypes..<a href="/src/api/resources/csharpInlineTypes/resources/client/Client.ts">getRoot</a>({ ...params }) -> SeedApi.RootType1</code></summary>
+## CsharpInlineTypes CsharpInlineTypes
+<details><summary><code>client.csharpInlineTypes.csharpInlineTypes.<a href="/src/api/resources/csharpInlineTypes/resources/csharpInlineTypes/client/Client.ts">getRoot</a>({ ...params }) -> SeedApi.RootType1</code></summary>
 <dl>
 <dd>
 
@@ -2469,7 +2469,7 @@ await client.crossPackageTypeNames.folderD.service.getDirectThread();
 <dd>
 
 ```typescript
-await client.csharpInlineTypes..getRoot({
+await client.csharpInlineTypes.csharpInlineTypes.getRoot({
     bar: {
         foo: "foo"
     },
@@ -2498,7 +2498,7 @@ await client.csharpInlineTypes..getRoot({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `CsharpInlineTypesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2510,7 +2510,7 @@ await client.csharpInlineTypes..getRoot({
 </dl>
 </details>
 
-<details><summary><code>client.csharpInlineTypes..<a href="/src/api/resources/csharpInlineTypes/resources/client/Client.ts">getDiscriminatedUnion</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.csharpInlineTypes.csharpInlineTypes.<a href="/src/api/resources/csharpInlineTypes/resources/csharpInlineTypes/client/Client.ts">getDiscriminatedUnion</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -2523,7 +2523,7 @@ await client.csharpInlineTypes..getRoot({
 <dd>
 
 ```typescript
-await client.csharpInlineTypes..getDiscriminatedUnion({
+await client.csharpInlineTypes.csharpInlineTypes.getDiscriminatedUnion({
     bar: {
         foo: "foo",
         bar: {
@@ -2562,7 +2562,7 @@ await client.csharpInlineTypes..getDiscriminatedUnion({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `CsharpInlineTypesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2574,7 +2574,7 @@ await client.csharpInlineTypes..getDiscriminatedUnion({
 </dl>
 </details>
 
-<details><summary><code>client.csharpInlineTypes..<a href="/src/api/resources/csharpInlineTypes/resources/client/Client.ts">getUndiscriminatedUnion</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.csharpInlineTypes.csharpInlineTypes.<a href="/src/api/resources/csharpInlineTypes/resources/csharpInlineTypes/client/Client.ts">getUndiscriminatedUnion</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -2587,7 +2587,7 @@ await client.csharpInlineTypes..getDiscriminatedUnion({
 <dd>
 
 ```typescript
-await client.csharpInlineTypes..getUndiscriminatedUnion({
+await client.csharpInlineTypes.csharpInlineTypes.getUndiscriminatedUnion({
     bar: "SUNNY",
     foo: "foo"
 });
@@ -2614,7 +2614,7 @@ await client.csharpInlineTypes..getUndiscriminatedUnion({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `CsharpInlineTypesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2626,8 +2626,8 @@ await client.csharpInlineTypes..getUndiscriminatedUnion({
 </dl>
 </details>
 
-## CsharpNamespaceCollision 
-<details><summary><code>client.csharpNamespaceCollision..<a href="/src/api/resources/csharpNamespaceCollision/resources/client/Client.ts">createUser</a>({ ...params }) -> SeedApi.User</code></summary>
+## CsharpPropertyNameCollision CsharpPropertyNameCollision
+<details><summary><code>client.csharpPropertyNameCollision.csharpPropertyNameCollision.<a href="/src/api/resources/csharpPropertyNameCollision/resources/csharpPropertyNameCollision/client/Client.ts">createCatalog</a>({ ...params }) -> SeedApi.CatalogV1Id</code></summary>
 <dl>
 <dd>
 
@@ -2640,116 +2640,7 @@ await client.csharpInlineTypes..getUndiscriminatedUnion({
 <dd>
 
 ```typescript
-await client.csharpNamespaceCollision..createUser({
-    id: "id",
-    name: "name",
-    email: "email",
-    password: "password"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.User` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Client.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.csharpNamespaceCollision..<a href="/src/api/resources/csharpNamespaceCollision/resources/client/Client.ts">createTask</a>({ ...params }) -> SeedApi.Task</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.csharpNamespaceCollision..createTask({
-    id: "id",
-    name: "name",
-    email: "email",
-    password: "password"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.Task` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Client.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## CsharpPropertyNameCollision 
-<details><summary><code>client.csharpPropertyNameCollision..<a href="/src/api/resources/csharpPropertyNameCollision/resources/client/Client.ts">createCatalog</a>({ ...params }) -> SeedApi.CatalogV1Id</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.csharpPropertyNameCollision..createCatalog({});
+await client.csharpPropertyNameCollision.csharpPropertyNameCollision.createCatalog({});
 
 ```
 </dd>
@@ -2773,7 +2664,7 @@ await client.csharpPropertyNameCollision..createCatalog({});
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `CsharpPropertyNameCollisionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2785,7 +2676,7 @@ await client.csharpPropertyNameCollision..createCatalog({});
 </dl>
 </details>
 
-<details><summary><code>client.csharpPropertyNameCollision..<a href="/src/api/resources/csharpPropertyNameCollision/resources/client/Client.ts">createActivity</a>({ ...params }) -> SeedApi.Activity</code></summary>
+<details><summary><code>client.csharpPropertyNameCollision.csharpPropertyNameCollision.<a href="/src/api/resources/csharpPropertyNameCollision/resources/csharpPropertyNameCollision/client/Client.ts">createActivity</a>({ ...params }) -> SeedApi.Activity</code></summary>
 <dl>
 <dd>
 
@@ -2798,7 +2689,7 @@ await client.csharpPropertyNameCollision..createCatalog({});
 <dd>
 
 ```typescript
-await client.csharpPropertyNameCollision..createActivity({});
+await client.csharpPropertyNameCollision.csharpPropertyNameCollision.createActivity({});
 
 ```
 </dd>
@@ -2822,7 +2713,7 @@ await client.csharpPropertyNameCollision..createActivity({});
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `CsharpPropertyNameCollisionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2834,8 +2725,8 @@ await client.csharpPropertyNameCollision..createActivity({});
 </dl>
 </details>
 
-## CsharpReadonlyRequest 
-<details><summary><code>client.csharpReadonlyRequest..<a href="/src/api/resources/csharpReadonlyRequest/resources/client/Client.ts">batchCreate</a>({ ...params }) -> SeedApi.CreateVendorResponse</code></summary>
+## CsharpReadonlyRequest CsharpReadonlyRequest
+<details><summary><code>client.csharpReadonlyRequest.csharpReadonlyRequest.<a href="/src/api/resources/csharpReadonlyRequest/resources/csharpReadonlyRequest/client/Client.ts">batchCreate</a>({ ...params }) -> SeedApi.CreateVendorResponse</code></summary>
 <dl>
 <dd>
 
@@ -2848,7 +2739,7 @@ await client.csharpPropertyNameCollision..createActivity({});
 <dd>
 
 ```typescript
-await client.csharpReadonlyRequest..batchCreate({
+await client.csharpReadonlyRequest.csharpReadonlyRequest.batchCreate({
     vendors: {
         "vendor-1": {
             id: "vendor-1",
@@ -2881,7 +2772,7 @@ await client.csharpReadonlyRequest..batchCreate({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `CsharpReadonlyRequestClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2893,8 +2784,8 @@ await client.csharpReadonlyRequest..batchCreate({
 </dl>
 </details>
 
-## CsharpSystemCollision 
-<details><summary><code>client.csharpSystemCollision..<a href="/src/api/resources/csharpSystemCollision/resources/client/Client.ts">createUser</a>({ ...params }) -> SeedApi.User</code></summary>
+## CsharpSystemCollision CsharpSystemCollision
+<details><summary><code>client.csharpSystemCollision.csharpSystemCollision.<a href="/src/api/resources/csharpSystemCollision/resources/csharpSystemCollision/client/Client.ts">createUser</a>({ ...params }) -> SeedApi.User</code></summary>
 <dl>
 <dd>
 
@@ -2907,7 +2798,7 @@ await client.csharpReadonlyRequest..batchCreate({
 <dd>
 
 ```typescript
-await client.csharpSystemCollision..createUser({
+await client.csharpSystemCollision.csharpSystemCollision.createUser({
     line1: "line1",
     city: "city",
     state: "state",
@@ -2937,7 +2828,7 @@ await client.csharpSystemCollision..createUser({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `CsharpSystemCollisionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2949,7 +2840,7 @@ await client.csharpSystemCollision..createUser({
 </dl>
 </details>
 
-<details><summary><code>client.csharpSystemCollision..<a href="/src/api/resources/csharpSystemCollision/resources/client/Client.ts">createTask</a>({ ...params }) -> SeedApi.Task</code></summary>
+<details><summary><code>client.csharpSystemCollision.csharpSystemCollision.<a href="/src/api/resources/csharpSystemCollision/resources/csharpSystemCollision/client/Client.ts">createTask</a>({ ...params }) -> SeedApi.Task</code></summary>
 <dl>
 <dd>
 
@@ -2962,7 +2853,7 @@ await client.csharpSystemCollision..createUser({
 <dd>
 
 ```typescript
-await client.csharpSystemCollision..createTask({
+await client.csharpSystemCollision.csharpSystemCollision.createTask({
     name: "name",
     user: {
         line1: "line1",
@@ -2995,7 +2886,7 @@ await client.csharpSystemCollision..createTask({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `CsharpSystemCollisionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -3007,7 +2898,7 @@ await client.csharpSystemCollision..createTask({
 </dl>
 </details>
 
-<details><summary><code>client.csharpSystemCollision..<a href="/src/api/resources/csharpSystemCollision/resources/client/Client.ts">emptyResponse</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.csharpSystemCollision.csharpSystemCollision.<a href="/src/api/resources/csharpSystemCollision/resources/csharpSystemCollision/client/Client.ts">emptyResponse</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -3020,7 +2911,7 @@ await client.csharpSystemCollision..createTask({
 <dd>
 
 ```typescript
-await client.csharpSystemCollision..emptyResponse({
+await client.csharpSystemCollision.csharpSystemCollision.emptyResponse({
     name: "name",
     user: {
         line1: "line1",
@@ -3053,7 +2944,7 @@ await client.csharpSystemCollision..emptyResponse({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `CsharpSystemCollisionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -3065,8 +2956,8 @@ await client.csharpSystemCollision..emptyResponse({
 </dl>
 </details>
 
-## CsharpXmlEntities 
-<details><summary><code>client.csharpXmlEntities..<a href="/src/api/resources/csharpXmlEntities/resources/client/Client.ts">getTimeZone</a>() -> SeedApi.TimeZoneModel</code></summary>
+## CsharpXmlEntities CsharpXmlEntities
+<details><summary><code>client.csharpXmlEntities.csharpXmlEntities.<a href="/src/api/resources/csharpXmlEntities/resources/csharpXmlEntities/client/Client.ts">getTimeZone</a>() -> SeedApi.TimeZoneModel</code></summary>
 <dl>
 <dd>
 
@@ -3093,7 +2984,7 @@ Get timezone information with &plus; offset
 <dd>
 
 ```typescript
-await client.csharpXmlEntities..getTimeZone();
+await client.csharpXmlEntities.csharpXmlEntities.getTimeZone();
 
 ```
 </dd>
@@ -3109,314 +3000,7 @@ await client.csharpXmlEntities..getTimeZone();
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## CsharpNamespaceCollision SCimConfiguration
-<details><summary><code>client.csharpNamespaceCollision.sCimConfiguration.<a href="/src/api/resources/csharpNamespaceCollision/resources/sCimConfiguration/client/Client.ts">scimConfigurationGetConfiguration</a>() -> SeedApi.ScimConfigurationScimConfiguration</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.csharpNamespaceCollision.sCimConfiguration.scimConfigurationGetConfiguration();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**requestOptions:** `SCimConfigurationClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.csharpNamespaceCollision.sCimConfiguration.<a href="/src/api/resources/csharpNamespaceCollision/resources/sCimConfiguration/client/Client.ts">scimConfigurationCreateToken</a>({ ...params }) -> SeedApi.ScimConfigurationScimToken</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.csharpNamespaceCollision.sCimConfiguration.scimConfigurationCreateToken({
-    tokenId: "tokenId",
-    createdAt: "createdAt"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.ScimConfigurationScimToken` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `SCimConfigurationClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.csharpNamespaceCollision.sCimConfiguration.<a href="/src/api/resources/csharpNamespaceCollision/resources/sCimConfiguration/client/Client.ts">scimConfigurationListUsers</a>() -> SeedApi.User[]</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.csharpNamespaceCollision.sCimConfiguration.scimConfigurationListUsers();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**requestOptions:** `SCimConfigurationClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## CsharpNamespaceCollision System
-<details><summary><code>client.csharpNamespaceCollision.system.<a href="/src/api/resources/csharpNamespaceCollision/resources/system/client/Client.ts">createUser</a>({ ...params }) -> SeedApi.SystemUser</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.csharpNamespaceCollision.system.createUser({
-    line1: "line1",
-    city: "city",
-    state: "state",
-    zip: "zip",
-    country: "USA"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.SystemUser` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `SystemClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.csharpNamespaceCollision.system.<a href="/src/api/resources/csharpNamespaceCollision/resources/system/client/Client.ts">createTask</a>({ ...params }) -> SeedApi.SystemTask</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.csharpNamespaceCollision.system.createTask({
-    name: "name",
-    user: {
-        line1: "line1",
-        city: "city",
-        state: "state",
-        zip: "zip",
-        country: "USA"
-    },
-    owner: {
-        line1: "line1",
-        city: "city",
-        state: "state",
-        zip: "zip",
-        country: "USA"
-    }
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.SystemTask` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `SystemClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.csharpNamespaceCollision.system.<a href="/src/api/resources/csharpNamespaceCollision/resources/system/client/Client.ts">getUser</a>({ ...params }) -> SeedApi.SystemUser</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.csharpNamespaceCollision.system.getUser({
-    userId: "userId"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.csharpNamespaceCollision.GetUserSystemRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `SystemClient.RequestOptions` 
+**requestOptions:** `CsharpXmlEntitiesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -4337,8 +3921,8 @@ await client.errors.simple.fooWithExamples({
 </dl>
 </details>
 
-## Examples 
-<details><summary><code>client.examples..<a href="/src/api/resources/examples/resources/client/Client.ts">echo</a>({ ...params }) -> string</code></summary>
+## Examples Examples
+<details><summary><code>client.examples.examples.<a href="/src/api/resources/examples/resources/examples/client/Client.ts">echo</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -4351,7 +3935,7 @@ await client.errors.simple.fooWithExamples({
 <dd>
 
 ```typescript
-await client.examples..echo("Hello world!\\n\\nwith\\n\\tnewlines");
+await client.examples.examples.echo("Hello world!\\n\\nwith\\n\\tnewlines");
 
 ```
 </dd>
@@ -4375,7 +3959,7 @@ await client.examples..echo("Hello world!\\n\\nwith\\n\\tnewlines");
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `ExamplesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -4387,7 +3971,7 @@ await client.examples..echo("Hello world!\\n\\nwith\\n\\tnewlines");
 </dl>
 </details>
 
-<details><summary><code>client.examples..<a href="/src/api/resources/examples/resources/client/Client.ts">createType</a>({ ...params }) -> SeedApi.Identifier</code></summary>
+<details><summary><code>client.examples.examples.<a href="/src/api/resources/examples/resources/examples/client/Client.ts">createType</a>({ ...params }) -> SeedApi.Identifier</code></summary>
 <dl>
 <dd>
 
@@ -4400,7 +3984,7 @@ await client.examples..echo("Hello world!\\n\\nwith\\n\\tnewlines");
 <dd>
 
 ```typescript
-await client.examples..createType("primitive");
+await client.examples.examples.createType("primitive");
 
 ```
 </dd>
@@ -4424,7 +4008,7 @@ await client.examples..createType("primitive");
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `ExamplesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -8142,8 +7726,8 @@ await client.exhaustive.endpoints.union.getAndReturnUnion({
 </dl>
 </details>
 
-## Extends 
-<details><summary><code>client.extends..<a href="/src/api/resources/extends/resources/client/Client.ts">extendedInlineRequestBody</a>({ ...params }) -> void</code></summary>
+## Extends Extends
+<details><summary><code>client.extends.extends.<a href="/src/api/resources/extends/resources/extends/client/Client.ts">extendedInlineRequestBody</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -8156,7 +7740,7 @@ await client.exhaustive.endpoints.union.getAndReturnUnion({
 <dd>
 
 ```typescript
-await client.extends..extendedInlineRequestBody({
+await client.extends.extends.extendedInlineRequestBody({
     docs: "Types extend this type to include a docs property.",
     name: "Example",
     unique: "unique"
@@ -8184,7 +7768,7 @@ await client.extends..extendedInlineRequestBody({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `ExtendsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -8966,8 +8550,8 @@ await client.fileUpload.service.withLiteralAndEnumTypes({});
 </dl>
 </details>
 
-## Folders 
-<details><summary><code>client.folders..<a href="/src/api/resources/folders/resources/client/Client.ts">foo</a>() -> void</code></summary>
+## Folders Folders
+<details><summary><code>client.folders.folders.<a href="/src/api/resources/folders/resources/folders/client/Client.ts">foo</a>() -> void</code></summary>
 <dl>
 <dd>
 
@@ -8980,7 +8564,7 @@ await client.fileUpload.service.withLiteralAndEnumTypes({});
 <dd>
 
 ```typescript
-await client.folders..foo();
+await client.folders.folders.foo();
 
 ```
 </dd>
@@ -8996,7 +8580,7 @@ await client.folders..foo();
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `FoldersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -9227,8 +8811,8 @@ await client.folders.folder.service.unknownRequest({
 </dl>
 </details>
 
-## GoOptionalLiteralAlias 
-<details><summary><code>client.goOptionalLiteralAlias..<a href="/src/api/resources/goOptionalLiteralAlias/resources/client/Client.ts">search</a>({ ...params }) -> SeedApi.SearchResponse</code></summary>
+## GoOptionalLiteralAlias GoOptionalLiteralAlias
+<details><summary><code>client.goOptionalLiteralAlias.goOptionalLiteralAlias.<a href="/src/api/resources/goOptionalLiteralAlias/resources/goOptionalLiteralAlias/client/Client.ts">search</a>({ ...params }) -> SeedApi.SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -9241,7 +8825,7 @@ await client.folders.folder.service.unknownRequest({
 <dd>
 
 ```typescript
-await client.goOptionalLiteralAlias..search({
+await client.goOptionalLiteralAlias.goOptionalLiteralAlias.search({
     sortField: "DEFAULT",
     query: "test query"
 });
@@ -9268,7 +8852,7 @@ await client.goOptionalLiteralAlias..search({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `GoOptionalLiteralAliasClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -12827,118 +12411,6 @@ await client.goUndiscriminatedUnionWireTests.service.rerank({
 </dl>
 </details>
 
-## HeaderAuth Service
-<details><summary><code>client.headerAuth.service.<a href="/src/api/resources/headerAuth/resources/service/client/Client.ts">getWithBearerToken</a>() -> string</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-GET request with custom api key
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.headerAuth.service.getWithBearerToken();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServiceClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## HeaderAuthEnvironmentVariable Service
-<details><summary><code>client.headerAuthEnvironmentVariable.service.<a href="/src/api/resources/headerAuthEnvironmentVariable/resources/service/client/Client.ts">getWithBearerToken</a>() -> string</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-GET request with custom api key
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.headerAuthEnvironmentVariable.service.getWithBearerToken();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServiceClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## HttpHead User
 <details><summary><code>client.httpHead.user.<a href="/src/api/resources/httpHead/resources/user/client/Client.ts">list</a>({ ...params }) -> SeedApi.User[]</code></summary>
 <dl>
@@ -14382,8 +13854,8 @@ await client.inferredAuthImplicitReference.simple.getSomething();
 </dl>
 </details>
 
-## JavaDefaultTimeout 
-<details><summary><code>client.javaDefaultTimeout..<a href="/src/api/resources/javaDefaultTimeout/resources/client/Client.ts">getUser</a>() -> SeedApi.User</code></summary>
+## JavaDefaultTimeout JavaDefaultTimeout
+<details><summary><code>client.javaDefaultTimeout.javaDefaultTimeout.<a href="/src/api/resources/javaDefaultTimeout/resources/javaDefaultTimeout/client/Client.ts">getUser</a>() -> SeedApi.User</code></summary>
 <dl>
 <dd>
 
@@ -14396,7 +13868,7 @@ await client.inferredAuthImplicitReference.simple.getSomething();
 <dd>
 
 ```typescript
-await client.javaDefaultTimeout..getUser();
+await client.javaDefaultTimeout.javaDefaultTimeout.getUser();
 
 ```
 </dd>
@@ -14412,7 +13884,7 @@ await client.javaDefaultTimeout..getUser();
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `JavaDefaultTimeoutClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -14424,8 +13896,8 @@ await client.javaDefaultTimeout..getUser();
 </dl>
 </details>
 
-## JavaInlineTypes 
-<details><summary><code>client.javaInlineTypes..<a href="/src/api/resources/javaInlineTypes/resources/client/Client.ts">getRoot</a>({ ...params }) -> SeedApi.RootType1</code></summary>
+## JavaInlineTypes JavaInlineTypes
+<details><summary><code>client.javaInlineTypes.javaInlineTypes.<a href="/src/api/resources/javaInlineTypes/resources/javaInlineTypes/client/Client.ts">getRoot</a>({ ...params }) -> SeedApi.RootType1</code></summary>
 <dl>
 <dd>
 
@@ -14438,7 +13910,7 @@ await client.javaDefaultTimeout..getUser();
 <dd>
 
 ```typescript
-await client.javaInlineTypes..getRoot({
+await client.javaInlineTypes.javaInlineTypes.getRoot({
     bar: {
         foo: "foo"
     },
@@ -14467,7 +13939,7 @@ await client.javaInlineTypes..getRoot({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `JavaInlineTypesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -14479,7 +13951,7 @@ await client.javaInlineTypes..getRoot({
 </dl>
 </details>
 
-<details><summary><code>client.javaInlineTypes..<a href="/src/api/resources/javaInlineTypes/resources/client/Client.ts">getDiscriminatedUnion</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.javaInlineTypes.javaInlineTypes.<a href="/src/api/resources/javaInlineTypes/resources/javaInlineTypes/client/Client.ts">getDiscriminatedUnion</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -14492,7 +13964,7 @@ await client.javaInlineTypes..getRoot({
 <dd>
 
 ```typescript
-await client.javaInlineTypes..getDiscriminatedUnion({
+await client.javaInlineTypes.javaInlineTypes.getDiscriminatedUnion({
     bar: {
         foo: "foo",
         bar: {
@@ -14531,7 +14003,7 @@ await client.javaInlineTypes..getDiscriminatedUnion({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `JavaInlineTypesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -14543,7 +14015,7 @@ await client.javaInlineTypes..getDiscriminatedUnion({
 </dl>
 </details>
 
-<details><summary><code>client.javaInlineTypes..<a href="/src/api/resources/javaInlineTypes/resources/client/Client.ts">getUndiscriminatedUnion</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.javaInlineTypes.javaInlineTypes.<a href="/src/api/resources/javaInlineTypes/resources/javaInlineTypes/client/Client.ts">getUndiscriminatedUnion</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -14556,7 +14028,7 @@ await client.javaInlineTypes..getDiscriminatedUnion({
 <dd>
 
 ```typescript
-await client.javaInlineTypes..getUndiscriminatedUnion({
+await client.javaInlineTypes.javaInlineTypes.getUndiscriminatedUnion({
     bar: "SUNNY",
     foo: "foo"
 });
@@ -14583,7 +14055,7 @@ await client.javaInlineTypes..getUndiscriminatedUnion({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `JavaInlineTypesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -14595,112 +14067,8 @@ await client.javaInlineTypes..getUndiscriminatedUnion({
 </dl>
 </details>
 
-## JavaNullableNamedRequestTypes
-<details><summary><code>client.javaNullableNamedRequestTypes.<a href="/src/api/resources/javaNullableNamedRequestTypes/client/Client.ts">postWithNullableNamedRequestBodyType</a>({ ...params }) -> SeedApi.ResponseBody</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.javaNullableNamedRequestTypes.postWithNullableNamedRequestBodyType({
-    id: "id",
-    body: {}
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.javaNullableNamedRequestTypes.PostWithNullableNamedRequestBodyTypeRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `JavaNullableNamedRequestTypesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.javaNullableNamedRequestTypes.<a href="/src/api/resources/javaNullableNamedRequestTypes/client/Client.ts">postWithNonNullableNamedRequestBodyType</a>({ ...params }) -> SeedApi.ResponseBody</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.javaNullableNamedRequestTypes.postWithNonNullableNamedRequestBodyType({
-    id: "id"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.javaNullableNamedRequestTypes.NonNullableObject` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `JavaNullableNamedRequestTypesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## JavaOptionalNullableQueryParams 
-<details><summary><code>client.javaOptionalNullableQueryParams..<a href="/src/api/resources/javaOptionalNullableQueryParams/resources/client/Client.ts">search</a>({ ...params }) -> SeedApi.SearchResponse</code></summary>
+## JavaOptionalNullableQueryParams JavaOptionalNullableQueryParams
+<details><summary><code>client.javaOptionalNullableQueryParams.javaOptionalNullableQueryParams.<a href="/src/api/resources/javaOptionalNullableQueryParams/resources/javaOptionalNullableQueryParams/client/Client.ts">search</a>({ ...params }) -> SeedApi.SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -14727,7 +14095,7 @@ Search endpoint with optional nullable query params with defaults
 <dd>
 
 ```typescript
-await client.javaOptionalNullableQueryParams..search();
+await client.javaOptionalNullableQueryParams.javaOptionalNullableQueryParams.search();
 
 ```
 </dd>
@@ -14751,7 +14119,7 @@ await client.javaOptionalNullableQueryParams..search();
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `JavaOptionalNullableQueryParamsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -14763,8 +14131,8 @@ await client.javaOptionalNullableQueryParams..search();
 </dl>
 </details>
 
-## JavaOptionalQueryParamsOverloads 
-<details><summary><code>client.javaOptionalQueryParamsOverloads..<a href="/src/api/resources/javaOptionalQueryParamsOverloads/resources/client/Client.ts">getLatestInsurance</a>({ ...params }) -> SeedApi.InsurancePolicy</code></summary>
+## JavaOptionalQueryParamsOverloads JavaOptionalQueryParamsOverloads
+<details><summary><code>client.javaOptionalQueryParamsOverloads.javaOptionalQueryParamsOverloads.<a href="/src/api/resources/javaOptionalQueryParamsOverloads/resources/javaOptionalQueryParamsOverloads/client/Client.ts">getLatestInsurance</a>({ ...params }) -> SeedApi.InsurancePolicy</code></summary>
 <dl>
 <dd>
 
@@ -14791,7 +14159,7 @@ Get latest insurance for a user. All query params are optional.
 <dd>
 
 ```typescript
-await client.javaOptionalQueryParamsOverloads..getLatestInsurance({
+await client.javaOptionalQueryParamsOverloads.javaOptionalQueryParamsOverloads.getLatestInsurance({
     userId: "userId"
 });
 
@@ -14817,7 +14185,7 @@ await client.javaOptionalQueryParamsOverloads..getLatestInsurance({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `JavaOptionalQueryParamsOverloadsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -14829,7 +14197,7 @@ await client.javaOptionalQueryParamsOverloads..getLatestInsurance({
 </dl>
 </details>
 
-<details><summary><code>client.javaOptionalQueryParamsOverloads..<a href="/src/api/resources/javaOptionalQueryParamsOverloads/resources/client/Client.ts">searchPolicies</a>({ ...params }) -> SeedApi.InsurancePolicy[]</code></summary>
+<details><summary><code>client.javaOptionalQueryParamsOverloads.javaOptionalQueryParamsOverloads.<a href="/src/api/resources/javaOptionalQueryParamsOverloads/resources/javaOptionalQueryParamsOverloads/client/Client.ts">searchPolicies</a>({ ...params }) -> SeedApi.InsurancePolicy[]</code></summary>
 <dl>
 <dd>
 
@@ -14856,7 +14224,7 @@ Search policies with required query params
 <dd>
 
 ```typescript
-await client.javaOptionalQueryParamsOverloads..searchPolicies({
+await client.javaOptionalQueryParamsOverloads.javaOptionalQueryParamsOverloads.searchPolicies({
     query: "query"
 });
 
@@ -14882,7 +14250,7 @@ await client.javaOptionalQueryParamsOverloads..searchPolicies({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `JavaOptionalQueryParamsOverloadsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -14894,7 +14262,7 @@ await client.javaOptionalQueryParamsOverloads..searchPolicies({
 </dl>
 </details>
 
-<details><summary><code>client.javaOptionalQueryParamsOverloads..<a href="/src/api/resources/javaOptionalQueryParamsOverloads/resources/client/Client.ts">listAllPolicies</a>() -> SeedApi.InsurancePolicy[]</code></summary>
+<details><summary><code>client.javaOptionalQueryParamsOverloads.javaOptionalQueryParamsOverloads.<a href="/src/api/resources/javaOptionalQueryParamsOverloads/resources/javaOptionalQueryParamsOverloads/client/Client.ts">listAllPolicies</a>() -> SeedApi.InsurancePolicy[]</code></summary>
 <dl>
 <dd>
 
@@ -14921,7 +14289,7 @@ List all policies
 <dd>
 
 ```typescript
-await client.javaOptionalQueryParamsOverloads..listAllPolicies();
+await client.javaOptionalQueryParamsOverloads.javaOptionalQueryParamsOverloads.listAllPolicies();
 
 ```
 </dd>
@@ -14937,7 +14305,7 @@ await client.javaOptionalQueryParamsOverloads..listAllPolicies();
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `JavaOptionalQueryParamsOverloadsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -15003,8 +14371,8 @@ await client.javaPathParamKeyConflict.createItem({
 </dl>
 </details>
 
-## JavaRequiredBodyOptionalHeaders 
-<details><summary><code>client.javaRequiredBodyOptionalHeaders..<a href="/src/api/resources/javaRequiredBodyOptionalHeaders/resources/client/Client.ts">getUsers</a>({ ...params }) -> SeedApi.User[]</code></summary>
+## JavaRequiredBodyOptionalHeaders JavaRequiredBodyOptionalHeaders
+<details><summary><code>client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.<a href="/src/api/resources/javaRequiredBodyOptionalHeaders/resources/javaRequiredBodyOptionalHeaders/client/Client.ts">getUsers</a>({ ...params }) -> SeedApi.User[]</code></summary>
 <dl>
 <dd>
 
@@ -15031,7 +14399,7 @@ Get all users with optional filtering.
 <dd>
 
 ```typescript
-await client.javaRequiredBodyOptionalHeaders..getUsers();
+await client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.getUsers();
 
 ```
 </dd>
@@ -15055,7 +14423,7 @@ await client.javaRequiredBodyOptionalHeaders..getUsers();
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `JavaRequiredBodyOptionalHeadersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -15067,7 +14435,7 @@ await client.javaRequiredBodyOptionalHeaders..getUsers();
 </dl>
 </details>
 
-<details><summary><code>client.javaRequiredBodyOptionalHeaders..<a href="/src/api/resources/javaRequiredBodyOptionalHeaders/resources/client/Client.ts">createUser</a>({ ...params }) -> SeedApi.User</code></summary>
+<details><summary><code>client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.<a href="/src/api/resources/javaRequiredBodyOptionalHeaders/resources/javaRequiredBodyOptionalHeaders/client/Client.ts">createUser</a>({ ...params }) -> SeedApi.User</code></summary>
 <dl>
 <dd>
 
@@ -15094,7 +14462,7 @@ Create a new user. Has required body and optional header.
 <dd>
 
 ```typescript
-await client.javaRequiredBodyOptionalHeaders..createUser({
+await client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.createUser({
     body: {
         name: "name",
         email: "email"
@@ -15123,7 +14491,7 @@ await client.javaRequiredBodyOptionalHeaders..createUser({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `JavaRequiredBodyOptionalHeadersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -15135,7 +14503,7 @@ await client.javaRequiredBodyOptionalHeaders..createUser({
 </dl>
 </details>
 
-<details><summary><code>client.javaRequiredBodyOptionalHeaders..<a href="/src/api/resources/javaRequiredBodyOptionalHeaders/resources/client/Client.ts">updateUser</a>({ ...params }) -> SeedApi.User</code></summary>
+<details><summary><code>client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.<a href="/src/api/resources/javaRequiredBodyOptionalHeaders/resources/javaRequiredBodyOptionalHeaders/client/Client.ts">updateUser</a>({ ...params }) -> SeedApi.User</code></summary>
 <dl>
 <dd>
 
@@ -15162,7 +14530,7 @@ Update an existing user. Has required body and optional query param.
 <dd>
 
 ```typescript
-await client.javaRequiredBodyOptionalHeaders..updateUser({
+await client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.updateUser({
     userId: "userId",
     body: {
         name: "name",
@@ -15192,7 +14560,7 @@ await client.javaRequiredBodyOptionalHeaders..updateUser({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `JavaRequiredBodyOptionalHeadersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -15204,7 +14572,7 @@ await client.javaRequiredBodyOptionalHeaders..updateUser({
 </dl>
 </details>
 
-<details><summary><code>client.javaRequiredBodyOptionalHeaders..<a href="/src/api/resources/javaRequiredBodyOptionalHeaders/resources/client/Client.ts">createUserWithOptions</a>({ ...params }) -> SeedApi.User</code></summary>
+<details><summary><code>client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.<a href="/src/api/resources/javaRequiredBodyOptionalHeaders/resources/javaRequiredBodyOptionalHeaders/client/Client.ts">createUserWithOptions</a>({ ...params }) -> SeedApi.User</code></summary>
 <dl>
 <dd>
 
@@ -15231,7 +14599,7 @@ Create a user with optional header and query param.
 <dd>
 
 ```typescript
-await client.javaRequiredBodyOptionalHeaders..createUserWithOptions({
+await client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.createUserWithOptions({
     body: {
         name: "name",
         email: "email"
@@ -15260,7 +14628,7 @@ await client.javaRequiredBodyOptionalHeaders..createUserWithOptions({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `JavaRequiredBodyOptionalHeadersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -15272,7 +14640,7 @@ await client.javaRequiredBodyOptionalHeaders..createUserWithOptions({
 </dl>
 </details>
 
-<details><summary><code>client.javaRequiredBodyOptionalHeaders..<a href="/src/api/resources/javaRequiredBodyOptionalHeaders/resources/client/Client.ts">createUserWithRequiredHeader</a>({ ...params }) -> SeedApi.User</code></summary>
+<details><summary><code>client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.<a href="/src/api/resources/javaRequiredBodyOptionalHeaders/resources/javaRequiredBodyOptionalHeaders/client/Client.ts">createUserWithRequiredHeader</a>({ ...params }) -> SeedApi.User</code></summary>
 <dl>
 <dd>
 
@@ -15299,7 +14667,7 @@ Create a user with required header.
 <dd>
 
 ```typescript
-await client.javaRequiredBodyOptionalHeaders..createUserWithRequiredHeader({
+await client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.createUserWithRequiredHeader({
     "X-Api-Key": "X-Api-Key",
     body: {
         name: "name",
@@ -15329,7 +14697,7 @@ await client.javaRequiredBodyOptionalHeaders..createUserWithRequiredHeader({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `JavaRequiredBodyOptionalHeadersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -15341,7 +14709,7 @@ await client.javaRequiredBodyOptionalHeaders..createUserWithRequiredHeader({
 </dl>
 </details>
 
-<details><summary><code>client.javaRequiredBodyOptionalHeaders..<a href="/src/api/resources/javaRequiredBodyOptionalHeaders/resources/client/Client.ts">createUserWithRequiredQuery</a>({ ...params }) -> SeedApi.User</code></summary>
+<details><summary><code>client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.<a href="/src/api/resources/javaRequiredBodyOptionalHeaders/resources/javaRequiredBodyOptionalHeaders/client/Client.ts">createUserWithRequiredQuery</a>({ ...params }) -> SeedApi.User</code></summary>
 <dl>
 <dd>
 
@@ -15368,7 +14736,7 @@ Create a user with required query param.
 <dd>
 
 ```typescript
-await client.javaRequiredBodyOptionalHeaders..createUserWithRequiredQuery({
+await client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.createUserWithRequiredQuery({
     tenantId: "tenantId",
     body: {
         name: "name",
@@ -15398,7 +14766,7 @@ await client.javaRequiredBodyOptionalHeaders..createUserWithRequiredQuery({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `JavaRequiredBodyOptionalHeadersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -15410,7 +14778,7 @@ await client.javaRequiredBodyOptionalHeaders..createUserWithRequiredQuery({
 </dl>
 </details>
 
-<details><summary><code>client.javaRequiredBodyOptionalHeaders..<a href="/src/api/resources/javaRequiredBodyOptionalHeaders/resources/client/Client.ts">createUserInlined</a>({ ...params }) -> SeedApi.User</code></summary>
+<details><summary><code>client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.<a href="/src/api/resources/javaRequiredBodyOptionalHeaders/resources/javaRequiredBodyOptionalHeaders/client/Client.ts">createUserInlined</a>({ ...params }) -> SeedApi.User</code></summary>
 <dl>
 <dd>
 
@@ -15437,7 +14805,7 @@ Create a user with inlined body and optional header.
 <dd>
 
 ```typescript
-await client.javaRequiredBodyOptionalHeaders..createUserInlined({
+await client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.createUserInlined({
     name: "name",
     email: "email"
 });
@@ -15464,7 +14832,7 @@ await client.javaRequiredBodyOptionalHeaders..createUserInlined({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `JavaRequiredBodyOptionalHeadersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -16277,8 +15645,8 @@ await client.javaStreamingAcceptHeader.dummy.generate({
 </dl>
 </details>
 
-## License 
-<details><summary><code>client.license..<a href="/src/api/resources/license/resources/client/Client.ts">get</a>() -> void</code></summary>
+## License License
+<details><summary><code>client.license.license.<a href="/src/api/resources/license/resources/license/client/Client.ts">get</a>() -> void</code></summary>
 <dl>
 <dd>
 
@@ -16291,7 +15659,7 @@ await client.javaStreamingAcceptHeader.dummy.generate({
 <dd>
 
 ```typescript
-await client.license..get();
+await client.license.license.get();
 
 ```
 </dd>
@@ -16307,7 +15675,7 @@ await client.license..get();
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `LicenseClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -16607,8 +15975,8 @@ await client.literal.reference.send({
 </dl>
 </details>
 
-## LiteralUserAgent 
-<details><summary><code>client.literalUserAgent..<a href="/src/api/resources/literalUserAgent/resources/client/Client.ts">ping</a>() -> string</code></summary>
+## LiteralUserAgent LiteralUserAgent
+<details><summary><code>client.literalUserAgent.literalUserAgent.<a href="/src/api/resources/literalUserAgent/resources/literalUserAgent/client/Client.ts">ping</a>() -> string</code></summary>
 <dl>
 <dd>
 
@@ -16621,7 +15989,7 @@ await client.literal.reference.send({
 <dd>
 
 ```typescript
-await client.literalUserAgent..ping();
+await client.literalUserAgent.literalUserAgent.ping();
 
 ```
 </dd>
@@ -16637,7 +16005,7 @@ await client.literalUserAgent..ping();
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `LiteralUserAgentClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -17502,8 +16870,8 @@ await client.multiUrlEnvironmentNoDefault.s3.getPresignedUrl({
 </dl>
 </details>
 
-## MultipleRequestBodies 
-<details><summary><code>client.multipleRequestBodies..<a href="/src/api/resources/multipleRequestBodies/resources/client/Client.ts">uploadJsonDocument</a>({ ...params }) -> SeedApi.UploadDocumentResponse</code></summary>
+## MultipleRequestBodies MultipleRequestBodies
+<details><summary><code>client.multipleRequestBodies.multipleRequestBodies.<a href="/src/api/resources/multipleRequestBodies/resources/multipleRequestBodies/client/Client.ts">uploadJsonDocument</a>({ ...params }) -> SeedApi.UploadDocumentResponse</code></summary>
 <dl>
 <dd>
 
@@ -17516,7 +16884,7 @@ await client.multiUrlEnvironmentNoDefault.s3.getPresignedUrl({
 <dd>
 
 ```typescript
-await client.multipleRequestBodies..uploadJsonDocument();
+await client.multipleRequestBodies.multipleRequestBodies.uploadJsonDocument();
 
 ```
 </dd>
@@ -17540,7 +16908,7 @@ await client.multipleRequestBodies..uploadJsonDocument();
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `MultipleRequestBodiesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -21312,113 +20680,6 @@ await client.optional.optional.sendOptionalNullableWithAllOptionalProperties({
 </dl>
 </details>
 
-## PackageYml 
-<details><summary><code>client.packageYml..<a href="/src/api/resources/packageYml/resources/client/Client.ts">echo</a>({ ...params }) -> string</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.packageYml..echo({
-    id: "id-ksfd9c1",
-    name: "Hello world!",
-    size: 20
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.packageYml.EchoRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Client.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## PackageYml Service
-<details><summary><code>client.packageYml.service.<a href="/src/api/resources/packageYml/resources/service/client/Client.ts">nop</a>({ ...params }) -> void</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.packageYml.service.nop({
-    id: "id-a2ijs82",
-    nestedId: "id-219xca8"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.packageYml.NopServiceRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServiceClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## Pagination Complex
 <details><summary><code>client.pagination.complex.<a href="/src/api/resources/pagination/resources/complex/client/Client.ts">search</a>({ ...params }) -> SeedApi.PaginatedConversationResponse</code></summary>
 <dl>
@@ -23549,8 +22810,8 @@ await client.plainText.service.getText();
 </dl>
 </details>
 
-## PropertyAccess 
-<details><summary><code>client.propertyAccess..<a href="/src/api/resources/propertyAccess/resources/client/Client.ts">createUser</a>({ ...params }) -> SeedApi.User</code></summary>
+## PropertyAccess PropertyAccess
+<details><summary><code>client.propertyAccess.propertyAccess.<a href="/src/api/resources/propertyAccess/resources/propertyAccess/client/Client.ts">createUser</a>({ ...params }) -> SeedApi.User</code></summary>
 <dl>
 <dd>
 
@@ -23563,7 +22824,7 @@ await client.plainText.service.getText();
 <dd>
 
 ```typescript
-await client.propertyAccess..createUser({
+await client.propertyAccess.propertyAccess.createUser({
     id: "id",
     email: "email",
     password: "password",
@@ -23598,7 +22859,7 @@ await client.propertyAccess..createUser({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `PropertyAccessClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -23652,8 +22913,8 @@ await client.publicObject.service.get();
 </dl>
 </details>
 
-## PythonPositionalSingleProperty 
-<details><summary><code>client.pythonPositionalSingleProperty..<a href="/src/api/resources/pythonPositionalSingleProperty/resources/client/Client.ts">create</a>({ ...params }) -> string</code></summary>
+## PythonPositionalSingleProperty PythonPositionalSingleProperty
+<details><summary><code>client.pythonPositionalSingleProperty.pythonPositionalSingleProperty.<a href="/src/api/resources/pythonPositionalSingleProperty/resources/pythonPositionalSingleProperty/client/Client.ts">create</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -23666,7 +22927,7 @@ await client.publicObject.service.get();
 <dd>
 
 ```typescript
-await client.pythonPositionalSingleProperty..create({
+await client.pythonPositionalSingleProperty.pythonPositionalSingleProperty.create({
     instrument: {
         identifier: {
             isin: "US0378331005"
@@ -23705,113 +22966,7 @@ await client.pythonPositionalSingleProperty..create({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## PythonStreamingParameterOpenapi
-<details><summary><code>client.pythonStreamingParameterOpenapi.<a href="/src/api/resources/pythonStreamingParameterOpenapi/client/Client.ts">chatStream</a>({ ...params }) -> core.Stream&lt;SeedApi.ChatStreamEvent&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-const response = await client.pythonStreamingParameterOpenapi.chatStream({
-    prompt: "prompt"
-});
-for await (const item of response) {
-    console.log(item);
-}
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.pythonStreamingParameterOpenapi.ChatStreamRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `PythonStreamingParameterOpenapiClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.pythonStreamingParameterOpenapi.<a href="/src/api/resources/pythonStreamingParameterOpenapi/client/Client.ts">chat</a>({ ...params }) -> SeedApi.ChatResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.pythonStreamingParameterOpenapi.chat({
-    prompt: "Hello"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.pythonStreamingParameterOpenapi.ChatRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `PythonStreamingParameterOpenapiClient.RequestOptions` 
+**requestOptions:** `PythonPositionalSinglePropertyClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -24006,56 +23161,6 @@ await client.pythonReservedKeywordSubpackages.automations.export.create();
 <dd>
 
 **requestOptions:** `ExportClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## QueryParamNameConflict
-<details><summary><code>client.queryParamNameConflict.<a href="/src/api/resources/queryParamNameConflict/client/Client.ts">bulkUpdateTasks</a>({ ...params }) -> SeedApi.BulkUpdateTasksResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.queryParamNameConflict.bulkUpdateTasks();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.queryParamNameConflict.BulkUpdateTasksRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `QueryParamNameConflictClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -24491,8 +23596,8 @@ await client.requestParameters.user.getUsername({
 </dl>
 </details>
 
-## RequiredNullable 
-<details><summary><code>client.requiredNullable..<a href="/src/api/resources/requiredNullable/resources/client/Client.ts">getFoo</a>({ ...params }) -> SeedApi.Foo</code></summary>
+## RequiredNullable RequiredNullable
+<details><summary><code>client.requiredNullable.requiredNullable.<a href="/src/api/resources/requiredNullable/resources/requiredNullable/client/Client.ts">getFoo</a>({ ...params }) -> SeedApi.Foo</code></summary>
 <dl>
 <dd>
 
@@ -24505,7 +23610,7 @@ await client.requestParameters.user.getUsername({
 <dd>
 
 ```typescript
-await client.requiredNullable..getFoo({
+await client.requiredNullable.requiredNullable.getFoo({
     required_baz: "required_baz",
     required_nullable_baz: "required_nullable_baz"
 });
@@ -24532,7 +23637,7 @@ await client.requiredNullable..getFoo({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `RequiredNullableClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -24544,7 +23649,7 @@ await client.requiredNullable..getFoo({
 </dl>
 </details>
 
-<details><summary><code>client.requiredNullable..<a href="/src/api/resources/requiredNullable/resources/client/Client.ts">updateFoo</a>({ ...params }) -> SeedApi.Foo</code></summary>
+<details><summary><code>client.requiredNullable.requiredNullable.<a href="/src/api/resources/requiredNullable/resources/requiredNullable/client/Client.ts">updateFoo</a>({ ...params }) -> SeedApi.Foo</code></summary>
 <dl>
 <dd>
 
@@ -24557,7 +23662,7 @@ await client.requiredNullable..getFoo({
 <dd>
 
 ```typescript
-await client.requiredNullable..updateFoo({
+await client.requiredNullable.requiredNullable.updateFoo({
     "X-Idempotency-Key": "X-Idempotency-Key",
     id: "id"
 });
@@ -24584,7 +23689,7 @@ await client.requiredNullable..updateFoo({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `RequiredNullableClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -25247,1208 +24352,6 @@ await client.schemalessRequestBodyExamples.createPlantWithSchema({
 </dl>
 </details>
 
-## ServerSentEventsOpenapi
-<details><summary><code>client.serverSentEventsOpenapi.<a href="/src/api/resources/serverSentEventsOpenapi/client/Client.ts">streamProtocolNoCollision</a>({ ...params }) -> core.Stream&lt;SeedApi.StreamProtocolNoCollisionResponse&gt;</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Uses discriminator with mapping, x-fern-discriminator-context set to protocol. Because the discriminant is at the protocol level, the data field can be any type or absent entirely. Demonstrates heartbeat (no data), string literal, number literal, and object data payloads.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-const response = await client.serverSentEventsOpenapi.streamProtocolNoCollision({});
-for await (const item of response) {
-    console.log(item);
-}
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.StreamRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServerSentEventsOpenapiClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.serverSentEventsOpenapi.<a href="/src/api/resources/serverSentEventsOpenapi/client/Client.ts">streamProtocolCollision</a>({ ...params }) -> core.Stream&lt;SeedApi.StreamProtocolCollisionResponse&gt;</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Same as endpoint 1, but the object data payload contains its own "event" property, which collides with the SSE envelope's "event" discriminator field. Tests whether generators correctly separate the protocol-level discriminant from the data-level field when context=protocol is specified.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-const response = await client.serverSentEventsOpenapi.streamProtocolCollision({});
-for await (const item of response) {
-    console.log(item);
-}
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.StreamRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServerSentEventsOpenapiClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.serverSentEventsOpenapi.<a href="/src/api/resources/serverSentEventsOpenapi/client/Client.ts">streamDataContext</a>({ ...params }) -> core.Stream&lt;SeedApi.StreamDataContextResponse&gt;</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-x-fern-discriminator-context is explicitly set to "data" (the default value). Each variant uses allOf to extend a payload schema and adds the "event" discriminant property at the same level. There is no "data" wrapper. The discriminant and payload fields coexist in a single flat object. This matches the real-world pattern used by customers with context=data.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-const response = await client.serverSentEventsOpenapi.streamDataContext({});
-for await (const item of response) {
-    console.log(item);
-}
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.StreamRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServerSentEventsOpenapiClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.serverSentEventsOpenapi.<a href="/src/api/resources/serverSentEventsOpenapi/client/Client.ts">streamNoContext</a>({ ...params }) -> core.Stream&lt;SeedApi.StreamNoContextResponse&gt;</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-The x-fern-discriminator-context extension is omitted entirely. Tests whether Fern correctly infers the default behavior (context=data) when the extension is absent. Same flat allOf pattern as endpoint 3.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-const response = await client.serverSentEventsOpenapi.streamNoContext({});
-for await (const item of response) {
-    console.log(item);
-}
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.StreamRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServerSentEventsOpenapiClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.serverSentEventsOpenapi.<a href="/src/api/resources/serverSentEventsOpenapi/client/Client.ts">streamProtocolWithFlatSchema</a>({ ...params }) -> core.Stream&lt;SeedApi.StreamProtocolWithFlatSchemaResponse&gt;</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Mismatched combination: context=protocol with the flat allOf schema pattern that is normally used with context=data. Shows what happens when the discriminant is declared as protocol-level but the schema uses allOf to flatten the event field alongside payload fields instead of wrapping them in a data field.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-const response = await client.serverSentEventsOpenapi.streamProtocolWithFlatSchema({});
-for await (const item of response) {
-    console.log(item);
-}
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.StreamRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServerSentEventsOpenapiClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.serverSentEventsOpenapi.<a href="/src/api/resources/serverSentEventsOpenapi/client/Client.ts">streamDataContextWithEnvelopeSchema</a>({ ...params }) -> core.Stream&lt;SeedApi.StreamDataContextWithEnvelopeSchemaResponse&gt;</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Mismatched combination: context=data with the envelope+data schema pattern that is normally used with context=protocol. Shows what happens when the discriminant is declared as data-level but the schema separates the event field and data field into an envelope structure.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-const response = await client.serverSentEventsOpenapi.streamDataContextWithEnvelopeSchema({});
-for await (const item of response) {
-    console.log(item);
-}
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.StreamRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServerSentEventsOpenapiClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.serverSentEventsOpenapi.<a href="/src/api/resources/serverSentEventsOpenapi/client/Client.ts">streamOasSpecNative</a>({ ...params }) -> core.Stream&lt;SeedApi.Event&gt;</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Follows the pattern from the OAS 3.2 specification's own SSE example. The itemSchema extends a base Event schema via $ref and uses inline oneOf variants with const on the event field to distinguish event types. Data fields use contentSchema/contentMediaType for structured payloads. No discriminator object is used. Event type resolution relies on const matching.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-const response = await client.serverSentEventsOpenapi.streamOasSpecNative({});
-for await (const item of response) {
-    console.log(item);
-}
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.StreamRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServerSentEventsOpenapiClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.serverSentEventsOpenapi.<a href="/src/api/resources/serverSentEventsOpenapi/client/Client.ts">streamXFernStreamingConditionStream</a>({ ...params }) -> core.Stream&lt;SeedApi.CompletionStreamChunk&gt;</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Uses x-fern-streaming extension with stream-condition to split into streaming and non-streaming variants based on a request body field. The request body is a $ref to a named schema. The response and response-stream point to different schemas.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-const response = await client.serverSentEventsOpenapi.streamXFernStreamingConditionStream({
-    query: "query"
-});
-for await (const item of response) {
-    console.log(item);
-}
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.serverSentEventsOpenapi.StreamXFernStreamingConditionStreamRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServerSentEventsOpenapiClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.serverSentEventsOpenapi.<a href="/src/api/resources/serverSentEventsOpenapi/client/Client.ts">streamXFernStreamingCondition</a>({ ...params }) -> SeedApi.CompletionFullResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Uses x-fern-streaming extension with stream-condition to split into streaming and non-streaming variants based on a request body field. The request body is a $ref to a named schema. The response and response-stream point to different schemas.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.serverSentEventsOpenapi.streamXFernStreamingCondition({
-    query: "query"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.serverSentEventsOpenapi.StreamXFernStreamingConditionRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServerSentEventsOpenapiClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.serverSentEventsOpenapi.<a href="/src/api/resources/serverSentEventsOpenapi/client/Client.ts">streamXFernStreamingSharedSchemaStream</a>({ ...params }) -> core.Stream&lt;SeedApi.CompletionStreamChunk&gt;</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Uses x-fern-streaming with stream-condition. The request body $ref (SharedCompletionRequest) is also referenced by a separate non-streaming endpoint (/validate-completion). This tests that the shared request schema is not excluded from the context during streaming processing.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-const response = await client.serverSentEventsOpenapi.streamXFernStreamingSharedSchemaStream({
-    prompt: "prompt",
-    model: "model"
-});
-for await (const item of response) {
-    console.log(item);
-}
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.serverSentEventsOpenapi.StreamXFernStreamingSharedSchemaStreamRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServerSentEventsOpenapiClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.serverSentEventsOpenapi.<a href="/src/api/resources/serverSentEventsOpenapi/client/Client.ts">streamXFernStreamingSharedSchema</a>({ ...params }) -> SeedApi.CompletionFullResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Uses x-fern-streaming with stream-condition. The request body $ref (SharedCompletionRequest) is also referenced by a separate non-streaming endpoint (/validate-completion). This tests that the shared request schema is not excluded from the context during streaming processing.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.serverSentEventsOpenapi.streamXFernStreamingSharedSchema({
-    prompt: "prompt",
-    model: "model"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.serverSentEventsOpenapi.StreamXFernStreamingSharedSchemaRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServerSentEventsOpenapiClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.serverSentEventsOpenapi.<a href="/src/api/resources/serverSentEventsOpenapi/client/Client.ts">validateCompletion</a>({ ...params }) -> SeedApi.CompletionFullResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-A non-streaming endpoint that references the same SharedCompletionRequest schema as endpoint 10. Ensures the shared $ref schema remains available and is not excluded during the streaming endpoint's processing.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.serverSentEventsOpenapi.validateCompletion({
-    prompt: "prompt",
-    model: "model"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.serverSentEventsOpenapi.SharedCompletionRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServerSentEventsOpenapiClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.serverSentEventsOpenapi.<a href="/src/api/resources/serverSentEventsOpenapi/client/Client.ts">streamXFernStreamingUnionStream</a>({ ...params }) -> core.Stream&lt;SeedApi.CompletionStreamChunk&gt;</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Uses x-fern-streaming with stream-condition where the request body is a discriminated union (oneOf) whose variants inherit the stream condition field (stream_response) from a shared base schema via allOf. Tests that the stream condition property is not duplicated in the generated output when the base schema is expanded into each variant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-const response = await client.serverSentEventsOpenapi.streamXFernStreamingUnionStream({
-    type: "message",
-    stream_response: true,
-    prompt: "prompt",
-    message: "message",
-    stream_response: true
-});
-for await (const item of response) {
-    console.log(item);
-}
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.StreamXFernStreamingUnionStreamRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServerSentEventsOpenapiClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.serverSentEventsOpenapi.<a href="/src/api/resources/serverSentEventsOpenapi/client/Client.ts">streamXFernStreamingUnion</a>({ ...params }) -> SeedApi.CompletionFullResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Uses x-fern-streaming with stream-condition where the request body is a discriminated union (oneOf) whose variants inherit the stream condition field (stream_response) from a shared base schema via allOf. Tests that the stream condition property is not duplicated in the generated output when the base schema is expanded into each variant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.serverSentEventsOpenapi.streamXFernStreamingUnion({
-    type: "message",
-    stream_response: false,
-    prompt: "prompt",
-    message: "message",
-    stream_response: false
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.StreamXFernStreamingUnionRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServerSentEventsOpenapiClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.serverSentEventsOpenapi.<a href="/src/api/resources/serverSentEventsOpenapi/client/Client.ts">validateUnionRequest</a>({ ...params }) -> SeedApi.ValidateUnionRequestResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-References UnionStreamRequestBase directly, ensuring the base schema cannot be excluded from the context. This endpoint exists to verify that shared base schemas used in discriminated union variants with stream-condition remain available.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.serverSentEventsOpenapi.validateUnionRequest({
-    prompt: "prompt"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.UnionStreamRequestBase` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServerSentEventsOpenapiClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.serverSentEventsOpenapi.<a href="/src/api/resources/serverSentEventsOpenapi/client/Client.ts">streamXFernStreamingNullableConditionStream</a>({ ...params }) -> core.Stream&lt;SeedApi.CompletionStreamChunk&gt;</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Uses x-fern-streaming with stream-condition where the stream field is nullable (type: ["boolean", "null"] in OAS 3.1). Previously, the spread order in the importer caused the nullable type array to overwrite the const literal, producing stream?: true | null instead of stream: true. The const/type override must be spread after the original property.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-const response = await client.serverSentEventsOpenapi.streamXFernStreamingNullableConditionStream({
-    query: "query"
-});
-for await (const item of response) {
-    console.log(item);
-}
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.serverSentEventsOpenapi.StreamXFernStreamingNullableConditionStreamRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServerSentEventsOpenapiClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.serverSentEventsOpenapi.<a href="/src/api/resources/serverSentEventsOpenapi/client/Client.ts">streamXFernStreamingNullableCondition</a>({ ...params }) -> SeedApi.CompletionFullResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Uses x-fern-streaming with stream-condition where the stream field is nullable (type: ["boolean", "null"] in OAS 3.1). Previously, the spread order in the importer caused the nullable type array to overwrite the const literal, producing stream?: true | null instead of stream: true. The const/type override must be spread after the original property.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.serverSentEventsOpenapi.streamXFernStreamingNullableCondition({
-    query: "query"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.serverSentEventsOpenapi.StreamXFernStreamingNullableConditionRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServerSentEventsOpenapiClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.serverSentEventsOpenapi.<a href="/src/api/resources/serverSentEventsOpenapi/client/Client.ts">streamXFernStreamingSseOnly</a>({ ...params }) -> core.Stream&lt;string&gt;</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Uses x-fern-streaming with format: sse but no stream-condition. This represents a stream-only endpoint that always returns SSE. There is no non-streaming variant, and the response is always a stream of chunks.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-const response = await client.serverSentEventsOpenapi.streamXFernStreamingSseOnly({});
-for await (const item of response) {
-    console.log(item);
-}
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.StreamRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServerSentEventsOpenapiClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## ServerUrlTemplating
 <details><summary><code>client.serverUrlTemplating.<a href="/src/api/resources/serverUrlTemplating/client/Client.ts">getUsers</a>() -> SeedApi.User[]</code></summary>
 <dl>
@@ -26902,8 +24805,8 @@ await client.serverSentEvents.completions.streamWithoutTerminator({
 </dl>
 </details>
 
-## SimpleFhir 
-<details><summary><code>client.simpleFhir..<a href="/src/api/resources/simpleFhir/resources/client/Client.ts">getAccount</a>({ ...params }) -> SeedApi.Account</code></summary>
+## SimpleFhir SimpleFhir
+<details><summary><code>client.simpleFhir.simpleFhir.<a href="/src/api/resources/simpleFhir/resources/simpleFhir/client/Client.ts">getAccount</a>({ ...params }) -> SeedApi.Account</code></summary>
 <dl>
 <dd>
 
@@ -26916,7 +24819,7 @@ await client.serverSentEvents.completions.streamWithoutTerminator({
 <dd>
 
 ```typescript
-await client.simpleFhir..getAccount({
+await client.simpleFhir.simpleFhir.getAccount({
     account_id: "account_id"
 });
 
@@ -26942,7 +24845,7 @@ await client.simpleFhir..getAccount({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `SimpleFhirClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -29511,8 +27414,8 @@ await client.tsExtraProperties.createUser({
 </dl>
 </details>
 
-## TsInlineTypes 
-<details><summary><code>client.tsInlineTypes..<a href="/src/api/resources/tsInlineTypes/resources/client/Client.ts">getRoot</a>({ ...params }) -> SeedApi.RootType1</code></summary>
+## TsInlineTypes TsInlineTypes
+<details><summary><code>client.tsInlineTypes.tsInlineTypes.<a href="/src/api/resources/tsInlineTypes/resources/tsInlineTypes/client/Client.ts">getRoot</a>({ ...params }) -> SeedApi.RootType1</code></summary>
 <dl>
 <dd>
 
@@ -29525,7 +27428,7 @@ await client.tsExtraProperties.createUser({
 <dd>
 
 ```typescript
-await client.tsInlineTypes..getRoot({
+await client.tsInlineTypes.tsInlineTypes.getRoot({
     bar: {
         foo: "foo"
     },
@@ -29554,7 +27457,7 @@ await client.tsInlineTypes..getRoot({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `TsInlineTypesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -29566,7 +27469,7 @@ await client.tsInlineTypes..getRoot({
 </dl>
 </details>
 
-<details><summary><code>client.tsInlineTypes..<a href="/src/api/resources/tsInlineTypes/resources/client/Client.ts">getDiscriminatedUnion</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.tsInlineTypes.tsInlineTypes.<a href="/src/api/resources/tsInlineTypes/resources/tsInlineTypes/client/Client.ts">getDiscriminatedUnion</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -29579,7 +27482,7 @@ await client.tsInlineTypes..getRoot({
 <dd>
 
 ```typescript
-await client.tsInlineTypes..getDiscriminatedUnion({
+await client.tsInlineTypes.tsInlineTypes.getDiscriminatedUnion({
     bar: {
         foo: "foo",
         bar: {
@@ -29618,7 +27521,7 @@ await client.tsInlineTypes..getDiscriminatedUnion({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `TsInlineTypesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -29630,7 +27533,7 @@ await client.tsInlineTypes..getDiscriminatedUnion({
 </dl>
 </details>
 
-<details><summary><code>client.tsInlineTypes..<a href="/src/api/resources/tsInlineTypes/resources/client/Client.ts">getUndiscriminatedUnion</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.tsInlineTypes.tsInlineTypes.<a href="/src/api/resources/tsInlineTypes/resources/tsInlineTypes/client/Client.ts">getUndiscriminatedUnion</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -29643,7 +27546,7 @@ await client.tsInlineTypes..getDiscriminatedUnion({
 <dd>
 
 ```typescript
-await client.tsInlineTypes..getUndiscriminatedUnion({
+await client.tsInlineTypes.tsInlineTypes.getUndiscriminatedUnion({
     bar: "SUNNY",
     foo: "foo"
 });
@@ -29670,7 +27573,7 @@ await client.tsInlineTypes..getUndiscriminatedUnion({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `TsInlineTypesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -29801,8 +27704,8 @@ await client.tsExpressCasing.imdb.getMovie({
 </dl>
 </details>
 
-## UndiscriminatedUnionWithResponseProperty 
-<details><summary><code>client.undiscriminatedUnionWithResponseProperty..<a href="/src/api/resources/undiscriminatedUnionWithResponseProperty/resources/client/Client.ts">getUnion</a>() -> SeedApi.UnionResponse</code></summary>
+## UndiscriminatedUnionWithResponseProperty UndiscriminatedUnionWithResponseProperty
+<details><summary><code>client.undiscriminatedUnionWithResponseProperty.undiscriminatedUnionWithResponseProperty.<a href="/src/api/resources/undiscriminatedUnionWithResponseProperty/resources/undiscriminatedUnionWithResponseProperty/client/Client.ts">getUnion</a>() -> SeedApi.UnionResponse</code></summary>
 <dl>
 <dd>
 
@@ -29815,7 +27718,7 @@ await client.tsExpressCasing.imdb.getMovie({
 <dd>
 
 ```typescript
-await client.undiscriminatedUnionWithResponseProperty..getUnion();
+await client.undiscriminatedUnionWithResponseProperty.undiscriminatedUnionWithResponseProperty.getUnion();
 
 ```
 </dd>
@@ -29831,7 +27734,7 @@ await client.undiscriminatedUnionWithResponseProperty..getUnion();
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `UndiscriminatedUnionWithResponsePropertyClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -29843,7 +27746,7 @@ await client.undiscriminatedUnionWithResponseProperty..getUnion();
 </dl>
 </details>
 
-<details><summary><code>client.undiscriminatedUnionWithResponseProperty..<a href="/src/api/resources/undiscriminatedUnionWithResponseProperty/resources/client/Client.ts">listUnions</a>() -> SeedApi.UnionListResponse</code></summary>
+<details><summary><code>client.undiscriminatedUnionWithResponseProperty.undiscriminatedUnionWithResponseProperty.<a href="/src/api/resources/undiscriminatedUnionWithResponseProperty/resources/undiscriminatedUnionWithResponseProperty/client/Client.ts">listUnions</a>() -> SeedApi.UnionListResponse</code></summary>
 <dl>
 <dd>
 
@@ -29856,7 +27759,7 @@ await client.undiscriminatedUnionWithResponseProperty..getUnion();
 <dd>
 
 ```typescript
-await client.undiscriminatedUnionWithResponseProperty..listUnions();
+await client.undiscriminatedUnionWithResponseProperty.undiscriminatedUnionWithResponseProperty.listUnions();
 
 ```
 </dd>
@@ -29872,7 +27775,7 @@ await client.undiscriminatedUnionWithResponseProperty..listUnions();
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `UndiscriminatedUnionWithResponsePropertyClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -31289,8 +29192,8 @@ await client.urlFormEncoded.getToken({
 </dl>
 </details>
 
-## Validation 
-<details><summary><code>client.validation..<a href="/src/api/resources/validation/resources/client/Client.ts">create</a>({ ...params }) -> SeedApi.Type</code></summary>
+## Validation Validation
+<details><summary><code>client.validation.validation.<a href="/src/api/resources/validation/resources/validation/client/Client.ts">create</a>({ ...params }) -> SeedApi.Type</code></summary>
 <dl>
 <dd>
 
@@ -31303,7 +29206,7 @@ await client.urlFormEncoded.getToken({
 <dd>
 
 ```typescript
-await client.validation..create({
+await client.validation.validation.create({
     decimal: 1.1,
     even: 1,
     name: "name",
@@ -31332,7 +29235,7 @@ await client.validation..create({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `ValidationClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -31344,7 +29247,7 @@ await client.validation..create({
 </dl>
 </details>
 
-<details><summary><code>client.validation..<a href="/src/api/resources/validation/resources/client/Client.ts">get</a>({ ...params }) -> SeedApi.Type</code></summary>
+<details><summary><code>client.validation.validation.<a href="/src/api/resources/validation/resources/validation/client/Client.ts">get</a>({ ...params }) -> SeedApi.Type</code></summary>
 <dl>
 <dd>
 
@@ -31357,7 +29260,7 @@ await client.validation..create({
 <dd>
 
 ```typescript
-await client.validation..get({
+await client.validation.validation.get({
     decimal: 1.1,
     even: 1,
     name: "name"
@@ -31385,7 +29288,7 @@ await client.validation..get({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `ValidationClient.RequestOptions` 
     
 </dd>
 </dl>

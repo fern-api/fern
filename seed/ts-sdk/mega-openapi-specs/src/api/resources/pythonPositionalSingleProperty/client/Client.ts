@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { PythonPositionalSinglePropertyClient as PythonPositionalSinglePropertyClient_ } from "../resources/pythonPositionalSingleProperty/client/Client.js";
 
 export declare namespace PythonPositionalSinglePropertyClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,13 @@ export declare namespace PythonPositionalSinglePropertyClient {
 
 export class PythonPositionalSinglePropertyClient {
     protected readonly _options: NormalizedClientOptions<PythonPositionalSinglePropertyClient.Options>;
-    protected _: Client | undefined;
+    protected _pythonPositionalSingleProperty: PythonPositionalSinglePropertyClient_ | undefined;
 
     constructor(options: PythonPositionalSinglePropertyClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get pythonPositionalSingleProperty(): PythonPositionalSinglePropertyClient_ {
+        return (this._pythonPositionalSingleProperty ??= new PythonPositionalSinglePropertyClient_(this._options));
     }
 }

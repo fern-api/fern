@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { JavaOptionalNullableQueryParamsClient as JavaOptionalNullableQueryParamsClient_ } from "../resources/javaOptionalNullableQueryParams/client/Client.js";
 
 export declare namespace JavaOptionalNullableQueryParamsClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,13 @@ export declare namespace JavaOptionalNullableQueryParamsClient {
 
 export class JavaOptionalNullableQueryParamsClient {
     protected readonly _options: NormalizedClientOptions<JavaOptionalNullableQueryParamsClient.Options>;
-    protected _: Client | undefined;
+    protected _javaOptionalNullableQueryParams: JavaOptionalNullableQueryParamsClient_ | undefined;
 
     constructor(options: JavaOptionalNullableQueryParamsClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get javaOptionalNullableQueryParams(): JavaOptionalNullableQueryParamsClient_ {
+        return (this._javaOptionalNullableQueryParams ??= new JavaOptionalNullableQueryParamsClient_(this._options));
     }
 }

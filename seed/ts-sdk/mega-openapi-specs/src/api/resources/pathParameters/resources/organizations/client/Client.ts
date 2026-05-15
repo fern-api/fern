@@ -48,7 +48,6 @@ export class OrganizationsClient {
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 "X-API-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2024-02-08",
-                "X-API-Key": requestOptions?.apiKey ?? this._options?.apiKey,
                 "x-api-key": requestOptions?.apiKey ?? this._options?.apiKey,
             }),
             requestOptions?.headers,
@@ -116,7 +115,6 @@ export class OrganizationsClient {
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 "X-API-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2024-02-08",
-                "X-API-Key": requestOptions?.apiKey ?? this._options?.apiKey,
                 "x-api-key": requestOptions?.apiKey ?? this._options?.apiKey,
             }),
             requestOptions?.headers,
@@ -186,7 +184,6 @@ export class OrganizationsClient {
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 "X-API-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2024-02-08",
-                "X-API-Key": requestOptions?.apiKey ?? this._options?.apiKey,
                 "x-api-key": requestOptions?.apiKey ?? this._options?.apiKey,
             }),
             requestOptions?.headers,

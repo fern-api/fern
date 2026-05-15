@@ -1,3 +1,2 @@
-export * from "./client/index.js";
-export * from "./client/requests/index.js";
-export * as  from "./index.js";
+export * from "./csharpReadonlyRequest/client/requests/index.js";
+export * as csharpReadonlyRequest from "./csharpReadonlyRequest/index.js";

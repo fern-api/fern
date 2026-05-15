@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { ExtendsClient as ExtendsClient_ } from "../resources/extends/client/Client.js";
 
 export declare namespace ExtendsClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,13 @@ export declare namespace ExtendsClient {
 
 export class ExtendsClient {
     protected readonly _options: NormalizedClientOptions<ExtendsClient.Options>;
-    protected _: Client | undefined;
+    protected _extends: ExtendsClient_ | undefined;
 
     constructor(options: ExtendsClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get extends(): ExtendsClient_ {
+        return (this._extends ??= new ExtendsClient_(this._options));
     }
 }

@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { ExamplesClient as ExamplesClient_ } from "../resources/examples/client/Client.js";
 import { FileClient } from "../resources/file/client/Client.js";
 import { HealthClient } from "../resources/health/client/Client.js";
 import { ServiceClient } from "../resources/service/client/Client.js";
@@ -13,7 +13,7 @@ export declare namespace ExamplesClient {
 
 export class ExamplesClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ExamplesClient.Options>;
-    protected _: Client | undefined;
+    protected _examples: ExamplesClient_ | undefined;
     protected _service: ServiceClient | undefined;
     protected _file: FileClient | undefined;
     protected _health: HealthClient | undefined;
@@ -22,8 +22,8 @@ export class ExamplesClient {
         this._options = normalizeClientOptionsWithAuth(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get examples(): ExamplesClient_ {
+        return (this._examples ??= new ExamplesClient_(this._options));
     }
 
     public get service(): ServiceClient {

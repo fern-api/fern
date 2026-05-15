@@ -1,2 +1,1 @@
-export * from "./client/index.js";
-export * as  from "./index.js";
+export * as propertyAccess from "./propertyAccess/index.js";

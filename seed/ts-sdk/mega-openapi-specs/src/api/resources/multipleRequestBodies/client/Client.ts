@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { MultipleRequestBodiesClient as MultipleRequestBodiesClient_ } from "../resources/multipleRequestBodies/client/Client.js";
 
 export declare namespace MultipleRequestBodiesClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,13 @@ export declare namespace MultipleRequestBodiesClient {
 
 export class MultipleRequestBodiesClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<MultipleRequestBodiesClient.Options>;
-    protected _: Client | undefined;
+    protected _multipleRequestBodies: MultipleRequestBodiesClient_ | undefined;
 
     constructor(options: MultipleRequestBodiesClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get multipleRequestBodies(): MultipleRequestBodiesClient_ {
+        return (this._multipleRequestBodies ??= new MultipleRequestBodiesClient_(this._options));
     }
 }

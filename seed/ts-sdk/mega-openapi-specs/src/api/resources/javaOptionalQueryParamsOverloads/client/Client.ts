@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { JavaOptionalQueryParamsOverloadsClient as JavaOptionalQueryParamsOverloadsClient_ } from "../resources/javaOptionalQueryParamsOverloads/client/Client.js";
 
 export declare namespace JavaOptionalQueryParamsOverloadsClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,13 @@ export declare namespace JavaOptionalQueryParamsOverloadsClient {
 
 export class JavaOptionalQueryParamsOverloadsClient {
     protected readonly _options: NormalizedClientOptions<JavaOptionalQueryParamsOverloadsClient.Options>;
-    protected _: Client | undefined;
+    protected _javaOptionalQueryParamsOverloads: JavaOptionalQueryParamsOverloadsClient_ | undefined;
 
     constructor(options: JavaOptionalQueryParamsOverloadsClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get javaOptionalQueryParamsOverloads(): JavaOptionalQueryParamsOverloadsClient_ {
+        return (this._javaOptionalQueryParamsOverloads ??= new JavaOptionalQueryParamsOverloadsClient_(this._options));
     }
 }

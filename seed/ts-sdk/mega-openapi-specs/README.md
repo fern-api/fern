@@ -13,7 +13,6 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Environments](#environments)
 - [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
-- [Streaming Response](#streaming-response)
 - [File Uploads](#file-uploads)
 - [Advanced](#advanced)
   - [Subpackage Exports](#subpackage-exports)
@@ -45,8 +44,8 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedApiClient } from "@fern/mega-openapi-specs";
 
-const client = new SeedApiClient({ token: "YOUR_TOKEN", apiVersion: "2024-02-08", apiKey: "YOUR_API_KEY", apiKey: "YOUR_API_KEY" });
-await client.aliasExtends..extendedInlineRequestBody({
+const client = new SeedApiClient({ token: "YOUR_TOKEN", apiVersion: "2024-02-08", apiKey: "YOUR_API_KEY" });
+await client.aliasExtends.aliasExtends.extendedInlineRequestBody({
     child: "child"
 });
 ```
@@ -85,7 +84,7 @@ will be thrown.
 import { SeedApiError } from "@fern/mega-openapi-specs";
 
 try {
-    await client.aliasExtends..extendedInlineRequestBody(...);
+    await client.aliasExtends.aliasExtends.extendedInlineRequestBody(...);
 } catch (err) {
     if (err instanceof SeedApiError) {
         console.log(err.statusCode);
@@ -93,23 +92,6 @@ try {
         console.log(err.body);
         console.log(err.rawResponse);
     }
-}
-```
-
-## Streaming Response
-
-Some endpoints return streaming responses instead of returning the full response at once.
-The SDK uses async iterators, so you can consume the responses using a `for await...of` loop.
-
-```typescript
-import { SeedApiClient } from "@fern/mega-openapi-specs";
-
-const client = new SeedApiClient({ token: "YOUR_TOKEN", apiVersion: "2024-02-08", apiKey: "YOUR_API_KEY", apiKey: "YOUR_API_KEY" });
-const response = await client.pythonStreamingParameterOpenapi.chatStream({
-    prompt: "prompt"
-});
-for await (const item of response) {
-    console.log(item);
 }
 ```
 
@@ -184,7 +166,7 @@ const client = new SeedApiClient({
     }
 });
 
-const response = await client.aliasExtends..extendedInlineRequestBody(..., {
+const response = await client.aliasExtends.aliasExtends.extendedInlineRequestBody(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -196,7 +178,7 @@ const response = await client.aliasExtends..extendedInlineRequestBody(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.aliasExtends..extendedInlineRequestBody(..., {
+const response = await client.aliasExtends.aliasExtends.extendedInlineRequestBody(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -226,7 +208,7 @@ Which status codes are retried depends on the `retryStatusCodes` generator confi
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.aliasExtends..extendedInlineRequestBody(..., {
+const response = await client.aliasExtends.aliasExtends.extendedInlineRequestBody(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -236,7 +218,7 @@ const response = await client.aliasExtends..extendedInlineRequestBody(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.aliasExtends..extendedInlineRequestBody(..., {
+const response = await client.aliasExtends.aliasExtends.extendedInlineRequestBody(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -247,7 +229,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.aliasExtends..extendedInlineRequestBody(..., {
+const response = await client.aliasExtends.aliasExtends.extendedInlineRequestBody(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -259,7 +241,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.aliasExtends..extendedInlineRequestBody(...).withRawResponse();
+const { data, rawResponse } = await client.aliasExtends.aliasExtends.extendedInlineRequestBody(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);

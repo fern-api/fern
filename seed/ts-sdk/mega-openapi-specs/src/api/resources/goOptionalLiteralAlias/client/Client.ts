@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { GoOptionalLiteralAliasClient as GoOptionalLiteralAliasClient_ } from "../resources/goOptionalLiteralAlias/client/Client.js";
 
 export declare namespace GoOptionalLiteralAliasClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,13 @@ export declare namespace GoOptionalLiteralAliasClient {
 
 export class GoOptionalLiteralAliasClient {
     protected readonly _options: NormalizedClientOptions<GoOptionalLiteralAliasClient.Options>;
-    protected _: Client | undefined;
+    protected _goOptionalLiteralAlias: GoOptionalLiteralAliasClient_ | undefined;
 
     constructor(options: GoOptionalLiteralAliasClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get goOptionalLiteralAlias(): GoOptionalLiteralAliasClient_ {
+        return (this._goOptionalLiteralAlias ??= new GoOptionalLiteralAliasClient_(this._options));
     }
 }

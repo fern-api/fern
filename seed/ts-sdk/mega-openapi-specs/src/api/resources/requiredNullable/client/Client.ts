@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { Client } from "../resources/client/Client.js";
+import { RequiredNullableClient as RequiredNullableClient_ } from "../resources/requiredNullable/client/Client.js";
 
 export declare namespace RequiredNullableClient {
     export type Options = BaseClientOptions;
@@ -10,13 +10,13 @@ export declare namespace RequiredNullableClient {
 
 export class RequiredNullableClient {
     protected readonly _options: NormalizedClientOptions<RequiredNullableClient.Options>;
-    protected _: Client | undefined;
+    protected _requiredNullable: RequiredNullableClient_ | undefined;
 
     constructor(options: RequiredNullableClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get(): Client {
-        return (this._ ??= new Client(this._options));
+    public get requiredNullable(): RequiredNullableClient_ {
+        return (this._requiredNullable ??= new RequiredNullableClient_(this._options));
     }
 }
