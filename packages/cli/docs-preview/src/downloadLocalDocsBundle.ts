@@ -7,7 +7,7 @@ import { execSync } from "child_process";
 import cliProgress from "cli-progress";
 import decompress from "decompress";
 import { cpSync, existsSync, lstatSync, mkdirSync, readdirSync, symlinkSync } from "fs";
-import { mkdir, readFile, rename, rm, writeFile } from "fs/promises";
+import { mkdir, readdir, readFile, rename, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
 import path from "path";
 import tmp from "tmp-promise";
@@ -280,6 +280,62 @@ export declare namespace DownloadLocalBundle {
     }
 }
 
+/**
+ * Removes stale old bundle directories (e.g. app-preview-old-<timestamp>) that
+ * accumulate in ~/.fern/ when previous async cleanup attempts failed.
+ */
+async function cleanupStaleBundles(logger: Logger): Promise<void> {
+    const storageFolder = getLocalStorageFolder();
+    if (!(await doesPathExist(storageFolder))) {
+        return;
+    }
+
+    try {
+        const entries = await readdir(storageFolder);
+        const stalePatterns = [`${APP_PREVIEW_FOLDER_NAME}-old-`, `${PREVIEW_FOLDER_NAME}-old-`];
+        const staleEntries = entries.filter((entry) => stalePatterns.some((pattern) => entry.startsWith(pattern)));
+
+        for (const entry of staleEntries) {
+            const fullPath = path.join(storageFolder, entry);
+            logger.debug(`Removing stale bundle directory: ${fullPath}`);
+            await rm(fullPath, { recursive: true }).catch((error) => {
+                logger.debug(`Failed to remove stale bundle ${fullPath}: ${error}`);
+            });
+        }
+
+        if (staleEntries.length > 0) {
+            logger.debug(
+                `Cleaned up ${staleEntries.length} stale bundle director${staleEntries.length === 1 ? "y" : "ies"}`
+            );
+        }
+    } catch (error) {
+        logger.debug(`Failed to scan for stale bundles: ${error}`);
+    }
+}
+
+/**
+ * Strips the packageManager field from the bundle's package.json to prevent
+ * corepack from activating an old pnpm version bundled with a previous release.
+ */
+async function stripPackageManagerField(bundleFolder: string, logger: Logger): Promise<void> {
+    const packageJsonPath = path.join(bundleFolder, "package.json");
+    if (!existsSync(packageJsonPath)) {
+        return;
+    }
+
+    try {
+        const content = await readFile(packageJsonPath, "utf-8");
+        const parsed = JSON.parse(content);
+        if (parsed.packageManager != null) {
+            logger.debug(`Stripping packageManager field (${parsed.packageManager}) from bundle package.json`);
+            delete parsed.packageManager;
+            await writeFile(packageJsonPath, JSON.stringify(parsed, null, 2) + "\n");
+        }
+    } catch (error) {
+        logger.debug(`Failed to strip packageManager from bundle: ${error}`);
+    }
+}
+
 export async function downloadBundle({
     bucketUrl,
     logger,
@@ -294,6 +350,9 @@ export async function downloadBundle({
     tryTar?: boolean;
 }): Promise<DownloadLocalBundle.Result> {
     logger.debug("Setting up docs preview bundle...");
+
+    // Clean up any stale old bundle directories from previous runs
+    await cleanupStaleBundles(logger);
     const response = await fetch(bucketUrl);
     if (!response.ok) {
         return {
@@ -316,7 +375,9 @@ export async function downloadBundle({
         }
         if (currentETag != null && currentETag === eTag) {
             logger.debug("ETag matches. Using already downloaded bundle");
-            // The bundle is already downloaded
+            // Strip packageManager from cached bundle to prevent corepack conflicts
+            const cachedBundleFolder = getPathToBundleFolder({ app });
+            await stripPackageManagerField(cachedBundleFolder, logger);
             return {
                 type: "success"
             };
@@ -494,6 +555,11 @@ export async function downloadBundle({
                 symlinkProgressBar.stop();
             }
         }
+
+        // Strip packageManager field to prevent corepack from using stale pnpm versions
+        await stripPackageManagerField(absolutePathToBundleFolder, logger);
+        const standaloneDir = path.join(absolutePathToBundleFolder, STANDALONE_FOLDER_NAME);
+        await stripPackageManagerField(standaloneDir, logger);
 
         // write etag
         await writeFile(eTagFilepath, eTag);

@@ -1,0 +1,5 @@
+- summary: |
+    Clean up stale docs preview bundles from ~/.fern/ on startup and strip
+    packageManager field from cached bundles to prevent corepack from
+    activating old pnpm versions.
+  type: fix
