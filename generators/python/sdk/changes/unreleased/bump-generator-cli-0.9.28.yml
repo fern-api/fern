@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump @fern-api/generator-cli to 0.9.28, which sets explicit author and
+    committer on API-created commits to the Fern bot identity. Fixes commit
+    attribution on GitHub Enterprise where PAT-based authentication previously
+    attributed commits to the PAT-owning service account instead of fern-api[bot].
+  type: fix
