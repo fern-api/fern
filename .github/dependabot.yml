@@ -24,6 +24,8 @@ updates:
       - "generators/typescript/utils/**"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7
     groups:
       production-dependencies:
         dependency-type: "production"
@@ -55,3 +57,20 @@ updates:
     directory: "/generators/go"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7
+  # Keep GitHub Actions pins (SHA + trailing version comment) up to date.
+  # Pair with the `unpinned-uses` policy enforced by `.github/workflows/zizmor.yml`.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "github-actions"
