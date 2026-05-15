@@ -257,7 +257,7 @@ export async function writeFilesToDiskAndRunGenerator({
         const rawSpecsDir = join(workspaceTempDir.path, RAW_SPECS_DIRECTORY_NAME);
         await mkdir(rawSpecsDir, { recursive: true });
 
-        const containerSpecsDir = environment.usesContainerPaths ? CONTAINER_RAW_SPECS_DIRECTORY : rawSpecsDir;
+        const containerSpecsDir = CONTAINER_RAW_SPECS_DIRECTORY;
 
         const manifest = await collectRawSpecs({
             specs: rawApiSpecs,
