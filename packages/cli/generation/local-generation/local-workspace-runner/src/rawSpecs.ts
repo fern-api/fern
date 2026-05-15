@@ -38,6 +38,7 @@ export async function collectRawSpecs({
     // Find the common ancestor directory across all spec files so we can
     // preserve relative paths when copying into the output directory.
     const allAbsolutePaths: string[] = [];
+    const directoryPaths = new Set<string>();
     for (const spec of specs) {
         switch (spec.type) {
             case "openapi":
@@ -57,6 +58,7 @@ export async function collectRawSpecs({
                 break;
             case "protobuf":
                 allAbsolutePaths.push(spec.absoluteFilepathToProtobufRoot);
+                directoryPaths.add(spec.absoluteFilepathToProtobufRoot);
                 if (spec.absoluteFilepathToOverrides != null) {
                     if (Array.isArray(spec.absoluteFilepathToOverrides)) {
                         allAbsolutePaths.push(...spec.absoluteFilepathToOverrides);
@@ -68,7 +70,7 @@ export async function collectRawSpecs({
         }
     }
 
-    const commonRoot = findCommonDirectory(allAbsolutePaths);
+    const commonRoot = findCommonDirectory(allAbsolutePaths, directoryPaths);
     context.logger.debug(`Raw specs common root: ${commonRoot}`);
 
     for (const spec of specs) {
@@ -211,14 +213,16 @@ function toContainerPath(relativePath: string, containerBaseDir: string): string
 }
 
 /**
- * Finds the deepest common directory among a set of absolute file paths.
+ * Finds the deepest common directory among a set of absolute paths.
+ * Paths that are already directories (e.g. protobuf root) are included as-is;
+ * paths that are files are reduced to their parent directory via path.dirname().
  */
-function findCommonDirectory(absolutePaths: string[]): string {
+export function findCommonDirectory(absolutePaths: string[], directoryPaths?: Set<string>): string {
     if (absolutePaths.length === 0) {
         return "/";
     }
 
-    const directories = absolutePaths.map((p) => path.dirname(p));
+    const directories = absolutePaths.map((p) => (directoryPaths?.has(p) ? p : path.dirname(p)));
     const segments = directories.map((d) => d.split(path.sep));
     const minLength = Math.min(...segments.map((s) => s.length));
 
