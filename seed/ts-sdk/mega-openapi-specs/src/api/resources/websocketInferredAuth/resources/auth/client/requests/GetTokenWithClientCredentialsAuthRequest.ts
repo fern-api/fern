@@ -3,7 +3,6 @@
 /**
  * @example
  *     {
- *         "X-Api-Key": "X-Api-Key",
  *         client_id: "client_id",
  *         client_secret: "client_secret",
  *         audience: "https://api.example.com",
@@ -11,7 +10,6 @@
  *     }
  */
 export interface GetTokenWithClientCredentialsAuthRequest {
-    "X-Api-Key": string;
     client_id: string;
     client_secret: string;
     audience: GetTokenWithClientCredentialsAuthRequest.Audience;

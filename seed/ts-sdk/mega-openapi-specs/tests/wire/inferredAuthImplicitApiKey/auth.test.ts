@@ -21,18 +21,9 @@ describe("AuthClient", () => {
             scope: "scope",
         };
 
-        server
-            .mockEndpoint()
-            .post("/token")
-            .header("X-Api-Key", "X-Api-Key")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().post("/token").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const response = await client.inferredAuthImplicitApiKey.auth.getToken({
-            "X-Api-Key": "X-Api-Key",
-        });
+        const response = await client.inferredAuthImplicitApiKey.auth.getToken();
         expect(response).toEqual(rawResponseBody);
     });
 });

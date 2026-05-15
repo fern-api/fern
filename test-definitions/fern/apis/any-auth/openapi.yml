@@ -10,12 +10,12 @@ paths:
         - Auth
       parameters: []
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TokenResponse'
+                $ref: "#/components/schemas/TokenResponse"
       requestBody:
         required: true
         content:
@@ -45,14 +45,14 @@ paths:
         - User
       parameters: []
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
       security:
         - Bearer: []
         - APIKey: []
@@ -66,14 +66,14 @@ paths:
         - User
       parameters: []
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
       security:
         - Bearer: []
         - APIKey: []
@@ -94,7 +94,7 @@ components:
         refresh_token:
           type:
             - string
-            - 'null'
+            - "null"
       required:
         - access_token
         - expires_in
@@ -116,7 +116,7 @@ components:
     APIKey:
       type: apiKey
       in: header
-      name: X-API-Key
+      name: X-Api-Key
     OAuth:
       type: http
       scheme: bearer

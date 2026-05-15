@@ -137,12 +137,12 @@ api:
     - openapi: ../go-undiscriminated-union-wire-tests/openapi.yml
       namespace: go-undiscriminated-union-wire-tests
       overrides: ../go-undiscriminated-union-wire-tests/openapi-overrides.yml
-    - openapi: ../header-auth-environment-variable/openapi.yml
-      namespace: header-auth-environment-variable
-      overrides: ../header-auth-environment-variable/openapi-overrides.yml
-    - openapi: ../header-auth/openapi.yml
-      namespace: header-auth
-      overrides: ../header-auth/openapi-overrides.yml
+    # - openapi: ../header-auth-environment-variable/openapi.yml
+    #   namespace: header-auth-environment-variable
+    #   overrides: ../header-auth-environment-variable/openapi-overrides.yml
+    # - openapi: ../header-auth/openapi.yml
+    #   namespace: header-auth
+    #   overrides: ../header-auth/openapi-overrides.yml
     - openapi: ../http-head/openapi.yml
       namespace: http-head
       overrides: ../http-head/openapi-overrides.yml

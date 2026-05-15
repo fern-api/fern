@@ -12741,7 +12741,6 @@ await client.imdb.imdb.getMovie({
 
 ```typescript
 await client.inferredAuthExplicit.auth.getTokenWithClientCredentials({
-    "X-Api-Key": "X-Api-Key",
     client_id: "client_id",
     client_secret: "client_secret",
     audience: "https://api.example.com",
@@ -12796,7 +12795,6 @@ await client.inferredAuthExplicit.auth.getTokenWithClientCredentials({
 
 ```typescript
 await client.inferredAuthExplicit.auth.refreshToken({
-    "X-Api-Key": "X-Api-Key",
     client_id: "client_id",
     client_secret: "client_secret",
     refresh_token: "refresh_token",
@@ -12979,7 +12977,6 @@ await client.inferredAuthExplicit.simple.getSomething();
 
 ```typescript
 await client.inferredAuthImplicit.auth.getTokenWithClientCredentials({
-    "X-Api-Key": "X-Api-Key",
     client_id: "client_id",
     client_secret: "client_secret",
     audience: "https://api.example.com",
@@ -13034,7 +13031,6 @@ await client.inferredAuthImplicit.auth.getTokenWithClientCredentials({
 
 ```typescript
 await client.inferredAuthImplicit.auth.refreshToken({
-    "X-Api-Key": "X-Api-Key",
     client_id: "client_id",
     client_secret: "client_secret",
     refresh_token: "refresh_token",
@@ -13203,7 +13199,7 @@ await client.inferredAuthImplicit.simple.getSomething();
 </details>
 
 ## InferredAuthImplicitApiKey Auth
-<details><summary><code>client.inferredAuthImplicitApiKey.auth.<a href="/src/api/resources/inferredAuthImplicitApiKey/resources/auth/client/Client.ts">getToken</a>({ ...params }) -> SeedApi.TokenResponse</code></summary>
+<details><summary><code>client.inferredAuthImplicitApiKey.auth.<a href="/src/api/resources/inferredAuthImplicitApiKey/resources/auth/client/Client.ts">getToken</a>() -> SeedApi.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13216,9 +13212,7 @@ await client.inferredAuthImplicit.simple.getSomething();
 <dd>
 
 ```typescript
-await client.inferredAuthImplicitApiKey.auth.getToken({
-    "X-Api-Key": "X-Api-Key"
-});
+await client.inferredAuthImplicitApiKey.auth.getToken();
 
 ```
 </dd>
@@ -13230,14 +13224,6 @@ await client.inferredAuthImplicitApiKey.auth.getToken({
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.inferredAuthImplicitApiKey.GetTokenAuthRequest` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -13395,7 +13381,6 @@ await client.inferredAuthImplicitApiKey.simple.getSomething();
 
 ```typescript
 await client.inferredAuthImplicitNoExpiry.auth.getTokenWithClientCredentials({
-    "X-Api-Key": "X-Api-Key",
     client_id: "client_id",
     client_secret: "client_secret",
     audience: "https://api.example.com",
@@ -13450,7 +13435,6 @@ await client.inferredAuthImplicitNoExpiry.auth.getTokenWithClientCredentials({
 
 ```typescript
 await client.inferredAuthImplicitNoExpiry.auth.refreshToken({
-    "X-Api-Key": "X-Api-Key",
     client_id: "client_id",
     client_secret: "client_secret",
     refresh_token: "refresh_token",
@@ -14668,11 +14652,8 @@ Create a user with required header.
 
 ```typescript
 await client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.createUserWithRequiredHeader({
-    "X-Api-Key": "X-Api-Key",
-    body: {
-        name: "name",
-        email: "email"
-    }
+    name: "name",
+    email: "email"
 });
 
 ```
@@ -14689,7 +14670,7 @@ await client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.cre
 <dl>
 <dd>
 
-**request:** `SeedApi.javaRequiredBodyOptionalHeaders.CreateUserWithRequiredHeaderRequest` 
+**request:** `SeedApi.UserData` 
     
 </dd>
 </dl>
@@ -29471,7 +29452,6 @@ await client.versionNoDefault.user.getUser({
 
 ```typescript
 await client.websocketInferredAuth.auth.getTokenWithClientCredentials({
-    "X-Api-Key": "X-Api-Key",
     client_id: "client_id",
     client_secret: "client_secret",
     audience: "https://api.example.com",
@@ -29526,7 +29506,6 @@ await client.websocketInferredAuth.auth.getTokenWithClientCredentials({
 
 ```typescript
 await client.websocketInferredAuth.auth.refreshToken({
-    "X-Api-Key": "X-Api-Key",
     client_id: "client_id",
     client_secret: "client_secret",
     refresh_token: "refresh_token",

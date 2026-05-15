@@ -28,7 +28,6 @@ export class AuthClient {
      *
      * @example
      *     await client.inferredAuthExplicit.auth.getTokenWithClientCredentials({
-     *         "X-Api-Key": "X-Api-Key",
      *         client_id: "client_id",
      *         client_secret: "client_secret",
      *         audience: "https://api.example.com",
@@ -46,13 +45,11 @@ export class AuthClient {
         request: SeedApi.inferredAuthExplicit.GetTokenWithClientCredentialsAuthRequest,
         requestOptions?: AuthClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.inferredAuthExplicit.TokenResponse>> {
-        const { "X-Api-Key": apiKey, ..._body } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
-                "X-Api-Key": apiKey,
                 "X-API-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2024-02-08",
-                "x-api-key": requestOptions?.apiKey ?? this._options?.apiKey,
+                "X-Api-Key": requestOptions?.apiKey ?? this._options?.apiKey,
             }),
             requestOptions?.headers,
         );
@@ -68,7 +65,7 @@ export class AuthClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: _body,
+            body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -99,7 +96,6 @@ export class AuthClient {
      *
      * @example
      *     await client.inferredAuthExplicit.auth.refreshToken({
-     *         "X-Api-Key": "X-Api-Key",
      *         client_id: "client_id",
      *         client_secret: "client_secret",
      *         refresh_token: "refresh_token",
@@ -118,13 +114,11 @@ export class AuthClient {
         request: SeedApi.inferredAuthExplicit.RefreshTokenAuthRequest,
         requestOptions?: AuthClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.inferredAuthExplicit.TokenResponse>> {
-        const { "X-Api-Key": apiKey, ..._body } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
-                "X-Api-Key": apiKey,
                 "X-API-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2024-02-08",
-                "x-api-key": requestOptions?.apiKey ?? this._options?.apiKey,
+                "X-Api-Key": requestOptions?.apiKey ?? this._options?.apiKey,
             }),
             requestOptions?.headers,
         );
@@ -140,7 +134,7 @@ export class AuthClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: _body,
+            body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

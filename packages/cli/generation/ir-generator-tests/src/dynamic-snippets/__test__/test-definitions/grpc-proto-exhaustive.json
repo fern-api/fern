@@ -1818,7 +1818,7 @@
                                 "safeName": "APIKey"
                             }
                         },
-                        "wireValue": "X-API-Key"
+                        "wireValue": "x-api-key"
                     },
                     "typeReference": {
                         "_type": "primitive",
@@ -1927,7 +1927,7 @@
                                 "safeName": "APIKey"
                             }
                         },
-                        "wireValue": "X-API-Key"
+                        "wireValue": "x-api-key"
                     },
                     "typeReference": {
                         "_type": "primitive",
@@ -2168,7 +2168,7 @@
                                 "safeName": "APIKey"
                             }
                         },
-                        "wireValue": "X-API-Key"
+                        "wireValue": "x-api-key"
                     },
                     "typeReference": {
                         "_type": "primitive",
@@ -2474,7 +2474,7 @@
                                 "safeName": "APIKey"
                             }
                         },
-                        "wireValue": "X-API-Key"
+                        "wireValue": "x-api-key"
                     },
                     "typeReference": {
                         "_type": "primitive",
@@ -2684,7 +2684,7 @@
                                 "safeName": "APIKey"
                             }
                         },
-                        "wireValue": "X-API-Key"
+                        "wireValue": "x-api-key"
                     },
                     "typeReference": {
                         "_type": "primitive",
@@ -2925,7 +2925,7 @@
                                 "safeName": "APIKey"
                             }
                         },
-                        "wireValue": "X-API-Key"
+                        "wireValue": "x-api-key"
                     },
                     "typeReference": {
                         "_type": "primitive",
@@ -3225,7 +3225,7 @@
                                 "safeName": "APIKey"
                             }
                         },
-                        "wireValue": "X-API-Key"
+                        "wireValue": "x-api-key"
                     },
                     "typeReference": {
                         "_type": "primitive",
@@ -3686,7 +3686,7 @@
                                 "safeName": "APIKey"
                             }
                         },
-                        "wireValue": "X-API-Key"
+                        "wireValue": "x-api-key"
                     },
                     "typeReference": {
                         "_type": "primitive",

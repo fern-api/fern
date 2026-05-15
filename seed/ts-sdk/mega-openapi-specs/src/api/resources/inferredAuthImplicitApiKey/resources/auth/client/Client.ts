@@ -23,32 +23,25 @@ export class AuthClient {
     }
 
     /**
-     * @param {SeedApi.inferredAuthImplicitApiKey.GetTokenAuthRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.inferredAuthImplicitApiKey.auth.getToken({
-     *         "X-Api-Key": "X-Api-Key"
-     *     })
+     *     await client.inferredAuthImplicitApiKey.auth.getToken()
      */
     public getToken(
-        request: SeedApi.inferredAuthImplicitApiKey.GetTokenAuthRequest,
         requestOptions?: AuthClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.inferredAuthImplicitApiKey.TokenResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__getToken(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__getToken(requestOptions));
     }
 
     private async __getToken(
-        request: SeedApi.inferredAuthImplicitApiKey.GetTokenAuthRequest,
         requestOptions?: AuthClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.inferredAuthImplicitApiKey.TokenResponse>> {
-        const { "X-Api-Key": apiKey } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
-                "X-Api-Key": apiKey,
                 "X-API-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2024-02-08",
-                "x-api-key": requestOptions?.apiKey ?? this._options?.apiKey,
+                "X-Api-Key": requestOptions?.apiKey ?? this._options?.apiKey,
             }),
             requestOptions?.headers,
         );

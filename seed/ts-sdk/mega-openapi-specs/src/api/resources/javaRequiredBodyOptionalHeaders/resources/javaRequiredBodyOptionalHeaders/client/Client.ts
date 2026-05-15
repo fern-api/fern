@@ -50,7 +50,7 @@ export class JavaRequiredBodyOptionalHeadersClient {
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 "X-API-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2024-02-08",
-                "x-api-key": requestOptions?.apiKey ?? this._options?.apiKey,
+                "X-Api-Key": requestOptions?.apiKey ?? this._options?.apiKey,
             }),
             requestOptions?.headers,
         );
@@ -123,7 +123,7 @@ export class JavaRequiredBodyOptionalHeadersClient {
             mergeOnlyDefinedHeaders({
                 "X-Correlation-Id": correlationId ?? undefined,
                 "X-API-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2024-02-08",
-                "x-api-key": requestOptions?.apiKey ?? this._options?.apiKey,
+                "X-Api-Key": requestOptions?.apiKey ?? this._options?.apiKey,
             }),
             requestOptions?.headers,
         );
@@ -198,7 +198,7 @@ export class JavaRequiredBodyOptionalHeadersClient {
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 "X-API-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2024-02-08",
-                "x-api-key": requestOptions?.apiKey ?? this._options?.apiKey,
+                "X-Api-Key": requestOptions?.apiKey ?? this._options?.apiKey,
             }),
             requestOptions?.headers,
         );
@@ -277,7 +277,7 @@ export class JavaRequiredBodyOptionalHeadersClient {
             mergeOnlyDefinedHeaders({
                 "X-Request-Id": requestId ?? undefined,
                 "X-API-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2024-02-08",
-                "x-api-key": requestOptions?.apiKey ?? this._options?.apiKey,
+                "X-Api-Key": requestOptions?.apiKey ?? this._options?.apiKey,
             }),
             requestOptions?.headers,
         );
@@ -325,36 +325,31 @@ export class JavaRequiredBodyOptionalHeadersClient {
     /**
      * Create a user with required header.
      *
-     * @param {SeedApi.javaRequiredBodyOptionalHeaders.CreateUserWithRequiredHeaderRequest} request
+     * @param {SeedApi.javaRequiredBodyOptionalHeaders.UserData} request
      * @param {JavaRequiredBodyOptionalHeadersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.createUserWithRequiredHeader({
-     *         "X-Api-Key": "X-Api-Key",
-     *         body: {
-     *             name: "name",
-     *             email: "email"
-     *         }
+     *         name: "name",
+     *         email: "email"
      *     })
      */
     public createUserWithRequiredHeader(
-        request: SeedApi.javaRequiredBodyOptionalHeaders.CreateUserWithRequiredHeaderRequest,
+        request: SeedApi.javaRequiredBodyOptionalHeaders.UserData,
         requestOptions?: JavaRequiredBodyOptionalHeadersClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.javaRequiredBodyOptionalHeaders.User> {
         return core.HttpResponsePromise.fromPromise(this.__createUserWithRequiredHeader(request, requestOptions));
     }
 
     private async __createUserWithRequiredHeader(
-        request: SeedApi.javaRequiredBodyOptionalHeaders.CreateUserWithRequiredHeaderRequest,
+        request: SeedApi.javaRequiredBodyOptionalHeaders.UserData,
         requestOptions?: JavaRequiredBodyOptionalHeadersClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.javaRequiredBodyOptionalHeaders.User>> {
-        const { "X-Api-Key": apiKey, body: _body } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
-                "X-Api-Key": apiKey,
                 "X-API-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2024-02-08",
-                "x-api-key": requestOptions?.apiKey ?? this._options?.apiKey,
+                "X-Api-Key": requestOptions?.apiKey ?? this._options?.apiKey,
             }),
             requestOptions?.headers,
         );
@@ -370,7 +365,7 @@ export class JavaRequiredBodyOptionalHeadersClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: _body,
+            body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -429,7 +424,7 @@ export class JavaRequiredBodyOptionalHeadersClient {
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 "X-API-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2024-02-08",
-                "x-api-key": requestOptions?.apiKey ?? this._options?.apiKey,
+                "X-Api-Key": requestOptions?.apiKey ?? this._options?.apiKey,
             }),
             requestOptions?.headers,
         );
@@ -503,7 +498,7 @@ export class JavaRequiredBodyOptionalHeadersClient {
             mergeOnlyDefinedHeaders({
                 "X-Trace-Id": traceId ?? undefined,
                 "X-API-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2024-02-08",
-                "x-api-key": requestOptions?.apiKey ?? this._options?.apiKey,
+                "X-Api-Key": requestOptions?.apiKey ?? this._options?.apiKey,
             }),
             requestOptions?.headers,
         );

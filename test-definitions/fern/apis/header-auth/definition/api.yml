@@ -3,7 +3,7 @@ auth: Header
 auth-schemes:
   Header:
     name: Header Token Auth
-    header: x-api-key
+    header: X-Api-Key
     type: string
     prefix: test_prefix
     placeholder: YOUR_API_KEY

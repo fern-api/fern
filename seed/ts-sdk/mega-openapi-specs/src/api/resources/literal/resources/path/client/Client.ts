@@ -47,7 +47,7 @@ export class PathClient {
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 "X-API-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2024-02-08",
-                "x-api-key": requestOptions?.apiKey ?? this._options?.apiKey,
+                "X-Api-Key": requestOptions?.apiKey ?? this._options?.apiKey,
             }),
             requestOptions?.headers,
         );

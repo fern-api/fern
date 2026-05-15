@@ -2676,7 +2676,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/mega-openapi-specs\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiVersion: \"2024-02-08\", apiKey: \"YOUR_API_KEY\" });\nawait client.inferredAuthExplicit.auth.getTokenWithClientCredentials({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    audience: \"https://api.example.com\",\n    grant_type: \"client_credentials\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/mega-openapi-specs\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiVersion: \"2024-02-08\", apiKey: \"YOUR_API_KEY\" });\nawait client.inferredAuthExplicit.auth.getTokenWithClientCredentials({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    audience: \"https://api.example.com\",\n    grant_type: \"client_credentials\"\n});\n"
             }
         },
         {
@@ -2687,7 +2687,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/mega-openapi-specs\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiVersion: \"2024-02-08\", apiKey: \"YOUR_API_KEY\" });\nawait client.inferredAuthExplicit.auth.refreshToken({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    audience: \"https://api.example.com\",\n    grant_type: \"refresh_token\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/mega-openapi-specs\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiVersion: \"2024-02-08\", apiKey: \"YOUR_API_KEY\" });\nawait client.inferredAuthExplicit.auth.refreshToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    audience: \"https://api.example.com\",\n    grant_type: \"refresh_token\"\n});\n"
             }
         },
         {
@@ -2731,7 +2731,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/mega-openapi-specs\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiVersion: \"2024-02-08\", apiKey: \"YOUR_API_KEY\" });\nawait client.inferredAuthImplicit.auth.getTokenWithClientCredentials({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    audience: \"https://api.example.com\",\n    grant_type: \"client_credentials\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/mega-openapi-specs\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiVersion: \"2024-02-08\", apiKey: \"YOUR_API_KEY\" });\nawait client.inferredAuthImplicit.auth.getTokenWithClientCredentials({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    audience: \"https://api.example.com\",\n    grant_type: \"client_credentials\"\n});\n"
             }
         },
         {
@@ -2742,7 +2742,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/mega-openapi-specs\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiVersion: \"2024-02-08\", apiKey: \"YOUR_API_KEY\" });\nawait client.inferredAuthImplicit.auth.refreshToken({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    audience: \"https://api.example.com\",\n    grant_type: \"refresh_token\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/mega-openapi-specs\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiVersion: \"2024-02-08\", apiKey: \"YOUR_API_KEY\" });\nawait client.inferredAuthImplicit.auth.refreshToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    audience: \"https://api.example.com\",\n    grant_type: \"refresh_token\"\n});\n"
             }
         },
         {
@@ -2786,7 +2786,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/mega-openapi-specs\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiVersion: \"2024-02-08\", apiKey: \"YOUR_API_KEY\" });\nawait client.inferredAuthImplicitApiKey.auth.getToken({\n    \"X-Api-Key\": \"X-Api-Key\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/mega-openapi-specs\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiVersion: \"2024-02-08\", apiKey: \"YOUR_API_KEY\" });\nawait client.inferredAuthImplicitApiKey.auth.getToken();\n"
             }
         },
         {
@@ -2830,7 +2830,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/mega-openapi-specs\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiVersion: \"2024-02-08\", apiKey: \"YOUR_API_KEY\" });\nawait client.inferredAuthImplicitNoExpiry.auth.getTokenWithClientCredentials({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    audience: \"https://api.example.com\",\n    grant_type: \"client_credentials\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/mega-openapi-specs\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiVersion: \"2024-02-08\", apiKey: \"YOUR_API_KEY\" });\nawait client.inferredAuthImplicitNoExpiry.auth.getTokenWithClientCredentials({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    audience: \"https://api.example.com\",\n    grant_type: \"client_credentials\"\n});\n"
             }
         },
         {
@@ -2841,7 +2841,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/mega-openapi-specs\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiVersion: \"2024-02-08\", apiKey: \"YOUR_API_KEY\" });\nawait client.inferredAuthImplicitNoExpiry.auth.refreshToken({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    audience: \"https://api.example.com\",\n    grant_type: \"refresh_token\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/mega-openapi-specs\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiVersion: \"2024-02-08\", apiKey: \"YOUR_API_KEY\" });\nawait client.inferredAuthImplicitNoExpiry.auth.refreshToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    audience: \"https://api.example.com\",\n    grant_type: \"refresh_token\"\n});\n"
             }
         },
         {
@@ -3083,7 +3083,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/mega-openapi-specs\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiVersion: \"2024-02-08\", apiKey: \"YOUR_API_KEY\" });\nawait client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.createUserWithRequiredHeader({\n    \"X-Api-Key\": \"X-Api-Key\",\n    body: {\n        name: \"name\",\n        email: \"email\"\n    }\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/mega-openapi-specs\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiVersion: \"2024-02-08\", apiKey: \"YOUR_API_KEY\" });\nawait client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.createUserWithRequiredHeader({\n    name: \"name\",\n    email: \"email\"\n});\n"
             }
         },
         {
@@ -6293,7 +6293,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/mega-openapi-specs\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiVersion: \"2024-02-08\", apiKey: \"YOUR_API_KEY\" });\nawait client.websocketInferredAuth.auth.getTokenWithClientCredentials({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    audience: \"https://api.example.com\",\n    grant_type: \"client_credentials\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/mega-openapi-specs\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiVersion: \"2024-02-08\", apiKey: \"YOUR_API_KEY\" });\nawait client.websocketInferredAuth.auth.getTokenWithClientCredentials({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    audience: \"https://api.example.com\",\n    grant_type: \"client_credentials\"\n});\n"
             }
         },
         {
@@ -6304,7 +6304,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/mega-openapi-specs\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiVersion: \"2024-02-08\", apiKey: \"YOUR_API_KEY\" });\nawait client.websocketInferredAuth.auth.refreshToken({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    audience: \"https://api.example.com\",\n    grant_type: \"refresh_token\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/mega-openapi-specs\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiVersion: \"2024-02-08\", apiKey: \"YOUR_API_KEY\" });\nawait client.websocketInferredAuth.auth.refreshToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    audience: \"https://api.example.com\",\n    grant_type: \"refresh_token\"\n});\n"
             }
         },
         {

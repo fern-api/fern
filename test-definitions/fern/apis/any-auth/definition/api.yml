@@ -16,7 +16,7 @@ auth-schemes:
     token:
       env: MY_TOKEN
   ApiKey:
-    header: X-API-Key
+    header: X-Api-Key
     type: string
     env: MY_API_KEY
   OAuth:

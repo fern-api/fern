@@ -19,7 +19,7 @@
             {
                 "_type": "header",
                 "name": {
-                    "wireValue": "X-API-Key",
+                    "wireValue": "x-api-key",
                     "name": "ApiKey"
                 },
                 "valueType": {

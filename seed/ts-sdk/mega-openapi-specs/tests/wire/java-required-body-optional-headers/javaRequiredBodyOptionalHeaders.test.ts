@@ -129,7 +129,6 @@ describe("JavaRequiredBodyOptionalHeadersClient", () => {
         server
             .mockEndpoint()
             .post("/api/users/required-header")
-            .header("X-Api-Key", "X-Api-Key")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -138,11 +137,8 @@ describe("JavaRequiredBodyOptionalHeadersClient", () => {
 
         const response =
             await client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.createUserWithRequiredHeader({
-                "X-Api-Key": "X-Api-Key",
-                body: {
-                    name: "name",
-                    email: "email",
-                },
+                name: "name",
+                email: "email",
             });
         expect(response).toEqual(rawResponseBody);
     });

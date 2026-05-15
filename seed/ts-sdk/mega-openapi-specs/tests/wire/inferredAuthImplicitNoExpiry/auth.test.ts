@@ -24,7 +24,6 @@ describe("AuthClient", () => {
         server
             .mockEndpoint()
             .post("/token")
-            .header("X-Api-Key", "X-Api-Key")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -32,7 +31,6 @@ describe("AuthClient", () => {
             .build();
 
         const response = await client.inferredAuthImplicitNoExpiry.auth.getTokenWithClientCredentials({
-            "X-Api-Key": "X-Api-Key",
             client_id: "client_id",
             client_secret: "client_secret",
             audience: "https://api.example.com",
@@ -62,7 +60,6 @@ describe("AuthClient", () => {
         server
             .mockEndpoint()
             .post("/token/refresh")
-            .header("X-Api-Key", "X-Api-Key")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -70,7 +67,6 @@ describe("AuthClient", () => {
             .build();
 
         const response = await client.inferredAuthImplicitNoExpiry.auth.refreshToken({
-            "X-Api-Key": "X-Api-Key",
             client_id: "client_id",
             client_secret: "client_secret",
             refresh_token: "refresh_token",
