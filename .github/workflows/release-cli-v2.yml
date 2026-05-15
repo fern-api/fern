@@ -1,0 +1,257 @@
+name: Release Fern CLI v2
+
+# Builds and publishes the Fern CLI v2 binaries:
+#   - npm: @fern-api/fern (wrapper) + @fern-api/fern-<os>-<cpu> (5 platforms)
+#   - GitHub Release: per-platform tarballs/zips + SHA256SUMS + provenance attestation
+#
+# Triggers:
+#   - push of a tag matching `cli-v2/v*` (e.g. `cli-v2/v0.1.0`, `cli-v2/v0.2.0-rc.1`)
+#   - manual `workflow_dispatch` for build-only dry runs (no publish / no release)
+#
+# See packages/cli/cli-v2/CLAUDE.md for the release runbook.
+
+on:
+  push:
+    tags:
+      - "cli-v2/v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to build (e.g. 0.1.0). For manual / dry-run testing — does not push a tag."
+        required: true
+        type: string
+      dry_run:
+        description: "Build artifacts but skip GitHub Release and npm publish."
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+env:
+  DO_NOT_TRACK: "1"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  TURBO_NO_UPDATE_NOTIFIER: "1"
+  TURBO_DAEMON: "false"
+
+concurrency:
+  group: release-cli-v2-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    name: Compute release plan
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.plan.outputs.version }}
+      dry_run: ${{ steps.plan.outputs.dry_run }}
+      npm_tag: ${{ steps.plan.outputs.npm_tag }}
+      is_prerelease: ${{ steps.plan.outputs.is_prerelease }}
+    steps:
+      - name: Compute version, npm dist-tag, and dry-run flag
+        id: plan
+        env:
+          INPUT_VERSION: ${{ github.event.inputs.version }}
+          INPUT_DRY_RUN: ${{ github.event.inputs.dry_run }}
+        run: |
+          set -euo pipefail
+          if [ -n "$INPUT_VERSION" ]; then
+            VERSION="$INPUT_VERSION"
+            DRY_RUN="$INPUT_DRY_RUN"
+          else
+            # Tag push: refs/tags/cli-v2/vX.Y.Z[-prerelease]
+            VERSION="${GITHUB_REF#refs/tags/cli-v2/v}"
+            DRY_RUN="false"
+          fi
+          if [[ "$VERSION" == *-* ]]; then
+            IS_PRERELEASE="true"
+            # Use the prerelease identifier as the npm dist-tag (e.g. "rc", "next", "beta").
+            LABEL="${VERSION#*-}"
+            NPM_TAG="${LABEL%%.*}"
+          else
+            IS_PRERELEASE="false"
+            NPM_TAG="latest"
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "dry_run=$DRY_RUN" >> "$GITHUB_OUTPUT"
+          echo "npm_tag=$NPM_TAG" >> "$GITHUB_OUTPUT"
+          echo "is_prerelease=$IS_PRERELEASE" >> "$GITHUB_OUTPUT"
+          echo "Plan: version=$VERSION dry_run=$DRY_RUN npm_tag=$NPM_TAG is_prerelease=$IS_PRERELEASE"
+
+  build:
+    name: Build binaries + assemble artifacts
+    needs: plan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # for build provenance attestation
+      attestations: write
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3.14"
+
+      - name: Install repo
+        uses: ./.github/actions/install
+
+      - name: Build cli-v2 dev bundle
+        run: pnpm turbo run dist:cli:dev --filter @fern-api/cli-v2
+
+      - name: Cross-compile binaries (Bun)
+        run: pnpm --filter @fern-api/cli-v2 dist:bin
+
+      - name: Assemble npm packages + archives
+        run: |
+          cd packages/cli/cli-v2
+          node build.npm.mjs --version=${{ needs.plan.outputs.version }}
+
+      - name: Attest build provenance for binaries and archives
+        uses: actions/attest-build-provenance@v3
+        with:
+          subject-path: |
+            packages/cli/cli-v2/dist/bin/*
+            packages/cli/cli-v2/dist/archives/*.tar.gz
+            packages/cli/cli-v2/dist/archives/*.zip
+
+      - name: Upload archives artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: cli-v2-archives
+          path: packages/cli/cli-v2/dist/archives/
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload npm packages artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: cli-v2-npm-packages
+          path: packages/cli/cli-v2/dist/npm/
+          if-no-files-found: error
+          retention-days: 14
+
+  github-release:
+    name: Create GitHub Release
+    needs: [plan, build]
+    if: ${{ needs.plan.outputs.dry_run != 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Download archives
+        uses: actions/download-artifact@v5
+        with:
+          name: cli-v2-archives
+          path: archives/
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ needs.plan.outputs.version }}
+          IS_PRERELEASE: ${{ needs.plan.outputs.is_prerelease }}
+        run: |
+          set -euo pipefail
+          TAG="cli-v2/v${VERSION}"
+          PRERELEASE_FLAG=""
+          if [ "$IS_PRERELEASE" = "true" ]; then
+            PRERELEASE_FLAG="--prerelease"
+          fi
+          NOTES=$(cat <<EOF
+          Fern CLI v2 — v${VERSION}
+
+          ## Install
+
+          \`\`\`sh
+          npm install -g @fern-api/fern@${VERSION}
+          \`\`\`
+
+          Or download a tarball/zip below and run the binary directly. Each
+          archive ships a \`.sha256\` checksum and a [build provenance
+          attestation](https://docs.github.com/en/actions/security-guides/using-artifact-attestations-to-establish-provenance-for-builds)
+          you can verify with the \`gh\` CLI:
+
+          \`\`\`sh
+          gh attestation verify <archive> --repo fern-api/fern
+          \`\`\`
+
+          ## Verify checksums
+
+          \`\`\`sh
+          sha256sum -c SHA256SUMS
+          \`\`\`
+          EOF
+          )
+          gh release create "$TAG" archives/* \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Fern CLI v2 v${VERSION}" \
+            --notes "$NOTES" \
+            $PRERELEASE_FLAG
+
+  publish-npm:
+    name: Publish to npm
+    needs: [plan, build]
+    if: ${{ needs.plan.outputs.dry_run != 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # for npm trusted publishing (OIDC) + provenance
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: "https://registry.npmjs.org"
+
+      # npm >= 11.5.1 is required for OIDC trusted publishing.
+      # Two-step upgrade works around Node 22.22.2 regression (npm/cli#9151).
+      # See publish-cli.yml for the same workaround in the v1 CLI flow.
+      - name: Update npm for OIDC publishing
+        run: npm install -g npm@10.9.8 && npm install -g npm@11
+
+      - name: Download npm packages
+        uses: actions/download-artifact@v5
+        with:
+          name: cli-v2-npm-packages
+          path: dist-npm/
+
+      # Publish platform packages BEFORE the wrapper so the wrapper's
+      # optionalDependencies resolve correctly for users installing in the
+      # narrow window between the two publishes.
+      - name: Publish platform packages
+        env:
+          NPM_TAG: ${{ needs.plan.outputs.npm_tag }}
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          dirs=(dist-npm/fern-*)
+          if [ ${#dirs[@]} -eq 0 ]; then
+            echo "No platform packages found in dist-npm/" >&2
+            exit 1
+          fi
+          for dir in "${dirs[@]}"; do
+            echo "::group::Publish $(basename "$dir")"
+            (cd "$dir" && npm publish --access public --provenance --tag "$NPM_TAG")
+            echo "::endgroup::"
+          done
+
+      - name: Publish wrapper
+        env:
+          NPM_TAG: ${{ needs.plan.outputs.npm_tag }}
+        run: |
+          set -euo pipefail
+          cd dist-npm/wrapper
+          npm publish --access public --provenance --tag "$NPM_TAG"

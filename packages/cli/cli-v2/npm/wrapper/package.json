@@ -1,0 +1,33 @@
+{
+  "name": "@fern-api/fern",
+  "version": "0.0.0-PLACEHOLDER",
+  "description": "The Fern CLI: build SDKs and developer docs for your API.",
+  "homepage": "https://github.com/fern-api/fern#readme",
+  "bugs": {
+    "url": "https://github.com/fern-api/fern/issues"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fern-api/fern.git",
+    "directory": "packages/cli/cli-v2"
+  },
+  "main": "index.js",
+  "bin": {
+    "fern": "./bin/fern"
+  },
+  "files": ["bin", "index.js", "install.js", "LICENSE", "README.md"],
+  "scripts": {
+    "postinstall": "node ./install.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "optionalDependencies": {
+    "@fern-api/fern-darwin-arm64": "0.0.0-PLACEHOLDER",
+    "@fern-api/fern-darwin-x64": "0.0.0-PLACEHOLDER",
+    "@fern-api/fern-linux-arm64": "0.0.0-PLACEHOLDER",
+    "@fern-api/fern-linux-x64": "0.0.0-PLACEHOLDER",
+    "@fern-api/fern-win32-x64": "0.0.0-PLACEHOLDER"
+  }
+}

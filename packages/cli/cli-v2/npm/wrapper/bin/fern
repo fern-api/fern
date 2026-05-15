@@ -1,0 +1,78 @@
+#!/usr/bin/env node
+// Launcher for the Fern CLI binary.
+//
+// This script resolves the platform-specific `@fern-api/fern-<os>-<arch>`
+// package that was installed via the `optionalDependencies` of `@fern-api/fern`
+// and execs its binary with the user's args. The platform packages contain
+// pre-compiled native binaries; `os` and `cpu` fields in their package.json
+// cause npm/pnpm/yarn to only install the package matching the current
+// platform.
+//
+// Modeled after esbuild and @bufbuild/buf.
+
+"use strict";
+
+const { spawnSync } = require("node:child_process");
+
+// Map of (process.platform, process.arch) → platform package name and binary subpath.
+const PLATFORM_PACKAGES = {
+    "darwin arm64": { pkg: "@fern-api/fern-darwin-arm64", bin: "bin/fern" },
+    "darwin x64": { pkg: "@fern-api/fern-darwin-x64", bin: "bin/fern" },
+    "linux arm64": { pkg: "@fern-api/fern-linux-arm64", bin: "bin/fern" },
+    "linux x64": { pkg: "@fern-api/fern-linux-x64", bin: "bin/fern" },
+    "win32 x64": { pkg: "@fern-api/fern-win32-x64", bin: "bin/fern.exe" }
+};
+
+function resolvePlatform() {
+    const key = `${process.platform} ${process.arch}`;
+    const entry = PLATFORM_PACKAGES[key];
+    if (entry == null) {
+        const supported = Object.keys(PLATFORM_PACKAGES).join(", ");
+        const err = new Error(
+            `Unsupported platform: ${key}.\n` +
+                `The Fern CLI is published for: ${supported}.\n` +
+                `If you believe your platform should be supported, please file an issue at\n` +
+                `https://github.com/fern-api/fern/issues.`
+        );
+        err.code = "EFERNUNSUPPORTED";
+        throw err;
+    }
+    return entry;
+}
+
+function resolveBinaryPath() {
+    const { pkg, bin } = resolvePlatform();
+    try {
+        return require.resolve(`${pkg}/${bin}`);
+    } catch (_err) {
+        const installCmd = `npm install ${pkg}`;
+        const err = new Error(
+            `Could not find the Fern binary for your platform.\n` +
+                `The package ${pkg} should have been installed as an optional dependency of @fern-api/fern, but it is missing.\n` +
+                `\n` +
+                `This can happen if you used --no-optional or --omit=optional when installing,\n` +
+                `or if your package manager skipped the optional dependency.\n` +
+                `\n` +
+                `Try reinstalling with:\n` +
+                `  ${installCmd}\n` +
+                `or rerun your install without skipping optional dependencies.`
+        );
+        err.code = "EFERNMISSING";
+        throw err;
+    }
+}
+
+let binaryPath;
+try {
+    binaryPath = resolveBinaryPath();
+} catch (err) {
+    process.stderr.write(`${err.message}\n`);
+    process.exit(1);
+}
+
+const result = spawnSync(binaryPath, process.argv.slice(2), { stdio: "inherit" });
+if (result.error != null) {
+    process.stderr.write(`Failed to launch Fern CLI: ${result.error.message}\n`);
+    process.exit(1);
+}
+process.exit(result.status ?? 1);
