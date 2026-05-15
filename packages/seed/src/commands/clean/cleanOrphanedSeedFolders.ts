@@ -7,7 +7,6 @@ import { rm } from "fs/promises";
 import path from "path";
 
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
-import { LANGUAGE_SPECIFIC_FIXTURE_PREFIXES } from "../test/testWorkspaceFixtures.js";
 
 export interface OrphanedFolder {
     generator: string;
@@ -35,10 +34,6 @@ function getExpectedFixtures(generator: GeneratorWorkspace, testDefinitions: Set
     const expectedFixtures = new Set<string>();
 
     for (const testDef of testDefinitions) {
-        const matchingPrefix = LANGUAGE_SPECIFIC_FIXTURE_PREFIXES.find((prefix) => testDef.startsWith(prefix));
-        if (matchingPrefix != null && !generator.workspaceName.startsWith(matchingPrefix)) {
-            continue;
-        }
         expectedFixtures.add(testDef);
     }
 

@@ -341,7 +341,17 @@ function convertRequestBody({
             };
         },
         bytes: () => {
-            throw new Error("bytes is not supported");
+            return {
+                required: true,
+                content: {
+                    "application/octet-stream": {
+                        schema: {
+                            type: "string",
+                            format: "binary"
+                        }
+                    }
+                }
+            };
         },
         _other: () => {
             throw new Error("Unknown FernIr.HttpRequestBody type: " + httpRequest.type);

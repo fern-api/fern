@@ -66,6 +66,8 @@ def generate_overrides(openapi_path: str) -> dict:
                 continue
 
             tag = tags[0]
+            if not tag:
+                continue
 
             # Determine group from definition structure, fall back to lowercased tag
             if tag in pkg_map:

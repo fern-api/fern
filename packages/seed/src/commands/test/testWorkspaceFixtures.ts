@@ -8,8 +8,6 @@ import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
 import { printTestCases } from "./printTestCases.js";
 import { TestRunner } from "./test-runner/index.js";
 
-export const LANGUAGE_SPECIFIC_FIXTURE_PREFIXES = ["csharp", "go", "java", "python", "ruby", "ts"];
-
 export const FIXTURES = readDirectories(
     path.join(__dirname, "../../../test-definitions", FERN_DIRECTORY, APIS_DIRECTORY)
 );
@@ -42,14 +40,6 @@ export async function testGenerator({
         }
 
         const config = generator.workspaceConfig.fixtures?.[fixtureName];
-        const matchingPrefix = LANGUAGE_SPECIFIC_FIXTURE_PREFIXES.filter((prefix) => fixtureName.startsWith(prefix))[0];
-
-        if (matchingPrefix != null && !generator.workspaceName.startsWith(matchingPrefix)) {
-            CONSOLE_LOGGER.debug(
-                `Skipping fixture ${fixtureName} for generator ${generator.workspaceName} because it was deemed specific to another language`
-            );
-            continue;
-        }
         if (config != null) {
             for (const instance of config) {
                 if (fixtureOutputFolder != null && instance.outputFolder !== fixtureOutputFolder) {
