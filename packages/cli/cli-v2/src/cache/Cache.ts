@@ -13,10 +13,10 @@ const CACHE_VERSION = "v1";
  *
  * Directory structure:
  * ```
- * ~/.cache/fern               # Linux and macOS (XDG_CACHE_HOME/fern)
- * %LOCALAPPDATA%/fern/cache   # Windows
- *
- * ├── v1/                     # Cache schema version
+ * ~/.fern/                     # Cache root (all platforms)
+ * ├── token                    # Auth token (NOT managed by cache — never cleared)
+ * ├── id                       # Telemetry distinct ID (NOT managed by cache)
+ * ├── v1/                      # Cache schema version
  * │   ├── ir/
  * │   │   ├── v63/
  * │   │   │   └── sha256/
@@ -26,10 +26,13 @@ const CACHE_VERSION = "v1";
  * │   ├── logs/
  * │   ├── migrations/
  * │   └── docs-preview/
- * │       ├── app-preview/     # Next.js docs bundle
- * │       └── preview/         # Legacy docs bundle
- * └── tmp/                    # Atomic write staging
+ * │       ├── app-preview/      # Next.js docs bundle
+ * │       └── preview/          # Legacy docs bundle
+ * └── tmp/                     # Atomic write staging
  * ```
+ *
+ * Files at the root level (token, id) are NOT cache entries and are never
+ * touched by {@link Cache.clear}. Only versioned subdirectories are managed.
  */
 export declare namespace Cache {
     /** Combined statistics for the entire cache */
@@ -75,14 +78,6 @@ export class Cache {
 
     /** Directory for downloaded generator migration packages. */
     public readonly migrations: { absoluteFilePath: AbsoluteFilePath };
-
-    /**
-     * Resolve the cache root path without creating a full Cache instance.
-     * Useful when only the path is needed (e.g. for telemetry ID storage).
-     */
-    public static resolveRootPath(): AbsoluteFilePath {
-        return Cache.resolveAbsoluteFilePathStatic();
-    }
 
     constructor({ logger }: { logger?: Logger } = {}) {
         this.absoluteFilePath = Cache.resolveAbsoluteFilePathStatic();
@@ -173,7 +168,7 @@ export class Cache {
      * Priority order:
      *  1. FERN_CACHE_DIR environment variable
      *  2. The configured cache path in ~/.fernrc
-     *  3. Platform defaults (XDG on macOS/Linux, LOCALAPPDATA on Windows)
+     *  3. Default: ~/.fern/
      */
     private static resolveAbsoluteFilePathStatic(): AbsoluteFilePath {
         const envCacheDir = process.env.FERN_CACHE_DIR;
@@ -186,25 +181,7 @@ export class Cache {
             return AbsoluteFilePath.of(Cache.expandPath(fernRcCachePath));
         }
 
-        const homeDir = AbsoluteFilePath.of(os.homedir());
-
-        const platform = process.platform;
-        if (platform === "win32") {
-            // Windows: %LOCALAPPDATA%/fern/cache
-            const localAppData =
-                process.env.LOCALAPPDATA != null
-                    ? AbsoluteFilePath.of(process.env.LOCALAPPDATA)
-                    : join(homeDir, RelativeFilePath.of("AppData/Local"));
-            return join(localAppData, RelativeFilePath.of("fern/cache"));
-        }
-
-        // For macOS and Linux, follow the XDG Base Directory Specification.
-        // For details, see: https://specifications.freedesktop.org/basedir/latest
-        const xdgCacheHome =
-            process.env.XDG_CACHE_HOME != null
-                ? AbsoluteFilePath.of(process.env.XDG_CACHE_HOME)
-                : join(homeDir, RelativeFilePath.of(".cache"));
-        return join(xdgCacheHome, RelativeFilePath.of("fern"));
+        return join(AbsoluteFilePath.of(os.homedir()), RelativeFilePath.of(".fern"));
     }
 
     /**
