@@ -1,0 +1,949 @@
+openapi: 3.1.0
+info:
+  title: Test API
+  version: 0.0.0
+paths:
+  /data.v1.DataService/Check:
+    post:
+      operationId: dataService_Check
+      tags:
+        - DataService
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckResponse'
+              examples:
+                Example1:
+                  value:
+                    created_at: '2024-01-15T09:30:00Z'
+                    updated_at: '2024-01-15T09:30:00Z'
+  /data.v1.DataService/Create:
+    post:
+      operationId: dataService_Create
+      tags:
+        - DataService
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateResponse'
+              examples:
+                Example1:
+                  value:
+                    resource:
+                      id: id
+                      values:
+                        - 1.1
+                      metadata:
+                        key: 1.1
+                      indexed_data:
+                        indices:
+                          - 1
+                        values:
+                          - 1.1
+                    success: true
+                    error_message: error_message
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the resource to create.
+                  examples:
+                    - name
+                description:
+                  type:
+                    - string
+                    - 'null'
+                  description: A description of the resource.
+                tool_choice:
+                  anyOf:
+                    - $ref: '#/components/schemas/ToolChoice'
+                    - type: 'null'
+                  description: The tool choice configuration.
+                url:
+                  type:
+                    - string
+                    - 'null'
+                  description: A URL to fetch the resource from.
+                content:
+                  type:
+                    - string
+                    - 'null'
+                  description: Inline content for the resource.
+                metadata:
+                  anyOf:
+                    - $ref: '#/components/schemas/Metadata'
+                    - type: 'null'
+                  description: Optional metadata for the resource.
+              required:
+                - name
+            examples:
+              Example1:
+                value:
+                  name: name
+  /data.v1.DataService/Delete:
+    post:
+      operationId: dataService_Delete
+      tags:
+        - DataService
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+              examples:
+                Example1:
+                  value: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type:
+                    - array
+                    - 'null'
+                  items:
+                    type: string
+                delete_all:
+                  type:
+                    - boolean
+                    - 'null'
+                namespace:
+                  type:
+                    - string
+                    - 'null'
+                filter:
+                  anyOf:
+                    - $ref: '#/components/schemas/Metadata'
+                    - type: 'null'
+            examples:
+              Example1:
+                value: {}
+  /data.v1.DataService/Describe:
+    post:
+      operationId: dataService_Describe
+      tags:
+        - DataService
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DescribeResponse'
+              examples:
+                Example1:
+                  value:
+                    namespaces:
+                      key:
+                        count: 1
+                    dimension: 1
+                    fullness: 1.1
+                    total_count: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filter:
+                  anyOf:
+                    - $ref: '#/components/schemas/Metadata'
+                    - type: 'null'
+                after:
+                  type:
+                    - string
+                    - 'null'
+                  format: date-time
+            examples:
+              Example1:
+                value: {}
+  /data.v1.DataService/Query:
+    post:
+      operationId: dataService_Query
+      tags:
+        - DataService
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResponse'
+              examples:
+                Example1:
+                  value:
+                    results:
+                      - matches:
+                          - id: id
+                        namespace: namespace
+                    matches:
+                      - id: id
+                        score: 1.1
+                        values:
+                          - 1.1
+                        metadata:
+                          key: 1.1
+                        indexed_data:
+                          indices:
+                            - 1
+                          values:
+                            - 1.1
+                    namespace: namespace
+                    usage:
+                      units: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                namespace:
+                  type:
+                    - string
+                    - 'null'
+                top_k:
+                  type: integer
+                  format: int64
+                  examples:
+                    - 1
+                filter:
+                  anyOf:
+                    - $ref: '#/components/schemas/Metadata'
+                    - type: 'null'
+                include_values:
+                  type:
+                    - boolean
+                    - 'null'
+                include_metadata:
+                  type:
+                    - boolean
+                    - 'null'
+                queries:
+                  type:
+                    - array
+                    - 'null'
+                  items:
+                    $ref: '#/components/schemas/QueryColumn'
+                column:
+                  type:
+                    - array
+                    - 'null'
+                  items:
+                    type: integer
+                    format: float
+                id:
+                  type:
+                    - string
+                    - 'null'
+                indexed_data:
+                  anyOf:
+                    - $ref: '#/components/schemas/IndexedData'
+                    - type: 'null'
+              required:
+                - top_k
+            examples:
+              Example1:
+                value:
+                  top_k: 1
+  /data.v1.DataService/Upload:
+    post:
+      operationId: dataService_Upload
+      tags:
+        - DataService
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadResponse'
+              examples:
+                Example1:
+                  value:
+                    count: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                columns:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Column'
+                namespace:
+                  type:
+                    - string
+                    - 'null'
+              required:
+                - columns
+            examples:
+              Example1:
+                value:
+                  columns:
+                    - id: id
+                      values:
+                        - 1.1
+  /data/fetch:
+    get:
+      operationId: dataService_Fetch
+      tags:
+        - DataService
+      parameters:
+        - name: ids
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type:
+                - string
+                - 'null'
+        - name: namespace
+          in: query
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchResponse'
+              examples:
+                Example1:
+                  value:
+                    columns:
+                      key:
+                        id: id
+                        values:
+                          - 1.1
+                        metadata:
+                          key: 1.1
+                        indexed_data:
+                          indices:
+                            - 1
+                          values:
+                            - 1.1
+                    namespace: namespace
+                    usage:
+                      units: 1
+  /data/list:
+    get:
+      operationId: dataService_List
+      tags:
+        - DataService
+      parameters:
+        - name: prefix
+          in: query
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type:
+              - integer
+              - 'null'
+            format: int64
+        - name: pagination_token
+          in: query
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+        - name: namespace
+          in: query
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResponse'
+              examples:
+                Example1:
+                  value:
+                    columns:
+                      - id: id
+                    pagination:
+                      next: next
+                    namespace: namespace
+                    usage:
+                      units: 1
+  /data/update:
+    post:
+      operationId: dataService_Update
+      tags:
+        - DataService
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateResponse'
+              examples:
+                Example1:
+                  value:
+                    updated_at: '2024-01-15T09:30:00Z'
+                    index_type: INDEX_TYPE_INVALID
+                    details:
+                      '@type': '@type'
+                    index_types:
+                      - INDEX_TYPE_INVALID
+                    status: STATUS_UNSPECIFIED
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  examples:
+                    - id
+                values:
+                  type:
+                    - array
+                    - 'null'
+                  items:
+                    type: integer
+                    format: float
+                set_metadata:
+                  anyOf:
+                    - $ref: '#/components/schemas/Metadata'
+                    - type: 'null'
+                namespace:
+                  type:
+                    - string
+                    - 'null'
+                indexed_data:
+                  anyOf:
+                    - $ref: '#/components/schemas/IndexedData'
+                    - type: 'null'
+                index_type:
+                  anyOf:
+                    - $ref: '#/components/schemas/IndexType'
+                    - type: 'null'
+                details:
+                  anyOf:
+                    - $ref: '#/components/schemas/GoogleProtobufAny'
+                    - type: 'null'
+                index_types:
+                  type:
+                    - array
+                    - 'null'
+                  items:
+                    $ref: '#/components/schemas/IndexType'
+                aspect_ratio:
+                  anyOf:
+                    - $ref: '#/components/schemas/AspectRatio'
+                    - type: 'null'
+                status:
+                  anyOf:
+                    - $ref: '#/components/schemas/GoogleRpcStatus'
+                    - type: 'null'
+                content:
+                  type:
+                    - string
+                    - 'null'
+                  format: byte
+                  description: >-
+                    Tests bytes field mapping (string <-> ByteString
+                    conversion).
+              required:
+                - id
+            examples:
+              Example1:
+                value:
+                  id: id
+  /foo:
+    post:
+      operationId: postFoo
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                Example1:
+                  value:
+                    key: value
+components:
+  schemas:
+    AspectRatio:
+      title: AspectRatio
+      type: string
+      enum:
+        - ASPECT_RATIO_UNSPECIFIED
+        - ASPECT_RATIO_1_1
+        - ASPECT_RATIO_16_9
+        - ASPECT_RATIO_9_16
+        - ASPECT_RATIO_4_3
+    CheckResponse:
+      title: CheckResponse
+      type: object
+      properties:
+        created_at:
+          type:
+            - string
+            - 'null'
+          format: date-time
+        updated_at:
+          type:
+            - string
+            - 'null'
+          format: date-time
+    Column:
+      title: Column
+      type: object
+      properties:
+        id:
+          type: string
+        values:
+          type: array
+          items:
+            type: integer
+            format: float
+        metadata:
+          anyOf:
+            - $ref: '#/components/schemas/Metadata'
+            - type: 'null'
+        indexed_data:
+          anyOf:
+            - $ref: '#/components/schemas/IndexedData'
+            - type: 'null'
+      required:
+        - id
+        - values
+    CreateResponse:
+      title: CreateResponse
+      type: object
+      properties:
+        resource:
+          anyOf:
+            - $ref: '#/components/schemas/Column'
+            - type: 'null'
+          description: The created resource.
+        success:
+          type:
+            - boolean
+            - 'null'
+          description: Indicates successful creation.
+        error_message:
+          type:
+            - string
+            - 'null'
+          description: Error message if creation failed.
+    DeleteResponse:
+      title: DeleteResponse
+      type: object
+      properties: {}
+    DescribeResponse:
+      title: DescribeResponse
+      type: object
+      properties:
+        namespaces:
+          type:
+            - object
+            - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/NamespaceSummary'
+        dimension:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        fullness:
+          type:
+            - integer
+            - 'null'
+          format: float
+        total_count:
+          type:
+            - integer
+            - 'null'
+          format: int64
+    FetchResponse:
+      title: FetchResponse
+      type: object
+      properties:
+        columns:
+          type:
+            - object
+            - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/Column'
+        namespace:
+          type:
+            - string
+            - 'null'
+        usage:
+          anyOf:
+            - $ref: '#/components/schemas/Usage'
+            - type: 'null'
+    FieldBehavior:
+      title: FieldBehavior
+      type: string
+      enum:
+        - FIELD_BEHAVIOR_UNSPECIFIED
+        - OPTIONAL
+        - REQUIRED
+        - OUTPUT_ONLY
+        - INPUT_ONLY
+        - IMMUTABLE
+        - UNORDERED_LIST
+        - NON_EMPTY_DEFAULT
+        - IDENTIFIER
+    GoogleProtobufAny:
+      title: GoogleProtobufAny
+      type: object
+      description: >-
+        Contains an arbitrary serialized message along with a @type that
+        describes the type of the serialized message.
+      properties:
+        '@type':
+          type:
+            - string
+            - 'null'
+          description: The type of the serialized message.
+    GoogleRpcStatus:
+      title: GoogleRpcStatus
+      type: object
+      description: >-
+        The `Status` type defines a logical error model that is suitable for
+        different programming environments, including REST APIs and RPC APIs. It
+        is used by [gRPC](https://github.com/grpc). Each `Status` message
+        contains three pieces of data: error code, error message, and error
+        details. You can find out more about this error model and how to work
+        with it in the [API Design
+        Guide](https://cloud.google.com/apis/design/errors).
+      properties:
+        code:
+          type:
+            - integer
+            - 'null'
+          description: >-
+            The status code, which should be an enum value of
+            [google.rpc.Code][google.rpc.Code].
+        message:
+          type:
+            - string
+            - 'null'
+          description: >-
+            A developer-facing error message, which should be in English. Any
+            user-facing error message should be localized and sent in the
+            [google.rpc.Status.details][google.rpc.Status.details] field, or
+            localized by the client.
+        details:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/GoogleProtobufAny'
+          description: >-
+            A list of messages that carry the error details.  There is a common
+            set of message types for APIs to use.
+    IndexType:
+      title: IndexType
+      type: string
+      enum:
+        - INDEX_TYPE_INVALID
+        - INDEX_TYPE_DEFAULT
+        - INDEX_TYPE_STRICT
+    IndexedData:
+      title: IndexedData
+      type: object
+      properties:
+        indices:
+          type: array
+          items:
+            type: integer
+            format: int64
+        values:
+          type: array
+          items:
+            type: integer
+            format: float
+      required:
+        - indices
+        - values
+    ListElement:
+      title: ListElement
+      type: object
+      properties:
+        id:
+          type:
+            - string
+            - 'null'
+    ListResponse:
+      title: ListResponse
+      type: object
+      properties:
+        columns:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/ListElement'
+        pagination:
+          anyOf:
+            - $ref: '#/components/schemas/Pagination'
+            - type: 'null'
+        namespace:
+          type:
+            - string
+            - 'null'
+        usage:
+          anyOf:
+            - $ref: '#/components/schemas/Usage'
+            - type: 'null'
+    NamespaceSummary:
+      title: NamespaceSummary
+      type: object
+      properties:
+        count:
+          type:
+            - integer
+            - 'null'
+          format: int64
+    Pagination:
+      title: Pagination
+      type: object
+      properties:
+        next:
+          type:
+            - string
+            - 'null'
+    QueryColumn:
+      title: QueryColumn
+      type: object
+      properties:
+        values:
+          type: array
+          items:
+            type: integer
+            format: float
+        top_k:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        namespace:
+          type:
+            - string
+            - 'null'
+        filter:
+          anyOf:
+            - $ref: '#/components/schemas/Metadata'
+            - type: 'null'
+        indexed_data:
+          anyOf:
+            - $ref: '#/components/schemas/IndexedData'
+            - type: 'null'
+      required:
+        - values
+    QueryResponse:
+      title: QueryResponse
+      type: object
+      properties:
+        results:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/QueryResult'
+        matches:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/ScoredColumn'
+        namespace:
+          type:
+            - string
+            - 'null'
+        usage:
+          anyOf:
+            - $ref: '#/components/schemas/Usage'
+            - type: 'null'
+    QueryResult:
+      title: QueryResult
+      type: object
+      properties:
+        matches:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/ScoredColumn'
+        namespace:
+          type:
+            - string
+            - 'null'
+    ScoredColumn:
+      title: ScoredColumn
+      type: object
+      properties:
+        id:
+          type: string
+        score:
+          type:
+            - integer
+            - 'null'
+          format: float
+        values:
+          type:
+            - array
+            - 'null'
+          items:
+            type: integer
+            format: float
+        metadata:
+          anyOf:
+            - $ref: '#/components/schemas/Metadata'
+            - type: 'null'
+        indexed_data:
+          anyOf:
+            - $ref: '#/components/schemas/IndexedData'
+            - type: 'null'
+      required:
+        - id
+    ToolChoice:
+      title: ToolChoice
+      type: object
+      properties:
+        mode:
+          anyOf:
+            - $ref: '#/components/schemas/ToolMode'
+            - type: 'null'
+          description: Force the model to perform in a given mode.
+        function_name:
+          type:
+            - string
+            - 'null'
+          description: Force the model to call a particular function.
+    ToolMode:
+      title: ToolMode
+      type: string
+      enum:
+        - TOOL_MODE_INVALID
+        - TOOL_MODE_AUTO
+        - TOOL_MODE_NONE
+        - TOOL_MODE_REQUIRED
+    UpdateResponse:
+      title: UpdateResponse
+      type: object
+      properties:
+        updated_at:
+          type:
+            - string
+            - 'null'
+          format: date-time
+        index_type:
+          anyOf:
+            - $ref: '#/components/schemas/IndexType'
+            - type: 'null'
+        details:
+          anyOf:
+            - $ref: '#/components/schemas/GoogleProtobufAny'
+            - type: 'null'
+        index_types:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/IndexType'
+        status:
+          anyOf:
+            - $ref: '#/components/schemas/UpdateResponse_Status'
+            - type: 'null'
+    UpdateResponse_Status:
+      title: UpdateResponse_Status
+      type: string
+      enum:
+        - STATUS_UNSPECIFIED
+        - STATUS_PENDING
+        - STATUS_ACTIVE
+        - STATUS_FAILED
+    UploadResponse:
+      title: UploadResponse
+      type: object
+      properties:
+        count:
+          type:
+            - integer
+            - 'null'
+          format: int64
+    Usage:
+      title: Usage
+      type: object
+      properties:
+        units:
+          type:
+            - integer
+            - 'null'
+          format: int64
+    Metadata:
+      title: Metadata
+      oneOf:
+        - type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MetadataValue'
+        - type: object
+    MetadataValue:
+      title: MetadataValue
+      oneOf:
+        - type: number
+          format: double
+        - type: string
+        - type: boolean
+  securitySchemes: {}
+servers:
+  - url: https://localhost
+    description: Default

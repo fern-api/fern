@@ -1,0 +1,2153 @@
+openapi: 3.1.0
+info:
+  title: many-properties
+  version: 0.0.0
+paths: {}
+components:
+  schemas:
+    LargeObject:
+      title: LargeObject
+      type: object
+      properties:
+        property0:
+          type:
+            - string
+            - 'null'
+        property1:
+          type:
+            - string
+            - 'null'
+        property2:
+          type:
+            - string
+            - 'null'
+        property3:
+          type:
+            - string
+            - 'null'
+        property4:
+          type:
+            - string
+            - 'null'
+        property5:
+          type:
+            - string
+            - 'null'
+        property6:
+          type:
+            - string
+            - 'null'
+        property7:
+          type:
+            - string
+            - 'null'
+        property8:
+          type:
+            - string
+            - 'null'
+        property9:
+          type:
+            - string
+            - 'null'
+        property10:
+          type:
+            - string
+            - 'null'
+        property11:
+          type:
+            - string
+            - 'null'
+        property12:
+          type:
+            - string
+            - 'null'
+        property13:
+          type:
+            - string
+            - 'null'
+        property14:
+          type:
+            - string
+            - 'null'
+        property15:
+          type:
+            - string
+            - 'null'
+        property16:
+          type:
+            - string
+            - 'null'
+        property17:
+          type:
+            - string
+            - 'null'
+        property18:
+          type:
+            - string
+            - 'null'
+        property19:
+          type:
+            - string
+            - 'null'
+        property20:
+          type:
+            - string
+            - 'null'
+        property21:
+          type:
+            - string
+            - 'null'
+        property22:
+          type:
+            - string
+            - 'null'
+        property23:
+          type:
+            - string
+            - 'null'
+        property24:
+          type:
+            - string
+            - 'null'
+        property25:
+          type:
+            - string
+            - 'null'
+        property26:
+          type:
+            - string
+            - 'null'
+        property27:
+          type:
+            - string
+            - 'null'
+        property28:
+          type:
+            - string
+            - 'null'
+        property29:
+          type:
+            - string
+            - 'null'
+        property30:
+          type:
+            - string
+            - 'null'
+        property31:
+          type:
+            - string
+            - 'null'
+        property32:
+          type:
+            - string
+            - 'null'
+        property33:
+          type:
+            - string
+            - 'null'
+        property34:
+          type:
+            - string
+            - 'null'
+        property35:
+          type:
+            - string
+            - 'null'
+        property36:
+          type:
+            - string
+            - 'null'
+        property37:
+          type:
+            - string
+            - 'null'
+        property38:
+          type:
+            - string
+            - 'null'
+        property39:
+          type:
+            - string
+            - 'null'
+        property40:
+          type:
+            - string
+            - 'null'
+        property41:
+          type:
+            - string
+            - 'null'
+        property42:
+          type:
+            - string
+            - 'null'
+        property43:
+          type:
+            - string
+            - 'null'
+        property44:
+          type:
+            - string
+            - 'null'
+        property45:
+          type:
+            - string
+            - 'null'
+        property46:
+          type:
+            - string
+            - 'null'
+        property47:
+          type:
+            - string
+            - 'null'
+        property48:
+          type:
+            - string
+            - 'null'
+        property49:
+          type:
+            - string
+            - 'null'
+        property50:
+          type:
+            - string
+            - 'null'
+        property51:
+          type:
+            - string
+            - 'null'
+        property52:
+          type:
+            - string
+            - 'null'
+        property53:
+          type:
+            - string
+            - 'null'
+        property54:
+          type:
+            - string
+            - 'null'
+        property55:
+          type:
+            - string
+            - 'null'
+        property56:
+          type:
+            - string
+            - 'null'
+        property57:
+          type:
+            - string
+            - 'null'
+        property58:
+          type:
+            - string
+            - 'null'
+        property59:
+          type:
+            - string
+            - 'null'
+        property60:
+          type:
+            - string
+            - 'null'
+        property61:
+          type:
+            - string
+            - 'null'
+        property62:
+          type:
+            - string
+            - 'null'
+        property63:
+          type:
+            - string
+            - 'null'
+        property64:
+          type:
+            - string
+            - 'null'
+        property65:
+          type:
+            - string
+            - 'null'
+        property66:
+          type:
+            - string
+            - 'null'
+        property67:
+          type:
+            - string
+            - 'null'
+        property68:
+          type:
+            - string
+            - 'null'
+        property69:
+          type:
+            - string
+            - 'null'
+        property70:
+          type:
+            - string
+            - 'null'
+        property71:
+          type:
+            - string
+            - 'null'
+        property72:
+          type:
+            - string
+            - 'null'
+        property73:
+          type:
+            - string
+            - 'null'
+        property74:
+          type:
+            - string
+            - 'null'
+        property75:
+          type:
+            - string
+            - 'null'
+        property76:
+          type:
+            - string
+            - 'null'
+        property77:
+          type:
+            - string
+            - 'null'
+        property78:
+          type:
+            - string
+            - 'null'
+        property79:
+          type:
+            - string
+            - 'null'
+        property80:
+          type:
+            - string
+            - 'null'
+        property81:
+          type:
+            - string
+            - 'null'
+        property82:
+          type:
+            - string
+            - 'null'
+        property83:
+          type:
+            - string
+            - 'null'
+        property84:
+          type:
+            - string
+            - 'null'
+        property85:
+          type:
+            - string
+            - 'null'
+        property86:
+          type:
+            - string
+            - 'null'
+        property87:
+          type:
+            - string
+            - 'null'
+        property88:
+          type:
+            - string
+            - 'null'
+        property89:
+          type:
+            - string
+            - 'null'
+        property90:
+          type:
+            - string
+            - 'null'
+        property91:
+          type:
+            - string
+            - 'null'
+        property92:
+          type:
+            - string
+            - 'null'
+        property93:
+          type:
+            - string
+            - 'null'
+        property94:
+          type:
+            - string
+            - 'null'
+        property95:
+          type:
+            - string
+            - 'null'
+        property96:
+          type:
+            - string
+            - 'null'
+        property97:
+          type:
+            - string
+            - 'null'
+        property98:
+          type:
+            - string
+            - 'null'
+        property99:
+          type:
+            - string
+            - 'null'
+        property100:
+          type:
+            - string
+            - 'null'
+        property101:
+          type:
+            - string
+            - 'null'
+        property102:
+          type:
+            - string
+            - 'null'
+        property103:
+          type:
+            - string
+            - 'null'
+        property104:
+          type:
+            - string
+            - 'null'
+        property105:
+          type:
+            - string
+            - 'null'
+        property106:
+          type:
+            - string
+            - 'null'
+        property107:
+          type:
+            - string
+            - 'null'
+        property108:
+          type:
+            - string
+            - 'null'
+        property109:
+          type:
+            - string
+            - 'null'
+        property110:
+          type:
+            - string
+            - 'null'
+        property111:
+          type:
+            - string
+            - 'null'
+        property112:
+          type:
+            - string
+            - 'null'
+        property113:
+          type:
+            - string
+            - 'null'
+        property114:
+          type:
+            - string
+            - 'null'
+        property115:
+          type:
+            - string
+            - 'null'
+        property116:
+          type:
+            - string
+            - 'null'
+        property117:
+          type:
+            - string
+            - 'null'
+        property118:
+          type:
+            - string
+            - 'null'
+        property119:
+          type:
+            - string
+            - 'null'
+        property120:
+          type:
+            - string
+            - 'null'
+        property121:
+          type:
+            - string
+            - 'null'
+        property122:
+          type:
+            - string
+            - 'null'
+        property123:
+          type:
+            - string
+            - 'null'
+        property124:
+          type:
+            - string
+            - 'null'
+        property125:
+          type:
+            - string
+            - 'null'
+        property126:
+          type:
+            - string
+            - 'null'
+        property127:
+          type:
+            - string
+            - 'null'
+        property128:
+          type:
+            - string
+            - 'null'
+        property129:
+          type:
+            - string
+            - 'null'
+        property130:
+          type:
+            - string
+            - 'null'
+        property131:
+          type:
+            - string
+            - 'null'
+        property132:
+          type:
+            - string
+            - 'null'
+        property133:
+          type:
+            - string
+            - 'null'
+        property134:
+          type:
+            - string
+            - 'null'
+        property135:
+          type:
+            - string
+            - 'null'
+        property136:
+          type:
+            - string
+            - 'null'
+        property137:
+          type:
+            - string
+            - 'null'
+        property138:
+          type:
+            - string
+            - 'null'
+        property139:
+          type:
+            - string
+            - 'null'
+        property140:
+          type:
+            - string
+            - 'null'
+        property141:
+          type:
+            - string
+            - 'null'
+        property142:
+          type:
+            - string
+            - 'null'
+        property143:
+          type:
+            - string
+            - 'null'
+        property144:
+          type:
+            - string
+            - 'null'
+        property145:
+          type:
+            - string
+            - 'null'
+        property146:
+          type:
+            - string
+            - 'null'
+        property147:
+          type:
+            - string
+            - 'null'
+        property148:
+          type:
+            - string
+            - 'null'
+        property149:
+          type:
+            - string
+            - 'null'
+        property150:
+          type:
+            - string
+            - 'null'
+        property151:
+          type:
+            - string
+            - 'null'
+        property152:
+          type:
+            - string
+            - 'null'
+        property153:
+          type:
+            - string
+            - 'null'
+        property154:
+          type:
+            - string
+            - 'null'
+        property155:
+          type:
+            - string
+            - 'null'
+        property156:
+          type:
+            - string
+            - 'null'
+        property157:
+          type:
+            - string
+            - 'null'
+        property158:
+          type:
+            - string
+            - 'null'
+        property159:
+          type:
+            - string
+            - 'null'
+        property160:
+          type:
+            - string
+            - 'null'
+        property161:
+          type:
+            - string
+            - 'null'
+        property162:
+          type:
+            - string
+            - 'null'
+        property163:
+          type:
+            - string
+            - 'null'
+        property164:
+          type:
+            - string
+            - 'null'
+        property165:
+          type:
+            - string
+            - 'null'
+        property166:
+          type:
+            - string
+            - 'null'
+        property167:
+          type:
+            - string
+            - 'null'
+        property168:
+          type:
+            - string
+            - 'null'
+        property169:
+          type:
+            - string
+            - 'null'
+        property170:
+          type:
+            - string
+            - 'null'
+        property171:
+          type:
+            - string
+            - 'null'
+        property172:
+          type:
+            - string
+            - 'null'
+        property173:
+          type:
+            - string
+            - 'null'
+        property174:
+          type:
+            - string
+            - 'null'
+        property175:
+          type:
+            - string
+            - 'null'
+        property176:
+          type:
+            - string
+            - 'null'
+        property177:
+          type:
+            - string
+            - 'null'
+        property178:
+          type:
+            - string
+            - 'null'
+        property179:
+          type:
+            - string
+            - 'null'
+        property180:
+          type:
+            - string
+            - 'null'
+        property181:
+          type:
+            - string
+            - 'null'
+        property182:
+          type:
+            - string
+            - 'null'
+        property183:
+          type:
+            - string
+            - 'null'
+        property184:
+          type:
+            - string
+            - 'null'
+        property185:
+          type:
+            - string
+            - 'null'
+        property186:
+          type:
+            - string
+            - 'null'
+        property187:
+          type:
+            - string
+            - 'null'
+        property188:
+          type:
+            - string
+            - 'null'
+        property189:
+          type:
+            - string
+            - 'null'
+        property190:
+          type:
+            - string
+            - 'null'
+        property191:
+          type:
+            - string
+            - 'null'
+        property192:
+          type:
+            - string
+            - 'null'
+        property193:
+          type:
+            - string
+            - 'null'
+        property194:
+          type:
+            - string
+            - 'null'
+        property195:
+          type:
+            - string
+            - 'null'
+        property196:
+          type:
+            - string
+            - 'null'
+        property197:
+          type:
+            - string
+            - 'null'
+        property198:
+          type:
+            - string
+            - 'null'
+        property199:
+          type:
+            - string
+            - 'null'
+        property200:
+          type:
+            - string
+            - 'null'
+        property201:
+          type:
+            - string
+            - 'null'
+        property202:
+          type:
+            - string
+            - 'null'
+        property203:
+          type:
+            - string
+            - 'null'
+        property204:
+          type:
+            - string
+            - 'null'
+        property205:
+          type:
+            - string
+            - 'null'
+        property206:
+          type:
+            - string
+            - 'null'
+        property207:
+          type:
+            - string
+            - 'null'
+        property208:
+          type:
+            - string
+            - 'null'
+        property209:
+          type:
+            - string
+            - 'null'
+        property210:
+          type:
+            - string
+            - 'null'
+        property211:
+          type:
+            - string
+            - 'null'
+        property212:
+          type:
+            - string
+            - 'null'
+        property213:
+          type:
+            - string
+            - 'null'
+        property214:
+          type:
+            - string
+            - 'null'
+        property215:
+          type:
+            - string
+            - 'null'
+        property216:
+          type:
+            - string
+            - 'null'
+        property217:
+          type:
+            - string
+            - 'null'
+        property218:
+          type:
+            - string
+            - 'null'
+        property219:
+          type:
+            - string
+            - 'null'
+        property220:
+          type:
+            - string
+            - 'null'
+        property221:
+          type:
+            - string
+            - 'null'
+        property222:
+          type:
+            - string
+            - 'null'
+        property223:
+          type:
+            - string
+            - 'null'
+        property224:
+          type:
+            - string
+            - 'null'
+        property225:
+          type:
+            - string
+            - 'null'
+        property226:
+          type:
+            - string
+            - 'null'
+        property227:
+          type:
+            - string
+            - 'null'
+        property228:
+          type:
+            - string
+            - 'null'
+        property229:
+          type:
+            - string
+            - 'null'
+        property230:
+          type:
+            - string
+            - 'null'
+        property231:
+          type:
+            - string
+            - 'null'
+        property232:
+          type:
+            - string
+            - 'null'
+        property233:
+          type:
+            - string
+            - 'null'
+        property234:
+          type:
+            - string
+            - 'null'
+        property235:
+          type:
+            - string
+            - 'null'
+        property236:
+          type:
+            - string
+            - 'null'
+        property237:
+          type:
+            - string
+            - 'null'
+        property238:
+          type:
+            - string
+            - 'null'
+        property239:
+          type:
+            - string
+            - 'null'
+        property240:
+          type:
+            - string
+            - 'null'
+        property241:
+          type:
+            - string
+            - 'null'
+        property242:
+          type:
+            - string
+            - 'null'
+        property243:
+          type:
+            - string
+            - 'null'
+        property244:
+          type:
+            - string
+            - 'null'
+        property245:
+          type:
+            - string
+            - 'null'
+        property246:
+          type:
+            - string
+            - 'null'
+        property247:
+          type:
+            - string
+            - 'null'
+        property248:
+          type:
+            - string
+            - 'null'
+        property249:
+          type:
+            - string
+            - 'null'
+        property250:
+          type:
+            - string
+            - 'null'
+        property251:
+          type:
+            - string
+            - 'null'
+        property252:
+          type:
+            - string
+            - 'null'
+        property253:
+          type:
+            - string
+            - 'null'
+        property254:
+          type:
+            - string
+            - 'null'
+        property255:
+          type:
+            - string
+            - 'null'
+        property256:
+          type:
+            - string
+            - 'null'
+        property257:
+          type:
+            - string
+            - 'null'
+        property258:
+          type:
+            - string
+            - 'null'
+        property259:
+          type:
+            - string
+            - 'null'
+        property260:
+          type:
+            - string
+            - 'null'
+        property261:
+          type:
+            - string
+            - 'null'
+        property262:
+          type:
+            - string
+            - 'null'
+        property263:
+          type:
+            - string
+            - 'null'
+        property264:
+          type:
+            - string
+            - 'null'
+        property265:
+          type:
+            - string
+            - 'null'
+        property266:
+          type:
+            - string
+            - 'null'
+        property267:
+          type:
+            - string
+            - 'null'
+        property268:
+          type:
+            - string
+            - 'null'
+        property269:
+          type:
+            - string
+            - 'null'
+        property270:
+          type:
+            - string
+            - 'null'
+        property271:
+          type:
+            - string
+            - 'null'
+        property272:
+          type:
+            - string
+            - 'null'
+        property273:
+          type:
+            - string
+            - 'null'
+        property274:
+          type:
+            - string
+            - 'null'
+        property275:
+          type:
+            - string
+            - 'null'
+        property276:
+          type:
+            - string
+            - 'null'
+        property277:
+          type:
+            - string
+            - 'null'
+        property278:
+          type:
+            - string
+            - 'null'
+        property279:
+          type:
+            - string
+            - 'null'
+        property280:
+          type:
+            - string
+            - 'null'
+        property281:
+          type:
+            - string
+            - 'null'
+        property282:
+          type:
+            - string
+            - 'null'
+        property283:
+          type:
+            - string
+            - 'null'
+        property284:
+          type:
+            - string
+            - 'null'
+        property285:
+          type:
+            - string
+            - 'null'
+        property286:
+          type:
+            - string
+            - 'null'
+        property287:
+          type:
+            - string
+            - 'null'
+        property288:
+          type:
+            - string
+            - 'null'
+        property289:
+          type:
+            - string
+            - 'null'
+        property290:
+          type:
+            - string
+            - 'null'
+        property291:
+          type:
+            - string
+            - 'null'
+        property292:
+          type:
+            - string
+            - 'null'
+        property293:
+          type:
+            - string
+            - 'null'
+        property294:
+          type:
+            - string
+            - 'null'
+        property295:
+          type:
+            - string
+            - 'null'
+        property296:
+          type:
+            - string
+            - 'null'
+        property297:
+          type:
+            - string
+            - 'null'
+        property298:
+          type:
+            - string
+            - 'null'
+        property299:
+          type:
+            - string
+            - 'null'
+    LargeObjectWithLongsAndDoubles:
+      title: LargeObjectWithLongsAndDoubles
+      type: object
+      description: |-
+        Object with long and double fields to test precise JVM slot counting.
+        Each long/double field consumes 2 JVM parameter slots instead of 1.
+      properties:
+        longField0:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField1:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField2:
+          type:
+            - string
+            - 'null'
+        longField3:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField4:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField5:
+          type:
+            - string
+            - 'null'
+        longField6:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField7:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField8:
+          type:
+            - string
+            - 'null'
+        longField9:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField10:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField11:
+          type:
+            - string
+            - 'null'
+        longField12:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField13:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField14:
+          type:
+            - string
+            - 'null'
+        longField15:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField16:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField17:
+          type:
+            - string
+            - 'null'
+        longField18:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField19:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField20:
+          type:
+            - string
+            - 'null'
+        longField21:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField22:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField23:
+          type:
+            - string
+            - 'null'
+        longField24:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField25:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField26:
+          type:
+            - string
+            - 'null'
+        longField27:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField28:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField29:
+          type:
+            - string
+            - 'null'
+        longField30:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField31:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField32:
+          type:
+            - string
+            - 'null'
+        longField33:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField34:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField35:
+          type:
+            - string
+            - 'null'
+        longField36:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField37:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField38:
+          type:
+            - string
+            - 'null'
+        longField39:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField40:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField41:
+          type:
+            - string
+            - 'null'
+        longField42:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField43:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField44:
+          type:
+            - string
+            - 'null'
+        longField45:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField46:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField47:
+          type:
+            - string
+            - 'null'
+        longField48:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField49:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField50:
+          type:
+            - string
+            - 'null'
+        longField51:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField52:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField53:
+          type:
+            - string
+            - 'null'
+        longField54:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField55:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField56:
+          type:
+            - string
+            - 'null'
+        longField57:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField58:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField59:
+          type:
+            - string
+            - 'null'
+        longField60:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField61:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField62:
+          type:
+            - string
+            - 'null'
+        longField63:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField64:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField65:
+          type:
+            - string
+            - 'null'
+        longField66:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField67:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField68:
+          type:
+            - string
+            - 'null'
+        longField69:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField70:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField71:
+          type:
+            - string
+            - 'null'
+        longField72:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField73:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField74:
+          type:
+            - string
+            - 'null'
+        longField75:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField76:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField77:
+          type:
+            - string
+            - 'null'
+        longField78:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField79:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField80:
+          type:
+            - string
+            - 'null'
+        longField81:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField82:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField83:
+          type:
+            - string
+            - 'null'
+        longField84:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField85:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField86:
+          type:
+            - string
+            - 'null'
+        longField87:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField88:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField89:
+          type:
+            - string
+            - 'null'
+        longField90:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField91:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField92:
+          type:
+            - string
+            - 'null'
+        longField93:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField94:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField95:
+          type:
+            - string
+            - 'null'
+        longField96:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField97:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField98:
+          type:
+            - string
+            - 'null'
+        longField99:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField100:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField101:
+          type:
+            - string
+            - 'null'
+        longField102:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField103:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField104:
+          type:
+            - string
+            - 'null'
+        longField105:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField106:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField107:
+          type:
+            - string
+            - 'null'
+        longField108:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField109:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField110:
+          type:
+            - string
+            - 'null'
+        longField111:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField112:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField113:
+          type:
+            - string
+            - 'null'
+        longField114:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField115:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField116:
+          type:
+            - string
+            - 'null'
+        longField117:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField118:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField119:
+          type:
+            - string
+            - 'null'
+        longField120:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField121:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField122:
+          type:
+            - string
+            - 'null'
+        longField123:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField124:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField125:
+          type:
+            - string
+            - 'null'
+        longField126:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField127:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField128:
+          type:
+            - string
+            - 'null'
+        longField129:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField130:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField131:
+          type:
+            - string
+            - 'null'
+        longField132:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField133:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField134:
+          type:
+            - string
+            - 'null'
+        longField135:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField136:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField137:
+          type:
+            - string
+            - 'null'
+        longField138:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField139:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField140:
+          type:
+            - string
+            - 'null'
+        longField141:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField142:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField143:
+          type:
+            - string
+            - 'null'
+        longField144:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField145:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField146:
+          type:
+            - string
+            - 'null'
+        longField147:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField148:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField149:
+          type:
+            - string
+            - 'null'
+        longField150:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField151:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField152:
+          type:
+            - string
+            - 'null'
+        longField153:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField154:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField155:
+          type:
+            - string
+            - 'null'
+        longField156:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField157:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField158:
+          type:
+            - string
+            - 'null'
+        longField159:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField160:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField161:
+          type:
+            - string
+            - 'null'
+        longField162:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField163:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField164:
+          type:
+            - string
+            - 'null'
+        longField165:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField166:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField167:
+          type:
+            - string
+            - 'null'
+        longField168:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField169:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField170:
+          type:
+            - string
+            - 'null'
+        longField171:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField172:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField173:
+          type:
+            - string
+            - 'null'
+        longField174:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField175:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField176:
+          type:
+            - string
+            - 'null'
+        longField177:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField178:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField179:
+          type:
+            - string
+            - 'null'
+        longField180:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField181:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField182:
+          type:
+            - string
+            - 'null'
+        longField183:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField184:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField185:
+          type:
+            - string
+            - 'null'
+        longField186:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField187:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField188:
+          type:
+            - string
+            - 'null'
+        longField189:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField190:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField191:
+          type:
+            - string
+            - 'null'
+        longField192:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField193:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField194:
+          type:
+            - string
+            - 'null'
+        longField195:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField196:
+          type:
+            - number
+            - 'null'
+          format: double
+        stringField197:
+          type:
+            - string
+            - 'null'
+        longField198:
+          type:
+            - integer
+            - 'null'
+          format: int64
+        doubleField199:
+          type:
+            - number
+            - 'null'
+          format: double
+  securitySchemes: {}

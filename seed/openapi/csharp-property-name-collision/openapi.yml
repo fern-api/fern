@@ -1,0 +1,86 @@
+openapi: 3.1.0
+info:
+  title: csharp-property-name-collision
+  version: 0.0.0
+paths:
+  /catalog:
+    post:
+      operationId: _createCatalog
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CatalogV1Id'
+              examples:
+                Example1:
+                  value:
+                    catalog_v1_id: catalog_v1_id
+                    location_id: location_id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CatalogV1Id'
+            examples:
+              Example1:
+                value: {}
+  /activity:
+    post:
+      operationId: _createActivity
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+              examples:
+                Example1:
+                  value:
+                    activity: activity
+                    timestamp: timestamp
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Activity'
+            examples:
+              Example1:
+                value: {}
+components:
+  schemas:
+    CatalogV1Id:
+      title: CatalogV1Id
+      type: object
+      properties:
+        catalog_v1_id:
+          type:
+            - string
+            - 'null'
+        location_id:
+          type:
+            - string
+            - 'null'
+    Activity:
+      title: Activity
+      type: object
+      properties:
+        activity:
+          type:
+            - string
+            - 'null'
+        timestamp:
+          type:
+            - string
+            - 'null'
+  securitySchemes: {}

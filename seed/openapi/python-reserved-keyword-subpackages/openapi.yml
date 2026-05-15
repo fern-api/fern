@@ -1,0 +1,35 @@
+openapi: 3.1.0
+info:
+  title: python-reserved-keyword-subpackages
+  version: 0.0.0
+paths:
+  /class:
+    post:
+      operationId: class_create
+      tags:
+        - Class
+      parameters: []
+      responses:
+        '204':
+          description: No content
+  /import:
+    post:
+      operationId: automations_import_create
+      tags:
+        - AutomationsImport
+      parameters: []
+      responses:
+        '204':
+          description: No content
+  /export:
+    post:
+      operationId: automations_export_create
+      tags:
+        - AutomationsExport
+      parameters: []
+      responses:
+        '204':
+          description: No content
+components:
+  schemas: {}
+  securitySchemes: {}

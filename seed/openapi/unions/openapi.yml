@@ -1,0 +1,1265 @@
+openapi: 3.1.0
+info:
+  title: unions
+  version: 0.0.0
+paths:
+  /bigunion/{id}:
+    get:
+      operationId: bigunion_get
+      tags:
+        - Bigunion
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BigUnion'
+  /bigunion:
+    patch:
+      operationId: bigunion_update
+      tags:
+        - Bigunion
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BigUnion'
+  /bigunion/many:
+    patch:
+      operationId: bigunion_update-many
+      tags:
+        - Bigunion
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: boolean
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/BigUnion'
+  /union/{id}:
+    get:
+      operationId: union_get
+      tags:
+        - Union
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shape'
+  /union:
+    patch:
+      operationId: union_update
+      tags:
+        - Union
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Shape'
+components:
+  schemas:
+    BigUnion:
+      title: BigUnion
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: normalSweet
+            - $ref: '#/components/schemas/NormalSweet'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: thankfulFactor
+            - $ref: '#/components/schemas/ThankfulFactor'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: jumboEnd
+            - $ref: '#/components/schemas/JumboEnd'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: hastyPain
+            - $ref: '#/components/schemas/HastyPain'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: mistySnow
+            - $ref: '#/components/schemas/MistySnow'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: distinctFailure
+            - $ref: '#/components/schemas/DistinctFailure'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: practicalPrinciple
+            - $ref: '#/components/schemas/PracticalPrinciple'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: limpingStep
+            - $ref: '#/components/schemas/LimpingStep'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: vibrantExcitement
+            - $ref: '#/components/schemas/VibrantExcitement'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: activeDiamond
+            - $ref: '#/components/schemas/ActiveDiamond'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: popularLimit
+            - $ref: '#/components/schemas/PopularLimit'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: falseMirror
+            - $ref: '#/components/schemas/FalseMirror'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: primaryBlock
+            - $ref: '#/components/schemas/PrimaryBlock'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: rotatingRatio
+            - $ref: '#/components/schemas/RotatingRatio'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: colorfulCover
+            - $ref: '#/components/schemas/ColorfulCover'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: disloyalValue
+            - $ref: '#/components/schemas/DisloyalValue'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: gruesomeCoach
+            - $ref: '#/components/schemas/GruesomeCoach'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: totalWork
+            - $ref: '#/components/schemas/TotalWork'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: harmoniousPlay
+            - $ref: '#/components/schemas/HarmoniousPlay'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: uniqueStress
+            - $ref: '#/components/schemas/UniqueStress'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: unwillingSmoke
+            - $ref: '#/components/schemas/UnwillingSmoke'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: frozenSleep
+            - $ref: '#/components/schemas/FrozenSleep'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: diligentDeal
+            - $ref: '#/components/schemas/DiligentDeal'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: attractiveScript
+            - $ref: '#/components/schemas/AttractiveScript'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: hoarseMouse
+            - $ref: '#/components/schemas/HoarseMouse'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: circularCard
+            - $ref: '#/components/schemas/CircularCard'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: potableBad
+            - $ref: '#/components/schemas/PotableBad'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: triangularRepair
+            - $ref: '#/components/schemas/TriangularRepair'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: gaseousRoad
+            - $ref: '#/components/schemas/GaseousRoad'
+          required:
+            - type
+      required:
+        - id
+        - created-at
+      properties:
+        id:
+          type: string
+        created-at:
+          type: string
+          format: date-time
+        archived-at:
+          type:
+            - string
+            - 'null'
+          format: date-time
+    NormalSweet:
+      title: NormalSweet
+      type: object
+      properties:
+        value:
+          type: string
+          examples:
+            - example1
+      required:
+        - value
+    ThankfulFactor:
+      title: ThankfulFactor
+      type: object
+      properties:
+        value:
+          type: string
+          examples:
+            - example1
+      required:
+        - value
+    JumboEnd:
+      title: JumboEnd
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    HastyPain:
+      title: HastyPain
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    MistySnow:
+      title: MistySnow
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    DistinctFailure:
+      title: DistinctFailure
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    PracticalPrinciple:
+      title: PracticalPrinciple
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    LimpingStep:
+      title: LimpingStep
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    VibrantExcitement:
+      title: VibrantExcitement
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    ActiveDiamond:
+      title: ActiveDiamond
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    PopularLimit:
+      title: PopularLimit
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    FalseMirror:
+      title: FalseMirror
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    PrimaryBlock:
+      title: PrimaryBlock
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    RotatingRatio:
+      title: RotatingRatio
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    ColorfulCover:
+      title: ColorfulCover
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    DisloyalValue:
+      title: DisloyalValue
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    GruesomeCoach:
+      title: GruesomeCoach
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    TotalWork:
+      title: TotalWork
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    HarmoniousPlay:
+      title: HarmoniousPlay
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    UniqueStress:
+      title: UniqueStress
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    UnwillingSmoke:
+      title: UnwillingSmoke
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    FrozenSleep:
+      title: FrozenSleep
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    DiligentDeal:
+      title: DiligentDeal
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    AttractiveScript:
+      title: AttractiveScript
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    HoarseMouse:
+      title: HoarseMouse
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    CircularCard:
+      title: CircularCard
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    PotableBad:
+      title: PotableBad
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    TriangularRepair:
+      title: TriangularRepair
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    GaseousRoad:
+      title: GaseousRoad
+      type: object
+      properties:
+        value:
+          type: string
+      required:
+        - value
+    Union:
+      title: Union
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              const: foo
+            foo:
+              $ref: '#/components/schemas/Foo'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: bar
+            bar:
+              $ref: '#/components/schemas/Bar'
+          required:
+            - type
+      description: This is a simple union.
+    UnionWithOptionalReference:
+      title: UnionWithOptionalReference
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              const: foo
+            value:
+              anyOf:
+                - $ref: '#/components/schemas/Foo'
+                - type: 'null'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: bar
+            value:
+              anyOf:
+                - $ref: '#/components/schemas/Bar'
+                - type: 'null'
+          required:
+            - type
+    UnionWithNullableReference:
+      title: UnionWithNullableReference
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              const: foo
+            value:
+              anyOf:
+                - $ref: '#/components/schemas/Foo'
+                - type: 'null'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: bar
+            value:
+              anyOf:
+                - $ref: '#/components/schemas/Bar'
+                - type: 'null'
+          required:
+            - type
+    UnionWithDiscriminant:
+      title: UnionWithDiscriminant
+      oneOf:
+        - type: object
+          properties:
+            _type:
+              type: string
+              const: foo
+            foo:
+              $ref: '#/components/schemas/Foo'
+          required:
+            - _type
+        - type: object
+          properties:
+            _type:
+              type: string
+              const: bar
+            bar:
+              $ref: '#/components/schemas/Bar'
+          required:
+            - _type
+    UnionWithPrimitive:
+      title: UnionWithPrimitive
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              const: integer
+            value:
+              type: integer
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: string
+            value:
+              type: string
+          required:
+            - type
+    UnionWithDuplicatePrimitive:
+      title: UnionWithDuplicatePrimitive
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              const: integer1
+            value:
+              type: integer
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: integer2
+            value:
+              type: integer
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: string1
+            value:
+              type: string
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: string2
+            value:
+              type: string
+          required:
+            - type
+    UnionWithoutKey:
+      title: UnionWithoutKey
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: foo
+            - $ref: '#/components/schemas/Foo'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: bar
+            - $ref: '#/components/schemas/Bar'
+          required:
+            - type
+    UnionWithNoProperties:
+      title: UnionWithNoProperties
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: foo
+            - $ref: '#/components/schemas/Foo'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: empty
+          required:
+            - type
+    UnionWithMultipleNoProperties:
+      title: UnionWithMultipleNoProperties
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: foo
+            - $ref: '#/components/schemas/Foo'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: empty1
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: empty2
+          required:
+            - type
+    UnionWithLiteral:
+      title: UnionWithLiteral
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              const: fern
+            value:
+              type: string
+              const: fern
+          required:
+            - type
+      required:
+        - base
+      properties:
+        base:
+          type: string
+          const: base
+    UnionWithBaseProperties:
+      title: UnionWithBaseProperties
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              const: integer
+            value:
+              type: integer
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: string
+            value:
+              type: string
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: foo
+            - $ref: '#/components/schemas/Foo'
+          required:
+            - type
+      required:
+        - id
+      properties:
+        id:
+          type: string
+    UnionWithTime:
+      title: UnionWithTime
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              const: value
+            value:
+              type: integer
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: date
+            value:
+              type: string
+              format: date
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: datetime
+            value:
+              type: string
+              format: date-time
+          required:
+            - type
+    UnionWithOptionalTime:
+      title: UnionWithOptionalTime
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              const: date
+            value:
+              type:
+                - string
+                - 'null'
+              format: date
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: datetime
+            value:
+              type:
+                - string
+                - 'null'
+              format: date-time
+          required:
+            - type
+    UnionWithSingleElement:
+      title: UnionWithSingleElement
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: foo
+            - $ref: '#/components/schemas/Foo'
+          required:
+            - type
+    UnionWithDuplicateTypes:
+      title: UnionWithDuplicateTypes
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: foo1
+            - $ref: '#/components/schemas/Foo'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: foo2
+            - $ref: '#/components/schemas/Foo'
+          required:
+            - type
+    UnionWithSubTypes:
+      title: UnionWithSubTypes
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: foo
+            - $ref: '#/components/schemas/Foo'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: fooExtended
+            - $ref: '#/components/schemas/FooExtended'
+          required:
+            - type
+    UnionWithDuplicativeDiscriminants:
+      title: UnionWithDuplicativeDiscriminants
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: firstItemType
+            - $ref: '#/components/schemas/FirstItemType'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: secondItemType
+            - $ref: '#/components/schemas/SecondItemType'
+          required:
+            - type
+    FirstItemType:
+      title: FirstItemType
+      type: object
+      properties:
+        type:
+          type:
+            - string
+            - 'null'
+          const: firstItemType
+        name:
+          type: string
+      required:
+        - name
+    SecondItemType:
+      title: SecondItemType
+      type: object
+      properties:
+        type:
+          type:
+            - string
+            - 'null'
+          const: secondItemType
+        title:
+          type: string
+      required:
+        - title
+    Foo:
+      title: Foo
+      type: object
+      properties:
+        name:
+          type: string
+          examples:
+            - example1
+      required:
+        - name
+    FooExtended:
+      title: FooExtended
+      type: object
+      properties:
+        age:
+          type: integer
+          examples:
+            - 5
+      required:
+        - age
+      allOf:
+        - $ref: '#/components/schemas/Foo'
+    Bar:
+      title: Bar
+      type: object
+      properties:
+        name:
+          type: string
+          examples:
+            - example1
+      required:
+        - name
+    TypeWithOptionalMap:
+      title: TypeWithOptionalMap
+      type: object
+      properties:
+        key:
+          type: string
+        columnValues:
+          type: object
+          additionalProperties:
+            type:
+              - string
+              - 'null'
+      required:
+        - key
+        - columnValues
+    UnionWithSameStringTypes:
+      title: UnionWithSameStringTypes
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              const: customFormat
+            value:
+              type: string
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: regularString
+            value:
+              type: string
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: patternString
+            value:
+              type: string
+          required:
+            - type
+    UnionWithSameNumberTypes:
+      title: UnionWithSameNumberTypes
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              const: positiveInt
+            value:
+              type: integer
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: negativeInt
+            value:
+              type: integer
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: anyNumber
+            value:
+              type: number
+              format: double
+          required:
+            - type
+    GetShapeRequest:
+      title: GetShapeRequest
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+            - example
+      required:
+        - id
+    WithName:
+      title: WithName
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    Shape:
+      title: Shape
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: circle
+            - $ref: '#/components/schemas/Circle'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: square
+            - $ref: '#/components/schemas/Square'
+          required:
+            - type
+      required:
+        - id
+      properties:
+        id:
+          type: string
+    Circle:
+      title: Circle
+      type: object
+      properties:
+        radius:
+          type: number
+          format: double
+      required:
+        - radius
+    Square:
+      title: Square
+      type: object
+      properties:
+        length:
+          type: number
+          format: double
+      required:
+        - length
+  securitySchemes: {}

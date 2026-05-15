@@ -1,0 +1,168 @@
+openapi: 3.1.0
+info:
+  title: deep-cursor-path
+  version: 0.0.0
+paths:
+  /do-thing:
+    post:
+      operationId: deepCursorPath_do-thing
+      tags:
+        - DeepCursorPath
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+      summary: Do Thing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/A'
+  /do-thing-required:
+    post:
+      operationId: deepCursorPath_do-thing-required
+      tags:
+        - DeepCursorPath
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+      summary: Do Thing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MainRequired'
+  /do-thing-inline:
+    post:
+      operationId: deepCursorPath_do-thing-inline
+      tags:
+        - DeepCursorPath
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+      summary: Do Thing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InlineA'
+components:
+  schemas:
+    D:
+      title: D
+      type: object
+      properties:
+        starting_after:
+          type:
+            - string
+            - 'null'
+    C:
+      title: C
+      type: object
+      properties:
+        d:
+          anyOf:
+            - $ref: '#/components/schemas/D'
+            - type: 'null'
+    B:
+      title: B
+      type: object
+      properties:
+        c:
+          $ref: '#/components/schemas/C'
+      required:
+        - c
+    A:
+      title: A
+      type: object
+      properties:
+        b:
+          anyOf:
+            - $ref: '#/components/schemas/B'
+            - type: 'null'
+    Response:
+      title: Response
+      type: object
+      properties:
+        starting_after:
+          type:
+            - string
+            - 'null'
+        results:
+          type: array
+          items:
+            type: string
+      required:
+        - results
+    IndirectionRequired:
+      title: IndirectionRequired
+      type: object
+      properties:
+        starting_after:
+          type:
+            - string
+            - 'null'
+        results:
+          type: array
+          items:
+            type: string
+      required:
+        - results
+    MainRequired:
+      title: MainRequired
+      type: object
+      properties:
+        indirection:
+          $ref: '#/components/schemas/IndirectionRequired'
+      required:
+        - indirection
+    InlineD:
+      title: InlineD
+      type: object
+      properties:
+        starting_after:
+          type:
+            - string
+            - 'null'
+    InlineC:
+      title: InlineC
+      type: object
+      properties:
+        b:
+          anyOf:
+            - $ref: '#/components/schemas/InlineD'
+            - type: 'null'
+    InlineB:
+      title: InlineB
+      type: object
+      properties:
+        c:
+          $ref: '#/components/schemas/InlineC'
+      required:
+        - c
+    InlineA:
+      title: InlineA
+      type: object
+      properties:
+        b:
+          anyOf:
+            - $ref: '#/components/schemas/InlineB'
+            - type: 'null'
+  securitySchemes: {}
