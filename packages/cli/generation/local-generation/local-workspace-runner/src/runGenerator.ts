@@ -1,3 +1,4 @@
+import { Spec } from "@fern-api/api-workspace-commons";
 import { Audiences, generatorsYml, SNIPPET_TEMPLATES_JSON_FILENAME } from "@fern-api/configuration";
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
@@ -23,14 +24,18 @@ import {
     CONTAINER_PATH_TO_IR,
     CONTAINER_PATH_TO_SNIPPET,
     CONTAINER_PATH_TO_SNIPPET_TEMPLATES,
+    CONTAINER_RAW_SPECS_DIRECTORY,
     CONTAINER_SOURCES_DIRECTORY,
     GENERATOR_CONFIG_FILENAME,
-    IR_FILENAME
+    IR_FILENAME,
+    RAW_SPECS_DIRECTORY_NAME,
+    RAW_SPECS_MANIFEST_FILENAME
 } from "./constants.js";
-import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
+import { ExecutionEnvironment, SourceMount } from "./ExecutionEnvironment.js";
 import { getGeneratorConfig, getLicensePathFromConfig } from "./getGeneratorConfig.js";
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation.js";
 import { LocalTaskHandler } from "./LocalTaskHandler.js";
+import { collectRawSpecs } from "./rawSpecs.js";
 
 export interface GeneratorRunResponse {
     ir: IntermediateRepresentation;
@@ -84,7 +89,8 @@ export async function writeFilesToDiskAndRunGenerator({
     autoVersioningCache,
     absolutePathToSpecRepo,
     skipFernignore,
-    disableTelemetry
+    disableTelemetry,
+    rawApiSpecs
 }: {
     organization: string;
     absolutePathToFernConfig: AbsoluteFilePath | undefined;
@@ -115,6 +121,7 @@ export async function writeFilesToDiskAndRunGenerator({
     absolutePathToSpecRepo: AbsoluteFilePath | undefined;
     skipFernignore?: boolean;
     disableTelemetry?: boolean;
+    rawApiSpecs?: Spec[];
 }): Promise<{
     ir: IntermediateRepresentation;
     generatorConfig: FernGeneratorExec.GeneratorConfig;
@@ -235,13 +242,38 @@ export async function writeFilesToDiskAndRunGenerator({
     // Extract LICENSE file path for Docker mounting
     const absolutePathToLicenseFile = extractLicenseFilePath(generatorInvocation, absolutePathToFernConfig);
 
-    const sourceMounts = workspace
+    const sourceMounts: SourceMount[] = workspace
         .getSources()
         .filter((source): source is IdentifiableSource & { type: "protobuf" } => source.type === "protobuf")
         .map((source) => ({
             hostPath: source.absoluteFilePath,
             containerPath: `${CONTAINER_SOURCES_DIRECTORY}/${source.id}`
         }));
+
+    // Collect and mount raw API spec files (OAS, overrides, overlays, protobuf, asyncapi, etc.)
+    // when specs are provided by the caller. This preserves the original directory structure
+    // so that relative $ref paths between spec files remain valid.
+    if (rawApiSpecs != null && rawApiSpecs.length > 0) {
+        const rawSpecsDir = join(workspaceTempDir.path, RAW_SPECS_DIRECTORY_NAME);
+        await mkdir(rawSpecsDir, { recursive: true });
+
+        const containerSpecsDir = environment.usesContainerPaths ? CONTAINER_RAW_SPECS_DIRECTORY : rawSpecsDir;
+
+        const manifest = await collectRawSpecs({
+            specs: rawApiSpecs,
+            hostOutputDir: AbsoluteFilePath.of(rawSpecsDir),
+            containerBaseDir: containerSpecsDir,
+            context
+        });
+
+        await writeFile(join(rawSpecsDir, RAW_SPECS_MANIFEST_FILENAME), JSON.stringify(manifest, undefined, 4));
+        context.logger.debug(`Wrote raw specs manifest with ${manifest.specs.length} spec(s) to ${rawSpecsDir}`);
+
+        sourceMounts.push({
+            hostPath: AbsoluteFilePath.of(rawSpecsDir),
+            containerPath: CONTAINER_RAW_SPECS_DIRECTORY
+        });
+    }
 
     await environment.execute({
         generatorName: generatorInvocation.name,

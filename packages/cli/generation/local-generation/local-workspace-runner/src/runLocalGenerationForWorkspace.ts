@@ -388,7 +388,8 @@ export async function runLocalGenerationForWorkspace({
                     autoVersioningCache,
                     absolutePathToSpecRepo: dirname(workspace.absoluteFilePath),
                     skipFernignore,
-                    disableTelemetry
+                    disableTelemetry,
+                    rawApiSpecs: workspace instanceof OSSWorkspace ? workspace.allSpecs : undefined
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
