@@ -1,0 +1,7 @@
+paths:
+  /echo:
+    post:
+      x-fern-sdk-group-name: root
+  /create-type:
+    post:
+      x-fern-sdk-group-name: root

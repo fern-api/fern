@@ -270,14 +270,25 @@ function addTestCommand(cli: Argv) {
                 } else {
                     const availableFixturesForGlobbing = getAvailableFixtures(generator, false);
                     fixturesForGenerator = expandFixtureGlobs(argv.fixture, availableFixturesForGlobbing);
+
+                    // If a glob didn't match but the fixture exists as a test definition, use it directly
+                    if (fixturesForGenerator.length === 0) {
+                        fixturesForGenerator = Array.isArray(argv.fixture) ? argv.fixture : [argv.fixture];
+                    }
                 }
 
                 // Get both formats of fixtures and check if the fixtures passed in are of one of the two formats allowed
                 const availableFixtures = getAvailableFixtures(generator, false);
                 const availableFixturesWithOutputFolders = getAvailableFixtures(generator, true);
+                const allFixtureNames = new Set(FIXTURES);
 
                 for (const fixture of fixturesForGenerator) {
-                    if (!availableFixtures.includes(fixture) && !availableFixturesWithOutputFolders.includes(fixture)) {
+                    const baseName = fixture.includes(":") ? (fixture.split(":", 2)[0] ?? fixture) : fixture;
+                    if (
+                        !availableFixtures.includes(fixture) &&
+                        !availableFixturesWithOutputFolders.includes(fixture) &&
+                        !allFixtureNames.has(baseName)
+                    ) {
                         throw new Error(
                             `Fixture ${fixture} not found. Please make sure that it is a valid fixture for the generator ${generator.workspaceName}.`
                         );
@@ -376,7 +387,8 @@ function addTestCommand(cli: Argv) {
                         runner: testRunner,
                         fixtures: fixturesForGenerator,
                         outputFolder: argv.outputFolder,
-                        inspect: argv.inspect
+                        inspect: argv.inspect,
+                        explicitFixtures: argv.fixture != null
                     })
                 );
             }

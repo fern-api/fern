@@ -1,0 +1,4 @@
+paths:
+  /vendors/batch:
+    post:
+      x-fern-sdk-group-name: root

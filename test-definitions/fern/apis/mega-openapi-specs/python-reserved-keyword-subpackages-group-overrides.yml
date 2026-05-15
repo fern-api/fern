@@ -1,0 +1,10 @@
+paths:
+  /import:
+    post:
+      x-fern-sdk-group-name: root
+  /export:
+    post:
+      x-fern-sdk-group-name: root
+  /class:
+    post:
+      x-fern-sdk-group-name: root

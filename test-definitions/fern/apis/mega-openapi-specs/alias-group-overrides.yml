@@ -1,0 +1,4 @@
+paths:
+  /{typeId}:
+    get:
+      x-fern-sdk-group-name: root

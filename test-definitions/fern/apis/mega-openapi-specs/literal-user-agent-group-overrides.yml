@@ -1,0 +1,4 @@
+paths:
+  /ping:
+    get:
+      x-fern-sdk-group-name: root

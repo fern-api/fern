@@ -1,0 +1,10 @@
+paths:
+  /public-webhook:
+    post:
+      x-fern-sdk-group-name: root
+  /private-webhook:
+    post:
+      x-fern-sdk-group-name: root
+  /no-audience-webhook:
+    post:
+      x-fern-sdk-group-name: root

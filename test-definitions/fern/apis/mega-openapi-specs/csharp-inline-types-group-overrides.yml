@@ -1,0 +1,10 @@
+paths:
+  /root/root:
+    post:
+      x-fern-sdk-group-name: root
+  /root/discriminated-union:
+    post:
+      x-fern-sdk-group-name: root
+  /root/undiscriminated-union:
+    post:
+      x-fern-sdk-group-name: root

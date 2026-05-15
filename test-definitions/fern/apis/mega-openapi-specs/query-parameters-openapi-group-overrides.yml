@@ -1,0 +1,4 @@
+paths:
+  /user/getUsername:
+    get:
+      x-fern-sdk-group-name: root

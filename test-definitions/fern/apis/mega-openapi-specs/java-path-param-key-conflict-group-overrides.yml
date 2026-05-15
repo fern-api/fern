@@ -1,0 +1,4 @@
+paths:
+  /{key}/{value}:
+    post:
+      x-fern-sdk-group-name: root

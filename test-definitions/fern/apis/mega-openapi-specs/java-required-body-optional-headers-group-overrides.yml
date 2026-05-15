@@ -1,0 +1,21 @@
+paths:
+  /api/users:
+    post:
+      x-fern-sdk-group-name: root
+    get:
+      x-fern-sdk-group-name: root
+  /api/users/{userId}:
+    put:
+      x-fern-sdk-group-name: root
+  /api/users/with-options:
+    post:
+      x-fern-sdk-group-name: root
+  /api/users/required-header:
+    post:
+      x-fern-sdk-group-name: root
+  /api/users/required-query:
+    post:
+      x-fern-sdk-group-name: root
+  /api/users/inlined:
+    post:
+      x-fern-sdk-group-name: root

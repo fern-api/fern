@@ -1,0 +1,7 @@
+paths:
+  /postWithNullableNamedRequestBodyType/{id}:
+    post:
+      x-fern-sdk-group-name: root
+  /postWithNonNullableNamedRequestBodyType/{id}:
+    post:
+      x-fern-sdk-group-name: root

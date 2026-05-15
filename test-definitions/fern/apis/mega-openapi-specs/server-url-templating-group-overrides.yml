@@ -1,0 +1,10 @@
+paths:
+  /users:
+    get:
+      x-fern-sdk-group-name: root
+  /users/{userId}:
+    get:
+      x-fern-sdk-group-name: root
+  /auth/token:
+    post:
+      x-fern-sdk-group-name: root

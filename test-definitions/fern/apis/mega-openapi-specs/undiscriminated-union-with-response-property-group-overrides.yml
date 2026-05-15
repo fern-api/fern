@@ -1,0 +1,7 @@
+paths:
+  /union:
+    get:
+      x-fern-sdk-group-name: root
+  /unions:
+    get:
+      x-fern-sdk-group-name: root

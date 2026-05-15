@@ -1,0 +1,4 @@
+paths:
+  /extends/extended-inline-request-body:
+    post:
+      x-fern-sdk-group-name: root

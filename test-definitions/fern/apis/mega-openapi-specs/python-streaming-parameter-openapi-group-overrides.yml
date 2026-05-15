@@ -1,0 +1,4 @@
+paths:
+  /chat:
+    post:
+      x-fern-sdk-group-name: root

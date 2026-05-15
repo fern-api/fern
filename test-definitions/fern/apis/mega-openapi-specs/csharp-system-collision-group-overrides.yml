@@ -1,0 +1,10 @@
+paths:
+  /users/create-user:
+    post:
+      x-fern-sdk-group-name: root
+  /users/create-task:
+    post:
+      x-fern-sdk-group-name: root
+  /users/empty:
+    post:
+      x-fern-sdk-group-name: root

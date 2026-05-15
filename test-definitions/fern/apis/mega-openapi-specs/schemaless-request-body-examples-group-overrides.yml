@@ -1,0 +1,10 @@
+paths:
+  /plants:
+    post:
+      x-fern-sdk-group-name: root
+  /plants/{plantId}:
+    put:
+      x-fern-sdk-group-name: root
+  /plants/with-schema:
+    post:
+      x-fern-sdk-group-name: root

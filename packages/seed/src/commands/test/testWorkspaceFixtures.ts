@@ -19,13 +19,15 @@ export async function testGenerator({
     generator,
     fixtures,
     outputFolder,
-    inspect
+    inspect,
+    explicitFixtures
 }: {
     runner: TestRunner;
     generator: GeneratorWorkspace;
     fixtures: string[];
     outputFolder?: string;
     inspect: boolean;
+    explicitFixtures?: boolean;
 }): Promise<boolean> {
     const testCases: Promise<TestRunner.TestResult>[] = [];
     const allowedFailuresAsSet = new Set(generator.workspaceConfig.allowedFailures);
@@ -41,12 +43,16 @@ export async function testGenerator({
             fixtureOutputFolder = folder;
         }
 
-        const matchingPrefix = LANGUAGE_SPECIFIC_FIXTURE_PREFIXES.filter((prefix) => fixtureName.startsWith(prefix))[0];
-        if (matchingPrefix != null && !generator.workspaceName.startsWith(matchingPrefix)) {
-            CONSOLE_LOGGER.debug(
-                `Skipping fixture ${fixtureName} for generator ${generator.workspaceName} because it was deemed specific to another language`
-            );
-            continue;
+        if (!explicitFixtures) {
+            const matchingPrefix = LANGUAGE_SPECIFIC_FIXTURE_PREFIXES.filter((prefix) =>
+                fixtureName.startsWith(prefix)
+            )[0];
+            if (matchingPrefix != null && !generator.workspaceName.startsWith(matchingPrefix)) {
+                CONSOLE_LOGGER.debug(
+                    `Skipping fixture ${fixtureName} for generator ${generator.workspaceName} because it was deemed specific to another language`
+                );
+                continue;
+            }
         }
 
         const config = generator.workspaceConfig.fixtures?.[fixtureName];
