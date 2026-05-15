@@ -8,7 +8,7 @@ paths:
     post:
       operationId: extendedInlineRequestBody
       tags:
-        - ''
+      - AliasExtends
       parameters: []
       responses:
         '204':
@@ -23,9 +23,9 @@ paths:
                 child:
                   type: string
               required:
-                - child
+              - child
               allOf:
-                - $ref: '#/components/schemas/AliasType'
+              - $ref: '#/components/schemas/AliasType'
 components:
   schemas:
     AliasType:
@@ -38,9 +38,9 @@ components:
         parent:
           type: string
           examples:
-            - Property from the parent
+          - Property from the parent
       required:
-        - parent
+      - parent
     Child:
       title: Child
       type: object
@@ -48,9 +48,9 @@ components:
         child:
           type: string
           examples:
-            - Property from the child
+          - Property from the child
       required:
-        - child
+      - child
       allOf:
-        - $ref: '#/components/schemas/Parent'
+      - $ref: '#/components/schemas/Parent'
   securitySchemes: {}

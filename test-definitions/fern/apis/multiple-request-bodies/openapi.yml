@@ -7,7 +7,7 @@ paths:
     post:
       operationId: uploadJsonDocument
       tags:
-        - ''
+      - MultipleRequestBodies
       parameters: []
       responses:
         '200':
@@ -22,11 +22,11 @@ paths:
                     author: author
                     id: 1
                     tags:
-                      - key: value
+                    - key: value
                     title: title
       summary: Upload document metadata (JSON) or document file
       security:
-        - BearerAuthScheme: []
+      - BearerAuthScheme: []
       requestBody:
         required: true
         content:
@@ -36,18 +36,18 @@ paths:
               properties:
                 author:
                   type:
-                    - string
-                    - 'null'
+                  - string
+                  - 'null'
                 tags:
                   type:
-                    - array
-                    - 'null'
+                  - array
+                  - 'null'
                   items:
                     type: string
                 title:
                   type:
-                    - string
-                    - 'null'
+                  - string
+                  - 'null'
             examples:
               Example1:
                 value: {}
@@ -55,7 +55,7 @@ paths:
     post:
       operationId: uploadPdfDocument
       tags:
-        - ''
+      - MultipleRequestBodies
       parameters: []
       responses:
         '200':
@@ -66,7 +66,7 @@ paths:
                 $ref: '#/components/schemas/UploadDocumentResponse'
       summary: Upload document metadata (JSON) or document file
       security:
-        - BearerAuthScheme: []
+      - BearerAuthScheme: []
       requestBody:
         required: true
         content:
@@ -82,42 +82,42 @@ components:
       properties:
         author:
           type:
-            - string
-            - 'null'
+          - string
+          - 'null'
         id:
           type:
-            - integer
-            - 'null'
+          - integer
+          - 'null'
         tags:
           type:
-            - array
-            - 'null'
+          - array
+          - 'null'
           items: {}
         title:
           type:
-            - string
-            - 'null'
+          - string
+          - 'null'
     DocumentUploadResult:
       title: DocumentUploadResult
       type: object
       properties:
         fileId:
           type:
-            - string
-            - 'null'
+          - string
+          - 'null'
         status:
           type:
-            - string
-            - 'null'
+          - string
+          - 'null'
     UploadDocumentResponse:
       title: UploadDocumentResponse
       oneOf:
-        - $ref: '#/components/schemas/DocumentMetadata'
-        - $ref: '#/components/schemas/DocumentUploadResult'
+      - $ref: '#/components/schemas/DocumentMetadata'
+      - $ref: '#/components/schemas/DocumentUploadResult'
   securitySchemes:
     BearerAuthScheme:
       type: http
       scheme: bearer
 servers:
-  - url: https://api.example.com/v1
-    description: Default
+- url: https://api.example.com/v1
+  description: Default

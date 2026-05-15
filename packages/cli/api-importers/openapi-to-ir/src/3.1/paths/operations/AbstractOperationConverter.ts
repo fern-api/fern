@@ -284,7 +284,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         const tag = this.operation.tags?.[0];
         const methodName = this.evaluateMethodNameFromOperation();
 
-        if (tag == null) {
+        if (tag == null || tag === "") {
             return { method: methodName };
         }
 

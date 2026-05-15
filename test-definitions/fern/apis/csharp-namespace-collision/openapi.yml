@@ -7,7 +7,7 @@ paths:
     post:
       operationId: createUser
       tags:
-        - ''
+      - CsharpNamespaceCollision
       parameters: []
       responses:
         '200':
@@ -26,7 +26,7 @@ paths:
     post:
       operationId: createTask
       tags:
-        - ''
+      - CsharpNamespaceCollision
       parameters: []
       responses:
         '200':
@@ -45,7 +45,7 @@ paths:
     get:
       operationId: scimConfiguration_getConfiguration
       tags:
-        - SCIMConfiguration
+      - SCIMConfiguration
       parameters: []
       responses:
         '200':
@@ -58,7 +58,7 @@ paths:
     post:
       operationId: scimConfiguration_createToken
       tags:
-        - SCIMConfiguration
+      - SCIMConfiguration
       parameters: []
       responses:
         '200':
@@ -77,7 +77,7 @@ paths:
     get:
       operationId: scimConfiguration_listUsers
       tags:
-        - SCIMConfiguration
+      - SCIMConfiguration
       parameters: []
       responses:
         '200':
@@ -92,7 +92,7 @@ paths:
     post:
       operationId: system_createUser
       tags:
-        - System
+      - System
       parameters: []
       responses:
         '200':
@@ -111,7 +111,7 @@ paths:
     post:
       operationId: system_createTask
       tags:
-        - System
+      - System
       parameters: []
       responses:
         '200':
@@ -130,13 +130,13 @@ paths:
     get:
       operationId: system_getUser
       tags:
-        - System
+      - System
       parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Success
@@ -159,10 +159,10 @@ components:
         password:
           type: string
       required:
-        - id
-        - name
-        - email
-        - password
+      - id
+      - name
+      - email
+      - password
     Task:
       title: Task
       type: object
@@ -176,10 +176,10 @@ components:
         password:
           type: string
       required:
-        - id
-        - name
-        - email
-        - password
+      - id
+      - name
+      - email
+      - password
     ScimConfigurationScimConfiguration:
       title: ScimConfigurationScimConfiguration
       type: object
@@ -193,10 +193,10 @@ components:
         tenant:
           type: string
       required:
-        - connectionId
-        - connectionName
-        - strategy
-        - tenant
+      - connectionId
+      - connectionName
+      - strategy
+      - tenant
     ScimConfigurationScimToken:
       title: ScimConfigurationScimToken
       type: object
@@ -205,19 +205,19 @@ components:
           type: string
         token:
           type:
-            - string
-            - 'null'
+          - string
+          - 'null'
         scopes:
           type:
-            - array
-            - 'null'
+          - array
+          - 'null'
           items:
             type: string
         createdAt:
           type: string
       required:
-        - tokenId
-        - createdAt
+      - tokenId
+      - createdAt
     SystemTask:
       title: SystemTask
       type: object
@@ -229,9 +229,9 @@ components:
         owner:
           $ref: '#/components/schemas/SystemUser'
       required:
-        - name
-        - user
-        - owner
+      - name
+      - user
+      - owner
     SystemUser:
       title: SystemUser
       type: object
@@ -240,8 +240,8 @@ components:
           type: string
         line2:
           type:
-            - string
-            - 'null'
+          - string
+          - 'null'
         city:
           type: string
         state:
@@ -252,9 +252,9 @@ components:
           type: string
           const: USA
       required:
-        - line1
-        - city
-        - state
-        - zip
-        - country
+      - line1
+      - city
+      - state
+      - zip
+      - country
   securitySchemes: {}

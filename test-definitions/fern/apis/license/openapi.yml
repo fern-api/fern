@@ -7,7 +7,7 @@ paths:
     get:
       operationId: get
       tags:
-        - ''
+      - License
       parameters: []
       responses:
         '204':
@@ -22,5 +22,5 @@ components:
         name:
           type: string
       required:
-        - name
+      - name
   securitySchemes: {}

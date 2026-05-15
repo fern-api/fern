@@ -7,7 +7,7 @@ paths:
     post:
       operationId: batchCreate
       tags:
-        - ''
+      - CsharpReadonlyRequest
       parameters: []
       responses:
         '200':
@@ -60,10 +60,10 @@ components:
           type: string
           description: The timestamp when the vendor was last updated.
       required:
-        - id
-        - name
-        - created_at
-        - updated_at
+      - id
+      - name
+      - created_at
+      - updated_at
     CreateVendorRequest:
       title: CreateVendorRequest
       type: object
@@ -75,7 +75,7 @@ components:
             $ref: '#/components/schemas/Vendor'
           description: Map of vendor ID to vendor data
       required:
-        - vendors
+      - vendors
     CreateVendorResponse:
       title: CreateVendorResponse
       type: object
@@ -87,5 +87,5 @@ components:
             $ref: '#/components/schemas/Vendor'
           description: Map of vendor ID to created vendor
       required:
-        - vendors
+      - vendors
   securitySchemes: {}

@@ -2,16 +2,18 @@ openapi: 3.1.0
 info:
   title: python-positional-single-property
   version: 0.0.0
-  description: |-
-    Test definition for positional single-property constructors in Python SDK.
+  description: 'Test definition for positional single-property constructors in Python
+    SDK.
+
     This tests the ability to use positional arguments for types with a single
-    required field (ignoring discriminator/literal type fields with defaults).
+
+    required field (ignoring discriminator/literal type fields with defaults).'
 paths:
   /create:
     post:
       operationId: create
       tags:
-        - ''
+      - PythonPositionalSingleProperty
       parameters: []
       responses:
         '200':
@@ -35,8 +37,8 @@ paths:
                 taker:
                   $ref: '#/components/schemas/TakerParty'
               required:
-                - instrument
-                - taker
+              - instrument
+              - taker
             examples:
               Example1:
                 value:
@@ -58,7 +60,7 @@ components:
         isin:
           type: string
       required:
-        - isin
+      - isin
     IsinWithDiscriminator:
       title: IsinWithDiscriminator
       type: object
@@ -69,8 +71,8 @@ components:
           type: string
           const: ISIN
       required:
-        - isin
-        - type
+      - isin
+      - type
     Quantity:
       title: Quantity
       type: object
@@ -82,8 +84,8 @@ components:
           type: string
           const: QUANTITY
       required:
-        - quantity
-        - type
+      - quantity
+      - type
     TwoFields:
       title: TwoFields
       type: object
@@ -93,8 +95,8 @@ components:
         field2:
           type: integer
       required:
-        - field1
-        - field2
+      - field1
+      - field2
     OneRequiredOneOptional:
       title: OneRequiredOneOptional
       type: object
@@ -103,10 +105,10 @@ components:
           type: string
         optional_field:
           type:
-            - string
-            - 'null'
+          - string
+          - 'null'
       required:
-        - required_field
+      - required_field
     MultipleDiscriminators:
       title: MultipleDiscriminators
       type: object
@@ -120,9 +122,9 @@ components:
           type: string
           const: v1
       required:
-        - value
-        - type
-        - version
+      - value
+      - type
+      - version
     Trader:
       title: Trader
       type: object
@@ -130,7 +132,7 @@ components:
         uuid_:
           type: integer
       required:
-        - uuid_
+      - uuid_
     TakerParty:
       title: TakerParty
       type: object
@@ -138,7 +140,7 @@ components:
         trader:
           $ref: '#/components/schemas/Trader'
       required:
-        - trader
+      - trader
     BondSingleLeg:
       title: BondSingleLeg
       type: object
@@ -148,31 +150,31 @@ components:
         quantity:
           $ref: '#/components/schemas/Quantity'
       required:
-        - identifier
-        - quantity
+      - identifier
+      - quantity
     Identifier:
       title: Identifier
       oneOf:
+      - type: object
+        allOf:
         - type: object
-          allOf:
-            - type: object
-              properties:
-                identifier_type:
-                  type: string
-                  const: isin
-            - $ref: '#/components/schemas/Isin'
-          required:
-            - identifier_type
+          properties:
+            identifier_type:
+              type: string
+              const: isin
+        - $ref: '#/components/schemas/Isin'
+        required:
+        - identifier_type
+      - type: object
+        allOf:
         - type: object
-          allOf:
-            - type: object
-              properties:
-                identifier_type:
-                  type: string
-                  const: cusip
-            - $ref: '#/components/schemas/Cusip'
-          required:
-            - identifier_type
+          properties:
+            identifier_type:
+              type: string
+              const: cusip
+        - $ref: '#/components/schemas/Cusip'
+        required:
+        - identifier_type
     Cusip:
       title: Cusip
       type: object
@@ -180,5 +182,5 @@ components:
         cusip:
           type: string
       required:
-        - cusip
+      - cusip
   securitySchemes: {}

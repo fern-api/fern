@@ -7,7 +7,7 @@ paths:
     get:
       operationId: getUser
       tags:
-        - ''
+      - JavaDefaultTimeout
       parameters: []
       responses:
         '200':
@@ -27,6 +27,6 @@ components:
         name:
           type: string
       required:
-        - id
-        - name
+      - id
+      - name
   securitySchemes: {}

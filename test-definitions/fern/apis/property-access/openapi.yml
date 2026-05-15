@@ -7,7 +7,7 @@ paths:
     post:
       operationId: createUser
       tags:
-        - ''
+      - PropertyAccess
       parameters: []
       responses:
         '200':
@@ -42,10 +42,10 @@ components:
           $ref: '#/components/schemas/UserProfile'
           description: User profile object
       required:
-        - id
-        - email
-        - password
-        - profile
+      - id
+      - email
+      - password
+      - profile
     UserProfile:
       title: UserProfile
       type: object
@@ -61,9 +61,9 @@ components:
           type: string
           description: The social security number of the user.
       required:
-        - name
-        - verification
-        - ssn
+      - name
+      - verification
+      - ssn
     UserProfileVerification:
       title: UserProfileVerification
       type: object
@@ -73,12 +73,12 @@ components:
           type: string
           description: User profile verification status
       required:
-        - verified
+      - verified
     UserOrAdmin:
       title: UserOrAdmin
       oneOf:
-        - $ref: '#/components/schemas/User'
-        - $ref: '#/components/schemas/Admin'
+      - $ref: '#/components/schemas/User'
+      - $ref: '#/components/schemas/Admin'
       description: Example of an undiscriminated union
     Admin:
       title: Admin
@@ -89,42 +89,42 @@ components:
           type: string
           description: The level of admin privileges.
       required:
-        - adminLevel
+      - adminLevel
       allOf:
-        - $ref: '#/components/schemas/User'
+      - $ref: '#/components/schemas/User'
     UserOrAdminDiscriminated:
       title: UserOrAdminDiscriminated
       oneOf:
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  const: user
-            - $ref: '#/components/schemas/User'
-          required:
-            - type
+      - type: object
+        allOf:
         - type: object
           properties:
             type:
               type: string
-              const: admin
-            admin:
-              $ref: '#/components/schemas/Admin'
-          required:
-            - type
-        - type: object
-          properties:
-            type:
-              type: string
-              const: empty
-          required:
-            - type
+              const: user
+        - $ref: '#/components/schemas/User'
+        required:
+        - type
+      - type: object
+        properties:
+          type:
+            type: string
+            const: admin
+          admin:
+            $ref: '#/components/schemas/Admin'
+        required:
+        - type
+      - type: object
+        properties:
+          type:
+            type: string
+            const: empty
+        required:
+        - type
       description: Example of an discriminated union
       required:
-        - normal
-        - foo
+      - normal
+      - foo
       properties:
         normal:
           type: string
@@ -141,7 +141,7 @@ components:
         write:
           type: string
       required:
-        - normal
-        - read
-        - write
+      - normal
+      - read
+      - write
   securitySchemes: {}

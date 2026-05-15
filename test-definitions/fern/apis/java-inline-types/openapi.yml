@@ -7,7 +7,7 @@ paths:
     post:
       operationId: getRoot
       tags:
-        - ''
+      - JavaInlineTypes
       parameters: []
       responses:
         '200':
@@ -28,13 +28,13 @@ paths:
                 foo:
                   type: string
               required:
-                - bar
-                - foo
+              - bar
+              - foo
   /root/discriminated-union:
     post:
       operationId: getDiscriminatedUnion
       tags:
-        - ''
+      - JavaInlineTypes
       parameters: []
       responses:
         '204':
@@ -51,13 +51,13 @@ paths:
                 foo:
                   type: string
               required:
-                - bar
-                - foo
+              - bar
+              - foo
   /root/undiscriminated-union:
     post:
       operationId: getUndiscriminatedUnion
       tags:
-        - ''
+      - JavaInlineTypes
       parameters: []
       responses:
         '204':
@@ -74,8 +74,8 @@ paths:
                 foo:
                   type: string
               required:
-                - bar
-                - foo
+              - bar
+              - foo
 components:
   schemas:
     AliasMapInline:
@@ -102,8 +102,8 @@ components:
         bar:
           type: string
       required:
-        - foo
-        - bar
+      - foo
+      - bar
     RequestTypeInlineType1:
       title: RequestTypeInlineType1
       type: object
@@ -113,7 +113,7 @@ components:
           type: string
           description: lorem ipsum
       required:
-        - foo
+      - foo
     RootType1:
       title: RootType1
       type: object
@@ -144,12 +144,12 @@ components:
           $ref: '#/components/schemas/ReferenceType'
           description: lorem ipsum
       required:
-        - foo
-        - bar
-        - fooMap
-        - fooList
-        - fooSet
-        - ref
+      - foo
+      - bar
+      - fooMap
+      - fooList
+      - fooSet
+      - ref
     RootType1FooMapValue:
       title: RootType1FooMapValue
       type: object
@@ -162,8 +162,8 @@ components:
           $ref: '#/components/schemas/ReferenceType'
           description: lorem ipsum
       required:
-        - foo
-        - ref
+      - foo
+      - ref
     RootType1FooListItem:
       title: RootType1FooListItem
       type: object
@@ -176,8 +176,8 @@ components:
           $ref: '#/components/schemas/ReferenceType'
           description: lorem ipsum
       required:
-        - foo
-        - ref
+      - foo
+      - ref
     RootType1FooSetItem:
       title: RootType1FooSetItem
       type: object
@@ -190,8 +190,8 @@ components:
           $ref: '#/components/schemas/ReferenceType'
           description: lorem ipsum
       required:
-        - foo
-        - ref
+      - foo
+      - ref
     RootType1InlineType1:
       title: RootType1InlineType1
       type: object
@@ -207,9 +207,9 @@ components:
           $ref: '#/components/schemas/ReferenceType'
           description: lorem ipsum
       required:
-        - foo
-        - bar
-        - ref
+      - foo
+      - bar
+      - ref
     RootType1InlineType1NestedInlineType1:
       title: RootType1InlineType1NestedInlineType1
       type: object
@@ -228,43 +228,43 @@ components:
           $ref: '#/components/schemas/ReferenceType'
           description: lorem ipsum
       required:
-        - foo
-        - bar
-        - myEnum
-        - ref
+      - foo
+      - bar
+      - myEnum
+      - ref
     DiscriminatedUnion1:
       title: DiscriminatedUnion1
       oneOf:
+      - type: object
+        allOf:
         - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  const: type1
-            - $ref: '#/components/schemas/DiscriminatedUnion1InlineType1'
-          required:
-            - type
+          properties:
+            type:
+              type: string
+              const: type1
+        - $ref: '#/components/schemas/DiscriminatedUnion1InlineType1'
+        required:
+        - type
+      - type: object
+        allOf:
         - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  const: type2
-            - $ref: '#/components/schemas/DiscriminatedUnion1InlineType2'
-          required:
-            - type
+          properties:
+            type:
+              type: string
+              const: type2
+        - $ref: '#/components/schemas/DiscriminatedUnion1InlineType2'
+        required:
+        - type
+      - type: object
+        allOf:
         - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  const: ref
-            - $ref: '#/components/schemas/ReferenceType'
-          required:
-            - type
+          properties:
+            type:
+              type: string
+              const: ref
+        - $ref: '#/components/schemas/ReferenceType'
+        required:
+        - type
       description: lorem ipsum
     DiscriminatedUnion1InlineType1:
       title: DiscriminatedUnion1InlineType1
@@ -281,9 +281,9 @@ components:
           $ref: '#/components/schemas/ReferenceType'
           description: lorem ipsum
       required:
-        - foo
-        - bar
-        - ref
+      - foo
+      - bar
+      - ref
     DiscriminatedUnion1InlineType1InlineType1:
       title: DiscriminatedUnion1InlineType1InlineType1
       type: object
@@ -296,8 +296,8 @@ components:
           $ref: '#/components/schemas/ReferenceType'
           description: lorem ipsum
       required:
-        - foo
-        - ref
+      - foo
+      - ref
     DiscriminatedUnion1InlineType2:
       title: DiscriminatedUnion1InlineType2
       type: object
@@ -310,35 +310,35 @@ components:
           $ref: '#/components/schemas/ReferenceType'
           description: lorem ipsum
       required:
-        - baz
-        - ref
+      - baz
+      - ref
     UndiscriminatedUnion1:
       title: UndiscriminatedUnion1
       oneOf:
-        - description: lorem ipsum
-          $ref: '#/components/schemas/UndiscriminatedUnion1InlineType1'
-        - description: lorem ipsum
-          $ref: '#/components/schemas/UndiscriminatedUnion1InlineType2'
-        - description: lorem ipsum
-          $ref: '#/components/schemas/UndiscriminatedUnion1DiscriminatedUnion1'
-        - description: lorem ipsum
-          $ref: '#/components/schemas/UndiscriminatedUnion1InlineEnum1'
-        - description: lorem ipsum
-          $ref: '#/components/schemas/UserId'
-        - description: lorem ipsum
-          type: array
-          items:
-            $ref: '#/components/schemas/UndiscriminatedUnion1InlineListItem1'
-        - description: lorem ipsum
-          type: array
-          items:
-            $ref: '#/components/schemas/UndiscriminatedUnion1InlineSetItem1'
-        - description: lorem ipsum
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/UndiscriminatedUnion1InlineMapItem1'
-        - description: lorem ipsum
-          $ref: '#/components/schemas/ReferenceType'
+      - description: lorem ipsum
+        $ref: '#/components/schemas/UndiscriminatedUnion1InlineType1'
+      - description: lorem ipsum
+        $ref: '#/components/schemas/UndiscriminatedUnion1InlineType2'
+      - description: lorem ipsum
+        $ref: '#/components/schemas/UndiscriminatedUnion1DiscriminatedUnion1'
+      - description: lorem ipsum
+        $ref: '#/components/schemas/UndiscriminatedUnion1InlineEnum1'
+      - description: lorem ipsum
+        $ref: '#/components/schemas/UserId'
+      - description: lorem ipsum
+        type: array
+        items:
+          $ref: '#/components/schemas/UndiscriminatedUnion1InlineListItem1'
+      - description: lorem ipsum
+        type: array
+        items:
+          $ref: '#/components/schemas/UndiscriminatedUnion1InlineSetItem1'
+      - description: lorem ipsum
+        type: object
+        additionalProperties:
+          $ref: '#/components/schemas/UndiscriminatedUnion1InlineMapItem1'
+      - description: lorem ipsum
+        $ref: '#/components/schemas/ReferenceType'
       description: lorem ipsum
     UndiscriminatedUnion1InlineType1:
       title: UndiscriminatedUnion1InlineType1
@@ -355,9 +355,9 @@ components:
           $ref: '#/components/schemas/ReferenceType'
           description: lorem ipsum
       required:
-        - foo
-        - bar
-        - ref
+      - foo
+      - bar
+      - ref
     UndiscriminatedUnion1InlineType1InlineType1:
       title: UndiscriminatedUnion1InlineType1InlineType1
       type: object
@@ -370,8 +370,8 @@ components:
           $ref: '#/components/schemas/ReferenceType'
           description: lorem ipsum
       required:
-        - foo
-        - ref
+      - foo
+      - ref
     UndiscriminatedUnion1InlineType2:
       title: UndiscriminatedUnion1InlineType2
       type: object
@@ -384,52 +384,50 @@ components:
           $ref: '#/components/schemas/ReferenceType'
           description: lorem ipsum
       required:
-        - baz
-        - ref
+      - baz
+      - ref
     InlineEnum1:
       title: InlineEnum1
       type: string
       enum:
-        - SUNNY
-        - CLOUDY
-        - RAINING
-        - SNOWING
+      - SUNNY
+      - CLOUDY
+      - RAINING
+      - SNOWING
       description: lorem ipsum
     UndiscriminatedUnion1DiscriminatedUnion1:
       title: UndiscriminatedUnion1DiscriminatedUnion1
       oneOf:
+      - type: object
+        allOf:
         - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  const: type1
-            - $ref: >-
-                #/components/schemas/UndiscriminatedUnion1DiscriminatedUnion1InlineType1
-          required:
-            - type
+          properties:
+            type:
+              type: string
+              const: type1
+        - $ref: '#/components/schemas/UndiscriminatedUnion1DiscriminatedUnion1InlineType1'
+        required:
+        - type
+      - type: object
+        allOf:
         - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  const: type2
-            - $ref: >-
-                #/components/schemas/UndiscriminatedUnion1DiscriminatedUnion1InlineType2
-          required:
-            - type
+          properties:
+            type:
+              type: string
+              const: type2
+        - $ref: '#/components/schemas/UndiscriminatedUnion1DiscriminatedUnion1InlineType2'
+        required:
+        - type
+      - type: object
+        allOf:
         - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  const: ref
-            - $ref: '#/components/schemas/ReferenceType'
-          required:
-            - type
+          properties:
+            type:
+              type: string
+              const: ref
+        - $ref: '#/components/schemas/ReferenceType'
+        required:
+        - type
       description: lorem ipsum
     UndiscriminatedUnion1DiscriminatedUnion1InlineType1:
       title: UndiscriminatedUnion1DiscriminatedUnion1InlineType1
@@ -440,16 +438,15 @@ components:
           type: string
           description: lorem ipsum
         bar:
-          $ref: >-
-            #/components/schemas/UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1
+          $ref: '#/components/schemas/UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1'
           description: lorem ipsum
         ref:
           $ref: '#/components/schemas/ReferenceType'
           description: lorem ipsum
       required:
-        - foo
-        - bar
-        - ref
+      - foo
+      - bar
+      - ref
     UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1:
       title: UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1
       type: object
@@ -462,8 +459,8 @@ components:
           $ref: '#/components/schemas/ReferenceType'
           description: lorem ipsum
       required:
-        - foo
-        - ref
+      - foo
+      - ref
     UndiscriminatedUnion1DiscriminatedUnion1InlineType2:
       title: UndiscriminatedUnion1DiscriminatedUnion1InlineType2
       type: object
@@ -476,16 +473,16 @@ components:
           $ref: '#/components/schemas/ReferenceType'
           description: lorem ipsum
       required:
-        - baz
-        - ref
+      - baz
+      - ref
     UndiscriminatedUnion1InlineEnum1:
       title: UndiscriminatedUnion1InlineEnum1
       type: string
       enum:
-        - SUNNY
-        - CLOUDY
-        - RAINING
-        - SNOWING
+      - SUNNY
+      - CLOUDY
+      - RAINING
+      - SNOWING
       description: lorem ipsum
     UserId:
       title: UserId
@@ -503,8 +500,8 @@ components:
           $ref: '#/components/schemas/ReferenceType'
           description: lorem ipsum
       required:
-        - foo
-        - ref
+      - foo
+      - ref
     UndiscriminatedUnion1InlineSetItem1:
       title: UndiscriminatedUnion1InlineSetItem1
       type: object
@@ -517,8 +514,8 @@ components:
           $ref: '#/components/schemas/ReferenceType'
           description: lorem ipsum
       required:
-        - foo
-        - ref
+      - foo
+      - ref
     UndiscriminatedUnion1InlineMapItem1:
       title: UndiscriminatedUnion1InlineMapItem1
       type: object
@@ -531,8 +528,8 @@ components:
           $ref: '#/components/schemas/ReferenceType'
           description: lorem ipsum
       required:
-        - foo
-        - ref
+      - foo
+      - ref
     ReferenceType:
       title: ReferenceType
       type: object
@@ -542,115 +539,115 @@ components:
           type: string
           description: lorem ipsum
       required:
-        - foo
+      - foo
     UnionTypeWithAliasVariant:
       title: UnionTypeWithAliasVariant
       oneOf:
+      - type: object
+        allOf:
         - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  const: aliasVariant
-            - $ref: '#/components/schemas/AliasVariantType'
-          required:
-            - type
+          properties:
+            type:
+              type: string
+              const: aliasVariant
+        - $ref: '#/components/schemas/AliasVariantType'
+        required:
+        - type
+      - type: object
+        allOf:
         - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  const: nonAliasVariant
-            - $ref: '#/components/schemas/NonAliasVariant'
-          required:
-            - type
+          properties:
+            type:
+              type: string
+              const: nonAliasVariant
+        - $ref: '#/components/schemas/NonAliasVariant'
+        required:
+        - type
       required:
-        - prop
+      - prop
       properties:
         prop:
           $ref: '#/components/schemas/AliasProperty'
     UnionTypeWithAliasMapVariant:
       title: UnionTypeWithAliasMapVariant
       oneOf:
-        - type: object
-          properties:
-            type:
-              type: string
-              const: aliasVariant
-            value:
-              type: object
-              additionalProperties:
-                $ref: '#/components/schemas/OtherAliasVariant'
-          required:
-            - type
+      - type: object
+        properties:
+          type:
+            type: string
+            const: aliasVariant
+          value:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/OtherAliasVariant'
+        required:
+        - type
       required:
-        - prop
+      - prop
       properties:
         prop:
           $ref: '#/components/schemas/AliasProperty'
     UnionTypeWithAliasListVariant:
       title: UnionTypeWithAliasListVariant
       oneOf:
-        - type: object
-          properties:
-            type:
-              type: string
-              const: aliasVariant
-            value:
-              type: array
-              items:
-                $ref: '#/components/schemas/AliasVariant'
-          required:
-            - type
+      - type: object
+        properties:
+          type:
+            type: string
+            const: aliasVariant
+          value:
+            type: array
+            items:
+              $ref: '#/components/schemas/AliasVariant'
+        required:
+        - type
       required:
-        - prop
+      - prop
       properties:
         prop:
           $ref: '#/components/schemas/AliasProperty'
     UnionTypeWithAliasSetVariant:
       title: UnionTypeWithAliasSetVariant
       oneOf:
-        - type: object
-          properties:
-            type:
-              type: string
-              const: aliasVariant
-            value:
-              type: array
-              items:
-                $ref: '#/components/schemas/AliasVariant'
-          required:
-            - type
+      - type: object
+        properties:
+          type:
+            type: string
+            const: aliasVariant
+          value:
+            type: array
+            items:
+              $ref: '#/components/schemas/AliasVariant'
+        required:
+        - type
       required:
-        - prop
+      - prop
       properties:
         prop:
           $ref: '#/components/schemas/AliasProperty'
     UndiscriminatedUnionTypeWithAliasVariant:
       title: UndiscriminatedUnionTypeWithAliasVariant
       oneOf:
-        - $ref: '#/components/schemas/AliasVariant'
-        - $ref: '#/components/schemas/NonAliasVariant'
+      - $ref: '#/components/schemas/AliasVariant'
+      - $ref: '#/components/schemas/NonAliasVariant'
     UndiscriminatedUnionTypeWithAliasMapVariant:
       title: UndiscriminatedUnionTypeWithAliasMapVariant
       oneOf:
-        - type: object
-          additionalProperties:
-            $ref: '#/components/schemas/OtherAliasVariant'
+      - type: object
+        additionalProperties:
+          $ref: '#/components/schemas/OtherAliasVariant'
     UndiscriminatedUnionTypeWithAliasListVariant:
       title: UndiscriminatedUnionTypeWithAliasListVariant
       oneOf:
-        - type: array
-          items:
-            $ref: '#/components/schemas/AliasVariant'
+      - type: array
+        items:
+          $ref: '#/components/schemas/AliasVariant'
     UndiscriminatedUnionTypeWithAliasSetVariant:
       title: UndiscriminatedUnionTypeWithAliasSetVariant
       oneOf:
-        - type: array
-          items:
-            $ref: '#/components/schemas/AliasVariant'
+      - type: array
+        items:
+          $ref: '#/components/schemas/AliasVariant'
     ObjectTypeWithAliasType:
       title: ObjectTypeWithAliasType
       type: object
@@ -658,7 +655,7 @@ components:
         prop:
           $ref: '#/components/schemas/AliasProperty'
       required:
-        - prop
+      - prop
     ObjectTypeWithMapAliasTypeValue:
       title: ObjectTypeWithMapAliasTypeValue
       type: object
@@ -668,7 +665,7 @@ components:
           additionalProperties:
             $ref: '#/components/schemas/AliasProperty'
       required:
-        - prop
+      - prop
     ObjectTypeWithMapAliasTypeKey:
       title: ObjectTypeWithMapAliasTypeKey
       type: object
@@ -678,7 +675,7 @@ components:
           additionalProperties:
             type: string
       required:
-        - prop
+      - prop
     ObjectTypeWithMapAliasTypeBoth:
       title: ObjectTypeWithMapAliasTypeBoth
       type: object
@@ -688,7 +685,7 @@ components:
           additionalProperties:
             $ref: '#/components/schemas/OtherAliasProperty'
       required:
-        - prop
+      - prop
     ObjectTypeWithListAliasType:
       title: ObjectTypeWithListAliasType
       type: object
@@ -698,7 +695,7 @@ components:
           items:
             $ref: '#/components/schemas/AliasProperty'
       required:
-        - prop
+      - prop
     ObjectTypeWithSetAliasType:
       title: ObjectTypeWithSetAliasType
       type: object
@@ -708,7 +705,7 @@ components:
           items:
             $ref: '#/components/schemas/AliasProperty'
       required:
-        - prop
+      - prop
     AliasVariant:
       title: AliasVariant
       $ref: '#/components/schemas/AliasVariantType'
@@ -728,7 +725,7 @@ components:
         prop:
           type: string
       required:
-        - prop
+      - prop
     OtherAliasVariantType:
       title: OtherAliasVariantType
       type: object
@@ -736,7 +733,7 @@ components:
         prop:
           type: string
       required:
-        - prop
+      - prop
     AliasPropertyType:
       title: AliasPropertyType
       type: object
@@ -744,7 +741,7 @@ components:
         prop:
           type: string
       required:
-        - prop
+      - prop
     OtherAliasPropertyType:
       title: OtherAliasPropertyType
       type: object
@@ -752,7 +749,7 @@ components:
         prop:
           type: string
       required:
-        - prop
+      - prop
     NonAliasVariant:
       title: NonAliasVariant
       type: object
@@ -760,5 +757,5 @@ components:
         prop:
           type: string
       required:
-        - prop
+      - prop
   securitySchemes: {}

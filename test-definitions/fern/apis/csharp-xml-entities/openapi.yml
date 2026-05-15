@@ -8,7 +8,7 @@ paths:
       description: Get timezone information with &plus; offset
       operationId: getTimeZone
       tags:
-        - ''
+      - CsharpXmlEntities
       parameters: []
       responses:
         '200':
@@ -22,9 +22,9 @@ components:
     TimeZoneModel:
       title: TimeZoneModel
       type: object
-      description: |-
-        Model demonstrating HTML entity bug in C# XML documentation.
-        This description contains HTML entities that are not valid in XML.
+      description: 'Model demonstrating HTML entity bug in C# XML documentation.
+
+        This description contains HTML entities that are not valid in XML.'
       properties:
         timeZoneOffset:
           type: string
@@ -37,11 +37,11 @@ components:
           description: 'This uses valid XML entity: A &lt; B &amp; C &gt; D'
         specialChars:
           type:
-            - string
-            - 'null'
+          - string
+          - 'null'
           description: 'Special characters: &nbsp; &hellip; &middot; &copy;'
       required:
-        - timeZoneOffset
-        - mathExpression
-        - validEntity
+      - timeZoneOffset
+      - mathExpression
+      - validEntity
   securitySchemes: {}

@@ -8,29 +8,29 @@ paths:
       description: Get latest insurance for a user. All query params are optional.
       operationId: getLatestInsurance
       tags:
-        - ''
+      - JavaOptionalQueryParamsOverloads
       parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: includeExpired
-          in: query
-          description: Include expired insurance policies
-          required: false
-          schema:
-            type:
-              - boolean
-              - 'null'
-        - name: policyType
-          in: query
-          description: Filter by policy type
-          required: false
-          schema:
-            anyOf:
-              - $ref: '#/components/schemas/PolicyType'
-              - type: 'null'
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: includeExpired
+        in: query
+        description: Include expired insurance policies
+        required: false
+        schema:
+          type:
+          - boolean
+          - 'null'
+      - name: policyType
+        in: query
+        description: Filter by policy type
+        required: false
+        schema:
+          anyOf:
+          - $ref: '#/components/schemas/PolicyType'
+          - type: 'null'
       responses:
         '200':
           description: Success
@@ -43,22 +43,22 @@ paths:
       description: Search policies with required query params
       operationId: searchPolicies
       tags:
-        - ''
+      - JavaOptionalQueryParamsOverloads
       parameters:
-        - name: query
-          in: query
-          description: Required search query
-          required: true
-          schema:
-            type: string
-        - name: limit
-          in: query
-          description: Optional limit
-          required: false
-          schema:
-            type:
-              - integer
-              - 'null'
+      - name: query
+        in: query
+        description: Required search query
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Optional limit
+        required: false
+        schema:
+          type:
+          - integer
+          - 'null'
       responses:
         '200':
           description: Success
@@ -73,7 +73,7 @@ paths:
       description: List all policies
       operationId: listAllPolicies
       tags:
-        - ''
+      - JavaOptionalQueryParamsOverloads
       parameters: []
       responses:
         '200':
@@ -90,10 +90,10 @@ components:
       title: PolicyType
       type: string
       enum:
-        - HEALTH
-        - AUTO
-        - HOME
-        - LIFE
+      - HEALTH
+      - AUTO
+      - HOME
+      - LIFE
       description: Type of insurance policy
     InsurancePolicy:
       title: InsurancePolicy
@@ -112,9 +112,9 @@ components:
           type: number
           format: double
       required:
-        - id
-        - userId
-        - policyType
-        - isExpired
-        - coverageAmount
+      - id
+      - userId
+      - policyType
+      - isExpired
+      - coverageAmount
   securitySchemes: {}

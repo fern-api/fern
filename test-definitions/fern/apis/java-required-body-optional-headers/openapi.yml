@@ -8,16 +8,16 @@ paths:
       description: Create a new user. Has required body and optional header.
       operationId: createUser
       tags:
-        - ''
+      - JavaRequiredBodyOptionalHeaders
       parameters:
-        - name: X-Correlation-Id
-          in: header
-          description: Optional correlation ID for request tracing
-          required: false
-          schema:
-            type:
-              - string
-              - 'null'
+      - name: X-Correlation-Id
+        in: header
+        description: Optional correlation ID for request tracing
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
       responses:
         '200':
           description: Success
@@ -35,16 +35,16 @@ paths:
       description: Get all users with optional filtering.
       operationId: getUsers
       tags:
-        - ''
+      - JavaRequiredBodyOptionalHeaders
       parameters:
-        - name: limit
-          in: query
-          description: Maximum number of users to return
-          required: false
-          schema:
-            type:
-              - integer
-              - 'null'
+      - name: limit
+        in: query
+        description: Maximum number of users to return
+        required: false
+        schema:
+          type:
+          - integer
+          - 'null'
       responses:
         '200':
           description: Success
@@ -59,21 +59,21 @@ paths:
       description: Update an existing user. Has required body and optional query param.
       operationId: updateUser
       tags:
-        - ''
+      - JavaRequiredBodyOptionalHeaders
       parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: dryRun
-          in: query
-          description: If true, validate the update without persisting
-          required: false
-          schema:
-            type:
-              - boolean
-              - 'null'
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: dryRun
+        in: query
+        description: If true, validate the update without persisting
+        required: false
+        schema:
+          type:
+          - boolean
+          - 'null'
       responses:
         '200':
           description: Success
@@ -92,24 +92,24 @@ paths:
       description: Create a user with optional header and query param.
       operationId: createUserWithOptions
       tags:
-        - ''
+      - JavaRequiredBodyOptionalHeaders
       parameters:
-        - name: validate
-          in: query
-          description: Whether to validate the request
-          required: false
-          schema:
-            type:
-              - boolean
-              - 'null'
-        - name: X-Request-Id
-          in: header
-          description: Optional request ID
-          required: false
-          schema:
-            type:
-              - string
-              - 'null'
+      - name: validate
+        in: query
+        description: Whether to validate the request
+        required: false
+        schema:
+          type:
+          - boolean
+          - 'null'
+      - name: X-Request-Id
+        in: header
+        description: Optional request ID
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
       responses:
         '200':
           description: Success
@@ -128,14 +128,14 @@ paths:
       description: Create a user with required header.
       operationId: createUserWithRequiredHeader
       tags:
-        - ''
+      - JavaRequiredBodyOptionalHeaders
       parameters:
-        - name: X-Api-Key
-          in: header
-          description: Required API key header
-          required: true
-          schema:
-            type: string
+      - name: X-Api-Key
+        in: header
+        description: Required API key header
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Success
@@ -154,14 +154,14 @@ paths:
       description: Create a user with required query param.
       operationId: createUserWithRequiredQuery
       tags:
-        - ''
+      - JavaRequiredBodyOptionalHeaders
       parameters:
-        - name: tenantId
-          in: query
-          description: Required tenant ID
-          required: true
-          schema:
-            type: string
+      - name: tenantId
+        in: query
+        description: Required tenant ID
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Success
@@ -180,16 +180,16 @@ paths:
       description: Create a user with inlined body and optional header.
       operationId: createUserInlined
       tags:
-        - ''
+      - JavaRequiredBodyOptionalHeaders
       parameters:
-        - name: X-Trace-Id
-          in: header
-          description: Optional trace ID for request tracing
-          required: false
-          schema:
-            type:
-              - string
-              - 'null'
+      - name: X-Trace-Id
+        in: header
+        description: Optional trace ID for request tracing
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
       responses:
         '200':
           description: Success
@@ -210,12 +210,12 @@ paths:
                   type: string
                 age:
                   type:
-                    - integer
-                    - 'null'
+                  - integer
+                  - 'null'
                   description: User's age
               required:
-                - name
-                - email
+              - name
+              - email
 components:
   schemas:
     UserData:
@@ -229,12 +229,12 @@ components:
           type: string
         age:
           type:
-            - integer
-            - 'null'
+          - integer
+          - 'null'
           description: User's age
       required:
-        - name
-        - email
+      - name
+      - email
     User:
       title: User
       type: object
@@ -248,13 +248,13 @@ components:
           type: string
         age:
           type:
-            - integer
-            - 'null'
+          - integer
+          - 'null'
         createdAt:
           type: string
       required:
-        - id
-        - name
-        - email
-        - createdAt
+      - id
+      - name
+      - email
+      - createdAt
   securitySchemes: {}

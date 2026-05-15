@@ -7,13 +7,13 @@ paths:
     get:
       operationId: get
       tags:
-        - ''
+      - Alias
       parameters:
-        - name: typeId
-          in: path
-          required: true
-          schema:
-            $ref: '#/components/schemas/TypeId'
+      - name: typeId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/TypeId'
       responses:
         '204':
           description: No content
@@ -33,10 +33,10 @@ components:
         name:
           type: string
           examples:
-            - foo
+          - foo
       required:
-        - id
-        - name
+      - id
+      - name
     Object:
       title: Object
       $ref: '#/components/schemas/Type'

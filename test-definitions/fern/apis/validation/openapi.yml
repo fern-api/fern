@@ -7,7 +7,7 @@ paths:
     post:
       operationId: create
       tags:
-        - ''
+      - Validation
       parameters: []
       responses:
         '200':
@@ -43,42 +43,42 @@ paths:
                 shape:
                   $ref: '#/components/schemas/Shape'
               required:
-                - decimal
-                - even
-                - name
-                - shape
+              - decimal
+              - even
+              - name
+              - shape
   /:
     get:
       operationId: get
       tags:
-        - ''
+      - Validation
       parameters:
-        - name: decimal
-          in: query
-          required: true
-          schema:
-            type: number
-            format: double
-            exclusiveMinimum: 1.1
-            maximum: 2.2
-            multipleOf: 1.1
-        - name: even
-          in: query
-          required: true
-          schema:
-            type: integer
-            minimum: 0
-            exclusiveMaximum: 100
-            multipleOf: 2
-        - name: name
-          in: query
-          required: true
-          schema:
-            type: string
-            format: custom
-            pattern: ^[a-z]+$
-            minLength: 3
-            maxLength: 10
+      - name: decimal
+        in: query
+        required: true
+        schema:
+          type: number
+          format: double
+          exclusiveMinimum: 1.1
+          maximum: 2.2
+          multipleOf: 1.1
+      - name: even
+        in: query
+        required: true
+        schema:
+          type: integer
+          minimum: 0
+          exclusiveMaximum: 100
+          multipleOf: 2
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+          format: custom
+          pattern: ^[a-z]+$
+          minLength: 3
+          maxLength: 10
       responses:
         '200':
           description: Success
@@ -119,9 +119,9 @@ components:
       title: Shape
       type: string
       enum:
-        - SQUARE
-        - CIRCLE
-        - TRIANGLE
+      - SQUARE
+      - CIRCLE
+      - TRIANGLE
     Type:
       title: Type
       type: object
@@ -134,14 +134,14 @@ components:
           maximum: 2.2
           multipleOf: 1.1
           examples:
-            - 1.1
+          - 1.1
         even:
           type: integer
           minimum: 0
           exclusiveMaximum: 100
           multipleOf: 2
           examples:
-            - 2
+          - 2
         name:
           type: string
           format: custom
@@ -149,12 +149,12 @@ components:
           minLength: 3
           maxLength: 10
           examples:
-            - rules
+          - rules
         shape:
           $ref: '#/components/schemas/Shape'
       required:
-        - decimal
-        - even
-        - name
-        - shape
+      - decimal
+      - even
+      - name
+      - shape
   securitySchemes: {}

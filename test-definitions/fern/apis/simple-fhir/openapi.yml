@@ -7,13 +7,13 @@ paths:
     get:
       operationId: getAccount
       tags:
-        - ''
+      - SimpleFhir
       parameters:
-        - name: account_id
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: account_id
+        in: path
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: Success
@@ -31,10 +31,10 @@ components:
           type: string
         account:
           anyOf:
-            - $ref: '#/components/schemas/Account'
-            - type: 'null'
+          - $ref: '#/components/schemas/Account'
+          - type: 'null'
       required:
-        - description
+      - description
     BaseResource:
       title: BaseResource
       type: object
@@ -48,16 +48,16 @@ components:
         memo:
           $ref: '#/components/schemas/Memo'
       required:
-        - id
-        - related_resources
-        - memo
+      - id
+      - related_resources
+      - memo
     ResourceList:
       title: ResourceList
       oneOf:
-        - $ref: '#/components/schemas/Account'
-        - $ref: '#/components/schemas/Patient'
-        - $ref: '#/components/schemas/Practitioner'
-        - $ref: '#/components/schemas/Script'
+      - $ref: '#/components/schemas/Account'
+      - $ref: '#/components/schemas/Patient'
+      - $ref: '#/components/schemas/Practitioner'
+      - $ref: '#/components/schemas/Script'
     Account:
       title: Account
       type: object
@@ -69,17 +69,17 @@ components:
           type: string
         patient:
           anyOf:
-            - $ref: '#/components/schemas/Patient'
-            - type: 'null'
+          - $ref: '#/components/schemas/Patient'
+          - type: 'null'
         practitioner:
           anyOf:
-            - $ref: '#/components/schemas/Practitioner'
-            - type: 'null'
+          - $ref: '#/components/schemas/Practitioner'
+          - type: 'null'
       required:
-        - resource_type
-        - name
+      - resource_type
+      - name
       allOf:
-        - $ref: '#/components/schemas/BaseResource'
+      - $ref: '#/components/schemas/BaseResource'
     Patient:
       title: Patient
       type: object
@@ -94,11 +94,11 @@ components:
           items:
             $ref: '#/components/schemas/Script'
       required:
-        - resource_type
-        - name
-        - scripts
+      - resource_type
+      - name
+      - scripts
       allOf:
-        - $ref: '#/components/schemas/BaseResource'
+      - $ref: '#/components/schemas/BaseResource'
     Practitioner:
       title: Practitioner
       type: object
@@ -109,10 +109,10 @@ components:
         name:
           type: string
       required:
-        - resource_type
-        - name
+      - resource_type
+      - name
       allOf:
-        - $ref: '#/components/schemas/BaseResource'
+      - $ref: '#/components/schemas/BaseResource'
     Script:
       title: Script
       type: object
@@ -123,8 +123,8 @@ components:
         name:
           type: string
       required:
-        - resource_type
-        - name
+      - resource_type
+      - name
       allOf:
-        - $ref: '#/components/schemas/BaseResource'
+      - $ref: '#/components/schemas/BaseResource'
   securitySchemes: {}

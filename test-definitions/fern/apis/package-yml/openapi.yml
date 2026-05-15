@@ -7,16 +7,16 @@ paths:
     post:
       operationId: echo
       tags:
-        - ''
+      - PackageYml
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-          examples:
-            Example1:
-              value: id-ksfd9c1
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        examples:
+          Example1:
+            value: id-ksfd9c1
       responses:
         '200':
           description: Success
@@ -42,24 +42,24 @@ paths:
     get:
       operationId: service_nop
       tags:
-        - Service
+      - Service
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-          examples:
-            Example1:
-              value: id-a2ijs82
-        - name: nestedId
-          in: path
-          required: true
-          schema:
-            type: string
-          examples:
-            Example1:
-              value: id-219xca8
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        examples:
+          Example1:
+            value: id-a2ijs82
+      - name: nestedId
+        in: path
+        required: true
+        schema:
+          type: string
+        examples:
+          Example1:
+            value: id-219xca8
       responses:
         '204':
           description: No content
@@ -72,12 +72,12 @@ components:
         name:
           type: string
           examples:
-            - Hello world!
+          - Hello world!
         size:
           type: integer
           examples:
-            - 20
+          - 20
       required:
-        - name
-        - size
+      - name
+      - size
   securitySchemes: {}

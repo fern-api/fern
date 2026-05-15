@@ -7,7 +7,7 @@ paths:
     post:
       operationId: createUser
       tags:
-        - ''
+      - CsharpSystemCollision
       parameters: []
       responses:
         '200':
@@ -26,7 +26,7 @@ paths:
     post:
       operationId: createTask
       tags:
-        - ''
+      - CsharpSystemCollision
       parameters: []
       responses:
         '200':
@@ -45,7 +45,7 @@ paths:
     post:
       operationId: emptyResponse
       tags:
-        - ''
+      - CsharpSystemCollision
       parameters: []
       responses:
         '204':
@@ -67,8 +67,8 @@ components:
         user:
           $ref: '#/components/schemas/User'
       required:
-        - name
-        - user
+      - name
+      - user
     User:
       title: User
       type: object
@@ -77,8 +77,8 @@ components:
           type: string
         line2:
           type:
-            - string
-            - 'null'
+          - string
+          - 'null'
         city:
           type: string
         state:
@@ -89,9 +89,9 @@ components:
           type: string
           const: USA
       required:
-        - line1
-        - city
-        - state
-        - zip
-        - country
+      - line1
+      - city
+      - state
+      - zip
+      - country
   securitySchemes: {}

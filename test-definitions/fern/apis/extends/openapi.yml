@@ -7,7 +7,7 @@ paths:
     post:
       operationId: extendedInlineRequestBody
       tags:
-        - ''
+      - Extends
       parameters: []
       responses:
         '204':
@@ -22,9 +22,9 @@ paths:
                 unique:
                   type: string
               required:
-                - unique
+              - unique
               allOf:
-                - $ref: '#/components/schemas/ExampleType'
+              - $ref: '#/components/schemas/ExampleType'
 components:
   schemas:
     ExampleType:
@@ -34,11 +34,11 @@ components:
         name:
           type: string
           examples:
-            - Example
+          - Example
       required:
-        - name
+      - name
       allOf:
-        - $ref: '#/components/schemas/Docs'
+      - $ref: '#/components/schemas/Docs'
     NestedType:
       title: NestedType
       type: object
@@ -46,11 +46,11 @@ components:
         name:
           type: string
           examples:
-            - NestedExample
+          - NestedExample
       required:
-        - name
+      - name
       allOf:
-        - $ref: '#/components/schemas/JSON'
+      - $ref: '#/components/schemas/JSON'
     Docs:
       title: Docs
       type: object
@@ -58,9 +58,9 @@ components:
         docs:
           type: string
           examples:
-            - Types extend this type to include a docs property.
+          - Types extend this type to include a docs property.
       required:
-        - docs
+      - docs
     JSON:
       title: JSON
       type: object
@@ -68,9 +68,9 @@ components:
         raw:
           type: string
           examples:
-            - '{"docs": true, "json": true}'
+          - '{"docs": true, "json": true}'
       required:
-        - raw
+      - raw
       allOf:
-        - $ref: '#/components/schemas/Docs'
+      - $ref: '#/components/schemas/Docs'
   securitySchemes: {}

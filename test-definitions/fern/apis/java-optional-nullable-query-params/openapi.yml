@@ -8,64 +8,64 @@ paths:
       description: Search endpoint with optional nullable query params with defaults
       operationId: search
       tags:
-        - ''
+      - JavaOptionalNullableQueryParams
       parameters:
-        - name: query
-          in: query
-          description: Search query - defaults to empty string when absent
-          required: false
-          schema:
-            type:
-              - string
-              - 'null'
-        - name: limit
-          in: query
-          description: Max results - defaults to 10 when absent
-          required: false
-          schema:
-            type:
-              - integer
-              - 'null'
-        - name: includeArchived
-          in: query
-          description: Include archived items - defaults to false when absent
-          required: false
-          schema:
-            type:
-              - boolean
-              - 'null'
-        - name: sortOrder
-          in: query
-          description: Sort order - defaults to ASC when absent
-          required: false
-          schema:
-            anyOf:
-              - $ref: '#/components/schemas/SortOrder'
-              - type: 'null'
-        - name: optionalWithoutDefault
-          in: query
-          description: Optional nullable without default - should check wasSpecified
-          required: false
-          schema:
-            type:
-              - string
-              - 'null'
-        - name: regularOptional
-          in: query
-          description: Another optional nullable with default for comparison
-          required: false
-          schema:
-            type:
-              - string
-              - 'null'
-        - name: regularOptionalNoDefault
-          in: query
-          description: Another optional nullable without default for comparison
-          required: false
-          schema:
-            type:
-              - string
-              - 'null'
+      - name: query
+        in: query
+        description: Search query - defaults to empty string when absent
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - name: limit
+        in: query
+        description: Max results - defaults to 10 when absent
+        required: false
+        schema:
+          type:
+          - integer
+          - 'null'
+      - name: includeArchived
+        in: query
+        description: Include archived items - defaults to false when absent
+        required: false
+        schema:
+          type:
+          - boolean
+          - 'null'
+      - name: sortOrder
+        in: query
+        description: Sort order - defaults to ASC when absent
+        required: false
+        schema:
+          anyOf:
+          - $ref: '#/components/schemas/SortOrder'
+          - type: 'null'
+      - name: optionalWithoutDefault
+        in: query
+        description: Optional nullable without default - should check wasSpecified
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - name: regularOptional
+        in: query
+        description: Another optional nullable with default for comparison
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - name: regularOptionalNoDefault
+        in: query
+        description: Another optional nullable without default for comparison
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
       responses:
         '200':
           description: Success
@@ -79,8 +79,8 @@ components:
       title: SortOrder
       type: string
       enum:
-        - ASC
-        - DESC
+      - ASC
+      - DESC
       description: Sort order enum
     SearchResponse:
       title: SearchResponse
@@ -95,21 +95,21 @@ components:
           type: integer
         query:
           type:
-            - string
-            - 'null'
+          - string
+          - 'null'
         limit:
           type:
-            - integer
-            - 'null'
+          - integer
+          - 'null'
         includeArchived:
           type:
-            - boolean
-            - 'null'
+          - boolean
+          - 'null'
         sortOrder:
           anyOf:
-            - $ref: '#/components/schemas/SortOrder'
-            - type: 'null'
+          - $ref: '#/components/schemas/SortOrder'
+          - type: 'null'
       required:
-        - results
-        - totalCount
+      - results
+      - totalCount
   securitySchemes: {}

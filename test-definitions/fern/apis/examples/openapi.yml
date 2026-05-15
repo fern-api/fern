@@ -7,7 +7,7 @@ paths:
     post:
       operationId: echo
       tags:
-        - ''
+      - Examples
       parameters: []
       responses:
         '200':
@@ -32,7 +32,7 @@ paths:
     post:
       operationId: createType
       tags:
-        - ''
+      - Examples
       parameters: []
       responses:
         '200':
@@ -51,16 +51,16 @@ paths:
     get:
       operationId: file_notification_service_getException
       tags:
-        - FileNotificationService
+      - FileNotificationService
       parameters:
-        - name: notificationId
-          in: path
-          required: true
-          schema:
-            type: string
-          examples:
-            Example1:
-              value: notification-hsy129x
+      - name: notificationId
+        in: path
+        required: true
+        schema:
+          type: string
+        examples:
+          Example1:
+            value: notification-hsy129x
       responses:
         '200':
           description: Success
@@ -76,23 +76,23 @@ paths:
                     exceptionMessage: This component is unavailable!
                     exceptionStacktrace: <logs>
       security:
-        - Bearer: []
+      - Bearer: []
   /file/{filename}:
     get:
       description: This endpoint returns a file by its name.
       operationId: file_service_getFile
       tags:
-        - FileService
+      - FileService
       parameters:
-        - name: filename
-          in: path
-          description: This is a filename
-          required: true
-          schema:
-            type: string
-          examples:
-            Example1:
-              value: file.txt
+      - name: filename
+        in: path
+        description: This is a filename
+        required: true
+        schema:
+          type: string
+        examples:
+          Example1:
+            value: file.txt
       responses:
         '200':
           description: Success
@@ -110,36 +110,36 @@ paths:
                 Example1:
                   value: A file with that name was not found!
       security:
-        - Bearer: []
+      - Bearer: []
   /check/{id}:
     get:
       description: This endpoint checks the health of a resource.
       operationId: health_service_check
       tags:
-        - HealthService
+      - HealthService
       parameters:
-        - name: id
-          in: path
-          description: The id to check
-          required: true
-          schema:
-            type: string
-          examples:
-            Example0:
-              value: id-2sdx82h
-            Example2:
-              value: id-3tey93i
+      - name: id
+        in: path
+        description: The id to check
+        required: true
+        schema:
+          type: string
+        examples:
+          Example0:
+            value: id-2sdx82h
+          Example2:
+            value: id-3tey93i
       responses:
         '204':
           description: No content
       security:
-        - Bearer: []
+      - Bearer: []
   /ping:
     get:
       description: This endpoint checks the health of the service.
       operationId: health_service_ping
       tags:
-        - HealthService
+      - HealthService
       parameters: []
       responses:
         '200':
@@ -152,21 +152,21 @@ paths:
                 Example0:
                   value: true
       security:
-        - Bearer: []
+      - Bearer: []
   /movie/{movieId}:
     get:
       operationId: service_getMovie
       tags:
-        - Service
+      - Service
       parameters:
-        - name: movieId
-          in: path
-          required: true
-          schema:
-            $ref: '#/components/schemas/MovieId'
-          examples:
-            Example1:
-              value: movie-c06a4ad7
+      - name: movieId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/MovieId'
+        examples:
+          Example1:
+            value: movie-c06a4ad7
       responses:
         '200':
           description: Success
@@ -186,9 +186,9 @@ paths:
                     tag: tag-wf9as23d
                     metadata:
                       actors:
-                        - Christian Bale
-                        - Florence Pugh
-                        - Willem Dafoe
+                      - Christian Bale
+                      - Florence Pugh
+                      - Willem Dafoe
                       releaseDate: '2023-12-08'
                       ratings:
                         rottenTomatoes: 97
@@ -198,7 +198,7 @@ paths:
     post:
       operationId: service_createMovie
       tags:
-        - Service
+      - Service
       parameters: []
       responses:
         '200':
@@ -228,9 +228,9 @@ paths:
                   tag: tag-wf9as23d
                   metadata:
                     actors:
-                      - Christian Bale
-                      - Florence Pugh
-                      - Willem Dafoe
+                    - Christian Bale
+                    - Florence Pugh
+                    - Willem Dafoe
                     releaseDate: '2023-12-08'
                     ratings:
                       rottenTomatoes: 97
@@ -240,38 +240,38 @@ paths:
     get:
       operationId: service_getMetadata
       tags:
-        - Service
+      - Service
       parameters:
-        - name: shallow
-          in: query
-          required: false
-          schema:
+      - name: shallow
+        in: query
+        required: false
+        schema:
+          type:
+          - boolean
+          - 'null'
+        examples:
+          Example1:
+            value: false
+      - name: tag
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
             type:
-              - boolean
-              - 'null'
-          examples:
-            Example1:
-              value: false
-        - name: tag
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type:
-                - string
-                - 'null'
-          examples:
-            Example1:
-              value: development
-        - name: X-API-Version
-          in: header
-          required: true
-          schema:
-            type: string
-          examples:
-            Example1:
-              value: 0.0.1
+            - string
+            - 'null'
+        examples:
+          Example1:
+            value: development
+      - name: X-API-Version
+        in: header
+        required: true
+        schema:
+          type: string
+        examples:
+          Example1:
+            value: 0.0.1
       responses:
         '200':
           description: Success
@@ -287,14 +287,14 @@ paths:
                       version: 0.0.1
                       tenancy: test
                     tags:
-                      - development
-                      - public
+                    - development
+                    - public
                     value: <head>...</head>
   /big-entity:
     post:
       operationId: service_createBigEntity
       tags:
-        - Service
+      - Service
       parameters: []
       responses:
         '200':
@@ -313,7 +313,7 @@ paths:
     post:
       operationId: service_refreshToken
       tags:
-        - Service
+      - Service
       parameters: []
       responses:
         '204':
@@ -324,8 +324,8 @@ paths:
           application/json:
             schema:
               anyOf:
-                - $ref: '#/components/schemas/RefreshTokenRequest'
-                - type: 'null'
+              - $ref: '#/components/schemas/RefreshTokenRequest'
+              - type: 'null'
             examples:
               Example1: {}
               Example2:
@@ -336,8 +336,8 @@ components:
     Type:
       title: Type
       oneOf:
-        - $ref: '#/components/schemas/BasicType'
-        - $ref: '#/components/schemas/ComplexType'
+      - $ref: '#/components/schemas/BasicType'
+      - $ref: '#/components/schemas/ComplexType'
     Identifier:
       title: Identifier
       type: object
@@ -349,22 +349,22 @@ components:
         label:
           type: string
       required:
-        - type
-        - value
-        - label
+      - type
+      - value
+      - label
     BasicType:
       title: BasicType
       type: string
       enum:
-        - primitive
-        - literal
+      - primitive
+      - literal
     ComplexType:
       title: ComplexType
       type: string
       enum:
-        - object
-        - union
-        - unknown
+      - object
+      - union
+      - unknown
     TypeWithSingleCharPropertyEqualToTypeStartingLetter:
       title: TypeWithSingleCharPropertyEqualToTypeStartingLetter
       type: object
@@ -374,8 +374,8 @@ components:
         ty:
           type: string
       required:
-        - t
-        - ty
+      - t
+      - ty
     commonsTag:
       title: commonsTag
       type: string
@@ -386,63 +386,63 @@ components:
         id:
           type: string
           examples:
-            - metadata-js8dg24b
+          - metadata-js8dg24b
         data:
           type:
-            - object
-            - 'null'
+          - object
+          - 'null'
           additionalProperties:
             type: string
         jsonString:
           type:
-            - string
-            - 'null'
+          - string
+          - 'null'
       required:
-        - id
+      - id
     commonsEventInfo:
       title: commonsEventInfo
       oneOf:
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  const: metadata
-            - $ref: '#/components/schemas/commonsMetadata'
-          required:
-            - type
+      - type: object
+        allOf:
         - type: object
           properties:
             type:
               type: string
-              const: tag
-            value:
-              $ref: '#/components/schemas/commonsTag'
-          required:
-            - type
+              const: metadata
+        - $ref: '#/components/schemas/commonsMetadata'
+        required:
+        - type
+      - type: object
+        properties:
+          type:
+            type: string
+            const: tag
+          value:
+            $ref: '#/components/schemas/commonsTag'
+        required:
+        - type
     commonsData:
       title: commonsData
       oneOf:
-        - type: object
-          properties:
-            type:
-              type: string
-              const: string
-            value:
-              type: string
-          required:
-            - type
-        - type: object
-          properties:
-            type:
-              type: string
-              const: base64
-            value:
-              type: string
-              format: byte
-          required:
-            - type
+      - type: object
+        properties:
+          type:
+            type: string
+            const: string
+          value:
+            type: string
+        required:
+        - type
+      - type: object
+        properties:
+          type:
+            type: string
+            const: base64
+          value:
+            type: string
+            format: byte
+        required:
+        - type
     fileFilename:
       title: fileFilename
       type: string
@@ -457,22 +457,22 @@ components:
           $ref: '#/components/schemas/MovieId'
         prequel:
           anyOf:
-            - $ref: '#/components/schemas/MovieId'
-            - type: 'null'
+          - $ref: '#/components/schemas/MovieId'
+          - type: 'null'
         title:
           type: string
           examples:
-            - The Boy and the Heron
+          - The Boy and the Heron
         from:
           type: string
           examples:
-            - Hayao Miyazaki
+          - Hayao Miyazaki
         rating:
           type: number
           format: double
           description: The rating scale is one to five stars
           examples:
-            - 8
+          - 8
         type:
           type: string
           const: movie
@@ -480,30 +480,30 @@ components:
           $ref: '#/components/schemas/commonsTag'
         book:
           type:
-            - string
-            - 'null'
+          - string
+          - 'null'
         metadata:
           type: object
         revenue:
           type: integer
           format: int64
           examples:
-            - 1000000
+          - 1000000
       required:
-        - id
-        - title
-        - from
-        - rating
-        - type
-        - tag
-        - metadata
-        - revenue
+      - id
+      - title
+      - from
+      - rating
+      - type
+      - tag
+      - metadata
+      - revenue
     CastMember:
       title: CastMember
       oneOf:
-        - $ref: '#/components/schemas/Actor'
-        - $ref: '#/components/schemas/Actress'
-        - $ref: '#/components/schemas/StuntDouble'
+      - $ref: '#/components/schemas/Actor'
+      - $ref: '#/components/schemas/Actress'
+      - $ref: '#/components/schemas/StuntDouble'
     Actor:
       title: Actor
       type: object
@@ -513,8 +513,8 @@ components:
         id:
           type: string
       required:
-        - name
-        - id
+      - name
+      - id
     Actress:
       title: Actress
       type: object
@@ -522,14 +522,14 @@ components:
         name:
           type: string
           examples:
-            - Jennifer Lawrence
+          - Jennifer Lawrence
         id:
           type: string
           examples:
-            - actor_456
+          - actor_456
       required:
-        - name
-        - id
+      - name
+      - id
     StuntDouble:
       title: StuntDouble
       type: object
@@ -539,8 +539,8 @@ components:
         actorOrActressId:
           type: string
       required:
-        - name
-        - actorOrActressId
+      - name
+      - actorOrActressId
     ExtendedMovie:
       title: ExtendedMovie
       type: object
@@ -550,14 +550,14 @@ components:
           items:
             type: string
           examples:
-            - - John Travolta
-              - Samuel L. Jackson
-              - Uma Thurman
-              - Bruce Willis
+          - - John Travolta
+            - Samuel L. Jackson
+            - Uma Thurman
+            - Bruce Willis
       required:
-        - cast
+      - cast
       allOf:
-        - $ref: '#/components/schemas/Movie'
+      - $ref: '#/components/schemas/Movie'
     Moment:
       title: Moment
       type: object
@@ -566,21 +566,21 @@ components:
           type: string
           format: uuid
           examples:
-            - 656f12d6-f592-444c-a1d3-a3cfd46d5b39
+          - 656f12d6-f592-444c-a1d3-a3cfd46d5b39
         date:
           type: string
           format: date
           examples:
-            - '1994-01-01'
+          - '1994-01-01'
         datetime:
           type: string
           format: date-time
           examples:
-            - '1994-01-01T01:01:01Z'
+          - '1994-01-01T01:01:01Z'
       required:
-        - id
-        - date
-        - datetime
+      - id
+      - date
+      - datetime
     File:
       title: File
       type: object
@@ -588,14 +588,14 @@ components:
         name:
           type: string
           examples:
-            - file.txt
+          - file.txt
         contents:
           type: string
           examples:
-            - ...
+          - '...'
       required:
-        - name
-        - contents
+      - name
+      - contents
     Directory:
       title: Directory
       type: object
@@ -603,21 +603,21 @@ components:
         name:
           type: string
           examples:
-            - root
+          - root
         files:
           type:
-            - array
-            - 'null'
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/File'
         directories:
           type:
-            - array
-            - 'null'
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/Directory'
       required:
-        - name
+      - name
     Node:
       title: Node
       type: object
@@ -625,55 +625,55 @@ components:
         name:
           type: string
           examples:
-            - root
+          - root
         nodes:
           type:
-            - array
-            - 'null'
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/Node'
         trees:
           type:
-            - array
-            - 'null'
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/Tree'
       required:
-        - name
+      - name
     Tree:
       title: Tree
       type: object
       properties:
         nodes:
           type:
-            - array
-            - 'null'
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/Node'
     Metadata:
       title: Metadata
       oneOf:
-        - type: object
-          properties:
-            type:
-              type: string
-              const: html
-            value:
-              type: string
-          required:
-            - type
-        - type: object
-          properties:
-            type:
-              type: string
-              const: markdown
-            value:
-              type: string
-          required:
-            - type
+      - type: object
+        properties:
+          type:
+            type: string
+            const: html
+          value:
+            type: string
+        required:
+        - type
+      - type: object
+        properties:
+          type:
+            type: string
+            const: markdown
+          value:
+            type: string
+        required:
+        - type
       required:
-        - extra
-        - tags
+      - extra
+      - tags
       properties:
         extra:
           type: object
@@ -686,23 +686,23 @@ components:
     Exception:
       title: Exception
       oneOf:
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  const: generic
-            - $ref: '#/components/schemas/ExceptionInfo'
-          required:
-            - type
+      - type: object
+        allOf:
         - type: object
           properties:
             type:
               type: string
-              const: timeout
-          required:
-            - type
+              const: generic
+        - $ref: '#/components/schemas/ExceptionInfo'
+        required:
+        - type
+      - type: object
+        properties:
+          type:
+            type: string
+            const: timeout
+        required:
+        - type
     ExceptionInfo:
       title: ExceptionInfo
       type: object
@@ -710,26 +710,26 @@ components:
         exceptionType:
           type: string
           examples:
-            - Unavailable
+          - Unavailable
         exceptionMessage:
           type: string
           examples:
-            - This component is unavailable!
+          - This component is unavailable!
         exceptionStacktrace:
           type: string
           examples:
-            - <logs>
+          - <logs>
       required:
-        - exceptionType
-        - exceptionMessage
-        - exceptionStacktrace
+      - exceptionType
+      - exceptionMessage
+      - exceptionStacktrace
     MigrationStatus:
       title: MigrationStatus
       type: string
       enum:
-        - RUNNING
-        - FAILED
-        - FINISHED
+      - RUNNING
+      - FAILED
+      - FINISHED
     Migration:
       title: Migration
       type: object
@@ -737,19 +737,19 @@ components:
         name:
           type: string
           examples:
-            - 001_init
+          - 001_init
         status:
           $ref: '#/components/schemas/MigrationStatus'
       required:
-        - name
-        - status
+      - name
+      - status
     Request:
       title: Request
       type: object
       properties:
         request: {}
       required:
-        - request
+      - request
     Response:
       title: Response
       type: object
@@ -760,8 +760,8 @@ components:
           items:
             $ref: '#/components/schemas/Identifier'
       required:
-        - response
-        - identifiers
+      - response
+      - identifiers
     ResponseType:
       title: ResponseType
       type: object
@@ -769,28 +769,28 @@ components:
         type:
           $ref: '#/components/schemas/Type'
       required:
-        - type
+      - type
     Test:
       title: Test
       oneOf:
-        - type: object
-          properties:
-            type:
-              type: string
-              const: and
-            value:
-              type: boolean
-          required:
-            - type
-        - type: object
-          properties:
-            type:
-              type: string
-              const: or
-            value:
-              type: boolean
-          required:
-            - type
+      - type: object
+        properties:
+          type:
+            type: string
+            const: and
+          value:
+            type: boolean
+        required:
+        - type
+      - type: object
+        properties:
+          type:
+            type: string
+            const: or
+          value:
+            type: boolean
+        required:
+        - type
     Entity:
       title: Entity
       type: object
@@ -800,66 +800,66 @@ components:
         name:
           type: string
           examples:
-            - unknown
+          - unknown
       required:
-        - type
-        - name
+      - type
+      - name
     BigEntity:
       title: BigEntity
       type: object
       properties:
         castMember:
           anyOf:
-            - $ref: '#/components/schemas/CastMember'
-            - type: 'null'
+          - $ref: '#/components/schemas/CastMember'
+          - type: 'null'
         extendedMovie:
           anyOf:
-            - $ref: '#/components/schemas/ExtendedMovie'
-            - type: 'null'
+          - $ref: '#/components/schemas/ExtendedMovie'
+          - type: 'null'
         entity:
           anyOf:
-            - $ref: '#/components/schemas/Entity'
-            - type: 'null'
+          - $ref: '#/components/schemas/Entity'
+          - type: 'null'
         metadata:
           anyOf:
-            - $ref: '#/components/schemas/Metadata'
-            - type: 'null'
+          - $ref: '#/components/schemas/Metadata'
+          - type: 'null'
         commonMetadata:
           anyOf:
-            - $ref: '#/components/schemas/commonsMetadata'
-            - type: 'null'
+          - $ref: '#/components/schemas/commonsMetadata'
+          - type: 'null'
         eventInfo:
           anyOf:
-            - $ref: '#/components/schemas/commonsEventInfo'
-            - type: 'null'
+          - $ref: '#/components/schemas/commonsEventInfo'
+          - type: 'null'
         data:
           anyOf:
-            - $ref: '#/components/schemas/commonsData'
-            - type: 'null'
+          - $ref: '#/components/schemas/commonsData'
+          - type: 'null'
         migration:
           anyOf:
-            - $ref: '#/components/schemas/Migration'
-            - type: 'null'
+          - $ref: '#/components/schemas/Migration'
+          - type: 'null'
         exception:
           anyOf:
-            - $ref: '#/components/schemas/Exception'
-            - type: 'null'
+          - $ref: '#/components/schemas/Exception'
+          - type: 'null'
         test:
           anyOf:
-            - $ref: '#/components/schemas/Test'
-            - type: 'null'
+          - $ref: '#/components/schemas/Test'
+          - type: 'null'
         node:
           anyOf:
-            - $ref: '#/components/schemas/Node'
-            - type: 'null'
+          - $ref: '#/components/schemas/Node'
+          - type: 'null'
         directory:
           anyOf:
-            - $ref: '#/components/schemas/Directory'
-            - type: 'null'
+          - $ref: '#/components/schemas/Directory'
+          - type: 'null'
         moment:
           anyOf:
-            - $ref: '#/components/schemas/Moment'
-            - type: 'null'
+          - $ref: '#/components/schemas/Moment'
+          - type: 'null'
     CronJob:
       title: CronJob
       type: object
@@ -867,9 +867,9 @@ components:
         expression:
           type: string
           examples:
-            - 0 */6 * * *
+          - 0 */6 * * *
       required:
-        - expression
+      - expression
     RefreshTokenRequest:
       title: RefreshTokenRequest
       type: object
@@ -877,13 +877,13 @@ components:
         ttl:
           type: integer
       required:
-        - ttl
+      - ttl
   securitySchemes:
     Bearer:
       type: http
       scheme: bearer
 servers:
-  - url: https://production.com/api
-    description: Production
-  - url: https://staging.com/api
-    description: Staging
+- url: https://production.com/api
+  description: Production
+- url: https://staging.com/api
+  description: Staging

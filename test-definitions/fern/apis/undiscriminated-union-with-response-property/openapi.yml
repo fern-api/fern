@@ -7,7 +7,7 @@ paths:
     get:
       operationId: getUnion
       tags:
-        - ''
+      - UndiscriminatedUnionWithResponseProperty
       parameters: []
       responses:
         '200':
@@ -20,7 +20,7 @@ paths:
     get:
       operationId: listUnions
       tags:
-        - ''
+      - UndiscriminatedUnionWithResponseProperty
       parameters: []
       responses:
         '200':
@@ -38,7 +38,7 @@ components:
         data:
           $ref: '#/components/schemas/MyUnion'
       required:
-        - data
+      - data
     UnionListResponse:
       title: UnionListResponse
       type: object
@@ -48,17 +48,18 @@ components:
           items:
             $ref: '#/components/schemas/MyUnion'
       required:
-        - data
+      - data
     MyUnion:
       title: MyUnion
       oneOf:
-        - $ref: '#/components/schemas/VariantA'
-        - $ref: '#/components/schemas/VariantB'
-        - $ref: '#/components/schemas/VariantC'
-      description: |-
-        Undiscriminated union with multiple object variants.
+      - $ref: '#/components/schemas/VariantA'
+      - $ref: '#/components/schemas/VariantB'
+      - $ref: '#/components/schemas/VariantC'
+      description: 'Undiscriminated union with multiple object variants.
+
         This reproduces the Pipedream issue where Emitter is a union of
-        DeployedComponent, HttpInterface, and TimerInterface.
+
+        DeployedComponent, HttpInterface, and TimerInterface.'
     VariantA:
       title: VariantA
       type: object
@@ -69,8 +70,8 @@ components:
         valueA:
           type: string
       required:
-        - type
-        - valueA
+      - type
+      - valueA
     VariantB:
       title: VariantB
       type: object
@@ -81,8 +82,8 @@ components:
         valueB:
           type: integer
       required:
-        - type
-        - valueB
+      - type
+      - valueB
     VariantC:
       title: VariantC
       type: object
@@ -93,6 +94,6 @@ components:
         valueC:
           type: boolean
       required:
-        - type
-        - valueC
+      - type
+      - valueC
   securitySchemes: {}

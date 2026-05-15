@@ -7,7 +7,7 @@ paths:
     post:
       operationId: search
       tags:
-        - ''
+      - GoOptionalLiteralAlias
       parameters: []
       responses:
         '200':
@@ -44,16 +44,16 @@ components:
       properties:
         sortField:
           anyOf:
-            - $ref: '#/components/schemas/SortField'
-            - type: 'null'
+          - $ref: '#/components/schemas/SortField'
+          - type: 'null'
           description: The sort field to use
         query:
           type: string
           description: The search query
           examples:
-            - test query
+          - test query
       required:
-        - query
+      - query
     SearchResponse:
       title: SearchResponse
       type: object
@@ -61,7 +61,7 @@ components:
         result:
           type: string
           examples:
-            - search result
+          - search result
       required:
-        - result
+      - result
   securitySchemes: {}

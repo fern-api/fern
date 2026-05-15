@@ -7,7 +7,7 @@ paths:
     post:
       operationId: foo
       tags:
-        - ''
+      - Folders
       parameters: []
       responses:
         '204':
@@ -16,7 +16,7 @@ paths:
     post:
       operationId: a_b_foo
       tags:
-        - AB
+      - AB
       parameters: []
       responses:
         '204':
@@ -25,7 +25,7 @@ paths:
     post:
       operationId: a_c_foo
       tags:
-        - AC
+      - AC
       parameters: []
       responses:
         '204':
@@ -34,7 +34,7 @@ paths:
     post:
       operationId: folder_foo
       tags:
-        - Folder
+      - Folder
       parameters: []
       responses:
         '204':
@@ -43,7 +43,7 @@ paths:
     get:
       operationId: folder_service_endpoint
       tags:
-        - FolderService
+      - FolderService
       parameters: []
       responses:
         '204':
@@ -51,7 +51,7 @@ paths:
     post:
       operationId: folder_service_unknownRequest
       tags:
-        - FolderService
+      - FolderService
       parameters: []
       responses:
         '204':

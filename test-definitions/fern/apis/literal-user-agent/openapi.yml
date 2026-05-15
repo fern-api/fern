@@ -8,7 +8,7 @@ paths:
     get:
       operationId: ping
       tags:
-        - ''
+      - LiteralUserAgent
       parameters: []
       responses:
         '200':
