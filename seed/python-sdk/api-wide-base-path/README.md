@@ -37,7 +37,6 @@ Instantiate and use the client with the following:
 from seed import SeedApiWideBasePath
 
 client = SeedApiWideBasePath(
-    path_param="pathParam",
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -59,7 +58,6 @@ import asyncio
 from seed import AsyncSeedApiWideBasePath
 
 client = AsyncSeedApiWideBasePath(
-    path_param="pathParam",
     base_url="https://yourhost.com/path/to/api",
 )
 

@@ -500,10 +500,6 @@ request := &pleaseinhere.BigEntity{
             },
         },
         ExtendedMovie: &pleaseinhere.ExtendedMovie{
-            Cast: []string{
-                "cast",
-                "cast",
-            },
             ID: "id",
             Prequel: pleaseinhere.String(
                 "prequel",
@@ -521,6 +517,10 @@ request := &pleaseinhere.BigEntity{
                 },
             },
             Revenue: int64(1000000),
+            Cast: []string{
+                "cast",
+                "cast",
+            },
         },
         Entity: &pleaseinhere.Entity{
             Type: &pleaseinhere.Type{

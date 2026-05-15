@@ -31,6 +31,7 @@ require "seed"
 client = Seed::Client.new
 
 client.echo(
+  id: "id-ksfd9c1",
   name: "Hello world!",
   size: 20
 )
