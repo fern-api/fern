@@ -1,0 +1,457 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  specs:
+    - openapi: ../accept-header/openapi.yml
+      namespace: accept-header
+      overrides: ../accept-header/openapi-overrides.yml
+    - openapi: ../alias-extends/openapi.yml
+      namespace: alias-extends
+      overrides: ../alias-extends/openapi-overrides.yml
+    - openapi: ../alias/openapi.yml
+      namespace: alias
+      overrides: ../alias/openapi-overrides.yml
+    - openapi: ../allof/openapi.yml
+      namespace: allof
+    - openapi: ../any-auth/openapi.yml
+      namespace: any-auth
+      overrides: ../any-auth/openapi-overrides.yml
+    - openapi: ../api-wide-base-path/openapi.yml
+      namespace: api-wide-base-path
+      overrides: ../api-wide-base-path/openapi-overrides.yml
+    - openapi: ../audiences/openapi.yml
+      namespace: audiences
+      overrides: ../audiences/openapi-overrides.yml
+    - openapi: ../basic-auth-environment-variables/openapi.yml
+      namespace: basic-auth-environment-variables
+      overrides: ../basic-auth-environment-variables/openapi-overrides.yml
+    - openapi: ../basic-auth-pw-omitted/openapi.yml
+      namespace: basic-auth-pw-omitted
+      overrides: ../basic-auth-pw-omitted/openapi-overrides.yml
+    - openapi: ../basic-auth/openapi.yml
+      namespace: basic-auth
+      overrides: ../basic-auth/openapi-overrides.yml
+    - openapi: ../bearer-token-environment-variable/openapi.yml
+      namespace: bearer-token-environment-variable
+      overrides: ../bearer-token-environment-variable/openapi-overrides.yml
+    - openapi: ../bytes-download/openapi.yml
+      namespace: bytes-download
+      overrides: ../bytes-download/openapi-overrides.yml
+    - openapi: ../bytes-upload/openapi.yml
+      namespace: bytes-upload
+      overrides: ../bytes-upload/openapi-overrides.yml
+    - openapi: ../circular-references-advanced/openapi.yml
+      namespace: circular-references-advanced
+      overrides: ../circular-references-advanced/openapi-overrides.yml
+    - openapi: ../circular-references-extends/openapi.yml
+      namespace: circular-references-extends
+      overrides: ../circular-references-extends/openapi-overrides.yml
+    - openapi: ../circular-references/openapi.yml
+      namespace: circular-references
+      overrides: ../circular-references/openapi-overrides.yml
+    - openapi: ../client-side-params/openapi.yml
+      namespace: client-side-params
+      overrides: ../client-side-params/openapi-overrides.yml
+    - openapi: ../content-type/openapi.yml
+      namespace: content-type
+      overrides: ../content-type/openapi-overrides.yml
+    - openapi: ../cross-package-type-names/openapi.yml
+      namespace: cross-package-type-names
+      overrides: ../cross-package-type-names/openapi-overrides.yml
+    - openapi: ../csharp-inline-types/openapi.yml
+      namespace: csharp-inline-types
+      overrides: ../csharp-inline-types/openapi-overrides.yml
+    - openapi: ../csharp-namespace-collision/openapi.yml
+      namespace: csharp-namespace-collision
+      overrides: ../csharp-namespace-collision/openapi-overrides.yml
+    - openapi: ../csharp-namespace-conflict/openapi.yml
+      namespace: csharp-namespace-conflict
+      overrides: ../csharp-namespace-conflict/openapi-overrides.yml
+    - openapi: ../csharp-property-name-collision/openapi.yml
+      namespace: csharp-property-name-collision
+    - openapi: ../csharp-readonly-request/openapi.yml
+      namespace: csharp-readonly-request
+      overrides: ../csharp-readonly-request/openapi-overrides.yml
+    - openapi: ../csharp-system-collision/openapi.yml
+      namespace: csharp-system-collision
+      overrides: ../csharp-system-collision/openapi-overrides.yml
+    - openapi: ../csharp-xml-entities/openapi.yml
+      namespace: csharp-xml-entities
+      overrides: ../csharp-xml-entities/openapi-overrides.yml
+    - openapi: ../dollar-string-examples/openapi.yml
+      namespace: dollar-string-examples
+      overrides: ../dollar-string-examples/openapi-overrides.yml
+    - openapi: ../empty-clients/openapi.yml
+      namespace: empty-clients
+      overrides: ../empty-clients/openapi-overrides.yml
+    - openapi: ../endpoint-security-auth/openapi.yml
+      namespace: endpoint-security-auth
+      overrides: ../endpoint-security-auth/openapi-overrides.yml
+    - openapi: ../enum/openapi.yml
+      namespace: enum
+      overrides: ../enum/openapi-overrides.yml
+    - openapi: ../error-property/openapi.yml
+      namespace: error-property
+      overrides: ../error-property/openapi-overrides.yml
+    - openapi: ../errors/openapi.yml
+      namespace: errors
+      overrides: ../errors/openapi-overrides.yml
+    - openapi: ../examples/openapi.yml
+      namespace: examples
+      overrides: ../examples/openapi-overrides.yml
+    - openapi: ../exhaustive/openapi.yml
+      namespace: exhaustive
+      overrides: ../exhaustive/openapi-overrides.yml
+    - openapi: ../extends/openapi.yml
+      namespace: extends
+      overrides: ../extends/openapi-overrides.yml
+    - openapi: ../extra-properties/openapi.yml
+      namespace: extra-properties
+      overrides: ../extra-properties/openapi-overrides.yml
+    - openapi: ../file-download/openapi.yml
+      namespace: file-download
+      overrides: ../file-download/openapi-overrides.yml
+    - openapi: ../file-upload/openapi.yml
+      namespace: file-upload
+      overrides: ../file-upload/openapi-overrides.yml
+    - openapi: ../folders/openapi.yml
+      namespace: folders
+      overrides: ../folders/openapi-overrides.yml
+    - openapi: ../go-bytes-request/openapi.yml
+      namespace: go-bytes-request
+      overrides: ../go-bytes-request/openapi-overrides.yml
+    - openapi: ../go-content-type/openapi.yml
+      namespace: go-content-type
+      overrides: ../go-content-type/openapi-overrides.yml
+    - openapi: ../go-deterministic-ordering/openapi.yml
+      namespace: go-deterministic-ordering
+      overrides: ../go-deterministic-ordering/openapi-overrides.yml
+    - openapi: ../go-nested-cross-package/openapi.yml
+      namespace: go-nested-cross-package
+      overrides: ../go-nested-cross-package/openapi-overrides.yml
+    - openapi: ../go-optional-literal-alias/openapi.yml
+      namespace: go-optional-literal-alias
+      overrides: ../go-optional-literal-alias/openapi-overrides.yml
+    - openapi: ../go-subpackage-collision/openapi.yml
+      namespace: go-subpackage-collision
+      overrides: ../go-subpackage-collision/openapi-overrides.yml
+    - openapi: ../go-undiscriminated-union-wire-tests/openapi.yml
+      namespace: go-undiscriminated-union-wire-tests
+      overrides: ../go-undiscriminated-union-wire-tests/openapi-overrides.yml
+    - openapi: ../header-auth-environment-variable/openapi.yml
+      namespace: header-auth-environment-variable
+      overrides: ../header-auth-environment-variable/openapi-overrides.yml
+    - openapi: ../header-auth/openapi.yml
+      namespace: header-auth
+      overrides: ../header-auth/openapi-overrides.yml
+    - openapi: ../http-head/openapi.yml
+      namespace: http-head
+      overrides: ../http-head/openapi-overrides.yml
+    - openapi: ../idempotency-headers/openapi.yml
+      namespace: idempotency-headers
+      overrides: ../idempotency-headers/openapi-overrides.yml
+    - openapi: ../imdb/openapi.yml
+      namespace: imdb
+      overrides: ../imdb/openapi-overrides.yml
+    - openapi: ../inferred-auth-explicit/openapi.yml
+      namespace: inferred-auth-explicit
+      overrides: ../inferred-auth-explicit/openapi-overrides.yml
+    - openapi: ../inferred-auth-implicit-api-key/openapi.yml
+      namespace: inferred-auth-implicit-api-key
+      overrides: ../inferred-auth-implicit-api-key/openapi-overrides.yml
+    - openapi: ../inferred-auth-implicit-no-expiry/openapi.yml
+      namespace: inferred-auth-implicit-no-expiry
+      overrides: ../inferred-auth-implicit-no-expiry/openapi-overrides.yml
+    - openapi: ../inferred-auth-implicit-reference/openapi.yml
+      namespace: inferred-auth-implicit-reference
+      overrides: ../inferred-auth-implicit-reference/openapi-overrides.yml
+    - openapi: ../inferred-auth-implicit/openapi.yml
+      namespace: inferred-auth-implicit
+      overrides: ../inferred-auth-implicit/openapi-overrides.yml
+    - openapi: ../java-builder-extension/openapi.yml
+      namespace: java-builder-extension
+      overrides: ../java-builder-extension/openapi-overrides.yml
+    - openapi: ../java-custom-package-prefix/openapi.yml
+      namespace: java-custom-package-prefix
+      overrides: ../java-custom-package-prefix/openapi-overrides.yml
+    - openapi: ../java-default-timeout/openapi.yml
+      namespace: java-default-timeout
+      overrides: ../java-default-timeout/openapi-overrides.yml
+    - openapi: ../java-inline-types/openapi.yml
+      namespace: java-inline-types
+      overrides: ../java-inline-types/openapi-overrides.yml
+    - openapi: ../java-many-properties/openapi.yml
+      namespace: java-many-properties
+      overrides: ../java-many-properties/openapi-overrides.yml
+    - openapi: ../java-nullable-named-request-types/openapi.yml
+      namespace: java-nullable-named-request-types
+    - openapi: ../java-optional-nullable-query-params/openapi.yml
+      namespace: java-optional-nullable-query-params
+      overrides: ../java-optional-nullable-query-params/openapi-overrides.yml
+    - openapi: ../java-optional-query-params-overloads/openapi.yml
+      namespace: java-optional-query-params-overloads
+      overrides: ../java-optional-query-params-overloads/openapi-overrides.yml
+    - openapi: ../java-output-directory/openapi.yml
+      namespace: java-output-directory
+      overrides: ../java-output-directory/openapi-overrides.yml
+    - openapi: ../java-pagination-deep-cursor-path/openapi.yml
+      namespace: java-pagination-deep-cursor-path
+      overrides: ../java-pagination-deep-cursor-path/openapi-overrides.yml
+    - openapi: ../java-path-param-key-conflict/openapi.yml
+      namespace: java-path-param-key-conflict
+    - openapi: ../java-required-body-optional-headers/openapi.yml
+      namespace: java-required-body-optional-headers
+      overrides: ../java-required-body-optional-headers/openapi-overrides.yml
+    - openapi: ../java-single-property-endpoint/openapi.yml
+      namespace: java-single-property-endpoint
+      overrides: ../java-single-property-endpoint/openapi-overrides.yml
+    - openapi: ../java-staged-builder-ordering/openapi.yml
+      namespace: java-staged-builder-ordering
+      overrides: ../java-staged-builder-ordering/openapi-overrides.yml
+    - openapi: ../java-streaming-accept-header/openapi.yml
+      namespace: java-streaming-accept-header
+      overrides: ../java-streaming-accept-header/openapi-overrides.yml
+    - openapi: ../java-websocket-shared-discriminator/openapi.yml
+      namespace: java-websocket-shared-discriminator
+      overrides: ../java-websocket-shared-discriminator/openapi-overrides.yml
+    - openapi: ../java-with-property-conflict/openapi.yml
+      namespace: java-with-property-conflict
+      overrides: ../java-with-property-conflict/openapi-overrides.yml
+    - openapi: ../license/openapi.yml
+      namespace: license
+      overrides: ../license/openapi-overrides.yml
+    - openapi: ../literal-user-agent/openapi.yml
+      namespace: literal-user-agent
+      overrides: ../literal-user-agent/openapi-overrides.yml
+    - openapi: ../literal/openapi.yml
+      namespace: literal
+      overrides: ../literal/openapi-overrides.yml
+    - openapi: ../literals-unions/openapi.yml
+      namespace: literals-unions
+      overrides: ../literals-unions/openapi-overrides.yml
+    - openapi: ../mixed-case/openapi.yml
+      namespace: mixed-case
+      overrides: ../mixed-case/openapi-overrides.yml
+    - openapi: ../mixed-file-directory/openapi.yml
+      namespace: mixed-file-directory
+      overrides: ../mixed-file-directory/openapi-overrides.yml
+    - openapi: ../multi-line-docs/openapi.yml
+      namespace: multi-line-docs
+      overrides: ../multi-line-docs/openapi-overrides.yml
+    - openapi: ../multi-url-environment-no-default/openapi.yml
+      namespace: multi-url-environment-no-default
+      overrides: ../multi-url-environment-no-default/openapi-overrides.yml
+    - openapi: ../multi-url-environment-reference/openapi.yml
+      namespace: multi-url-environment-reference
+    - openapi: ../multi-url-environment/openapi.yml
+      namespace: multi-url-environment
+      overrides: ../multi-url-environment/openapi-overrides.yml
+    - openapi: ../multiple-request-bodies/openapi.yml
+      namespace: multiple-request-bodies
+      overrides: ../multiple-request-bodies/openapi-overrides.yml
+    - openapi: ../no-content-response/openapi.yml
+      namespace: no-content-response
+    - openapi: ../no-environment/openapi.yml
+      namespace: no-environment
+      overrides: ../no-environment/openapi-overrides.yml
+    - openapi: ../no-retries/openapi.yml
+      namespace: no-retries
+      overrides: ../no-retries/openapi-overrides.yml
+    - openapi: ../null-type/openapi.yml
+      namespace: null-type
+    - openapi: ../nullable-allof-extends/openapi.yml
+      namespace: nullable-allof-extends
+    - openapi: ../nullable-optional/openapi.yml
+      namespace: nullable-optional
+      overrides: ../nullable-optional/openapi-overrides.yml
+    - openapi: ../nullable-request-body/openapi.yml
+      namespace: nullable-request-body
+    - openapi: ../nullable/openapi.yml
+      namespace: nullable
+      overrides: ../nullable/openapi-overrides.yml
+    - openapi: ../oauth-client-credentials-custom/openapi.yml
+      namespace: oauth-client-credentials-custom
+      overrides: ../oauth-client-credentials-custom/openapi-overrides.yml
+    - openapi: ../oauth-client-credentials-default/openapi.yml
+      namespace: oauth-client-credentials-default
+      overrides: ../oauth-client-credentials-default/openapi-overrides.yml
+    - openapi: ../oauth-client-credentials-environment-variables/openapi.yml
+      namespace: oauth-client-credentials-environment-variables
+      overrides: ../oauth-client-credentials-environment-variables/openapi-overrides.yml
+    - openapi: ../oauth-client-credentials-mandatory-auth/openapi.yml
+      namespace: oauth-client-credentials-mandatory-auth
+      overrides: ../oauth-client-credentials-mandatory-auth/openapi-overrides.yml
+    - openapi: ../oauth-client-credentials-nested-root/openapi.yml
+      namespace: oauth-client-credentials-nested-root
+      overrides: ../oauth-client-credentials-nested-root/openapi-overrides.yml
+    - openapi: ../oauth-client-credentials-openapi/openapi.yml
+      namespace: oauth-client-credentials-openapi
+    - openapi: ../oauth-client-credentials-reference/openapi.yml
+      namespace: oauth-client-credentials-reference
+      overrides: ../oauth-client-credentials-reference/openapi-overrides.yml
+    - openapi: ../oauth-client-credentials-with-variables/openapi.yml
+      namespace: oauth-client-credentials-with-variables
+      overrides: ../oauth-client-credentials-with-variables/openapi-overrides.yml
+    - openapi: ../oauth-client-credentials/openapi.yml
+      namespace: oauth-client-credentials
+      overrides: ../oauth-client-credentials/openapi-overrides.yml
+    - openapi: ../object/openapi.yml
+      namespace: object
+      overrides: ../object/openapi-overrides.yml
+    - openapi: ../objects-with-imports/openapi.yml
+      namespace: objects-with-imports
+      overrides: ../objects-with-imports/openapi-overrides.yml
+    - openapi: ../openapi-request-body-ref/openapi.yml
+      namespace: openapi-request-body-ref
+    - openapi: ../optional/openapi.yml
+      namespace: optional
+      overrides: ../optional/openapi-overrides.yml
+    - openapi: ../package-yml/openapi.yml
+      namespace: package-yml
+      overrides: ../package-yml/openapi-overrides.yml
+    - openapi: ../pagination-custom/openapi.yml
+      namespace: pagination-custom
+      overrides: ../pagination-custom/openapi-overrides.yml
+    - openapi: ../pagination-uri-path/openapi.yml
+      namespace: pagination-uri-path
+      overrides: ../pagination-uri-path/openapi-overrides.yml
+    - openapi: ../pagination/openapi.yml
+      namespace: pagination
+      overrides: ../pagination/openapi-overrides.yml
+    - openapi: ../path-parameters/openapi.yml
+      namespace: path-parameters
+      overrides: ../path-parameters/openapi-overrides.yml
+    - openapi: ../plain-text/openapi.yml
+      namespace: plain-text
+      overrides: ../plain-text/openapi-overrides.yml
+    - openapi: ../property-access/openapi.yml
+      namespace: property-access
+      overrides: ../property-access/openapi-overrides.yml
+    - openapi: ../public-object/openapi.yml
+      namespace: public-object
+      overrides: ../public-object/openapi-overrides.yml
+    - openapi: ../python-backslash-escape/openapi.yml
+      namespace: python-backslash-escape
+      overrides: ../python-backslash-escape/openapi-overrides.yml
+    - openapi: ../python-mypy-exclude/openapi.yml
+      namespace: python-mypy-exclude
+    - openapi: ../python-positional-single-property/openapi.yml
+      namespace: python-positional-single-property
+      overrides: ../python-positional-single-property/openapi-overrides.yml
+    - openapi: ../python-reserved-keyword-subpackages/openapi.yml
+      namespace: python-reserved-keyword-subpackages
+    - openapi: ../python-streaming-parameter-openapi/openapi.yml
+      namespace: python-streaming-parameter-openapi
+    - openapi: ../query-param-name-conflict/openapi.yml
+      namespace: query-param-name-conflict
+    - openapi: ../query-parameters-openapi/openapi.yml
+      namespace: query-parameters-openapi
+    - openapi: ../query-parameters/openapi.yml
+      namespace: query-parameters
+      overrides: ../query-parameters/openapi-overrides.yml
+    - openapi: ../request-parameters/openapi.yml
+      namespace: request-parameters
+      overrides: ../request-parameters/openapi-overrides.yml
+    - openapi: ../required-nullable/openapi.yml
+      namespace: required-nullable
+      overrides: ../required-nullable/openapi-overrides.yml
+    - openapi: ../reserved-keywords/openapi.yml
+      namespace: reserved-keywords
+      overrides: ../reserved-keywords/openapi-overrides.yml
+    - openapi: ../response-property/openapi.yml
+      namespace: response-property
+      overrides: ../response-property/openapi-overrides.yml
+    - openapi: ../ruby-reserved-word-properties/openapi.yml
+      namespace: ruby-reserved-word-properties
+      overrides: ../ruby-reserved-word-properties/openapi-overrides.yml
+    - openapi: ../schemaless-request-body-examples/openapi.yml
+      namespace: schemaless-request-body-examples
+    - openapi: ../server-sent-event-examples/openapi.yml
+      namespace: server-sent-event-examples
+      overrides: ../server-sent-event-examples/openapi-overrides.yml
+    - openapi: ../server-sent-events-openapi/openapi.yml
+      namespace: server-sent-events-openapi
+    - openapi: ../server-sent-events/openapi.yml
+      namespace: server-sent-events
+      overrides: ../server-sent-events/openapi-overrides.yml
+    - openapi: ../server-url-templating/openapi.yml
+      namespace: server-url-templating
+    - openapi: ../simple-api/openapi.yml
+      namespace: simple-api
+      overrides: ../simple-api/openapi-overrides.yml
+    - openapi: ../simple-fhir/openapi.yml
+      namespace: simple-fhir
+      overrides: ../simple-fhir/openapi-overrides.yml
+    - openapi: ../single-url-environment-default/openapi.yml
+      namespace: single-url-environment-default
+      overrides: ../single-url-environment-default/openapi-overrides.yml
+    - openapi: ../single-url-environment-no-default/openapi.yml
+      namespace: single-url-environment-no-default
+      overrides: ../single-url-environment-no-default/openapi-overrides.yml
+    - openapi: ../streaming-parameter/openapi.yml
+      namespace: streaming-parameter
+      overrides: ../streaming-parameter/openapi-overrides.yml
+    - openapi: ../streaming/openapi.yml
+      namespace: streaming
+      overrides: ../streaming/openapi-overrides.yml
+    - openapi: ../trace/openapi.yml
+      namespace: trace
+      overrides: ../trace/openapi-overrides.yml
+    - openapi: ../ts-express-casing/openapi.yml
+      namespace: ts-express-casing
+      overrides: ../ts-express-casing/openapi-overrides.yml
+    - openapi: ../ts-extra-properties/openapi.yml
+      namespace: ts-extra-properties
+    - openapi: ../ts-inline-types/openapi.yml
+      namespace: ts-inline-types
+      overrides: ../ts-inline-types/openapi-overrides.yml
+    - openapi: ../undiscriminated-union-with-response-property/openapi.yml
+      namespace: undiscriminated-union-with-response-property
+      overrides: ../undiscriminated-union-with-response-property/openapi-overrides.yml
+    - openapi: ../undiscriminated-unions/openapi.yml
+      namespace: undiscriminated-unions
+      overrides: ../undiscriminated-unions/openapi-overrides.yml
+    - openapi: ../union-query-parameters/openapi.yml
+      namespace: union-query-parameters
+      overrides: ../union-query-parameters/openapi-overrides.yml
+    - openapi: ../unions-with-local-date/openapi.yml
+      namespace: unions-with-local-date
+      overrides: ../unions-with-local-date/openapi-overrides.yml
+    - openapi: ../unions/openapi.yml
+      namespace: unions
+      overrides: ../unions/openapi-overrides.yml
+    - openapi: ../unknown/openapi.yml
+      namespace: unknown
+      overrides: ../unknown/openapi-overrides.yml
+    - openapi: ../url-form-encoded/openapi.yml
+      namespace: url-form-encoded
+    - openapi: ../validation/openapi.yml
+      namespace: validation
+      overrides: ../validation/openapi-overrides.yml
+    - openapi: ../variables/openapi.yml
+      namespace: variables
+      overrides: ../variables/openapi-overrides.yml
+    - openapi: ../version-no-default/openapi.yml
+      namespace: version-no-default
+      overrides: ../version-no-default/openapi-overrides.yml
+    - openapi: ../version/openapi.yml
+      namespace: version
+      overrides: ../version/openapi-overrides.yml
+    - openapi: ../webhook-audience/openapi.yml
+      namespace: webhook-audience
+    - openapi: ../webhooks/openapi.yml
+      namespace: webhooks
+      overrides: ../webhooks/openapi-overrides.yml
+    - openapi: ../websocket-bearer-auth/openapi.yml
+      namespace: websocket-bearer-auth
+      overrides: ../websocket-bearer-auth/openapi-overrides.yml
+    - openapi: ../websocket-inferred-auth/openapi.yml
+      namespace: websocket-inferred-auth
+      overrides: ../websocket-inferred-auth/openapi-overrides.yml
+    - openapi: ../websocket-multi-url/openapi.yml
+      namespace: websocket-multi-url
+      overrides: ../websocket-multi-url/openapi-overrides.yml
+    - openapi: ../websocket/openapi.yml
+      namespace: websocket
+      overrides: ../websocket/openapi-overrides.yml
+    - openapi: ../x-fern-default/openapi.yml
+      namespace: x-fern-default

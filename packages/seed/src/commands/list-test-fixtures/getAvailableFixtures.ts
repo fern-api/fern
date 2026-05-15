@@ -1,6 +1,12 @@
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 
 /**
+ * Language-specific fixture prefixes. Fixtures starting with these prefixes
+ * are only available for generators whose workspace name starts with the same prefix.
+ */
+export const LANGUAGE_SPECIFIC_FIXTURE_PREFIXES = ["csharp", "go", "java", "mega", "python", "ruby", "ts"];
+
+/**
  * Get all available fixtures for a generator, optionally including output folders.
  * This function lazily imports FIXTURES to avoid file system operations at module load time.
  *
@@ -28,7 +34,10 @@ export function getAvailableFixturesFromList(
     allFixtures: string[],
     withOutputFolders: boolean
 ): string[] {
-    const availableFixtures = allFixtures;
+    const availableFixtures = allFixtures.filter((fixture) => {
+        const matchingPrefix = LANGUAGE_SPECIFIC_FIXTURE_PREFIXES.filter((prefix) => fixture.startsWith(prefix))[0];
+        return matchingPrefix == null || generator.workspaceName.startsWith(matchingPrefix);
+    });
 
     // Optionally, include output folders in format fixture:outputFolder
     if (withOutputFolders) {
