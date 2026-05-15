@@ -35,7 +35,7 @@ import Trace
             ]
         )
         let response = try await client.playlist.createPlaylist(
-            serviceParam: 1,
+            serviceParam: "1",
             datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             optionalDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             request: PlaylistCreateRequest(
@@ -104,7 +104,7 @@ import Trace
             )
         ]
         let response = try await client.playlist.getPlaylists(
-            serviceParam: 1,
+            serviceParam: "1",
             limit: 1,
             otherField: "otherField",
             multiLineDocs: "multiLineDocs",
@@ -145,7 +145,7 @@ import Trace
             ]
         )
         let response = try await client.playlist.getPlaylist(
-            serviceParam: 1,
+            serviceParam: "1",
             playlistId: "playlistId",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
@@ -184,7 +184,7 @@ import Trace
             ]
         ))
         let response = try await client.playlist.updatePlaylist(
-            serviceParam: 1,
+            serviceParam: "1",
             playlistId: "playlistId",
             request: UpdatePlaylistRequest(
                 name: "name",

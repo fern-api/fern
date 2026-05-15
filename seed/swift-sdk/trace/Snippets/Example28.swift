@@ -8,8 +8,8 @@ private func main() async throws {
     )
 
     _ = try await client.sysprop.setNumWarmInstances(
-        language: .java,
-        numWarmInstances: 1
+        language: "JAVA",
+        numWarmInstances: "1"
     )
 }
 
