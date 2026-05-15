@@ -518,6 +518,285 @@ fixtures:
   server-sent-events-openapi:
     - outputFolder: no-custom-config
       customConfig: null
+  mega-openapi-specs:
+    - outputFolder: allow-custom-fetcher
+      customConfig:
+        allowCustomFetcher: true
+    - outputFolder: allow-extra-fields
+      customConfig:
+        allowExtraFields: true
+    - outputFolder: always-send-auth
+      customConfig:
+        alwaysSendAuth: true
+    - outputFolder: bigint
+      customConfig:
+        testFramework: jest
+        useBigInt: true
+    - outputFolder: bigint-serde-layer
+      customConfig:
+        noSerdeLayer: false
+        testFramework: jest
+        useBigInt: true
+    - outputFolder: branded-string-aliases
+      customConfig:
+        maxRetries: 5
+        useBrandedStringAliases: true
+    - outputFolder: consolidate-type-files
+      customConfig:
+        consolidateTypeFiles: true
+    - outputFolder: custom-package-json
+      customConfig:
+        extraDependencies:
+          lodash-es: ^4.17.21
+        extraDevDependencies:
+          jest: ^29.7.0
+        extraPeerDependencies:
+          openai: ^4.47.1
+        extraPeerDependenciesMeta:
+          openai:
+            optional: true
+        packageJson:
+          browser:
+            command-exists: false
+            execa: false
+          dependencies:
+            qs: ^6.11.2
+            stream: ^0.0.2
+          engines:
+            node: '>=16.0.0'
+          files:
+          - exampleFile
+          - dist
+          version: 0.0.2
+        private: true
+    - outputFolder: customPagerName
+      customConfig:
+        customPagerName: MyPager
+    - outputFolder: exhaustive
+      customConfig:
+        includeCredentialsOnCrossOriginRequests: true
+        includeOtherInUnionTypes: true
+        includeUtilsOnUnionMembers: true
+        neverThrowErrors: true
+        timeoutInSeconds: infinity
+        useBrandedStringAliases: true
+    - outputFolder: export-all-requests-at-root
+      customConfig:
+        exportAllRequestsAtRoot: true
+    - outputFolder: file-download-response-headers
+      customConfig:
+        includeContentHeadersOnFileDownloadResponse: true
+    - outputFolder: flatten-request-parameters
+      customConfig:
+        flattenRequestParameters: true
+    - outputFolder: form-data-node16
+      customConfig:
+        formDataSupport: Node16
+    - outputFolder: forward-compatible-enums
+      customConfig:
+        enableForwardCompatibleEnums: true
+    - outputFolder: forward-compatible-enums-with-serde
+      customConfig:
+        enableForwardCompatibleEnums: true
+        noSerdeLayer: false
+    - outputFolder: generate-endpoint-metadata
+      customConfig:
+        generateEndpointMetadata: true
+    - outputFolder: generate-read-write-only-types
+      customConfig:
+        experimentalGenerateReadWriteOnlyTypes: true
+    - outputFolder: inline-file-properties
+      customConfig:
+        inlineFileProperties: true
+        inlinePathParameters: true
+    - outputFolder: inline-types
+      customConfig:
+        enableInlineTypes: true
+    - outputFolder: jsr
+      customConfig:
+        publishToJsr: true
+    - outputFolder: legacy-exports
+      customConfig:
+        useLegacyExports: true
+    - outputFolder: multiple-exports
+      customConfig:
+        generateSubpackageExports: true
+    - outputFolder: naming
+      customConfig:
+        naming:
+          client: AcmeSdkClient
+          environment: AcmeApiEnvironment
+          environmentUrls: AcmeApiEnvironmentUrls
+          error: AcmeApiError
+          namespace: acme
+          timeoutError: AcmeRequestTimeoutError
+          version: AcmeApiVersion
+    - outputFolder: naming-shorthand
+      customConfig:
+        naming: acme
+    - outputFolder: never-throw-errors
+      customConfig:
+        neverThrowErrors: true
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: no-inline
+      customConfig:
+        enableInlineTypes: false
+    - outputFolder: no-inline-path-parameters
+      customConfig:
+        inlinePathParameters: false
+    - outputFolder: no-inline-path-parameters-retain-original-casing
+      customConfig:
+        inlinePathParameters: false
+        retainOriginalCasing: true
+    - outputFolder: no-inline-path-parameters-serde
+      customConfig:
+        inlinePathParameters: false
+        noSerdeLayer: false
+    - outputFolder: no-linter-and-formatter
+      customConfig:
+        formatter: none
+        linter: none
+    - outputFolder: no-scripts
+      customConfig:
+        noScripts: true
+    - outputFolder: no-serde
+      customConfig:
+        generateWebSocketClients: true
+        noSerdeLayer: true
+    - outputFolder: noSerdeLayer
+      customConfig:
+        enableInlineTypes: true
+        noSerdeLayer: true
+        resolveQueryParameterNameConflicts: true
+    - outputFolder: node-fetch
+      customConfig:
+        fetchSupport: node-fetch
+    - outputFolder: omit-fern-headers
+      customConfig:
+        omitFernHeaders: true
+    - outputFolder: omit-undefined
+      customConfig:
+        omitUndefined: true
+    - outputFolder: package-path
+      customConfig:
+        packagePath: src/test-packagePath
+    - outputFolder: page-index-semantics
+      customConfig:
+        offsetSemantics: page-index
+    - outputFolder: parameter-naming-camel-case
+      customConfig:
+        parameterNaming: camelCase
+    - outputFolder: parameter-naming-original-name
+      customConfig:
+        parameterNaming: originalName
+    - outputFolder: parameter-naming-snake-case
+      customConfig:
+        parameterNaming: snakeCase
+    - outputFolder: parameter-naming-wire-value
+      customConfig:
+        parameterNaming: wireValue
+    - outputFolder: retain-original-casing
+      customConfig:
+        retainOriginalCasing: true
+    - outputFolder: serde
+      customConfig:
+        generateWebSocketClients: true
+        noSerdeLayer: false
+    - outputFolder: serde-layer
+      customConfig:
+        noSerdeLayer: false
+    - outputFolder: serde-no-throwing
+      customConfig:
+        neverThrowErrors: true
+        noSerdeLayer: false
+    - outputFolder: skip-response-validation
+      customConfig:
+        skipResponseValidation: true
+    - outputFolder: stream-wrapper
+      customConfig:
+        fileResponseType: stream
+        streamType: wrapper
+        testFramework: jest
+    - outputFolder: union-utils
+      customConfig:
+        includeOtherInUnionTypes: true
+        includeUtilsOnUnionMembers: true
+    - outputFolder: unknown-as-any
+      customConfig:
+        treatUnknownAsAny: true
+    - outputFolder: use-big-int-and-default-request-parameter-values
+      customConfig:
+        testFramework: jest
+        useBigInt: true
+        useDefaultRequestParameterValues: true
+    - outputFolder: use-default-request-parameter-values
+      customConfig:
+        useDefaultRequestParameterValues: true
+    - outputFolder: use-jest
+      customConfig:
+        testFramework: jest
+    - outputFolder: use-oxc
+      customConfig:
+        formatter: oxfmt
+        linter: oxlint
+    - outputFolder: use-oxfmt
+      customConfig:
+        formatter: oxfmt
+    - outputFolder: use-oxlint
+      customConfig:
+        linter: oxlint
+    - outputFolder: use-prettier
+      customConfig:
+        formatter: prettier
+    - outputFolder: use-prettier-no-linter
+      customConfig:
+        formatter: prettier
+        linter: none
+    - outputFolder: use-yarn
+      customConfig:
+        packageManager: yarn
+    - outputFolder: web-stream-wrapper
+      customConfig:
+        streamType: web
+    - outputFolder: websockets
+      customConfig:
+        generateWebSocketClients: true
+    - outputFolder: wrapper
+      customConfig:
+        streamType: wrapper
+        testFramework: jest
+    - outputFolder: with-partner-audience
+      customConfig: null
+      audiences:
+        - partner
+    - outputFolder: with-audiences
+      customConfig: null
+      audiences:
+        - audience1
+        - audience2
+    - outputFolder: local-files
+      outputMode: local_files
+    - outputFolder: local-files-no-source
+      outputMode: local_files
+      customConfig:
+        outputSourceFiles: false
+    - outputFolder: output-src-only
+      outputMode: local_files
+      customConfig:
+        outputSrcOnly: true
+    - outputFolder: bundle
+      license: MIT
+      customConfig:
+        bundle: true
+        extraDependencies:
+          lodash-es: '^4.17.21'
+    - outputFolder: oidc-token
+      publishConfig:
+        type: npm
+        registryUrl: https://registry.npmjs.org/
+        packageName: "@fern-api/dummy"
+        token: <USE_OIDC>
 
 scripts:
   - image: fernapi/ts-seed
