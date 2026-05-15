@@ -1,0 +1,51 @@
+paths:
+  /file/notification/{notificationId}:
+    get:
+      x-fern-sdk-group-name:
+      - file
+      - notification
+      - service
+      x-fern-sdk-method-name: getException
+  /file/{filename}:
+    get:
+      x-fern-sdk-group-name:
+      - file
+      - service
+      x-fern-sdk-method-name: getFile
+  /check/{id}:
+    get:
+      x-fern-sdk-group-name:
+      - health
+      - service
+      x-fern-sdk-method-name: check
+  /ping:
+    get:
+      x-fern-sdk-group-name:
+      - health
+      - service
+      x-fern-sdk-method-name: ping
+  /movie/{movieId}:
+    get:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: getMovie
+  /movie:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: createMovie
+  /metadata:
+    get:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: getMetadata
+  /big-entity:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: createBigEntity
+  /refresh-token:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: refreshToken

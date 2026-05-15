@@ -1,17 +1,17 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: file-upload
-  version: ""
+  version: 0.0.0
 paths:
-  /:
+  /post:
     post:
       operationId: service_post
       tags:
         - Service
       parameters: []
       responses:
-        "204":
-          description: ""
+        '204':
+          description: No content
       requestBody:
         required: true
         content:
@@ -20,8 +20,9 @@ paths:
               type: object
               properties:
                 maybe_string:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                 integer:
                   type: integer
                 file:
@@ -37,33 +38,36 @@ paths:
                   type: string
                   format: binary
                 maybe_integer:
-                  type: integer
-                  nullable: true
+                  type:
+                    - integer
+                    - 'null'
                 optional_list_of_strings:
-                  type: array
+                  type:
+                    - array
+                    - 'null'
                   items:
                     type: string
-                  nullable: true
                 list_of_objects:
                   type: array
                   items:
-                    $ref: "#/components/schemas/MyObject"
-                optional_metadata:
-                  nullable: true
+                    $ref: '#/components/schemas/MyObject'
+                optional_metadata: {}
                 optional_object_type:
-                  $ref: "#/components/schemas/ObjectType"
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/ObjectType'
+                    - type: 'null'
                 optional_id:
-                  $ref: "#/components/schemas/Id"
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/Id'
+                    - type: 'null'
                 alias_object:
-                  $ref: "#/components/schemas/MyAliasObject"
+                  $ref: '#/components/schemas/MyAliasObject'
                 list_of_alias_object:
                   type: array
                   items:
-                    $ref: "#/components/schemas/MyAliasObject"
+                    $ref: '#/components/schemas/MyAliasObject'
                 alias_list_of_object:
-                  $ref: "#/components/schemas/MyCollectionAliasObject"
+                  $ref: '#/components/schemas/MyCollectionAliasObject'
   /just-file:
     post:
       operationId: service_justFile
@@ -71,8 +75,8 @@ paths:
         - Service
       parameters: []
       responses:
-        "204":
-          description: ""
+        '204':
+          description: No content
       requestBody:
         required: true
         content:
@@ -93,8 +97,9 @@ paths:
           in: query
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: integer
           in: query
           required: true
@@ -104,8 +109,9 @@ paths:
           in: query
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: listOfStrings
           in: query
           required: true
@@ -119,11 +125,12 @@ paths:
           schema:
             type: array
             items:
-              type: string
-              nullable: true
+              type:
+                - string
+                - 'null'
       responses:
-        "204":
-          description: ""
+        '204':
+          description: No content
       requestBody:
         required: true
         content:
@@ -144,17 +151,19 @@ paths:
           in: query
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: maybeInteger
           in: query
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
       responses:
-        "204":
-          description: ""
+        '204':
+          description: No content
       requestBody:
         required: true
         content:
@@ -172,8 +181,8 @@ paths:
         - Service
       parameters: []
       responses:
-        "204":
-          description: ""
+        '204':
+          description: No content
       requestBody:
         required: true
         content:
@@ -187,10 +196,11 @@ paths:
                 foo:
                   type: string
                 bar:
-                  $ref: "#/components/schemas/MyObject"
+                  $ref: '#/components/schemas/MyObject'
                 foo_bar:
-                  $ref: "#/components/schemas/MyObject"
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/MyObject'
+                    - type: 'null'
   /with-form-encoding:
     post:
       operationId: service_withFormEncoding
@@ -198,8 +208,8 @@ paths:
         - Service
       parameters: []
       responses:
-        "204":
-          description: ""
+        '204':
+          description: No content
       requestBody:
         required: true
         content:
@@ -213,16 +223,16 @@ paths:
                 foo:
                   type: string
                 bar:
-                  $ref: "#/components/schemas/MyObject"
-  /form-encoded-containers:
+                  $ref: '#/components/schemas/MyObject'
+  /with-form-encoded-containers:
     post:
       operationId: service_withFormEncodedContainers
       tags:
         - Service
       parameters: []
       responses:
-        "204":
-          description: ""
+        '204':
+          description: No content
       requestBody:
         required: true
         content:
@@ -231,8 +241,9 @@ paths:
               type: object
               properties:
                 maybe_string:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                 integer:
                   type: integer
                 file:
@@ -248,37 +259,40 @@ paths:
                   type: string
                   format: binary
                 maybe_integer:
-                  type: integer
-                  nullable: true
+                  type:
+                    - integer
+                    - 'null'
                 optional_list_of_strings:
-                  type: array
+                  type:
+                    - array
+                    - 'null'
                   items:
                     type: string
-                  nullable: true
                 list_of_objects:
                   type: array
                   items:
-                    $ref: "#/components/schemas/MyObject"
-                optional_metadata:
-                  nullable: true
+                    $ref: '#/components/schemas/MyObject'
+                optional_metadata: {}
                 optional_object_type:
-                  $ref: "#/components/schemas/ObjectType"
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/ObjectType'
+                    - type: 'null'
                 optional_id:
-                  $ref: "#/components/schemas/Id"
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/Id'
+                    - type: 'null'
                 list_of_objects_with_optionals:
                   type: array
                   items:
-                    $ref: "#/components/schemas/MyObjectWithOptional"
+                    $ref: '#/components/schemas/MyObjectWithOptional'
                 alias_object:
-                  $ref: "#/components/schemas/MyAliasObject"
+                  $ref: '#/components/schemas/MyAliasObject'
                 list_of_alias_object:
                   type: array
                   items:
-                    $ref: "#/components/schemas/MyAliasObject"
+                    $ref: '#/components/schemas/MyAliasObject'
                 alias_list_of_object:
-                  $ref: "#/components/schemas/MyCollectionAliasObject"
+                  $ref: '#/components/schemas/MyCollectionAliasObject'
   /optional-args:
     post:
       operationId: service_optionalArgs
@@ -286,12 +300,15 @@ paths:
         - Service
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
                 type: string
+              examples:
+                Example1:
+                  value: Foo
       requestBody:
         required: true
         content:
@@ -302,8 +319,7 @@ paths:
                 image_file:
                   type: string
                   format: binary
-                request:
-                  nullable: true
+                request: {}
   /inline-type:
     post:
       operationId: service_withInlineType
@@ -311,8 +327,8 @@ paths:
         - Service
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
@@ -328,7 +344,7 @@ paths:
                   type: string
                   format: binary
                 request:
-                  $ref: "#/components/schemas/MyInlineType"
+                  $ref: '#/components/schemas/MyInlineType'
   /with-json-property:
     post:
       operationId: service_withJsonProperty
@@ -336,8 +352,8 @@ paths:
         - Service
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
@@ -353,8 +369,37 @@ paths:
                   type: string
                   format: binary
                 json:
-                  $ref: "#/components/schemas/MyObject"
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/MyObject'
+                    - type: 'null'
+  /with-ref-body:
+    post:
+      operationId: service_withRefBody
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                Example1:
+                  value: Success
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image_file:
+                  type: string
+                  format: binary
+                request:
+                  $ref: '#/components/schemas/MyObject'
   /snippet:
     post:
       operationId: service_simple
@@ -362,8 +407,8 @@ paths:
         - Service
       parameters: []
       responses:
-        "204":
-          description: ""
+        '204':
+          description: No content
   /with-literal-enum:
     post:
       operationId: service_withLiteralAndEnumTypes
@@ -371,8 +416,8 @@ paths:
         - Service
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
@@ -388,14 +433,17 @@ paths:
                   type: string
                   format: binary
                 model_type:
-                  $ref: "#/components/schemas/ModelType"
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/ModelType'
+                    - type: 'null'
                 open_enum:
-                  $ref: "#/components/schemas/OpenEnumType"
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/OpenEnumType'
+                    - type: 'null'
                 maybe_name:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
 components:
   schemas:
     Id:
@@ -408,18 +456,19 @@ components:
         prop:
           type: string
         optionalProp:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - prop
     MyAliasObject:
       title: MyAliasObject
-      $ref: "#/components/schemas/MyObject"
+      $ref: '#/components/schemas/MyObject'
     MyCollectionAliasObject:
       title: MyCollectionAliasObject
       type: array
       items:
-        $ref: "#/components/schemas/MyObject"
+        $ref: '#/components/schemas/MyObject'
     MyObject:
       title: MyObject
       type: object

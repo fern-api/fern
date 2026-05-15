@@ -1,0 +1,186 @@
+paths:
+  /:
+    get:
+      x-fern-sdk-group-name:
+      - v2
+      x-fern-sdk-method-name: test
+  /admin/store-test-submission-status/{submissionId}:
+    post:
+      x-fern-sdk-group-name:
+      - admin
+      x-fern-sdk-method-name: updateTestSubmissionStatus
+  /admin/store-test-submission-status-v2/{submissionId}:
+    post:
+      x-fern-sdk-group-name:
+      - admin
+      x-fern-sdk-method-name: sendTestSubmissionUpdate
+  /admin/store-workspace-submission-status/{submissionId}:
+    post:
+      x-fern-sdk-group-name:
+      - admin
+      x-fern-sdk-method-name: updateWorkspaceSubmissionStatus
+  /admin/store-workspace-submission-status-v2/{submissionId}:
+    post:
+      x-fern-sdk-group-name:
+      - admin
+      x-fern-sdk-method-name: sendWorkspaceSubmissionUpdate
+  /admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}:
+    post:
+      x-fern-sdk-group-name:
+      - admin
+      x-fern-sdk-method-name: storeTracedTestCase
+  /admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}:
+    post:
+      x-fern-sdk-group-name:
+      - admin
+      x-fern-sdk-method-name: storeTracedTestCaseV2
+  /admin/store-workspace-trace/submission/{submissionId}:
+    post:
+      x-fern-sdk-group-name:
+      - admin
+      x-fern-sdk-method-name: storeTracedWorkspace
+  /admin/store-workspace-trace-v2/submission/{submissionId}:
+    post:
+      x-fern-sdk-group-name:
+      - admin
+      x-fern-sdk-method-name: storeTracedWorkspaceV2
+  /homepage-problems:
+    get:
+      x-fern-sdk-group-name:
+      - homepage
+      x-fern-sdk-method-name: getHomepageProblems
+    post:
+      x-fern-sdk-group-name:
+      - homepage
+      x-fern-sdk-method-name: setHomepageProblems
+  /migration-info/all:
+    get:
+      x-fern-sdk-group-name:
+      - migration
+      x-fern-sdk-method-name: getAttemptedMigrations
+  /v2/playlist/{serviceParam}/create:
+    post:
+      x-fern-sdk-group-name:
+      - playlist
+      x-fern-sdk-method-name: createPlaylist
+  /v2/playlist/{serviceParam}/all:
+    get:
+      x-fern-sdk-group-name:
+      - playlist
+      x-fern-sdk-method-name: getPlaylists
+  /v2/playlist/{serviceParam}/{playlistId}:
+    get:
+      x-fern-sdk-group-name:
+      - playlist
+      x-fern-sdk-method-name: getPlaylist
+    put:
+      x-fern-sdk-group-name:
+      - playlist
+      x-fern-sdk-method-name: updatePlaylist
+  /v2/playlist/{serviceParam}/{playlist_id}:
+    delete:
+      x-fern-sdk-group-name:
+      - playlist
+      x-fern-sdk-method-name: deletePlaylist
+  /problem-crud/create:
+    post:
+      x-fern-sdk-group-name:
+      - problem
+      x-fern-sdk-method-name: createProblem
+  /problem-crud/update/{problemId}:
+    post:
+      x-fern-sdk-group-name:
+      - problem
+      x-fern-sdk-method-name: updateProblem
+  /problem-crud/delete/{problemId}:
+    delete:
+      x-fern-sdk-group-name:
+      - problem
+      x-fern-sdk-method-name: deleteProblem
+  /problem-crud/default-starter-files:
+    post:
+      x-fern-sdk-group-name:
+      - problem
+      x-fern-sdk-method-name: getDefaultStarterFiles
+  /sessions/create-session/{language}:
+    post:
+      x-fern-sdk-group-name:
+      - submission
+      x-fern-sdk-method-name: createExecutionSession
+  /sessions/{sessionId}:
+    get:
+      x-fern-sdk-group-name:
+      - submission
+      x-fern-sdk-method-name: getExecutionSession
+  /sessions/stop/{sessionId}:
+    delete:
+      x-fern-sdk-group-name:
+      - submission
+      x-fern-sdk-method-name: stopExecutionSession
+  /sessions/execution-sessions-state:
+    get:
+      x-fern-sdk-group-name:
+      - submission
+      x-fern-sdk-method-name: getExecutionSessionsState
+  /sysprop/num-warm-instances/{language}/{numWarmInstances}:
+    put:
+      x-fern-sdk-group-name:
+      - sysprop
+      x-fern-sdk-method-name: setNumWarmInstances
+  /sysprop/num-warm-instances:
+    get:
+      x-fern-sdk-group-name:
+      - sysprop
+      x-fern-sdk-method-name: getNumWarmInstances
+  /problems-v2/lightweight-problem-info:
+    get:
+      x-fern-sdk-group-name:
+      - v2
+      - problem
+      x-fern-sdk-method-name: getLightweightProblems
+  /problems-v2/problem-info:
+    get:
+      x-fern-sdk-group-name:
+      - v2
+      - problem
+      x-fern-sdk-method-name: getProblems
+  /problems-v2/problem-info/{problemId}:
+    get:
+      x-fern-sdk-group-name:
+      - v2
+      - problem
+      x-fern-sdk-method-name: getLatestProblem
+  /problems-v2/problem-info/{problemId}/version/{problemVersion}:
+    get:
+      x-fern-sdk-group-name:
+      - v2
+      - problem
+      x-fern-sdk-method-name: getProblemVersion
+  /problems-v3/lightweight-problem-info:
+    get:
+      x-fern-sdk-group-name:
+      - v2
+      - v3
+      - problem
+      x-fern-sdk-method-name: getLightweightProblems
+  /problems-v3/problem-info:
+    get:
+      x-fern-sdk-group-name:
+      - v2
+      - v3
+      - problem
+      x-fern-sdk-method-name: getProblems
+  /problems-v3/problem-info/{problemId}:
+    get:
+      x-fern-sdk-group-name:
+      - v2
+      - v3
+      - problem
+      x-fern-sdk-method-name: getLatestProblem
+  /problems-v3/problem-info/{problemId}/version/{problemVersion}:
+    get:
+      x-fern-sdk-group-name:
+      - v2
+      - v3
+      - problem
+      x-fern-sdk-method-name: getProblemVersion

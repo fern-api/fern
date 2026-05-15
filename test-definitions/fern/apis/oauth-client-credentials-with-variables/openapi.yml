@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: oauth-client-credentials-with-variables
-  version: ""
+  version: 0.0.0
 paths:
   /token:
     post:
@@ -10,12 +10,12 @@ paths:
         - Auth
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TokenResponse"
+                $ref: '#/components/schemas/TokenResponse'
       requestBody:
         required: true
         content:
@@ -34,8 +34,9 @@ paths:
                   type: string
                   const: client_credentials
                 scope:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
               required:
                 - client_id
                 - client_secret
@@ -48,12 +49,12 @@ paths:
         - Auth
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TokenResponse"
+                $ref: '#/components/schemas/TokenResponse'
       requestBody:
         required: true
         content:
@@ -74,8 +75,9 @@ paths:
                   type: string
                   const: refresh_token
                 scope:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
               required:
                 - client_id
                 - client_secret
@@ -86,22 +88,22 @@ paths:
     get:
       operationId: nestedNoAuth_api_getSomething
       tags:
-        - NestedNoAuthApi
+        - NestedNoAuthAPI
       parameters: []
       responses:
-        "204":
-          description: ""
+        '204':
+          description: No content
   /nested/get-something:
     get:
       operationId: nested_api_getSomething
       tags:
-        - NestedApi
+        - NestedAPI
       parameters: []
       responses:
-        "204":
-          description: ""
-      security: &ref_0
-        - BearerAuth: []
+        '204':
+          description: No content
+      security:
+        - OAuthScheme: []
   /service/{endpointParam}:
     post:
       operationId: service_post
@@ -114,9 +116,10 @@ paths:
           schema:
             type: string
       responses:
-        "204":
-          description: ""
-      security: *ref_0
+        '204':
+          description: No content
+      security:
+        - OAuthScheme: []
   /get-something:
     get:
       operationId: simple_getSomething
@@ -124,9 +127,10 @@ paths:
         - Simple
       parameters: []
       responses:
-        "204":
-          description: ""
-      security: *ref_0
+        '204':
+          description: No content
+      security:
+        - OAuthScheme: []
 components:
   schemas:
     TokenResponse:
@@ -139,12 +143,13 @@ components:
         expires_in:
           type: integer
         refresh_token:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - access_token
         - expires_in
   securitySchemes:
-    BearerAuth:
+    OAuthScheme:
       type: http
       scheme: bearer

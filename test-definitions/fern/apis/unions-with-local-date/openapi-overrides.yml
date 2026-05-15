@@ -1,0 +1,36 @@
+paths:
+  /bigunion/{id}:
+    get:
+      x-fern-sdk-group-name:
+      - bigunion
+      x-fern-sdk-method-name: get
+  /bigunion:
+    patch:
+      x-fern-sdk-group-name:
+      - bigunion
+      x-fern-sdk-method-name: update
+  /bigunion/many:
+    patch:
+      x-fern-sdk-group-name:
+      - bigunion
+      x-fern-sdk-method-name: update-many
+  /time/{id}:
+    get:
+      x-fern-sdk-group-name:
+      - types
+      x-fern-sdk-method-name: get
+  /time:
+    patch:
+      x-fern-sdk-group-name:
+      - types
+      x-fern-sdk-method-name: update
+  /union/{id}:
+    get:
+      x-fern-sdk-group-name:
+      - union
+      x-fern-sdk-method-name: get
+  /union:
+    patch:
+      x-fern-sdk-group-name:
+      - union
+      x-fern-sdk-method-name: update

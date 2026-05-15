@@ -1,0 +1,41 @@
+paths:
+  /token:
+    post:
+      x-fern-sdk-group-name:
+      - auth
+      x-fern-sdk-method-name: getToken
+  /users/get-with-bearer:
+    get:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: getWithBearer
+  /users/get-with-api-key:
+    get:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: getWithApiKey
+  /users/get-with-o-auth:
+    get:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: getWithOAuth
+  /users/get-with-basic:
+    get:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: getWithBasic
+  /users/get-with-inferred-auth:
+    get:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: getWithInferredAuth
+  /users/get-with-any-auth:
+    get:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: getWithAnyAuth
+  /users/get-with-all-auth:
+    get:
+      x-fern-sdk-group-name:
+      - user
+      x-fern-sdk-method-name: getWithAllAuth

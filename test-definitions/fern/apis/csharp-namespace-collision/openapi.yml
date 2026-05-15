@@ -1,65 +1,112 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: csharp-namespace-collision
-  version: ""
+  version: 0.0.0
 paths:
-  /users:
+  /users/create-user:
     post:
       operationId: createUser
       tags:
-        - ""
+        - ''
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                $ref: '#/components/schemas/User'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/User"
+              $ref: '#/components/schemas/User'
   /users/create-task:
     post:
       operationId: createTask
       tags:
-        - ""
+        - ''
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Task"
+                $ref: '#/components/schemas/Task'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Task"
-  /system/users:
+              $ref: '#/components/schemas/Task'
+  /scim-configuration:
+    get:
+      operationId: scimConfiguration_getConfiguration
+      tags:
+        - SCIMConfiguration
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimConfigurationScimConfiguration'
+  /scim-configuration/tokens:
+    post:
+      operationId: scimConfiguration_createToken
+      tags:
+        - SCIMConfiguration
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimConfigurationScimToken'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScimConfigurationScimToken'
+  /scim-configuration/users:
+    get:
+      operationId: scimConfiguration_listUsers
+      tags:
+        - SCIMConfiguration
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /system/users/create-user:
     post:
       operationId: system_createUser
       tags:
         - System
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SystemUser"
+                $ref: '#/components/schemas/SystemUser'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SystemUser"
+              $ref: '#/components/schemas/SystemUser'
   /system/users/create-task:
     post:
       operationId: system_createTask
@@ -67,18 +114,18 @@ paths:
         - System
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SystemTask"
+                $ref: '#/components/schemas/SystemTask'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SystemTask"
+              $ref: '#/components/schemas/SystemTask'
   /system/users/{userId}:
     get:
       operationId: system_getUser
@@ -91,12 +138,12 @@ paths:
           schema:
             type: string
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SystemUser"
+                $ref: '#/components/schemas/SystemUser'
 components:
   schemas:
     User:
@@ -133,6 +180,44 @@ components:
         - name
         - email
         - password
+    ScimConfigurationScimConfiguration:
+      title: ScimConfigurationScimConfiguration
+      type: object
+      properties:
+        connectionId:
+          type: string
+        connectionName:
+          type: string
+        strategy:
+          type: string
+        tenant:
+          type: string
+      required:
+        - connectionId
+        - connectionName
+        - strategy
+        - tenant
+    ScimConfigurationScimToken:
+      title: ScimConfigurationScimToken
+      type: object
+      properties:
+        tokenId:
+          type: string
+        token:
+          type:
+            - string
+            - 'null'
+        scopes:
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
+        createdAt:
+          type: string
+      required:
+        - tokenId
+        - createdAt
     SystemTask:
       title: SystemTask
       type: object
@@ -140,9 +225,9 @@ components:
         name:
           type: string
         user:
-          $ref: "#/components/schemas/SystemUser"
+          $ref: '#/components/schemas/SystemUser'
         owner:
-          $ref: "#/components/schemas/SystemUser"
+          $ref: '#/components/schemas/SystemUser'
       required:
         - name
         - user
@@ -154,8 +239,9 @@ components:
         line1:
           type: string
         line2:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         city:
           type: string
         state:

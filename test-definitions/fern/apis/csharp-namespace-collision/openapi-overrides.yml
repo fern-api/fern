@@ -1,0 +1,31 @@
+paths:
+  /scim-configuration:
+    get:
+      x-fern-sdk-group-name:
+      - sCIMConfiguration
+      x-fern-sdk-method-name: scimConfiguration_getConfiguration
+  /scim-configuration/tokens:
+    post:
+      x-fern-sdk-group-name:
+      - sCIMConfiguration
+      x-fern-sdk-method-name: scimConfiguration_createToken
+  /scim-configuration/users:
+    get:
+      x-fern-sdk-group-name:
+      - sCIMConfiguration
+      x-fern-sdk-method-name: scimConfiguration_listUsers
+  /system/users/create-user:
+    post:
+      x-fern-sdk-group-name:
+      - system
+      x-fern-sdk-method-name: createUser
+  /system/users/create-task:
+    post:
+      x-fern-sdk-group-name:
+      - system
+      x-fern-sdk-method-name: createTask
+  /system/users/{userId}:
+    get:
+      x-fern-sdk-group-name:
+      - system
+      x-fern-sdk-method-name: getUser

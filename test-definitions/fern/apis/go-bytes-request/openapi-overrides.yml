@@ -1,0 +1,6 @@
+paths:
+  /upload-content:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: upload

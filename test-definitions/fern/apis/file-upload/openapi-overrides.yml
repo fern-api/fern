@@ -1,0 +1,66 @@
+paths:
+  /post:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: post
+  /just-file:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: justFile
+  /just-file-with-query-params:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: justFileWithQueryParams
+  /just-file-with-optional-query-params:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: justFileWithOptionalQueryParams
+  /with-content-type:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: withContentType
+  /with-form-encoding:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: withFormEncoding
+  /with-form-encoded-containers:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: withFormEncodedContainers
+  /optional-args:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: optionalArgs
+  /inline-type:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: withInlineType
+  /with-json-property:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: withJsonProperty
+  /with-ref-body:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: withRefBody
+  /snippet:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: simple
+  /with-literal-enum:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: withLiteralAndEnumTypes

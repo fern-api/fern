@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
-  title: java-pagination-deep-cursor-path
-  version: ""
+  title: deep-cursor-path
+  version: 0.0.0
 paths:
   /do-thing:
     post:
@@ -10,19 +10,19 @@ paths:
         - DeepCursorPath
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Response"
+                $ref: '#/components/schemas/Response'
       summary: Do Thing
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/A"
+              $ref: '#/components/schemas/A'
   /do-thing-required:
     post:
       operationId: deepCursorPath_do-thing-required
@@ -30,19 +30,19 @@ paths:
         - DeepCursorPath
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Response"
+                $ref: '#/components/schemas/Response'
       summary: Do Thing
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/MainRequired"
+              $ref: '#/components/schemas/MainRequired'
   /do-thing-inline:
     post:
       operationId: deepCursorPath_do-thing-inline
@@ -50,19 +50,19 @@ paths:
         - DeepCursorPath
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Response"
+                $ref: '#/components/schemas/Response'
       summary: Do Thing
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/InlineA"
+              $ref: '#/components/schemas/InlineA'
 components:
   schemas:
     D:
@@ -70,21 +70,23 @@ components:
       type: object
       properties:
         starting_after:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
     C:
       title: C
       type: object
       properties:
         d:
-          $ref: "#/components/schemas/D"
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/D'
+            - type: 'null'
     B:
       title: B
       type: object
       properties:
         c:
-          $ref: "#/components/schemas/C"
+          $ref: '#/components/schemas/C'
       required:
         - c
     A:
@@ -92,15 +94,17 @@ components:
       type: object
       properties:
         b:
-          $ref: "#/components/schemas/B"
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/B'
+            - type: 'null'
     Response:
       title: Response
       type: object
       properties:
         starting_after:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         results:
           type: array
           items:
@@ -112,8 +116,9 @@ components:
       type: object
       properties:
         starting_after:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         results:
           type: array
           items:
@@ -125,7 +130,7 @@ components:
       type: object
       properties:
         indirection:
-          $ref: "#/components/schemas/IndirectionRequired"
+          $ref: '#/components/schemas/IndirectionRequired'
       required:
         - indirection
     InlineD:
@@ -133,21 +138,23 @@ components:
       type: object
       properties:
         starting_after:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
     InlineC:
       title: InlineC
       type: object
       properties:
         b:
-          $ref: "#/components/schemas/InlineD"
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/InlineD'
+            - type: 'null'
     InlineB:
       title: InlineB
       type: object
       properties:
         c:
-          $ref: "#/components/schemas/InlineC"
+          $ref: '#/components/schemas/InlineC'
       required:
         - c
     InlineA:
@@ -155,6 +162,7 @@ components:
       type: object
       properties:
         b:
-          $ref: "#/components/schemas/InlineB"
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/InlineB'
+            - type: 'null'
   securitySchemes: {}

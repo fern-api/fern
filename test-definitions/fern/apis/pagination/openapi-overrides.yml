@@ -1,0 +1,158 @@
+paths:
+  /{index}/conversations/search:
+    post:
+      x-fern-sdk-group-name:
+      - complex
+      x-fern-sdk-method-name: search
+  /inline-users/list-with-cursor-pagination:
+    get:
+      x-fern-sdk-group-name:
+      - inlineUsers
+      - inlineUsers
+      x-fern-sdk-method-name: listWithCursorPagination
+  /inline-users/list-with-mixed-type-cursor-pagination:
+    post:
+      x-fern-sdk-group-name:
+      - inlineUsers
+      - inlineUsers
+      x-fern-sdk-method-name: listWithMixedTypeCursorPagination
+  /inline-users/list-with-body-cursor-pagination:
+    post:
+      x-fern-sdk-group-name:
+      - inlineUsers
+      - inlineUsers
+      x-fern-sdk-method-name: listWithBodyCursorPagination
+  /inline-users/list-with-offset-pagination:
+    get:
+      x-fern-sdk-group-name:
+      - inlineUsers
+      - inlineUsers
+      x-fern-sdk-method-name: listWithOffsetPagination
+  /inline-users/list-with-double-offset-pagination:
+    get:
+      x-fern-sdk-group-name:
+      - inlineUsers
+      - inlineUsers
+      x-fern-sdk-method-name: listWithDoubleOffsetPagination
+  /inline-users/list-with-body-offset-pagination:
+    post:
+      x-fern-sdk-group-name:
+      - inlineUsers
+      - inlineUsers
+      x-fern-sdk-method-name: listWithBodyOffsetPagination
+  /inline-users/list-with-offset-step-pagination:
+    get:
+      x-fern-sdk-group-name:
+      - inlineUsers
+      - inlineUsers
+      x-fern-sdk-method-name: listWithOffsetStepPagination
+  /inline-users/list-with-offset-pagination-has-next-page:
+    get:
+      x-fern-sdk-group-name:
+      - inlineUsers
+      - inlineUsers
+      x-fern-sdk-method-name: listWithOffsetPaginationHasNextPage
+  /inline-users/list-with-extended-results:
+    get:
+      x-fern-sdk-group-name:
+      - inlineUsers
+      - inlineUsers
+      x-fern-sdk-method-name: listWithExtendedResults
+  /inline-users/list-with-extended-results-and-optional-data:
+    get:
+      x-fern-sdk-group-name:
+      - inlineUsers
+      - inlineUsers
+      x-fern-sdk-method-name: listWithExtendedResultsAndOptionalData
+  /inline-users/list-usernames:
+    get:
+      x-fern-sdk-group-name:
+      - inlineUsers
+      - inlineUsers
+      x-fern-sdk-method-name: listUsernames
+  /inline-users/list-with-global-config:
+    get:
+      x-fern-sdk-group-name:
+      - inlineUsers
+      - inlineUsers
+      x-fern-sdk-method-name: listWithGlobalConfig
+  /users/list-with-cursor-pagination:
+    get:
+      x-fern-sdk-group-name:
+      - users
+      x-fern-sdk-method-name: listWithCursorPagination
+  /users/list-with-mixed-type-cursor-pagination:
+    post:
+      x-fern-sdk-group-name:
+      - users
+      x-fern-sdk-method-name: listWithMixedTypeCursorPagination
+  /users/list-with-body-cursor-pagination:
+    post:
+      x-fern-sdk-group-name:
+      - users
+      x-fern-sdk-method-name: listWithBodyCursorPagination
+  /users/top-level-cursor:
+    post:
+      x-fern-sdk-group-name:
+      - users
+      x-fern-sdk-method-name: listWithTopLevelBodyCursorPagination
+  /users/list-with-offset-pagination:
+    get:
+      x-fern-sdk-group-name:
+      - users
+      x-fern-sdk-method-name: listWithOffsetPagination
+  /users/list-with-double-offset-pagination:
+    get:
+      x-fern-sdk-group-name:
+      - users
+      x-fern-sdk-method-name: listWithDoubleOffsetPagination
+  /users/list-with-body-offset-pagination:
+    post:
+      x-fern-sdk-group-name:
+      - users
+      x-fern-sdk-method-name: listWithBodyOffsetPagination
+  /users/list-with-offset-step-pagination:
+    get:
+      x-fern-sdk-group-name:
+      - users
+      x-fern-sdk-method-name: listWithOffsetStepPagination
+  /users/list-with-offset-pagination-has-next-page:
+    get:
+      x-fern-sdk-group-name:
+      - users
+      x-fern-sdk-method-name: listWithOffsetPaginationHasNextPage
+  /users/list-with-extended-results:
+    get:
+      x-fern-sdk-group-name:
+      - users
+      x-fern-sdk-method-name: listWithExtendedResults
+  /users/list-with-extended-results-and-optional-data:
+    get:
+      x-fern-sdk-group-name:
+      - users
+      x-fern-sdk-method-name: listWithExtendedResultsAndOptionalData
+  /users/list-usernames:
+    get:
+      x-fern-sdk-group-name:
+      - users
+      x-fern-sdk-method-name: listUsernames
+  /users/list-usernames-with-optional-response:
+    get:
+      x-fern-sdk-group-name:
+      - users
+      x-fern-sdk-method-name: listUsernamesWithOptionalResponse
+  /users/list-with-global-config:
+    get:
+      x-fern-sdk-group-name:
+      - users
+      x-fern-sdk-method-name: listWithGlobalConfig
+  /users/optional-data:
+    get:
+      x-fern-sdk-group-name:
+      - users
+      x-fern-sdk-method-name: listWithOptionalData
+  /users/aliased-data:
+    get:
+      x-fern-sdk-group-name:
+      - users
+      x-fern-sdk-method-name: listWithAliasedData

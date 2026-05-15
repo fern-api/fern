@@ -1,0 +1,16 @@
+paths:
+  /do-thing:
+    post:
+      x-fern-sdk-group-name:
+      - deepCursorPath
+      x-fern-sdk-method-name: do-thing
+  /do-thing-required:
+    post:
+      x-fern-sdk-group-name:
+      - deepCursorPath
+      x-fern-sdk-method-name: do-thing-required
+  /do-thing-inline:
+    post:
+      x-fern-sdk-group-name:
+      - deepCursorPath
+      x-fern-sdk-method-name: do-thing-inline

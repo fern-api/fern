@@ -1,0 +1,11 @@
+paths:
+  /upload-content:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: upload
+  /upload-content-with-query-params:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: uploadWithQueryParams

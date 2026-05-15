@@ -1,0 +1,27 @@
+paths:
+  /a/b:
+    post:
+      x-fern-sdk-group-name:
+      - aB
+      x-fern-sdk-method-name: a_b_foo
+  /a/c:
+    post:
+      x-fern-sdk-group-name:
+      - aC
+      x-fern-sdk-method-name: a_c_foo
+  /folder:
+    post:
+      x-fern-sdk-group-name:
+      - folder
+      x-fern-sdk-method-name: foo
+  /service:
+    get:
+      x-fern-sdk-group-name:
+      - folder
+      - service
+      x-fern-sdk-method-name: endpoint
+    post:
+      x-fern-sdk-group-name:
+      - folder
+      - service
+      x-fern-sdk-method-name: unknownRequest

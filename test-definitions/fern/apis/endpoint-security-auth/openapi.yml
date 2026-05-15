@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: endpoint-security-auth
-  version: ""
+  version: 0.0.0
 paths:
   /token:
     post:
@@ -10,12 +10,12 @@ paths:
         - Auth
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TokenResponse"
+                $ref: '#/components/schemas/TokenResponse'
       requestBody:
         required: true
         content:
@@ -38,118 +38,153 @@ paths:
                 - client_secret
                 - audience
                 - grant_type
-  /users/bearer:
+  /users/get-with-bearer:
     get:
       operationId: user_getWithBearer
       tags:
         - User
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/User"
-      security: &ref_0 []
-  /users/api-key:
+                  $ref: '#/components/schemas/User'
+      security:
+        - Bearer: []
+          APIKey: []
+          OAuth: []
+          Basic: []
+          InferredAuth: []
+  /users/get-with-api-key:
     get:
       operationId: user_getWithApiKey
       tags:
         - User
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/User"
-      security: *ref_0
-  /users/oauth:
+                  $ref: '#/components/schemas/User'
+      security:
+        - Bearer: []
+          APIKey: []
+          OAuth: []
+          Basic: []
+          InferredAuth: []
+  /users/get-with-o-auth:
     get:
       operationId: user_getWithOAuth
       tags:
         - User
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/User"
-      security: *ref_0
-  /users/basic:
+                  $ref: '#/components/schemas/User'
+      security:
+        - Bearer: []
+          APIKey: []
+          OAuth: []
+          Basic: []
+          InferredAuth: []
+  /users/get-with-basic:
     get:
       operationId: user_getWithBasic
       tags:
         - User
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/User"
-      security: *ref_0
-  /users/inferred:
+                  $ref: '#/components/schemas/User'
+      security:
+        - Bearer: []
+          APIKey: []
+          OAuth: []
+          Basic: []
+          InferredAuth: []
+  /users/get-with-inferred-auth:
     get:
       operationId: user_getWithInferredAuth
       tags:
         - User
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/User"
-      security: *ref_0
-  /users/any-auth:
+                  $ref: '#/components/schemas/User'
+      security:
+        - Bearer: []
+          APIKey: []
+          OAuth: []
+          Basic: []
+          InferredAuth: []
+  /users/get-with-any-auth:
     get:
       operationId: user_getWithAnyAuth
       tags:
         - User
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/User"
-      security: *ref_0
-  /users/all-auth:
+                  $ref: '#/components/schemas/User'
+      security:
+        - Bearer: []
+          APIKey: []
+          OAuth: []
+          Basic: []
+          InferredAuth: []
+  /users/get-with-all-auth:
     get:
       operationId: user_getWithAllAuth
       tags:
         - User
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: Success
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/User"
-      security: *ref_0
+                  $ref: '#/components/schemas/User'
+      security:
+        - Bearer: []
+          APIKey: []
+          OAuth: []
+          Basic: []
+          InferredAuth: []
 components:
   schemas:
     TokenResponse:
@@ -162,8 +197,9 @@ components:
         expires_in:
           type: integer
         refresh_token:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - access_token
         - expires_in
@@ -179,13 +215,19 @@ components:
         - id
         - name
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer
-    ApiKeyAuth:
+    APIKey:
       type: apiKey
       in: header
       name: X-API-Key
-    BasicAuth:
+    OAuth:
+      type: http
+      scheme: bearer
+    Basic:
       type: http
       scheme: basic
+    InferredAuth:
+      type: http
+      scheme: bearer

@@ -1,0 +1,36 @@
+paths:
+  /movie/get-movie:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: getMovie
+  /movie/get-movie-docs:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: getMovieDocs
+  /movie/get-movie-name:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: getMovieName
+  /movie/get-movie-metadata:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: getMovieMetadata
+  /movie/get-optional-movie:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: getOptionalMovie
+  /movie/get-optional-movie-docs:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: getOptionalMovieDocs
+  /movie/get-optional-movie-name:
+    post:
+      x-fern-sdk-group-name:
+      - service
+      x-fern-sdk-method-name: getOptionalMovieName
