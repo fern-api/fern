@@ -1,6 +1,6 @@
-//! # Api SDK
+//! # api SDK
 //!
-//! The official Rust SDK for the Api.
+//! The official Rust SDK for the api.
 //!
 //! ## Getting Started
 //!
@@ -20,7 +20,6 @@
 //!             &CreateMovieRequest {
 //!                 title: "title".to_string(),
 //!                 rating: 1.1,
-//!                 ..Default::default()
 //!             },
 //!             None,
 //!         )

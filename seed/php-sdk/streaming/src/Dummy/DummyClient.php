@@ -5,13 +5,14 @@ namespace Seed\Dummy;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Dummy\Requests\GenerateStreamRequest;
+use Seed\Core\Client\JsonStream;
+use Seed\Dummy\Types\StreamResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Dummy\Requests\Generateequest;
-use Seed\Dummy\Types\StreamResponse;
 use JsonException;
 
 class DummyClient
@@ -60,10 +61,11 @@ class DummyClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
+     * @return JsonStream<StreamResponse>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function generateStream(GenerateStreamRequest $request, ?array $options = null): void
+    public function generateStream(GenerateStreamRequest $request, ?array $options = null): JsonStream
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -77,6 +79,9 @@ class DummyClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return new JsonStream(response: $response, deserializer: fn (string $data) => StreamResponse::fromJson($data), terminator: null);
+            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }

@@ -333,7 +333,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.imdb.createMovie(request: CreateMovieRequest(
+    _ = try await client.imdb.createMovie(request: .init(
         title: "The Matrix",
         rating: 8.2
     ))

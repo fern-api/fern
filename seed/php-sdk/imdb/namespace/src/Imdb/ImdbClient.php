@@ -4,7 +4,7 @@ namespace Fern\Imdb;
 
 use Psr\Http\Client\ClientInterface;
 use Fern\Core\Client\RawClient;
-use Fern\Imdb\Types\CreateMovieRequest;
+use Fern\Imdb\Requests\CreateMovieRequest;
 use Fern\Exceptions\SeedException;
 use Fern\Exceptions\SeedApiException;
 use Fern\Core\Json\JsonApiRequest;
@@ -12,7 +12,7 @@ use Fern\Core\Client\HttpMethod;
 use Fern\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Fern\Imdb\Types\Movie;
+use Fern\Types\Movie;
 
 class ImdbClient
 {
@@ -73,7 +73,7 @@ class ImdbClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/movies/create-movie",
+                    path: "movies/create-movie",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -120,7 +120,7 @@ class ImdbClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/movies/{$movieId}",
+                    path: "movies/{$movieId}",
                     method: HttpMethod::GET,
                 ),
                 $options,

@@ -1,4 +1,25 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.26.4
+  changelogEntry:
+    - summary: |
+        Fix `missing-redirects` causing `fern check` to exit with code 1 even when
+        the rule is configured at `warn`. Rule initialization failures now honor
+        the configured severity (`warn` emits a warning, `error` emits an error)
+        instead of always being reported as fatal. The `missing-redirects` rule
+        also degrades to a warning when the local docs navigation fails to
+        resolve, captures the underlying `failAndThrow` message so the warning
+        explains *why* (e.g. `Folder not found: ...`) instead of `[object Object]`,
+        and non-`Error` throws are formatted readably across the validator.
+      type: fix
+  createdAt: "2026-05-14"
+  irVersion: 66
+- version: 5.26.3
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` grabbing the local fern token for authentication when loading a global theme
+      type: fix
+  createdAt: "2026-05-14"
+  irVersion: 66
 - version: 5.26.2
   changelogEntry:
     - summary: |
@@ -33,7 +54,7 @@
     - summary: |
         Add `fern docs link check` command to validate links on live documentation sites.
         Supports text, JSON, and CSV output formats via `--output` flag.
-        Use `--url <url>` to specify which docs site to check, or auto-detect from fern.yml.
+        Use `--url <url>` to specify which docs site to check, or auto-detect from docs.yml.
       type: feat
     - summary: |
         Add progress bars matching `fern docs dev` style for `fern docs link check`.
