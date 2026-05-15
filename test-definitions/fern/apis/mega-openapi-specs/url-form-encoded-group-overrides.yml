@@ -1,7 +1,0 @@
-paths:
-  /submit:
-    post:
-      x-fern-sdk-group-name: root
-  /token:
-    post:
-      x-fern-sdk-group-name: root

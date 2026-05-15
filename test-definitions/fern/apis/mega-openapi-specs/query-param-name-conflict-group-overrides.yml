@@ -1,4 +1,0 @@
-paths:
-  /task/:
-    put:
-      x-fern-sdk-group-name: root

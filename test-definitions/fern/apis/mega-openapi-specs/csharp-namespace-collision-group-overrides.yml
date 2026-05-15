@@ -1,7 +1,0 @@
-paths:
-  /users/create-user:
-    post:
-      x-fern-sdk-group-name: root
-  /users/create-task:
-    post:
-      x-fern-sdk-group-name: root

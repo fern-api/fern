@@ -1,6 +1,0 @@
-paths:
-  /user:
-    get:
-      x-fern-sdk-group-name: root
-    post:
-      x-fern-sdk-group-name: root

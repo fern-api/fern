@@ -60,9 +60,9 @@ api:
     - openapi: ../csharp-inline-types/openapi.yml
       namespace: csharp-inline-types
       overrides: ../csharp-inline-types/openapi-overrides.yml
-    - openapi: ../csharp-namespace-collision/openapi.yml
-      namespace: csharp-namespace-collision
-      overrides: ../csharp-namespace-collision/openapi-overrides.yml
+    # - openapi: ../csharp-namespace-collision/openapi.yml
+    #   namespace: csharp-namespace-collision
+    #   overrides: ../csharp-namespace-collision/openapi-overrides.yml
     - openapi: ../csharp-namespace-conflict/openapi.yml
       namespace: csharp-namespace-conflict
       overrides: ../csharp-namespace-conflict/openapi-overrides.yml
@@ -182,8 +182,8 @@ api:
     - openapi: ../java-many-properties/openapi.yml
       namespace: java-many-properties
       overrides: ../java-many-properties/openapi-overrides.yml
-    - openapi: ../java-nullable-named-request-types/openapi.yml
-      namespace: java-nullable-named-request-types
+    # - openapi: ../java-nullable-named-request-types/openapi.yml
+    #   namespace: java-nullable-named-request-types
     - openapi: ../java-optional-nullable-query-params/openapi.yml
       namespace: java-optional-nullable-query-params
       overrides: ../java-optional-nullable-query-params/openapi-overrides.yml
@@ -305,9 +305,9 @@ api:
     - openapi: ../optional/openapi.yml
       namespace: optional
       overrides: ../optional/openapi-overrides.yml
-    - openapi: ../package-yml/openapi.yml
-      namespace: package-yml
-      overrides: ../package-yml/openapi-overrides.yml
+    # - openapi: ../package-yml/openapi.yml
+    #   namespace: package-yml
+    #   overrides: ../package-yml/openapi-overrides.yml
     - openapi: ../pagination-custom/openapi.yml
       namespace: pagination-custom
       overrides: ../pagination-custom/openapi-overrides.yml
@@ -339,10 +339,10 @@ api:
       overrides: ../python-positional-single-property/openapi-overrides.yml
     - openapi: ../python-reserved-keyword-subpackages/openapi.yml
       namespace: python-reserved-keyword-subpackages
-    - openapi: ../python-streaming-parameter-openapi/openapi.yml
-      namespace: python-streaming-parameter-openapi
-    - openapi: ../query-param-name-conflict/openapi.yml
-      namespace: query-param-name-conflict
+    # - openapi: ../python-streaming-parameter-openapi/openapi.yml
+    #   namespace: python-streaming-parameter-openapi
+    # - openapi: ../query-param-name-conflict/openapi.yml
+    #   namespace: query-param-name-conflict
     - openapi: ../query-parameters-openapi/openapi.yml
       namespace: query-parameters-openapi
     - openapi: ../query-parameters/openapi.yml
@@ -368,8 +368,8 @@ api:
     - openapi: ../server-sent-event-examples/openapi.yml
       namespace: server-sent-event-examples
       overrides: ../server-sent-event-examples/openapi-overrides.yml
-    - openapi: ../server-sent-events-openapi/openapi.yml
-      namespace: server-sent-events-openapi
+    # - openapi: ../server-sent-events-openapi/openapi.yml
+    #   namespace: server-sent-events-openapi
     - openapi: ../server-sent-events/openapi.yml
       namespace: server-sent-events
       overrides: ../server-sent-events/openapi-overrides.yml

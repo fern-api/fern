@@ -1,7 +1,0 @@
-paths:
-  /catalog:
-    post:
-      x-fern-sdk-group-name: root
-  /activity:
-    post:
-      x-fern-sdk-group-name: root

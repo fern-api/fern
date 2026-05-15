@@ -1,4 +1,0 @@
-paths:
-  /account/{account_id}:
-    get:
-      x-fern-sdk-group-name: root

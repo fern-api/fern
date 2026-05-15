@@ -1,7 +1,0 @@
-paths:
-  /foo:
-    get:
-      x-fern-sdk-group-name: root
-  /foo/{id}:
-    patch:
-      x-fern-sdk-group-name: root

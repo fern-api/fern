@@ -1,4 +1,0 @@
-paths:
-  /timezone:
-    get:
-      x-fern-sdk-group-name: root

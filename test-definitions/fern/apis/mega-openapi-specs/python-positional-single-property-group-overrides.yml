@@ -1,4 +1,0 @@
-paths:
-  /create:
-    post:
-      x-fern-sdk-group-name: root

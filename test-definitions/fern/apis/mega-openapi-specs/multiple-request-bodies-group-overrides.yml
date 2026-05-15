@@ -1,7 +1,0 @@
-paths:
-  /documents/upload:
-    post:
-      x-fern-sdk-group-name: root
-  /documents/upload-pdf:
-    post:
-      x-fern-sdk-group-name: root

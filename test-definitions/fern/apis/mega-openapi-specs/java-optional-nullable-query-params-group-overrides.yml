@@ -1,4 +1,0 @@
-paths:
-  /api/search:
-    get:
-      x-fern-sdk-group-name: root
