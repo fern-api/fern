@@ -6,5 +6,6 @@ export class ParseError extends Error {
         super(errors.map(stringifyValidationError).join("; "));
         Object.setPrototypeOf(this, ParseError.prototype);
         this.name = "ParseError";
+        this.name = "ParseError";
     }
 }
