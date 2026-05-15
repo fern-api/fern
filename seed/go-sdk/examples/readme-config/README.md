@@ -74,10 +74,6 @@ func do() {
             },
         },
         ExtendedMovie: &fern.ExtendedMovie{
-            Cast: []string{
-                "cast",
-                "cast",
-            },
             ID: "id",
             Prequel: fern.String(
                 "prequel",
@@ -95,6 +91,10 @@ func do() {
                 },
             },
             Revenue: int64(1000000),
+            Cast: []string{
+                "cast",
+                "cast",
+            },
         },
         Entity: &fern.Entity{
             Type: &fern.Type{

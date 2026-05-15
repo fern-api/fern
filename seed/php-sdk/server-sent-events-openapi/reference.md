@@ -781,9 +781,9 @@ Uses x-fern-streaming with stream-condition where the request body is a discrimi
 ```php
 $client->streamXFernStreamingUnionStream(
     StreamXFernStreamingUnionStreamRequest::message(true, new UnionStreamMessageVariant([
+        'streamResponse' => true,
         'prompt' => 'prompt',
         'message' => 'message',
-        'streamResponse' => true,
     ])),
 );
 ```
@@ -841,9 +841,9 @@ Uses x-fern-streaming with stream-condition where the request body is a discrimi
 ```php
 $client->streamXFernStreamingUnionStream(
     StreamXFernStreamingUnionStreamRequest::message(false, new UnionStreamMessageVariant([
+        'streamResponse' => false,
         'prompt' => 'prompt',
         'message' => 'message',
-        'streamResponse' => false,
     ])),
 );
 ```

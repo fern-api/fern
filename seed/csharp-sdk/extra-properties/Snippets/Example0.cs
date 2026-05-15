@@ -11,9 +11,9 @@ public partial class Examples
 
         await client.User.CreateUserAsync(
             new CreateUserRequest {
-                Name = "Alice",
                 Type = "CreateUserRequest",
-                Version = "v1"
+                Version = "v1",
+                Name = "Alice"
             }
         );
     }

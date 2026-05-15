@@ -12,9 +12,9 @@ public partial class Examples
         await client.Reference.SendAsync(
             new SendRequest {
                 Prompt = "You are a helpful assistant",
+                Query = "What is the weather today",
                 Stream = false,
                 Context = "You're super wise",
-                Query = "What is the weather today",
                 ContainerObject = new ContainerObject {
                     NestedObjects = new List<NestedObjectWithLiterals>(){
                         new NestedObjectWithLiterals {

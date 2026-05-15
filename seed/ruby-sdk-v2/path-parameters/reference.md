@@ -13,7 +13,10 @@
 <dd>
 
 ```ruby
-client.organizations.get_organization(organization_id: "organization_id")
+client.organizations.get_organization(
+  tenant_id: "tenant_id",
+  organization_id: "organization_id"
+)
 ```
 </dd>
 </dl>
@@ -70,6 +73,7 @@ client.organizations.get_organization(organization_id: "organization_id")
 
 ```ruby
 client.organizations.get_organization_user(
+  tenant_id: "tenant_id",
   organization_id: "organization_id",
   user_id: "user_id"
 )
@@ -137,6 +141,7 @@ client.organizations.get_organization_user(
 
 ```ruby
 client.organizations.search_organizations(
+  tenant_id: "tenant_id",
   organization_id: "organization_id",
   limit: 1
 )
@@ -204,7 +209,10 @@ client.organizations.search_organizations(
 <dd>
 
 ```ruby
-client.user.get_user(user_id: "user_id")
+client.user.get_user(
+  tenant_id: "tenant_id",
+  user_id: "user_id"
+)
 ```
 </dd>
 </dl>
@@ -261,6 +269,7 @@ client.user.get_user(user_id: "user_id")
 
 ```ruby
 client.user.create_user(
+  tenant_id: "tenant_id",
   name: "name",
   tags: %w[tags tags]
 )
@@ -320,6 +329,7 @@ client.user.create_user(
 
 ```ruby
 client.user.update_user(
+  tenant_id: "tenant_id",
   user_id: "user_id",
   name: "name",
   tags: %w[tags tags]
@@ -388,6 +398,7 @@ client.user.update_user(
 
 ```ruby
 client.user.search_users(
+  tenant_id: "tenant_id",
   user_id: "user_id",
   limit: 1
 )
@@ -469,6 +480,7 @@ Test endpoint with path parameter that has a text prefix (v{version})
 
 ```ruby
 client.user.get_user_metadata(
+  tenant_id: "tenant_id",
   user_id: "user_id",
   version: 1
 )
@@ -550,6 +562,7 @@ Test endpoint with path parameters listed in different order than found in path
 
 ```ruby
 client.user.get_user_specifics(
+  tenant_id: "tenant_id",
   user_id: "user_id",
   version: 1,
   thought: "thought"

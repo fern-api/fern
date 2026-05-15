@@ -2304,7 +2304,7 @@ import Trace
         )
         let response = try await client.v2.problem.getProblemVersion(
             problemId: "problemId",
-            problemVersion: 1,
+            problemVersion: "1",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
