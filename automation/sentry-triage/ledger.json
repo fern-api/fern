@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
   "project": "buildwithfern/cli",
-  "updatedAt": "2026-05-04",
+  "updatedAt": "2026-05-05",
   "issues": {
     "CLI-2W": {
       "title": "59:2: Unexpected character `!` before name",
@@ -272,11 +272,11 @@
     },
     "CLI-H": {
       "title": "ExitPromptError after SIGINT",
-      "disposition": "keep_sentry",
-      "rationale": "Prompt SIGINT is a user abort, but this path still needs prompt-boundary handling; do not suppress it centrally via resolveErrorCode.",
-      "fixSummary": "—",
-      "prOrIssue": "Keep in Sentry until prompt boundary handles ExitPromptError",
-      "lastAnalyzed": "2026-05-04",
+      "disposition": "shipped",
+      "rationale": "Prompt SIGINT is a user abort; current CliContext prompt wrappers convert ExitPromptError to TaskAbortSignal before reporting.",
+      "fixSummary": "Handle ExitPromptError at prompt boundaries and abort without Sentry reporting.",
+      "prOrIssue": "Already handled in current code; ledger corrected in this PR",
+      "lastAnalyzed": "2026-05-05",
       "problemSignature": "Interactive prompt cancellation via SIGINT surfaced as Sentry InternalError instead of a non-reportable user abort."
     },
     "CLI-3P": {
@@ -844,12 +844,12 @@
     },
     "CLI-1K": {
       "title": "GitHub pull request base branch invalid",
-      "disposition": "keep_sentry",
-      "rationale": "GitHub PR creation got a 422 invalid base response; leave reportable until GitHub output validation/error mapping is fixed.",
-      "fixSummary": "—",
-      "prOrIssue": "Keep in Sentry until product fix",
-      "lastAnalyzed": "2026-05-04",
-      "problemSignature": "GitHub output PR creation failed because the configured base branch was invalid; needs config/error mapping product fix."
+      "disposition": "shipped",
+      "rationale": "Remote generation task failures are generator/container task failures, not CLI internal defects.",
+      "fixSummary": "RemoteTaskHandler maps failed remote tasks to non-reportable ContainerError in current code.",
+      "prOrIssue": "Already handled in current code; ledger corrected in this PR",
+      "lastAnalyzed": "2026-05-05",
+      "problemSignature": "Remote generation task failed because downstream generator/GitHub output rejected user configuration; should be non-reportable task/container failure."
     },
     "CLI-3J": {
       "title": "Windows temp OpenAPI filepath is not relative",
@@ -871,66 +871,66 @@
     },
     "CLI-34": {
       "title": "Python package path not found",
-      "disposition": "keep_sentry",
-      "rationale": "Generator/library package path validation should be handled as user config, but this path still reports through task failure; needs product mapping.",
-      "fixSummary": "—",
-      "prOrIssue": "Keep in Sentry until product fix",
-      "lastAnalyzed": "2026-05-04",
-      "problemSignature": "Python generator package path missing or not a Python package; user config problem still reported through CLI task failure."
+      "disposition": "shipped",
+      "rationale": "Library docs generation failed in the external library-docs service; the CLI should not report service job failures as internal defects.",
+      "fixSummary": "Map failed library-docs generation statuses to NetworkError instead of InternalError.",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-05",
+      "problemSignature": "Library docs generation failed in an external service job; should be non-reportable service/network semantics."
     },
     "CLI-2J": {
       "title": "Failed to load generator migrations",
-      "disposition": "keep_sentry",
-      "rationale": "Generator migration loading failed for a specific generator; leave reportable until migration-loading error mapping/root cause is fixed.",
-      "fixSummary": "—",
-      "prOrIssue": "Keep in Sentry until product fix",
-      "lastAnalyzed": "2026-05-04",
-      "problemSignature": "Generator migrations failed to load for a configured generator; product/config boundary needs investigation."
+      "disposition": "shipped",
+      "rationale": "Migration loading failed because the user's local migration cache/npm environment could not create its cache directory.",
+      "fixSummary": "Wrap migration package install/load failures as CliError(EnvironmentError) while preserving true CliErrors.",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-05",
+      "problemSignature": "Generator migrations failed to load due local npm/cache/environment error; should be environment semantics."
     },
     "CLI-2D": {
       "title": "git rm -rf command failed",
-      "disposition": "keep_sentry",
-      "rationale": "Subprocess failure in Git output cleanup should be controlled or classified at the boundary; not fixed in this run.",
-      "fixSummary": "—",
-      "prOrIssue": "Keep in Sentry until product fix",
-      "lastAnalyzed": "2026-05-04",
-      "problemSignature": "Git subprocess failure during generated output cleanup reported as InternalError; subprocess boundary needs controlled failure."
+      "disposition": "shipped",
+      "rationale": "Generated-output cleanup failed because the user's git worktree/submodule state rejected git rm.",
+      "fixSummary": "Wrap local generated-output git command failures as CliError(UserError).",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-05",
+      "problemSignature": "Git subprocess failure during generated output cleanup reported as InternalError; should be user/worktree semantics."
     },
     "CLI-22": {
       "title": "Auth0 SSO connection returned HTTP 400",
-      "disposition": "keep_sentry",
-      "rationale": "Auth/network 400 should likely be mapped to auth or network semantics, but root cause needs login-flow handling.",
-      "fixSummary": "—",
-      "prOrIssue": "Keep in Sentry until product fix",
-      "lastAnalyzed": "2026-05-04",
-      "problemSignature": "Auth0 login/SSO request returned HTTP 400 and surfaced as AxiosError; auth/network boundary needs mapping."
+      "disposition": "shipped",
+      "rationale": "SSO connection resolution 400 is an auth/login boundary failure, not an internal CLI defect.",
+      "fixSummary": "Map Auth0 SSO resolve HTTP 400 responses to CliError(AuthError).",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-05",
+      "problemSignature": "Auth0 login/SSO request returned HTTP 400 and surfaced as AxiosError; should be auth semantics."
     },
     "CLI-D": {
       "title": "Invalid BAML provider bedrock",
-      "disposition": "keep_sentry",
-      "rationale": "AI/BAML provider configuration error should be mapped at the AI config boundary; not fixed in this run.",
-      "fixSummary": "—",
-      "prOrIssue": "Keep in Sentry until product fix",
-      "lastAnalyzed": "2026-05-04",
-      "problemSignature": "AI configuration selected an unsupported BAML provider and surfaced as InternalError; config boundary needs mapping."
+      "disposition": "shipped",
+      "rationale": "Unsupported BAML provider comes from user AI configuration in generators.yml.",
+      "fixSummary": "Wrap BAML client setup failures at the local-generation AI config boundary as CliError(ConfigError).",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-05",
+      "problemSignature": "AI configuration selected an unsupported BAML provider and surfaced as InternalError; should be config semantics."
     },
     "CLI-21": {
       "title": "User post-generation sed command failed",
-      "disposition": "keep_sentry",
-      "rationale": "User/tool subprocess failure should be controlled or classified at the subprocess boundary; not fixed in this run.",
-      "fixSummary": "—",
-      "prOrIssue": "Keep in Sentry until product fix",
-      "lastAnalyzed": "2026-05-04",
-      "problemSignature": "User-configured subprocess or post-generation command failed and was reported as InternalError instead of controlled task failure."
+      "disposition": "shipped",
+      "rationale": "Placeholder replacement failed in generated files because the local sed command could not process user output bytes.",
+      "fixSummary": "Wrap auto-version placeholder replacement subprocess failures as CliError(UserError).",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-05",
+      "problemSignature": "Auto-version placeholder replacement subprocess failed on generated/user files; should be user semantics."
     },
     "CLI-1M": {
       "title": "buf generate command failed",
-      "disposition": "keep_sentry",
-      "rationale": "Protobuf/buf subprocess failure should be controlled or classified at the subprocess boundary; not fixed in this run.",
-      "fixSummary": "—",
-      "prOrIssue": "Keep in Sentry until product fix",
-      "lastAnalyzed": "2026-05-04",
-      "problemSignature": "buf/protobuf subprocess failed during generation and was reported as InternalError instead of controlled task failure."
+      "disposition": "shipped",
+      "rationale": "buf/protobuf generation is an external local tool boundary; command failures should be user-facing, not internal.",
+      "fixSummary": "Run buf commands with controlled exit-code handling and map failures to CliError(UserError).",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-05",
+      "problemSignature": "buf/protobuf subprocess failed during generation and was reported as InternalError; should be user/tool semantics."
     },
     "CLI-K": {
       "title": "Package fern-api could not be found",
@@ -943,12 +943,12 @@
     },
     "CLI-C": {
       "title": "stream-json parser expected comma",
-      "disposition": "keep_sentry",
-      "rationale": "Streaming JSON parser failure lacks enough user-input boundary context; keep reportable until the parser source is identified and mapped.",
-      "fixSummary": "—",
-      "prOrIssue": "Keep in Sentry until product fix",
-      "lastAnalyzed": "2026-05-04",
-      "problemSignature": "stream-json parser failed on malformed JSON input; source boundary needs investigation before suppression."
+      "disposition": "shipped",
+      "rationale": "The stream-json parser failure occurs while reading user-provided IR for diff; current code wraps it as ParseError at that boundary.",
+      "fixSummary": "diff command catches streamObjectFromFile failures and reports CliError(ParseError).",
+      "prOrIssue": "Already handled in current code; ledger corrected in this PR",
+      "lastAnalyzed": "2026-05-05",
+      "problemSignature": "stream-json parser failed on malformed user-provided IR input; should be parse semantics at diff boundary."
     }
   }
 }

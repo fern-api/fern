@@ -104,6 +104,7 @@ const USER_ENVIRONMENT_ERRNOS: ReadonlySet<string> = new Set([
     "ENOENT",
     "EACCES",
     "EPERM",
+    "EINTR",
     "EISDIR",
     "ENOTDIR",
     "EEXIST",

@@ -2014,12 +2014,14 @@ async function loadTranslationPages({
 
             if (!(await doesPathExist(langDir))) {
                 context.failAndThrow(
-                    `Translation directory for locale "${lang}" not found.`,
-                    `Expected a directory at: ${langDir}\n` +
+                    `Translation directory for locale "${lang}" not found.\n` +
+                        `Expected a directory at: ${langDir}\n` +
                         `Create the directory and add translated versions of your documentation pages.\n` +
                         `The directory should mirror the same relative paths referenced in your docs.yml navigation.\n` +
                         `Example: if your docs.yml references "pages/getting-started.mdx", add a translated\n` +
-                        `version at "translations/${lang}/pages/getting-started.mdx".`
+                        `version at "translations/${lang}/pages/getting-started.mdx".`,
+                    undefined,
+                    { code: CliError.Code.ValidationError }
                 );
                 return;
             }
