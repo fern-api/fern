@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
   "project": "buildwithfern/cli",
-  "updatedAt": "2026-05-05",
+  "updatedAt": "2026-05-16",
   "issues": {
     "CLI-2W": {
       "title": "59:2: Unexpected character `!` before name",
@@ -949,6 +949,119 @@
       "prOrIssue": "Already handled in current code; ledger corrected in this PR",
       "lastAnalyzed": "2026-05-05",
       "problemSignature": "stream-json parser failed on malformed user-provided IR input; should be parse semantics at diff boundary."
+    },
+    "CLI-4N": {
+      "title": "ENOTEMPTY rmdir generated output",
+      "disposition": "shipped",
+      "rationale": "ENOTEMPTY is a user-environment errno (directory not empty during rmdir of generated output); added to USER_ENVIRONMENT_ERRNOS.",
+      "fixSummary": "Add ENOTEMPTY to USER_ENVIRONMENT_ERRNOS in resolveErrorCode.",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "Filesystem errno ENOTEMPTY during generated-output cleanup surfaced as InternalError instead of EnvironmentError."
+    },
+    "CLI-4R": {
+      "title": "ENOTEMPTY rmdir generated Java SDK",
+      "disposition": "duplicate",
+      "rationale": "Same ENOTEMPTY errno classification as CLI-4N.",
+      "fixSummary": "—",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-16",
+      "duplicateOf": "CLI-4N",
+      "problemSignature": "Filesystem errno ENOTEMPTY during generated-output cleanup surfaced as InternalError instead of EnvironmentError."
+    },
+    "CLI-4S": {
+      "title": "ENOTEMPTY rmdir generated Java SDK",
+      "disposition": "duplicate",
+      "rationale": "Same ENOTEMPTY errno classification as CLI-4N.",
+      "fixSummary": "—",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-16",
+      "duplicateOf": "CLI-4N",
+      "problemSignature": "Filesystem errno ENOTEMPTY during generated-output cleanup surfaced as InternalError instead of EnvironmentError."
+    },
+    "CLI-3S": {
+      "title": "ENOMEM open user spec file",
+      "disposition": "shipped",
+      "rationale": "ENOMEM is a user-environment errno (out of memory opening file); added to USER_ENVIRONMENT_ERRNOS.",
+      "fixSummary": "Add ENOMEM to USER_ENVIRONMENT_ERRNOS in resolveErrorCode.",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "Filesystem errno ENOMEM while opening user spec file surfaced as InternalError instead of EnvironmentError."
+    },
+    "CLI-43": {
+      "title": "TypeError: fetch failed (docs resolver)",
+      "disposition": "shipped",
+      "rationale": "Undici TypeError: fetch failed escapes as unhandled error; wrapped fetch calls at boundary with try/catch → NetworkError in uploadDynamicIRs, SourceUploader, and uploadDynamicIRForSdkGeneration.",
+      "fixSummary": "Wrap bare fetch() calls in uploadDynamicIRs, SourceUploader.uploadSource, and uploadDynamicIRForSdkGeneration with try/catch that classifies network failures as NetworkError at the call site.",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "Undici TypeError fetch failed during docs resolution surfaced as InternalError instead of NetworkError."
+    },
+    "CLI-4H": {
+      "title": "TypeError: fetch failed (source upload)",
+      "disposition": "duplicate",
+      "rationale": "Same boundary-level fetch wrapping as CLI-43; SourceUploader.uploadSource now catches TypeError and classifies as NetworkError.",
+      "fixSummary": "—",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-16",
+      "duplicateOf": "CLI-43",
+      "problemSignature": "Undici TypeError fetch failed during source upload surfaced as InternalError instead of NetworkError."
+    },
+    "CLI-3R": {
+      "title": "EPERM mkdir unhandled rejection",
+      "disposition": "keep_sentry",
+      "rationale": "EPERM from PosthogManager mkdir escapes normal error handling as unhandled rejection; reaches Sentry via onUnhandledRejectionIntegration. Needs boundary-level wrapping at the PosthogManager call site.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until boundary-level fix",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "Unhandled rejection with EPERM errno from background telemetry bypassed resolveErrorCode and reached Sentry as raw exception."
+    },
+    "CLI-4Z": {
+      "title": "ENOSPC file watcher unhandled rejection",
+      "disposition": "keep_sentry",
+      "rationale": "ENOSPC from file watcher escapes normal error handling as unhandled rejection; reaches Sentry via onUnhandledRejectionIntegration. Needs boundary-level wrapping at the file watcher call site.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until boundary-level fix",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "Unhandled rejection with ENOSPC errno from file watcher bypassed resolveErrorCode and reached Sentry as raw exception."
+    },
+    "CLI-4M": {
+      "title": "EPIPE write uncaught exception",
+      "disposition": "keep_sentry",
+      "rationale": "EPIPE from stdout/stderr write escapes normal error handling as uncaught exception; reaches Sentry via onUncaughtExceptionIntegration. Needs boundary-level wrapping at the stream write call site.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until boundary-level fix",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "Uncaught exception with EPIPE errno from stream write bypassed resolveErrorCode and reached Sentry as raw exception."
+    },
+    "CLI-3Y": {
+      "title": "spawn xdg-open ENOENT uncaught exception",
+      "disposition": "keep_sentry",
+      "rationale": "ENOENT from spawn xdg-open escapes normal error handling as uncaught exception; reaches Sentry via onUncaughtExceptionIntegration. Needs boundary-level wrapping at the spawn call site.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until boundary-level fix",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "Uncaught exception with ENOENT errno from spawn xdg-open bypassed resolveErrorCode and reached Sentry as raw exception."
+    },
+    "CLI-3W": {
+      "title": "ENOENT reading OpenAPI spec",
+      "disposition": "duplicate",
+      "rationale": "ENOENT is already mapped to EnvironmentError by the errno classification shipped in CLI-2X.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-05-16",
+      "duplicateOf": "CLI-2X",
+      "problemSignature": "Filesystem errno ENOENT from user environment surfaced as InternalError instead of EnvironmentError."
+    },
+    "CLI-3X": {
+      "title": "ENOENT reading OpenAPI spec",
+      "disposition": "duplicate",
+      "rationale": "ENOENT is already mapped to EnvironmentError by the errno classification shipped in CLI-2X.",
+      "fixSummary": "—",
+      "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+      "lastAnalyzed": "2026-05-16",
+      "duplicateOf": "CLI-2X",
+      "problemSignature": "Filesystem errno ENOENT from user environment surfaced as InternalError instead of EnvironmentError."
     }
   }
 }
