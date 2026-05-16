@@ -1107,6 +1107,85 @@
       "prOrIssue": "This PR (ledger only)",
       "lastAnalyzed": "2026-05-16",
       "problemSignature": "Global theme HTTP 403 classified as ConfigError by stitchGlobalTheme."
+    },
+    "CLI-44": {
+      "title": "MDX expected closing Tip tag",
+      "disposition": "shipped",
+      "rationale": "MDX parse error from user-authored docs content. replaceImagePathsAndUrls in DocsDefinitionResolver and previewDocs now wrapped with try/catch that converts to CliError(ParseError).",
+      "fixSummary": "Wrap replaceImagePathsAndUrls calls in DocsDefinitionResolver.resolve and getPreviewDocsDefinition with try/catch → CliError(ParseError).",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "MDX parse error surfaced as InternalError from unwrapped replaceImagePathsAndUrls call sites."
+    },
+    "CLI-45": {
+      "title": "MDX expected closing div tag",
+      "disposition": "shipped",
+      "rationale": "Same MDX parse boundary family as CLI-44.",
+      "fixSummary": "Wrap replaceImagePathsAndUrls calls in DocsDefinitionResolver.resolve and getPreviewDocsDefinition with try/catch → CliError(ParseError).",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-16",
+      "duplicateOf": "CLI-44",
+      "problemSignature": "MDX parse error surfaced as InternalError from unwrapped replaceImagePathsAndUrls call sites."
+    },
+    "CLI-47": {
+      "title": "MDX expected closing img tag",
+      "disposition": "shipped",
+      "rationale": "Same MDX parse boundary family as CLI-44.",
+      "fixSummary": "Wrap replaceImagePathsAndUrls calls in DocsDefinitionResolver.resolve and getPreviewDocsDefinition with try/catch → CliError(ParseError).",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-16",
+      "duplicateOf": "CLI-44",
+      "problemSignature": "MDX parse error surfaced as InternalError from unwrapped replaceImagePathsAndUrls call sites."
+    },
+    "CLI-48": {
+      "title": "MDX unexpected character before name",
+      "disposition": "shipped",
+      "rationale": "Same MDX parse boundary family as CLI-44.",
+      "fixSummary": "Wrap replaceImagePathsAndUrls calls in DocsDefinitionResolver.resolve and getPreviewDocsDefinition with try/catch → CliError(ParseError).",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-16",
+      "duplicateOf": "CLI-44",
+      "problemSignature": "MDX parse error surfaced as InternalError from unwrapped replaceImagePathsAndUrls call sites."
+    },
+    "CLI-4A": {
+      "title": "MDX unexpected quote in attribute name",
+      "disposition": "shipped",
+      "rationale": "Same MDX parse boundary family as CLI-44.",
+      "fixSummary": "Wrap replaceImagePathsAndUrls calls in DocsDefinitionResolver.resolve and getPreviewDocsDefinition with try/catch → CliError(ParseError).",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-16",
+      "duplicateOf": "CLI-44",
+      "problemSignature": "MDX parse error surfaced as InternalError from unwrapped replaceImagePathsAndUrls call sites."
+    },
+    "CLI-4E": {
+      "title": "MDX unexpected quote in attribute name",
+      "disposition": "shipped",
+      "rationale": "Same MDX parse boundary family as CLI-44.",
+      "fixSummary": "Wrap replaceImagePathsAndUrls calls in DocsDefinitionResolver.resolve and getPreviewDocsDefinition with try/catch → CliError(ParseError).",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-16",
+      "duplicateOf": "CLI-44",
+      "problemSignature": "MDX parse error surfaced as InternalError from unwrapped replaceImagePathsAndUrls call sites."
+    },
+    "CLI-4K": {
+      "title": "MDX acorn parse expression",
+      "disposition": "shipped",
+      "rationale": "Same MDX parse boundary family as CLI-44.",
+      "fixSummary": "Wrap replaceImagePathsAndUrls calls in DocsDefinitionResolver.resolve and getPreviewDocsDefinition with try/catch → CliError(ParseError).",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-16",
+      "duplicateOf": "CLI-44",
+      "problemSignature": "MDX parse error surfaced as InternalError from unwrapped replaceImagePathsAndUrls call sites."
+    },
+    "CLI-3V": {
+      "title": "MDX unexpected character before name",
+      "disposition": "shipped",
+      "rationale": "Same MDX parse boundary family as CLI-44.",
+      "fixSummary": "Wrap replaceImagePathsAndUrls calls in DocsDefinitionResolver.resolve and getPreviewDocsDefinition with try/catch → CliError(ParseError).",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-16",
+      "duplicateOf": "CLI-44",
+      "problemSignature": "MDX parse error surfaced as InternalError from unwrapped replaceImagePathsAndUrls call sites."
     }
   },
   "CLI-49": {
