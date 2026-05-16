@@ -90,7 +90,14 @@ export class CliContext {
             packageVersion,
             cliName
         };
-        this.sentryClient = new SentryClient({ release: `cli@${this.environment.packageVersion}` });
+        this.sentryClient = new SentryClient({
+            release: `cli@${this.environment.packageVersion}`,
+            telemetry: {
+                cliName: this.environment.cliName,
+                packageVersion: this.environment.packageVersion,
+                isLocal: this.isLocal
+            }
+        });
         this.automationTelemetryManager = new AutomationTelemetryManager(this);
     }
 
