@@ -577,9 +577,6 @@ export class DocsDefinitionResolver {
                     this.taskContext
                 );
             } catch (error) {
-                this.taskContext.logger.error(
-                    `Failed to replace image paths in ${relativePath}: ${extractErrorMessage(error)}`
-                );
                 throw new CliError({
                     message: `Failed to replace image paths in markdown file ${relativePath}: ${extractErrorMessage(error)}`,
                     code: CliError.Code.ParseError
