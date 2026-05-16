@@ -1063,5 +1063,50 @@
       "duplicateOf": "CLI-2X",
       "problemSignature": "Filesystem errno ENOENT from user environment surfaced as InternalError instead of EnvironmentError."
     }
+  },
+  "CLI-49": {
+    "title": "YAMLException: can not read a block mapping entry; a multiline key may not be an implicit key",
+    "disposition": "shipped",
+    "rationale": "YAML parse error from user-authored version config file (RSA key embedded in YAML). yaml.load in getVersionedNavigationConfiguration now wrapped with try/catch that converts to CliError(ParseError).",
+    "fixSummary": "Wrap yaml.load calls in getVersionedNavigationConfiguration and getNavigationConfiguration with try/catch → CliError(ParseError).",
+    "prOrIssue": "This PR",
+    "lastAnalyzed": "2026-05-16",
+    "problemSignature": "YAMLException surfaced as InternalError from unwrapped yaml.load in getVersionedNavigationConfiguration."
+  },
+  "CLI-4Y": {
+    "title": "YAMLException: end of the stream or a document separator is expected",
+    "disposition": "shipped",
+    "rationale": "YAML parse error from user-authored product config file. yaml.load in getNavigationConfiguration now wrapped with try/catch that converts to CliError(ParseError).",
+    "fixSummary": "Wrap yaml.load calls in getVersionedNavigationConfiguration and getNavigationConfiguration with try/catch → CliError(ParseError).",
+    "prOrIssue": "This PR",
+    "lastAnalyzed": "2026-05-16",
+    "problemSignature": "YAMLException surfaced as InternalError from unwrapped yaml.load in getNavigationConfiguration."
+  },
+  "CLI-3T": {
+    "title": "YAMLException: bad indentation of a sequence entry",
+    "disposition": "shipped",
+    "rationale": "YAML parse error from user-authored docs config. js-yaml throws YAMLException which bubbles through unwrapped yaml.load call sites. Now caught at getVersionedNavigationConfiguration and getNavigationConfiguration boundaries.",
+    "fixSummary": "Wrap yaml.load calls in getVersionedNavigationConfiguration and getNavigationConfiguration with try/catch → CliError(ParseError).",
+    "prOrIssue": "This PR",
+    "lastAnalyzed": "2026-05-16",
+    "problemSignature": "YAMLException from js-yaml surfaced as InternalError through unwrapped yaml.load call sites."
+  },
+  "CLI-3Z": {
+    "title": "YAMLException: bad indentation of a mapping entry",
+    "disposition": "shipped",
+    "rationale": "YAML parse error from user-authored docs config. js-yaml throws YAMLException which bubbles through unwrapped yaml.load call sites. Now caught at getVersionedNavigationConfiguration and getNavigationConfiguration boundaries.",
+    "fixSummary": "Wrap yaml.load calls in getVersionedNavigationConfiguration and getNavigationConfiguration with try/catch → CliError(ParseError).",
+    "prOrIssue": "This PR",
+    "lastAnalyzed": "2026-05-16",
+    "problemSignature": "YAMLException from js-yaml surfaced as InternalError through unwrapped yaml.load call sites."
+  },
+  "CLI-4D": {
+    "title": "YAMLException: bad indentation of a sequence entry",
+    "disposition": "shipped",
+    "rationale": "YAML parse error from user-authored docs.yml. Already caught at loadRawDocsConfiguration boundary (loadDocsWorkspace.ts:69-79). This PR adds coverage for the remaining unwrapped yaml.load call sites in version and product file loading.",
+    "fixSummary": "loadRawDocsConfiguration already wraps yaml.load with try/catch → CliError(ParseError). This PR extends the pattern to version/product file loading.",
+    "prOrIssue": "This PR",
+    "lastAnalyzed": "2026-05-16",
+    "problemSignature": "YAMLException surfaced as InternalError from loadRawDocsConfiguration (already fixed in that call site)."
   }
 }
