@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.27.4
+  changelogEntry:
+    - summary: |
+        Classify service and environment errors at their boundary call sites: mark exhausted
+        429 retries as NetworkError, pass error objects through failWithoutThrowing in remote
+        generation so CliError codes propagate, and reclassify docs preview server startup
+        failures as EnvironmentError instead of InternalError.
+      type: fix
+  createdAt: "2026-05-16"
+  irVersion: 66
 - version: 5.27.3
   changelogEntry:
     - summary: |
