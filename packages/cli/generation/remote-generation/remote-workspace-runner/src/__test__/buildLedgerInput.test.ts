@@ -358,7 +358,7 @@ describe("buildLedgerInput", () => {
         expect(parsed).toEqual({ "api-def-1": minimalApiDefinition });
     });
 
-    it("forwards fileManifest unchanged and merges fileBlobs into the blob map", () => {
+    it("forwards fileManifest unchanged (file blobs are loaded lazily, not included in blob map)", () => {
         // Image entry — exercises width/height fields.
         const imageBytes = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]); // PNG header
         const imageHash = createHash("sha256").update(new Uint8Array(imageBytes)).digest("hex");
@@ -385,10 +385,6 @@ describe("buildLedgerInput", () => {
             "assets/logo.png": imageEntry,
             "docs/notes.txt": docEntry
         };
-        const fileBlobs = new Map<string, Buffer>([
-            [imageHash, imageBytes],
-            [docHash, docBytes]
-        ]);
 
         const { input, blobs } = buildLedgerInput({
             docsDefinition: makeDocsDefinition(),
@@ -397,16 +393,16 @@ describe("buildLedgerInput", () => {
             basepath: undefined,
             previewId: undefined,
             apiDefinitions: new Map(),
-            fileManifest,
-            fileBlobs
+            fileManifest
         });
 
         // fileManifest round-trips unchanged.
         expect(input.fileManifest).toEqual(fileManifest);
 
-        // File hashes show up in the returned blobs map alongside page/config blobs.
-        expect(blobs.get(imageHash)).toEqual(imageBytes);
-        expect(blobs.get(docHash)).toEqual(docBytes);
+        // File blobs are NOT in the blob map — they are loaded lazily during
+        // the upload step via filePaths (hash → absolute path).
+        expect(blobs.has(imageHash)).toBe(false);
+        expect(blobs.has(docHash)).toBe(false);
     });
 
     it("legacy behaviour: omitting fileManifest still works", () => {

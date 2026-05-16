@@ -4,6 +4,7 @@ import {
     type DocsPublishGitInput,
     type FileManifestEntry
 } from "@fern-api/fdr-sdk/orpc-client";
+import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { TaskContext } from "@fern-api/task-context";
 
 import { buildLedgerInput, uploadMissingBlobs } from "./publishDocsLedger.js";
@@ -37,7 +38,7 @@ export async function publishDocsViaLedgerPreview({
     context,
     apiDefinitions,
     fileManifest,
-    fileBlobs,
+    filePaths,
     fileIdToPath
 }: {
     docsDefinition: DocsDefinition;
@@ -51,7 +52,8 @@ export async function publishDocsViaLedgerPreview({
     context: TaskContext;
     apiDefinitions: Map<string, APIV1Write.ApiDefinition>;
     fileManifest?: Record<string, FileManifestEntry>;
-    fileBlobs?: Map<string, Buffer>;
+    /** Hash → absolute file path for lazy on-demand reads during upload. */
+    filePaths?: Map<string, AbsoluteFilePath>;
     fileIdToPath?: Map<string, string>;
 }): Promise<LedgerPreviewResult> {
     // Build the input and blob map using the shared helper.  We pass a
@@ -68,7 +70,6 @@ export async function publishDocsViaLedgerPreview({
         git,
         apiDefinitions,
         fileManifest,
-        fileBlobs,
         fileIdToPath
     });
 
@@ -101,7 +102,7 @@ export async function publishDocsViaLedgerPreview({
     );
 
     // Step 2: Upload missing blobs.
-    await uploadMissingBlobs(registerResult.missingContent, blobs, context);
+    await uploadMissingBlobs(registerResult.missingContent, blobs, context, filePaths);
 
     // Step 3: Finish — use the server-assigned domain and previewId so the
     // deployment is keyed to the preview branch.

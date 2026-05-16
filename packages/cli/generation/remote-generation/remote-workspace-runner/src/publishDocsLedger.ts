@@ -5,8 +5,10 @@ import {
     type DocsPublishInput,
     type FileManifestEntry
 } from "@fern-api/fdr-sdk/orpc-client";
+import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { TaskContext } from "@fern-api/task-context";
 import { createHash } from "crypto";
+import { readFile } from "fs/promises";
 
 import { mapDocsConfigToLedgerConfig } from "./mapDocsConfigToLedgerConfig.js";
 import { asyncPool } from "./utils/asyncPool.js";
@@ -61,13 +63,13 @@ function jsonBlobRef(value: unknown): { ref: BlobRef; hash: string; buf: Buffer 
  * Build a DocsPublishInput from a resolved DocsDefinition and collect
  * all content blobs that may need uploading.
  *
- * If `fileManifest` and `fileBlobs` are provided, they are merged into the
- * resulting input: the manifest is forwarded as-is, and the per-file blobs
- * are folded into the returned blob map so the upload step can stream them
- * to the docs bucket. The manifest's keys MUST be the same string the FDR
- * register handler treats as `fullPath` (see {@link makeFileArtifact} in
- * docsPublishTransform.ts) — the CLI uses sanitizedPath (fern-host-relative)
- * which maps 1:1 to fullPath.
+ * If `fileManifest` is provided, it is forwarded as-is into the resulting
+ * input. File blobs are NOT included in the returned blob map — they are
+ * loaded lazily during the upload step to avoid holding all file content in
+ * memory for the entire publish duration. The manifest's keys MUST be the
+ * same string the FDR register handler treats as `fullPath` (see
+ * {@link makeFileArtifact} in docsPublishTransform.ts) — the CLI uses
+ * sanitizedPath (fern-host-relative) which maps 1:1 to fullPath.
  */
 export function buildLedgerInput({
     docsDefinition,
@@ -79,7 +81,6 @@ export function buildLedgerInput({
     git,
     apiDefinitions,
     fileManifest,
-    fileBlobs,
     fileIdToPath
 }: {
     docsDefinition: DocsDefinition;
@@ -91,7 +92,6 @@ export function buildLedgerInput({
     git?: DocsPublishGitInput;
     apiDefinitions: Map<string, APIV1Write.ApiDefinition>;
     fileManifest?: Record<string, FileManifestEntry>;
-    fileBlobs?: Map<string, Buffer>;
     /**
      * Map from FileId (as returned by FDR's legacy startDocsRegister
      * `uploadUrls`) to the `fullPath` string used to key `fileManifest`.
@@ -149,16 +149,6 @@ export function buildLedgerInput({
         apiManifestRef = manifestBlob.ref;
     }
 
-    // Merge per-file blobs into the CAS blob map so they get uploaded by the
-    // ledger flow alongside pages/config/apiManifest. Each entry in
-    // `fileManifest` references a blob by SHA-256 hash that the server will
-    // request via the register response's `missingContent` list.
-    if (fileBlobs != null) {
-        for (const [hash, buf] of fileBlobs) {
-            blobs.set(hash, buf);
-        }
-    }
-
     const input: DocsPublishInput = {
         orgId: organization,
         domain,
@@ -205,7 +195,7 @@ export async function publishDocsViaLedger({
     context,
     apiDefinitions,
     fileManifest,
-    fileBlobs,
+    filePaths,
     fileIdToPath
 }: {
     docsDefinition: DocsDefinition;
@@ -221,7 +211,8 @@ export async function publishDocsViaLedger({
     context: TaskContext;
     apiDefinitions: Map<string, APIV1Write.ApiDefinition>;
     fileManifest?: Record<string, FileManifestEntry>;
-    fileBlobs?: Map<string, Buffer>;
+    /** Hash → absolute file path for lazy on-demand reads during upload. */
+    filePaths?: Map<string, AbsoluteFilePath>;
     fileIdToPath?: Map<string, string>;
 }): Promise<LedgerPublishResult> {
     const { input, blobs } = buildLedgerInput({
@@ -234,7 +225,6 @@ export async function publishDocsViaLedger({
         git,
         apiDefinitions,
         fileManifest,
-        fileBlobs,
         fileIdToPath
     });
 
@@ -251,7 +241,9 @@ export async function publishDocsViaLedger({
     );
 
     // Step 2: Upload any blobs the server doesn't have yet.
-    await uploadMissingBlobs(registerResult.missingContent, blobs, context);
+    // In-memory blobs (pages, config, apiManifest) are checked first;
+    // file blobs are read lazily from disk via filePaths.
+    await uploadMissingBlobs(registerResult.missingContent, blobs, context, filePaths);
 
     // Step 3: Finish — server persists the deployment.
     context.logger.debug("[ledger] Finishing deployment...");
@@ -268,18 +260,33 @@ export async function publishDocsViaLedger({
 /**
  * Upload blobs the server reported as missing after a register call.
  * Shared between the production and preview ledger flows.
+ *
+ * Small in-memory blobs (pages, config, apiManifest) are looked up in
+ * `blobs` first. File blobs are loaded lazily from disk via `filePaths`
+ * (hash → absolute path) to avoid holding every file's bytes in memory
+ * for the entire publish duration.
  */
 export async function uploadMissingBlobs(
     missingContent: ReadonlyArray<{ hash: string; uploadUrl: string }>,
     blobs: Map<string, Buffer>,
-    context: TaskContext
+    context: TaskContext,
+    filePaths?: Map<string, AbsoluteFilePath>
 ): Promise<void> {
     if (missingContent.length > 0) {
         context.logger.debug(`[ledger] Uploading ${missingContent.length} missing blobs...`);
         const uploadStart = performance.now();
 
         const results = await asyncPool(UPLOAD_CONCURRENCY, [...missingContent], async ({ hash, uploadUrl }) => {
-            const blob = blobs.get(hash);
+            // Prefer in-memory blobs (pages, config, apiManifest).
+            let blob = blobs.get(hash);
+            if (blob == null && filePaths != null) {
+                // Lazy read: only load file content for blobs the server
+                // actually needs, and discard after upload.
+                const filePath = filePaths.get(hash);
+                if (filePath != null) {
+                    blob = await readFile(filePath);
+                }
+            }
             if (blob == null) {
                 context.logger.warn(`[ledger] Server requested blob ${hash} but we don't have it — skipping`);
                 return "skipped" as const;

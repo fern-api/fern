@@ -282,12 +282,16 @@ export async function publishDocs({
         // Collect API definitions (keyed by FDR definition ID) for the ledger manifest.
         const apiDefinitionCollector = new Map<string, APIV1Write.ApiDefinition>();
 
-        // Collect per-file manifest entries + raw bytes for the ledger publish.
+        // Collect per-file manifest entries for the ledger publish.
         // The manifest is keyed by `sanitizedPath` (fern-host-relative file path),
         // which matches the `fullPath` used by the FDR register handler when
         // routing fileManifest entries to file artifacts.
+        //
+        // File content is NOT kept in memory. Instead, ledgerFilePaths maps
+        // each content hash to the file's absolute path so that uploadMissingBlobs
+        // can re-read only the files the server actually needs.
         const ledgerFileManifest: Record<string, FileManifestEntry> = {};
-        const ledgerFileBlobs = new Map<string, Buffer>();
+        const ledgerFilePaths = new Map<string, AbsoluteFilePath>();
         // FileId → fullPath lookup used by mapDocsConfigToLedgerConfig to
         // translate DocsConfig's FileId-based references (e.g. colorsV3.dark.logo)
         // into LedgerConfig path strings.
@@ -364,7 +368,7 @@ export async function publishDocs({
                             height: image.height
                             // blurDataURL: not populated yet (caching is a separate concern)
                         };
-                        ledgerFileBlobs.set(hash, buffer);
+                        ledgerFilePaths.set(hash, filePath.absoluteFilePath);
 
                         const obj = {
                             filePath: CjsFdrSdk.docs.v1.write.FilePath(
@@ -412,7 +416,7 @@ export async function publishDocs({
                             filename: basename(file.sanitizedPath)
                             // width/height/blurDataURL omitted: non-image
                         };
-                        ledgerFileBlobs.set(hash, buffer);
+                        ledgerFilePaths.set(hash, file.absoluteFilePath);
 
                         return {
                             path: CjsFdrSdk.docs.v1.write.FilePath(
@@ -816,7 +820,7 @@ export async function publishDocs({
                         context,
                         apiDefinitions: apiDefinitionCollector,
                         fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
-                        fileBlobs: ledgerFileBlobs.size > 0 ? ledgerFileBlobs : undefined,
+                        filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
                         fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined
                     });
                     // In ledger-only mode the preview URL comes from the ledger;
@@ -840,7 +844,7 @@ export async function publishDocs({
                         context,
                         apiDefinitions: apiDefinitionCollector,
                         fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
-                        fileBlobs: ledgerFileBlobs.size > 0 ? ledgerFileBlobs : undefined,
+                        filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
                         fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined
                     });
                     context.logger.info(
