@@ -35,13 +35,24 @@ export class SourceUploader {
     private async uploadSource(source: IdentifiableSource, uploadURL: string): Promise<void> {
         const uploadCommand = await this.getUploadCommand(source);
         const fileData = await readFile(uploadCommand.absoluteFilePath);
-        const response = await fetch(uploadURL, {
-            method: "PUT",
-            body: fileData as BodyInit,
-            headers: {
-                "Content-Type": "application/octet-stream"
-            }
-        });
+        let response: Response;
+        try {
+            response = await fetch(uploadURL, {
+                method: "PUT",
+                body: fileData as BodyInit,
+                headers: {
+                    "Content-Type": "application/octet-stream"
+                }
+            });
+        } catch (error) {
+            await uploadCommand.cleanup();
+            this.context.failAndThrow(
+                `Network error uploading source file: ${source.absoluteFilePath}`,
+                error,
+                { code: CliError.Code.NetworkError }
+            );
+            return;
+        }
         await uploadCommand.cleanup();
         if (!response.ok) {
             this.context.failAndThrow(

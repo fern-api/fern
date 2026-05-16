@@ -96,10 +96,6 @@ function isNodeVersionError(error: unknown): boolean {
     return error instanceof Error && error.message.includes("globalThis");
 }
 
-function isFetchNetworkError(error: unknown): boolean {
-    return error instanceof TypeError && error.message === "fetch failed";
-}
-
 // Node `ErrnoException` codes that represent a problem with the user's
 // environment (missing file, bad perms, full disk, closed pipe, …).
 // None of these indicate a Fern bug, so they map to EnvironmentError
@@ -181,9 +177,6 @@ export function resolveErrorCode(error: unknown, explicitCode?: CliError.Code): 
         if (NETWORK_ERRNOS.has(errno)) {
             return CliError.Code.NetworkError;
         }
-    }
-    if (isFetchNetworkError(error)) {
-        return CliError.Code.NetworkError;
     }
     return CliError.Code.InternalError;
 }
