@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.27.1
+  changelogEntry:
+    - summary: |
+        Report escaped fatal CLI errors through telemetry in packaged production runs.
+      type: fix
+  createdAt: "2026-05-16"
+  irVersion: 66
 - version: 5.27.0
   changelogEntry:
     - summary: |
