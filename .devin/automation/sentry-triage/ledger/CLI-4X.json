@@ -1,0 +1,9 @@
+{
+  "title": "Failed to find Error type",
+  "problemSignature": "FDR SDK example generation failed to locate a referenced type during endpoint example call generation.",
+  "disposition": "shipped",
+  "rationale": "Docs API conversion now detects unresolved type references before FDR fallback example generation can throw, and supplies placeholder examples only for affected generated example paths.",
+  "fixSummary": "Add converter-side fallback examples for unresolved FDR generated example type references.",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15952",
+  "lastAnalyzed": "2026-05-16"
+}
