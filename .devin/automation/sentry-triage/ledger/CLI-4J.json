@@ -4,6 +4,6 @@
   "disposition": "shipped",
   "rationale": "User-authored OpenAPI specs should surface parser failures at the input boundary; parseOpenAPI now maps Redocly's unsupported OpenAPI version error to a non-reportable ParseError.",
   "fixSummary": "Classified unsupported OpenAPI version bundler failures as CliError ParseError with spec path context.",
-  "prOrIssue": "",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15947",
   "lastAnalyzed": "2026-05-16"
 }
