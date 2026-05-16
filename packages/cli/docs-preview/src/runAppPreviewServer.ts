@@ -33,9 +33,9 @@ import { readFile, rm } from "fs/promises";
 import http, { type IncomingMessage } from "http";
 import path from "path";
 import { type Duplex } from "stream";
-import Watcher from "watcher";
 import { WebSocket, WebSocketServer } from "ws";
 import { type BunServer, createBunServer } from "./createBunServer.js";
+import { createDocsPreviewWatcher } from "./createDocsPreviewWatcher.js";
 import { DebugLogger } from "./DebugLogger.js";
 import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle.js";
 import { writeNodePolyfillScript } from "./nodePolyfills.js";
@@ -971,11 +971,10 @@ export async function runAppPreviewServer({
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
 
     // Create watcher but don't attach the event handler yet - we'll do that after the Next.js server starts
-    const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
-        recursive: true,
-        ignoreInitial: true,
-        debounce: 100,
-        renameDetection: true
+    const watcher = await createDocsPreviewWatcher({
+        absoluteFilePathToFern,
+        additionalFilepaths,
+        context
     });
 
     const editedAbsoluteFilepaths: AbsoluteFilePath[] = [];
