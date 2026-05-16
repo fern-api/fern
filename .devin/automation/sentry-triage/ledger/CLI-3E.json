@@ -3,7 +3,7 @@
   "disposition": "shipped",
   "rationale": "Response property references against non-object response types are invalid user-authored API definitions, so the converter now raises a non-reportable reference error instead of an internal error.",
   "fixSummary": "Classify non-object response property references as ReferenceError at the property conversion boundary.",
-  "prOrIssue": "",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15955",
   "lastAnalyzed": "2026-05-16",
   "problemSignature": "IR conversion invariant failure while resolving response object properties; pagination response property references can point at a non-object response type."
 }
