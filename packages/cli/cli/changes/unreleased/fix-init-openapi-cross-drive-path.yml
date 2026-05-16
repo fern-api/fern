@@ -1,0 +1,4 @@
+- summary: |
+    Copy OpenAPI specs into new workspaces during `fern init` when Windows cannot express
+    the source spec path relative to the generated workspace.
+  type: fix

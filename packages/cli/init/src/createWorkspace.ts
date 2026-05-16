@@ -9,10 +9,11 @@ import {
 } from "@fern-api/configuration-loader";
 import { formatDefinitionFile } from "@fern-api/fern-definition-formatter";
 import { RootApiFileSchema } from "@fern-api/fern-definition-schema";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
-import { mkdir, writeFile } from "fs/promises";
+import { copyFile, mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
+import path from "path";
 
 import { SAMPLE_IMDB_API } from "./sampleImdbApi.js";
 import { SAMPLE_OPENAPI } from "./sampleOpenApi.js";
@@ -57,14 +58,46 @@ export async function createOpenAPIWorkspace({
     if (!(await doesPathExist(directoryOfWorkspace))) {
         await mkdir(directoryOfWorkspace);
     }
+    const relativeOpenAPIFilePath = getRelativeOpenAPIFilePathForWorkspace({ directoryOfWorkspace, openAPIFilePath });
+    const openAPIFilePathForConfig =
+        relativeOpenAPIFilePath ?? (await copyOpenAPIFileIntoWorkspace({ directoryOfWorkspace, openAPIFilePath }));
     await writeGeneratorsConfiguration({
         filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
         cliVersion,
         context,
         apiConfiguration: {
-            specs: [{ openapi: relative(directoryOfWorkspace, openAPIFilePath) }]
+            specs: [{ openapi: openAPIFilePathForConfig }]
         }
     });
+}
+
+export function getRelativeOpenAPIFilePathForWorkspace({
+    directoryOfWorkspace,
+    openAPIFilePath,
+    pathModule = path
+}: {
+    directoryOfWorkspace: string;
+    openAPIFilePath: string;
+    pathModule?: Pick<typeof path, "isAbsolute" | "relative">;
+}): RelativeFilePath | undefined {
+    const relativeOpenAPIFilePath = pathModule.relative(directoryOfWorkspace, openAPIFilePath);
+    if (pathModule.isAbsolute(relativeOpenAPIFilePath)) {
+        return undefined;
+    }
+    return RelativeFilePath.of(relativeOpenAPIFilePath);
+}
+
+async function copyOpenAPIFileIntoWorkspace({
+    directoryOfWorkspace,
+    openAPIFilePath
+}: {
+    directoryOfWorkspace: AbsoluteFilePath;
+    openAPIFilePath: AbsoluteFilePath;
+}): Promise<RelativeFilePath> {
+    const filename = RelativeFilePath.of(path.basename(openAPIFilePath));
+    const destination = join(directoryOfWorkspace, filename);
+    await copyFile(openAPIFilePath, destination);
+    return filename;
 }
 
 export async function createDefaultOpenAPIWorkspace({
