@@ -1,4 +1,5 @@
 import type { APIV1Write } from "@fern-api/fdr-sdk";
+import type { FileManifestEntry } from "@fern-api/fdr-sdk/orpc-client";
 import { createHash } from "crypto";
 import { describe, expect, it } from "vitest";
 import { buildLedgerInput } from "../publishDocsLedger.js";
@@ -67,8 +68,8 @@ describe("buildLedgerInput", () => {
         expect(Object.keys(input.pages)).toHaveLength(0);
     });
 
-    it("serializes config as a JSON blob ref", () => {
-        const { input, blobs } = buildLedgerInput({
+    it("maps a minimal DocsConfig to a LedgerConfig shape (mostly empty fields)", () => {
+        const { input } = buildLedgerInput({
             docsDefinition: makeDocsDefinition(),
             organization: "acme",
             domain: "docs.acme.com",
@@ -77,12 +78,107 @@ describe("buildLedgerInput", () => {
             apiDefinitions: new Map()
         });
 
+        // With only `root` set on the source DocsConfig every LedgerConfig
+        // field is `undefined` — but `input.config` itself is the populated
+        // ledger object (not `undefined`), unlike the prior workaround.
         expect(input.config).toBeDefined();
-        expect(input.config?.contentType).toBe("application/json");
-        // The blob should exist and round-trip back to the config.
-        const configBuf = blobs.get(input.config?.hash ?? "");
-        expect(configBuf).toBeDefined();
-        expect(JSON.parse(configBuf?.toString("utf-8") ?? "")).toEqual({ root: MINIMAL_ROOT });
+        expect(input.config?.title).toBeUndefined();
+        expect(input.config?.colorsV3).toBeUndefined();
+        expect(input.config?.metadata).toBeUndefined();
+        expect(input.config?.redirects).toBeUndefined();
+    });
+
+    it("translates a DocsConfig logo FileId into a LedgerConfig ImageRef using fileManifest dimensions", () => {
+        // Source DocsConfig: colorsV3.dark.logo points to a FileId that
+        // matches a fileManifest entry's fullPath (current FDR behaviour).
+        const docsDefinition = {
+            pages: {},
+            config: {
+                root: MINIMAL_ROOT,
+                colorsV3: {
+                    type: "dark" as const,
+                    accentPrimary: { r: 1, g: 2, b: 3 },
+                    logo: "assets/logo.png"
+                }
+            }
+        } as unknown as Parameters<typeof buildLedgerInput>[0]["docsDefinition"];
+
+        const fileManifest: Record<string, FileManifestEntry> = {
+            "assets/logo.png": {
+                hash: "deadbeef",
+                contentType: "image/png",
+                contentLength: 1234,
+                filename: "logo.png",
+                width: 320,
+                height: 160
+            }
+        };
+
+        const { input } = buildLedgerInput({
+            docsDefinition,
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            apiDefinitions: new Map(),
+            fileManifest,
+            // Identity map: fileId === sanitizedPath in the current FDR flow.
+            fileIdToPath: new Map([["assets/logo.png", "assets/logo.png"]])
+        });
+
+        expect(input.config?.colorsV3).toEqual({
+            type: "dark",
+            accentPrimary: { r: 1, g: 2, b: 3 },
+            logo: { path: "assets/logo.png", width: 320, height: 160 }
+        });
+    });
+
+    it("drops a logo ImageRef when the file is not measured (no width/height in manifest)", () => {
+        const docsDefinition = {
+            pages: {},
+            config: {
+                root: MINIMAL_ROOT,
+                colorsV3: {
+                    type: "light" as const,
+                    accentPrimary: { r: 4, g: 5, b: 6 },
+                    logo: "assets/unmeasured.svg"
+                }
+            }
+        } as unknown as Parameters<typeof buildLedgerInput>[0]["docsDefinition"];
+
+        const fileManifest: Record<string, FileManifestEntry> = {
+            "assets/unmeasured.svg": {
+                hash: "cafef00d",
+                contentType: "image/svg+xml",
+                contentLength: 42,
+                filename: "unmeasured.svg"
+                // width/height intentionally omitted
+            }
+        };
+
+        const { input } = buildLedgerInput({
+            docsDefinition,
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            apiDefinitions: new Map(),
+            fileManifest,
+            fileIdToPath: new Map([["assets/unmeasured.svg", "assets/unmeasured.svg"]])
+        });
+
+        // Logo absent rather than emitted with placeholder dimensions.
+        expect(input.config?.colorsV3).toEqual({
+            type: "light",
+            accentPrimary: { r: 4, g: 5, b: 6 },
+            logo: undefined,
+            backgroundImage: undefined,
+            background: undefined,
+            border: undefined,
+            sidebarBackground: undefined,
+            headerBackground: undefined,
+            cardBackground: undefined
+        });
     });
 
     it("passes through org, domain, basepath, previewId", () => {
@@ -169,6 +265,58 @@ describe("buildLedgerInput", () => {
         expect(input.apiManifest).toBeNull();
     });
 
+    it("apiManifest blob hash is stable across Map insertion order (determinism guard)", () => {
+        // Reproduces the docs-ledger deterministic-hash bug: `apiDefinitions`
+        // is built by `Promise.all` of /api/register calls in CLI, so its Map
+        // insertion order is whichever round-trip completed first. Without
+        // `stableStringify`, byte-identical content would hash differently
+        // across publishes and the docs-ledger "no-op republish" fast-path
+        // would never fire. The two manifests below have identical entries
+        // inserted in opposite orders and MUST produce the same blob hash.
+        const minimalApiDefinition: APIV1Write.ApiDefinition = {
+            types: {},
+            subpackages: {},
+            rootPackage: {
+                endpoints: [],
+                types: [],
+                subpackages: [],
+                websockets: [],
+                webhooks: []
+            },
+            auth: undefined,
+            snippetsConfiguration: {},
+            globalHeaders: []
+        };
+
+        const forward = new Map<string, APIV1Write.ApiDefinition>();
+        forward.set("api-def-a", minimalApiDefinition);
+        forward.set("api-def-b", minimalApiDefinition);
+
+        const reverse = new Map<string, APIV1Write.ApiDefinition>();
+        reverse.set("api-def-b", minimalApiDefinition);
+        reverse.set("api-def-a", minimalApiDefinition);
+
+        const { input: inForward } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            apiDefinitions: forward
+        });
+        const { input: inReverse } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            apiDefinitions: reverse
+        });
+
+        expect(inForward.apiManifest?.hash).toBe(inReverse.apiManifest?.hash);
+        expect(inForward.apiManifest?.contentLength).toBe(inReverse.apiManifest?.contentLength);
+    });
+
     it("serializes apiManifest as a JSON blob ref when apiDefinitions is non-empty", () => {
         const minimalApiDefinition: APIV1Write.ApiDefinition = {
             types: {},
@@ -208,5 +356,150 @@ describe("buildLedgerInput", () => {
         // Round-trip: the blob content should deserialize to match the input map.
         const parsed = JSON.parse(manifestBuf?.toString("utf-8") ?? "");
         expect(parsed).toEqual({ "api-def-1": minimalApiDefinition });
+    });
+
+    it("forwards fileManifest unchanged (file blobs are loaded lazily, not included in blob map)", () => {
+        // Image entry — exercises width/height fields.
+        const imageBytes = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]); // PNG header
+        const imageHash = createHash("sha256").update(new Uint8Array(imageBytes)).digest("hex");
+        const imageEntry: FileManifestEntry = {
+            hash: imageHash,
+            contentType: "image/png",
+            contentLength: imageBytes.byteLength,
+            filename: "logo.png",
+            width: 200,
+            height: 100
+        };
+
+        // Non-image entry — no width/height.
+        const docBytes = Buffer.from("hello world", "utf-8");
+        const docHash = createHash("sha256").update(new Uint8Array(docBytes)).digest("hex");
+        const docEntry: FileManifestEntry = {
+            hash: docHash,
+            contentType: "text/plain",
+            contentLength: docBytes.byteLength,
+            filename: "notes.txt"
+        };
+
+        const fileManifest: Record<string, FileManifestEntry> = {
+            "assets/logo.png": imageEntry,
+            "docs/notes.txt": docEntry
+        };
+
+        const { input, blobs } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            apiDefinitions: new Map(),
+            fileManifest
+        });
+
+        // fileManifest round-trips unchanged.
+        expect(input.fileManifest).toEqual(fileManifest);
+
+        // File blobs are NOT in the blob map — they are loaded lazily during
+        // the upload step via filePaths (hash → absolute path).
+        expect(blobs.has(imageHash)).toBe(false);
+        expect(blobs.has(docHash)).toBe(false);
+    });
+
+    it("legacy behaviour: omitting fileManifest still works", () => {
+        const { input, blobs } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition({ pages: { "page-1": { markdown: "# hi" } } }),
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            apiDefinitions: new Map()
+        });
+
+        expect(input.fileManifest).toBeUndefined();
+        // Blob map still contains the page + config blobs.
+        expect(blobs.size).toBeGreaterThan(0);
+    });
+
+    // ── ADR 0011: git provenance ──────────────────────────────────────
+
+    it("forwards git into DocsPublishInput when provided", () => {
+        const git = {
+            repoUrl: "https://github.com/acme/docs",
+            branch: "main",
+            commitSha: "abc123"
+        };
+        const { input } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            git,
+            apiDefinitions: new Map()
+        });
+
+        expect(input.git).toEqual(git);
+    });
+
+    it("omits git from DocsPublishInput when not provided", () => {
+        const { input } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            apiDefinitions: new Map()
+        });
+
+        expect(input.git).toBeUndefined();
+    });
+
+    it("forwards git without commitSha when commitSha is omitted", () => {
+        const git = {
+            repoUrl: "https://gitlab.com/acme/docs",
+            branch: "feature/x"
+        };
+        const { input } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            git,
+            apiDefinitions: new Map()
+        });
+
+        expect(input.git).toEqual(git);
+        expect(input.git?.commitSha).toBeUndefined();
+    });
+
+    // ── ADR 0009: customDomains ───────────────────────────────────────
+
+    it("forwards customDomains into DocsPublishInput", () => {
+        const customDomains = ["docs.acme.com", "alt.acme.com/v2"];
+        const { input } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            organization: "acme",
+            domain: "acme.docs.buildwithfern.com",
+            basepath: undefined,
+            previewId: undefined,
+            customDomains,
+            apiDefinitions: new Map()
+        });
+
+        expect(input.customDomains).toEqual(customDomains);
+    });
+
+    it("defaults customDomains to [] when omitted", () => {
+        const { input } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            apiDefinitions: new Map()
+        });
+
+        expect(input.customDomains).toEqual([]);
     });
 });

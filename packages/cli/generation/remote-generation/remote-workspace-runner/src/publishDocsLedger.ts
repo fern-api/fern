@@ -1,8 +1,16 @@
 import type { APIV1Write, DocsV1Write } from "@fern-api/fdr-sdk";
-import { createDocsLedgerClient, type DocsPublishInput } from "@fern-api/fdr-sdk/orpc-client";
+import {
+    createDocsLedgerClient,
+    type DocsPublishGitInput,
+    type DocsPublishInput,
+    type FileManifestEntry
+} from "@fern-api/fdr-sdk/orpc-client";
+import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { TaskContext } from "@fern-api/task-context";
 import { createHash } from "crypto";
+import { readFile } from "fs/promises";
 
+import { mapDocsConfigToLedgerConfig } from "./mapDocsConfigToLedgerConfig.js";
 import { asyncPool } from "./utils/asyncPool.js";
 
 const UPLOAD_CONCURRENCY = 10;
@@ -22,11 +30,27 @@ interface BlobRef {
 }
 
 /**
- * Serializes a value to a JSON buffer and returns a BlobRef + the raw bytes,
- * keyed by content hash for later upload.
+ * `JSON.stringify` with deterministic key ordering at every level. Arrays
+ * keep their original ordering (positions are meaningful); object keys are
+ * sorted lexicographically via the replacer. Two inputs that differ only by
+ * key insertion order serialize identically — required so the apiManifest
+ * blob hash is stable across publishes (cf. FDR `stableStringify`).
+ */
+function stableStringify(value: unknown): string {
+    return JSON.stringify(value, (_key, val) => {
+        if (val != null && typeof val === "object" && !Array.isArray(val)) {
+            return Object.fromEntries(Object.entries(val).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)));
+        }
+        return val;
+    });
+}
+
+/**
+ * Serializes a value to a JSON buffer using {@link stableStringify} and
+ * returns a BlobRef + the raw bytes, keyed by content hash for later upload.
  */
 function jsonBlobRef(value: unknown): { ref: BlobRef; hash: string; buf: Buffer } {
-    const buf = Buffer.from(JSON.stringify(value), "utf-8");
+    const buf = Buffer.from(stableStringify(value), "utf-8");
     const hash = sha256(buf);
     return {
         ref: { hash, contentType: "application/json", contentLength: buf.length },
@@ -38,6 +62,14 @@ function jsonBlobRef(value: unknown): { ref: BlobRef; hash: string; buf: Buffer 
 /**
  * Build a DocsPublishInput from a resolved DocsDefinition and collect
  * all content blobs that may need uploading.
+ *
+ * If `fileManifest` is provided, it is forwarded as-is into the resulting
+ * input. File blobs are NOT included in the returned blob map — they are
+ * loaded lazily during the upload step to avoid holding all file content in
+ * memory for the entire publish duration. The manifest's keys MUST be the
+ * same string the FDR register handler treats as `fullPath` (see
+ * {@link makeFileArtifact} in docsPublishTransform.ts) — the CLI uses
+ * sanitizedPath (fern-host-relative) which maps 1:1 to fullPath.
  */
 export function buildLedgerInput({
     docsDefinition,
@@ -45,14 +77,29 @@ export function buildLedgerInput({
     domain,
     basepath,
     previewId,
-    apiDefinitions
+    customDomains,
+    git,
+    apiDefinitions,
+    fileManifest,
+    fileIdToPath
 }: {
     docsDefinition: DocsDefinition;
     organization: string;
     domain: string;
     basepath: string | undefined;
     previewId: string | undefined;
+    customDomains?: string[];
+    git?: DocsPublishGitInput;
     apiDefinitions: Map<string, APIV1Write.ApiDefinition>;
+    fileManifest?: Record<string, FileManifestEntry>;
+    /**
+     * Map from FileId (as returned by FDR's legacy startDocsRegister
+     * `uploadUrls`) to the `fullPath` string used to key `fileManifest`.
+     * Used by {@link mapDocsConfigToLedgerConfig} to translate DocsConfig's
+     * FileId-based references (e.g. `colorsV3.dark.logo`) into LedgerConfig's
+     * path-based references (e.g. `ImageRef { path, width, height }`).
+     */
+    fileIdToPath?: Map<string, string>;
 }): { input: DocsPublishInput; blobs: Map<string, Buffer> } {
     const blobs = new Map<string, Buffer>();
 
@@ -68,11 +115,32 @@ export function buildLedgerInput({
         blobs.set(hash, buf);
     }
 
-    // Config: serialize the entire config as a JSON blob.
-    const configBlob = jsonBlobRef(docsDefinition.config);
-    blobs.set(configBlob.hash, configBlob.buf);
+    // Config is sent inline (not a CAS blob) per the docs-ledger contract.
+    // DocsConfig (FileId-based) is translated to LedgerConfig (path-based)
+    // up front so the wire payload is already in the schema FDR validates.
+    const ledgerConfig = mapDocsConfigToLedgerConfig({
+        docsConfig: docsDefinition.config,
+        fileManifest,
+        fileIdToPath
+    });
 
     // API manifest: serialize all API definitions as a single JSON blob.
+    //
+    // `apiDefinitions` is populated by the `registerApi` callback inside a
+    // `Promise.all`, so the Map's insertion order reflects whichever HTTP
+    // round-trip completed first — non-deterministic across publishes.
+    // {@link jsonBlobRef} uses {@link stableStringify}, which sorts object
+    // keys at every level, so the resulting bytes are stable regardless of
+    // Map iteration order.
+    //
+    // Determinism caveat: stable apiManifest bytes are necessary but not
+    // sufficient for a deterministic deployment hash. Page bodies must also
+    // be byte-identical, which requires that file references substituted
+    // into markdown (`file:<fileId>` tokens emitted by replaceImagePathsAndUrls)
+    // be stable. In `ledger` deploy mode the CLI emits path tokens
+    // (`file:<sanitizedPath>`) and short-circuits the V2 register call; in
+    // `dual`/`legacy` modes the V2 register flow mints fresh UUID FileIds per
+    // request, so deployment-level dedup will not fire there.
     let apiManifestRef: BlobRef | null = null;
     if (apiDefinitions.size > 0) {
         const manifestObj = Object.fromEntries(apiDefinitions);
@@ -85,14 +153,16 @@ export function buildLedgerInput({
         orgId: organization,
         domain,
         basepath: basepath ?? "",
+        customDomains: customDomains ?? [],
         previewId: previewId ?? null,
         root: docsDefinition.config.root ?? docsDefinition.config.navigation,
         pages,
-        config: configBlob.ref,
+        config: ledgerConfig,
         apiManifest: apiManifestRef,
-        files: null,
+        fileManifest,
         redirects: null,
-        locale: "en"
+        locale: "en",
+        git
     };
 
     return { input, blobs };
@@ -117,22 +187,33 @@ export async function publishDocsViaLedger({
     domain,
     basepath,
     previewId,
+    customDomains,
+    git,
     token,
     fdrOrigin,
     headers,
     context,
-    apiDefinitions
+    apiDefinitions,
+    fileManifest,
+    filePaths,
+    fileIdToPath
 }: {
     docsDefinition: DocsDefinition;
     organization: string;
     domain: string;
     basepath: string | undefined;
     previewId: string | undefined;
+    customDomains?: string[];
+    git?: DocsPublishGitInput;
     token: string;
     fdrOrigin: string;
     headers: Record<string, string>;
     context: TaskContext;
     apiDefinitions: Map<string, APIV1Write.ApiDefinition>;
+    fileManifest?: Record<string, FileManifestEntry>;
+    /** Hash → absolute file path for lazy on-demand reads during upload. */
+    filePaths?: Map<string, AbsoluteFilePath>;
+    fileIdToPath?: Map<string, string>;
 }): Promise<LedgerPublishResult> {
     const { input, blobs } = buildLedgerInput({
         docsDefinition,
@@ -140,7 +221,11 @@ export async function publishDocsViaLedger({
         domain,
         basepath,
         previewId,
-        apiDefinitions
+        customDomains,
+        git,
+        apiDefinitions,
+        fileManifest,
+        fileIdToPath
     });
 
     const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers });
@@ -156,32 +241,9 @@ export async function publishDocsViaLedger({
     );
 
     // Step 2: Upload any blobs the server doesn't have yet.
-    if (registerResult.missingContent.length > 0) {
-        context.logger.debug(`[ledger] Uploading ${registerResult.missingContent.length} missing blobs...`);
-        const uploadStart = performance.now();
-
-        const results = await asyncPool(
-            UPLOAD_CONCURRENCY,
-            registerResult.missingContent,
-            async ({ hash, uploadUrl }) => {
-                const blob = blobs.get(hash);
-                if (blob == null) {
-                    context.logger.warn(`[ledger] Server requested blob ${hash} but we don't have it — skipping`);
-                    return "skipped" as const;
-                }
-                return uploadBlobWithRetry(blob, uploadUrl, hash, context);
-            }
-        );
-
-        const uploaded = results.filter((r) => r === "uploaded").length;
-        const alreadyExisted = results.filter((r) => r === "already_exists").length;
-        const uploadTime = performance.now() - uploadStart;
-        context.logger.debug(
-            `[ledger] Upload complete in ${uploadTime.toFixed(0)}ms — ${uploaded} uploaded, ${alreadyExisted} already in store`
-        );
-    } else {
-        context.logger.debug("[ledger] All content already in CAS — no uploads needed");
-    }
+    // In-memory blobs (pages, config, apiManifest) are checked first;
+    // file blobs are read lazily from disk via filePaths.
+    await uploadMissingBlobs(registerResult.missingContent, blobs, context, filePaths);
 
     // Step 3: Finish — server persists the deployment.
     context.logger.debug("[ledger] Finishing deployment...");
@@ -193,6 +255,54 @@ export async function publishDocsViaLedger({
     );
 
     return finishResult;
+}
+
+/**
+ * Upload blobs the server reported as missing after a register call.
+ * Shared between the production and preview ledger flows.
+ *
+ * Small in-memory blobs (pages, config, apiManifest) are looked up in
+ * `blobs` first. File blobs are loaded lazily from disk via `filePaths`
+ * (hash → absolute path) to avoid holding every file's bytes in memory
+ * for the entire publish duration.
+ */
+export async function uploadMissingBlobs(
+    missingContent: ReadonlyArray<{ hash: string; uploadUrl: string }>,
+    blobs: Map<string, Buffer>,
+    context: TaskContext,
+    filePaths?: Map<string, AbsoluteFilePath>
+): Promise<void> {
+    if (missingContent.length > 0) {
+        context.logger.debug(`[ledger] Uploading ${missingContent.length} missing blobs...`);
+        const uploadStart = performance.now();
+
+        const results = await asyncPool(UPLOAD_CONCURRENCY, [...missingContent], async ({ hash, uploadUrl }) => {
+            // Prefer in-memory blobs (pages, config, apiManifest).
+            let blob = blobs.get(hash);
+            if (blob == null && filePaths != null) {
+                // Lazy read: only load file content for blobs the server
+                // actually needs, and discard after upload.
+                const filePath = filePaths.get(hash);
+                if (filePath != null) {
+                    blob = await readFile(filePath);
+                }
+            }
+            if (blob == null) {
+                context.logger.warn(`[ledger] Server requested blob ${hash} but we don't have it — skipping`);
+                return "skipped" as const;
+            }
+            return uploadBlobWithRetry(blob, uploadUrl, hash, context);
+        });
+
+        const uploaded = results.filter((r) => r === "uploaded").length;
+        const alreadyExisted = results.filter((r) => r === "already_exists").length;
+        const uploadTime = performance.now() - uploadStart;
+        context.logger.debug(
+            `[ledger] Upload complete in ${uploadTime.toFixed(0)}ms — ${uploaded} uploaded, ${alreadyExisted} already in store`
+        );
+    } else {
+        context.logger.debug("[ledger] All content already in CAS — no uploads needed");
+    }
 }
 
 type UploadResult = "uploaded" | "already_exists";
