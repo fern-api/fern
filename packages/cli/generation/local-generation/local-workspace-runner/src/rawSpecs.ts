@@ -5,7 +5,7 @@ import { cp } from "fs/promises";
 import path from "path";
 
 export interface RawSpecsManifestEntry {
-    type: "openapi" | "protobuf" | "openrpc" | "graphql";
+    type: "openapi" | "asyncapi" | "protobuf" | "openrpc" | "graphql";
     specPath: string;
     overridePaths?: string[];
     overlayPath?: string;
