@@ -96,6 +96,10 @@ function isNodeVersionError(error: unknown): boolean {
     return error instanceof Error && error.message.includes("globalThis");
 }
 
+function isFetchNetworkError(error: unknown): boolean {
+    return error instanceof TypeError && error.message === "fetch failed";
+}
+
 // Node `ErrnoException` codes that represent a problem with the user's
 // environment (missing file, bad perms, full disk, closed pipe, …).
 // None of these indicate a Fern bug, so they map to EnvironmentError
@@ -114,7 +118,9 @@ const USER_ENVIRONMENT_ERRNOS: ReadonlySet<string> = new Set([
     "EMFILE",
     "ENFILE",
     "EBUSY",
-    "EADDRINUSE"
+    "EADDRINUSE",
+    "ENOTEMPTY",
+    "ENOMEM"
 ]);
 
 // `ErrnoException` codes from `node:net` / `node:dns` / `undici` that mean
@@ -136,7 +142,17 @@ function errnoCode(error: unknown): string | undefined {
         return undefined;
     }
     const code = (error as NodeJS.ErrnoException).code;
-    return typeof code === "string" ? code : undefined;
+    if (typeof code === "string") {
+        return code;
+    }
+    const cause = (error as { cause?: unknown }).cause;
+    if (cause instanceof Error) {
+        const causeCode = (cause as NodeJS.ErrnoException).code;
+        if (typeof causeCode === "string") {
+            return causeCode;
+        }
+    }
+    return undefined;
 }
 
 /**
@@ -165,6 +181,9 @@ export function resolveErrorCode(error: unknown, explicitCode?: CliError.Code): 
         if (NETWORK_ERRNOS.has(errno)) {
             return CliError.Code.NetworkError;
         }
+    }
+    if (isFetchNetworkError(error)) {
+        return CliError.Code.NetworkError;
     }
     return CliError.Code.InternalError;
 }

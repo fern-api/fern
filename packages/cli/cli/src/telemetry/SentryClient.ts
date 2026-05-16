@@ -1,5 +1,5 @@
 import { setSentryRunIdTags } from "@fern-api/cli-telemetry";
-import { type CaptureExceptionOptions, CliError } from "@fern-api/task-context";
+import { type CaptureExceptionOptions, CliError, resolveErrorCode, shouldReportToSentry } from "@fern-api/task-context";
 import * as Sentry from "@sentry/node";
 
 import { isTelemetryDisabled } from "./isTelemetryDisabled.js";
@@ -47,7 +47,17 @@ export class SentryClient {
                 attachStacktrace: true,
                 // Suppress the client-report envelope Sentry sends when events
                 // are dropped (e.g. due to rate limits).
-                sendClientReports: false
+                sendClientReports: false,
+                beforeSend(event, hint) {
+                    const error = hint?.originalException;
+                    if (error != null) {
+                        const code = resolveErrorCode(error);
+                        if (!shouldReportToSentry(code)) {
+                            return null;
+                        }
+                    }
+                    return event;
+                }
             });
             setSentryRunIdTags();
         }
