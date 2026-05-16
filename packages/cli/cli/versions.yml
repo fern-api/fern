@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.27.0
+  changelogEntry:
+    - summary: |
+        Enrich CLI telemetry with automation-mode context (config repo, branch,
+        commit sha, PR number, trigger, and GitHub run details) on every PostHog
+        event and Sentry error report.
+        Add the three-leg failure flow (Sentry + PostHog + automation event API)
+        so automation-run failures surface end-to-end.
+      type: internal
+  createdAt: "2026-05-16"
+  irVersion: 66
 - version: 5.26.5
   changelogEntry:
     - summary: |
