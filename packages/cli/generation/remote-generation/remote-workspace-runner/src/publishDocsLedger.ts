@@ -1,5 +1,10 @@
 import type { APIV1Write, DocsV1Write } from "@fern-api/fdr-sdk";
-import { createDocsLedgerClient, type DocsPublishInput, type FileManifestEntry } from "@fern-api/fdr-sdk/orpc-client";
+import {
+    createDocsLedgerClient,
+    type DocsPublishGitInput,
+    type DocsPublishInput,
+    type FileManifestEntry
+} from "@fern-api/fdr-sdk/orpc-client";
 import type { TaskContext } from "@fern-api/task-context";
 import { createHash } from "crypto";
 
@@ -70,6 +75,8 @@ export function buildLedgerInput({
     domain,
     basepath,
     previewId,
+    customDomains,
+    git,
     apiDefinitions,
     fileManifest,
     fileBlobs,
@@ -80,6 +87,8 @@ export function buildLedgerInput({
     domain: string;
     basepath: string | undefined;
     previewId: string | undefined;
+    customDomains?: string[];
+    git?: DocsPublishGitInput;
     apiDefinitions: Map<string, APIV1Write.ApiDefinition>;
     fileManifest?: Record<string, FileManifestEntry>;
     fileBlobs?: Map<string, Buffer>;
@@ -121,11 +130,17 @@ export function buildLedgerInput({
     // `Promise.all`, so the Map's insertion order reflects whichever HTTP
     // round-trip completed first — non-deterministic across publishes.
     // {@link jsonBlobRef} uses {@link stableStringify}, which sorts object
-    // keys at every level, so the resulting bytes are stable regardless
-    // of Map iteration order. Combined with the FDR-side
-    // `(orgId, apiName, contentHash)` dedup on `api_definitions_v2`, this
-    // makes the docs-ledger deployment hash deterministic for byte-identical
-    // publishes.
+    // keys at every level, so the resulting bytes are stable regardless of
+    // Map iteration order.
+    //
+    // Determinism caveat: stable apiManifest bytes are necessary but not
+    // sufficient for a deterministic deployment hash. Page bodies must also
+    // be byte-identical, which requires that file references substituted
+    // into markdown (`file:<fileId>` tokens emitted by replaceImagePathsAndUrls)
+    // be stable. In `ledger` deploy mode the CLI emits path tokens
+    // (`file:<sanitizedPath>`) and short-circuits the V2 register call; in
+    // `dual`/`legacy` modes the V2 register flow mints fresh UUID FileIds per
+    // request, so deployment-level dedup will not fire there.
     let apiManifestRef: BlobRef | null = null;
     if (apiDefinitions.size > 0) {
         const manifestObj = Object.fromEntries(apiDefinitions);
@@ -148,6 +163,7 @@ export function buildLedgerInput({
         orgId: organization,
         domain,
         basepath: basepath ?? "",
+        customDomains: customDomains ?? [],
         previewId: previewId ?? null,
         root: docsDefinition.config.root ?? docsDefinition.config.navigation,
         pages,
@@ -155,7 +171,8 @@ export function buildLedgerInput({
         apiManifest: apiManifestRef,
         fileManifest,
         redirects: null,
-        locale: "en"
+        locale: "en",
+        git
     };
 
     return { input, blobs };
@@ -180,6 +197,8 @@ export async function publishDocsViaLedger({
     domain,
     basepath,
     previewId,
+    customDomains,
+    git,
     token,
     fdrOrigin,
     headers,
@@ -194,6 +213,8 @@ export async function publishDocsViaLedger({
     domain: string;
     basepath: string | undefined;
     previewId: string | undefined;
+    customDomains?: string[];
+    git?: DocsPublishGitInput;
     token: string;
     fdrOrigin: string;
     headers: Record<string, string>;
@@ -209,6 +230,8 @@ export async function publishDocsViaLedger({
         domain,
         basepath,
         previewId,
+        customDomains,
+        git,
         apiDefinitions,
         fileManifest,
         fileBlobs,
@@ -228,32 +251,7 @@ export async function publishDocsViaLedger({
     );
 
     // Step 2: Upload any blobs the server doesn't have yet.
-    if (registerResult.missingContent.length > 0) {
-        context.logger.debug(`[ledger] Uploading ${registerResult.missingContent.length} missing blobs...`);
-        const uploadStart = performance.now();
-
-        const results = await asyncPool(
-            UPLOAD_CONCURRENCY,
-            registerResult.missingContent,
-            async ({ hash, uploadUrl }) => {
-                const blob = blobs.get(hash);
-                if (blob == null) {
-                    context.logger.warn(`[ledger] Server requested blob ${hash} but we don't have it — skipping`);
-                    return "skipped" as const;
-                }
-                return uploadBlobWithRetry(blob, uploadUrl, hash, context);
-            }
-        );
-
-        const uploaded = results.filter((r) => r === "uploaded").length;
-        const alreadyExisted = results.filter((r) => r === "already_exists").length;
-        const uploadTime = performance.now() - uploadStart;
-        context.logger.debug(
-            `[ledger] Upload complete in ${uploadTime.toFixed(0)}ms — ${uploaded} uploaded, ${alreadyExisted} already in store`
-        );
-    } else {
-        context.logger.debug("[ledger] All content already in CAS — no uploads needed");
-    }
+    await uploadMissingBlobs(registerResult.missingContent, blobs, context);
 
     // Step 3: Finish — server persists the deployment.
     context.logger.debug("[ledger] Finishing deployment...");
@@ -265,6 +263,39 @@ export async function publishDocsViaLedger({
     );
 
     return finishResult;
+}
+
+/**
+ * Upload blobs the server reported as missing after a register call.
+ * Shared between the production and preview ledger flows.
+ */
+export async function uploadMissingBlobs(
+    missingContent: ReadonlyArray<{ hash: string; uploadUrl: string }>,
+    blobs: Map<string, Buffer>,
+    context: TaskContext
+): Promise<void> {
+    if (missingContent.length > 0) {
+        context.logger.debug(`[ledger] Uploading ${missingContent.length} missing blobs...`);
+        const uploadStart = performance.now();
+
+        const results = await asyncPool(UPLOAD_CONCURRENCY, [...missingContent], async ({ hash, uploadUrl }) => {
+            const blob = blobs.get(hash);
+            if (blob == null) {
+                context.logger.warn(`[ledger] Server requested blob ${hash} but we don't have it — skipping`);
+                return "skipped" as const;
+            }
+            return uploadBlobWithRetry(blob, uploadUrl, hash, context);
+        });
+
+        const uploaded = results.filter((r) => r === "uploaded").length;
+        const alreadyExisted = results.filter((r) => r === "already_exists").length;
+        const uploadTime = performance.now() - uploadStart;
+        context.logger.debug(
+            `[ledger] Upload complete in ${uploadTime.toFixed(0)}ms — ${uploaded} uploaded, ${alreadyExisted} already in store`
+        );
+    } else {
+        context.logger.debug("[ledger] All content already in CAS — no uploads needed");
+    }
 }
 
 type UploadResult = "uploaded" | "already_exists";

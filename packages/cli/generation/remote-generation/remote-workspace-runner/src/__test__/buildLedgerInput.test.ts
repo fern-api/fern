@@ -423,4 +423,87 @@ describe("buildLedgerInput", () => {
         // Blob map still contains the page + config blobs.
         expect(blobs.size).toBeGreaterThan(0);
     });
+
+    // ── ADR 0011: git provenance ──────────────────────────────────────
+
+    it("forwards git into DocsPublishInput when provided", () => {
+        const git = {
+            repoUrl: "https://github.com/acme/docs",
+            branch: "main",
+            commitSha: "abc123"
+        };
+        const { input } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            git,
+            apiDefinitions: new Map()
+        });
+
+        expect(input.git).toEqual(git);
+    });
+
+    it("omits git from DocsPublishInput when not provided", () => {
+        const { input } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            apiDefinitions: new Map()
+        });
+
+        expect(input.git).toBeUndefined();
+    });
+
+    it("forwards git without commitSha when commitSha is omitted", () => {
+        const git = {
+            repoUrl: "https://gitlab.com/acme/docs",
+            branch: "feature/x"
+        };
+        const { input } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            git,
+            apiDefinitions: new Map()
+        });
+
+        expect(input.git).toEqual(git);
+        expect(input.git?.commitSha).toBeUndefined();
+    });
+
+    // ── ADR 0009: customDomains ───────────────────────────────────────
+
+    it("forwards customDomains into DocsPublishInput", () => {
+        const customDomains = ["docs.acme.com", "alt.acme.com/v2"];
+        const { input } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            organization: "acme",
+            domain: "acme.docs.buildwithfern.com",
+            basepath: undefined,
+            previewId: undefined,
+            customDomains,
+            apiDefinitions: new Map()
+        });
+
+        expect(input.customDomains).toEqual(customDomains);
+    });
+
+    it("defaults customDomains to [] when omitted", () => {
+        const { input } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            organization: "acme",
+            domain: "docs.acme.com",
+            basepath: undefined,
+            previewId: undefined,
+            apiDefinitions: new Map()
+        });
+
+        expect(input.customDomains).toEqual([]);
+    });
 });

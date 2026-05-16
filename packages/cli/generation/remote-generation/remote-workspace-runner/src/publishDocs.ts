@@ -17,7 +17,7 @@ import {
     wrapWithHttps
 } from "@fern-api/docs-resolver";
 import { APIV1Write, FdrAPI as CjsFdrSdk, DocsV1Write, DocsV2Write, FdrClient } from "@fern-api/fdr-sdk";
-import type { FileManifestEntry } from "@fern-api/fdr-sdk/orpc-client";
+import type { DocsPublishGitInput, FileManifestEntry } from "@fern-api/fdr-sdk/orpc-client";
 
 type DynamicIr = APIV1Write.DynamicIr;
 type DynamicIRUpload = APIV1Write.DynamicIRUpload;
@@ -50,7 +50,9 @@ import terminalLink from "terminal-link";
 import { getDocsDeployMode } from "./docsDeployMode.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { measureImageSizes } from "./measureImageSizes.js";
+import { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
 import { publishDocsViaLedger } from "./publishDocsLedger.js";
+import { publishDocsViaLedgerPreview } from "./publishDocsLedgerPreview.js";
 import { asyncPool } from "./utils/asyncPool.js";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
@@ -288,8 +290,13 @@ export async function publishDocs({
         const ledgerFileBlobs = new Map<string, Buffer>();
         // FileId → fullPath lookup used by mapDocsConfigToLedgerConfig to
         // translate DocsConfig's FileId-based references (e.g. colorsV3.dark.logo)
-        // into LedgerConfig path strings. Populated from FDR's startDocsRegister
-        // response in the uploadFiles callback below.
+        // into LedgerConfig path strings.
+        //
+        // Populated by the uploadFiles callback below:
+        //   - ledger mode: identity map (fullPath → fullPath) — the FileId we
+        //     emit IS the sanitizedPath, so the lookup just round-trips it.
+        //   - dual/legacy: keyed by the UUID FileId returned by FDR's
+        //     startDocsRegister/startDocsPreviewRegister response.
         const ledgerFileIdToPath = new Map<string, string>();
 
         const resolver = new DocsDefinitionResolver({
@@ -417,6 +424,53 @@ export async function publishDocs({
                 );
                 const hashNonImageTime = performance.now() - hashNonImageStart;
                 context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
+
+                // ── Ledger-only path ─────────────────────────────────────
+                // In ledger mode we do NOT call fdr.docs.v2.write.startDocsRegister
+                // / startDocsPreviewRegister. The legacy V2 register mints fresh
+                // FileId UUIDs per request even for byte-identical inputs, which
+                // then leak into the substituted markdown (via
+                // replaceImagePathsAndUrls below) and rotate the deployment hash
+                // on every publish — defeating the ledger's deployment-level dedup.
+                //
+                // Instead, we synthesize UploadedFile entries whose `fileId` is
+                // the file's sanitized fern-host-relative path. The resolver
+                // substitutes `file:<sanitizedPath>` into the markdown, which:
+                //   - is byte-identical across publishes of byte-identical
+                //     inputs (sanitizedPath is deterministic), so pages dedup
+                //     at the CAS layer; and
+                //   - resolves directly through the existing path-keyed ledger
+                //     reader endpoints (`fileArtifact`/`fileMetadata`, both
+                //     keyed on `fullPath` ≡ sanitizedPath) — no new server-
+                //     side resolver is needed.
+                //
+                // File bytes are uploaded later by the ledger missing-blobs
+                // step in publishDocsViaLedger / publishDocsViaLedgerPreview;
+                // they do not need a separate V2 upload round-trip.
+                if (deployMode === "ledger") {
+                    const uploadedFiles: UploadedFile[] = [];
+                    for (const file of filesWithSanitizedPaths) {
+                        const manifestEntry = ledgerFileManifest[file.sanitizedPath];
+                        if (manifestEntry == null) {
+                            continue;
+                        }
+                        // mapDocsConfigToLedgerConfig keys this lookup by
+                        // whatever string the DocsConfig stores as a FileId.
+                        // In ledger mode the FileId we emit IS the fullPath,
+                        // so the map is identity (fullPath → fullPath) — kept
+                        // populated for parity with the dual/legacy paths.
+                        ledgerFileIdToPath.set(file.sanitizedPath, file.sanitizedPath);
+                        uploadedFiles.push({
+                            relativeFilePath: file.relativeFilePath,
+                            absoluteFilePath: file.absoluteFilePath,
+                            fileId: file.sanitizedPath
+                        });
+                    }
+                    context.logger.debug(
+                        `[ledger] Skipping V2 startDocsRegister; resolved ${uploadedFiles.length} files by sanitizedPath`
+                    );
+                    return uploadedFiles;
+                }
 
                 if (preview) {
                     let startDocsRegisterResponse;
@@ -733,25 +787,66 @@ export async function publishDocs({
 
         // ── Ledger publish path (dual-write or ledger-only) ──────────
         if (deployMode === "dual" || deployMode === "ledger") {
+            // Build structured git provenance from the CI environment (ADR 0011).
+            // The X-CI-Source header is still sent for other telemetry sinks; this
+            // puts the same data into the DocsPublishInput so the ledger persists it.
+            const ledgerGit: DocsPublishGitInput | undefined =
+                ciSource?.repo != null && ciSource?.branch != null
+                    ? {
+                          repoUrl: normalizeRepoUrlToHttps(ciSource.repo, ciSource.type),
+                          branch: ciSource.branch,
+                          commitSha: ciSource.commitSha
+                      }
+                    : undefined;
+
             try {
-                const ledgerResult = await publishDocsViaLedger({
-                    docsDefinition,
-                    organization,
-                    domain,
-                    basepath: basePath,
-                    previewId,
-                    token: token.value,
-                    fdrOrigin,
-                    headers,
-                    context,
-                    apiDefinitions: apiDefinitionCollector,
-                    fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
-                    fileBlobs: ledgerFileBlobs.size > 0 ? ledgerFileBlobs : undefined,
-                    fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined
-                });
-                context.logger.info(
-                    `[ledger] Deployment ${ledgerResult.reusedDeployment ? "reused" : "created"}: ${ledgerResult.deploymentId}`
-                );
+                if (preview) {
+                    // ADR 0012: preview publishes go through the dedicated
+                    // /preview/init endpoint so they land on the server-generated
+                    // preview hostname instead of the production domain.
+                    const previewResult = await publishDocsViaLedgerPreview({
+                        docsDefinition,
+                        organization,
+                        basePath,
+                        previewId: previewId != null ? sanitizePreviewId(previewId) : previewId,
+                        git: ledgerGit,
+                        token: token.value,
+                        fdrOrigin,
+                        headers,
+                        context,
+                        apiDefinitions: apiDefinitionCollector,
+                        fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
+                        fileBlobs: ledgerFileBlobs.size > 0 ? ledgerFileBlobs : undefined,
+                        fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined
+                    });
+                    // In ledger-only mode the preview URL comes from the ledger;
+                    // in dual mode the V2 URL was already set above.
+                    if (deployMode === "ledger") {
+                        urlToOutput = previewResult.previewUrl;
+                    }
+                    context.logger.info(`[ledger] Preview deployment created: ${previewResult.deploymentId}`);
+                } else {
+                    const ledgerResult = await publishDocsViaLedger({
+                        docsDefinition,
+                        organization,
+                        domain,
+                        basepath: basePath,
+                        previewId,
+                        customDomains,
+                        git: ledgerGit,
+                        token: token.value,
+                        fdrOrigin,
+                        headers,
+                        context,
+                        apiDefinitions: apiDefinitionCollector,
+                        fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
+                        fileBlobs: ledgerFileBlobs.size > 0 ? ledgerFileBlobs : undefined,
+                        fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined
+                    });
+                    context.logger.info(
+                        `[ledger] Deployment ${ledgerResult.reusedDeployment ? "reused" : "created"}: ${ledgerResult.deploymentId}`
+                    );
+                }
             } catch (error) {
                 if (deployMode === "ledger") {
                     return context.failAndThrow("Failed to publish docs via ledger to " + domain, error, {

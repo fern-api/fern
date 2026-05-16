@@ -1,0 +1,5 @@
+- summary: |
+    Wire CLI to docs-ledger publish contracts for ADRs 0009, 0011, and 0012:
+    structured git provenance (repoUrl, branch, commitSha), multi-domain
+    customDomains forwarding, and dedicated preview endpoint (/preview/init).
+  type: feat
