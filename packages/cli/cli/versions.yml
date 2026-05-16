@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.27.3
+  changelogEntry:
+    - summary: |
+        Wrap `yaml.load` calls in `getVersionedNavigationConfiguration` and `getNavigationConfiguration`
+        with try/catch boundaries that convert YAML parse failures to `CliError(ParseError)`, preventing
+        user-authored YAML syntax errors in version and product config files from reaching Sentry as
+        false-positive InternalErrors.
+      type: fix
+  createdAt: "2026-05-16"
+  irVersion: 66
 - version: 5.27.2
   changelogEntry:
     - summary: |
