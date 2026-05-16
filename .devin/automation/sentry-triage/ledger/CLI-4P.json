@@ -4,6 +4,6 @@
   "disposition": "shipped",
   "rationale": "Undefined endpoint server references come from user-authored API environment configuration and should surface as validation errors at the IR-to-FDR boundary, not as reportable internal conversion failures.",
   "fixSummary": "Reclassified undefined REST endpoint server references in IR-to-FDR conversion as non-reportable validation errors.",
-  "prOrIssue": "Pending PR",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15943",
   "lastAnalyzed": "2026-05-16"
 }
