@@ -1186,6 +1186,96 @@
       "lastAnalyzed": "2026-05-16",
       "duplicateOf": "CLI-44",
       "problemSignature": "MDX parse error surfaced as InternalError from unwrapped replaceImagePathsAndUrls call sites."
+    },
+    "CLI-42": {
+      "title": "Generic Error (minified, no actionable signature)",
+      "disposition": "ignored",
+      "rationale": "Single event with generic Error and no useful stack trace or context after minification; no actionable product signature to fix or suppress safely.",
+      "fixSummary": "—",
+      "prOrIssue": "Ignored after event-level review",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "Minified generic Error with no actionable stack trace or context."
+    },
+    "CLI-46": {
+      "title": "Filepath is not relative (Linux absolute path)",
+      "disposition": "keep_sentry",
+      "rationale": "Absolute path reached a relative-path invariant; same family as CLI-3J and CLI-18.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "OpenAPI or workspace path conversion received an absolute path where a relative path was required; path boundary bug."
+    },
+    "CLI-4C": {
+      "title": "Endpoint not found in readme config",
+      "disposition": "keep_sentry",
+      "rationale": "convertReadmeConfig could not match an endpoint; either user readme config is wrong or the endpoint matcher has a product bug.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "IR generation readme config endpoint matcher failed to locate a matching endpoint; needs product investigation."
+    },
+    "CLI-4G": {
+      "title": "Endpoint not found in readme config",
+      "disposition": "keep_sentry",
+      "rationale": "Same readme config endpoint resolution family as CLI-4C.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "IR generation readme config endpoint matcher failed to locate a matching endpoint; needs product investigation."
+    },
+    "CLI-4J": {
+      "title": "Unsupported OpenAPI version 3.2.0",
+      "disposition": "keep_sentry",
+      "rationale": "Redocly threw for unsupported OpenAPI 3.2.0; the CLI should either support it or classify as ParseError at the OpenAPI loading boundary. Needs product decision.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "Redocly rejected user OpenAPI spec version 3.2.0 as unsupported; needs product decision on classification or support."
+    },
+    "CLI-4P": {
+      "title": "Undefined server name in IR-to-FDR conversion",
+      "disposition": "keep_sentry",
+      "rationale": "ir-to-fdr-converter encountered an undefined server name; this is a product/conversion bug in server URL mapping.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "IR-to-FDR converter encountered undefined server name at endpoint; server URL mapping product bug."
+    },
+    "CLI-4T": {
+      "title": "Failed to find PronunciationItem",
+      "disposition": "keep_sentry",
+      "rationale": "FDR SDK example generation failed to resolve a type; this is a product/SDK bug in generateEndpointExampleCall.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "FDR SDK example generation failed to locate a referenced type during endpoint example call generation; true product bug."
+    },
+    "CLI-4V": {
+      "title": "Cannot find declaration of type in IR generator",
+      "disposition": "keep_sentry",
+      "rationale": "IR generator TypeResolver could not find a declared type; this is a product/resolution bug.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "IR generation TypeResolver failed to locate a declared type; possible reference/resolution product bug."
+    },
+    "CLI-4W": {
+      "title": "Failed to find NorthErrorType",
+      "disposition": "keep_sentry",
+      "rationale": "FDR SDK example generation failed to resolve a type; same product bug family as CLI-4T.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "FDR SDK example generation failed to locate a referenced type during endpoint example call generation; true product bug."
+    },
+    "CLI-4X": {
+      "title": "Failed to find Error type",
+      "disposition": "keep_sentry",
+      "rationale": "FDR SDK example generation failed to resolve a type; same product bug family as CLI-4T.",
+      "fixSummary": "—",
+      "prOrIssue": "Keep in Sentry until product fix",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "FDR SDK example generation failed to locate a referenced type during endpoint example call generation; true product bug."
     }
   },
   "CLI-49": {
