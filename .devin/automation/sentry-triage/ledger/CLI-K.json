@@ -1,9 +1,9 @@
 {
   "title": "Package fern-api could not be found",
-  "disposition": "keep_sentry",
-  "rationale": "Package manager bootstrap failure needs environment/package-boundary handling; not enough evidence for a safe suppression.",
-  "fixSummary": "—",
-  "prOrIssue": "Keep in Sentry until product fix",
-  "lastAnalyzed": "2026-05-04",
+  "disposition": "shipped",
+  "rationale": "The latest-version package lookup is now handled at the CLI bootstrap boundary and converted to a non-reportable NetworkError instead of escaping as PackageNotFoundError.",
+  "fixSummary": "Wrap latest CLI package lookup failures in CliError.Code.NetworkError.",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/14753",
+  "lastAnalyzed": "2026-05-16",
   "problemSignature": "CLI package lookup/bootstrap failed because package could not be found; environment/package boundary needs investigation."
 }
