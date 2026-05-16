@@ -1062,6 +1062,51 @@
       "lastAnalyzed": "2026-05-16",
       "duplicateOf": "CLI-2X",
       "problemSignature": "Filesystem errno ENOENT from user environment surfaced as InternalError instead of EnvironmentError."
+    },
+    "CLI-40": {
+      "title": "Received 429 Too Many Requests",
+      "disposition": "shipped",
+      "rationale": "HTTP 429 rate-limit from remote generation service. retryWithRateLimit now throws CliError(NetworkError) on exhaustion, and generateOne passes error object through failWithoutThrowing so resolveErrorCode propagates the code.",
+      "fixSummary": "Change retryWithRateLimit exhaustion code from InternalError to NetworkError; pass error object in generateOne catch to failWithoutThrowing.",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "TooManyRequestsError from retryWithRateLimit reaching Sentry because failWithoutThrowing(message) lost the error object and code."
+    },
+    "CLI-41": {
+      "title": "Docs preview server failed to start: Server process exited with code 1",
+      "disposition": "shipped",
+      "rationale": "Next.js subprocess failing to start is an environment issue (port conflict, missing deps, etc.), not a Fern bug. Reclassified from InternalError to EnvironmentError.",
+      "fixSummary": "Change failAndThrow code from InternalError to EnvironmentError in runAppPreviewServer.ts.",
+      "prOrIssue": "This PR",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "startNextJsServer failure classified as InternalError instead of EnvironmentError."
+    },
+    "CLI-4B": {
+      "title": "Failed to load generator migrations for fernapi/fern-typescript-sdk",
+      "disposition": "shipped",
+      "rationale": "npm install failure (EACCES on rename) in migration cache. loadMigrationModule already wraps non-CliError exceptions as CliError(EnvironmentError) at the boundary.",
+      "fixSummary": "Already fixed: loadMigrationModule catch block wraps with EnvironmentError.",
+      "prOrIssue": "This PR (ledger only)",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "npm cache rename EACCES inside ensureMigrationsInstalled, caught and wrapped as EnvironmentError by loadMigrationModule."
+    },
+    "CLI-4F": {
+      "title": "Global theme \"dark\" not found for org \"asi\"",
+      "disposition": "shipped",
+      "rationale": "User references a global theme that does not exist. stitchGlobalTheme already passes ConfigError to failAndThrow for 404 and NOT_FOUND responses.",
+      "fixSummary": "Already fixed: failAndThrow passes { code: ConfigError } for theme-not-found.",
+      "prOrIssue": "This PR (ledger only)",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "Global theme 404/NOT_FOUND classified as ConfigError by stitchGlobalTheme."
+    },
+    "CLI-4Q": {
+      "title": "Failed to fetch global theme \"nvidia\": HTTP 403",
+      "disposition": "shipped",
+      "rationale": "HTTP 403 from FDR when fetching a global theme the org lacks access to. stitchGlobalTheme already passes ConfigError to failAndThrow for non-ok HTTP responses.",
+      "fixSummary": "Already fixed: failAndThrow passes { code: ConfigError } for non-ok HTTP status.",
+      "prOrIssue": "This PR (ledger only)",
+      "lastAnalyzed": "2026-05-16",
+      "problemSignature": "Global theme HTTP 403 classified as ConfigError by stitchGlobalTheme."
     }
   },
   "CLI-49": {
