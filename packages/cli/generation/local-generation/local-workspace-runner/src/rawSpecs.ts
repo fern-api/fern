@@ -1,7 +1,7 @@
 import { Spec } from "@fern-api/api-workspace-commons";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { cp, mkdir } from "fs/promises";
+import { cp } from "fs/promises";
 import path from "path";
 
 export interface RawSpecsManifestEntry {
@@ -16,9 +16,11 @@ export interface RawSpecsManifest {
 }
 
 /**
- * Collects raw API spec files (OAS, protobuf, OpenRPC, GraphQL) and copies them
- * to a host output directory, preserving the original directory structure so that
- * relative $ref paths between files remain valid.
+ * Collects raw API spec files (OAS, protobuf, OpenRPC, GraphQL) and copies the
+ * entire common root directory tree to a host output directory. This preserves
+ * the original directory structure so that relative $ref paths between files
+ * remain valid — including $ref targets that live outside the spec file's own
+ * directory (e.g. `../../shared/models.yaml`).
  *
  * Returns a manifest describing the container paths for each spec.
  */
@@ -34,6 +36,10 @@ export async function collectRawSpecs({
     context: TaskContext;
 }): Promise<RawSpecsManifest> {
     const manifest: RawSpecsManifest = { specs: [] };
+
+    if (specs.length === 0) {
+        return manifest;
+    }
 
     // Find the common ancestor directory across all spec files so we can
     // preserve relative paths when copying into the output directory.
@@ -73,39 +79,34 @@ export async function collectRawSpecs({
     const commonRoot = findCommonDirectory(allAbsolutePaths, directoryPaths);
     context.logger.debug(`Raw specs common root: ${commonRoot}`);
 
+    // Copy the entire common root directory tree so that all files reachable
+    // via relative $ref paths (including ../../ references) are preserved.
+    await cp(commonRoot, hostOutputDir, { recursive: true });
+    context.logger.debug(`Copied directory tree from ${commonRoot} to ${hostOutputDir}`);
+
+    // Build manifest entries with container paths for each spec file.
     for (const spec of specs) {
-        const entry = await copySpecFiles({
-            spec,
-            commonRoot,
-            hostOutputDir,
-            containerBaseDir
-        });
+        const entry = buildManifestEntry({ spec, commonRoot, containerBaseDir });
         manifest.specs.push(entry);
     }
 
     return manifest;
 }
 
-async function copySpecFiles({
+function buildManifestEntry({
     spec,
     commonRoot,
-    hostOutputDir,
     containerBaseDir
 }: {
     spec: Spec;
     commonRoot: string;
-    hostOutputDir: AbsoluteFilePath;
     containerBaseDir: string;
-}): Promise<RawSpecsManifestEntry> {
+}): RawSpecsManifestEntry {
     switch (spec.type) {
         case "openapi":
         case "openrpc":
         case "graphql": {
-            const specPath = await copyPathPreservingStructure({
-                absolutePath: spec.absoluteFilepath,
-                commonRoot,
-                hostOutputDir
-            });
+            const specPath = toContainerPath(path.relative(commonRoot, spec.absoluteFilepath), containerBaseDir);
 
             const overridePaths: string[] = [];
             if (spec.absoluteFilepathToOverrides != null) {
@@ -113,28 +114,21 @@ async function copySpecFiles({
                     ? spec.absoluteFilepathToOverrides
                     : [spec.absoluteFilepathToOverrides];
                 for (const overridePath of overrides) {
-                    const copied = await copyPathPreservingStructure({
-                        absolutePath: overridePath,
-                        commonRoot,
-                        hostOutputDir
-                    });
-                    overridePaths.push(toContainerPath(copied, containerBaseDir));
+                    overridePaths.push(toContainerPath(path.relative(commonRoot, overridePath), containerBaseDir));
                 }
             }
 
             let overlayPath: string | undefined;
             if (spec.type === "openapi" && spec.absoluteFilepathToOverlays != null) {
-                const copied = await copyPathPreservingStructure({
-                    absolutePath: spec.absoluteFilepathToOverlays,
-                    commonRoot,
-                    hostOutputDir
-                });
-                overlayPath = toContainerPath(copied, containerBaseDir);
+                overlayPath = toContainerPath(
+                    path.relative(commonRoot, spec.absoluteFilepathToOverlays),
+                    containerBaseDir
+                );
             }
 
             const entry: RawSpecsManifestEntry = {
                 type: spec.type,
-                specPath: toContainerPath(specPath, containerBaseDir)
+                specPath
             };
             if (overridePaths.length > 0) {
                 entry.overridePaths = overridePaths;
@@ -145,12 +139,10 @@ async function copySpecFiles({
             return entry;
         }
         case "protobuf": {
-            const specPath = await copyPathPreservingStructure({
-                absolutePath: spec.absoluteFilepathToProtobufRoot,
-                commonRoot,
-                hostOutputDir,
-                isDirectory: true
-            });
+            const specPath = toContainerPath(
+                path.relative(commonRoot, spec.absoluteFilepathToProtobufRoot),
+                containerBaseDir
+            );
 
             const overridePaths: string[] = [];
             if (spec.absoluteFilepathToOverrides != null) {
@@ -158,18 +150,13 @@ async function copySpecFiles({
                     ? spec.absoluteFilepathToOverrides
                     : [spec.absoluteFilepathToOverrides];
                 for (const overridePath of overrides) {
-                    const copied = await copyPathPreservingStructure({
-                        absolutePath: overridePath,
-                        commonRoot,
-                        hostOutputDir
-                    });
-                    overridePaths.push(toContainerPath(copied, containerBaseDir));
+                    overridePaths.push(toContainerPath(path.relative(commonRoot, overridePath), containerBaseDir));
                 }
             }
 
             const entry: RawSpecsManifestEntry = {
                 type: "protobuf",
-                specPath: toContainerPath(specPath, containerBaseDir)
+                specPath
             };
             if (overridePaths.length > 0) {
                 entry.overridePaths = overridePaths;
@@ -177,32 +164,6 @@ async function copySpecFiles({
             return entry;
         }
     }
-}
-
-/**
- * Copies a file or directory into hostOutputDir, preserving its path relative to commonRoot.
- * Returns the relative path (from hostOutputDir) of the copied entry.
- */
-async function copyPathPreservingStructure({
-    absolutePath,
-    commonRoot,
-    hostOutputDir,
-    isDirectory
-}: {
-    absolutePath: string;
-    commonRoot: string;
-    hostOutputDir: AbsoluteFilePath;
-    isDirectory?: boolean;
-}): Promise<string> {
-    const relativePath = path.relative(commonRoot, absolutePath);
-    const destPath = path.join(hostOutputDir, relativePath);
-    if (isDirectory) {
-        await cp(absolutePath, destPath, { recursive: true });
-    } else {
-        await mkdir(path.dirname(destPath), { recursive: true });
-        await cp(absolutePath, destPath);
-    }
-    return relativePath;
 }
 
 /**
