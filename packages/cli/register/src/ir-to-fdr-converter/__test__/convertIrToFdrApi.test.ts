@@ -3,15 +3,87 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
+import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 // import { loadApis } from "@fern-api/project-loader"; // Commented out to avoid cyclic dependency
 import { createMockTaskContext } from "@fern-api/task-context";
 import { readdir } from "fs/promises";
 import path from "path";
-
-// import { loadAPIWorkspace } from "../../../../workspace/loader/src/loadAPIWorkspace"; // Commented out to avoid cyclic dependency
 import { convertIrToFdrApi } from "../convertIrToFdrApi.js";
+// import { loadAPIWorkspace } from "../../../../workspace/loader/src/loadAPIWorkspace"; // Commented out to avoid cyclic dependency
+import { withFallbackExamplesForUnresolvedTypeReferences } from "../convertPackage.js";
+
+describe("withFallbackExamplesForUnresolvedTypeReferences", () => {
+    it("adds placeholder examples only for unresolved generated example paths", () => {
+        const endpoint = {
+            slug: undefined,
+            availability: undefined,
+            auth: undefined,
+            authV2: undefined,
+            multiAuth: undefined,
+            defaultEnvironment: undefined,
+            environments: undefined,
+            method: "GET",
+            id: FdrCjsSdk.EndpointId("getThing"),
+            originalEndpointId: "getThing",
+            name: "Get Thing",
+            description: undefined,
+            path: {
+                parts: [{ type: "literal", value: "/thing" }],
+                pathParameters: []
+            },
+            queryParameters: [],
+            headers: [],
+            responseHeaders: undefined,
+            request: undefined,
+            requestsV2: { requests: undefined },
+            response: {
+                statusCode: 200,
+                description: undefined,
+                type: {
+                    type: "reference",
+                    value: {
+                        type: "id",
+                        value: FdrCjsSdk.TypeId("MissingSuccessType"),
+                        default: undefined
+                    }
+                }
+            },
+            responsesV2: { responses: undefined },
+            errors: undefined,
+            errorsV2: [
+                {
+                    statusCode: 404,
+                    description: undefined,
+                    availability: undefined,
+                    headers: undefined,
+                    isWildcard: undefined,
+                    name: "Missing",
+                    examples: [],
+                    type: {
+                        type: "alias",
+                        value: {
+                            type: "id",
+                            value: FdrCjsSdk.TypeId("MissingErrorType"),
+                            default: undefined
+                        }
+                    }
+                }
+            ],
+            examples: [],
+            protocol: { type: "rest" },
+            includeInApiExplorer: true
+        } satisfies FdrCjsSdk.api.v1.register.EndpointDefinition;
+
+        const result = withFallbackExamplesForUnresolvedTypeReferences(endpoint, new Set());
+
+        expect(result.examples).toHaveLength(2);
+        expect(result.examples.map((example) => example.responseStatusCode)).toEqual([200, 404]);
+        expect(result.examples[0]?.path).toBe("/thing");
+        expect(endpoint.examples).toHaveLength(0);
+    });
+});
 
 // Temporarily disabled to avoid cyclic dependency with @fern-api/project-loader
 // biome-ignore lint/suspicious/noSkippedTests: Intentionally disabled due to cyclic dependency
