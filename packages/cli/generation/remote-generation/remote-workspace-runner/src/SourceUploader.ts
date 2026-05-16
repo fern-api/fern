@@ -46,11 +46,9 @@ export class SourceUploader {
             });
         } catch (error) {
             await uploadCommand.cleanup();
-            this.context.failAndThrow(
-                `Network error uploading source file: ${source.absoluteFilePath}`,
-                error,
-                { code: CliError.Code.NetworkError }
-            );
+            this.context.failAndThrow(`Network error uploading source file: ${source.absoluteFilePath}`, error, {
+                code: CliError.Code.NetworkError
+            });
             return;
         }
         await uploadCommand.cleanup();
