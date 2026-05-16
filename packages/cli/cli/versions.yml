@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.27.5
+  changelogEntry:
+    - summary: |
+        Wrap `replaceImagePathsAndUrls` calls in `DocsDefinitionResolver` and `previewDocs` with
+        try/catch boundaries that convert MDX parse failures to `CliError(ParseError)`, preventing
+        user-authored MDX syntax errors from reaching Sentry as false-positive InternalErrors.
+      type: fix
+  createdAt: "2026-05-16"
+  irVersion: 66
 - version: 5.27.4
   changelogEntry:
     - summary: |
