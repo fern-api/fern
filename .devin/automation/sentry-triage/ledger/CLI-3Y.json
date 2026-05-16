@@ -1,0 +1,9 @@
+{
+  "title": "spawn xdg-open ENOENT uncaught exception",
+  "disposition": "keep_sentry",
+  "rationale": "ENOENT from spawn xdg-open escapes normal error handling as uncaught exception; reaches Sentry via onUncaughtExceptionIntegration. Needs boundary-level wrapping at the spawn call site.",
+  "fixSummary": "—",
+  "prOrIssue": "Keep in Sentry until boundary-level fix",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "Uncaught exception with ENOENT errno from spawn xdg-open bypassed resolveErrorCode and reached Sentry as raw exception."
+}

@@ -1,0 +1,9 @@
+{
+  "title": "Rerun CLI at version failure",
+  "disposition": "shipped",
+  "rationale": "Spurious InternalError on rerun failure; TaskAbortSignal.",
+  "fixSummary": "rerunFernCliAtVersion uses TaskAbortSignal.",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+  "lastAnalyzed": "2026-04-21",
+  "problemSignature": "CLI rerun-at-version path failed and reported misleading InternalError instead of controlled task abort."
+}
