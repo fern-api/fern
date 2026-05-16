@@ -109,6 +109,9 @@
                     }
                   }
                 ]
+              },
+              "multi-source": {
+                "type": "boolean"
               }
             },
             "required": [
@@ -1768,27 +1771,34 @@
         "languages": {
           "type": "array",
           "items": {
-            "type": "string",
-            "pattern": "^[a-zA-Z]{2,8}(-[a-zA-Z0-9]{1,8})*$"
+            "type": "string"
           }
         },
         "translations": {
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "lang": {
+            "anyOf": [
+              {
                 "type": "string",
                 "pattern": "^[a-zA-Z]{2,8}(-[a-zA-Z0-9]{1,8})*$"
               },
-              "default": {
-                "type": "boolean"
+              {
+                "type": "object",
+                "properties": {
+                  "lang": {
+                    "type": "string",
+                    "pattern": "^[a-zA-Z]{2,8}(-[a-zA-Z0-9]{1,8})*$"
+                  },
+                  "default": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "lang"
+                ],
+                "additionalProperties": false
               }
-            },
-            "required": [
-              "lang"
-            ],
-            "additionalProperties": false
+            ]
           }
         },
         "ai-chat": {
@@ -1977,7 +1987,7 @@
             "og:dynamic": {
               "type": "boolean"
             },
-            "og:background-image": {
+            "og:dynamic:background-image": {
               "type": "string"
             },
             "og:dynamic:text-color": {
@@ -2085,6 +2095,13 @@
                   ]
                 },
                 "missing-redirects": {
+                  "type": "string",
+                  "enum": [
+                    "warn",
+                    "error"
+                  ]
+                },
+                "valid-changelog-slug": {
                   "type": "string",
                   "enum": [
                     "warn",
@@ -3949,6 +3966,9 @@
                           "uint32",
                           "uint64"
                         ]
+                      },
+                      "inferDiscriminatedUnionBaseProperties": {
+                        "type": "boolean"
                       }
                     },
                     "additionalProperties": false
@@ -4174,6 +4194,38 @@
                 },
                 "required": [
                   "openrpc"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "graphql": {
+                    "type": "string"
+                  },
+                  "origin": {
+                    "type": "string"
+                  },
+                  "overrides": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "minItems": 1,
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    ]
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "graphql"
                 ],
                 "additionalProperties": false
               }
@@ -4482,6 +4534,9 @@
                             "uint32",
                             "uint64"
                           ]
+                        },
+                        "inferDiscriminatedUnionBaseProperties": {
+                          "type": "boolean"
                         }
                       },
                       "additionalProperties": false
@@ -4707,6 +4762,38 @@
                   },
                   "required": [
                     "openrpc"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "graphql": {
+                      "type": "string"
+                    },
+                    "origin": {
+                      "type": "string"
+                    },
+                    "overrides": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "minItems": 1,
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "graphql"
                   ],
                   "additionalProperties": false
                 }
