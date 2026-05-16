@@ -15,7 +15,34 @@ import {
     WorkspaceLoaderFailureType
 } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
+import path from "path";
 import { loadAPIChangelog } from "./loadAPIChangelog.js";
+
+function resolveConfiguredFilepath({
+    absolutePathToWorkspace,
+    configuredFilepath
+}: {
+    absolutePathToWorkspace: AbsoluteFilePath;
+    configuredFilepath: string;
+}): AbsoluteFilePath {
+    if (path.isAbsolute(configuredFilepath)) {
+        return AbsoluteFilePath.of(configuredFilepath);
+    }
+    return join(absolutePathToWorkspace, RelativeFilePath.of(configuredFilepath));
+}
+
+function getFailureFilepath({
+    absolutePathToWorkspace,
+    configuredFilepath
+}: {
+    absolutePathToWorkspace: AbsoluteFilePath;
+    configuredFilepath: string;
+}): RelativeFilePath {
+    if (path.isAbsolute(configuredFilepath)) {
+        return RelativeFilePath.of(path.relative(absolutePathToWorkspace, configuredFilepath));
+    }
+    return RelativeFilePath.of(configuredFilepath);
+}
 
 export async function loadSingleNamespaceAPIWorkspace({
     absolutePathToWorkspace,
@@ -129,12 +156,15 @@ export async function loadSingleNamespaceAPIWorkspace({
             continue;
         }
 
-        const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.path));
+        const absoluteFilepath = resolveConfiguredFilepath({
+            absolutePathToWorkspace,
+            configuredFilepath: definition.schema.path
+        });
         if (!(await doesPathExist(absoluteFilepath))) {
             return {
                 didSucceed: false,
                 failures: {
-                    [RelativeFilePath.of(definition.schema.path)]: {
+                    [getFailureFilepath({ absolutePathToWorkspace, configuredFilepath: definition.schema.path })]: {
                         type: WorkspaceLoaderFailureType.FILE_MISSING
                     }
                 }
