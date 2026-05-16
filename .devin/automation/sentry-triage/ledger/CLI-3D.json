@@ -1,0 +1,9 @@
+{
+  "title": "Mintlify import navigation is not iterable",
+  "disposition": "shipped",
+  "rationale": "Mintlify docs import now validates user-authored mint.json navigation at the importer boundary and reports invalid shape as a non-reportable config error instead of throwing an internal TypeError.",
+  "fixSummary": "Validate Mintlify navigation before iteration and fail with CliError.Code.ConfigError when it is not an array.",
+  "prOrIssue": "",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "Mintlify docs import TypeError while reading navigation; true importer robustness bug until fixed."
+}

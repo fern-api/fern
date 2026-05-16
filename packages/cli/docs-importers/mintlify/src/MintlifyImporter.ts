@@ -23,13 +23,41 @@ export declare namespace MintlifyImporter {
     }
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === "object" && value != null && !Array.isArray(value);
+}
+
+function isStringArray(value: unknown): value is string[] {
+    return Array.isArray(value) && value.every((item) => typeof item === "string");
+}
+
+function isMintJsonSchema(value: unknown): value is MintJsonSchema {
+    if (!isRecord(value)) {
+        return false;
+    }
+
+    return (
+        typeof value.name === "string" &&
+        typeof value.favicon === "string" &&
+        isRecord(value.colors) &&
+        typeof value.colors.primary === "string" &&
+        Array.isArray(value.navigation) &&
+        (value.openapi == null || typeof value.openapi === "string" || isStringArray(value.openapi)) &&
+        (value.tabs == null || Array.isArray(value.tabs)) &&
+        (value.anchors == null || Array.isArray(value.anchors))
+    );
+}
+
 export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
     private documentationTab: TabInfo | undefined = undefined;
     private tabUrlToInfo: Record<string, TabInfo> = {};
 
     public async import({ args, builder }: { args: MintlifyImporter.Args; builder: FernDocsBuilder }): Promise<void> {
         const mintJsonContent = await readFile(args.absolutePathToMintJson, "utf-8");
-        const mint = JSON.parse(mintJsonContent) as MintJsonSchema;
+        const mint = this.parseMintJson({
+            content: mintJsonContent,
+            absolutePathToMintJson: args.absolutePathToMintJson
+        });
 
         builder.setTitle({ title: mint.name });
 
@@ -143,6 +171,39 @@ export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
             companyName: convertInstanceName(mint.name)
         });
         this.context.logger.debug(`Added instance ${instanceUrl} to docs.yml`);
+    }
+
+    private parseMintJson({
+        content,
+        absolutePathToMintJson
+    }: {
+        content: string;
+        absolutePathToMintJson: AbsoluteFilePath;
+    }): MintJsonSchema {
+        let mintJson: unknown;
+        try {
+            mintJson = JSON.parse(content) as unknown;
+        } catch (error) {
+            return this.context.failAndThrow(`Failed to parse ${absolutePathToMintJson}.`, error, {
+                code: CliError.Code.ParseError
+            });
+        }
+
+        if (!isRecord(mintJson) || !Array.isArray(mintJson.navigation)) {
+            return this.context.failAndThrow("Expected navigation in mint.json to be an array.", undefined, {
+                code: CliError.Code.ConfigError
+            });
+        }
+
+        if (!isMintJsonSchema(mintJson)) {
+            return this.context.failAndThrow(
+                "Expected mint.json to include name, favicon, colors.primary, and valid navigation settings.",
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
+
+        return mintJson;
     }
 
     private async getNavigationBuilder({
