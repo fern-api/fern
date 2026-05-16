@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.27.2
+  changelogEntry:
+    - summary: |
+        Suppress Sentry false positives for ENOTEMPTY/ENOMEM syscalls, undici
+        fetch-failed TypeErrors, and errno codes on error.cause.
+      type: fix
+  createdAt: "2026-05-16"
+  irVersion: 66
 - version: 5.27.1
   changelogEntry:
     - summary: |
