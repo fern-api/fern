@@ -3,7 +3,7 @@
   "disposition": "shipped",
   "rationale": "Windows can return an absolute path when relativizing an OpenAPI spec from a different drive than the new workspace; `fern init` now copies that spec into the workspace instead of tripping the relative-path invariant.",
   "fixSummary": "Copy cross-drive OpenAPI specs into new workspaces before writing generators.yml.",
-  "prOrIssue": "Pending PR",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15951",
   "lastAnalyzed": "2026-05-16",
   "problemSignature": "OpenAPI or workspace path conversion received an absolute path where a relative path was required; path boundary bug until fixed."
 }
