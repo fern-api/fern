@@ -1,6 +1,8 @@
+import path from "node:path";
 import { DEFAULT_OPENAPI_BUNDLE_OPTIONS } from "@fern-api/api-workspace-commons";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
+import { CliError } from "@fern-api/task-context";
 import { bundle, Source } from "@redocly/openapi-core";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -83,8 +85,19 @@ export async function parseOpenAPI({
 
             return document;
         }
+        if (isUnsupportedOpenAPIVersionError(error)) {
+            const relativePath = path.relative(process.cwd(), absolutePathToOpenAPI);
+            throw new CliError({
+                message: `Failed to parse ${relativePath}: ${error.message}`,
+                code: CliError.Code.ParseError
+            });
+        }
         throw error;
     }
+}
+
+function isUnsupportedOpenAPIVersionError(error: unknown): error is Error {
+    return error instanceof Error && error.message.startsWith("Unsupported OpenAPI version:");
 }
 
 async function readAndParseFile(absoluteFilePath: AbsoluteFilePath): Promise<OpenAPI.Document> {

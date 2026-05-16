@@ -1,0 +1,9 @@
+{
+  "title": "Unsupported OpenAPI version 3.2.0",
+  "problemSignature": "Redocly rejected user OpenAPI spec version 3.2.0 during parseOpenAPI bundling.",
+  "disposition": "shipped",
+  "rationale": "User-authored OpenAPI specs should surface parser failures at the input boundary; parseOpenAPI now maps Redocly's unsupported OpenAPI version error to a non-reportable ParseError.",
+  "fixSummary": "Classified unsupported OpenAPI version bundler failures as CliError ParseError with spec path context.",
+  "prOrIssue": "",
+  "lastAnalyzed": "2026-05-16"
+}

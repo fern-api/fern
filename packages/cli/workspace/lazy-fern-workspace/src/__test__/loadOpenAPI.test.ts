@@ -1,4 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import { mkdir, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { tmpdir } from "os";
@@ -59,6 +60,29 @@ describe("loadOpenAPI", () => {
             }
         });
         expect(result.paths).toHaveProperty("/pets");
+    });
+
+    it("classifies unsupported OpenAPI versions as parse errors", async () => {
+        const specPath = join(tempDir, "openapi.yml");
+        await writeFile(
+            specPath,
+            yaml.dump({
+                ...BASE_SPEC,
+                openapi: "3.2.0"
+            })
+        );
+
+        await expect(
+            loadOpenAPI({
+                context,
+                absolutePathToOpenAPI: AbsoluteFilePath.of(specPath),
+                absolutePathToOpenAPIOverrides: undefined,
+                absolutePathToOpenAPIOverlays: undefined
+            })
+        ).rejects.toMatchObject({
+            code: CliError.Code.ParseError,
+            message: expect.stringContaining("Unsupported OpenAPI version: 3.2.0")
+        });
     });
 
     it("applies a single override", async () => {

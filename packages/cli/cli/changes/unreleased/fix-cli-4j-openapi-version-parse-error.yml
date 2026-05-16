@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Classify unsupported OpenAPI version errors as user-facing parse errors.
+  type: fix
