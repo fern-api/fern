@@ -15,6 +15,9 @@ env:
   TURBO_NO_UPDATE_NOTIFIER: "1"
   TURBO_DAEMON: "false"
 
+permissions:
+  contents: read
+
 jobs:
   update-test:
     if: github.repository == 'fern-api/fern' && github.ref != 'refs/heads/main'
@@ -22,15 +25,16 @@ jobs:
     timeout-minutes: 90
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           lfs: true
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
 
       - name: Cache Fern bin dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
         with:
           path: ~/.fern/bin
           key: ${{ runner.os }}-fern-bin-${{ hashFiles('packages/cli/workspace/lazy-fern-workspace/src/protobuf/BufDownloader.ts', 'packages/cli/workspace/lazy-fern-workspace/src/protobuf/ProtocGenOpenAPIDownloader.ts') }}

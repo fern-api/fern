@@ -15,6 +15,9 @@ concurrency:
 env:
   DO_NOT_TRACK: "1"
 
+permissions:
+  contents: read
+
 jobs:
   trigger-seed-snapshot-tests:
     runs-on: ubuntu-latest
@@ -23,7 +26,7 @@ jobs:
     steps:
       # Note: this will trigger to the default branch of the repo, not the workflow_dispatch branch
       - name: Trigger Seed Tests with Metrics
-        uses: peter-evans/repository-dispatch@v4
+        uses: peter-evans/repository-dispatch@28959ce8df70de7be546dd1250a005dd32156697 # v4
         with:
           token: ${{ secrets.ACTIONS_PAT }}
           event-type: seed-test-metrics

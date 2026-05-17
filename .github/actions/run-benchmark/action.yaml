@@ -20,7 +20,7 @@ runs:
     - name: Run benchmark for ${{ inputs.generator }}
       shell: bash
       run: |
-        GENERATOR="${{ inputs.generator }}"
+        GENERATOR="${INPUTS_GENERATOR}"
         RESULTS_DIR="benchmark-results"
         mkdir -p "$RESULTS_DIR"
 
@@ -41,7 +41,7 @@ runs:
 
           # Run generation (--skip-scripts omits post-gen build/test for cleaner signal)
           SKIP_FLAG=""
-          if [ "${{ inputs.skip-scripts }}" = "true" ]; then
+          if [ "${INPUTS_SKIP_SCRIPTS}" = "true" ]; then
             SKIP_FLAG="--skip-scripts"
           fi
           LOG_FILE=$(mktemp)
@@ -76,6 +76,9 @@ runs:
 
           echo "::endgroup::"
         done
+      env:
+        INPUTS_GENERATOR: ${{ inputs.generator }}
+        INPUTS_SKIP_SCRIPTS: ${{ inputs.skip-scripts }}
 
     - name: Fail if any generation crashed
       shell: bash

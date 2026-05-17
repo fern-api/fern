@@ -38,7 +38,7 @@ runs:
     - name: Log in to Docker Hub
       id: docker-login
       if: ${{ inputs.dockerhub-username != '' }}
-      uses: docker/login-action@v4
+      uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4
       continue-on-error: true
       with:
         username: ${{ inputs.dockerhub-username }}
@@ -47,7 +47,7 @@ runs:
     - name: Retry Docker Hub login
       id: docker-login-retry
       if: ${{ inputs.dockerhub-username != '' && steps.docker-login.outcome == 'failure' }}
-      uses: docker/login-action@v4
+      uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4
       continue-on-error: true
       with:
         username: ${{ inputs.dockerhub-username }}
@@ -57,13 +57,16 @@ runs:
       if: ${{ inputs.dockerhub-username != '' }}
       shell: bash
       run: |
-        if [[ "${{ steps.docker-login.outcome }}" == "success" ]]; then
+        if [[ "${STEPS_DOCKER_LOGIN_OUTCOME}" == "success" ]]; then
           echo "Docker Hub login succeeded on first attempt"
-        elif [[ "${{ steps.docker-login-retry.outcome }}" == "success" ]]; then
+        elif [[ "${STEPS_DOCKER_LOGIN_RETRY_OUTCOME}" == "success" ]]; then
           echo "Docker Hub login succeeded on retry"
         else
           echo "::warning::Docker Hub login failed after 2 attempts — continuing without authentication (may hit rate limits)"
         fi
+      env:
+        STEPS_DOCKER_LOGIN_OUTCOME: ${{ steps.docker-login.outcome }}
+        STEPS_DOCKER_LOGIN_RETRY_OUTCOME: ${{ steps.docker-login-retry.outcome }}
 
     - name: Clear stale Docker image cache
       shell: bash
@@ -71,7 +74,7 @@ runs:
 
     - name: Cache Docker images
       id: docker-cache
-      uses: actions/cache@v5
+      uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
       with:
         path: /tmp/docker-cache
         key: ${{ runner.os }}-docker-${{ inputs.generator-name }}-${{ hashFiles('**/Dockerfile*') }}
@@ -112,14 +115,16 @@ runs:
       shell: bash
       env:
         FORCE_COLOR: "2"
+        INPUTS_FIXTURES_TO_RUN: ${{ inputs.fixtures-to-run }}
+        INPUTS_GENERATOR_NAME: ${{ inputs.generator-name }}
       run: |
         FORMATTED_FIXTURES_COMMAND=""
-        if [[ "${{ inputs.fixtures-to-run }}" != "all" ]]; then
-          FORMATTED_FIXTURES_COMMAND="--fixture ${{ inputs.fixtures-to-run }}"
+        if [[ "${INPUTS_FIXTURES_TO_RUN}" != "all" ]]; then
+          FORMATTED_FIXTURES_COMMAND="--fixture ${INPUTS_FIXTURES_TO_RUN}"
         fi
 
         SEED_CMD="pnpm seed:local test \
-          --generator ${{ inputs.generator-name }} \
+          --generator ${INPUTS_GENERATOR_NAME} \
           --parallel 16 \
           ${FORMATTED_FIXTURES_COMMAND} \
           ${{ inputs.skip-scripts == 'true' && '--skip-scripts' || '' }} \

@@ -28,6 +28,9 @@ env:
   TURBO_NO_UPDATE_NOTIFIER: "1"
   TURBO_DAEMON: "false"
 
+permissions:
+  contents: read
+
 jobs:
   setup:
     runs-on: ubuntu-latest
@@ -40,14 +43,16 @@ jobs:
         shell: bash
         run: |
           echo "GitHub Event: ${{ github.event_name }}"
-          echo "GitHub Event Action: ${{ github.event.action }}"
-          if [[ "${{ github.event_name }}" == "repository_dispatch" && "${{ github.event.action }}" == "seed-test-metrics" ]]; then
+          echo "GitHub Event Action: ${GITHUB_EVENT_ACTION}"
+          if [[ "${{ github.event_name }}" == "repository_dispatch" && "${GITHUB_EVENT_ACTION}" == "seed-test-metrics" ]]; then
             echo "post-metrics=true" >> $GITHUB_OUTPUT
             echo "Set to collect metrics on this run"
           else
             echo "post-metrics=false" >> $GITHUB_OUTPUT
             echo "Will not collect metrics on this run"
           fi
+        env:
+          GITHUB_EVENT_ACTION: ${{ github.event.action }}
 
   check-orphaned-seed-folders:
     runs-on: ubuntu-latest
@@ -56,7 +61,9 @@ jobs:
     if: ${{ needs.get-all-test-matrices.outputs.seed-infrastructure-changed == 'true' || github.event_name == 'workflow_dispatch' }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -114,7 +121,7 @@ jobs:
       benchmark-docs: ${{ steps.create-dynamic-matrix.outputs.benchmark-docs }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           # fetch-depth: 2 ensures the merge commit's parents are available.
           # For PRs, HEAD is a merge commit; HEAD~1 is the base branch tip.
@@ -122,6 +129,7 @@ jobs:
           # and the affected detection falls back to diffing against the
           # (potentially stale) event payload SHA.
           fetch-depth: 2
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -138,6 +146,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
           GH_TOKEN: ${{ github.token }}
+          NEEDS_SETUP_OUTPUTS_POST_METRICS: ${{ needs.setup.outputs.post-metrics }}
         run: |
           # Determine base ref for affected detection.
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
@@ -176,7 +185,7 @@ jobs:
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             echo "Manual dispatch — forcing all generators and fixtures to run."
             AFFECTED_JSON='{"allGeneratorsAffected":true,"allFixturesAffected":true,"generators":[],"generatorsWithAllFixtures":[],"fixtures":[],"summary":["Forced: workflow_dispatch event."]}'
-          elif [[ "${{ needs.setup.outputs.post-metrics }}" == "true" ]]; then
+          elif [[ "${NEEDS_SETUP_OUTPUTS_POST_METRICS}" == "true" ]]; then
             echo "Metrics collection mode — forcing all generators and fixtures to run."
             AFFECTED_JSON='{"allGeneratorsAffected":true,"allFixturesAffected":true,"generators":[],"generatorsWithAllFixtures":[],"fixtures":[],"summary":["Forced: metrics collection mode."]}'
           else
@@ -343,10 +352,11 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk-v2) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
+          persist-credentials: false
 
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
@@ -377,10 +387,11 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.pydantic) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
+          persist-credentials: false
 
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
@@ -409,10 +420,11 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.python-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
+          persist-credentials: false
 
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
@@ -442,10 +454,11 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.openapi) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
+          persist-credentials: false
 
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
@@ -474,10 +487,11 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
+          persist-credentials: false
 
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
@@ -507,10 +521,11 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-model) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
+          persist-credentials: false
 
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
@@ -539,10 +554,11 @@ jobs:
         include: ${{ fromJson(needs.get-all-test-matrices.outputs.ts-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
+          persist-credentials: false
 
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
@@ -573,10 +589,11 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-model) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
+          persist-credentials: false
 
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
@@ -605,10 +622,11 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
+          persist-credentials: false
 
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
@@ -638,10 +656,11 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-model) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
+          persist-credentials: false
 
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
@@ -670,10 +689,11 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
+          persist-credentials: false
 
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
@@ -703,10 +723,11 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-model) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
+          persist-credentials: false
 
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
@@ -735,10 +756,11 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
+          persist-credentials: false
 
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
@@ -767,10 +789,11 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.swift-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
+          persist-credentials: false
 
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
@@ -800,10 +823,11 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-model) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
+          persist-credentials: false
 
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
@@ -832,10 +856,11 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-sdk) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
+          persist-credentials: false
 
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
@@ -864,10 +889,11 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.cli) }}
     steps:
       - name: Checkout action file
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
+          persist-credentials: false
 
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
@@ -897,18 +923,19 @@ jobs:
       }}
     steps:
       - name: Checkout PR branch
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/fetch-benchmark-specs
             benchmarks/fern/apis
             benchmarks/fern/api-versions.txt
+          persist-credentials: false
 
       - name: Fetch benchmark OpenAPI specs
         uses: ./.github/actions/fetch-benchmark-specs
 
       - name: Upload specs as shared artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: benchmark-specs
           path: benchmarks/fern/apis/*/openapi.json
@@ -930,14 +957,16 @@ jobs:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.benchmark-generators) }}
     steps:
       - name: Checkout PR branch
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
 
       - name: Log in to Docker Hub
         if: ${{ env.DOCKERHUB_USERNAME != '' }}
-        uses: docker/login-action@v4
+        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
         with:
@@ -949,7 +978,7 @@ jobs:
 
       - name: Cache Docker images
         id: docker-cache
-        uses: actions/cache@v5
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
         with:
           path: /tmp/docker-cache
           key: ${{ runner.os }}-docker-${{ matrix.generator }}-${{ hashFiles('**/Dockerfile*') }}
@@ -966,7 +995,7 @@ jobs:
         run: docker images -q | sort -u > /tmp/docker-images-before.txt
 
       - name: Download shared specs
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
         with:
           name: benchmark-specs
           path: benchmarks/fern/apis
@@ -994,7 +1023,7 @@ jobs:
 
       - name: Upload PR results
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: benchmark-pr-${{ matrix.generator }}
           path: benchmark-results/
@@ -1015,12 +1044,13 @@ jobs:
       actions: read
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: .github/scripts
+          persist-credentials: false
 
       - name: Download all PR benchmark artifacts
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
         with:
           pattern: benchmark-pr-*
           path: benchmark-pr-results
@@ -1236,13 +1266,15 @@ jobs:
       }}
     steps:
       - name: Checkout PR branch
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
 
       - name: Download shared specs
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
         with:
           name: benchmark-specs
           path: benchmarks/fern/apis
@@ -1253,7 +1285,7 @@ jobs:
           fern-token: ${{ secrets.FERN_FERN_TOKEN }}
 
       - name: Upload PR docs benchmark results
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           # Must not match the `benchmark-pr-*` pattern used by the SDK
           # benchmark report download, or docs jsonl rows (which have no
@@ -1277,12 +1309,13 @@ jobs:
       actions: read
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: .github/scripts
+          persist-credentials: false
 
       - name: Download PR docs benchmark artifacts
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
         with:
           pattern: benchmark-docs-pr
           path: docs-pr-results
@@ -1656,7 +1689,9 @@ jobs:
       cli-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.cli-allowed-failures-count }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -1764,7 +1799,7 @@ jobs:
           fi
 
       - name: Download Seed Test Time Artifacts
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
         with:
           path: ${{ steps.artifacts-info.outputs.metrics_path }}
           pattern: ${{ steps.artifacts-info.outputs.metrics_pattern }}
@@ -1774,8 +1809,8 @@ jobs:
         shell: bash
         id: get-number-of-metric-artifacts
         run: |
-          METRICS_PATH="${{ steps.artifacts-info.outputs.metrics_path }}"
-          METRICS_PATTERN="${{ steps.artifacts-info.outputs.metrics_pattern }}"
+          METRICS_PATH="${STEPS_ARTIFACTS_INFO_OUTPUTS_METRICS_PATH}"
+          METRICS_PATTERN="${STEPS_ARTIFACTS_INFO_OUTPUTS_METRICS_PATTERN}"
           echo "Looking for files in: $METRICS_PATH"
           echo "Using pattern: $METRICS_PATTERN"
 
@@ -1787,18 +1822,23 @@ jobs:
             echo "Found 0 artifacts for seed metrics"
             exit 1
           fi
+        env:
+          STEPS_ARTIFACTS_INFO_OUTPUTS_METRICS_PATH: ${{ steps.artifacts-info.outputs.metrics_path }}
+          STEPS_ARTIFACTS_INFO_OUTPUTS_METRICS_PATTERN: ${{ steps.artifacts-info.outputs.metrics_pattern }}
 
       - name: Display Content of Metrics Artifacts Folder
         run: |
-          METRICS_PATH="${{ steps.artifacts-info.outputs.metrics_path }}"
+          METRICS_PATH="${STEPS_ARTIFACTS_INFO_OUTPUTS_METRICS_PATH}"
           echo "Content of '$METRICS_PATH' folder:"
           ls -R $METRICS_PATH/
+        env:
+          STEPS_ARTIFACTS_INFO_OUTPUTS_METRICS_PATH: ${{ steps.artifacts-info.outputs.metrics_path }}
 
       - name: Parse Seed Test Metrics
         id: parse-seed-test-metrics
         run: |
-          METRICS_PATH="${{ steps.artifacts-info.outputs.metrics_path }}"
-          METRICS_PATTERN="${{ steps.artifacts-info.outputs.metrics_pattern }}"
+          METRICS_PATH="${STEPS_ARTIFACTS_INFO_OUTPUTS_METRICS_PATH}"
+          METRICS_PATTERN="${STEPS_ARTIFACTS_INFO_OUTPUTS_METRICS_PATTERN}"
 
           # Combine all JSON files into an array and find min start time and max end time
           min_start=$(jq -r '.startTimeSeconds' ./$METRICS_PATH/$METRICS_PATTERN | sort | head -n 1)
@@ -1831,10 +1871,13 @@ jobs:
           fi
 
           echo "all_seed_files_deterministic=$all_seed_files_deterministic" >> $GITHUB_OUTPUT
+        env:
+          STEPS_ARTIFACTS_INFO_OUTPUTS_METRICS_PATH: ${{ steps.artifacts-info.outputs.metrics_path }}
+          STEPS_ARTIFACTS_INFO_OUTPUTS_METRICS_PATTERN: ${{ steps.artifacts-info.outputs.metrics_pattern }}
 
       - name: Post to PostHog
         # https://github.com/PostHog/posthog-github-action
-        uses: PostHog/posthog-github-action@v1
+        uses: PostHog/posthog-github-action@58dea254b598fb5d469c0699c98af8288a7f7650 # v1
         with:
           posthog-token: ${{ secrets.POSTHOG_API_KEY }}
           event: "gh-actions-seed-test-metrics-event"

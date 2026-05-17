@@ -28,13 +28,18 @@ env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
 
+permissions:
+  contents: read
+
 jobs:
   build-cli:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
 
       - name: Install dependencies
         uses: ./.github/actions/install
@@ -67,7 +72,7 @@ jobs:
           cat packages/cli/cli/dist/prod/package.json
 
       - name: Upload CLI artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: fern-cli
           path: packages/cli/cli/dist/prod/
@@ -108,17 +113,19 @@ jobs:
 
       - name: Checkout repository
         if: steps.node-check.outputs.available == 'true'
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
         if: steps.node-check.outputs.available == 'true'
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: ${{ matrix.node-version }}
 
       - name: Download CLI artifact
         if: steps.node-check.outputs.available == 'true'
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
         with:
           name: fern-cli
           path: cli-dist/
@@ -249,7 +256,7 @@ jobs:
             cd docs-preview-smoke-test/playwright && npx playwright test smoke.spec.ts --config playwright.config.ts
 
       - name: Upload Playwright report
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         if: always() && steps.node-check.outputs.available == 'true'
         continue-on-error: true
         with:

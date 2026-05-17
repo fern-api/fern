@@ -19,9 +19,10 @@ runs:
   using: "composite"
   steps:
     - name: Checkout repo
-      uses: actions/checkout@v6
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       with:
         ref: ${{ inputs.checkout-ref }}
+        persist-credentials: false
 
     - name: Create artifacts downloads directory
       shell: bash
@@ -37,7 +38,7 @@ runs:
     # Merge-multiple is set so all patches are downloaded into the same folder. Otherwise
     # they are subfoldered into folders that match *.patch pattern and cause errors downstream
     - name: Download patches
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
       with:
         path: ./artifacts
         merge-multiple: true
@@ -53,7 +54,7 @@ runs:
       id: get-number-of-patches
       run: |
         # Apply patches per generator for multiple, separate, PRs
-        PATCHES_PATTERN="${{ inputs.patch-pattern }}"
+        PATCHES_PATTERN="${INPUTS_PATCH_PATTERN}"
         file_count=$(find ./artifacts -type f -name "$PATCHES_PATTERN" | wc -l)
         echo "Number of patches downloaded: $file_count"
         if [ "$file_count" -gt 0 ]; then
@@ -61,10 +62,14 @@ runs:
         else
           echo "HAS_PATCHES=false" >> $GITHUB_OUTPUT
         fi
+      env:
+        INPUTS_PATCH_PATTERN: ${{ inputs.patch-pattern }}
 
     - name: Apply patches
       shell: bash
       if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
       run: |
-        PATCHES_PATTERN="${{ inputs.patch-pattern }}"
+        PATCHES_PATTERN="${INPUTS_PATCH_PATTERN}"
         git apply artifacts/$PATCHES_PATTERN
+      env:
+        INPUTS_PATCH_PATTERN: ${{ inputs.patch-pattern }}

@@ -56,7 +56,7 @@ runs:
       id: check-changes
       shell: bash
       run: |
-        git add seed/${{ inputs.generator-name }}/*
+        git add seed/${INPUTS_GENERATOR_NAME}/*
         if git --no-pager diff --staged --exit-code; then
           echo "No changes detected for seed."
           echo "seed-changes-generated=false" >> $GITHUB_OUTPUT
@@ -64,6 +64,8 @@ runs:
           echo "Changes detected for seed."
           echo "seed-changes-generated=true" >> $GITHUB_OUTPUT
         fi
+      env:
+        INPUTS_GENERATOR_NAME: ${{ inputs.generator-name }}
 
     - name: Log if no changes
       if: steps.check-changes.outputs.seed-changes-generated == 'false'
@@ -76,12 +78,15 @@ runs:
       if: steps.check-changes.outputs.seed-changes-generated == 'true'
       shell: bash
       run: |
-        git diff --staged --binary --full-index > seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch
+        git diff --staged --binary --full-index > seed-${INPUTS_GENERATOR_NAME}-${INPUTS_INDEX}.patch
+      env:
+        INPUTS_GENERATOR_NAME: ${{ inputs.generator-name }}
+        INPUTS_INDEX: ${{ inputs.index }}
 
     # Upload patch files as artifacts to be applied and committed by caller when all of seed is up to date
     - name: Upload Seed Artifacts
       if: steps.check-changes.outputs.seed-changes-generated == 'true'
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
       with:
         name: seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch
         path: seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch

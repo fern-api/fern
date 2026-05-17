@@ -37,15 +37,19 @@ env:
   TURBO_NO_UPDATE_NOTIFIER: "1"
   TURBO_DAEMON: "false"
 
+permissions:
+  contents: read
+
 jobs:
   validate-changelogs:
     name: Validate Changelogs
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo at current ref
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 1
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install

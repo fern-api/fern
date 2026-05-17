@@ -24,9 +24,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main branch of fern repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           ref: main
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -46,11 +47,12 @@ jobs:
           pnpm seed:local generate changelog cli -o ./changelogs/cli/ --clean-directory
 
       - name: Checkout main branch of docs repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           repository: fern-api/docs
           ref: main
           path: docs
+          persist-credentials: false
 
       - name: update csharp-sdk changelog
         run: rsync -av --delete "changelogs/csharp-sdk/" "docs/fern/products/sdks/generators/csharp/changelog"
@@ -84,7 +86,7 @@ jobs:
 
       - name: create PR
         id: cpr
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
         with:
           token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
           commit-message: "update changelogs"
@@ -95,7 +97,7 @@ jobs:
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-number
-        uses: peter-evans/enable-pull-request-automerge@v3
+        uses: peter-evans/enable-pull-request-automerge@a660677d5469627102a1c1e11409dd063606628d # v3
         with:
           token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
@@ -106,4 +108,5 @@ jobs:
         if: steps.cpr.outputs.pull-request-number
         env:
           GH_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
-        run: gh pr review ${{ steps.cpr.outputs.pull-request-number }} --repo fern-api/docs --approve
+          STEPS_CPR_OUTPUTS_PULL_REQUEST_NUMBER: ${{ steps.cpr.outputs.pull-request-number }}
+        run: gh pr review ${STEPS_CPR_OUTPUTS_PULL_REQUEST_NUMBER} --repo fern-api/docs --approve

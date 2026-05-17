@@ -5,9 +5,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  pull-requests: write
-  contents: write
-  issues: write
+  contents: read
 
 env:
   DO_NOT_TRACK: "1"
@@ -15,8 +13,11 @@ env:
 jobs:
   stale-prs-and-issues:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
     steps:
-      - uses: actions/stale@v10
+      - uses: actions/stale@b5d41d4e1d5dceea10e7104786b73624c18a190f # v10
         with:
           stale-issue-message: "This issue is stale because it has been open 180 days with no activity. Remove stale label or comment or this will be closed in 30 days."
           close-issue-message: "This issue was closed because it has been inactive for 30 days after being marked stale."
@@ -30,8 +31,12 @@ jobs:
 
   stale-branch:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: read
     steps:
-      - uses: crs-k/stale-branches@v8.2.2
+      - uses: crs-k/stale-branches@865501af01284d43aef267d4b9aab0f9f1734b12 # v8.2.2
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           days-before-stale: 60

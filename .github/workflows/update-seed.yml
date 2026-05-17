@@ -45,8 +45,7 @@ concurrency:
 
 # These scope secrets.GITHUB_TOKEN
 permissions:
-  pull-requests: write
-  contents: write
+  contents: read
 
 env:
   DO_NOT_TRACK: "1"
@@ -74,14 +73,14 @@ jobs:
         id: set-update-options
         shell: bash
         run: |
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" != "refs/heads/main" ]]; then
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${GITHUB_REF}" != "refs/heads/main" ]]; then
             echo "skip-scripts=true" >> $GITHUB_OUTPUT
             echo "update-by-push=true" >> $GITHUB_OUTPUT
             echo "update-by-pr=false" >> $GITHUB_OUTPUT
           else
             # For workflow_dispatch, check if skip-scripts checkbox is checked
             # For push events, default to false
-            if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.event.inputs.skip-scripts }}" == "true" ]]; then
+            if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${GITHUB_EVENT_INPUTS_SKIP_SCRIPTS}" == "true" ]]; then
               echo "skip-scripts=true" >> $GITHUB_OUTPUT
             else
               echo "skip-scripts=false" >> $GITHUB_OUTPUT
@@ -89,6 +88,8 @@ jobs:
             echo "update-by-push=false" >> $GITHUB_OUTPUT
             echo "update-by-pr=true" >> $GITHUB_OUTPUT
           fi
+        env:
+          GITHUB_EVENT_INPUTS_SKIP_SCRIPTS: ${{ github.event.inputs.skip-scripts }}
 
       - name: Set language filter
         id: set-language-filter
@@ -97,13 +98,15 @@ jobs:
           # For workflow_dispatch events, use the input language filter
           # For push events, default to 'all' to maintain existing behavior
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            SELECTED_LANGUAGE="${{ github.event.inputs.language }}"
+            SELECTED_LANGUAGE="${GITHUB_EVENT_INPUTS_LANGUAGE}"
             echo "Language filter from workflow_dispatch input: $SELECTED_LANGUAGE"
           else
             SELECTED_LANGUAGE="all"
             echo "Push event detected, running all languages"
           fi
           echo "selected-language=$SELECTED_LANGUAGE" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_EVENT_INPUTS_LANGUAGE: ${{ github.event.inputs.language }}
 
       - name: Set commit-on-failure option
         id: set-commit-on-failure
@@ -112,13 +115,15 @@ jobs:
           # For workflow_dispatch events, use the input commit-on-failure option
           # For push events, default to 'false' to maintain existing behavior
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            COMMIT_ON_FAILURE="${{ github.event.inputs.commit-on-failure }}"
+            COMMIT_ON_FAILURE="${GITHUB_EVENT_INPUTS_COMMIT_ON_FAILURE}"
             echo "Commit on failure option from workflow_dispatch input: $COMMIT_ON_FAILURE"
           else
             COMMIT_ON_FAILURE="false"
             echo "Push event detected, defaulting commit-on-failure to false"
           fi
           echo "commit-on-failure=$COMMIT_ON_FAILURE" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_EVENT_INPUTS_COMMIT_ON_FAILURE: ${{ github.event.inputs.commit-on-failure }}
 
       - name: Set fixture filter
         id: set-fixture-filter
@@ -127,13 +132,15 @@ jobs:
           # For workflow_dispatch events, use the input fixture filter
           # For push events, default to 'all' to maintain existing behavior
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            SELECTED_FIXTURE="${{ github.event.inputs.fixture }}"
+            SELECTED_FIXTURE="${GITHUB_EVENT_INPUTS_FIXTURE}"
             echo "Fixture filter from workflow_dispatch input: $SELECTED_FIXTURE"
           else
             SELECTED_FIXTURE="all"
             echo "Push event detected, running all fixtures"
           fi
           echo "selected-fixture=$SELECTED_FIXTURE" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_EVENT_INPUTS_FIXTURE: ${{ github.event.inputs.fixture }}
 
   changes:
     if: github.repository == 'fern-api/fern'
@@ -216,12 +223,13 @@ jobs:
 
     steps:
       - name: Checkout Files
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             ${{ matrix.files }}
             .github/
           fetch-tags: false
+          persist-credentials: false
 
       - name: Setup Base SHA
         id: setup-base-sha
@@ -230,7 +238,7 @@ jobs:
         run: |
           BASE_SHA=""
 
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" != "refs/heads/main" ]]; then
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${GITHUB_REF}" != "refs/heads/main" ]]; then
             # Use GitHub API to get merge base - git merge-base doesn't work with shallow clones
             CURRENT_SHA=$(git rev-parse HEAD)
             MAIN_SHA=$(gh api "/repos/${{ github.repository }}/git/ref/heads/main" --jq '.object.sha')
@@ -268,7 +276,9 @@ jobs:
       - name: Set output
         id: set-output
         run: |
-          echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
+          echo "${{ matrix.generator-name }}-changes=${STEPS_GET_GENERATOR_CHANGES_OUTPUTS_ANY_CHANGED}" >> $GITHUB_OUTPUT
+        env:
+          STEPS_GET_GENERATOR_CHANGES_OUTPUTS_ANY_CHANGED: ${{ steps.get-generator-changes.outputs.any_changed }}
 
   get-all-test-matrices:
     runs-on: ubuntu-latest
@@ -293,7 +303,9 @@ jobs:
       rust-sdk: ${{ steps.create-dynamic-matrix.outputs.rust-sdk-test-matrix }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -307,7 +319,7 @@ jobs:
         id: create-dynamic-matrix
         shell: bash
         run: |
-          SELECTED_FIXTURE="${{ needs.setup.outputs.selected-fixture }}"
+          SELECTED_FIXTURE="${NEEDS_SETUP_OUTPUTS_SELECTED_FIXTURE}"
           
           # List of all generators.
           # Retired generators (pydantic v1 and the standalone *-model generators) are
@@ -336,6 +348,8 @@ jobs:
             echo "${GEN}-test-matrix=$MATRIX" >> $GITHUB_OUTPUT
             echo "Set output for $GEN: $MATRIX"
           done
+        env:
+          NEEDS_SETUP_OUTPUTS_SELECTED_FIXTURE: ${{ needs.setup.outputs.selected-fixture }}
 
   ruby-sdk-v2-seed-update:
     runs-on: ubuntu-latest
@@ -356,10 +370,11 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/
+          persist-credentials: false
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -393,10 +408,11 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/
+          persist-credentials: false
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -429,10 +445,11 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/
+          persist-credentials: false
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -465,10 +482,11 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/
+          persist-credentials: false
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -501,10 +519,11 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/
+          persist-credentials: false
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -538,10 +557,11 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/
+          persist-credentials: false
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -574,10 +594,11 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/
+          persist-credentials: false
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -611,10 +632,11 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/
+          persist-credentials: false
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -647,10 +669,11 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/
+          persist-credentials: false
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -684,10 +707,11 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/
+          persist-credentials: false
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -720,10 +744,11 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/
+          persist-credentials: false
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -757,10 +782,11 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/
+          persist-credentials: false
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -793,10 +819,11 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/
+          persist-credentials: false
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -829,10 +856,11 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/
+          persist-credentials: false
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -866,10 +894,11 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/
+          persist-credentials: false
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -902,10 +931,11 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/actions/
+          persist-credentials: false
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -922,6 +952,8 @@ jobs:
   # Use always() to ensure this runs even if stages from needs are skipped.
   # By default, block on failures. If commit-on-failure is true, continue even if some seed runs fail.
   commit-seed-changes-by-push:
+    permissions:
+      contents: write # EndBug/add-and-commit pushes seed snapshots back to the branch
     if: >-
       ${{
         always() && !cancelled() && needs.setup.outputs.update-by-push == 'true' &&
@@ -962,11 +994,12 @@ jobs:
 
       # Get action file specific to the running branch
       - name: Checkout Action File
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           ref: ${{ steps.extract-branch.outputs.branch }}
           sparse-checkout: |
             .github/
+          persist-credentials: false
 
       # Match to all patch files, since we are committing all generator changes at once
       # Checkout the branch directly to avoid detaching the head so we can commit back changes
@@ -992,7 +1025,7 @@ jobs:
       # Commit all applied patches back to branch (will be checked out in apply-patches step)
       - name: Add and Commit Changes
         id: commit-changes
-        uses: EndBug/add-and-commit@v10
+        uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10
         if: ${{ steps.apply-patches.outputs.has-patches == 'true' }}
         with:
           add: "seed/*"
@@ -1035,10 +1068,11 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout Action File
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           sparse-checkout: |
             .github/
+          persist-credentials: false
 
       # Apply ALL seed patches at once (seed-*.patch matches every generator)
       - name: Apply Patches
@@ -1062,7 +1096,7 @@ jobs:
       - name: Create Pull Request
         if: steps.apply-patches.outputs.has-patches == 'true'
         id: cpr
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
         with:
           token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
           commit-message: "chore(seed): update all seed snapshots"
@@ -1085,11 +1119,13 @@ jobs:
         if: steps.cpr.outputs.pull-request-operation == 'created'
         shell: bash
         run: |
-          echo "PR Created: ${{ steps.cpr.outputs.pull-request-url }}"
+          echo "PR Created: ${STEPS_CPR_OUTPUTS_PULL_REQUEST_URL}"
+        env:
+          STEPS_CPR_OUTPUTS_PULL_REQUEST_URL: ${{ steps.cpr.outputs.pull-request-url }}
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
+        uses: peter-evans/enable-pull-request-automerge@a660677d5469627102a1c1e11409dd063606628d # v3
         with:
           token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}

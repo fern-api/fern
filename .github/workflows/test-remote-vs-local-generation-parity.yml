@@ -37,6 +37,9 @@ env:
   TURBO_NO_UPDATE_NOTIFIER: "1"
   TURBO_DAEMON: "false"
 
+permissions:
+  contents: read
+
 jobs:
   # Determine which generator to test based on the triggering workflow
   determine-generator:
@@ -50,7 +53,7 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_run" ]; then
             # Map workflow name to generator
-            case "${{ github.event.workflow_run.name }}" in
+            case "${GITHUB_EVENT_WORKFLOW_RUN_NAME}" in
               "Publish TypeScript SDK Generator")
                 echo 'generators=["ts-sdk"]' >> $GITHUB_OUTPUT
                 ;;
@@ -64,7 +67,7 @@ jobs:
                 echo 'generators=["python-sdk"]' >> $GITHUB_OUTPUT
                 ;;
               *)
-                echo "Unknown workflow: ${{ github.event.workflow_run.name }}"
+                echo "Unknown workflow: ${GITHUB_EVENT_WORKFLOW_RUN_NAME}"
                 exit 1
                 ;;
             esac
@@ -72,6 +75,8 @@ jobs:
             # For schedule and workflow_dispatch, test all generators
             echo 'generators=["ts-sdk", "java-sdk", "go-sdk", "python-sdk"]' >> $GITHUB_OUTPUT
           fi
+        env:
+          GITHUB_EVENT_WORKFLOW_RUN_NAME: ${{ github.event.workflow_run.name }}
 
   compile-and-build:
     needs: determine-generator
@@ -79,9 +84,10 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           ref: ${{ inputs.branch || github.ref }}
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -96,14 +102,14 @@ jobs:
         run: pnpm seed:build
 
       - name: Upload Seed CLI
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: seed-cli
           path: packages/seed/dist/
           retention-days: 1
 
       - name: Upload Fern CLI
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: fern-cli
           path: packages/cli/cli/dist/prod/
@@ -126,21 +132,22 @@ jobs:
         generator: ${{ fromJson(needs.determine-generator.outputs.generators) }}
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           ref: ${{ inputs.branch || github.ref }}
+          persist-credentials: false
 
       - name: Install
         uses: ./.github/actions/install
 
       - name: Download Seed CLI
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
         with:
           name: seed-cli
           path: packages/seed/dist/
 
       - name: Download Fern CLI
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
         with:
           name: fern-cli
           path: packages/cli/cli/dist/prod/
@@ -149,7 +156,7 @@ jobs:
         run: chmod +x packages/cli/cli/dist/prod/cli.cjs packages/seed/dist/cli.cjs
 
       - name: Run Seed Test Remote-Local (${{ matrix.generator }})
-        uses: nick-fields/retry@v4
+        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4
         with:
           timeout_minutes: 30
           max_attempts: 5

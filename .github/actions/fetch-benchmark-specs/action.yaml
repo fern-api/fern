@@ -119,7 +119,7 @@ runs:
       shell: bash
       run: |
         SPECS=""
-        if [ "${{ steps.fetch-primary.outputs.primary-ok }}" = "true" ]; then
+        if [ "${STEPS_FETCH_PRIMARY_OUTPUTS_PRIMARY_OK}" = "true" ]; then
           SPECS="square"
         fi
         if [ -z "$SPECS" ]; then
@@ -128,5 +128,8 @@ runs:
         fi
         echo "specs-fetched=$SPECS" >> $GITHUB_OUTPUT
         echo "Successfully fetched specs: $SPECS"
-        VERSIONS="${{ steps.fetch-versions.outputs.versions-fetched }}"
+        VERSIONS="${STEPS_FETCH_VERSIONS_OUTPUTS_VERSIONS_FETCHED}"
         echo "Historical versions fetched: ${VERSIONS:-0}"
+      env:
+        STEPS_FETCH_PRIMARY_OUTPUTS_PRIMARY_OK: ${{ steps.fetch-primary.outputs.primary-ok }}
+        STEPS_FETCH_VERSIONS_OUTPUTS_VERSIONS_FETCHED: ${{ steps.fetch-versions.outputs.versions-fetched }}

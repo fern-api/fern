@@ -11,12 +11,17 @@ on:
 env:
   DO_NOT_TRACK: "1"
 
+permissions:
+  contents: read
+
 jobs:
   compile:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
 
       - name: Compile
         working-directory: ./generators/go
@@ -26,7 +31,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
 
       - name: Run Tests
         working-directory: ./generators/go

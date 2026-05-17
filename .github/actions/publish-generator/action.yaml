@@ -38,13 +38,13 @@ runs:
       uses: ./.github/actions/install
 
     - name: Set up QEMU
-      uses: docker/setup-qemu-action@v4
+      uses: docker/setup-qemu-action@ce360397dd3f832beb865e1373c09c0e9f86d70a # v4
 
     - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v4
+      uses: docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd # v4
 
     - name: Log in to Docker Hub
-      uses: docker/login-action@v4
+      uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4
       with:
         username: fernapi
         password: ${{ inputs.docker-pwd }}
@@ -66,9 +66,10 @@ runs:
         SENTRY_AUTH_TOKEN: ${{ inputs.sentry-auth-token }}
         SENTRY_DSN: ${{ inputs.sentry-dsn }}
         VERSIONS_FILE: ${{ inputs.version-file }}
+        INPUTS_GENERATOR_NAME: ${{ inputs.generator-name }}
       run: |
         echo $VERSIONS_FILE
-        echo ${{ inputs.generator-name }}
+        echo ${INPUTS_GENERATOR_NAME}
 
         previous_commit=$(git log -n 2 --pretty=format:"%h" -- ${VERSIONS_FILE} | tail -n 1)
         current_commit=$(git log -n 1 --pretty=format:"%h" -- ${VERSIONS_FILE})
@@ -84,12 +85,12 @@ runs:
         head ${VERSIONS_FILE}
 
         if [ $GIT_SHOW_STATUS -eq 0 ]; then
-          node --enable-source-maps packages/seed/dist/cli.cjs publish generator ${{ inputs.generator-name }} --changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug
+          node --enable-source-maps packages/seed/dist/cli.cjs publish generator ${INPUTS_GENERATOR_NAME} --changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug
         else
           echo "No previous versions found, skipping publish."
         fi
 
-        node --enable-source-maps packages/seed/dist/cli.cjs register generator --generators ${{ inputs.generator-name }}
+        node --enable-source-maps packages/seed/dist/cli.cjs register generator --generators ${INPUTS_GENERATOR_NAME}
 
     - name: Run publish (manual)
       if: inputs.manual-trigger == 'true'
@@ -101,15 +102,17 @@ runs:
         DOCKER_PASSWORD: ${{ inputs.docker-pwd }}
         SENTRY_AUTH_TOKEN: ${{ inputs.sentry-auth-token }}
         SENTRY_DSN: ${{ inputs.sentry-dsn }}
+        INPUTS_GENERATOR_NAME: ${{ inputs.generator-name }}
+        INPUTS_VERSION: ${{ inputs.version }}
       run: |
-        node --enable-source-maps packages/seed/dist/cli.cjs publish generator ${{ inputs.generator-name }} --ver ${{ inputs.version }} --log-level debug
-        node --enable-source-maps packages/seed/dist/cli.cjs register generator --generators ${{ inputs.generator-name }}
+        node --enable-source-maps packages/seed/dist/cli.cjs publish generator ${INPUTS_GENERATOR_NAME} --ver ${INPUTS_VERSION} --log-level debug
+        node --enable-source-maps packages/seed/dist/cli.cjs register generator --generators ${INPUTS_GENERATOR_NAME}
 
     - name: Determine snippet package info
       id: snippet-info
       shell: bash
       run: |
-        GENERATOR_NAME="${{ inputs.generator-name }}"
+        GENERATOR_NAME="${INPUTS_GENERATOR_NAME}"
 
         # Map generator names to their corresponding snippet package names and directories
         case "$GENERATOR_NAME" in
@@ -154,6 +157,8 @@ runs:
 
         echo "snippet_package=$SNIPPET_PACKAGE" >> "$GITHUB_OUTPUT"
         echo "snippet_dir=$SNIPPET_DIR" >> "$GITHUB_OUTPUT"
+      env:
+        INPUTS_GENERATOR_NAME: ${{ inputs.generator-name }}
 
     - name: Determine version for snippet package (auto)
       id: snippet-version-auto
@@ -169,13 +174,13 @@ runs:
 
     - name: Setup for snippet package publishing
       if: steps.snippet-info.outputs.snippet_package != ''
-      uses: bufbuild/buf-setup-action@v1.50.0
+      uses: bufbuild/buf-setup-action@a47c93e0b1648d5651a065437926377d060baa99 # v1.50.0
       with:
         github_token: ${{ github.token }}
 
     - name: Setup Go for snippet package publishing
       if: steps.snippet-info.outputs.snippet_package != ''
-      uses: actions/setup-go@v6
+      uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6
       with:
         go-version: "stable"
 
