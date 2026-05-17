@@ -56,7 +56,7 @@ Instantiate and use the client with the following:
 package com.example.usage;
 
 import com.seed.api.SeedApiClient;
-import com.seed.api.resources.imdb.types.CreateMovieRequest;
+import com.seed.api.resources.imdb.requests.CreateMovieRequest;
 
 public class Example {
     public static void main(String[] args) {

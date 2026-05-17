@@ -64,6 +64,7 @@ import PathParameters
             ]
         )
         let response = try await client.organizations.getOrganizationUser(
+            tenantId: "tenant_id",
             organizationId: "organization_id",
             userId: "user_id",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -116,6 +117,7 @@ import PathParameters
             )
         ]
         let response = try await client.organizations.searchOrganizations(
+            tenantId: "tenant_id",
             organizationId: "organization_id",
             limit: 1,
             requestOptions: RequestOptions(additionalHeaders: stub.headers)

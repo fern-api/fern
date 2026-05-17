@@ -52,12 +52,12 @@ func (c *Client) CreateMovie(
 
 func (c *Client) GetMovie(
 	ctx context.Context,
-	movieID testPackageName.MovieID,
+	request *testPackageName.GetMovieImdbRequest,
 	opts ...option.RequestOption,
 ) (*testPackageName.Movie, error) {
 	response, err := c.WithRawResponse.GetMovie(
 		ctx,
-		movieID,
+		request,
 		opts...,
 	)
 	if err != nil {

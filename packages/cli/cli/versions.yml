@@ -1,4 +1,164 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.27.6
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.29, which includes @fern-api/replay
+        0.15.1 with fixes for fallback patch anchoring, composite-patch survival,
+        and FileOwnership divergence.
+      type: chore
+  createdAt: "2026-05-17"
+  irVersion: 66
+- version: 5.27.5
+  changelogEntry:
+    - summary: |
+        Wrap `replaceImagePathsAndUrls` calls in `DocsDefinitionResolver` and `previewDocs` with
+        try/catch boundaries that convert MDX parse failures to `CliError(ParseError)`, preventing
+        user-authored MDX syntax errors from reaching Sentry as false-positive InternalErrors.
+      type: fix
+  createdAt: "2026-05-16"
+  irVersion: 66
+- version: 5.27.4
+  changelogEntry:
+    - summary: |
+        Classify service and environment errors at their boundary call sites: mark exhausted
+        429 retries as NetworkError, pass error objects through failWithoutThrowing in remote
+        generation so CliError codes propagate, and reclassify docs preview server startup
+        failures as EnvironmentError instead of InternalError.
+      type: fix
+  createdAt: "2026-05-16"
+  irVersion: 66
+- version: 5.27.3
+  changelogEntry:
+    - summary: |
+        Wrap `yaml.load` calls in `getVersionedNavigationConfiguration` and `getNavigationConfiguration`
+        with try/catch boundaries that convert YAML parse failures to `CliError(ParseError)`, preventing
+        user-authored YAML syntax errors in version and product config files from reaching Sentry as
+        false-positive InternalErrors.
+      type: fix
+  createdAt: "2026-05-16"
+  irVersion: 66
+- version: 5.27.2
+  changelogEntry:
+    - summary: |
+        Suppress Sentry false positives for ENOTEMPTY/ENOMEM syscalls, undici
+        fetch-failed TypeErrors, and errno codes on error.cause.
+      type: fix
+  createdAt: "2026-05-16"
+  irVersion: 66
+- version: 5.27.1
+  changelogEntry:
+    - summary: |
+        Report escaped fatal CLI errors through telemetry in packaged production runs.
+      type: fix
+  createdAt: "2026-05-16"
+  irVersion: 66
+- version: 5.27.0
+  changelogEntry:
+    - summary: |
+        Enrich CLI telemetry with automation-mode context (config repo, branch,
+        commit sha, PR number, trigger, and GitHub run details) on every PostHog
+        event and Sentry error report.
+        Add the three-leg failure flow (Sentry + PostHog + automation event API)
+        so automation-run failures surface end-to-end.
+      type: internal
+  createdAt: "2026-05-16"
+  irVersion: 66
+- version: 5.26.5
+  changelogEntry:
+    - summary: |
+        Suppress additional Sentry false positives for interrupted syscalls, invalid versions, YAML parse failures, IR schema parse failures, invalid GitHub repository config, replay resolve failures, missing translation directories, and global theme fetch failures.
+      type: fix
+  createdAt: "2026-05-15"
+  irVersion: 66
+- version: 5.26.4
+  changelogEntry:
+    - summary: |
+        Fix `missing-redirects` causing `fern check` to exit with code 1 even when
+        the rule is configured at `warn`. Rule initialization failures now honor
+        the configured severity (`warn` emits a warning, `error` emits an error)
+        instead of always being reported as fatal. The `missing-redirects` rule
+        also degrades to a warning when the local docs navigation fails to
+        resolve, captures the underlying `failAndThrow` message so the warning
+        explains *why* (e.g. `Folder not found: ...`) instead of `[object Object]`,
+        and non-`Error` throws are formatted readably across the validator.
+      type: fix
+  createdAt: "2026-05-14"
+  irVersion: 66
+- version: 5.26.3
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` grabbing the local fern token for authentication when loading a global theme
+      type: fix
+  createdAt: "2026-05-14"
+  irVersion: 66
+- version: 5.26.2
+  changelogEntry:
+    - summary: |
+        Fix commit author attribution for GitHub Enterprise: API-created commits now
+        use the Fern bot identity instead of the PAT-owning user, matching the git CLI
+        behavior of Fern 3.x generators.
+      type: fix
+    - summary: |
+        Authenticate Venus calls during local Docker generation (`fern generate --local`)
+        by silently picking up an existing `FERN_TOKEN` env var or saved login token,
+        matching the remote generation path. Previously, `useLocalDocker` skipped the
+        auth flow entirely, leaving Venus calls (e.g. `GET /organizations/{org_id}`)
+        unauthenticated.
+      type: fix
+  createdAt: "2026-05-14"
+  irVersion: 66
+- version: 5.26.1
+  changelogEntry:
+    - summary: |
+        Forward `--verify` through the remote (Fiddle) generation path. Previously the
+        CLI-level `--verify` flag only worked for local generation; on remote runs the
+        value was silently dropped before reaching `CreateJobRequestV2.verify`. The
+        flag now plumbs through `runRemoteGenerationForAPIWorkspace` →
+        `runRemoteGenerationForGenerator` → `createAndStartJob` and is set on the
+        Fiddle job request, enabling the generator-cli pipeline's VerificationStep
+        against the language-specific validator on opted-in runs.
+      type: fix
+  createdAt: "2026-05-14"
+  irVersion: 66
+- version: 5.26.0
+  changelogEntry:
+    - summary: |
+        Add `fern docs link check` command to validate links on live documentation sites.
+        Supports text, JSON, and CSV output formats via `--output` flag.
+        Use `--url <url>` to specify which docs site to check, or auto-detect from docs.yml.
+      type: feat
+    - summary: |
+        Add progress bars matching `fern docs dev` style for `fern docs link check`.
+        Broken links show status codes, blocked links show diagnostic details,
+        and error messages include actionable context.
+      type: feat
+    - summary: |
+        The `fern docs link check` command now resolves broken link sources to local file paths when the server provides `sourcePageIds` and a Fern workspace is available.
+      type: feat
+  createdAt: "2026-05-14"
+  irVersion: 66
+- version: 5.25.0
+  changelogEntry:
+    - summary: |
+        Register the new `fernapi/fern-cli` generator in the CLI configuration.
+      type: feat
+  createdAt: "2026-05-14"
+  irVersion: 66
+- version: 5.24.2
+  changelogEntry:
+    - summary: |
+        Fix `fern config migrate` producing wrong file path references in the generated `fern.yml`. Paths from `generators.yml` (relative to the `fern/` directory) are now correctly re-rooted to be relative to the project root where `fern.yml` is created. This also fixes the `docs` `$ref` pointer to use `./fern/docs.yml` instead of `./docs.yml`.
+      type: fix
+  createdAt: "2026-05-14"
+  irVersion: 66
+- version: 5.24.1
+  changelogEntry:
+    - summary: |
+        Propagate Fern `docs:` strings into generated JSON Schemas so editor hovers
+        work for schemas served from `schema.buildwithfern.dev`.
+      type: chore
+  createdAt: "2026-05-14"
+  irVersion: 66
 - version: 5.24.0
   changelogEntry:
     - summary: |

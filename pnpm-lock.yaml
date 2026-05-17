@@ -37,8 +37,8 @@ catalogs:
       specifier: 0.0.6-2ee1b7e28
       version: 0.0.6-2ee1b7e28
     '@fern-api/generator-cli':
-      specifier: 0.9.22
-      version: 0.9.22
+      specifier: 0.9.28
+      version: 0.9.28
     '@fern-api/venus-api-sdk':
       specifier: 0.22.34
       version: 0.22.34
@@ -49,8 +49,8 @@ catalogs:
       specifier: ^0.0.5297
       version: 0.0.5297
     '@fern-fern/fiddle-sdk':
-      specifier: 1.0.3
-      version: 1.0.3
+      specifier: 1.1.0
+      version: 1.1.0
     '@fern-fern/generator-exec-sdk':
       specifier: ^0.0.1167
       version: 0.0.1167
@@ -630,7 +630,7 @@ importers:
         version: link:packages/configs
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.9.22
+        version: 0.9.28
       '@rolldown/binding-darwin-arm64':
         specifier: 'catalog:'
         version: 1.0.0
@@ -699,7 +699,7 @@ importers:
         version: link:../../packages/commons/fs-utils
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.9.22
+        version: 0.9.28
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../packages/ir-sdk
@@ -777,6 +777,33 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@22.19.17)(@vitest/coverage-v8@4.1.4)(vite@7.3.2(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
+
+  generators/cli:
+    devDependencies:
+      '@fern-api/base-generator':
+        specifier: workspace:*
+        version: link:../base
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../packages/configs
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../packages/commons/fs-utils
+      '@fern-fern/ir-sdk':
+        specifier: 66.0.0
+        version: 66.0.0
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.19.17
+      commander:
+        specifier: ^14.0.3
+        version: 14.0.3
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -2439,7 +2466,7 @@ importers:
         version: link:../../../packages/commons/fs-utils
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.9.22
+        version: 0.9.28
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../packages/cli/logger
@@ -4446,7 +4473,7 @@ importers:
         version: link:../workspace/loader
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
-        version: 1.0.3
+        version: 1.1.0
       '@fern-fern/generators-sdk':
         specifier: 'catalog:'
         version: 0.114.0-5745f9e74
@@ -4730,6 +4757,9 @@ importers:
 
   packages/cli/cli-v2:
     dependencies:
+      cli-progress:
+        specifier: 'catalog:'
+        version: 3.12.0
       dotenv:
         specifier: ^16.0.0
         version: 16.6.1
@@ -4856,13 +4886,16 @@ importers:
         version: link:../yaml/loader
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
-        version: 1.0.3
+        version: 1.1.0
       '@fern-fern/generators-sdk':
         specifier: 'catalog:'
         version: 0.114.0-5745f9e74
       '@sentry/node':
         specifier: ^10.45.0
         version: 10.49.0
+      '@types/cli-progress':
+        specifier: 'catalog:'
+        version: 3.11.6
       '@types/inquirer':
         specifier: 'catalog:'
         version: 9.0.9
@@ -4989,7 +5022,7 @@ importers:
         version: link:../../commons/path-utils
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
-        version: 1.0.3
+        version: 1.1.0
       zod:
         specifier: ^4.3.6
         version: 4.3.6
@@ -5032,7 +5065,7 @@ importers:
         version: link:../task-context
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
-        version: 1.0.3
+        version: 1.1.0
       '@fern-fern/generators-sdk':
         specifier: 'catalog:'
         version: 0.114.0-5745f9e74
@@ -5320,6 +5353,9 @@ importers:
 
   packages/cli/docs-preview:
     dependencies:
+      '@fern-api/auth':
+        specifier: workspace:*
+        version: link:../auth
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
@@ -6124,7 +6160,7 @@ importers:
         version: link:../../../workspace/loader
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
-        version: 1.0.3
+        version: 1.1.0
       '@fern-fern/generator-exec-sdk':
         specifier: 'catalog:'
         version: 0.0.1167
@@ -6284,7 +6320,7 @@ importers:
         version: link:../../../workspace/loader
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
-        version: 1.0.3
+        version: 1.1.0
       axios:
         specifier: 'catalog:'
         version: 1.16.0
@@ -7021,7 +7057,7 @@ importers:
         version: link:../../api-importers/v3-importer-commons
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
-        version: 1.0.3
+        version: 1.1.0
       '@open-rpc/meta-schema':
         specifier: 'catalog:'
         version: 1.14.9
@@ -7462,7 +7498,7 @@ importers:
         version: link:../../cli/task-context
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
-        version: 1.0.3
+        version: 1.1.0
       '@redocly/openapi-core':
         specifier: 'catalog:'
         version: 1.34.11
@@ -7864,7 +7900,7 @@ importers:
         version: 0.0.5297
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
-        version: 1.0.3
+        version: 1.1.0
       '@fern-fern/generators-sdk':
         specifier: 'catalog:'
         version: 0.114.0-5745f9e74
@@ -7903,8 +7939,8 @@ importers:
         specifier: workspace:*
         version: link:../commons/logging-execa
       '@fern-api/replay':
-        specifier: 0.15.0
-        version: 0.15.0
+        specifier: 0.15.2
+        version: 0.15.2
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../cli/task-context
@@ -8114,7 +8150,7 @@ importers:
         version: link:../cli/workspace/loader
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
-        version: 1.0.3
+        version: 1.1.0
       '@fern-fern/generators-sdk':
         specifier: 'catalog:'
         version: 0.114.0-5745f9e74
@@ -9414,17 +9450,17 @@ packages:
   '@fern-api/fdr-sdk@1.2.4-f661387fb2':
     resolution: {integrity: sha512-wlk1lTCIZ7biND4vQf8jvhUw9P/rBQ5pXASCrumv8R96up0B3DY6yiY1C4VmFyHmp/kPhcjzc5T9TvHZZxFdrA==}
 
-  '@fern-api/generator-cli@0.9.22':
-    resolution: {integrity: sha512-War2x7+HMAl8TzferxbIRfp1zgQ5OMdoZW/FsD2H/Ep7t0SWLBDcAm+x7s+mhnwEYYXe9VSdA2+aNZC3pwRalA==}
-    hasBin: true
-
-  '@fern-api/replay@0.14.1':
-    resolution: {integrity: sha512-OBuBJb7HWMkWjhKpd91NW5pfPtpzvAEvkkFPVtN70K9uLPoc8CQm0j/asaEaOjH/tm7cXDAEQZj4Ekn1Rj+XNw==}
-    engines: {node: '>=18'}
+  '@fern-api/generator-cli@0.9.28':
+    resolution: {integrity: sha512-XWotnNAkiMIIKFE4xujI3O31Cd0PDljogKqUytGgnJH+a74rtMtGrSGWG58ryfDBCoJtLsjS1Q/B9vUlkceAJQ==}
     hasBin: true
 
   '@fern-api/replay@0.15.0':
     resolution: {integrity: sha512-F5EcUoVLsVYW5qmwag0S87ZAIf7ldc+vlHEbg4MdImd2m4W5WVKIL1vy60DDPucD2QnGTzavDv9Hi6IaOlyYCg==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  '@fern-api/replay@0.15.2':
+    resolution: {integrity: sha512-B9eTCbYhr4UKCnuLIVEVA8aFC8uMp9f4eV1Sv+yL+OCkrNhaNGbuzi15mU+18/m8iOiuJ/IYXntImlS/JT5KYw==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -9441,8 +9477,8 @@ packages:
   '@fern-fern/fdr-test-sdk@0.0.5297':
     resolution: {integrity: sha512-jrZUZ6oIA64LHtrv77xEq0X7qJhT9xRMGWhKcLjIUArMsD7h6KMWUHVdoB/1MP0Mz/uL/E2xmM31SOgJicpIcA==}
 
-  '@fern-fern/fiddle-sdk@1.0.3':
-    resolution: {integrity: sha512-JXR2YRzitbGdd1cioDkUhEQNuq1SckJJpCahJKHTPROQirRnjVHJrzC6PG2MZpuCbgSw6cg4TmqRVm66VISBkg==}
+  '@fern-fern/fiddle-sdk@1.1.0':
+    resolution: {integrity: sha512-NVAyCRgsLr3SdX5XsOKhQRpnCr7OyYw7pQozEw0HH8/szD9JVqrg0CaK6GX0cwmHy1JhMQvdsiiNOVZ56Xb/3w==}
     engines: {node: '>=18.0.0'}
 
   '@fern-fern/generator-cli-sdk@0.1.8':
@@ -16352,10 +16388,10 @@ snapshots:
       - encoding
       - typescript
 
-  '@fern-api/generator-cli@0.9.22':
+  '@fern-api/generator-cli@0.9.28':
     dependencies:
       '@boundaryml/baml': 0.219.0
-      '@fern-api/replay': 0.14.1
+      '@fern-api/replay': 0.15.0
       '@octokit/rest': 22.0.1
       es-toolkit: 1.45.1
       semver: 7.7.4
@@ -16363,7 +16399,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@fern-api/replay@0.14.1':
+  '@fern-api/replay@0.15.0':
     dependencies:
       minimatch: 10.2.5
       node-diff3: 3.2.0
@@ -16372,7 +16408,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@fern-api/replay@0.15.0':
+  '@fern-api/replay@0.15.2':
     dependencies:
       minimatch: 10.2.5
       node-diff3: 3.2.0
@@ -16403,7 +16439,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/fiddle-sdk@1.0.3': {}
+  '@fern-fern/fiddle-sdk@1.1.0': {}
 
   '@fern-fern/generator-cli-sdk@0.1.8':
     dependencies:

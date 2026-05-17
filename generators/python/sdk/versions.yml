@@ -1,4 +1,42 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.12.10
+  changelogEntry:
+    - summary: |
+        Dynamic snippets now render path-parameter arguments in IR (URL / SDK signature) order
+        rather than in the order they happen to appear in the input request, so generated
+        examples line up with the actual SDK method signature even when the spec lists path
+        parameters in a different order.
+      type: fix
+    - summary: |
+        Dynamic snippets now pass root-level path parameters to the endpoint method instead
+        of the client constructor (which does not accept them), and include them alongside
+        endpoint-level path parameters so the rendered call matches the generated Python SDK
+        method signature.
+      type: fix
+  createdAt: "2026-05-15"
+  irVersion: 66
+- version: 5.12.9
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.28, which sets explicit author and
+        committer on API-created commits to the Fern bot identity. Fixes commit
+        attribution on GitHub Enterprise where PAT-based authentication previously
+        attributed commits to the PAT-owning service account instead of fern-api[bot].
+      type: fix
+  createdAt: "2026-05-15"
+  irVersion: 66
+- version: 5.12.8
+  changelogEntry:
+    - summary: |
+        Bump Poetry from 1.8.5 to 2.4.1 in the python-sdk and pydantic-model
+        container images. Clears CVE-2026-34591 (Poetry `<2.3.3` stored credentials
+        in cleartext when keyring storage was unavailable). pyproject.toml's
+        `poetry-core` constraint moves from `^1.9.0` to `^2.0.0` to stay in
+        lockstep with Poetry 2.4.1's bundled `poetry-core 2.4.0` under
+        `virtualenvs.create=false`. `poetry.lock` regenerated under Poetry 2.4.1.
+      type: chore
+  createdAt: "2026-05-14"
+  irVersion: 66
 - version: 5.12.7
   changelogEntry:
     - summary: |

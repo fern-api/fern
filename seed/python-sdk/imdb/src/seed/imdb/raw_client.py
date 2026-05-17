@@ -10,9 +10,9 @@ from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from .errors.movie_does_not_exist_error import MovieDoesNotExistError
-from .types.movie import Movie
-from .types.movie_id import MovieId
+from ..errors.not_found_error import NotFoundError
+from ..types.movie import Movie
+from ..types.movie_id import MovieId
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -41,6 +41,7 @@ class RawImdbClient:
         Returns
         -------
         HttpResponse[MovieId]
+            Success
         """
         _response = self._client_wrapper.httpx_client.request(
             "movies/create-movie",
@@ -48,6 +49,9 @@ class RawImdbClient:
             json={
                 "title": title,
                 "rating": rating,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -85,6 +89,7 @@ class RawImdbClient:
         Returns
         -------
         HttpResponse[Movie]
+            Success
         """
         _response = self._client_wrapper.httpx_client.request(
             f"movies/{encode_path_param(movie_id)}",
@@ -102,7 +107,7 @@ class RawImdbClient:
                 )
                 return HttpResponse(response=_response, data=_data)
             if _response.status_code == 404:
-                raise MovieDoesNotExistError(
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         MovieId,
@@ -144,6 +149,7 @@ class AsyncRawImdbClient:
         Returns
         -------
         AsyncHttpResponse[MovieId]
+            Success
         """
         _response = await self._client_wrapper.httpx_client.request(
             "movies/create-movie",
@@ -151,6 +157,9 @@ class AsyncRawImdbClient:
             json={
                 "title": title,
                 "rating": rating,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -188,6 +197,7 @@ class AsyncRawImdbClient:
         Returns
         -------
         AsyncHttpResponse[Movie]
+            Success
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"movies/{encode_path_param(movie_id)}",
@@ -205,7 +215,7 @@ class AsyncRawImdbClient:
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 404:
-                raise MovieDoesNotExistError(
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         MovieId,

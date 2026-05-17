@@ -1212,7 +1212,7 @@ export async function runAppPreviewServer({
             `Docs preview server failed to start: ${extractErrorMessage(err)}. ` +
                 `Run with --log-level debug for more details.`,
             undefined,
-            { code: CliError.Code.InternalError }
+            { code: CliError.Code.EnvironmentError }
         );
     }
 

@@ -43,6 +43,7 @@ export async function createAndStartJob({
     automationMode,
     autoMerge,
     skipIfNoDiff,
+    verify,
     loginCommand = "fern login"
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
@@ -68,6 +69,13 @@ export async function createAndStartJob({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    /**
+     * When true, Fiddle enables the generator-cli pipeline's VerificationStep,
+     * which runs `.fern/verify.sh` inside the language-specific validator
+     * container after the generator emits SDK files. Plumbed through from the
+     * CLI-level `--verify` flag. Default: false (verify off).
+     */
+    verify?: boolean;
     /**
      * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
      * 'fern auth login' for CLI v2). Defaults to 'fern login'.
@@ -111,6 +119,7 @@ export async function createAndStartJob({
                 automationMode,
                 autoMerge,
                 skipIfNoDiff,
+                verify,
                 loginCommand
             }),
         retryRateLimited,
@@ -142,6 +151,7 @@ async function createJob({
     pushPreviewBranch,
     fernignoreContents,
     skipIfNoDiff,
+    verify,
     loginCommand
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
@@ -163,6 +173,7 @@ async function createJob({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    verify?: boolean;
     loginCommand: string;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const remoteGenerationService = createFiddleService({ token: token.value });
@@ -200,7 +211,8 @@ async function createJob({
         preview: fiddlePreview ?? absolutePathToPreview != null,
         pushPreviewBranch,
         fernignoreContents,
-        skipIfNoDiff
+        skipIfNoDiff,
+        verify
         // TODO(FER-9671): Pass remaining automation flags to Fiddle once its API is updated:
         //   automationMode,
         //   autoMerge,

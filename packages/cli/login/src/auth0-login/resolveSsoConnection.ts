@@ -18,11 +18,19 @@ export async function resolveSsoConnection({
             }
         );
     } catch (error) {
-        if (axios.isAxiosError(error) && error.response?.status === 404) {
-            throw new CliError({
-                message: `No SSO connection associated with email: ${email}`,
-                code: CliError.Code.AuthError
-            });
+        if (axios.isAxiosError(error)) {
+            if (error.response?.status === 404) {
+                throw new CliError({
+                    message: `No SSO connection associated with email: ${email}`,
+                    code: CliError.Code.AuthError
+                });
+            }
+            if (error.response?.status === 400) {
+                throw new CliError({
+                    message: `Unable to resolve SSO connection for email: ${email}`,
+                    code: CliError.Code.AuthError
+                });
+            }
         }
         throw error;
     }

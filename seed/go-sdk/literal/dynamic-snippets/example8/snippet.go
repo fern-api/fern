@@ -15,10 +15,10 @@ func do() {
         ),
     )
     request := &fern.SendRequest{
+        Query: "What is the weather today",
         Context: fern.SomeLiteral(
             "You're super wise",
         ),
-        Query: "What is the weather today",
         ContainerObject: &fern.ContainerObject{
             NestedObjects: []*fern.NestedObjectWithLiterals{
                 &fern.NestedObjectWithLiterals{

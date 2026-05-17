@@ -333,7 +333,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.imdb.createMovie(request: CreateMovieRequest(
+    _ = try await client.imdb.createMovie(request: .init(
         title: "The Matrix",
         rating: 8.2
     ))
@@ -466,6 +466,25 @@ private func main() async throws {
         tags: [
             .null
         ]
+    )
+}
+
+try await main()
+"
+`;
+
+exports[`snippets (default) > path-parameters > 'GET /{tenant_id}/user/{user_id}/speci…' 1`] = `
+"import Foundation
+import Acme
+
+private func main() async throws {
+    let client = AcmeClient()
+
+    _ = try await client.user.getUserSpecifics(
+        tenantID: "my_tenant",
+        userID: "my_user",
+        version: "7",
+        thought: "my_thought"
     )
 }
 

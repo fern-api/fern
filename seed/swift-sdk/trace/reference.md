@@ -70,7 +70,7 @@ private func main() async throws {
     let client = TraceClient(token: "<token>")
 
     _ = try await client.admin.updateTestSubmissionStatus(
-        submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         request: TestSubmissionStatus.stopped
     )
 }
@@ -138,7 +138,7 @@ private func main() async throws {
     let client = TraceClient(token: "<token>")
 
     _ = try await client.admin.sendTestSubmissionUpdate(
-        submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         request: TestSubmissionUpdate(
             updateTime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             updateInfo: TestSubmissionUpdateInfo.running(
@@ -211,7 +211,7 @@ private func main() async throws {
     let client = TraceClient(token: "<token>")
 
     _ = try await client.admin.updateWorkspaceSubmissionStatus(
-        submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         request: WorkspaceSubmissionStatus.stopped
     )
 }
@@ -279,7 +279,7 @@ private func main() async throws {
     let client = TraceClient(token: "<token>")
 
     _ = try await client.admin.sendWorkspaceSubmissionUpdate(
-        submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         request: WorkspaceSubmissionUpdate(
             updateTime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             updateInfo: WorkspaceSubmissionUpdateInfo.running(
@@ -352,7 +352,7 @@ private func main() async throws {
     let client = TraceClient(token: "<token>")
 
     _ = try await client.admin.storeTracedTestCase(
-        submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         testCaseId: "testCaseId",
         request: .init(
             result: TestCaseResultWithStdout(
@@ -516,7 +516,7 @@ private func main() async throws {
     let client = TraceClient(token: "<token>")
 
     _ = try await client.admin.storeTracedTestCaseV2(
-        submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         testCaseId: "testCaseId",
         request: [
             TraceResponseV2(
@@ -672,7 +672,7 @@ private func main() async throws {
     let client = TraceClient(token: "<token>")
 
     _ = try await client.admin.storeTracedWorkspace(
-        submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         request: .init(
             workspaceRunDetails: WorkspaceRunDetails(
                 exceptionV2: ExceptionV2.generic(
@@ -828,7 +828,7 @@ private func main() async throws {
     let client = TraceClient(token: "<token>")
 
     _ = try await client.admin.storeTracedWorkspaceV2(
-        submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         request: [
             TraceResponseV2(
                 submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
@@ -1158,7 +1158,7 @@ private func main() async throws {
     let client = TraceClient(token: "<token>")
 
     _ = try await client.playlist.createPlaylist(
-        serviceParam: 1,
+        serviceParam: "1",
         datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
         optionalDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
         request: PlaylistCreateRequest(
@@ -1264,7 +1264,7 @@ private func main() async throws {
     let client = TraceClient(token: "<token>")
 
     _ = try await client.playlist.getPlaylists(
-        serviceParam: 1,
+        serviceParam: "1",
         limit: 1,
         otherField: "otherField",
         multiLineDocs: "multiLineDocs"
@@ -1383,7 +1383,7 @@ private func main() async throws {
     let client = TraceClient(token: "<token>")
 
     _ = try await client.playlist.getPlaylist(
-        serviceParam: 1,
+        serviceParam: "1",
         playlistId: "playlistId"
     )
 }
@@ -1465,7 +1465,7 @@ private func main() async throws {
     let client = TraceClient(token: "<token>")
 
     _ = try await client.playlist.updatePlaylist(
-        serviceParam: 1,
+        serviceParam: "1",
         playlistId: "playlistId",
         request: UpdatePlaylistRequest(
             name: "name",
@@ -1562,7 +1562,7 @@ private func main() async throws {
     let client = TraceClient(token: "<token>")
 
     _ = try await client.playlist.deletePlaylist(
-        serviceParam: 1,
+        serviceParam: "1",
         playlistId: "playlist_id"
     )
 }
@@ -2105,7 +2105,7 @@ import Trace
 private func main() async throws {
     let client = TraceClient(token: "<token>")
 
-    _ = try await client.submission.createExecutionSession(language: .java)
+    _ = try await client.submission.createExecutionSession(language: "JAVA")
 }
 
 try await main()
@@ -2355,8 +2355,8 @@ private func main() async throws {
     let client = TraceClient(token: "<token>")
 
     _ = try await client.sysprop.setNumWarmInstances(
-        language: .java,
-        numWarmInstances: 1
+        language: "JAVA",
+        numWarmInstances: "1"
     )
 }
 
@@ -2685,7 +2685,7 @@ private func main() async throws {
 
     _ = try await client.v2.v3.problem.getProblemVersion(
         problemId: "problemId",
-        problemVersion: 1
+        problemVersion: "1"
     )
 }
 
@@ -2965,7 +2965,7 @@ private func main() async throws {
 
     _ = try await client.v2.v3.problem.getProblemVersion(
         problemId: "problemId",
-        problemVersion: 1
+        problemVersion: "1"
     )
 }
 

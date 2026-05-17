@@ -134,10 +134,8 @@ private func main() async throws {
     let client = EnumClient()
 
     _ = try await client.pathParam.send(
-        operand: .greaterThan,
-        operandOrColor: ColorOrOperand.color(
-            .red
-        )
+        operand: ">",
+        operandOrColor: "red"
     )
 }
 

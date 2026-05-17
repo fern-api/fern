@@ -388,11 +388,15 @@ export class EndpointSnippetGenerator {
     }): swift.FunctionArgument[] {
         const args: swift.FunctionArgument[] = [];
         this.context.errors.scope(Scope.PathParameters);
+        // Generated Swift SDKs surface both root-level and endpoint-level path parameters
+        // as labelled arguments on the endpoint method, so merge them here in IR / URL
+        // order before rendering (mirroring `getEndpointMethodArgsForBodyRequest`).
+        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
         const pathParameterFields: swift.FunctionArgument[] = [];
-        if (request.pathParameters != null) {
+        if (pathParameters.length > 0) {
             pathParameterFields.push(
                 ...this.getEndpointMethodPathParameters({
-                    namedParameters: request.pathParameters,
+                    namedParameters: pathParameters,
                     snippet
                 })
             );
@@ -452,7 +456,6 @@ export class EndpointSnippetGenerator {
         namedParameters: FernIr.dynamic.NamedParameter[];
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): swift.FunctionArgument[] {
-        const moduleSymbol = this.context.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
         return this.context
             .getExampleObjectProperties({
                 parameters: namedParameters,
@@ -461,13 +464,29 @@ export class EndpointSnippetGenerator {
             .map((parameter) => {
                 return swift.functionArgument({
                     label: parameter.name.name.camelCase.unsafeName,
-                    value: this.context.dynamicTypeLiteralMapper.convert({
-                        fromSymbol: moduleSymbol,
-                        typeReference: parameter.typeReference,
-                        value: parameter.value
-                    })
+                    // Generated Swift SDKs declare every path parameter as `String` in
+                    // the endpoint method signature (the value is interpolated into the
+                    // URL string), so render non-string primitive literals as their
+                    // String representation here to keep the rendered snippet's
+                    // argument type compatible with the SDK signature.
+                    value: this.renderPathParameterValueAsSwiftString({ value: parameter.value })
                 });
             });
+    }
+
+    private renderPathParameterValueAsSwiftString({ value }: { value: unknown }): swift.Expression {
+        if (typeof value === "string") {
+            return swift.Expression.escapedStringLiteral(value);
+        }
+        if (typeof value === "number" || typeof value === "boolean" || typeof value === "bigint") {
+            return swift.Expression.escapedStringLiteral(String(value));
+        }
+        if (value == null) {
+            return swift.Expression.nop();
+        }
+        // Fallback: serialize unexpected shapes as JSON so the rendered argument
+        // remains a String literal that matches the SDK signature.
+        return swift.Expression.escapedStringLiteral(JSON.stringify(value));
     }
 
     private getEndpointMethodQueryParameters({
@@ -645,7 +664,6 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): swift.FunctionArgument[] {
         const args: swift.FunctionArgument[] = [];
-        const moduleSymbol = this.context.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
         this.context.errors.scope(Scope.PathParameters);
         const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
         if (pathParameters.length > 0) {
