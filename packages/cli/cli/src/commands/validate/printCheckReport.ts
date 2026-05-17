@@ -39,12 +39,12 @@ export function printCheckReport({ apiResults, docsResult, logWarnings, context 
     });
 
     if (apiResultsWithViolations.length > 0) {
-        const totalSdkStats = getTotalStats(apiResults.map((r) => r.violations).flat());
+        const totalApiStats = getTotalStats(apiResults.map((r) => r.violations).flat());
         const showApiNesting = apiResults.length > 1;
 
         if (showApiNesting) {
-            // Multiple APIs - show [sdk] header with nested [api] sections
-            context.logger.info(chalk.cyan(chalk.bold("[sdk]")));
+            // Multiple APIs - show [api] header with nested [api] sections
+            context.logger.info(chalk.cyan(chalk.bold("[api]")));
             for (const apiResult of apiResults) {
                 const stats = getViolationStats(apiResult.violations);
                 if (stats.numErrors > 0 || (logWarnings && stats.numWarnings > 0)) {
@@ -60,11 +60,11 @@ export function printCheckReport({ apiResults, docsResult, logWarnings, context 
                 }
             }
         } else {
-            // Single API - show [sdk] header with violations directly
-            hasErrors = hasErrors || totalSdkStats.numErrors > 0;
-            printSdkSectionFlat({
+            // Single API - show [api] header with violations directly
+            hasErrors = hasErrors || totalApiStats.numErrors > 0;
+            printApiSectionFlat({
                 violations: apiResults[0]?.violations ?? [],
-                stats: totalSdkStats,
+                stats: totalApiStats,
                 logWarnings,
                 context
             });
@@ -100,7 +100,7 @@ export function printCheckReport({ apiResults, docsResult, logWarnings, context 
     return { hasErrors };
 }
 
-function printSdkSectionFlat({
+function printApiSectionFlat({
     violations,
     stats,
     logWarnings,
@@ -112,7 +112,7 @@ function printSdkSectionFlat({
     context: TaskContext;
 }): void {
     const statsStr = formatStats(stats, logWarnings);
-    context.logger.info(chalk.cyan(chalk.bold(`[sdk]`)) + ` ${statsStr}`);
+    context.logger.info(chalk.cyan(chalk.bold(`[api]`)) + ` ${statsStr}`);
 
     printViolationsByType({
         violations,
@@ -185,27 +185,114 @@ function printViolationsByType({
     const errors = violations.filter((v) => v.severity === "fatal" || v.severity === "error");
     const warnings = violations.filter((v) => v.severity === "warning");
 
-    // Print warnings first (if enabled)
-    if (logWarnings) {
-        for (const violation of warnings.sort(sortViolations)) {
-            printViolation({ violation, context, indent });
-        }
+    // Print warnings first (if enabled), grouped by rule
+    if (logWarnings && warnings.length > 0) {
+        printViolationsGroupedByRule({
+            violations: warnings,
+            context,
+            indent
+        });
     }
 
-    // Print errors at the end
-    for (const violation of errors.sort(sortViolations)) {
-        printViolation({ violation, context, indent });
+    // Print errors at the end, grouped by rule
+    if (errors.length > 0) {
+        printViolationsGroupedByRule({
+            violations: errors,
+            context,
+            indent
+        });
     }
+}
+
+function printViolationsGroupedByRule({
+    violations,
+    context,
+    indent
+}: {
+    violations: ValidationViolation[];
+    context: TaskContext;
+    indent: string;
+}): void {
+    // Group violations by rule name
+    const violationsByRule = groupViolationsByRule(violations);
+    const ruleNames = Array.from(violationsByRule.keys()).sort();
+
+    // If there's only one rule, skip the subsection headers
+    const showRuleHeaders = ruleNames.length > 1;
+
+    for (const ruleName of ruleNames) {
+        const ruleViolations = violationsByRule.get(ruleName);
+        if (ruleViolations == null || ruleViolations.length === 0) {
+            continue;
+        }
+
+        // Print subsection header if there are multiple rules
+        if (showRuleHeaders) {
+            const displayName = formatRuleName(ruleName);
+            const count = ruleViolations.length;
+            const countStr = `${count} ${count === 1 ? "issue" : "issues"}`;
+            context.logger.info("");
+            context.logger.info(`${indent}${chalk.dim(displayName)} ${chalk.dim(`(${countStr})`)}`);
+            context.logger.info("");
+        }
+
+        // Print violations for this rule
+        // When grouped, skip the severity label since the group header provides context
+        for (const violation of ruleViolations.sort(sortViolations)) {
+            printViolation({ violation, context, indent, skipSeverityLabel: showRuleHeaders });
+        }
+    }
+}
+
+function groupViolationsByRule(violations: ValidationViolation[]): Map<string, ValidationViolation[]> {
+    const grouped = new Map<string, ValidationViolation[]>();
+    for (const violation of violations) {
+        const ruleName = violation.name || "other";
+        const existing = grouped.get(ruleName) ?? [];
+        existing.push(violation);
+        grouped.set(ruleName, existing);
+    }
+    return grouped;
+}
+
+function formatRuleName(ruleName: string): string {
+    // Convert kebab-case or snake_case to Title Case
+    // e.g., "md-validate" -> "Markdown Validation"
+    //       "no-non-component-refs" -> "No Non-Component References"
+
+    // Special case mappings for better display names
+    const specialCases: Record<string, string> = {
+        "md-validate": "Markdown Files",
+        "no-non-component-refs": "API Specification",
+        "valid-markdown-links": "Broken Links",
+        "valid-local-references": "Local References",
+        "no-circular-redirects": "Circular Redirects",
+        "valid-docs-endpoints": "API Endpoints",
+        "missing-redirects": "Missing Redirects",
+        "valid-changelog-slug": "Changelog Slugs",
+        "example-validation": "Example Validation"
+    };
+
+    return specialCases[ruleName] ?? toTitleCase(ruleName);
+}
+
+function toTitleCase(str: string): string {
+    return str
+        .split(/[-_]/)
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
 }
 
 function printViolation({
     violation,
     context,
-    indent
+    indent,
+    skipSeverityLabel = false
 }: {
     violation: ValidationViolation;
     context: TaskContext;
     indent: string;
+    skipSeverityLabel?: boolean;
 }): void {
     const severityLabel = getSeverityLabel(violation.severity);
     const path = formatViolationPath(violation);
@@ -221,13 +308,23 @@ function printViolation({
         return;
     }
 
-    // If path is empty, print issue on same line as severity label
+    // If path is empty, print issue on same line as severity label (or without label if grouped)
     if (path === "") {
-        context.logger.info(`${indent}${severityLabel} ${violation.message}`);
+        if (skipSeverityLabel) {
+            context.logger.info(`${indent}${violation.message}`);
+        } else {
+            context.logger.info(`${indent}${severityLabel} ${violation.message}`);
+        }
     } else {
-        context.logger.info(`${indent}${severityLabel}`);
-        context.logger.info(`${indent}    path: ${chalk.blue(path)}`);
-        context.logger.info(`${indent}    issue: ${violation.message}`);
+        // When violations are grouped, skip the severity label and adjust formatting
+        if (skipSeverityLabel) {
+            context.logger.info(`${indent}${chalk.blue(path)}`);
+            context.logger.info(`${indent}    ${violation.message}`);
+        } else {
+            context.logger.info(`${indent}${severityLabel}`);
+            context.logger.info(`${indent}    path: ${chalk.blue(path)}`);
+            context.logger.info(`${indent}    issue: ${violation.message}`);
+        }
     }
     // Add blank line after each violation for better readability
     context.logger.info("");

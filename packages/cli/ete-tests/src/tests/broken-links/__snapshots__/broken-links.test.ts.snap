@@ -10,6 +10,8 @@ exports[`fern docs broken-links > broken links in sections with path property sh
 [docs]: Found 2 errors and 0 warnings in"
 `;
 
+exports[`fern docs broken-links > external link with docs domain in query param should not be flagged 1`] = `""`;
+
 exports[`fern docs broken-links > simple broken links 1`] = `
 "[docs]:foo.md
        [error] broken link to /bar/baz

@@ -20,14 +20,18 @@ For more information, see https://buildwithfern.com/learn/api-definition/introdu
 `;
 
 exports[`validate > simple 1`] = `
-"[sdk] 2 errors
-    [error]
-        path: api.yml -> error-discrimination
-        issue: error-discrimination is required because this API has declared errors.
+"[api] 2 errors
 
-    [error]
-        path: other.yml -> types -> MyType
-        issue: Type MissingType is not defined.
+    No Missing Error Discriminant (1 issue)
+
+    api.yml -> error-discrimination
+        error-discrimination is required because this API has declared errors.
+
+
+    No Undefined Type Reference (1 issue)
+
+    other.yml -> types -> MyType
+        Type MissingType is not defined.
 
 Found 2 errors and 0 warnings in __ELAPSED__ seconds."
 `;
