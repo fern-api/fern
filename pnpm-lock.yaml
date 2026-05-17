@@ -7939,8 +7939,8 @@ importers:
         specifier: workspace:*
         version: link:../commons/logging-execa
       '@fern-api/replay':
-        specifier: 0.15.1
-        version: 0.15.1
+        specifier: 0.15.2
+        version: 0.15.2
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../cli/task-context
@@ -9459,8 +9459,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@fern-api/replay@0.15.1':
-    resolution: {integrity: sha512-s48EkuzdFccAE5Wn4DztgfJoFcnRIFCrQjPlGd9ULt42v3wEBom2s6c+NyN7fQzgL3H1BrM/cwqC/uhdvr0XXw==}
+  '@fern-api/replay@0.15.2':
+    resolution: {integrity: sha512-B9eTCbYhr4UKCnuLIVEVA8aFC8uMp9f4eV1Sv+yL+OCkrNhaNGbuzi15mU+18/m8iOiuJ/IYXntImlS/JT5KYw==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -16408,7 +16408,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@fern-api/replay@0.15.1':
+  '@fern-api/replay@0.15.2':
     dependencies:
       minimatch: 10.2.5
       node-diff3: 3.2.0
