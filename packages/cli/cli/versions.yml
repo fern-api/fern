@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.27.6
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.29, which includes @fern-api/replay
+        0.15.1 with fixes for fallback patch anchoring, composite-patch survival,
+        and FileOwnership divergence.
+      type: chore
+  createdAt: "2026-05-17"
+  irVersion: 66
 - version: 5.27.5
   changelogEntry:
     - summary: |
