@@ -1,7 +1,8 @@
 import { Spec } from "@fern-api/api-workspace-commons";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { cp } from "fs/promises";
+import { copyFile, cp, mkdir, readFile } from "fs/promises";
+import yaml from "js-yaml";
 import path from "path";
 
 export interface RawSpecsManifestEntry {
@@ -16,11 +17,12 @@ export interface RawSpecsManifest {
 }
 
 /**
- * Collects raw API spec files (OAS, protobuf, OpenRPC, GraphQL) and copies the
- * entire common root directory tree to a host output directory. This preserves
- * the original directory structure so that relative $ref paths between files
- * remain valid — including $ref targets that live outside the spec file's own
- * directory (e.g. `../../shared/models.yaml`).
+ * Collects raw API spec files (OAS, protobuf, OpenRPC, GraphQL) and copies only
+ * the declared spec/override/overlay files plus any files discovered via external
+ * $ref resolution. Protobuf roots are copied as full directories.
+ *
+ * Directory structure is preserved relative to a computed common root so that
+ * relative $ref paths between files remain valid at runtime inside the container.
  *
  * Returns a manifest describing the container paths for each spec.
  */
@@ -41,48 +43,64 @@ export async function collectRawSpecs({
         return manifest;
     }
 
-    // Find the common ancestor directory across all spec files so we can
-    // preserve relative paths when copying into the output directory.
-    const allAbsolutePaths: string[] = [];
+    // Gather all explicitly-declared file paths and directory paths.
+    const declaredFiles: string[] = [];
     const directoryPaths = new Set<string>();
     for (const spec of specs) {
         switch (spec.type) {
             case "openapi":
             case "openrpc":
             case "graphql":
-                allAbsolutePaths.push(spec.absoluteFilepath);
+                declaredFiles.push(spec.absoluteFilepath);
                 if (spec.absoluteFilepathToOverrides != null) {
                     if (Array.isArray(spec.absoluteFilepathToOverrides)) {
-                        allAbsolutePaths.push(...spec.absoluteFilepathToOverrides);
+                        declaredFiles.push(...spec.absoluteFilepathToOverrides);
                     } else {
-                        allAbsolutePaths.push(spec.absoluteFilepathToOverrides);
+                        declaredFiles.push(spec.absoluteFilepathToOverrides);
                     }
                 }
                 if (spec.type === "openapi" && spec.absoluteFilepathToOverlays != null) {
-                    allAbsolutePaths.push(spec.absoluteFilepathToOverlays);
+                    declaredFiles.push(spec.absoluteFilepathToOverlays);
                 }
                 break;
             case "protobuf":
-                allAbsolutePaths.push(spec.absoluteFilepathToProtobufRoot);
+                declaredFiles.push(spec.absoluteFilepathToProtobufRoot);
                 directoryPaths.add(spec.absoluteFilepathToProtobufRoot);
                 if (spec.absoluteFilepathToOverrides != null) {
                     if (Array.isArray(spec.absoluteFilepathToOverrides)) {
-                        allAbsolutePaths.push(...spec.absoluteFilepathToOverrides);
+                        declaredFiles.push(...spec.absoluteFilepathToOverrides);
                     } else {
-                        allAbsolutePaths.push(spec.absoluteFilepathToOverrides);
+                        declaredFiles.push(spec.absoluteFilepathToOverrides);
                     }
                 }
                 break;
         }
     }
 
-    const commonRoot = findCommonDirectory(allAbsolutePaths, directoryPaths);
+    // Discover external $ref targets by scanning non-directory files.
+    const refTargets = new Set<string>();
+    for (const filePath of declaredFiles) {
+        if (!directoryPaths.has(filePath)) {
+            await discoverExternalRefs(filePath, refTargets, context);
+        }
+    }
+
+    // Combine declared files with discovered $ref targets for common root calculation.
+    const allPaths = [...declaredFiles, ...refTargets];
+
+    const commonRoot = findCommonDirectory(allPaths, directoryPaths);
     context.logger.debug(`Raw specs common root: ${commonRoot}`);
 
-    // Copy the entire common root directory tree so that all files reachable
-    // via relative $ref paths (including ../../ references) are preserved.
-    await cp(commonRoot, hostOutputDir, { recursive: true });
-    context.logger.debug(`Copied directory tree from ${commonRoot} to ${hostOutputDir}`);
+    // Copy each file/directory individually, preserving structure relative to commonRoot.
+    const copiedPaths = new Set<string>();
+    for (const filePath of allPaths) {
+        if (copiedPaths.has(filePath)) {
+            continue;
+        }
+        copiedPaths.add(filePath);
+        await copyPathPreservingStructure(filePath, commonRoot, hostOutputDir, directoryPaths.has(filePath));
+    }
+    context.logger.debug(`Copied ${copiedPaths.size} file(s)/director(ies) to ${hostOutputDir}`);
 
     // Build manifest entries with container paths for each spec file.
     for (const spec of specs) {
@@ -91,6 +109,120 @@ export async function collectRawSpecs({
     }
 
     return manifest;
+}
+
+/**
+ * Recursively scans a YAML/JSON file for external $ref values and collects the
+ * absolute paths of all referenced files. Follows transitive $ref chains.
+ */
+export async function discoverExternalRefs(
+    absoluteFilePath: string,
+    discovered: Set<string>,
+    context: TaskContext,
+    visited?: Set<string>
+): Promise<void> {
+    const seen = visited ?? new Set<string>();
+    if (seen.has(absoluteFilePath)) {
+        return;
+    }
+    seen.add(absoluteFilePath);
+
+    let content: string;
+    try {
+        content = await readFile(absoluteFilePath, "utf-8");
+    } catch {
+        context.logger.debug(`Could not read file for $ref discovery: ${absoluteFilePath}`);
+        return;
+    }
+
+    let parsed: unknown;
+    try {
+        if (absoluteFilePath.endsWith(".json")) {
+            parsed = JSON.parse(content);
+        } else {
+            parsed = yaml.load(content);
+        }
+    } catch {
+        context.logger.debug(`Could not parse file for $ref discovery: ${absoluteFilePath}`);
+        return;
+    }
+
+    const baseDir = path.dirname(absoluteFilePath);
+    const refs = collectExternalRefPaths(parsed);
+
+    for (const ref of refs) {
+        const resolved = path.resolve(baseDir, ref);
+        if (!discovered.has(resolved)) {
+            discovered.add(resolved);
+            await discoverExternalRefs(resolved, discovered, context, seen);
+        }
+    }
+}
+
+/**
+ * Walks a parsed YAML/JSON document and extracts the file-path portion of every
+ * external $ref value (not internal `#/...` refs, not HTTP URLs).
+ */
+export function collectExternalRefPaths(obj: unknown): string[] {
+    const refs: string[] = [];
+    walkForRefs(obj, refs);
+    return refs;
+}
+
+function walkForRefs(obj: unknown, refs: string[]): void {
+    if (obj == null || typeof obj !== "object") {
+        return;
+    }
+
+    if (Array.isArray(obj)) {
+        for (const item of obj) {
+            walkForRefs(item, refs);
+        }
+        return;
+    }
+
+    const record = obj as Record<string, unknown>;
+    const ref = record["$ref"];
+    if (typeof ref === "string" && ref.length > 0 && !ref.startsWith("#") && !isUrlRef(ref)) {
+        const hashIndex = ref.indexOf("#");
+        const filePath = hashIndex >= 0 ? ref.slice(0, hashIndex) : ref;
+        if (filePath.length > 0) {
+            refs.push(filePath);
+        }
+    }
+
+    for (const value of Object.values(record)) {
+        walkForRefs(value, refs);
+    }
+}
+
+function isUrlRef(ref: string): boolean {
+    return ref.startsWith("http://") || ref.startsWith("https://");
+}
+
+/**
+ * Copies a single file (or directory for protobuf) into hostOutputDir,
+ * preserving its path relative to commonRoot.
+ */
+async function copyPathPreservingStructure(
+    absolutePath: string,
+    commonRoot: string,
+    hostOutputDir: string,
+    isDirectory: boolean
+): Promise<void> {
+    const relativePath = path.relative(commonRoot, absolutePath);
+    const destPath = path.join(hostOutputDir, relativePath);
+
+    try {
+        if (isDirectory) {
+            await cp(absolutePath, destPath, { recursive: true });
+        } else {
+            await mkdir(path.dirname(destPath), { recursive: true });
+            await copyFile(absolutePath, destPath);
+        }
+    } catch {
+        // $ref target may not exist on disk — skip silently.
+    }
 }
 
 function buildManifestEntry({

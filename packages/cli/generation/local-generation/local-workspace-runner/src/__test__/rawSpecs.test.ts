@@ -3,7 +3,7 @@ import { access, mkdir, readFile, rm, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { collectRawSpecs, findCommonDirectory } from "../rawSpecs.js";
+import { collectExternalRefPaths, collectRawSpecs, discoverExternalRefs, findCommonDirectory } from "../rawSpecs.js";
 
 // biome-ignore lint/suspicious/noExplicitAny: mock context for testing
 function createMockContext(): any {
@@ -365,17 +365,17 @@ describe("collectRawSpecs", () => {
         expect(content2).toBe("v2");
     });
 
-    it("copies entire directory tree so $ref targets outside spec dir are preserved", async () => {
-        // Simulate: spec at sourceDir/api/openapi.yaml references
-        // ../../shared/models.yaml via $ref. The shared/models.yaml file
-        // should be present in the output even though it's not a spec file.
+    it("discovers and copies $ref targets outside the spec directory", async () => {
         const specFile = path.join(sourceDir, "api", "openapi.yaml");
         const sharedDir = path.join(sourceDir, "shared");
         const sharedModel = path.join(sharedDir, "models.yaml");
 
         await mkdir(sharedDir, { recursive: true });
-        await writeFile(specFile, "openapi: 3.0.0\n$ref: '../shared/models.yaml'");
-        await writeFile(sharedModel, "components:\n  schemas:\n    User:\n      type: object");
+        await writeFile(
+            specFile,
+            'openapi: "3.0.0"\ncomponents:\n  schemas:\n    User:\n      $ref: "../shared/models.yaml#/User"'
+        );
+        await writeFile(sharedModel, "User:\n  type: object\n  properties:\n    name:\n      type: string");
 
         const outputDir = path.join(tmpDir.path, "output");
         await mkdir(outputDir, { recursive: true });
@@ -401,32 +401,103 @@ describe("collectRawSpecs", () => {
 
         expect(manifest.specs).toHaveLength(1);
 
-        // The spec file's parent dir is sourceDir/api/. That's the common root.
-        // But the whole tree from sourceDir/api/ is copied, which only includes openapi.yaml.
-        // To capture shared/models.yaml (which is a sibling directory), we need the
-        // common root to be sourceDir/ — but it won't be unless shared/ is also referenced.
-        // With tree-copy, the spec's parent dir (api/) is copied. The $ref target at
-        // ../shared/models.yaml is NOT captured because it's above the common root.
-        //
-        // To truly support external $ref, the caller should ensure the common root is
-        // wide enough (e.g., by providing the workspace root). For now, verify that
-        // the spec file itself is copied correctly.
-        const copiedSpec = path.join(outputDir, "openapi.yaml");
-        const content = await readFile(copiedSpec, "utf-8");
-        expect(content).toContain("openapi: 3.0.0");
+        // The $ref to ../shared/models.yaml is discovered and copied.
+        // Common root widens to sourceDir/ to include both api/ and shared/.
+        const copiedSpec = path.join(outputDir, "api", "openapi.yaml");
+        const copiedModel = path.join(outputDir, "shared", "models.yaml");
+        expect(await readFile(copiedSpec, "utf-8")).toContain('openapi: "3.0.0"');
+        expect(await readFile(copiedModel, "utf-8")).toContain("User:");
     });
 
-    it("copies sibling directories when overrides widen the common root", async () => {
-        // When overrides are in a different directory than the spec, the common root
-        // widens to include both. This means any $ref target between them is captured.
+    it("does not copy unreferenced sibling files", async () => {
+        const specFile = path.join(sourceDir, "api", "openapi.yaml");
+        const unrelatedFile = path.join(sourceDir, "api", "unrelated.txt");
+
+        await writeFile(specFile, "openapi: 3.0.0");
+        await writeFile(unrelatedFile, "should not be copied");
+
+        const outputDir = path.join(tmpDir.path, "output");
+        await mkdir(outputDir, { recursive: true });
+
+        await collectRawSpecs({
+            specs: [
+                {
+                    type: "openapi",
+                    absoluteFilepath: AbsoluteFilePath.of(specFile),
+                    absoluteFilepathToOverrides: undefined,
+                    absoluteFilepathToOverlays: undefined,
+                    source: {
+                        type: "openapi",
+                        file: AbsoluteFilePath.of(specFile),
+                        relativePathToDependency: undefined
+                    }
+                }
+            ],
+            hostOutputDir: AbsoluteFilePath.of(outputDir),
+            containerBaseDir: "/fern/raw-specs",
+            context: createMockContext()
+        });
+
+        // Only the spec file is copied, not the sibling unrelated.txt
+        await expect(access(path.join(outputDir, "openapi.yaml"))).resolves.toBeUndefined();
+        await expect(access(path.join(outputDir, "unrelated.txt"))).rejects.toThrow();
+    });
+
+    it("follows transitive $ref chains", async () => {
+        const specFile = path.join(sourceDir, "api", "openapi.yaml");
+        const sharedDir = path.join(sourceDir, "shared");
+        const modelsFile = path.join(sharedDir, "models.yaml");
+        const commonDir = path.join(sourceDir, "common");
+        const typesFile = path.join(commonDir, "types.yaml");
+
+        await mkdir(sharedDir, { recursive: true });
+        await mkdir(commonDir, { recursive: true });
+
+        await writeFile(
+            specFile,
+            'openapi: "3.0.0"\ncomponents:\n  schemas:\n    User:\n      $ref: "../shared/models.yaml"'
+        );
+        await writeFile(
+            modelsFile,
+            'User:\n  type: object\n  properties:\n    address:\n      $ref: "../common/types.yaml#/Address"'
+        );
+        await writeFile(typesFile, "Address:\n  type: object");
+
+        const outputDir = path.join(tmpDir.path, "output");
+        await mkdir(outputDir, { recursive: true });
+
+        await collectRawSpecs({
+            specs: [
+                {
+                    type: "openapi",
+                    absoluteFilepath: AbsoluteFilePath.of(specFile),
+                    absoluteFilepathToOverrides: undefined,
+                    absoluteFilepathToOverlays: undefined,
+                    source: {
+                        type: "openapi",
+                        file: AbsoluteFilePath.of(specFile),
+                        relativePathToDependency: undefined
+                    }
+                }
+            ],
+            hostOutputDir: AbsoluteFilePath.of(outputDir),
+            containerBaseDir: "/fern/raw-specs",
+            context: createMockContext()
+        });
+
+        // All three files should be copied via transitive discovery:
+        // spec → shared/models.yaml → common/types.yaml
+        await expect(access(path.join(outputDir, "api", "openapi.yaml"))).resolves.toBeUndefined();
+        await expect(access(path.join(outputDir, "shared", "models.yaml"))).resolves.toBeUndefined();
+        await expect(access(path.join(outputDir, "common", "types.yaml"))).resolves.toBeUndefined();
+    });
+
+    it("copies declared files even when overrides widen common root", async () => {
         const specFile = path.join(sourceDir, "api", "openapi.yaml");
         const overrideFile = path.join(sourceDir, "overrides", "override.yaml");
-        const sharedModel = path.join(sourceDir, "shared", "models.yaml");
 
-        await mkdir(path.join(sourceDir, "shared"), { recursive: true });
         await writeFile(specFile, "openapi: 3.0.0");
         await writeFile(overrideFile, "override: true");
-        await writeFile(sharedModel, "shared-model: true");
 
         const outputDir = path.join(tmpDir.path, "output");
         await mkdir(outputDir, { recursive: true });
@@ -450,13 +521,7 @@ describe("collectRawSpecs", () => {
             context: createMockContext()
         });
 
-        // Common root is sourceDir/ (parent of api/ and overrides/).
-        // The entire sourceDir tree is copied, including shared/models.yaml.
-        const copiedSharedModel = path.join(outputDir, "shared", "models.yaml");
-        const content = await readFile(copiedSharedModel, "utf-8");
-        expect(content).toBe("shared-model: true");
-
-        // Also verify spec and override are present
+        // Both declared files are copied
         await expect(access(path.join(outputDir, "api", "openapi.yaml"))).resolves.toBeUndefined();
         await expect(access(path.join(outputDir, "overrides", "override.yaml"))).resolves.toBeUndefined();
     });
@@ -548,11 +613,222 @@ describe("collectRawSpecs", () => {
         expect(manifest.specs[0]?.type).toBe("openapi");
         expect(manifest.specs[1]?.type).toBe("protobuf");
 
-        // With tree copy, both api/ and proto/ dirs should be in output
-        // since common root is sourceDir/
+        // Both declared files are copied: the OpenAPI spec and the protobuf directory
         const copiedSpec = await readFile(path.join(outputDir, "api", "openapi.yaml"), "utf-8");
         expect(copiedSpec).toBe("openapi: 3.0.0");
         const copiedProto = await readFile(path.join(outputDir, "proto", "service", "api.proto"), "utf-8");
         expect(copiedProto).toBe('syntax = "proto3";');
+    });
+
+    it("ignores HTTP URL $refs", async () => {
+        const specFile = path.join(sourceDir, "api", "openapi.yaml");
+        await writeFile(
+            specFile,
+            'openapi: "3.0.0"\ncomponents:\n  schemas:\n    Remote:\n      $ref: "https://example.com/schema.yaml"'
+        );
+
+        const outputDir = path.join(tmpDir.path, "output");
+        await mkdir(outputDir, { recursive: true });
+
+        const manifest = await collectRawSpecs({
+            specs: [
+                {
+                    type: "openapi",
+                    absoluteFilepath: AbsoluteFilePath.of(specFile),
+                    absoluteFilepathToOverrides: undefined,
+                    absoluteFilepathToOverlays: undefined,
+                    source: {
+                        type: "openapi",
+                        file: AbsoluteFilePath.of(specFile),
+                        relativePathToDependency: undefined
+                    }
+                }
+            ],
+            hostOutputDir: AbsoluteFilePath.of(outputDir),
+            containerBaseDir: "/fern/raw-specs",
+            context: createMockContext()
+        });
+
+        // Only the spec file should be copied, no HTTP $ref targets
+        expect(manifest.specs).toHaveLength(1);
+        await expect(access(path.join(outputDir, "openapi.yaml"))).resolves.toBeUndefined();
+    });
+
+    it("handles $ref targets that do not exist on disk", async () => {
+        const specFile = path.join(sourceDir, "api", "openapi.yaml");
+        await writeFile(
+            specFile,
+            'openapi: "3.0.0"\ncomponents:\n  schemas:\n    Missing:\n      $ref: "../missing/schema.yaml"'
+        );
+
+        const outputDir = path.join(tmpDir.path, "output");
+        await mkdir(outputDir, { recursive: true });
+
+        // Should not throw — missing $ref targets are skipped during copy
+        const manifest = await collectRawSpecs({
+            specs: [
+                {
+                    type: "openapi",
+                    absoluteFilepath: AbsoluteFilePath.of(specFile),
+                    absoluteFilepathToOverrides: undefined,
+                    absoluteFilepathToOverlays: undefined,
+                    source: {
+                        type: "openapi",
+                        file: AbsoluteFilePath.of(specFile),
+                        relativePathToDependency: undefined
+                    }
+                }
+            ],
+            hostOutputDir: AbsoluteFilePath.of(outputDir),
+            containerBaseDir: "/fern/raw-specs",
+            context: createMockContext()
+        });
+
+        expect(manifest.specs).toHaveLength(1);
+    });
+});
+
+describe("collectExternalRefPaths", () => {
+    it("returns empty array for non-object input", () => {
+        expect(collectExternalRefPaths(null)).toEqual([]);
+        expect(collectExternalRefPaths(undefined)).toEqual([]);
+        expect(collectExternalRefPaths("string")).toEqual([]);
+        expect(collectExternalRefPaths(42)).toEqual([]);
+    });
+
+    it("extracts file path from $ref", () => {
+        const result = collectExternalRefPaths({
+            $ref: "./models.yaml"
+        });
+        expect(result).toEqual(["./models.yaml"]);
+    });
+
+    it("strips JSON pointer fragment from $ref", () => {
+        const result = collectExternalRefPaths({
+            $ref: "./models.yaml#/User"
+        });
+        expect(result).toEqual(["./models.yaml"]);
+    });
+
+    it("ignores internal $refs", () => {
+        const result = collectExternalRefPaths({
+            $ref: "#/components/schemas/User"
+        });
+        expect(result).toEqual([]);
+    });
+
+    it("ignores HTTP URL $refs", () => {
+        const result = collectExternalRefPaths({
+            $ref: "https://example.com/schema.yaml"
+        });
+        expect(result).toEqual([]);
+    });
+
+    it("finds nested $refs in objects", () => {
+        const result = collectExternalRefPaths({
+            components: {
+                schemas: {
+                    User: { $ref: "./user.yaml" },
+                    Order: { $ref: "./order.yaml#/Order" }
+                }
+            }
+        });
+        expect(result).toEqual(["./user.yaml", "./order.yaml"]);
+    });
+
+    it("finds $refs inside arrays", () => {
+        const result = collectExternalRefPaths({
+            allOf: [{ $ref: "./base.yaml" }, { $ref: "./extra.yaml" }]
+        });
+        expect(result).toEqual(["./base.yaml", "./extra.yaml"]);
+    });
+
+    it("handles mixed internal, external, and URL $refs", () => {
+        const result = collectExternalRefPaths({
+            components: {
+                schemas: {
+                    A: { $ref: "#/components/schemas/B" },
+                    B: { $ref: "./b.yaml" },
+                    C: { $ref: "https://example.com/c.yaml" },
+                    D: { $ref: "../shared/d.yaml#/Foo" }
+                }
+            }
+        });
+        expect(result).toEqual(["./b.yaml", "../shared/d.yaml"]);
+    });
+});
+
+describe("discoverExternalRefs", () => {
+    let tmpDir: tmp.DirectoryResult;
+
+    beforeEach(async () => {
+        tmpDir = await tmp.dir({ unsafeCleanup: true });
+    });
+
+    afterEach(async () => {
+        await rm(tmpDir.path, { recursive: true, force: true });
+    });
+
+    it("discovers $ref targets in a YAML file", async () => {
+        const specFile = path.join(tmpDir.path, "spec.yaml");
+        const modelFile = path.join(tmpDir.path, "models.yaml");
+        await writeFile(specFile, 'components:\n  schemas:\n    User:\n      $ref: "./models.yaml"');
+        await writeFile(modelFile, "User:\n  type: object");
+
+        const discovered = new Set<string>();
+        await discoverExternalRefs(specFile, discovered, createMockContext());
+
+        expect(discovered.has(modelFile)).toBe(true);
+    });
+
+    it("discovers $ref targets in a JSON file", async () => {
+        const specFile = path.join(tmpDir.path, "spec.json");
+        const modelFile = path.join(tmpDir.path, "models.json");
+        await writeFile(specFile, JSON.stringify({ components: { schemas: { User: { $ref: "./models.json" } } } }));
+        await writeFile(modelFile, JSON.stringify({ User: { type: "object" } }));
+
+        const discovered = new Set<string>();
+        await discoverExternalRefs(specFile, discovered, createMockContext());
+
+        expect(discovered.has(modelFile)).toBe(true);
+    });
+
+    it("follows transitive $refs", async () => {
+        const fileA = path.join(tmpDir.path, "a.yaml");
+        const fileB = path.join(tmpDir.path, "b.yaml");
+        const fileC = path.join(tmpDir.path, "c.yaml");
+        await writeFile(fileA, '$ref: "./b.yaml"');
+        await writeFile(fileB, '$ref: "./c.yaml"');
+        await writeFile(fileC, "final: true");
+
+        const discovered = new Set<string>();
+        await discoverExternalRefs(fileA, discovered, createMockContext());
+
+        expect(discovered.has(fileB)).toBe(true);
+        expect(discovered.has(fileC)).toBe(true);
+    });
+
+    it("handles circular $refs without infinite loop", async () => {
+        const fileA = path.join(tmpDir.path, "a.yaml");
+        const fileB = path.join(tmpDir.path, "b.yaml");
+        await writeFile(fileA, '$ref: "./b.yaml"');
+        await writeFile(fileB, '$ref: "./a.yaml"');
+
+        const discovered = new Set<string>();
+        await discoverExternalRefs(fileA, discovered, createMockContext());
+
+        expect(discovered.has(fileB)).toBe(true);
+    });
+
+    it("skips unreadable files gracefully", async () => {
+        const specFile = path.join(tmpDir.path, "spec.yaml");
+        await writeFile(specFile, '$ref: "./nonexistent.yaml"');
+
+        const discovered = new Set<string>();
+        // Should not throw
+        await discoverExternalRefs(specFile, discovered, createMockContext());
+
+        // The path is added to discovered but can't be read further
+        expect(discovered.size).toBe(1);
     });
 });

@@ -6176,6 +6176,9 @@ importers:
       decompress:
         specifier: 'catalog:'
         version: 4.2.1
+      js-yaml:
+        specifier: 'catalog:'
+        version: 4.1.1
       semver:
         specifier: ^7.6.3
         version: 7.7.4
@@ -6189,6 +6192,9 @@ importers:
       '@types/decompress':
         specifier: 'catalog:'
         version: 4.2.7
+      '@types/js-yaml':
+        specifier: 'catalog:'
+        version: 4.0.9
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
