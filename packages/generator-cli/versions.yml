@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Bump @fern-api/replay to 0.15.1.
+      type: chore
+  createdAt: "2026-05-17"
+  version: 0.9.29
+
+- changelogEntry:
+    - summary: |
         Set explicit author and committer on API-created commits to the Fern bot
         identity (`fern-api` / `115122769+fern-api[bot]@users.noreply.github.com`).
         Previously, `octokit.git.createCommit()` defaulted to the authenticated user,
