@@ -15,7 +15,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "A string that is used as the tab bar title."
     },
     "libraries": {
       "oneOf": [
@@ -28,7 +29,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Configuration for library documentation generation. Each library entry defines\na source repository and output location for generated MDX documentation.\n\nExample:\n```yaml\nlibraries:\n  my-sdk:\n    input:\n      git: https://github.com/acme/sdk-python\n      subpath: src/sdk\n    output:\n      path: ./static/sdk-docs\n    lang: python\n```"
     },
     "analytics": {
       "oneOf": [
@@ -38,7 +40,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "The `analytics` object allows you to configure analytics for your docs site.\nCurrently, only Segment is supported."
     },
     "announcement": {
       "oneOf": [
@@ -61,7 +64,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Global list of roles that can be used to filter the navigation and content based on the user's session."
     },
     "tabs": {
       "oneOf": [
@@ -110,7 +114,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Creates a landing page for your documentation website."
     },
     "navigation": {
       "oneOf": [
@@ -120,7 +125,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "The navigation config is skipped when multiple versions are present."
     },
     "navbar-links": {
       "oneOf": [
@@ -163,7 +169,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Name of a global theme stored in Fern's cloud to apply to this documentation site.\nTheme values override local branding configuration (colors, typography, logo, fonts, JS, CSS, etc.).\nUpload a theme first with: fern beta docs theme upload --name <theme-name>"
     },
     "experimental": {
       "oneOf": [
@@ -183,7 +190,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Sets the default language displayed by code snippets in the API Reference.\nOptions include: typescript, python, java, go, ruby, csharp, php, swift, curl"
     },
     "languages": {
       "oneOf": [
@@ -209,7 +217,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Configuration for multi-language documentation. Each entry defines a locale\nthat the documentation supports. Use the `translations/` directory alongside\n`docs.yml` to provide per-language content.\n\nExample (object syntax):\n```yaml\ntranslations:\n  - lang: en\n    default: true\n  - lang: ja\n  - lang: fr\n```\n\nExample (simplified syntax):\n```yaml\ntranslations:\n  - en\n  - ja\n  - fr\n```\n\nYou can mix both syntaxes:\n```yaml\ntranslations:\n  - lang: en\n    default: true\n  - ja\n  - fr\n```"
     },
     "ai-chat": {
       "oneOf": [
@@ -239,7 +248,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Configure AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples."
     },
     "agents": {
       "oneOf": [
@@ -249,7 +259,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Configuration for agent-serving endpoints."
     },
     "metadata": {
       "oneOf": [
@@ -302,7 +313,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Relative filepath to the favicon."
     },
     "background-image": {
       "oneOf": [
@@ -402,7 +414,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Relative filepath to a custom React component (TSX/JSX) that replaces the default header.\nThe component must have a default export."
     },
     "footer": {
       "oneOf": [
@@ -412,7 +425,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Relative filepath to a custom React component (TSX/JSX) that replaces the default footer.\nThe component must have a default export."
     }
   },
   "required": [
@@ -444,13 +458,16 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "@default: `github.com`"
         },
         "owner": {
-          "type": "string"
+          "type": "string",
+          "description": "The GitHub organization that owns the documentation repository."
         },
         "repo": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the GitHub repository containing your fern folder."
         },
         "branch": {
           "oneOf": [
@@ -460,7 +477,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The branch of the repository you would like the GitHub editor to open a PR to. Default is `main`."
         }
       },
       "required": [
@@ -497,13 +515,15 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The launch method for \"Edit this page\" button. Defaults to github."
         }
       },
       "additionalProperties": false
     },
     "docs.AudienceId": {
-      "type": "string"
+      "type": "string",
+      "description": "ID of audience which is used to filter the API spec."
     },
     "docs.Audience": {
       "anyOf": [
@@ -516,13 +536,15 @@
             "$ref": "#/definitions/docs.AudienceId"
           }
         }
-      ]
+      ],
+      "description": "Audience can either be a string or list of strings\ni.e. `audiences: internal` or `audiences: [internal, beta]`"
     },
     "docs.DocsInstance": {
       "type": "object",
       "properties": {
         "url": {
-          "type": "string"
+          "type": "string",
+          "description": "The URL where your Fern documentation is deployed. Must contain the suffix `docs.buildwithfern.com`."
         },
         "custom-domain": {
           "oneOf": [
@@ -532,7 +554,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The custom domain where your documentation is hosted. Learn more about setting up a custom domain."
         },
         "edit-this-page": {
           "oneOf": [
@@ -542,7 +565,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If specified, adds an \"Edit this page\" link to the bottom of each page that links to the given public GitHub repository."
         },
         "audiences": {
           "oneOf": [
@@ -552,7 +576,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Specify which audiences this instance serves (e.g., internal developers, beta testers, public customers).\nYou can use audiences to control which versions and products appear in each documentation instance, enabling you to create separate sites for different user groups. Content is included when its audience tag matches the instance audience. Content without an audience tag is included by default."
         },
         "multi-source": {
           "oneOf": [
@@ -562,7 +587,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths. If true, the url and custom-domain must share the same basepath."
         }
       },
       "required": [
@@ -574,7 +600,8 @@
       "type": "object",
       "properties": {
         "git": {
-          "type": "string"
+          "type": "string",
+          "description": "GitHub URL to the repository containing the library source code.\nExample: https://github.com/django/django"
         },
         "subpath": {
           "oneOf": [
@@ -584,25 +611,29 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Optional path within the repository to the library source.\nExample: django/core"
         }
       },
       "required": [
         "git"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Configuration for fetching library source from a Git repository."
     },
     "docs.PathLibraryInputSchema": {
       "type": "object",
       "properties": {
         "path": {
-          "type": "string"
+          "type": "string",
+          "description": "Local filesystem path to the library source.\nExample: ./src/my-library"
         }
       },
       "required": [
         "path"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Configuration for using a local filesystem path as library source. (Not yet implemented)"
     },
     "docs.LibraryInputConfiguration": {
       "anyOf": [
@@ -612,26 +643,30 @@
         {
           "$ref": "#/definitions/docs.PathLibraryInputSchema"
         }
-      ]
+      ],
+      "description": "Configuration for the library source location."
     },
     "docs.LibraryOutputConfiguration": {
       "type": "object",
       "properties": {
         "path": {
-          "type": "string"
+          "type": "string",
+          "description": "The output directory where MDX files will be generated.\nExample: ./static/sdk-docs"
         }
       },
       "required": [
         "path"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Configuration for the library documentation output."
     },
     "docs.LibraryLanguage": {
       "type": "string",
       "enum": [
         "python",
         "cpp"
-      ]
+      ],
+      "description": "The programming language of the library source code."
     },
     "docs.LibraryConfig": {
       "type": "object",
@@ -644,22 +679,27 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Path to a Doxyfile for C++ library documentation, relative to the fern/ directory.\nWhen provided, the backend uses this Doxyfile instead of auto-generating one.\nOnly valid when lang is cpp."
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Language-specific configuration for library documentation.\nValid fields depend on the `lang` value of the parent LibraryConfiguration."
     },
     "docs.LibraryConfiguration": {
       "type": "object",
       "properties": {
         "input": {
-          "$ref": "#/definitions/docs.LibraryInputConfiguration"
+          "$ref": "#/definitions/docs.LibraryInputConfiguration",
+          "description": "Configuration for the library source location."
         },
         "output": {
-          "$ref": "#/definitions/docs.LibraryOutputConfiguration"
+          "$ref": "#/definitions/docs.LibraryOutputConfiguration",
+          "description": "Configuration for the library documentation output."
         },
         "lang": {
-          "$ref": "#/definitions/docs.LibraryLanguage"
+          "$ref": "#/definitions/docs.LibraryLanguage",
+          "description": "The programming language of the library source code."
         },
         "config": {
           "oneOf": [
@@ -669,7 +709,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Language-specific configuration options. Valid fields depend on the lang value."
         }
       },
       "required": [
@@ -677,7 +718,8 @@
         "output",
         "lang"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Configuration for a library documentation source.\nUsed by `fern docs md generate` to generate MDX files from library source code."
     },
     "docs.SegmentConfig": {
       "type": "object",
@@ -729,7 +771,8 @@
       "type": "object",
       "properties": {
         "api-key": {
-          "type": "string"
+          "type": "string",
+          "description": "Your PostHog project API key. Defaults to the api-host of \"https://us.i.posthog.com\"."
         },
         "endpoint": {
           "oneOf": [
@@ -751,7 +794,8 @@
       "type": "object",
       "properties": {
         "container-id": {
-          "type": "string"
+          "type": "string",
+          "description": "Your Google Tag Manager container ID. Must start with \"GTM-\"."
         }
       },
       "required": [
@@ -763,7 +807,8 @@
       "type": "object",
       "properties": {
         "measurement-id": {
-          "type": "string"
+          "type": "string",
+          "description": "Your Google Analytics 4 measurement ID. Must start with \"G-\"."
         }
       },
       "required": [
@@ -841,7 +886,8 @@
       "type": "object",
       "properties": {
         "message": {
-          "type": "string"
+          "type": "string",
+          "description": "The message to display in the announcement bar. Markdown is supported."
         }
       },
       "required": [
@@ -850,7 +896,8 @@
       "additionalProperties": false
     },
     "docs.RoleId": {
-      "type": "string"
+      "type": "string",
+      "description": "ID of role which is used to filter the content shown in Fern Docs."
     },
     "docs.Role": {
       "anyOf": [
@@ -863,13 +910,15 @@
             "$ref": "#/definitions/docs.RoleId"
           }
         }
-      ]
+      ],
+      "description": "Audience can either be a string or list of strings\ni.e. `audience: internal` or `audience: [internal, beta]`"
     },
     "docs.FeatureFlag": {
       "type": "object",
       "properties": {
         "flag": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the feature flag to check."
         },
         "fallback-value": {
           "oneOf": [
@@ -886,7 +935,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The default value to use if the feature flag is not set. If not specified, defaults to false."
         },
         "match": {
           "oneOf": [
@@ -903,7 +953,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The value that the feature flag should match for the content to be shown. If not specified, content is shown when the flag is true."
         }
       },
       "required": [
@@ -940,7 +991,8 @@
       ]
     },
     "docs.ChangelogFolderRelativePath": {
-      "type": "string"
+      "type": "string",
+      "description": "The relative path to a folder containing markdown files broken down by date.\n\nExample:\n```\nchangelog: \"changelog\"\n```\n\nThis will look for markdown files in the `/fern/changelog` directory, which should contain files named like\n- `/fern/changelog/2024-04-29.mdx`.\n- `/fern/changelog/2023-01-02.mdx`."
     },
     "docs.TabConfig": {
       "type": "object",
@@ -963,7 +1015,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -1026,7 +1079,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If `href` is set, clicking on the tab will redirect to the given URL.\n\nTabs with `href` must not have children in the navigation config."
         },
         "target": {
           "oneOf": [
@@ -1087,7 +1141,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -1103,7 +1158,8 @@
           "type": "string"
         },
         "path": {
-          "type": "string"
+          "type": "string",
+          "description": "The relative path to the version's docs.yml file."
         },
         "slug": {
           "oneOf": [
@@ -1113,7 +1169,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The \"slug\" is this version's basePath. If not set, the slug will be generated from the display-name."
         },
         "availability": {
           "oneOf": [
@@ -1123,7 +1180,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If `availability` is set to `deprecated`, Fern will display a warning banner on the docs site."
         },
         "audiences": {
           "oneOf": [
@@ -1143,7 +1201,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, this version will be hidden from navigation, search, and indexing, but still accessible via direct URL."
         },
         "announcement": {
           "oneOf": [
@@ -1196,7 +1255,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The image to display in the product card. This will override the icon field if both are set."
         },
         "versions": {
           "oneOf": [
@@ -1239,7 +1299,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -1252,7 +1313,8 @@
           ]
         },
         "path": {
-          "type": "string"
+          "type": "string",
+          "description": "The relative path to the version's docs.yml file."
         },
         "slug": {
           "oneOf": [
@@ -1262,7 +1324,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The \"slug\" is this version's basePath. If not set, the slug will be generated from the display-name."
         },
         "announcement": {
           "oneOf": [
@@ -1315,7 +1378,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The image to display in the product card. This will override the icon field if both are set."
         },
         "versions": {
           "oneOf": [
@@ -1358,7 +1422,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -1371,7 +1436,8 @@
           ]
         },
         "href": {
-          "type": "string"
+          "type": "string",
+          "description": "The absolute URL to the product."
         },
         "target": {
           "oneOf": [
@@ -1381,7 +1447,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The target of the URL"
         }
       },
       "required": [
@@ -1435,7 +1502,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -1547,7 +1615,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -1570,7 +1639,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The relative path to the markdown file that will be displayed when the section is clicked."
         },
         "contents": {
           "type": "array",
@@ -1586,7 +1656,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Deprecated. Use `collapsible` and `collapsed-by-default` instead."
         },
         "collapsible": {
           "oneOf": [
@@ -1596,7 +1667,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether the section can be expanded/collapsed by the user."
         },
         "collapsed-by-default": {
           "oneOf": [
@@ -1606,7 +1678,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether the section starts collapsed. Only meaningful when `collapsible` is true. Defaults to false (starts open)."
         },
         "slug": {
           "oneOf": [
@@ -1689,7 +1762,8 @@
         {
           "$ref": "#/definitions/docs.VersionedSnippetLanguageConfiguration"
         }
-      ]
+      ],
+      "description": "This snippets config object is meant to allow users to specify a specific package for the snippets,\nand optionally a version for that package. If you pass in a string, that should be the name of the package."
     },
     "docs.SnippetsConfiguration": {
       "type": "object",
@@ -1827,7 +1901,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "A list of environment IDs that are allowed to be used in the playground. If not provided, all environments are allowed. And if the provided list is empty, the playground should be disabled."
         },
         "button": {
           "oneOf": [
@@ -1857,7 +1932,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The maximum number of websocket messages per connection in the playground."
         }
       },
       "additionalProperties": false
@@ -1883,7 +1959,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -1913,7 +1990,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Relative path to the markdown file. This summary is displayed at the top of the API section."
         },
         "contents": {
           "oneOf": [
@@ -1986,7 +2064,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Settings for the api playground that is applied only to descendants of this api package."
         }
       },
       "additionalProperties": false
@@ -2025,7 +2104,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -2038,7 +2118,8 @@
           ]
         },
         "section": {
-          "type": "string"
+          "type": "string",
+          "description": "The title of the api package that will be displayed in the sidebar."
         },
         "referenced-packages": {
           "oneOf": [
@@ -2051,7 +2132,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "This section will inherit the endpoints from the specified subpackage(s). If multiple packages are specified, they will be merged."
         },
         "summary": {
           "oneOf": [
@@ -2061,7 +2143,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Relative path to the markdown file."
         },
         "contents": {
           "oneOf": [
@@ -2124,7 +2207,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Deprecated. Use `collapsible` and `collapsed-by-default` instead."
         },
         "collapsible": {
           "oneOf": [
@@ -2134,7 +2218,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether the section can be expanded/collapsed by the user in the sidebar."
         },
         "collapsed-by-default": {
           "oneOf": [
@@ -2144,7 +2229,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether the section starts collapsed. Only meaningful when collapsible is true."
         },
         "availability": {
           "oneOf": [
@@ -2164,7 +2250,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Settings for the api playground that affects all endpoints."
         }
       },
       "required": [
@@ -2193,7 +2280,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -2266,7 +2354,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Settings for the api playground that affect this endpoint specifically."
         }
       },
       "required": [
@@ -2295,7 +2384,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -2354,7 +2444,8 @@
       "required": [
         "operation"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Defines a GraphQL-native schema for selecting operations (REST -> Endpoint === GraphQL -> Operation)"
     },
     "docs.LinkConfiguration": {
       "type": "object",
@@ -2420,7 +2511,8 @@
         {
           "$ref": "#/definitions/docs.LinkConfiguration"
         }
-      ]
+      ],
+      "description": "Use the `layout` object to customize the order that your API endpoints\nare displayed in the docs site."
     },
     "docs.ApiReferenceConfiguration": {
       "type": "object",
@@ -2443,7 +2535,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -2466,7 +2559,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Name of API that we are referencing"
         },
         "openrpc": {
           "oneOf": [
@@ -2476,7 +2570,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Path to an openrpc spec."
         },
         "audiences": {
           "oneOf": [
@@ -2496,7 +2591,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Defaults to false"
         },
         "tag-description-pages": {
           "oneOf": [
@@ -2506,7 +2602,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, a page will be created for each tag in the OpenAPI spec that contains a description."
         },
         "snippets": {
           "oneOf": [
@@ -2526,7 +2623,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "URL to a Postman collection for this API reference"
         },
         "summary": {
           "oneOf": [
@@ -2536,7 +2634,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Relative path to the markdown file"
         },
         "layout": {
           "oneOf": [
@@ -2549,7 +2648,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Advanced usage: when specified, this object will be used to customize the order that your API endpoints are displayed in the docs site, including subpackages, and additional markdown pages (to be rendered in between API endpoints). If not specified, the order will be inferred from the OpenAPI Spec or Fern Definition."
         },
         "collapsed": {
           "oneOf": [
@@ -2619,7 +2719,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If `alphabetized` is set to true, packages and endpoints will be sorted alphabetically, unless explicitly ordered in the `layout` object."
         },
         "flattened": {
           "oneOf": [
@@ -2629,7 +2730,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If `flattened` is set to true, the title specified in `api` will be hidden, and its endpoints and subpackages won't be grouped under it.\n\nThis setting is useful if the API reference is short and you want to display all endpoints at the top level."
         },
         "paginated": {
           "oneOf": [
@@ -2639,7 +2741,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, the API reference will be paginated rather than displayed in a single page (long-scrolling)."
         },
         "playground": {
           "oneOf": [
@@ -2649,7 +2752,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Settings for the api playground that affects all endpoints."
         }
       },
       "required": [
@@ -2658,7 +2762,8 @@
       "additionalProperties": false
     },
     "docs.LibraryName": {
-      "type": "string"
+      "type": "string",
+      "description": "The name identifier for a library. Used to reference the library in navigation."
     },
     "docs.LibraryReferenceConfiguration": {
       "type": "object",
@@ -2681,7 +2786,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -2694,7 +2800,8 @@
           ]
         },
         "library": {
-          "$ref": "#/definitions/docs.LibraryName"
+          "$ref": "#/definitions/docs.LibraryName",
+          "description": "The name of the library to reference (must match a key in the `libraries` section)."
         },
         "title": {
           "oneOf": [
@@ -2704,7 +2811,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override the display title for this library reference."
         },
         "slug": {
           "oneOf": [
@@ -2714,13 +2822,15 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override the URL slug for this library reference."
         }
       },
       "required": [
         "library"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "References a library defined in the `libraries` section.\nThe library's generated navigation will be injected at this point."
     },
     "docs.ChangelogConfiguration": {
       "type": "object",
@@ -2743,7 +2853,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -2832,7 +2943,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -2845,7 +2957,8 @@
           ]
         },
         "folder": {
-          "type": "string"
+          "type": "string",
+          "description": "The relative path to a folder containing markdown files. Fern will automatically discover and add all markdown files from this folder to the navigation."
         },
         "title": {
           "oneOf": [
@@ -2855,7 +2968,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The title to display for this folder section. If not provided, the folder name will be used."
         },
         "title-source": {
           "oneOf": [
@@ -2865,7 +2979,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Determines how page titles are derived for files in this folder. Options are `frontmatter` (use the `title` field from the file's frontmatter) or `filename` (derive title from the file name). Defaults to `filename`."
         },
         "slug": {
           "oneOf": [
@@ -2915,7 +3030,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Deprecated. Use `collapsible` and `collapsed-by-default` instead."
         },
         "collapsible": {
           "oneOf": [
@@ -2925,7 +3041,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether the section can be expanded/collapsed by the user."
         },
         "collapsed-by-default": {
           "oneOf": [
@@ -2935,7 +3052,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether the section starts collapsed. Only meaningful when `collapsible` is true. Defaults to false (starts open)."
         },
         "availability": {
           "oneOf": [
@@ -3004,7 +3122,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If `href` is set, `layout` must be null."
         }
       },
       "required": [
@@ -3033,7 +3152,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
         },
         "feature-flag": {
           "oneOf": [
@@ -3229,7 +3349,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The URL once you click on the button.\nExample: https://buildwithfern.com/contact"
         },
         "target": {
           "oneOf": [
@@ -3249,7 +3370,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Use `href` instead."
         },
         "text": {
           "oneOf": [
@@ -3259,7 +3381,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Text inside the button."
         },
         "icon": {
           "oneOf": [
@@ -3269,7 +3392,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The icon to be used in the button. This icon will appear to the **left** of the text content.\nIcons can be in three formats:\n- **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.\n- **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.\n- **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `\"<svg>...</svg>\"`)."
         },
         "rightIcon": {
           "oneOf": [
@@ -3279,7 +3403,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The icon to be used in the button. This icon will appear to the **right** of the text content.\nIcons can be in three formats:\n- **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.\n- **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.\n- **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `\"<svg>...</svg>\"`).\n\nBy default, the `rightIcon` for a `filled` button is set to `arrow-right`."
         },
         "rounded": {
           "oneOf": [
@@ -3289,7 +3414,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When `true`, the border radius of the button will be fully rounded."
         }
       },
       "additionalProperties": false
@@ -3334,7 +3460,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "The URL once you click on the button.\nExample: https://buildwithfern.com/contact"
             },
             "target": {
               "oneOf": [
@@ -3354,7 +3481,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "Use `href` instead."
             },
             "text": {
               "oneOf": [
@@ -3364,7 +3492,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "Text inside the button."
             },
             "icon": {
               "oneOf": [
@@ -3374,7 +3503,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "The icon to be used in the button. This icon will appear to the **left** of the text content.\nIcons can be in three formats:\n- **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.\n- **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.\n- **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `\"<svg>...</svg>\"`)."
             },
             "rightIcon": {
               "oneOf": [
@@ -3384,7 +3514,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "The icon to be used in the button. This icon will appear to the **right** of the text content.\nIcons can be in three formats:\n- **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.\n- **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.\n- **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `\"<svg>...</svg>\"`).\n\nBy default, the `rightIcon` for a `filled` button is set to `arrow-right`."
             },
             "rounded": {
               "oneOf": [
@@ -3394,7 +3525,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "When `true`, the border radius of the button will be fully rounded."
             }
           },
           "required": [
@@ -3424,7 +3556,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "The URL once you click on the button.\nExample: https://buildwithfern.com/contact"
             },
             "target": {
               "oneOf": [
@@ -3444,7 +3577,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "Use `href` instead."
             },
             "text": {
               "oneOf": [
@@ -3454,7 +3588,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "Text inside the button."
             },
             "icon": {
               "oneOf": [
@@ -3464,7 +3599,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "The icon to be used in the button. This icon will appear to the **left** of the text content.\nIcons can be in three formats:\n- **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.\n- **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.\n- **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `\"<svg>...</svg>\"`)."
             },
             "rightIcon": {
               "oneOf": [
@@ -3474,7 +3610,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "The icon to be used in the button. This icon will appear to the **right** of the text content.\nIcons can be in three formats:\n- **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.\n- **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.\n- **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `\"<svg>...</svg>\"`).\n\nBy default, the `rightIcon` for a `filled` button is set to `arrow-right`."
             },
             "rounded": {
               "oneOf": [
@@ -3484,7 +3621,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "When `true`, the border radius of the button will be fully rounded."
             }
           },
           "required": [
@@ -3514,7 +3652,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "The URL once you click on the button.\nExample: https://buildwithfern.com/contact"
             },
             "target": {
               "oneOf": [
@@ -3534,7 +3673,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "Use `href` instead."
             },
             "text": {
               "oneOf": [
@@ -3544,7 +3684,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "Text inside the button."
             },
             "icon": {
               "oneOf": [
@@ -3554,7 +3695,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "The icon to be used in the button. This icon will appear to the **left** of the text content.\nIcons can be in three formats:\n- **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.\n- **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.\n- **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `\"<svg>...</svg>\"`)."
             },
             "rightIcon": {
               "oneOf": [
@@ -3564,7 +3706,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "The icon to be used in the button. This icon will appear to the **right** of the text content.\nIcons can be in three formats:\n- **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.\n- **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.\n- **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `\"<svg>...</svg>\"`).\n\nBy default, the `rightIcon` for a `filled` button is set to `arrow-right`."
             },
             "rounded": {
               "oneOf": [
@@ -3574,7 +3717,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "When `true`, the border radius of the button will be fully rounded."
             }
           },
           "required": [
@@ -3684,7 +3828,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "The URL once you click on the button.\nExample: https://buildwithfern.com/contact"
             },
             "target": {
               "oneOf": [
@@ -3704,7 +3849,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "Use `href` instead."
             },
             "text": {
               "oneOf": [
@@ -3714,7 +3860,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "Text inside the button."
             },
             "icon": {
               "oneOf": [
@@ -3724,7 +3871,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "The icon to be used in the button. This icon will appear to the **left** of the text content.\nIcons can be in three formats:\n- **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.\n- **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.\n- **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `\"<svg>...</svg>\"`)."
             },
             "rightIcon": {
               "oneOf": [
@@ -3734,7 +3882,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "The icon to be used in the button. This icon will appear to the **right** of the text content.\nIcons can be in three formats:\n- **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.\n- **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.\n- **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `\"<svg>...</svg>\"`).\n\nBy default, the `rightIcon` for a `filled` button is set to `arrow-right`."
             },
             "rounded": {
               "oneOf": [
@@ -3744,7 +3893,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "When `true`, the border radius of the button will be fully rounded."
             }
           },
           "required": [
@@ -3774,7 +3924,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "The URL once you click on the button.\nExample: https://buildwithfern.com/contact"
             },
             "target": {
               "oneOf": [
@@ -3794,7 +3945,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "Use `href` instead."
             },
             "text": {
               "oneOf": [
@@ -3804,7 +3956,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "Text inside the button."
             },
             "icon": {
               "oneOf": [
@@ -3814,7 +3967,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "The icon to be used in the button. This icon will appear to the **left** of the text content.\nIcons can be in three formats:\n- **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.\n- **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.\n- **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `\"<svg>...</svg>\"`)."
             },
             "rightIcon": {
               "oneOf": [
@@ -3824,7 +3978,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "The icon to be used in the button. This icon will appear to the **right** of the text content.\nIcons can be in three formats:\n- **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.\n- **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.\n- **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `\"<svg>...</svg>\"`).\n\nBy default, the `rightIcon` for a `filled` button is set to `arrow-right`."
             },
             "rounded": {
               "oneOf": [
@@ -3834,7 +3989,8 @@
                 {
                   "type": "null"
                 }
-              ]
+              ],
+              "description": "When `true`, the border radius of the button will be fully rounded."
             }
           },
           "required": [
@@ -3854,7 +4010,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "URL to your GitHub repository or organization."
         },
         "twitter": {
           "oneOf": [
@@ -3864,7 +4021,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "URL to your Twitter profile. Use `footer-links.x` for the new X branding."
         },
         "x": {
           "oneOf": [
@@ -3874,7 +4032,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "URL to your X (formerly Twitter) profile."
         },
         "linkedin": {
           "oneOf": [
@@ -3884,7 +4043,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "URL to your LinkedIn company page or profile."
         },
         "youtube": {
           "oneOf": [
@@ -3894,7 +4054,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "URL to your YouTube channel."
         },
         "instagram": {
           "oneOf": [
@@ -3904,7 +4065,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "URL to your Instagram profile."
         },
         "facebook": {
           "oneOf": [
@@ -3914,7 +4076,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "URL to your Facebook page."
         },
         "discord": {
           "oneOf": [
@@ -3924,7 +4087,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "URL to your Discord server invite."
         },
         "slack": {
           "oneOf": [
@@ -3934,7 +4098,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "URL to your Slack community or workspace."
         },
         "hackernews": {
           "oneOf": [
@@ -3944,7 +4109,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "URL to your Hacker News profile."
         },
         "medium": {
           "oneOf": [
@@ -3954,7 +4120,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "URL to your Medium publication or profile."
         },
         "website": {
           "oneOf": [
@@ -3964,7 +4131,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "URL to your main website or homepage."
         }
       },
       "additionalProperties": false
@@ -3986,7 +4154,8 @@
       "type": "object",
       "properties": {
         "title": {
-          "type": "string"
+          "type": "string",
+          "description": "The title of the custom action."
         },
         "subtitle": {
           "oneOf": [
@@ -3996,10 +4165,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The subtitle/helper text of the custom action."
         },
         "url": {
-          "type": "string"
+          "type": "string",
+          "description": "The URL to navigate to. Use {slug} as a placeholder for the current page slug, {domain} as a placeholder for the current domain, and {url} as a placeholder for the current full URL."
         },
         "icon": {
           "oneOf": [
@@ -4009,7 +4180,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Icon to display for the custom action. Can be a relative filepath, an image URL (starting with http://, https://, or /), or a Font Awesome icon name (e.g., \"fa-solid fa-star\" or \"star\")."
         },
         "default": {
           "oneOf": [
@@ -4019,14 +4191,16 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether this custom action should be the default action."
         }
       },
       "required": [
         "title",
         "url"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "A custom page action that can be configured by the user."
     },
     "docs.PageActionOptions": {
       "type": "object",
@@ -4039,7 +4213,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When enabled, displays a button that allows users to copy the entire page content to their clipboard for easy sharing or reference.\n\n@default: true"
         },
         "view-as-markdown": {
           "oneOf": [
@@ -4049,7 +4224,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When enabled, displays a button that allows users to view the raw Markdown source of the current page.\n\n@default: true"
         },
         "ask-ai": {
           "oneOf": [
@@ -4059,7 +4235,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When enabled, displays an \"Ask AI\" button that allows users to ask questions about the page content using AI-powered assistance.\n\n@default: true"
         },
         "chatgpt": {
           "oneOf": [
@@ -4069,7 +4246,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls the \"Open in ChatGPT\" button, which sends the page content to ChatGPT for further\nexploration and Q&A. Set to `false` to hide it.\n\n@default: true"
         },
         "claude": {
           "oneOf": [
@@ -4079,7 +4257,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls the \"Open in Claude\" button, which sends the page content to Claude for further\nexploration and Q&A. Set to `false` to hide it.\n\n@default: true"
         },
         "claude-code": {
           "oneOf": [
@@ -4089,7 +4268,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls the \"Connect to Claude Code\" button, which copies a `claude mcp add` command to the\nclipboard so users can register this docs site's MCP server with Claude Code. The button only\nrenders on docs sites that have Ask AI enabled; set to `false` to hide it on those sites.\n\n@default: true"
         },
         "cursor": {
           "oneOf": [
@@ -4099,7 +4279,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls the \"Connect to Cursor\" button, which installs this docs site's MCP server in\nCursor via a deeplink. The button only renders on docs sites that have Ask AI enabled; set\nto `false` to hide it on those sites.\n\n@default: true"
         },
         "vscode": {
           "oneOf": [
@@ -4109,7 +4290,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When enabled, displays an \"Open in VS Code\" button that allows users to open the page content in Visual Studio Code for editing and development.\n\n@default: false"
         },
         "custom": {
           "oneOf": [
@@ -4122,7 +4304,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When enabled, displays a custom button that allows users to open the page content in a custom IDE for editing and development.\nThe value of this property should be the name of the custom IDE.\nExample: `cursor`"
         }
       },
       "additionalProperties": false
@@ -4138,7 +4321,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The default page action to display. Options: copy-page, view-as-markdown, ask-ai, chatgpt, claude, cursor, vscode."
         },
         "options": {
           "oneOf": [
@@ -4167,7 +4351,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "List of relative paths to folders or files that end in .{ts,tsx,js,jsx},\nand makes them available for use in MDX files."
         },
         "disable-stream-toggle": {
           "oneOf": [
@@ -4177,7 +4362,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If `disable-stream-toggle` is set to true, the stream toggle will be disabled.\n\nThis behavior is unstable and may change in the future."
         },
         "openapi-parser-v2": {
           "oneOf": [
@@ -4187,7 +4373,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "OpenAPI parser rewrite, now deprecated."
         },
         "openapi-parser-v3": {
           "oneOf": [
@@ -4197,7 +4384,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "OpenAPI parser in alpha."
         },
         "dynamic-snippets": {
           "oneOf": [
@@ -4207,7 +4395,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "By default, SDK snippets are static code examples that are displayed in your API Reference. Alternatively, you can use dynamic SDK snippets that allow users to modify parameters and see code examples update in real time.\n\nEnable dynamic snippets in `docs.yml`, then configure them by following the SDK snippets setup instructions."
         },
         "ai-examples": {
           "oneOf": [
@@ -4217,7 +4406,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.\n\nDEPRECATED: Use the top-level `ai-examples` property instead."
         },
         "ai-example-style-instructions": {
           "oneOf": [
@@ -4227,7 +4417,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.\n\nDEPRECATED: Use the top-level `ai-example-style-instructions` property instead."
         },
         "exclude-apis": {
           "oneOf": [
@@ -4237,7 +4428,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Experimental flag to exclude API reference sections from documentation generation. When enabled, API reference content will be omitted from the generated documentation."
         },
         "basepath-aware": {
           "oneOf": [
@@ -4247,7 +4439,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Deprecated: Use `multi-source: true` on the instance instead. When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths."
         }
       },
       "additionalProperties": false
@@ -4275,7 +4468,8 @@
       ]
     },
     "docs.Language": {
-      "type": "string"
+      "type": "string",
+      "description": "A BCP 47 language tag identifying a docs locale. Common shorthand codes\nlike \"en\", \"es\", \"ja\" are accepted, as well as regional variants such as\n\"ja-JP\", \"pt-BR\", \"zh-Hans\", and \"zh-Hans-CN\". See RFC 5646 for the full\ngrammar."
     },
     "docs.TranslationConfigObject": {
       "type": "object",
@@ -4291,7 +4485,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Whether this language is the default. At most one entry should be marked as default."
         }
       },
       "required": [
@@ -4307,7 +4502,8 @@
         {
           "$ref": "#/definitions/docs.TranslationConfigObject"
         }
-      ]
+      ],
+      "description": "Translation configuration can be either a language code string or an object with additional options.\nWhen using a string, it's equivalent to `{ lang: <string> }`."
     },
     "docs.AIChatModel": {
       "type": "string",
@@ -4329,7 +4525,8 @@
       "type": "object",
       "properties": {
         "url": {
-          "type": "string"
+          "type": "string",
+          "description": "The URL of the website to index. Ask Fern will crawl and index the content from this URL."
         },
         "title": {
           "oneOf": [
@@ -4339,7 +4536,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "An optional display name for this datasource. This helps users understand where the information is coming from when Ask Fern cites content from this source."
         }
       },
       "required": [
@@ -4375,7 +4573,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "By default, Ask Fern uses system prompts to finetune AI search results. Add a custom prompt here to override it.\nSee Anthropic's prompting guide for ideas and examples."
         },
         "location": {
           "oneOf": [
@@ -4388,7 +4587,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Specifies where Ask Fern will be available. Options:\n- `docs` enables Ask Fern on your documentation site\n- `slack` enables Ask Fern in Slack\n- `discord` enables Ask Fern in Discord\n\nMost users should enable Ask Fern for both `docs` and either `slack` or `discord`."
         },
         "datasources": {
           "oneOf": [
@@ -4401,7 +4601,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Additional content sources that Ask Fern should index and search."
         }
       },
       "additionalProperties": false
@@ -4417,7 +4618,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples."
         },
         "style": {
           "oneOf": [
@@ -4427,7 +4629,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters."
         }
       },
       "additionalProperties": false
@@ -4450,7 +4653,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Text to prepend to each page when it is served through agent endpoints."
         },
         "page-description-source": {
           "oneOf": [
@@ -4460,7 +4664,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls which frontmatter field is preferred for one-line page descriptions\nin llms.txt. Defaults to \"description\". If the preferred field is not present\nin a page's frontmatter, falls back to other fields (description, subtitle,\nog:description, headline, excerpt)."
         },
         "llms-txt": {
           "oneOf": [
@@ -4470,7 +4675,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Relative filepath to a custom `llms.txt` file that Fern should host at `/llms.txt`,\noverriding the auto-generated version. The file should follow the llmstxt.org specification."
         },
         "llms-full-txt": {
           "oneOf": [
@@ -4480,7 +4686,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Relative filepath to a custom `llms-full.txt` file that Fern should host at `/llms-full.txt`,\noverriding the auto-generated version. The file should contain the full concatenated documentation content."
         },
         "robots-txt": {
           "oneOf": [
@@ -4490,7 +4697,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Relative filepath to a custom `robots.txt` file that Fern should host at `/robots.txt`,\noverriding the auto-generated version. Fern automatically appends a rule to disallow\nits internal `/api/fern-docs/` routes so they are excluded from crawler indexing."
         }
       },
       "additionalProperties": false
@@ -4522,7 +4730,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The name of your website for Open Graph tags."
         },
         "og:title": {
           "oneOf": [
@@ -4532,7 +4741,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The title shown in social media previews."
         },
         "og:description": {
           "oneOf": [
@@ -4542,7 +4752,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The description shown in social media previews."
         },
         "og:url": {
           "oneOf": [
@@ -4552,7 +4763,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The canonical URL of your documentation."
         },
         "og:image": {
           "oneOf": [
@@ -4562,7 +4774,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The image shown in social media previews. Recommended size is 1200x630 pixels."
         },
         "og:image:width": {
           "oneOf": [
@@ -4572,7 +4785,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The width of your Open Graph image in pixels."
         },
         "og:image:height": {
           "oneOf": [
@@ -4582,7 +4796,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The height of your Open Graph image in pixels."
         },
         "og:locale": {
           "oneOf": [
@@ -4592,7 +4807,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The locale of your content (e.g., \"en_US\")."
         },
         "og:logo": {
           "oneOf": [
@@ -4602,7 +4818,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "URL to your company logo."
         },
         "twitter:title": {
           "oneOf": [
@@ -4612,7 +4829,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The title shown in Twitter Card previews."
         },
         "twitter:description": {
           "oneOf": [
@@ -4622,7 +4840,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The description shown in Twitter Card previews."
         },
         "twitter:handle": {
           "oneOf": [
@@ -4632,7 +4851,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Your company's Twitter handle."
         },
         "twitter:image": {
           "oneOf": [
@@ -4642,7 +4862,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The image shown in Twitter Card previews."
         },
         "twitter:site": {
           "oneOf": [
@@ -4652,7 +4873,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The Twitter handle for your website."
         },
         "twitter:url": {
           "oneOf": [
@@ -4672,7 +4894,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The Twitter Card type. Options are `summary`, `summary_large_image`, `app`, or `player`."
         },
         "og:dynamic": {
           "oneOf": [
@@ -4682,7 +4905,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When true, enables dynamic OG image generation for pages that don't have a custom og:image set."
         },
         "og:dynamic:background-image": {
           "oneOf": [
@@ -4692,7 +4916,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "A custom background image for dynamically generated OG images. Can be a URL or a file path."
         },
         "og:dynamic:text-color": {
           "oneOf": [
@@ -4702,7 +4927,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override the text color for dynamically generated OG images. Accepts any valid CSS color value (e.g., \"#1a1a1a\")."
         },
         "og:dynamic:background-color": {
           "oneOf": [
@@ -4712,7 +4938,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override the background color for dynamically generated OG images. Accepts any valid CSS color value (e.g., \"#ffffff\")."
         },
         "og:dynamic:logo-color": {
           "oneOf": [
@@ -4722,7 +4949,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Choose which logo variant from docs.yml to render in dynamically generated OG images. Defaults to `dark`."
         },
         "og:dynamic:show-logo": {
           "oneOf": [
@@ -4732,7 +4960,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Toggle visibility of the logo in dynamically generated OG images. Defaults to true when og:dynamic is enabled."
         },
         "og:dynamic:show-section": {
           "oneOf": [
@@ -4742,7 +4971,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Toggle visibility of the section title in dynamically generated OG images. Defaults to true when og:dynamic is enabled."
         },
         "og:dynamic:show-description": {
           "oneOf": [
@@ -4752,7 +4982,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Toggle visibility of the page description in dynamically generated OG images. Defaults to true when og:dynamic is enabled."
         },
         "og:dynamic:show-url": {
           "oneOf": [
@@ -4762,7 +4993,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Toggle visibility of the page URL in dynamically generated OG images. Defaults to true when og:dynamic is enabled."
         },
         "og:dynamic:show-gradient": {
           "oneOf": [
@@ -4772,7 +5004,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Toggle visibility of the accent gradient overlay in dynamically generated OG images. Defaults to true when og:dynamic is enabled."
         },
         "canonical-host": {
           "oneOf": [
@@ -4782,19 +5015,23 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The host of your documentation website. This will be used to set the canonical URL for metadata tags and documents like the sitemap.\nDefaults to the URL defined in the `instances` configuration."
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "The `metadata` object allows you to customize the appearance of your docs site in search engines and social media.\nThese settings are applied globally, but can be overridden on a per-page basis using frontmatter."
     },
     "docs.RedirectConfig": {
       "type": "object",
       "properties": {
         "source": {
-          "type": "string"
+          "type": "string",
+          "description": "The path you want to redirect from."
         },
         "destination": {
-          "type": "string"
+          "type": "string",
+          "description": "The path you want to route to. Can be an internal path (`/new-path`) or an external URL (`https://example.com`).\nExternal URLs must include the full address, including `https`."
         },
         "permanent": {
           "oneOf": [
@@ -4804,14 +5041,16 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "By default, uses the 308 status code to instructs clients and search engines to cache the redirect forever. Set to `false` only if you need a temporary redirect using the 307 status code, which won't be cached.\n\n@default: true"
         }
       },
       "required": [
         "source",
         "destination"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "The `redirects` object allows you to redirect traffic from one path to another. You can redirect exact paths or use dynamic patterns with regex parameters like `:slug` to handle bulk redirects. You can redirect to internal paths within your site or external URLs.\n\n```yaml\nredirects:\n  - source: \"/old-path\"\n    destination: \"/new-path\"\n```\n\nBoth source and destination paths support regex. See https://github.com/pillarjs/path-to-regexp"
     },
     "docs.CheckRuleSeverity": {
       "type": "string",
@@ -4831,7 +5070,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Severity for OpenAPI example validation. Default is warn."
         },
         "broken-links": {
           "oneOf": [
@@ -4841,7 +5081,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Severity for broken link detection. Defaults to error for broken internal links and warn for malformed URLs."
         },
         "no-non-component-refs": {
           "oneOf": [
@@ -4851,7 +5092,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Severity for non-component OpenAPI reference validation. Default is error."
         },
         "valid-local-references": {
           "oneOf": [
@@ -4861,7 +5103,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Severity for local OpenAPI reference validation. Default is warn."
         },
         "no-circular-redirects": {
           "oneOf": [
@@ -4871,7 +5114,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Severity for circular redirect validation. Default is error."
         },
         "valid-docs-endpoints": {
           "oneOf": [
@@ -4881,7 +5125,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Severity for docs endpoint URL validation. Default is warn."
         },
         "missing-redirects": {
           "oneOf": [
@@ -4891,7 +5136,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Severity for detecting previously published URLs that disappeared without an explicit redirect. Default is warn."
         },
         "valid-changelog-slug": {
           "oneOf": [
@@ -4901,7 +5147,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Severity for validating that each changelog's effective URL slug is one of the allowlisted values served as an RSS/Atom/JSON feed. Default is error."
         },
         "md-validate": {
           "oneOf": [
@@ -4911,7 +5158,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Severity for MDX/Markdown parse validation. Default is warn in cli-v1, error in cli-v2."
         }
       },
       "additionalProperties": false
@@ -4930,7 +5178,8 @@
           ]
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Configure the severity of validation rules run by `fern check`.\nEach rule can be set to `warn` (non-blocking) or `error` (blocking)."
     },
     "docs.LogoConfiguration": {
       "type": "object",
@@ -4943,7 +5192,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Path to your dark mode logo file, relative to the docs root. SVG format is recommended for optimal quality.\nExample: `assets/images/logo-dark.svg`"
         },
         "light": {
           "oneOf": [
@@ -4953,7 +5203,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Path to your light mode logo file, relative to the docs root. SVG format is recommended for optimal quality.\nExample: `assets/images/logo-light.svg`"
         },
         "height": {
           "oneOf": [
@@ -4973,7 +5224,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The URL that users will be directed to when clicking the logo. Typically your company's homepage or app."
         },
         "right-text": {
           "oneOf": [
@@ -4983,7 +5235,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Text to display to the right of the logo image. This is useful for adding a tagline or product name next to your logo.\nExample: `Docs`"
         }
       },
       "additionalProperties": false
@@ -4999,7 +5252,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Relative filepath to the dark-mode background image."
         },
         "light": {
           "oneOf": [
@@ -5009,7 +5263,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Relative filepath to the light-mode background image."
         }
       },
       "additionalProperties": false
@@ -5022,7 +5277,8 @@
         {
           "$ref": "#/definitions/docs.BackgroundImageThemedConfig"
         }
-      ]
+      ],
+      "description": "This background image is used to customize the appearance of your docs site."
     },
     "docs.ColorThemedConfig": {
       "type": "object",
@@ -5071,7 +5327,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The primary brand color used for interactive elements like links, buttons, and highlighted text.\nConfigure separate colors for light and dark modes to ensure proper contrast and visibility.\n\n@default: #818CF8"
         },
         "accentPrimary": {
           "oneOf": [
@@ -5081,7 +5338,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Use `accent-primary` instead."
         },
         "background": {
           "oneOf": [
@@ -5091,7 +5349,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The main background color for all documentation pages. Choose colors that provide good contrast with text\nand complement your brand colors. Dark mode colors should reduce eye strain.\n\n@default:\n  dark: #111111\n  light: #F9F9F9\n\nIf not set, there will be also be a vertical gradient from the top using the accent primary color with 5% opacity."
         },
         "border": {
           "oneOf": [
@@ -5101,7 +5360,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Used for dividing lines, borders around elements, and visual separators. Choose subtle colors that create\nclear boundaries without being too prominent.\n\n@default:\n  dark: black/12%\n  white: white/13%"
         },
         "sidebar-background": {
           "oneOf": [
@@ -5111,7 +5371,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Background color for the navigation sidebar. When specified, includes a 1px border on the right side.\nIf omitted, the sidebar uses a transparent background without a border."
         },
         "header-background": {
           "oneOf": [
@@ -5121,7 +5382,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Background color for the top navigation header. When specified, includes a 1px solid border on the bottom.\nIf omitted, the header uses a transparent background with a subtle gradient border."
         },
         "card-background": {
           "oneOf": [
@@ -5131,7 +5393,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Background color for cards, code blocks, and other contained elements. Should be slightly different from the\nmain background to create visual hierarchy while maintaining readability.\n\n@default:\n  dark: white/3.5%\n  light: white/70%"
         },
         "accent-1": {
           "oneOf": [
@@ -5141,7 +5404,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override for accent scale step 1. This is the lightest accent color, typically used for subtle backgrounds.\nBy default, this is automatically calculated from the accent-primary color."
         },
         "accent-2": {
           "oneOf": [
@@ -5151,7 +5415,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override for accent scale step 2. A very light accent color for backgrounds.\nBy default, this is automatically calculated from the accent-primary color."
         },
         "accent-3": {
           "oneOf": [
@@ -5161,7 +5426,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override for accent scale step 3. A light accent color for UI element backgrounds.\nBy default, this is automatically calculated from the accent-primary color."
         },
         "accent-4": {
           "oneOf": [
@@ -5171,7 +5437,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override for accent scale step 4. Used for hovered UI element backgrounds.\nBy default, this is automatically calculated from the accent-primary color."
         },
         "accent-5": {
           "oneOf": [
@@ -5181,7 +5448,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override for accent scale step 5. Used for active/selected UI element backgrounds.\nBy default, this is automatically calculated from the accent-primary color."
         },
         "accent-6": {
           "oneOf": [
@@ -5191,7 +5459,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override for accent scale step 6. Used for subtle borders and separators.\nBy default, this is automatically calculated from the accent-primary color."
         },
         "accent-7": {
           "oneOf": [
@@ -5201,7 +5470,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override for accent scale step 7. Used for UI element borders and focus rings.\nBy default, this is automatically calculated from the accent-primary color."
         },
         "accent-8": {
           "oneOf": [
@@ -5211,7 +5481,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override for accent scale step 8. Used for hovered UI element borders.\nBy default, this is automatically calculated from the accent-primary color."
         },
         "accent-9": {
           "oneOf": [
@@ -5221,7 +5492,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override for accent scale step 9. The solid accent color, used for solid backgrounds like buttons.\nBy default, this is automatically calculated from the accent-primary color."
         },
         "accent-10": {
           "oneOf": [
@@ -5231,7 +5503,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override for accent scale step 10. Used for hovered solid backgrounds.\nBy default, this is automatically calculated from the accent-primary color."
         },
         "accent-11": {
           "oneOf": [
@@ -5241,7 +5514,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override for accent scale step 11. Used for low-contrast text.\nBy default, this is automatically calculated from the accent-primary color."
         },
         "accent-12": {
           "oneOf": [
@@ -5251,7 +5525,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Override for accent scale step 12. The darkest accent color, used for high-contrast text.\nBy default, this is automatically calculated from the accent-primary color."
         }
       },
       "additionalProperties": false
@@ -5287,7 +5562,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "@default: `100 900`."
         },
         "style": {
           "oneOf": [
@@ -5297,7 +5573,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "@default: `normal`."
         }
       },
       "required": [
@@ -5336,7 +5613,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The name of the font. Defaults to a generated name that will be used to reference your custom font in the eventually injected CSS."
         },
         "path": {
           "oneOf": [
@@ -5346,7 +5624,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The path to your font file, relative to your docs folder. Use this when you have a single font file.\nFor multiple font files (like separate files for bold, italic etc), use `paths` instead."
         },
         "weight": {
           "oneOf": [
@@ -5356,7 +5635,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The weight of the font. Can be a number (400, 700) or a range for variable fonts (400 700).\nCommon values: 400 (normal), 700 (bold).\n\n@default: `100 900`."
         },
         "style": {
           "oneOf": [
@@ -5366,7 +5646,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The font style, either \"normal\" or \"italic\". Defaults to \"normal\" if not specified.\n\n@default: `normal`."
         },
         "paths": {
           "oneOf": [
@@ -5379,7 +5660,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "A list of font files for particular weights. Each element in the list includes a `path`, `weight`, and `style` property."
         },
         "display": {
           "oneOf": [
@@ -5389,7 +5671,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "@default: `swap`."
         },
         "fallback": {
           "oneOf": [
@@ -5402,7 +5685,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Define fallback fonts in case the custom font fails to load."
         },
         "font-variation-settings": {
           "oneOf": [
@@ -5428,7 +5712,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The font used for headings, titles, and other prominent text elements. Can be the same as your body font\nif you prefer a unified look. Supports multiple weights for different heading levels."
         },
         "bodyFont": {
           "oneOf": [
@@ -5438,7 +5723,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The font used for all body text including paragraphs, lists, and general content.\nFor optimal performance, use WOFF2 format."
         },
         "codeFont": {
           "oneOf": [
@@ -5448,17 +5734,25 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The font used for code blocks and inline code. Monospace fonts are recommended for better code readability.\nPopular choices include JetBrains Mono, Fira Code, and Source Code Pro."
         }
       },
       "additionalProperties": false
     },
     "docs.SearchbarPlacement": {
       "type": "string",
-      "enum": [
-        "header",
-        "header-tabs",
-        "sidebar"
+      "oneOf": [
+        {
+          "const": "header"
+        },
+        {
+          "const": "header-tabs",
+          "description": "The searchbar will be placed in the header, but on the tabs row. If the tabs row is hidden, the searchbar will be placed in the header instead.\nThis is a good option if you want to keep the searchbar visible, but save space in the header for more navbar links."
+        },
+        {
+          "const": "sidebar"
+        }
       ]
     },
     "docs.TabsPlacement": {
@@ -5500,7 +5794,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Sets the maximum width of the docs layout, including the sidebar and content.\n\n@default: 88rem (1408px)\n\nValid options are:\n- `{number}rem`\n- `{number}px`\n- `full` (100% of the viewport width)"
         },
         "content-width": {
           "oneOf": [
@@ -5510,7 +5805,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Sets the maximum width of the markdown article content.\n\n@default: 44rem (704px)\n\nValid options are:\n- `{number}rem`\n- `{number}px`"
         },
         "sidebar-width": {
           "oneOf": [
@@ -5520,7 +5816,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Sets the width of the sidebar in desktop mode\n\n@default: 18rem (288px)\n\nValid options are:\n- `{number}rem`\n- `{number}px`"
         },
         "header-height": {
           "oneOf": [
@@ -5530,7 +5827,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Sets the height of the header\n\n@default: 4rem (64px)\n\nValid options are:\n- `{number}rem`\n- `{number}px`"
         },
         "searchbar-placement": {
           "oneOf": [
@@ -5540,7 +5838,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Sets the placement of the searchbar\n\n@default: `sidebar`\n\nNote: this setting is ignored when `disable-header` is set to true."
         },
         "tabs-placement": {
           "oneOf": [
@@ -5550,7 +5849,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Set the placement of the tabs\n\n@default: `sidebar`\n\nNote: this setting is ignored when `disable-header` is set to true."
         },
         "switcher-placement": {
           "oneOf": [
@@ -5560,7 +5860,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Set the placement of the version and language switcher\n\n@default: `header`\n\nNote: this setting is ignored when `disable-header` is set to true."
         },
         "content-alignment": {
           "oneOf": [
@@ -5570,7 +5871,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Set the alignment of the mardown content.\n\n@default: `center`\n\nSide effects:\n- When the alignment is set to `center`, the \"On this page\" (ToC) will be aligned to the right of the page.\n- When the alignment is set to `left`, the content will be aligned next to the right of the markdown content."
         },
         "header-position": {
           "oneOf": [
@@ -5580,7 +5882,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If `header-position` is set to `fixed`, the header will be fixed to the top of the viewport.\nIf `header-position` is set to `absolute`, the header will be absolute and will scroll with the content.\n\n@default: `fixed`"
         },
         "disable-header": {
           "oneOf": [
@@ -5590,7 +5893,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If `disable-header` is set to true, the header will not be rendered. Instead, the logo will be rendered as part of the sidebar,\nand a 1px border will separate the sidebar from the content."
         },
         "hide-nav-links": {
           "oneOf": [
@@ -5600,7 +5904,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If `hide-nav-links` is set to true, the navbar links will not be rendered. This can be overridden for a specific page using the frontmatter."
         },
         "hide-feedback": {
           "oneOf": [
@@ -5610,7 +5915,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If `hide-feedback` is set to true, the feedback button will not be rendered. This can be overridden for a specific page using the frontmatter."
         },
         "mobile-toc": {
           "oneOf": [
@@ -5620,7 +5926,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If `mobile-toc` is set to true, a sticky collapsible table of contents bar will be shown on mobile viewports for guide and overview layout pages."
         }
       },
       "additionalProperties": false
@@ -5671,7 +5978,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The text to display in the searchbar.\n\n@default: Search"
         },
         "disable-search": {
           "oneOf": [
@@ -5681,7 +5989,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If set to true, the searchbar will be disabled. Use this if you want to use a custom search solution.\n\n@default: false"
         },
         "dark-mode-code": {
           "oneOf": [
@@ -5691,7 +6000,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If set to true, the code blocks will be displayed in dark mode, regardless of the selected theme.\n\n@default: false"
         },
         "default-search-filters": {
           "oneOf": [
@@ -5701,7 +6011,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "By default (`false`), search will display results for pages across all products and versions.\nIf set to true, search will display results for pages within the current product and version.\n\n@default: false"
         },
         "http-snippets": {
           "oneOf": [
@@ -5711,7 +6022,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls the display of HTTP snippets in the API Reference. HTTP snippets are enabled by default for all languages.\n- Set to `false` to disable HTTP snippets completely\n- Provide a list of languages to enable snippets for specific languages only\n\n@default: true"
         },
         "hide-404-page": {
           "oneOf": [
@@ -5721,7 +6033,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If set to true, when a user navigates to a page that does not exist, they will be redirected to the home page.\nBy default, a 404 page will be displayed.\n\n@default: false"
         },
         "use-javascript-as-typescript": {
           "oneOf": [
@@ -5731,7 +6044,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If set to true, the TypeScript snippets will be displayed as JavaScript snippets in the API Reference.\n\n@default: false"
         },
         "disable-explorer-proxy": {
           "oneOf": [
@@ -5741,7 +6055,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If set to true, the API Explorer will bypass the proxy when sending requests directly to your API.\n\nWhen this feature is enabled, your API must have Cross-Origin Resource Sharing (CORS) enabled to allow requests from the documentation domain.\n\n@default: false"
         },
         "disable-environment-editing": {
           "oneOf": [
@@ -5751,7 +6066,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If set to true, the base URL (environment) shown in the endpoint header on API reference\ndocs pages will no longer be editable. Users will still be able to switch between configured\nenvironments via the dropdown, but will not be able to double-click and type in a custom\nURL. This does not affect the API Playground.\n\n@default: false"
         },
         "disable-analytics": {
           "oneOf": [
@@ -5781,7 +6097,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Sets the default title source for all folder navigations. When set, this value is used as the\ndefault `title-source` for any folder that does not explicitly specify its own `title-source`.\nOptions are `frontmatter` (use the `title` field from the file's frontmatter) or `filename`\n(derive title from the file name)."
         },
         "substitute-env-vars": {
           "oneOf": [
@@ -5791,7 +6108,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "When true, substitutes ${ENV_VAR} expressions using environment variables across all files in the docs bundle,\nincluding markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.\nUse \\$\\{VAR\\} to escape and output literal ${VAR} without substitution.\n\n@default: false"
         },
         "websocket-oneof-display": {
           "oneOf": [
@@ -5801,7 +6119,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Controls how WebSocket messages with oneOf bodies are displayed in the API Reference.\n- `flat` (default): Each variant in the oneOf is shown as a separate top-level entry.\n- `grouped`: Messages are shown as a single parent entry with nested variants.\n\n@default: flat"
         }
       },
       "additionalProperties": false
@@ -6006,7 +6325,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Relative filepath to a `context7.json` file that Fern should host at `/context7.json`.\nFern only checks that the file exists and is valid JSON, then passes it through as-is."
         }
       },
       "additionalProperties": false
@@ -6022,7 +6342,8 @@
             "type": "string"
           }
         }
-      ]
+      ],
+      "description": "The `css` object allows you to customize the appearance of your docs site by injecting custom CSS, i.e.\n\n```yaml\ncss: \"path/to/css/file.css\"\n```\n\nor, multiple files:\n\n```yaml\ncss:\n  - \"path/to/css/file.css\"\n  - \"path/to/another/css/file.css\"\n```"
     },
     "docs.JsScriptStrategy": {
       "type": "string",
@@ -6107,7 +6428,8 @@
             "$ref": "#/definitions/docs.JsConfigOptions"
           }
         }
-      ]
+      ],
+      "description": "The `js` object allows you to customize the behavior of your docs site by injecting custom JavaScript, i.e.\n\n```yaml\njs: \"path/to/js/file.js\"\n```\n\nor, multiple files:\n\n```yaml\njs:\n  - \"path/to/js/file.js\"\n  - \"path/to/another/js/file.js\"\n```\n\nor remote js:\n\n```yaml\njs:\n  url: \"https://example.com/path/to/js/file.js\"\n  strategy: \"afterInteractive\"\n```\n\nor, mixed:\n\n```yaml\njs:\n  - \"path/to/js/file.js\"\n  - path: \"path/to/another/js/file.js\"\n    strategy: \"beforeInteractive\"\n  - url: \"https://example.com/path/to/js/file.js\"\n```"
     }
   }
 }
