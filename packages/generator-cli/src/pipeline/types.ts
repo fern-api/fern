@@ -43,7 +43,6 @@ export interface GenerationCommitStepResult extends StepResult {
     preparedReplay?: import("../replay/replay-run").PreparedReplay | null;
     previousGenerationSha?: string;
     currentGenerationSha?: string;
-    baseBranchHead?: string;
     /** Flow selected by the replay service during prepare. */
     flow?: "first-generation" | "no-patches" | "normal-regeneration" | "skip-application";
     /**
@@ -214,7 +213,6 @@ export interface ReplayStepResult extends StepResult {
     patchesRefreshed?: number;
     previousGenerationSha?: string;
     currentGenerationSha?: string;
-    baseBranchHead?: string;
     unresolvedPatches?: Array<{
         patchId: string;
         patchMessage: string;
