@@ -81,8 +81,7 @@
         {
           "type": "null"
         }
-      ],
-      "description": "Default webhook signature verification configuration.\nApplied to all webhooks in this file that do not declare their own signature."
+      ]
     },
     "channel": {
       "oneOf": [
@@ -143,8 +142,7 @@
       "type": "object",
       "properties": {
         "type": {
-          "type": "string",
-          "description": "The name of the Protobuf type (e.g. google.protobuf.Struct)."
+          "type": "string"
         }
       },
       "required": [
@@ -172,8 +170,7 @@
       "type": "object",
       "properties": {
         "openapi": {
-          "type": "string",
-          "description": "Path to the OpenAPI spec"
+          "type": "string"
         }
       },
       "required": [
@@ -185,8 +182,7 @@
       "type": "object",
       "properties": {
         "proto": {
-          "type": "string",
-          "description": "Path to the Protobuf spec"
+          "type": "string"
         }
       },
       "required": [
@@ -923,8 +919,7 @@
             {
               "type": "null"
             }
-          ],
-          "description": "Context for where the discriminator exists. Defaults to \"data\" for backward compatibility.\n\"data\" means the discriminator is within the union data itself.\n\"protocol\" means the discriminator is at the SSE protocol level."
+          ]
         }
       },
       "required": [
@@ -1597,8 +1592,7 @@
       "type": "object",
       "properties": {
         "service-name": {
-          "type": "string",
-          "description": "The name of the gRPC service."
+          "type": "string"
         }
       },
       "required": [
@@ -1685,15 +1679,13 @@
         "items": {
           "$ref": "#/definitions/auth.AuthScope"
         }
-      },
-      "description": "A collection of auth schemes that all need to be satisfied for the endpoint."
+      }
     },
     "service.HttpEndpointSecurity": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/service.HttpEndpointSecurityItem"
-      },
-      "description": "A list of auth scheme collections. \nTo satisfy the security requirements, the caller must satisfy at least one collection of schemes."
+      }
     },
     "service.HttpEndpointAuth": {
       "anyOf": [
@@ -2117,8 +2109,7 @@
             {
               "type": "null"
             }
-          ],
-          "description": "Defaults to json encoding"
+          ]
         },
         "content-type": {
           "oneOf": [
@@ -2400,8 +2391,7 @@
             {
               "type": "null"
             }
-          ],
-          "description": "For SSE responses (`format: sse`), when true, the endpoint\nparticipates in client-side reconnection using `Last-Event-ID`\nand `retry:`. Defaults to false. No effect on non-SSE streams."
+          ]
         }
       },
       "required": [
@@ -2785,16 +2775,13 @@
       "type": "object",
       "properties": {
         "cursor": {
-          "type": "string",
-          "description": "The path to the request property for the cursor."
+          "type": "string"
         },
         "next_cursor": {
-          "type": "string",
-          "description": "The path to the response property for the next cursor."
+          "type": "string"
         },
         "results": {
-          "type": "string",
-          "description": "The path to the response property for the page elements."
+          "type": "string"
         }
       },
       "required": [
@@ -2808,12 +2795,10 @@
       "type": "object",
       "properties": {
         "offset": {
-          "type": "string",
-          "description": "The path to the request property for the page offset."
+          "type": "string"
         },
         "results": {
-          "type": "string",
-          "description": "The path to the response property for the page elements."
+          "type": "string"
         },
         "step": {
           "oneOf": [
@@ -2823,8 +2808,7 @@
             {
               "type": "null"
             }
-          ],
-          "description": "The path to the request property for the page step."
+          ]
         },
         "has-next-page": {
           "oneOf": [
@@ -2834,8 +2818,7 @@
             {
               "type": "null"
             }
-          ],
-          "description": "The path to the response property indicating next page presence."
+          ]
         }
       },
       "required": [
@@ -2848,31 +2831,26 @@
       "type": "object",
       "properties": {
         "type": {
-          "const": "custom",
-          "description": "The type of pagination."
+          "const": "custom"
         },
         "results": {
-          "type": "string",
-          "description": "The response property is used to determine the results response type\ngenerated in the endpoint."
+          "type": "string"
         }
       },
       "required": [
         "type",
         "results"
       ],
-      "additionalProperties": false,
-      "description": "Pagination where the SDK author is responsible for implementing the pagination\nlogic in the SDK."
+      "additionalProperties": false
     },
     "pagination.UriPaginationSchema": {
       "type": "object",
       "properties": {
         "next_uri": {
-          "type": "string",
-          "description": "The path to the response property for the next URI."
+          "type": "string"
         },
         "results": {
-          "type": "string",
-          "description": "The path to the response property for the page elements."
+          "type": "string"
         }
       },
       "required": [
@@ -2885,12 +2863,10 @@
       "type": "object",
       "properties": {
         "next_path": {
-          "type": "string",
-          "description": "The path to the response property for the next path."
+          "type": "string"
         },
         "results": {
-          "type": "string",
-          "description": "The path to the response property for the page elements."
+          "type": "string"
         }
       },
       "required": [
@@ -3470,8 +3446,7 @@
             {
               "type": "null"
             }
-          ],
-          "description": "Defaults to empty string."
+          ]
         },
         "body-sort": {
           "oneOf": [
@@ -3481,8 +3456,7 @@
             {
               "type": "null"
             }
-          ],
-          "description": "When set, POST body parameters are sorted before being concatenated\ninto the signing payload. Required by providers like Twilio."
+          ]
         }
       },
       "required": [
@@ -3512,8 +3486,7 @@
             {
               "type": "null"
             }
-          ],
-          "description": "Defaults to unix-seconds."
+          ]
         },
         "tolerance": {
           "oneOf": [
@@ -3523,8 +3496,7 @@
             {
               "type": "null"
             }
-          ],
-          "description": "Allowed clock skew in seconds. Defaults to 300."
+          ]
         }
       },
       "required": [
@@ -3572,8 +3544,7 @@
                 {
                   "type": "null"
                 }
-              ],
-              "description": "Defaults to sha256."
+              ]
             },
             "encoding": {
               "oneOf": [
@@ -3583,8 +3554,7 @@
                 {
                   "type": "null"
                 }
-              ],
-              "description": "Defaults to base64."
+              ]
             },
             "signature-prefix": {
               "oneOf": [
@@ -3594,8 +3564,7 @@
                 {
                   "type": "null"
                 }
-              ],
-              "description": "Prefix in the header value before the signature (e.g. \"sha256=\")."
+              ]
             },
             "payload-format": {
               "oneOf": [
@@ -3605,8 +3574,7 @@
                 {
                   "type": "null"
                 }
-              ],
-              "description": "Defaults to body-only (components: [body], delimiter: \"\")."
+              ]
             },
             "timestamp": {
               "oneOf": [
@@ -3643,8 +3611,7 @@
                 {
                   "type": "null"
                 }
-              ],
-              "description": "Defaults to base64."
+              ]
             },
             "signature-prefix": {
               "oneOf": [
@@ -3654,8 +3621,7 @@
                 {
                   "type": "null"
                 }
-              ],
-              "description": "Prefix in the header value before the signature."
+              ]
             },
             "jwks-url": {
               "oneOf": [
@@ -3665,8 +3631,7 @@
                 {
                   "type": "null"
                 }
-              ],
-              "description": "JWKS endpoint URL. When omitted, a static public key is expected at runtime."
+              ]
             },
             "key-id-header": {
               "oneOf": [
@@ -3676,8 +3641,7 @@
                 {
                   "type": "null"
                 }
-              ],
-              "description": "HTTP header containing the key ID for JWKS key selection."
+              ]
             },
             "timestamp": {
               "oneOf": [
