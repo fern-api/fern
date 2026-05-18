@@ -1,0 +1,18 @@
+import type * as SeedApi from "../../../../../../index.js";
+/**
+ * @example
+ *     {
+ *         vendors: {
+ *             "vendor-1": {
+ *                 id: "vendor-1",
+ *                 name: "Acme Corp",
+ *                 created_at: "2024-01-01T00:00:00Z",
+ *                 updated_at: "2024-01-01T00:00:00Z"
+ *             }
+ *         }
+ *     }
+ */
+export interface CreateVendorRequest {
+    /** Map of vendor ID to vendor data */
+    vendors: Record<string, SeedApi.csharpReadonlyRequest.Vendor>;
+}

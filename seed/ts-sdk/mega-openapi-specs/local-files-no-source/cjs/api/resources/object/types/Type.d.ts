@@ -1,0 +1,37 @@
+import type * as SeedApi from "../../../index.js";
+/**
+ * Exercises all of the built-in types.
+ */
+export interface Type {
+    one: number;
+    two: number;
+    three: string;
+    four: boolean;
+    five: number;
+    six: string;
+    seven: string;
+    eight: string;
+    nine: string;
+    ten: number[];
+    eleven: number[];
+    twelve: Record<string, boolean>;
+    thirteen?: (number | null) | undefined;
+    fourteen?: unknown | undefined;
+    fifteen: number[][];
+    sixteen: Record<string, number>[];
+    seventeen: (string | null)[];
+    eighteen: Type.Eighteen;
+    nineteen: SeedApi.object.Name;
+    twenty: number;
+    twentyone: number;
+    twentytwo: number;
+    twentythree: number;
+    twentyfour?: (string | null) | undefined;
+    twentyfive?: (string | null) | undefined;
+}
+export declare namespace Type {
+    const Eighteen: {
+        readonly Eighteen: "eighteen";
+    };
+    type Eighteen = (typeof Eighteen)[keyof typeof Eighteen];
+}

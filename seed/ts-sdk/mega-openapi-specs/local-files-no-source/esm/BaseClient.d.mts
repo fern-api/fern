@@ -1,0 +1,50 @@
+import { BearerAuthProvider } from "./auth/BearerAuthProvider.mjs";
+import * as core from "./core/index.mjs";
+import type * as environments from "./environments.mjs";
+export type AuthOption = false | core.AuthProvider["getAuthRequest"] | core.AuthProvider | BearerAuthProvider.AuthOptions;
+export type BaseClientOptions = {
+    environment?: core.Supplier<environments.SeedApiEnvironment | environments.SeedApiEnvironmentUrls>;
+    /** Specify a custom URL to connect the client to. */
+    baseUrl?: core.Supplier<string>;
+    /** Override the X-API-Version header */
+    apiVersion?: core.Supplier<string | undefined>;
+    /** Override the X-Api-Key header */
+    apiKey: core.Supplier<string>;
+    /** Additional headers to include in requests. */
+    headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
+    /** The default maximum time to wait for a response in seconds. */
+    timeoutInSeconds?: number;
+    /** The default number of times to retry the request. Defaults to 2. */
+    maxRetries?: number;
+    /** Provide a custom fetch implementation. Useful for platforms that don't have a built-in fetch or need a custom implementation. */
+    fetch?: typeof fetch;
+    /** Configure logging for the client. */
+    logging?: core.logging.LogConfig | core.logging.Logger;
+    /** Override auth. Pass false to disable, a function returning auth headers, an AuthProvider, or auth options. */
+    auth?: AuthOption;
+} & BearerAuthProvider.AuthOptions;
+export interface BaseRequestOptions {
+    /** The maximum time to wait for a response in seconds. */
+    timeoutInSeconds?: number;
+    /** The number of times to retry the request. Defaults to 2. */
+    maxRetries?: number;
+    /** A hook to abort the request. */
+    abortSignal?: AbortSignal;
+    /** Override the X-API-Version header */
+    apiVersion?: string | undefined;
+    /** Override the X-Api-Key header */
+    apiKey?: string;
+    /** Additional query string parameters to include in the request. */
+    queryParams?: Record<string, unknown>;
+    /** Additional headers to include in the request. */
+    headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
+}
+export type NormalizedClientOptions<T extends BaseClientOptions = BaseClientOptions> = T & {
+    logging: core.logging.Logger;
+    authProvider?: core.AuthProvider;
+};
+export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions> = NormalizedClientOptions<T> & {
+    authProvider: core.AuthProvider;
+};
+export declare function normalizeClientOptions<T extends BaseClientOptions = BaseClientOptions>(options: T): NormalizedClientOptions<T>;
+export declare function normalizeClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions>(options: T): NormalizedClientOptionsWithAuth<T>;

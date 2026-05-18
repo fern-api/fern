@@ -1,0 +1,6 @@
+export interface DocumentMetadata {
+    author?: (string | null) | undefined;
+    id?: (number | null) | undefined;
+    tags?: (unknown[] | null) | undefined;
+    title?: (string | null) | undefined;
+}

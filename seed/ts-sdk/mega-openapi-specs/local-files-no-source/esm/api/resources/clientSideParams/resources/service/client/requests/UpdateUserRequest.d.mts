@@ -1,0 +1,18 @@
+/**
+ * @example
+ *     {
+ *         userId: "userId"
+ *     }
+ */
+export interface UpdateUserRequest {
+    userId: string;
+    email?: string | null;
+    email_verified?: boolean | null;
+    username?: string | null;
+    phone_number?: string | null;
+    phone_verified?: boolean | null;
+    user_metadata?: Record<string, unknown> | null;
+    app_metadata?: Record<string, unknown> | null;
+    password?: string | null;
+    blocked?: boolean | null;
+}

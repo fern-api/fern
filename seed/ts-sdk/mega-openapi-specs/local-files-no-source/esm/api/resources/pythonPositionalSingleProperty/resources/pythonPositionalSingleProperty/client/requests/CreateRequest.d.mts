@@ -1,0 +1,24 @@
+import type * as SeedApi from "../../../../../../index.mjs";
+/**
+ * @example
+ *     {
+ *         instrument: {
+ *             identifier: {
+ *                 isin: "US0378331005"
+ *             },
+ *             quantity: {
+ *                 quantity: 10000,
+ *                 type: "QUANTITY"
+ *             }
+ *         },
+ *         taker: {
+ *             trader: {
+ *                 uuid_: 1234567
+ *             }
+ *         }
+ *     }
+ */
+export interface CreateRequest {
+    instrument: SeedApi.pythonPositionalSingleProperty.BondSingleLeg;
+    taker: SeedApi.pythonPositionalSingleProperty.TakerParty;
+}

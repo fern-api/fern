@@ -1,0 +1,11 @@
+/**
+ * @example
+ *     {
+ *         page_limit: 1,
+ *         beforeDate: "2023-01-01"
+ *     }
+ */
+export interface ListResourcesServiceRequest {
+    page_limit: number;
+    beforeDate: string;
+}

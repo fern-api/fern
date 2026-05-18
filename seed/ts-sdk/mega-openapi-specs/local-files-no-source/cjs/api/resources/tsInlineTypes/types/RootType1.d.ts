@@ -1,0 +1,18 @@
+import type * as SeedApi from "../../../index.js";
+/**
+ * lorem ipsum
+ */
+export interface RootType1 {
+    /** lorem ipsum */
+    foo: string;
+    /** lorem ipsum */
+    bar: SeedApi.tsInlineTypes.RootType1InlineType1;
+    /** lorem ipsum */
+    fooMap: Record<string, SeedApi.tsInlineTypes.RootType1FooMapValue>;
+    /** lorem ipsum */
+    fooList: SeedApi.tsInlineTypes.RootType1FooListItem[];
+    /** lorem ipsum */
+    fooSet: SeedApi.tsInlineTypes.RootType1FooSetItem[];
+    /** lorem ipsum */
+    ref: SeedApi.tsInlineTypes.ReferenceType;
+}

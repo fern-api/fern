@@ -1,0 +1,7 @@
+import type * as SeedApi from "../../../index.mjs";
+export interface V2V3BasicTestCaseTemplate {
+    templateId: SeedApi.trace.V2V3TestCaseTemplateId;
+    name: string;
+    description: SeedApi.trace.V2V3TestCaseImplementationDescription;
+    expectedValueParameterId: SeedApi.trace.V2V3ParameterId;
+}

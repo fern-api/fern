@@ -1,0 +1,29 @@
+import type * as SeedApi from "../../../../../../index.js";
+/**
+ * @example
+ *     {
+ *         inputParams: [{
+ *                 variableType: {
+ *                     type: "integerType"
+ *                 },
+ *                 name: "name"
+ *             }],
+ *         outputType: {
+ *             type: "integerType"
+ *         },
+ *         methodName: "methodName"
+ *     }
+ */
+export interface GetDefaultStarterFilesProblemRequest {
+    inputParams: SeedApi.trace.VariableTypeAndName[];
+    outputType: SeedApi.trace.VariableType;
+    /**
+     * The name of the `method` that the student has to complete.
+     * The method name cannot include the following characters:
+     *   - Greater Than `>`
+     *   - Less Than `<``
+     *   - Equals `=`
+     *   - Period `.`
+     */
+    methodName: string;
+}

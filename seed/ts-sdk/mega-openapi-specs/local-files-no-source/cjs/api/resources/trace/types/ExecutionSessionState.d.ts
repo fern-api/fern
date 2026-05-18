@@ -1,0 +1,10 @@
+import type * as SeedApi from "../../../index.js";
+export interface ExecutionSessionState {
+    lastTimeContacted?: (string | null) | undefined;
+    /** The auto-generated session id. Formatted as a uuid. */
+    sessionId: string;
+    isWarmInstance: boolean;
+    awsTaskId?: (string | null) | undefined;
+    language: SeedApi.trace.Language;
+    status: SeedApi.trace.ExecutionSessionStatus;
+}

@@ -1,0 +1,24 @@
+import type * as SeedApi from "../../../index.mjs";
+/**
+ * Test object with nullable and optional fields
+ */
+export interface UserProfile {
+    id: string;
+    username: string;
+    nullableString: string | null;
+    nullableInteger: number | null;
+    nullableBoolean: boolean | null;
+    nullableDate: string | null;
+    nullableObject: SeedApi.nullableOptional.Address | null;
+    nullableList: string[] | null;
+    nullableMap: Record<string, string | null> | null;
+    optionalString?: (string | null) | undefined;
+    optionalInteger?: (number | null) | undefined;
+    optionalBoolean?: (boolean | null) | undefined;
+    optionalDate?: (string | null) | undefined;
+    optionalObject?: (SeedApi.nullableOptional.Address | null) | undefined;
+    optionalList?: (string[] | null) | undefined;
+    optionalMap?: (Record<string, string | null> | null) | undefined;
+    optionalNullableString?: (string | null) | undefined;
+    optionalNullableObject?: (SeedApi.nullableOptional.Address | null) | undefined;
+}

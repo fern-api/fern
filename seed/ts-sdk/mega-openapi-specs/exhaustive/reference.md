@@ -1,0 +1,29601 @@
+# Reference
+## AcceptHeader Service
+<details><summary><code>client.acceptHeader.service.<a href="/src/api/resources/acceptHeader/resources/service/client/Client.ts">endpoint</a>() -> core.APIResponse&lt;void, SeedApi.acceptHeader.service.endpoint.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.acceptHeader.service.endpoint();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Alias Alias
+<details><summary><code>client.alias.alias.<a href="/src/api/resources/alias/resources/alias/client/Client.ts">get</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.alias.alias.get.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.alias.alias.get({
+    typeId: SeedApi.TypeId("typeId")
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.alias.GetRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AliasClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## AliasExtends AliasExtends
+<details><summary><code>client.aliasExtends.aliasExtends.<a href="/src/api/resources/aliasExtends/resources/aliasExtends/client/Client.ts">extendedInlineRequestBody</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.aliasExtends.aliasExtends.extendedInlineRequestBody.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.aliasExtends.aliasExtends.extendedInlineRequestBody({
+    child: "child"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.aliasExtends.ExtendedInlineRequestBodyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AliasExtendsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Allof
+<details><summary><code>client.allof.<a href="/src/api/resources/allof/client/Client.ts">searchRuleTypes</a>({ ...params }) -> core.APIResponse&lt;SeedApi.RuleTypeSearchResponse, SeedApi.allof.searchRuleTypes.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.allof.searchRuleTypes();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.allof.SearchRuleTypesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AllofClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.allof.<a href="/src/api/resources/allof/client/Client.ts">createRule</a>({ ...params }) -> core.APIResponse&lt;SeedApi.RuleResponse, SeedApi.allof.createRule.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.allof.createRule({
+    name: "name",
+    executionContext: "prod"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.allof.RuleCreateRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AllofClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.allof.<a href="/src/api/resources/allof/client/Client.ts">listUsers</a>() -> core.APIResponse&lt;SeedApi.UserSearchResponse, SeedApi.allof.listUsers.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.allof.listUsers();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `AllofClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.allof.<a href="/src/api/resources/allof/client/Client.ts">getEntity</a>() -> core.APIResponse&lt;SeedApi.CombinedEntity, SeedApi.allof.getEntity.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.allof.getEntity();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `AllofClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.allof.<a href="/src/api/resources/allof/client/Client.ts">getOrganization</a>() -> core.APIResponse&lt;SeedApi.Organization, SeedApi.allof.getOrganization.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.allof.getOrganization();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `AllofClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## AnyAuth Auth
+<details><summary><code>client.anyAuth.auth.<a href="/src/api/resources/anyAuth/resources/auth/client/Client.ts">getToken</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.anyAuth.auth.getToken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.anyAuth.auth.getToken({
+    client_id: "client_id",
+    client_secret: "client_secret",
+    audience: "https://api.example.com",
+    grant_type: "client_credentials"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.anyAuth.GetTokenAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## AnyAuth User
+<details><summary><code>client.anyAuth.user.<a href="/src/api/resources/anyAuth/resources/user/client/Client.ts">get</a>() -> core.APIResponse&lt;SeedApi.User[], SeedApi.anyAuth.user.get.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.anyAuth.user.get();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.anyAuth.user.<a href="/src/api/resources/anyAuth/resources/user/client/Client.ts">getAdmins</a>() -> core.APIResponse&lt;SeedApi.User[], SeedApi.anyAuth.user.getAdmins.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.anyAuth.user.getAdmins();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ApiWideBasePath Service
+<details><summary><code>client.apiWideBasePath.service.<a href="/src/api/resources/apiWideBasePath/resources/service/client/Client.ts">post</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.apiWideBasePath.service.post.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.apiWideBasePath.service.post({
+    pathParam: "pathParam",
+    serviceParam: "serviceParam",
+    endpointParam: 1,
+    resourceParam: "resourceParam"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.apiWideBasePath.PostServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Audiences Foo
+<details><summary><code>client.audiences.foo.<a href="/src/api/resources/audiences/resources/foo/client/Client.ts">find</a>({ ...params }) -> core.APIResponse&lt;SeedApi.ImportingType, SeedApi.audiences.foo.find.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.audiences.foo.find();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.audiences.FindFooRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FooClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Audiences FolderA Service
+<details><summary><code>client.audiences.folderA.service.<a href="/src/api/resources/audiences/resources/folderA/resources/service/client/Client.ts">getDirectThread</a>({ ...params }) -> core.APIResponse&lt;SeedApi.FolderAResponse, SeedApi.audiences.folderA.service.getDirectThread.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.audiences.folderA.service.getDirectThread({
+    ids: ["ids"],
+    tags: ["tags"]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.audiences.folderA.GetDirectThreadServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Audiences FolderD Service
+<details><summary><code>client.audiences.folderD.service.<a href="/src/api/resources/audiences/resources/folderD/resources/service/client/Client.ts">getDirectThread</a>() -> core.APIResponse&lt;SeedApi.FolderDResponse, SeedApi.audiences.folderD.service.getDirectThread.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.audiences.folderD.service.getDirectThread();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## BasicAuth BasicAuth
+<details><summary><code>client.basicAuth.basicAuth.<a href="/src/api/resources/basicAuth/resources/basicAuth/client/Client.ts">getWithBasicAuth</a>() -> core.APIResponse&lt;boolean, SeedApi.basicAuth.basicAuth.getWithBasicAuth.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET request with basic auth scheme
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.basicAuth.basicAuth.getWithBasicAuth();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `BasicAuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.basicAuth.basicAuth.<a href="/src/api/resources/basicAuth/resources/basicAuth/client/Client.ts">postWithBasicAuth</a>({ ...params }) -> core.APIResponse&lt;boolean, SeedApi.basicAuth.basicAuth.postWithBasicAuth.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST request with basic auth scheme
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.basicAuth.basicAuth.postWithBasicAuth({
+    "key": "value"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `unknown` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `BasicAuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## BasicAuthEnvironmentVariables BasicAuth
+<details><summary><code>client.basicAuthEnvironmentVariables.basicAuth.<a href="/src/api/resources/basicAuthEnvironmentVariables/resources/basicAuth/client/Client.ts">getWithBasicAuth</a>() -> core.APIResponse&lt;boolean, SeedApi.basicAuthEnvironmentVariables.basicAuth.getWithBasicAuth.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET request with basic auth scheme
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.basicAuthEnvironmentVariables.basicAuth.getWithBasicAuth();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `BasicAuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.basicAuthEnvironmentVariables.basicAuth.<a href="/src/api/resources/basicAuthEnvironmentVariables/resources/basicAuth/client/Client.ts">postWithBasicAuth</a>({ ...params }) -> core.APIResponse&lt;boolean, SeedApi.basicAuthEnvironmentVariables.basicAuth.postWithBasicAuth.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST request with basic auth scheme
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.basicAuthEnvironmentVariables.basicAuth.postWithBasicAuth({
+    "key": "value"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `unknown` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `BasicAuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## BasicAuthPwOmitted BasicAuth
+<details><summary><code>client.basicAuthPwOmitted.basicAuth.<a href="/src/api/resources/basicAuthPwOmitted/resources/basicAuth/client/Client.ts">getWithBasicAuth</a>() -> core.APIResponse&lt;boolean, SeedApi.basicAuthPwOmitted.basicAuth.getWithBasicAuth.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET request with basic auth scheme
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.basicAuthPwOmitted.basicAuth.getWithBasicAuth();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `BasicAuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.basicAuthPwOmitted.basicAuth.<a href="/src/api/resources/basicAuthPwOmitted/resources/basicAuth/client/Client.ts">postWithBasicAuth</a>({ ...params }) -> core.APIResponse&lt;boolean, SeedApi.basicAuthPwOmitted.basicAuth.postWithBasicAuth.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST request with basic auth scheme
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.basicAuthPwOmitted.basicAuth.postWithBasicAuth({
+    "key": "value"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `unknown` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `BasicAuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## BearerTokenEnvironmentVariable Service
+<details><summary><code>client.bearerTokenEnvironmentVariable.service.<a href="/src/api/resources/bearerTokenEnvironmentVariable/resources/service/client/Client.ts">getWithBearerToken</a>() -> core.APIResponse&lt;string, SeedApi.bearerTokenEnvironmentVariable.service.getWithBearerToken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET request with custom api key
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.bearerTokenEnvironmentVariable.service.getWithBearerToken();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## BytesDownload Service
+<details><summary><code>client.bytesDownload.service.<a href="/src/api/resources/bytesDownload/resources/service/client/Client.ts">simple</a>() -> core.APIResponse&lt;void, SeedApi.bytesDownload.service.simple.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.bytesDownload.service.simple();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.bytesDownload.service.<a href="/src/api/resources/bytesDownload/resources/service/client/Client.ts">download</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.bytesDownload.service.download.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.bytesDownload.service.download({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.bytesDownload.DownloadServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## BytesUpload Service
+## ClientSideParams Service
+<details><summary><code>client.clientSideParams.service.<a href="/src/api/resources/clientSideParams/resources/service/client/Client.ts">listResources</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Resource[], SeedApi.clientSideParams.service.listResources.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List resources with pagination
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.clientSideParams.service.listResources({
+    page: 1,
+    per_page: 1,
+    sort: "sort",
+    order: "order",
+    include_totals: true
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.clientSideParams.ListResourcesServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.clientSideParams.service.<a href="/src/api/resources/clientSideParams/resources/service/client/Client.ts">getResource</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Resource, SeedApi.clientSideParams.service.getResource.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a single resource
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.clientSideParams.service.getResource({
+    resourceId: "resourceId",
+    include_metadata: true,
+    format: "format"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.clientSideParams.GetResourceServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.clientSideParams.service.<a href="/src/api/resources/clientSideParams/resources/service/client/Client.ts">searchResources</a>({ ...params }) -> core.APIResponse&lt;SeedApi.SearchResponse, SeedApi.clientSideParams.service.searchResources.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Search resources with complex parameters
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.clientSideParams.service.searchResources({
+    limit: 1,
+    offset: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.clientSideParams.SearchResourcesServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.clientSideParams.service.<a href="/src/api/resources/clientSideParams/resources/service/client/Client.ts">listUsers</a>({ ...params }) -> core.APIResponse&lt;SeedApi.PaginatedUserResponse, SeedApi.clientSideParams.service.listUsers.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List or search for users
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.clientSideParams.service.listUsers();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.clientSideParams.ListUsersServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.clientSideParams.service.<a href="/src/api/resources/clientSideParams/resources/service/client/Client.ts">createUser</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.clientSideParams.service.createUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.clientSideParams.service.createUser({
+    email: "email",
+    connection: "connection"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.clientSideParams.CreateUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.clientSideParams.service.<a href="/src/api/resources/clientSideParams/resources/service/client/Client.ts">getUserById</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.clientSideParams.service.getUserById.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a user by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.clientSideParams.service.getUserById({
+    userId: "userId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.clientSideParams.GetUserByIdServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.clientSideParams.service.<a href="/src/api/resources/clientSideParams/resources/service/client/Client.ts">deleteUser</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.clientSideParams.service.deleteUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.clientSideParams.service.deleteUser({
+    userId: "userId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.clientSideParams.DeleteUserServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.clientSideParams.service.<a href="/src/api/resources/clientSideParams/resources/service/client/Client.ts">updateUser</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.clientSideParams.service.updateUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.clientSideParams.service.updateUser({
+    userId: "userId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.clientSideParams.UpdateUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.clientSideParams.service.<a href="/src/api/resources/clientSideParams/resources/service/client/Client.ts">listConnections</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Connection[], SeedApi.clientSideParams.service.listConnections.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all connections
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.clientSideParams.service.listConnections();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.clientSideParams.ListConnectionsServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.clientSideParams.service.<a href="/src/api/resources/clientSideParams/resources/service/client/Client.ts">getConnection</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Connection, SeedApi.clientSideParams.service.getConnection.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a connection by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.clientSideParams.service.getConnection({
+    connectionId: "connectionId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.clientSideParams.GetConnectionServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.clientSideParams.service.<a href="/src/api/resources/clientSideParams/resources/service/client/Client.ts">listClients</a>({ ...params }) -> core.APIResponse&lt;SeedApi.PaginatedClientResponse, SeedApi.clientSideParams.service.listClients.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all clients/applications
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.clientSideParams.service.listClients();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.clientSideParams.ListClientsServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.clientSideParams.service.<a href="/src/api/resources/clientSideParams/resources/service/client/Client.ts">getClient</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Client, SeedApi.clientSideParams.service.getClient.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a client by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.clientSideParams.service.getClient({
+    clientId: "clientId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.clientSideParams.GetClientServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ContentType Service
+<details><summary><code>client.contentType.service.<a href="/src/api/resources/contentType/resources/service/client/Client.ts">patch</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.contentType.service.patch.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.contentType.service.patch({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.contentType.PatchServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.contentType.service.<a href="/src/api/resources/contentType/resources/service/client/Client.ts">patchComplex</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.contentType.service.patchComplex.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update with JSON merge patch - complex types.
+This endpoint demonstrates the distinction between:
+- optional<T> fields (can be present or absent, but not null)
+- optional<nullable<T>> fields (can be present, absent, or null)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.contentType.service.patchComplex({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.contentType.PatchComplexServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.contentType.service.<a href="/src/api/resources/contentType/resources/service/client/Client.ts">namedPatchWithMixed</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.contentType.service.namedPatchWithMixed.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Named request with mixed optional/nullable fields and merge-patch content type.
+This should trigger the NPE issue when optional fields aren't initialized.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.contentType.service.namedPatchWithMixed({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.contentType.NamedPatchWithMixedServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.contentType.service.<a href="/src/api/resources/contentType/resources/service/client/Client.ts">optionalMergePatchTest</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.contentType.service.optionalMergePatchTest.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
+This endpoint should:
+1. Not NPE when fields are not provided (tests initialization)
+2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.contentType.service.optionalMergePatchTest({
+    requiredField: "requiredField"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.contentType.OptionalMergePatchTestServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.contentType.service.<a href="/src/api/resources/contentType/resources/service/client/Client.ts">regularPatch</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.contentType.service.regularPatch.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Regular PATCH endpoint without merge-patch semantics
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.contentType.service.regularPatch({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.contentType.RegularPatchServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## CrossPackageTypeNames Foo
+<details><summary><code>client.crossPackageTypeNames.foo.<a href="/src/api/resources/crossPackageTypeNames/resources/foo/client/Client.ts">find</a>({ ...params }) -> core.APIResponse&lt;SeedApi.ImportingType, SeedApi.crossPackageTypeNames.foo.find.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.crossPackageTypeNames.foo.find();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.crossPackageTypeNames.FindFooRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FooClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## CrossPackageTypeNames FolderA Service
+<details><summary><code>client.crossPackageTypeNames.folderA.service.<a href="/src/api/resources/crossPackageTypeNames/resources/folderA/resources/service/client/Client.ts">getDirectThread</a>() -> core.APIResponse&lt;SeedApi.FolderAResponse, SeedApi.crossPackageTypeNames.folderA.service.getDirectThread.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.crossPackageTypeNames.folderA.service.getDirectThread();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## CrossPackageTypeNames FolderD Service
+<details><summary><code>client.crossPackageTypeNames.folderD.service.<a href="/src/api/resources/crossPackageTypeNames/resources/folderD/resources/service/client/Client.ts">getDirectThread</a>() -> core.APIResponse&lt;SeedApi.FolderDResponse, SeedApi.crossPackageTypeNames.folderD.service.getDirectThread.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.crossPackageTypeNames.folderD.service.getDirectThread();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## CsharpInlineTypes CsharpInlineTypes
+<details><summary><code>client.csharpInlineTypes.csharpInlineTypes.<a href="/src/api/resources/csharpInlineTypes/resources/csharpInlineTypes/client/Client.ts">getRoot</a>({ ...params }) -> core.APIResponse&lt;SeedApi.RootType1, SeedApi.csharpInlineTypes.csharpInlineTypes.getRoot.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.csharpInlineTypes.csharpInlineTypes.getRoot({
+    bar: {
+        foo: "foo"
+    },
+    foo: "foo"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.csharpInlineTypes.GetRootRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CsharpInlineTypesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.csharpInlineTypes.csharpInlineTypes.<a href="/src/api/resources/csharpInlineTypes/resources/csharpInlineTypes/client/Client.ts">getDiscriminatedUnion</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.csharpInlineTypes.csharpInlineTypes.getDiscriminatedUnion.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.csharpInlineTypes.csharpInlineTypes.getDiscriminatedUnion({
+    bar: {
+        foo: "foo",
+        bar: {
+            foo: "foo",
+            ref: {
+                foo: "foo"
+            }
+        },
+        ref: {
+            foo: "foo"
+        },
+        type: "type1"
+    },
+    foo: "foo"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.csharpInlineTypes.GetDiscriminatedUnionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CsharpInlineTypesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.csharpInlineTypes.csharpInlineTypes.<a href="/src/api/resources/csharpInlineTypes/resources/csharpInlineTypes/client/Client.ts">getUndiscriminatedUnion</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.csharpInlineTypes.csharpInlineTypes.getUndiscriminatedUnion.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.csharpInlineTypes.csharpInlineTypes.getUndiscriminatedUnion({
+    bar: "SUNNY",
+    foo: "foo"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.csharpInlineTypes.GetUndiscriminatedUnionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CsharpInlineTypesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## CsharpPropertyNameCollision CsharpPropertyNameCollision
+<details><summary><code>client.csharpPropertyNameCollision.csharpPropertyNameCollision.<a href="/src/api/resources/csharpPropertyNameCollision/resources/csharpPropertyNameCollision/client/Client.ts">createCatalog</a>({ ...params }) -> core.APIResponse&lt;SeedApi.CatalogV1Id, SeedApi.csharpPropertyNameCollision.csharpPropertyNameCollision.createCatalog.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.csharpPropertyNameCollision.csharpPropertyNameCollision.createCatalog({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.CatalogV1Id` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CsharpPropertyNameCollisionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.csharpPropertyNameCollision.csharpPropertyNameCollision.<a href="/src/api/resources/csharpPropertyNameCollision/resources/csharpPropertyNameCollision/client/Client.ts">createActivity</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Activity, SeedApi.csharpPropertyNameCollision.csharpPropertyNameCollision.createActivity.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.csharpPropertyNameCollision.csharpPropertyNameCollision.createActivity({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.Activity` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CsharpPropertyNameCollisionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## CsharpReadonlyRequest CsharpReadonlyRequest
+<details><summary><code>client.csharpReadonlyRequest.csharpReadonlyRequest.<a href="/src/api/resources/csharpReadonlyRequest/resources/csharpReadonlyRequest/client/Client.ts">batchCreate</a>({ ...params }) -> core.APIResponse&lt;SeedApi.CreateVendorResponse, SeedApi.csharpReadonlyRequest.csharpReadonlyRequest.batchCreate.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.csharpReadonlyRequest.csharpReadonlyRequest.batchCreate({
+    vendors: {
+        "vendor-1": {
+            id: "vendor-1",
+            name: "Acme Corp",
+            created_at: "2024-01-01T00:00:00Z",
+            updated_at: "2024-01-01T00:00:00Z"
+        }
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.csharpReadonlyRequest.CreateVendorRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CsharpReadonlyRequestClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## CsharpSystemCollision CsharpSystemCollision
+<details><summary><code>client.csharpSystemCollision.csharpSystemCollision.<a href="/src/api/resources/csharpSystemCollision/resources/csharpSystemCollision/client/Client.ts">createUser</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.csharpSystemCollision.csharpSystemCollision.createUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.csharpSystemCollision.csharpSystemCollision.createUser({
+    line1: "line1",
+    city: "city",
+    state: "state",
+    zip: "zip",
+    country: "USA"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.User` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CsharpSystemCollisionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.csharpSystemCollision.csharpSystemCollision.<a href="/src/api/resources/csharpSystemCollision/resources/csharpSystemCollision/client/Client.ts">createTask</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Task, SeedApi.csharpSystemCollision.csharpSystemCollision.createTask.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.csharpSystemCollision.csharpSystemCollision.createTask({
+    name: "name",
+    user: {
+        line1: "line1",
+        city: "city",
+        state: "state",
+        zip: "zip",
+        country: "USA"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.Task` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CsharpSystemCollisionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.csharpSystemCollision.csharpSystemCollision.<a href="/src/api/resources/csharpSystemCollision/resources/csharpSystemCollision/client/Client.ts">emptyResponse</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.csharpSystemCollision.csharpSystemCollision.emptyResponse.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.csharpSystemCollision.csharpSystemCollision.emptyResponse({
+    name: "name",
+    user: {
+        line1: "line1",
+        city: "city",
+        state: "state",
+        zip: "zip",
+        country: "USA"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.Task` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CsharpSystemCollisionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## CsharpXmlEntities CsharpXmlEntities
+<details><summary><code>client.csharpXmlEntities.csharpXmlEntities.<a href="/src/api/resources/csharpXmlEntities/resources/csharpXmlEntities/client/Client.ts">getTimeZone</a>() -> core.APIResponse&lt;SeedApi.TimeZoneModel, SeedApi.csharpXmlEntities.csharpXmlEntities.getTimeZone.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get timezone information with &plus; offset
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.csharpXmlEntities.csharpXmlEntities.getTimeZone();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `CsharpXmlEntitiesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## CsharpNamespaceConflict Tasktest
+<details><summary><code>client.csharpNamespaceConflict.tasktest.<a href="/src/api/resources/csharpNamespaceConflict/resources/tasktest/client/Client.ts">hello</a>() -> core.APIResponse&lt;void, SeedApi.csharpNamespaceConflict.tasktest.hello.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.csharpNamespaceConflict.tasktest.hello();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `TasktestClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## EndpointSecurityAuth Auth
+<details><summary><code>client.endpointSecurityAuth.auth.<a href="/src/api/resources/endpointSecurityAuth/resources/auth/client/Client.ts">getToken</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.endpointSecurityAuth.auth.getToken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpointSecurityAuth.auth.getToken({
+    client_id: "client_id",
+    client_secret: "client_secret",
+    audience: "https://api.example.com",
+    grant_type: "client_credentials"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.endpointSecurityAuth.GetTokenAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## EndpointSecurityAuth User
+<details><summary><code>client.endpointSecurityAuth.user.<a href="/src/api/resources/endpointSecurityAuth/resources/user/client/Client.ts">getWithBearer</a>() -> core.APIResponse&lt;SeedApi.User[], SeedApi.endpointSecurityAuth.user.getWithBearer.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpointSecurityAuth.user.getWithBearer();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpointSecurityAuth.user.<a href="/src/api/resources/endpointSecurityAuth/resources/user/client/Client.ts">getWithApiKey</a>() -> core.APIResponse&lt;SeedApi.User[], SeedApi.endpointSecurityAuth.user.getWithApiKey.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpointSecurityAuth.user.getWithApiKey();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpointSecurityAuth.user.<a href="/src/api/resources/endpointSecurityAuth/resources/user/client/Client.ts">getWithOAuth</a>() -> core.APIResponse&lt;SeedApi.User[], SeedApi.endpointSecurityAuth.user.getWithOAuth.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpointSecurityAuth.user.getWithOAuth();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpointSecurityAuth.user.<a href="/src/api/resources/endpointSecurityAuth/resources/user/client/Client.ts">getWithBasic</a>() -> core.APIResponse&lt;SeedApi.User[], SeedApi.endpointSecurityAuth.user.getWithBasic.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpointSecurityAuth.user.getWithBasic();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpointSecurityAuth.user.<a href="/src/api/resources/endpointSecurityAuth/resources/user/client/Client.ts">getWithInferredAuth</a>() -> core.APIResponse&lt;SeedApi.User[], SeedApi.endpointSecurityAuth.user.getWithInferredAuth.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpointSecurityAuth.user.getWithInferredAuth();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpointSecurityAuth.user.<a href="/src/api/resources/endpointSecurityAuth/resources/user/client/Client.ts">getWithAnyAuth</a>() -> core.APIResponse&lt;SeedApi.User[], SeedApi.endpointSecurityAuth.user.getWithAnyAuth.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpointSecurityAuth.user.getWithAnyAuth();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpointSecurityAuth.user.<a href="/src/api/resources/endpointSecurityAuth/resources/user/client/Client.ts">getWithAllAuth</a>() -> core.APIResponse&lt;SeedApi.User[], SeedApi.endpointSecurityAuth.user.getWithAllAuth.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpointSecurityAuth.user.getWithAllAuth();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Enum Headers
+<details><summary><code>client.enum.headers.<a href="/src/api/resources/enum/resources/headers/client/Client.ts">send</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.enum_.headers.send.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.enum.headers.send({
+    operand: ">",
+    operandOrColor: "red"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.enum_.SendHeadersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `HeadersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Enum InlinedRequest
+<details><summary><code>client.enum.inlinedRequest.<a href="/src/api/resources/enum/resources/inlinedRequest/client/Client.ts">send</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.enum_.inlinedRequest.send.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.enum.inlinedRequest.send({
+    operand: ">",
+    operandOrColor: "red"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.enum_.SendInlinedRequestRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InlinedRequestClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Enum MultipartForm
+<details><summary><code>client.enum.multipartForm.<a href="/src/api/resources/enum/resources/multipartForm/client/Client.ts">multipartForm</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.enum_.multipartForm.multipartForm.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.enum.multipartForm.multipartForm({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.enum_.MultipartFormMultipartFormRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MultipartFormClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Enum PathParam
+<details><summary><code>client.enum.pathParam.<a href="/src/api/resources/enum/resources/pathParam/client/Client.ts">send</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.enum_.pathParam.send.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.enum.pathParam.send({
+    operand: ">",
+    operandOrColor: "red"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.enum_.SendPathParamRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PathParamClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Enum QueryParam
+<details><summary><code>client.enum.queryParam.<a href="/src/api/resources/enum/resources/queryParam/client/Client.ts">send</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.enum_.queryParam.send.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.enum.queryParam.send({
+    operand: ">",
+    operandOrColor: "red"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.enum_.SendQueryParamRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `QueryParamClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.enum.queryParam.<a href="/src/api/resources/enum/resources/queryParam/client/Client.ts">sendList</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.enum_.queryParam.sendList.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.enum.queryParam.sendList({
+    operand: [">"],
+    operandOrColor: ["red"]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.enum_.SendListQueryParamRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `QueryParamClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ErrorProperty PropertyBasedError
+<details><summary><code>client.errorProperty.propertyBasedError.<a href="/src/api/resources/errorProperty/resources/propertyBasedError/client/Client.ts">throwError</a>() -> core.APIResponse&lt;string, SeedApi.errorProperty.propertyBasedError.throwError.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET request that always throws an error
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.errorProperty.propertyBasedError.throwError();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `PropertyBasedErrorClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Errors Simple
+<details><summary><code>client.errors.simple.<a href="/src/api/resources/errors/resources/simple/client/Client.ts">fooWithoutEndpointError</a>({ ...params }) -> core.APIResponse&lt;SeedApi.FooResponse, SeedApi.errors.simple.fooWithoutEndpointError.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.errors.simple.fooWithoutEndpointError({
+    bar: "hello"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.FooRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SimpleClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.errors.simple.<a href="/src/api/resources/errors/resources/simple/client/Client.ts">foo</a>({ ...params }) -> core.APIResponse&lt;SeedApi.FooResponse, SeedApi.errors.simple.foo.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.errors.simple.foo({
+    bar: "hello"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.FooRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SimpleClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.errors.simple.<a href="/src/api/resources/errors/resources/simple/client/Client.ts">fooWithExamples</a>({ ...params }) -> core.APIResponse&lt;SeedApi.FooResponse, SeedApi.errors.simple.fooWithExamples.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.errors.simple.fooWithExamples({
+    bar: "hello"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.FooRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SimpleClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Examples Examples
+<details><summary><code>client.examples.examples.<a href="/src/api/resources/examples/resources/examples/client/Client.ts">echo</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.examples.examples.echo.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.examples.examples.echo("Hello world!\\n\\nwith\\n\\tnewlines");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ExamplesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.examples.examples.<a href="/src/api/resources/examples/resources/examples/client/Client.ts">createType</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Identifier, SeedApi.examples.examples.createType.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.examples.examples.createType("primitive");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.Type` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ExamplesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Examples Service
+<details><summary><code>client.examples.service.<a href="/src/api/resources/examples/resources/service/client/Client.ts">getMovie</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Movie, SeedApi.examples.service.getMovie.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.examples.service.getMovie({
+    movieId: SeedApi.MovieId("movieId")
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.examples.GetMovieServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.examples.service.<a href="/src/api/resources/examples/resources/service/client/Client.ts">createMovie</a>({ ...params }) -> core.APIResponse&lt;SeedApi.MovieId, SeedApi.examples.service.createMovie.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.examples.service.createMovie({
+    id: SeedApi.MovieId("movie-c06a4ad7"),
+    prequel: SeedApi.MovieId("movie-cv9b914f"),
+    title: "The Boy and the Heron",
+    from: "Hayao Miyazaki",
+    rating: 8,
+    type: "movie",
+    tag: SeedApi.CommonsTag("tag-wf9as23d"),
+    metadata: {
+        "actors": [
+            "Christian Bale",
+            "Florence Pugh",
+            "Willem Dafoe"
+        ],
+        "releaseDate": "2023-12-08",
+        "ratings": {
+            "rottenTomatoes": 97,
+            "imdb": 7.6
+        }
+    },
+    revenue: 1000000
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.Movie` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.examples.service.<a href="/src/api/resources/examples/resources/service/client/Client.ts">getMetadata</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Metadata, SeedApi.examples.service.getMetadata.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.examples.service.getMetadata();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.examples.GetMetadataServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.examples.service.<a href="/src/api/resources/examples/resources/service/client/Client.ts">createBigEntity</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Response, SeedApi.examples.service.createBigEntity.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.examples.service.createBigEntity();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.examples.BigEntity` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.examples.service.<a href="/src/api/resources/examples/resources/service/client/Client.ts">refreshToken</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.examples.service.refreshToken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.examples.service.refreshToken({
+    ttl: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.RefreshTokenRequest | null` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Examples File Service
+<details><summary><code>client.examples.file.service.<a href="/src/api/resources/examples/resources/file/resources/service/client/Client.ts">getFile</a>({ ...params }) -> core.APIResponse&lt;SeedApi.File_, SeedApi.examples.file.service.getFile.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint returns a file by its name.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.examples.file.service.getFile({
+    filename: "file.txt"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.examples.file.GetFileServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Examples File Notification Service
+<details><summary><code>client.examples.file.notification.service.<a href="/src/api/resources/examples/resources/file/resources/notification/resources/service/client/Client.ts">getException</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Exception, SeedApi.examples.file.notification.service.getException.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.examples.file.notification.service.getException({
+    notificationId: "notification-hsy129x"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.examples.file.notification.GetExceptionServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Examples Health Service
+<details><summary><code>client.examples.health.service.<a href="/src/api/resources/examples/resources/health/resources/service/client/Client.ts">check</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.examples.health.service.check.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint checks the health of a resource.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.examples.health.service.check({
+    id: "id-2sdx82h"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.examples.health.CheckServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.examples.health.service.<a href="/src/api/resources/examples/resources/health/resources/service/client/Client.ts">ping</a>() -> core.APIResponse&lt;boolean, SeedApi.examples.health.service.ping.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This endpoint checks the health of the service.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.examples.health.service.ping();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Exhaustive EndpointsHttpMethods
+<details><summary><code>client.exhaustive.endpointsHttpMethods.<a href="/src/api/resources/exhaustive/resources/endpointsHttpMethods/client/Client.ts">endpointsHttpMethodsTestGet</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.exhaustive.endpointsHttpMethods.endpointsHttpMethodsTestGet.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpointsHttpMethods.endpointsHttpMethodsTestGet({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.exhaustive.EndpointsHttpMethodsTestGetEndpointsHttpMethodsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EndpointsHttpMethodsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpointsHttpMethods.<a href="/src/api/resources/exhaustive/resources/endpointsHttpMethods/client/Client.ts">endpointsHttpMethodsTestPut</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithOptionalField, SeedApi.exhaustive.endpointsHttpMethods.endpointsHttpMethodsTestPut.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpointsHttpMethods.endpointsHttpMethodsTestPut({
+    id: "id",
+    body: {
+        string: "uploaded"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.exhaustive.EndpointsHttpMethodsTestPutEndpointsHttpMethodsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EndpointsHttpMethodsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpointsHttpMethods.<a href="/src/api/resources/exhaustive/resources/endpointsHttpMethods/client/Client.ts">endpointsHttpMethodsTestDelete</a>({ ...params }) -> core.APIResponse&lt;boolean, SeedApi.exhaustive.endpointsHttpMethods.endpointsHttpMethodsTestDelete.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpointsHttpMethods.endpointsHttpMethodsTestDelete({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.exhaustive.EndpointsHttpMethodsTestDeleteEndpointsHttpMethodsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EndpointsHttpMethodsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpointsHttpMethods.<a href="/src/api/resources/exhaustive/resources/endpointsHttpMethods/client/Client.ts">endpointsHttpMethodsTestPatch</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithOptionalField, SeedApi.exhaustive.endpointsHttpMethods.endpointsHttpMethodsTestPatch.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpointsHttpMethods.endpointsHttpMethodsTestPatch({
+    id: "id",
+    body: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.exhaustive.EndpointsHttpMethodsTestPatchEndpointsHttpMethodsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EndpointsHttpMethodsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpointsHttpMethods.<a href="/src/api/resources/exhaustive/resources/endpointsHttpMethods/client/Client.ts">endpointsHttpMethodsTestPost</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithOptionalField, SeedApi.exhaustive.endpointsHttpMethods.endpointsHttpMethodsTestPost.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpointsHttpMethods.endpointsHttpMethodsTestPost({
+    string: "uploaded"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithRequiredField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EndpointsHttpMethodsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Exhaustive EndpointsUrLs
+<details><summary><code>client.exhaustive.endpointsUrLs.<a href="/src/api/resources/exhaustive/resources/endpointsUrLs/client/Client.ts">endpointsUrlsWithMixedCase</a>() -> core.APIResponse&lt;string, SeedApi.exhaustive.endpointsUrLs.endpointsUrlsWithMixedCase.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpointsUrLs.endpointsUrlsWithMixedCase();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `EndpointsUrLsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpointsUrLs.<a href="/src/api/resources/exhaustive/resources/endpointsUrLs/client/Client.ts">endpointsUrlsNoEndingSlash</a>() -> core.APIResponse&lt;string, SeedApi.exhaustive.endpointsUrLs.endpointsUrlsNoEndingSlash.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpointsUrLs.endpointsUrlsNoEndingSlash();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `EndpointsUrLsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpointsUrLs.<a href="/src/api/resources/exhaustive/resources/endpointsUrLs/client/Client.ts">endpointsUrlsWithEndingSlash</a>() -> core.APIResponse&lt;string, SeedApi.exhaustive.endpointsUrLs.endpointsUrlsWithEndingSlash.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpointsUrLs.endpointsUrlsWithEndingSlash();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `EndpointsUrLsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpointsUrLs.<a href="/src/api/resources/exhaustive/resources/endpointsUrLs/client/Client.ts">endpointsUrlsWithUnderscores</a>() -> core.APIResponse&lt;string, SeedApi.exhaustive.endpointsUrLs.endpointsUrlsWithUnderscores.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpointsUrLs.endpointsUrlsWithUnderscores();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `EndpointsUrLsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Exhaustive InlinedRequests
+<details><summary><code>client.exhaustive.inlinedRequests.<a href="/src/api/resources/exhaustive/resources/inlinedRequests/client/Client.ts">postWithObjectBodyandResponse</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithOptionalField, SeedApi.exhaustive.inlinedRequests.postWithObjectBodyandResponse.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with custom object in request body, response is an object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.inlinedRequests.postWithObjectBodyandResponse({
+    string: "string",
+    integer: 1,
+    NestedObject: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.exhaustive.PostWithObjectBodyandResponseInlinedRequestsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InlinedRequestsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Exhaustive NoAuth
+<details><summary><code>client.exhaustive.noAuth.<a href="/src/api/resources/exhaustive/resources/noAuth/client/Client.ts">postWithNoAuth</a>({ ...params }) -> core.APIResponse&lt;boolean, SeedApi.exhaustive.noAuth.postWithNoAuth.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST request with no auth
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.noAuth.postWithNoAuth({
+    "key": "value"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `unknown` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NoAuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Exhaustive NoReqBody
+<details><summary><code>client.exhaustive.noReqBody.<a href="/src/api/resources/exhaustive/resources/noReqBody/client/Client.ts">getWithNoRequestBody</a>() -> core.APIResponse&lt;SeedApi.TypesObjectWithOptionalField, SeedApi.exhaustive.noReqBody.getWithNoRequestBody.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.noReqBody.getWithNoRequestBody();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NoReqBodyClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.noReqBody.<a href="/src/api/resources/exhaustive/resources/noReqBody/client/Client.ts">postWithNoRequestBody</a>() -> core.APIResponse&lt;string, SeedApi.exhaustive.noReqBody.postWithNoRequestBody.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.noReqBody.postWithNoRequestBody();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NoReqBodyClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Exhaustive ReqWithHeaders
+<details><summary><code>client.exhaustive.reqWithHeaders.<a href="/src/api/resources/exhaustive/resources/reqWithHeaders/client/Client.ts">getWithCustomHeader</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.exhaustive.reqWithHeaders.getWithCustomHeader.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.reqWithHeaders.getWithCustomHeader({
+    "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
+    body: "string"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.exhaustive.GetWithCustomHeaderReqWithHeadersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ReqWithHeadersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Exhaustive Endpoints Container
+<details><summary><code>client.exhaustive.endpoints.container.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/container/client/Client.ts">getAndReturnListOfPrimitives</a>({ ...params }) -> core.APIResponse&lt;string[], SeedApi.exhaustive.endpoints.container.getAndReturnListOfPrimitives.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.container.getAndReturnListOfPrimitives(["string"]);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string[]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.container.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/container/client/Client.ts">getAndReturnListOfObjects</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithRequiredField[], SeedApi.exhaustive.endpoints.container.getAndReturnListOfObjects.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.container.getAndReturnListOfObjects([{
+        string: "uploaded"
+    }]);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithRequiredField[]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.container.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfPrimitives</a>({ ...params }) -> core.APIResponse&lt;string[], SeedApi.exhaustive.endpoints.container.getAndReturnSetOfPrimitives.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.container.getAndReturnSetOfPrimitives(["string"]);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string[]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.container.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfObjects</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithRequiredField[], SeedApi.exhaustive.endpoints.container.getAndReturnSetOfObjects.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.container.getAndReturnSetOfObjects([{
+        string: "uploaded"
+    }]);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithRequiredField[]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.container.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapPrimToPrim</a>({ ...params }) -> core.APIResponse&lt;Record&lt;string, string&gt;, SeedApi.exhaustive.endpoints.container.getAndReturnMapPrimToPrim.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.container.getAndReturnMapPrimToPrim({
+    "key": "value"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Record<string, string>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.container.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfPrimToObject</a>({ ...params }) -> core.APIResponse&lt;Record&lt;string, SeedApi.TypesObjectWithRequiredField&gt;, SeedApi.exhaustive.endpoints.container.getAndReturnMapOfPrimToObject.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.container.getAndReturnMapOfPrimToObject({
+    "key": {
+        string: "uploaded"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Record<string, SeedApi.TypesObjectWithRequiredField>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.container.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfPrimToUndiscriminatedUnion</a>({ ...params }) -> core.APIResponse&lt;Record&lt;string, SeedApi.TypesMixedType&gt;, SeedApi.exhaustive.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
+    "key": 1.1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Record<string, SeedApi.TypesMixedType>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.container.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/container/client/Client.ts">getAndReturnOptional</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithRequiredField | null, SeedApi.exhaustive.endpoints.container.getAndReturnOptional.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.container.getAndReturnOptional({
+    string: "uploaded"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithRequiredField | null` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Exhaustive Endpoints ContentType
+<details><summary><code>client.exhaustive.endpoints.contentType.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/contentType/client/Client.ts">postJsonPatchContentType</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.exhaustive.endpoints.contentType.postJsonPatchContentType.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.contentType.postJsonPatchContentType({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithOptionalField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContentTypeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.contentType.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/contentType/client/Client.ts">postJsonPatchContentWithCharsetType</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.exhaustive.endpoints.contentType.postJsonPatchContentWithCharsetType.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.contentType.postJsonPatchContentWithCharsetType({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithOptionalField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContentTypeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Exhaustive Endpoints Enum
+<details><summary><code>client.exhaustive.endpoints.enum.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/enum/client/Client.ts">getAndReturnEnum</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesWeatherReport, SeedApi.exhaustive.endpoints.enum_.getAndReturnEnum.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.enum.getAndReturnEnum("SUNNY");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesWeatherReport` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EnumClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Exhaustive Endpoints Object
+<details><summary><code>client.exhaustive.endpoints.object.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithOptionalField</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithOptionalField, SeedApi.exhaustive.endpoints.object.getAndReturnWithOptionalField.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.object.getAndReturnWithOptionalField({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithOptionalField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.object.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithRequiredField</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithRequiredField, SeedApi.exhaustive.endpoints.object.getAndReturnWithRequiredField.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.object.getAndReturnWithRequiredField({
+    string: "uploaded"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithRequiredField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.object.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithMapOfMap</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithMapOfMap, SeedApi.exhaustive.endpoints.object.getAndReturnWithMapOfMap.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.object.getAndReturnWithMapOfMap({
+    map: {
+        "key": {
+            "key": "value"
+        }
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithMapOfMap` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.object.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithOptionalField</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesNestedObjectWithOptionalField, SeedApi.exhaustive.endpoints.object.getAndReturnNestedWithOptionalField.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.object.getAndReturnNestedWithOptionalField({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesNestedObjectWithOptionalField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.object.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredField</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesNestedObjectWithRequiredField, SeedApi.exhaustive.endpoints.object.getAndReturnNestedWithRequiredField.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.object.getAndReturnNestedWithRequiredField({
+    string: "string",
+    body: {
+        string: "string",
+        NestedObject: {}
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.exhaustive.endpoints.GetAndReturnNestedWithRequiredFieldObjectRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.object.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredFieldAsList</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesNestedObjectWithRequiredField, SeedApi.exhaustive.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
+        string: "string",
+        NestedObject: {}
+    }]);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesNestedObjectWithRequiredField[]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.object.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithUnknownField</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithUnknownField, SeedApi.exhaustive.endpoints.object.getAndReturnWithUnknownField.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.object.getAndReturnWithUnknownField({
+    unknown: {
+        "$ref": "https://example.com/schema"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithUnknownField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.object.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithDocumentedUnknownType</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithDocumentedUnknownType, SeedApi.exhaustive.endpoints.object.getAndReturnWithDocumentedUnknownType.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.object.getAndReturnWithDocumentedUnknownType({
+    documentedUnknownType: {
+        "key": "value"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithDocumentedUnknownType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.object.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/object/client/Client.ts">getAndReturnMapOfDocumentedUnknownType</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesMapOfDocumentedUnknownType, SeedApi.exhaustive.endpoints.object.getAndReturnMapOfDocumentedUnknownType.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.object.getAndReturnMapOfDocumentedUnknownType({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesMapOfDocumentedUnknownType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.object.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithMixedRequiredAndOptionalFields</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithMixedRequiredAndOptionalFields, SeedApi.exhaustive.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that dynamic snippets include all required properties in the
+object initializer, even when the example omits some required fields.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields({
+    requiredString: "hello",
+    requiredInteger: 0,
+    optionalString: "world",
+    requiredLong: 0
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithMixedRequiredAndOptionalFields` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.object.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithRequiredNestedObject</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithRequiredNestedObject, SeedApi.exhaustive.endpoints.object.getAndReturnWithRequiredNestedObject.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that dynamic snippets recursively construct default objects for
+required properties whose type is a named object. When the example
+omits the nested object, the generator should construct a default
+initializer with the nested object's required properties filled in.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.object.getAndReturnWithRequiredNestedObject({
+    requiredString: "hello",
+    requiredObject: {
+        string: "nested",
+        NestedObject: {}
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithRequiredNestedObject` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.object.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithDatetimeLikeString</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithDatetimeLikeString, SeedApi.exhaustive.endpoints.object.getAndReturnWithDatetimeLikeString.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that string fields containing datetime-like values are NOT reformatted.
+The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+without being converted to "2023-08-31T14:15:22.000Z".
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.object.getAndReturnWithDatetimeLikeString({
+    datetimeLikeString: "2023-08-31T14:15:22Z",
+    actualDatetime: "2023-08-31T14:15:22Z"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithDatetimeLikeString` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Exhaustive Endpoints Pagination
+<details><summary><code>client.exhaustive.endpoints.pagination.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/pagination/client/Client.ts">listItems</a>({ ...params }) -> core.APIResponse&lt;SeedApi.EndpointsPaginatedResponse, SeedApi.exhaustive.endpoints.pagination.listItems.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List items with cursor pagination
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.pagination.listItems();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.exhaustive.endpoints.ListItemsPaginationRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PaginationClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Exhaustive Endpoints Params
+<details><summary><code>client.exhaustive.endpoints.params.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/params/client/Client.ts">getWithPath</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.exhaustive.endpoints.params.getWithPath.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.params.getWithPath({
+    param: "param"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.exhaustive.endpoints.GetWithPathParamsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.params.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/params/client/Client.ts">modifyWithPath</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.exhaustive.endpoints.params.modifyWithPath.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+PUT to update with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.params.modifyWithPath({
+    param: "param",
+    body: "string"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.exhaustive.endpoints.ModifyWithPathParamsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.params.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/params/client/Client.ts">getWithInlinePath</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.exhaustive.endpoints.params.getWithInlinePath.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.params.getWithInlinePath({
+    param: "param"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.exhaustive.endpoints.GetWithInlinePathParamsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.params.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/params/client/Client.ts">modifyWithInlinePath</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.exhaustive.endpoints.params.modifyWithInlinePath.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+PUT to update with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.params.modifyWithInlinePath({
+    param: "param",
+    body: "string"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.exhaustive.endpoints.ModifyWithInlinePathParamsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.params.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/params/client/Client.ts">getWithQuery</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.exhaustive.endpoints.params.getWithQuery.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with query param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.params.getWithQuery({
+    query: "query",
+    number: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.exhaustive.endpoints.GetWithQueryParamsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.params.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/params/client/Client.ts">getWithAllowMultipleQuery</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.exhaustive.endpoints.params.getWithAllowMultipleQuery.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with multiple of same query param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.params.getWithAllowMultipleQuery({
+    query: ["query"],
+    number: [1]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.exhaustive.endpoints.GetWithAllowMultipleQueryParamsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.params.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/params/client/Client.ts">getWithPathAndQuery</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.exhaustive.endpoints.params.getWithPathAndQuery.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path and query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.params.getWithPathAndQuery({
+    param: "param",
+    query: "query"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.exhaustive.endpoints.GetWithPathAndQueryParamsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.params.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/params/client/Client.ts">getWithInlinePathAndQuery</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.exhaustive.endpoints.params.getWithInlinePathAndQuery.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path and query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.params.getWithInlinePathAndQuery({
+    param: "param",
+    query: "query"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.exhaustive.endpoints.GetWithInlinePathAndQueryParamsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.params.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/params/client/Client.ts">getWithBooleanPath</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.exhaustive.endpoints.params.getWithBooleanPath.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with boolean path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.params.getWithBooleanPath({
+    param: true
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.exhaustive.endpoints.GetWithBooleanPathParamsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.params.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/params/client/Client.ts">getWithPathAndErrors</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.exhaustive.endpoints.params.getWithPathAndErrors.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path param that can throw errors
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.params.getWithPathAndErrors({
+    param: "param"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.exhaustive.endpoints.GetWithPathAndErrorsParamsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Exhaustive Endpoints Primitive
+<details><summary><code>client.exhaustive.endpoints.primitive.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnString</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.exhaustive.endpoints.primitive.getAndReturnString.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.primitive.getAndReturnString("string");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PrimitiveClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.primitive.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnInt</a>({ ...params }) -> core.APIResponse&lt;number, SeedApi.exhaustive.endpoints.primitive.getAndReturnInt.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.primitive.getAndReturnInt(1);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `number` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PrimitiveClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.primitive.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnLong</a>({ ...params }) -> core.APIResponse&lt;number, SeedApi.exhaustive.endpoints.primitive.getAndReturnLong.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.primitive.getAndReturnLong(1000000);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `number` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PrimitiveClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.primitive.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDouble</a>({ ...params }) -> core.APIResponse&lt;number, SeedApi.exhaustive.endpoints.primitive.getAndReturnDouble.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.primitive.getAndReturnDouble(1.1);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `number` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PrimitiveClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.primitive.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnBool</a>({ ...params }) -> core.APIResponse&lt;boolean, SeedApi.exhaustive.endpoints.primitive.getAndReturnBool.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.primitive.getAndReturnBool(true);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `boolean` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PrimitiveClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.primitive.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDatetime</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.exhaustive.endpoints.primitive.getAndReturnDatetime.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PrimitiveClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.primitive.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDate</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.exhaustive.endpoints.primitive.getAndReturnDate.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.primitive.getAndReturnDate("2023-01-15");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PrimitiveClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.primitive.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnUuid</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.exhaustive.endpoints.primitive.getAndReturnUuid.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.primitive.getAndReturnUuid("string");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PrimitiveClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.exhaustive.endpoints.primitive.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnBase64</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.exhaustive.endpoints.primitive.getAndReturnBase64.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.primitive.getAndReturnBase64("string");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PrimitiveClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Exhaustive Endpoints Put
+<details><summary><code>client.exhaustive.endpoints.put.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/put/client/Client.ts">add</a>({ ...params }) -> core.APIResponse&lt;SeedApi.EndpointsPutResponse, SeedApi.exhaustive.endpoints.put.add.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.put.add({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.exhaustive.endpoints.AddPutRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PutClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Exhaustive Endpoints Union
+<details><summary><code>client.exhaustive.endpoints.union.<a href="/src/api/resources/exhaustive/resources/endpoints/resources/union/client/Client.ts">getAndReturnUnion</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesAnimal, SeedApi.exhaustive.endpoints.union.getAndReturnUnion.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.exhaustive.endpoints.union.getAndReturnUnion({
+    name: "name",
+    likesToWoof: true,
+    animal: "dog"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesAnimal` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Extends Extends
+<details><summary><code>client.extends.extends.<a href="/src/api/resources/extends/resources/extends/client/Client.ts">extendedInlineRequestBody</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.extends_.extends_.extendedInlineRequestBody.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.extends.extends.extendedInlineRequestBody({
+    docs: "Types extend this type to include a docs property.",
+    name: "Example",
+    unique: "unique"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.extends_.ExtendedInlineRequestBodyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ExtendsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ExtraProperties User
+<details><summary><code>client.extraProperties.user.<a href="/src/api/resources/extraProperties/resources/user/client/Client.ts">createUser</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.extraProperties.user.createUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.extraProperties.user.createUser({
+    _type: "CreateUserRequest",
+    _version: "v1",
+    name: "Alice"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.extraProperties.CreateUserUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## FileDownload Service
+<details><summary><code>client.fileDownload.service.<a href="/src/api/resources/fileDownload/resources/service/client/Client.ts">simple</a>() -> core.APIResponse&lt;void, SeedApi.fileDownload.service.simple.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.fileDownload.service.simple();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.fileDownload.service.<a href="/src/api/resources/fileDownload/resources/service/client/Client.ts">downloadFile</a>() -> core.APIResponse&lt;void, SeedApi.fileDownload.service.downloadFile.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.fileDownload.service.downloadFile();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## FileUpload Service
+<details><summary><code>client.fileUpload.service.<a href="/src/api/resources/fileUpload/resources/service/client/Client.ts">post</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.fileUpload.service.post.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.fileUpload.service.post({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.fileUpload.PostServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.fileUpload.service.<a href="/src/api/resources/fileUpload/resources/service/client/Client.ts">justFile</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.fileUpload.service.justFile.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.fileUpload.service.justFile({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.fileUpload.JustFileServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.fileUpload.service.<a href="/src/api/resources/fileUpload/resources/service/client/Client.ts">justFileWithQueryParams</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.fileUpload.service.justFileWithQueryParams.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.fileUpload.service.justFileWithQueryParams({
+    integer: 1,
+    listOfStrings: ["listOfStrings"]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.fileUpload.JustFileWithQueryParamsServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.fileUpload.service.<a href="/src/api/resources/fileUpload/resources/service/client/Client.ts">justFileWithOptionalQueryParams</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.fileUpload.service.justFileWithOptionalQueryParams.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.fileUpload.service.justFileWithOptionalQueryParams({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.fileUpload.JustFileWithOptionalQueryParamsServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.fileUpload.service.<a href="/src/api/resources/fileUpload/resources/service/client/Client.ts">withContentType</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.fileUpload.service.withContentType.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.fileUpload.service.withContentType({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.fileUpload.WithContentTypeServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.fileUpload.service.<a href="/src/api/resources/fileUpload/resources/service/client/Client.ts">withFormEncoding</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.fileUpload.service.withFormEncoding.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.fileUpload.service.withFormEncoding({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.fileUpload.WithFormEncodingServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.fileUpload.service.<a href="/src/api/resources/fileUpload/resources/service/client/Client.ts">withFormEncodedContainers</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.fileUpload.service.withFormEncodedContainers.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.fileUpload.service.withFormEncodedContainers({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.fileUpload.WithFormEncodedContainersServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.fileUpload.service.<a href="/src/api/resources/fileUpload/resources/service/client/Client.ts">optionalArgs</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.fileUpload.service.optionalArgs.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.fileUpload.service.optionalArgs({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.fileUpload.OptionalArgsServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.fileUpload.service.<a href="/src/api/resources/fileUpload/resources/service/client/Client.ts">withInlineType</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.fileUpload.service.withInlineType.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.fileUpload.service.withInlineType({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.fileUpload.WithInlineTypeServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.fileUpload.service.<a href="/src/api/resources/fileUpload/resources/service/client/Client.ts">withJsonProperty</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.fileUpload.service.withJsonProperty.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.fileUpload.service.withJsonProperty({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.fileUpload.WithJsonPropertyServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.fileUpload.service.<a href="/src/api/resources/fileUpload/resources/service/client/Client.ts">withRefBody</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.fileUpload.service.withRefBody.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.fileUpload.service.withRefBody({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.fileUpload.WithRefBodyServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.fileUpload.service.<a href="/src/api/resources/fileUpload/resources/service/client/Client.ts">simple</a>() -> core.APIResponse&lt;void, SeedApi.fileUpload.service.simple.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.fileUpload.service.simple();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.fileUpload.service.<a href="/src/api/resources/fileUpload/resources/service/client/Client.ts">withLiteralAndEnumTypes</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.fileUpload.service.withLiteralAndEnumTypes.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.fileUpload.service.withLiteralAndEnumTypes({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.fileUpload.WithLiteralAndEnumTypesServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Folders Folders
+<details><summary><code>client.folders.folders.<a href="/src/api/resources/folders/resources/folders/client/Client.ts">foo</a>() -> core.APIResponse&lt;void, SeedApi.folders.folders.foo.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.folders.folders.foo();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `FoldersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Folders AB
+<details><summary><code>client.folders.aB.<a href="/src/api/resources/folders/resources/aB/client/Client.ts">aBFoo</a>() -> core.APIResponse&lt;void, SeedApi.folders.aB.aBFoo.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.folders.aB.aBFoo();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ABClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Folders AC
+<details><summary><code>client.folders.aC.<a href="/src/api/resources/folders/resources/aC/client/Client.ts">aCFoo</a>() -> core.APIResponse&lt;void, SeedApi.folders.aC.aCFoo.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.folders.aC.aCFoo();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ACClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Folders Folder
+<details><summary><code>client.folders.folder.<a href="/src/api/resources/folders/resources/folder/client/Client.ts">foo</a>() -> core.APIResponse&lt;void, SeedApi.folders.folder.foo.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.folders.folder.foo();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `FolderClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Folders Folder Service
+<details><summary><code>client.folders.folder.service.<a href="/src/api/resources/folders/resources/folder/resources/service/client/Client.ts">endpoint</a>() -> core.APIResponse&lt;void, SeedApi.folders.folder.service.endpoint.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.folders.folder.service.endpoint();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.folders.folder.service.<a href="/src/api/resources/folders/resources/folder/resources/service/client/Client.ts">unknownRequest</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.folders.folder.service.unknownRequest.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.folders.folder.service.unknownRequest({
+    "key": "value"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `unknown` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GoOptionalLiteralAlias GoOptionalLiteralAlias
+<details><summary><code>client.goOptionalLiteralAlias.goOptionalLiteralAlias.<a href="/src/api/resources/goOptionalLiteralAlias/resources/goOptionalLiteralAlias/client/Client.ts">search</a>({ ...params }) -> core.APIResponse&lt;SeedApi.SearchResponse, SeedApi.goOptionalLiteralAlias.goOptionalLiteralAlias.search.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goOptionalLiteralAlias.goOptionalLiteralAlias.search({
+    sortField: "DEFAULT",
+    query: "test query"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goOptionalLiteralAlias.SearchRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `GoOptionalLiteralAliasClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GoBytesRequest Service
+## GoContentType Imdb
+<details><summary><code>client.goContentType.imdb.<a href="/src/api/resources/goContentType/resources/imdb/client/Client.ts">createMovie</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.goContentType.imdb.createMovie.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add a movie to the database
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goContentType.imdb.createMovie({
+    title: "title",
+    rating: 1.1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goContentType.CreateMovieRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ImdbClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GoDeterministicOrdering EndpointsHttpMethods
+<details><summary><code>client.goDeterministicOrdering.endpointsHttpMethods.<a href="/src/api/resources/goDeterministicOrdering/resources/endpointsHttpMethods/client/Client.ts">endpointsHttpMethodsTestGet</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.goDeterministicOrdering.endpointsHttpMethods.endpointsHttpMethodsTestGet.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpointsHttpMethods.endpointsHttpMethodsTestGet({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.EndpointsHttpMethodsTestGetEndpointsHttpMethodsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EndpointsHttpMethodsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpointsHttpMethods.<a href="/src/api/resources/goDeterministicOrdering/resources/endpointsHttpMethods/client/Client.ts">endpointsHttpMethodsTestPut</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithOptionalField, SeedApi.goDeterministicOrdering.endpointsHttpMethods.endpointsHttpMethodsTestPut.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpointsHttpMethods.endpointsHttpMethodsTestPut({
+    id: "id",
+    body: {
+        string: "uploaded"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.EndpointsHttpMethodsTestPutEndpointsHttpMethodsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EndpointsHttpMethodsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpointsHttpMethods.<a href="/src/api/resources/goDeterministicOrdering/resources/endpointsHttpMethods/client/Client.ts">endpointsHttpMethodsTestDelete</a>({ ...params }) -> core.APIResponse&lt;boolean, SeedApi.goDeterministicOrdering.endpointsHttpMethods.endpointsHttpMethodsTestDelete.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpointsHttpMethods.endpointsHttpMethodsTestDelete({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.EndpointsHttpMethodsTestDeleteEndpointsHttpMethodsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EndpointsHttpMethodsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpointsHttpMethods.<a href="/src/api/resources/goDeterministicOrdering/resources/endpointsHttpMethods/client/Client.ts">endpointsHttpMethodsTestPatch</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithOptionalField, SeedApi.goDeterministicOrdering.endpointsHttpMethods.endpointsHttpMethodsTestPatch.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpointsHttpMethods.endpointsHttpMethodsTestPatch({
+    id: "id",
+    body: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.EndpointsHttpMethodsTestPatchEndpointsHttpMethodsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EndpointsHttpMethodsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpointsHttpMethods.<a href="/src/api/resources/goDeterministicOrdering/resources/endpointsHttpMethods/client/Client.ts">endpointsHttpMethodsTestPost</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithOptionalField, SeedApi.goDeterministicOrdering.endpointsHttpMethods.endpointsHttpMethodsTestPost.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpointsHttpMethods.endpointsHttpMethodsTestPost({
+    string: "uploaded"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithRequiredField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EndpointsHttpMethodsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GoDeterministicOrdering EndpointsUrLs
+<details><summary><code>client.goDeterministicOrdering.endpointsUrLs.<a href="/src/api/resources/goDeterministicOrdering/resources/endpointsUrLs/client/Client.ts">endpointsUrlsWithMixedCase</a>() -> core.APIResponse&lt;string, SeedApi.goDeterministicOrdering.endpointsUrLs.endpointsUrlsWithMixedCase.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpointsUrLs.endpointsUrlsWithMixedCase();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `EndpointsUrLsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpointsUrLs.<a href="/src/api/resources/goDeterministicOrdering/resources/endpointsUrLs/client/Client.ts">endpointsUrlsNoEndingSlash</a>() -> core.APIResponse&lt;string, SeedApi.goDeterministicOrdering.endpointsUrLs.endpointsUrlsNoEndingSlash.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpointsUrLs.endpointsUrlsNoEndingSlash();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `EndpointsUrLsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpointsUrLs.<a href="/src/api/resources/goDeterministicOrdering/resources/endpointsUrLs/client/Client.ts">endpointsUrlsWithEndingSlash</a>() -> core.APIResponse&lt;string, SeedApi.goDeterministicOrdering.endpointsUrLs.endpointsUrlsWithEndingSlash.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpointsUrLs.endpointsUrlsWithEndingSlash();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `EndpointsUrLsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpointsUrLs.<a href="/src/api/resources/goDeterministicOrdering/resources/endpointsUrLs/client/Client.ts">endpointsUrlsWithUnderscores</a>() -> core.APIResponse&lt;string, SeedApi.goDeterministicOrdering.endpointsUrLs.endpointsUrlsWithUnderscores.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpointsUrLs.endpointsUrlsWithUnderscores();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `EndpointsUrLsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GoDeterministicOrdering InlinedRequests
+<details><summary><code>client.goDeterministicOrdering.inlinedRequests.<a href="/src/api/resources/goDeterministicOrdering/resources/inlinedRequests/client/Client.ts">postWithObjectBodyandResponse</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithOptionalField, SeedApi.goDeterministicOrdering.inlinedRequests.postWithObjectBodyandResponse.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with custom object in request body, response is an object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.inlinedRequests.postWithObjectBodyandResponse({
+    string: "string",
+    integer: 1,
+    NestedObject: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.PostWithObjectBodyandResponseInlinedRequestsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InlinedRequestsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GoDeterministicOrdering NoAuth
+<details><summary><code>client.goDeterministicOrdering.noAuth.<a href="/src/api/resources/goDeterministicOrdering/resources/noAuth/client/Client.ts">postWithNoAuth</a>({ ...params }) -> core.APIResponse&lt;boolean, SeedApi.goDeterministicOrdering.noAuth.postWithNoAuth.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST request with no auth
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.noAuth.postWithNoAuth({
+    "key": "value"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `unknown` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NoAuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GoDeterministicOrdering NoReqBody
+<details><summary><code>client.goDeterministicOrdering.noReqBody.<a href="/src/api/resources/goDeterministicOrdering/resources/noReqBody/client/Client.ts">getWithNoRequestBody</a>() -> core.APIResponse&lt;SeedApi.TypesObjectWithOptionalField, SeedApi.goDeterministicOrdering.noReqBody.getWithNoRequestBody.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.noReqBody.getWithNoRequestBody();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NoReqBodyClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.noReqBody.<a href="/src/api/resources/goDeterministicOrdering/resources/noReqBody/client/Client.ts">postWithNoRequestBody</a>() -> core.APIResponse&lt;string, SeedApi.goDeterministicOrdering.noReqBody.postWithNoRequestBody.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.noReqBody.postWithNoRequestBody();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NoReqBodyClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GoDeterministicOrdering ReqWithHeaders
+<details><summary><code>client.goDeterministicOrdering.reqWithHeaders.<a href="/src/api/resources/goDeterministicOrdering/resources/reqWithHeaders/client/Client.ts">getWithCustomHeader</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.goDeterministicOrdering.reqWithHeaders.getWithCustomHeader.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.reqWithHeaders.getWithCustomHeader({
+    "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
+    body: "string"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.GetWithCustomHeaderReqWithHeadersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ReqWithHeadersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GoDeterministicOrdering Endpoints Container
+<details><summary><code>client.goDeterministicOrdering.endpoints.container.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/container/client/Client.ts">getAndReturnListOfPrimitives</a>({ ...params }) -> core.APIResponse&lt;string[], SeedApi.goDeterministicOrdering.endpoints.container.getAndReturnListOfPrimitives.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.container.getAndReturnListOfPrimitives(["string"]);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string[]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.container.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/container/client/Client.ts">getAndReturnListOfObjects</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithRequiredField[], SeedApi.goDeterministicOrdering.endpoints.container.getAndReturnListOfObjects.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.container.getAndReturnListOfObjects([{
+        string: "uploaded"
+    }]);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithRequiredField[]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.container.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfPrimitives</a>({ ...params }) -> core.APIResponse&lt;string[], SeedApi.goDeterministicOrdering.endpoints.container.getAndReturnSetOfPrimitives.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.container.getAndReturnSetOfPrimitives(["string"]);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string[]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.container.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfObjects</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithRequiredField[], SeedApi.goDeterministicOrdering.endpoints.container.getAndReturnSetOfObjects.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.container.getAndReturnSetOfObjects([{
+        string: "uploaded"
+    }]);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithRequiredField[]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.container.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapPrimToPrim</a>({ ...params }) -> core.APIResponse&lt;Record&lt;string, string&gt;, SeedApi.goDeterministicOrdering.endpoints.container.getAndReturnMapPrimToPrim.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.container.getAndReturnMapPrimToPrim({
+    "key": "value"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Record<string, string>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.container.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfPrimToObject</a>({ ...params }) -> core.APIResponse&lt;Record&lt;string, SeedApi.TypesObjectWithRequiredField&gt;, SeedApi.goDeterministicOrdering.endpoints.container.getAndReturnMapOfPrimToObject.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.container.getAndReturnMapOfPrimToObject({
+    "key": {
+        string: "uploaded"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Record<string, SeedApi.TypesObjectWithRequiredField>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.container.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfPrimToUndiscriminatedUnion</a>({ ...params }) -> core.APIResponse&lt;Record&lt;string, SeedApi.TypesMixedType&gt;, SeedApi.goDeterministicOrdering.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
+    "key": 1.1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Record<string, SeedApi.TypesMixedType>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.container.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/container/client/Client.ts">getAndReturnOptional</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithRequiredField | null, SeedApi.goDeterministicOrdering.endpoints.container.getAndReturnOptional.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.container.getAndReturnOptional({
+    string: "uploaded"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithRequiredField | null` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GoDeterministicOrdering Endpoints ContentType
+<details><summary><code>client.goDeterministicOrdering.endpoints.contentType.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/contentType/client/Client.ts">postJsonPatchContentType</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.goDeterministicOrdering.endpoints.contentType.postJsonPatchContentType.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.contentType.postJsonPatchContentType({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithOptionalField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContentTypeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.contentType.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/contentType/client/Client.ts">postJsonPatchContentWithCharsetType</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.goDeterministicOrdering.endpoints.contentType.postJsonPatchContentWithCharsetType.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.contentType.postJsonPatchContentWithCharsetType({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithOptionalField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContentTypeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GoDeterministicOrdering Endpoints DuplicateNamesA
+<details><summary><code>client.goDeterministicOrdering.endpoints.duplicateNamesA.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/duplicateNamesA/client/Client.ts">list</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.goDeterministicOrdering.endpoints.duplicateNamesA.list.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List endpoint for service A
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.duplicateNamesA.list();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.endpoints.ListDuplicateNamesARequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DuplicateNamesAClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.duplicateNamesA.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/duplicateNamesA/client/Client.ts">create</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithOptionalField, SeedApi.goDeterministicOrdering.endpoints.duplicateNamesA.create.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create endpoint for service A
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.duplicateNamesA.create({
+    name: "name",
+    value: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.endpoints.CreateDuplicateNamesARequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DuplicateNamesAClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.duplicateNamesA.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/duplicateNamesA/client/Client.ts">get</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.goDeterministicOrdering.endpoints.duplicateNamesA.get.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get endpoint for service A
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.duplicateNamesA.get({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.endpoints.GetDuplicateNamesARequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DuplicateNamesAClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GoDeterministicOrdering Endpoints DuplicateNamesB
+<details><summary><code>client.goDeterministicOrdering.endpoints.duplicateNamesB.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/duplicateNamesB/client/Client.ts">list</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.goDeterministicOrdering.endpoints.duplicateNamesB.list.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List endpoint for service B
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.duplicateNamesB.list();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.endpoints.ListDuplicateNamesBRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DuplicateNamesBClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.duplicateNamesB.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/duplicateNamesB/client/Client.ts">create</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithOptionalField, SeedApi.goDeterministicOrdering.endpoints.duplicateNamesB.create.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create endpoint for service B
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.duplicateNamesB.create({
+    description: "description",
+    count: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.endpoints.CreateDuplicateNamesBRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DuplicateNamesBClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.duplicateNamesB.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/duplicateNamesB/client/Client.ts">get</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.goDeterministicOrdering.endpoints.duplicateNamesB.get.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get endpoint for service B
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.duplicateNamesB.get({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.endpoints.GetDuplicateNamesBRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DuplicateNamesBClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GoDeterministicOrdering Endpoints DuplicateNamesC
+<details><summary><code>client.goDeterministicOrdering.endpoints.duplicateNamesC.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/duplicateNamesC/client/Client.ts">list</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.goDeterministicOrdering.endpoints.duplicateNamesC.list.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List endpoint for service C
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.duplicateNamesC.list();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.endpoints.ListDuplicateNamesCRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DuplicateNamesCClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.duplicateNamesC.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/duplicateNamesC/client/Client.ts">create</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithOptionalField, SeedApi.goDeterministicOrdering.endpoints.duplicateNamesC.create.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create endpoint for service C
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.duplicateNamesC.create({
+    label: "label",
+    priority: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.endpoints.CreateDuplicateNamesCRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DuplicateNamesCClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.duplicateNamesC.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/duplicateNamesC/client/Client.ts">get</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.goDeterministicOrdering.endpoints.duplicateNamesC.get.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get endpoint for service C
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.duplicateNamesC.get({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.endpoints.GetDuplicateNamesCRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DuplicateNamesCClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GoDeterministicOrdering Endpoints Enum
+<details><summary><code>client.goDeterministicOrdering.endpoints.enum.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/enum/client/Client.ts">getAndReturnEnum</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesWeatherReport, SeedApi.goDeterministicOrdering.endpoints.enum_.getAndReturnEnum.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.enum.getAndReturnEnum("SUNNY");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesWeatherReport` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EnumClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GoDeterministicOrdering Endpoints Object
+<details><summary><code>client.goDeterministicOrdering.endpoints.object.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithOptionalField</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithOptionalField, SeedApi.goDeterministicOrdering.endpoints.object.getAndReturnWithOptionalField.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.object.getAndReturnWithOptionalField({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithOptionalField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.object.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithRequiredField</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithRequiredField, SeedApi.goDeterministicOrdering.endpoints.object.getAndReturnWithRequiredField.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.object.getAndReturnWithRequiredField({
+    string: "uploaded"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithRequiredField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.object.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithMapOfMap</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithMapOfMap, SeedApi.goDeterministicOrdering.endpoints.object.getAndReturnWithMapOfMap.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.object.getAndReturnWithMapOfMap({
+    map: {
+        "key": {
+            "key": "value"
+        }
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithMapOfMap` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.object.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithOptionalField</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesNestedObjectWithOptionalField, SeedApi.goDeterministicOrdering.endpoints.object.getAndReturnNestedWithOptionalField.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.object.getAndReturnNestedWithOptionalField({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesNestedObjectWithOptionalField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.object.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredField</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesNestedObjectWithRequiredField, SeedApi.goDeterministicOrdering.endpoints.object.getAndReturnNestedWithRequiredField.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.object.getAndReturnNestedWithRequiredField({
+    string: "string",
+    body: {
+        string: "string",
+        NestedObject: {}
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.endpoints.GetAndReturnNestedWithRequiredFieldObjectRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.object.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredFieldAsList</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesNestedObjectWithRequiredField, SeedApi.goDeterministicOrdering.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
+        string: "string",
+        NestedObject: {}
+    }]);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesNestedObjectWithRequiredField[]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.object.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithUnknownField</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithUnknownField, SeedApi.goDeterministicOrdering.endpoints.object.getAndReturnWithUnknownField.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.object.getAndReturnWithUnknownField({
+    unknown: {
+        "$ref": "https://example.com/schema"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithUnknownField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.object.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithDatetimeLikeString</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesObjectWithDatetimeLikeString, SeedApi.goDeterministicOrdering.endpoints.object.getAndReturnWithDatetimeLikeString.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that string fields containing datetime-like values are NOT reformatted.
+The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+without being converted to "2023-08-31T14:15:22.000Z".
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.object.getAndReturnWithDatetimeLikeString({
+    datetimeLikeString: "2023-08-31T14:15:22Z",
+    actualDatetime: "2023-08-31T14:15:22Z"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesObjectWithDatetimeLikeString` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GoDeterministicOrdering Endpoints Pagination
+<details><summary><code>client.goDeterministicOrdering.endpoints.pagination.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/pagination/client/Client.ts">listItems</a>({ ...params }) -> core.APIResponse&lt;SeedApi.EndpointsPaginatedResponse, SeedApi.goDeterministicOrdering.endpoints.pagination.listItems.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List items with cursor pagination
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.pagination.listItems();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.endpoints.ListItemsPaginationRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PaginationClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GoDeterministicOrdering Endpoints Params
+<details><summary><code>client.goDeterministicOrdering.endpoints.params.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/params/client/Client.ts">getWithPath</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.goDeterministicOrdering.endpoints.params.getWithPath.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.params.getWithPath({
+    param: "param"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.endpoints.GetWithPathParamsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.params.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/params/client/Client.ts">modifyWithPath</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.goDeterministicOrdering.endpoints.params.modifyWithPath.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+PUT to update with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.params.modifyWithPath({
+    param: "param",
+    body: "string"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.endpoints.ModifyWithPathParamsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.params.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/params/client/Client.ts">getWithInlinePath</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.goDeterministicOrdering.endpoints.params.getWithInlinePath.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.params.getWithInlinePath({
+    param: "param"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.endpoints.GetWithInlinePathParamsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.params.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/params/client/Client.ts">modifyWithInlinePath</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.goDeterministicOrdering.endpoints.params.modifyWithInlinePath.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+PUT to update with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.params.modifyWithInlinePath({
+    param: "param",
+    body: "string"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.endpoints.ModifyWithInlinePathParamsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.params.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/params/client/Client.ts">getWithQuery</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.goDeterministicOrdering.endpoints.params.getWithQuery.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with query param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.params.getWithQuery({
+    query: "query",
+    number: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.endpoints.GetWithQueryParamsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.params.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/params/client/Client.ts">getWithAllowMultipleQuery</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.goDeterministicOrdering.endpoints.params.getWithAllowMultipleQuery.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with multiple of same query param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.params.getWithAllowMultipleQuery({
+    query: ["query"],
+    number: [1]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.endpoints.GetWithAllowMultipleQueryParamsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.params.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/params/client/Client.ts">getWithPathAndQuery</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.goDeterministicOrdering.endpoints.params.getWithPathAndQuery.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path and query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.params.getWithPathAndQuery({
+    param: "param",
+    query: "query"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.endpoints.GetWithPathAndQueryParamsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.params.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/params/client/Client.ts">getWithInlinePathAndQuery</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.goDeterministicOrdering.endpoints.params.getWithInlinePathAndQuery.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path and query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.params.getWithInlinePathAndQuery({
+    param: "param",
+    query: "query"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.endpoints.GetWithInlinePathAndQueryParamsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GoDeterministicOrdering Endpoints Primitive
+<details><summary><code>client.goDeterministicOrdering.endpoints.primitive.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnString</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.goDeterministicOrdering.endpoints.primitive.getAndReturnString.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.primitive.getAndReturnString("string");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PrimitiveClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.primitive.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnInt</a>({ ...params }) -> core.APIResponse&lt;number, SeedApi.goDeterministicOrdering.endpoints.primitive.getAndReturnInt.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.primitive.getAndReturnInt(1);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `number` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PrimitiveClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.primitive.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnLong</a>({ ...params }) -> core.APIResponse&lt;number, SeedApi.goDeterministicOrdering.endpoints.primitive.getAndReturnLong.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.primitive.getAndReturnLong(1000000);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `number` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PrimitiveClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.primitive.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDouble</a>({ ...params }) -> core.APIResponse&lt;number, SeedApi.goDeterministicOrdering.endpoints.primitive.getAndReturnDouble.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.primitive.getAndReturnDouble(1.1);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `number` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PrimitiveClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.primitive.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnBool</a>({ ...params }) -> core.APIResponse&lt;boolean, SeedApi.goDeterministicOrdering.endpoints.primitive.getAndReturnBool.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.primitive.getAndReturnBool(true);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `boolean` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PrimitiveClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.primitive.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDatetime</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.goDeterministicOrdering.endpoints.primitive.getAndReturnDatetime.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PrimitiveClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.primitive.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDate</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.goDeterministicOrdering.endpoints.primitive.getAndReturnDate.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.primitive.getAndReturnDate("2023-01-15");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PrimitiveClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.primitive.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnUuid</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.goDeterministicOrdering.endpoints.primitive.getAndReturnUuid.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.primitive.getAndReturnUuid("string");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PrimitiveClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.goDeterministicOrdering.endpoints.primitive.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnBase64</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.goDeterministicOrdering.endpoints.primitive.getAndReturnBase64.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.primitive.getAndReturnBase64("string");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PrimitiveClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GoDeterministicOrdering Endpoints Put
+<details><summary><code>client.goDeterministicOrdering.endpoints.put.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/put/client/Client.ts">add</a>({ ...params }) -> core.APIResponse&lt;SeedApi.EndpointsPutResponse, SeedApi.goDeterministicOrdering.endpoints.put.add.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.put.add({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goDeterministicOrdering.endpoints.AddPutRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PutClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GoDeterministicOrdering Endpoints Union
+<details><summary><code>client.goDeterministicOrdering.endpoints.union.<a href="/src/api/resources/goDeterministicOrdering/resources/endpoints/resources/union/client/Client.ts">getAndReturnUnion</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TypesAnimal, SeedApi.goDeterministicOrdering.endpoints.union.getAndReturnUnion.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goDeterministicOrdering.endpoints.union.getAndReturnUnion({
+    name: "name",
+    likesToWoof: true,
+    animal: "dog"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TypesAnimal` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GoUndiscriminatedUnionWireTests Service
+<details><summary><code>client.goUndiscriminatedUnionWireTests.service.<a href="/src/api/resources/goUndiscriminatedUnionWireTests/resources/service/client/Client.ts">rerank</a>({ ...params }) -> core.APIResponse&lt;SeedApi.RerankResponse, SeedApi.goUndiscriminatedUnionWireTests.service.rerank.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Rerank documents based on relevance to a query
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.goUndiscriminatedUnionWireTests.service.rerank({
+    documents: [{
+            text: "Carson City is the capital city of the American state of Nevada."
+        }, {
+            text: "Washington, D.C. is the capital of the United States."
+        }],
+    query: "What is the capital of the United States?"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.goUndiscriminatedUnionWireTests.RerankRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## HttpHead User
+<details><summary><code>client.httpHead.user.<a href="/src/api/resources/httpHead/resources/user/client/Client.ts">list</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User[], SeedApi.httpHead.user.list.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.httpHead.user.list({
+    limit: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.httpHead.ListUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.httpHead.user.<a href="/src/api/resources/httpHead/resources/user/client/Client.ts">head</a>() -> core.APIResponse&lt;Headers, SeedApi.httpHead.user.head.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.httpHead.user.head();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## IdempotencyHeaders Payment
+<details><summary><code>client.idempotencyHeaders.payment.<a href="/src/api/resources/idempotencyHeaders/resources/payment/client/Client.ts">create</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.idempotencyHeaders.payment.create.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.idempotencyHeaders.payment.create({
+    amount: 1,
+    currency: "USD"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.idempotencyHeaders.CreatePaymentRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PaymentClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.idempotencyHeaders.payment.<a href="/src/api/resources/idempotencyHeaders/resources/payment/client/Client.ts">delete</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.idempotencyHeaders.payment.delete.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.idempotencyHeaders.payment.delete({
+    paymentId: "paymentId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.idempotencyHeaders.DeletePaymentRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PaymentClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Imdb Imdb
+<details><summary><code>client.imdb.imdb.<a href="/src/api/resources/imdb/resources/imdb/client/Client.ts">createMovie</a>({ ...params }) -> core.APIResponse&lt;SeedApi.MovieId, SeedApi.imdb.imdb.createMovie.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add a movie to the database using the movies/* /... path.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.imdb.imdb.createMovie({
+    title: "title",
+    rating: 1.1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.imdb.CreateMovieRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ImdbClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.imdb.imdb.<a href="/src/api/resources/imdb/resources/imdb/client/Client.ts">getMovie</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Movie, SeedApi.imdb.imdb.getMovie.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.imdb.imdb.getMovie({
+    movieId: SeedApi.MovieId("movieId")
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.imdb.GetMovieImdbRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ImdbClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## InferredAuthExplicit Auth
+<details><summary><code>client.inferredAuthExplicit.auth.<a href="/src/api/resources/inferredAuthExplicit/resources/auth/client/Client.ts">getTokenWithClientCredentials</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.inferredAuthExplicit.auth.getTokenWithClientCredentials.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthExplicit.auth.getTokenWithClientCredentials({
+    client_id: "client_id",
+    client_secret: "client_secret",
+    audience: "https://api.example.com",
+    grant_type: "client_credentials"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.inferredAuthExplicit.GetTokenWithClientCredentialsAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inferredAuthExplicit.auth.<a href="/src/api/resources/inferredAuthExplicit/resources/auth/client/Client.ts">refreshToken</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.inferredAuthExplicit.auth.refreshToken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthExplicit.auth.refreshToken({
+    client_id: "client_id",
+    client_secret: "client_secret",
+    refresh_token: "refresh_token",
+    audience: "https://api.example.com",
+    grant_type: "refresh_token"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.inferredAuthExplicit.RefreshTokenAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## InferredAuthExplicit NestedNoAuthApi
+<details><summary><code>client.inferredAuthExplicit.nestedNoAuthApi.<a href="/src/api/resources/inferredAuthExplicit/resources/nestedNoAuthApi/client/Client.ts">nestedNoAuthApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.inferredAuthExplicit.nestedNoAuthApi.nestedNoAuthApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthExplicit.nestedNoAuthApi.nestedNoAuthApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedNoAuthApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## InferredAuthExplicit NestedApi
+<details><summary><code>client.inferredAuthExplicit.nestedApi.<a href="/src/api/resources/inferredAuthExplicit/resources/nestedApi/client/Client.ts">nestedApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.inferredAuthExplicit.nestedApi.nestedApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthExplicit.nestedApi.nestedApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## InferredAuthExplicit Simple
+<details><summary><code>client.inferredAuthExplicit.simple.<a href="/src/api/resources/inferredAuthExplicit/resources/simple/client/Client.ts">getSomething</a>() -> core.APIResponse&lt;void, SeedApi.inferredAuthExplicit.simple.getSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthExplicit.simple.getSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `SimpleClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## InferredAuthImplicit Auth
+<details><summary><code>client.inferredAuthImplicit.auth.<a href="/src/api/resources/inferredAuthImplicit/resources/auth/client/Client.ts">getTokenWithClientCredentials</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.inferredAuthImplicit.auth.getTokenWithClientCredentials.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthImplicit.auth.getTokenWithClientCredentials({
+    client_id: "client_id",
+    client_secret: "client_secret",
+    audience: "https://api.example.com",
+    grant_type: "client_credentials"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.inferredAuthImplicit.GetTokenWithClientCredentialsAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inferredAuthImplicit.auth.<a href="/src/api/resources/inferredAuthImplicit/resources/auth/client/Client.ts">refreshToken</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.inferredAuthImplicit.auth.refreshToken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthImplicit.auth.refreshToken({
+    client_id: "client_id",
+    client_secret: "client_secret",
+    refresh_token: "refresh_token",
+    audience: "https://api.example.com",
+    grant_type: "refresh_token"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.inferredAuthImplicit.RefreshTokenAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## InferredAuthImplicit NestedNoAuthApi
+<details><summary><code>client.inferredAuthImplicit.nestedNoAuthApi.<a href="/src/api/resources/inferredAuthImplicit/resources/nestedNoAuthApi/client/Client.ts">nestedNoAuthApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.inferredAuthImplicit.nestedNoAuthApi.nestedNoAuthApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthImplicit.nestedNoAuthApi.nestedNoAuthApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedNoAuthApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## InferredAuthImplicit NestedApi
+<details><summary><code>client.inferredAuthImplicit.nestedApi.<a href="/src/api/resources/inferredAuthImplicit/resources/nestedApi/client/Client.ts">nestedApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.inferredAuthImplicit.nestedApi.nestedApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthImplicit.nestedApi.nestedApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## InferredAuthImplicit Simple
+<details><summary><code>client.inferredAuthImplicit.simple.<a href="/src/api/resources/inferredAuthImplicit/resources/simple/client/Client.ts">getSomething</a>() -> core.APIResponse&lt;void, SeedApi.inferredAuthImplicit.simple.getSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthImplicit.simple.getSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `SimpleClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## InferredAuthImplicitApiKey Auth
+<details><summary><code>client.inferredAuthImplicitApiKey.auth.<a href="/src/api/resources/inferredAuthImplicitApiKey/resources/auth/client/Client.ts">getToken</a>() -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.inferredAuthImplicitApiKey.auth.getToken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthImplicitApiKey.auth.getToken();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## InferredAuthImplicitApiKey NestedNoAuthApi
+<details><summary><code>client.inferredAuthImplicitApiKey.nestedNoAuthApi.<a href="/src/api/resources/inferredAuthImplicitApiKey/resources/nestedNoAuthApi/client/Client.ts">nestedNoAuthApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.inferredAuthImplicitApiKey.nestedNoAuthApi.nestedNoAuthApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthImplicitApiKey.nestedNoAuthApi.nestedNoAuthApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedNoAuthApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## InferredAuthImplicitApiKey NestedApi
+<details><summary><code>client.inferredAuthImplicitApiKey.nestedApi.<a href="/src/api/resources/inferredAuthImplicitApiKey/resources/nestedApi/client/Client.ts">nestedApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.inferredAuthImplicitApiKey.nestedApi.nestedApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthImplicitApiKey.nestedApi.nestedApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## InferredAuthImplicitApiKey Simple
+<details><summary><code>client.inferredAuthImplicitApiKey.simple.<a href="/src/api/resources/inferredAuthImplicitApiKey/resources/simple/client/Client.ts">getSomething</a>() -> core.APIResponse&lt;void, SeedApi.inferredAuthImplicitApiKey.simple.getSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthImplicitApiKey.simple.getSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `SimpleClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## InferredAuthImplicitNoExpiry Auth
+<details><summary><code>client.inferredAuthImplicitNoExpiry.auth.<a href="/src/api/resources/inferredAuthImplicitNoExpiry/resources/auth/client/Client.ts">getTokenWithClientCredentials</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.inferredAuthImplicitNoExpiry.auth.getTokenWithClientCredentials.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthImplicitNoExpiry.auth.getTokenWithClientCredentials({
+    client_id: "client_id",
+    client_secret: "client_secret",
+    audience: "https://api.example.com",
+    grant_type: "client_credentials"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.inferredAuthImplicitNoExpiry.GetTokenWithClientCredentialsAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inferredAuthImplicitNoExpiry.auth.<a href="/src/api/resources/inferredAuthImplicitNoExpiry/resources/auth/client/Client.ts">refreshToken</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.inferredAuthImplicitNoExpiry.auth.refreshToken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthImplicitNoExpiry.auth.refreshToken({
+    client_id: "client_id",
+    client_secret: "client_secret",
+    refresh_token: "refresh_token",
+    audience: "https://api.example.com",
+    grant_type: "refresh_token"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.inferredAuthImplicitNoExpiry.RefreshTokenAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## InferredAuthImplicitNoExpiry NestedNoAuthApi
+<details><summary><code>client.inferredAuthImplicitNoExpiry.nestedNoAuthApi.<a href="/src/api/resources/inferredAuthImplicitNoExpiry/resources/nestedNoAuthApi/client/Client.ts">nestedNoAuthApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.inferredAuthImplicitNoExpiry.nestedNoAuthApi.nestedNoAuthApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthImplicitNoExpiry.nestedNoAuthApi.nestedNoAuthApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedNoAuthApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## InferredAuthImplicitNoExpiry NestedApi
+<details><summary><code>client.inferredAuthImplicitNoExpiry.nestedApi.<a href="/src/api/resources/inferredAuthImplicitNoExpiry/resources/nestedApi/client/Client.ts">nestedApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.inferredAuthImplicitNoExpiry.nestedApi.nestedApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthImplicitNoExpiry.nestedApi.nestedApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## InferredAuthImplicitNoExpiry Simple
+<details><summary><code>client.inferredAuthImplicitNoExpiry.simple.<a href="/src/api/resources/inferredAuthImplicitNoExpiry/resources/simple/client/Client.ts">getSomething</a>() -> core.APIResponse&lt;void, SeedApi.inferredAuthImplicitNoExpiry.simple.getSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthImplicitNoExpiry.simple.getSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `SimpleClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## InferredAuthImplicitReference Auth
+<details><summary><code>client.inferredAuthImplicitReference.auth.<a href="/src/api/resources/inferredAuthImplicitReference/resources/auth/client/Client.ts">getTokenWithClientCredentials</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.inferredAuthImplicitReference.auth.getTokenWithClientCredentials.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthImplicitReference.auth.getTokenWithClientCredentials({
+    client_id: "client_id",
+    client_secret: "client_secret",
+    audience: "https://api.example.com",
+    grant_type: "client_credentials"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.inferredAuthImplicitReference.GetTokenRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inferredAuthImplicitReference.auth.<a href="/src/api/resources/inferredAuthImplicitReference/resources/auth/client/Client.ts">refreshToken</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.inferredAuthImplicitReference.auth.refreshToken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthImplicitReference.auth.refreshToken({
+    client_id: "client_id",
+    client_secret: "client_secret",
+    refresh_token: "refresh_token",
+    audience: "https://api.example.com",
+    grant_type: "refresh_token"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.RefreshTokenRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## InferredAuthImplicitReference NestedNoAuthApi
+<details><summary><code>client.inferredAuthImplicitReference.nestedNoAuthApi.<a href="/src/api/resources/inferredAuthImplicitReference/resources/nestedNoAuthApi/client/Client.ts">nestedNoAuthApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.inferredAuthImplicitReference.nestedNoAuthApi.nestedNoAuthApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthImplicitReference.nestedNoAuthApi.nestedNoAuthApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedNoAuthApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## InferredAuthImplicitReference NestedApi
+<details><summary><code>client.inferredAuthImplicitReference.nestedApi.<a href="/src/api/resources/inferredAuthImplicitReference/resources/nestedApi/client/Client.ts">nestedApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.inferredAuthImplicitReference.nestedApi.nestedApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthImplicitReference.nestedApi.nestedApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## InferredAuthImplicitReference Simple
+<details><summary><code>client.inferredAuthImplicitReference.simple.<a href="/src/api/resources/inferredAuthImplicitReference/resources/simple/client/Client.ts">getSomething</a>() -> core.APIResponse&lt;void, SeedApi.inferredAuthImplicitReference.simple.getSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inferredAuthImplicitReference.simple.getSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `SimpleClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## JavaDefaultTimeout JavaDefaultTimeout
+<details><summary><code>client.javaDefaultTimeout.javaDefaultTimeout.<a href="/src/api/resources/javaDefaultTimeout/resources/javaDefaultTimeout/client/Client.ts">getUser</a>() -> core.APIResponse&lt;SeedApi.User, SeedApi.javaDefaultTimeout.javaDefaultTimeout.getUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaDefaultTimeout.javaDefaultTimeout.getUser();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `JavaDefaultTimeoutClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## JavaInlineTypes JavaInlineTypes
+<details><summary><code>client.javaInlineTypes.javaInlineTypes.<a href="/src/api/resources/javaInlineTypes/resources/javaInlineTypes/client/Client.ts">getRoot</a>({ ...params }) -> core.APIResponse&lt;SeedApi.RootType1, SeedApi.javaInlineTypes.javaInlineTypes.getRoot.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaInlineTypes.javaInlineTypes.getRoot({
+    bar: {
+        foo: "foo"
+    },
+    foo: "foo"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaInlineTypes.GetRootRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JavaInlineTypesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.javaInlineTypes.javaInlineTypes.<a href="/src/api/resources/javaInlineTypes/resources/javaInlineTypes/client/Client.ts">getDiscriminatedUnion</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.javaInlineTypes.javaInlineTypes.getDiscriminatedUnion.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaInlineTypes.javaInlineTypes.getDiscriminatedUnion({
+    bar: {
+        foo: "foo",
+        bar: {
+            foo: "foo",
+            ref: {
+                foo: "foo"
+            }
+        },
+        ref: {
+            foo: "foo"
+        },
+        type: "type1"
+    },
+    foo: "foo"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaInlineTypes.GetDiscriminatedUnionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JavaInlineTypesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.javaInlineTypes.javaInlineTypes.<a href="/src/api/resources/javaInlineTypes/resources/javaInlineTypes/client/Client.ts">getUndiscriminatedUnion</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.javaInlineTypes.javaInlineTypes.getUndiscriminatedUnion.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaInlineTypes.javaInlineTypes.getUndiscriminatedUnion({
+    bar: "SUNNY",
+    foo: "foo"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaInlineTypes.GetUndiscriminatedUnionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JavaInlineTypesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## JavaOptionalNullableQueryParams JavaOptionalNullableQueryParams
+<details><summary><code>client.javaOptionalNullableQueryParams.javaOptionalNullableQueryParams.<a href="/src/api/resources/javaOptionalNullableQueryParams/resources/javaOptionalNullableQueryParams/client/Client.ts">search</a>({ ...params }) -> core.APIResponse&lt;SeedApi.SearchResponse, SeedApi.javaOptionalNullableQueryParams.javaOptionalNullableQueryParams.search.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Search endpoint with optional nullable query params with defaults
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaOptionalNullableQueryParams.javaOptionalNullableQueryParams.search();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaOptionalNullableQueryParams.SearchRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JavaOptionalNullableQueryParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## JavaOptionalQueryParamsOverloads JavaOptionalQueryParamsOverloads
+<details><summary><code>client.javaOptionalQueryParamsOverloads.javaOptionalQueryParamsOverloads.<a href="/src/api/resources/javaOptionalQueryParamsOverloads/resources/javaOptionalQueryParamsOverloads/client/Client.ts">getLatestInsurance</a>({ ...params }) -> core.APIResponse&lt;SeedApi.InsurancePolicy, SeedApi.javaOptionalQueryParamsOverloads.javaOptionalQueryParamsOverloads.getLatestInsurance.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get latest insurance for a user. All query params are optional.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaOptionalQueryParamsOverloads.javaOptionalQueryParamsOverloads.getLatestInsurance({
+    userId: "userId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaOptionalQueryParamsOverloads.GetLatestInsuranceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JavaOptionalQueryParamsOverloadsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.javaOptionalQueryParamsOverloads.javaOptionalQueryParamsOverloads.<a href="/src/api/resources/javaOptionalQueryParamsOverloads/resources/javaOptionalQueryParamsOverloads/client/Client.ts">searchPolicies</a>({ ...params }) -> core.APIResponse&lt;SeedApi.InsurancePolicy[], SeedApi.javaOptionalQueryParamsOverloads.javaOptionalQueryParamsOverloads.searchPolicies.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Search policies with required query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaOptionalQueryParamsOverloads.javaOptionalQueryParamsOverloads.searchPolicies({
+    query: "query"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaOptionalQueryParamsOverloads.SearchPoliciesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JavaOptionalQueryParamsOverloadsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.javaOptionalQueryParamsOverloads.javaOptionalQueryParamsOverloads.<a href="/src/api/resources/javaOptionalQueryParamsOverloads/resources/javaOptionalQueryParamsOverloads/client/Client.ts">listAllPolicies</a>() -> core.APIResponse&lt;SeedApi.InsurancePolicy[], SeedApi.javaOptionalQueryParamsOverloads.javaOptionalQueryParamsOverloads.listAllPolicies.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all policies
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaOptionalQueryParamsOverloads.javaOptionalQueryParamsOverloads.listAllPolicies();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `JavaOptionalQueryParamsOverloadsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## JavaPathParamKeyConflict
+<details><summary><code>client.javaPathParamKeyConflict.<a href="/src/api/resources/javaPathParamKeyConflict/client/Client.ts">createItem</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Item, SeedApi.javaPathParamKeyConflict.createItem.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaPathParamKeyConflict.createItem({
+    key: "key",
+    value: "value",
+    data: "data"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaPathParamKeyConflict.ItemData` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JavaPathParamKeyConflictClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## JavaRequiredBodyOptionalHeaders JavaRequiredBodyOptionalHeaders
+<details><summary><code>client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.<a href="/src/api/resources/javaRequiredBodyOptionalHeaders/resources/javaRequiredBodyOptionalHeaders/client/Client.ts">getUsers</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User[], SeedApi.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.getUsers.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all users with optional filtering.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.getUsers();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaRequiredBodyOptionalHeaders.GetUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JavaRequiredBodyOptionalHeadersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.<a href="/src/api/resources/javaRequiredBodyOptionalHeaders/resources/javaRequiredBodyOptionalHeaders/client/Client.ts">createUser</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.createUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new user. Has required body and optional header.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.createUser({
+    body: {
+        name: "name",
+        email: "email"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaRequiredBodyOptionalHeaders.CreateUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JavaRequiredBodyOptionalHeadersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.<a href="/src/api/resources/javaRequiredBodyOptionalHeaders/resources/javaRequiredBodyOptionalHeaders/client/Client.ts">updateUser</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.updateUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update an existing user. Has required body and optional query param.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.updateUser({
+    userId: "userId",
+    body: {
+        name: "name",
+        email: "email"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaRequiredBodyOptionalHeaders.UpdateUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JavaRequiredBodyOptionalHeadersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.<a href="/src/api/resources/javaRequiredBodyOptionalHeaders/resources/javaRequiredBodyOptionalHeaders/client/Client.ts">createUserWithOptions</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.createUserWithOptions.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a user with optional header and query param.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.createUserWithOptions({
+    body: {
+        name: "name",
+        email: "email"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaRequiredBodyOptionalHeaders.CreateUserWithOptionsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JavaRequiredBodyOptionalHeadersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.<a href="/src/api/resources/javaRequiredBodyOptionalHeaders/resources/javaRequiredBodyOptionalHeaders/client/Client.ts">createUserWithRequiredHeader</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.createUserWithRequiredHeader.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a user with required header.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.createUserWithRequiredHeader({
+    name: "name",
+    email: "email"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.UserData` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JavaRequiredBodyOptionalHeadersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.<a href="/src/api/resources/javaRequiredBodyOptionalHeaders/resources/javaRequiredBodyOptionalHeaders/client/Client.ts">createUserWithRequiredQuery</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.createUserWithRequiredQuery.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a user with required query param.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.createUserWithRequiredQuery({
+    tenantId: "tenantId",
+    body: {
+        name: "name",
+        email: "email"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaRequiredBodyOptionalHeaders.CreateUserWithRequiredQueryRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JavaRequiredBodyOptionalHeadersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.<a href="/src/api/resources/javaRequiredBodyOptionalHeaders/resources/javaRequiredBodyOptionalHeaders/client/Client.ts">createUserInlined</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.createUserInlined.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a user with inlined body and optional header.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaRequiredBodyOptionalHeaders.javaRequiredBodyOptionalHeaders.createUserInlined({
+    name: "name",
+    email: "email"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaRequiredBodyOptionalHeaders.CreateUserInlinedRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JavaRequiredBodyOptionalHeadersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## JavaBuilderExtension Service
+<details><summary><code>client.javaBuilderExtension.service.<a href="/src/api/resources/javaBuilderExtension/resources/service/client/Client.ts">hello</a>() -> core.APIResponse&lt;SeedApi.HelloResponse, SeedApi.javaBuilderExtension.service.hello.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaBuilderExtension.service.hello();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## JavaCustomPackagePrefix Imdb
+<details><summary><code>client.javaCustomPackagePrefix.imdb.<a href="/src/api/resources/javaCustomPackagePrefix/resources/imdb/client/Client.ts">createMovie</a>({ ...params }) -> core.APIResponse&lt;SeedApi.MovieId, SeedApi.javaCustomPackagePrefix.imdb.createMovie.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add a movie to the database
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaCustomPackagePrefix.imdb.createMovie({
+    title: "title",
+    rating: 1.1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaCustomPackagePrefix.CreateMovieRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ImdbClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.javaCustomPackagePrefix.imdb.<a href="/src/api/resources/javaCustomPackagePrefix/resources/imdb/client/Client.ts">getMovie</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Movie, SeedApi.javaCustomPackagePrefix.imdb.getMovie.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaCustomPackagePrefix.imdb.getMovie({
+    movieId: SeedApi.MovieId("movieId")
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaCustomPackagePrefix.GetMovieImdbRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ImdbClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## JavaOutputDirectory Service
+<details><summary><code>client.javaOutputDirectory.service.<a href="/src/api/resources/javaOutputDirectory/resources/service/client/Client.ts">getUser</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.javaOutputDirectory.service.getUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaOutputDirectory.service.getUser({
+    userId: "userId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaOutputDirectory.GetUserServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## JavaPaginationDeepCursorPath DeepCursorPath
+<details><summary><code>client.javaPaginationDeepCursorPath.deepCursorPath.<a href="/src/api/resources/javaPaginationDeepCursorPath/resources/deepCursorPath/client/Client.ts">doThing</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Response, SeedApi.javaPaginationDeepCursorPath.deepCursorPath.doThing.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaPaginationDeepCursorPath.deepCursorPath.doThing({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.A` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DeepCursorPathClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.javaPaginationDeepCursorPath.deepCursorPath.<a href="/src/api/resources/javaPaginationDeepCursorPath/resources/deepCursorPath/client/Client.ts">doThingRequired</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Response, SeedApi.javaPaginationDeepCursorPath.deepCursorPath.doThingRequired.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaPaginationDeepCursorPath.deepCursorPath.doThingRequired({
+    indirection: {
+        results: ["results"]
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaPaginationDeepCursorPath.MainRequired` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DeepCursorPathClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.javaPaginationDeepCursorPath.deepCursorPath.<a href="/src/api/resources/javaPaginationDeepCursorPath/resources/deepCursorPath/client/Client.ts">doThingInline</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Response, SeedApi.javaPaginationDeepCursorPath.deepCursorPath.doThingInline.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaPaginationDeepCursorPath.deepCursorPath.doThingInline();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaPaginationDeepCursorPath.InlineA` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DeepCursorPathClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## JavaSinglePropertyEndpoint SingleProperty
+<details><summary><code>client.javaSinglePropertyEndpoint.singleProperty.<a href="/src/api/resources/javaSinglePropertyEndpoint/resources/singleProperty/client/Client.ts">doThing</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.javaSinglePropertyEndpoint.singleProperty.doThing.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaSinglePropertyEndpoint.singleProperty.doThing({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaSinglePropertyEndpoint.DoThingSinglePropertyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SinglePropertyClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## JavaStagedBuilderOrdering Service
+<details><summary><code>client.javaStagedBuilderOrdering.service.<a href="/src/api/resources/javaStagedBuilderOrdering/resources/service/client/Client.ts">createSimple</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.javaStagedBuilderOrdering.service.createSimple.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaStagedBuilderOrdering.service.createSimple({
+    first: "a",
+    second: "b",
+    third: "c"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.SimpleStaged` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.javaStagedBuilderOrdering.service.<a href="/src/api/resources/javaStagedBuilderOrdering/resources/service/client/Client.ts">createMedium</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.javaStagedBuilderOrdering.service.createMedium.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaStagedBuilderOrdering.service.createMedium({
+    alpha: "alpha",
+    beta: 1,
+    gamma: "gamma",
+    delta: true,
+    optional: "optional"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaStagedBuilderOrdering.MediumStaged` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.javaStagedBuilderOrdering.service.<a href="/src/api/resources/javaStagedBuilderOrdering/resources/service/client/Client.ts">createComplex</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.javaStagedBuilderOrdering.service.createComplex.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaStagedBuilderOrdering.service.createComplex({
+    fieldA: "a",
+    fieldB: 1,
+    fieldC: true,
+    fieldD: "d",
+    fieldE: 1.5,
+    optionalX: "x",
+    optionalY: 2,
+    optionalZ: false
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaStagedBuilderOrdering.ComplexStaged` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.javaStagedBuilderOrdering.service.<a href="/src/api/resources/javaStagedBuilderOrdering/resources/service/client/Client.ts">createMixed</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.javaStagedBuilderOrdering.service.createMixed.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaStagedBuilderOrdering.service.createMixed({
+    id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    name: "test",
+    timestamp: "2024-01-15T09:30:00Z",
+    nested: {
+        first: "a",
+        second: "b",
+        third: "c"
+    },
+    count: 42
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaStagedBuilderOrdering.MixedStaged` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.javaStagedBuilderOrdering.service.<a href="/src/api/resources/javaStagedBuilderOrdering/resources/service/client/Client.ts">createParent</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.javaStagedBuilderOrdering.service.createParent.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaStagedBuilderOrdering.service.createParent({
+    parentId: "parent-123",
+    child: {
+        childId: "child-456",
+        childValue: 789
+    },
+    parentName: "Parent Name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.Parent` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## JavaStreamingAcceptHeader Dummy
+<details><summary><code>client.javaStreamingAcceptHeader.dummy.<a href="/src/api/resources/javaStreamingAcceptHeader/resources/dummy/client/Client.ts">generateStream</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.javaStreamingAcceptHeader.dummy.generateStream.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaStreamingAcceptHeader.dummy.generateStream({
+    num_events: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaStreamingAcceptHeader.GenerateStreamDummyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DummyClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.javaStreamingAcceptHeader.dummy.<a href="/src/api/resources/javaStreamingAcceptHeader/resources/dummy/client/Client.ts">generate</a>({ ...params }) -> core.APIResponse&lt;SeedApi.StreamResponse, SeedApi.javaStreamingAcceptHeader.dummy.generate.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.javaStreamingAcceptHeader.dummy.generate({
+    num_events: 5
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.javaStreamingAcceptHeader.GenerateDummyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DummyClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## License License
+<details><summary><code>client.license.license.<a href="/src/api/resources/license/resources/license/client/Client.ts">get</a>() -> core.APIResponse&lt;void, SeedApi.license.license.get.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.license.license.get();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `LicenseClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Literal Headers
+<details><summary><code>client.literal.headers.<a href="/src/api/resources/literal/resources/headers/client/Client.ts">send</a>({ ...params }) -> core.APIResponse&lt;SeedApi.SendResponse, SeedApi.literal.headers.send.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.literal.headers.send({
+    "X-Endpoint-Version": "02-12-2024",
+    "X-Async": true,
+    query: "What is the weather today"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.literal.SendHeadersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `HeadersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Literal Inlined
+<details><summary><code>client.literal.inlined.<a href="/src/api/resources/literal/resources/inlined/client/Client.ts">send</a>({ ...params }) -> core.APIResponse&lt;SeedApi.SendResponse, SeedApi.literal.inlined.send.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.literal.inlined.send({
+    prompt: "You are a helpful assistant",
+    context: "You're super wise",
+    query: "What is the weather today",
+    temperature: 10.1,
+    stream: false,
+    aliasedContext: "You're super wise",
+    maybeContext: "You're super wise",
+    objectWithLiteral: {
+        nestedLiteral: {
+            myLiteral: "How super cool"
+        }
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.literal.SendInlinedRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InlinedClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Literal Path
+<details><summary><code>client.literal.path.<a href="/src/api/resources/literal/resources/path/client/Client.ts">send</a>({ ...params }) -> core.APIResponse&lt;SeedApi.SendResponse, SeedApi.literal.path.send.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.literal.path.send({
+    id: "123"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.literal.SendPathRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PathClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Literal Query
+<details><summary><code>client.literal.query.<a href="/src/api/resources/literal/resources/query/client/Client.ts">send</a>({ ...params }) -> core.APIResponse&lt;SeedApi.SendResponse, SeedApi.literal.query.send.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.literal.query.send({
+    prompt: "You are a helpful assistant",
+    alias_prompt: "You are a helpful assistant",
+    query: "What is the weather today",
+    stream: true,
+    alias_stream: true
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.literal.SendQueryRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `QueryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Literal Reference
+<details><summary><code>client.literal.reference.<a href="/src/api/resources/literal/resources/reference/client/Client.ts">send</a>({ ...params }) -> core.APIResponse&lt;SeedApi.SendResponse, SeedApi.literal.reference.send.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.literal.reference.send({
+    prompt: "You are a helpful assistant",
+    query: "What is the weather today",
+    stream: false,
+    ending: "\\$ending",
+    context: "You're super wise",
+    containerObject: {
+        nestedObjects: [{
+                literal1: "literal1",
+                literal2: "literal2",
+                strProp: "strProp"
+            }]
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.literal.SendRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ReferenceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## LiteralUserAgent LiteralUserAgent
+<details><summary><code>client.literalUserAgent.literalUserAgent.<a href="/src/api/resources/literalUserAgent/resources/literalUserAgent/client/Client.ts">ping</a>() -> core.APIResponse&lt;string, SeedApi.literalUserAgent.literalUserAgent.ping.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.literalUserAgent.literalUserAgent.ping();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `LiteralUserAgentClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## MixedCase Service
+<details><summary><code>client.mixedCase.service.<a href="/src/api/resources/mixedCase/resources/service/client/Client.ts">getResource</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Resource, SeedApi.mixedCase.service.getResource.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.mixedCase.service.getResource({
+    ResourceID: "rsc-xyz"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.mixedCase.GetResourceServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.mixedCase.service.<a href="/src/api/resources/mixedCase/resources/service/client/Client.ts">listResources</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Resource[], SeedApi.mixedCase.service.listResources.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.mixedCase.service.listResources({
+    page_limit: 1,
+    beforeDate: "2023-01-01"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.mixedCase.ListResourcesServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## MixedFileDirectory Organization
+<details><summary><code>client.mixedFileDirectory.organization.<a href="/src/api/resources/mixedFileDirectory/resources/organization/client/Client.ts">create</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Organization, SeedApi.mixedFileDirectory.organization.create.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.mixedFileDirectory.organization.create({
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.mixedFileDirectory.CreateOrganizationRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `OrganizationClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## MixedFileDirectory User
+<details><summary><code>client.mixedFileDirectory.user.<a href="/src/api/resources/mixedFileDirectory/resources/user/client/Client.ts">list</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User[], SeedApi.mixedFileDirectory.user.list.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all users.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.mixedFileDirectory.user.list();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.mixedFileDirectory.ListUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## MixedFileDirectory User Events
+<details><summary><code>client.mixedFileDirectory.user.events.<a href="/src/api/resources/mixedFileDirectory/resources/user/resources/events/client/Client.ts">listEvents</a>({ ...params }) -> core.APIResponse&lt;SeedApi.UserEvent[], SeedApi.mixedFileDirectory.user.events.listEvents.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all user events.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.mixedFileDirectory.user.events.listEvents();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.mixedFileDirectory.user.ListEventsEventsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EventsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## MixedFileDirectory User Events Metadata
+<details><summary><code>client.mixedFileDirectory.user.events.metadata.<a href="/src/api/resources/mixedFileDirectory/resources/user/resources/events/resources/metadata/client/Client.ts">getMetadata</a>({ ...params }) -> core.APIResponse&lt;SeedApi.UsereventsMetadata, SeedApi.mixedFileDirectory.user.events.metadata.getMetadata.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get event metadata.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.mixedFileDirectory.user.events.metadata.getMetadata({
+    id: SeedApi.Id("id")
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.mixedFileDirectory.user.events.GetMetadataMetadataRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MetadataClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## MultiUrlEnvironmentReference Items
+<details><summary><code>client.multiUrlEnvironmentReference.items.<a href="/src/api/resources/multiUrlEnvironmentReference/resources/items/client/Client.ts">listItems</a>() -> core.APIResponse&lt;string, SeedApi.multiUrlEnvironmentReference.items.listItems.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.multiUrlEnvironmentReference.items.listItems();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ItemsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## MultiUrlEnvironmentReference Auth
+<details><summary><code>client.multiUrlEnvironmentReference.auth.<a href="/src/api/resources/multiUrlEnvironmentReference/resources/auth/client/Client.ts">gettoken</a>({ ...params }) -> core.APIResponse&lt;SeedApi.AuthGetTokenResponse, SeedApi.multiUrlEnvironmentReference.auth.gettoken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.multiUrlEnvironmentReference.auth.gettoken({
+    client_id: "client_id",
+    client_secret: "client_secret"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.multiUrlEnvironmentReference.AuthGetTokenRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## MultiUrlEnvironmentReference Files
+<details><summary><code>client.multiUrlEnvironmentReference.files.<a href="/src/api/resources/multiUrlEnvironmentReference/resources/files/client/Client.ts">upload</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.multiUrlEnvironmentReference.files.upload.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.multiUrlEnvironmentReference.files.upload({
+    name: "name",
+    parent_id: "parent_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.multiUrlEnvironmentReference.FilesUploadRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FilesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## MultiLineDocs User
+<details><summary><code>client.multiLineDocs.user.<a href="/src/api/resources/multiLineDocs/resources/user/client/Client.ts">getUser</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.multiLineDocs.user.getUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a user.
+This endpoint is used to retrieve a user.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.multiLineDocs.user.getUser({
+    userId: "userId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.multiLineDocs.GetUserUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.multiLineDocs.user.<a href="/src/api/resources/multiLineDocs/resources/user/client/Client.ts">createUser</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.multiLineDocs.user.createUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new user.
+This endpoint is used to create a new user.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.multiLineDocs.user.createUser({
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.multiLineDocs.CreateUserUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## MultiUrlEnvironment Ec2
+<details><summary><code>client.multiUrlEnvironment.ec2.<a href="/src/api/resources/multiUrlEnvironment/resources/ec2/client/Client.ts">bootInstance</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.multiUrlEnvironment.ec2.bootInstance.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.multiUrlEnvironment.ec2.bootInstance({
+    size: "size"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.multiUrlEnvironment.BootInstanceEc2Request` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Ec2Client.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## MultiUrlEnvironment S3
+<details><summary><code>client.multiUrlEnvironment.s3.<a href="/src/api/resources/multiUrlEnvironment/resources/s3/client/Client.ts">getPresignedUrl</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.multiUrlEnvironment.s3.getPresignedUrl.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.multiUrlEnvironment.s3.getPresignedUrl({
+    s3Key: "s3Key"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.multiUrlEnvironment.GetPresignedUrlS3Request` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `S3Client.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## MultiUrlEnvironmentNoDefault Ec2
+<details><summary><code>client.multiUrlEnvironmentNoDefault.ec2.<a href="/src/api/resources/multiUrlEnvironmentNoDefault/resources/ec2/client/Client.ts">bootInstance</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.multiUrlEnvironmentNoDefault.ec2.bootInstance.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.multiUrlEnvironmentNoDefault.ec2.bootInstance({
+    size: "size"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.multiUrlEnvironmentNoDefault.BootInstanceEc2Request` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Ec2Client.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## MultiUrlEnvironmentNoDefault S3
+<details><summary><code>client.multiUrlEnvironmentNoDefault.s3.<a href="/src/api/resources/multiUrlEnvironmentNoDefault/resources/s3/client/Client.ts">getPresignedUrl</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.multiUrlEnvironmentNoDefault.s3.getPresignedUrl.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.multiUrlEnvironmentNoDefault.s3.getPresignedUrl({
+    s3Key: "s3Key"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.multiUrlEnvironmentNoDefault.GetPresignedUrlS3Request` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `S3Client.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## MultipleRequestBodies MultipleRequestBodies
+<details><summary><code>client.multipleRequestBodies.multipleRequestBodies.<a href="/src/api/resources/multipleRequestBodies/resources/multipleRequestBodies/client/Client.ts">uploadJsonDocument</a>({ ...params }) -> core.APIResponse&lt;SeedApi.UploadDocumentResponse, SeedApi.multipleRequestBodies.multipleRequestBodies.uploadJsonDocument.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.multipleRequestBodies.multipleRequestBodies.uploadJsonDocument();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.multipleRequestBodies.UploadJsonDocumentRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MultipleRequestBodiesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## NoContentResponse Contacts
+<details><summary><code>client.noContentResponse.contacts.<a href="/src/api/resources/noContentResponse/resources/contacts/client/Client.ts">create</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Contact | undefined, SeedApi.noContentResponse.contacts.create.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new contact. Returns 200 with the contact or 204 with no content.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.noContentResponse.contacts.create({
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.noContentResponse.CreateContactRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContactsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.noContentResponse.contacts.<a href="/src/api/resources/noContentResponse/resources/contacts/client/Client.ts">get</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Contact, SeedApi.noContentResponse.contacts.get.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets a contact by ID. Returns 200 with the contact.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.noContentResponse.contacts.get({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.noContentResponse.GetContactsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContactsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## NoEnvironment Dummy
+<details><summary><code>client.noEnvironment.dummy.<a href="/src/api/resources/noEnvironment/resources/dummy/client/Client.ts">getDummy</a>() -> core.APIResponse&lt;string, SeedApi.noEnvironment.dummy.getDummy.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.noEnvironment.dummy.getDummy();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `DummyClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## NoRetries Retries
+<details><summary><code>client.noRetries.retries.<a href="/src/api/resources/noRetries/resources/retries/client/Client.ts">getUsers</a>() -> core.APIResponse&lt;SeedApi.User[], SeedApi.noRetries.retries.getUsers.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.noRetries.retries.getUsers();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `RetriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## NullType Conversations
+<details><summary><code>client.nullType.conversations.<a href="/src/api/resources/nullType/resources/conversations/client/Client.ts">outboundCall</a>({ ...params }) -> core.APIResponse&lt;SeedApi.OutboundCallConversationsResponse, SeedApi.nullType.conversations.outboundCall.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Place an outbound call or validate call setup with dry_run.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullType.conversations.outboundCall({
+    to_phone_number: "to_phone_number"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.nullType.OutboundCallConversationsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ConversationsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## NullType Users
+<details><summary><code>client.nullType.users.<a href="/src/api/resources/nullType/resources/users/client/Client.ts">get</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.nullType.users.get.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets a user by ID. The deleted_at field uses type null.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullType.users.get({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.nullType.GetUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Nullable Nullable
+<details><summary><code>client.nullable.nullable.<a href="/src/api/resources/nullable/resources/nullable/client/Client.ts">getUsers</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User[], SeedApi.nullable.nullable.getUsers.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullable.nullable.getUsers();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.nullable.GetUsersNullableRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullable.nullable.<a href="/src/api/resources/nullable/resources/nullable/client/Client.ts">createUser</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.nullable.nullable.createUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullable.nullable.createUser({
+    username: "username"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.nullable.CreateUserNullableRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullable.nullable.<a href="/src/api/resources/nullable/resources/nullable/client/Client.ts">deleteUser</a>({ ...params }) -> core.APIResponse&lt;boolean, SeedApi.nullable.nullable.deleteUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullable.nullable.deleteUser();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.nullable.DeleteUserNullableRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## NullableAllofExtends
+<details><summary><code>client.nullableAllofExtends.<a href="/src/api/resources/nullableAllofExtends/client/Client.ts">getTest</a>() -> core.APIResponse&lt;SeedApi.RootObject, SeedApi.nullableAllofExtends.getTest.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a RootObject which inherits from a nullable schema.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullableAllofExtends.getTest();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableAllofExtendsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullableAllofExtends.<a href="/src/api/resources/nullableAllofExtends/client/Client.ts">createTest</a>({ ...params }) -> core.APIResponse&lt;SeedApi.RootObject, SeedApi.nullableAllofExtends.createTest.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a test object with nullable allOf in request body.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullableAllofExtends.createTest({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.RootObject` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableAllofExtendsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## NullableOptional NullableOptional
+<details><summary><code>client.nullableOptional.nullableOptional.<a href="/src/api/resources/nullableOptional/resources/nullableOptional/client/Client.ts">getUser</a>({ ...params }) -> core.APIResponse&lt;SeedApi.UserResponse, SeedApi.nullableOptional.nullableOptional.getUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a user by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullableOptional.nullableOptional.getUser({
+    userId: "userId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.nullableOptional.GetUserNullableOptionalRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullableOptional.nullableOptional.<a href="/src/api/resources/nullableOptional/resources/nullableOptional/client/Client.ts">updateUser</a>({ ...params }) -> core.APIResponse&lt;SeedApi.UserResponse, SeedApi.nullableOptional.nullableOptional.updateUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a user (partial update)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullableOptional.nullableOptional.updateUser({
+    userId: "userId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.nullableOptional.UpdateUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullableOptional.nullableOptional.<a href="/src/api/resources/nullableOptional/resources/nullableOptional/client/Client.ts">listUsers</a>({ ...params }) -> core.APIResponse&lt;SeedApi.UserResponse[], SeedApi.nullableOptional.nullableOptional.listUsers.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all users
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullableOptional.nullableOptional.listUsers();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.nullableOptional.ListUsersNullableOptionalRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullableOptional.nullableOptional.<a href="/src/api/resources/nullableOptional/resources/nullableOptional/client/Client.ts">createUser</a>({ ...params }) -> core.APIResponse&lt;SeedApi.UserResponse, SeedApi.nullableOptional.nullableOptional.createUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullableOptional.nullableOptional.createUser({
+    username: "username"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.nullableOptional.CreateUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullableOptional.nullableOptional.<a href="/src/api/resources/nullableOptional/resources/nullableOptional/client/Client.ts">searchUsers</a>({ ...params }) -> core.APIResponse&lt;SeedApi.UserResponse[], SeedApi.nullableOptional.nullableOptional.searchUsers.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Search users
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullableOptional.nullableOptional.searchUsers({
+    query: "query",
+    department: "department"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.nullableOptional.SearchUsersNullableOptionalRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullableOptional.nullableOptional.<a href="/src/api/resources/nullableOptional/resources/nullableOptional/client/Client.ts">createComplexProfile</a>({ ...params }) -> core.APIResponse&lt;SeedApi.ComplexProfile, SeedApi.nullableOptional.nullableOptional.createComplexProfile.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a complex profile to test nullable enums and unions
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullableOptional.nullableOptional.createComplexProfile({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.ComplexProfile` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullableOptional.nullableOptional.<a href="/src/api/resources/nullableOptional/resources/nullableOptional/client/Client.ts">getComplexProfile</a>({ ...params }) -> core.APIResponse&lt;SeedApi.ComplexProfile, SeedApi.nullableOptional.nullableOptional.getComplexProfile.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a complex profile by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullableOptional.nullableOptional.getComplexProfile({
+    profileId: "profileId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.nullableOptional.GetComplexProfileNullableOptionalRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullableOptional.nullableOptional.<a href="/src/api/resources/nullableOptional/resources/nullableOptional/client/Client.ts">updateComplexProfile</a>({ ...params }) -> core.APIResponse&lt;SeedApi.ComplexProfile, SeedApi.nullableOptional.nullableOptional.updateComplexProfile.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update complex profile to test nullable field updates
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullableOptional.nullableOptional.updateComplexProfile({
+    profileId: "profileId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.nullableOptional.UpdateComplexProfileNullableOptionalRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullableOptional.nullableOptional.<a href="/src/api/resources/nullableOptional/resources/nullableOptional/client/Client.ts">testDeserialization</a>({ ...params }) -> core.APIResponse&lt;SeedApi.DeserializationTestResponse, SeedApi.nullableOptional.nullableOptional.testDeserialization.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Test endpoint for validating null deserialization
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullableOptional.nullableOptional.testDeserialization({
+    requiredString: "requiredString"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.DeserializationTestRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullableOptional.nullableOptional.<a href="/src/api/resources/nullableOptional/resources/nullableOptional/client/Client.ts">filterByRole</a>({ ...params }) -> core.APIResponse&lt;SeedApi.UserResponse[], SeedApi.nullableOptional.nullableOptional.filterByRole.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Filter users by role with nullable enum
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullableOptional.nullableOptional.filterByRole({
+    role: "ADMIN"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.nullableOptional.FilterByRoleNullableOptionalRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullableOptional.nullableOptional.<a href="/src/api/resources/nullableOptional/resources/nullableOptional/client/Client.ts">getNotificationSettings</a>({ ...params }) -> core.APIResponse&lt;SeedApi.NotificationMethod | null, SeedApi.nullableOptional.nullableOptional.getNotificationSettings.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get notification settings which may be null
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullableOptional.nullableOptional.getNotificationSettings({
+    userId: "userId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.nullableOptional.GetNotificationSettingsNullableOptionalRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullableOptional.nullableOptional.<a href="/src/api/resources/nullableOptional/resources/nullableOptional/client/Client.ts">updateTags</a>({ ...params }) -> core.APIResponse&lt;string[], SeedApi.nullableOptional.nullableOptional.updateTags.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update tags to test array handling
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullableOptional.nullableOptional.updateTags({
+    userId: "userId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.nullableOptional.UpdateTagsNullableOptionalRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullableOptional.nullableOptional.<a href="/src/api/resources/nullableOptional/resources/nullableOptional/client/Client.ts">getSearchResults</a>({ ...params }) -> core.APIResponse&lt;SeedApi.SearchResult[] | null, SeedApi.nullableOptional.nullableOptional.getSearchResults.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get search results with nullable unions
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullableOptional.nullableOptional.getSearchResults({
+    query: "query"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.nullableOptional.GetSearchResultsNullableOptionalRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## NullableRequestBody TestGroup
+<details><summary><code>client.nullableRequestBody.testGroup.<a href="/src/api/resources/nullableRequestBody/resources/testGroup/client/Client.ts">testMethodName</a>({ ...params }) -> core.APIResponse&lt;unknown, SeedApi.nullableRequestBody.testGroup.testMethodName.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Post a nullable request body
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullableRequestBody.testGroup.testMethodName({
+    path_param: "path_param",
+    body: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.nullableRequestBody.TestMethodNameTestGroupRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `TestGroupClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentials Auth
+<details><summary><code>client.oauthClientCredentials.auth.<a href="/src/api/resources/oauthClientCredentials/resources/auth/client/Client.ts">getTokenWithClientCredentials</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.oauthClientCredentials.auth.getTokenWithClientCredentials.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentials.auth.getTokenWithClientCredentials({
+    client_id: "my_oauth_app_123",
+    client_secret: "sk_live_abcdef123456789",
+    audience: "https://api.example.com",
+    grant_type: "client_credentials",
+    scope: "read:users"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.oauthClientCredentials.GetTokenWithClientCredentialsAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.oauthClientCredentials.auth.<a href="/src/api/resources/oauthClientCredentials/resources/auth/client/Client.ts">refreshToken</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.oauthClientCredentials.auth.refreshToken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentials.auth.refreshToken({
+    client_id: "my_oauth_app_123",
+    client_secret: "sk_live_abcdef123456789",
+    refresh_token: "refresh_token",
+    audience: "https://api.example.com",
+    grant_type: "refresh_token",
+    scope: "read:users"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.oauthClientCredentials.RefreshTokenAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentials NestedNoAuthApi
+<details><summary><code>client.oauthClientCredentials.nestedNoAuthApi.<a href="/src/api/resources/oauthClientCredentials/resources/nestedNoAuthApi/client/Client.ts">nestedNoAuthApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.oauthClientCredentials.nestedNoAuthApi.nestedNoAuthApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentials.nestedNoAuthApi.nestedNoAuthApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedNoAuthApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentials NestedApi
+<details><summary><code>client.oauthClientCredentials.nestedApi.<a href="/src/api/resources/oauthClientCredentials/resources/nestedApi/client/Client.ts">nestedApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.oauthClientCredentials.nestedApi.nestedApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentials.nestedApi.nestedApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentials Simple
+<details><summary><code>client.oauthClientCredentials.simple.<a href="/src/api/resources/oauthClientCredentials/resources/simple/client/Client.ts">getSomething</a>() -> core.APIResponse&lt;void, SeedApi.oauthClientCredentials.simple.getSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentials.simple.getSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `SimpleClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsCustom Auth
+<details><summary><code>client.oauthClientCredentialsCustom.auth.<a href="/src/api/resources/oauthClientCredentialsCustom/resources/auth/client/Client.ts">getTokenWithClientCredentials</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.oauthClientCredentialsCustom.auth.getTokenWithClientCredentials.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsCustom.auth.getTokenWithClientCredentials({
+    cid: "cid",
+    csr: "csr",
+    scp: "scp",
+    entity_id: "entity_id",
+    audience: "https://api.example.com",
+    grant_type: "client_credentials"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.oauthClientCredentialsCustom.GetTokenWithClientCredentialsAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.oauthClientCredentialsCustom.auth.<a href="/src/api/resources/oauthClientCredentialsCustom/resources/auth/client/Client.ts">refreshToken</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.oauthClientCredentialsCustom.auth.refreshToken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsCustom.auth.refreshToken({
+    client_id: "client_id",
+    client_secret: "client_secret",
+    refresh_token: "refresh_token",
+    audience: "https://api.example.com",
+    grant_type: "refresh_token"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.oauthClientCredentialsCustom.RefreshTokenAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsCustom NestedNoAuthApi
+<details><summary><code>client.oauthClientCredentialsCustom.nestedNoAuthApi.<a href="/src/api/resources/oauthClientCredentialsCustom/resources/nestedNoAuthApi/client/Client.ts">nestedNoAuthApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.oauthClientCredentialsCustom.nestedNoAuthApi.nestedNoAuthApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsCustom.nestedNoAuthApi.nestedNoAuthApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedNoAuthApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsCustom NestedApi
+<details><summary><code>client.oauthClientCredentialsCustom.nestedApi.<a href="/src/api/resources/oauthClientCredentialsCustom/resources/nestedApi/client/Client.ts">nestedApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.oauthClientCredentialsCustom.nestedApi.nestedApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsCustom.nestedApi.nestedApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsCustom Simple
+<details><summary><code>client.oauthClientCredentialsCustom.simple.<a href="/src/api/resources/oauthClientCredentialsCustom/resources/simple/client/Client.ts">getSomething</a>() -> core.APIResponse&lt;void, SeedApi.oauthClientCredentialsCustom.simple.getSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsCustom.simple.getSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `SimpleClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsDefault Auth
+<details><summary><code>client.oauthClientCredentialsDefault.auth.<a href="/src/api/resources/oauthClientCredentialsDefault/resources/auth/client/Client.ts">getToken</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.oauthClientCredentialsDefault.auth.getToken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsDefault.auth.getToken({
+    client_id: "client_id",
+    client_secret: "client_secret",
+    grant_type: "client_credentials"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.oauthClientCredentialsDefault.GetTokenAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsDefault NestedNoAuthApi
+<details><summary><code>client.oauthClientCredentialsDefault.nestedNoAuthApi.<a href="/src/api/resources/oauthClientCredentialsDefault/resources/nestedNoAuthApi/client/Client.ts">nestedNoAuthApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.oauthClientCredentialsDefault.nestedNoAuthApi.nestedNoAuthApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsDefault.nestedNoAuthApi.nestedNoAuthApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedNoAuthApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsDefault NestedApi
+<details><summary><code>client.oauthClientCredentialsDefault.nestedApi.<a href="/src/api/resources/oauthClientCredentialsDefault/resources/nestedApi/client/Client.ts">nestedApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.oauthClientCredentialsDefault.nestedApi.nestedApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsDefault.nestedApi.nestedApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsDefault Simple
+<details><summary><code>client.oauthClientCredentialsDefault.simple.<a href="/src/api/resources/oauthClientCredentialsDefault/resources/simple/client/Client.ts">getSomething</a>() -> core.APIResponse&lt;void, SeedApi.oauthClientCredentialsDefault.simple.getSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsDefault.simple.getSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `SimpleClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsEnvironmentVariables Auth
+<details><summary><code>client.oauthClientCredentialsEnvironmentVariables.auth.<a href="/src/api/resources/oauthClientCredentialsEnvironmentVariables/resources/auth/client/Client.ts">getTokenWithClientCredentials</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.oauthClientCredentialsEnvironmentVariables.auth.getTokenWithClientCredentials.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsEnvironmentVariables.auth.getTokenWithClientCredentials({
+    client_id: "client_id",
+    client_secret: "client_secret",
+    audience: "https://api.example.com",
+    grant_type: "client_credentials"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.oauthClientCredentialsEnvironmentVariables.GetTokenWithClientCredentialsAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.oauthClientCredentialsEnvironmentVariables.auth.<a href="/src/api/resources/oauthClientCredentialsEnvironmentVariables/resources/auth/client/Client.ts">refreshToken</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.oauthClientCredentialsEnvironmentVariables.auth.refreshToken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsEnvironmentVariables.auth.refreshToken({
+    client_id: "client_id",
+    client_secret: "client_secret",
+    refresh_token: "refresh_token",
+    audience: "https://api.example.com",
+    grant_type: "refresh_token"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.oauthClientCredentialsEnvironmentVariables.RefreshTokenAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsEnvironmentVariables NestedNoAuthApi
+<details><summary><code>client.oauthClientCredentialsEnvironmentVariables.nestedNoAuthApi.<a href="/src/api/resources/oauthClientCredentialsEnvironmentVariables/resources/nestedNoAuthApi/client/Client.ts">nestedNoAuthApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.oauthClientCredentialsEnvironmentVariables.nestedNoAuthApi.nestedNoAuthApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsEnvironmentVariables.nestedNoAuthApi.nestedNoAuthApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedNoAuthApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsEnvironmentVariables NestedApi
+<details><summary><code>client.oauthClientCredentialsEnvironmentVariables.nestedApi.<a href="/src/api/resources/oauthClientCredentialsEnvironmentVariables/resources/nestedApi/client/Client.ts">nestedApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.oauthClientCredentialsEnvironmentVariables.nestedApi.nestedApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsEnvironmentVariables.nestedApi.nestedApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsEnvironmentVariables Simple
+<details><summary><code>client.oauthClientCredentialsEnvironmentVariables.simple.<a href="/src/api/resources/oauthClientCredentialsEnvironmentVariables/resources/simple/client/Client.ts">getSomething</a>() -> core.APIResponse&lt;void, SeedApi.oauthClientCredentialsEnvironmentVariables.simple.getSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsEnvironmentVariables.simple.getSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `SimpleClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsMandatoryAuth Auth
+<details><summary><code>client.oauthClientCredentialsMandatoryAuth.auth.<a href="/src/api/resources/oauthClientCredentialsMandatoryAuth/resources/auth/client/Client.ts">getTokenWithClientCredentials</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.oauthClientCredentialsMandatoryAuth.auth.getTokenWithClientCredentials.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsMandatoryAuth.auth.getTokenWithClientCredentials({
+    client_id: "my_oauth_app_123",
+    client_secret: "sk_live_abcdef123456789",
+    audience: "https://api.example.com",
+    grant_type: "client_credentials",
+    scope: "read:users"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.oauthClientCredentialsMandatoryAuth.GetTokenWithClientCredentialsAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.oauthClientCredentialsMandatoryAuth.auth.<a href="/src/api/resources/oauthClientCredentialsMandatoryAuth/resources/auth/client/Client.ts">refreshToken</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.oauthClientCredentialsMandatoryAuth.auth.refreshToken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsMandatoryAuth.auth.refreshToken({
+    client_id: "my_oauth_app_123",
+    client_secret: "sk_live_abcdef123456789",
+    refresh_token: "refresh_token",
+    audience: "https://api.example.com",
+    grant_type: "refresh_token",
+    scope: "read:users"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.oauthClientCredentialsMandatoryAuth.RefreshTokenAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsMandatoryAuth NestedApi
+<details><summary><code>client.oauthClientCredentialsMandatoryAuth.nestedApi.<a href="/src/api/resources/oauthClientCredentialsMandatoryAuth/resources/nestedApi/client/Client.ts">nestedApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.oauthClientCredentialsMandatoryAuth.nestedApi.nestedApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsMandatoryAuth.nestedApi.nestedApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsMandatoryAuth Simple
+<details><summary><code>client.oauthClientCredentialsMandatoryAuth.simple.<a href="/src/api/resources/oauthClientCredentialsMandatoryAuth/resources/simple/client/Client.ts">getSomething</a>() -> core.APIResponse&lt;void, SeedApi.oauthClientCredentialsMandatoryAuth.simple.getSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsMandatoryAuth.simple.getSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `SimpleClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsNestedRoot Auth
+<details><summary><code>client.oauthClientCredentialsNestedRoot.auth.<a href="/src/api/resources/oauthClientCredentialsNestedRoot/resources/auth/client/Client.ts">getToken</a>({ ...params }) -> core.APIResponse&lt;SeedApi.AuthTokenResponse, SeedApi.oauthClientCredentialsNestedRoot.auth.getToken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsNestedRoot.auth.getToken({
+    client_id: "client_id",
+    client_secret: "client_secret",
+    audience: "https://api.example.com",
+    grant_type: "client_credentials"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.oauthClientCredentialsNestedRoot.GetTokenAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsNestedRoot NestedNoAuthApi
+<details><summary><code>client.oauthClientCredentialsNestedRoot.nestedNoAuthApi.<a href="/src/api/resources/oauthClientCredentialsNestedRoot/resources/nestedNoAuthApi/client/Client.ts">nestedNoAuthApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.oauthClientCredentialsNestedRoot.nestedNoAuthApi.nestedNoAuthApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsNestedRoot.nestedNoAuthApi.nestedNoAuthApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedNoAuthApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsNestedRoot NestedApi
+<details><summary><code>client.oauthClientCredentialsNestedRoot.nestedApi.<a href="/src/api/resources/oauthClientCredentialsNestedRoot/resources/nestedApi/client/Client.ts">nestedApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.oauthClientCredentialsNestedRoot.nestedApi.nestedApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsNestedRoot.nestedApi.nestedApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsNestedRoot Simple
+<details><summary><code>client.oauthClientCredentialsNestedRoot.simple.<a href="/src/api/resources/oauthClientCredentialsNestedRoot/resources/simple/client/Client.ts">getSomething</a>() -> core.APIResponse&lt;void, SeedApi.oauthClientCredentialsNestedRoot.simple.getSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsNestedRoot.simple.getSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `SimpleClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsOpenapi Identity
+<details><summary><code>client.oauthClientCredentialsOpenapi.identity.<a href="/src/api/resources/oauthClientCredentialsOpenapi/resources/identity/client/Client.ts">getToken</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.oauthClientCredentialsOpenapi.identity.getToken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsOpenapi.identity.getToken({
+    username: "username",
+    password: "password"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.oauthClientCredentialsOpenapi.GetTokenIdentityRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `IdentityClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsOpenapi Plants
+<details><summary><code>client.oauthClientCredentialsOpenapi.plants.<a href="/src/api/resources/oauthClientCredentialsOpenapi/resources/plants/client/Client.ts">list</a>() -> core.APIResponse&lt;SeedApi.Plant[], SeedApi.oauthClientCredentialsOpenapi.plants.list.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsOpenapi.plants.list();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `PlantsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.oauthClientCredentialsOpenapi.plants.<a href="/src/api/resources/oauthClientCredentialsOpenapi/resources/plants/client/Client.ts">get</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Plant, SeedApi.oauthClientCredentialsOpenapi.plants.get.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsOpenapi.plants.get({
+    plantId: "plantId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.oauthClientCredentialsOpenapi.GetPlantsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PlantsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsReference Auth
+<details><summary><code>client.oauthClientCredentialsReference.auth.<a href="/src/api/resources/oauthClientCredentialsReference/resources/auth/client/Client.ts">getToken</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.oauthClientCredentialsReference.auth.getToken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsReference.auth.getToken({
+    client_id: "client_id",
+    client_secret: "client_secret"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.oauthClientCredentialsReference.GetTokenRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsReference Simple
+<details><summary><code>client.oauthClientCredentialsReference.simple.<a href="/src/api/resources/oauthClientCredentialsReference/resources/simple/client/Client.ts">getSomething</a>() -> core.APIResponse&lt;void, SeedApi.oauthClientCredentialsReference.simple.getSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsReference.simple.getSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `SimpleClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsWithVariables Auth
+<details><summary><code>client.oauthClientCredentialsWithVariables.auth.<a href="/src/api/resources/oauthClientCredentialsWithVariables/resources/auth/client/Client.ts">getTokenWithClientCredentials</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.oauthClientCredentialsWithVariables.auth.getTokenWithClientCredentials.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsWithVariables.auth.getTokenWithClientCredentials({
+    client_id: "client_id",
+    client_secret: "client_secret",
+    audience: "https://api.example.com",
+    grant_type: "client_credentials"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.oauthClientCredentialsWithVariables.GetTokenWithClientCredentialsAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.oauthClientCredentialsWithVariables.auth.<a href="/src/api/resources/oauthClientCredentialsWithVariables/resources/auth/client/Client.ts">refreshToken</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.oauthClientCredentialsWithVariables.auth.refreshToken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsWithVariables.auth.refreshToken({
+    client_id: "client_id",
+    client_secret: "client_secret",
+    refresh_token: "refresh_token",
+    audience: "https://api.example.com",
+    grant_type: "refresh_token"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.oauthClientCredentialsWithVariables.RefreshTokenAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsWithVariables NestedNoAuthApi
+<details><summary><code>client.oauthClientCredentialsWithVariables.nestedNoAuthApi.<a href="/src/api/resources/oauthClientCredentialsWithVariables/resources/nestedNoAuthApi/client/Client.ts">nestedNoAuthApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.oauthClientCredentialsWithVariables.nestedNoAuthApi.nestedNoAuthApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsWithVariables.nestedNoAuthApi.nestedNoAuthApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedNoAuthApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsWithVariables NestedApi
+<details><summary><code>client.oauthClientCredentialsWithVariables.nestedApi.<a href="/src/api/resources/oauthClientCredentialsWithVariables/resources/nestedApi/client/Client.ts">nestedApiGetSomething</a>() -> core.APIResponse&lt;void, SeedApi.oauthClientCredentialsWithVariables.nestedApi.nestedApiGetSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsWithVariables.nestedApi.nestedApiGetSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `NestedApiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsWithVariables Service
+<details><summary><code>client.oauthClientCredentialsWithVariables.service.<a href="/src/api/resources/oauthClientCredentialsWithVariables/resources/service/client/Client.ts">post</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.oauthClientCredentialsWithVariables.service.post.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsWithVariables.service.post({
+    endpointParam: "endpointParam"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.oauthClientCredentialsWithVariables.PostServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OauthClientCredentialsWithVariables Simple
+<details><summary><code>client.oauthClientCredentialsWithVariables.simple.<a href="/src/api/resources/oauthClientCredentialsWithVariables/resources/simple/client/Client.ts">getSomething</a>() -> core.APIResponse&lt;void, SeedApi.oauthClientCredentialsWithVariables.simple.getSomething.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oauthClientCredentialsWithVariables.simple.getSomething();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `SimpleClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OpenapiRequestBodyRef Vendor
+<details><summary><code>client.openapiRequestBodyRef.vendor.<a href="/src/api/resources/openapiRequestBodyRef/resources/vendor/client/Client.ts">updateVendor</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Vendor, SeedApi.openapiRequestBodyRef.vendor.updateVendor.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.openapiRequestBodyRef.vendor.updateVendor({
+    vendor_id: "vendor_id",
+    body: {
+        name: "name"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.openapiRequestBodyRef.UpdateVendorBody` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `VendorClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.openapiRequestBodyRef.vendor.<a href="/src/api/resources/openapiRequestBodyRef/resources/vendor/client/Client.ts">createVendor</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Vendor, SeedApi.openapiRequestBodyRef.vendor.createVendor.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.openapiRequestBodyRef.vendor.createVendor({
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.openapiRequestBodyRef.CreateVendorRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `VendorClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OpenapiRequestBodyRef Catalog
+<details><summary><code>client.openapiRequestBodyRef.catalog.<a href="/src/api/resources/openapiRequestBodyRef/resources/catalog/client/Client.ts">createCatalogImage</a>({ ...params }) -> core.APIResponse&lt;SeedApi.CatalogImage, SeedApi.openapiRequestBodyRef.catalog.createCatalogImage.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.openapiRequestBodyRef.catalog.createCatalogImage({
+    request: {
+        catalog_object_id: "catalog_object_id"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.openapiRequestBodyRef.CreateCatalogImageBody` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CatalogClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.openapiRequestBodyRef.catalog.<a href="/src/api/resources/openapiRequestBodyRef/resources/catalog/client/Client.ts">getCatalogImage</a>({ ...params }) -> core.APIResponse&lt;SeedApi.CatalogImage, SeedApi.openapiRequestBodyRef.catalog.getCatalogImage.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.openapiRequestBodyRef.catalog.getCatalogImage({
+    image_id: "image_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.openapiRequestBodyRef.GetCatalogImageRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CatalogClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OpenapiRequestBodyRef TeamMember
+<details><summary><code>client.openapiRequestBodyRef.teamMember.<a href="/src/api/resources/openapiRequestBodyRef/resources/teamMember/client/Client.ts">updateTeamMember</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TeamMember, SeedApi.openapiRequestBodyRef.teamMember.updateTeamMember.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.openapiRequestBodyRef.teamMember.updateTeamMember({
+    team_member_id: "team_member_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.openapiRequestBodyRef.UpdateTeamMemberRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `TeamMemberClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Optional Optional
+<details><summary><code>client.optional.optional.<a href="/src/api/resources/optional/resources/optional/client/Client.ts">sendOptionalBody</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.optional.optional.sendOptionalBody.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.optional.optional.sendOptionalBody({
+    "key": "value"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Record<string, unknown> | null` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `OptionalClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.optional.optional.<a href="/src/api/resources/optional/resources/optional/client/Client.ts">sendOptionalTypedBody</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.optional.optional.sendOptionalTypedBody.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.optional.optional.sendOptionalTypedBody({
+    message: "message"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.SendOptionalBodyRequest | null` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `OptionalClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.optional.optional.<a href="/src/api/resources/optional/resources/optional/client/Client.ts">sendOptionalNullableWithAllOptionalProperties</a>({ ...params }) -> core.APIResponse&lt;SeedApi.DeployResponse, SeedApi.optional.optional.sendOptionalNullableWithAllOptionalProperties.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests optional(nullable(T)) where T has only optional properties.
+This should not generate wire tests expecting {} when Optional.empty() is passed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.optional.optional.sendOptionalNullableWithAllOptionalProperties({
+    actionId: "actionId",
+    id: "id",
+    body: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.optional.SendOptionalNullableWithAllOptionalPropertiesOptionalRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `OptionalClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Pagination Complex
+<details><summary><code>client.pagination.complex.<a href="/src/api/resources/pagination/resources/complex/client/Client.ts">search</a>({ ...params }) -> core.APIResponse&lt;SeedApi.PaginatedConversationResponse, SeedApi.pagination.complex.search.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.complex.search({
+    index: "index",
+    query: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.SearchRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ComplexClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Pagination Users
+<details><summary><code>client.pagination.users.<a href="/src/api/resources/pagination/resources/users/client/Client.ts">listWithCursorPagination</a>({ ...params }) -> core.APIResponse&lt;SeedApi.ListUsersPaginationResponse, SeedApi.pagination.users.listWithCursorPagination.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.users.listWithCursorPagination();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.ListWithCursorPaginationUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.users.<a href="/src/api/resources/pagination/resources/users/client/Client.ts">listWithMixedTypeCursorPagination</a>({ ...params }) -> core.APIResponse&lt;SeedApi.ListUsersMixedTypePaginationResponse, SeedApi.pagination.users.listWithMixedTypeCursorPagination.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.users.listWithMixedTypeCursorPagination();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.ListWithMixedTypeCursorPaginationUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.users.<a href="/src/api/resources/pagination/resources/users/client/Client.ts">listWithBodyCursorPagination</a>({ ...params }) -> core.APIResponse&lt;SeedApi.ListUsersPaginationResponse, SeedApi.pagination.users.listWithBodyCursorPagination.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.users.listWithBodyCursorPagination();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.ListWithBodyCursorPaginationUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.users.<a href="/src/api/resources/pagination/resources/users/client/Client.ts">listWithTopLevelBodyCursorPagination</a>({ ...params }) -> core.APIResponse&lt;SeedApi.ListUsersTopLevelCursorPaginationResponse, SeedApi.pagination.users.listWithTopLevelBodyCursorPagination.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pagination endpoint with a top-level cursor field in the request body.
+This tests that the mock server correctly ignores cursor mismatches
+when getNextPage() is called with a different cursor value.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.users.listWithTopLevelBodyCursorPagination({
+    cursor: "initial_cursor",
+    filter: "active"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.ListWithTopLevelBodyCursorPaginationUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.users.<a href="/src/api/resources/pagination/resources/users/client/Client.ts">listWithOffsetPagination</a>({ ...params }) -> core.APIResponse&lt;SeedApi.ListUsersPaginationResponse, SeedApi.pagination.users.listWithOffsetPagination.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.users.listWithOffsetPagination();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.ListWithOffsetPaginationUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.users.<a href="/src/api/resources/pagination/resources/users/client/Client.ts">listWithDoubleOffsetPagination</a>({ ...params }) -> core.APIResponse&lt;SeedApi.ListUsersPaginationResponse, SeedApi.pagination.users.listWithDoubleOffsetPagination.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.users.listWithDoubleOffsetPagination();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.ListWithDoubleOffsetPaginationUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.users.<a href="/src/api/resources/pagination/resources/users/client/Client.ts">listWithBodyOffsetPagination</a>({ ...params }) -> core.APIResponse&lt;SeedApi.ListUsersPaginationResponse, SeedApi.pagination.users.listWithBodyOffsetPagination.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.users.listWithBodyOffsetPagination();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.ListWithBodyOffsetPaginationUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.users.<a href="/src/api/resources/pagination/resources/users/client/Client.ts">listWithOffsetStepPagination</a>({ ...params }) -> core.APIResponse&lt;SeedApi.ListUsersPaginationResponse, SeedApi.pagination.users.listWithOffsetStepPagination.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.users.listWithOffsetStepPagination();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.ListWithOffsetStepPaginationUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.users.<a href="/src/api/resources/pagination/resources/users/client/Client.ts">listWithOffsetPaginationHasNextPage</a>({ ...params }) -> core.APIResponse&lt;SeedApi.ListUsersPaginationResponse, SeedApi.pagination.users.listWithOffsetPaginationHasNextPage.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.users.listWithOffsetPaginationHasNextPage();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.ListWithOffsetPaginationHasNextPageUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.users.<a href="/src/api/resources/pagination/resources/users/client/Client.ts">listWithExtendedResults</a>({ ...params }) -> core.APIResponse&lt;SeedApi.ListUsersExtendedResponse, SeedApi.pagination.users.listWithExtendedResults.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.users.listWithExtendedResults();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.ListWithExtendedResultsUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.users.<a href="/src/api/resources/pagination/resources/users/client/Client.ts">listWithExtendedResultsAndOptionalData</a>({ ...params }) -> core.APIResponse&lt;SeedApi.ListUsersExtendedOptionalListResponse, SeedApi.pagination.users.listWithExtendedResultsAndOptionalData.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.users.listWithExtendedResultsAndOptionalData();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.ListWithExtendedResultsAndOptionalDataUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.users.<a href="/src/api/resources/pagination/resources/users/client/Client.ts">listUsernames</a>({ ...params }) -> core.APIResponse&lt;SeedApi.UsernameCursor, SeedApi.pagination.users.listUsernames.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.users.listUsernames();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.ListUsernamesUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.users.<a href="/src/api/resources/pagination/resources/users/client/Client.ts">listUsernamesWithOptionalResponse</a>({ ...params }) -> core.APIResponse&lt;SeedApi.UsernameCursor | null, SeedApi.pagination.users.listUsernamesWithOptionalResponse.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.users.listUsernamesWithOptionalResponse();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.ListUsernamesWithOptionalResponseUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.users.<a href="/src/api/resources/pagination/resources/users/client/Client.ts">listWithGlobalConfig</a>({ ...params }) -> core.APIResponse&lt;SeedApi.UsernameContainer, SeedApi.pagination.users.listWithGlobalConfig.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.users.listWithGlobalConfig();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.ListWithGlobalConfigUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.users.<a href="/src/api/resources/pagination/resources/users/client/Client.ts">listWithOptionalData</a>({ ...params }) -> core.APIResponse&lt;SeedApi.ListUsersOptionalDataPaginationResponse, SeedApi.pagination.users.listWithOptionalData.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.users.listWithOptionalData();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.ListWithOptionalDataUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.users.<a href="/src/api/resources/pagination/resources/users/client/Client.ts">listWithAliasedData</a>({ ...params }) -> core.APIResponse&lt;SeedApi.ListUsersAliasedDataPaginationResponse, SeedApi.pagination.users.listWithAliasedData.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.users.listWithAliasedData();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.ListWithAliasedDataUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Pagination InlineUsers InlineUsers
+<details><summary><code>client.pagination.inlineUsers.inlineUsers.<a href="/src/api/resources/pagination/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithCursorPagination</a>({ ...params }) -> core.APIResponse&lt;SeedApi.InlineUsersListUsersPaginationResponse, SeedApi.pagination.inlineUsers.inlineUsers.listWithCursorPagination.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.inlineUsers.inlineUsers.listWithCursorPagination();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.inlineUsers.ListWithCursorPaginationInlineUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InlineUsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.inlineUsers.inlineUsers.<a href="/src/api/resources/pagination/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithMixedTypeCursorPagination</a>({ ...params }) -> core.APIResponse&lt;SeedApi.InlineUsersListUsersMixedTypePaginationResponse, SeedApi.pagination.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.inlineUsers.ListWithMixedTypeCursorPaginationInlineUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InlineUsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.inlineUsers.inlineUsers.<a href="/src/api/resources/pagination/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithBodyCursorPagination</a>({ ...params }) -> core.APIResponse&lt;SeedApi.InlineUsersListUsersPaginationResponse, SeedApi.pagination.inlineUsers.inlineUsers.listWithBodyCursorPagination.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.inlineUsers.inlineUsers.listWithBodyCursorPagination();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.inlineUsers.ListWithBodyCursorPaginationInlineUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InlineUsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.inlineUsers.inlineUsers.<a href="/src/api/resources/pagination/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithOffsetPagination</a>({ ...params }) -> core.APIResponse&lt;SeedApi.InlineUsersListUsersPaginationResponse, SeedApi.pagination.inlineUsers.inlineUsers.listWithOffsetPagination.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.inlineUsers.inlineUsers.listWithOffsetPagination();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.inlineUsers.ListWithOffsetPaginationInlineUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InlineUsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.inlineUsers.inlineUsers.<a href="/src/api/resources/pagination/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithDoubleOffsetPagination</a>({ ...params }) -> core.APIResponse&lt;SeedApi.InlineUsersListUsersPaginationResponse, SeedApi.pagination.inlineUsers.inlineUsers.listWithDoubleOffsetPagination.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.inlineUsers.inlineUsers.listWithDoubleOffsetPagination();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.inlineUsers.ListWithDoubleOffsetPaginationInlineUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InlineUsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.inlineUsers.inlineUsers.<a href="/src/api/resources/pagination/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithBodyOffsetPagination</a>({ ...params }) -> core.APIResponse&lt;SeedApi.InlineUsersListUsersPaginationResponse, SeedApi.pagination.inlineUsers.inlineUsers.listWithBodyOffsetPagination.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.inlineUsers.inlineUsers.listWithBodyOffsetPagination();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.inlineUsers.ListWithBodyOffsetPaginationInlineUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InlineUsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.inlineUsers.inlineUsers.<a href="/src/api/resources/pagination/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithOffsetStepPagination</a>({ ...params }) -> core.APIResponse&lt;SeedApi.InlineUsersListUsersPaginationResponse, SeedApi.pagination.inlineUsers.inlineUsers.listWithOffsetStepPagination.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.inlineUsers.inlineUsers.listWithOffsetStepPagination();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.inlineUsers.ListWithOffsetStepPaginationInlineUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InlineUsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.inlineUsers.inlineUsers.<a href="/src/api/resources/pagination/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithOffsetPaginationHasNextPage</a>({ ...params }) -> core.APIResponse&lt;SeedApi.InlineUsersListUsersPaginationResponse, SeedApi.pagination.inlineUsers.inlineUsers.listWithOffsetPaginationHasNextPage.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.inlineUsers.inlineUsers.listWithOffsetPaginationHasNextPage();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.inlineUsers.ListWithOffsetPaginationHasNextPageInlineUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InlineUsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.inlineUsers.inlineUsers.<a href="/src/api/resources/pagination/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithExtendedResults</a>({ ...params }) -> core.APIResponse&lt;SeedApi.InlineUsersListUsersExtendedResponse, SeedApi.pagination.inlineUsers.inlineUsers.listWithExtendedResults.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.inlineUsers.inlineUsers.listWithExtendedResults();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.inlineUsers.ListWithExtendedResultsInlineUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InlineUsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.inlineUsers.inlineUsers.<a href="/src/api/resources/pagination/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithExtendedResultsAndOptionalData</a>({ ...params }) -> core.APIResponse&lt;SeedApi.InlineUsersListUsersExtendedOptionalListResponse, SeedApi.pagination.inlineUsers.inlineUsers.listWithExtendedResultsAndOptionalData.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.inlineUsers.inlineUsers.listWithExtendedResultsAndOptionalData();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.inlineUsers.ListWithExtendedResultsAndOptionalDataInlineUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InlineUsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.inlineUsers.inlineUsers.<a href="/src/api/resources/pagination/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listUsernames</a>({ ...params }) -> core.APIResponse&lt;SeedApi.UsernameCursor, SeedApi.pagination.inlineUsers.inlineUsers.listUsernames.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.inlineUsers.inlineUsers.listUsernames();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.inlineUsers.ListUsernamesInlineUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InlineUsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pagination.inlineUsers.inlineUsers.<a href="/src/api/resources/pagination/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithGlobalConfig</a>({ ...params }) -> core.APIResponse&lt;SeedApi.InlineUsersUsernameContainer, SeedApi.pagination.inlineUsers.inlineUsers.listWithGlobalConfig.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pagination.inlineUsers.inlineUsers.listWithGlobalConfig();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pagination.inlineUsers.ListWithGlobalConfigInlineUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InlineUsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## PaginationCustom Users
+<details><summary><code>client.paginationCustom.users.<a href="/src/api/resources/paginationCustom/resources/users/client/Client.ts">listWithCustomPager</a>({ ...params }) -> core.APIResponse&lt;SeedApi.UsersListResponse, SeedApi.paginationCustom.users.listWithCustomPager.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.paginationCustom.users.listWithCustomPager();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.paginationCustom.ListWithCustomPagerUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## PaginationUriPath Users
+<details><summary><code>client.paginationUriPath.users.<a href="/src/api/resources/paginationUriPath/resources/users/client/Client.ts">listWithUriPagination</a>() -> core.APIResponse&lt;SeedApi.ListUsersUriPaginationResponse, SeedApi.paginationUriPath.users.listWithUriPagination.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.paginationUriPath.users.listWithUriPagination();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.paginationUriPath.users.<a href="/src/api/resources/paginationUriPath/resources/users/client/Client.ts">listWithPathPagination</a>() -> core.APIResponse&lt;SeedApi.ListUsersPathPaginationResponse, SeedApi.paginationUriPath.users.listWithPathPagination.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.paginationUriPath.users.listWithPathPagination();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## PathParameters Organizations
+<details><summary><code>client.pathParameters.organizations.<a href="/src/api/resources/pathParameters/resources/organizations/client/Client.ts">getOrganization</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Organization, SeedApi.pathParameters.organizations.getOrganization.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pathParameters.organizations.getOrganization({
+    tenant_id: "tenant_id",
+    organization_id: "organization_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pathParameters.GetOrganizationOrganizationsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `OrganizationsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pathParameters.organizations.<a href="/src/api/resources/pathParameters/resources/organizations/client/Client.ts">getOrganizationUser</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.pathParameters.organizations.getOrganizationUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pathParameters.organizations.getOrganizationUser({
+    tenant_id: "tenant_id",
+    organization_id: "organization_id",
+    user_id: "user_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pathParameters.GetOrganizationUserOrganizationsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `OrganizationsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pathParameters.organizations.<a href="/src/api/resources/pathParameters/resources/organizations/client/Client.ts">searchOrganizations</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Organization[], SeedApi.pathParameters.organizations.searchOrganizations.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pathParameters.organizations.searchOrganizations({
+    tenant_id: "tenant_id",
+    organization_id: "organization_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pathParameters.SearchOrganizationsOrganizationsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `OrganizationsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## PathParameters User
+<details><summary><code>client.pathParameters.user.<a href="/src/api/resources/pathParameters/resources/user/client/Client.ts">getUser</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.pathParameters.user.getUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pathParameters.user.getUser({
+    tenant_id: "tenant_id",
+    user_id: "user_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pathParameters.GetUserUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pathParameters.user.<a href="/src/api/resources/pathParameters/resources/user/client/Client.ts">updateUser</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.pathParameters.user.updateUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pathParameters.user.updateUser({
+    tenant_id: "tenant_id",
+    user_id: "user_id",
+    body: {
+        name: "name",
+        tags: ["tags"]
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pathParameters.UpdateUserUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pathParameters.user.<a href="/src/api/resources/pathParameters/resources/user/client/Client.ts">createUser</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.pathParameters.user.createUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pathParameters.user.createUser({
+    tenant_id: "tenant_id",
+    body: {
+        name: "name",
+        tags: ["tags"]
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pathParameters.CreateUserUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pathParameters.user.<a href="/src/api/resources/pathParameters/resources/user/client/Client.ts">searchUsers</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User[], SeedApi.pathParameters.user.searchUsers.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pathParameters.user.searchUsers({
+    tenant_id: "tenant_id",
+    user_id: "user_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pathParameters.SearchUsersUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pathParameters.user.<a href="/src/api/resources/pathParameters/resources/user/client/Client.ts">getUserMetadata</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.pathParameters.user.getUserMetadata.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Test endpoint with path parameter that has a text prefix (v{version})
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pathParameters.user.getUserMetadata({
+    tenant_id: "tenant_id",
+    user_id: "user_id",
+    version: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pathParameters.GetUserMetadataUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pathParameters.user.<a href="/src/api/resources/pathParameters/resources/user/client/Client.ts">getUserSpecifics</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.pathParameters.user.getUserSpecifics.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Test endpoint with path parameters listed in different order than found in path
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pathParameters.user.getUserSpecifics({
+    tenant_id: "tenant_id",
+    user_id: "user_id",
+    version: 1,
+    thought: "thought"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pathParameters.GetUserSpecificsUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## PlainText Service
+<details><summary><code>client.plainText.service.<a href="/src/api/resources/plainText/resources/service/client/Client.ts">getText</a>() -> core.APIResponse&lt;void, SeedApi.plainText.service.getText.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.plainText.service.getText();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## PropertyAccess PropertyAccess
+<details><summary><code>client.propertyAccess.propertyAccess.<a href="/src/api/resources/propertyAccess/resources/propertyAccess/client/Client.ts">createUser</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.propertyAccess.propertyAccess.createUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.propertyAccess.propertyAccess.createUser({
+    id: "id",
+    email: "email",
+    password: "password",
+    profile: {
+        name: "name",
+        verification: {
+            verified: "verified"
+        },
+        ssn: "ssn"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.User` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PropertyAccessClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## PublicObject Service
+<details><summary><code>client.publicObject.service.<a href="/src/api/resources/publicObject/resources/service/client/Client.ts">get</a>() -> core.APIResponse&lt;void, SeedApi.publicObject.service.get.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.publicObject.service.get();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## PythonPositionalSingleProperty PythonPositionalSingleProperty
+<details><summary><code>client.pythonPositionalSingleProperty.pythonPositionalSingleProperty.<a href="/src/api/resources/pythonPositionalSingleProperty/resources/pythonPositionalSingleProperty/client/Client.ts">create</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.pythonPositionalSingleProperty.pythonPositionalSingleProperty.create.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pythonPositionalSingleProperty.pythonPositionalSingleProperty.create({
+    instrument: {
+        identifier: {
+            isin: "US0378331005"
+        },
+        quantity: {
+            quantity: 10000,
+            type: "QUANTITY"
+        }
+    },
+    taker: {
+        trader: {
+            uuid_: 1234567
+        }
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pythonPositionalSingleProperty.CreateRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PythonPositionalSinglePropertyClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## PythonBackslashEscape User
+<details><summary><code>client.pythonBackslashEscape.user.<a href="/src/api/resources/pythonBackslashEscape/resources/user/client/Client.ts">get</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.pythonBackslashEscape.user.get.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a user by their ID.
+For Windows authentication, use DOMAIN\username format.
+Other backslash examples: FOO\_BAR, path\to\file, C:\Users\name
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pythonBackslashEscape.user.get({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.pythonBackslashEscape.GetUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## PythonReservedKeywordSubpackages Class
+<details><summary><code>client.pythonReservedKeywordSubpackages.class.<a href="/src/api/resources/pythonReservedKeywordSubpackages/resources/class/client/Client.ts">create</a>() -> core.APIResponse&lt;void, SeedApi.pythonReservedKeywordSubpackages.class_.create.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pythonReservedKeywordSubpackages.class.create();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ClassClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## PythonReservedKeywordSubpackages Automations Import
+<details><summary><code>client.pythonReservedKeywordSubpackages.automations.import.<a href="/src/api/resources/pythonReservedKeywordSubpackages/resources/automations/resources/import/client/Client.ts">create</a>() -> core.APIResponse&lt;void, SeedApi.pythonReservedKeywordSubpackages.automations.import_.create.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pythonReservedKeywordSubpackages.automations.import.create();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ImportClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## PythonReservedKeywordSubpackages Automations Export
+<details><summary><code>client.pythonReservedKeywordSubpackages.automations.export.<a href="/src/api/resources/pythonReservedKeywordSubpackages/resources/automations/resources/export/client/Client.ts">create</a>() -> core.APIResponse&lt;void, SeedApi.pythonReservedKeywordSubpackages.automations.export_.create.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pythonReservedKeywordSubpackages.automations.export.create();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ExportClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## QueryParametersOpenapi
+<details><summary><code>client.queryParametersOpenapi.<a href="/src/api/resources/queryParametersOpenapi/client/Client.ts">search</a>({ ...params }) -> core.APIResponse&lt;SeedApi.SearchResponse, SeedApi.queryParametersOpenapi.search.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.queryParametersOpenapi.search({
+    limit: 1,
+    id: "id",
+    date: "2023-01-15",
+    deadline: "2024-01-15T09:30:00Z",
+    bytes: "bytes",
+    user: {
+        name: "name",
+        tags: ["tags", "tags"]
+    },
+    userList: {
+        name: "name",
+        tags: ["tags", "tags"]
+    },
+    optionalDeadline: "2024-01-15T09:30:00Z",
+    keyValue: {
+        "keyValue": "keyValue"
+    },
+    optionalString: "optionalString",
+    nestedUser: {
+        name: "name",
+        user: {
+            name: "name",
+            tags: ["tags", "tags"]
+        }
+    },
+    optionalUser: {
+        name: "name",
+        tags: ["tags", "tags"]
+    },
+    excludeUser: {
+        name: "name",
+        tags: ["tags", "tags"]
+    },
+    filter: "filter",
+    tags: "tags",
+    optionalTags: "optionalTags",
+    neighbor: {
+        name: "name",
+        tags: ["tags", "tags"]
+    },
+    neighborRequired: {
+        name: "name",
+        tags: ["tags", "tags"]
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.queryParametersOpenapi.SearchRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `QueryParametersOpenapiClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## QueryParameters User
+<details><summary><code>client.queryParameters.user.<a href="/src/api/resources/queryParameters/resources/user/client/Client.ts">getUsername</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.queryParameters.user.getUsername.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.queryParameters.user.getUsername({
+    limit: 1,
+    id: "id",
+    date: "2023-01-15",
+    deadline: "2024-01-15T09:30:00Z",
+    bytes: "bytes",
+    user: {
+        name: "name",
+        tags: ["tags", "tags"]
+    },
+    userList: {
+        name: "name",
+        tags: ["tags", "tags"]
+    },
+    optionalDeadline: "2024-01-15T09:30:00Z",
+    keyValue: {
+        "keyValue": "keyValue"
+    },
+    optionalString: "optionalString",
+    nestedUser: {
+        name: "name",
+        user: {
+            name: "name",
+            tags: ["tags", "tags"]
+        }
+    },
+    optionalUser: {
+        name: "name",
+        tags: ["tags", "tags"]
+    },
+    excludeUser: {
+        name: "name",
+        tags: ["tags", "tags"]
+    },
+    filter: "filter"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.queryParameters.GetUsernameUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## RequestParameters User
+<details><summary><code>client.requestParameters.user.<a href="/src/api/resources/requestParameters/resources/user/client/Client.ts">createUsername</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.requestParameters.user.createUsername.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.requestParameters.user.createUsername({
+    tags: ["tags"],
+    username: "username",
+    password: "password",
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.requestParameters.CreateUsernameUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.requestParameters.user.<a href="/src/api/resources/requestParameters/resources/user/client/Client.ts">createUsernameWithReferencedType</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.requestParameters.user.createUsernameWithReferencedType.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.requestParameters.user.createUsernameWithReferencedType({
+    tags: ["tags"],
+    username: "username",
+    password: "password",
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.requestParameters.CreateUsernameBody` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.requestParameters.user.<a href="/src/api/resources/requestParameters/resources/user/client/Client.ts">createUsernameOptional</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.requestParameters.user.createUsernameOptional.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.requestParameters.user.createUsernameOptional({});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.CreateUsernameBodyOptionalProperties | null` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.requestParameters.user.<a href="/src/api/resources/requestParameters/resources/user/client/Client.ts">getUsername</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.requestParameters.user.getUsername.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.requestParameters.user.getUsername({
+    limit: 1,
+    id: "id",
+    date: "2023-01-15",
+    deadline: "2024-01-15T09:30:00Z",
+    bytes: "bytes",
+    user: {
+        name: "name",
+        tags: ["tags", "tags"]
+    },
+    userList: {
+        name: "name",
+        tags: ["tags", "tags"]
+    },
+    optionalDeadline: "2024-01-15T09:30:00Z",
+    keyValue: {
+        "keyValue": "keyValue"
+    },
+    optionalString: "optionalString",
+    nestedUser: {
+        name: "name",
+        user: {
+            name: "name",
+            tags: ["tags", "tags"]
+        }
+    },
+    optionalUser: {
+        name: "name",
+        tags: ["tags", "tags"]
+    },
+    excludeUser: {
+        name: "name",
+        tags: ["tags", "tags"]
+    },
+    filter: "filter",
+    longParam: 1000000,
+    bigIntParam: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.requestParameters.GetUsernameUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## RequiredNullable RequiredNullable
+<details><summary><code>client.requiredNullable.requiredNullable.<a href="/src/api/resources/requiredNullable/resources/requiredNullable/client/Client.ts">getFoo</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Foo, SeedApi.requiredNullable.requiredNullable.getFoo.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.requiredNullable.requiredNullable.getFoo({
+    required_baz: "required_baz",
+    required_nullable_baz: "required_nullable_baz"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.requiredNullable.GetFooRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequiredNullableClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.requiredNullable.requiredNullable.<a href="/src/api/resources/requiredNullable/resources/requiredNullable/client/Client.ts">updateFoo</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Foo, SeedApi.requiredNullable.requiredNullable.updateFoo.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.requiredNullable.requiredNullable.updateFoo({
+    "X-Idempotency-Key": "X-Idempotency-Key",
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.requiredNullable.UpdateFooRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequiredNullableClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ReservedKeywords Package
+<details><summary><code>client.reservedKeywords.package.<a href="/src/api/resources/reservedKeywords/resources/package/client/Client.ts">test</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.reservedKeywords.package_.test.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.reservedKeywords.package.test({
+    "for": "for"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.reservedKeywords.TestPackageRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PackageClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ResponseProperty Service
+<details><summary><code>client.responseProperty.service.<a href="/src/api/resources/responseProperty/resources/service/client/Client.ts">getMovie</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Response, SeedApi.responseProperty.service.getMovie.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.responseProperty.service.getMovie("string");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.responseProperty.service.<a href="/src/api/resources/responseProperty/resources/service/client/Client.ts">getMovieDocs</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Response, SeedApi.responseProperty.service.getMovieDocs.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.responseProperty.service.getMovieDocs("string");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.responseProperty.service.<a href="/src/api/resources/responseProperty/resources/service/client/Client.ts">getMovieName</a>({ ...params }) -> core.APIResponse&lt;SeedApi.StringResponse, SeedApi.responseProperty.service.getMovieName.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.responseProperty.service.getMovieName("string");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.responseProperty.service.<a href="/src/api/resources/responseProperty/resources/service/client/Client.ts">getMovieMetadata</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Response, SeedApi.responseProperty.service.getMovieMetadata.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.responseProperty.service.getMovieMetadata("string");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.responseProperty.service.<a href="/src/api/resources/responseProperty/resources/service/client/Client.ts">getOptionalMovie</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Response | null, SeedApi.responseProperty.service.getOptionalMovie.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.responseProperty.service.getOptionalMovie("string");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.responseProperty.service.<a href="/src/api/resources/responseProperty/resources/service/client/Client.ts">getOptionalMovieDocs</a>({ ...params }) -> core.APIResponse&lt;SeedApi.OptionalWithDocs | null, SeedApi.responseProperty.service.getOptionalMovieDocs.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.responseProperty.service.getOptionalMovieDocs("string");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.responseProperty.service.<a href="/src/api/resources/responseProperty/resources/service/client/Client.ts">getOptionalMovieName</a>({ ...params }) -> core.APIResponse&lt;SeedApi.OptionalStringResponse | null, SeedApi.responseProperty.service.getOptionalMovieName.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.responseProperty.service.getOptionalMovieName("string");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## RubyReservedWordProperties Service
+<details><summary><code>client.rubyReservedWordProperties.service.<a href="/src/api/resources/rubyReservedWordProperties/resources/service/client/Client.ts">get</a>() -> core.APIResponse&lt;SeedApi.Foo, SeedApi.rubyReservedWordProperties.service.get.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.rubyReservedWordProperties.service.get();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## SchemalessRequestBodyExamples
+<details><summary><code>client.schemalessRequestBodyExamples.<a href="/src/api/resources/schemalessRequestBodyExamples/client/Client.ts">createPlant</a>({ ...params }) -> core.APIResponse&lt;SeedApi.CreatePlantResponse, SeedApi.schemalessRequestBodyExamples.createPlant.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a plant with example JSON but no request body schema.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.schemalessRequestBodyExamples.createPlant({
+    "name": "Venus Flytrap",
+    "species": "Dionaea muscipula",
+    "care": {
+        "light": "full sun",
+        "water": "distilled only",
+        "humidity": "high"
+    },
+    "tags": [
+        "carnivorous",
+        "tropical"
+    ]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `unknown` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SchemalessRequestBodyExamplesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.schemalessRequestBodyExamples.<a href="/src/api/resources/schemalessRequestBodyExamples/client/Client.ts">updatePlant</a>({ ...params }) -> core.APIResponse&lt;SeedApi.UpdatePlantResponse, SeedApi.schemalessRequestBodyExamples.updatePlant.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates a plant with example JSON but no request body schema.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.schemalessRequestBodyExamples.updatePlant({
+    plantId: "plantId",
+    body: {
+        "name": "Updated Venus Flytrap",
+        "care": {
+            "light": "partial shade"
+        }
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.schemalessRequestBodyExamples.UpdatePlantRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SchemalessRequestBodyExamplesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.schemalessRequestBodyExamples.<a href="/src/api/resources/schemalessRequestBodyExamples/client/Client.ts">createPlantWithSchema</a>({ ...params }) -> core.APIResponse&lt;SeedApi.CreatePlantWithSchemaResponse, SeedApi.schemalessRequestBodyExamples.createPlantWithSchema.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+A control endpoint that has both schema and example defined.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.schemalessRequestBodyExamples.createPlantWithSchema({
+    name: "Sundew",
+    species: "Drosera capensis"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.schemalessRequestBodyExamples.CreatePlantWithSchemaRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SchemalessRequestBodyExamplesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ServerUrlTemplating
+<details><summary><code>client.serverUrlTemplating.<a href="/src/api/resources/serverUrlTemplating/client/Client.ts">getUsers</a>() -> core.APIResponse&lt;SeedApi.User[], SeedApi.serverUrlTemplating.getUsers.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.serverUrlTemplating.getUsers();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServerUrlTemplatingClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.serverUrlTemplating.<a href="/src/api/resources/serverUrlTemplating/client/Client.ts">getUser</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.serverUrlTemplating.getUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.serverUrlTemplating.getUser({
+    userId: "userId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.serverUrlTemplating.GetUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServerUrlTemplatingClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.serverUrlTemplating.<a href="/src/api/resources/serverUrlTemplating/client/Client.ts">getToken</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.serverUrlTemplating.getToken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.serverUrlTemplating.getToken({
+    client_id: "client_id",
+    client_secret: "client_secret"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TokenRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServerUrlTemplatingClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ServerSentEventExamples Completions
+<details><summary><code>client.serverSentEventExamples.completions.<a href="/src/api/resources/serverSentEventExamples/resources/completions/client/Client.ts">stream</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.serverSentEventExamples.completions.stream.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.serverSentEventExamples.completions.stream({
+    query: "foo"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.serverSentEventExamples.StreamCompletionsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CompletionsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.serverSentEventExamples.completions.<a href="/src/api/resources/serverSentEventExamples/resources/completions/client/Client.ts">streamEvents</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.serverSentEventExamples.completions.streamEvents.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.serverSentEventExamples.completions.streamEvents({
+    query: "query"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.serverSentEventExamples.StreamEventsCompletionsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CompletionsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.serverSentEventExamples.completions.<a href="/src/api/resources/serverSentEventExamples/resources/completions/client/Client.ts">streamEventsDiscriminantInData</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.serverSentEventExamples.completions.streamEventsDiscriminantInData.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.serverSentEventExamples.completions.streamEventsDiscriminantInData({
+    query: "query"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.serverSentEventExamples.StreamEventsDiscriminantInDataCompletionsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CompletionsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.serverSentEventExamples.completions.<a href="/src/api/resources/serverSentEventExamples/resources/completions/client/Client.ts">streamEventsContextProtocol</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.serverSentEventExamples.completions.streamEventsContextProtocol.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.serverSentEventExamples.completions.streamEventsContextProtocol({
+    query: "query"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.serverSentEventExamples.StreamEventsContextProtocolCompletionsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CompletionsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ServerSentEvents Completions
+<details><summary><code>client.serverSentEvents.completions.<a href="/src/api/resources/serverSentEvents/resources/completions/client/Client.ts">stream</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.serverSentEvents.completions.stream.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.serverSentEvents.completions.stream({
+    query: "foo"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.serverSentEvents.StreamCompletionsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CompletionsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.serverSentEvents.completions.<a href="/src/api/resources/serverSentEvents/resources/completions/client/Client.ts">streamWithoutTerminator</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.serverSentEvents.completions.streamWithoutTerminator.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.serverSentEvents.completions.streamWithoutTerminator({
+    query: "query"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.serverSentEvents.StreamWithoutTerminatorCompletionsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CompletionsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## SimpleFhir SimpleFhir
+<details><summary><code>client.simpleFhir.simpleFhir.<a href="/src/api/resources/simpleFhir/resources/simpleFhir/client/Client.ts">getAccount</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Account, SeedApi.simpleFhir.simpleFhir.getAccount.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.simpleFhir.simpleFhir.getAccount({
+    account_id: "account_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.simpleFhir.GetAccountRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SimpleFhirClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## SimpleApi User
+<details><summary><code>client.simpleApi.user.<a href="/src/api/resources/simpleApi/resources/user/client/Client.ts">get</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.simpleApi.user.get.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.simpleApi.user.get({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.simpleApi.GetUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## SingleUrlEnvironmentDefault Dummy
+<details><summary><code>client.singleUrlEnvironmentDefault.dummy.<a href="/src/api/resources/singleUrlEnvironmentDefault/resources/dummy/client/Client.ts">getDummy</a>() -> core.APIResponse&lt;string, SeedApi.singleUrlEnvironmentDefault.dummy.getDummy.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.singleUrlEnvironmentDefault.dummy.getDummy();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `DummyClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## SingleUrlEnvironmentNoDefault Dummy
+<details><summary><code>client.singleUrlEnvironmentNoDefault.dummy.<a href="/src/api/resources/singleUrlEnvironmentNoDefault/resources/dummy/client/Client.ts">getDummy</a>() -> core.APIResponse&lt;string, SeedApi.singleUrlEnvironmentNoDefault.dummy.getDummy.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.singleUrlEnvironmentNoDefault.dummy.getDummy();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `DummyClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Streaming Dummy
+<details><summary><code>client.streaming.dummy.<a href="/src/api/resources/streaming/resources/dummy/client/Client.ts">generateStream</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.streaming.dummy.generateStream.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.streaming.dummy.generateStream({
+    stream: true,
+    num_events: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.streaming.GenerateStreamDummyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DummyClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.streaming.dummy.<a href="/src/api/resources/streaming/resources/dummy/client/Client.ts">generate</a>({ ...params }) -> core.APIResponse&lt;SeedApi.StreamResponse, SeedApi.streaming.dummy.generate.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.streaming.dummy.generate({
+    stream: false,
+    num_events: 5
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.streaming.GenerateDummyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DummyClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## StreamingParameter Dummy
+<details><summary><code>client.streamingParameter.dummy.<a href="/src/api/resources/streamingParameter/resources/dummy/client/Client.ts">generate</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.streamingParameter.dummy.generate.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.streamingParameter.dummy.generate({
+    stream: false,
+    num_events: 5
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.streamingParameter.GenerateDummyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DummyClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Trace V2
+<details><summary><code>client.trace.v2.<a href="/src/api/resources/trace/resources/v2/client/Client.ts">test</a>() -> core.APIResponse&lt;void, SeedApi.trace.v2.test.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.v2.test();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `V2Client.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Trace Admin
+<details><summary><code>client.trace.admin.<a href="/src/api/resources/trace/resources/admin/client/Client.ts">updateTestSubmissionStatus</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.trace.admin.updateTestSubmissionStatus.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.admin.updateTestSubmissionStatus({
+    submissionId: SeedApi.SubmissionId("submissionId"),
+    body: {
+        type: "stopped"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.UpdateTestSubmissionStatusAdminRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AdminClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.admin.<a href="/src/api/resources/trace/resources/admin/client/Client.ts">sendTestSubmissionUpdate</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.trace.admin.sendTestSubmissionUpdate.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.admin.sendTestSubmissionUpdate({
+    submissionId: SeedApi.SubmissionId("submissionId"),
+    body: {
+        updateTime: "2024-01-15T09:30:00Z",
+        updateInfo: {
+            type: "running"
+        }
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.SendTestSubmissionUpdateAdminRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AdminClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.admin.<a href="/src/api/resources/trace/resources/admin/client/Client.ts">updateWorkspaceSubmissionStatus</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.trace.admin.updateWorkspaceSubmissionStatus.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.admin.updateWorkspaceSubmissionStatus({
+    submissionId: SeedApi.SubmissionId("submissionId"),
+    body: {
+        type: "stopped"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.UpdateWorkspaceSubmissionStatusAdminRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AdminClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.admin.<a href="/src/api/resources/trace/resources/admin/client/Client.ts">sendWorkspaceSubmissionUpdate</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.trace.admin.sendWorkspaceSubmissionUpdate.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.admin.sendWorkspaceSubmissionUpdate({
+    submissionId: SeedApi.SubmissionId("submissionId"),
+    body: {
+        updateTime: "2024-01-15T09:30:00Z",
+        updateInfo: {
+            type: "running"
+        }
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.SendWorkspaceSubmissionUpdateAdminRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AdminClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.admin.<a href="/src/api/resources/trace/resources/admin/client/Client.ts">storeTracedTestCase</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.trace.admin.storeTracedTestCase.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.admin.storeTracedTestCase({
+    submissionId: SeedApi.SubmissionId("submissionId"),
+    testCaseId: "testCaseId",
+    result: {
+        result: {
+            expectedResult: {
+                type: "integerValue"
+            },
+            actualResult: {
+                type: "value"
+            },
+            passed: true
+        },
+        stdout: "stdout"
+    },
+    traceResponses: [{
+            submissionId: SeedApi.SubmissionId("submissionId"),
+            lineNumber: 1,
+            stack: {
+                numStackFrames: 1
+            }
+        }]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.StoreTracedTestCaseAdminRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AdminClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.admin.<a href="/src/api/resources/trace/resources/admin/client/Client.ts">storeTracedTestCaseV2</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.trace.admin.storeTracedTestCaseV2.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.admin.storeTracedTestCaseV2({
+    submissionId: SeedApi.SubmissionId("submissionId"),
+    testCaseId: SeedApi.V2TestCaseId("testCaseId"),
+    body: [{
+            submissionId: SeedApi.SubmissionId("submissionId"),
+            lineNumber: 1,
+            file: {
+                filename: "filename",
+                directory: "directory"
+            },
+            stack: {
+                numStackFrames: 1
+            }
+        }]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.StoreTracedTestCaseV2AdminRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AdminClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.admin.<a href="/src/api/resources/trace/resources/admin/client/Client.ts">storeTracedWorkspace</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.trace.admin.storeTracedWorkspace.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.admin.storeTracedWorkspace({
+    submissionId: SeedApi.SubmissionId("submissionId"),
+    workspaceRunDetails: {
+        stdout: "stdout"
+    },
+    traceResponses: [{
+            submissionId: SeedApi.SubmissionId("submissionId"),
+            lineNumber: 1,
+            stack: {
+                numStackFrames: 1
+            }
+        }]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.StoreTracedWorkspaceAdminRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AdminClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.admin.<a href="/src/api/resources/trace/resources/admin/client/Client.ts">storeTracedWorkspaceV2</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.trace.admin.storeTracedWorkspaceV2.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.admin.storeTracedWorkspaceV2({
+    submissionId: SeedApi.SubmissionId("submissionId"),
+    body: [{
+            submissionId: SeedApi.SubmissionId("submissionId"),
+            lineNumber: 1,
+            file: {
+                filename: "filename",
+                directory: "directory"
+            },
+            stack: {
+                numStackFrames: 1
+            }
+        }]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.StoreTracedWorkspaceV2AdminRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AdminClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Trace Homepage
+<details><summary><code>client.trace.homepage.<a href="/src/api/resources/trace/resources/homepage/client/Client.ts">getHomepageProblems</a>() -> core.APIResponse&lt;SeedApi.ProblemId[], SeedApi.trace.homepage.getHomepageProblems.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.homepage.getHomepageProblems();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `HomepageClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.homepage.<a href="/src/api/resources/trace/resources/homepage/client/Client.ts">setHomepageProblems</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.trace.homepage.setHomepageProblems.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.homepage.setHomepageProblems([SeedApi.ProblemId("string")]);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.ProblemId[]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `HomepageClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Trace Migration
+<details><summary><code>client.trace.migration.<a href="/src/api/resources/trace/resources/migration/client/Client.ts">getAttemptedMigrations</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Migration[], SeedApi.trace.migration.getAttemptedMigrations.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.migration.getAttemptedMigrations({
+    "admin-key-header": "admin-key-header"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.GetAttemptedMigrationsMigrationRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MigrationClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Trace Playlist
+<details><summary><code>client.trace.playlist.<a href="/src/api/resources/trace/resources/playlist/client/Client.ts">createPlaylist</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Playlist, SeedApi.trace.playlist.createPlaylist.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new playlist
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.playlist.createPlaylist({
+    serviceParam: 1,
+    datetime: "2024-01-15T09:30:00Z",
+    body: {
+        name: "name",
+        problems: [SeedApi.ProblemId("problems")]
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.CreatePlaylistPlaylistRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PlaylistClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.playlist.<a href="/src/api/resources/trace/resources/playlist/client/Client.ts">getPlaylists</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Playlist[], SeedApi.trace.playlist.getPlaylists.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the user's playlists
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.playlist.getPlaylists({
+    serviceParam: 1,
+    otherField: "otherField",
+    multiLineDocs: "multiLineDocs",
+    multipleField: ["multipleField"]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.GetPlaylistsPlaylistRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PlaylistClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.playlist.<a href="/src/api/resources/trace/resources/playlist/client/Client.ts">getPlaylist</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Playlist, SeedApi.trace.playlist.getPlaylist.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a playlist
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.playlist.getPlaylist({
+    serviceParam: 1,
+    playlistId: SeedApi.PlaylistId("playlistId")
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.GetPlaylistPlaylistRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PlaylistClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.playlist.<a href="/src/api/resources/trace/resources/playlist/client/Client.ts">updatePlaylist</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Playlist | null, SeedApi.trace.playlist.updatePlaylist.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates a playlist
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.playlist.updatePlaylist({
+    serviceParam: 1,
+    playlistId: SeedApi.PlaylistId("playlistId"),
+    body: {
+        name: "name",
+        problems: [SeedApi.ProblemId("problems")]
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.UpdatePlaylistPlaylistRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PlaylistClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.playlist.<a href="/src/api/resources/trace/resources/playlist/client/Client.ts">deletePlaylist</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.trace.playlist.deletePlaylist.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes a playlist
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.playlist.deletePlaylist({
+    serviceParam: 1,
+    playlist_id: SeedApi.PlaylistId("playlist_id")
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.DeletePlaylistPlaylistRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PlaylistClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Trace Problem
+<details><summary><code>client.trace.problem.<a href="/src/api/resources/trace/resources/problem/client/Client.ts">createProblem</a>({ ...params }) -> core.APIResponse&lt;SeedApi.CreateProblemResponse, SeedApi.trace.problem.createProblem.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a problem
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.problem.createProblem({
+    problemName: "problemName",
+    problemDescription: {
+        boards: [{
+                type: "html"
+            }]
+    },
+    files: {
+        "key": {
+            solutionFile: {
+                filename: "filename",
+                contents: "contents"
+            },
+            readOnlyFiles: [{
+                    filename: "filename",
+                    contents: "contents"
+                }]
+        }
+    },
+    inputParams: [{
+            variableType: {
+                type: "integerType"
+            },
+            name: "name"
+        }],
+    outputType: {
+        type: "integerType"
+    },
+    testcases: [{
+            testCase: {
+                id: "id",
+                params: [{
+                        type: "integerValue"
+                    }]
+            },
+            expectedResult: {
+                type: "integerValue"
+            }
+        }],
+    methodName: "methodName"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.CreateProblemRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ProblemClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.problem.<a href="/src/api/resources/trace/resources/problem/client/Client.ts">updateProblem</a>({ ...params }) -> core.APIResponse&lt;SeedApi.UpdateProblemResponse, SeedApi.trace.problem.updateProblem.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates a problem
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.problem.updateProblem({
+    problemId: SeedApi.ProblemId("problemId"),
+    body: {
+        problemName: "problemName",
+        problemDescription: {
+            boards: [{
+                    type: "html"
+                }]
+        },
+        files: {
+            "key": {
+                solutionFile: {
+                    filename: "filename",
+                    contents: "contents"
+                },
+                readOnlyFiles: [{
+                        filename: "filename",
+                        contents: "contents"
+                    }]
+            }
+        },
+        inputParams: [{
+                variableType: {
+                    type: "integerType"
+                },
+                name: "name"
+            }],
+        outputType: {
+            type: "integerType"
+        },
+        testcases: [{
+                testCase: {
+                    id: "id",
+                    params: [{
+                            type: "integerValue"
+                        }]
+                },
+                expectedResult: {
+                    type: "integerValue"
+                }
+            }],
+        methodName: "methodName"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.UpdateProblemProblemRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ProblemClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.problem.<a href="/src/api/resources/trace/resources/problem/client/Client.ts">deleteProblem</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.trace.problem.deleteProblem.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Soft deletes a problem
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.problem.deleteProblem({
+    problemId: SeedApi.ProblemId("problemId")
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.DeleteProblemProblemRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ProblemClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.problem.<a href="/src/api/resources/trace/resources/problem/client/Client.ts">getDefaultStarterFiles</a>({ ...params }) -> core.APIResponse&lt;SeedApi.GetDefaultStarterFilesResponse, SeedApi.trace.problem.getDefaultStarterFiles.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns default starter files for problem
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.problem.getDefaultStarterFiles({
+    inputParams: [{
+            variableType: {
+                type: "integerType"
+            },
+            name: "name"
+        }],
+    outputType: {
+        type: "integerType"
+    },
+    methodName: "methodName"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.GetDefaultStarterFilesProblemRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ProblemClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Trace Submission
+<details><summary><code>client.trace.submission.<a href="/src/api/resources/trace/resources/submission/client/Client.ts">createExecutionSession</a>({ ...params }) -> core.APIResponse&lt;SeedApi.ExecutionSessionResponse, SeedApi.trace.submission.createExecutionSession.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns sessionId and execution server URL for session. Spins up server.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.submission.createExecutionSession({
+    language: "JAVA"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.CreateExecutionSessionSubmissionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SubmissionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.submission.<a href="/src/api/resources/trace/resources/submission/client/Client.ts">getExecutionSession</a>({ ...params }) -> core.APIResponse&lt;SeedApi.ExecutionSessionResponse | null, SeedApi.trace.submission.getExecutionSession.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns execution server URL for session. Returns empty if session isn't registered.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.submission.getExecutionSession({
+    sessionId: "sessionId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.GetExecutionSessionSubmissionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SubmissionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.submission.<a href="/src/api/resources/trace/resources/submission/client/Client.ts">stopExecutionSession</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.trace.submission.stopExecutionSession.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stops execution session.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.submission.stopExecutionSession({
+    sessionId: "sessionId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.StopExecutionSessionSubmissionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SubmissionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.submission.<a href="/src/api/resources/trace/resources/submission/client/Client.ts">getExecutionSessionsState</a>() -> core.APIResponse&lt;SeedApi.GetExecutionSessionStateResponse, SeedApi.trace.submission.getExecutionSessionsState.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.submission.getExecutionSessionsState();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `SubmissionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Trace Sysprop
+<details><summary><code>client.trace.sysprop.<a href="/src/api/resources/trace/resources/sysprop/client/Client.ts">setNumWarmInstances</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.trace.sysprop.setNumWarmInstances.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.sysprop.setNumWarmInstances({
+    language: "JAVA",
+    numWarmInstances: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.SetNumWarmInstancesSyspropRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SyspropClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.sysprop.<a href="/src/api/resources/trace/resources/sysprop/client/Client.ts">getNumWarmInstances</a>() -> core.APIResponse&lt;Record&lt;string, number&gt;, SeedApi.trace.sysprop.getNumWarmInstances.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.sysprop.getNumWarmInstances();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `SyspropClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Trace V2 Problem
+<details><summary><code>client.trace.v2.problem.<a href="/src/api/resources/trace/resources/v2/resources/problem/client/Client.ts">getLightweightProblems</a>() -> core.APIResponse&lt;SeedApi.V2LightweightProblemInfoV2[], SeedApi.trace.v2.problem.getLightweightProblems.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns lightweight versions of all problems
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.v2.problem.getLightweightProblems();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ProblemClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.v2.problem.<a href="/src/api/resources/trace/resources/v2/resources/problem/client/Client.ts">getProblems</a>() -> core.APIResponse&lt;SeedApi.V2ProblemInfoV2[], SeedApi.trace.v2.problem.getProblems.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns latest versions of all problems
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.v2.problem.getProblems();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ProblemClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.v2.problem.<a href="/src/api/resources/trace/resources/v2/resources/problem/client/Client.ts">getLatestProblem</a>({ ...params }) -> core.APIResponse&lt;SeedApi.V2ProblemInfoV2, SeedApi.trace.v2.problem.getLatestProblem.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns latest version of a problem
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.v2.problem.getLatestProblem({
+    problemId: SeedApi.ProblemId("problemId")
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.v2.GetLatestProblemProblemRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ProblemClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.v2.problem.<a href="/src/api/resources/trace/resources/v2/resources/problem/client/Client.ts">getProblemVersion</a>({ ...params }) -> core.APIResponse&lt;SeedApi.V2ProblemInfoV2, SeedApi.trace.v2.problem.getProblemVersion.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns requested version of a problem
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.v2.problem.getProblemVersion({
+    problemId: SeedApi.ProblemId("problemId"),
+    problemVersion: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.v2.GetProblemVersionProblemRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ProblemClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Trace V2 V3 Problem
+<details><summary><code>client.trace.v2.v3.problem.<a href="/src/api/resources/trace/resources/v2/resources/v3/resources/problem/client/Client.ts">getLightweightProblems</a>() -> core.APIResponse&lt;SeedApi.V2V3LightweightProblemInfoV2[], SeedApi.trace.v2.v3.problem.getLightweightProblems.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns lightweight versions of all problems
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.v2.v3.problem.getLightweightProblems();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ProblemClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.v2.v3.problem.<a href="/src/api/resources/trace/resources/v2/resources/v3/resources/problem/client/Client.ts">getProblems</a>() -> core.APIResponse&lt;SeedApi.V2V3ProblemInfoV2[], SeedApi.trace.v2.v3.problem.getProblems.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns latest versions of all problems
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.v2.v3.problem.getProblems();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ProblemClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.v2.v3.problem.<a href="/src/api/resources/trace/resources/v2/resources/v3/resources/problem/client/Client.ts">getLatestProblem</a>({ ...params }) -> core.APIResponse&lt;SeedApi.V2V3ProblemInfoV2, SeedApi.trace.v2.v3.problem.getLatestProblem.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns latest version of a problem
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.v2.v3.problem.getLatestProblem({
+    problemId: SeedApi.ProblemId("problemId")
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.v2.v3.GetLatestProblemProblemRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ProblemClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.trace.v2.v3.problem.<a href="/src/api/resources/trace/resources/v2/resources/v3/resources/problem/client/Client.ts">getProblemVersion</a>({ ...params }) -> core.APIResponse&lt;SeedApi.V2V3ProblemInfoV2, SeedApi.trace.v2.v3.problem.getProblemVersion.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns requested version of a problem
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.trace.v2.v3.problem.getProblemVersion({
+    problemId: SeedApi.ProblemId("problemId"),
+    problemVersion: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.trace.v2.v3.GetProblemVersionProblemRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ProblemClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## TsExtraProperties
+<details><summary><code>client.tsExtraProperties.<a href="/src/api/resources/tsExtraProperties/client/Client.ts">getUser</a>() -> core.APIResponse&lt;SeedApi.User, SeedApi.tsExtraProperties.getUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.tsExtraProperties.getUser();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `TsExtraPropertiesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.tsExtraProperties.<a href="/src/api/resources/tsExtraProperties/client/Client.ts">createUser</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.tsExtraProperties.createUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.tsExtraProperties.createUser({
+    user_name: "user_name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.tsExtraProperties.CreateUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `TsExtraPropertiesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## TsInlineTypes TsInlineTypes
+<details><summary><code>client.tsInlineTypes.tsInlineTypes.<a href="/src/api/resources/tsInlineTypes/resources/tsInlineTypes/client/Client.ts">getRoot</a>({ ...params }) -> core.APIResponse&lt;SeedApi.RootType1, SeedApi.tsInlineTypes.tsInlineTypes.getRoot.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.tsInlineTypes.tsInlineTypes.getRoot({
+    bar: {
+        foo: "foo"
+    },
+    foo: "foo"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.tsInlineTypes.GetRootRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `TsInlineTypesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.tsInlineTypes.tsInlineTypes.<a href="/src/api/resources/tsInlineTypes/resources/tsInlineTypes/client/Client.ts">getDiscriminatedUnion</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.tsInlineTypes.tsInlineTypes.getDiscriminatedUnion.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.tsInlineTypes.tsInlineTypes.getDiscriminatedUnion({
+    bar: {
+        foo: "foo",
+        bar: {
+            foo: "foo",
+            ref: {
+                foo: "foo"
+            }
+        },
+        ref: {
+            foo: "foo"
+        },
+        type: "type1"
+    },
+    foo: "foo"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.tsInlineTypes.GetDiscriminatedUnionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `TsInlineTypesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.tsInlineTypes.tsInlineTypes.<a href="/src/api/resources/tsInlineTypes/resources/tsInlineTypes/client/Client.ts">getUndiscriminatedUnion</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.tsInlineTypes.tsInlineTypes.getUndiscriminatedUnion.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.tsInlineTypes.tsInlineTypes.getUndiscriminatedUnion({
+    bar: "SUNNY",
+    foo: "foo"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.tsInlineTypes.GetUndiscriminatedUnionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `TsInlineTypesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## TsExpressCasing Imdb
+<details><summary><code>client.tsExpressCasing.imdb.<a href="/src/api/resources/tsExpressCasing/resources/imdb/client/Client.ts">createMovie</a>({ ...params }) -> core.APIResponse&lt;SeedApi.MovieId, SeedApi.tsExpressCasing.imdb.createMovie.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add a movie to the database
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.tsExpressCasing.imdb.createMovie({
+    id: SeedApi.MovieId("id"),
+    movie_title: "movie_title",
+    movie_rating: 1.1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.tsExpressCasing.CreateMovieImdbRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ImdbClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.tsExpressCasing.imdb.<a href="/src/api/resources/tsExpressCasing/resources/imdb/client/Client.ts">getMovie</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Movie, SeedApi.tsExpressCasing.imdb.getMovie.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.tsExpressCasing.imdb.getMovie({
+    movie_id: SeedApi.MovieId("movie_id")
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.tsExpressCasing.GetMovieImdbRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ImdbClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## UndiscriminatedUnionWithResponseProperty UndiscriminatedUnionWithResponseProperty
+<details><summary><code>client.undiscriminatedUnionWithResponseProperty.undiscriminatedUnionWithResponseProperty.<a href="/src/api/resources/undiscriminatedUnionWithResponseProperty/resources/undiscriminatedUnionWithResponseProperty/client/Client.ts">getUnion</a>() -> core.APIResponse&lt;SeedApi.UnionResponse, SeedApi.undiscriminatedUnionWithResponseProperty.undiscriminatedUnionWithResponseProperty.getUnion.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.undiscriminatedUnionWithResponseProperty.undiscriminatedUnionWithResponseProperty.getUnion();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `UndiscriminatedUnionWithResponsePropertyClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.undiscriminatedUnionWithResponseProperty.undiscriminatedUnionWithResponseProperty.<a href="/src/api/resources/undiscriminatedUnionWithResponseProperty/resources/undiscriminatedUnionWithResponseProperty/client/Client.ts">listUnions</a>() -> core.APIResponse&lt;SeedApi.UnionListResponse, SeedApi.undiscriminatedUnionWithResponseProperty.undiscriminatedUnionWithResponseProperty.listUnions.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.undiscriminatedUnionWithResponseProperty.undiscriminatedUnionWithResponseProperty.listUnions();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `UndiscriminatedUnionWithResponsePropertyClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## UndiscriminatedUnions Union
+<details><summary><code>client.undiscriminatedUnions.union.<a href="/src/api/resources/undiscriminatedUnions/resources/union/client/Client.ts">get</a>({ ...params }) -> core.APIResponse&lt;SeedApi.MyUnion, SeedApi.undiscriminatedUnions.union.get.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.undiscriminatedUnions.union.get("string");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.MyUnion` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.undiscriminatedUnions.union.<a href="/src/api/resources/undiscriminatedUnions/resources/union/client/Client.ts">getMetadata</a>() -> core.APIResponse&lt;SeedApi.Metadata, SeedApi.undiscriminatedUnions.union.getMetadata.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.undiscriminatedUnions.union.getMetadata();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.undiscriminatedUnions.union.<a href="/src/api/resources/undiscriminatedUnions/resources/union/client/Client.ts">updateMetadata</a>({ ...params }) -> core.APIResponse&lt;boolean, SeedApi.undiscriminatedUnions.union.updateMetadata.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.undiscriminatedUnions.union.updateMetadata({
+    "string": {
+        "key": "value"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.MetadataUnion` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.undiscriminatedUnions.union.<a href="/src/api/resources/undiscriminatedUnions/resources/union/client/Client.ts">call</a>({ ...params }) -> core.APIResponse&lt;boolean, SeedApi.undiscriminatedUnions.union.call.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.undiscriminatedUnions.union.call({
+    union: {
+        "string": {
+            "key": "value"
+        }
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.undiscriminatedUnions.Request` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.undiscriminatedUnions.union.<a href="/src/api/resources/undiscriminatedUnions/resources/union/client/Client.ts">duplicateTypesUnion</a>({ ...params }) -> core.APIResponse&lt;SeedApi.UnionWithDuplicateTypes, SeedApi.undiscriminatedUnions.union.duplicateTypesUnion.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.undiscriminatedUnions.union.duplicateTypesUnion("string");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.UnionWithDuplicateTypes` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.undiscriminatedUnions.union.<a href="/src/api/resources/undiscriminatedUnions/resources/union/client/Client.ts">nestedUnions</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.undiscriminatedUnions.union.nestedUnions.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.undiscriminatedUnions.union.nestedUnions("string");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.NestedUnionRoot` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.undiscriminatedUnions.union.<a href="/src/api/resources/undiscriminatedUnions/resources/union/client/Client.ts">nestedObjectUnions</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.undiscriminatedUnions.union.nestedObjectUnions.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.undiscriminatedUnions.union.nestedObjectUnions("string");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.OuterNestedUnion` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.undiscriminatedUnions.union.<a href="/src/api/resources/undiscriminatedUnions/resources/union/client/Client.ts">aliasedObjectUnion</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.undiscriminatedUnions.union.aliasedObjectUnion.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.undiscriminatedUnions.union.aliasedObjectUnion({
+    "onlyInA": "onlyInA",
+    "sharedNumber": 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.AliasedObjectUnion` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.undiscriminatedUnions.union.<a href="/src/api/resources/undiscriminatedUnions/resources/union/client/Client.ts">getWithBaseProperties</a>({ ...params }) -> core.APIResponse&lt;SeedApi.UnionWithBaseProperties, SeedApi.undiscriminatedUnions.union.getWithBaseProperties.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.undiscriminatedUnions.union.getWithBaseProperties({
+    name: "name",
+    value: {
+        "key": "value"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.UnionWithBaseProperties` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.undiscriminatedUnions.union.<a href="/src/api/resources/undiscriminatedUnions/resources/union/client/Client.ts">testCamelCaseProperties</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.undiscriminatedUnions.union.testCamelCaseProperties.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.undiscriminatedUnions.union.testCamelCaseProperties({
+    paymentMethod: {
+        method: "card",
+        cardNumber: "1234567890123456"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.undiscriminatedUnions.TestCamelCasePropertiesUnionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## UnionQueryParameters Events
+<details><summary><code>client.unionQueryParameters.events.<a href="/src/api/resources/unionQueryParameters/resources/events/client/Client.ts">subscribe</a>({ ...params }) -> core.APIResponse&lt;string, SeedApi.unionQueryParameters.events.subscribe.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Subscribe to events with a oneOf-style query parameter that may be a
+scalar enum value or a list of enum values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.unionQueryParameters.events.subscribe();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.unionQueryParameters.SubscribeEventsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EventsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Unions Bigunion
+<details><summary><code>client.unions.bigunion.<a href="/src/api/resources/unions/resources/bigunion/client/Client.ts">get</a>({ ...params }) -> core.APIResponse&lt;SeedApi.BigUnion, SeedApi.unions.bigunion.get.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.unions.bigunion.get({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.unions.GetBigunionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `BigunionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.unions.bigunion.<a href="/src/api/resources/unions/resources/bigunion/client/Client.ts">update</a>({ ...params }) -> core.APIResponse&lt;boolean, SeedApi.unions.bigunion.update.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.unions.bigunion.update({
+    value: "example1",
+    type: "normalSweet"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.BigUnion` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `BigunionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.unions.bigunion.<a href="/src/api/resources/unions/resources/bigunion/client/Client.ts">updateMany</a>({ ...params }) -> core.APIResponse&lt;Record&lt;string, boolean&gt;, SeedApi.unions.bigunion.updateMany.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.unions.bigunion.updateMany([{
+        value: "example1",
+        type: "normalSweet"
+    }]);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.BigUnion[]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `BigunionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Unions Union
+<details><summary><code>client.unions.union.<a href="/src/api/resources/unions/resources/union/client/Client.ts">get</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Shape, SeedApi.unions.union.get.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.unions.union.get({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.unions.GetUnionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.unions.union.<a href="/src/api/resources/unions/resources/union/client/Client.ts">update</a>({ ...params }) -> core.APIResponse&lt;boolean, SeedApi.unions.union.update.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.unions.union.update({
+    radius: 1.1,
+    type: "circle"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.Shape` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## UnionsWithLocalDate Bigunion
+<details><summary><code>client.unionsWithLocalDate.bigunion.<a href="/src/api/resources/unionsWithLocalDate/resources/bigunion/client/Client.ts">get</a>({ ...params }) -> core.APIResponse&lt;SeedApi.BigUnion, SeedApi.unionsWithLocalDate.bigunion.get.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.unionsWithLocalDate.bigunion.get({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.unionsWithLocalDate.GetBigunionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `BigunionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.unionsWithLocalDate.bigunion.<a href="/src/api/resources/unionsWithLocalDate/resources/bigunion/client/Client.ts">update</a>({ ...params }) -> core.APIResponse&lt;boolean, SeedApi.unionsWithLocalDate.bigunion.update.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.unionsWithLocalDate.bigunion.update({
+    value: "example1",
+    type: "normalSweet"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.BigUnion` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `BigunionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.unionsWithLocalDate.bigunion.<a href="/src/api/resources/unionsWithLocalDate/resources/bigunion/client/Client.ts">updateMany</a>({ ...params }) -> core.APIResponse&lt;Record&lt;string, boolean&gt;, SeedApi.unionsWithLocalDate.bigunion.updateMany.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.unionsWithLocalDate.bigunion.updateMany([{
+        value: "example1",
+        type: "normalSweet"
+    }]);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.BigUnion[]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `BigunionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## UnionsWithLocalDate Types
+<details><summary><code>client.unionsWithLocalDate.types.<a href="/src/api/resources/unionsWithLocalDate/resources/types/client/Client.ts">get</a>({ ...params }) -> core.APIResponse&lt;SeedApi.UnionWithTime, SeedApi.unionsWithLocalDate.types.get.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.unionsWithLocalDate.types.get({
+    id: "date-example"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.unionsWithLocalDate.GetTypesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `TypesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.unionsWithLocalDate.types.<a href="/src/api/resources/unionsWithLocalDate/resources/types/client/Client.ts">update</a>({ ...params }) -> core.APIResponse&lt;boolean, SeedApi.unionsWithLocalDate.types.update.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.unionsWithLocalDate.types.update({
+    type: "date",
+    value: "1994-01-01"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.UnionWithTime` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `TypesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## UnionsWithLocalDate Union
+<details><summary><code>client.unionsWithLocalDate.union.<a href="/src/api/resources/unionsWithLocalDate/resources/union/client/Client.ts">get</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Shape, SeedApi.unionsWithLocalDate.union.get.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.unionsWithLocalDate.union.get({
+    id: "id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.unionsWithLocalDate.GetUnionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.unionsWithLocalDate.union.<a href="/src/api/resources/unionsWithLocalDate/resources/union/client/Client.ts">update</a>({ ...params }) -> core.APIResponse&lt;boolean, SeedApi.unionsWithLocalDate.union.update.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.unionsWithLocalDate.union.update({
+    radius: 1.1,
+    type: "circle"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.Shape` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Unknown Unknown
+<details><summary><code>client.unknown.unknown.<a href="/src/api/resources/unknown/resources/unknown/client/Client.ts">post</a>({ ...params }) -> core.APIResponse&lt;unknown[], SeedApi.unknown.unknown.post.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.unknown.unknown.post({
+    "key": "value"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `unknown` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnknownClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.unknown.unknown.<a href="/src/api/resources/unknown/resources/unknown/client/Client.ts">postObject</a>({ ...params }) -> core.APIResponse&lt;unknown[], SeedApi.unknown.unknown.postObject.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.unknown.unknown.postObject({
+    unknown: {
+        "key": "value"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.MyObject` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnknownClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## UrlFormEncoded
+<details><summary><code>client.urlFormEncoded.<a href="/src/api/resources/urlFormEncoded/client/Client.ts">submitFormData</a>({ ...params }) -> core.APIResponse&lt;SeedApi.PostSubmitResponse, SeedApi.urlFormEncoded.submitFormData.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.urlFormEncoded.submitFormData({
+    username: "johndoe",
+    email: "john@example.com"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.urlFormEncoded.PostSubmitRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UrlFormEncodedClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.urlFormEncoded.<a href="/src/api/resources/urlFormEncoded/client/Client.ts">getToken</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.urlFormEncoded.getToken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.urlFormEncoded.getToken({
+    client_id: "client_id",
+    client_secret: "client_secret"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.TokenRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UrlFormEncodedClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Validation Validation
+<details><summary><code>client.validation.validation.<a href="/src/api/resources/validation/resources/validation/client/Client.ts">create</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Type, SeedApi.validation.validation.create.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.validation.validation.create({
+    decimal: 1.1,
+    even: 1,
+    name: "name",
+    shape: "SQUARE"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.validation.CreateRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ValidationClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.validation.validation.<a href="/src/api/resources/validation/resources/validation/client/Client.ts">get</a>({ ...params }) -> core.APIResponse&lt;SeedApi.Type, SeedApi.validation.validation.get.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.validation.validation.get({
+    decimal: 1.1,
+    even: 1,
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.validation.GetRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ValidationClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Variables Service
+<details><summary><code>client.variables.service.<a href="/src/api/resources/variables/resources/service/client/Client.ts">post</a>({ ...params }) -> core.APIResponse&lt;void, SeedApi.variables.service.post.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.variables.service.post({
+    endpointParam: "endpointParam"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.variables.PostServiceRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Version User
+<details><summary><code>client.version.user.<a href="/src/api/resources/version/resources/user/client/Client.ts">getUser</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.version.user.getUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.version.user.getUser({
+    userId: SeedApi.UserId("userId")
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.version.GetUserUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## VersionNoDefault User
+<details><summary><code>client.versionNoDefault.user.<a href="/src/api/resources/versionNoDefault/resources/user/client/Client.ts">getUser</a>({ ...params }) -> core.APIResponse&lt;SeedApi.User, SeedApi.versionNoDefault.user.getUser.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.versionNoDefault.user.getUser({
+    userId: SeedApi.UserId("userId")
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.versionNoDefault.GetUserUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## WebsocketInferredAuth Auth
+<details><summary><code>client.websocketInferredAuth.auth.<a href="/src/api/resources/websocketInferredAuth/resources/auth/client/Client.ts">getTokenWithClientCredentials</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.websocketInferredAuth.auth.getTokenWithClientCredentials.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.websocketInferredAuth.auth.getTokenWithClientCredentials({
+    client_id: "client_id",
+    client_secret: "client_secret",
+    audience: "https://api.example.com",
+    grant_type: "client_credentials"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.websocketInferredAuth.GetTokenWithClientCredentialsAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.websocketInferredAuth.auth.<a href="/src/api/resources/websocketInferredAuth/resources/auth/client/Client.ts">refreshToken</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TokenResponse, SeedApi.websocketInferredAuth.auth.refreshToken.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.websocketInferredAuth.auth.refreshToken({
+    client_id: "client_id",
+    client_secret: "client_secret",
+    refresh_token: "refresh_token",
+    audience: "https://api.example.com",
+    grant_type: "refresh_token"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.websocketInferredAuth.RefreshTokenAuthRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuthClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## XFernDefault
+<details><summary><code>client.xFernDefault.<a href="/src/api/resources/xFernDefault/client/Client.ts">testGet</a>({ ...params }) -> core.APIResponse&lt;SeedApi.TestGetResponse, SeedApi.xFernDefault.testGet.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.xFernDefault.testGet({
+    region: "region"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.xFernDefault.TestGetRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `XFernDefaultClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

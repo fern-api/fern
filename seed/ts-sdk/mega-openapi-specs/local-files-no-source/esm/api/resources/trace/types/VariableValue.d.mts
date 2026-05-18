@@ -1,0 +1,30 @@
+import type * as SeedApi from "../../../index.mjs";
+export type VariableValue = {
+    type: "integerValue";
+    value?: number | undefined;
+} | {
+    type: "booleanValue";
+    value?: boolean | undefined;
+} | {
+    type: "doubleValue";
+    value?: number | undefined;
+} | {
+    type: "stringValue";
+    value?: string | undefined;
+} | {
+    type: "charValue";
+    value?: string | undefined;
+} | {
+    type: "mapValue";
+} | {
+    type: "listValue";
+    value?: SeedApi.trace.VariableValue[] | undefined;
+} | {
+    type: "binaryTreeValue";
+} | {
+    type: "singlyLinkedListValue";
+} | {
+    type: "doublyLinkedListValue";
+} | {
+    type: "nullValue";
+};

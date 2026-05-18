@@ -1,0 +1,52 @@
+import type * as SeedApi from "../../../../../../index.mjs";
+/**
+ * @example
+ *     {
+ *         problemId: "problemId",
+ *         body: {
+ *             problemName: "problemName",
+ *             problemDescription: {
+ *                 boards: [{
+ *                         type: "html"
+ *                     }]
+ *             },
+ *             files: {
+ *                 "key": {
+ *                     solutionFile: {
+ *                         filename: "filename",
+ *                         contents: "contents"
+ *                     },
+ *                     readOnlyFiles: [{
+ *                             filename: "filename",
+ *                             contents: "contents"
+ *                         }]
+ *                 }
+ *             },
+ *             inputParams: [{
+ *                     variableType: {
+ *                         type: "integerType"
+ *                     },
+ *                     name: "name"
+ *                 }],
+ *             outputType: {
+ *                 type: "integerType"
+ *             },
+ *             testcases: [{
+ *                     testCase: {
+ *                         id: "id",
+ *                         params: [{
+ *                                 type: "integerValue"
+ *                             }]
+ *                     },
+ *                     expectedResult: {
+ *                         type: "integerValue"
+ *                     }
+ *                 }],
+ *             methodName: "methodName"
+ *         }
+ *     }
+ */
+export interface UpdateProblemProblemRequest {
+    problemId: SeedApi.trace.ProblemId;
+    body: SeedApi.trace.CreateProblemRequest;
+}

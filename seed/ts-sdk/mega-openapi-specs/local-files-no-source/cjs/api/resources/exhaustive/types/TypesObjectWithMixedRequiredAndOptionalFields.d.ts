@@ -1,0 +1,11 @@
+/**
+ * Tests that dynamic snippets include all required properties even when
+ * the example data only provides a subset. In C#, properties marked as
+ * `required` must be set in the object initializer.
+ */
+export interface TypesObjectWithMixedRequiredAndOptionalFields {
+    requiredString: string;
+    requiredInteger: number;
+    optionalString?: (string | null) | undefined;
+    requiredLong: number;
+}

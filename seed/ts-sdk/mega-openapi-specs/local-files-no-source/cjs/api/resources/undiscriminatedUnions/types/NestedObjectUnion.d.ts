@@ -1,0 +1,6 @@
+import type * as SeedApi from "../../../index.js";
+/**
+ * Inner union with two object variants that have disjoint required keys.
+ * Tests that required-key guards work correctly inside nested union contexts.
+ */
+export type NestedObjectUnion = SeedApi.undiscriminatedUnions.LeafTypeA | SeedApi.undiscriminatedUnions.LeafTypeB;

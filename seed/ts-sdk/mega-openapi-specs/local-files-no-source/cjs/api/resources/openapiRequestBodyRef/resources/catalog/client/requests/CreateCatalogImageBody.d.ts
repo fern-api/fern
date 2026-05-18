@@ -1,0 +1,14 @@
+import type * as core from "../../../../../../../core/index.js";
+import type * as SeedApi from "../../../../../../index.js";
+/**
+ * @example
+ *     {
+ *         request: {
+ *             catalog_object_id: "catalog_object_id"
+ *         }
+ *     }
+ */
+export interface CreateCatalogImageBody {
+    request: SeedApi.openapiRequestBodyRef.CreateCatalogImageRequest;
+    image_file?: core.file.Uploadable | undefined;
+}

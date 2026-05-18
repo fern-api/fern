@@ -1,0 +1,11 @@
+/**
+ * @example
+ *     {
+ *         tenant_id: "tenant_id",
+ *         organization_id: "organization_id"
+ *     }
+ */
+export interface GetOrganizationOrganizationsRequest {
+    tenant_id: string;
+    organization_id: string;
+}

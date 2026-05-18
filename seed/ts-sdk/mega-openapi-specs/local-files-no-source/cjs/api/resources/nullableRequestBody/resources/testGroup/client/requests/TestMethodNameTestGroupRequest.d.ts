@@ -1,0 +1,14 @@
+import type * as SeedApi from "../../../../../../index.js";
+/**
+ * @example
+ *     {
+ *         path_param: "path_param",
+ *         body: {}
+ *     }
+ */
+export interface TestMethodNameTestGroupRequest {
+    path_param: string;
+    query_param_object?: SeedApi.nullableRequestBody.PlainObject | null;
+    query_param_integer?: number | null;
+    body: SeedApi.nullableRequestBody.PlainObject | null;
+}

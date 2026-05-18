@@ -1,0 +1,4 @@
+export interface CatalogV1Id {
+    catalog_v1_id?: string | undefined;
+    location_id?: string | undefined;
+}

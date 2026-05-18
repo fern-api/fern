@@ -1,0 +1,5 @@
+import type * as SeedApi from "../../../index.js";
+export interface V2V3TestCaseImplementation {
+    description: SeedApi.trace.V2V3TestCaseImplementationDescription;
+    function: SeedApi.trace.V2V3TestCaseFunction;
+}

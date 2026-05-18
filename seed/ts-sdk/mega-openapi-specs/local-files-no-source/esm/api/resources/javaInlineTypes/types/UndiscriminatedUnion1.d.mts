@@ -1,0 +1,32 @@
+import type * as SeedApi from "../../../index.mjs";
+/**
+ * lorem ipsum
+ */
+export type UndiscriminatedUnion1 = 
+/**
+ * lorem ipsum */
+SeedApi.javaInlineTypes.UndiscriminatedUnion1InlineType1
+/**
+ * lorem ipsum */
+ | SeedApi.javaInlineTypes.UndiscriminatedUnion1InlineType2
+/**
+ * lorem ipsum */
+ | SeedApi.javaInlineTypes.UndiscriminatedUnion1DiscriminatedUnion1
+/**
+ * lorem ipsum */
+ | SeedApi.javaInlineTypes.UndiscriminatedUnion1InlineEnum1
+/**
+ * lorem ipsum */
+ | SeedApi.javaInlineTypes.UserId
+/**
+ * lorem ipsum */
+ | SeedApi.javaInlineTypes.UndiscriminatedUnion1InlineListItem1[]
+/**
+ * lorem ipsum */
+ | SeedApi.javaInlineTypes.UndiscriminatedUnion1InlineSetItem1[]
+/**
+ * lorem ipsum */
+ | Record<string, SeedApi.javaInlineTypes.UndiscriminatedUnion1InlineMapItem1>
+/**
+ * lorem ipsum */
+ | SeedApi.javaInlineTypes.ReferenceType;

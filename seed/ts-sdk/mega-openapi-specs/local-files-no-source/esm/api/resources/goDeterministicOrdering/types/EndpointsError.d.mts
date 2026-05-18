@@ -1,0 +1,7 @@
+import type * as SeedApi from "../../../index.mjs";
+export interface EndpointsError {
+    category: SeedApi.goDeterministicOrdering.EndpointsErrorCategory;
+    code: SeedApi.goDeterministicOrdering.EndpointsErrorCode;
+    detail?: (string | null) | undefined;
+    field?: (string | null) | undefined;
+}

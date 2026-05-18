@@ -1,0 +1,21 @@
+import type * as SeedApi from "../../../../../../index.js";
+/**
+ * @example
+ *     {}
+ */
+export interface SearchRequest {
+    /** Search query - defaults to empty string when absent */
+    query?: string | null;
+    /** Max results - defaults to 10 when absent */
+    limit?: number | null;
+    /** Include archived items - defaults to false when absent */
+    includeArchived?: boolean | null;
+    /** Sort order - defaults to ASC when absent */
+    sortOrder?: SeedApi.javaOptionalNullableQueryParams.SortOrder | null;
+    /** Optional nullable without default - should check wasSpecified */
+    optionalWithoutDefault?: string | null;
+    /** Another optional nullable with default for comparison */
+    regularOptional?: string | null;
+    /** Another optional nullable without default for comparison */
+    regularOptionalNoDefault?: string | null;
+}

@@ -1,0 +1,10 @@
+import type * as SeedApi from "../../../index.mjs";
+export interface V2CreateProblemRequestV2 {
+    problemName: string;
+    problemDescription: SeedApi.trace.ProblemDescription;
+    customFiles: SeedApi.trace.V2CustomFiles;
+    customTestCaseTemplates: SeedApi.trace.V2TestCaseTemplate[];
+    testcases: SeedApi.trace.V2TestCaseV2[];
+    supportedLanguages: SeedApi.trace.Language[];
+    isPublic: boolean;
+}

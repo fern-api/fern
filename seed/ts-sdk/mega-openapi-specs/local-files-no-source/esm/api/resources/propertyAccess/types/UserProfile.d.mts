@@ -1,0 +1,12 @@
+import type * as SeedApi from "../../../index.mjs";
+/**
+ * User profile object
+ */
+export interface UserProfile {
+    /** The name of the user. */
+    name: string;
+    /** User profile verification object */
+    verification: SeedApi.propertyAccess.UserProfileVerification;
+    /** The social security number of the user. */
+    ssn: string;
+}

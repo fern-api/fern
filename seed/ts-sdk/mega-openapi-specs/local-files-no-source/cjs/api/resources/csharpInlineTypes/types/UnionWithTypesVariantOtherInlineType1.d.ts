@@ -1,0 +1,10 @@
+import type * as SeedApi from "../../../index.js";
+/**
+ * lorem ipsum
+ */
+export interface UnionWithTypesVariantOtherInlineType1 {
+    /** lorem ipsum */
+    bar: string;
+    /** lorem ipsum */
+    ref: SeedApi.csharpInlineTypes.ReferenceType;
+}

@@ -1,0 +1,6 @@
+/**
+ * Undiscriminated union whose members are named aliases of object types
+ * (including an alias-of-alias). Required keys are disjoint, so a correct
+ * deserializer must emit containsKey() guards for each alias variant.
+ */
+export type AliasedObjectUnion = unknown;

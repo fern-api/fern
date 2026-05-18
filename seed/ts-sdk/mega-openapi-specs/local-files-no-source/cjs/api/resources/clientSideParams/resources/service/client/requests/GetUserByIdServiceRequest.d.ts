@@ -1,0 +1,13 @@
+/**
+ * @example
+ *     {
+ *         userId: "userId"
+ *     }
+ */
+export interface GetUserByIdServiceRequest {
+    userId: string;
+    /** Comma-separated list of fields to include or exclude */
+    fields?: string | null;
+    /** true to include the fields specified, false to exclude them */
+    include_fields?: boolean | null;
+}

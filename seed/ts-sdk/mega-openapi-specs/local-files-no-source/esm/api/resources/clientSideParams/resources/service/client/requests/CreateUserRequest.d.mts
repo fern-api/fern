@@ -1,0 +1,18 @@
+/**
+ * @example
+ *     {
+ *         email: "email",
+ *         connection: "connection"
+ *     }
+ */
+export interface CreateUserRequest {
+    email: string;
+    email_verified?: boolean | null;
+    username?: string | null;
+    password?: string | null;
+    phone_number?: string | null;
+    phone_verified?: boolean | null;
+    user_metadata?: Record<string, unknown> | null;
+    app_metadata?: Record<string, unknown> | null;
+    connection: string;
+}

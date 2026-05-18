@@ -1,0 +1,13 @@
+/**
+ * Common audit metadata.
+ */
+export interface AuditInfo {
+    /** The user who created this resource. */
+    createdBy?: string | undefined;
+    /** When this resource was created. */
+    createdDateTime?: string | undefined;
+    /** The user who last modified this resource. */
+    modifiedBy?: string | undefined;
+    /** When this resource was last modified. */
+    modifiedDateTime?: string | undefined;
+}

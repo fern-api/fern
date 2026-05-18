@@ -1,0 +1,12 @@
+import type * as SeedApi from "../../../../../../index.mjs";
+/**
+ * @example
+ *     {}
+ */
+export interface ListWithBodyOffsetPaginationUsersRequest {
+    /**
+     * The object that contains the offset used for pagination
+     * in order to fetch the next page of results.
+     */
+    pagination?: SeedApi.pagination.WithPage | null;
+}

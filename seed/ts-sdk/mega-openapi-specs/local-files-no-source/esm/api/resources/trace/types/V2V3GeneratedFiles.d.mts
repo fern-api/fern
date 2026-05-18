@@ -1,0 +1,6 @@
+import type * as SeedApi from "../../../index.mjs";
+export interface V2V3GeneratedFiles {
+    generatedTestCaseFiles: Record<string, SeedApi.trace.V2V3Files>;
+    generatedTemplateFiles: Record<string, SeedApi.trace.V2V3Files>;
+    other: Record<string, SeedApi.trace.V2V3Files>;
+}

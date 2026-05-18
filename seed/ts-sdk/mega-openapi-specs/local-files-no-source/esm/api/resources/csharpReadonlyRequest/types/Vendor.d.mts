@@ -1,0 +1,13 @@
+/**
+ * A vendor object with read-only timestamps
+ */
+export interface Vendor {
+    /** The unique identifier for the vendor. */
+    id: string;
+    /** The name of the vendor. */
+    name: string;
+    /** The timestamp when the vendor was created. */
+    created_at: string;
+    /** The timestamp when the vendor was last updated. */
+    updated_at: string;
+}

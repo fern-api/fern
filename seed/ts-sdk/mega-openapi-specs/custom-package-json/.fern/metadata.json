@@ -1,0 +1,41 @@
+{
+    "cliVersion": "DUMMY",
+    "generatorName": "fernapi/fern-typescript-sdk",
+    "generatorVersion": "latest",
+    "generatorConfig": {
+        "extraDependencies": {
+            "lodash-es": "^4.17.21"
+        },
+        "extraDevDependencies": {
+            "jest": "^29.7.0"
+        },
+        "extraPeerDependencies": {
+            "openai": "^4.47.1"
+        },
+        "extraPeerDependenciesMeta": {
+            "openai": {
+                "optional": true
+            }
+        },
+        "packageJson": {
+            "browser": {
+                "command-exists": false,
+                "execa": false
+            },
+            "dependencies": {
+                "qs": "^6.11.2",
+                "stream": "^0.0.2"
+            },
+            "engines": {
+                "node": ">=16.0.0"
+            },
+            "files": ["exampleFile", "dist"],
+            "version": "0.0.2"
+        },
+        "private": true
+    },
+    "originGitCommit": "DUMMY",
+    "invokedBy": "manual",
+    "requestedVersion": "0.0.1",
+    "sdkVersion": "0.0.1"
+}

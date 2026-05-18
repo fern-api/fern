@@ -1,0 +1,10 @@
+/**
+ * @example
+ *     {
+ *         user_name: "user_name"
+ *     }
+ */
+export interface CreateUserRequest {
+    user_name: string;
+    meta_data?: Record<string, unknown>;
+}

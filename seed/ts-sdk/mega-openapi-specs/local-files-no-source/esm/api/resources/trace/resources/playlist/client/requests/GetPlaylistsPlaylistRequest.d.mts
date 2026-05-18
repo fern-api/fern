@@ -1,0 +1,22 @@
+/**
+ * @example
+ *     {
+ *         serviceParam: 1,
+ *         otherField: "otherField",
+ *         multiLineDocs: "multiLineDocs",
+ *         multipleField: ["multipleField"]
+ *     }
+ */
+export interface GetPlaylistsPlaylistRequest {
+    serviceParam: number;
+    limit?: number | null;
+    /** i'm another field */
+    otherField: string;
+    /**
+     * I'm a multiline
+     * description
+     */
+    multiLineDocs: string;
+    optionalMultipleField?: (string | null) | (string | null)[];
+    multipleField?: string | string[];
+}

@@ -1,0 +1,20 @@
+import type * as SeedApi from "../../../../../../index.js";
+/**
+ * @example
+ *     {}
+ */
+export interface BigEntity {
+    castMember?: SeedApi.examples.CastMember | null;
+    extendedMovie?: SeedApi.examples.ExtendedMovie | null;
+    entity?: SeedApi.examples.Entity | null;
+    metadata?: SeedApi.examples.Metadata | null;
+    commonMetadata?: SeedApi.examples.CommonsMetadata | null;
+    eventInfo?: SeedApi.examples.CommonsEventInfo | null;
+    data?: SeedApi.examples.CommonsData | null;
+    migration?: SeedApi.examples.Migration | null;
+    exception?: SeedApi.examples.Exception | null;
+    test?: SeedApi.examples.Test | null;
+    node?: SeedApi.examples.Node | null;
+    directory?: SeedApi.examples.Directory | null;
+    moment?: SeedApi.examples.Moment | null;
+}

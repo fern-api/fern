@@ -1,0 +1,13 @@
+import type * as SeedApi from "../../../index.js";
+export interface ProblemInfo {
+    problemId: SeedApi.trace.ProblemId;
+    problemDescription: SeedApi.trace.ProblemDescription;
+    problemName: string;
+    problemVersion: number;
+    files: Record<string, SeedApi.trace.ProblemFiles>;
+    inputParams: SeedApi.trace.VariableTypeAndName[];
+    outputType: SeedApi.trace.VariableType;
+    testcases: SeedApi.trace.TestCaseWithExpectedResult[];
+    methodName: string;
+    supportsCustomTestCases: boolean;
+}

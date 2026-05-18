@@ -1,0 +1,11 @@
+import type * as SeedApi from "../../../index.js";
+export interface User {
+    name: string;
+    id: SeedApi.nullable.UserId;
+    tags: string[] | null;
+    metadata?: (SeedApi.nullable.Metadata | null) | undefined;
+    email: SeedApi.nullable.Email | null;
+    "favorite-number": SeedApi.nullable.WeirdNumber;
+    numbers?: (number[] | null) | undefined;
+    strings?: (Record<string, unknown> | null) | undefined;
+}

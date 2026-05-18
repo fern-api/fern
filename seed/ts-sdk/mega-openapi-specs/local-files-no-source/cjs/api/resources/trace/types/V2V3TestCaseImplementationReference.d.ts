@@ -1,0 +1,7 @@
+import type * as SeedApi from "../../../index.js";
+export type V2V3TestCaseImplementationReference = {
+    type: "templateId";
+    value?: SeedApi.trace.V2V3TestCaseTemplateId | undefined;
+} | {
+    type: "implementation";
+};

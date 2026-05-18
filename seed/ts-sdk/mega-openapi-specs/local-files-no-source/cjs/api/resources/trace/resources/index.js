@@ -1,0 +1,53 @@
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.v2 = exports.sysprop = exports.submission = exports.problem = exports.playlist = exports.migration = exports.homepage = exports.admin = void 0;
+__exportStar(require("./admin/client/requests/index.js"), exports);
+exports.admin = __importStar(require("./admin/index.js"));
+exports.homepage = __importStar(require("./homepage/index.js"));
+__exportStar(require("./migration/client/requests/index.js"), exports);
+exports.migration = __importStar(require("./migration/index.js"));
+__exportStar(require("./playlist/client/requests/index.js"), exports);
+exports.playlist = __importStar(require("./playlist/index.js"));
+__exportStar(require("./problem/client/requests/index.js"), exports);
+exports.problem = __importStar(require("./problem/index.js"));
+__exportStar(require("./submission/client/requests/index.js"), exports);
+exports.submission = __importStar(require("./submission/index.js"));
+__exportStar(require("./sysprop/client/requests/index.js"), exports);
+exports.sysprop = __importStar(require("./sysprop/index.js"));
+exports.v2 = __importStar(require("./v2/index.js"));

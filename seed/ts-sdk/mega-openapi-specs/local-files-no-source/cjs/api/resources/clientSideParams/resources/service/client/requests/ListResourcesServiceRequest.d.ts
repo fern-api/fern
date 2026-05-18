@@ -1,0 +1,26 @@
+/**
+ * @example
+ *     {
+ *         page: 1,
+ *         per_page: 1,
+ *         sort: "sort",
+ *         order: "order",
+ *         include_totals: true
+ *     }
+ */
+export interface ListResourcesServiceRequest {
+    /** Zero-indexed page number */
+    page: number;
+    /** Number of items per page */
+    per_page: number;
+    /** Sort field */
+    sort: string;
+    /** Sort order (asc or desc) */
+    order: string;
+    /** Whether to include total count */
+    include_totals: boolean;
+    /** Comma-separated list of fields to include */
+    fields?: string | null;
+    /** Search query */
+    search?: string | null;
+}
