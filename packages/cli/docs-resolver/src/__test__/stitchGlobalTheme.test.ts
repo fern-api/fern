@@ -1,3 +1,4 @@
+import { isPlainObject } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 
@@ -6,7 +7,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
     deepMergeGlobalWins,
     filenameFromUrl,
-    isPlainObject,
     isPresignedUrl,
     isRemoteUrl,
     mergeThemeOverride,

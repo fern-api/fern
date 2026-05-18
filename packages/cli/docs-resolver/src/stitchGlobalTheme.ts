@@ -1,4 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
+import { isPlainObject } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
@@ -194,10 +195,6 @@ export async function resolveThemeFileUrls(
     }
 
     return cfg;
-}
-
-export function isPlainObject(value: unknown): value is Record<string, unknown> {
-    return value !== null && typeof value === "object" && !Array.isArray(value);
 }
 
 // Deep merge where global wins on conflicting keys; local-only sub-fields survive.
