@@ -1,0 +1,5 @@
+- summary: |
+    Bump @fern-api/generator-cli to 0.9.31, which includes @fern-api/replay
+    0.16.0 with squash-merge and force-push recovery delegated to the replay
+    engine.
+  type: chore
