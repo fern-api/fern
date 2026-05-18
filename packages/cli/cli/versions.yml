@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.28.1
+  changelogEntry:
+    - summary: |
+        Fix global theme merge to deep-merge object fields instead of overwriting them.
+        Local-only sub-fields (e.g. logo.right-text, logo.height) are now preserved
+        when the global theme defines sibling fields on the same object.
+      type: fix
+  createdAt: "2026-05-18"
+  irVersion: 66
 - version: 5.28.0
   changelogEntry:
     - summary: |
