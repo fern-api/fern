@@ -34,6 +34,8 @@ export interface GraphQlExampleInput {
 
 export interface GraphQlOperationExamplesInput {
     operation: string;
+    operationType?: "query" | "mutation" | "subscription";
+    namespace?: string;
     examples: GraphQlExampleInput[];
 }
 
@@ -62,16 +64,19 @@ export class GraphQLConverter {
         this.namespace = namespace;
         if (examples != null) {
             for (const entry of examples) {
-                this.examplesByOperation.set(
-                    entry.operation,
-                    entry.examples.map((ex) => ({
-                        name: ex.name ?? undefined,
-                        description: ex.description ?? undefined,
-                        query: ex.query,
-                        variables: ex.variables ?? undefined,
-                        response: ex.response ?? undefined
-                    }))
-                );
+                const mapped = entry.examples.map((ex) => ({
+                    name: ex.name ?? undefined,
+                    description: ex.description ?? undefined,
+                    query: ex.query,
+                    variables: ex.variables ?? undefined,
+                    response: ex.response ?? undefined
+                }));
+                if (entry.operationType != null) {
+                    const key = `${entry.operationType}:${entry.operation}`;
+                    this.examplesByOperation.set(key, mapped);
+                } else {
+                    this.examplesByOperation.set(entry.operation, mapped);
+                }
             }
         }
     }
@@ -283,7 +288,9 @@ export class GraphQLConverter {
         operationType: FdrAPI.api.v1.register.GraphQlOperationType
     ): FdrAPI.api.v1.register.GraphQlOperation {
         const args = field.args.map((arg) => this.convertArgument(arg));
-        const examples = this.examplesByOperation.get(name);
+        const examples =
+            this.examplesByOperation.get(`${operationType.toLowerCase()}:${name}`) ??
+            this.examplesByOperation.get(name);
 
         return {
             id: this.getNamespacedOperationId(`${operationType.toLowerCase()}_${name}`),

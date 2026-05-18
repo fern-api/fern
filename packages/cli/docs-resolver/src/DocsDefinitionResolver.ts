@@ -1758,7 +1758,34 @@ export class DocsDefinitionResolver {
             if (!Array.isArray(parsed)) {
                 return undefined;
             }
-            return parsed as GraphQlOperationExamplesInput[];
+            for (const entry of parsed) {
+                if (typeof entry !== "object" || entry == null) {
+                    this.taskContext.logger.warn(
+                        `Skipping invalid entry in GraphQL examples file ${absoluteFilepathToExamples}: expected object`
+                    );
+                    continue;
+                }
+                if (typeof entry.operation !== "string") {
+                    this.taskContext.logger.warn(
+                        `Skipping entry in GraphQL examples file ${absoluteFilepathToExamples}: missing or invalid 'operation' field`
+                    );
+                    continue;
+                }
+                if (!Array.isArray(entry.examples)) {
+                    this.taskContext.logger.warn(
+                        `Skipping entry for operation '${entry.operation}' in ${absoluteFilepathToExamples}: 'examples' must be an array`
+                    );
+                    continue;
+                }
+            }
+            const validEntries = parsed.filter(
+                (entry): entry is GraphQlOperationExamplesInput =>
+                    typeof entry === "object" &&
+                    entry != null &&
+                    typeof entry.operation === "string" &&
+                    Array.isArray(entry.examples)
+            );
+            return validEntries.length > 0 ? validEntries : undefined;
         } catch (error) {
             this.taskContext.logger.error(
                 `Failed to load GraphQL examples from ${absoluteFilepathToExamples}:`,

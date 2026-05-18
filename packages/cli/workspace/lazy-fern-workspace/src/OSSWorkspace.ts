@@ -14,6 +14,7 @@ import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { extractErrorMessage, isNonNullish } from "@fern-api/core-utils";
+import type { GraphQlOperationExamplesInput } from "@fern-api/graphql-to-fdr";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
@@ -221,7 +222,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
         for (const spec of graphqlSpecs) {
             try {
-                const examples = await loadGraphQlExamples(spec.absoluteFilepathToExamples);
+                const examples = await loadGraphQlExamples(spec.absoluteFilepathToExamples, context);
                 const converter = new GraphQLConverter({
                     context,
                     filePath: spec.absoluteFilepath,
@@ -752,17 +753,53 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 }
 
 async function loadGraphQlExamples(
-    absoluteFilepathToExamples: AbsoluteFilePath | undefined
-): Promise<import("@fern-api/graphql-to-fdr").GraphQlOperationExamplesInput[] | undefined> {
+    absoluteFilepathToExamples: AbsoluteFilePath | undefined,
+    context: TaskContext
+): Promise<GraphQlOperationExamplesInput[] | undefined> {
     if (absoluteFilepathToExamples == null) {
         return undefined;
     }
-    const contents = (await readFile(absoluteFilepathToExamples)).toString();
-    const parsed = yaml.load(contents);
-    if (!Array.isArray(parsed)) {
+    try {
+        const contents = (await readFile(absoluteFilepathToExamples)).toString();
+        const parsed = yaml.load(contents);
+        if (!Array.isArray(parsed)) {
+            return undefined;
+        }
+        for (const entry of parsed) {
+            if (typeof entry !== "object" || entry == null) {
+                context.logger.warn(
+                    `Skipping invalid entry in GraphQL examples file ${absoluteFilepathToExamples}: expected object`
+                );
+                continue;
+            }
+            if (typeof entry.operation !== "string") {
+                context.logger.warn(
+                    `Skipping entry in GraphQL examples file ${absoluteFilepathToExamples}: missing or invalid 'operation' field`
+                );
+                continue;
+            }
+            if (!Array.isArray(entry.examples)) {
+                context.logger.warn(
+                    `Skipping entry for operation '${entry.operation}' in ${absoluteFilepathToExamples}: 'examples' must be an array`
+                );
+                continue;
+            }
+        }
+        const validEntries = parsed.filter(
+            (entry): entry is GraphQlOperationExamplesInput =>
+                typeof entry === "object" &&
+                entry != null &&
+                typeof entry.operation === "string" &&
+                Array.isArray(entry.examples)
+        );
+        return validEntries.length > 0 ? validEntries : undefined;
+    } catch (error) {
+        context.logger.error(
+            `Failed to load GraphQL examples from ${absoluteFilepathToExamples}:`,
+            extractErrorMessage(error)
+        );
         return undefined;
     }
-    return parsed as import("@fern-api/graphql-to-fdr").GraphQlOperationExamplesInput[];
 }
 
 async function getAuthFromOverrideFiles(specs: Spec[]): Promise<RawSchemas.WithAuthSchema | undefined> {
