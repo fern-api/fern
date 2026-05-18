@@ -82,10 +82,7 @@ export async function validateWorkspaces({
         await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
             const { errors } = await validateMdxFiles({ workspace: docsWorkspace, context });
             mdxViolations = errors.map((error) => {
-                const relativePath = path.relative(
-                    path.join(docsWorkspace.absoluteFilePath),
-                    error.filepath
-                );
+                const relativePath = path.relative(path.join(docsWorkspace.absoluteFilePath), error.filepath);
                 let richMessage = error.message;
                 if (error.contextLines && error.contextLines.length > 0) {
                     richMessage += "\n";
@@ -109,9 +106,10 @@ export async function validateWorkspaces({
                         }
                     }
                 }
-                const filePart = error.line != null
-                    ? `${relativePath}:${error.line}${error.column != null ? `:${error.column}` : ""}`
-                    : relativePath;
+                const filePart =
+                    error.line != null
+                        ? `${relativePath}:${error.line}${error.column != null ? `:${error.column}` : ""}`
+                        : relativePath;
                 return {
                     severity: mdValidateSeverity === "error" ? "error" : "warning",
                     name: "md-validate",

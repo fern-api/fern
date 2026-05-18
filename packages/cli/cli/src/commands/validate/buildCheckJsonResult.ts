@@ -60,9 +60,9 @@ export function buildCheckJsonResult({
             // For md-validate violations, parse filepath:line:column from relativeFilepath
             if (violation.name === "md-validate" && violation.relativeFilepath) {
                 const match = violation.relativeFilepath.match(/^(.+?):(\d+)(?::(\d+))?$/);
-                if (match != null) {
+                if (match != null && match[2] != null) {
                     entry.filepath = match[1];
-                    entry.line = parseInt(match[2]!, 10);
+                    entry.line = parseInt(match[2], 10);
                     if (match[3] != null) {
                         entry.column = parseInt(match[3], 10);
                     }
