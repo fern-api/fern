@@ -3,7 +3,7 @@ import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { collectRawSpecs } from "../rawSpecs.js";
+import { collectRawSpecs, filterSpec } from "../rawSpecs.js";
 
 // biome-ignore lint/suspicious/noExplicitAny: mock context for testing
 function createMockContext(): any {
@@ -555,5 +555,329 @@ describe("collectRawSpecs", () => {
 
         expect(manifest.specs[0]?.overridePaths).toHaveLength(1);
         expect(manifest.specs[0]?.overridePaths?.[0]).toContain("graphql-0-override-0");
+    });
+
+    it("filters out x-fern-ignore operations from resolved OpenAPI spec", async () => {
+        const specFile = path.join(sourceDir, "api", "openapi.yaml");
+        await writeFile(
+            specFile,
+            [
+                'openapi: "3.0.0"',
+                "info:",
+                "  title: Test",
+                '  version: "1.0"',
+                "paths:",
+                "  /users:",
+                "    get:",
+                "      operationId: getUsers",
+                "      responses:",
+                '        "200":',
+                "          description: OK",
+                "    post:",
+                "      operationId: createUser",
+                "      x-fern-ignore: true",
+                "      responses:",
+                '        "200":',
+                "          description: OK",
+                "  /internal:",
+                "    get:",
+                "      operationId: internalEndpoint",
+                "      x-fern-ignore: true",
+                "      responses:",
+                '        "200":',
+                "          description: OK"
+            ].join("\n")
+        );
+
+        const outputDir = path.join(tmpDir.path, "output");
+        await mkdir(outputDir, { recursive: true });
+
+        const manifest = await collectRawSpecs({
+            specs: [
+                {
+                    type: "openapi",
+                    absoluteFilepath: AbsoluteFilePath.of(specFile),
+                    absoluteFilepathToOverrides: undefined,
+                    absoluteFilepathToOverlays: undefined,
+                    source: {
+                        type: "openapi",
+                        file: AbsoluteFilePath.of(specFile),
+                        relativePathToDependency: undefined
+                    }
+                }
+            ],
+            hostOutputDir: AbsoluteFilePath.of(outputDir),
+            containerBaseDir: "/fern/raw-specs",
+            context: createMockContext()
+        });
+
+        const content = JSON.parse(await readFile(path.join(outputDir, "spec-0.json"), "utf-8"));
+        expect(content.paths["/users"]).toBeDefined();
+        expect(content.paths["/users"].get).toBeDefined();
+        expect(content.paths["/users"].post).toBeUndefined();
+        expect(content.paths["/internal"]).toBeUndefined();
+
+        expect(manifest.specs).toHaveLength(1);
+    });
+
+    it("filters operations by x-fern-audiences when audiences are configured", async () => {
+        const specFile = path.join(sourceDir, "api", "openapi.yaml");
+        await writeFile(
+            specFile,
+            [
+                'openapi: "3.0.0"',
+                "info:",
+                "  title: Test",
+                '  version: "1.0"',
+                "paths:",
+                "  /public:",
+                "    get:",
+                "      operationId: publicEndpoint",
+                "      x-fern-audiences:",
+                "        - external",
+                "      responses:",
+                '        "200":',
+                "          description: OK",
+                "  /internal:",
+                "    get:",
+                "      operationId: internalEndpoint",
+                "      x-fern-audiences:",
+                "        - internal",
+                "      responses:",
+                '        "200":',
+                "          description: OK",
+                "  /untagged:",
+                "    get:",
+                "      operationId: untaggedEndpoint",
+                "      responses:",
+                '        "200":',
+                "          description: OK"
+            ].join("\n")
+        );
+
+        const outputDir = path.join(tmpDir.path, "output");
+        await mkdir(outputDir, { recursive: true });
+
+        const manifest = await collectRawSpecs({
+            specs: [
+                {
+                    type: "openapi",
+                    absoluteFilepath: AbsoluteFilePath.of(specFile),
+                    absoluteFilepathToOverrides: undefined,
+                    absoluteFilepathToOverlays: undefined,
+                    source: {
+                        type: "openapi",
+                        file: AbsoluteFilePath.of(specFile),
+                        relativePathToDependency: undefined
+                    }
+                }
+            ],
+            hostOutputDir: AbsoluteFilePath.of(outputDir),
+            containerBaseDir: "/fern/raw-specs",
+            audiences: { type: "select", audiences: ["external"] },
+            context: createMockContext()
+        });
+
+        const content = JSON.parse(await readFile(path.join(outputDir, "spec-0.json"), "utf-8"));
+        expect(content.paths["/public"]).toBeDefined();
+        expect(content.paths["/public"].get).toBeDefined();
+        expect(content.paths["/internal"]).toBeUndefined();
+        expect(content.paths["/untagged"]).toBeDefined();
+        expect(content.paths["/untagged"].get).toBeDefined();
+
+        expect(manifest.specs).toHaveLength(1);
+    });
+
+    it("keeps all operations when audiences type is 'all'", async () => {
+        const specFile = path.join(sourceDir, "api", "openapi.yaml");
+        await writeFile(
+            specFile,
+            [
+                'openapi: "3.0.0"',
+                "info:",
+                "  title: Test",
+                '  version: "1.0"',
+                "paths:",
+                "  /public:",
+                "    get:",
+                "      operationId: publicEndpoint",
+                "      x-fern-audiences:",
+                "        - external",
+                "      responses:",
+                '        "200":',
+                "          description: OK",
+                "  /internal:",
+                "    get:",
+                "      operationId: internalEndpoint",
+                "      x-fern-audiences:",
+                "        - internal",
+                "      responses:",
+                '        "200":',
+                "          description: OK"
+            ].join("\n")
+        );
+
+        const outputDir = path.join(tmpDir.path, "output");
+        await mkdir(outputDir, { recursive: true });
+
+        const manifest = await collectRawSpecs({
+            specs: [
+                {
+                    type: "openapi",
+                    absoluteFilepath: AbsoluteFilePath.of(specFile),
+                    absoluteFilepathToOverrides: undefined,
+                    absoluteFilepathToOverlays: undefined,
+                    source: {
+                        type: "openapi",
+                        file: AbsoluteFilePath.of(specFile),
+                        relativePathToDependency: undefined
+                    }
+                }
+            ],
+            hostOutputDir: AbsoluteFilePath.of(outputDir),
+            containerBaseDir: "/fern/raw-specs",
+            audiences: { type: "all" },
+            context: createMockContext()
+        });
+
+        const content = JSON.parse(await readFile(path.join(outputDir, "spec-0.json"), "utf-8"));
+        expect(content.paths["/public"]).toBeDefined();
+        expect(content.paths["/internal"]).toBeDefined();
+    });
+});
+
+describe("filterSpec", () => {
+    it("returns spec unchanged when no audiences and no ignored operations", () => {
+        const spec = {
+            openapi: "3.0.0",
+            paths: {
+                "/users": {
+                    get: { operationId: "getUsers" },
+                    post: { operationId: "createUser" }
+                }
+            }
+        };
+        const result = filterSpec(spec);
+        expect(result.paths).toEqual(spec.paths);
+    });
+
+    it("removes operations with x-fern-ignore: true", () => {
+        const spec = {
+            openapi: "3.0.0",
+            paths: {
+                "/users": {
+                    get: { operationId: "getUsers" },
+                    post: { operationId: "createUser", "x-fern-ignore": true }
+                },
+                "/admin": {
+                    get: { operationId: "adminGet", "x-fern-ignore": true }
+                }
+            }
+        };
+        const result = filterSpec(spec) as Record<string, Record<string, Record<string, unknown>>>;
+        expect(result.paths["/users"]?.get).toBeDefined();
+        expect(result.paths["/users"]?.post).toBeUndefined();
+        expect(result.paths["/admin"]).toBeUndefined();
+    });
+
+    it("filters by audiences when SelectAudiences is provided", () => {
+        const spec = {
+            openapi: "3.0.0",
+            paths: {
+                "/public": {
+                    get: { operationId: "publicGet", "x-fern-audiences": ["external"] }
+                },
+                "/internal": {
+                    get: { operationId: "internalGet", "x-fern-audiences": ["internal"] }
+                },
+                "/both": {
+                    get: { operationId: "bothGet", "x-fern-audiences": ["external", "internal"] }
+                },
+                "/untagged": {
+                    get: { operationId: "untaggedGet" }
+                }
+            }
+        };
+        const result = filterSpec(spec, { type: "select", audiences: ["external"] }) as Record<
+            string,
+            Record<string, Record<string, unknown>>
+        >;
+        expect(result.paths["/public"]).toBeDefined();
+        expect(result.paths["/internal"]).toBeUndefined();
+        expect(result.paths["/both"]).toBeDefined();
+        expect(result.paths["/untagged"]).toBeDefined();
+    });
+
+    it("combines x-fern-ignore and audience filtering", () => {
+        const spec = {
+            openapi: "3.0.0",
+            paths: {
+                "/endpoint": {
+                    get: { operationId: "kept", "x-fern-audiences": ["external"] },
+                    post: { operationId: "ignored", "x-fern-ignore": true, "x-fern-audiences": ["external"] },
+                    put: { operationId: "wrongAudience", "x-fern-audiences": ["internal"] },
+                    delete: { operationId: "noAudience" }
+                }
+            }
+        };
+        const result = filterSpec(spec, { type: "select", audiences: ["external"] }) as Record<
+            string,
+            Record<string, Record<string, unknown>>
+        >;
+        expect(result.paths["/endpoint"]?.get).toBeDefined();
+        expect(result.paths["/endpoint"]?.post).toBeUndefined();
+        expect(result.paths["/endpoint"]?.put).toBeUndefined();
+        expect(result.paths["/endpoint"]?.delete).toBeDefined();
+    });
+
+    it("preserves non-operation path-level properties", () => {
+        const spec = {
+            openapi: "3.0.0",
+            paths: {
+                "/users": {
+                    parameters: [{ name: "id", in: "path" }],
+                    get: { operationId: "getUsers" },
+                    post: { operationId: "createUser", "x-fern-ignore": true }
+                }
+            }
+        };
+        const result = filterSpec(spec) as Record<string, Record<string, Record<string, unknown>>>;
+        expect(result.paths["/users"]?.parameters).toBeDefined();
+        expect(result.paths["/users"]?.get).toBeDefined();
+        expect(result.paths["/users"]?.post).toBeUndefined();
+    });
+
+    it("returns spec unchanged when paths is missing", () => {
+        const spec = { openapi: "3.0.0", info: { title: "Test" } };
+        const result = filterSpec(spec);
+        expect(result).toEqual(spec);
+    });
+
+    it("handles empty paths object", () => {
+        const spec = { openapi: "3.0.0", paths: {} };
+        const result = filterSpec(spec);
+        expect(result.paths).toEqual({});
+    });
+
+    it("handles x-fern-audiences as single string value", () => {
+        const spec = {
+            openapi: "3.0.0",
+            paths: {
+                "/endpoint": {
+                    get: { operationId: "getEndpoint", "x-fern-audiences": "external" }
+                }
+            }
+        };
+        const result = filterSpec(spec, { type: "select", audiences: ["external"] }) as Record<
+            string,
+            Record<string, Record<string, unknown>>
+        >;
+        expect(result.paths["/endpoint"]?.get).toBeDefined();
+
+        const result2 = filterSpec(spec, { type: "select", audiences: ["internal"] }) as Record<
+            string,
+            Record<string, Record<string, unknown>>
+        >;
+        expect(result2.paths["/endpoint"]).toBeUndefined();
     });
 });

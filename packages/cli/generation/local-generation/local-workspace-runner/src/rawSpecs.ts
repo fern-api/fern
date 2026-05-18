@@ -5,6 +5,7 @@ import {
     type ProtobufSpec,
     Spec
 } from "@fern-api/api-workspace-commons";
+import { type Audiences } from "@fern-api/configuration";
 import { mergeWithOverrides as coreMergeWithOverrides } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { loadAsyncAPI, loadOpenAPI } from "@fern-api/lazy-fern-workspace";
@@ -39,12 +40,14 @@ export async function collectRawSpecs({
     specs,
     hostOutputDir,
     containerBaseDir,
-    context
+    context,
+    audiences
 }: {
     specs: Spec[];
     hostOutputDir: AbsoluteFilePath;
     containerBaseDir: string;
     context: TaskContext;
+    audiences?: Audiences;
 }): Promise<RawSpecsManifest> {
     const manifest: RawSpecsManifest = { specs: [] };
     if (specs.length === 0) {
@@ -52,7 +55,14 @@ export async function collectRawSpecs({
     }
 
     for (const [i, spec] of specs.entries()) {
-        const entry = await resolveAndWriteSpec({ spec, hostOutputDir, containerBaseDir, context, index: i });
+        const entry = await resolveAndWriteSpec({
+            spec,
+            hostOutputDir,
+            containerBaseDir,
+            context,
+            index: i,
+            audiences
+        });
         manifest.specs.push(entry);
     }
 
@@ -65,17 +75,19 @@ async function resolveAndWriteSpec({
     hostOutputDir,
     containerBaseDir,
     context,
-    index
+    index,
+    audiences
 }: {
     spec: Spec;
     hostOutputDir: string;
     containerBaseDir: string;
     context: TaskContext;
     index: number;
+    audiences?: Audiences;
 }): Promise<RawSpecsManifestEntry> {
     switch (spec.type) {
         case "openapi":
-            return resolveOpenAPIOrAsyncAPI({ spec, hostOutputDir, containerBaseDir, context, index });
+            return resolveOpenAPIOrAsyncAPI({ spec, hostOutputDir, containerBaseDir, context, index, audiences });
         case "openrpc":
             return resolveOpenRPC({ spec, hostOutputDir, containerBaseDir, context, index });
         case "protobuf":
@@ -94,13 +106,15 @@ async function resolveOpenAPIOrAsyncAPI({
     hostOutputDir,
     containerBaseDir,
     context,
-    index
+    index,
+    audiences
 }: {
     spec: OpenAPISpec;
     hostOutputDir: string;
     containerBaseDir: string;
     context: TaskContext;
     index: number;
+    audiences?: Audiences;
 }): Promise<RawSpecsManifestEntry> {
     const isAsync = await isAsyncAPISpec(spec.absoluteFilepath);
     const filename = `spec-${index}.json`;
@@ -120,6 +134,8 @@ async function resolveOpenAPIOrAsyncAPI({
             absolutePathToOpenAPIOverlays: spec.absoluteFilepathToOverlays
         });
     }
+
+    resolved = filterSpec(resolved as Record<string, unknown>, audiences);
 
     await writeFile(path.join(hostOutputDir, filename), JSON.stringify(resolved));
     context.logger.debug(`Resolved ${isAsync ? "AsyncAPI" : "OpenAPI"} spec ${spec.absoluteFilepath} -> ${filename}`);
@@ -275,4 +291,109 @@ function normalizeOverrides(overrides: AbsoluteFilePath | AbsoluteFilePath[] | u
 
 function toContainerPath(relativePath: string, containerBaseDir: string): string {
     return path.posix.join(containerBaseDir, relativePath.split(path.sep).join(path.posix.sep));
+}
+
+const HTTP_METHODS = new Set(["get", "post", "put", "patch", "delete", "head", "options", "trace"]);
+
+/**
+ * Filters a resolved OpenAPI/AsyncAPI spec by removing operations marked with
+ * `x-fern-ignore: true` and operations whose `x-fern-audiences` do not overlap
+ * with the configured audiences. Operations without `x-fern-audiences` are kept
+ * regardless of audience configuration (they are not restricted).
+ *
+ * Paths with no remaining operations after filtering are removed entirely.
+ */
+export function filterSpec(spec: Record<string, unknown>, audiences?: Audiences): Record<string, unknown> {
+    if (audiences == null || audiences.type === "all") {
+        return filterIgnoredOperations(spec);
+    }
+
+    const selectedAudiences = new Set(audiences.audiences);
+    return filterOperations(spec, selectedAudiences);
+}
+
+function filterIgnoredOperations(spec: Record<string, unknown>): Record<string, unknown> {
+    const paths = spec.paths as Record<string, Record<string, unknown>> | undefined;
+    if (paths == null) {
+        return spec;
+    }
+
+    const filteredPaths: Record<string, Record<string, unknown>> = {};
+    for (const [pathKey, pathItem] of Object.entries(paths)) {
+        if (pathItem == null || typeof pathItem !== "object") {
+            continue;
+        }
+        const filteredPathItem: Record<string, unknown> = {};
+        for (const [key, value] of Object.entries(pathItem)) {
+            if (HTTP_METHODS.has(key.toLowerCase()) && isIgnored(value)) {
+                continue;
+            }
+            filteredPathItem[key] = value;
+        }
+        if (hasOperations(filteredPathItem)) {
+            filteredPaths[pathKey] = filteredPathItem;
+        }
+    }
+
+    return { ...spec, paths: filteredPaths };
+}
+
+function filterOperations(spec: Record<string, unknown>, selectedAudiences: Set<string>): Record<string, unknown> {
+    const paths = spec.paths as Record<string, Record<string, unknown>> | undefined;
+    if (paths == null) {
+        return spec;
+    }
+
+    const filteredPaths: Record<string, Record<string, unknown>> = {};
+    for (const [pathKey, pathItem] of Object.entries(paths)) {
+        if (pathItem == null || typeof pathItem !== "object") {
+            continue;
+        }
+        const filteredPathItem: Record<string, unknown> = {};
+        for (const [key, value] of Object.entries(pathItem)) {
+            if (!HTTP_METHODS.has(key.toLowerCase())) {
+                filteredPathItem[key] = value;
+                continue;
+            }
+            if (isIgnored(value)) {
+                continue;
+            }
+            if (!matchesAudiences(value, selectedAudiences)) {
+                continue;
+            }
+            filteredPathItem[key] = value;
+        }
+        if (hasOperations(filteredPathItem)) {
+            filteredPaths[pathKey] = filteredPathItem;
+        }
+    }
+
+    return { ...spec, paths: filteredPaths };
+}
+
+function isIgnored(operation: unknown): boolean {
+    if (operation == null || typeof operation !== "object") {
+        return false;
+    }
+    const op = operation as Record<string, unknown>;
+    return op["x-fern-ignore"] === true;
+}
+
+function matchesAudiences(operation: unknown, selectedAudiences: Set<string>): boolean {
+    if (operation == null || typeof operation !== "object") {
+        return true;
+    }
+    const op = operation as Record<string, unknown>;
+    const opAudiences = op["x-fern-audiences"];
+    if (opAudiences == null) {
+        return true;
+    }
+    if (!Array.isArray(opAudiences)) {
+        return typeof opAudiences === "string" && selectedAudiences.has(opAudiences);
+    }
+    return opAudiences.some((a) => typeof a === "string" && selectedAudiences.has(a));
+}
+
+function hasOperations(pathItem: Record<string, unknown>): boolean {
+    return Object.keys(pathItem).some((key) => HTTP_METHODS.has(key.toLowerCase()));
 }

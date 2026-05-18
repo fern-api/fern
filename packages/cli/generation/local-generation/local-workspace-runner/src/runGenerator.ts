@@ -263,7 +263,8 @@ export async function writeFilesToDiskAndRunGenerator({
             specs: rawApiSpecs,
             hostOutputDir: AbsoluteFilePath.of(rawSpecsDir),
             containerBaseDir: containerSpecsDir,
-            context
+            context,
+            audiences
         });
 
         await writeFile(join(rawSpecsDir, RAW_SPECS_MANIFEST_FILENAME), JSON.stringify(manifest, undefined, 4));
