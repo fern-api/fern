@@ -1,4 +1,3 @@
-import { isPlainObject } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 
@@ -116,32 +115,6 @@ describe("filenameFromUrl", () => {
         const encoded = encodeURIComponent('attachment; filename="abc123"');
         const url = `https://s3.amazonaws.com/bucket/hash?response-content-disposition=${encoded}`;
         expect(filenameFromUrl(url)).toBeUndefined();
-    });
-});
-
-// ---------------------------------------------------------------------------
-// isPlainObject
-// ---------------------------------------------------------------------------
-
-describe("isPlainObject", () => {
-    it("returns true for plain objects", () => {
-        expect(isPlainObject({})).toBe(true);
-        expect(isPlainObject({ a: 1 })).toBe(true);
-    });
-
-    it("returns false for null", () => {
-        expect(isPlainObject(null)).toBe(false);
-    });
-
-    it("returns false for primitives", () => {
-        expect(isPlainObject("string")).toBe(false);
-        expect(isPlainObject(42)).toBe(false);
-        expect(isPlainObject(undefined)).toBe(false);
-    });
-
-    it("returns false for arrays", () => {
-        expect(isPlainObject([])).toBe(false);
-        expect(isPlainObject([1, 2, 3])).toBe(false);
     });
 });
 
