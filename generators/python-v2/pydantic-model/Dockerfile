@@ -1,12 +1,12 @@
 # Bundled npm globals are removed below so npm's JS dependencies cannot be
 # flagged or invoked at runtime — this image only runs the bundled CLI via node.
 FROM node:24.15-trixie-slim
-# Security update 2026-05-18: trixie's krb5 (1.21.3-5) and curl (8.14.1)
-# are still vulnerable to CVE-2026-40355, CVE-2026-40356 (krb5
-# gss_accept_sec_context integer underflow & NULL deref) and
-# CVE-2026-1965, CVE-2026-4873, CVE-2026-5545, CVE-2026-6253,
-# CVE-2026-6429 (curl). Pin sid as a low-priority source and pull the
-# fixed krb5 1.22.1+ and curl 8.20.0+ from there.
+# Security update 2026-05-18: trixie's krb5 (1.21.3-5), curl (8.14.1),
+# and gnutls28 (3.8.9) are still vulnerable to CVE-2026-40355,
+# CVE-2026-40356 (krb5 gss_accept_sec_context integer underflow & NULL
+# deref), CVE-2026-1965, CVE-2026-4873, CVE-2026-5545, CVE-2026-6253,
+# CVE-2026-6429 (curl), and CVE-2026-3832 (gnutls28). Pin sid as a
+# low-priority source and pull the fixed packages from there.
 RUN apt-get update \
     && apt-get -y --no-install-recommends dist-upgrade \
     && apt-get install -y --no-install-recommends ca-certificates curl \
@@ -20,7 +20,7 @@ RUN echo "Types: deb" > /etc/apt/sources.list.d/sid.sources \
     && apt-get update \
     && apt-get install -y --no-install-recommends -t sid \
        libkrb5-3 libkrb5support0 libk5crypto3 libgssapi-krb5-2 \
-       curl libcurl4t64 \
+       curl libcurl4t64 libgnutls30t64 \
     && rm -f /etc/apt/sources.list.d/sid.sources /etc/apt/preferences.d/sid-low \
     && rm -rf /var/lib/apt/lists/*
 RUN rm -rf /usr/local/lib/node_modules /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /opt/yarn-*
