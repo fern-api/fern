@@ -1,0 +1,6 @@
+- summary: |
+    Add multi-locale support to docs-ledger publishing. When translations
+    are configured, the ledger path now publishes translated pages as
+    locale-specific segments via the finishTranslation endpoint instead
+    of duplicating entire blobs per locale.
+  type: feat

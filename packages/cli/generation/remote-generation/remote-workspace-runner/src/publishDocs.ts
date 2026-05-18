@@ -845,7 +845,8 @@ export async function publishDocs({
                         apiDefinitions: apiDefinitionCollector,
                         fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
                         filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
-                        fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined
+                        fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
+                        resolver
                     });
                     context.logger.info(
                         `[ledger] Deployment ${ledgerResult.reusedDeployment ? "reused" : "created"}: ${ledgerResult.deploymentId}`
@@ -862,13 +863,15 @@ export async function publishDocs({
             }
         }
 
-        // Register translated page content for each configured locale.
+        // Register translated page content for each configured locale via the V2 endpoint.
+        // In ledger-only mode, translations are handled by publishDocsViaLedger (above),
+        // so this block only runs for legacy and dual-write modes.
         // In preview mode, register translations against the preview URL (not the production domain)
         // so that translated docs are visible in preview without overwriting production translations.
         const translationPages = resolver.getTranslationPages();
         const translationNavigationOverlays = resolver.getTranslationNavigationOverlays();
         const translationDomain = preview ? urlToOutput : domain;
-        if (translationPages != null && Object.keys(translationPages).length > 0) {
+        if (deployMode !== "ledger" && translationPages != null && Object.keys(translationPages).length > 0) {
             context.logger.info(`Registering translations for ${Object.keys(translationPages).length} locale(s)...`);
             await Promise.all(
                 Object.entries(translationPages).map(async ([locale, localePages]) => {
