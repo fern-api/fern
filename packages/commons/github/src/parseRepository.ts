@@ -20,10 +20,10 @@ export function parseRepository(githubRepository: string): RepositoryReference {
 
     const parts = githubRepository.split("/");
 
-    if (parts.length === 2 && parts[0] != null && parts[1] != null) {
+    if (parts.length === 2 && isNonEmptyPart(parts[0]) && isNonEmptyPart(parts[1])) {
         // Format: owner/repo
         [owner, repo] = parts;
-    } else if (parts.length === 3 && parts[0] != null && parts[1] != null && parts[2] != null) {
+    } else if (parts.length === 3 && isNonEmptyPart(parts[0]) && isNonEmptyPart(parts[1]) && isNonEmptyPart(parts[2])) {
         // Format: github.com/owner/repo
         [remote, owner, repo] = parts;
     } else {
@@ -31,6 +31,10 @@ export function parseRepository(githubRepository: string): RepositoryReference {
     }
 
     return newRepositoryReference({ remote, owner, repo });
+}
+
+function isNonEmptyPart(part: string | undefined): part is string {
+    return part != null && part.length > 0;
 }
 
 function newRepositoryReference({

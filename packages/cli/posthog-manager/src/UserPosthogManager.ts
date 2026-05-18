@@ -2,7 +2,7 @@ import { FernUserToken, getUserIdFromToken } from "@fern-api/auth";
 import { getRunIdProperties } from "@fern-api/cli-telemetry";
 import { createVenusService } from "@fern-api/core";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { PosthogEvent } from "@fern-api/task-context";
+import type { PosthogAutomationEvent, PosthogEvent } from "@fern-api/task-context";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { homedir } from "os";
 import { dirname } from "path";
@@ -47,6 +47,14 @@ export class UserPosthogManager implements PosthogManager {
                 ...(userEmail != null ? { userEmail } : {}),
                 ...getRunIdProperties()
             }
+        });
+    }
+
+    public sendAutomationEvent(event: PosthogAutomationEvent): void {
+        this.posthog.capture({
+            distinctId: event.distinctId,
+            event: event.event,
+            properties: event.properties
         });
     }
 

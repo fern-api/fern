@@ -2727,7 +2727,7 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpoints.params.getWithBooleanPath(param: true)
+    _ = try await client.endpoints.params.getWithBooleanPath(param: "true")
 }
 
 try await main()

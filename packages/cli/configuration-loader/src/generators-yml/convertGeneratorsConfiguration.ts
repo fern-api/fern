@@ -815,8 +815,19 @@ async function convertOutputMode({
     const downloadSnippets = generator.snippets != null && generator.snippets.path !== "";
     if (generator.github) {
         const repoString = isGithubSelfhosted(generator.github) ? generator.github.uri : generator.github.repository;
-        const { owner, repo, remote } = parseRepository(repoString);
+        let owner: string;
+        let repo: string;
+        let remote: string;
+        try {
+            ({ owner, repo, remote } = parseRepository(repoString));
+        } catch {
+            throw new CliError({
+                message: `Invalid GitHub repository "${repoString}" in generators.yml. Expected a repository like "owner/repo", "github.com/owner/repo", or "https://github.com/owner/repo.git".`,
+                code: CliError.Code.ConfigError
+            });
+        }
         const host = remote !== "github.com" ? remote : undefined;
+
         const publishInfo =
             generator.output != null
                 ? getGithubPublishInfo(generator.output, maybeGroupLevelMetadata, maybeTopLevelMetadata)

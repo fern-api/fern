@@ -16,11 +16,11 @@ func do() {
     )
     request := &fern.StreamXFernStreamingUnionStreamRequest{
         Message: &fern.UnionStreamMessageVariant{
-            Message: "message",
             StreamResponse: fern.Bool(
                 true,
             ),
             Prompt: "prompt",
+            Message: "message",
         },
     }
     client.StreamXFernStreamingUnionStream(

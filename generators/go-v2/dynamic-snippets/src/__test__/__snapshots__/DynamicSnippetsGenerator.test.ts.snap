@@ -96,17 +96,11 @@ func do() {
 	request := &acme.BigEntity{
 		CastMember: &acme.CastMember{
 			Actor: &acme.Actor{
-				ID:   "john.doe",
 				Name: "John Doe",
+				ID:   "john.doe",
 			},
 		},
 		ExtendedMovie: &acme.ExtendedMovie{
-			Cast: []string{
-				"John Travolta",
-				"Samuel L. Jackson",
-				"Uma Thurman",
-				"Bruce Willis",
-			},
 			ID:     "movie-sda231x",
 			Title:  "Pulp Fiction",
 			From:   "Quentin Tarantino",
@@ -121,6 +115,12 @@ func do() {
 				"releaseDate": "2023-12-08",
 			},
 			Revenue: int64(1000000),
+			Cast: []string{
+				"John Travolta",
+				"Samuel L. Jackson",
+				"Uma Thurman",
+				"Bruce Willis",
+			},
 		},
 		EventInfo: &commons.EventInfo{
 			Metadata: &commons.Metadata{
@@ -751,6 +751,32 @@ func do() {
 "
 `;
 
+exports[`snippets (default) > path-parameters > 'GET /{tenant_id}/user/{user_id}/speci…' 1`] = `
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	request := &acme.GetUserSpecificsRequest{
+		TenantID: "my_tenant",
+		UserID:   "my_user",
+		Version:  7,
+		Thought:  "my_thought",
+	}
+	client.User.GetUserSpecifics(
+		context.TODO(),
+		request,
+	)
+}
+"
+`;
+
 exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
 "package example
 
@@ -1072,17 +1098,11 @@ func do() {
 	request := &acme.BigEntity{
 		CastMember: &acme.CastMember{
 			Actor: &acme.Actor{
-				ID:   "john.doe",
 				Name: "John Doe",
+				ID:   "john.doe",
 			},
 		},
 		ExtendedMovie: &acme.ExtendedMovie{
-			Cast: []string{
-				"John Travolta",
-				"Samuel L. Jackson",
-				"Uma Thurman",
-				"Bruce Willis",
-			},
 			ID:     "movie-sda231x",
 			Title:  "Pulp Fiction",
 			From:   "Quentin Tarantino",
@@ -1097,6 +1117,12 @@ func do() {
 				"releaseDate": "2023-12-08",
 			},
 			Revenue: int64(1000000),
+			Cast: []string{
+				"John Travolta",
+				"Samuel L. Jackson",
+				"Uma Thurman",
+				"Bruce Willis",
+			},
 		},
 		EventInfo: &commons.EventInfo{
 			Metadata: &commons.Metadata{
@@ -1727,6 +1753,32 @@ func do() {
 "
 `;
 
+exports[`snippets (exportAllRequestsAtRoot) > path-parameters > 'GET /{tenant_id}/user/{user_id}/speci…' 1`] = `
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	request := &acme.GetUserSpecificsRequest{
+		TenantID: "my_tenant",
+		UserID:   "my_user",
+		Version:  7,
+		Thought:  "my_thought",
+	}
+	client.User.GetUserSpecifics(
+		context.TODO(),
+		request,
+	)
+}
+"
+`;
+
 exports[`snippets (exportAllRequestsAtRoot) > read-write-only > 'Body properties' 1`] = `
 "package example
 
@@ -2048,17 +2100,11 @@ func do() {
 	request := &acme.BigEntity{
 		CastMember: &acme.CastMember{
 			Actor: &acme.Actor{
-				ID:   "john.doe",
 				Name: "John Doe",
+				ID:   "john.doe",
 			},
 		},
 		ExtendedMovie: &acme.ExtendedMovie{
-			Cast: []string{
-				"John Travolta",
-				"Samuel L. Jackson",
-				"Uma Thurman",
-				"Bruce Willis",
-			},
 			ID:     "movie-sda231x",
 			Title:  "Pulp Fiction",
 			From:   "Quentin Tarantino",
@@ -2073,6 +2119,12 @@ func do() {
 				"releaseDate": "2023-12-08",
 			},
 			Revenue: int64(1000000),
+			Cast: []string{
+				"John Travolta",
+				"Samuel L. Jackson",
+				"Uma Thurman",
+				"Bruce Willis",
+			},
 		},
 		EventInfo: &commons.EventInfo{
 			Metadata: &commons.Metadata{
@@ -2696,6 +2748,32 @@ func do() {
 		Tags: []*string{},
 	}
 	client.Nullable.GetUsers(
+		context.TODO(),
+		request,
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > path-parameters > 'GET /{tenant_id}/user/{user_id}/speci…' 1`] = `
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewFernClient()
+	request := &acme.GetUserSpecificsRequest{
+		TenantID: "my_tenant",
+		UserID:   "my_user",
+		Version:  7,
+		Thought:  "my_thought",
+	}
+	client.User.GetUserSpecifics(
 		context.TODO(),
 		request,
 	)

@@ -4,7 +4,7 @@ import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { TaskAbortSignal, TaskContext } from "@fern-api/task-context";
+import { resolveErrorCode, TaskAbortSignal, TaskContext } from "@fern-api/task-context";
 import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
@@ -438,6 +438,10 @@ async function generateOne({
             generatorsYmlLineNumber: lineNumber
         });
         // Mark the task as failed but don't propagate — siblings continue running.
-        interactiveTaskContext.failWithoutThrowing(message);
+        // Pass the error object so resolveErrorCode can extract CliError codes,
+        // errno codes, etc. instead of defaulting to InternalError.
+        interactiveTaskContext.failWithoutThrowing(message, error, {
+            code: resolveErrorCode(error)
+        });
     }
 }

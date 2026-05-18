@@ -65,6 +65,7 @@ export class IrGraph {
     private webhooksNeededForAudience: Set<WebhookId> = new Set();
     private channelsNeededForAudience: Set<WebSocketChannelId> = new Set();
     private subpackagesNeededForAudience: Set<SubpackageId> = new Set();
+    private schemaIdToGraphTypeId: Map<string, TypeId> = new Map();
 
     public constructor(audiences: ConfigAudiences) {
         this.audiences = audiencesFromConfig(audiences);
@@ -91,6 +92,9 @@ export class IrGraph {
             referencedSubpackages: descendantFilepaths
         };
         this.types[typeId] = typeNode;
+        if (declaredTypeName.typeId != null && declaredTypeName.typeId !== typeId) {
+            this.schemaIdToGraphTypeId.set(declaredTypeName.typeId, typeId);
+        }
         if (this.typesReferencedByService[typeId] == null) {
             this.typesReferencedByService[typeId] = new Set();
         }
@@ -564,8 +568,12 @@ export class IrGraph {
 
         const typeNode = this.getTypeNode(typeId);
         for (const descendantTypeId of typeNode.allDescendants) {
-            this.markTypeForService(descendantTypeId, serviceId);
+            this.markTypeForService(this.resolveTypeId(descendantTypeId), serviceId);
         }
+    }
+
+    private resolveTypeId(id: TypeId): TypeId {
+        return this.schemaIdToGraphTypeId.get(id) ?? id;
     }
 
     private addReferencedTypes(types: Set<TypeId>, typesToAdd: Set<TypeId>): void {
@@ -581,18 +589,18 @@ export class IrGraph {
                     const descendantsForAudience = typeNode.descendantsByAudience[audienceId];
                     if (descendantsForAudience != null) {
                         descendantsForAudience.forEach((descendantTypeId) => {
-                            types.add(descendantTypeId);
+                            types.add(this.resolveTypeId(descendantTypeId));
                         });
                     } else {
                         typeNode.allDescendants.forEach((descendantTypeId) => {
-                            types.add(descendantTypeId);
+                            types.add(this.resolveTypeId(descendantTypeId));
                         });
                         break;
                     }
                 }
             } else {
                 typeNode.allDescendants.forEach((descendantTypeId) => {
-                    types.add(descendantTypeId);
+                    types.add(this.resolveTypeId(descendantTypeId));
                 });
             }
         }

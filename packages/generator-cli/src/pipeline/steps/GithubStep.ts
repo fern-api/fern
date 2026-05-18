@@ -596,12 +596,17 @@ export function shouldCheckNoDiff(config: { skipIfNoDiff?: boolean }): boolean {
 }
 
 /**
- * The fern-generation-base tag only has a consumer (next run's syncFromDivergentMerge)
- * when the current replay produced conflicts that a human will resolve during merge.
- * On clean replays, pushing the tag creates a stale pointer that poisons subsequent runs
- * if the PR is closed without merging — the forward-projected tree ends up diffed against
- * the still-unmerged main HEAD, producing a "customer patch" that encodes a version
- * downgrade as customization.
+ * Push the fern-generation-base tag only when the current replay produced conflicts
+ * that a human will resolve during merge. On clean replays, pushing the tag creates a
+ * stale pointer: if the PR is closed without merging, the forward-projected tree ends
+ * up diffed against the still-unmerged main HEAD, producing a "customer patch" that
+ * encodes a version downgrade as a customization.
+ *
+ * The tag is written for older deployed generator-cli versions whose bundled
+ * divergent-merge gauntlet still reads it. The current generator-cli no longer needs
+ * the tag — replay's derived scan boundary recovers from squash-merges via the
+ * first-parent walk in `findPreviousGenerationFromHistory`. Once the generator-cli
+ * catalog rolls forward across all generators, the write side can also be removed.
  * Exported for testing.
  */
 export function shouldPushGenerationBaseTag(replayResult: ReplayStepResult | undefined): boolean {

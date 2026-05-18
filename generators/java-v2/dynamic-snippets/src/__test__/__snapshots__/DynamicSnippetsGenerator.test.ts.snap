@@ -619,6 +619,28 @@ exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
 ]"
 `;
 
+exports[`snippets (default) > path-parameters > 'GET /{tenant_id}/user/{user_id}/speci…' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.types.GetUserSpecificsRequest;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .tenantID("my_tenant")
+    .build();
+
+client.user().getUserSpecifics(
+    "my_user",
+    7,
+    "my_thought",
+    GetUserSpecificsRequest
+        .builder()
+        .build()
+);
+"
+`;
+
 exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
 "package com.example.usage;
 

@@ -510,10 +510,14 @@ export class EndpointSnippetGenerator {
     }): ruby.KeywordArgument[] {
         const args: ruby.KeywordArgument[] = [];
 
+        // Generated Ruby SDKs surface both root-level and endpoint-level path parameters
+        // as keyword arguments on the endpoint method (via `**params`), so merge them here
+        // in IR / URL order before rendering.
+        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
         args.push(
             ...this.getNamedParameterArgs({
                 kind: "PathParameters",
-                namedParameters: request.pathParameters,
+                namedParameters: pathParameters,
                 values: snippet.pathParameters
             })
         );
@@ -668,11 +672,14 @@ export class EndpointSnippetGenerator {
     }): ruby.KeywordArgument[] {
         const args: ruby.KeywordArgument[] = [];
 
-        // Add path parameters as keyword arguments (Ruby SDK uses **params)
+        // Add path parameters as keyword arguments (Ruby SDK uses **params).
+        // Merge root-level and endpoint-level path params in IR / URL order so
+        // root-level parameters (e.g. tenant_id) are not dropped from the call.
+        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
         args.push(
             ...this.getNamedParameterArgs({
                 kind: "PathParameters",
-                namedParameters: request.pathParameters,
+                namedParameters: pathParameters,
                 values: snippet.pathParameters
             })
         );

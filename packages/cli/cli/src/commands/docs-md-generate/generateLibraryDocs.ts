@@ -368,7 +368,7 @@ async function pollForCompletion(
                 return context.failAndThrow(
                     `Generation failed for library '${libraryName}': ${status.error?.message ?? "Unknown error"} (${status.error?.code ?? "UNKNOWN"})`,
                     undefined,
-                    { code: CliError.Code.InternalError }
+                    { code: CliError.Code.NetworkError }
                 );
             default:
                 return context.failAndThrow(

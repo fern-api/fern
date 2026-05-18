@@ -500,10 +500,6 @@ request := &fern.BigEntity{
             },
         },
         ExtendedMovie: &fern.ExtendedMovie{
-            Cast: []string{
-                "cast",
-                "cast",
-            },
             ID: "id",
             Prequel: fern.String(
                 "prequel",
@@ -521,6 +517,10 @@ request := &fern.BigEntity{
                 },
             },
             Revenue: int64(1000000),
+            Cast: []string{
+                "cast",
+                "cast",
+            },
         },
         Entity: &fern.Entity{
             Type: &fern.Type{

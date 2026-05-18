@@ -88,6 +88,7 @@ private func main() async throws {
     let client = PathParametersClient()
 
     _ = try await client.organizations.getOrganizationUser(
+        tenantId: "tenant_id",
         organizationId: "organization_id",
         userId: "user_id"
     )
@@ -164,6 +165,7 @@ private func main() async throws {
     let client = PathParametersClient()
 
     _ = try await client.organizations.searchOrganizations(
+        tenantId: "tenant_id",
         organizationId: "organization_id",
         limit: 1
     )
@@ -240,7 +242,10 @@ import PathParameters
 private func main() async throws {
     let client = PathParametersClient()
 
-    _ = try await client.user.getUser(userId: "user_id")
+    _ = try await client.user.getUser(
+        tenantId: "tenant_id",
+        userId: "user_id"
+    )
 }
 
 try await main()
@@ -380,6 +385,7 @@ private func main() async throws {
     let client = PathParametersClient()
 
     _ = try await client.user.updateUser(
+        tenantId: "tenant_id",
         userId: "user_id",
         request: User(
             name: "name",
@@ -462,6 +468,7 @@ private func main() async throws {
     let client = PathParametersClient()
 
     _ = try await client.user.searchUsers(
+        tenantId: "tenant_id",
         userId: "user_id",
         limit: 1
     )
@@ -552,8 +559,9 @@ private func main() async throws {
     let client = PathParametersClient()
 
     _ = try await client.user.getUserMetadata(
+        tenantId: "tenant_id",
         userId: "user_id",
-        version: 1
+        version: "1"
     )
 }
 
@@ -642,8 +650,9 @@ private func main() async throws {
     let client = PathParametersClient()
 
     _ = try await client.user.getUserSpecifics(
+        tenantId: "tenant_id",
         userId: "user_id",
-        version: 1,
+        version: "1",
         thought: "thought"
     )
 }

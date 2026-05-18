@@ -284,16 +284,24 @@ export async function getPreviewDocsDefinition({
             }
 
             // Then replace image paths with file IDs
-            const finalMarkdown = replaceImagePathsAndUrls(
-                markdownWithAbsPaths,
-                fileIdsMap,
-                {}, // markdownFilesToPathName - empty object since we don't need it for images
-                {
-                    absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
-                    absolutePathToMarkdownFile: absoluteFilePath
-                },
-                context
-            );
+            let finalMarkdown: string;
+            try {
+                finalMarkdown = replaceImagePathsAndUrls(
+                    markdownWithAbsPaths,
+                    fileIdsMap,
+                    {}, // markdownFilesToPathName - empty object since we don't need it for images
+                    {
+                        absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                        absolutePathToMarkdownFile: absoluteFilePath
+                    },
+                    context
+                );
+            } catch (error) {
+                throw new CliError({
+                    message: `Failed to replace image paths in ${absoluteFilePath}: ${extractErrorMessage(error)}`,
+                    code: CliError.Code.ParseError
+                });
+            }
 
             previousDocsDefinition.pages[pageId] = {
                 markdown: stripMdxComments(finalMarkdown),
