@@ -60,7 +60,12 @@ export async function createOpenAPIWorkspace({
     }
     const relativeOpenAPIFilePath = getRelativeOpenAPIFilePathForWorkspace({ directoryOfWorkspace, openAPIFilePath });
     const openAPIFilePathForConfig =
-        relativeOpenAPIFilePath ?? (await copyOpenAPIFileIntoWorkspace({ directoryOfWorkspace, openAPIFilePath }));
+        relativeOpenAPIFilePath ??
+        (await copyOpenAPIFileIntoWorkspace({
+            directoryOfWorkspace,
+            openAPIFilePath,
+            context
+        }));
     await writeGeneratorsConfiguration({
         filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
         cliVersion,
@@ -89,13 +94,18 @@ export function getRelativeOpenAPIFilePathForWorkspace({
 
 async function copyOpenAPIFileIntoWorkspace({
     directoryOfWorkspace,
-    openAPIFilePath
+    openAPIFilePath,
+    context
 }: {
     directoryOfWorkspace: AbsoluteFilePath;
     openAPIFilePath: AbsoluteFilePath;
+    context: TaskContext;
 }): Promise<RelativeFilePath> {
     const filename = RelativeFilePath.of(path.basename(openAPIFilePath));
     const destination = join(directoryOfWorkspace, filename);
+    context.logger.warn(
+        `The OpenAPI spec is on a different drive than the new Fern workspace, so Fern copied it into the workspace as ${filename}.`
+    );
     await copyFile(openAPIFilePath, destination);
     return filename;
 }
