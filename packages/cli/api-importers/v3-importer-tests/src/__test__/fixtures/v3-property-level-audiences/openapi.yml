@@ -58,6 +58,12 @@ paths:
       responses:
         "201":
           description: ok
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
     get:
       operationId: listUsers
@@ -91,6 +97,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
 webhooks:
   userCreated:
@@ -125,3 +137,15 @@ components:
         password_hash:
           type: string
           x-fern-audiences: ["internal"]
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: "#/components/schemas/ErrorResponseError"
+    ErrorResponseError:
+      type: object
+      properties:
+        error_msg:
+          type: string
+        error_name:
+          type: string

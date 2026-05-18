@@ -74,6 +74,8 @@ RUN rm -f /opt/gradle/lib/plugins/bcpg-jdk18on-*.jar \
 # Security update 2026-05-04: add glibc/glibc-common/glibc-minimal-langpack
 # (CVE-2026-4046, iconv() assertion failure when converting IBM1390/IBM1399
 # inputs; fixed in glibc 2.34-231.amzn2023.0.4)
+# Security update 2026-05-18: add libgcrypt (CVE-2026-41989, heap-based
+# buffer overflow in gcry_pk_decrypt; fixed in 1.10.2-1.amzn2023.0.3)
 RUN dnf --releasever=latest update -y \
     openssl-fips-provider-latest \
     openssl-libs \
@@ -96,7 +98,8 @@ RUN dnf --releasever=latest update -y \
     libnghttp2 \
     glibc \
     glibc-common \
-    glibc-minimal-langpack && \
+    glibc-minimal-langpack \
+    libgcrypt && \
     dnf remove -y git-lfs wget || true && \
     dnf clean all && \
     rm -rf /var/cache/dnf
