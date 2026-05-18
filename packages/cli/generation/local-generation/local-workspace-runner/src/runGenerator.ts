@@ -250,9 +250,9 @@ export async function writeFilesToDiskAndRunGenerator({
             containerPath: `${CONTAINER_SOURCES_DIRECTORY}/${source.id}`
         }));
 
-    // Collect and mount raw API spec files (OAS, overrides, overlays, protobuf, asyncapi, etc.)
-    // when specs are provided by the caller. This preserves the original directory structure
-    // so that relative $ref paths between spec files remain valid.
+    // Pre-process and mount raw API spec files when provided. OpenAPI/AsyncAPI specs are
+    // bundled (all $refs resolved), overrides merged, and overlays applied before mounting.
+    // Protobuf and GraphQL specs are copied as-is.
     if (rawApiSpecs != null && rawApiSpecs.length > 0) {
         const rawSpecsDir = join(workspaceTempDir.path, RAW_SPECS_DIRECTORY_NAME);
         await mkdir(rawSpecsDir, { recursive: true });

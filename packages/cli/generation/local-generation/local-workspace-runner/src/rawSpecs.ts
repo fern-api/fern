@@ -9,7 +9,7 @@ import { mergeWithOverrides as coreMergeWithOverrides } from "@fern-api/core-uti
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { loadAsyncAPI, loadOpenAPI } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
-import { copyFile, cp, mkdir, readFile, writeFile } from "fs/promises";
+import { copyFile, cp, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 
@@ -212,7 +212,6 @@ async function copyProtobuf({
         entry.overridePaths = [];
         for (const [i, override] of overrides.entries()) {
             const overrideName = `proto-${index}-override-${i}${path.extname(override)}`;
-            await mkdir(path.dirname(path.join(hostOutputDir, overrideName)), { recursive: true });
             await copyFile(override, path.join(hostOutputDir, overrideName));
             entry.overridePaths.push(toContainerPath(overrideName, containerBaseDir));
         }
