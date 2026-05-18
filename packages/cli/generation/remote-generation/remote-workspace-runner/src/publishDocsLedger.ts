@@ -1,14 +1,4 @@
-import {
-    applyTranslatedFrontmatterToNavTree,
-    applyTranslatedNavigationOverlays,
-    type DocsDefinitionResolver,
-    getTranslatedAnnouncement,
-    replaceImagePathsAndUrls,
-    replaceReferencedCode,
-    replaceReferencedMarkdown,
-    stripMdxComments,
-    transformAtPrefixImports
-} from "@fern-api/docs-resolver";
+import { type DocsDefinitionResolver } from "@fern-api/docs-resolver";
 import type { APIV1Write, DocsV1Write } from "@fern-api/fdr-sdk";
 import {
     createDocsLedgerClient,
@@ -17,11 +7,12 @@ import {
     type FileManifestEntry,
     type FinishTranslationInput
 } from "@fern-api/fdr-sdk/orpc-client";
-import { AbsoluteFilePath, doesPathExist, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { TaskContext } from "@fern-api/task-context";
 import { createHash } from "crypto";
 import { readFile } from "fs/promises";
 
+import { buildTranslatedDocsDefinition } from "./buildTranslatedDocsDefinition.js";
 import { mapDocsConfigToLedgerConfig } from "./mapDocsConfigToLedgerConfig.js";
 import { asyncPool } from "./utils/asyncPool.js";
 
@@ -457,220 +448,66 @@ async function publishTranslationsViaLedger({
         return;
     }
 
-    context.logger.info(`[ledger] Publishing translations for ${Object.keys(translationPages).length} locale(s)...`);
+    const localeEntries = Object.entries(translationPages);
+    context.logger.info(`[ledger] Publishing translations for ${localeEntries.length} locale(s)...`);
 
-    for (const [locale, localePages] of Object.entries(translationPages)) {
-        try {
-            const translatedDefinition = await buildTranslatedDocsDefinition({
-                docsDefinition,
-                locale,
-                localePages,
-                translationNavigationOverlays,
-                resolver,
-                context
-            });
-
-            const { input: translationInput, blobs: translationBlobs } = buildLedgerInput({
-                docsDefinition: translatedDefinition,
-                organization,
-                domain,
-                basepath,
-                previewId: undefined,
-                git,
-                apiDefinitions,
-                fileManifest,
-                fileIdToPath,
-                locale
-            });
-
-            // Register to get presigned URLs for any new blobs (translated page content).
-            const registerResult = await client.register(translationInput);
-
-            // Upload missing blobs (translated pages will have different content hashes).
-            await uploadMissingBlobs(registerResult.missingContent, translationBlobs, context, filePaths);
-
-            // Finish translation — attaches locale-specific segments to the existing deployment.
-            const finishInput: FinishTranslationInput = {
-                orgId: organization,
-                domain,
-                basepath: basepath ?? "",
-                deploymentId,
-                locale,
-                root: translatedDefinition.config.root ?? translatedDefinition.config.navigation,
-                pages: translationInput.pages,
-                apiManifest: translationInput.apiManifest,
-                config: translationInput.config,
-                fileManifest: translationInput.fileManifest,
-                jsFiles: translationInput.jsFiles,
-                redirects: translationInput.redirects,
-                git: translationInput.git
-            };
-
-            const result = await client.finishTranslation(finishInput);
-
-            const pageCount = Object.keys(localePages).length;
-            context.logger.info(
-                `[ledger] Locale "${locale}": ${pageCount} page(s), ${result.segmentsAdded} segment(s) added`
-            );
-        } catch (error) {
-            context.logger.warn(`[ledger] Failed to publish translations for locale "${locale}": ${String(error)}`);
-        }
-    }
-}
-
-/**
- * Build a translated DocsDefinition by overlaying translated pages and
- * navigation on top of the base definition. Applies the same MDX processing
- * pipeline as the V2 translation path:
- *
- *  1. Locale-aware snippet resolution (prefers translated snippets)
- *  2. `<Code src="..."/>` reference resolution
- *  3. `@/` import transforms
- *  4. MDX comment stripping
- *  5. Image path rewrites (using base page location)
- *  6. `editThisPageUrl` rewriting to point to the translated file
- *  7. Nav tree overlay (translated sidebar titles from frontmatter + docs.yml)
- *  8. Translated announcement and navbar links
- */
-async function buildTranslatedDocsDefinition({
-    docsDefinition,
-    locale,
-    localePages,
-    translationNavigationOverlays,
-    resolver,
-    context
-}: {
-    docsDefinition: DocsDefinition;
-    locale: string;
-    localePages: Record<string, string>;
-    translationNavigationOverlays:
-        | Record<string, import("@fern-api/configuration").docsYml.TranslationNavigationOverlay>
-        | undefined;
-    resolver: DocsDefinitionResolver;
-    context: TaskContext;
-}): Promise<DocsDefinition> {
-    const collectedFileIds = resolver.getCollectedFileIds();
-    const docsWorkspacePath = resolver.getDocsWorkspacePath();
-
-    const resolveLocalePath = async (filepath: AbsoluteFilePath): Promise<AbsoluteFilePath> => {
-        const relPath = relative(docsWorkspacePath, filepath);
-        const translatedPath = resolve(docsWorkspacePath, RelativeFilePath.of(`translations/${locale}/${relPath}`));
-        return (await doesPathExist(translatedPath)) ? translatedPath : filepath;
-    };
-
-    const localeAwareMarkdownLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
-        const pathToRead = await resolveLocalePath(filepath);
-        const raw = await readFile(pathToRead, "utf-8");
-        const fmMatch = raw.match(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/);
-        return fmMatch != null ? raw.slice(fmMatch[0].length) : raw;
-    };
-
-    const localeAwareFileLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
-        const pathToRead = await resolveLocalePath(filepath);
-        return readFile(pathToRead, "utf-8");
-    };
-
-    const translatedPageEntries = await Promise.all(
-        Object.entries(localePages).map(async ([path, rawMarkdown]) => {
+    await Promise.all(
+        localeEntries.map(async ([locale, localePages]) => {
             try {
-                const basePage = docsDefinition.pages[path as DocsV1Write.PageId];
-                const absolutePathToMarkdownFile = resolve(docsWorkspacePath, RelativeFilePath.of(path));
-
-                const { markdown: markdownResolved } = await replaceReferencedMarkdown({
-                    markdown: rawMarkdown,
-                    absolutePathToFernFolder: docsWorkspacePath,
-                    absolutePathToMarkdownFile,
-                    context,
-                    markdownLoader: localeAwareMarkdownLoader
-                });
-
-                const codeResolved = await replaceReferencedCode({
-                    markdown: markdownResolved,
-                    absolutePathToFernFolder: docsWorkspacePath,
-                    absolutePathToMarkdownFile,
-                    context,
-                    fileLoader: localeAwareFileLoader
-                });
-
-                const importsResolved = transformAtPrefixImports({
-                    markdown: codeResolved,
-                    absolutePathToFernFolder: docsWorkspacePath,
-                    absolutePathToMarkdownFile
-                });
-
-                let processedMarkdown = stripMdxComments(importsResolved);
-
-                processedMarkdown = replaceImagePathsAndUrls(
-                    processedMarkdown,
-                    collectedFileIds,
-                    {},
-                    {
-                        absolutePathToMarkdownFile,
-                        absolutePathToFernFolder: docsWorkspacePath
-                    },
+                const translatedDefinition = await buildTranslatedDocsDefinition({
+                    docsDefinition,
+                    locale,
+                    localePages,
+                    translationNavigationOverlays,
+                    resolver,
                     context
-                );
+                });
 
-                let editThisPageUrl = basePage?.editThisPageUrl;
-                if (editThisPageUrl != null) {
-                    const fernPathPattern = `/fern/${path}`;
-                    const translatedPathStr = `/fern/translations/${locale}/${path}`;
-                    editThisPageUrl = editThisPageUrl.replace(
-                        fernPathPattern,
-                        translatedPathStr
-                    ) as typeof editThisPageUrl;
-                }
+                const { input: translationInput, blobs: translationBlobs } = buildLedgerInput({
+                    docsDefinition: translatedDefinition,
+                    organization,
+                    domain,
+                    basepath,
+                    previewId: undefined,
+                    git,
+                    apiDefinitions,
+                    fileManifest,
+                    fileIdToPath,
+                    locale
+                });
 
-                return [
-                    path,
-                    {
-                        markdown: processedMarkdown,
-                        rawMarkdown: processedMarkdown,
-                        editThisPageUrl,
-                        editThisPageLaunch: basePage?.editThisPageLaunch
-                    }
-                ];
-            } catch (pageError) {
-                context.logger.warn(
-                    `[ledger] Failed to process translated page "${path}" for locale "${locale}": ${String(pageError)}. Falling back to base page.`
+                // Register to get presigned URLs for any new blobs (translated page content).
+                const registerResult = await client.register(translationInput);
+
+                // Upload missing blobs (translated pages will have different content hashes).
+                await uploadMissingBlobs(registerResult.missingContent, translationBlobs, context, filePaths);
+
+                // Finish translation — attaches locale-specific segments to the existing deployment.
+                const finishInput: FinishTranslationInput = {
+                    orgId: organization,
+                    domain,
+                    basepath: basepath ?? "",
+                    deploymentId,
+                    locale,
+                    root: translatedDefinition.config.root ?? translatedDefinition.config.navigation,
+                    pages: translationInput.pages,
+                    apiManifest: translationInput.apiManifest,
+                    config: translationInput.config,
+                    fileManifest: translationInput.fileManifest,
+                    jsFiles: translationInput.jsFiles,
+                    redirects: translationInput.redirects,
+                    git: translationInput.git
+                };
+
+                const result = await client.finishTranslation(finishInput);
+
+                const pageCount = Object.keys(localePages).length;
+                context.logger.info(
+                    `[ledger] Locale "${locale}": ${pageCount} page(s), ${result.segmentsAdded} segment(s) added`
                 );
-                return undefined;
+            } catch (error) {
+                context.logger.warn(`[ledger] Failed to publish translations for locale "${locale}": ${String(error)}`);
             }
         })
     );
-
-    const translatedPages = {
-        ...docsDefinition.pages,
-        ...Object.fromEntries(
-            translatedPageEntries.filter((entry): entry is NonNullable<typeof entry> => entry != null)
-        )
-    };
-
-    let updatedRoot = applyTranslatedFrontmatterToNavTree(
-        docsDefinition.config.root,
-        localePages as Record<string, string>,
-        context
-    );
-
-    const localeNavOverlay = translationNavigationOverlays?.[locale];
-    let translatedAnnouncement = docsDefinition.config.announcement;
-    let translatedNavbarLinks = docsDefinition.config.navbarLinks;
-    if (localeNavOverlay != null) {
-        updatedRoot = applyTranslatedNavigationOverlays(updatedRoot, localeNavOverlay);
-        translatedAnnouncement = getTranslatedAnnouncement(localeNavOverlay) ?? translatedAnnouncement;
-        if (localeNavOverlay.navbarLinks != null) {
-            translatedNavbarLinks = localeNavOverlay.navbarLinks;
-        }
-    }
-
-    return {
-        ...docsDefinition,
-        pages: translatedPages,
-        config: {
-            ...docsDefinition.config,
-            root: updatedRoot,
-            announcement: translatedAnnouncement,
-            navbarLinks: translatedNavbarLinks
-        }
-    };
 }

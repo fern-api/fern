@@ -3,19 +3,7 @@ import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
-import {
-    applyTranslatedFrontmatterToNavTree,
-    applyTranslatedNavigationOverlays,
-    DocsDefinitionResolver,
-    getTranslatedAnnouncement,
-    replaceImagePathsAndUrls,
-    replaceReferencedCode,
-    replaceReferencedMarkdown,
-    stripMdxComments,
-    transformAtPrefixImports,
-    UploadedFile,
-    wrapWithHttps
-} from "@fern-api/docs-resolver";
+import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
 import { APIV1Write, FdrAPI as CjsFdrSdk, DocsV1Write, DocsV2Write, FdrClient } from "@fern-api/fdr-sdk";
 import type { DocsPublishGitInput, FileManifestEntry } from "@fern-api/fdr-sdk/orpc-client";
 
@@ -25,14 +13,7 @@ type SnippetsConfig = APIV1Write.SnippetsConfig;
 type DocsDefinition = DocsV1Write.DocsDefinition;
 
 import { stitchGlobalTheme } from "@fern-api/docs-resolver";
-import {
-    AbsoluteFilePath,
-    convertToFernHostRelativeFilePath,
-    doesPathExist,
-    RelativeFilePath,
-    relative,
-    resolve
-} from "@fern-api/fs-utils";
+import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
@@ -47,6 +28,7 @@ import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import { basename } from "path";
 import terminalLink from "terminal-link";
+import { buildTranslatedDocsDefinition } from "./buildTranslatedDocsDefinition.js";
 import { getDocsDeployMode } from "./docsDeployMode.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { measureImageSizes } from "./measureImageSizes.js";
@@ -821,7 +803,8 @@ export async function publishDocs({
                         apiDefinitions: apiDefinitionCollector,
                         fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
                         filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
-                        fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined
+                        fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
+                        resolver
                     });
                     // In ledger-only mode the preview URL comes from the ledger;
                     // in dual mode the V2 URL was already set above.
@@ -866,6 +849,11 @@ export async function publishDocs({
         // Register translated page content for each configured locale via the V2 endpoint.
         // In ledger-only mode, translations are handled by publishDocsViaLedger (above),
         // so this block only runs for legacy and dual-write modes.
+        // In dual mode, translations are intentionally published through BOTH the V2
+        // endpoint (here) and the ledger finishTranslation endpoint (inside
+        // publishDocsViaLedger above). This ensures migration parity — both stores
+        // receive identical translated content until the ledger path is promoted to
+        // sole owner.
         // In preview mode, register translations against the preview URL (not the production domain)
         // so that translated docs are visible in preview without overwriting production translations.
         const translationPages = resolver.getTranslationPages();
@@ -876,160 +864,15 @@ export async function publishDocs({
             await Promise.all(
                 Object.entries(translationPages).map(async ([locale, localePages]) => {
                     try {
-                        // Build a translated DocsDefinition by taking the base definition,
-                        // overriding translated pages, and updating the nav tree to reflect
-                        // any sidebar-title / slug frontmatter in the translated pages.
-                        //
-                        // For each translated page, we apply the same transformations as default locale pages:
-                        // 1. Resolve <Markdown src="..."/> and <Code src="..."/> snippet references
-                        // 2. Transform @/ prefix imports to relative paths
-                        // 3. Strip MDX comments to prevent leakage
-                        // 4. Replace relative image paths with file IDs (using base page path for resolution)
-                        // 5. Preserve editThisPageUrl/editThisPageLaunch from the base page
-                        const collectedFileIds = resolver.getCollectedFileIds();
-                        const docsWorkspacePath = resolver.getDocsWorkspacePath();
-
-                        // Create a locale-aware file loader that prefers translated snippets
-                        // (e.g., translations/zh/snippets/foo.mdx) over base snippets.
-                        const resolveLocalePath = async (filepath: AbsoluteFilePath): Promise<AbsoluteFilePath> => {
-                            const relPath = relative(docsWorkspacePath, filepath);
-                            const translatedPath = resolve(
-                                docsWorkspacePath,
-                                RelativeFilePath.of(`translations/${locale}/${relPath}`)
-                            );
-                            return (await doesPathExist(translatedPath)) ? translatedPath : filepath;
-                        };
-
-                        const localeAwareMarkdownLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
-                            const pathToRead = await resolveLocalePath(filepath);
-                            const raw = await readFile(pathToRead, "utf-8");
-                            // Strip frontmatter (---\n...\n---) from snippet files
-                            const fmMatch = raw.match(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/);
-                            return fmMatch != null ? raw.slice(fmMatch[0].length) : raw;
-                        };
-
-                        const localeAwareFileLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
-                            const pathToRead = await resolveLocalePath(filepath);
-                            return readFile(pathToRead, "utf-8");
-                        };
-
-                        const translatedPageEntries = await Promise.all(
-                            Object.entries(localePages).map(async ([path, rawMarkdown]) => {
-                                try {
-                                    const basePage = docsDefinition.pages[path as DocsV1Write.PageId];
-                                    const absolutePathToMarkdownFile = resolve(
-                                        docsWorkspacePath,
-                                        RelativeFilePath.of(path)
-                                    );
-
-                                    // Resolve <Markdown src="..."/> snippets (must happen before image processing).
-                                    // Uses locale-aware loader to prefer translated snippets when available.
-                                    const { markdown: markdownResolved } = await replaceReferencedMarkdown({
-                                        markdown: rawMarkdown,
-                                        absolutePathToFernFolder: docsWorkspacePath,
-                                        absolutePathToMarkdownFile,
-                                        context,
-                                        markdownLoader: localeAwareMarkdownLoader
-                                    });
-
-                                    // Resolve <Code src="..."/> references (also locale-aware)
-                                    const codeResolved = await replaceReferencedCode({
-                                        markdown: markdownResolved,
-                                        absolutePathToFernFolder: docsWorkspacePath,
-                                        absolutePathToMarkdownFile,
-                                        context,
-                                        fileLoader: localeAwareFileLoader
-                                    });
-
-                                    // Transform @/ prefix imports to relative paths
-                                    const importsResolved = transformAtPrefixImports({
-                                        markdown: codeResolved,
-                                        absolutePathToFernFolder: docsWorkspacePath,
-                                        absolutePathToMarkdownFile
-                                    });
-
-                                    // Strip MDX comments
-                                    let processedMarkdown = stripMdxComments(importsResolved);
-
-                                    // Replace image paths using the base page's location for resolution
-                                    // (translated pages reference the same images as the default locale)
-                                    processedMarkdown = replaceImagePathsAndUrls(
-                                        processedMarkdown,
-                                        collectedFileIds,
-                                        {}, // markdownFilesToPathName not needed for translations
-                                        {
-                                            absolutePathToMarkdownFile,
-                                            absolutePathToFernFolder: docsWorkspacePath
-                                        },
-                                        context
-                                    );
-
-                                    // Rewrite editThisPageUrl to point to the translated file
-                                    let editThisPageUrl = basePage?.editThisPageUrl;
-                                    if (editThisPageUrl != null) {
-                                        const fernPathPattern = `/fern/${path}`;
-                                        const translatedPath = `/fern/translations/${locale}/${path}`;
-                                        editThisPageUrl = editThisPageUrl.replace(
-                                            fernPathPattern,
-                                            translatedPath
-                                        ) as typeof editThisPageUrl;
-                                    }
-                                    return [
-                                        path,
-                                        {
-                                            markdown: processedMarkdown,
-                                            rawMarkdown: processedMarkdown,
-                                            editThisPageUrl,
-                                            editThisPageLaunch: basePage?.editThisPageLaunch
-                                        }
-                                    ];
-                                } catch (pageError) {
-                                    context.logger.warn(
-                                        `Failed to process translated page "${path}" for locale "${locale}": ${String(pageError)}. Falling back to base page.`
-                                    );
-                                    return undefined;
-                                }
-                            })
-                        );
-
-                        const translatedPages = {
-                            ...docsDefinition.pages,
-                            ...Object.fromEntries(
-                                translatedPageEntries.filter(
-                                    (entry): entry is NonNullable<typeof entry> => entry != null
-                                )
-                            )
-                        };
-                        let updatedRoot = applyTranslatedFrontmatterToNavTree(
-                            docsDefinition.config.root,
-                            // localePages is Record<RelativeFilePath, string> (path -> raw markdown)
-                            localePages as Record<string, string>,
+                        const translatedDefinition = await buildTranslatedDocsDefinition({
+                            docsDefinition,
+                            locale,
+                            localePages,
+                            translationNavigationOverlays,
+                            resolver,
                             context
-                        );
+                        });
 
-                        // Apply navigation overlay (translated display-names, titles, etc.)
-                        const localeNavOverlay = translationNavigationOverlays?.[locale];
-                        let translatedAnnouncement = docsDefinition.config.announcement;
-                        let translatedNavbarLinks = docsDefinition.config.navbarLinks;
-                        if (localeNavOverlay != null) {
-                            updatedRoot = applyTranslatedNavigationOverlays(updatedRoot, localeNavOverlay);
-                            translatedAnnouncement =
-                                getTranslatedAnnouncement(localeNavOverlay) ?? translatedAnnouncement;
-                            if (localeNavOverlay.navbarLinks != null) {
-                                translatedNavbarLinks = localeNavOverlay.navbarLinks;
-                            }
-                        }
-
-                        const translatedDefinition: DocsDefinition = {
-                            ...docsDefinition,
-                            pages: translatedPages,
-                            config: {
-                                ...docsDefinition.config,
-                                root: updatedRoot,
-                                announcement: translatedAnnouncement,
-                                navbarLinks: translatedNavbarLinks
-                            }
-                        };
                         const pageCount = Object.keys(localePages).length;
                         context.logger.debug(
                             `Sending translation for locale "${locale}" (${pageCount} page${pageCount === 1 ? "" : "s"})`

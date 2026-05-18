@@ -1,12 +1,15 @@
+import type { DocsDefinitionResolver } from "@fern-api/docs-resolver";
 import type { APIV1Write, DocsV1Write } from "@fern-api/fdr-sdk";
 import {
     createDocsLedgerClient,
     type DocsPublishGitInput,
-    type FileManifestEntry
+    type FileManifestEntry,
+    type FinishTranslationInput
 } from "@fern-api/fdr-sdk/orpc-client";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { TaskContext } from "@fern-api/task-context";
 
+import { buildTranslatedDocsDefinition } from "./buildTranslatedDocsDefinition.js";
 import { buildLedgerInput, uploadMissingBlobs } from "./publishDocsLedger.js";
 
 type DocsDefinition = DocsV1Write.DocsDefinition;
@@ -39,7 +42,8 @@ export async function publishDocsViaLedgerPreview({
     apiDefinitions,
     fileManifest,
     filePaths,
-    fileIdToPath
+    fileIdToPath,
+    resolver
 }: {
     docsDefinition: DocsDefinition;
     organization: string;
@@ -55,6 +59,8 @@ export async function publishDocsViaLedgerPreview({
     /** Hash → absolute file path for lazy on-demand reads during upload. */
     filePaths?: Map<string, AbsoluteFilePath>;
     fileIdToPath?: Map<string, string>;
+    /** Resolver instance for accessing translation pages/overlays. Optional. */
+    resolver?: DocsDefinitionResolver;
 }): Promise<LedgerPreviewResult> {
     // Build the input and blob map using the shared helper.  We pass a
     // throwaway `domain` — it's required by buildLedgerInput's type but will
@@ -120,6 +126,74 @@ export async function publishDocsViaLedgerPreview({
         `[ledger-preview] Finished in ${finishTime.toFixed(0)}ms — deploymentId=${finishResult.deploymentId}, ` +
             `reused=${finishResult.reusedDeployment}`
     );
+
+    // Step 4: Publish translations if the resolver has them.
+    if (resolver != null) {
+        const translationPages = resolver.getTranslationPages();
+        const translationNavigationOverlays = resolver.getTranslationNavigationOverlays();
+
+        if (translationPages != null && Object.keys(translationPages).length > 0) {
+            const client2 = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers });
+            const localeEntries = Object.entries(translationPages);
+            context.logger.info(`[ledger-preview] Publishing translations for ${localeEntries.length} locale(s)...`);
+
+            await Promise.all(
+                localeEntries.map(async ([locale, localePages]) => {
+                    try {
+                        const translatedDefinition = await buildTranslatedDocsDefinition({
+                            docsDefinition,
+                            locale,
+                            localePages,
+                            translationNavigationOverlays,
+                            resolver,
+                            context
+                        });
+
+                        const { input: translationInput, blobs: translationBlobs } = buildLedgerInput({
+                            docsDefinition: translatedDefinition,
+                            organization,
+                            domain: registerResult.domain,
+                            basepath: registerResult.basepath,
+                            previewId: registerResult.previewId,
+                            git,
+                            apiDefinitions,
+                            fileManifest,
+                            fileIdToPath,
+                            locale
+                        });
+
+                        const localeRegister = await client2.register(translationInput);
+                        await uploadMissingBlobs(localeRegister.missingContent, translationBlobs, context, filePaths);
+
+                        const finishInput: FinishTranslationInput = {
+                            orgId: organization,
+                            domain: registerResult.domain,
+                            basepath: registerResult.basepath ?? "",
+                            deploymentId: finishResult.deploymentId,
+                            locale,
+                            root: translatedDefinition.config.root ?? translatedDefinition.config.navigation,
+                            pages: translationInput.pages,
+                            apiManifest: translationInput.apiManifest,
+                            config: translationInput.config,
+                            fileManifest: translationInput.fileManifest,
+                            jsFiles: translationInput.jsFiles,
+                            redirects: translationInput.redirects,
+                            git: translationInput.git
+                        };
+
+                        const result = await client2.finishTranslation(finishInput);
+                        context.logger.info(
+                            `[ledger-preview] Locale "${locale}": ${Object.keys(localePages).length} page(s), ${result.segmentsAdded} segment(s) added`
+                        );
+                    } catch (error) {
+                        context.logger.warn(
+                            `[ledger-preview] Failed to publish translations for locale "${locale}": ${String(error)}`
+                        );
+                    }
+                })
+            );
+        }
+    }
 
     return {
         previewUrl: registerResult.previewUrl,

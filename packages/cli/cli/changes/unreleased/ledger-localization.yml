@@ -1,6 +1,8 @@
 - summary: |
-    Add multi-locale support to docs-ledger publishing. When translations
-    are configured, the ledger path now publishes translated pages as
-    locale-specific segments via the finishTranslation endpoint instead
-    of duplicating entire blobs per locale.
+    Add multi-locale support to docs-ledger publishing. Extracts the
+    shared MDX translation pipeline (snippet resolution, image rewrites,
+    nav overlays) into a reusable module used by both V2 and ledger paths.
+    The ledger path now publishes translated pages as locale-specific
+    segments via the finishTranslation endpoint, with parallel locale
+    publishing. Preview mode also supports translations.
   type: feat
