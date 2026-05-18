@@ -40,6 +40,16 @@ import tmp from "tmp-promise";
 import { getGeneratorOutputSubfolder } from "./getGeneratorOutputSubfolder.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 
+/**
+ * Generators that receive pre-processed raw API spec files mounted into their
+ * Docker container. Add new generator names here as they opt in.
+ */
+const GENERATORS_WANTING_RAW_SPECS: ReadonlySet<string> = new Set(["fernapi/fern-cli"]);
+
+function generatorWantsRawSpecs(generatorName: string): boolean {
+    return GENERATORS_WANTING_RAW_SPECS.has(generatorName);
+}
+
 export async function runLocalGenerationForWorkspace({
     token,
     projectConfig,
@@ -393,7 +403,7 @@ export async function runLocalGenerationForWorkspace({
                     skipFernignore,
                     disableTelemetry,
                     rawApiSpecs:
-                        workspace instanceof OSSWorkspace && generatorInvocation.name === "fernapi/fern-cli"
+                        workspace instanceof OSSWorkspace && generatorWantsRawSpecs(generatorInvocation.name)
                             ? workspace.allSpecs
                             : undefined
                 });

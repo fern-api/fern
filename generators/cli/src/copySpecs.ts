@@ -72,6 +72,7 @@ export async function copySpecFile(containerPath: string, specsOutputDir: string
         if (err != null && typeof err === "object" && "code" in err && err.code === "ENOENT") {
             throw new Error(`Spec file not found at mount path: ${containerPath}`);
         }
+        throw err;
     }
     if (isDir) {
         await cp(containerPath, destPath, { recursive: true });

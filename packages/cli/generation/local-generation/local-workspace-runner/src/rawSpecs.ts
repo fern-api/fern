@@ -6,7 +6,7 @@ import {
     Spec
 } from "@fern-api/api-workspace-commons";
 import { type Audiences } from "@fern-api/configuration";
-import { mergeWithOverrides as coreMergeWithOverrides } from "@fern-api/core-utils";
+import { assertNever, mergeWithOverrides as coreMergeWithOverrides } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { loadAsyncAPI, loadOpenAPI } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
@@ -94,6 +94,8 @@ async function resolveAndWriteSpec({
             return copyProtobuf({ spec, hostOutputDir, containerBaseDir, index });
         case "graphql":
             return copyGraphQL({ spec, hostOutputDir, containerBaseDir, index });
+        default:
+            assertNever(spec);
     }
 }
 
