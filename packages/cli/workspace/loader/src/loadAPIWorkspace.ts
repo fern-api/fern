@@ -18,32 +18,6 @@ import { TaskContext } from "@fern-api/task-context";
 import path from "path";
 import { loadAPIChangelog } from "./loadAPIChangelog.js";
 
-function resolveConfiguredFilepath({
-    absolutePathToWorkspace,
-    configuredFilepath
-}: {
-    absolutePathToWorkspace: AbsoluteFilePath;
-    configuredFilepath: string;
-}): AbsoluteFilePath {
-    if (path.isAbsolute(configuredFilepath)) {
-        return AbsoluteFilePath.of(configuredFilepath);
-    }
-    return join(absolutePathToWorkspace, RelativeFilePath.of(configuredFilepath));
-}
-
-function getFailureFilepath({
-    absolutePathToWorkspace,
-    configuredFilepath
-}: {
-    absolutePathToWorkspace: AbsoluteFilePath;
-    configuredFilepath: string;
-}): RelativeFilePath {
-    if (path.isAbsolute(configuredFilepath)) {
-        return RelativeFilePath.of(path.relative(absolutePathToWorkspace, configuredFilepath));
-    }
-    return RelativeFilePath.of(configuredFilepath);
-}
-
 export async function loadSingleNamespaceAPIWorkspace({
     absolutePathToWorkspace,
     namespace,
@@ -156,15 +130,25 @@ export async function loadSingleNamespaceAPIWorkspace({
             continue;
         }
 
-        const absoluteFilepath = resolveConfiguredFilepath({
-            absolutePathToWorkspace,
-            configuredFilepath: definition.schema.path
-        });
+        if (path.isAbsolute(definition.schema.path)) {
+            return {
+                didSucceed: false,
+                failures: {
+                    [RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)]: {
+                        type: WorkspaceLoaderFailureType.ABSOLUTE_FILEPATH,
+                        filepath: definition.schema.path
+                    }
+                }
+            };
+        }
+
+        const relativeFilepath = RelativeFilePath.of(definition.schema.path);
+        const absoluteFilepath = join(absolutePathToWorkspace, relativeFilepath);
         if (!(await doesPathExist(absoluteFilepath))) {
             return {
                 didSucceed: false,
                 failures: {
-                    [getFailureFilepath({ absolutePathToWorkspace, configuredFilepath: definition.schema.path })]: {
+                    [relativeFilepath]: {
                         type: WorkspaceLoaderFailureType.FILE_MISSING
                     }
                 }
