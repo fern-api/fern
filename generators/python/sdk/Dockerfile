@@ -10,9 +10,14 @@ COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm && \
     ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
+# Security update 2026-05-18: explicitly upgrade libkrb5-3 and curl to fix
+# CVE-2026-40355, CVE-2026-40356 (krb5 gss_accept_sec_context) and
+# CVE-2026-1965, CVE-2026-4873, CVE-2026-5545, CVE-2026-6253,
+# CVE-2026-6429 (curl)
 RUN apt-get update \
     && apt-get -y --no-install-recommends dist-upgrade \
     && apt-get install -y --no-install-recommends ca-certificates curl git \
+       libkrb5-3 libcurl4 \
     && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/*
 RUN node --version

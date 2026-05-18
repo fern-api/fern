@@ -1,0 +1,6 @@
+- summary: |
+    Update krb5 and curl packages in the TypeScript SDK generator container to fix
+    CVE-2026-40355, CVE-2026-40356 (krb5 gss_accept_sec_context) and
+    CVE-2026-1965, CVE-2026-4873, CVE-2026-5545, CVE-2026-6253,
+    CVE-2026-6429 (curl).
+  type: chore

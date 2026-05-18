@@ -35,9 +35,14 @@ FROM node:24.15-trixie-slim
 # (bookworm publishes the upstream fixes only via the next-stable
 # branch), so the base-image choice — not just dist-upgrade — is what
 # clears the AWS Inspector findings.
+# Security update 2026-05-18: explicitly upgrade libkrb5-3 and curl to fix
+# CVE-2026-40355, CVE-2026-40356 (krb5 gss_accept_sec_context) and
+# CVE-2026-1965, CVE-2026-4873, CVE-2026-5545, CVE-2026-6253,
+# CVE-2026-6429 (curl)
 RUN apt-get update \
     && apt-get -y --no-install-recommends dist-upgrade \
     && apt-get install -y --no-install-recommends ca-certificates git zip \
+       libkrb5-3 curl libcurl4 \
     && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/*
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
