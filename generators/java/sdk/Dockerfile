@@ -75,7 +75,10 @@ RUN rm -f /opt/gradle/lib/plugins/bcpg-jdk18on-*.jar \
 # (CVE-2026-4046, iconv() assertion failure when converting IBM1390/IBM1399
 # inputs; fixed in glibc 2.34-231.amzn2023.0.4)
 # Security update 2026-05-18: add libgcrypt (CVE-2026-41989, heap-based
-# buffer overflow in gcry_pk_decrypt; fixed in 1.10.2-1.amzn2023.0.3)
+# buffer overflow in gcry_pk_decrypt; fixed in 1.10.2-1.amzn2023.0.3),
+# krb5-libs (CVE-2026-40356 integer underflow OOB read, CVE-2026-40355
+# NULL pointer dereference in gss_accept_sec_context; fixed in
+# 1.21.3-7.amzn2023.0.1)
 RUN dnf --releasever=latest update -y \
     openssl-fips-provider-latest \
     openssl-libs \
@@ -99,7 +102,8 @@ RUN dnf --releasever=latest update -y \
     glibc \
     glibc-common \
     glibc-minimal-langpack \
-    libgcrypt && \
+    libgcrypt \
+    krb5-libs && \
     dnf remove -y git-lfs wget || true && \
     dnf clean all && \
     rm -rf /var/cache/dnf
