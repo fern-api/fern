@@ -113,24 +113,32 @@ describe("replayRun — squash-merge regression", { tags: ["slow"] }, () => {
         gitExec(["update-ref", "refs/heads/main", squashedSha], repoPath);
         gitExec(["reset", "--hard", "main"], repoPath);
 
-        // Sanity check: G_old is unreachable from HEAD now.
-        const gOldReachable = (() => {
-            try {
-                execFileSync("git", ["merge-base", "--is-ancestor", gOldSha, "HEAD"], {
-                    cwd: repoPath,
-                    stdio: "pipe"
-                });
-                return true;
-            } catch {
-                return false;
-            }
-        })();
-        expect(gOldReachable).toBe(false);
+        // Setup invariants — bail out loudly if the simulated squash-merge didn't
+        // actually orphan G_old, otherwise the behavioral tests below pass for
+        // the wrong reason. Plain throws rather than expect() so they don't trip
+        // biome's noMisplacedAssertion rule (expect() must live inside it()).
+        let gOldReachable: boolean;
+        try {
+            execFileSync("git", ["merge-base", "--is-ancestor", gOldSha, "HEAD"], {
+                cwd: repoPath,
+                stdio: "pipe"
+            });
+            gOldReachable = true;
+        } catch {
+            gOldReachable = false;
+        }
+        if (gOldReachable) {
+            throw new Error(
+                `Test setup invariant violated: G_old (${gOldSha}) is still reachable from HEAD after the simulated squash-merge — the orphaning step didn't take effect, so any downstream assertion would pass for the wrong reason.`
+            );
+        }
 
-        // The lockfile in the working tree still records G_old as current_generation
-        // — that's the orphaned reference the deleted gauntlet used to "fix".
         const lockOnDisk = lockManager.read();
-        expect(lockOnDisk.current_generation).toBe(gOldSha);
+        if (lockOnDisk.current_generation !== gOldSha) {
+            throw new Error(
+                `Test setup invariant violated: lockfile's current_generation should still point at the now-orphaned G_old (${gOldSha}), but it points at ${lockOnDisk.current_generation}. The squash-merge simulation rewrote the lockfile, which means the scenario being tested isn't what we think it is.`
+            );
+        }
     });
 
     afterAll(async () => {
