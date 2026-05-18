@@ -6,6 +6,5 @@ export class JsonError extends Error {
         super(errors.map(stringifyValidationError).join("; "));
         Object.setPrototypeOf(this, JsonError.prototype);
         this.name = "JsonError";
-        this.name = "JsonError";
     }
 }
