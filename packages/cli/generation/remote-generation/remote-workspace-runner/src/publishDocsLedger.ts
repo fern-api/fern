@@ -451,7 +451,7 @@ async function publishTranslationsViaLedger({
     const localeEntries = Object.entries(translationPages);
     context.logger.info(`[ledger] Publishing translations for ${localeEntries.length} locale(s)...`);
 
-    await Promise.all(
+    const localeResults = await Promise.all(
         localeEntries.map(async ([locale, localePages]) => {
             try {
                 const translatedDefinition = await buildTranslatedDocsDefinition({
@@ -507,7 +507,16 @@ async function publishTranslationsViaLedger({
                 );
             } catch (error) {
                 context.logger.warn(`[ledger] Failed to publish translations for locale "${locale}": ${String(error)}`);
+                return locale;
             }
+            return undefined;
         })
     );
+
+    const failedLocales = localeResults.filter((l): l is string => l != null);
+    if (failedLocales.length > 0) {
+        context.logger.warn(
+            `[ledger] ${failedLocales.length}/${localeEntries.length} locale(s) failed: ${failedLocales.join(", ")}`
+        );
+    }
 }

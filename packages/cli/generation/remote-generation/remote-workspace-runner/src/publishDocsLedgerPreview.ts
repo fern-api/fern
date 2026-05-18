@@ -133,11 +133,10 @@ export async function publishDocsViaLedgerPreview({
         const translationNavigationOverlays = resolver.getTranslationNavigationOverlays();
 
         if (translationPages != null && Object.keys(translationPages).length > 0) {
-            const client2 = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers });
             const localeEntries = Object.entries(translationPages);
             context.logger.info(`[ledger-preview] Publishing translations for ${localeEntries.length} locale(s)...`);
 
-            await Promise.all(
+            const localeResults = await Promise.all(
                 localeEntries.map(async ([locale, localePages]) => {
                     try {
                         const translatedDefinition = await buildTranslatedDocsDefinition({
@@ -162,7 +161,7 @@ export async function publishDocsViaLedgerPreview({
                             locale
                         });
 
-                        const localeRegister = await client2.register(translationInput);
+                        const localeRegister = await client.register(translationInput);
                         await uploadMissingBlobs(localeRegister.missingContent, translationBlobs, context, filePaths);
 
                         const finishInput: FinishTranslationInput = {
@@ -181,7 +180,7 @@ export async function publishDocsViaLedgerPreview({
                             git: translationInput.git
                         };
 
-                        const result = await client2.finishTranslation(finishInput);
+                        const result = await client.finishTranslation(finishInput);
                         context.logger.info(
                             `[ledger-preview] Locale "${locale}": ${Object.keys(localePages).length} page(s), ${result.segmentsAdded} segment(s) added`
                         );
@@ -189,9 +188,18 @@ export async function publishDocsViaLedgerPreview({
                         context.logger.warn(
                             `[ledger-preview] Failed to publish translations for locale "${locale}": ${String(error)}`
                         );
+                        return locale;
                     }
+                    return undefined;
                 })
             );
+
+            const failedLocales = localeResults.filter((l): l is string => l != null);
+            if (failedLocales.length > 0) {
+                context.logger.warn(
+                    `[ledger-preview] ${failedLocales.length}/${localeEntries.length} locale(s) failed: ${failedLocales.join(", ")}`
+                );
+            }
         }
     }
 
