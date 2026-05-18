@@ -42,7 +42,8 @@ const CHECK_RULE_CONFIG_TO_RULE_NAME = {
     noCircularRedirects: NoCircularRedirectsRule.name,
     validDocsEndpoints: ValidDocsEndpoints.name,
     missingRedirects: MissingRedirectsRule.name,
-    validChangelogSlug: ValidChangelogSlugRule.name
+    validChangelogSlug: ValidChangelogSlugRule.name,
+    mdValidate: "md-validate"
 } satisfies Record<keyof docsYml.RawSchemas.CheckRulesConfig, string>;
 
 function buildSeverityOverrides(

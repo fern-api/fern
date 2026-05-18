@@ -19,4 +19,6 @@ export interface CheckRulesConfig {
     missingRedirects?: FernDocsConfig.CheckRuleSeverity;
     /** Severity for validating that each changelog's effective URL slug is one of the allowlisted values served as an RSS/Atom/JSON feed. Default is error. */
     validChangelogSlug?: FernDocsConfig.CheckRuleSeverity;
+    /** Severity for MDX/Markdown parse validation. Default is warn in cli-v1, error in cli-v2. */
+    mdValidate?: FernDocsConfig.CheckRuleSeverity;
 }

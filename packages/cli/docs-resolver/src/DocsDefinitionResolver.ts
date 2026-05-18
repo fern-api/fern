@@ -482,12 +482,8 @@ export class DocsDefinitionResolver {
                 for (const filepath of filepaths) {
                     filesToUploadSet.add(filepath);
                 }
-            } catch (error) {
-                this.taskContext.logger.error(`Failed to parse ${relativePath}: ${extractErrorMessage(error)}`);
-                throw new CliError({
-                    message: `Failed to parse markdown file ${relativePath}: ${extractErrorMessage(error)}`,
-                    code: CliError.Code.ParseError
-                });
+            } catch {
+                this.taskContext.logger.warn(`Skipping image parsing for ${relativePath} (MDX parse error)`);
             }
         }
         const imageParseTime = performance.now() - imageParseStart;
@@ -576,11 +572,8 @@ export class DocsDefinitionResolver {
                     },
                     this.taskContext
                 );
-            } catch (error) {
-                throw new CliError({
-                    message: `Failed to replace image paths in markdown file ${relativePath}: ${extractErrorMessage(error)}`,
-                    code: CliError.Code.ParseError
-                });
+            } catch {
+                this.taskContext.logger.warn(`Skipping image replacement for ${relativePath} (MDX parse error)`);
             }
         }
         const replaceTime = performance.now() - replaceStart;
