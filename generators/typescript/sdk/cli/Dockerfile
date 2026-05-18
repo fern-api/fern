@@ -35,15 +35,28 @@ FROM node:24.15-trixie-slim
 # (bookworm publishes the upstream fixes only via the next-stable
 # branch), so the base-image choice — not just dist-upgrade — is what
 # clears the AWS Inspector findings.
-# Security update 2026-05-18: explicitly upgrade libkrb5-3 and curl to fix
-# CVE-2026-40355, CVE-2026-40356 (krb5 gss_accept_sec_context) and
+# Security update 2026-05-18: trixie's krb5 (1.21.3-5) and curl (8.14.1)
+# are still vulnerable to CVE-2026-40355, CVE-2026-40356 (krb5
+# gss_accept_sec_context integer underflow & NULL deref) and
 # CVE-2026-1965, CVE-2026-4873, CVE-2026-5545, CVE-2026-6253,
-# CVE-2026-6429 (curl)
+# CVE-2026-6429 (curl). Pin sid as a low-priority source and pull the
+# fixed krb5 1.22.1+ and curl 8.20.0+ from there.
 RUN apt-get update \
     && apt-get -y --no-install-recommends dist-upgrade \
     && apt-get install -y --no-install-recommends ca-certificates git zip \
-       libkrb5-3 curl libcurl4 \
     && apt-get -y autoremove \
+    && rm -rf /var/lib/apt/lists/*
+RUN echo "Types: deb" > /etc/apt/sources.list.d/sid.sources \
+    && echo "URIs: http://deb.debian.org/debian" >> /etc/apt/sources.list.d/sid.sources \
+    && echo "Suites: sid" >> /etc/apt/sources.list.d/sid.sources \
+    && echo "Components: main" >> /etc/apt/sources.list.d/sid.sources \
+    && echo "Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg" >> /etc/apt/sources.list.d/sid.sources \
+    && echo 'Package: *\nPin: release n=sid\nPin-Priority: 100' > /etc/apt/preferences.d/sid-low \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends -t sid \
+       libkrb5-3 libkrb5support0 libk5crypto3 libgssapi-krb5-2 \
+       curl libcurl4t64 \
+    && rm -f /etc/apt/sources.list.d/sid.sources /etc/apt/preferences.d/sid-low \
     && rm -rf /var/lib/apt/lists/*
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
