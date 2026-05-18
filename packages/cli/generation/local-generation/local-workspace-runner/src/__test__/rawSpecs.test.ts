@@ -774,10 +774,11 @@ describe("filterSpec", () => {
                 }
             }
         };
-        const result = filterSpec(spec) as Record<string, Record<string, Record<string, unknown>>>;
-        expect(result.paths["/users"]?.get).toBeDefined();
-        expect(result.paths["/users"]?.post).toBeUndefined();
-        expect(result.paths["/admin"]).toBeUndefined();
+        const result = filterSpec(spec);
+        const paths = result.paths as Record<string, Record<string, unknown>> | undefined;
+        expect(paths?.["/users"]?.get).toBeDefined();
+        expect(paths?.["/users"]?.post).toBeUndefined();
+        expect(paths?.["/admin"]).toBeUndefined();
     });
 
     it("filters by audiences when SelectAudiences is provided", () => {
@@ -798,14 +799,12 @@ describe("filterSpec", () => {
                 }
             }
         };
-        const result = filterSpec(spec, { type: "select", audiences: ["external"] }) as Record<
-            string,
-            Record<string, Record<string, unknown>>
-        >;
-        expect(result.paths["/public"]).toBeDefined();
-        expect(result.paths["/internal"]).toBeUndefined();
-        expect(result.paths["/both"]).toBeDefined();
-        expect(result.paths["/untagged"]).toBeDefined();
+        const result = filterSpec(spec, { type: "select", audiences: ["external"] });
+        const paths = result.paths as Record<string, Record<string, unknown>> | undefined;
+        expect(paths?.["/public"]).toBeDefined();
+        expect(paths?.["/internal"]).toBeUndefined();
+        expect(paths?.["/both"]).toBeDefined();
+        expect(paths?.["/untagged"]).toBeDefined();
     });
 
     it("combines x-fern-ignore and audience filtering", () => {
@@ -820,14 +819,12 @@ describe("filterSpec", () => {
                 }
             }
         };
-        const result = filterSpec(spec, { type: "select", audiences: ["external"] }) as Record<
-            string,
-            Record<string, Record<string, unknown>>
-        >;
-        expect(result.paths["/endpoint"]?.get).toBeDefined();
-        expect(result.paths["/endpoint"]?.post).toBeUndefined();
-        expect(result.paths["/endpoint"]?.put).toBeUndefined();
-        expect(result.paths["/endpoint"]?.delete).toBeDefined();
+        const result = filterSpec(spec, { type: "select", audiences: ["external"] });
+        const paths = result.paths as Record<string, Record<string, unknown>> | undefined;
+        expect(paths?.["/endpoint"]?.get).toBeDefined();
+        expect(paths?.["/endpoint"]?.post).toBeUndefined();
+        expect(paths?.["/endpoint"]?.put).toBeUndefined();
+        expect(paths?.["/endpoint"]?.delete).toBeDefined();
     });
 
     it("preserves non-operation path-level properties", () => {
@@ -841,10 +838,11 @@ describe("filterSpec", () => {
                 }
             }
         };
-        const result = filterSpec(spec) as Record<string, Record<string, Record<string, unknown>>>;
-        expect(result.paths["/users"]?.parameters).toBeDefined();
-        expect(result.paths["/users"]?.get).toBeDefined();
-        expect(result.paths["/users"]?.post).toBeUndefined();
+        const result = filterSpec(spec);
+        const paths = result.paths as Record<string, Record<string, unknown>> | undefined;
+        expect(paths?.["/users"]?.parameters).toBeDefined();
+        expect(paths?.["/users"]?.get).toBeDefined();
+        expect(paths?.["/users"]?.post).toBeUndefined();
     });
 
     it("returns spec unchanged when paths is missing", () => {
@@ -868,16 +866,12 @@ describe("filterSpec", () => {
                 }
             }
         };
-        const result = filterSpec(spec, { type: "select", audiences: ["external"] }) as Record<
-            string,
-            Record<string, Record<string, unknown>>
-        >;
-        expect(result.paths["/endpoint"]?.get).toBeDefined();
+        const result = filterSpec(spec, { type: "select", audiences: ["external"] });
+        const paths = result.paths as Record<string, Record<string, unknown>> | undefined;
+        expect(paths?.["/endpoint"]?.get).toBeDefined();
 
-        const result2 = filterSpec(spec, { type: "select", audiences: ["internal"] }) as Record<
-            string,
-            Record<string, Record<string, unknown>>
-        >;
-        expect(result2.paths["/endpoint"]).toBeUndefined();
+        const result2 = filterSpec(spec, { type: "select", audiences: ["internal"] });
+        const paths2 = result2.paths as Record<string, Record<string, unknown>> | undefined;
+        expect(paths2?.["/endpoint"]).toBeUndefined();
     });
 });
