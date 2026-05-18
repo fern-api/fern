@@ -1,5 +1,6 @@
 - summary: |
     Mount pre-processed raw API specs into generator Docker containers.
     Specs are bundled, overrides merged, overlays applied, and output as
-    compact JSON before passing to generators.
+    compact JSON before passing to generators. Add hidden `resolve-specs`
+    command to output pre-processed specs to a directory.
   type: feat
