@@ -770,12 +770,12 @@ export async function publishDocs({
         }
 
         // ── Legacy publish path ──────────────────────────────────────
-        if (deployMode !== "ledger") {
+        if (deployMode !== "ledger" && docsRegistrationId != null) {
             context.logger.info("Publishing docs to FDR...");
             const publishStart = performance.now();
             try {
                 await fdr.docs.v2.write.finishDocsRegister({
-                    docsRegistrationId: docsRegistrationId!,
+                    docsRegistrationId,
                     docsDefinition,
                     excludeApis,
                     ...(isBasepathAware && !preview && { basepathAware: true })
