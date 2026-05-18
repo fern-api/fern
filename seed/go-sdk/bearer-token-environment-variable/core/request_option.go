@@ -29,6 +29,7 @@ type RequestOptions struct {
 	DisableStreamReconnection  bool
 	DisableRetries             bool
 	APIKey                     string
+	APIKeyFunc                 func() (string, error)
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
