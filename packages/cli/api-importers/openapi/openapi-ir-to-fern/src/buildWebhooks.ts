@@ -105,7 +105,8 @@ export function buildWebhooks(context: OpenApiIrConverterContext): void {
                     webhookDefinition.response = {
                         docs: textResponse.description ?? undefined,
                         type: "text",
-                        "status-code": textResponse.statusCode
+                        "status-code": textResponse.statusCode,
+                        "content-type": textResponse.contentType ?? undefined
                     };
                 },
                 streamingJson: (jsonResponse) => {
