@@ -236,10 +236,8 @@ function printViolationsGroupedByRule({
             context.logger.info("");
         }
 
-        // Print violations for this rule
-        // When grouped, skip the severity label since the group header provides context
         for (const violation of ruleViolations.sort(sortViolations)) {
-            printViolation({ violation, context, indent, skipSeverityLabel: showRuleHeaders });
+            printViolation({ violation, context, indent });
         }
     }
 }
@@ -286,45 +284,34 @@ function toTitleCase(str: string): string {
 function printViolation({
     violation,
     context,
-    indent,
-    skipSeverityLabel = false
+    indent
 }: {
     violation: ValidationViolation;
     context: TaskContext;
     indent: string;
-    skipSeverityLabel?: boolean;
 }): void {
     const severityLabel = getSeverityLabel(violation.severity);
     const path = formatViolationPath(violation);
 
     // md-validate violations use a rich format matching `fern docs md check`
     if (violation.name === "md-validate" && path !== "") {
-        context.logger.info(`${indent}${chalk.blue(path)}`);
+        context.logger.info(`${indent}${severityLabel}`);
+        context.logger.info(`${indent}    ${chalk.blue(path)}`);
         const messageLines = violation.message.split("\n");
         for (const line of messageLines) {
-            context.logger.info(`${indent}    ${line}`);
+            context.logger.info(`${indent}        ${line}`);
         }
         context.logger.info("");
         return;
     }
 
-    // If path is empty, print issue on same line as severity label (or without label if grouped)
+    // If path is empty, print issue on same line as severity label
     if (path === "") {
-        if (skipSeverityLabel) {
-            context.logger.info(`${indent}${violation.message}`);
-        } else {
-            context.logger.info(`${indent}${severityLabel} ${violation.message}`);
-        }
+        context.logger.info(`${indent}${severityLabel} ${violation.message}`);
     } else {
-        // When violations are grouped, skip the severity label and adjust formatting
-        if (skipSeverityLabel) {
-            context.logger.info(`${indent}${chalk.blue(path)}`);
-            context.logger.info(`${indent}    ${violation.message}`);
-        } else {
-            context.logger.info(`${indent}${severityLabel}`);
-            context.logger.info(`${indent}    path: ${chalk.blue(path)}`);
-            context.logger.info(`${indent}    issue: ${violation.message}`);
-        }
+        context.logger.info(`${indent}${severityLabel}`);
+        context.logger.info(`${indent}    path: ${chalk.blue(path)}`);
+        context.logger.info(`${indent}    issue: ${violation.message}`);
     }
     // Add blank line after each violation for better readability
     context.logger.info("");
