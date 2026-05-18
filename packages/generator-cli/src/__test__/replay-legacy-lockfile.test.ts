@@ -98,16 +98,45 @@ describe("replayRun — legacy lockfile compatibility", { tags: ["slow"] }, () =
         expect(result.report).not.toBeNull();
     });
 
-    it("preserves the legacy base_branch_head on the existing record after the engine rewrites the lockfile", () => {
+    it("preserves the legacy base_branch_head on the original record after the engine rewrites the lockfile", () => {
         // The engine round-trips unknown fields on existing generation records
         // rather than stripping them. New records it adds itself do not get a
         // base_branch_head (the field is no longer written by 0.16+), but the
         // legacy record from the customer's pre-upgrade lockfile is preserved
         // verbatim. This is the strong backward-compat guarantee: customer
         // lockfiles do not lose data on the first regen post-upgrade.
+        //
+        // The assertions below pin three things in order, so a future engine
+        // change that short-circuits the lockfile rewrite, drops unknown fields,
+        // or accidentally copies `base_branch_head` onto new records will all
+        // fail noisily rather than slipping through as a vacuous pass:
+        //   1. The lockfile WAS rewritten (>= 2 generation records) — proves the
+        //      "no-patches" terminal path didn't bypass the serializer.
+        //   2. The ORIGINAL record (index 0) still carries base_branch_head.
+        //   3. The NEW record (index 1) does NOT carry base_branch_head.
         const lockfilePath = join(repoPath, ".fern", "replay.lock");
         expect(existsSync(lockfilePath)).toBe(true);
         const lockOnDisk = readFileSync(lockfilePath, "utf-8");
+
+        // The lockfile is YAML, written by the engine's own serializer. Rather
+        // than pull in a YAML parser, pin the three invariants with counting
+        // assertions over the raw bytes — robust to formatter changes, still
+        // tight enough to fail noisily on regression.
+
+        // (1) Lockfile WAS rewritten: at least two generation records exist.
+        // The original record was committed by beforeAll(); a second record
+        // gets written only if the engine actually went through the serializer.
+        const generationRecordCount = (lockOnDisk.match(/^\s*-\s+commit_sha:/gm) ?? []).length;
+        expect(generationRecordCount).toBeGreaterThanOrEqual(2);
+
+        // (2) The legacy field is preserved on the original record.
         expect(lockOnDisk).toContain("base_branch_head");
+
+        // (3) The new record does NOT carry base_branch_head — the engine writes
+        // it onto exactly the record(s) that already had it, not new ones.
+        // Counting occurrences pins this: if the engine ever started writing the
+        // field on new records, the count would be >= 2.
+        const baseBranchHeadCount = (lockOnDisk.match(/base_branch_head/g) ?? []).length;
+        expect(baseBranchHeadCount).toBe(1);
     });
 });
