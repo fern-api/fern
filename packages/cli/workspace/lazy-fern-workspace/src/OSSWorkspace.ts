@@ -796,7 +796,11 @@ async function loadGraphQlExamples(
             )
             .map((entry) => {
                 const validExamples = entry.examples.filter((ex: unknown) => {
-                    if (typeof ex !== "object" || ex == null || typeof (ex as Record<string, unknown>).query !== "string") {
+                    if (
+                        typeof ex !== "object" ||
+                        ex == null ||
+                        typeof (ex as Record<string, unknown>).query !== "string"
+                    ) {
                         context.logger.warn(
                             `Skipping malformed example for operation '${entry.operation}' in ${absoluteFilepathToExamples}: missing or invalid 'query' field`
                         );
