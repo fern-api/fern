@@ -15,7 +15,6 @@ import {
     AbsoluteFilePath,
     dirname,
     doesPathExist,
-    join,
     listFiles,
     RelativeFilePath,
     relative,
@@ -491,7 +490,8 @@ export async function runAppPreviewServer({
     bundlePath,
     backendPort,
     forceDownload,
-    cacheDir
+    cacheDir,
+    logsDir
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
@@ -502,6 +502,7 @@ export async function runAppPreviewServer({
     backendPort: number;
     forceDownload?: boolean;
     cacheDir?: AbsoluteFilePath;
+    logsDir?: AbsoluteFilePath;
 }): Promise<void> {
     if (forceDownload) {
         const appPreviewFolder = getPathToPreviewFolder({ app: true, cacheDir });
@@ -577,7 +578,7 @@ export async function runAppPreviewServer({
             debug: (msg) => context.logger.debug(msg),
             info: (msg) => context.logger.info(msg)
         },
-        cacheDir != null ? join(cacheDir, RelativeFilePath.of("logs")) : undefined
+        logsDir
     );
     const debugLogPath = debugLogger.getLogFilePath();
     if (debugLogPath) {
@@ -1227,11 +1228,6 @@ export async function runAppPreviewServer({
     // Attach the watcher event handler
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
-        // Ignore changes to log directories (contains debug logs)
-        if (targetPath.includes("/logs/") || targetPath.includes("\\logs\\")) {
-            return;
-        }
-
         context.logger.info(chalk.dim(`[${event}] ${targetPath}`));
 
         if (isReloading) {

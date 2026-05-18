@@ -55,7 +55,8 @@ export class LegacyDevServer {
             bundlePath,
             backendPort,
             forceDownload,
-            cacheDir: this.context.cache.docsPreview.absoluteFilePath
+            cacheDir: this.context.cache.docsPreview.absoluteFilePath,
+            logsDir: this.context.cache.logs.absoluteFilePath
         });
     }
 
