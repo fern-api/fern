@@ -4,6 +4,7 @@ import { CliError, createMockTaskContext } from "@fern-api/task-context";
 import { mkdir, mkdtemp, rm, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
+import { vi } from "vitest";
 
 import { runMintlifyMigration } from "../runMintlifyMigration.js";
 

@@ -27,25 +27,8 @@ function isRecord(value: unknown): value is Record<string, unknown> {
     return typeof value === "object" && value != null && !Array.isArray(value);
 }
 
-function isStringArray(value: unknown): value is string[] {
-    return Array.isArray(value) && value.every((item) => typeof item === "string");
-}
-
-function isMintJsonSchema(value: unknown): value is MintJsonSchema {
-    if (!isRecord(value)) {
-        return false;
-    }
-
-    return (
-        typeof value.name === "string" &&
-        typeof value.favicon === "string" &&
-        isRecord(value.colors) &&
-        typeof value.colors.primary === "string" &&
-        Array.isArray(value.navigation) &&
-        (value.openapi == null || typeof value.openapi === "string" || isStringArray(value.openapi)) &&
-        (value.tabs == null || Array.isArray(value.tabs)) &&
-        (value.anchors == null || Array.isArray(value.anchors))
-    );
+function hasNavigationArray(value: unknown): value is MintJsonSchema {
+    return isRecord(value) && Array.isArray(value.navigation);
 }
 
 export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
@@ -189,18 +172,10 @@ export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
             });
         }
 
-        if (!isRecord(mintJson) || !Array.isArray(mintJson.navigation)) {
+        if (!hasNavigationArray(mintJson)) {
             return this.context.failAndThrow("Expected navigation in mint.json to be an array.", undefined, {
                 code: CliError.Code.ConfigError
             });
-        }
-
-        if (!isMintJsonSchema(mintJson)) {
-            return this.context.failAndThrow(
-                "Expected mint.json to include name, favicon, colors.primary, and valid navigation settings.",
-                undefined,
-                { code: CliError.Code.ConfigError }
-            );
         }
 
         return mintJson;
