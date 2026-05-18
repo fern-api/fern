@@ -6,7 +6,9 @@ namespace SeedBearerTokenEnvironmentVariable;
 /// </summary>
 public abstract class Auth
 {
-    private Auth() { }
+    private protected Auth() { }
+
+    internal virtual (string Name, string Value)? BuildAuthHeader() => null;
 
     /// <summary>
     /// Authenticate using a pre-fetched bearer token sent in the Authorization header.
@@ -23,5 +25,8 @@ public abstract class Auth
             set;
 #endif
         }
+
+        internal override (string Name, string Value)? BuildAuthHeader() =>
+            ("Authorization", $"Bearer {Token}");
     }
 }

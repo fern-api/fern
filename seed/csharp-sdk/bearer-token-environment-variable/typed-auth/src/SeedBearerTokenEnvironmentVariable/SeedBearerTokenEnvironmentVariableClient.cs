@@ -38,16 +38,9 @@ public partial class SeedBearerTokenEnvironmentVariableClient
         {
             clientOptionsWithAuth.Headers[header.Key] = header.Value;
         }
-        switch (auth)
+        if (auth.BuildAuthHeader() is { } authHeader)
         {
-            case Auth.Bearer bearer:
-                clientOptionsWithAuth.Headers["Authorization"] = $"Bearer {bearer.Token}";
-                break;
-            default:
-                throw new ArgumentException(
-                    $"Unsupported Auth type: {auth.GetType().Name}",
-                    nameof(auth)
-                );
+            clientOptionsWithAuth.Headers[authHeader.Name] = authHeader.Value;
         }
         _client = new RawClient(clientOptionsWithAuth);
         Service = new ServiceClient(_client);

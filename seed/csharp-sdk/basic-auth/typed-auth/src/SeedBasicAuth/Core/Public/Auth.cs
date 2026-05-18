@@ -6,7 +6,9 @@ namespace SeedBasicAuth;
 /// </summary>
 public abstract class Auth
 {
-    private Auth() { }
+    private protected Auth() { }
+
+    internal virtual (string Name, string Value)? BuildAuthHeader() => null;
 
     /// <summary>
     /// Authenticate using HTTP basic auth (username + password).
@@ -34,5 +36,14 @@ public abstract class Auth
             set;
 #endif
         }
+
+        internal override (string Name, string Value)? BuildAuthHeader() =>
+            (
+                "Authorization",
+                "Basic "
+                    + global::System.Convert.ToBase64String(
+                        global::System.Text.Encoding.UTF8.GetBytes(Username + ":" + Password)
+                    )
+            );
     }
 }

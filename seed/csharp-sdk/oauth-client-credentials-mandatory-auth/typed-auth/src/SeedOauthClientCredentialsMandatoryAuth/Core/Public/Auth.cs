@@ -6,7 +6,9 @@ namespace SeedOauthClientCredentialsMandatoryAuth;
 /// </summary>
 public abstract class Auth
 {
-    private Auth() { }
+    private protected Auth() { }
+
+    internal virtual (string Name, string Value)? BuildAuthHeader() => null;
 
     /// <summary>
     /// Authenticate using OAuth client credentials.
@@ -52,5 +54,8 @@ public abstract class Auth
             set;
 #endif
         }
+
+        internal override (string Name, string Value)? BuildAuthHeader() =>
+            ("Authorization", $"Bearer {Token}");
     }
 }

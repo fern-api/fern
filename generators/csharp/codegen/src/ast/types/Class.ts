@@ -529,12 +529,14 @@ function accessSorter(access: Access | undefined): number {
             return 0;
         case Access.Private:
             return 1;
-        case Access.Protected:
+        case Access.PrivateProtected:
             return 2;
-        case Access.Internal:
+        case Access.Protected:
             return 3;
-        case Access.Public:
+        case Access.Internal:
             return 4;
+        case Access.Public:
+            return 5;
     }
 }
 

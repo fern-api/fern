@@ -31,26 +31,20 @@ public partial class SeedOauthClientCredentialsMandatoryAuthClient
             }
         }
         var clientOptionsWithAuth = clientOptions.Clone();
-        switch (auth)
+        if (auth.BuildAuthHeader() is { } authHeader)
         {
-            case Auth.Bearer bearer:
-                clientOptionsWithAuth.Headers["Authorization"] = $"Bearer {bearer.Token}";
-                break;
-            case Auth.ClientCredentials creds:
-                var tokenProvider = new OAuthTokenProvider(
-                    creds.ClientId,
-                    creds.ClientSecret,
-                    new AuthClient(new RawClient(clientOptions))
-                );
-                clientOptionsWithAuth.Headers["Authorization"] =
-                    new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
-                        await tokenProvider.GetAccessTokenAsync().ConfigureAwait(false)
-                    );
-                break;
-            default:
-                throw new ArgumentException(
-                    $"Unsupported Auth type: {auth.GetType().Name}",
-                    nameof(auth)
+            clientOptionsWithAuth.Headers[authHeader.Name] = authHeader.Value;
+        }
+        else if (auth is Auth.ClientCredentials creds)
+        {
+            var tokenProvider = new OAuthTokenProvider(
+                creds.ClientId,
+                creds.ClientSecret,
+                new AuthClient(new RawClient(clientOptions))
+            );
+            clientOptionsWithAuth.Headers["Authorization"] =
+                new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
+                    await tokenProvider.GetAccessTokenAsync().ConfigureAwait(false)
                 );
         }
         _client = new RawClient(clientOptionsWithAuth);

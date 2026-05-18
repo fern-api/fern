@@ -26,17 +26,9 @@ public partial class SeedBasicAuthClient : ISeedBasicAuthClient
             }
         }
         var clientOptionsWithAuth = clientOptions.Clone();
-        switch (auth)
+        if (auth.BuildAuthHeader() is { } authHeader)
         {
-            case Auth.Basic basic:
-                clientOptionsWithAuth.Headers["Authorization"] =
-                    $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{basic.Username}:{basic.Password}"))}";
-                break;
-            default:
-                throw new ArgumentException(
-                    $"Unsupported Auth type: {auth.GetType().Name}",
-                    nameof(auth)
-                );
+            clientOptionsWithAuth.Headers[authHeader.Name] = authHeader.Value;
         }
         _client = new RawClient(clientOptionsWithAuth);
         BasicAuth = new BasicAuthClient(_client);

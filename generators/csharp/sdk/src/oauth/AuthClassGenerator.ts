@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { assertNeverNoThrow } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
@@ -55,13 +56,23 @@ export class AuthClassGenerator extends FileGenerator<CSharpFile, SdkGeneratorCo
                 "Authentication option for the SDK.\nPass one of the sealed `Auth` subclasses (`Auth.ClientCredentials`, `Auth.Bearer`, `Auth.ApiKey`, `Auth.Basic`) appropriate to the API's auth scheme."
         });
 
-        // Private constructor: nested types have full access to the enclosing
-        // type's private members in C#, so this still allows the sealed
-        // subclasses below to call `: base()` while preventing external
-        // subclassing of `Auth`.
+        // `private protected` constructor: closed hierarchy — the nested
+        // sealed subclasses below can call `: base()` because they live
+        // inside the same enclosing type, but no external type can derive
+        // from `Auth`. Matches Niels' canonical "sealed nested classes" pattern.
         class_.addConstructor({
-            access: ast.Access.Private
+            access: ast.Access.PrivateProtected
         });
+
+        // `internal virtual` so each subclass can return its own header tuple
+        // (Bearer/Basic/ApiKey) and `ClientCredentials` keeps the default
+        // `null`, signaling that the root client should fall back to the
+        // OAuth token-provider dance.
+        class_.addRawBodyContent(
+            this.csharp.codeblock((writer) => {
+                writer.writeLine("internal virtual (string Name, string Value)? BuildAuthHeader() => null;");
+            })
+        );
 
         const oauthScheme = this.findOAuthScheme();
         let emittedBearer = false;
@@ -219,6 +230,14 @@ export class AuthClassGenerator extends FileGenerator<CSharpFile, SdkGeneratorCo
             summary: "The bearer token sent in the Authorization header."
         });
 
+        subClass.addRawBodyContent(
+            this.csharp.codeblock((writer) => {
+                writer.writeLine(
+                    'internal override (string Name, string Value)? BuildAuthHeader() => ("Authorization", $"Bearer {Token}");'
+                );
+            })
+        );
+
         parent.addNestedClass(subClass);
     }
 
@@ -241,6 +260,21 @@ export class AuthClassGenerator extends FileGenerator<CSharpFile, SdkGeneratorCo
             useRequired: true,
             summary: "The API key value sent in the auth header."
         });
+
+        // The header name and prefix come from the IR; mirror the wire format
+        // the root client used to inline. With multiple `header` schemes on an
+        // API we just use the first one (matches the prior switch behavior).
+        const headerScheme = this.findApiKeyHeaderScheme();
+        const headerName = headerScheme != null ? getWireValue(headerScheme.name) : "X-API-Key";
+        const prefix = headerScheme?.prefix;
+        const valueExpr = prefix != null ? `$"${prefix} {Value}"` : "Value";
+        subClass.addRawBodyContent(
+            this.csharp.codeblock((writer) => {
+                writer.writeLine(
+                    `internal override (string Name, string Value)? BuildAuthHeader() => ("${headerName}", ${valueExpr});`
+                );
+            })
+        );
 
         parent.addNestedClass(subClass);
     }
@@ -274,6 +308,26 @@ export class AuthClassGenerator extends FileGenerator<CSharpFile, SdkGeneratorCo
             summary: "The password used for HTTP basic auth."
         });
 
+        // String concatenation (not nested `$"..."`) keeps the override valid in
+        // C# 7.3 / net462 / netstandard2.0, which don't allow nested interpolated
+        // strings.
+        subClass.addRawBodyContent(
+            this.csharp.codeblock((writer) => {
+                writer.writeLine(
+                    'internal override (string Name, string Value)? BuildAuthHeader() => ("Authorization", "Basic " + global::System.Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes(Username + ":" + Password)));'
+                );
+            })
+        );
+
         parent.addNestedClass(subClass);
+    }
+
+    private findApiKeyHeaderScheme(): FernIr.HeaderAuthScheme | undefined {
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "header") {
+                return scheme;
+            }
+        }
+        return undefined;
     }
 }
