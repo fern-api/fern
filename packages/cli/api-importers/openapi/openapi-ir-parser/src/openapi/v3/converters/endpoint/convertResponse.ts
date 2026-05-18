@@ -347,7 +347,7 @@ function convertResolvedResponse({
 
         if (mimeType.isText() && !mediaType.includes("event-stream")) {
             const textPlainSchema = mediaObject.schema;
-            const contentType = mediaType !== "text/plain" ? mediaType : undefined;
+            const contentType = !mimeType.isPlainText() ? mediaType : undefined;
             if (textPlainSchema == null) {
                 return ResponseWithExample.text({
                     description: resolvedResponse.description,

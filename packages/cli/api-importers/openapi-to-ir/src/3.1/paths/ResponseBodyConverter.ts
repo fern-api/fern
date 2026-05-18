@@ -402,7 +402,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                     generateOptionalProperties: true,
                     exampleGenerationStrategy: "response"
                 }),
-                contentType: contentType !== "text/plain" ? contentType : undefined
+                contentType: MediaType.parse(contentType)?.isPlainText() ? undefined : contentType
             }),
             streamResponseBody: undefined,
             inlinedTypes: {},
