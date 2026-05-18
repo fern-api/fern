@@ -46,6 +46,15 @@ describe("copySpecFile", () => {
         expect(content).toBe('syntax = "proto3";');
     });
 
+    it("throws a clear error when source file does not exist", async () => {
+        const outputDir = path.join(tmpDir, "output");
+        await mkdir(outputDir, { recursive: true });
+
+        await expect(copySpecFile(path.join(tmpDir, "nonexistent.yaml"), outputDir, tmpDir)).rejects.toThrow(
+            "Spec file not found at mount path"
+        );
+    });
+
     it("falls back to basename when path does not start with specsDir", async () => {
         const sourceFile = path.join(tmpDir, "random", "spec.yaml");
         await mkdir(path.join(tmpDir, "random"), { recursive: true });

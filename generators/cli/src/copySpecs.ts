@@ -68,8 +68,10 @@ export async function copySpecFile(containerPath: string, specsOutputDir: string
     try {
         const stat = await lstat(containerPath);
         isDir = stat.isDirectory();
-    } catch {
-        // If stat fails, assume it's a file
+    } catch (err: unknown) {
+        if (err != null && typeof err === "object" && "code" in err && err.code === "ENOENT") {
+            throw new Error(`Spec file not found at mount path: ${containerPath}`);
+        }
     }
     if (isDir) {
         await cp(containerPath, destPath, { recursive: true });

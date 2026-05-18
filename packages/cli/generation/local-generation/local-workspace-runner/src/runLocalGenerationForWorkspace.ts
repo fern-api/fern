@@ -392,7 +392,10 @@ export async function runLocalGenerationForWorkspace({
                     absolutePathToSpecRepo: dirname(workspace.absoluteFilePath),
                     skipFernignore,
                     disableTelemetry,
-                    rawApiSpecs: workspace instanceof OSSWorkspace ? workspace.allSpecs : undefined
+                    rawApiSpecs:
+                        workspace instanceof OSSWorkspace && generatorInvocation.name === "fernapi/fern-cli"
+                            ? workspace.allSpecs
+                            : undefined
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
