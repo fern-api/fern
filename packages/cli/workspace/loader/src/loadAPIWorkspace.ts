@@ -124,7 +124,11 @@ export async function loadSingleNamespaceAPIWorkspace({
                 definition.schema.examples != null
                     ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.examples))
                     : undefined;
-            if (absoluteFilepathToExamples != null && !(await doesPathExist(absoluteFilepathToExamples))) {
+            if (
+                definition.schema.examples != null &&
+                absoluteFilepathToExamples != null &&
+                !(await doesPathExist(absoluteFilepathToExamples))
+            ) {
                 return {
                     didSucceed: false,
                     failures: {
