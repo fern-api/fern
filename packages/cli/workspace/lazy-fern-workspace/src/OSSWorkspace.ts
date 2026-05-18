@@ -221,9 +221,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
         for (const spec of graphqlSpecs) {
             try {
+                const examples = await loadGraphQlExamples(spec.absoluteFilepathToExamples);
                 const converter = new GraphQLConverter({
                     context,
-                    filePath: spec.absoluteFilepath
+                    filePath: spec.absoluteFilepath,
+                    examples
                 });
                 const result = await converter.convert();
 
@@ -747,6 +749,20 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             return acc;
         }, result);
     }
+}
+
+async function loadGraphQlExamples(
+    absoluteFilepathToExamples: AbsoluteFilePath | undefined
+): Promise<import("@fern-api/graphql-to-fdr").GraphQlOperationExamplesInput[] | undefined> {
+    if (absoluteFilepathToExamples == null) {
+        return undefined;
+    }
+    const contents = (await readFile(absoluteFilepathToExamples)).toString();
+    const parsed = yaml.load(contents);
+    if (!Array.isArray(parsed)) {
+        return undefined;
+    }
+    return parsed as import("@fern-api/graphql-to-fdr").GraphQlOperationExamplesInput[];
 }
 
 async function getAuthFromOverrideFiles(specs: Spec[]): Promise<RawSchemas.WithAuthSchema | undefined> {

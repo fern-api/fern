@@ -20,7 +20,7 @@ import {
 } from "@fern-api/docs-markdown-utils";
 import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, listFiles, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
-import { GraphQLConverter } from "@fern-api/graphql-to-fdr";
+import { GraphQLConverter, type GraphQlOperationExamplesInput } from "@fern-api/graphql-to-fdr";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { getSnakeCaseUnsafe } from "@fern-api/ir-utils";
@@ -1718,10 +1718,12 @@ export class DocsDefinitionResolver {
         const graphqlSpecs = workspace.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
         for (const spec of graphqlSpecs) {
             try {
+                const examples = await this.loadGraphQlExamples(spec.absoluteFilepathToExamples);
                 const converter = new GraphQLConverter({
                     context: this.taskContext,
                     filePath: spec.absoluteFilepath,
-                    namespace: spec.namespace
+                    namespace: spec.namespace,
+                    examples
                 });
                 const graphqlResult = await converter.convert();
 
@@ -1742,6 +1744,28 @@ export class DocsDefinitionResolver {
         }
 
         return { operations: graphqlOperations, types: graphqlTypes, namespacesByOperationId };
+    }
+
+    private async loadGraphQlExamples(
+        absoluteFilepathToExamples: AbsoluteFilePath | undefined
+    ): Promise<GraphQlOperationExamplesInput[] | undefined> {
+        if (absoluteFilepathToExamples == null) {
+            return undefined;
+        }
+        try {
+            const contents = (await readFile(absoluteFilepathToExamples)).toString();
+            const parsed = jsYaml.load(contents);
+            if (!Array.isArray(parsed)) {
+                return undefined;
+            }
+            return parsed as GraphQlOperationExamplesInput[];
+        } catch (error) {
+            this.taskContext.logger.error(
+                `Failed to load GraphQL examples from ${absoluteFilepathToExamples}:`,
+                String(error)
+            );
+            return undefined;
+        }
     }
 
     /**
