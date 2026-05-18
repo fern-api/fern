@@ -1778,13 +1778,35 @@ export class DocsDefinitionResolver {
                     continue;
                 }
             }
-            const validEntries = parsed.filter(
-                (entry): entry is GraphQlOperationExamplesInput =>
-                    typeof entry === "object" &&
-                    entry != null &&
-                    typeof entry.operation === "string" &&
-                    Array.isArray(entry.examples)
-            );
+            const validEntries = parsed
+                .filter(
+                    (entry): entry is { operation: string; operationType?: string; examples: unknown[] } =>
+                        typeof entry === "object" &&
+                        entry != null &&
+                        typeof entry.operation === "string" &&
+                        Array.isArray(entry.examples)
+                )
+                .map((entry) => {
+                    const validExamples = entry.examples.filter((ex: unknown) => {
+                        if (typeof ex !== "object" || ex == null || typeof (ex as Record<string, unknown>).query !== "string") {
+                            this.taskContext.logger.warn(
+                                `Skipping malformed example for operation '${entry.operation}' in ${absoluteFilepathToExamples}: missing or invalid 'query' field`
+                            );
+                            return false;
+                        }
+                        return true;
+                    });
+                    if (entry.operationType != null) {
+                        const lower = entry.operationType.toLowerCase();
+                        if (lower !== "query" && lower !== "mutation" && lower !== "subscription") {
+                            this.taskContext.logger.warn(
+                                `Invalid operationType '${entry.operationType}' for operation '${entry.operation}' in ${absoluteFilepathToExamples}: must be 'query', 'mutation', or 'subscription'`
+                            );
+                        }
+                    }
+                    return { ...entry, examples: validExamples } as GraphQlOperationExamplesInput;
+                })
+                .filter((entry) => entry.examples.length > 0);
             return validEntries.length > 0 ? validEntries : undefined;
         } catch (error) {
             this.taskContext.logger.error(

@@ -35,7 +35,6 @@ export interface GraphQlExampleInput {
 export interface GraphQlOperationExamplesInput {
     operation: string;
     operationType?: "query" | "mutation" | "subscription";
-    namespace?: string;
     examples: GraphQlExampleInput[];
 }
 
@@ -72,9 +71,10 @@ export class GraphQLConverter {
                     response: ex.response ?? undefined
                 }));
                 if (entry.operationType != null) {
-                    const key = `${entry.operationType}:${entry.operation}`;
+                    const key = `${entry.operationType.toLowerCase()}:${entry.operation}`;
                     this.examplesByOperation.set(key, mapped);
-                } else {
+                }
+                if (!this.examplesByOperation.has(entry.operation)) {
                     this.examplesByOperation.set(entry.operation, mapped);
                 }
             }
