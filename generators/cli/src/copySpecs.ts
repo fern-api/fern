@@ -5,7 +5,6 @@ export interface RawSpecsManifestEntry {
     type: "openapi" | "asyncapi" | "protobuf" | "openrpc" | "graphql";
     specPath: string;
     overridePaths?: string[];
-    overlayPath?: string;
 }
 
 export interface RawSpecsManifest {
@@ -47,10 +46,6 @@ export async function copyRawSpecs(outputDir: string, rawSpecsDir?: string): Pro
             for (const overridePath of entry.overridePaths) {
                 copiedEntry.overridePaths.push(await copySpecFile(overridePath, specsOutputDir, specsDir));
             }
-        }
-
-        if (entry.overlayPath != null) {
-            copiedEntry.overlayPath = await copySpecFile(entry.overlayPath, specsOutputDir, specsDir);
         }
 
         copiedManifest.specs.push(copiedEntry);

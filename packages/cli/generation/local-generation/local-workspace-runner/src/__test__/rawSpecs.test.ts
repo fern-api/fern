@@ -1,9 +1,9 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { access, mkdir, readFile, rm, writeFile } from "fs/promises";
+import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { collectExternalRefPaths, collectRawSpecs, discoverExternalRefs, findCommonDirectory } from "../rawSpecs.js";
+import { collectRawSpecs } from "../rawSpecs.js";
 
 // biome-ignore lint/suspicious/noExplicitAny: mock context for testing
 function createMockContext(): any {
@@ -35,68 +35,7 @@ function createMockContext(): any {
     };
 }
 
-describe("findCommonDirectory", () => {
-    it("returns / for empty array", () => {
-        expect(findCommonDirectory([])).toBe("/");
-    });
-
-    it("returns parent directory for single file path", () => {
-        expect(findCommonDirectory(["/home/user/project/spec.yaml"])).toBe("/home/user/project");
-    });
-
-    it("finds common directory for files in the same directory", () => {
-        expect(findCommonDirectory(["/home/user/project/openapi.yaml", "/home/user/project/overrides.yaml"])).toBe(
-            "/home/user/project"
-        );
-    });
-
-    it("finds common directory for files in different subdirectories", () => {
-        expect(
-            findCommonDirectory(["/home/user/project/api/openapi.yaml", "/home/user/project/overrides/override.yaml"])
-        ).toBe("/home/user/project");
-    });
-
-    it("handles deeply nested specs with shared prefix", () => {
-        expect(
-            findCommonDirectory([
-                "/workspace/fern/apis/v1/spec.yaml",
-                "/workspace/fern/apis/v2/spec.yaml",
-                "/workspace/fern/apis/overrides.yaml"
-            ])
-        ).toBe("/workspace/fern/apis");
-    });
-
-    it("handles protobuf directory paths correctly when marked as directories", () => {
-        const protobufRoot = "/home/user/project/proto";
-        const directoryPaths = new Set([protobufRoot]);
-        expect(findCommonDirectory([protobufRoot, "/home/user/project/overrides/override.yaml"], directoryPaths)).toBe(
-            "/home/user/project"
-        );
-    });
-
-    it("without directoryPaths, treats protobuf root as a file (dirname goes up one extra level)", () => {
-        const protobufRoot = "/home/user/project/proto";
-        // Without marking as directory, dirname("/home/user/project/proto") = "/home/user/project"
-        // dirname("/home/user/project/overrides/override.yaml") = "/home/user/project/overrides"
-        // Common = "/home/user/project"
-        expect(findCommonDirectory([protobufRoot, "/home/user/project/overrides/override.yaml"])).toBe(
-            "/home/user/project"
-        );
-    });
-
-    it("protobuf root as directory keeps common root tighter", () => {
-        // protobufRoot = "/a/b/proto" (directory) → used as-is: "/a/b/proto"
-        // spec file = "/a/b/proto/overrides.yaml" → dirname: "/a/b/proto"
-        // Common = "/a/b/proto"
-        const protobufRoot = "/a/b/proto";
-        const directoryPaths = new Set([protobufRoot]);
-        expect(findCommonDirectory([protobufRoot, "/a/b/proto/overrides.yaml"], directoryPaths)).toBe("/a/b/proto");
-    });
-
-    it("handles root-level paths", () => {
-        expect(findCommonDirectory(["/a.yaml", "/b.yaml"])).toBe("/");
-    });
-});
+const MINIMAL_OPENAPI = ['openapi: "3.0.0"', "info:", "  title: Test", '  version: "1.0"', "paths: {}", ""].join("\n");
 
 describe("collectRawSpecs", () => {
     let tmpDir: tmp.DirectoryResult;
@@ -104,8 +43,6 @@ describe("collectRawSpecs", () => {
 
     beforeEach(async () => {
         tmpDir = await tmp.dir({ unsafeCleanup: true });
-
-        // Create a source directory structure to simulate workspace files
         sourceDir = path.join(tmpDir.path, "source");
         await mkdir(path.join(sourceDir, "api"), { recursive: true });
         await mkdir(path.join(sourceDir, "overrides"), { recursive: true });
@@ -117,9 +54,23 @@ describe("collectRawSpecs", () => {
         await rm(tmpDir.path, { recursive: true, force: true });
     });
 
-    it("collects a single OpenAPI spec", async () => {
+    it("returns empty manifest for empty specs array", async () => {
+        const outputDir = path.join(tmpDir.path, "output");
+        await mkdir(outputDir, { recursive: true });
+
+        const manifest = await collectRawSpecs({
+            specs: [],
+            hostOutputDir: AbsoluteFilePath.of(outputDir),
+            containerBaseDir: "/fern/raw-specs",
+            context: createMockContext()
+        });
+
+        expect(manifest.specs).toHaveLength(0);
+    });
+
+    it("resolves a single OpenAPI spec to compact JSON", async () => {
         const specFile = path.join(sourceDir, "api", "openapi.yaml");
-        await writeFile(specFile, "openapi: 3.0.0\ninfo:\n  title: Test\n  version: '1.0'");
+        await writeFile(specFile, MINIMAL_OPENAPI);
 
         const outputDir = path.join(tmpDir.path, "output");
         await mkdir(outputDir, { recursive: true });
@@ -145,25 +96,23 @@ describe("collectRawSpecs", () => {
 
         expect(manifest.specs).toHaveLength(1);
         expect(manifest.specs[0]?.type).toBe("openapi");
-        expect(manifest.specs[0]?.specPath).toContain("openapi.yaml");
+        expect(manifest.specs[0]?.specPath).toBe("/fern/raw-specs/spec-0.json");
         expect(manifest.specs[0]?.overridePaths).toBeUndefined();
-        expect(manifest.specs[0]?.overlayPath).toBeUndefined();
 
-        // When there's only one file, the common root is its parent dir,
-        // so the relative path is just the filename.
-        const copiedSpecPath = path.join(outputDir, "openapi.yaml");
-        const content = await readFile(copiedSpecPath, "utf-8");
-        expect(content).toContain("openapi: 3.0.0");
+        const content = await readFile(path.join(outputDir, "spec-0.json"), "utf-8");
+        const parsed = JSON.parse(content);
+        expect(parsed.openapi).toBe("3.0.0");
+        expect(parsed.info.title).toBe("Test");
+        // Compact JSON has no newlines
+        expect(content).not.toContain("\n");
     });
 
-    it("collects OpenAPI spec with overrides and overlays", async () => {
+    it("merges overrides into the resolved OpenAPI spec", async () => {
         const specFile = path.join(sourceDir, "api", "openapi.yaml");
         const overrideFile = path.join(sourceDir, "overrides", "override.yaml");
-        const overlayFile = path.join(sourceDir, "overlays", "overlay.yaml");
 
-        await writeFile(specFile, "openapi: 3.0.0");
-        await writeFile(overrideFile, "x-fern-override: true");
-        await writeFile(overlayFile, "overlay: true");
+        await writeFile(specFile, MINIMAL_OPENAPI);
+        await writeFile(overrideFile, 'info:\n  description: "Added by override"\n');
 
         const outputDir = path.join(tmpDir.path, "output");
         await mkdir(outputDir, { recursive: true });
@@ -174,50 +123,6 @@ describe("collectRawSpecs", () => {
                     type: "openapi",
                     absoluteFilepath: AbsoluteFilePath.of(specFile),
                     absoluteFilepathToOverrides: AbsoluteFilePath.of(overrideFile),
-                    absoluteFilepathToOverlays: AbsoluteFilePath.of(overlayFile),
-                    source: {
-                        type: "openapi",
-                        file: AbsoluteFilePath.of(specFile),
-                        relativePathToDependency: undefined
-                    }
-                }
-            ],
-            hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
-            context: createMockContext()
-        });
-
-        expect(manifest.specs).toHaveLength(1);
-        const entry = manifest.specs[0];
-        expect(entry?.type).toBe("openapi");
-        expect(entry?.specPath).toContain("openapi.yaml");
-        expect(entry?.overridePaths).toHaveLength(1);
-        expect(entry?.overridePaths?.[0]).toContain("override.yaml");
-        expect(entry?.overlayPath).toContain("overlay.yaml");
-
-        // Verify all files were copied
-        const copiedOverride = path.join(outputDir, "overrides", "override.yaml");
-        expect(await readFile(copiedOverride, "utf-8")).toBe("x-fern-override: true");
-    });
-
-    it("collects OpenAPI spec with array overrides", async () => {
-        const specFile = path.join(sourceDir, "api", "openapi.yaml");
-        const override1 = path.join(sourceDir, "overrides", "override1.yaml");
-        const override2 = path.join(sourceDir, "overrides", "override2.yaml");
-
-        await writeFile(specFile, "openapi: 3.0.0");
-        await writeFile(override1, "override: 1");
-        await writeFile(override2, "override: 2");
-
-        const outputDir = path.join(tmpDir.path, "output");
-        await mkdir(outputDir, { recursive: true });
-
-        const manifest = await collectRawSpecs({
-            specs: [
-                {
-                    type: "openapi",
-                    absoluteFilepath: AbsoluteFilePath.of(specFile),
-                    absoluteFilepathToOverrides: [AbsoluteFilePath.of(override1), AbsoluteFilePath.of(override2)],
                     absoluteFilepathToOverlays: undefined,
                     source: {
                         type: "openapi",
@@ -231,48 +136,45 @@ describe("collectRawSpecs", () => {
             context: createMockContext()
         });
 
-        expect(manifest.specs[0]?.overridePaths).toHaveLength(2);
-    });
-
-    it("collects protobuf spec (directory)", async () => {
-        const protoRoot = path.join(sourceDir, "proto");
-        await writeFile(path.join(protoRoot, "service", "api.proto"), 'syntax = "proto3";');
-
-        const outputDir = path.join(tmpDir.path, "output");
-        await mkdir(outputDir, { recursive: true });
-
-        const manifest = await collectRawSpecs({
-            specs: [
-                {
-                    type: "protobuf",
-                    absoluteFilepathToProtobufRoot: AbsoluteFilePath.of(protoRoot),
-                    absoluteFilepathToProtobufTarget: undefined,
-                    absoluteFilepathToOverrides: undefined,
-                    relativeFilepathToProtobufRoot: RelativeFilePath.of("proto"),
-                    generateLocally: false,
-                    fromOpenAPI: false,
-                    dependencies: []
-                }
-            ],
-            hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
-            context: createMockContext()
-        });
-
         expect(manifest.specs).toHaveLength(1);
-        expect(manifest.specs[0]?.type).toBe("protobuf");
+        expect(manifest.specs[0]?.overridePaths).toBeUndefined();
 
-        // When proto root is the only path and it's a directory, the common root
-        // is the proto directory itself. The contents are copied directly into
-        // the output root (relative path is "").
-        const copiedProtoFile = path.join(outputDir, "service", "api.proto");
-        const content = await readFile(copiedProtoFile, "utf-8");
-        expect(content).toBe('syntax = "proto3";');
+        const content = await readFile(path.join(outputDir, "spec-0.json"), "utf-8");
+        const parsed = JSON.parse(content);
+        expect(parsed.info.description).toBe("Added by override");
+        expect(parsed.info.title).toBe("Test");
     });
 
-    it("collects GraphQL spec", async () => {
-        const graphqlFile = path.join(sourceDir, "api", "schema.graphql");
-        await writeFile(graphqlFile, "type Query { hello: String }");
+    it("bundles external refs into a single self-contained JSON", async () => {
+        const specFile = path.join(sourceDir, "api", "openapi.yaml");
+        const sharedDir = path.join(sourceDir, "shared");
+        const sharedModel = path.join(sharedDir, "models.yaml");
+
+        await mkdir(sharedDir, { recursive: true });
+        await writeFile(
+            specFile,
+            [
+                'openapi: "3.0.0"',
+                "info:",
+                "  title: Test",
+                '  version: "1.0"',
+                "paths:",
+                "  /users:",
+                "    get:",
+                "      operationId: getUsers",
+                "      responses:",
+                '        "200":',
+                "          description: OK",
+                "          content:",
+                "            application/json:",
+                "              schema:",
+                '                $ref: "../shared/models.yaml#/User"'
+            ].join("\n")
+        );
+        await writeFile(
+            sharedModel,
+            ["User:", "  type: object", "  properties:", "    name:", "      type: string"].join("\n")
+        );
 
         const outputDir = path.join(tmpDir.path, "output");
         await mkdir(outputDir, { recursive: true });
@@ -280,36 +182,15 @@ describe("collectRawSpecs", () => {
         const manifest = await collectRawSpecs({
             specs: [
                 {
-                    type: "graphql",
-                    absoluteFilepath: AbsoluteFilePath.of(graphqlFile),
-                    absoluteFilepathToOverrides: undefined
-                }
-            ],
-            hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
-            context: createMockContext()
-        });
-
-        expect(manifest.specs).toHaveLength(1);
-        expect(manifest.specs[0]?.type).toBe("graphql");
-    });
-
-    it("collects OpenRPC spec with overrides", async () => {
-        const specFile = path.join(sourceDir, "api", "openrpc.json");
-        const overrideFile = path.join(sourceDir, "overrides", "override.json");
-
-        await writeFile(specFile, '{"openrpc": "1.0.0"}');
-        await writeFile(overrideFile, '{"override": true}');
-
-        const outputDir = path.join(tmpDir.path, "output");
-        await mkdir(outputDir, { recursive: true });
-
-        const manifest = await collectRawSpecs({
-            specs: [
-                {
-                    type: "openrpc",
+                    type: "openapi",
                     absoluteFilepath: AbsoluteFilePath.of(specFile),
-                    absoluteFilepathToOverrides: AbsoluteFilePath.of(overrideFile)
+                    absoluteFilepathToOverrides: undefined,
+                    absoluteFilepathToOverlays: undefined,
+                    source: {
+                        type: "openapi",
+                        file: AbsoluteFilePath.of(specFile),
+                        relativePathToDependency: undefined
+                    }
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
@@ -318,18 +199,19 @@ describe("collectRawSpecs", () => {
         });
 
         expect(manifest.specs).toHaveLength(1);
-        expect(manifest.specs[0]?.type).toBe("openrpc");
-        expect(manifest.specs[0]?.overridePaths).toHaveLength(1);
+
+        const content = await readFile(path.join(outputDir, "spec-0.json"), "utf-8");
+        const parsed = JSON.parse(content);
+        // External $ref should be resolved/inlined
+        expect(JSON.stringify(parsed)).toContain("name");
     });
 
-    it("preserves relative directory structure across multiple specs", async () => {
-        const spec1 = path.join(sourceDir, "api", "v1", "spec.yaml");
-        const spec2 = path.join(sourceDir, "api", "v2", "spec.yaml");
+    it("handles multiple OpenAPI specs with indexed filenames", async () => {
+        const spec1 = path.join(sourceDir, "api", "v1.yaml");
+        const spec2 = path.join(sourceDir, "api", "v2.yaml");
 
-        await mkdir(path.join(sourceDir, "api", "v1"), { recursive: true });
-        await mkdir(path.join(sourceDir, "api", "v2"), { recursive: true });
-        await writeFile(spec1, "v1");
-        await writeFile(spec2, "v2");
+        await writeFile(spec1, 'openapi: "3.0.0"\ninfo:\n  title: V1\n  version: "1.0"\npaths: {}');
+        await writeFile(spec2, 'openapi: "3.0.0"\ninfo:\n  title: V2\n  version: "2.0"\npaths: {}');
 
         const outputDir = path.join(tmpDir.path, "output");
         await mkdir(outputDir, { recursive: true });
@@ -357,25 +239,18 @@ describe("collectRawSpecs", () => {
         });
 
         expect(manifest.specs).toHaveLength(2);
+        expect(manifest.specs[0]?.specPath).toBe("/fern/raw-specs/spec-0.json");
+        expect(manifest.specs[1]?.specPath).toBe("/fern/raw-specs/spec-1.json");
 
-        // Verify both files exist and directory structure is preserved
-        const content1 = await readFile(path.join(outputDir, "v1", "spec.yaml"), "utf-8");
-        const content2 = await readFile(path.join(outputDir, "v2", "spec.yaml"), "utf-8");
-        expect(content1).toBe("v1");
-        expect(content2).toBe("v2");
+        const content0 = JSON.parse(await readFile(path.join(outputDir, "spec-0.json"), "utf-8"));
+        const content1 = JSON.parse(await readFile(path.join(outputDir, "spec-1.json"), "utf-8"));
+        expect(content0.info.title).toBe("V1");
+        expect(content1.info.title).toBe("V2");
     });
 
-    it("discovers and copies $ref targets outside the spec directory", async () => {
-        const specFile = path.join(sourceDir, "api", "openapi.yaml");
-        const sharedDir = path.join(sourceDir, "shared");
-        const sharedModel = path.join(sharedDir, "models.yaml");
-
-        await mkdir(sharedDir, { recursive: true });
-        await writeFile(
-            specFile,
-            'openapi: "3.0.0"\ncomponents:\n  schemas:\n    User:\n      $ref: "../shared/models.yaml#/User"'
-        );
-        await writeFile(sharedModel, "User:\n  type: object\n  properties:\n    name:\n      type: string");
+    it("copies protobuf directory as-is", async () => {
+        const protoRoot = path.join(sourceDir, "proto");
+        await writeFile(path.join(protoRoot, "service", "api.proto"), 'syntax = "proto3";');
 
         const outputDir = path.join(tmpDir.path, "output");
         await mkdir(outputDir, { recursive: true });
@@ -383,15 +258,14 @@ describe("collectRawSpecs", () => {
         const manifest = await collectRawSpecs({
             specs: [
                 {
-                    type: "openapi",
-                    absoluteFilepath: AbsoluteFilePath.of(specFile),
+                    type: "protobuf",
+                    absoluteFilepathToProtobufRoot: AbsoluteFilePath.of(protoRoot),
+                    absoluteFilepathToProtobufTarget: undefined,
                     absoluteFilepathToOverrides: undefined,
-                    absoluteFilepathToOverlays: undefined,
-                    source: {
-                        type: "openapi",
-                        file: AbsoluteFilePath.of(specFile),
-                        relativePathToDependency: undefined
-                    }
+                    relativeFilepathToProtobufRoot: RelativeFilePath.of("proto"),
+                    generateLocally: false,
+                    fromOpenAPI: false,
+                    dependencies: []
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
@@ -400,120 +274,34 @@ describe("collectRawSpecs", () => {
         });
 
         expect(manifest.specs).toHaveLength(1);
+        expect(manifest.specs[0]?.type).toBe("protobuf");
+        expect(manifest.specs[0]?.specPath).toBe("/fern/raw-specs/proto-0");
 
-        // The $ref to ../shared/models.yaml is discovered and copied.
-        // Common root widens to sourceDir/ to include both api/ and shared/.
-        const copiedSpec = path.join(outputDir, "api", "openapi.yaml");
-        const copiedModel = path.join(outputDir, "shared", "models.yaml");
-        expect(await readFile(copiedSpec, "utf-8")).toContain('openapi: "3.0.0"');
-        expect(await readFile(copiedModel, "utf-8")).toContain("User:");
+        const copiedProto = await readFile(path.join(outputDir, "proto-0", "service", "api.proto"), "utf-8");
+        expect(copiedProto).toBe('syntax = "proto3";');
     });
 
-    it("does not copy unreferenced sibling files", async () => {
-        const specFile = path.join(sourceDir, "api", "openapi.yaml");
-        const unrelatedFile = path.join(sourceDir, "api", "unrelated.txt");
-
-        await writeFile(specFile, "openapi: 3.0.0");
-        await writeFile(unrelatedFile, "should not be copied");
-
-        const outputDir = path.join(tmpDir.path, "output");
-        await mkdir(outputDir, { recursive: true });
-
-        await collectRawSpecs({
-            specs: [
-                {
-                    type: "openapi",
-                    absoluteFilepath: AbsoluteFilePath.of(specFile),
-                    absoluteFilepathToOverrides: undefined,
-                    absoluteFilepathToOverlays: undefined,
-                    source: {
-                        type: "openapi",
-                        file: AbsoluteFilePath.of(specFile),
-                        relativePathToDependency: undefined
-                    }
-                }
-            ],
-            hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
-            context: createMockContext()
-        });
-
-        // Only the spec file is copied, not the sibling unrelated.txt
-        await expect(access(path.join(outputDir, "openapi.yaml"))).resolves.toBeUndefined();
-        await expect(access(path.join(outputDir, "unrelated.txt"))).rejects.toThrow();
-    });
-
-    it("follows transitive $ref chains", async () => {
-        const specFile = path.join(sourceDir, "api", "openapi.yaml");
-        const sharedDir = path.join(sourceDir, "shared");
-        const modelsFile = path.join(sharedDir, "models.yaml");
-        const commonDir = path.join(sourceDir, "common");
-        const typesFile = path.join(commonDir, "types.yaml");
-
-        await mkdir(sharedDir, { recursive: true });
-        await mkdir(commonDir, { recursive: true });
-
-        await writeFile(
-            specFile,
-            'openapi: "3.0.0"\ncomponents:\n  schemas:\n    User:\n      $ref: "../shared/models.yaml"'
-        );
-        await writeFile(
-            modelsFile,
-            'User:\n  type: object\n  properties:\n    address:\n      $ref: "../common/types.yaml#/Address"'
-        );
-        await writeFile(typesFile, "Address:\n  type: object");
-
-        const outputDir = path.join(tmpDir.path, "output");
-        await mkdir(outputDir, { recursive: true });
-
-        await collectRawSpecs({
-            specs: [
-                {
-                    type: "openapi",
-                    absoluteFilepath: AbsoluteFilePath.of(specFile),
-                    absoluteFilepathToOverrides: undefined,
-                    absoluteFilepathToOverlays: undefined,
-                    source: {
-                        type: "openapi",
-                        file: AbsoluteFilePath.of(specFile),
-                        relativePathToDependency: undefined
-                    }
-                }
-            ],
-            hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
-            context: createMockContext()
-        });
-
-        // All three files should be copied via transitive discovery:
-        // spec → shared/models.yaml → common/types.yaml
-        await expect(access(path.join(outputDir, "api", "openapi.yaml"))).resolves.toBeUndefined();
-        await expect(access(path.join(outputDir, "shared", "models.yaml"))).resolves.toBeUndefined();
-        await expect(access(path.join(outputDir, "common", "types.yaml"))).resolves.toBeUndefined();
-    });
-
-    it("copies declared files even when overrides widen common root", async () => {
-        const specFile = path.join(sourceDir, "api", "openapi.yaml");
+    it("copies protobuf directory with override files", async () => {
+        const protoRoot = path.join(sourceDir, "proto");
         const overrideFile = path.join(sourceDir, "overrides", "override.yaml");
 
-        await writeFile(specFile, "openapi: 3.0.0");
+        await writeFile(path.join(protoRoot, "service", "api.proto"), 'syntax = "proto3";');
         await writeFile(overrideFile, "override: true");
 
         const outputDir = path.join(tmpDir.path, "output");
         await mkdir(outputDir, { recursive: true });
 
-        await collectRawSpecs({
+        const manifest = await collectRawSpecs({
             specs: [
                 {
-                    type: "openapi",
-                    absoluteFilepath: AbsoluteFilePath.of(specFile),
+                    type: "protobuf",
+                    absoluteFilepathToProtobufRoot: AbsoluteFilePath.of(protoRoot),
+                    absoluteFilepathToProtobufTarget: undefined,
                     absoluteFilepathToOverrides: AbsoluteFilePath.of(overrideFile),
-                    absoluteFilepathToOverlays: undefined,
-                    source: {
-                        type: "openapi",
-                        file: AbsoluteFilePath.of(specFile),
-                        relativePathToDependency: undefined
-                    }
+                    relativeFilepathToProtobufRoot: RelativeFilePath.of("proto"),
+                    generateLocally: false,
+                    fromOpenAPI: false,
+                    dependencies: []
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
@@ -521,14 +309,13 @@ describe("collectRawSpecs", () => {
             context: createMockContext()
         });
 
-        // Both declared files are copied
-        await expect(access(path.join(outputDir, "api", "openapi.yaml"))).resolves.toBeUndefined();
-        await expect(access(path.join(outputDir, "overrides", "override.yaml"))).resolves.toBeUndefined();
+        expect(manifest.specs[0]?.overridePaths).toHaveLength(1);
+        expect(manifest.specs[0]?.overridePaths?.[0]).toContain("proto-0-override-0");
     });
 
-    it("uses container paths in manifest entries", async () => {
-        const specFile = path.join(sourceDir, "api", "openapi.yaml");
-        await writeFile(specFile, "openapi: 3.0.0");
+    it("copies GraphQL spec as-is", async () => {
+        const graphqlFile = path.join(sourceDir, "api", "schema.graphql");
+        await writeFile(graphqlFile, "type Query { hello: String }");
 
         const outputDir = path.join(tmpDir.path, "output");
         await mkdir(outputDir, { recursive: true });
@@ -536,15 +323,9 @@ describe("collectRawSpecs", () => {
         const manifest = await collectRawSpecs({
             specs: [
                 {
-                    type: "openapi",
-                    absoluteFilepath: AbsoluteFilePath.of(specFile),
-                    absoluteFilepathToOverrides: undefined,
-                    absoluteFilepathToOverlays: undefined,
-                    source: {
-                        type: "openapi",
-                        file: AbsoluteFilePath.of(specFile),
-                        relativePathToDependency: undefined
-                    }
+                    type: "graphql",
+                    absoluteFilepath: AbsoluteFilePath.of(graphqlFile),
+                    absoluteFilepathToOverrides: undefined
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
@@ -552,30 +333,55 @@ describe("collectRawSpecs", () => {
             context: createMockContext()
         });
 
-        // Container paths should start with the containerBaseDir
-        expect(manifest.specs[0]?.specPath).toMatch(/^\/fern\/raw-specs\//);
+        expect(manifest.specs).toHaveLength(1);
+        expect(manifest.specs[0]?.type).toBe("graphql");
+        expect(manifest.specs[0]?.specPath).toBe("/fern/raw-specs/spec-0.graphql");
+
+        const content = await readFile(path.join(outputDir, "spec-0.graphql"), "utf-8");
+        expect(content).toBe("type Query { hello: String }");
     });
 
-    it("returns empty manifest for empty specs array", async () => {
+    it("resolves OpenRPC spec with overrides to compact JSON", async () => {
+        const specFile = path.join(sourceDir, "api", "openrpc.json");
+        const overrideFile = path.join(sourceDir, "overrides", "override.json");
+
+        await writeFile(specFile, JSON.stringify({ openrpc: "1.0.0", info: { title: "Test", version: "1.0" } }));
+        await writeFile(overrideFile, JSON.stringify({ info: { description: "Added by override" } }));
+
         const outputDir = path.join(tmpDir.path, "output");
         await mkdir(outputDir, { recursive: true });
 
         const manifest = await collectRawSpecs({
-            specs: [],
+            specs: [
+                {
+                    type: "openrpc",
+                    absoluteFilepath: AbsoluteFilePath.of(specFile),
+                    absoluteFilepathToOverrides: AbsoluteFilePath.of(overrideFile)
+                }
+            ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
             containerBaseDir: "/fern/raw-specs",
             context: createMockContext()
         });
 
-        expect(manifest.specs).toHaveLength(0);
+        expect(manifest.specs).toHaveLength(1);
+        expect(manifest.specs[0]?.type).toBe("openrpc");
+        expect(manifest.specs[0]?.overridePaths).toBeUndefined();
+
+        const content = await readFile(path.join(outputDir, "spec-0.json"), "utf-8");
+        const parsed = JSON.parse(content);
+        expect(parsed.openrpc).toBe("1.0.0");
+        expect(parsed.info.description).toBe("Added by override");
     });
 
-    it("handles mixed spec types (OpenAPI + protobuf)", async () => {
+    it("handles mixed spec types (OpenAPI + protobuf + GraphQL)", async () => {
         const specFile = path.join(sourceDir, "api", "openapi.yaml");
         const protoRoot = path.join(sourceDir, "proto");
+        const graphqlFile = path.join(sourceDir, "api", "schema.graphql");
 
-        await writeFile(specFile, "openapi: 3.0.0");
+        await writeFile(specFile, MINIMAL_OPENAPI);
         await writeFile(path.join(protoRoot, "service", "api.proto"), 'syntax = "proto3";');
+        await writeFile(graphqlFile, "type Query { hello: String }");
 
         const outputDir = path.join(tmpDir.path, "output");
         await mkdir(outputDir, { recursive: true });
@@ -602,6 +408,11 @@ describe("collectRawSpecs", () => {
                     generateLocally: false,
                     fromOpenAPI: false,
                     dependencies: []
+                },
+                {
+                    type: "graphql",
+                    absoluteFilepath: AbsoluteFilePath.of(graphqlFile),
+                    absoluteFilepathToOverrides: undefined
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
@@ -609,23 +420,18 @@ describe("collectRawSpecs", () => {
             context: createMockContext()
         });
 
-        expect(manifest.specs).toHaveLength(2);
+        expect(manifest.specs).toHaveLength(3);
         expect(manifest.specs[0]?.type).toBe("openapi");
+        expect(manifest.specs[0]?.specPath).toBe("/fern/raw-specs/spec-0.json");
         expect(manifest.specs[1]?.type).toBe("protobuf");
-
-        // Both declared files are copied: the OpenAPI spec and the protobuf directory
-        const copiedSpec = await readFile(path.join(outputDir, "api", "openapi.yaml"), "utf-8");
-        expect(copiedSpec).toBe("openapi: 3.0.0");
-        const copiedProto = await readFile(path.join(outputDir, "proto", "service", "api.proto"), "utf-8");
-        expect(copiedProto).toBe('syntax = "proto3";');
+        expect(manifest.specs[1]?.specPath).toBe("/fern/raw-specs/proto-1");
+        expect(manifest.specs[2]?.type).toBe("graphql");
+        expect(manifest.specs[2]?.specPath).toBe("/fern/raw-specs/spec-2.graphql");
     });
 
-    it("ignores HTTP URL $refs", async () => {
+    it("uses container paths in manifest entries", async () => {
         const specFile = path.join(sourceDir, "api", "openapi.yaml");
-        await writeFile(
-            specFile,
-            'openapi: "3.0.0"\ncomponents:\n  schemas:\n    Remote:\n      $ref: "https://example.com/schema.yaml"'
-        );
+        await writeFile(specFile, MINIMAL_OPENAPI);
 
         const outputDir = path.join(tmpDir.path, "output");
         await mkdir(outputDir, { recursive: true });
@@ -649,23 +455,56 @@ describe("collectRawSpecs", () => {
             context: createMockContext()
         });
 
-        // Only the spec file should be copied, no HTTP $ref targets
-        expect(manifest.specs).toHaveLength(1);
-        await expect(access(path.join(outputDir, "openapi.yaml"))).resolves.toBeUndefined();
+        expect(manifest.specs[0]?.specPath).toMatch(/^\/fern\/raw-specs\//);
     });
 
-    it("handles $ref targets that do not exist on disk", async () => {
+    it("merges array overrides sequentially into OpenAPI spec", async () => {
         const specFile = path.join(sourceDir, "api", "openapi.yaml");
-        await writeFile(
-            specFile,
-            'openapi: "3.0.0"\ncomponents:\n  schemas:\n    Missing:\n      $ref: "../missing/schema.yaml"'
-        );
+        const override1 = path.join(sourceDir, "overrides", "override1.yaml");
+        const override2 = path.join(sourceDir, "overrides", "override2.yaml");
+
+        await writeFile(specFile, MINIMAL_OPENAPI);
+        await writeFile(override1, 'info:\n  description: "From override 1"');
+        await writeFile(override2, 'info:\n  x-custom: "From override 2"');
 
         const outputDir = path.join(tmpDir.path, "output");
         await mkdir(outputDir, { recursive: true });
 
-        // Should not throw — missing $ref targets are skipped during copy
         const manifest = await collectRawSpecs({
+            specs: [
+                {
+                    type: "openapi",
+                    absoluteFilepath: AbsoluteFilePath.of(specFile),
+                    absoluteFilepathToOverrides: [AbsoluteFilePath.of(override1), AbsoluteFilePath.of(override2)],
+                    absoluteFilepathToOverlays: undefined,
+                    source: {
+                        type: "openapi",
+                        file: AbsoluteFilePath.of(specFile),
+                        relativePathToDependency: undefined
+                    }
+                }
+            ],
+            hostOutputDir: AbsoluteFilePath.of(outputDir),
+            containerBaseDir: "/fern/raw-specs",
+            context: createMockContext()
+        });
+
+        expect(manifest.specs[0]?.overridePaths).toBeUndefined();
+
+        const content = await readFile(path.join(outputDir, "spec-0.json"), "utf-8");
+        const parsed = JSON.parse(content);
+        expect(parsed.info.description).toBe("From override 1");
+        expect(parsed.info["x-custom"]).toBe("From override 2");
+    });
+
+    it("does not copy raw files - only outputs resolved JSON", async () => {
+        const specFile = path.join(sourceDir, "api", "openapi.yaml");
+        await writeFile(specFile, MINIMAL_OPENAPI);
+
+        const outputDir = path.join(tmpDir.path, "output");
+        await mkdir(outputDir, { recursive: true });
+
+        await collectRawSpecs({
             specs: [
                 {
                     type: "openapi",
@@ -684,151 +523,37 @@ describe("collectRawSpecs", () => {
             context: createMockContext()
         });
 
-        expect(manifest.specs).toHaveLength(1);
-    });
-});
+        const resolvedContent = await readFile(path.join(outputDir, "spec-0.json"), "utf-8");
+        expect(resolvedContent).toBeTruthy();
 
-describe("collectExternalRefPaths", () => {
-    it("returns empty array for non-object input", () => {
-        expect(collectExternalRefPaths(null)).toEqual([]);
-        expect(collectExternalRefPaths(undefined)).toEqual([]);
-        expect(collectExternalRefPaths("string")).toEqual([]);
-        expect(collectExternalRefPaths(42)).toEqual([]);
+        await expect(readFile(path.join(outputDir, "openapi.yaml"), "utf-8")).rejects.toThrow();
+        await expect(readFile(path.join(outputDir, "api", "openapi.yaml"), "utf-8")).rejects.toThrow();
     });
 
-    it("extracts file path from $ref", () => {
-        const result = collectExternalRefPaths({
-            $ref: "./models.yaml"
-        });
-        expect(result).toEqual(["./models.yaml"]);
-    });
+    it("GraphQL spec with overrides keeps overrides as separate files", async () => {
+        const graphqlFile = path.join(sourceDir, "api", "schema.graphql");
+        const overrideFile = path.join(sourceDir, "overrides", "override.yaml");
 
-    it("strips JSON pointer fragment from $ref", () => {
-        const result = collectExternalRefPaths({
-            $ref: "./models.yaml#/User"
-        });
-        expect(result).toEqual(["./models.yaml"]);
-    });
+        await writeFile(graphqlFile, "type Query { hello: String }");
+        await writeFile(overrideFile, "override: true");
 
-    it("ignores internal $refs", () => {
-        const result = collectExternalRefPaths({
-            $ref: "#/components/schemas/User"
-        });
-        expect(result).toEqual([]);
-    });
+        const outputDir = path.join(tmpDir.path, "output");
+        await mkdir(outputDir, { recursive: true });
 
-    it("ignores HTTP URL $refs", () => {
-        const result = collectExternalRefPaths({
-            $ref: "https://example.com/schema.yaml"
-        });
-        expect(result).toEqual([]);
-    });
-
-    it("finds nested $refs in objects", () => {
-        const result = collectExternalRefPaths({
-            components: {
-                schemas: {
-                    User: { $ref: "./user.yaml" },
-                    Order: { $ref: "./order.yaml#/Order" }
+        const manifest = await collectRawSpecs({
+            specs: [
+                {
+                    type: "graphql",
+                    absoluteFilepath: AbsoluteFilePath.of(graphqlFile),
+                    absoluteFilepathToOverrides: AbsoluteFilePath.of(overrideFile)
                 }
-            }
+            ],
+            hostOutputDir: AbsoluteFilePath.of(outputDir),
+            containerBaseDir: "/fern/raw-specs",
+            context: createMockContext()
         });
-        expect(result).toEqual(["./user.yaml", "./order.yaml"]);
-    });
 
-    it("finds $refs inside arrays", () => {
-        const result = collectExternalRefPaths({
-            allOf: [{ $ref: "./base.yaml" }, { $ref: "./extra.yaml" }]
-        });
-        expect(result).toEqual(["./base.yaml", "./extra.yaml"]);
-    });
-
-    it("handles mixed internal, external, and URL $refs", () => {
-        const result = collectExternalRefPaths({
-            components: {
-                schemas: {
-                    A: { $ref: "#/components/schemas/B" },
-                    B: { $ref: "./b.yaml" },
-                    C: { $ref: "https://example.com/c.yaml" },
-                    D: { $ref: "../shared/d.yaml#/Foo" }
-                }
-            }
-        });
-        expect(result).toEqual(["./b.yaml", "../shared/d.yaml"]);
-    });
-});
-
-describe("discoverExternalRefs", () => {
-    let tmpDir: tmp.DirectoryResult;
-
-    beforeEach(async () => {
-        tmpDir = await tmp.dir({ unsafeCleanup: true });
-    });
-
-    afterEach(async () => {
-        await rm(tmpDir.path, { recursive: true, force: true });
-    });
-
-    it("discovers $ref targets in a YAML file", async () => {
-        const specFile = path.join(tmpDir.path, "spec.yaml");
-        const modelFile = path.join(tmpDir.path, "models.yaml");
-        await writeFile(specFile, 'components:\n  schemas:\n    User:\n      $ref: "./models.yaml"');
-        await writeFile(modelFile, "User:\n  type: object");
-
-        const discovered = new Set<string>();
-        await discoverExternalRefs(specFile, discovered, createMockContext());
-
-        expect(discovered.has(modelFile)).toBe(true);
-    });
-
-    it("discovers $ref targets in a JSON file", async () => {
-        const specFile = path.join(tmpDir.path, "spec.json");
-        const modelFile = path.join(tmpDir.path, "models.json");
-        await writeFile(specFile, JSON.stringify({ components: { schemas: { User: { $ref: "./models.json" } } } }));
-        await writeFile(modelFile, JSON.stringify({ User: { type: "object" } }));
-
-        const discovered = new Set<string>();
-        await discoverExternalRefs(specFile, discovered, createMockContext());
-
-        expect(discovered.has(modelFile)).toBe(true);
-    });
-
-    it("follows transitive $refs", async () => {
-        const fileA = path.join(tmpDir.path, "a.yaml");
-        const fileB = path.join(tmpDir.path, "b.yaml");
-        const fileC = path.join(tmpDir.path, "c.yaml");
-        await writeFile(fileA, '$ref: "./b.yaml"');
-        await writeFile(fileB, '$ref: "./c.yaml"');
-        await writeFile(fileC, "final: true");
-
-        const discovered = new Set<string>();
-        await discoverExternalRefs(fileA, discovered, createMockContext());
-
-        expect(discovered.has(fileB)).toBe(true);
-        expect(discovered.has(fileC)).toBe(true);
-    });
-
-    it("handles circular $refs without infinite loop", async () => {
-        const fileA = path.join(tmpDir.path, "a.yaml");
-        const fileB = path.join(tmpDir.path, "b.yaml");
-        await writeFile(fileA, '$ref: "./b.yaml"');
-        await writeFile(fileB, '$ref: "./a.yaml"');
-
-        const discovered = new Set<string>();
-        await discoverExternalRefs(fileA, discovered, createMockContext());
-
-        expect(discovered.has(fileB)).toBe(true);
-    });
-
-    it("skips unreadable files gracefully", async () => {
-        const specFile = path.join(tmpDir.path, "spec.yaml");
-        await writeFile(specFile, '$ref: "./nonexistent.yaml"');
-
-        const discovered = new Set<string>();
-        // Should not throw
-        await discoverExternalRefs(specFile, discovered, createMockContext());
-
-        // The path is added to discovered but can't be read further
-        expect(discovered.size).toBe(1);
+        expect(manifest.specs[0]?.overridePaths).toHaveLength(1);
+        expect(manifest.specs[0]?.overridePaths?.[0]).toContain("graphql-0-override-0");
     });
 });

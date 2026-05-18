@@ -140,23 +140,20 @@ describe("copyRawSpecs", () => {
         expect(outputManifest.specs[0]?.specPath).toBe(path.join("api", "openapi.yaml"));
     });
 
-    it("copies spec with overrides and overlays", async () => {
+    it("copies spec with overrides", async () => {
         const rawSpecsDir = path.join(tmpDir, "raw-specs");
         await mkdir(path.join(rawSpecsDir, "api"), { recursive: true });
         await mkdir(path.join(rawSpecsDir, "overrides"), { recursive: true });
-        await mkdir(path.join(rawSpecsDir, "overlays"), { recursive: true });
 
         await writeFile(path.join(rawSpecsDir, "api", "spec.yaml"), "spec");
         await writeFile(path.join(rawSpecsDir, "overrides", "override.yaml"), "override");
-        await writeFile(path.join(rawSpecsDir, "overlays", "overlay.yaml"), "overlay");
 
         const manifest: RawSpecsManifest = {
             specs: [
                 {
                     type: "openapi",
                     specPath: path.join(rawSpecsDir, "api", "spec.yaml"),
-                    overridePaths: [path.join(rawSpecsDir, "overrides", "override.yaml")],
-                    overlayPath: path.join(rawSpecsDir, "overlays", "overlay.yaml")
+                    overridePaths: [path.join(rawSpecsDir, "overrides", "override.yaml")]
                 }
             ]
         };
@@ -170,14 +167,12 @@ describe("copyRawSpecs", () => {
         // Verify all files were copied
         expect(await readFile(path.join(outputDir, "specs", "api", "spec.yaml"), "utf-8")).toBe("spec");
         expect(await readFile(path.join(outputDir, "specs", "overrides", "override.yaml"), "utf-8")).toBe("override");
-        expect(await readFile(path.join(outputDir, "specs", "overlays", "overlay.yaml"), "utf-8")).toBe("overlay");
 
         // Verify output manifest has correct relative paths
         const outputManifest: RawSpecsManifest = JSON.parse(
             await readFile(path.join(outputDir, "specs", "specs-manifest.json"), "utf-8")
         );
         expect(outputManifest.specs[0]?.overridePaths).toHaveLength(1);
-        expect(outputManifest.specs[0]?.overlayPath).toBe(path.join("overlays", "overlay.yaml"));
     });
 
     it("copies protobuf directory spec", async () => {
