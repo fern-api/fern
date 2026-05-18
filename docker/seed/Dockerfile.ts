@@ -37,10 +37,9 @@ ENV PATH=$PNPM_HOME:$PATH
 # vulnerabilities (perl-base, liblzma5, libgnutls30, libpam*, libc*, gpgv,
 # libsystemd0, libudev1, libcap2, libtasn1-6, login/passwd, etc.) are
 # resolved on top of the base image.
-# Security update 2026-05-18: trixie's openssl (3.5.5) and expat (2.7.1)
-# are vulnerable to CVE-2026-28387/28388/28389/28390/31790/2673 (openssl)
-# and CVE-2026-45186 (expat). Pin sid as a low-priority source and pull
-# the fixed packages from there.
+# Security update 2026-05-18: trixie's openssl (3.5.5) is vulnerable to
+# CVE-2026-28387/28388/28389/28390/31790/2673. Pin sid as a low-priority
+# source and pull the fixed package from there.
 RUN apt-get update \
   && apt-get -y upgrade \
   && apt-get -y autoremove \
@@ -53,7 +52,7 @@ RUN echo "Types: deb" > /etc/apt/sources.list.d/sid.sources \
     && echo 'Package: *\nPin: release n=sid\nPin-Priority: 100' > /etc/apt/preferences.d/sid-low \
     && apt-get update \
     && apt-get install -y --no-install-recommends -t sid \
-       libssl3t64 libexpat1 \
+       libssl3t64 \
     && rm -f /etc/apt/sources.list.d/sid.sources /etc/apt/preferences.d/sid-low \
     && rm -rf /var/lib/apt/lists/*
 

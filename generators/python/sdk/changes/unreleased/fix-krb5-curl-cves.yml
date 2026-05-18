@@ -2,6 +2,5 @@
     Update OS packages in the Python SDK generator container from Debian sid to fix
     krb5 (CVE-2026-40355, CVE-2026-40356), curl (CVE-2026-1965, CVE-2026-4873,
     CVE-2026-5545, CVE-2026-6253, CVE-2026-6429), gnutls28 (CVE-2026-3832),
-    expat (CVE-2026-45186), and openssl (CVE-2026-28387, CVE-2026-28388,
-    CVE-2026-28389, CVE-2026-28390, CVE-2026-31790, CVE-2026-2673).
+    and expat (CVE-2026-45186).
   type: chore
