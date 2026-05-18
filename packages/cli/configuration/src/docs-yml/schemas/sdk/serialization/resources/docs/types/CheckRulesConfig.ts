@@ -17,7 +17,6 @@ export const CheckRulesConfig: core.serialization.ObjectSchema<
     validDocsEndpoints: core.serialization.property("valid-docs-endpoints", CheckRuleSeverity.optional()),
     missingRedirects: core.serialization.property("missing-redirects", CheckRuleSeverity.optional()),
     validChangelogSlug: core.serialization.property("valid-changelog-slug", CheckRuleSeverity.optional()),
-    mdValidate: core.serialization.property("md-validate", CheckRuleSeverity.optional()),
 });
 
 export declare namespace CheckRulesConfig {
@@ -30,6 +29,5 @@ export declare namespace CheckRulesConfig {
         "valid-docs-endpoints"?: CheckRuleSeverity.Raw | null;
         "missing-redirects"?: CheckRuleSeverity.Raw | null;
         "valid-changelog-slug"?: CheckRuleSeverity.Raw | null;
-        "md-validate"?: CheckRuleSeverity.Raw | null;
     }
 }

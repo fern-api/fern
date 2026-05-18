@@ -8,7 +8,7 @@ import { readFileSync } from "fs";
 import grayMatter from "gray-matter";
 import path from "path";
 
-export interface ContextLine {
+interface ContextLine {
     lineNumber: number;
     content: string;
     isErrorLine: boolean;
@@ -22,7 +22,7 @@ function calculateVisualColumn(text: string, charIndex: number, tabWidth = 4): n
     return visualColumn;
 }
 
-export class MdxValidationError {
+class MdxValidationError {
     constructor(
         public readonly filepath: AbsoluteFilePath,
         public readonly message: string,
@@ -160,13 +160,11 @@ export async function validateMdxFiles({
 export function logMdxValidationResults({
     errors,
     totalFiles,
-    context,
-    severity = "error"
+    context
 }: {
     errors: MdxValidationError[];
     totalFiles: number;
     context: TaskContext;
-    severity?: "warn" | "error";
 }): void {
     if (errors.length === 0) {
         context.logger.info(chalk.green(`\n✓ All ${totalFiles} MDX files are valid`));
@@ -174,10 +172,6 @@ export function logMdxValidationResults({
     }
 
     for (const error of errors) {
-        if (severity === "warn") {
-            context.logger.warn(error.toString());
-        } else {
-            context.logger.error(error.toString());
-        }
+        context.logger.error(error.toString());
     }
 }

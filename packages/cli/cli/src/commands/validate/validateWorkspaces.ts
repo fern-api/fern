@@ -1,17 +1,14 @@
 import { collectAPIWorkspaceViolations } from "@fern-api/api-workspace-validator";
 import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/configuration-loader";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
-import { ValidationViolation } from "@fern-api/fern-definition-validator";
 import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
 import { CliError } from "@fern-api/task-context";
-import path from "path";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { buildCheckJsonResult } from "./buildCheckJsonResult.js";
 import { ApiValidationResult, DocsValidationResult, printCheckReport } from "./printCheckReport.js";
 import { collectDocsWorkspaceViolations } from "./validateDocsWorkspaceAndLogIssues.js";
-import { type MdxValidationError, validateMdxFiles } from "./validateMdx.js";
 
 export async function validateWorkspaces({
     project,
@@ -52,10 +49,8 @@ export async function validateWorkspaces({
     if (docsWorkspace != null) {
         const excludeRules = brokenLinks || errorOnBrokenLinks ? [] : ["valid-markdown-links"];
         const ossWorkspaces = await filterOssWorkspaces(project);
-        const mdValidateSeverity = docsWorkspace.config.check?.rules?.mdValidate ?? "warn";
 
         let collected: Awaited<ReturnType<typeof collectDocsWorkspaceViolations>> | undefined;
-        const mdxViolations: ValidationViolation[] = [];
         await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
             collected = await collectDocsWorkspaceViolations({
                 workspace: docsWorkspace,
@@ -65,42 +60,15 @@ export async function validateWorkspaces({
                 errorOnBrokenLinks,
                 excludeRules
             });
-
-            // Run MDX parse validation (md-validate rule)
-            try {
-                const { errors } = await validateMdxFiles({ workspace: docsWorkspace, context });
-                const severity: ValidationViolation["severity"] = mdValidateSeverity === "error" ? "error" : "warning";
-                for (const error of errors) {
-                    const relPath = path.relative(docsWorkspace.absoluteFilePath, error.filepath);
-                    const pathWithLocation =
-                        error.line != null
-                            ? error.column != null
-                                ? `${relPath}:${error.line}:${error.column}`
-                                : `${relPath}:${error.line}`
-                            : relPath;
-
-                    mdxViolations.push({
-                        name: "md-validate",
-                        severity,
-                        relativeFilepath: RelativeFilePath.of(pathWithLocation),
-                        nodePath: [],
-                        message: formatMdxErrorMessage(error)
-                    });
-                }
-            } catch {
-                // MDX validation requires a parseable docs config with navigation.
-                // If the config is incomplete, skip MDX validation silently —
-                // the rule-based validators will report the config error.
-            }
         });
 
-        if (collected != null || mdxViolations.length > 0) {
+        if (collected != null) {
             docsResult = {
-                violations: [...(collected?.violations ?? []), ...mdxViolations],
-                elapsedMillis: collected?.elapsedMillis ?? 0
+                violations: collected.violations,
+                elapsedMillis: collected.elapsedMillis
             };
 
-            if (collected?.hasErrors || (mdValidateSeverity === "error" && mdxViolations.length > 0)) {
+            if (collected.hasErrors) {
                 hasAnyErrors = true;
             }
         }
@@ -193,27 +161,4 @@ export async function validateWorkspaces({
     if (hasErrors || hasAnyErrors) {
         cliContext.failAndThrow(undefined, undefined, { code: CliError.Code.ValidationError });
     }
-}
-
-function formatMdxErrorMessage(error: MdxValidationError): string {
-    let message = error.message;
-
-    if (error.contextLines != null && error.contextLines.length > 0) {
-        const maxLineNum = Math.max(...error.contextLines.map((ctx) => ctx.lineNumber));
-        const lineNumWidth = String(maxLineNum).length;
-
-        message += "\n";
-        for (const ctx of error.contextLines) {
-            const lineNumStr = String(ctx.lineNumber).padStart(lineNumWidth, " ");
-            const displayContent = ctx.content.replace(/\t/g, "    ");
-
-            message += `\n${lineNumStr} | ${displayContent}`;
-            if (ctx.isErrorLine && error.column != null && error.column > 0) {
-                const caretPadding = " ".repeat(lineNumWidth + 3 + error.column - 1);
-                message += `\n${caretPadding}^`;
-            }
-        }
-    }
-
-    return message;
 }

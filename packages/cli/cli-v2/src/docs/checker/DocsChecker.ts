@@ -40,9 +40,6 @@ export declare namespace DocsChecker {
         /** MDX/Markdown parse errors with rich source-context formatting. */
         mdxParseErrors: MdxParseError[];
 
-        /** Configured severity for MDX parse errors (`error` or `warning`). */
-        mdxParseErrorSeverity: "error" | "warning";
-
         /** Whether any errors (fatal or error severity) were found */
         hasErrors: boolean;
 
@@ -83,7 +80,6 @@ export class DocsChecker {
             return {
                 violations: [],
                 mdxParseErrors: [],
-                mdxParseErrorSeverity: "warning",
                 hasErrors: false,
                 hasWarnings: false,
                 errorCount: 0,
@@ -128,23 +124,18 @@ export class DocsChecker {
         const mdxValidator = new MdxParseValidator({ context: this.context, task: this.task });
         const mdxResult = await mdxValidator.validate({ workspace: docsWorkspace });
 
-        const mdValidateSeverity = docsWorkspace.config.check?.rules?.mdValidate ?? "error";
-        const mdxErrorsAreErrors = mdValidateSeverity === "error";
-
         const counts = this.countViolations(resolvedViolations);
-        const errorCount = counts.errorCount + (mdxErrorsAreErrors ? mdxResult.errors.length : 0);
-        const warningCount = counts.warningCount + (mdxErrorsAreErrors ? 0 : mdxResult.errors.length);
-        const hasErrors = result.hasErrors || (mdxErrorsAreErrors && mdxResult.errors.length > 0);
+        const errorCount = counts.errorCount + mdxResult.errors.length;
+        const hasErrors = result.hasErrors || mdxResult.errors.length > 0;
         return {
             errorCount,
-            warningCount,
+            warningCount: counts.warningCount,
             hasErrors,
-            hasWarnings: result.hasWarnings || (!mdxErrorsAreErrors && mdxResult.errors.length > 0),
+            hasWarnings: result.hasWarnings,
             violations: strict
                 ? resolvedViolations
                 : resolvedViolations.filter((v) => v.severity === "fatal" || v.severity === "error"),
             mdxParseErrors: mdxResult.errors,
-            mdxParseErrorSeverity: mdValidateSeverity === "error" ? "error" : "warning",
             elapsedMillis: result.elapsedMillis + mdxResult.elapsedMillis
         };
     }

@@ -217,9 +217,6 @@ types:
       valid-changelog-slug:
         type: optional<CheckRuleSeverity>
         docs: Severity for validating that each changelog's effective URL slug is one of the allowlisted values served as an RSS/Atom/JSON feed. Default is error.
-      md-validate:
-        type: optional<CheckRuleSeverity>
-        docs: Severity for MDX/Markdown parse validation. Default is error for `fern check` (cli-v2) and warn for `fern docs md check` (cli-v1).
 
   CheckConfig:
     docs: |

@@ -42,10 +42,7 @@ const CHECK_RULE_CONFIG_TO_RULE_NAME = {
     noCircularRedirects: NoCircularRedirectsRule.name,
     validDocsEndpoints: ValidDocsEndpoints.name,
     missingRedirects: MissingRedirectsRule.name,
-    validChangelogSlug: ValidChangelogSlugRule.name,
-    // md-validate is handled by MdxParseValidator, not the rule visitor.
-    // Listed here only to satisfy the Record<keyof CheckRulesConfig, string> constraint.
-    mdValidate: "md-validate"
+    validChangelogSlug: ValidChangelogSlugRule.name
 } satisfies Record<keyof docsYml.RawSchemas.CheckRulesConfig, string>;
 
 function buildSeverityOverrides(

@@ -588,8 +588,7 @@ export const CheckRulesConfig = z.object({
     "no-circular-redirects": CheckRuleSeverity.optional(),
     "valid-docs-endpoints": CheckRuleSeverity.optional(),
     "missing-redirects": CheckRuleSeverity.optional(),
-    "valid-changelog-slug": CheckRuleSeverity.optional(),
-    "md-validate": CheckRuleSeverity.optional()
+    "valid-changelog-slug": CheckRuleSeverity.optional()
 });
 
 export const CheckConfig = z.object({
