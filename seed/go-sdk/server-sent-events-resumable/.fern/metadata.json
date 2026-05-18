@@ -1,0 +1,16 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-go-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "enableWireTests": false,
+    "packageName": "sseresumable",
+    "module": {
+      "path": "github.com/fern-api/sse-resumable-go"
+    }
+  },
+  "originGitCommit": "DUMMY",
+  "invokedBy": "manual",
+  "requestedVersion": "0.0.1",
+  "sdkVersion": "v0.0.1"
+}

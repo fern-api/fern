@@ -278,6 +278,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             { name: "Method", value: go.TypeInstantiation.string(endpoint.method) },
             { name: "Headers", value: go.TypeInstantiation.reference(go.codeblock("headers")) },
             { name: "MaxAttempts", value: go.TypeInstantiation.reference(go.codeblock("options.MaxAttempts")) },
+            { name: "DisableRetries", value: go.TypeInstantiation.reference(go.codeblock("options.DisableRetries")) },
             { name: "BodyProperties", value: go.TypeInstantiation.reference(go.codeblock("options.BodyProperties")) },
             { name: "QueryParameters", value: go.TypeInstantiation.reference(go.codeblock("options.QueryParameters")) },
             { name: "Client", value: go.TypeInstantiation.reference(go.codeblock("options.HTTPClient")) },
