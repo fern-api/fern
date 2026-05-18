@@ -14,10 +14,10 @@ import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { extractErrorMessage, isNonNullish } from "@fern-api/core-utils";
-import type { GraphQlOperationExamplesInput } from "@fern-api/graphql-to-fdr";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
+import type { GraphQlOperationExamplesInput } from "@fern-api/graphql-to-fdr";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
