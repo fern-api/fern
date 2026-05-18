@@ -37,24 +37,10 @@ ENV PATH=$PNPM_HOME:$PATH
 # vulnerabilities (perl-base, liblzma5, libgnutls30, libpam*, libc*, gpgv,
 # libsystemd0, libudev1, libcap2, libtasn1-6, login/passwd, etc.) are
 # resolved on top of the base image.
-# Security update 2026-05-18: trixie's openssl (3.5.5) is vulnerable to
-# CVE-2026-28387/28388/28389/28390/31790/2673. Pin sid as a low-priority
-# source and pull the fixed package from there.
 RUN apt-get update \
   && apt-get -y upgrade \
   && apt-get -y autoremove \
   && rm -rf /var/lib/apt/lists/*
-RUN echo "Types: deb" > /etc/apt/sources.list.d/sid.sources \
-    && echo "URIs: http://deb.debian.org/debian" >> /etc/apt/sources.list.d/sid.sources \
-    && echo "Suites: sid" >> /etc/apt/sources.list.d/sid.sources \
-    && echo "Components: main" >> /etc/apt/sources.list.d/sid.sources \
-    && echo "Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg" >> /etc/apt/sources.list.d/sid.sources \
-    && echo 'Package: *\nPin: release n=sid\nPin-Priority: 100' > /etc/apt/preferences.d/sid-low \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends -t sid \
-       libssl3t64 \
-    && rm -f /etc/apt/sources.list.d/sid.sources /etc/apt/preferences.d/sid-low \
-    && rm -rf /var/lib/apt/lists/*
 
 # Upgrade bundled npm to 11.14.1 to pick up patched transitive dependencies
 # (picomatch 4.0.4, brace-expansion 5.0.5, minimatch 10.2.5, tar 7.5.13).
