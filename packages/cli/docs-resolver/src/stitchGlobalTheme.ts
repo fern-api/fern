@@ -196,6 +196,27 @@ async function resolveThemeFileUrls(
     return cfg;
 }
 
+export function isPlainObject(value: unknown): value is Record<string, unknown> {
+    return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+
+// Deep merge where global wins on conflicting keys; local-only sub-fields survive.
+export function deepMergeGlobalWins(
+    local: Record<string, unknown>,
+    global: Record<string, unknown>
+): Record<string, unknown> {
+    const result: Record<string, unknown> = { ...local };
+    for (const [key, globalValue] of Object.entries(global)) {
+        const localValue = local[key];
+        if (isPlainObject(globalValue) && isPlainObject(localValue)) {
+            result[key] = deepMergeGlobalWins(localValue, globalValue);
+        } else {
+            result[key] = globalValue;
+        }
+    }
+    return result;
+}
+
 // "global" — the theme value always wins; local docs.yml cannot override it.
 // "local"  — the local docs.yml value wins when present; theme is the fallback.
 type ThemeFieldPolicy = "global" | "local";
@@ -254,7 +275,7 @@ function normalizeThemeKeys(raw: Record<string, unknown>): Record<string, unknow
     return deepNormalizeKeys(raw) as Record<string, unknown>;
 }
 
-function mergeThemeOverride(local: RawDocsConfig, themeOverride: Record<string, unknown>): RawDocsConfig {
+export function mergeThemeOverride(local: RawDocsConfig, themeOverride: Record<string, unknown>): RawDocsConfig {
     const normalized = normalizeThemeKeys(themeOverride);
     const localRecord = local as unknown as Record<string, unknown>;
     const merged: Record<string, unknown> = { ...localRecord };
@@ -268,8 +289,13 @@ function mergeThemeOverride(local: RawDocsConfig, themeOverride: Record<string, 
 
         if (policy === "global") {
             // Theme wins when present, otherwise keep the local value.
+            // Object fields are deep-merged so local-only sub-fields survive.
             if (themeHasValue) {
-                merged[key] = themeValue;
+                if (isPlainObject(themeValue) && isPlainObject(localValue)) {
+                    merged[key] = deepMergeGlobalWins(localValue, themeValue);
+                } else {
+                    merged[key] = themeValue;
+                }
             }
         } else {
             // "local" — local wins when present, otherwise fall back to theme
