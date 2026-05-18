@@ -434,7 +434,7 @@ export async function runLocalGenerationForWorkspace({
                                           prDescription: autoVersioningPrDescription,
                                           versionBumpReason: autoVersioningVersionBumpReason,
                                           previousVersion: autoVersioningPreviousVersion,
-                                          newVersion: autoVersioningNewVersion,
+                                          newVersion: autoVersioningNewVersion ?? version,
                                           versionBump: autoVersioningVersionBump,
                                           previewMode: selfhostedGithubConfig.previewMode,
                                           generatorName: generatorInvocation.name,

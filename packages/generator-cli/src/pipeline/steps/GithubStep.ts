@@ -408,7 +408,12 @@ export class GithubStep extends BaseStep {
             this.logger.info(`Pushed branch: ${result.branchUrl}`);
 
             // Create a GitHub release if a new version is available
-            if (resolved.newVersion != null) {
+            if (resolved.newVersion == null) {
+                this.logger.warn(
+                    "No new version available — skipping release tag creation. " +
+                        "Pass --version <semver> or --version AUTO to fern generate to enable release tagging."
+                );
+            } else {
                 try {
                     const tagName = resolved.newVersion;
                     const headSha = await repository.getHeadSha();
