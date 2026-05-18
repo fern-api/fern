@@ -13,15 +13,15 @@ type RawDocsConfig = docsYml.RawSchemas.DocsConfiguration;
 // Theme-eligible fields that can contain local file paths (strings that become
 // { hash } sentinels on upload and presigned S3 URLs on GET from FDR).
 // Presigned S3 URLs are identified by the presence of "X-Amz-" in the query string.
-function isPresignedUrl(value: string): boolean {
+export function isPresignedUrl(value: string): boolean {
     return (value.startsWith("http://") || value.startsWith("https://")) && value.includes("X-Amz-");
 }
 
-function isRemoteUrl(value: string): boolean {
+export function isRemoteUrl(value: string): boolean {
     return value.startsWith("http://") || value.startsWith("https://");
 }
 
-function parseFilenameFromDisposition(value: string | null): string | undefined {
+export function parseFilenameFromDisposition(value: string | null): string | undefined {
     if (value == null) {
         return undefined;
     }
@@ -33,7 +33,7 @@ function parseFilenameFromDisposition(value: string | null): string | undefined 
     return name != null && path.extname(name) !== "" ? name : undefined;
 }
 
-function filenameFromUrl(url: string): string | undefined {
+export function filenameFromUrl(url: string): string | undefined {
     try {
         // S3 presigned URLs encode the intended filename in the
         // `response-content-disposition` query param, e.g.:
@@ -95,7 +95,7 @@ async function downloadToTemp(url: string, tmpDir: string, index: number): Promi
     return dest;
 }
 
-async function resolveThemeFileUrls(
+export async function resolveThemeFileUrls(
     themeConfig: Record<string, unknown>,
     tmpDir: string
 ): Promise<Record<string, unknown>> {
