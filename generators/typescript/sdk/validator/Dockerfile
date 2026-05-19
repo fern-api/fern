@@ -35,4 +35,17 @@ RUN cd /tmp/warm-cache \
     && pnpm install --ignore-scripts --prefer-offline \
     && rm -rf /tmp/warm-cache/node_modules
 
+# Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; node:24.15 vendors 5.0.5).
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/brace-expansion; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.6.tgz -o brace-expansion-5.0.6.tgz && \
+        tar -xzf brace-expansion-5.0.6.tgz && \
+        mv package brace-expansion && \
+        rm brace-expansion-5.0.6.tgz; \
+      fi; \
+    done
+
 WORKDIR /workspace

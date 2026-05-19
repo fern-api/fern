@@ -34,6 +34,19 @@ RUN mkdir -p /tmp/ip-address-upgrade \
     && mv package /usr/local/lib/node_modules/npm/node_modules/ip-address \
     && rm -rf /tmp/ip-address-upgrade
 
+# Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; npm 11.13.0 vendors 5.0.5).
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/brace-expansion; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.6.tgz -o brace-expansion-5.0.6.tgz && \
+        tar -xzf brace-expansion-5.0.6.tgz && \
+        mv package brace-expansion && \
+        rm brace-expansion-5.0.6.tgz; \
+      fi; \
+    done
+
 ARG SENTRY_DSN
 ARG SENTRY_ENVIRONMENT=production
 ARG SENTRY_RELEASE
