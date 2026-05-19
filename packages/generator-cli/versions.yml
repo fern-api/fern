@@ -1,6 +1,18 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Restore GitHub web-flow signing on cloud-generated PRs. `pushSignedCommit`
+        still sends `author` (Fern bot attribution from 0.9.28) but no longer
+        sends `committer` by default — the signer keys off `committer`, so the
+        unconditional override added in 0.9.28 silently suppressed the "Verified"
+        badge on every cloud generation. Callers that need a pinned committer
+        can still opt in via `GithubStepConfig.author`.
+      type: fix
+  createdAt: "2026-05-19"
+  version: 0.9.32
+
+- changelogEntry:
+    - summary: |
         Bump @fern-api/replay to 0.16.0 and remove the consumer-side divergent-merge
         gauntlet. Squash-merge and force-push recovery are now handled inside the
         replay engine via the derived scan boundary (`findPreviousGenerationFromHistory`
