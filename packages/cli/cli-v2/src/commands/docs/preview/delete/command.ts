@@ -30,7 +30,7 @@ export class DeleteCommand {
         }
 
         const token = await context.getTokenOrPrompt();
-        const fdr = createFdrService({ token: token.value });
+        const fdr = createFdrService({ token: token.value, headers: context.headers });
 
         context.stderr.debug(`Deleting preview site: ${resolvedUrl}`);
 

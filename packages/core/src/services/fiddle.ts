@@ -9,9 +9,13 @@ export function getFiddleOrigin(): string {
     return FIDDLE_ORIGIN;
 }
 
-export function createFiddleService({ token }: { token?: string } = {}): FernFiddleClient {
+export function createFiddleService({
+    token,
+    headers
+}: { token?: string; headers?: Record<string, string> } = {}): FernFiddleClient {
     return new FernFiddleClient({
         environment: FIDDLE_ORIGIN,
-        token
+        token,
+        headers
     });
 }

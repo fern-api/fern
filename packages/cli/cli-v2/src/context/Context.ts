@@ -14,6 +14,7 @@ import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
 import inquirer from "inquirer";
+import { v4 as uuidv4 } from "uuid";
 import { CredentialStore, TokenService } from "../auth/index.js";
 import { Cache } from "../cache/index.js";
 import { FernYmlSchemaLoader } from "../config/fern-yml/FernYmlSchemaLoader.js";
@@ -33,6 +34,7 @@ export class Context {
     private logFilePathPrinted = false;
 
     public readonly createdAt: number = Date.now();
+    public readonly requestId: string = uuidv4();
     public readonly cwd: AbsoluteFilePath;
     public readonly logLevel: LogLevel;
     public readonly info: CommandInfo;
@@ -90,6 +92,13 @@ export class Context {
      */
     public get isTTY(): boolean {
         return this.ttyAwareLogger.isTTY;
+    }
+
+    /**
+     * Returns headers that should be included with every outbound API request.
+     */
+    public get headers(): Record<string, string> {
+        return { "X-Request-Id": this.requestId };
     }
 
     /**
@@ -247,7 +256,7 @@ export class Context {
             return;
         }
 
-        const result = await checkOrganizationMembership({ organization, token });
+        const result = await checkOrganizationMembership({ organization, token, headers: this.headers });
 
         switch (result.type) {
             case "member":

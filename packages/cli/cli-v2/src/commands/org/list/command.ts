@@ -24,7 +24,7 @@ export class ListCommand {
             throw new CliError({ code: CliError.Code.AuthError });
         }
 
-        const venus = createVenusService({ token: token.value });
+        const venus = createVenusService({ token: token.value, headers: context.headers });
 
         // Fetch the first page to check if there are any results.
         const firstPage = await this.fetchPage({ venus, pageId: 1 });

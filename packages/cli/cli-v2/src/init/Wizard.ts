@@ -237,7 +237,7 @@ export class Wizard {
         }
 
         try {
-            const result = await checkOrganizationMembership({ organization, token });
+            const result = await checkOrganizationMembership({ organization, token, headers: this.context.headers });
 
             switch (result.type) {
                 case "member":
@@ -249,7 +249,12 @@ export class Wizard {
                     const created = await withSpinner({
                         message: `Creating organization "${organization}"`,
                         operation: () =>
-                            createOrganizationIfDoesNotExist({ organization, token, context: taskContext }),
+                            createOrganizationIfDoesNotExist({
+                                organization,
+                                token,
+                                context: taskContext,
+                                headers: this.context.headers
+                            }),
                         indent: 2
                     });
                     if (created) {
