@@ -331,8 +331,13 @@ class SdkGenerator(AbstractGenerator):
 
         for subpackage_id in ir.subpackages.keys():
             subpackage = ir.subpackages[subpackage_id]
+            has_websocket_in_tree = (
+                subpackage.has_web_socket_in_tree
+                if subpackage.has_web_socket_in_tree is not None
+                else subpackage.websocket is not None
+            )
             if subpackage.has_endpoints_in_tree or (
-                subpackage.websocket is not None and context.custom_config.should_generate_websocket_clients
+                has_websocket_in_tree and context.custom_config.should_generate_websocket_clients
             ):
                 channel_websocket = (
                     ir.websocket_channels[subpackage.websocket]

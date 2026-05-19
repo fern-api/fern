@@ -171,9 +171,12 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
 
         for subpackage_id in self._package.subpackages:
             subpackage = self._context.ir.subpackages[subpackage_id]
-            has_websocket = (
-                subpackage.websocket is not None and self._context.custom_config.should_generate_websocket_clients
+            has_websocket_in_tree = (
+                subpackage.has_web_socket_in_tree
+                if subpackage.has_web_socket_in_tree is not None
+                else subpackage.websocket is not None
             )
+            has_websocket = has_websocket_in_tree and self._context.custom_config.should_generate_websocket_clients
             if subpackage.has_endpoints_in_tree or has_websocket:
                 if should_declare_client_wrapper:
                     writer.write_line("self._client_wrapper = client_wrapper")
@@ -276,9 +279,12 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
         if self._context.custom_config.lazy_imports:
             for subpackage_id in self._package.subpackages:
                 subpackage = self._context.ir.subpackages[subpackage_id]
-                has_websocket = (
-                    subpackage.websocket is not None and self._context.custom_config.should_generate_websocket_clients
+                has_websocket_in_tree = (
+                    subpackage.has_web_socket_in_tree
+                    if subpackage.has_web_socket_in_tree is not None
+                    else subpackage.websocket is not None
                 )
+                has_websocket = has_websocket_in_tree and self._context.custom_config.should_generate_websocket_clients
                 if subpackage.has_endpoints_in_tree or has_websocket:
                     class_declaration.add_method(
                         declaration=AST.FunctionDeclaration(
