@@ -9,7 +9,7 @@ import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import { buildReference } from "./reference/buildReference.js";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+import { type OutputDirectory, SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 import { selectExamplesForSnippets } from "./utils/selectExamplesForSnippets.js";
 import { WireTestGenerator } from "./wire-tests/WireTestGenerator.js";
@@ -52,22 +52,17 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         // In source-root mode the user is embedding the source tree into an existing
         // project, so README/reference/CONTRIBUTING/wire-test scaffolding doesn't apply.
-        const emitScaffolding = context.customConfig.output_directory !== "source-root";
-
-        if (emitScaffolding) {
+        const sourceRoot: OutputDirectory = "source-root";
+        if (context.customConfig.output_directory !== sourceRoot) {
             await this.generateWireTestFiles(context);
-        }
 
-        // Generate snippets once, used by both README and reference
-        let endpointSnippets: Endpoint[] = [];
-        try {
-            endpointSnippets = this.generateSnippets({ context });
-        } catch (error) {
-            context.logger.debug(`Failed to generate snippets: ${extractErrorMessage(error)}`);
-        }
+            let endpointSnippets: Endpoint[] = [];
+            try {
+                endpointSnippets = this.generateSnippets({ context });
+            } catch (error) {
+                context.logger.debug(`Failed to generate snippets: ${extractErrorMessage(error)}`);
+            }
 
-        if (emitScaffolding) {
-            // Generate README.md
             if (this.shouldGenerateReadme(context) && endpointSnippets.length > 0) {
                 try {
                     await this.generateReadme({ context, endpointSnippets });
@@ -76,7 +71,6 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
                 }
             }
 
-            // Generate reference.md
             try {
                 await this.generateReference({ context, endpointSnippets });
             } catch (error) {

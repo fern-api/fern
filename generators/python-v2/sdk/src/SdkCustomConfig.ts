@@ -1,6 +1,9 @@
 import path from "path";
 import { z } from "zod";
 
+export const OUTPUT_DIRECTORY_OPTIONS = ["project-root", "source-root"] as const;
+export type OutputDirectory = (typeof OUTPUT_DIRECTORY_OPTIONS)[number];
+
 /**
  * Schema for validating and normalizing relative paths.
  * Rejects absolute paths, parent traversal, and invalid characters.
@@ -65,7 +68,7 @@ export const SdkCustomConfigSchema = z.object({
      * `source-root` writes source files directly without the `src/` prefix and
      * skips project scaffolding — useful when embedding into an existing project.
      */
-    output_directory: z.enum(["project-root", "source-root"]).optional(),
+    output_directory: z.enum(OUTPUT_DIRECTORY_OPTIONS).optional(),
     client: ClientConfigSchema.optional(),
     client_class_name: z.string().optional(),
     inline_request_params: z.boolean().optional(),
