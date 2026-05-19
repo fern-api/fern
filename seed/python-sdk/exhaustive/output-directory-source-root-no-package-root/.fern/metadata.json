@@ -1,0 +1,13 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "local",
+  "generatorConfig": {
+    "output_directory": "source-root",
+    "package_name": "sub.dir"
+  },
+  "originGitCommit": "DUMMY",
+  "invokedBy": "manual",
+  "requestedVersion": "0.0.1",
+  "sdkVersion": "0.0.1"
+}

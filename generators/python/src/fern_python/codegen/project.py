@@ -3,9 +3,15 @@ from __future__ import annotations
 import os
 import typing
 from dataclasses import dataclass
+from enum import Enum
 from pathlib import Path
 from types import TracebackType
-from typing import TYPE_CHECKING, List, Optional, Sequence, Set, Type
+from typing import TYPE_CHECKING, List, Optional, Sequence, Set, Tuple, Type
+
+
+class OutputDirectory(str, Enum):
+    PROJECT_ROOT = "project-root"
+    SOURCE_ROOT = "source-root"
 
 from .dependency_manager import DependencyManager
 from .filepath import Filepath
@@ -35,6 +41,26 @@ class Project:
         ...
     """
 
+    @staticmethod
+    def _resolve_layout(
+        *,
+        output_directory: Optional[OutputDirectory],
+        flat_layout: bool,
+    ) -> Tuple[bool, bool]:
+        """Returns (use_src_prefix, emit_scaffolding).
+
+        `output_directory` (when set) takes precedence over `flat_layout` and
+        controls both the `src/` prefix and whether project scaffolding files
+        (pyproject.toml, requirements.txt, README.md, py.typed, LICENSE) are
+        emitted. When unset, `flat_layout` continues to drive only the `src/`
+        prefix and scaffolding is always emitted — bit-exact legacy behavior.
+        """
+        if output_directory is OutputDirectory.SOURCE_ROOT:
+            return False, False
+        if output_directory is OutputDirectory.PROJECT_ROOT:
+            return True, True
+        return (not flat_layout), True
+
     def __init__(
         self,
         *,
@@ -45,6 +71,7 @@ class Project:
         project_config: Optional[ProjectConfig] = None,
         sorted_modules: Optional[Sequence[str]] = None,
         flat_layout: bool = False,
+        output_directory: Optional[OutputDirectory] = None,
         whitelabel: bool = False,
         pypi_metadata: Optional[PypiMetadata],
         github_output_mode: Optional[GithubOutputMode],
@@ -65,12 +92,19 @@ class Project:
         if package_path is not None:
             normalized_package_path = package_path.strip("/") or None
 
+        # Resolve layout from output_directory (new) or flat_layout (deprecated).
+        # output_directory wins when set; otherwise fall back to flat_layout so
+        # existing users keep bit-exact behavior.
+        use_src_prefix, emit_scaffolding = self._resolve_layout(
+            output_directory=output_directory, flat_layout=flat_layout
+        )
+
         # Build the project-relative filepath (e.g., "src/seed" or "src/seed/package/path")
         # package_path is applied as a suffix within the module
-        if flat_layout:
-            self._project_relative_filepath = relative_path_to_project
-        else:
+        if use_src_prefix:
             self._project_relative_filepath = os.path.join("src", relative_path_to_project)
+        else:
+            self._project_relative_filepath = relative_path_to_project
 
         if normalized_package_path:
             self._project_relative_filepath = os.path.join(self._project_relative_filepath, normalized_package_path)
@@ -81,7 +115,8 @@ class Project:
         self._generate_readme = True
         self._root_filepath = filepath
         self._package_path = normalized_package_path
-        self._flat_layout = flat_layout
+        self._use_src_prefix = use_src_prefix
+        self._emit_scaffolding = emit_scaffolding
         self._relative_path_to_project = relative_path_to_project
         self._project_config = project_config
         # Compute the package name for import_paths hook
@@ -110,6 +145,15 @@ class Project:
         self._enable_wire_tests = enable_wire_tests
         self._generator_exec_wrapper = generator_exec_wrapper
         self._mypy_exclude = mypy_exclude
+
+    @property
+    def should_emit_scaffolding(self) -> bool:
+        """True when this project should emit ancillary files (pyproject.toml,
+        GitHub workflows, README, tests scaffolding, snippet.json, etc.) outside
+        the source tree. False when `output_directory == source-root` — the user
+        is embedding the source tree into an existing project and owns those files.
+        """
+        return self._emit_scaffolding
 
     def get_module_path_for_imports(self) -> str:
         """
@@ -238,18 +282,15 @@ class Project:
         if self._package_path and self._project_config is not None:
             self._create_package_path_init_files()
 
-        if self._project_config is not None:
+        if self._project_config is not None and self._emit_scaffolding:
             # generate pyproject.toml
-            if self._flat_layout:
-                package_from = None
-                include_path = self._relative_path_to_project
-                if self._package_path:
-                    include_path = os.path.join(include_path, self._package_path)
-            else:
+            if self._use_src_prefix:
                 package_from = "src"
-                include_path = self._relative_path_to_project
-                if self._package_path:
-                    include_path = os.path.join(include_path, self._package_path)
+            else:
+                package_from = None
+            include_path = self._relative_path_to_project
+            if self._package_path:
+                include_path = os.path.join(include_path, self._package_path)
             py_project_toml = PyProjectToml(
                 name=self._project_config.package_name,
                 version=self._project_config.package_version,
@@ -301,10 +342,10 @@ class Project:
         package_path_parts = self._package_path.split("/")
 
         # Build path incrementally from the base module (e.g., src/seed)
-        if self._flat_layout:
-            base_path = os.path.join(self._root_filepath, self._relative_path_to_project)
-        else:
+        if self._use_src_prefix:
             base_path = os.path.join(self._root_filepath, "src", self._relative_path_to_project)
+        else:
+            base_path = os.path.join(self._root_filepath, self._relative_path_to_project)
 
         current_path = base_path
         for i, part in enumerate(package_path_parts):

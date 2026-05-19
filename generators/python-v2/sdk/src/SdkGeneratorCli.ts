@@ -50,7 +50,13 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        await this.generateWireTestFiles(context);
+        // In source-root mode the user is embedding the source tree into an existing
+        // project, so README/reference/CONTRIBUTING/wire-test scaffolding doesn't apply.
+        const emitScaffolding = context.customConfig.output_directory !== "source-root";
+
+        if (emitScaffolding) {
+            await this.generateWireTestFiles(context);
+        }
 
         // Generate snippets once, used by both README and reference
         let endpointSnippets: Endpoint[] = [];
@@ -60,27 +66,31 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
             context.logger.debug(`Failed to generate snippets: ${extractErrorMessage(error)}`);
         }
 
-        // Generate README.md
-        if (this.shouldGenerateReadme(context) && endpointSnippets.length > 0) {
-            try {
-                await this.generateReadme({ context, endpointSnippets });
-            } catch (error) {
-                throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(error)}`);
+        if (emitScaffolding) {
+            // Generate README.md
+            if (this.shouldGenerateReadme(context) && endpointSnippets.length > 0) {
+                try {
+                    await this.generateReadme({ context, endpointSnippets });
+                } catch (error) {
+                    throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(error)}`);
+                }
             }
-        }
 
-        // Generate reference.md
-        try {
-            await this.generateReference({ context, endpointSnippets });
-        } catch (error) {
-            throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
-        }
-
-        if (!context.config.whitelabel) {
+            // Generate reference.md
             try {
-                this.generateContributing({ context });
+                await this.generateReference({ context, endpointSnippets });
             } catch (error) {
-                throw GeneratorError.internalError(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(error)}`);
+                throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
+            }
+
+            if (!context.config.whitelabel) {
+                try {
+                    this.generateContributing({ context });
+                } catch (error) {
+                    throw GeneratorError.internalError(
+                        `Failed to generate CONTRIBUTING.md: ${extractErrorMessage(error)}`
+                    );
+                }
             }
         }
 

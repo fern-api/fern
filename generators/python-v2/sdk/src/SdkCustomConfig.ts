@@ -59,6 +59,13 @@ export const SdkCustomConfigSchema = z.object({
     enable_wire_tests: z.boolean().optional(),
     package_path: relativePathSchema.optional(),
     package_name: z.string().optional(),
+    /**
+     * Controls project layout. `project-root` (default when unset) emits the
+     * standard `src/<package>/...` tree with a pyproject.toml at root.
+     * `source-root` writes source files directly without the `src/` prefix and
+     * skips project scaffolding — useful when embedding into an existing project.
+     */
+    output_directory: z.enum(["project-root", "source-root"]).optional(),
     client: ClientConfigSchema.optional(),
     client_class_name: z.string().optional(),
     inline_request_params: z.boolean().optional(),
