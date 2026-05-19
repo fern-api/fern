@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix the OpenAPI importer silently dropping the request body of an operation
+    that combines `x-fern-streaming` (with `stream-condition`) with a `oneOf` or
+    `anyOf` request body schema. Previously both the cloned streaming and
+    non-streaming variants emitted endpoints with `requestBody: null` and
+    `onlyPathParameters: true`, so the generated SDK could not send a body at
+    all. The streaming converter now accepts union-shaped bodies and synthesizes
+    each variant with the stream-condition literal pinned as a common base
+    property on an undiscriminated union. Endpoints whose body is a plain object
+    (`properties`/`allOf`) are unaffected.
+  type: fix
