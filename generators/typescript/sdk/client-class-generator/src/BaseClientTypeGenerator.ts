@@ -217,6 +217,17 @@ export type BaseClientOptions = {
         headers,`;
         }
 
+        let variableDefaultsReturn = "";
+        for (const variable of this.ir.variables) {
+            // `default` was added to VariableDeclaration in IR v67.3; access defensively
+            // until this generator bumps its @fern-fern/ir-sdk pin past v67.
+            const variableDefault = (variable as unknown as Record<string, unknown>)["default"] as string | undefined;
+            if (variableDefault != null) {
+                const optionKey = context.case.camelUnsafe(variable.name);
+                variableDefaultsReturn += `\n        ${optionKey}: ${OPTIONS_PARAMETER_NAME}.${optionKey} ?? ${JSON.stringify(variableDefault)},`;
+            }
+        }
+
         const functionCode = `
 export function normalizeClientOptions<T extends BaseClientOptions = BaseClientOptions>(
     ${OPTIONS_PARAMETER_NAME}: T
@@ -224,7 +235,7 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
         ...options,
         logging: ${getTextOfTsNode(
             context.coreUtilities.logging.createLogger._invoke(ts.factory.createIdentifier("options?.logging"))
-        )},${headersReturn}
+        )},${headersReturn}${variableDefaultsReturn}
     } as NormalizedClientOptions<T>;
 }`;
 
