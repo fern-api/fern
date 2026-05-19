@@ -37,8 +37,8 @@ catalogs:
       specifier: 0.0.6-2ee1b7e28
       version: 0.0.6-2ee1b7e28
     '@fern-api/generator-cli':
-      specifier: 0.9.31
-      version: 0.9.31
+      specifier: 0.9.32
+      version: 0.9.32
     '@fern-api/venus-api-sdk':
       specifier: 0.22.34
       version: 0.22.34
@@ -630,7 +630,7 @@ importers:
         version: link:packages/configs
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.9.31
+        version: 0.9.32
       '@rolldown/binding-darwin-arm64':
         specifier: 'catalog:'
         version: 1.0.0
@@ -699,7 +699,7 @@ importers:
         version: link:../../packages/commons/fs-utils
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.9.31
+        version: 0.9.32
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../packages/ir-sdk
@@ -2466,7 +2466,7 @@ importers:
         version: link:../../../packages/commons/fs-utils
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.9.31
+        version: 0.9.32
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../packages/cli/logger
@@ -4821,6 +4821,9 @@ importers:
       '@fern-api/docs-validator':
         specifier: workspace:*
         version: link:../yaml/docs-validator
+      '@fern-api/fdr-sdk':
+        specifier: 1.2.4-f661387fb2
+        version: 1.2.4-f661387fb2(@opentelemetry/api@1.9.1)(typescript@5.9.3)
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../fern-definition/schema
@@ -4848,6 +4851,9 @@ importers:
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
         version: link:../workspace/lazy-fern-workspace
+      '@fern-api/library-docs-generator':
+        specifier: workspace:*
+        version: link:../library-docs-generator
       '@fern-api/local-workspace-runner':
         specifier: workspace:*
         version: link:../generation/local-generation/local-workspace-runner
@@ -6498,12 +6504,24 @@ importers:
 
   packages/cli/library-docs-generator:
     dependencies:
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../configuration
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../commons/core-utils
       '@fern-api/fdr-sdk':
         specifier: 1.2.4-f661387fb2
         version: 1.2.4-f661387fb2(@opentelemetry/api@1.9.1)(typescript@5.9.3)
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../commons/fs-utils
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
+      chalk:
+        specifier: 'catalog:'
+        version: 5.6.2
       js-yaml:
         specifier: 'catalog:'
         version: 4.1.1
@@ -9456,8 +9474,8 @@ packages:
   '@fern-api/fdr-sdk@1.2.4-f661387fb2':
     resolution: {integrity: sha512-wlk1lTCIZ7biND4vQf8jvhUw9P/rBQ5pXASCrumv8R96up0B3DY6yiY1C4VmFyHmp/kPhcjzc5T9TvHZZxFdrA==}
 
-  '@fern-api/generator-cli@0.9.31':
-    resolution: {integrity: sha512-ZvqBLwd0J39miiSjU1P9ZJb903VyDN82lSDVnA+xG4i+4/cy+Z7MUCo1AGRQzYydyJQsSAo/PYD/6jJ3qFU9lg==}
+  '@fern-api/generator-cli@0.9.32':
+    resolution: {integrity: sha512-i51Wp7iGPOj0xUIPFQg1SCzzojV/5jWgkq4Pp+VnPG8x2xmHUE65ZgdRWdpu3em6pqFNLCHfW/so2VKrxal4ag==}
     hasBin: true
 
   '@fern-api/replay@0.16.0':
@@ -16393,7 +16411,7 @@ snapshots:
       - encoding
       - typescript
 
-  '@fern-api/generator-cli@0.9.31':
+  '@fern-api/generator-cli@0.9.32':
     dependencies:
       '@boundaryml/baml': 0.219.0
       '@fern-api/replay': 0.16.0
