@@ -454,6 +454,9 @@ scripts:
         - export NPM_CONFIG_CACHE="$(pwd)/.cache"
         - export HOME="$(pwd)/"
         - poetry run pytest -rP .
+        # yarl 1.24.0/1.24.1 (2026-05-19) ship only cp310 wheels; constrain to <1.24 so the
+        # cp313 test container can resolve a compatible build. Drop once 1.24.2+ lands.
+        - poetry add 'yarl@<1.24'
         - poetry install --extras aiohttp
         - poetry run pytest -rP -n auto -m aiohttp .
   # Test Pydantic V1
@@ -472,6 +475,9 @@ scripts:
         - export NPM_CONFIG_CACHE="$(pwd)/.cache"
         - export HOME="$(pwd)/"
         - poetry run pytest -rP .
+        # yarl 1.24.0/1.24.1 (2026-05-19) ship only cp310 wheels; constrain to <1.24 so the
+        # cp313 test container can resolve a compatible build. Drop once 1.24.2+ lands.
+        - poetry add 'yarl@<1.24'
         - poetry install --extras aiohttp
         - poetry run pytest -rP -n auto -m aiohttp .
 allowedFailures:
