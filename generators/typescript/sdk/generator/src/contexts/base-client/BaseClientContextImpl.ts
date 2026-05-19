@@ -204,7 +204,9 @@ export class BaseClientContextImpl implements BaseClientContext {
                 kind: StructureKind.PropertySignature,
                 name: getPropertyKey(this.getOptionNameForVariable(variable)),
                 type: getTextOfTsNode(variableType.typeNodeWithoutUndefined),
-                hasQuestionToken: variableType.isOptional
+                // `default` added to VariableDeclaration in IR v67.3; access defensively until ir-sdk pin is bumped
+                hasQuestionToken:
+                    variableType.isOptional || (variable as unknown as Record<string, unknown>)["default"] != null
             });
         }
 

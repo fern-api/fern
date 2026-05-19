@@ -13,6 +13,7 @@ types:
       - commons.WithDocsSchema
     properties:
       type: string
+      default: optional<string>
 
   VariableReferenceSchema:
     extends:

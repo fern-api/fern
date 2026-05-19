@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.3.0] - 2026-05-19
+
+- Feature: Add optional `default` field to `VariableDeclaration`. Carries the default
+  value from `x-fern-sdk-variables` entries that specify a `default:` in the OpenAPI
+  spec (e.g. `default: v1beta`). Allows generators to use the default when the caller
+  does not supply a value for the variable.
+
 ## [v67.2.0] - 2026-05-08
 
 - Feature: Add optional `resumable` field to `SseStreamChunk`. When `true`, signals

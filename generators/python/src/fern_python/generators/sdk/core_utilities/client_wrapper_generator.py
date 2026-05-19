@@ -724,14 +724,20 @@ class ClientWrapperGenerator:
                 variable.type
             )
             constructor_parameter_name = names.get_variable_constructor_parameter_name(variable)
+            default_expr = AST.Expression(repr(variable.default)) if variable.default is not None else None
             parameters.append(
                 ConstructorParameter(
                     constructor_parameter_name=constructor_parameter_name,
                     private_member_name=names.get_variable_member_name(variable),
                     type_hint=variable_type_hint,
-                    initializer=AST.Expression(
-                        f'{constructor_parameter_name}="YOUR_{resolve_name(variable.name).screaming_snake_case.safe_name}"'
+                    initializer=(
+                        default_expr
+                        if default_expr is not None
+                        else AST.Expression(
+                            f'{constructor_parameter_name}="YOUR_{resolve_name(variable.name).screaming_snake_case.safe_name}"'
+                        )
                     ),
+                    client_default=default_expr,
                     docs=variable.docs,
                 )
             )

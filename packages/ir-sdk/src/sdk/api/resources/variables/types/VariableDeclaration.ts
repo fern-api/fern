@@ -6,4 +6,5 @@ export interface VariableDeclaration extends FernIr.WithDocs {
     id: FernIr.VariableId;
     name: FernIr.NameOrString;
     type: FernIr.TypeReference;
+    default: string | undefined;
 }

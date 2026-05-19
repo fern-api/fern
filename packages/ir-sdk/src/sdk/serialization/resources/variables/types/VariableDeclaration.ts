@@ -15,6 +15,7 @@ export const VariableDeclaration: core.serialization.ObjectSchema<
         id: VariableId,
         name: NameOrString,
         type: core.serialization.lazy(() => serializers.TypeReference),
+        default: core.serialization.string().optional(),
     })
     .extend(WithDocs);
 
@@ -23,5 +24,6 @@ export declare namespace VariableDeclaration {
         id: VariableId.Raw;
         name: NameOrString.Raw;
         type: serializers.TypeReference.Raw;
+        default?: string | null;
     }
 }

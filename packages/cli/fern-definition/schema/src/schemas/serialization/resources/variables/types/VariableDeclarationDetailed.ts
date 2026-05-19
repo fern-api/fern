@@ -11,11 +11,13 @@ export const VariableDeclarationDetailed: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         type: core.serialization.string(),
+        default: core.serialization.string().optional(),
     })
     .extend(WithDocsSchema);
 
 export declare namespace VariableDeclarationDetailed {
     export interface Raw extends WithDocsSchema.Raw {
         type: string;
+        default?: string | null;
     }
 }
