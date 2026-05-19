@@ -160,7 +160,7 @@ describe("mergeExamplesIntoSpec", () => {
                     post: {
                         "x-fern-examples": [
                             {
-                                request: { body: { name: "John", email: "john@example.com" } }
+                                request: { name: "John", email: "john@example.com" }
                             }
                         ]
                     }
@@ -386,7 +386,7 @@ describe("mergeExamplesIntoSpec", () => {
                                 "path-parameters": { customerId: "cust-999" },
                                 "query-parameters": { include_audit: true },
                                 headers: { "X-Idempotency-Key": "key-abc" },
-                                request: { body: { name: "Acme Corp", email: "acme@example.com" } },
+                                request: { name: "Acme Corp", email: "acme@example.com" },
                                 response: { body: { id: "cust-999", name: "Acme Corp", status: "updated" } }
                             }
                         ]
