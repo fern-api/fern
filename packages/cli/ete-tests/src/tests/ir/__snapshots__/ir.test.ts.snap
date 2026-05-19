@@ -94,6 +94,7 @@ exports[`ir > {"name":"auth-header-prefix"} 1`] = `
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": false,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {
@@ -832,6 +833,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_commons": {
@@ -855,6 +857,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -875,6 +878,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": false,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {
@@ -1394,6 +1398,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -1413,6 +1418,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {
@@ -16071,6 +16077,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_service-url": {
@@ -16091,6 +16098,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -16111,6 +16119,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {
@@ -16206,6 +16215,7 @@ exports[`ir > {"name":"navigation-points-to"} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_subpackage/x": {
@@ -16229,6 +16239,7 @@ exports[`ir > {"name":"navigation-points-to"} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -16250,6 +16261,7 @@ exports[`ir > {"name":"navigation-points-to"} 1`] = `
             "pointsTo": "subpackage_subpackage"
         },
         "hasEndpointsInTree": false,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {
@@ -17598,6 +17610,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -17617,6 +17630,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {
@@ -18485,6 +18499,7 @@ exports[`ir > {"name":"packages"} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_importer": {
@@ -18507,6 +18522,7 @@ exports[`ir > {"name":"packages"} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": "I'm an importer!"
         },
         "subpackage_package/a": {
@@ -18532,6 +18548,7 @@ exports[`ir > {"name":"packages"} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_package/b": {
@@ -18555,6 +18572,7 @@ exports[`ir > {"name":"packages"} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -18577,6 +18595,7 @@ exports[`ir > {"name":"packages"} 1`] = `
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {
@@ -20015,6 +20034,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -20034,6 +20054,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {
@@ -21081,6 +21102,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_imdb": {
@@ -21103,6 +21125,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -21123,6 +21146,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {
@@ -23093,6 +23117,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_imdb": {
@@ -23116,6 +23141,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -23136,6 +23162,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {
@@ -30950,6 +30977,7 @@ exports[`ir > {"name":"simple"} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_director": {
@@ -30975,6 +31003,7 @@ exports[`ir > {"name":"simple"} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_imdb": {
@@ -31008,6 +31037,7 @@ exports[`ir > {"name":"simple"} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -31029,6 +31059,7 @@ exports[`ir > {"name":"simple"} 1`] = `
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {
@@ -31683,6 +31714,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -31702,6 +31734,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {
@@ -32421,6 +32454,7 @@ exports[`ir > {"name":"variables"} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_service": {
@@ -32441,6 +32475,7 @@ exports[`ir > {"name":"variables"} 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -32461,6 +32496,7 @@ exports[`ir > {"name":"variables"} 1`] = `
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {
@@ -33712,6 +33748,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
             "webhooks": "webhooks_webhooks",
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -33731,6 +33768,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": false,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {
