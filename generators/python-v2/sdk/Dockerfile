@@ -20,6 +20,14 @@ RUN echo "Types: deb" > /etc/apt/sources.list.d/sid.sources \
        curl libcurl4t64 libgnutls30t64 \
     && rm -f /etc/apt/sources.list.d/sid.sources /etc/apt/preferences.d/sid-low \
     && rm -rf /var/lib/apt/lists/*
+# Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; node:24.15 vendors 5.0.5).
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    npm pack brace-expansion@5.0.6 && \
+    rm -rf brace-expansion && \
+    mkdir brace-expansion && \
+    tar -xzf brace-expansion-5.0.6.tgz --strip-components=1 -C brace-expansion/ && \
+    rm brace-expansion-5.0.6.tgz
+
 RUN curl -LsSf https://astral.sh/ruff/0.15.7/install.sh | sh
 ENV PATH="/root/.local/bin:${PATH}"
 RUN ruff --version

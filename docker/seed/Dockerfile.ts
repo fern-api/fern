@@ -43,17 +43,23 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 # Upgrade bundled npm to 11.14.1 to pick up patched transitive dependencies
-# (picomatch 4.0.4, brace-expansion 5.0.5, minimatch 10.2.5, tar 7.5.13).
+# (picomatch 4.0.4, minimatch 10.2.5, tar 7.5.13).
 # node:24.15.0 ships npm 11.12.1 which still vendors picomatch 4.0.3 and
 # brace-expansion 5.0.4. Replace ip-address with 10.1.1 to fix
 # GHSA-v2v4-37r5-5v8g (still bundled at 10.1.0 even in npm 11.14.1).
+# Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; npm 11.14.1 vendors 5.0.5).
 RUN npm install -g npm@11.14.1 --force && \
     cd /usr/local/lib/node_modules/npm/node_modules && \
     npm pack ip-address@10.1.1 && \
     rm -rf ip-address && \
     mkdir ip-address && \
     tar -xzf ip-address-10.1.1.tgz --strip-components=1 -C ip-address/ && \
-    rm ip-address-10.1.1.tgz
+    rm ip-address-10.1.1.tgz && \
+    npm pack brace-expansion@5.0.6 && \
+    rm -rf brace-expansion && \
+    mkdir brace-expansion && \
+    tar -xzf brace-expansion-5.0.6.tgz --strip-components=1 -C brace-expansion/ && \
+    rm brace-expansion-5.0.6.tgz
 
 RUN npm install -g pnpm@10.33.3 --force
 RUN corepack prepare pnpm@10.33.3
