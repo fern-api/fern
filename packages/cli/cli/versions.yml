@@ -1,4 +1,41 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.30.3
+  changelogEntry:
+    - summary: |
+        Fix a `TypeError: Cannot read properties of undefined (reading 'startsWith')`
+        crash in the OpenAPI parser when an operation's `x-fern-streaming` extension
+        sets only `resumable: true` (or otherwise omits both `format` and
+        `stream-condition`). The parser now returns `undefined` for that operation
+        instead of crashing.
+      type: fix
+  createdAt: "2026-05-19"
+  irVersion: 66
+- version: 5.30.2
+  changelogEntry:
+    - summary: |
+        Fix `fern docs link check` disconnecting on large sites by using batched
+        requests instead of a single long-lived SSE connection. Pages are now scraped
+        in batches of ~200 and links checked in batches of ~500, with automatic
+        retries on connection failures.
+      type: fix
+  createdAt: "2026-05-19"
+  irVersion: 66
+- version: 5.30.1
+  changelogEntry:
+    - summary: |
+        Fix broken link checker to validate links in pages referenced via folder entries in docs.yml navigation.
+      type: fix
+  createdAt: "2026-05-19"
+  irVersion: 66
+- version: 5.30.0
+  changelogEntry:
+    - summary: |
+        Add `commit-and-release` mode support for self-hosted GitHub configuration.
+        Users can now set `mode: commit-and-release` in their self-hosted `github:`
+        block to commit directly to a branch and create a GitHub release.
+      type: feat
+  createdAt: "2026-05-19"
+  irVersion: 66
 - version: 5.29.0
   changelogEntry:
     - summary: |

@@ -304,12 +304,15 @@ export async function runLocalGenerationForWorkspace({
                             timeoutMs: 30000 // 30 seconds timeout for credential/network issues
                         });
 
-                        // For push mode and pull-request mode with a target branch,
+                        // For push, commit-and-release, and pull-request mode with a target branch,
                         // checkout the target branch while the working tree is clean.
                         // This prevents non-fast-forward errors that occur when trying to checkout
                         // after files have been generated (dirty working tree).
                         const mode = selfhostedGithubConfig.mode ?? "push";
-                        if ((mode === "push" || mode === "pull-request") && selfhostedGithubConfig.branch != null) {
+                        if (
+                            (mode === "push" || mode === "pull-request" || mode === "commit-and-release") &&
+                            selfhostedGithubConfig.branch != null
+                        ) {
                             interactiveTaskContext.logger.debug(
                                 `Checking out branch ${selfhostedGithubConfig.branch} before generation`
                             );
@@ -431,7 +434,7 @@ export async function runLocalGenerationForWorkspace({
                                           prDescription: autoVersioningPrDescription,
                                           versionBumpReason: autoVersioningVersionBumpReason,
                                           previousVersion: autoVersioningPreviousVersion,
-                                          newVersion: autoVersioningNewVersion,
+                                          newVersion: autoVersioningNewVersion ?? version,
                                           versionBump: autoVersioningVersionBump,
                                           previewMode: selfhostedGithubConfig.previewMode,
                                           generatorName: generatorInvocation.name,
