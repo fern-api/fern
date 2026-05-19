@@ -1,0 +1,8 @@
+- summary: |
+    Add multi-locale support to docs-ledger publishing. All locales are
+    built upfront and published in a single register → upload → finish
+    flow. Translations are passed inline to the finish call, eliminating
+    per-locale finishTranslation round-trips. Extracts the shared MDX
+    translation pipeline into a reusable module used by both V2 and
+    ledger paths. Preview mode also supports translations.
+  type: feat
