@@ -2551,6 +2551,13 @@ function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     { code: CliError.Code.ConfigError }
                 );
             }
+            if (argv.split === true && argv.output == null) {
+                cliContext.failAndThrow(
+                    "--split requires --output (-o) to specify where to write the extracted examples.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
             const overridesPath = resolve(cwd(), argv.file);
             const outputPath = argv.output != null ? resolve(cwd(), argv.output) : openapiPath;
             await mergeOpenAPIWithOverrides({
