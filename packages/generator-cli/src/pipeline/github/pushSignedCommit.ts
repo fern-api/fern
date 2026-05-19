@@ -34,7 +34,13 @@ export interface PushSignedCommitOptions {
     rebaseOnConflict?: boolean;
     /**
      * Override the commit author and committer identity.
-     * Defaults to the Fern bot identity (fern-api / fern-api[bot] noreply email).
+     *
+     * When omitted, `author` defaults to the Fern bot identity (so attribution stays stable
+     * even on GHE/PAT auth) and `committer` is *not* sent — letting GitHub fill it in from
+     * the authenticated installation and sign the commit with the web-flow GPG key.
+     * When set, both `author` and `committer` are forced to the provided identity; this
+     * suppresses GitHub's auto-signing but is the only way to get a stable committer name
+     * for downstream tooling that reads `git log --format=%cn`.
      */
     author?: CommitAuthor;
     logger: PipelineLogger;
@@ -77,18 +83,24 @@ export async function pushSignedCommit({
         tempRefPushed = true;
 
         for (let attempt = 0; attempt < MAX_CONCURRENT_PUSH_RETRIES; attempt++) {
-            const commitAuthor = {
-                name: author?.name ?? FERN_BOT_NAME,
-                email: author?.email ?? FERN_BOT_EMAIL
-            };
+            // GitHub's web-flow signer keys off the `committer` field, not `author`:
+            //   - committer omitted -> GitHub fills it in from the authenticated installation
+            //     and signs the commit (the "Verified" badge path).
+            //   - committer set     -> GitHub uses it verbatim and skips signing unless the
+            //     email matches a verified email on the App's bot user.
+            // We always send `author` (stable attribution on PRs and `git log`), but only send
+            // `committer` when the caller explicitly demands it. Cloud generations get signed;
+            // GHE/PAT callers that need a deterministic committer can opt in via `author`.
+            const resolvedAuthor = author ?? { name: FERN_BOT_NAME, email: FERN_BOT_EMAIL };
+            const committerField = author != null ? { committer: author } : {};
             const { data: signedCommit } = await octokit.git.createCommit({
                 owner,
                 repo,
                 message,
                 tree: treeSha,
                 parents,
-                author: commitAuthor,
-                committer: commitAuthor
+                author: resolvedAuthor,
+                ...committerField
             });
             const signedSha = signedCommit.sha;
 

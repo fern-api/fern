@@ -1,6 +1,20 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Restore GitHub commit signing on cloud-generated PRs while keeping the
+        stable Fern bot attribution introduced in 0.9.28. `pushSignedCommit` now
+        always sends `author` (defaulting to the Fern bot identity) but only
+        sends `committer` when the caller explicitly passes one. GitHub's
+        web-flow signer keys off `committer`, so omitting it lets the
+        installation's bot identity be filled in and the commit signed — the
+        previous unconditional `committer` override silently suppressed the
+        "Verified" badge on every cloud generation after 0.9.28.
+      type: fix
+  createdAt: "2026-05-19"
+  version: 0.9.32
+
+- changelogEntry:
+    - summary: |
         Bump @fern-api/replay to 0.16.0 and remove the consumer-side divergent-merge
         gauntlet. Squash-merge and force-push recovery are now handled inside the
         replay engine via the derived scan boundary (`findPreviousGenerationFromHistory`
