@@ -572,7 +572,8 @@
       "errors": [],
       "subpackages": [],
       "websocket": "channel_v1Realtime",
-      "hasEndpointsInTree": false
+      "hasEndpointsInTree": false,
+      "hasWebSocketInTree": true
     }
   },
   "rootPackage": {
@@ -585,7 +586,8 @@
     "subpackages": [
       "subpackage_v1Realtime"
     ],
-    "hasEndpointsInTree": false
+    "hasEndpointsInTree": false,
+    "hasWebSocketInTree": true
   },
   "sdkConfig": {
     "isAuthMandatory": false,

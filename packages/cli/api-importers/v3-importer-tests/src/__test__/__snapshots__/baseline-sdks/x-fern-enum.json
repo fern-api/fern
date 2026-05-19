@@ -178,7 +178,8 @@
       ],
       "errors": [],
       "subpackages": [],
-      "hasEndpointsInTree": false
+      "hasEndpointsInTree": false,
+      "hasWebSocketInTree": false
     }
   },
   "rootPackage": {
@@ -191,7 +192,8 @@
     "subpackages": [
       "subpackage_transcripts"
     ],
-    "hasEndpointsInTree": false
+    "hasEndpointsInTree": false,
+    "hasWebSocketInTree": false
   },
   "sdkConfig": {
     "isAuthMandatory": false,
