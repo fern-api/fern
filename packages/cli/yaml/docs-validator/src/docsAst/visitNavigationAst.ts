@@ -2,9 +2,18 @@ import { docsYml } from "@fern-api/configuration-loader";
 import { noop, visitObjectAsync } from "@fern-api/core-utils";
 import { parseImagePaths } from "@fern-api/docs-markdown-utils";
 import { NodePath } from "@fern-api/fern-definition-schema";
-import { AbsoluteFilePath, dirname, doesPathExist, relative, resolve } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    dirname,
+    doesPathExist,
+    join,
+    RelativeFilePath,
+    relative,
+    resolve
+} from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
+import path from "path";
 import { readdir, readFile, stat } from "fs/promises";
 import { asyncPool } from "../utils/asyncPool.js";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor.js";
@@ -110,6 +119,10 @@ async function visitNavigationItem({
         api: noop,
         apiName: noop,
         audiences: noop,
+        folder: noop,
+        titleSource: noop,
+        collapsible: noop,
+        collapsedByDefault: noop,
         openrpc: async (path: string | undefined): Promise<void> => {
             if (path == null) {
                 return;
@@ -251,6 +264,21 @@ async function visitNavigationItem({
         }
     }
 
+    if (navigationItemIsFolder(navigationItem)) {
+        const folderDir = resolve(dirname(absoluteFilepathToConfiguration), navigationItem.folder);
+        if (await doesPathExist(folderDir)) {
+            await visitFolderMarkdownFiles({
+                directoryPath: folderDir,
+                absolutePathToFernFolder,
+                absoluteFilepathToConfiguration,
+                visitor,
+                nodePath: [...nodePath, "folder"],
+                apiWorkspaces,
+                context
+            });
+        }
+    }
+
     if (navigationItemIsChangelog(navigationItem)) {
         const changelogDir = resolve(dirname(absoluteFilepathToConfiguration), navigationItem.changelog);
         context.logger.trace(`Starting changelog processing for directory: ${changelogDir}`);
@@ -284,6 +312,102 @@ async function visitNavigationItem({
             context.logger.trace(`Changelog directory does not exist: ${changelogDir}`);
         }
     }
+}
+
+function navigationItemIsFolder(
+    item: docsYml.RawSchemas.NavigationItem
+): item is docsYml.RawSchemas.FolderConfiguration {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (item as docsYml.RawSchemas.FolderConfiguration)?.folder != null;
+}
+
+async function visitFolderMarkdownFiles({
+    directoryPath,
+    absolutePathToFernFolder,
+    absoluteFilepathToConfiguration,
+    visitor,
+    nodePath,
+    apiWorkspaces,
+    context
+}: {
+    directoryPath: AbsoluteFilePath;
+    absolutePathToFernFolder: AbsoluteFilePath;
+    absoluteFilepathToConfiguration: AbsoluteFilePath;
+    visitor: Partial<DocsConfigFileAstVisitor>;
+    nodePath: NodePath;
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
+    context: TaskContext;
+}): Promise<void> {
+    const entries = await readdir(directoryPath, { withFileTypes: true });
+
+    const markdownFiles = entries.filter(
+        (entry) =>
+            entry.isFile() &&
+            !entry.name.startsWith("_") &&
+            (entry.name.toLowerCase().endsWith(".md") || entry.name.toLowerCase().endsWith(".mdx"))
+    );
+
+    const subdirectories = entries.filter((entry) => entry.isDirectory() && !entry.name.startsWith("_"));
+
+    await asyncPool(VALIDATION_CONCURRENCY, markdownFiles, async (file) => {
+        const absoluteFilepath = join(directoryPath, RelativeFilePath.of(file.name));
+        if (!(await doesPathExist(absoluteFilepath))) {
+            return;
+        }
+
+        const fileStats = await stat(absoluteFilepath);
+        const fileSizeMB = fileStats.size / (1024 * 1024);
+        if (fileSizeMB > 1) {
+            context.logger.trace(
+                `Processing large markdown file in folder: ${file.name} (${fileSizeMB.toFixed(2)} MB)`
+            );
+        }
+
+        const content = (await readFile(absoluteFilepath, "utf8")).toString();
+        const title = path.basename(file.name, path.extname(file.name));
+
+        await visitor.markdownPage?.(
+            {
+                title,
+                content,
+                absoluteFilepath
+            },
+            [...nodePath, file.name]
+        );
+
+        try {
+            const { filepaths } = parseImagePaths(content, {
+                absolutePathToFernFolder,
+                absolutePathToMarkdownFile: absoluteFilepath
+            });
+
+            for (const filepath of filepaths) {
+                await visitor.filepath?.(
+                    {
+                        absoluteFilepath: filepath,
+                        value: relative(absolutePathToFernFolder, filepath),
+                        willBeUploaded: true
+                    },
+                    [...nodePath, file.name]
+                );
+            }
+        } catch (err) {
+            context.logger.trace(`Failed to parse image paths in folder file ${file.name}: ${err}`);
+        }
+    });
+
+    await asyncPool(VALIDATION_CONCURRENCY, subdirectories, async (subdir) => {
+        const subdirPath = join(directoryPath, RelativeFilePath.of(subdir.name));
+        await visitFolderMarkdownFiles({
+            directoryPath: subdirPath,
+            absolutePathToFernFolder,
+            absoluteFilepathToConfiguration,
+            visitor,
+            nodePath: [...nodePath, subdir.name],
+            apiWorkspaces,
+            context
+        });
+    });
 }
 
 function navigationItemIsChangelog(
