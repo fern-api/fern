@@ -13,8 +13,8 @@ import {
 } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
-import path from "path";
 import { readdir, readFile, stat } from "fs/promises";
+import path from "path";
 import { asyncPool } from "../utils/asyncPool.js";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor.js";
 import { visitFilepath } from "./visitFilepath.js";
