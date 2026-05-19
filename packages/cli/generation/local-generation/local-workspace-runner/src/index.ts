@@ -1,6 +1,6 @@
 export * from "./ContainerExecutionEnvironment.js";
 export { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment.js";
-export { RAW_SPECS_MANIFEST_FILENAME } from "./constants.js";
+export { generatorWantsRawSpecs, RAW_SPECS_MANIFEST_FILENAME } from "./constants.js";
 export * from "./DockerExecutionEnvironment.js";
 export { DockerExecutionEnvironment } from "./DockerExecutionEnvironment.js";
 export * from "./ExecutionEnvironment.js";

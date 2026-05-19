@@ -32,3 +32,13 @@ export const DOCKER_RAW_SPECS_DIRECTORY = path.join(DOCKER_FERN_DIRECTORY, RAW_S
 export const CONTAINER_RAW_SPECS_DIRECTORY = DOCKER_RAW_SPECS_DIRECTORY;
 
 export const DEFAULT_NODE_DEBUG_PORT = "9229";
+
+/**
+ * Generators that receive pre-processed raw API spec files mounted into their
+ * Docker container. Add new generator names here as they opt in.
+ */
+const GENERATORS_WANTING_RAW_SPECS: ReadonlySet<string> = new Set(["fernapi/fern-cli"]);
+
+export function generatorWantsRawSpecs(generatorName: string): boolean {
+    return GENERATORS_WANTING_RAW_SPECS.has(generatorName);
+}

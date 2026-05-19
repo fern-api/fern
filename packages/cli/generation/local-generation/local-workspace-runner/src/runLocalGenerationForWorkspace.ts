@@ -37,18 +37,9 @@ import * as fs from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
+import { generatorWantsRawSpecs } from "./constants.js";
 import { getGeneratorOutputSubfolder } from "./getGeneratorOutputSubfolder.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
-
-/**
- * Generators that receive pre-processed raw API spec files mounted into their
- * Docker container. Add new generator names here as they opt in.
- */
-const GENERATORS_WANTING_RAW_SPECS: ReadonlySet<string> = new Set(["fernapi/fern-cli"]);
-
-function generatorWantsRawSpecs(generatorName: string): boolean {
-    return GENERATORS_WANTING_RAW_SPECS.has(generatorName);
-}
 
 export async function runLocalGenerationForWorkspace({
     token,
