@@ -1,10 +1,10 @@
 import { readFile } from "fs/promises";
 import path from "path";
 import {
-    RAW_SPECS_DIRECTORY,
-    RAW_SPECS_MANIFEST_FILENAME,
     type RawSpecsManifest,
-    type RawSpecsManifestEntry
+    type RawSpecsManifestEntry,
+    SPECS_DIRECTORY,
+    SPECS_MANIFEST_FILENAME
 } from "./copySpecs.js";
 
 interface SpecSummary {
@@ -24,8 +24,8 @@ export interface SpecAnalysis {
 }
 
 export async function analyzeSpecs(rawSpecsDir?: string): Promise<SpecAnalysis> {
-    const specsDir = rawSpecsDir ?? RAW_SPECS_DIRECTORY;
-    const manifestPath = path.join(specsDir, RAW_SPECS_MANIFEST_FILENAME);
+    const specsDir = rawSpecsDir ?? SPECS_DIRECTORY;
+    const manifestPath = path.join(specsDir, SPECS_MANIFEST_FILENAME);
 
     let manifestContent: string;
     try {

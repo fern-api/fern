@@ -11,12 +11,12 @@ export interface RawSpecsManifest {
     specs: RawSpecsManifestEntry[];
 }
 
-export const RAW_SPECS_DIRECTORY = "/fern/raw-specs";
-export const RAW_SPECS_MANIFEST_FILENAME = "specs-manifest.json";
+export const SPECS_DIRECTORY = "/fern/specs";
+export const SPECS_MANIFEST_FILENAME = "specs-manifest.json";
 
-export async function copyRawSpecs(outputDir: string, rawSpecsDir?: string): Promise<void> {
-    const specsDir = rawSpecsDir ?? RAW_SPECS_DIRECTORY;
-    const manifestPath = path.join(specsDir, RAW_SPECS_MANIFEST_FILENAME);
+export async function copySpecs(outputDir: string, rawSpecsDir?: string): Promise<void> {
+    const specsDir = rawSpecsDir ?? SPECS_DIRECTORY;
+    const manifestPath = path.join(specsDir, SPECS_MANIFEST_FILENAME);
     let manifestContent: string;
     try {
         manifestContent = await readFile(manifestPath, "utf-8");
@@ -51,14 +51,11 @@ export async function copyRawSpecs(outputDir: string, rawSpecsDir?: string): Pro
         copiedManifest.specs.push(copiedEntry);
     }
 
-    await writeFile(
-        path.join(specsOutputDir, RAW_SPECS_MANIFEST_FILENAME),
-        JSON.stringify(copiedManifest, undefined, 4)
-    );
+    await writeFile(path.join(specsOutputDir, SPECS_MANIFEST_FILENAME), JSON.stringify(copiedManifest, undefined, 4));
 }
 
 export async function copySpecFile(containerPath: string, specsOutputDir: string, specsDir?: string): Promise<string> {
-    const baseDir = specsDir ?? RAW_SPECS_DIRECTORY;
+    const baseDir = specsDir ?? SPECS_DIRECTORY;
     const relativePath = containerPath.startsWith(baseDir + "/")
         ? containerPath.slice(baseDir.length + 1)
         : path.basename(containerPath);

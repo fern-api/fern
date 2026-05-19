@@ -37,7 +37,7 @@ import * as fs from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
-import { generatorWantsRawSpecs } from "./constants.js";
+import { generatorWantsSpecs } from "./constants.js";
 import { getGeneratorOutputSubfolder } from "./getGeneratorOutputSubfolder.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 
@@ -397,7 +397,7 @@ export async function runLocalGenerationForWorkspace({
                     skipFernignore,
                     disableTelemetry,
                     rawApiSpecs:
-                        workspace instanceof OSSWorkspace && generatorWantsRawSpecs(generatorInvocation.name)
+                        workspace instanceof OSSWorkspace && generatorWantsSpecs(generatorInvocation.name)
                             ? workspace.allSpecs
                             : undefined
                 });

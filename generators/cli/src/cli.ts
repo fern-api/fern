@@ -6,7 +6,7 @@ import {
 } from "@fern-api/base-generator";
 import { mkdir } from "fs/promises";
 import { analyzeSpecs, formatSpecAnalysis } from "./analyzeSpecs.js";
-import { copyRawSpecs } from "./copySpecs.js";
+import { copySpecs } from "./copySpecs.js";
 
 const pathToConfig = process.argv[process.argv.length - 1];
 if (pathToConfig == null) {
@@ -40,8 +40,8 @@ async function generate(configPath: string): Promise<void> {
                 console.log("No API specs were mounted.");
             }
 
-            // Copy raw API spec files from the mounted directory to the output
-            await copyRawSpecs(outputDir);
+            // Copy API spec files from the mounted directory to the output
+            await copySpecs(outputDir);
 
             await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful({})));
         } catch (e) {

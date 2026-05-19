@@ -3,7 +3,7 @@ import { tmpdir } from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { analyzeSpecs, formatSpecAnalysis } from "../analyzeSpecs.js";
-import { RAW_SPECS_MANIFEST_FILENAME } from "../copySpecs.js";
+import { SPECS_MANIFEST_FILENAME } from "../copySpecs.js";
 
 describe("analyzeSpecs", () => {
     let tmpDir: string;
@@ -27,7 +27,7 @@ describe("analyzeSpecs", () => {
     });
 
     it("returns empty analysis when manifest has no specs", async () => {
-        await writeFile(path.join(tmpDir, RAW_SPECS_MANIFEST_FILENAME), JSON.stringify({ specs: [] }));
+        await writeFile(path.join(tmpDir, SPECS_MANIFEST_FILENAME), JSON.stringify({ specs: [] }));
         const result = await analyzeSpecs(tmpDir);
         expect(result.totalSpecs).toBe(0);
     });
@@ -50,7 +50,7 @@ describe("analyzeSpecs", () => {
         const specPath = path.join(tmpDir, "spec-0.json");
         await writeFile(specPath, JSON.stringify(spec));
         await writeFile(
-            path.join(tmpDir, RAW_SPECS_MANIFEST_FILENAME),
+            path.join(tmpDir, SPECS_MANIFEST_FILENAME),
             JSON.stringify({ specs: [{ type: "openapi", specPath }] })
         );
 
@@ -74,7 +74,7 @@ describe("analyzeSpecs", () => {
         const specPath = path.join(tmpDir, "spec-0.json");
         await writeFile(specPath, JSON.stringify(spec));
         await writeFile(
-            path.join(tmpDir, RAW_SPECS_MANIFEST_FILENAME),
+            path.join(tmpDir, SPECS_MANIFEST_FILENAME),
             JSON.stringify({ specs: [{ type: "asyncapi", specPath }] })
         );
 
@@ -93,7 +93,7 @@ describe("analyzeSpecs", () => {
         const specPath = path.join(tmpDir, "spec-0.json");
         await writeFile(specPath, JSON.stringify(spec));
         await writeFile(
-            path.join(tmpDir, RAW_SPECS_MANIFEST_FILENAME),
+            path.join(tmpDir, SPECS_MANIFEST_FILENAME),
             JSON.stringify({ specs: [{ type: "openrpc", specPath }] })
         );
 
@@ -107,7 +107,7 @@ describe("analyzeSpecs", () => {
         const specPath = path.join(tmpDir, "proto");
         await mkdir(specPath, { recursive: true });
         await writeFile(
-            path.join(tmpDir, RAW_SPECS_MANIFEST_FILENAME),
+            path.join(tmpDir, SPECS_MANIFEST_FILENAME),
             JSON.stringify({ specs: [{ type: "protobuf", specPath }] })
         );
 
@@ -135,7 +135,7 @@ describe("analyzeSpecs", () => {
         await writeFile(specPath1, JSON.stringify(spec1));
         await writeFile(specPath2, JSON.stringify(spec2));
         await writeFile(
-            path.join(tmpDir, RAW_SPECS_MANIFEST_FILENAME),
+            path.join(tmpDir, SPECS_MANIFEST_FILENAME),
             JSON.stringify({
                 specs: [
                     { type: "openapi", specPath: specPath1 },
@@ -154,7 +154,7 @@ describe("analyzeSpecs", () => {
         const specPath = path.join(tmpDir, "spec-0.json");
         await writeFile(specPath, "not valid json {{{");
         await writeFile(
-            path.join(tmpDir, RAW_SPECS_MANIFEST_FILENAME),
+            path.join(tmpDir, SPECS_MANIFEST_FILENAME),
             JSON.stringify({ specs: [{ type: "openapi", specPath }] })
         );
 
@@ -166,7 +166,7 @@ describe("analyzeSpecs", () => {
 
     it("handles missing spec file gracefully", async () => {
         await writeFile(
-            path.join(tmpDir, RAW_SPECS_MANIFEST_FILENAME),
+            path.join(tmpDir, SPECS_MANIFEST_FILENAME),
             JSON.stringify({ specs: [{ type: "openapi", specPath: path.join(tmpDir, "missing.json") }] })
         );
 
@@ -189,7 +189,7 @@ describe("formatSpecAnalysis", () => {
                     version: "1.0.0",
                     endpointCount: 5,
                     schemaCount: 3,
-                    specPath: "/fern/raw-specs/spec-0.json"
+                    specPath: "/fern/specs/spec-0.json"
                 }
             ]
         });

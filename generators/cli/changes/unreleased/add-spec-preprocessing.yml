@@ -1,5 +1,5 @@
 - summary: |
-    Add raw API spec pre-processing infrastructure: bundle external $refs,
+    Add API spec pre-processing infrastructure: bundle external $refs,
     merge overrides, apply overlays, and output compact JSON for embedding
     in generated CLI.
   type: feat

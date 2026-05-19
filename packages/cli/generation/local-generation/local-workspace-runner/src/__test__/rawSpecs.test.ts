@@ -61,7 +61,7 @@ describe("collectRawSpecs", () => {
         const manifest = await collectRawSpecs({
             specs: [],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
+            containerBaseDir: "/fern/specs",
             context: createMockContext()
         });
 
@@ -90,13 +90,13 @@ describe("collectRawSpecs", () => {
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
+            containerBaseDir: "/fern/specs",
             context: createMockContext()
         });
 
         expect(manifest.specs).toHaveLength(1);
         expect(manifest.specs[0]?.type).toBe("openapi");
-        expect(manifest.specs[0]?.specPath).toBe("/fern/raw-specs/spec-0.json");
+        expect(manifest.specs[0]?.specPath).toBe("/fern/specs/spec-0.json");
         expect(manifest.specs[0]?.overridePaths).toBeUndefined();
 
         const content = await readFile(path.join(outputDir, "spec-0.json"), "utf-8");
@@ -132,7 +132,7 @@ describe("collectRawSpecs", () => {
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
+            containerBaseDir: "/fern/specs",
             context: createMockContext()
         });
 
@@ -194,7 +194,7 @@ describe("collectRawSpecs", () => {
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
+            containerBaseDir: "/fern/specs",
             context: createMockContext()
         });
 
@@ -234,13 +234,13 @@ describe("collectRawSpecs", () => {
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
+            containerBaseDir: "/fern/specs",
             context: createMockContext()
         });
 
         expect(manifest.specs).toHaveLength(2);
-        expect(manifest.specs[0]?.specPath).toBe("/fern/raw-specs/spec-0.json");
-        expect(manifest.specs[1]?.specPath).toBe("/fern/raw-specs/spec-1.json");
+        expect(manifest.specs[0]?.specPath).toBe("/fern/specs/spec-0.json");
+        expect(manifest.specs[1]?.specPath).toBe("/fern/specs/spec-1.json");
 
         const content0 = JSON.parse(await readFile(path.join(outputDir, "spec-0.json"), "utf-8"));
         const content1 = JSON.parse(await readFile(path.join(outputDir, "spec-1.json"), "utf-8"));
@@ -269,13 +269,13 @@ describe("collectRawSpecs", () => {
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
+            containerBaseDir: "/fern/specs",
             context: createMockContext()
         });
 
         expect(manifest.specs).toHaveLength(1);
         expect(manifest.specs[0]?.type).toBe("protobuf");
-        expect(manifest.specs[0]?.specPath).toBe("/fern/raw-specs/proto-0");
+        expect(manifest.specs[0]?.specPath).toBe("/fern/specs/proto-0");
 
         const copiedProto = await readFile(path.join(outputDir, "proto-0", "service", "api.proto"), "utf-8");
         expect(copiedProto).toBe('syntax = "proto3";');
@@ -305,7 +305,7 @@ describe("collectRawSpecs", () => {
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
+            containerBaseDir: "/fern/specs",
             context: createMockContext()
         });
 
@@ -329,13 +329,13 @@ describe("collectRawSpecs", () => {
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
+            containerBaseDir: "/fern/specs",
             context: createMockContext()
         });
 
         expect(manifest.specs).toHaveLength(1);
         expect(manifest.specs[0]?.type).toBe("graphql");
-        expect(manifest.specs[0]?.specPath).toBe("/fern/raw-specs/spec-0.graphql");
+        expect(manifest.specs[0]?.specPath).toBe("/fern/specs/spec-0.graphql");
 
         const content = await readFile(path.join(outputDir, "spec-0.graphql"), "utf-8");
         expect(content).toBe("type Query { hello: String }");
@@ -360,7 +360,7 @@ describe("collectRawSpecs", () => {
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
+            containerBaseDir: "/fern/specs",
             context: createMockContext()
         });
 
@@ -416,17 +416,17 @@ describe("collectRawSpecs", () => {
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
+            containerBaseDir: "/fern/specs",
             context: createMockContext()
         });
 
         expect(manifest.specs).toHaveLength(3);
         expect(manifest.specs[0]?.type).toBe("openapi");
-        expect(manifest.specs[0]?.specPath).toBe("/fern/raw-specs/spec-0.json");
+        expect(manifest.specs[0]?.specPath).toBe("/fern/specs/spec-0.json");
         expect(manifest.specs[1]?.type).toBe("protobuf");
-        expect(manifest.specs[1]?.specPath).toBe("/fern/raw-specs/proto-1");
+        expect(manifest.specs[1]?.specPath).toBe("/fern/specs/proto-1");
         expect(manifest.specs[2]?.type).toBe("graphql");
-        expect(manifest.specs[2]?.specPath).toBe("/fern/raw-specs/spec-2.graphql");
+        expect(manifest.specs[2]?.specPath).toBe("/fern/specs/spec-2.graphql");
     });
 
     it("uses container paths in manifest entries", async () => {
@@ -451,11 +451,11 @@ describe("collectRawSpecs", () => {
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
+            containerBaseDir: "/fern/specs",
             context: createMockContext()
         });
 
-        expect(manifest.specs[0]?.specPath).toMatch(/^\/fern\/raw-specs\//);
+        expect(manifest.specs[0]?.specPath).toMatch(/^\/fern\/specs\//);
     });
 
     it("merges array overrides sequentially into OpenAPI spec", async () => {
@@ -485,7 +485,7 @@ describe("collectRawSpecs", () => {
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
+            containerBaseDir: "/fern/specs",
             context: createMockContext()
         });
 
@@ -519,7 +519,7 @@ describe("collectRawSpecs", () => {
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
+            containerBaseDir: "/fern/specs",
             context: createMockContext()
         });
 
@@ -549,7 +549,7 @@ describe("collectRawSpecs", () => {
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
+            containerBaseDir: "/fern/specs",
             context: createMockContext()
         });
 
@@ -607,7 +607,7 @@ describe("collectRawSpecs", () => {
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
+            containerBaseDir: "/fern/specs",
             context: createMockContext()
         });
 
@@ -673,7 +673,7 @@ describe("collectRawSpecs", () => {
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
+            containerBaseDir: "/fern/specs",
             audiences: { type: "select", audiences: ["external"] },
             context: createMockContext()
         });
@@ -735,7 +735,7 @@ describe("collectRawSpecs", () => {
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
-            containerBaseDir: "/fern/raw-specs",
+            containerBaseDir: "/fern/specs",
             audiences: { type: "all" },
             context: createMockContext()
         });

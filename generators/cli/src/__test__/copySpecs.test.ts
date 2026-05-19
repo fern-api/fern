@@ -2,7 +2,7 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { copyRawSpecs, copySpecFile, type RawSpecsManifest } from "../copySpecs.js";
+import { copySpecFile, copySpecs, type RawSpecsManifest } from "../copySpecs.js";
 
 describe("copySpecFile", () => {
     let tmpDir: string;
@@ -69,11 +69,11 @@ describe("copySpecFile", () => {
     });
 });
 
-describe("copyRawSpecs", () => {
+describe("copySpecs", () => {
     let tmpDir: string;
 
     beforeEach(async () => {
-        tmpDir = await mkdtemp(path.join(os.tmpdir(), "copyRawSpecs-"));
+        tmpDir = await mkdtemp(path.join(os.tmpdir(), "copySpecs-"));
     });
 
     afterEach(async () => {
@@ -85,7 +85,7 @@ describe("copyRawSpecs", () => {
         await mkdir(outputDir, { recursive: true });
 
         // Should not throw
-        await copyRawSpecs(outputDir, path.join(tmpDir, "nonexistent"));
+        await copySpecs(outputDir, path.join(tmpDir, "nonexistent"));
 
         // specs/ dir should not be created
         try {
@@ -97,7 +97,7 @@ describe("copyRawSpecs", () => {
     });
 
     it("does nothing when manifest has empty specs array", async () => {
-        const rawSpecsDir = path.join(tmpDir, "raw-specs");
+        const rawSpecsDir = path.join(tmpDir, "specs");
         await mkdir(rawSpecsDir, { recursive: true });
         const manifest: RawSpecsManifest = { specs: [] };
         await writeFile(path.join(rawSpecsDir, "specs-manifest.json"), JSON.stringify(manifest));
@@ -105,7 +105,7 @@ describe("copyRawSpecs", () => {
         const outputDir = path.join(tmpDir, "output");
         await mkdir(outputDir, { recursive: true });
 
-        await copyRawSpecs(outputDir, rawSpecsDir);
+        await copySpecs(outputDir, rawSpecsDir);
 
         // specs/ dir should not be created
         try {
@@ -117,7 +117,7 @@ describe("copyRawSpecs", () => {
     });
 
     it("copies OpenAPI spec and writes output manifest", async () => {
-        const rawSpecsDir = path.join(tmpDir, "raw-specs");
+        const rawSpecsDir = path.join(tmpDir, "specs");
         await mkdir(path.join(rawSpecsDir, "api"), { recursive: true });
         await writeFile(path.join(rawSpecsDir, "api", "openapi.yaml"), "openapi: 3.0.0");
 
@@ -134,7 +134,7 @@ describe("copyRawSpecs", () => {
         const outputDir = path.join(tmpDir, "output");
         await mkdir(outputDir, { recursive: true });
 
-        await copyRawSpecs(outputDir, rawSpecsDir);
+        await copySpecs(outputDir, rawSpecsDir);
 
         // Verify spec file was copied
         const specContent = await readFile(path.join(outputDir, "specs", "api", "openapi.yaml"), "utf-8");
@@ -150,7 +150,7 @@ describe("copyRawSpecs", () => {
     });
 
     it("copies spec with overrides", async () => {
-        const rawSpecsDir = path.join(tmpDir, "raw-specs");
+        const rawSpecsDir = path.join(tmpDir, "specs");
         await mkdir(path.join(rawSpecsDir, "api"), { recursive: true });
         await mkdir(path.join(rawSpecsDir, "overrides"), { recursive: true });
 
@@ -171,7 +171,7 @@ describe("copyRawSpecs", () => {
         const outputDir = path.join(tmpDir, "output");
         await mkdir(outputDir, { recursive: true });
 
-        await copyRawSpecs(outputDir, rawSpecsDir);
+        await copySpecs(outputDir, rawSpecsDir);
 
         // Verify all files were copied
         expect(await readFile(path.join(outputDir, "specs", "api", "spec.yaml"), "utf-8")).toBe("spec");
@@ -185,7 +185,7 @@ describe("copyRawSpecs", () => {
     });
 
     it("copies protobuf directory spec", async () => {
-        const rawSpecsDir = path.join(tmpDir, "raw-specs");
+        const rawSpecsDir = path.join(tmpDir, "specs");
         const protoDir = path.join(rawSpecsDir, "proto");
         await mkdir(path.join(protoDir, "service"), { recursive: true });
         await writeFile(path.join(protoDir, "service", "api.proto"), 'syntax = "proto3";');
@@ -203,7 +203,7 @@ describe("copyRawSpecs", () => {
         const outputDir = path.join(tmpDir, "output");
         await mkdir(outputDir, { recursive: true });
 
-        await copyRawSpecs(outputDir, rawSpecsDir);
+        await copySpecs(outputDir, rawSpecsDir);
 
         // Verify protobuf directory was copied recursively
         const protoContent = await readFile(path.join(outputDir, "specs", "proto", "service", "api.proto"), "utf-8");

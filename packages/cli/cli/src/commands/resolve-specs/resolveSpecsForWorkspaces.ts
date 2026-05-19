@@ -1,6 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { collectRawSpecs, RAW_SPECS_MANIFEST_FILENAME } from "@fern-api/local-workspace-runner";
+import { collectRawSpecs, SPECS_MANIFEST_FILENAME } from "@fern-api/local-workspace-runner";
 import { Project } from "@fern-api/project-loader";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
@@ -45,7 +45,7 @@ export async function resolveSpecsForWorkspaces({
                 });
 
                 await writeFile(
-                    path.join(workspaceOutputDir, RAW_SPECS_MANIFEST_FILENAME),
+                    path.join(workspaceOutputDir, SPECS_MANIFEST_FILENAME),
                     JSON.stringify(manifest, undefined, 4)
                 );
 

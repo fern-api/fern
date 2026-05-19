@@ -24,12 +24,12 @@ import {
     CONTAINER_PATH_TO_IR,
     CONTAINER_PATH_TO_SNIPPET,
     CONTAINER_PATH_TO_SNIPPET_TEMPLATES,
-    CONTAINER_RAW_SPECS_DIRECTORY,
     CONTAINER_SOURCES_DIRECTORY,
+    CONTAINER_SPECS_DIRECTORY,
     GENERATOR_CONFIG_FILENAME,
     IR_FILENAME,
-    RAW_SPECS_DIRECTORY_NAME,
-    RAW_SPECS_MANIFEST_FILENAME
+    SPECS_DIRECTORY_NAME,
+    SPECS_MANIFEST_FILENAME
 } from "./constants.js";
 import { ExecutionEnvironment, SourceMount } from "./ExecutionEnvironment.js";
 import { getGeneratorConfig, getLicensePathFromConfig } from "./getGeneratorConfig.js";
@@ -254,10 +254,10 @@ export async function writeFilesToDiskAndRunGenerator({
     // bundled (all $refs resolved), overrides merged, and overlays applied before mounting.
     // Protobuf and GraphQL specs are copied as-is.
     if (rawApiSpecs != null && rawApiSpecs.length > 0) {
-        const rawSpecsDir = join(workspaceTempDir.path, RAW_SPECS_DIRECTORY_NAME);
+        const rawSpecsDir = join(workspaceTempDir.path, SPECS_DIRECTORY_NAME);
         await mkdir(rawSpecsDir, { recursive: true });
 
-        const containerSpecsDir = CONTAINER_RAW_SPECS_DIRECTORY;
+        const containerSpecsDir = CONTAINER_SPECS_DIRECTORY;
 
         const manifest = await collectRawSpecs({
             specs: rawApiSpecs,
@@ -267,12 +267,12 @@ export async function writeFilesToDiskAndRunGenerator({
             audiences
         });
 
-        await writeFile(join(rawSpecsDir, RAW_SPECS_MANIFEST_FILENAME), JSON.stringify(manifest, undefined, 4));
+        await writeFile(join(rawSpecsDir, SPECS_MANIFEST_FILENAME), JSON.stringify(manifest, undefined, 4));
         context.logger.debug(`Wrote raw specs manifest with ${manifest.specs.length} spec(s) to ${rawSpecsDir}`);
 
         sourceMounts.push({
             hostPath: AbsoluteFilePath.of(rawSpecsDir),
-            containerPath: CONTAINER_RAW_SPECS_DIRECTORY
+            containerPath: CONTAINER_SPECS_DIRECTORY
         });
     }
 

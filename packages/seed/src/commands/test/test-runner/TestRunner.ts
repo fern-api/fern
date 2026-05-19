@@ -2,7 +2,7 @@ import { FernWorkspace, type Spec } from "@fern-api/api-workspace-commons";
 import { APIS_DIRECTORY, FERN_DIRECTORY, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { generatorWantsRawSpecs } from "@fern-api/local-workspace-runner";
+import { generatorWantsSpecs } from "@fern-api/local-workspace-runner";
 import { LogLevel } from "@fern-api/logger";
 import { TaskContext, TaskResult } from "@fern-api/task-context";
 import { getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation } from "@fern-api/workspace-loader";
@@ -235,7 +235,7 @@ export abstract class TestRunner {
 
             let fernWorkspace: FernWorkspace | undefined;
             let rawApiSpecs: Spec[] | undefined;
-            const wantsSpecs = generatorWantsRawSpecs(this.getParsedDockerImageName().name);
+            const wantsSpecs = generatorWantsSpecs(this.getParsedDockerImageName().name);
             if (this.workspaceCache != null && generatorInvocation == null) {
                 // Use cache when no generatorInvocation overrides are present.
                 // The cache is keyed by absolutePathToAPIDefinition (derived from fixture name),

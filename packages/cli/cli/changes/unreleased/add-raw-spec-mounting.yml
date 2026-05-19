@@ -1,5 +1,5 @@
 - summary: |
-    Mount pre-processed raw API specs into generator Docker containers.
+    Mount pre-processed API specs into generator Docker containers.
     Specs are bundled, overrides merged, overlays applied, x-fern-ignore
     operations filtered, and x-fern-audiences respected before outputting
     compact JSON to generators. Add hidden `resolve-specs` command.
