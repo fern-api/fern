@@ -2125,8 +2125,7 @@ export class SdkGenerator {
 
             const hasWebSocketInTree =
                 (package_ as { hasWebSocketInTree?: boolean }).hasWebSocketInTree ?? package_.websocket != null;
-            const hasClient =
-                package_.hasEndpointsInTree || (this.generateWebSocketClients && hasWebSocketInTree);
+            const hasClient = package_.hasEndpointsInTree || (this.generateWebSocketClients && hasWebSocketInTree);
 
             if (!hasClient && package_.subpackages.length === 0) {
                 continue;
