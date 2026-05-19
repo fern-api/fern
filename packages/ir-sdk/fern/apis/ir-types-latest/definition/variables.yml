@@ -11,3 +11,4 @@ types:
       id: VariableId
       name: commons.NameOrString
       type: types.TypeReference
+      default: optional<string>

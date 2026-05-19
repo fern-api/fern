@@ -17,11 +17,14 @@ export function buildVariables(context: OpenApiIrConverterContext): void {
             namespace,
             declarationDepth: 0
         });
+        const defaultValue =
+            variableSchema.schema.type === "string" ? (variableSchema.schema.default ?? undefined) : undefined;
         context.builder.addVariable({
             name: variable,
             schema: {
                 type: getTypeFromTypeReference(typeReference),
-                docs: variableSchema.description ?? undefined
+                docs: variableSchema.description ?? undefined,
+                ...(defaultValue != null ? { default: defaultValue } : {})
             }
         });
     }

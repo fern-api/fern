@@ -4,4 +4,5 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface VariableDeclarationDetailed extends FernDefinition.WithDocsSchema {
     type: string;
+    default?: string;
 }
