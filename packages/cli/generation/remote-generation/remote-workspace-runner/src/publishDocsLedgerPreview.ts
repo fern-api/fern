@@ -4,7 +4,7 @@ import {
     createDocsLedgerClient,
     type DocsPublishGitInput,
     type FileManifestEntry,
-    type FinishTranslationInput
+    type TranslationEntry
 } from "@fern-api/fdr-sdk/orpc-client";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { TaskContext } from "@fern-api/task-context";
@@ -145,6 +145,23 @@ export async function publishDocsViaLedgerPreview({
 
     await uploadMissingBlobs(registerResult.missingContent, blobs, context, filePaths);
 
+    // Build the translations array for the finish call.
+    const translations: TranslationEntry[] = translationInputs.map((t) => ({
+        locale: t.locale,
+        root: t.input.root,
+        pages: t.input.pages,
+        apiManifest: t.input.apiManifest,
+        config: t.input.config,
+        fileManifest: t.input.fileManifest,
+        jsFiles: t.input.jsFiles,
+        redirects: t.input.redirects,
+        version: t.input.version,
+        repo: t.input.repo,
+        git: t.input.git
+    }));
+
+    // Finish — server persists the preview deployment + all translations
+    // in a single call.
     context.logger.debug("[ledger-preview] Finishing preview deployment...");
     const finishStart = performance.now();
     const finishResult = await client.finish({
@@ -152,7 +169,8 @@ export async function publishDocsViaLedgerPreview({
         domain: registerResult.domain,
         basepath: registerResult.basepath,
         customDomains: [],
-        previewId: registerResult.previewId
+        previewId: registerResult.previewId,
+        translations: translations.length > 0 ? translations : undefined
     });
     const finishTime = performance.now() - finishStart;
     context.logger.debug(
@@ -160,35 +178,10 @@ export async function publishDocsViaLedgerPreview({
             `reused=${finishResult.reusedDeployment}`
     );
 
-    // ── Phase 3: Attach translations to the deployment ─────────────────
-
-    if (translationInputs.length > 0) {
-        context.logger.info(`[ledger-preview] Attaching translations for ${translationInputs.length} locale(s)...`);
-
-        for (const t of translationInputs) {
-            const localeRegister = await client.register(t.input);
-            await uploadMissingBlobs(localeRegister.missingContent, t.blobs, context, filePaths);
-
-            const finishInput: FinishTranslationInput = {
-                orgId: organization,
-                domain: registerResult.domain,
-                basepath: registerResult.basepath ?? "",
-                deploymentId: finishResult.deploymentId,
-                locale: t.locale,
-                root: t.translatedDefinition.config.root ?? t.translatedDefinition.config.navigation,
-                pages: t.input.pages,
-                apiManifest: t.input.apiManifest,
-                config: t.input.config,
-                fileManifest: t.input.fileManifest,
-                jsFiles: t.input.jsFiles,
-                redirects: t.input.redirects,
-                git: t.input.git
-            };
-
-            const result = await client.finishTranslation(finishInput);
-            context.logger.info(
-                `[ledger-preview] Locale "${t.locale}": ${Object.keys(t.localePages).length} page(s), ${result.segmentsAdded} segment(s) added`
-            );
+    // Log translation results if any were processed.
+    if (finishResult.translationsProcessed != null) {
+        for (const tp of finishResult.translationsProcessed) {
+            context.logger.info(`[ledger-preview] Locale "${tp.locale}": ${tp.segmentsAdded} segment(s) added`);
         }
     }
 

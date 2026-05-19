@@ -5,7 +5,7 @@ import {
     type DocsPublishGitInput,
     type DocsPublishInput,
     type FileManifestEntry,
-    type FinishTranslationInput
+    type TranslationEntry
 } from "@fern-api/fdr-sdk/orpc-client";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { TaskContext } from "@fern-api/task-context";
@@ -272,6 +272,8 @@ export async function publishDocsViaLedger({
     }
 
     // ── Phase 2: Single register → upload → finish ─────────────────────
+    // Translations are passed inline to the finish call so the server
+    // persists base + all locale segments in a single request.
 
     const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers });
 
@@ -290,50 +292,41 @@ export async function publishDocsViaLedger({
     // lazily from disk via filePaths.
     await uploadMissingBlobs(registerResult.missingContent, blobs, context, filePaths);
 
-    // Finish — server persists the base deployment.
+    // Build the translations array for the finish call. Each entry
+    // carries only the content fields + locale — orgId/domain/basepath
+    // are inherited from the base input on the server side.
+    const translations: TranslationEntry[] = builtTranslations.map((t) => ({
+        locale: t.locale,
+        root: t.input.root,
+        pages: t.input.pages,
+        apiManifest: t.input.apiManifest,
+        config: t.input.config,
+        fileManifest: t.input.fileManifest,
+        jsFiles: t.input.jsFiles,
+        redirects: t.input.redirects,
+        version: t.input.version,
+        repo: t.input.repo,
+        git: t.input.git
+    }));
+
+    // Finish — server persists the base deployment + all translations
+    // in a single call.
+    const finishInput: DocsPublishInput = {
+        ...input,
+        translations: translations.length > 0 ? translations : undefined
+    };
     context.logger.debug("[ledger] Finishing deployment...");
     const finishStart = performance.now();
-    const finishResult = await client.finish(input);
+    const finishResult = await client.finish(finishInput);
     const finishTime = performance.now() - finishStart;
     context.logger.debug(
         `[ledger] Finished in ${finishTime.toFixed(0)}ms — deploymentId=${finishResult.deploymentId}, reused=${finishResult.reusedDeployment}`
     );
 
-    // ── Phase 3: Attach translations to the deployment ─────────────────
-    // Translation blobs are already uploaded. Each finishTranslation call
-    // registers the locale's content hashes, uploads any remaining blobs
-    // the base register didn't cover, and attaches locale-specific
-    // segments to the existing deployment.
-
-    if (builtTranslations.length > 0) {
-        context.logger.info(`[ledger] Attaching translations for ${builtTranslations.length} locale(s)...`);
-
-        for (const t of builtTranslations) {
-            // Register translation to discover any blobs not covered by
-            // the base register (translation pages have different hashes).
-            const localeRegister = await client.register(t.input);
-            await uploadMissingBlobs(localeRegister.missingContent, t.blobs, context, filePaths);
-
-            const finishInput: FinishTranslationInput = {
-                orgId: organization,
-                domain,
-                basepath: basepath ?? "",
-                deploymentId: finishResult.deploymentId,
-                locale: t.locale,
-                root: t.translatedDefinition.config.root ?? t.translatedDefinition.config.navigation,
-                pages: t.input.pages,
-                apiManifest: t.input.apiManifest,
-                config: t.input.config,
-                fileManifest: t.input.fileManifest,
-                jsFiles: t.input.jsFiles,
-                redirects: t.input.redirects,
-                git: t.input.git
-            };
-
-            const result = await client.finishTranslation(finishInput);
-            context.logger.info(
-                `[ledger] Locale "${t.locale}": ${Object.keys(t.localePages).length} page(s), ${result.segmentsAdded} segment(s) added`
-            );
+    // Log translation results if any were processed.
+    if (finishResult.translationsProcessed != null) {
+        for (const tp of finishResult.translationsProcessed) {
+            context.logger.info(`[ledger] Locale "${tp.locale}": ${tp.segmentsAdded} segment(s) added`);
         }
     }
 
