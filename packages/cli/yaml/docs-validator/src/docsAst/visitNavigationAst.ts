@@ -270,10 +270,8 @@ async function visitNavigationItem({
             await visitFolderMarkdownFiles({
                 directoryPath: folderDir,
                 absolutePathToFernFolder,
-                absoluteFilepathToConfiguration,
                 visitor,
                 nodePath: [...nodePath, "folder"],
-                apiWorkspaces,
                 context
             });
         }
@@ -324,18 +322,14 @@ function navigationItemIsFolder(
 async function visitFolderMarkdownFiles({
     directoryPath,
     absolutePathToFernFolder,
-    absoluteFilepathToConfiguration,
     visitor,
     nodePath,
-    apiWorkspaces,
     context
 }: {
     directoryPath: AbsoluteFilePath;
     absolutePathToFernFolder: AbsoluteFilePath;
-    absoluteFilepathToConfiguration: AbsoluteFilePath;
     visitor: Partial<DocsConfigFileAstVisitor>;
     nodePath: NodePath;
-    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     context: TaskContext;
 }): Promise<void> {
     const entries = await readdir(directoryPath, { withFileTypes: true });
@@ -351,9 +345,6 @@ async function visitFolderMarkdownFiles({
 
     await asyncPool(VALIDATION_CONCURRENCY, markdownFiles, async (file) => {
         const absoluteFilepath = join(directoryPath, RelativeFilePath.of(file.name));
-        if (!(await doesPathExist(absoluteFilepath))) {
-            return;
-        }
 
         const fileStats = await stat(absoluteFilepath);
         const fileSizeMB = fileStats.size / (1024 * 1024);
@@ -401,10 +392,8 @@ async function visitFolderMarkdownFiles({
         await visitFolderMarkdownFiles({
             directoryPath: subdirPath,
             absolutePathToFernFolder,
-            absoluteFilepathToConfiguration,
             visitor,
             nodePath: [...nodePath, subdir.name],
-            apiWorkspaces,
             context
         });
     });
