@@ -1,4 +1,33 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.42.0
+  changelogEntry:
+    - summary: |
+        Add streaming reconnect options on every Go SDK request:
+        `option.WithMaxStreamReconnectAttempts(uint)`, `option.WithoutStreamReconnection()`,
+        and `option.WithoutRetries()`.
+
+        For SSE endpoints whose Fern definition sets `response-stream.resumable: true`
+        (or whose OpenAPI sets `x-fern-streaming.resumable: true`), the generated
+        streaming methods now reconnect transparently on mid-stream connection drops
+        using SSE `Last-Event-ID` semantics, honoring server-sent `retry:` directives
+        and capped by `MaxStreamReconnectAttempts` (default 5).
+
+        No behavior change for endpoints that do not opt into `resumable: true`. The
+        new option constructors are emitted unconditionally and have no effect on
+        those endpoints.
+      type: feat
+  createdAt: "2026-05-18"
+  irVersion: 66
+- version: 1.41.4
+  changelogEntry:
+    - summary: |
+        Dynamic snippets now render path-parameter arguments in IR (URL / SDK signature) order
+        rather than in the order they happen to appear in the input request, so generated
+        examples line up with the actual SDK method signature even when the spec lists path
+        parameters in a different order.
+      type: fix
+  createdAt: "2026-05-15"
+  irVersion: 66
 - version: 1.41.3
   changelogEntry:
     - summary: |

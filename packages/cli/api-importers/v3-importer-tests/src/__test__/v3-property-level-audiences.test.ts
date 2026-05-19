@@ -1,8 +1,10 @@
 import type { Audiences } from "@fern-api/configuration";
+import { APIV1Db, convertAPIDefinitionToDb, convertDbAPIDefinitionToRead, SDKSnippetHolder } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import type { FernIr } from "@fern-api/ir-sdk";
 import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { convertIrToFdrApi } from "@fern-api/register";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import { describe, expect, it } from "vitest";
@@ -390,4 +392,75 @@ describe("OpenAPI 3.1 → IR property-level audience filtering (regression cover
             expect(project(filteredEndpoint?.pathParameters)).toEqual(project(unfilteredEndpoint?.pathParameters));
         }, 90_000);
     });
+});
+
+// Regression test for CLI v5.23.3: audience filtering with enableUniqueErrorsPerEndpoint
+// breaks when error types reference other types via properties (e.g. ErrorResponse → ErrorResponseError).
+// The FDR SDK throws "Failed to find ErrorResponseError" because the property-referenced type
+// was excluded during audience filtering despite being needed by an included error type.
+describe("enableUniqueErrorsPerEndpoint + audience filtering (v5.23.3 regression)", () => {
+    async function getIRWithUniqueErrors(audiences: Audiences) {
+        const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(FIXTURE_NAME), RelativeFilePath.of("fern"));
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: fixturePath,
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: FIXTURE_NAME
+        });
+        if (!workspace.didSucceed) {
+            throw new Error(`Failed to load OpenAPI fixture ${FIXTURE_NAME}\n${JSON.stringify(workspace.failures)}`);
+        }
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(`Expected OSSWorkspace for fixture ${FIXTURE_NAME}`);
+        }
+        return workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences,
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: true,
+            logWarnings: false
+        });
+    }
+
+    it("error types referencing other types via properties survive audience filtering", async () => {
+        const ir = await getIRWithUniqueErrors({ type: "select", audiences: ["public"] });
+
+        // ErrorResponse and ErrorResponseError must both be in the filtered types
+        const typeNames = Object.values(ir.types).map((t) => getOriginalName(t.name.name));
+        expect(typeNames).toContain("ErrorResponse");
+        expect(typeNames).toContain("ErrorResponseError");
+    }, 90_000);
+
+    it("full FDR pipeline succeeds with audience filtering and unique error IDs", async () => {
+        const ir = await getIRWithUniqueErrors({ type: "select", audiences: ["public"] });
+
+        const snippetHolder = new SDKSnippetHolder({
+            snippetsBySdkId: {},
+            snippetsConfigWithSdkId: {},
+            snippetTemplatesByEndpoint: {},
+            snippetsBySdkIdAndEndpointId: {},
+            snippetTemplatesByEndpointId: {}
+        });
+        const context = createMockTaskContext();
+        // This is the exact pipeline that DocsDefinitionResolver uses.
+        // Before the fix, convertDbAPIDefinitionToRead threw "Failed to find ErrorResponseError".
+        const fdrApi = convertIrToFdrApi({
+            ir,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            context
+        });
+        const dbDef = convertAPIDefinitionToDb(fdrApi, APIV1Db.ApiDefinitionId("test-api"), snippetHolder);
+        expect(() => convertDbAPIDefinitionToRead(dbDef)).not.toThrow();
+    }, 90_000);
 });

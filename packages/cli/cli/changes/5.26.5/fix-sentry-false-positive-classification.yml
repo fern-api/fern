@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Suppress additional Sentry false positives for interrupted syscalls, invalid versions, YAML parse failures, IR schema parse failures, invalid GitHub repository config, replay resolve failures, missing translation directories, and global theme fetch failures.
+  type: fix

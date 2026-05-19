@@ -1,4 +1,33 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.8.10
+  changelogEntry:
+    - summary: |
+        Update krb5-libs in the Java SDK generator container to fix
+        CVE-2026-40356 (integer underflow OOB read) and CVE-2026-40355
+        (NULL pointer dereference) in MIT Kerberos 5.
+      type: chore
+  createdAt: "2026-05-18"
+  irVersion: 66
+- version: 4.8.9
+  changelogEntry:
+    - summary: |
+        Fix CVE-2026-41989: update libgcrypt in Docker image to patch heap-based
+        buffer overflow in gcry_pk_decrypt.
+      type: chore
+  createdAt: "2026-05-18"
+  irVersion: 66
+- version: 4.8.8
+  changelogEntry:
+    - summary: |
+        Dynamic snippets now render path-parameter arguments in IR (URL / SDK signature) order
+        rather than in the order they happen to appear in the input request, so generated
+        examples line up with the actual SDK method signature even when the spec lists path
+        parameters in a different order. Also fixes spurious "not recognized" errors that
+        were raised for endpoint-level path parameters when both top-level and endpoint-level
+        path parameters were supplied.
+      type: fix
+  createdAt: "2026-05-15"
+  irVersion: 66
 - version: 4.8.7
   changelogEntry:
     - summary: |

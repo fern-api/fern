@@ -1,4 +1,125 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.28.2
+  changelogEntry:
+    - summary: |
+        Generator-cli now delegates divergent-merge recovery (squash-merge of a regen
+        PR, force-push past a generation, lost-then-found generations) entirely to
+        `@fern-api/replay`'s derived scan boundary. Customers no longer hit the
+        pre-replay precondition gauntlet that occasionally got stuck on stale
+        `fern-generation-base` tag pointers. Replay still writes the tag for
+        backward compatibility with older bundled generator-cli versions.
+      type: chore
+  createdAt: "2026-05-18"
+  irVersion: 66
+- version: 5.28.1
+  changelogEntry:
+    - summary: |
+        Fix global theme merge to deep-merge object fields instead of overwriting them.
+        Local-only sub-fields (e.g. logo.right-text, logo.height) are now preserved
+        when the global theme defines sibling fields on the same object.
+      type: fix
+  createdAt: "2026-05-18"
+  irVersion: 66
+- version: 5.28.0
+  changelogEntry:
+    - summary: |
+        Consolidate all CLI v2 cache directories into `~/.fern/`. Docs preview bundles are now
+        managed under `~/.fern/v1/docs-preview/` and discoverable via `fern cache show` and
+        `fern cache clear --docs-preview`. The `fern cache clear` command never touches the
+        user's auth token or telemetry ID.
+      type: feat
+  createdAt: "2026-05-18"
+  irVersion: 66
+- version: 5.27.8
+  changelogEntry:
+    - summary: |
+        Fix property-level x-fern-audiences filtering breaking error type resolution when
+        enableUniqueErrorsPerEndpoint is true. Types referenced via object properties (e.g.
+        ErrorResponse → ErrorResponseError) are now correctly included during audience filtering,
+        resolving "Failed to find ErrorResponseError" errors in fern check and fern docs dev.
+      type: fix
+  createdAt: "2026-05-18"
+  irVersion: 66
+- version: 5.27.7
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.30, which includes @fern-api/replay
+        0.15.2 with a fix for customer commits on merged regen branches surviving
+        replay detection.
+      type: chore
+  createdAt: "2026-05-17"
+  irVersion: 66
+- version: 5.27.6
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.29, which includes @fern-api/replay
+        0.15.1 with fixes for fallback patch anchoring, composite-patch survival,
+        and FileOwnership divergence.
+      type: chore
+  createdAt: "2026-05-17"
+  irVersion: 66
+- version: 5.27.5
+  changelogEntry:
+    - summary: |
+        Wrap `replaceImagePathsAndUrls` calls in `DocsDefinitionResolver` and `previewDocs` with
+        try/catch boundaries that convert MDX parse failures to `CliError(ParseError)`, preventing
+        user-authored MDX syntax errors from reaching Sentry as false-positive InternalErrors.
+      type: fix
+  createdAt: "2026-05-16"
+  irVersion: 66
+- version: 5.27.4
+  changelogEntry:
+    - summary: |
+        Classify service and environment errors at their boundary call sites: mark exhausted
+        429 retries as NetworkError, pass error objects through failWithoutThrowing in remote
+        generation so CliError codes propagate, and reclassify docs preview server startup
+        failures as EnvironmentError instead of InternalError.
+      type: fix
+  createdAt: "2026-05-16"
+  irVersion: 66
+- version: 5.27.3
+  changelogEntry:
+    - summary: |
+        Wrap `yaml.load` calls in `getVersionedNavigationConfiguration` and `getNavigationConfiguration`
+        with try/catch boundaries that convert YAML parse failures to `CliError(ParseError)`, preventing
+        user-authored YAML syntax errors in version and product config files from reaching Sentry as
+        false-positive InternalErrors.
+      type: fix
+  createdAt: "2026-05-16"
+  irVersion: 66
+- version: 5.27.2
+  changelogEntry:
+    - summary: |
+        Suppress Sentry false positives for ENOTEMPTY/ENOMEM syscalls, undici
+        fetch-failed TypeErrors, and errno codes on error.cause.
+      type: fix
+  createdAt: "2026-05-16"
+  irVersion: 66
+- version: 5.27.1
+  changelogEntry:
+    - summary: |
+        Report escaped fatal CLI errors through telemetry in packaged production runs.
+      type: fix
+  createdAt: "2026-05-16"
+  irVersion: 66
+- version: 5.27.0
+  changelogEntry:
+    - summary: |
+        Enrich CLI telemetry with automation-mode context (config repo, branch,
+        commit sha, PR number, trigger, and GitHub run details) on every PostHog
+        event and Sentry error report.
+        Add the three-leg failure flow (Sentry + PostHog + automation event API)
+        so automation-run failures surface end-to-end.
+      type: internal
+  createdAt: "2026-05-16"
+  irVersion: 66
+- version: 5.26.5
+  changelogEntry:
+    - summary: |
+        Suppress additional Sentry false positives for interrupted syscalls, invalid versions, YAML parse failures, IR schema parse failures, invalid GitHub repository config, replay resolve failures, missing translation directories, and global theme fetch failures.
+      type: fix
+  createdAt: "2026-05-15"
+  irVersion: 66
 - version: 5.26.4
   changelogEntry:
     - summary: |

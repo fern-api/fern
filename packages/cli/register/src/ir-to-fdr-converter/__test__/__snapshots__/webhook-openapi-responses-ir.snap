@@ -636,6 +636,7 @@
       },
       "referencedTypes": Set {
         "PaymentSessionCompletedEventEventType",
+        "PaymentSession",
       },
       "shape": {
         "_visit": [Function],

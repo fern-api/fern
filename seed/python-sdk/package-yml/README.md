@@ -37,7 +37,6 @@ Instantiate and use the client with the following:
 from seed import SeedPackageYml
 
 client = SeedPackageYml(
-    id="id-ksfd9c1",
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -58,7 +57,6 @@ import asyncio
 from seed import AsyncSeedPackageYml
 
 client = AsyncSeedPackageYml(
-    id="id-ksfd9c1",
     base_url="https://yourhost.com/path/to/api",
 )
 

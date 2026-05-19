@@ -8,7 +8,7 @@ private func main() async throws {
     )
 
     _ = try await client.admin.storeTracedWorkspace(
-        submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         request: .init(
             workspaceRunDetails: WorkspaceRunDetails(
                 exceptionV2: ExceptionV2.generic(

@@ -64,8 +64,7 @@ export class PostGenerationPipeline {
                     this.logger,
                     { enabled: true, skipApplication: config.replay.skipApplication },
                     config.cliVersion,
-                    config.generatorVersions,
-                    config.generatorName
+                    config.generatorVersions
                 )
             );
         }
@@ -81,8 +80,7 @@ export class PostGenerationPipeline {
                     this.logger,
                     config.replay,
                     config.cliVersion,
-                    config.generatorVersions,
-                    config.generatorName
+                    config.generatorVersions
                 )
             );
         }

@@ -12,9 +12,9 @@ public partial class Examples
         await client.StreamXFernStreamingUnionAsync(
             new StreamXFernStreamingUnionRequest(
                 new UnionStreamMessageVariant {
-                    Message = "message",
                     StreamResponse = false,
-                    Prompt = "prompt"
+                    Prompt = "prompt",
+                    Message = "message"
                 }
             ) {
                 StreamResponse = false,

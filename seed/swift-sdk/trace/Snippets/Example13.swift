@@ -8,7 +8,7 @@ private func main() async throws {
     )
 
     _ = try await client.playlist.getPlaylists(
-        serviceParam: 1,
+        serviceParam: "1",
         limit: 1,
         otherField: "otherField",
         multiLineDocs: "multiLineDocs"

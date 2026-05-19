@@ -1031,7 +1031,8 @@ export class EndpointSnippetGenerator {
         const args: java.BuilderParameter[] = [];
         const pathParameters = this.context.associateByWireValue({
             parameters: namedParameters,
-            values: snippet.pathParameters ?? {}
+            values: snippet.pathParameters ?? {},
+            ignoreMissingParameters: true
         });
         for (const parameter of pathParameters) {
             args.push({

@@ -48,16 +48,10 @@ async function main() {
     });
     await client.service.createBigEntity({
         castMember: {
-            id: "john.doe",
             name: "John Doe",
+            id: "john.doe",
         },
         extendedMovie: {
-            cast: [
-                "John Travolta",
-                "Samuel L. Jackson",
-                "Uma Thurman",
-                "Bruce Willis",
-            ],
             id: "movie-sda231x",
             title: "Pulp Fiction",
             from: "Quentin Tarantino",
@@ -73,6 +67,12 @@ async function main() {
                 },
             },
             revenue: BigInt("1000000"),
+            cast: [
+                "John Travolta",
+                "Samuel L. Jackson",
+                "Uma Thurman",
+                "Bruce Willis",
+            ],
         },
         eventInfo: {
             type: "metadata",
@@ -466,6 +466,23 @@ async function main() {
             null,
         ],
         extra: null,
+    });
+}
+main();
+"
+`;
+
+exports[`snippets > path-parameters > 'GET /{tenant_id}/user/{user_id}/speci…' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        tenantID: "my_tenant",
+    });
+    await client.user.getUserSpecifics({
+        userID: "my_user",
+        version: 7,
+        thought: "my_thought",
     });
 }
 main();
