@@ -1,9 +1,10 @@
 /**
  * SSE client for consuming the link-checker CLI endpoint.
  *
- * Uses the full-run mode (no phase parameter) which handles scraping and
- * checking in a single long-lived SSE connection. This is appropriate for
- * the CLI since the endpoint has maxDuration=800s.
+ * Uses a multi-phase batched approach to avoid server-side timeouts on large
+ * sites. Pages are scraped in batches of ~200 and links are checked in batches
+ * of ~500, with server-side state stored in Redis between requests. Each
+ * individual request stays well within the 800s maxDuration limit.
  */
 
 export interface BrokenLink {
@@ -42,6 +43,9 @@ interface ParsedSseEvent {
     data: Record<string, unknown>;
 }
 
+const MAX_RETRIES = 3;
+const RETRY_DELAY_MS = 2000;
+
 export class LinkCheckClient {
     private readonly baseUrl: string;
     private readonly token: string;
@@ -61,10 +65,210 @@ export class LinkCheckClient {
         let workingLinks = 0;
         let pagesScrapedSoFar = 0;
         let linksCheckedSoFar = 0;
-        let serverError: string | undefined;
-        let sawComplete = false;
 
-        const url = `${this.baseUrl}?${new URLSearchParams({ domain }).toString()}`;
+        // Phase 1: Scrape pages in batches
+        let scrapeJobId: string | null = null;
+        let checkJobId: string | null = null;
+        let scrapeComplete = false;
+
+        while (!scrapeComplete) {
+            const params = new URLSearchParams({ domain, phase: "scrape" });
+            if (scrapeJobId != null) {
+                params.set("scrapeJobId", scrapeJobId);
+            }
+
+            const events = await this.fetchSseStream(params);
+            let batchAdvanced = false;
+
+            for (const event of events) {
+                switch (event.type) {
+                    case "sitemap_fetched": {
+                        if (isSitemapFetchedData(event.data)) {
+                            totalPages = event.data.totalPages;
+                            callbacks.onSitemapFetched?.({ totalPages: event.data.totalPages });
+                        }
+                        break;
+                    }
+                    case "page_scraped": {
+                        if (isPageScrapedData(event.data)) {
+                            totalPages = event.data.totalPages;
+                            pagesScrapedSoFar = event.data.pageIndex;
+                            callbacks.onPageScraped?.(event.data);
+                        }
+                        break;
+                    }
+                    case "scrape_batch_complete": {
+                        if (isScrapeBatchCompleteData(event.data)) {
+                            scrapeJobId = event.data.scrapeJobId;
+                            batchAdvanced = true;
+                        }
+                        break;
+                    }
+                    case "scrape_complete": {
+                        if (isScrapeCompleteData(event.data)) {
+                            checkJobId = event.data.jobId;
+                            totalPages = event.data.totalPages;
+                            totalLinks = event.data.totalLinks;
+                            scrapeComplete = true;
+                            batchAdvanced = true;
+                        }
+                        break;
+                    }
+                    case "error": {
+                        if (isErrorData(event.data)) {
+                            throw new LinkCheckError(0, event.data.message);
+                        }
+                        break;
+                    }
+                }
+            }
+
+            if (!scrapeComplete && !batchAdvanced) {
+                callbacks.onStreamInterrupted?.({
+                    phase: "scraping pages",
+                    pagesScraped: pagesScrapedSoFar,
+                    totalPages,
+                    linksChecked: 0,
+                    totalLinks: 0
+                });
+                return {
+                    totalPages: pagesScrapedSoFar,
+                    totalLinks: 0,
+                    workingLinks: 0,
+                    brokenLinks,
+                    blockedLinks,
+                    durationMs: Date.now() - startTime
+                };
+            }
+        }
+
+        if (checkJobId == null) {
+            throw new LinkCheckError(0, "Scraping completed but no check job ID was returned.");
+        }
+
+        // Phase 2: Check links in batches
+        let checkComplete = false;
+
+        while (!checkComplete) {
+            const params = new URLSearchParams({ domain, phase: "check", jobId: checkJobId });
+            const events = await this.fetchSseStream(params);
+            let batchAdvanced = false;
+
+            for (const event of events) {
+                switch (event.type) {
+                    case "links_check_started": {
+                        if (isLinksCheckStartedData(event.data)) {
+                            totalLinks = event.data.totalLinks;
+                        }
+                        break;
+                    }
+                    case "link_check_progress": {
+                        if (isLinkCheckProgressData(event.data)) {
+                            totalLinks = event.data.totalLinks;
+                            linksCheckedSoFar = event.data.linksChecked;
+                            callbacks.onLinkChecked?.(event.data);
+                        }
+                        break;
+                    }
+                    case "link_checked": {
+                        if (isLinkCheckedData(event.data)) {
+                            brokenLinks.push(toBrokenLink(event.data));
+                        }
+                        break;
+                    }
+                    case "link_blocked": {
+                        if (isLinkCheckedData(event.data)) {
+                            blockedLinks.push(toBrokenLink(event.data));
+                        }
+                        break;
+                    }
+                    case "batch_complete": {
+                        if (isBatchCompleteData(event.data)) {
+                            batchAdvanced = true;
+                        }
+                        break;
+                    }
+                    case "complete": {
+                        if (isCompleteData(event.data)) {
+                            checkComplete = true;
+                            batchAdvanced = true;
+                            totalPages = event.data.totalPages;
+                            totalLinks = event.data.totalLinks;
+                            workingLinks = event.data.workingLinks;
+                        }
+                        break;
+                    }
+                    case "error": {
+                        if (isErrorData(event.data)) {
+                            throw new LinkCheckError(0, event.data.message);
+                        }
+                        break;
+                    }
+                }
+            }
+
+            if (!checkComplete && !batchAdvanced) {
+                callbacks.onStreamInterrupted?.({
+                    phase: "checking links",
+                    pagesScraped: pagesScrapedSoFar,
+                    totalPages,
+                    linksChecked: linksCheckedSoFar,
+                    totalLinks
+                });
+                return {
+                    totalPages: pagesScrapedSoFar,
+                    totalLinks: linksCheckedSoFar,
+                    workingLinks: Math.max(0, linksCheckedSoFar - brokenLinks.length - blockedLinks.length),
+                    brokenLinks,
+                    blockedLinks,
+                    durationMs: Date.now() - startTime
+                };
+            }
+        }
+
+        return {
+            totalPages,
+            totalLinks,
+            workingLinks,
+            brokenLinks,
+            blockedLinks,
+            durationMs: Date.now() - startTime
+        };
+    }
+
+    /**
+     * Opens an SSE connection with retries and returns all parsed events.
+     * Retries on connection failures up to MAX_RETRIES times.
+     */
+    private async fetchSseStream(params: URLSearchParams): Promise<ParsedSseEvent[]> {
+        let lastError: Error | undefined;
+
+        for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+            if (attempt > 0) {
+                await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS * attempt));
+            }
+
+            try {
+                return await this.readSseStream(params);
+            } catch (error) {
+                if (error instanceof LinkCheckError) {
+                    throw error;
+                }
+                lastError = error instanceof Error ? error : new Error(String(error));
+            }
+        }
+
+        throw new LinkCheckError(
+            0,
+            `Connection failed after ${MAX_RETRIES + 1} attempts: ${lastError?.message ?? "unknown error"}`
+        );
+    }
+
+    /**
+     * Opens a single SSE connection and reads all events until the stream closes.
+     */
+    private async readSseStream(params: URLSearchParams): Promise<ParsedSseEvent[]> {
+        const url = `${this.baseUrl}?${params.toString()}`;
         const response = await fetch(url, {
             headers: {
                 Authorization: `Bearer ${this.token}`,
@@ -73,25 +277,7 @@ export class LinkCheckClient {
         });
 
         if (!response.ok) {
-            let errorMessage: string;
-            try {
-                const body: unknown = await response.json();
-                if (typeof body === "object" && body != null) {
-                    const obj = body as Record<string, unknown>;
-                    if (typeof obj.message === "string") {
-                        errorMessage = obj.message;
-                    } else if (typeof obj.error === "string") {
-                        errorMessage = obj.error;
-                    } else {
-                        errorMessage = response.statusText;
-                    }
-                } else {
-                    errorMessage = response.statusText;
-                }
-            } catch {
-                // JSON parse failed — fall back to HTTP status text
-                errorMessage = response.statusText;
-            }
+            const errorMessage = await this.extractErrorMessage(response);
             throw new LinkCheckError(response.status, errorMessage);
         }
 
@@ -102,112 +288,7 @@ export class LinkCheckClient {
 
         const decoder = new TextDecoder();
         let buffer = "";
-
-        const processLine = (line: string): void => {
-            let payload: string;
-            if (line.startsWith("data: ")) {
-                payload = line.slice(6);
-            } else if (line.startsWith("data:")) {
-                payload = line.slice(5);
-            } else {
-                return;
-            }
-
-            let event: ParsedSseEvent;
-            try {
-                const parsed: unknown = JSON.parse(payload);
-                if (
-                    parsed == null ||
-                    typeof parsed !== "object" ||
-                    !("type" in parsed) ||
-                    typeof (parsed as Record<string, unknown>).type !== "string" ||
-                    !("data" in parsed) ||
-                    typeof (parsed as Record<string, unknown>).data !== "object" ||
-                    (parsed as Record<string, unknown>).data == null
-                ) {
-                    // Malformed SSE payload (null, primitive, or missing type/data fields)
-                    return;
-                }
-                event = parsed as ParsedSseEvent;
-            } catch {
-                // Skip non-JSON SSE lines (comments, partial chunks)
-                return;
-            }
-
-            switch (event.type) {
-                case "sitemap_fetched": {
-                    if (isSitemapFetchedData(event.data)) {
-                        totalPages = event.data.totalPages;
-                        callbacks.onSitemapFetched?.({ totalPages: event.data.totalPages });
-                    }
-                    break;
-                }
-                case "page_scraped": {
-                    if (isPageScrapedData(event.data)) {
-                        totalPages = event.data.totalPages;
-                        pagesScrapedSoFar = event.data.pageIndex + 1;
-                        callbacks.onPageScraped?.({
-                            ...event.data,
-                            pageIndex: event.data.pageIndex + 1
-                        });
-                    }
-                    break;
-                }
-                case "links_check_started": {
-                    if (isLinksCheckStartedData(event.data)) {
-                        totalLinks = event.data.totalLinks;
-                    }
-                    break;
-                }
-                case "link_check_progress": {
-                    if (isLinkCheckProgressData(event.data)) {
-                        totalLinks = event.data.totalLinks;
-                        linksCheckedSoFar = event.data.linksChecked;
-                        callbacks.onLinkChecked?.(event.data);
-                    }
-                    break;
-                }
-                case "link_checked": {
-                    if (isLinkCheckedData(event.data)) {
-                        brokenLinks.push(toBrokenLink(event.data));
-                    }
-                    break;
-                }
-                case "complete": {
-                    if (isCompleteData(event.data)) {
-                        sawComplete = true;
-                        totalPages = event.data.totalPages;
-                        totalLinks = event.data.totalLinks;
-                        workingLinks = event.data.workingLinks;
-                        brokenLinks.length = 0;
-                        for (const link of event.data.brokenLinks) {
-                            if (typeof link !== "object" || link == null) {
-                                continue;
-                            }
-                            if (isLinkCheckedData(link as Record<string, unknown>)) {
-                                brokenLinks.push(toBrokenLink(link as Record<string, unknown>));
-                            }
-                        }
-                        blockedLinks.length = 0;
-                        for (const link of event.data.blockedLinks) {
-                            if (typeof link !== "object" || link == null) {
-                                continue;
-                            }
-                            if (isLinkCheckedData(link as Record<string, unknown>)) {
-                                blockedLinks.push(toBrokenLink(link as Record<string, unknown>));
-                            }
-                        }
-                    }
-                    break;
-                }
-                case "error": {
-                    if (isErrorData(event.data)) {
-                        serverError = event.data.message;
-                    }
-                    break;
-                }
-            }
-        };
+        const events: ParsedSseEvent[] = [];
 
         while (true) {
             const { done, value } = await reader.read();
@@ -220,59 +301,74 @@ export class LinkCheckClient {
             buffer = lines.pop() ?? "";
 
             for (const line of lines) {
-                processLine(line);
+                const event = parseSseLine(line);
+                if (event != null) {
+                    events.push(event);
+                }
             }
         }
 
-        // Flush remaining decoder bytes and process any trailing buffer content
+        // Flush remaining decoder bytes
         buffer += decoder.decode();
         if (buffer.length > 0) {
             for (const line of buffer.split("\n")) {
-                processLine(line);
+                const event = parseSseLine(line);
+                if (event != null) {
+                    events.push(event);
+                }
             }
         }
 
-        if (serverError != null) {
-            throw new LinkCheckError(0, serverError);
-        }
+        return events;
+    }
 
-        if (!sawComplete) {
-            const phase = totalLinks > 0 ? "checking links" : pagesScrapedSoFar > 0 ? "scraping pages" : "connecting";
-
-            if (brokenLinks.length > 0 || blockedLinks.length > 0) {
-                callbacks.onStreamInterrupted?.({
-                    phase,
-                    pagesScraped: pagesScrapedSoFar,
-                    totalPages,
-                    linksChecked: linksCheckedSoFar,
-                    totalLinks
-                });
-
-                return {
-                    totalPages: pagesScrapedSoFar,
-                    totalLinks: linksCheckedSoFar,
-                    workingLinks: Math.max(0, linksCheckedSoFar - brokenLinks.length - blockedLinks.length),
-                    brokenLinks,
-                    blockedLinks,
-                    durationMs: Date.now() - startTime
-                };
+    private async extractErrorMessage(response: Response): Promise<string> {
+        try {
+            const body: unknown = await response.json();
+            if (typeof body === "object" && body != null) {
+                const obj = body as Record<string, unknown>;
+                if (typeof obj.message === "string") {
+                    return obj.message;
+                }
+                if (typeof obj.error === "string") {
+                    return obj.error;
+                }
             }
-
-            const detail =
-                phase === "connecting"
-                    ? "The server closed the connection before sending any data. This may indicate a timeout or network issue."
-                    : `The connection was lost while ${phase} (${pagesScrapedSoFar} pages scraped, ${linksCheckedSoFar}/${totalLinks} links checked). This is usually caused by a server timeout.`;
-            throw new LinkCheckError(0, detail);
+        } catch {
+            // JSON parse failed
         }
+        return response.statusText;
+    }
+}
 
-        return {
-            totalPages,
-            totalLinks,
-            workingLinks,
-            brokenLinks,
-            blockedLinks,
-            durationMs: Date.now() - startTime
-        };
+// SSE line parser
+
+function parseSseLine(line: string): ParsedSseEvent | undefined {
+    let payload: string;
+    if (line.startsWith("data: ")) {
+        payload = line.slice(6);
+    } else if (line.startsWith("data:")) {
+        payload = line.slice(5);
+    } else {
+        return undefined;
+    }
+
+    try {
+        const parsed: unknown = JSON.parse(payload);
+        if (
+            parsed == null ||
+            typeof parsed !== "object" ||
+            !("type" in parsed) ||
+            typeof (parsed as Record<string, unknown>).type !== "string" ||
+            !("data" in parsed) ||
+            typeof (parsed as Record<string, unknown>).data !== "object" ||
+            (parsed as Record<string, unknown>).data == null
+        ) {
+            return undefined;
+        }
+        return parsed as ParsedSseEvent;
+    } catch {
+        return undefined;
     }
 }
 
@@ -335,6 +431,24 @@ function isCompleteData(data: Record<string, unknown>): data is Record<string, u
         Array.isArray(data.brokenLinks) &&
         Array.isArray(data.blockedLinks)
     );
+}
+
+function isScrapeBatchCompleteData(
+    data: Record<string, unknown>
+): data is { scrapeJobId: string; pagesScraped: number; totalPages: number; hasMore: boolean } {
+    return typeof data.scrapeJobId === "string" && typeof data.hasMore === "boolean";
+}
+
+function isScrapeCompleteData(
+    data: Record<string, unknown>
+): data is { jobId: string; totalPages: number; totalLinks: number } {
+    return typeof data.jobId === "string" && typeof data.totalPages === "number" && typeof data.totalLinks === "number";
+}
+
+function isBatchCompleteData(
+    data: Record<string, unknown>
+): data is { jobId: string; cursor: number; hasMore: boolean } {
+    return typeof data.jobId === "string" && typeof data.hasMore === "boolean";
 }
 
 function isErrorData(data: Record<string, unknown>): data is { message: string } {
