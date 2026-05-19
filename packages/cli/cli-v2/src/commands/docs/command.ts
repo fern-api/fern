@@ -13,6 +13,13 @@ export function addDocsCommand(cli: Argv<GlobalArgs>): void {
         cli,
         name: "docs",
         description: "Configure, edit, preview, and publish your documentation.",
-        subcommands: [addCheckCommand, addDevCommand, addLinkCommand, addMdCommand, addPreviewCommand, addPublishCommand]
+        subcommands: [
+            addCheckCommand,
+            addDevCommand,
+            addLinkCommand,
+            addMdCommand,
+            addPreviewCommand,
+            addPublishCommand
+        ]
     });
 }
