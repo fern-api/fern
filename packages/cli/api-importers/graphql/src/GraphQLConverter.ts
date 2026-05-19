@@ -243,7 +243,8 @@ export class GraphQLConverter {
     private convertOperations(
         type: GraphQLObjectType,
         operationType: FdrAPI.api.v1.register.GraphQlOperationType,
-        operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>
+        operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>,
+        parentFieldPath: string[] = []
     ): void {
         const fields = type.getFields();
         for (const [fieldName, field] of Object.entries(fields)) {
@@ -253,10 +254,13 @@ export class GraphQLConverter {
                 field.args.length === 0 &&
                 this.isNamespaceType(returnRawType)
             ) {
-                this.convertNamespaceOperations(returnRawType, fieldName, operationType, operations);
+                this.convertNamespaceOperations(returnRawType, fieldName, operationType, operations, [
+                    ...parentFieldPath,
+                    fieldName
+                ]);
             } else {
                 const operationId = this.getNamespacedOperationId(`${operationType.toLowerCase()}_${fieldName}`);
-                operations[operationId] = this.convertField(field, fieldName, operationType);
+                operations[operationId] = this.convertField(field, fieldName, operationType, parentFieldPath);
             }
         }
     }
@@ -265,12 +269,25 @@ export class GraphQLConverter {
         namespaceType: GraphQLObjectType,
         _parentName: string,
         operationType: FdrAPI.api.v1.register.GraphQlOperationType,
-        operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>
+        operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>,
+        fieldPath: string[]
     ): void {
         const fields = namespaceType.getFields();
         for (const [fieldName, field] of Object.entries(fields)) {
-            const operationId = this.getNamespacedOperationId(`${operationType.toLowerCase()}_${fieldName}`);
-            operations[operationId] = this.convertField(field, fieldName, operationType);
+            const returnRawType = this.unwrapNonNull(field.type);
+            if (
+                returnRawType instanceof GraphQLObjectType &&
+                field.args.length === 0 &&
+                this.isNamespaceType(returnRawType)
+            ) {
+                this.convertNamespaceOperations(returnRawType, fieldName, operationType, operations, [
+                    ...fieldPath,
+                    fieldName
+                ]);
+            } else {
+                const operationId = this.getNamespacedOperationId(`${operationType.toLowerCase()}_${fieldName}`);
+                operations[operationId] = this.convertField(field, fieldName, operationType, fieldPath);
+            }
         }
     }
 
@@ -284,7 +301,8 @@ export class GraphQLConverter {
     private convertField(
         field: GraphQLField<unknown, unknown>,
         name: string,
-        operationType: FdrAPI.api.v1.register.GraphQlOperationType
+        operationType: FdrAPI.api.v1.register.GraphQlOperationType,
+        fieldPath: string[] = []
     ): FdrAPI.api.v1.register.GraphQlOperation {
         const args = field.args.map((arg) => this.convertArgument(arg));
         const examples =
@@ -298,11 +316,12 @@ export class GraphQLConverter {
             displayName: undefined,
             description: field.description ?? undefined,
             availability: undefined,
+            fieldPath: fieldPath.length > 0 ? fieldPath : undefined,
             arguments: args.length > 0 ? args : undefined,
             returnType: this.convertOutputType(field.type),
             examples: examples != null && examples.length > 0 ? examples : undefined,
             snippets: undefined
-        };
+        } as FdrAPI.api.v1.register.GraphQlOperation;
     }
 
     private convertArgument(arg: GQLArgument): FdrAPI.api.v1.register.GraphQlArgument {
