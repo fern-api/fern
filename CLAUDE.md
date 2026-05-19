@@ -393,6 +393,8 @@ After writing the ADR, number it by finding the highest existing `docs/adr/NNNN-
 
 ## Troubleshooting
 
+For Sentry `buildwithfern` / `cli` false-positive triage, see [`automation/sentry-triage/AGENT.md`](automation/sentry-triage/AGENT.md), [`automation/sentry-triage/DESIGN_CHOICES.md`](automation/sentry-triage/DESIGN_CHOICES.md), and [`automation/sentry-triage/ledger.json`](automation/sentry-triage/ledger.json).
+
 ### Quick Fixes by Issue Type
 - **Generator failures**: Check `docker ps` → Rebuild image → Check container logs
 - **IR compilation**: `pnpm fern check` → Check circular refs → Review migrations

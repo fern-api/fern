@@ -5,6 +5,7 @@ export interface PipelineConfig {
     replay?: ReplayStepConfig;
     autoVersion?: AutoVersionStepConfig;
     fernignore?: FernignoreStepConfig; // PHASE 2: not implemented yet
+    verify?: VerifyStepConfig;
     github?: GithubStepConfig;
 
     // Global metadata
@@ -19,6 +20,7 @@ export interface PipelineContext {
         replay?: ReplayStepResult;
         autoVersion?: AutoVersionStepResult;
         fernignore?: FernignoreStepResult;
+        verify?: VerificationStepResult;
     };
 }
 
@@ -41,7 +43,6 @@ export interface GenerationCommitStepResult extends StepResult {
     preparedReplay?: import("../replay/replay-run").PreparedReplay | null;
     previousGenerationSha?: string;
     currentGenerationSha?: string;
-    baseBranchHead?: string;
     /** Flow selected by the replay service during prepare. */
     flow?: "first-generation" | "no-patches" | "normal-regeneration" | "skip-application";
     /**
@@ -95,6 +96,12 @@ export interface FernignoreStepConfig {
     customContents?: string;
 }
 
+export interface VerifyStepConfig {
+    enabled: boolean;
+    /** Container runtime to use. Defaults to "docker". */
+    runner?: "docker" | "podman";
+}
+
 export interface GithubStepConfig {
     enabled: boolean;
     /** GitHub repository URI (e.g. "owner/repo") */
@@ -144,6 +151,11 @@ export interface GithubStepConfig {
     runId?: string;
     /** GitHub API base URL for GitHub Enterprise (e.g. "https://github.intuit.com/api/v3"). Omit for github.com. */
     apiBaseUrl?: string;
+    /** Override the commit author/committer identity for API-created commits. Defaults to the Fern bot identity. */
+    author?: {
+        name: string;
+        email: string;
+    };
 }
 
 export interface PipelineResult {
@@ -153,6 +165,7 @@ export interface PipelineResult {
         replay?: ReplayStepResult;
         autoVersion?: AutoVersionStepResult;
         fernignore?: FernignoreStepResult;
+        verify?: VerificationStepResult;
         github?: GithubStepResult;
     };
     errors?: string[];
@@ -200,7 +213,6 @@ export interface ReplayStepResult extends StepResult {
     patchesRefreshed?: number;
     previousGenerationSha?: string;
     currentGenerationSha?: string;
-    baseBranchHead?: string;
     unresolvedPatches?: Array<{
         patchId: string;
         patchMessage: string;
@@ -215,6 +227,13 @@ export interface ReplayStepResult extends StepResult {
 
 export interface FernignoreStepResult extends StepResult {
     pathsPreserved?: string[];
+}
+
+export interface VerificationStepResult extends StepResult {
+    /** True when no `.fern/verify.sh` was emitted by the generator — the step short-circuits silently. */
+    skipped: boolean;
+    /** Captured stderr from the verification script when it fails. */
+    stderr?: string;
 }
 
 export interface AutoVersionStepResult extends StepResult {

@@ -4,7 +4,7 @@ namespace Seed\Imdb;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Imdb\Types\CreateMovieRequest;
+use Seed\Imdb\Requests\CreateMovieRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -12,7 +12,7 @@ use Seed\Core\Client\HttpMethod;
 use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Imdb\Types\Movie;
+use Seed\Types\Movie;
 
 class ImdbClient
 {
@@ -73,7 +73,7 @@ class ImdbClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/movies/create-movie",
+                    path: "movies/create-movie",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -120,7 +120,7 @@ class ImdbClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/movies/{$movieId}",
+                    path: "movies/{$movieId}",
                     method: HttpMethod::GET,
                 ),
                 $options,

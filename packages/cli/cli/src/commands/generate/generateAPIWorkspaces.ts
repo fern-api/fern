@@ -1,4 +1,4 @@
-import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
+import { createOrganizationIfDoesNotExist, FernToken, getToken } from "@fern-api/auth";
 import { ContainerRunner, Values } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
@@ -43,6 +43,7 @@ export async function generateAPIWorkspaces({
     dynamicIrOnly,
     outputDir,
     noReplay,
+    verify,
     retryRateLimited,
     requireEnvVars,
     automationMode,
@@ -72,6 +73,7 @@ export async function generateAPIWorkspaces({
     dynamicIrOnly: boolean;
     outputDir: string | undefined;
     noReplay: boolean;
+    verify: boolean;
     retryRateLimited: boolean;
     requireEnvVars: boolean;
     automationMode?: boolean;
@@ -98,6 +100,11 @@ export async function generateAPIWorkspaces({
             });
         }
         token = currentToken;
+    } else {
+        // Local generation must stay non-interactive: silently pick up an existing
+        // token (FERN_TOKEN env var or saved login file) so Venus calls are
+        // authenticated when possible, and leave `token` undefined otherwise.
+        token = await getToken();
     }
 
     await confirmOutputDirectoriesForEligibleGenerators({
@@ -170,6 +177,7 @@ export async function generateAPIWorkspaces({
                     skipFernignore,
                     dynamicIrOnly,
                     noReplay,
+                    verify,
                     retryRateLimited,
                     requireEnvVars,
                     automationMode,

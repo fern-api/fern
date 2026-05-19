@@ -30,6 +30,7 @@ const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
 // Const for windows post-processing
 const INSTRUMENTATION_PATH = "packages/fern-docs/bundle/.next/server/instrumentation.js";
 const COREPACK_MISSING_KEYID_ERROR_MESSAGE = 'Cannot find matching keyid: {"signatures":';
+const PNPM_IGNORED_BUILDS_ERROR = "ERR_PNPM_IGNORED_BUILDS";
 
 interface SymlinkEntry {
     path: string;
@@ -236,35 +237,71 @@ function resolveWindowsSymlinks(
     }
 }
 
-export function getLocalStorageFolder(): AbsoluteFilePath {
+export function getLocalStorageFolder(cacheDir?: AbsoluteFilePath): AbsoluteFilePath {
+    if (cacheDir != null) {
+        return cacheDir;
+    }
     return join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(LOCAL_STORAGE_FOLDER));
 }
 
-export function getPathToPreviewFolder({ app = false }: { app?: boolean }): AbsoluteFilePath {
-    return join(getLocalStorageFolder(), RelativeFilePath.of(app ? APP_PREVIEW_FOLDER_NAME : PREVIEW_FOLDER_NAME));
+export function getPathToPreviewFolder({
+    app = false,
+    cacheDir
+}: {
+    app?: boolean;
+    cacheDir?: AbsoluteFilePath;
+}): AbsoluteFilePath {
+    return join(
+        getLocalStorageFolder(cacheDir),
+        RelativeFilePath.of(app ? APP_PREVIEW_FOLDER_NAME : PREVIEW_FOLDER_NAME)
+    );
 }
 
-export function getPathToBundleFolder({ app = false }: { app?: boolean }): AbsoluteFilePath {
+export function getPathToBundleFolder({
+    app = false,
+    cacheDir
+}: {
+    app?: boolean;
+    cacheDir?: AbsoluteFilePath;
+}): AbsoluteFilePath {
     return join(
-        getPathToPreviewFolder({ app }),
+        getPathToPreviewFolder({ app, cacheDir }),
         RelativeFilePath.of(app ? NEXT_BUNDLE_FOLDER_NAME : BUNDLE_FOLDER_NAME)
     );
 }
 
-export function getPathToStandaloneFolder({ app = false }: { app?: boolean }): AbsoluteFilePath {
-    return join(getPathToBundleFolder({ app }), RelativeFilePath.of(STANDALONE_FOLDER_NAME));
+export function getPathToStandaloneFolder({
+    app = false,
+    cacheDir
+}: {
+    app?: boolean;
+    cacheDir?: AbsoluteFilePath;
+}): AbsoluteFilePath {
+    return join(getPathToBundleFolder({ app, cacheDir }), RelativeFilePath.of(STANDALONE_FOLDER_NAME));
 }
 
-export function getPathToInstrumentationJs({ app = false }: { app?: boolean }): AbsoluteFilePath {
-    return join(getPathToStandaloneFolder({ app }), RelativeFilePath.of(INSTRUMENTATION_PATH));
+export function getPathToInstrumentationJs({
+    app = false,
+    cacheDir
+}: {
+    app?: boolean;
+    cacheDir?: AbsoluteFilePath;
+}): AbsoluteFilePath {
+    return join(getPathToStandaloneFolder({ app, cacheDir }), RelativeFilePath.of(INSTRUMENTATION_PATH));
 }
 
 function contactFernSupportError(errorMessage: string): Error {
     return new Error(`${errorMessage}. Please reach out to support@buildwithfern.com.`);
 }
 
-export function getPathToEtagFile({ app = false }: { app?: boolean }): AbsoluteFilePath {
-    return join(getPathToPreviewFolder({ app }), RelativeFilePath.of(ETAG_FILENAME));
+export function getPathToEtagFile({
+    app = false,
+    cacheDir
+}: {
+    app?: boolean;
+    cacheDir?: AbsoluteFilePath;
+}): AbsoluteFilePath {
+    return join(getPathToPreviewFolder({ app, cacheDir }), RelativeFilePath.of(ETAG_FILENAME));
 }
 
 export declare namespace DownloadLocalBundle {
@@ -284,13 +321,15 @@ export async function downloadBundle({
     logger,
     preferCached,
     app = false,
-    tryTar = false
+    tryTar = false,
+    cacheDir
 }: {
     bucketUrl: string;
     logger: Logger;
     preferCached: boolean;
     app?: boolean;
     tryTar?: boolean;
+    cacheDir?: AbsoluteFilePath;
 }): Promise<DownloadLocalBundle.Result> {
     logger.debug("Setting up docs preview bundle...");
     const response = await fetch(bucketUrl);
@@ -305,7 +344,7 @@ export async function downloadBundle({
     const eTag = parsedResponse?.ListBucketResult?.Contents?.[0]?.ETag?.[0];
     const key = parsedResponse?.ListBucketResult?.Contents?.[0]?.Key?.[0];
 
-    const eTagFilepath = getPathToEtagFile({ app });
+    const eTagFilepath = getPathToEtagFile({ app, cacheDir });
     if (preferCached) {
         const currentETagExists = await doesPathExist(eTagFilepath);
         let currentETag = undefined;
@@ -399,7 +438,7 @@ export async function downloadBundle({
         await writeFile(outputZipPath, new Uint8Array(nodeBuffer));
         logger.debug(`Wrote ${tryTar ? "output.tar.gz" : "output.zip"} to ${outputZipPath}`);
 
-        const absolutePathToPreviewFolder = getPathToPreviewFolder({ app });
+        const absolutePathToPreviewFolder = getPathToPreviewFolder({ app, cacheDir });
         if (await doesPathExist(absolutePathToPreviewFolder)) {
             const oldBundlePath = AbsoluteFilePath.of(`${absolutePathToPreviewFolder}-old-${Date.now()}`);
             logger.debug(`Moving previously cached bundle to: ${oldBundlePath}`);
@@ -412,7 +451,7 @@ export async function downloadBundle({
         }
         await mkdir(absolutePathToPreviewFolder, { recursive: true });
 
-        const absolutePathToBundleFolder = getPathToBundleFolder({ app });
+        const absolutePathToBundleFolder = getPathToBundleFolder({ app, cacheDir });
         await mkdir(absolutePathToBundleFolder, { recursive: true });
         logger.debug(`Decompressing bundle from ${outputZipPath} to ${absolutePathToBundleFolder}`);
 
@@ -527,6 +566,11 @@ export async function downloadBundle({
                 });
             }
 
+            const workspaceConfigPath = path.join(absolutePathToBundleFolder, "pnpm-workspace.yaml");
+            if (!existsSync(workspaceConfigPath)) {
+                await writeFile(workspaceConfigPath, "onlyBuiltDependencies:\n  - esbuild\n");
+            }
+
             try {
                 // install esbuild
                 logger.debug("Installing esbuild");
@@ -536,11 +580,18 @@ export async function downloadBundle({
                 });
             } catch (error) {
                 if (error instanceof Error) {
-                    // If error message contains "Cannot find matching keyid:", try to upgrade corepack
-                    if (
+                    // pnpm 10+ blocks build scripts by default. esbuild is installed
+                    // but its postinstall is skipped — install-esbuild.js handles the
+                    // binary setup separately, so this error is non-fatal.
+                    if (typeof error?.message === "string" && error.message.includes(PNPM_IGNORED_BUILDS_ERROR)) {
+                        logger.debug(
+                            "pnpm blocked esbuild build scripts (ERR_PNPM_IGNORED_BUILDS) — continuing, install-esbuild.js will handle binary setup"
+                        );
+                    } else if (
                         typeof error?.message === "string" &&
                         error.message.includes(COREPACK_MISSING_KEYID_ERROR_MESSAGE)
                     ) {
+                        // If error message contains "Cannot find matching keyid:", try to upgrade corepack
                         logger.debug("Detected corepack missing keyid error. Attempting to upgrade corepack");
                         try {
                             await loggingExeca(logger, "npm", ["install", "-g", "corepack@latest"], {
@@ -581,7 +632,7 @@ export async function downloadBundle({
             }
 
             if (PLATFORM_IS_WINDOWS) {
-                const absPathToInstrumentationJs = getPathToInstrumentationJs({ app });
+                const absPathToInstrumentationJs = getPathToInstrumentationJs({ app, cacheDir });
                 if (await doesPathExist(absPathToInstrumentationJs)) {
                     logger.debug(`Removing instrumentation.js at ${absPathToInstrumentationJs}`);
                     await rm(absPathToInstrumentationJs);
@@ -596,7 +647,7 @@ export async function downloadBundle({
         logger.error(`Error: ${error}`);
 
         // remove incomplete bundle
-        const absolutePathToPreviewFolder = getPathToPreviewFolder({ app });
+        const absolutePathToPreviewFolder = getPathToPreviewFolder({ app, cacheDir });
         if (await doesPathExist(absolutePathToPreviewFolder)) {
             await rm(absolutePathToPreviewFolder, { recursive: true });
         }

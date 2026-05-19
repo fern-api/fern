@@ -6,7 +6,7 @@ import chalk from "chalk";
 import { doAuth0DeviceAuthorizationFlow } from "./auth0-login/doAuth0DeviceAuthorizationFlow.js";
 import { type Auth0TokenResponse, doAuth0LoginFlow } from "./auth0-login/doAuth0LoginFlow.js";
 import { resolveSsoConnection } from "./auth0-login/resolveSsoConnection.js";
-import { AUTH0_CLIENT_ID, AUTH0_DOMAIN, DASHBOARD_BASE_URL, VENUS_AUDIENCE } from "./constants.js";
+import { AUTH0_CLIENT_ID, AUTH0_DOMAIN, getDashboardBaseUrl, VENUS_AUDIENCE } from "./constants.js";
 
 export type { Auth0TokenResponse } from "./auth0-login/doAuth0LoginFlow.js";
 
@@ -51,7 +51,7 @@ export async function getTokenFromAuth0(
     // If email is provided, resolve the SSO connection and go directly to the IdP
     if (email != null) {
         const connection = await resolveSsoConnection({
-            dashboardBaseUrl: DASHBOARD_BASE_URL,
+            dashboardBaseUrl: getDashboardBaseUrl(),
             email
         });
         return await doAuth0LoginFlow({

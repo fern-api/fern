@@ -144,14 +144,11 @@ class AbstractGenerator(ABC):
 
         with Project(
             filepath=generator_config.output.path,
-            relative_path_to_project=os.path.join(
-                *self.get_relative_path_to_project_for_publish(
-                    generator_config=generator_config,
-                    ir=ir,
-                )
-            )
-            if project_config is not None
-            else generator_config.organization,
+            relative_path_to_project=self._get_relative_path_for_project(
+                generator_config=generator_config,
+                ir=ir,
+                project_config=project_config,
+            ),
             package_path=package_path,
             project_config=project_config,
             sorted_modules=self.get_sorted_modules(),
@@ -628,6 +625,29 @@ def test_client() -> None:
         generator_config: GeneratorConfig,
         ir: ir_types.IntermediateRepresentation,
     ) -> Tuple[str, ...]: ...
+
+    def _get_relative_path_for_project(
+        self,
+        *,
+        generator_config: GeneratorConfig,
+        ir: ir_types.IntermediateRepresentation,
+        project_config: Optional[ProjectConfig],
+    ) -> str:
+        """Return the relative path used as the project's module root.
+
+        Defaults to ``get_relative_path_to_project_for_publish`` when
+        *project_config* is set, otherwise falls back to the raw organization
+        name. Subclasses may override to change the download-mode behavior
+        (e.g. to always respect ``package_name`` from custom config).
+        """
+        if project_config is not None:
+            return os.path.join(
+                *self.get_relative_path_to_project_for_publish(
+                    generator_config=generator_config,
+                    ir=ir,
+                )
+            )
+        return generator_config.organization
 
     @abstractmethod
     def is_flat_layout(

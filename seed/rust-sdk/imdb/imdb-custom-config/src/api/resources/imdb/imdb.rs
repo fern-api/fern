@@ -30,7 +30,7 @@ impl ImdbClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/movies/create-movie",
+                "movies/create-movie",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -46,7 +46,7 @@ impl ImdbClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/movies/{}", movie_id.0),
+                &format!("movies/{}", movie_id.0),
                 None,
                 None,
                 options,

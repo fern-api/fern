@@ -378,11 +378,11 @@ func TestStreamXFernStreamingUnionStreamWithWireMock(
 	)
 	request := &fern.StreamXFernStreamingUnionStreamRequest{
 		Message: &fern.UnionStreamMessageVariant{
-			Prompt:  "prompt",
-			Message: "message",
 			StreamResponse: fern.Bool(
 				true,
 			),
+			Prompt:  "prompt",
+			Message: "message",
 		},
 	}
 	_, invocationErr := client.StreamXFernStreamingUnionStream(
@@ -409,11 +409,11 @@ func TestStreamXFernStreamingUnionStreamWithWireMock2(
 	)
 	request := &fern.StreamXFernStreamingUnionStreamRequest{
 		Message: &fern.UnionStreamMessageVariant{
-			Prompt:  "prompt",
-			Message: "message",
 			StreamResponse: fern.Bool(
 				false,
 			),
+			Prompt:  "prompt",
+			Message: "message",
 		},
 	}
 	_, invocationErr := client.StreamXFernStreamingUnionStream(

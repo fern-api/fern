@@ -2,10 +2,12 @@
   "type": "object",
   "properties": {
     "types": {
-      "type": "string"
+      "type": "string",
+      "description": "This property collides with the default nested class name \"Types\""
     },
     "child": {
-      "$ref": "#/definitions/TypesPropertyCollisionChild"
+      "$ref": "#/definitions/TypesPropertyCollisionChild",
+      "description": "This inline child should be nested inside InnerTypes instead of Types"
     }
   },
   "required": [

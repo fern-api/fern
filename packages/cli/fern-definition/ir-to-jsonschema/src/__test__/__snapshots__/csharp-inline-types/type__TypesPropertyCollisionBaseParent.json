@@ -2,7 +2,8 @@
   "type": "object",
   "properties": {
     "types": {
-      "type": "string"
+      "type": "string",
+      "description": "This inherited property collides with the default nested class name \"Types\""
     }
   },
   "required": [

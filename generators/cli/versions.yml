@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.1.0
+  changelogEntry:
+    - summary: |
+        Add CLI generator infrastructure and registration.
+      type: feat
+  createdAt: "2026-05-14"
+  irVersion: 66
+- version: 0.0.1
+  changelogEntry:
+    - summary: Initial release of the CLI generator.
+      type: feat
+  createdAt: "2026-05-08"
+  irVersion: 66

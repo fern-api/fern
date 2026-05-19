@@ -2,13 +2,16 @@
   "type": "object",
   "properties": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "description": "The name of the user."
     },
     "verification": {
-      "$ref": "#/definitions/UserProfileVerification"
+      "$ref": "#/definitions/UserProfileVerification",
+      "description": "User profile verification object"
     },
     "ssn": {
-      "type": "string"
+      "type": "string",
+      "description": "The social security number of the user."
     }
   },
   "required": [
@@ -17,18 +20,21 @@
     "ssn"
   ],
   "additionalProperties": false,
+  "description": "User profile object",
   "definitions": {
     "UserProfileVerification": {
       "type": "object",
       "properties": {
         "verified": {
-          "type": "string"
+          "type": "string",
+          "description": "User profile verification status"
         }
       },
       "required": [
         "verified"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "User profile verification object"
     }
   }
 }

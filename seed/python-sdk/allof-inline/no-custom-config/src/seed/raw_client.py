@@ -11,7 +11,7 @@ from .core.pydantic_utilities import parse_obj_as
 from .core.request_options import RequestOptions
 from .types.combined_entity import CombinedEntity
 from .types.organization import Organization
-from .types.rule_execution_context import RuleExecutionContext
+from .types.rule_create_request_execution_context import RuleCreateRequestExecutionContext
 from .types.rule_response import RuleResponse
 from .types.rule_type_search_response import RuleTypeSearchResponse
 from .types.user_search_response import UserSearchResponse
@@ -72,7 +72,7 @@ class RawSeedApi:
         self,
         *,
         name: str,
-        execution_context: RuleExecutionContext,
+        execution_context: RuleCreateRequestExecutionContext,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[RuleResponse]:
         """
@@ -80,7 +80,8 @@ class RawSeedApi:
         ----------
         name : str
 
-        execution_context : RuleExecutionContext
+        execution_context : RuleCreateRequestExecutionContext
+            Execution context for the rule, excluding the prod environment.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -286,7 +287,7 @@ class AsyncRawSeedApi:
         self,
         *,
         name: str,
-        execution_context: RuleExecutionContext,
+        execution_context: RuleCreateRequestExecutionContext,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[RuleResponse]:
         """
@@ -294,7 +295,8 @@ class AsyncRawSeedApi:
         ----------
         name : str
 
-        execution_context : RuleExecutionContext
+        execution_context : RuleCreateRequestExecutionContext
+            Execution context for the rule, excluding the prod environment.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

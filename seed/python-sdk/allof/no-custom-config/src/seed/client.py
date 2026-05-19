@@ -10,7 +10,7 @@ from .environment import SeedApiEnvironment
 from .raw_client import AsyncRawSeedApi, RawSeedApi
 from .types.combined_entity import CombinedEntity
 from .types.organization import Organization
-from .types.rule_execution_context import RuleExecutionContext
+from .types.rule_create_request_execution_context import RuleCreateRequestExecutionContext
 from .types.rule_response import RuleResponse
 from .types.rule_type_search_response import RuleTypeSearchResponse
 from .types.user_search_response import UserSearchResponse
@@ -133,7 +133,7 @@ class SeedApi:
         self,
         *,
         name: str,
-        execution_context: RuleExecutionContext,
+        execution_context: RuleCreateRequestExecutionContext,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RuleResponse:
         """
@@ -141,7 +141,8 @@ class SeedApi:
         ----------
         name : str
 
-        execution_context : RuleExecutionContext
+        execution_context : RuleCreateRequestExecutionContext
+            Execution context for the rule, excluding the prod environment.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -371,7 +372,7 @@ class AsyncSeedApi:
         self,
         *,
         name: str,
-        execution_context: RuleExecutionContext,
+        execution_context: RuleCreateRequestExecutionContext,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RuleResponse:
         """
@@ -379,7 +380,8 @@ class AsyncSeedApi:
         ----------
         name : str
 
-        execution_context : RuleExecutionContext
+        execution_context : RuleCreateRequestExecutionContext
+            Execution context for the rule, excluding the prod environment.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

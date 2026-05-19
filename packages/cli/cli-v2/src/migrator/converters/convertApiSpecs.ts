@@ -1,7 +1,8 @@
 import type { schemas } from "@fern-api/config";
-import { APIS_DIRECTORY, DEFINITION_DIRECTORY, FERN_DIRECTORY, generatorsYml } from "@fern-api/configuration";
+import { DEFINITION_DIRECTORY, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readdir } from "fs/promises";
+import path from "path";
 import type { MigratorWarning } from "../types/index.js";
 import { convertOpenApiSpecSettings } from "./convertSettings.js";
 
@@ -11,6 +12,8 @@ export interface ConvertApiSpecsResult {
 }
 
 export interface ConvertSingleApiOptions {
+    /** The project root directory where fern.yml will be written */
+    projectRoot: AbsoluteFilePath;
     /** The fern directory (e.g., /path/to/project/fern) */
     fernDir: AbsoluteFilePath;
     /** API config from generators.yml */
@@ -27,16 +30,17 @@ export interface ConvertSingleApiResult {
  * Checks for Fern definition directory (takes precedence) or uses generators.yml specs.
  */
 export async function convertSingleApi(options: ConvertSingleApiOptions): Promise<ConvertSingleApiResult> {
-    const { fernDir, generatorsYmlApi } = options;
+    const { projectRoot, fernDir, generatorsYmlApi } = options;
     const warnings: MigratorWarning[] = [];
+    const fernRelPath = computeRelativePosixPath(projectRoot, fernDir);
 
     const definitionDir = join(fernDir, RelativeFilePath.of(DEFINITION_DIRECTORY));
     const hasFernDefinition = await doesPathExist(definitionDir, "directory");
 
     if (hasFernDefinition) {
-        // The Fern definition takes precedence.
+        const defRelPath = computeRelativePosixPath(projectRoot, definitionDir);
         const api: schemas.ApiDefinitionSchema = {
-            specs: [{ fern: `./${FERN_DIRECTORY}/${DEFINITION_DIRECTORY}` }]
+            specs: [{ fern: `./${defRelPath}` }]
         };
 
         if (generatorsYmlApi != null) {
@@ -61,7 +65,8 @@ export async function convertSingleApi(options: ConvertSingleApiOptions): Promis
         warnings.push(...result.warnings);
 
         if (result.specs.length > 0) {
-            return { api: { specs: result.specs }, warnings };
+            const adjustedSpecs = rebaseSpecPaths(result.specs, fernRelPath);
+            return { api: { specs: adjustedSpecs }, warnings };
         }
     }
 
@@ -69,6 +74,8 @@ export async function convertSingleApi(options: ConvertSingleApiOptions): Promis
 }
 
 export interface ConvertMultiApiOptions {
+    /** The project root directory where fern.yml will be written */
+    projectRoot: AbsoluteFilePath;
     /** The fern directory (e.g., /path/to/project/fern) */
     fernDir: AbsoluteFilePath;
     /** The apis directory (e.g., /path/to/project/fern/apis) */
@@ -83,7 +90,7 @@ export interface ConvertMultiApiResult {
 }
 
 export async function convertMultiApi(options: ConvertMultiApiOptions): Promise<ConvertMultiApiResult> {
-    const { apisDir, generatorsYmlApis } = options;
+    const { projectRoot, apisDir, generatorsYmlApis } = options;
     const warnings: MigratorWarning[] = [];
     const apis: schemas.ApisSchema = {};
 
@@ -94,13 +101,14 @@ export async function convertMultiApi(options: ConvertMultiApiOptions): Promise<
         const apiDir = join(apisDir, RelativeFilePath.of(apiName));
         const definitionDir = join(apiDir, RelativeFilePath.of(DEFINITION_DIRECTORY));
         const hasFernDefinition = await doesPathExist(definitionDir, "directory");
+        const apiRelPath = computeRelativePosixPath(projectRoot, apiDir);
 
         const generatorsYmlApi = generatorsYmlApis[apiName];
 
         if (hasFernDefinition) {
-            // The Fern definition takes precedence.
+            const defRelPath = computeRelativePosixPath(projectRoot, definitionDir);
             apis[apiName] = {
-                specs: [{ fern: `./${FERN_DIRECTORY}/${APIS_DIRECTORY}/${apiName}/${DEFINITION_DIRECTORY}` }]
+                specs: [{ fern: `./${defRelPath}` }]
             };
 
             if (generatorsYmlApi != null) {
@@ -119,7 +127,7 @@ export async function convertMultiApi(options: ConvertMultiApiOptions): Promise<
             const result = convertApiSpecs(generatorsYmlApi);
             warnings.push(...result.warnings);
             if (result.specs.length > 0) {
-                const adjustedSpecs = adjustSpecPaths(result.specs, apiName);
+                const adjustedSpecs = rebaseSpecPaths(result.specs, apiRelPath);
                 apis[apiName] = { specs: adjustedSpecs };
             } else {
                 apis[apiName] = { specs: [] };
@@ -143,49 +151,52 @@ export async function convertMultiApi(options: ConvertMultiApiOptions): Promise<
 }
 
 /**
- * Adjusts spec paths to be relative from the project root (where fern.yml is created).
+ * Rebases spec paths so they are relative to the project root (where fern.yml lives).
+ *
+ * `sourcePrefix` is the POSIX-style relative path from the project root to the directory
+ * that originally contained the generators.yml (e.g. "fern" or "fern/apis/rest").
  */
-function adjustSpecPaths(specs: schemas.ApiSpecSchema[], apiName: string): schemas.ApiSpecSchema[] {
+function rebaseSpecPaths(specs: schemas.ApiSpecSchema[], sourcePrefix: string): schemas.ApiSpecSchema[] {
     return specs.map((spec) => {
         if ("openapi" in spec) {
             return {
                 ...spec,
-                openapi: adjustPath(spec.openapi, apiName),
-                overrides: spec.overrides != null ? adjustPathOrPaths(spec.overrides, apiName) : undefined,
-                overlays: spec.overlays != null ? adjustPath(spec.overlays, apiName) : undefined
+                openapi: rebasePath(spec.openapi, sourcePrefix),
+                overrides: spec.overrides != null ? rebasePathOrPaths(spec.overrides, sourcePrefix) : undefined,
+                overlays: spec.overlays != null ? rebasePath(spec.overlays, sourcePrefix) : undefined
             };
         }
         if ("asyncapi" in spec) {
             return {
                 ...spec,
-                asyncapi: adjustPath(spec.asyncapi, apiName),
-                overrides: spec.overrides != null ? adjustPathOrPaths(spec.overrides, apiName) : undefined
+                asyncapi: rebasePath(spec.asyncapi, sourcePrefix),
+                overrides: spec.overrides != null ? rebasePathOrPaths(spec.overrides, sourcePrefix) : undefined
             };
         }
         if ("fern" in spec) {
             return {
                 ...spec,
-                fern: adjustPath(spec.fern, apiName)
+                fern: rebasePath(spec.fern, sourcePrefix)
             };
         }
         if ("conjure" in spec) {
             return {
                 ...spec,
-                conjure: adjustPath(spec.conjure, apiName)
+                conjure: rebasePath(spec.conjure, sourcePrefix)
             };
         }
         if ("openrpc" in spec) {
             return {
                 ...spec,
-                openrpc: adjustPath(spec.openrpc, apiName),
-                overrides: spec.overrides != null ? adjustPathOrPaths(spec.overrides, apiName) : undefined
+                openrpc: rebasePath(spec.openrpc, sourcePrefix),
+                overrides: spec.overrides != null ? rebasePathOrPaths(spec.overrides, sourcePrefix) : undefined
             };
         }
         if ("graphql" in spec) {
             return {
                 ...spec,
-                graphql: adjustPath(spec.graphql, apiName),
-                overrides: spec.overrides != null ? adjustPathOrPaths(spec.overrides, apiName) : undefined
+                graphql: rebasePath(spec.graphql, sourcePrefix),
+                overrides: spec.overrides != null ? rebasePathOrPaths(spec.overrides, sourcePrefix) : undefined
             };
         }
         if ("proto" in spec) {
@@ -193,9 +204,9 @@ function adjustSpecPaths(specs: schemas.ApiSpecSchema[], apiName: string): schem
                 ...spec,
                 proto: {
                     ...spec.proto,
-                    root: adjustPath(spec.proto.root, apiName),
+                    root: rebasePath(spec.proto.root, sourcePrefix),
                     overrides:
-                        spec.proto.overrides != null ? adjustPathOrPaths(spec.proto.overrides, apiName) : undefined
+                        spec.proto.overrides != null ? rebasePathOrPaths(spec.proto.overrides, sourcePrefix) : undefined
                 }
             };
         }
@@ -203,21 +214,34 @@ function adjustSpecPaths(specs: schemas.ApiSpecSchema[], apiName: string): schem
     });
 }
 
-function adjustPath(path: string, apiName: string): string {
-    if (path.startsWith("/")) {
-        return path;
+/**
+ * Rebases a single file path from being relative to `sourcePrefix` to being
+ * relative to the project root. Absolute paths are left untouched.
+ */
+function rebasePath(filePath: string, sourcePrefix: string): string {
+    if (filePath.startsWith("/")) {
+        return filePath;
     }
-    if (path.startsWith("./")) {
-        return `./${FERN_DIRECTORY}/${APIS_DIRECTORY}/${apiName}/${path.slice(2)}`;
+    const rawPath = filePath.startsWith("./") ? filePath.slice(2) : filePath;
+    if (sourcePrefix === "") {
+        return `./${rawPath}`;
     }
-    return `./${FERN_DIRECTORY}/${APIS_DIRECTORY}/${apiName}/${path}`;
+    return `./${path.posix.normalize(`${sourcePrefix}/${rawPath}`)}`;
 }
 
-function adjustPathOrPaths(paths: string | string[], apiName: string): string | string[] {
+function rebasePathOrPaths(paths: string | string[], sourcePrefix: string): string | string[] {
     if (Array.isArray(paths)) {
-        return paths.map((p) => adjustPath(p, apiName));
+        return paths.map((p) => rebasePath(p, sourcePrefix));
     }
-    return adjustPath(paths, apiName);
+    return rebasePath(paths, sourcePrefix);
+}
+
+/**
+ * Computes a POSIX-style relative path from `from` to `to`.
+ */
+function computeRelativePosixPath(from: AbsoluteFilePath, to: AbsoluteFilePath): string {
+    const rel = path.relative(from, to);
+    return rel.split(path.sep).join(path.posix.sep);
 }
 
 /**

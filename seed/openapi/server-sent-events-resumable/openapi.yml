@@ -1,0 +1,72 @@
+openapi: 3.1.0
+info:
+  title: server-sent-events-resumable
+  version: 0.0.0
+paths:
+  /stream:
+    post:
+      operationId: completions_stream
+      tags:
+        - Completions
+      parameters: []
+      responses:
+        '204':
+          description: No content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  examples:
+                    - foo
+              required:
+                - query
+            examples:
+              Stream completions (resumable):
+                value:
+                  query: foo
+  /stream-non-resumable:
+    post:
+      operationId: completions_streamNonResumable
+      tags:
+        - Completions
+      parameters: []
+      responses:
+        '204':
+          description: No content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  examples:
+                    - bar
+              required:
+                - query
+            examples:
+              Stream completions (non-resumable):
+                value:
+                  query: bar
+components:
+  schemas:
+    StreamedCompletion:
+      title: StreamedCompletion
+      type: object
+      properties:
+        delta:
+          type: string
+        tokens:
+          type:
+            - integer
+            - 'null'
+      required:
+        - delta
+  securitySchemes: {}

@@ -37,7 +37,6 @@ Instantiate and use the client with the following:
 from seed import SeedPathParameters
 
 client = SeedPathParameters(
-    tenant_id="tenant_id",
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -61,7 +60,6 @@ import asyncio
 from seed import AsyncSeedPathParameters
 
 client = AsyncSeedPathParameters(
-    tenant_id="tenant_id",
     base_url="https://yourhost.com/path/to/api",
 )
 

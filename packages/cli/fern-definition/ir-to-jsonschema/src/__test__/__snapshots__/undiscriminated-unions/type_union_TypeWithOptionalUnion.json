@@ -50,7 +50,8 @@
           },
           "uniqueItems": true
         }
-      ]
+      ],
+      "description": "Several different types are accepted."
     }
   }
 }

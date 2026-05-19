@@ -8,7 +8,7 @@ RUN rustup component add rustfmt \
     && cp "$RUSTFMT" /rustfmt/rustfmt \
     && cp "$(dirname "$RUSTFMT")/../lib"/librustc_driver-*.so /rustfmt/lib/
 
-FROM node:22.22-alpine3.23
+FROM node:24.15-alpine3.23
 
 RUN apk update && apk upgrade --no-cache
 
@@ -23,6 +23,14 @@ COPY --from=rust /rustfmt /usr/local/lib/rustfmt
 ENV PATH=/usr/local/lib/rustfmt:$PATH \
     LD_LIBRARY_PATH=/usr/local/lib/rustfmt/lib
 RUN rustfmt --version
+
+# Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; node:24.15 vendors 5.0.5).
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    npm pack brace-expansion@5.0.6 && \
+    rm -rf brace-expansion && \
+    mkdir brace-expansion && \
+    tar -xzf brace-expansion-5.0.6.tgz --strip-components=1 -C brace-expansion/ && \
+    rm brace-expansion-5.0.6.tgz
 
 COPY generators/rust/model/dist /dist
 

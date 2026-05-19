@@ -169,5 +169,12 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<generatorsYml.Gen
             location: "local-file-system",
             path: "../sdks/rust"
         }
+    },
+    [GeneratorName.CLI]: {
+        version: "0.0.1",
+        output: {
+            location: "local-file-system",
+            path: "../sdks/cli"
+        }
     }
 };

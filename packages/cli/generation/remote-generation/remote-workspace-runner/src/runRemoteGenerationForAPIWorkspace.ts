@@ -4,7 +4,7 @@ import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { TaskAbortSignal, TaskContext } from "@fern-api/task-context";
+import { resolveErrorCode, TaskAbortSignal, TaskContext } from "@fern-api/task-context";
 import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
@@ -47,6 +47,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     automationMode,
     autoMerge,
     skipIfNoDiff,
+    verify,
     noReplay,
     disableTelemetry,
     automation,
@@ -85,6 +86,13 @@ export async function runRemoteGenerationForAPIWorkspace({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    /**
+     * `--verify` CLI flag. When true, Fiddle runs the generator-cli pipeline's
+     * VerificationStep against the language-specific validator after the generator
+     * emits SDK files. Forwarded per-generator to {@link runRemoteGenerationForGenerator}.
+     * Default: false.
+     */
+    verify?: boolean;
     /** `--no-replay` CLI flag. Cloud doesn't honor it yet (FER-10343), plumbed for telemetry parity. */
     noReplay?: boolean;
     /** Suppresses replay PostHog event when true. Honors FERN_DISABLE_TELEMETRY. */
@@ -156,6 +164,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                     automationMode,
                     autoMerge,
                     skipIfNoDiff,
+                    verify,
                     noReplay,
                     disableTelemetry,
                     automation,
@@ -212,6 +221,7 @@ async function generateOne({
     automationMode,
     autoMerge,
     skipIfNoDiff,
+    verify,
     noReplay,
     disableTelemetry,
     automation,
@@ -246,6 +256,7 @@ async function generateOne({
     automationMode: boolean | undefined;
     autoMerge: boolean | undefined;
     skipIfNoDiff: boolean | undefined;
+    verify: boolean | undefined;
     noReplay: boolean | undefined;
     disableTelemetry: boolean | undefined;
     automation: AutomationRunOptions | undefined;
@@ -332,6 +343,7 @@ async function generateOne({
             automationMode,
             autoMerge,
             skipIfNoDiff,
+            verify,
             noReplay,
             disableTelemetry,
             loginCommand
@@ -426,6 +438,10 @@ async function generateOne({
             generatorsYmlLineNumber: lineNumber
         });
         // Mark the task as failed but don't propagate — siblings continue running.
-        interactiveTaskContext.failWithoutThrowing(message);
+        // Pass the error object so resolveErrorCode can extract CliError codes,
+        // errno codes, etc. instead of defaulting to InternalError.
+        interactiveTaskContext.failWithoutThrowing(message, error, {
+            code: resolveErrorCode(error)
+        });
     }
 }

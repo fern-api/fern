@@ -54,6 +54,7 @@ export async function runRemoteGenerationForGenerator({
     automationMode,
     autoMerge,
     skipIfNoDiff,
+    verify,
     noReplay,
     disableTelemetry,
     loginCommand
@@ -86,6 +87,12 @@ export async function runRemoteGenerationForGenerator({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    /**
+     * Whether the user passed `--verify`. When true, Fiddle runs the generator-cli
+     * pipeline's VerificationStep against the language-specific validator after the
+     * generator emits SDK files. Forwarded to {@link createAndStartJob}. Default: false.
+     */
+    verify?: boolean;
     /**
      * Whether the user passed `--no-replay`. Currently a no-op on the cloud path
      * (Fiddle doesn't honor it yet — FER-10343 out-of-scope), but plumbed through
@@ -332,6 +339,7 @@ export async function runRemoteGenerationForGenerator({
         automationMode,
         autoMerge,
         skipIfNoDiff,
+        verify,
         loginCommand
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
@@ -533,19 +541,23 @@ async function uploadDynamicIRForSdkGeneration({
 
     // Upload the dynamic IR to S3
     const dynamicIRJson = JSON.stringify(dynamicIR);
-    const uploadResponse = await fetch(uploadUrl, {
-        method: "PUT",
-        body: dynamicIRJson,
-        headers: {
-            "Content-Type": "application/octet-stream",
-            "Content-Length": dynamicIRJson.length.toString()
-        }
-    });
+    try {
+        const uploadResponse = await fetch(uploadUrl, {
+            method: "PUT",
+            body: dynamicIRJson,
+            headers: {
+                "Content-Type": "application/octet-stream",
+                "Content-Length": dynamicIRJson.length.toString()
+            }
+        });
 
-    if (uploadResponse.ok) {
-        context.logger.debug(`Uploaded dynamic IR for ${language}:${packageName} (${version})`);
-    } else {
-        context.logger.warn(`Failed to upload dynamic IR for ${language}: ${uploadResponse.status}`);
+        if (uploadResponse.ok) {
+            context.logger.debug(`Uploaded dynamic IR for ${language}:${packageName} (${version})`);
+        } else {
+            context.logger.warn(`Failed to upload dynamic IR for ${language}: ${uploadResponse.status}`);
+        }
+    } catch (error) {
+        context.logger.warn(`Network error uploading dynamic IR for ${language}: ${error}`);
     }
 }
 

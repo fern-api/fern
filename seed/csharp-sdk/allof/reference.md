@@ -53,7 +53,11 @@ await client.SearchRuleTypesAsync(new SearchRuleTypesRequest());
 
 ```csharp
 await client.CreateRuleAsync(
-    new RuleCreateRequest { Name = "name", ExecutionContext = RuleExecutionContext.Prod }
+    new RuleCreateRequest
+    {
+        Name = "name",
+        ExecutionContext = RuleCreateRequestExecutionContext.Prod,
+    }
 );
 ```
 </dd>

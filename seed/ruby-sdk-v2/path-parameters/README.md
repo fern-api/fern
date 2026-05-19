@@ -31,6 +31,7 @@ require "seed"
 client = Seed::Client.new
 
 client.user.create_user(
+  tenant_id: "tenant_id",
   name: "name",
   tags: %w[tags tags]
 )

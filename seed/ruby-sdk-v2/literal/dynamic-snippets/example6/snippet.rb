@@ -7,9 +7,9 @@ client.query.send_(
   optional_prompt: "You are a helpful assistant",
   alias_prompt: "You are a helpful assistant",
   alias_optional_prompt: "You are a helpful assistant",
+  query: "What is the weather today",
   stream: false,
   optional_stream: false,
   alias_stream: false,
-  alias_optional_stream: false,
-  query: "What is the weather today"
+  alias_optional_stream: false
 )

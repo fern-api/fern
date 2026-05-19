@@ -83,18 +83,18 @@ client.headers.send_(
 
 ```ruby
 client.inlined.send_(
-  temperature: 10.1,
   prompt: "You are a helpful assistant",
   context: "You're super wise",
+  query: "What is the weather today",
+  temperature: 10.1,
+  stream: false,
   aliased_context: "You're super wise",
   maybe_context: "You're super wise",
   object_with_literal: {
     nested_literal: {
       my_literal: "How super cool"
     }
-  },
-  stream: false,
-  query: "What is the weather today"
+  }
 )
 ```
 </dd>
@@ -254,11 +254,11 @@ client.query.send_(
   optional_prompt: "You are a helpful assistant",
   alias_prompt: "You are a helpful assistant",
   alias_optional_prompt: "You are a helpful assistant",
+  query: "What is the weather today",
   stream: false,
   optional_stream: false,
   alias_stream: false,
-  alias_optional_stream: false,
-  query: "What is the weather today"
+  alias_optional_stream: false
 )
 ```
 </dd>

@@ -2,10 +2,12 @@
   "type": "object",
   "properties": {
     "bar": {
-      "type": "string"
+      "type": "string",
+      "description": "lorem ipsum"
     },
     "ref": {
-      "$ref": "#/definitions/ReferenceType"
+      "$ref": "#/definitions/ReferenceType",
+      "description": "lorem ipsum"
     }
   },
   "required": [
@@ -13,18 +15,21 @@
     "ref"
   ],
   "additionalProperties": false,
+  "description": "lorem ipsum",
   "definitions": {
     "ReferenceType": {
       "type": "object",
       "properties": {
         "foo": {
-          "type": "string"
+          "type": "string",
+          "description": "lorem ipsum"
         }
       },
       "required": [
         "foo"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "lorem ipsum"
     }
   }
 }

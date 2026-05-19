@@ -17,14 +17,18 @@ type RequestOption interface {
 // This type is primarily used by the generated code and is not meant
 // to be used directly; use the option package instead.
 type RequestOptions struct {
-	BaseURL         string
-	HTTPClient      HTTPClient
-	HTTPHeader      http.Header
-	BodyProperties  map[string]interface{}
-	QueryParameters url.Values
-	MaxAttempts     uint
-	MaxBufSize      int
-	Token           string
+	BaseURL                    string
+	HTTPClient                 HTTPClient
+	HTTPHeader                 http.Header
+	BodyProperties             map[string]interface{}
+	QueryParameters            url.Values
+	MaxAttempts                uint
+	MaxBufSize                 int
+	MaxStreamReconnectAttempts uint
+	DisableStreamReconnection  bool
+	DisableRetries             bool
+	Token                      string
+	TokenFunc                  func() (string, error)
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -49,6 +53,10 @@ func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
 	if r.Token != "" {
 		header.Set("Authorization", "Bearer "+r.Token)
+	} else if r.TokenFunc != nil {
+		if token, err := r.TokenFunc(); err == nil && token != "" {
+			header.Set("Authorization", "Bearer "+token)
+		}
 	}
 	return header
 }
@@ -153,6 +161,41 @@ func (m *MaxBufSizeOption) applyIdempotentRequestOptions(opts *IdempotentRequest
 	opts.MaxBufSize = m.MaxBufSize
 }
 
+// MaxStreamReconnectAttemptsOption implements the RequestOption interface.
+type MaxStreamReconnectAttemptsOption struct {
+	MaxStreamReconnectAttempts uint
+}
+
+func (m *MaxStreamReconnectAttemptsOption) applyRequestOptions(opts *RequestOptions) {
+	opts.MaxStreamReconnectAttempts = m.MaxStreamReconnectAttempts
+}
+
+func (m *MaxStreamReconnectAttemptsOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
+	opts.MaxStreamReconnectAttempts = m.MaxStreamReconnectAttempts
+}
+
+// WithoutStreamReconnectionOption implements the RequestOption interface.
+type WithoutStreamReconnectionOption struct{}
+
+func (w *WithoutStreamReconnectionOption) applyRequestOptions(opts *RequestOptions) {
+	opts.DisableStreamReconnection = true
+}
+
+func (w *WithoutStreamReconnectionOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
+	opts.DisableStreamReconnection = true
+}
+
+// WithoutRetriesOption implements the RequestOption interface.
+type WithoutRetriesOption struct{}
+
+func (w *WithoutRetriesOption) applyRequestOptions(opts *RequestOptions) {
+	opts.DisableRetries = true
+}
+
+func (w *WithoutRetriesOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
+	opts.DisableRetries = true
+}
+
 // TokenOption implements the RequestOption interface.
 type TokenOption struct {
 	Token string
@@ -164,4 +207,17 @@ func (t *TokenOption) applyRequestOptions(opts *RequestOptions) {
 
 func (t *TokenOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
 	opts.Token = t.Token
+}
+
+// TokenFuncOption implements the RequestOption interface.
+type TokenFuncOption struct {
+	TokenFunc func() (string, error)
+}
+
+func (t *TokenFuncOption) applyRequestOptions(opts *RequestOptions) {
+	opts.TokenFunc = t.TokenFunc
+}
+
+func (t *TokenFuncOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
+	opts.TokenFunc = t.TokenFunc
 }

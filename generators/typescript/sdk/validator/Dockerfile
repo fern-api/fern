@@ -1,4 +1,4 @@
-FROM node:22.22-trixie-slim
+FROM node:24.15-trixie-slim
 
 # Apply latest Debian security updates so that grype-tracked OS package
 # vulnerabilities (glibc, dpkg, nghttp2, libcap2, systemd, libgcrypt20,
@@ -34,5 +34,13 @@ RUN cd /tmp/warm-cache \
     && pnpm config set store-dir "$PNPM_STORE_PATH" \
     && pnpm install --ignore-scripts --prefer-offline \
     && rm -rf /tmp/warm-cache/node_modules
+
+# Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; node:24.15 vendors 5.0.5).
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    npm pack brace-expansion@5.0.6 && \
+    rm -rf brace-expansion && \
+    mkdir brace-expansion && \
+    tar -xzf brace-expansion-5.0.6.tgz --strip-components=1 -C brace-expansion/ && \
+    rm brace-expansion-5.0.6.tgz
 
 WORKDIR /workspace

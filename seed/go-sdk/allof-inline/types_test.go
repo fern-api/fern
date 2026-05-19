@@ -21,7 +21,7 @@ func TestSettersRuleCreateRequest(t *testing.T) {
 
 	t.Run("SetExecutionContext", func(t *testing.T) {
 		obj := &RuleCreateRequest{}
-		var fernTestValueExecutionContext RuleExecutionContext
+		var fernTestValueExecutionContext RuleCreateRequestExecutionContext
 		obj.SetExecutionContext(fernTestValueExecutionContext)
 		assert.Equal(t, fernTestValueExecutionContext, obj.ExecutionContext)
 		assert.NotNil(t, obj.explicitFields)
@@ -65,7 +65,7 @@ func TestSettersMarkExplicitRuleCreateRequest(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &RuleCreateRequest{}
-		var fernTestValueExecutionContext RuleExecutionContext
+		var fernTestValueExecutionContext RuleCreateRequestExecutionContext
 
 		// Act
 		obj.SetExecutionContext(fernTestValueExecutionContext)
@@ -4217,6 +4217,42 @@ func TestEnumCombinedEntityStatus(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewCombinedEntityStatusFromString("active")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumRuleCreateRequestExecutionContext(t *testing.T) {
+	t.Run("NewFromString_prod", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewRuleCreateRequestExecutionContextFromString("prod")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, RuleCreateRequestExecutionContext("prod"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_staging", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewRuleCreateRequestExecutionContextFromString("staging")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, RuleCreateRequestExecutionContext("staging"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_dev", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewRuleCreateRequestExecutionContextFromString("dev")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, RuleCreateRequestExecutionContext("dev"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewRuleCreateRequestExecutionContextFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewRuleCreateRequestExecutionContextFromString("prod")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)

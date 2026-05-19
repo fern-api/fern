@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "987cdcd2",
+            "example_identifier": "29893e03",
             "id": {
                 "method": "POST",
                 "path": "/movies/create-movie",
@@ -9,12 +9,12 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.imdb.types.CreateMovieRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().createMovie(\n            CreateMovieRequest\n                .builder()\n                .title(\"title\")\n                .rating(1.1)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.imdb.types.CreateMovieRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().createMovie(\n            CreateMovieRequest\n                .builder()\n                .title(\"title\")\n                .rating(1.1)\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.imdb.requests.CreateMovieRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().createMovie(\n            CreateMovieRequest\n                .builder()\n                .title(\"title\")\n                .rating(1.1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.imdb.requests.CreateMovieRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().createMovie(\n            CreateMovieRequest\n                .builder()\n                .title(\"title\")\n                .rating(1.1)\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "c0c8e16f",
+            "example_identifier": "4f9f05f3",
             "id": {
                 "method": "GET",
                 "path": "/movies/{movieId}",
@@ -22,8 +22,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().getMovie(\"movieId\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().getMovie(\"movieId\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.imdb.requests.GetMovieImdbRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().getMovie(\n            \"movieId\",\n            GetMovieImdbRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.imdb.requests.GetMovieImdbRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().getMovie(\n            \"movieId\",\n            GetMovieImdbRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         }
     ],

@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix SDK generation crashing with `fatal: <sha> is not a valid object`
+    when the prior fern-bot PR was squash-merged and its branch deleted.
+    The stale `fern-generation-base` tag update is now skipped with a
+    warning; the SDK PR still opens.
+  type: fix

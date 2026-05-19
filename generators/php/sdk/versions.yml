@@ -1,4 +1,68 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.10.1
+  changelogEntry:
+    - summary: |
+        Dynamic snippets now render path-parameter arguments in IR (URL / SDK signature) order
+        rather than in the order they happen to appear in the input request, so generated
+        examples line up with the actual SDK method signature even when the spec lists path
+        parameters in a different order.
+      type: fix
+  createdAt: "2026-05-15"
+  irVersion: 66
+- version: 2.10.0
+  changelogEntry:
+    - summary: |
+        Support streaming response bodies in generated PHP SDKs (Server-Sent Events,
+        NDJSON, and raw text). Endpoints with a `response-stream` now return a typed
+        `SseStream<T>`, `JsonStream<T>`, or `TextStream` that iterates the response
+        frame-by-frame and deserializes each one into the declared payload type.
+        Previously these endpoints were emitted as broken `void` methods that always
+        threw `<Sdk>ApiException` regardless of HTTP status.
+      type: feat
+  createdAt: "2026-05-14"
+  irVersion: 66
+- version: 2.9.7
+  changelogEntry:
+    - summary: |
+        Patch the bundled `ip-address` to v10.2.0 in the php-sdk container to
+        address CVE-2026-42338 / GHSA-v2v4-37r5-5v8g (XSS in `Address6` HTML-
+        emitting methods). npm 11.12.1 (shipped with `node:24.15`) bundles
+        `ip-address@10.1.0` via `socks`; this overlays the published 10.2.0
+        tarball in place at image build time.
+      type: chore
+  createdAt: "2026-05-14"
+  irVersion: 66
+- version: 2.9.6
+  changelogEntry:
+    - summary: |
+        Stop launching WireMock with `--global-response-templating` in generated
+        wire-test `docker-compose.test.yml`. Response examples containing literal
+        `{{...}}` are now served verbatim instead of being passed through
+        WireMock's Handlebars transformer, which would fail to resolve them as
+        helpers and return 500.
+      type: fix
+  createdAt: "2026-05-13"
+  irVersion: 66
+- version: 2.9.5
+  changelogEntry:
+    - summary: |
+        Patch PHP SDK + PHP model generator container CVEs flagged in the AWS ECR /
+        grype scan. Refresh `apk upgrade --available` to pull the latest Alpine
+        3.23 security patches and patch npm's bundled `picomatch@4.0.3 -> 4.0.4`
+        and `brace-expansion@5.0.4 -> 5.0.5` via tarball replacement.
+      type: chore
+  createdAt: "2026-05-12"
+  irVersion: 66
+- version: 2.9.4
+  changelogEntry:
+    - summary: |
+        Bump the PHP SDK and PHP model generator containers' Node base image from
+        `node:22.22-alpine3.23` to `node:24.15-alpine3.23`. Aligns the generators
+        with the rest of the Fern generator containers on a single Node major
+        version (Node 24) and picks up Node 24's CVE patches.
+      type: chore
+  createdAt: "2026-05-11"
+  irVersion: 66
 - version: 2.9.3
   changelogEntry:
     - summary: |

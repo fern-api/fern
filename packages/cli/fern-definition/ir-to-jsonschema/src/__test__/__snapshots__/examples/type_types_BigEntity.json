@@ -224,7 +224,8 @@
           "type": "string"
         },
         "rating": {
-          "type": "number"
+          "type": "number",
+          "description": "The rating scale is one to five stars"
         },
         "type": {
           "const": "movie"
@@ -501,10 +502,18 @@
     },
     "types.MigrationStatus": {
       "type": "string",
-      "enum": [
-        "RUNNING",
-        "FAILED",
-        "FINISHED"
+      "oneOf": [
+        {
+          "const": "RUNNING",
+          "description": "The migration is running."
+        },
+        {
+          "const": "FAILED",
+          "description": "The migration failed."
+        },
+        {
+          "const": "FINISHED"
+        }
       ]
     },
     "types.Migration": {

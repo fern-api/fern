@@ -35,7 +35,9 @@ describe("ImdbClient", () => {
 
         server.mockEndpoint().get("/movies/movieId").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const response = await client.imdb.getMovie("movieId");
+        const response = await client.imdb.getMovie({
+            movieId: "movieId",
+        });
         expect(response).toEqual(rawResponseBody);
     });
 
@@ -48,7 +50,9 @@ describe("ImdbClient", () => {
         server.mockEndpoint().get("/movies/movieId").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
 
         await expect(async () => {
-            return await client.imdb.getMovie("movieId");
-        }).rejects.toThrow(SeedApi.MovieDoesNotExistError);
+            return await client.imdb.getMovie({
+                movieId: "movieId",
+            });
+        }).rejects.toThrow(SeedApi.NotFoundError);
     });
 });
