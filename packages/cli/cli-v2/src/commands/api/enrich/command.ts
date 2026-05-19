@@ -15,19 +15,36 @@ import { extractEnrichedExamples, mergeExamplesIntoSpec } from "./mergeExamples.
 export declare namespace EnrichCommand {
     export interface Args extends GlobalArgs {
         openapi: string;
-        file: string;
+        file?: string;
         output?: string;
         split?: boolean;
+        "ai-examples"?: boolean;
+        "disable-ai-examples"?: boolean;
     }
 }
 
 export class EnrichCommand {
     public async handle(context: Context, args: EnrichCommand.Args): Promise<void> {
         const openapiPath = AbsoluteFilePath.of(path.resolve(context.cwd, args.openapi));
-        const overridesPath = AbsoluteFilePath.of(path.resolve(context.cwd, args.file));
         const outputPath =
             args.output != null ? AbsoluteFilePath.of(path.resolve(context.cwd, args.output)) : openapiPath;
 
+        if (args.file == null) {
+            if (args["ai-examples"] === true) {
+                throw new CliError({
+                    message:
+                        "AI example generation is not yet available. Provide an overrides file with --file in the meantime.",
+                    code: CliError.Code.ConfigError
+                });
+            }
+            throw new CliError({
+                message:
+                    "Provide an overrides file with --file (-f), or pass --ai-examples to generate examples with AI.",
+                code: CliError.Code.ConfigError
+            });
+        }
+
+        const overridesPath = AbsoluteFilePath.of(path.resolve(context.cwd, args.file));
         const [spec, overrides] = await Promise.all([loadSpec(openapiPath), loadSpec(overridesPath)]);
 
         const logger = {
@@ -64,7 +81,7 @@ export function addEnrichCommand(cli: Argv<GlobalArgs>): void {
     command(
         cli,
         "enrich <openapi>",
-        "Enrich an OpenAPI spec with AI-generated examples from an overrides file",
+        "Enrich an OpenAPI spec with AI-generated examples",
         (context, args) => cmd.handle(context, args as EnrichCommand.Args),
         (yargs) =>
             yargs
@@ -76,8 +93,7 @@ export function addEnrichCommand(cli: Argv<GlobalArgs>): void {
                 .option("file", {
                     type: "string",
                     alias: "f",
-                    description: "Path to the overrides file containing x-fern-examples",
-                    demandOption: true
+                    description: "Path to the overrides file containing x-fern-examples"
                 })
                 .option("output", {
                     type: "string",
@@ -88,6 +104,14 @@ export function addEnrichCommand(cli: Argv<GlobalArgs>): void {
                     type: "boolean",
                     default: false,
                     description: "Extract only the enriched examples instead of the full spec"
+                })
+                .option("ai-examples", {
+                    type: "boolean",
+                    description: "Generate examples using AI (coming soon)"
+                })
+                .option("disable-ai-examples", {
+                    type: "boolean",
+                    description: "Disable AI example generation"
                 })
     );
 }

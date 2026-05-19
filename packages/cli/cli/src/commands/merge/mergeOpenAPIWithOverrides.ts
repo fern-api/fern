@@ -25,11 +25,13 @@ export async function mergeOpenAPIWithOverrides({
     openapiPath,
     overridesPath,
     outputPath,
+    split = false,
     cliContext
 }: {
     openapiPath: AbsoluteFilePath;
     overridesPath: AbsoluteFilePath;
     outputPath: AbsoluteFilePath;
+    split?: boolean;
     cliContext: CliContext;
 }): Promise<void> {
     await cliContext.runTask(async (context) => {
@@ -56,11 +58,25 @@ export async function mergeOpenAPIWithOverrides({
 
         // Determine output format based on output file extension
         const isJson = outputPath.endsWith(".json");
-        const output = isJson ? JSON.stringify(merged, null, 2) : yaml.dump(merged, { lineWidth: -1, noRefs: true });
 
-        await writeFile(outputPath, output);
-
-        context.logger.info(`Merged output written to ${outputPath}`);
+        if (split) {
+            const examples = extractEnrichedExamples(openapi, merged);
+            const output = isJson
+                ? JSON.stringify(examples, null, 2)
+                : yaml.dump(examples, { lineWidth: -1, noRefs: true });
+            await writeFile(outputPath, output);
+            context.logger.info(`Extracted enriched examples written to ${outputPath}`);
+        } else {
+            const output = isJson
+                ? JSON.stringify(merged, null, 2)
+                : yaml.dump(merged, { lineWidth: -1, noRefs: true });
+            await writeFile(outputPath, output);
+            if (outputPath === openapiPath) {
+                context.logger.info(`Enriched ${openapiPath} in-place`);
+            } else {
+                context.logger.info(`Merged output written to ${outputPath}`);
+            }
+        }
     });
 }
 
@@ -139,6 +155,154 @@ export function mergeExamplesIntoSpec(spec: OpenAPISpec, overrides: OpenAPISpec,
     stripFernExamples(merged);
 
     return merged;
+}
+
+/**
+ * Extracts only the enriched examples from a merged spec by diffing against
+ * the original spec. Returns a minimal spec containing only the paths and
+ * operations that gained example fields.
+ */
+export function extractEnrichedExamples(original: OpenAPISpec, enriched: OpenAPISpec): OpenAPISpec {
+    const examples: OpenAPISpec = {};
+
+    const enrichedPaths = enriched.paths;
+    const originalPaths = original.paths ?? {};
+    if (enrichedPaths == null || typeof enrichedPaths !== "object") {
+        return examples;
+    }
+
+    for (const [pathKey, pathItem] of Object.entries(enrichedPaths)) {
+        if (pathItem == null || typeof pathItem !== "object") {
+            continue;
+        }
+        const originalPathItem = originalPaths[pathKey] ?? {};
+
+        for (const [method, operation] of Object.entries(pathItem as Record<string, unknown>)) {
+            if (!HTTP_METHODS.has(method.toLowerCase())) {
+                continue;
+            }
+            if (operation == null || typeof operation !== "object") {
+                continue;
+            }
+
+            const originalOp = (originalPathItem as Record<string, unknown>)?.[method];
+            const exampleFields = extractOperationExamples(
+                operation as Record<string, unknown>,
+                (originalOp ?? {}) as Record<string, unknown>
+            );
+
+            if (exampleFields != null) {
+                if (examples.paths == null) {
+                    examples.paths = {};
+                }
+                if (examples.paths[pathKey] == null) {
+                    examples.paths[pathKey] = {};
+                }
+                examples.paths[pathKey][method] = exampleFields;
+            }
+        }
+    }
+
+    return examples;
+}
+
+/**
+ * Extracts example fields from an operation that were not present in the original.
+ */
+function extractOperationExamples(
+    enrichedOp: Record<string, unknown>,
+    originalOp: Record<string, unknown>
+): Record<string, unknown> | undefined {
+    const result: Record<string, unknown> = {};
+    let hasExamples = false;
+
+    // Check parameters for new examples
+    if (Array.isArray(enrichedOp.parameters)) {
+        const originalParams = Array.isArray(originalOp.parameters) ? originalOp.parameters : [];
+        const paramsWithExamples: unknown[] = [];
+        for (const param of enrichedOp.parameters as Array<Record<string, unknown>>) {
+            const origParam = originalParams.find(
+                (p: Record<string, unknown>) => p.name === param.name && p.in === param.in
+            );
+            if (
+                (param.example !== undefined && origParam?.example === undefined) ||
+                (param.examples !== undefined && origParam?.examples === undefined)
+            ) {
+                paramsWithExamples.push({
+                    name: param.name,
+                    in: param.in,
+                    ...(param.example !== undefined ? { example: param.example } : {}),
+                    ...(param.examples !== undefined ? { examples: param.examples } : {})
+                });
+                hasExamples = true;
+            }
+        }
+        if (paramsWithExamples.length > 0) {
+            result.parameters = paramsWithExamples;
+        }
+    }
+
+    // Check requestBody for new examples
+    const enrichedBody = enrichedOp.requestBody as Record<string, unknown> | undefined;
+    const originalBody = originalOp.requestBody as Record<string, unknown> | undefined;
+    if (enrichedBody?.content != null) {
+        const enrichedContent = enrichedBody.content as Record<string, Record<string, unknown>>;
+        const originalContent = (originalBody?.content ?? {}) as Record<string, Record<string, unknown>>;
+        const bodyExamples: Record<string, Record<string, unknown>> = {};
+        for (const [contentType, mediaType] of Object.entries(enrichedContent)) {
+            const origMedia = originalContent[contentType] ?? {};
+            if (
+                (mediaType.example !== undefined && origMedia.example === undefined) ||
+                (mediaType.examples !== undefined && origMedia.examples === undefined)
+            ) {
+                bodyExamples[contentType] = {
+                    ...(mediaType.example !== undefined ? { example: mediaType.example } : {}),
+                    ...(mediaType.examples !== undefined ? { examples: mediaType.examples } : {})
+                };
+                hasExamples = true;
+            }
+        }
+        if (Object.keys(bodyExamples).length > 0) {
+            result.requestBody = { content: bodyExamples };
+        }
+    }
+
+    // Check responses for new examples
+    const enrichedResponses = enrichedOp.responses as Record<string, Record<string, unknown>> | undefined;
+    const originalResponses = originalOp.responses as Record<string, Record<string, unknown>> | undefined;
+    if (enrichedResponses != null) {
+        const responseExamples: Record<string, unknown> = {};
+        for (const [statusCode, response] of Object.entries(enrichedResponses)) {
+            if (response?.content == null) {
+                continue;
+            }
+            const origResponse = originalResponses?.[statusCode] ?? {};
+            const origContent = (origResponse.content ?? {}) as Record<string, Record<string, unknown>>;
+            const respContent = response.content as Record<string, Record<string, unknown>>;
+            const contentExamples: Record<string, Record<string, unknown>> = {};
+            for (const [contentType, mediaType] of Object.entries(respContent)) {
+                const origMedia = origContent[contentType] ?? {};
+                if (
+                    (mediaType.example !== undefined && origMedia.example === undefined) ||
+                    (mediaType.examples !== undefined && origMedia.examples === undefined)
+                ) {
+                    contentExamples[contentType] = {
+                        ...(mediaType.example !== undefined ? { example: mediaType.example } : {}),
+                        ...(mediaType.examples !== undefined ? { examples: mediaType.examples } : {})
+                    };
+                    hasExamples = true;
+                }
+            }
+            if (Object.keys(contentExamples).length > 0) {
+                responseExamples[statusCode] = { content: contentExamples };
+            }
+        }
+        if (Object.keys(responseExamples).length > 0) {
+            result.responses = responseExamples;
+        }
+    }
+
+    return hasExamples ? result : undefined;
 }
 
 /**
@@ -282,7 +446,7 @@ function resolveRef(spec: OpenAPISpec, ref: string): any | undefined {
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI operation shape
 function applyRequestBodyExample(operation: any, bodyExample: unknown): void {
     if (operation.requestBody == null) {
-        operation.requestBody = { content: { "application/json": { schema: {} } } };
+        return;
     }
     const content = operation.requestBody.content;
     if (content == null) {
@@ -300,7 +464,7 @@ function applyRequestBodyExample(operation: any, bodyExample: unknown): void {
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI operation shape
 function applyRequestBodyNamedExample(operation: any, bodyExample: unknown, exampleName: string): void {
     if (operation.requestBody == null) {
-        operation.requestBody = { content: { "application/json": { schema: {} } } };
+        return;
     }
     const content = operation.requestBody.content;
     if (content == null) {

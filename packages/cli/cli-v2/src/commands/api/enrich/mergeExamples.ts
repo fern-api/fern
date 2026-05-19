@@ -345,7 +345,7 @@ function resolveRef(spec: OpenAPISpec, ref: string): any | undefined {
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI operation shape
 function applyRequestBodyExample(operation: any, bodyExample: unknown): void {
     if (operation.requestBody == null) {
-        operation.requestBody = { content: { "application/json": { schema: {} } } };
+        return;
     }
     const content = operation.requestBody.content;
     if (content == null) {
@@ -360,7 +360,7 @@ function applyRequestBodyExample(operation: any, bodyExample: unknown): void {
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI operation shape
 function applyRequestBodyNamedExample(operation: any, bodyExample: unknown, exampleName: string): void {
     if (operation.requestBody == null) {
-        operation.requestBody = { content: { "application/json": { schema: {} } } };
+        return;
     }
     const content = operation.requestBody.content;
     if (content == null) {
