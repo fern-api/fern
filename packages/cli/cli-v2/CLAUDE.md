@@ -121,14 +121,29 @@ Build pipeline:
 `dist:npm` requires `--version`, e.g.
 `node build.npm.mjs --version=0.1.0`. See `build.npm.mjs` and `npm/README.md`.
 
+### Versioning strategy
+
+CLI v2 starts at **6.0.0**, continuing the semver timeline from where CLI v1
+(`fern-api`) left off at 5.x. This keeps the version history coherent for
+users migrating from `fern-api` to `@fern-api/fern`.
+
+- Pre-releases before the stable launch use `6.0.0-rc.1`, `6.0.0-rc.2`, etc.
+- The first stable tag must be `cli-v2/v6.0.0`.
+- On the first stable release, CI automatically runs `npm deprecate fern-api`
+  to redirect users to `@fern-api/fern`. This requires a classic npm token
+  with publish access to `fern-api` stored as the **`FERN_API_NPM_TOKEN`**
+  repository secret (Settings → Secrets → Actions). Add this secret before
+  cutting the first stable release.
+
 ### Cutting a release
 
-1. **Pick a version.** Use SemVer. Pre-releases use a dash: `0.2.0-rc.1` →
-   npm dist-tag `rc`. Stable releases get dist-tag `latest`.
+1. **Pick a version.** Use SemVer starting from 6.0.0. Pre-releases use a
+   dash: `6.0.0-rc.1` → npm dist-tag `rc`. Stable releases get dist-tag
+   `latest`.
 2. **Tag and push.** Tag scheme is `cli-v2/v<version>`:
    ```sh
-   git tag cli-v2/v0.1.0
-   git push origin cli-v2/v0.1.0
+   git tag cli-v2/v6.0.0
+   git push origin cli-v2/v6.0.0
    ```
 3. **CI does the rest.** `.github/workflows/release-cli-v2.yml` triggers on
    `cli-v2/v*` tags and:
@@ -138,6 +153,8 @@ Build pipeline:
      and a build provenance attestation
    - publishes to npm via OIDC trusted publishing (no token), with npm
      package provenance
+   - on stable releases only: deprecates `fern-api` on npm, pointing users
+     to `@fern-api/fern` (requires `FERN_API_NPM_TOKEN` secret)
 
 ### Dry-run / smoke test
 
@@ -151,7 +168,7 @@ Locally:
 pnpm --filter @fern-api/cli-v2 dist:cli:dev
 pnpm --filter @fern-api/cli-v2 dist:bin
 cd packages/cli/cli-v2
-node build.npm.mjs --version=0.0.0-dev
+node build.npm.mjs --version=6.0.0-dev
 cd dist/npm/wrapper && npm pack --dry-run
 ```
 

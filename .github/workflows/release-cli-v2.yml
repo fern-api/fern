@@ -5,10 +5,12 @@ name: Release Fern CLI v2
 #   - GitHub Release: per-platform tarballs/zips + SHA256SUMS + provenance attestation
 #
 # Triggers:
-#   - push of a tag matching `cli-v2/v*` (e.g. `cli-v2/v0.1.0`, `cli-v2/v0.2.0-rc.1`)
+#   - push of a tag matching `cli-v2/v*` (e.g. `cli-v2/v6.0.0`, `cli-v2/v6.1.0-rc.1`)
 #   - manual `workflow_dispatch` for build-only dry runs (no publish / no release)
 #
-# See packages/cli/cli-v2/CLAUDE.md for the release runbook.
+# Versioning: CLI v2 starts at 6.0.0, continuing from where CLI v1 (fern-api) left off
+# at 5.x. On the first stable release, fern-api is deprecated on npm pointing users
+# to @fern-api/fern. See packages/cli/cli-v2/CLAUDE.md for the release runbook.
 
 on:
   push:
@@ -17,7 +19,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Version to build (e.g. 0.1.0). For manual / dry-run testing — does not push a tag."
+        description: "Version to build (e.g. 6.0.0). For manual / dry-run testing — does not push a tag."
         required: true
         type: string
       dry_run:
@@ -255,3 +257,18 @@ jobs:
           set -euo pipefail
           cd dist-npm/wrapper
           npm publish --access public --provenance --tag "$NPM_TAG"
+
+      # On stable releases, mark the legacy fern-api package as deprecated so users
+      # are directed to @fern-api/fern. fern-api is not configured for OIDC trusted
+      # publishing, so this step uses a classic npm token stored as the repository
+      # secret FERN_API_NPM_TOKEN (Settings → Secrets → Actions). Add this secret
+      # before the first stable release or this step will fail.
+      - name: Deprecate legacy fern-api package
+        if: ${{ needs.plan.outputs.is_prerelease == 'false' }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.FERN_API_NPM_TOKEN }}
+          VERSION: ${{ needs.plan.outputs.version }}
+        run: |
+          set -euo pipefail
+          npm deprecate fern-api \
+            "fern-api has moved to @fern-api/fern. Please update your install: npm install -g @fern-api/fern@${VERSION}"
