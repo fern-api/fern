@@ -1,3 +1,4 @@
+import os
 import sys
 from typing import Literal, Optional, Sequence, Tuple, Union, cast
 
@@ -24,6 +25,7 @@ from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import AST, Project
 from fern_python.codegen.filepath import Filepath
 from fern_python.codegen.module_manager import ModuleExport
+from fern_python.codegen.project import ProjectConfig
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model.pydantic_model_generator import PydanticModelGenerator
 from fern_python.generators.sdk import as_is_copier
@@ -88,6 +90,20 @@ class SdkGenerator(AbstractGenerator):
             )
             if custom_config.use_api_name_in_package
             else (cleaned_org_name,)
+        )
+
+    def _get_relative_path_for_project(
+        self,
+        *,
+        generator_config: GeneratorConfig,
+        ir: ir_types.IntermediateRepresentation,
+        project_config: Optional[ProjectConfig],
+    ) -> str:
+        return os.path.join(
+            *self.get_relative_path_to_project_for_publish(
+                generator_config=generator_config,
+                ir=ir,
+            )
         )
 
     def run(
@@ -902,7 +918,15 @@ def pytest_collection_modifyitems(config: pytest.Config, items: list) -> None:
         context: SdkGeneratorContext,
         project: Project,
     ) -> None:
-        package_name = project._project_config.package_name if project._project_config is not None else "package"
+        if project._project_config is not None:
+            package_name = project._project_config.package_name
+        else:
+            package_name = ".".join(
+                self.get_relative_path_to_project_for_publish(
+                    generator_config=context.generator_config,
+                    ir=context.ir,
+                )
+            )
         filepath = Filepath(
             directories=(),
             file=Filepath.FilepathPart(module_name="_default_clients"),

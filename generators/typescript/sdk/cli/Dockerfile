@@ -73,16 +73,22 @@ ENV SENTRY_ENVIRONMENT=$SENTRY_ENVIRONMENT
 ENV SENTRY_RELEASE=$SENTRY_RELEASE
 
 # Upgrade the bundled npm to pick up patched transitive dependencies
-# (minimatch, picomatch, tar, brace-expansion). npm at this version still
-# vendors ip-address@10.1.0, so swap in the patched 10.1.1 release that
-# fixes GHSA-v2v4-37r5-5v8g (XSS in Address6 HTML-emitting methods).
+# (minimatch, picomatch, tar). npm at this version still vendors
+# ip-address@10.1.0, so swap in the patched 10.1.1 release that fixes
+# GHSA-v2v4-37r5-5v8g (XSS in Address6 HTML-emitting methods).
+# Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; npm 11.13.0 vendors 5.0.5).
 RUN npm install -g npm@11.13.0 --force && \
     cd /usr/local/lib/node_modules/npm/node_modules && \
     npm pack ip-address@10.1.1 && \
     rm -rf ip-address && \
     mkdir ip-address && \
     tar -xzf ip-address-10.1.1.tgz --strip-components=1 -C ip-address/ && \
-    rm ip-address-10.1.1.tgz
+    rm ip-address-10.1.1.tgz && \
+    npm pack brace-expansion@5.0.6 && \
+    rm -rf brace-expansion && \
+    mkdir brace-expansion && \
+    tar -xzf brace-expansion-5.0.6.tgz --strip-components=1 -C brace-expansion/ && \
+    rm brace-expansion-5.0.6.tgz
 
 # pnpm 10.33.3 bundles patched picomatch, brace-expansion, tar, and ip-address.
 RUN npm install -g pnpm@10.33.3 --force
