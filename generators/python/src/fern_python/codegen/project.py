@@ -13,6 +13,7 @@ class OutputDirectory(str, Enum):
     PROJECT_ROOT = "project-root"
     SOURCE_ROOT = "source-root"
 
+
 from .dependency_manager import DependencyManager
 from .filepath import Filepath
 from .module_manager import ModuleExport, ModuleManager
