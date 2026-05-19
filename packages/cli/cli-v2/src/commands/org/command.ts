@@ -8,10 +8,10 @@ import { addMemberCommand } from "./member/index.js";
 import { addTokenCommand } from "./token/index.js";
 
 export function addOrgCommand(cli: Argv<GlobalArgs>): void {
-    commandGroup(cli, "org", "Manage your organizations", [
-        addCreateCommand,
-        addListCommand,
-        addMemberCommand,
-        addTokenCommand
-    ]);
+    commandGroup({
+        cli,
+        name: "org",
+        description: "Manage your organizations",
+        subcommands: [addCreateCommand, addListCommand, addMemberCommand, addTokenCommand]
+    });
 }
