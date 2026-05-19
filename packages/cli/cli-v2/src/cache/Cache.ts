@@ -14,6 +14,7 @@ const CACHE_VERSION = "v1";
  * Directory structure:
  * ```
  * ~/.fern/                     # Cache root (all platforms)
+ * ├── bin/                     # Downloaded tool binaries (buf, protoc-gen-openapi)
  * ├── token                    # Auth token (NOT managed by cache — never cleared)
  * ├── id                       # Telemetry distinct ID (NOT managed by cache)
  * ├── v1/                      # Cache schema version
@@ -79,6 +80,9 @@ export class Cache {
     /** Directory for downloaded generator migration packages. */
     public readonly migrations: { absoluteFilePath: AbsoluteFilePath };
 
+    /** Directory for downloaded tool binaries (buf, protoc-gen-openapi). Shared with CLI v1. */
+    public readonly bin: { absoluteFilePath: AbsoluteFilePath };
+
     constructor({ logger }: { logger?: Logger } = {}) {
         this.absoluteFilePath = Cache.resolveAbsoluteFilePathStatic();
         this.ir = new IrCache({
@@ -92,6 +96,9 @@ export class Cache {
         });
         this.migrations = {
             absoluteFilePath: join(this.getVersionedPath(), RelativeFilePath.of("migrations"))
+        };
+        this.bin = {
+            absoluteFilePath: join(this.absoluteFilePath, RelativeFilePath.of("bin"))
         };
     }
 
