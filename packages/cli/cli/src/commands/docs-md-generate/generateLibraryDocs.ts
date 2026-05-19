@@ -43,6 +43,15 @@ export async function generateLibraryDocs({ project, cliContext, library }: Gene
         return;
     }
 
+    if (library != null && libraries[library] == null) {
+        cliContext.failAndThrow(
+            `Library '${library}' not found in docs.yml. Available libraries: ${Object.keys(libraries).join(", ")}`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+        return;
+    }
+
     const token: FernToken | null = await cliContext.runTask(async (context) => {
         return askToLogin(context);
     });
