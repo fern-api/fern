@@ -21,17 +21,12 @@ RUN echo "Types: deb" > /etc/apt/sources.list.d/sid.sources \
     && rm -f /etc/apt/sources.list.d/sid.sources /etc/apt/preferences.d/sid-low \
     && rm -rf /var/lib/apt/lists/*
 # Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; node:24.15 vendors 5.0.5).
-RUN for dir in \
-      /usr/local/lib/node_modules/npm/node_modules/brace-expansion; do \
-      if [ -d "$dir" ]; then \
-        rm -rf "$dir" && \
-        cd "$(dirname "$dir")" && \
-        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.6.tgz -o brace-expansion-5.0.6.tgz && \
-        tar -xzf brace-expansion-5.0.6.tgz && \
-        mv package brace-expansion && \
-        rm brace-expansion-5.0.6.tgz; \
-      fi; \
-    done
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    npm pack brace-expansion@5.0.6 && \
+    rm -rf brace-expansion && \
+    mkdir brace-expansion && \
+    tar -xzf brace-expansion-5.0.6.tgz --strip-components=1 -C brace-expansion/ && \
+    rm brace-expansion-5.0.6.tgz
 
 RUN curl -LsSf https://astral.sh/ruff/0.15.7/install.sh | sh
 ENV PATH="/root/.local/bin:${PATH}"

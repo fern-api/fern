@@ -84,10 +84,11 @@ RUN npm install -g npm@11.13.0 --force && \
     mkdir ip-address && \
     tar -xzf ip-address-10.1.1.tgz --strip-components=1 -C ip-address/ && \
     rm ip-address-10.1.1.tgz && \
+    npm pack brace-expansion@5.0.6 && \
     rm -rf brace-expansion && \
     mkdir brace-expansion && \
-    curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.6.tgz | \
-    tar -xz --strip-components=1 -C brace-expansion/
+    tar -xzf brace-expansion-5.0.6.tgz --strip-components=1 -C brace-expansion/ && \
+    rm brace-expansion-5.0.6.tgz
 
 # pnpm 10.33.3 bundles patched picomatch, brace-expansion, tar, and ip-address.
 RUN npm install -g pnpm@10.33.3 --force
