@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 from typing import Literal, Optional, Sequence, Tuple, cast
 
 from .publisher import Publisher
-from fern_python.codegen.project import Project, ProjectConfig
+from fern_python.codegen.project import OutputDirectory, Project, ProjectConfig
 from fern_python.external_dependencies.ruff import RUFF_DEPENDENCY
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.utils import configure_smart_casing
@@ -134,6 +134,10 @@ class AbstractGenerator(ABC):
         if generator_config.custom_config is not None and "package_path" in generator_config.custom_config:
             package_path = generator_config.custom_config.get("package_path")
 
+        output_directory: Optional[OutputDirectory] = None
+        if generator_config.custom_config is not None and "output_directory" in generator_config.custom_config:
+            output_directory = OutputDirectory(generator_config.custom_config.get("output_directory"))
+
         mypy_exclude = None
         if generator_config.custom_config is not None and "mypy_exclude" in generator_config.custom_config:
             mypy_exclude = generator_config.custom_config.get("mypy_exclude")
@@ -153,6 +157,7 @@ class AbstractGenerator(ABC):
             project_config=project_config,
             sorted_modules=self.get_sorted_modules(),
             flat_layout=self.is_flat_layout(generator_config=generator_config),
+            output_directory=output_directory,
             whitelabel=generator_config.whitelabel,
             python_version=python_version,
             pypi_metadata=self._get_pypi_metadata(generator_config=generator_config),
@@ -181,19 +186,22 @@ class AbstractGenerator(ABC):
                 and generator_config.custom_config.get("include_legacy_wire_tests", False)
             )
 
-            generator_config.output.mode.visit(
-                download_files=lambda: None,
-                github=lambda github_output_mode: self._write_files_for_github_repo(
-                    project=project,
-                    output_mode=github_output_mode,
-                    publish_config=generator_config.publish,
-                    write_unit_tests=(
-                        self.project_type() == "sdk" and include_legacy_wire_tests and generator_config.write_unit_tests
+            if project.should_emit_scaffolding:
+                generator_config.output.mode.visit(
+                    download_files=lambda: None,
+                    github=lambda github_output_mode: self._write_files_for_github_repo(
+                        project=project,
+                        output_mode=github_output_mode,
+                        publish_config=generator_config.publish,
+                        write_unit_tests=(
+                            self.project_type() == "sdk"
+                            and include_legacy_wire_tests
+                            and generator_config.write_unit_tests
+                        ),
+                        python_version_constraint=python_version,
                     ),
-                    python_version_constraint=python_version,
-                ),
-                publish=lambda x: None,
-            )
+                    publish=lambda x: None,
+                )
 
         publisher = Publisher(
             should_fix=self.should_fix_files(),
