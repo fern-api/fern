@@ -149,6 +149,15 @@ export function buildLedgerInput({
         apiManifestRef = manifestBlob.ref;
     }
 
+    // jsFiles: custom React components, referenced markdown snippets, and
+    // custom header/footer components resolved by DocsDefinitionResolver.
+    let jsFilesRef: BlobRef | null = null;
+    if (docsDefinition.jsFiles != null && Object.keys(docsDefinition.jsFiles).length > 0) {
+        const jsFilesBlob = jsonBlobRef(docsDefinition.jsFiles);
+        blobs.set(jsFilesBlob.hash, jsFilesBlob.buf);
+        jsFilesRef = jsFilesBlob.ref;
+    }
+
     const input: DocsPublishInput = {
         orgId: organization,
         domain,
@@ -159,6 +168,7 @@ export function buildLedgerInput({
         pages,
         config: ledgerConfig,
         apiManifest: apiManifestRef,
+        jsFiles: jsFilesRef,
         fileManifest,
         redirects: null,
         locale: "en",
