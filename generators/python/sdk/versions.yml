@@ -10,7 +10,7 @@
         instead of the actual package name.
       type: fix
   createdAt: "2026-05-18"
-  irVersion: 66
+  irVersion: 67
 - version: 5.12.11
   changelogEntry:
     - summary: |
