@@ -396,10 +396,9 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             return undefined;
         }
 
-        let streamConditionProperty: OpenAPIV3_1.SchemaObject | undefined =
-            resolvedMediaTypeSchema.properties?.[this.streamingExtension.streamConditionProperty] as
-                | OpenAPIV3_1.SchemaObject
-                | undefined;
+        let streamConditionProperty: OpenAPIV3_1.SchemaObject | undefined = resolvedMediaTypeSchema.properties?.[
+            this.streamingExtension.streamConditionProperty
+        ] as OpenAPIV3_1.SchemaObject | undefined;
         if (streamConditionProperty != null && this.context.isReferenceObject(streamConditionProperty)) {
             streamConditionProperty = undefined;
         }
