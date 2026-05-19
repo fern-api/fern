@@ -97,8 +97,7 @@ describe("pushSignedCommit", () => {
             "local-sha",
             expect.stringMatching(/^refs\/temp\/fern-/)
         );
-        // Default path: `author` is always sent (stable attribution), but `committer` is
-        // omitted so GitHub fills it in from the App installation and signs the commit.
+        // `author` always sent; `committer` omitted so GitHub fills it in and signs.
         expect(octokit.git.createCommit).toHaveBeenCalledWith({
             owner: "acme",
             repo: "acme-sdk",
