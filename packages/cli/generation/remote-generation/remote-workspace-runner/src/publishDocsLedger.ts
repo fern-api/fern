@@ -184,6 +184,12 @@ export interface LedgerPublishResult {
 /**
  * Publish docs via the new docs-ledger register → upload → finish flow.
  *
+ * All locales (base + translations) are built upfront before any network
+ * calls. If any locale fails to build, the entire publish aborts. After
+ * building, a single register → upload → finish pipeline runs for the
+ * base locale, and then finishTranslation is called for each translation
+ * locale (blobs are already uploaded from the combined pool).
+ *
  * This is a self-contained function that can run alongside (dual-write)
  * or instead of (ledger-only) the legacy finishDocsRegister path.
  */
@@ -224,6 +230,10 @@ export async function publishDocsViaLedger({
     /** Resolver instance for accessing translation pages/overlays. Optional. */
     resolver?: DocsDefinitionResolver;
 }): Promise<LedgerPublishResult> {
+    // ── Phase 1: Build all locales upfront ──────────────────────────────
+    // If any locale fails to build, the entire publish aborts before any
+    // network calls are made.
+
     const { input, blobs } = buildLedgerInput({
         docsDefinition,
         organization,
@@ -237,10 +247,36 @@ export async function publishDocsViaLedger({
         fileIdToPath
     });
 
+    const translationInputs = buildAllTranslationInputs({
+        docsDefinition,
+        organization,
+        domain,
+        basepath,
+        git,
+        apiDefinitions,
+        fileManifest,
+        fileIdToPath,
+        resolver,
+        context
+    });
+
+    // Wait for all translation builds to complete (fail-fast).
+    const builtTranslations = await translationInputs;
+
+    // Merge all translation blobs into the base blob pool so the single
+    // upload phase covers everything.
+    for (const t of builtTranslations) {
+        for (const [hash, buf] of t.blobs) {
+            blobs.set(hash, buf);
+        }
+    }
+
+    // ── Phase 2: Single register → upload → finish ─────────────────────
+
     const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers });
 
-    // Step 1: Register — server computes deployment hash, returns presigned
-    // S3 URLs for any blobs it doesn't already have in CAS.
+    // Register — server computes deployment hash, returns presigned S3
+    // URLs for any blobs it doesn't already have in CAS.
     context.logger.debug("[ledger] Registering deployment...");
     const registerStart = performance.now();
     const registerResult = await client.register(input);
@@ -249,12 +285,12 @@ export async function publishDocsViaLedger({
         `[ledger] Registered in ${registerTime.toFixed(0)}ms — hash=${registerResult.deploymentHash}, missing=${registerResult.missingContent.length} blobs`
     );
 
-    // Step 2: Upload any blobs the server doesn't have yet.
-    // In-memory blobs (pages, config, apiManifest) are checked first;
-    // file blobs are read lazily from disk via filePaths.
+    // Upload all blobs the server doesn't have yet (base + translations
+    // combined). In-memory blobs are checked first; file blobs are read
+    // lazily from disk via filePaths.
     await uploadMissingBlobs(registerResult.missingContent, blobs, context, filePaths);
 
-    // Step 3: Finish — server persists the deployment.
+    // Finish — server persists the base deployment.
     context.logger.debug("[ledger] Finishing deployment...");
     const finishStart = performance.now();
     const finishResult = await client.finish(input);
@@ -263,23 +299,42 @@ export async function publishDocsViaLedger({
         `[ledger] Finished in ${finishTime.toFixed(0)}ms — deploymentId=${finishResult.deploymentId}, reused=${finishResult.reusedDeployment}`
     );
 
-    // Step 4: Publish translations if the resolver has them.
-    if (resolver != null) {
-        await publishTranslationsViaLedger({
-            docsDefinition,
-            deploymentId: finishResult.deploymentId,
-            organization,
-            domain,
-            basepath,
-            git,
-            apiDefinitions,
-            fileManifest,
-            fileIdToPath,
-            filePaths,
-            client,
-            context,
-            resolver
-        });
+    // ── Phase 3: Attach translations to the deployment ─────────────────
+    // Translation blobs are already uploaded. Each finishTranslation call
+    // registers the locale's content hashes, uploads any remaining blobs
+    // the base register didn't cover, and attaches locale-specific
+    // segments to the existing deployment.
+
+    if (builtTranslations.length > 0) {
+        context.logger.info(`[ledger] Attaching translations for ${builtTranslations.length} locale(s)...`);
+
+        for (const t of builtTranslations) {
+            // Register translation to discover any blobs not covered by
+            // the base register (translation pages have different hashes).
+            const localeRegister = await client.register(t.input);
+            await uploadMissingBlobs(localeRegister.missingContent, t.blobs, context, filePaths);
+
+            const finishInput: FinishTranslationInput = {
+                orgId: organization,
+                domain,
+                basepath: basepath ?? "",
+                deploymentId: finishResult.deploymentId,
+                locale: t.locale,
+                root: t.translatedDefinition.config.root ?? t.translatedDefinition.config.navigation,
+                pages: t.input.pages,
+                apiManifest: t.input.apiManifest,
+                config: t.input.config,
+                fileManifest: t.input.fileManifest,
+                jsFiles: t.input.jsFiles,
+                redirects: t.input.redirects,
+                git: t.input.git
+            };
+
+            const result = await client.finishTranslation(finishInput);
+            context.logger.info(
+                `[ledger] Locale "${t.locale}": ${Object.keys(t.localePages).length} page(s), ${result.segmentsAdded} segment(s) added`
+            );
+        }
     }
 
     return finishResult;
@@ -396,25 +451,25 @@ async function uploadBlobWithRetry(
     throw new Error(`[ledger] Upload exhausted retries for ${hash}`);
 }
 
-// ── Translation publishing ─────────────────────────────────────────────
+// ── Translation build helpers ──────────────────────────────────────────
 
-type DocsLedgerClient = ReturnType<typeof createDocsLedgerClient>;
+interface BuiltTranslation {
+    locale: string;
+    localePages: Record<string, string>;
+    translatedDefinition: DocsDefinition;
+    input: DocsPublishInput;
+    blobs: Map<string, Buffer>;
+}
 
 /**
- * After a base deployment finishes, publish translated content for each
- * locale the resolver discovered under `translations/<lang>/`.
+ * Build ledger inputs for every translation locale the resolver discovered.
  *
- * For each locale:
- *  1. Build a translated DocsDefinition (overlay translated pages + nav).
- *  2. Convert to a ledger input via {@link buildLedgerInput} with the locale.
- *  3. Call `register` to dedup blobs and get presigned upload URLs.
- *  4. Upload any missing blobs (translated page content).
- *  5. Call `finishTranslation` to attach locale-specific segments to the
- *     existing deployment.
+ * All locales are built in parallel. If ANY locale fails, the returned
+ * promise rejects — callers should let the error propagate to abort the
+ * entire publish.
  */
-async function publishTranslationsViaLedger({
+async function buildAllTranslationInputs({
     docsDefinition,
-    deploymentId,
     organization,
     domain,
     basepath,
@@ -422,13 +477,10 @@ async function publishTranslationsViaLedger({
     apiDefinitions,
     fileManifest,
     fileIdToPath,
-    filePaths,
-    client,
-    context,
-    resolver
+    resolver,
+    context
 }: {
     docsDefinition: DocsDefinition;
-    deploymentId: string;
     organization: string;
     domain: string;
     basepath: string | undefined;
@@ -436,87 +488,48 @@ async function publishTranslationsViaLedger({
     apiDefinitions: Map<string, APIV1Write.ApiDefinition>;
     fileManifest?: Record<string, FileManifestEntry>;
     fileIdToPath?: Map<string, string>;
-    filePaths?: Map<string, AbsoluteFilePath>;
-    client: DocsLedgerClient;
+    resolver?: DocsDefinitionResolver;
     context: TaskContext;
-    resolver: DocsDefinitionResolver;
-}): Promise<void> {
+}): Promise<BuiltTranslation[]> {
+    if (resolver == null) {
+        return [];
+    }
+
     const translationPages = resolver.getTranslationPages();
     const translationNavigationOverlays = resolver.getTranslationNavigationOverlays();
 
     if (translationPages == null || Object.keys(translationPages).length === 0) {
-        return;
+        return [];
     }
 
     const localeEntries = Object.entries(translationPages);
-    context.logger.info(`[ledger] Publishing translations for ${localeEntries.length} locale(s)...`);
+    context.logger.info(`[ledger] Building ${localeEntries.length} translation locale(s)...`);
 
-    const localeResults = await Promise.all(
-        localeEntries.map(async ([locale, localePages]) => {
-            try {
-                const translatedDefinition = await buildTranslatedDocsDefinition({
-                    docsDefinition,
-                    locale,
-                    localePages,
-                    translationNavigationOverlays,
-                    resolver,
-                    context
-                });
+    return Promise.all(
+        localeEntries.map(async ([locale, localePages]): Promise<BuiltTranslation> => {
+            const translatedDefinition = await buildTranslatedDocsDefinition({
+                docsDefinition,
+                locale,
+                localePages,
+                translationNavigationOverlays,
+                resolver,
+                context
+            });
 
-                const { input: translationInput, blobs: translationBlobs } = buildLedgerInput({
-                    docsDefinition: translatedDefinition,
-                    organization,
-                    domain,
-                    basepath,
-                    previewId: undefined,
-                    git,
-                    apiDefinitions,
-                    fileManifest,
-                    fileIdToPath,
-                    locale
-                });
+            const { input, blobs } = buildLedgerInput({
+                docsDefinition: translatedDefinition,
+                organization,
+                domain,
+                basepath,
+                previewId: undefined,
+                git,
+                apiDefinitions,
+                fileManifest,
+                fileIdToPath,
+                locale
+            });
 
-                // Register to get presigned URLs for any new blobs (translated page content).
-                const registerResult = await client.register(translationInput);
-
-                // Upload missing blobs (translated pages will have different content hashes).
-                await uploadMissingBlobs(registerResult.missingContent, translationBlobs, context, filePaths);
-
-                // Finish translation — attaches locale-specific segments to the existing deployment.
-                const finishInput: FinishTranslationInput = {
-                    orgId: organization,
-                    domain,
-                    basepath: basepath ?? "",
-                    deploymentId,
-                    locale,
-                    root: translatedDefinition.config.root ?? translatedDefinition.config.navigation,
-                    pages: translationInput.pages,
-                    apiManifest: translationInput.apiManifest,
-                    config: translationInput.config,
-                    fileManifest: translationInput.fileManifest,
-                    jsFiles: translationInput.jsFiles,
-                    redirects: translationInput.redirects,
-                    git: translationInput.git
-                };
-
-                const result = await client.finishTranslation(finishInput);
-
-                const pageCount = Object.keys(localePages).length;
-                context.logger.info(
-                    `[ledger] Locale "${locale}": ${pageCount} page(s), ${result.segmentsAdded} segment(s) added`
-                );
-            } catch (error) {
-                context.logger.warn(`[ledger] Failed to publish translations for locale "${locale}": ${String(error)}`);
-                return locale;
-            }
-            return undefined;
+            return { locale, localePages, translatedDefinition, input, blobs };
         })
     );
-
-    const failedLocales = localeResults.filter((l): l is string => l != null);
-    if (failedLocales.length > 0) {
-        context.logger.warn(
-            `[ledger] ${failedLocales.length}/${localeEntries.length} locale(s) failed: ${failedLocales.join(", ")}`
-        );
-    }
 }
