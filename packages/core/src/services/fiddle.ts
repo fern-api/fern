@@ -12,7 +12,10 @@ export function getFiddleOrigin(): string {
 export function createFiddleService({
     token,
     headers
-}: { token?: string; headers?: Record<string, string> } = {}): FernFiddleClient {
+}: {
+    token?: string;
+    headers?: Record<string, string>;
+} = {}): FernFiddleClient {
     return new FernFiddleClient({
         environment: FIDDLE_ORIGIN,
         token,
