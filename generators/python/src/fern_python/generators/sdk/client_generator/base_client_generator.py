@@ -172,8 +172,8 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
         for subpackage_id in self._package.subpackages:
             subpackage = self._context.ir.subpackages[subpackage_id]
             has_websocket_in_tree = (
-                getattr(subpackage, "has_web_socket_in_tree", None) or subpackage.websocket is not None
-            )  # type: ignore[attr-defined]
+                getattr(subpackage, "hasWebSocketInTree", None) or subpackage.websocket is not None
+            )
             has_websocket = has_websocket_in_tree and self._context.custom_config.should_generate_websocket_clients
             if subpackage.has_endpoints_in_tree or has_websocket:
                 if should_declare_client_wrapper:
@@ -278,8 +278,8 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
             for subpackage_id in self._package.subpackages:
                 subpackage = self._context.ir.subpackages[subpackage_id]
                 has_websocket_in_tree = (
-                    getattr(subpackage, "has_web_socket_in_tree", None) or subpackage.websocket is not None
-                )  # type: ignore[attr-defined]
+                    getattr(subpackage, "hasWebSocketInTree", None) or subpackage.websocket is not None
+                )
                 has_websocket = has_websocket_in_tree and self._context.custom_config.should_generate_websocket_clients
                 if subpackage.has_endpoints_in_tree or has_websocket:
                     class_declaration.add_method(

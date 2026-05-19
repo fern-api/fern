@@ -332,8 +332,8 @@ class SdkGenerator(AbstractGenerator):
         for subpackage_id in ir.subpackages.keys():
             subpackage = ir.subpackages[subpackage_id]
             has_websocket_in_tree = (
-                getattr(subpackage, "has_web_socket_in_tree", None) or subpackage.websocket is not None
-            )  # type: ignore[attr-defined]
+                getattr(subpackage, "hasWebSocketInTree", None) or subpackage.websocket is not None
+            )
             if subpackage.has_endpoints_in_tree or (
                 has_websocket_in_tree and context.custom_config.should_generate_websocket_clients
             ):

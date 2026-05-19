@@ -1413,28 +1413,28 @@ files = [
 
 [[package]]
 name = "yarl"
-version = "1.24.0"
+version = "1.24.1"
 description = "Yet another URL library"
 optional = true
 python-versions = ">=3.10"
 groups = ["main"]
 markers = "extra == \"aiohttp\""
 files = [
-    {file = "yarl-1.24.0-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:aa4dac2b34950d7ba5b4a3864ff63f5726e7cdd5c5a03f96d2eadd2c204142b0"},
-    {file = "yarl-1.24.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:5fa6f25d7c4851606bc4e02f190c37cdbd9c7e3201d0277ecfac21dfae533885"},
-    {file = "yarl-1.24.0-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:0425bd2159145026dd6015037e62b64bafaa1cca8385a95e0e1b7cb0d4a87af3"},
-    {file = "yarl-1.24.0-cp310-cp310-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:d22766d3235019ee1c75a78aad3db1ffc20842240e21b567745ad99882bada75"},
-    {file = "yarl-1.24.0-cp310-cp310-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl", hash = "sha256:23834adfc8838dd347e0ea87254a491ca77cd386c8eddcda14292c3eee21bfec"},
-    {file = "yarl-1.24.0-cp310-cp310-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:e3de6b2f9671aecc2da2407aeb4507c7c370d3479945b6f65d34f10834ccec95"},
-    {file = "yarl-1.24.0-cp310-cp310-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:51e3ef6fa5a2471b481ae7e1262ebb0a6b7caf730157d976fb41f19e93cb68b6"},
-    {file = "yarl-1.24.0-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:c74e2560377a4c0c019ce9a456e1e186217d376e68bb884d0583ef4fc6d9b9e6"},
-    {file = "yarl-1.24.0-cp310-cp310-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:630f24038cd533d229aaae8dd31631e27bc29732baed63b9e61da24b8b0322d7"},
-    {file = "yarl-1.24.0-cp310-cp310-musllinux_1_2_aarch64.whl", hash = "sha256:f9b4c2276e4021e9b007520863f45100073aa6e9fb04e40e153f0d8f677d67aa"},
-    {file = "yarl-1.24.0-cp310-cp310-musllinux_1_2_armv7l.whl", hash = "sha256:b47db0dbdff93b73d36736860e15a84d36dda76e0b4798e21c74706ea1feef35"},
-    {file = "yarl-1.24.0-cp310-cp310-musllinux_1_2_ppc64le.whl", hash = "sha256:b521cf3b03368fcf2446915fd4e81500223a8b4c9d0c643cdfb84747c86b2b6e"},
-    {file = "yarl-1.24.0-cp310-cp310-musllinux_1_2_riscv64.whl", hash = "sha256:47afc594662fc942287e0804fcb55afd7dfd60741e5f200ff2417c668ebd3ab8"},
-    {file = "yarl-1.24.0-cp310-cp310-musllinux_1_2_s390x.whl", hash = "sha256:955962468eeb58d5502151de3cc6f4b7300314bad4fe85151f19c6fc38819a81"},
-    {file = "yarl-1.24.0-cp310-cp310-musllinux_1_2_x86_64.whl", hash = "sha256:b89a20dfc6eb4610246129daa49038426cd97e1107523af9b8888a1637c17fc3"},
+    {file = "yarl-1.24.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:d2e26e65d3ae94897cfb7f9e43b30e2fb88bb50d8a4e1d77ac1aa202f3b2c734"},
+    {file = "yarl-1.24.1-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:fb9d0a2b2b8588852709370f1ea4d7b06abfd49f7c0a39d372cb3a3e16c790c2"},
+    {file = "yarl-1.24.1-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:0adc2418f8a9e6198af13423eef2cc576c88dfafd6fad49220252f0c21770d55"},
+    {file = "yarl-1.24.1-cp310-cp310-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:cc8fbb75e027c8e76cb1c33fc033bdc3129bf4e99e6877edce408698d02b1793"},
+    {file = "yarl-1.24.1-cp310-cp310-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl", hash = "sha256:d2e73d53f15ca84cf4c31ab3a5f1e36798fc5a2ff002a4c945508b707c51008f"},
+    {file = "yarl-1.24.1-cp310-cp310-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:6e974d5a4f215cb0fd7c0cfe72abd4611e852302fc8496b4369186520d00669e"},
+    {file = "yarl-1.24.1-cp310-cp310-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:4fb3cde6afe79fb004708a79618755c792afc51a6d887088291c4091c8bb3b14"},
+    {file = "yarl-1.24.1-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:57855f09c3555b9a787ee32f285d06ff5320efadc60092d91cd40d7cf13f917f"},
+    {file = "yarl-1.24.1-cp310-cp310-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:ac72c5f2e542080b825f27c216d63c7945da2432fad4fb59847cb5d2ec675e64"},
+    {file = "yarl-1.24.1-cp310-cp310-musllinux_1_2_aarch64.whl", hash = "sha256:6bbd672db9bfc7d96b7fa3f5fbb265ae096da827fc4cb6e31e535f44c5746ebd"},
+    {file = "yarl-1.24.1-cp310-cp310-musllinux_1_2_armv7l.whl", hash = "sha256:48169cf5300d5f75b64b0e4d411400c4f37f1982be900bbc369c254c5fc89713"},
+    {file = "yarl-1.24.1-cp310-cp310-musllinux_1_2_ppc64le.whl", hash = "sha256:96af67ab87f06076e7c860c14122d7af6e50edc8337730ebcce875502289756e"},
+    {file = "yarl-1.24.1-cp310-cp310-musllinux_1_2_riscv64.whl", hash = "sha256:c45caba3b18798e88865ad26353de6cdd53d938aef48ae656c0d7ff45b951e4d"},
+    {file = "yarl-1.24.1-cp310-cp310-musllinux_1_2_s390x.whl", hash = "sha256:a5f5114a07b6094e8f9bf3f6b83e9c9d851c60f19f9a86b7e249e27348f59b7e"},
+    {file = "yarl-1.24.1-cp310-cp310-musllinux_1_2_x86_64.whl", hash = "sha256:6427342cc86c42eee29aeedb5e9a69230878e2cbb08437d28eaeb67fb0208bab"},
 ]
 
 [package.dependencies]
