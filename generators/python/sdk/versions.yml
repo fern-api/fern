@@ -14,7 +14,7 @@
         preserved as a deprecated alias with bit-exact behavior.
       type: feat
   createdAt: "2026-05-19"
-  irVersion: 66
+  irVersion: 67
 - version: 5.12.12
   changelogEntry:
     - summary: |
