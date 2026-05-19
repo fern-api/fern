@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.13.1
+  changelogEntry:
+    - summary: |
+        Use the `default` value from `x-fern-sdk-variables` as the default
+        argument in the generated client constructor. Previously, variables with
+        a `default` specified in the OpenAPI spec (e.g. `default: v1beta`) were
+        always generated as required parameters with a `YOUR_<VARIABLE>`
+        placeholder. They are now optional parameters whose signature default
+        matches the spec-supplied value.
+      type: fix
+  createdAt: "2026-05-19"
+  irVersion: 67
 - version: 5.13.0
   changelogEntry:
     - summary: |
