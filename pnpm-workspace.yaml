@@ -14,7 +14,7 @@ packages:
 # Supply chain security settings
 # See: https://pnpm.io/settings
 allowBuilds:
-  "@scarf/scarf": false
+  '@scarf/scarf': false
   "@sentry/cli": true
   esbuild: true
   puppeteer: true
@@ -256,7 +256,7 @@ catalog:
   vitest: 4.1.4
   watcher: ^2.3.1
   whatwg-mimetype: ^4.0.0
-  ws: ^8.20.0
+  ws: ^8.20.1
   xml2js: ^0.6.2
   yaml: ^2.8.3
   yauzl: ^3.2.1
@@ -267,11 +267,11 @@ overrides:
   brace-expansion: ^5.0.6
   cross-spawn: ^7.0.6
   node-fetch@2.x>whatwg-url: ^14.0.0
-  minimatch: ">=10.2.3"
+  minimatch: '>=10.2.3'
   qs: 6.15.0
   url-join: ^4.0.1
-  "@fern-api/fdr-sdk": 1.2.4-f661387fb2
+  '@fern-api/fdr-sdk': 1.2.4-f661387fb2
   form-data: ^4.0.4
-  "@fern-api/ui-core-utils": 0.145.12-b50d999d1
+  '@fern-api/ui-core-utils': 0.145.12-b50d999d1
   vite: ^7.3.2
   yauzl: ^3.2.1
