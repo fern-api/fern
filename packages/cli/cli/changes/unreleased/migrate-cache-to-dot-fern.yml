@@ -1,5 +1,5 @@
 - summary: |
-    Migrate CLI v2 cache directory from ~/.cache/fern/ to ~/.fern/ so all
-    Fern-related files (bin, ir, logs, migrations) live under a single
-    directory shared with CLI v1.
+    Add bin/ property to CLI v2 Cache class for shared tool binaries
+    (buf, protoc-gen-openapi) at ~/.fern/bin/, enabling both CLI v1 and
+    CLI v2 to share the same binary download location.
   type: chore
