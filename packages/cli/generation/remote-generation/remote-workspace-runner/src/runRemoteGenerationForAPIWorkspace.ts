@@ -52,7 +52,8 @@ export async function runRemoteGenerationForAPIWorkspace({
     disableTelemetry,
     automation,
     occurrenceTracker,
-    loginCommand
+    loginCommand,
+    getSpecsTarGzBuffer
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -115,6 +116,7 @@ export async function runRemoteGenerationForAPIWorkspace({
      * 'fern auth login' for CLI v2). Defaults to 'fern login'.
      */
     loginCommand?: string;
+    getSpecsTarGzBuffer?: (generatorName: string) => Promise<Buffer | undefined>;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -171,6 +173,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                     generatorsYmlAbsolutePath,
                     occurrenceTracker: effectiveOccurrenceTracker,
                     loginCommand,
+                    getSpecsTarGzBuffer,
                     onSnippetsProduced: (invocation) => snippetsProducedBy.push(invocation)
                 })
             )
@@ -228,6 +231,7 @@ async function generateOne({
     generatorsYmlAbsolutePath,
     occurrenceTracker,
     loginCommand,
+    getSpecsTarGzBuffer,
     onSnippetsProduced
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -263,6 +267,7 @@ async function generateOne({
     generatorsYmlAbsolutePath: AbsoluteFilePath | undefined;
     occurrenceTracker: GeneratorOccurrenceTracker;
     loginCommand: string | undefined;
+    getSpecsTarGzBuffer: ((generatorName: string) => Promise<Buffer | undefined>) | undefined;
     /** Invoked post-success when the generator produced snippets. */
     onSnippetsProduced: (invocation: generatorsYml.GeneratorInvocation) => void;
 }): Promise<void> {
@@ -346,7 +351,8 @@ async function generateOne({
             verify,
             noReplay,
             disableTelemetry,
-            loginCommand
+            loginCommand,
+            specsTarGzBuffer: await getSpecsTarGzBuffer?.(generatorInvocation.name)
         });
 
         if (remoteTaskHandlerResponse?.createdSnippets) {

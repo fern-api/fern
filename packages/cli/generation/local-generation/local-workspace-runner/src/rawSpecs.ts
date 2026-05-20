@@ -7,12 +7,16 @@ import {
 } from "@fern-api/api-workspace-commons";
 import { type Audiences } from "@fern-api/configuration";
 import { assertNever, mergeWithOverrides as coreMergeWithOverrides } from "@fern-api/core-utils";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loadAsyncAPI, loadOpenAPI } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { copyFile, cp, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
+import * as tar from "tar";
+import tmp from "tmp-promise";
+
+import { SPECS_MANIFEST_FILENAME } from "./constants.js";
 
 export interface RawSpecsManifestEntry {
     type: "openapi" | "asyncapi" | "protobuf" | "openrpc" | "graphql";
@@ -54,13 +58,26 @@ export async function collectRawSpecs({
         return manifest;
     }
 
-    for (const [i, spec] of specs.entries()) {
+    const typeCounters: Record<string, number> = {};
+    function nextIndex(type: string): number {
+        const idx = typeCounters[type] ?? 0;
+        typeCounters[type] = idx + 1;
+        return idx;
+    }
+
+    for (const spec of specs) {
+        let specType: string;
+        if (spec.type === "openapi") {
+            specType = (await isAsyncAPISpec(spec.absoluteFilepath)) ? "asyncapi" : "openapi";
+        } else {
+            specType = spec.type;
+        }
         const entry = await resolveAndWriteSpec({
             spec,
             hostOutputDir,
             containerBaseDir,
             context,
-            index: i,
+            index: nextIndex(specType),
             audiences
         });
         manifest.specs.push(entry);
@@ -119,7 +136,7 @@ async function resolveOpenAPIOrAsyncAPI({
     audiences?: Audiences;
 }): Promise<RawSpecsManifestEntry> {
     const isAsync = await isAsyncAPISpec(spec.absoluteFilepath);
-    const filename = `spec-${index}.json`;
+    const filename = isAsync ? `asyncapi${index}.json` : `openapi${index}.json`;
 
     let resolved: object;
     if (isAsync) {
@@ -165,7 +182,7 @@ async function resolveOpenRPC({
     context: TaskContext;
     index: number;
 }): Promise<RawSpecsManifestEntry> {
-    const filename = `spec-${index}.json`;
+    const filename = `openrpc${index}.json`;
     const rawContent = await readFile(spec.absoluteFilepath, "utf-8");
 
     let parsed: object;
@@ -216,7 +233,7 @@ async function copyProtobuf({
     containerBaseDir: string;
     index: number;
 }): Promise<RawSpecsManifestEntry> {
-    const dirName = `proto-${index}`;
+    const dirName = `protobuf${index}`;
     const destDir = path.join(hostOutputDir, dirName);
     await cp(spec.absoluteFilepathToProtobufRoot, destDir, { recursive: true });
 
@@ -229,7 +246,7 @@ async function copyProtobuf({
     if (overrides.length > 0) {
         entry.overridePaths = [];
         for (const [i, override] of overrides.entries()) {
-            const overrideName = `proto-${index}-override-${i}${path.extname(override)}`;
+            const overrideName = `protobuf${index}-override-${i}${path.extname(override)}`;
             await copyFile(override, path.join(hostOutputDir, overrideName));
             entry.overridePaths.push(toContainerPath(overrideName, containerBaseDir));
         }
@@ -254,7 +271,7 @@ async function copyGraphQL({
     index: number;
 }): Promise<RawSpecsManifestEntry> {
     const ext = path.extname(spec.absoluteFilepath) || ".graphql";
-    const filename = `spec-${index}${ext}`;
+    const filename = `graphql${index}${ext}`;
     await copyFile(spec.absoluteFilepath, path.join(hostOutputDir, filename));
 
     const entry: RawSpecsManifestEntry = {
@@ -266,7 +283,7 @@ async function copyGraphQL({
     if (overrides.length > 0) {
         entry.overridePaths = [];
         for (const [i, override] of overrides.entries()) {
-            const overrideName = `graphql-${index}-override-${i}${path.extname(override)}`;
+            const overrideName = `graphql${index}-override-${i}${path.extname(override)}`;
             await copyFile(override, path.join(hostOutputDir, overrideName));
             entry.overridePaths.push(toContainerPath(overrideName, containerBaseDir));
         }
@@ -398,4 +415,51 @@ function matchesAudiences(operation: unknown, selectedAudiences: Set<string>): b
 
 function hasOperations(pathItem: Record<string, unknown>): boolean {
     return Object.keys(pathItem).some((key) => HTTP_METHODS.has(key.toLowerCase()));
+}
+
+/**
+ * Collects raw API specs, writes them to a temporary directory alongside a
+ * manifest, and packages everything into a gzipped tar archive suitable for
+ * uploading to Fiddle's `startJob` endpoint.
+ */
+export async function createSpecsTarGzBuffer({
+    specs,
+    context,
+    audiences
+}: {
+    specs: Spec[];
+    context: TaskContext;
+    audiences?: Audiences;
+}): Promise<Buffer> {
+    const tmpDir = await tmp.dir({ unsafeCleanup: true });
+    try {
+        const manifest = await collectRawSpecs({
+            specs,
+            hostOutputDir: AbsoluteFilePath.of(tmpDir.path),
+            containerBaseDir: "/fern/specs",
+            context,
+            audiences
+        });
+
+        await writeFile(
+            join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of(SPECS_MANIFEST_FILENAME)),
+            JSON.stringify(manifest, undefined, 4)
+        );
+
+        const tarGzPath = join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of("specs.tar.gz"));
+        await tar.create(
+            {
+                gzip: true,
+                cwd: tmpDir.path,
+                file: tarGzPath,
+                portable: true,
+                filter: (entryPath: string) => entryPath !== "./specs.tar.gz"
+            },
+            ["."]
+        );
+
+        return await readFile(tarGzPath);
+    } finally {
+        await tmpDir.cleanup();
+    }
 }

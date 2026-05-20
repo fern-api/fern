@@ -6188,6 +6188,9 @@ importers:
       semver:
         specifier: ^7.6.3
         version: 7.7.4
+      tar:
+        specifier: 'catalog:'
+        version: 7.5.13
       tmp-promise:
         specifier: 'catalog:'
         version: 3.0.3
@@ -6207,6 +6210,9 @@ importers:
       '@types/semver':
         specifier: 'catalog:'
         version: 7.7.1
+      '@types/tar':
+        specifier: 'catalog:'
+        version: 6.1.13
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
