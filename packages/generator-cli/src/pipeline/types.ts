@@ -20,6 +20,7 @@ export interface PipelineContext {
         replay?: ReplayStepResult;
         autoVersion?: AutoVersionStepResult;
         fernignore?: FernignoreStepResult;
+        lockfile?: LockfileStepResult;
         verify?: VerificationStepResult;
     };
 }
@@ -165,6 +166,7 @@ export interface PipelineResult {
         replay?: ReplayStepResult;
         autoVersion?: AutoVersionStepResult;
         fernignore?: FernignoreStepResult;
+        lockfile?: LockfileStepResult;
         verify?: VerificationStepResult;
         github?: GithubStepResult;
     };
@@ -227,6 +229,13 @@ export interface ReplayStepResult extends StepResult {
 
 export interface FernignoreStepResult extends StepResult {
     pathsPreserved?: string[];
+}
+
+export interface LockfileStepResult extends StepResult {
+    /** True when no package.json was found — the step short-circuits silently. */
+    skipped: boolean;
+    /** The detected package manager when the step ran. */
+    packageManager?: "pnpm" | "yarn";
 }
 
 export interface VerificationStepResult extends StepResult {

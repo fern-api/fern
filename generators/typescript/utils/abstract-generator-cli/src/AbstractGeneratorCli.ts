@@ -199,7 +199,9 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             packageManager: this.getPackageManager(customConfig)
                         });
                     });
-                    await typescriptProject.generateLockfile(logger);
+                    // Lockfile generation is handled by the PostGenerationPipeline's
+                    // LockfileStep, which runs after ReplayStep applies customizations
+                    // so the lockfile reflects the final package.json state.
                     if (!(await typescriptProject.areCheckFixToolsAvailable(logger))) {
                         await typescriptProject.installCheckFixDependencies(logger);
                     }

@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Move lockfile generation (pnpm-lock.yaml / yarn.lock) from the generator
+    into the PostGenerationPipeline's LockfileStep, which runs after ReplayStep
+    applies customization patches. The lockfile now reflects the final
+    package.json state after all user customizations.
+  type: fix
