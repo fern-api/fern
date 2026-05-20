@@ -610,7 +610,7 @@
                             "inline": null
                         },
                         "docs": null,
-                        "contentType": "application/json",
+                        "contentType": null,
                         "v2Examples": null
                     },
                     "v2RequestBodies": null,
