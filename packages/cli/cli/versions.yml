@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.32.0
+  changelogEntry:
+    - summary: |
+        Support structured `x-fern-base-path` with per-parameter declarations and defaults.
+        The OpenAPI extension now accepts an object form with `path` and `parameters`, where
+        each parameter can specify a `type`, `docs`, and `default`.
+      type: feat
+  createdAt: "2026-05-20"
+  irVersion: 66
 - version: 5.31.0
   changelogEntry:
     - summary: |
