@@ -397,8 +397,17 @@ export function generateIr({
             context,
             document: openApi
         }),
-        basePath: getFernBasePath(openApi),
-        basePathParameters: undefined,
+        basePath: (() => {
+            const parsed = getFernBasePath(openApi);
+            return parsed?.basePath;
+        })(),
+        basePathParameters: (() => {
+            const parsed = getFernBasePath(openApi);
+            if (parsed == null || parsed.pathParameters.length === 0) {
+                return undefined;
+            }
+            return parsed.pathParameters;
+        })(),
         title: openApi.info.title ?? "",
         description: openApi.info.description,
         groups: Object.fromEntries(
