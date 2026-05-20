@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.14.0
+  changelogEntry:
+    - summary: |
+        Add support for the `x-fern-base-path` OpenAPI extension. Root path
+        parameters declared on the base path are hoisted to the client
+        constructor; endpoint methods no longer take them as arguments and
+        URL substitution reads them from the client wrapper.
+      type: feat
+  createdAt: "2026-05-20"
+  irVersion: 67
 - version: 5.13.1
   changelogEntry:
     - summary: |
