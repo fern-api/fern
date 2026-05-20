@@ -309,7 +309,7 @@ def _get_type_adapter(type_: Type[Any]) -> Any:
 def parse_obj_as(type_: Type[T], object_: Any) -> T:
     if IS_PYDANTIC_V2:
         adapter = _get_type_adapter(type_)
-        return adapter.validate_python(object_)
+        return adapter.validate_python(object_)  # type: ignore[no-any-return]
     return pydantic.parse_obj_as(type_, object_)
 
 
