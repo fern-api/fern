@@ -45,9 +45,6 @@ class RawSeedApi:
             "plants",
             method="POST",
             json=request,
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -202,9 +199,6 @@ class AsyncRawSeedApi:
             "plants",
             method="POST",
             json=request,
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )

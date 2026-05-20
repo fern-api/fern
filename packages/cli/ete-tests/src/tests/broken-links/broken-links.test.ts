@@ -75,6 +75,17 @@ describe("fern docs broken-links", () => {
         expect(stripAnsi(stdout)).toContain("All checks passed");
     }, 20_000);
 
+    it("broken links in folder-referenced pages should be detected", async ({ signal }) => {
+        const { stdout } = await runFernCli(["docs", "broken-links"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("folder-navigation")),
+            reject: false,
+            signal
+        });
+        // This fixture tests that markdown files referenced via folder entries
+        // in docs.yml are validated for broken links
+        expect(stripAnsi(stdout)).toContain("Found 2 errors");
+    }, 20_000);
+
     it("broken links in sections with path property should be detected", async ({ signal }) => {
         const { stdout } = await runFernCli(["docs", "broken-links"], {
             cwd: join(fixturesDir, RelativeFilePath.of("section-with-path")),

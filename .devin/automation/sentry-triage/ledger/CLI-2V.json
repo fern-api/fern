@@ -1,0 +1,10 @@
+{
+  "title": "MDX / docs image path parse failure",
+  "disposition": "duplicate",
+  "rationale": "Same fix narrative as CLI-2W; one PR covered both.",
+  "fixSummary": "—",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15484",
+  "lastAnalyzed": "2026-04-28",
+  "duplicateOf": "CLI-2W",
+  "problemSignature": "Docs or preview path: MDX/acorn parse error (often bad `!` or JSX) while resolving doc image paths; showed as InternalError."
+}

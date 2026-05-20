@@ -31,10 +31,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/extended",
-              "request": {
-                "body": "Extended",
-                "content-type": "application/json",
-              },
+              "request": "Extended",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -58,10 +55,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/flexible",
-              "request": {
-                "body": "FlexibleValue",
-                "content-type": "application/json",
-              },
+              "request": "FlexibleValue",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -90,10 +84,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/pet",
-              "request": {
-                "body": "Pet",
-                "content-type": "application/json",
-              },
+              "request": "Pet",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -415,9 +406,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: Extended
-        content-type: application/json
+      request: Extended
       response:
         docs: Success
         type: Extended
@@ -437,9 +426,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: Pet
-        content-type: application/json
+      request: Pet
       response:
         docs: Success
         type: Pet
@@ -456,9 +443,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: FlexibleValue
-        content-type: application/json
+      request: FlexibleValue
       response:
         docs: Success
         type: FlexibleValue

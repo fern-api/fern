@@ -11,5 +11,6 @@ export interface Package extends FernIr.WithDocs {
     websocket: FernIr.WebSocketChannelId | undefined;
     subpackages: FernIr.SubpackageId[];
     hasEndpointsInTree: boolean;
+    hasWebSocketInTree: boolean | undefined;
     navigationConfig: FernIr.PackageNavigationConfig | undefined;
 }

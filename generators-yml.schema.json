@@ -3968,7 +3968,8 @@
       "type": "string",
       "enum": [
         "pull-request",
-        "push"
+        "push",
+        "commit-and-release"
       ]
     },
     "license.GithubLicenseType": {

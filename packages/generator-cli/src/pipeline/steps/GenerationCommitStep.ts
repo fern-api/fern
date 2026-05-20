@@ -26,8 +26,7 @@ export class GenerationCommitStep extends BaseStep {
         logger: PipelineLogger,
         private readonly config: GenerationCommitStepConfig,
         private readonly cliVersion?: string,
-        private readonly generatorVersions?: Record<string, string>,
-        private readonly generatorName?: string
+        private readonly generatorVersions?: Record<string, string>
     ) {
         super(outputDir, logger);
     }
@@ -49,7 +48,6 @@ export class GenerationCommitStep extends BaseStep {
                     outputDir: this.outputDir,
                     cliVersion: this.cliVersion,
                     generatorVersions: this.generatorVersions,
-                    generatorName: this.generatorName,
                     skipApplication: this.config.skipApplication,
                     logger: this.logger
                 },
@@ -100,7 +98,6 @@ export class GenerationCommitStep extends BaseStep {
             preparedReplay: prepared,
             previousGenerationSha: prepared.previousGenerationSha ?? undefined,
             currentGenerationSha: prepared.currentGenerationSha,
-            baseBranchHead: prepared.baseBranchHead ?? undefined,
             flow: prepared.flow,
             bootstrapAttempted: prepareState.bootstrapAttempted
         };

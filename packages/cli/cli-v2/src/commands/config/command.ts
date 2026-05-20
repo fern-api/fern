@@ -5,5 +5,10 @@ import { addAiCommand } from "./ai/index.js";
 import { addMigrateCommand } from "./migrate/index.js";
 
 export function addConfigCommand(cli: Argv<GlobalArgs>): void {
-    commandGroup(cli, "config", "Configure, edit, and inspect your settings", [addMigrateCommand, addAiCommand]);
+    commandGroup({
+        cli,
+        name: "config",
+        description: "Configure, edit, and inspect your settings",
+        subcommands: [addMigrateCommand, addAiCommand]
+    });
 }

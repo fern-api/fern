@@ -1,4 +1,202 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.33.3
+  changelogEntry:
+    - summary: |
+        Swallow stdout/stderr EPIPE events in the cli-v2 terminal logger so Unix pipe closures do not report false-positive internal errors.
+      type: fix
+    - summary: |
+        Stop reporting invalid endpoint server references during IR-to-FDR conversion to Sentry.
+      type: fix
+    - summary: |
+        Prevent CLI telemetry from failing when the user's home directory cannot store Fern's analytics ID.
+      type: fix
+  createdAt: "2026-05-20"
+  irVersion: 66
+- version: 5.33.2
+  changelogEntry:
+    - summary: |
+        Validate that the Fern instance `url` and every `custom-domain` share the same basepath when
+        basepath-aware mode is enabled (`multi-source: true` or the deprecated
+        `experimental.basepath-aware: true`). Previously the check was skipped when the custom domain
+        was at the root, allowing publishes that would 404 after DNS cutover.
+      type: fix
+    - summary: |
+        Strip any `https://` or `http://` prefix from `custom-domain` entries in `docs.yml` before
+        they're sent to FDR or used for basepath comparisons. Including the protocol in the configured
+        value could interfere with basepath resolution during DNS cutover.
+      type: fix
+  createdAt: "2026-05-20"
+  irVersion: 66
+- version: 5.33.1
+  changelogEntry:
+    - summary: |
+        Publish a JSON Schema for `fern.yml` so YAML language servers can provide
+        autocomplete and validation in IDEs. Regenerate via `fern schema --output`
+        (or `pnpm fern-yml:jsonschema` in the monorepo).
+      type: chore
+  createdAt: "2026-05-20"
+  irVersion: 66
+- version: 5.33.0
+  changelogEntry:
+    - summary: |
+        Mount pre-processed API specs into generator Docker containers.
+        Specs are bundled, overrides merged, overlays applied, x-fern-ignore
+        operations filtered, and x-fern-audiences respected before outputting
+        compact JSON to generators. Add hidden `resolve-specs` command.
+      type: feat
+  createdAt: "2026-05-20"
+  irVersion: 66
+- version: 5.32.1
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.33 (picks up @fern-api/replay 0.16.1).
+      type: chore
+  createdAt: "2026-05-20"
+  irVersion: 66
+- version: 5.32.0
+  changelogEntry:
+    - summary: |
+        Support structured `x-fern-base-path` with per-parameter declarations and defaults.
+        The OpenAPI extension now accepts an object form with `path` and `parameters`, where
+        each parameter can specify a `type`, `docs`, and `default`.
+      type: feat
+  createdAt: "2026-05-20"
+  irVersion: 66
+- version: 5.31.0
+  changelogEntry:
+    - summary: |
+        Populate `hasWebSocketInTree` on IR Package/Subpackage types. When a
+        subpackage (or any of its nested children) contains a WebSocket channel,
+        this field is set to `true`, enabling generators to wire WebSocket-only
+        namespaces into the root client.
+      type: feat
+  createdAt: "2026-05-20"
+  irVersion: 66
+- version: 5.30.4
+  changelogEntry:
+    - summary: |
+        Fix the OpenAPI importer silently dropping the request body of an operation
+        that combines `x-fern-streaming` (with `stream-condition`) with a `oneOf` or
+        `anyOf` request body schema. Endpoints whose body is a plain object
+        (`properties`/`allOf`) are unaffected.
+      type: fix
+  createdAt: "2026-05-19"
+  irVersion: 66
+- version: 5.30.3
+  changelogEntry:
+    - summary: |
+        Fix a `TypeError: Cannot read properties of undefined (reading 'startsWith')`
+        crash in the OpenAPI parser when an operation's `x-fern-streaming` extension
+        sets only `resumable: true` (or otherwise omits both `format` and
+        `stream-condition`). The parser now returns `undefined` for that operation
+        instead of crashing.
+      type: fix
+  createdAt: "2026-05-19"
+  irVersion: 66
+- version: 5.30.2
+  changelogEntry:
+    - summary: |
+        Fix `fern docs link check` disconnecting on large sites by using batched
+        requests instead of a single long-lived SSE connection. Pages are now scraped
+        in batches of ~200 and links checked in batches of ~500, with automatic
+        retries on connection failures.
+      type: fix
+  createdAt: "2026-05-19"
+  irVersion: 66
+- version: 5.30.1
+  changelogEntry:
+    - summary: |
+        Fix broken link checker to validate links in pages referenced via folder entries in docs.yml navigation.
+      type: fix
+  createdAt: "2026-05-19"
+  irVersion: 66
+- version: 5.30.0
+  changelogEntry:
+    - summary: |
+        Add `commit-and-release` mode support for self-hosted GitHub configuration.
+        Users can now set `mode: commit-and-release` in their self-hosted `github:`
+        block to commit directly to a branch and create a GitHub release.
+      type: feat
+  createdAt: "2026-05-19"
+  irVersion: 66
+- version: 5.29.0
+  changelogEntry:
+    - summary: |
+        Port the hidden `fern docs md` command group from CLI v1 to CLI v2.
+        Adds `fern docs md generate` (beta library documentation generation
+        from source code) and `fern docs md check` (MDX-only syntax validation)
+        with CLI v2's consistent UI.
+      type: feat
+  createdAt: "2026-05-19"
+  irVersion: 66
+- version: 5.28.3
+  changelogEntry:
+    - summary: |
+        Add bin/ property to CLI v2 Cache class for shared tool binaries
+        (buf, protoc-gen-openapi) at ~/.fern/bin/, enabling both CLI v1 and
+        CLI v2 to share the same binary download location.
+      type: chore
+  createdAt: "2026-05-19"
+  irVersion: 66
+- version: 5.28.2
+  changelogEntry:
+    - summary: |
+        Generator-cli now delegates divergent-merge recovery (squash-merge of a regen
+        PR, force-push past a generation, lost-then-found generations) entirely to
+        `@fern-api/replay`'s derived scan boundary. Customers no longer hit the
+        pre-replay precondition gauntlet that occasionally got stuck on stale
+        `fern-generation-base` tag pointers. Replay still writes the tag for
+        backward compatibility with older bundled generator-cli versions.
+      type: chore
+  createdAt: "2026-05-18"
+  irVersion: 66
+- version: 5.28.1
+  changelogEntry:
+    - summary: |
+        Fix global theme merge to deep-merge object fields instead of overwriting them.
+        Local-only sub-fields (e.g. logo.right-text, logo.height) are now preserved
+        when the global theme defines sibling fields on the same object.
+      type: fix
+  createdAt: "2026-05-18"
+  irVersion: 66
+- version: 5.28.0
+  changelogEntry:
+    - summary: |
+        Consolidate all CLI v2 cache directories into `~/.fern/`. Docs preview bundles are now
+        managed under `~/.fern/v1/docs-preview/` and discoverable via `fern cache show` and
+        `fern cache clear --docs-preview`. The `fern cache clear` command never touches the
+        user's auth token or telemetry ID.
+      type: feat
+  createdAt: "2026-05-18"
+  irVersion: 66
+- version: 5.27.8
+  changelogEntry:
+    - summary: |
+        Fix property-level x-fern-audiences filtering breaking error type resolution when
+        enableUniqueErrorsPerEndpoint is true. Types referenced via object properties (e.g.
+        ErrorResponse → ErrorResponseError) are now correctly included during audience filtering,
+        resolving "Failed to find ErrorResponseError" errors in fern check and fern docs dev.
+      type: fix
+  createdAt: "2026-05-18"
+  irVersion: 66
+- version: 5.27.7
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.30, which includes @fern-api/replay
+        0.15.2 with a fix for customer commits on merged regen branches surviving
+        replay detection.
+      type: chore
+  createdAt: "2026-05-17"
+  irVersion: 66
+- version: 5.27.6
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.29, which includes @fern-api/replay
+        0.15.1 with fixes for fallback patch anchoring, composite-patch survival,
+        and FileOwnership divergence.
+      type: chore
+  createdAt: "2026-05-17"
+  irVersion: 66
 - version: 5.27.5
   changelogEntry:
     - summary: |
