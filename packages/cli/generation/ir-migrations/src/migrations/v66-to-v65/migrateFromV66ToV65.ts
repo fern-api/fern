@@ -45,7 +45,7 @@ export const V66_TO_V65_MIGRATION: IrMigration<
         [GeneratorName.PHP_SDK]: "2.3.2-rc.0",
         [GeneratorName.RUST_MODEL]: "0.5.0-rc.0",
         [GeneratorName.RUST_SDK]: "0.32.0-rc.0",
-        [GeneratorName.CLI]: GeneratorWasNotCreatedYet
+        [GeneratorName.CLI]: "0.0.1"
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V65.IntermediateRepresentation.jsonOrThrow(ir, {
