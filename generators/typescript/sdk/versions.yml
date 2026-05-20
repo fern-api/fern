@@ -11,12 +11,21 @@
 - version: 3.70.9
   changelogEntry:
     - summary: |
+<<<<<<< HEAD
         Use `hasWebSocketInTree` IR field to wire WebSocket sub-clients into the
         root client, even when the WebSocket channel lives on a nested sub-resource
         rather than the top-level namespace package.
       type: fix
   createdAt: "2026-05-20"
   irVersion: 67
+=======
+        Apply `client-default` to root path parameters at runtime. When omitted
+        at client construction, the configured default now lands in the URL
+        instead of `undefined`.
+      type: feat
+  createdAt: "2026-05-19"
+  irVersion: 66
+>>>>>>> e35e5ed4569 (chore(typescript,python): shorten changelog entries)
 - version: 3.70.8
   changelogEntry:
     - summary: |
