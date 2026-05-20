@@ -1,0 +1,9 @@
+{
+  "title": "Invalid URL in app preview server",
+  "disposition": "keep_sentry",
+  "rationale": "Preview server should validate or normalize the URL source; leave reportable until fixed.",
+  "fixSummary": "—",
+  "prOrIssue": "Keep in Sentry until product fix",
+  "lastAnalyzed": "2026-05-04",
+  "problemSignature": "Docs app preview server TypeError Invalid URL; possible product/config boundary bug until fixed."
+}

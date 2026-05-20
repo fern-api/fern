@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 from typing import Literal, Optional, Sequence, Tuple, cast
 
 from .publisher import Publisher
-from fern_python.codegen.project import Project, ProjectConfig
+from fern_python.codegen.project import OutputDirectory, Project, ProjectConfig
 from fern_python.external_dependencies.ruff import RUFF_DEPENDENCY
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.utils import configure_smart_casing
@@ -134,6 +134,10 @@ class AbstractGenerator(ABC):
         if generator_config.custom_config is not None and "package_path" in generator_config.custom_config:
             package_path = generator_config.custom_config.get("package_path")
 
+        output_directory: Optional[OutputDirectory] = None
+        if generator_config.custom_config is not None and "output_directory" in generator_config.custom_config:
+            output_directory = OutputDirectory(generator_config.custom_config.get("output_directory"))
+
         mypy_exclude = None
         if generator_config.custom_config is not None and "mypy_exclude" in generator_config.custom_config:
             mypy_exclude = generator_config.custom_config.get("mypy_exclude")
@@ -144,18 +148,16 @@ class AbstractGenerator(ABC):
 
         with Project(
             filepath=generator_config.output.path,
-            relative_path_to_project=os.path.join(
-                *self.get_relative_path_to_project_for_publish(
-                    generator_config=generator_config,
-                    ir=ir,
-                )
-            )
-            if project_config is not None
-            else generator_config.organization,
+            relative_path_to_project=self._get_relative_path_for_project(
+                generator_config=generator_config,
+                ir=ir,
+                project_config=project_config,
+            ),
             package_path=package_path,
             project_config=project_config,
             sorted_modules=self.get_sorted_modules(),
             flat_layout=self.is_flat_layout(generator_config=generator_config),
+            output_directory=output_directory,
             whitelabel=generator_config.whitelabel,
             python_version=python_version,
             pypi_metadata=self._get_pypi_metadata(generator_config=generator_config),
@@ -184,19 +186,22 @@ class AbstractGenerator(ABC):
                 and generator_config.custom_config.get("include_legacy_wire_tests", False)
             )
 
-            generator_config.output.mode.visit(
-                download_files=lambda: None,
-                github=lambda github_output_mode: self._write_files_for_github_repo(
-                    project=project,
-                    output_mode=github_output_mode,
-                    publish_config=generator_config.publish,
-                    write_unit_tests=(
-                        self.project_type() == "sdk" and include_legacy_wire_tests and generator_config.write_unit_tests
+            if project.should_emit_scaffolding:
+                generator_config.output.mode.visit(
+                    download_files=lambda: None,
+                    github=lambda github_output_mode: self._write_files_for_github_repo(
+                        project=project,
+                        output_mode=github_output_mode,
+                        publish_config=generator_config.publish,
+                        write_unit_tests=(
+                            self.project_type() == "sdk"
+                            and include_legacy_wire_tests
+                            and generator_config.write_unit_tests
+                        ),
+                        python_version_constraint=python_version,
                     ),
-                    python_version_constraint=python_version,
-                ),
-                publish=lambda x: None,
-            )
+                    publish=lambda x: None,
+                )
 
         publisher = Publisher(
             should_fix=self.should_fix_files(),
@@ -628,6 +633,29 @@ def test_client() -> None:
         generator_config: GeneratorConfig,
         ir: ir_types.IntermediateRepresentation,
     ) -> Tuple[str, ...]: ...
+
+    def _get_relative_path_for_project(
+        self,
+        *,
+        generator_config: GeneratorConfig,
+        ir: ir_types.IntermediateRepresentation,
+        project_config: Optional[ProjectConfig],
+    ) -> str:
+        """Return the relative path used as the project's module root.
+
+        Defaults to ``get_relative_path_to_project_for_publish`` when
+        *project_config* is set, otherwise falls back to the raw organization
+        name. Subclasses may override to change the download-mode behavior
+        (e.g. to always respect ``package_name`` from custom config).
+        """
+        if project_config is not None:
+            return os.path.join(
+                *self.get_relative_path_to_project_for_publish(
+                    generator_config=generator_config,
+                    ir=ir,
+                )
+            )
+        return generator_config.organization
 
     @abstractmethod
     def is_flat_layout(

@@ -470,7 +470,8 @@
     "errors": [],
     "subpackages": [],
     "webhooks": "webhooks_",
-    "hasEndpointsInTree": false
+    "hasEndpointsInTree": false,
+    "hasWebSocketInTree": false
   },
   "sdkConfig": {
     "isAuthMandatory": false,

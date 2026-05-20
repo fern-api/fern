@@ -1,0 +1,130 @@
+openapi: 3.0.0
+info:
+  title: Acme API
+  version: "1.0"
+  description: The Acme API.
+servers:
+  - url: https://api.acme.com
+x-fern-base-path:
+  path: /{tenant}/{apiVersion}
+  paths-include-base-path: true
+  parameters:
+    tenant:
+      type: string
+      docs: The tenant slug.
+    apiVersion:
+      type: string
+      default: v1beta
+paths:
+  /{tenant}/{apiVersion}/widgets:
+    post:
+      operationId: createWidget
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: apiVersion
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Widget"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Widget"
+  /{tenant}/{apiVersion}/interactions/stream:
+    post:
+      operationId: createInteractionStream
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: apiVersion
+          in: path
+          required: true
+          schema:
+            type: string
+      x-fern-streaming:
+        format: sse
+        terminator: "[DONE]"
+        stream-condition: $request.stream
+        stream-request-name: CreateInteractionStreamRequest
+        response:
+          $ref: "#/components/schemas/Interaction"
+        response-stream:
+          $ref: "#/components/schemas/InteractionSseEvent"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InteractionRequest"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Interaction"
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/InteractionSseEvent"
+components:
+  schemas:
+    Widget:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    InteractionRequest:
+      x-fern-undiscriminated: true
+      oneOf:
+        - $ref: "#/components/schemas/ModelInteractionRequest"
+        - $ref: "#/components/schemas/AgentInteractionRequest"
+    ModelInteractionRequest:
+      type: object
+      required:
+        - model
+        - input
+      properties:
+        model:
+          type: string
+        input:
+          type: string
+    AgentInteractionRequest:
+      type: object
+      required:
+        - agent
+        - input
+      properties:
+        agent:
+          type: string
+        input:
+          type: string
+    Interaction:
+      type: object
+      properties:
+        id:
+          type: string
+        output:
+          type: string
+    InteractionSseEvent:
+      type: object
+      properties:
+        delta:
+          type: string

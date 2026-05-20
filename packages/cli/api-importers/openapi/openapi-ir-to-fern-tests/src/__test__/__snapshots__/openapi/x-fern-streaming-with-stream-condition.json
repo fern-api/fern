@@ -15,10 +15,6 @@
               "docs": "Create a chat while specifying the default retrieval parameters used by the prompt.",
               "examples": [
                 {
-                  "headers": {
-                    "Request-Timeout": 0,
-                    "Request-Timeout-Millis": 0,
-                  },
                   "request": {
                     "query": "How can I use the Vectara platform?",
                     "stream_response": false,
@@ -49,7 +45,18 @@
                   },
                 },
                 "content-type": "application/json",
-                "headers": undefined,
+                "headers": {
+                  "Request-Timeout": {
+                    "docs": "The API will make a best effort to complete the request in the specified seconds or time out.",
+                    "name": "requestTimeout",
+                    "type": "optional<integer>",
+                  },
+                  "Request-Timeout-Millis": {
+                    "docs": "The API will make a best effort to complete the request in the specified milliseconds or time out.",
+                    "name": "requestTimeoutMillis",
+                    "type": "optional<integer>",
+                  },
+                },
                 "name": "ChatRequest",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -69,10 +76,6 @@
               "docs": "Create a chat while specifying the default retrieval parameters used by the prompt.",
               "examples": [
                 {
-                  "headers": {
-                    "Request-Timeout": 0,
-                    "Request-Timeout-Millis": 0,
-                  },
                   "request": {
                     "query": "How can I use the Vectara platform?",
                     "stream_response": true,
@@ -103,7 +106,18 @@
                   },
                 },
                 "content-type": "application/json",
-                "headers": undefined,
+                "headers": {
+                  "Request-Timeout": {
+                    "docs": "The API will make a best effort to complete the request in the specified seconds or time out.",
+                    "name": "requestTimeout",
+                    "type": "optional<integer>",
+                  },
+                  "Request-Timeout-Millis": {
+                    "docs": "The API will make a best effort to complete the request in the specified milliseconds or time out.",
+                    "name": "requestTimeoutMillis",
+                    "type": "optional<integer>",
+                  },
+                },
                 "name": "ChatStreamRequest",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -118,12 +132,99 @@
                 "openapi": "../openapi.yml",
               },
             },
+            "interact": {
+              "auth": undefined,
+              "display-name": "Start an interaction",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "input": "input",
+                    "model": "model",
+                  },
+                  "response": {
+                    "body": {
+                      "id": "id",
+                      "output": "output",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/v2/interactions",
+              "request": {
+                "body": {
+                  "docs": "Parameters for creating an interaction (model OR agent).",
+                  "type": "InteractRequest",
+                },
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "",
+                "status-code": 200,
+                "type": "InteractionFullResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "interact_stream": {
+              "auth": undefined,
+              "display-name": "Start an interaction",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "input": "input",
+                    "model": "model",
+                  },
+                  "response": {
+                    "stream": [
+                      {
+                        "delta": "delta",
+                      },
+                    ],
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/v2/interactions",
+              "request": {
+                "body": {
+                  "docs": "Parameters for creating an interaction (model OR agent).",
+                  "type": "InteractStreamRequest",
+                },
+                "content-type": "application/json",
+              },
+              "response-stream": {
+                "docs": "",
+                "format": "json",
+                "terminator": undefined,
+                "type": "InteractionStreamedResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
           },
           "source": {
             "openapi": "../openapi.yml",
           },
         },
         "types": {
+          "AgentInteractionRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "agent": "string",
+              "input": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "ChatFullResponse": {
             "docs": "Full response to a chat question when the result is not streamed.",
             "inline": undefined,
@@ -176,6 +277,84 @@
               "openapi": "../openapi.yml",
             },
           },
+          "InteractRequest": {
+            "base-properties": {
+              "stream_response": "literal<false>",
+            },
+            "discriminated": false,
+            "docs": "Parameters for creating an interaction (model OR agent).",
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "ModelInteractionRequest",
+              "AgentInteractionRequest",
+            ],
+          },
+          "InteractStreamRequest": {
+            "base-properties": {
+              "stream_response": "literal<true>",
+            },
+            "discriminated": false,
+            "docs": "Parameters for creating an interaction (model OR agent).",
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "ModelInteractionRequest",
+              "AgentInteractionRequest",
+            ],
+          },
+          "InteractionFullResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+              "output": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "InteractionRequest": {
+            "base-properties": undefined,
+            "discriminated": false,
+            "docs": "Parameters for creating an interaction (model OR agent).",
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "ModelInteractionRequest",
+              "AgentInteractionRequest",
+            ],
+          },
+          "InteractionStreamedResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "delta": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ModelInteractionRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "input": "string",
+              "model": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
         },
       },
       "rawContents": "service:
@@ -193,6 +372,19 @@
       display-name: Start a chat
       request:
         name: ChatStreamRequest
+        headers:
+          Request-Timeout:
+            type: optional<integer>
+            name: requestTimeout
+            docs: >-
+              The API will make a best effort to complete the request in the
+              specified seconds or time out.
+          Request-Timeout-Millis:
+            type: optional<integer>
+            name: requestTimeoutMillis
+            docs: >-
+              The API will make a best effort to complete the request in the
+              specified milliseconds or time out.
         body:
           properties:
             query:
@@ -207,10 +399,7 @@
         type: ChatStreamedResponse
         format: json
       examples:
-        - headers:
-            Request-Timeout: 0
-            Request-Timeout-Millis: 0
-          request:
+        - request:
             query: How can I use the Vectara platform?
             stream_response: true
           response:
@@ -227,6 +416,19 @@
       display-name: Start a chat
       request:
         name: ChatRequest
+        headers:
+          Request-Timeout:
+            type: optional<integer>
+            name: requestTimeout
+            docs: >-
+              The API will make a best effort to complete the request in the
+              specified seconds or time out.
+          Request-Timeout-Millis:
+            type: optional<integer>
+            name: requestTimeoutMillis
+            docs: >-
+              The API will make a best effort to complete the request in the
+              specified milliseconds or time out.
         body:
           properties:
             query:
@@ -241,10 +443,7 @@
         type: ChatFullResponse
         status-code: 200
       examples:
-        - headers:
-            Request-Timeout: 0
-            Request-Timeout-Millis: 0
-          request:
+        - request:
             query: How can I use the Vectara platform?
             stream_response: false
           response:
@@ -252,9 +451,74 @@
               chat_id: chat_id
               turn_id: turn_id
               answer: answer
+    interact_stream:
+      path: /v2/interactions
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      display-name: Start an interaction
+      request:
+        body:
+          type: InteractStreamRequest
+          docs: Parameters for creating an interaction (model OR agent).
+        content-type: application/json
+      response-stream:
+        docs: ''
+        type: InteractionStreamedResponse
+        format: json
+      examples:
+        - request:
+            model: model
+            input: input
+          response:
+            stream:
+              - delta: delta
+    interact:
+      path: /v2/interactions
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      display-name: Start an interaction
+      request:
+        body:
+          type: InteractRequest
+          docs: Parameters for creating an interaction (model OR agent).
+        content-type: application/json
+      response:
+        docs: ''
+        type: InteractionFullResponse
+        status-code: 200
+      examples:
+        - request:
+            model: model
+            input: input
+          response:
+            body:
+              id: id
+              output: output
   source:
     openapi: ../openapi.yml
 types:
+  InteractStreamRequest:
+    discriminated: false
+    base-properties:
+      stream_response: literal<true>
+    docs: Parameters for creating an interaction (model OR agent).
+    union:
+      - ModelInteractionRequest
+      - AgentInteractionRequest
+    source:
+      openapi: ../openapi.yml
+  InteractRequest:
+    discriminated: false
+    base-properties:
+      stream_response: literal<false>
+    docs: Parameters for creating an interaction (model OR agent).
+    union:
+      - ModelInteractionRequest
+      - AgentInteractionRequest
+    source:
+      openapi: ../openapi.yml
   ChatRequest:
     properties:
       query:
@@ -288,6 +552,37 @@ types:
         docs: The chunk of the response.
     source:
       openapi: ../openapi.yml
+  InteractionRequest:
+    discriminated: false
+    docs: Parameters for creating an interaction (model OR agent).
+    union:
+      - ModelInteractionRequest
+      - AgentInteractionRequest
+    source:
+      openapi: ../openapi.yml
+  ModelInteractionRequest:
+    properties:
+      model: string
+      input: string
+    source:
+      openapi: ../openapi.yml
+  AgentInteractionRequest:
+    properties:
+      agent: string
+      input: string
+    source:
+      openapi: ../openapi.yml
+  InteractionFullResponse:
+    properties:
+      id: optional<string>
+      output: optional<string>
+    source:
+      openapi: ../openapi.yml
+  InteractionStreamedResponse:
+    properties:
+      delta: optional<string>
+    source:
+      openapi: ../openapi.yml
 ",
     },
   },
@@ -302,18 +597,6 @@ types:
       "error-discrimination": {
         "strategy": "status-code",
       },
-      "headers": {
-        "Request-Timeout": {
-          "docs": "The API will make a best effort to complete the request in the specified seconds or time out.",
-          "name": "requestTimeout",
-          "type": "optional<integer>",
-        },
-        "Request-Timeout-Millis": {
-          "docs": "The API will make a best effort to complete the request in the specified milliseconds or time out.",
-          "name": "requestTimeoutMillis",
-          "type": "optional<integer>",
-        },
-      },
       "name": "api",
     },
     "defaultUrl": undefined,
@@ -324,19 +607,6 @@ display-name: Vectara REST API v2
 environments:
   Default: https://api.streamingtest.io
 default-environment: Default
-headers:
-  Request-Timeout:
-    type: optional<integer>
-    name: requestTimeout
-    docs: >-
-      The API will make a best effort to complete the request in the specified
-      seconds or time out.
-  Request-Timeout-Millis:
-    type: optional<integer>
-    name: requestTimeoutMillis
-    docs: >-
-      The API will make a best effort to complete the request in the specified
-      milliseconds or time out.
 ",
   },
 }
