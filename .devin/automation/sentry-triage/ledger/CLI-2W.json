@@ -1,0 +1,9 @@
+{
+  "title": "59:2: Unexpected character `!` before name",
+  "disposition": "shipped",
+  "rationale": "User-authored MDX/acorn parse error surfaced as InternalError; should be ParseError at parseImagePaths call sites.",
+  "fixSummary": "Wrap parseImagePaths in DocsDefinitionResolver and previewDocs with CliError(ParseError).",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15484",
+  "lastAnalyzed": "2026-04-28",
+  "problemSignature": "Docs or preview path: MDX/acorn parse error (often bad `!` or JSX) while resolving doc image paths; showed as InternalError."
+}

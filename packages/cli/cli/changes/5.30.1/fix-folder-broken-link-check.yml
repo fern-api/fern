@@ -1,0 +1,3 @@
+- summary: |
+    Fix broken link checker to validate links in pages referenced via folder entries in docs.yml navigation.
+  type: fix

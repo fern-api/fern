@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/{apiVersion}/widgets",
+                "method": "POST",
+                "identifier_override": "endpoint_widgets.create"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/api-wide-base-path-with-default\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.widgets.create({\n    name: \"name\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

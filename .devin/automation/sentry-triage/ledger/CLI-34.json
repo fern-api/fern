@@ -1,0 +1,9 @@
+{
+  "title": "Python package path not found",
+  "disposition": "shipped",
+  "rationale": "Library docs generation failed in the external library-docs service; the CLI should not report service job failures as internal defects.",
+  "fixSummary": "Map failed library-docs generation statuses to NetworkError instead of InternalError.",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-05",
+  "problemSignature": "Library docs generation failed in an external service job; should be non-reportable service/network semantics."
+}

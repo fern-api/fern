@@ -275,6 +275,7 @@ types:
       websocket: optional<commons.WebSocketChannelId>
       subpackages: list<commons.SubpackageId>
       hasEndpointsInTree: boolean
+      hasWebSocketInTree: optional<boolean>
       navigationConfig: optional<PackageNavigationConfig>
   Subpackage:
     extends: Package

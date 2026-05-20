@@ -7,9 +7,10 @@ import { addListMembersCommand } from "./list/index.js";
 import { addRemoveMemberCommand } from "./remove/index.js";
 
 export function addMemberCommand(cli: Argv<GlobalArgs>): void {
-    commandGroup(cli, "member", "Manage organization members", [
-        addInviteMemberCommand,
-        addListMembersCommand,
-        addRemoveMemberCommand
-    ]);
+    commandGroup({
+        cli,
+        name: "member",
+        description: "Manage organization members",
+        subcommands: [addInviteMemberCommand, addListMembersCommand, addRemoveMemberCommand]
+    });
 }

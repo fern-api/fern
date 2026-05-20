@@ -1,3 +1,6 @@
 - summary: |
     Add CLI generator infrastructure and registration.
   type: feat
+- summary: |
+    Add raw API spec file mounting and embedding for runtime CLI construction.
+  type: feat

@@ -31,10 +31,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/array-map",
-              "request": {
-                "body": "ArrayMap",
-                "content-type": "application/json",
-              },
+              "request": "ArrayMap",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -65,10 +62,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/extended-with-any",
-              "request": {
-                "body": "ExtendedWithAdditionalPropertiesAny",
-                "content-type": "application/json",
-              },
+              "request": "ExtendedWithAdditionalPropertiesAny",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -101,10 +95,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/extended-with-ref",
-              "request": {
-                "body": "ExtendedWithAdditionalPropertiesRef",
-                "content-type": "application/json",
-              },
+              "request": "ExtendedWithAdditionalPropertiesRef",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -134,10 +125,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/extended-with-typed",
-              "request": {
-                "body": "ExtendedWithAdditionalPropertiesTyped",
-                "content-type": "application/json",
-              },
+              "request": "ExtendedWithAdditionalPropertiesTyped",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -164,10 +152,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/flexible",
-              "request": {
-                "body": "FlexibleObject",
-                "content-type": "application/json",
-              },
+              "request": "FlexibleObject",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -198,10 +183,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/object-map",
-              "request": {
-                "body": "ObjectMap",
-                "content-type": "application/json",
-              },
+              "request": "ObjectMap",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -228,10 +210,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/strict",
-              "request": {
-                "body": "StrictObject",
-                "content-type": "application/json",
-              },
+              "request": "StrictObject",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -257,10 +236,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/string-map",
-              "request": {
-                "body": "StringMap",
-                "content-type": "application/json",
-              },
+              "request": "StringMap",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -291,10 +267,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/user-map",
-              "request": {
-                "body": "UserMap",
-                "content-type": "application/json",
-              },
+              "request": "UserMap",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -442,9 +415,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: FlexibleObject
-        content-type: application/json
+      request: FlexibleObject
       response:
         docs: Success
         type: FlexibleObject
@@ -460,9 +431,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: StrictObject
-        content-type: application/json
+      request: StrictObject
       response:
         docs: Success
         type: StrictObject
@@ -478,9 +447,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: StringMap
-        content-type: application/json
+      request: StringMap
       response:
         docs: Success
         type: StringMap
@@ -495,9 +462,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: ObjectMap
-        content-type: application/json
+      request: ObjectMap
       response:
         docs: Success
         type: ObjectMap
@@ -515,9 +480,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: UserMap
-        content-type: application/json
+      request: UserMap
       response:
         docs: Success
         type: UserMap
@@ -535,9 +498,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: ArrayMap
-        content-type: application/json
+      request: ArrayMap
       response:
         docs: Success
         type: ArrayMap
@@ -555,9 +516,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: ExtendedWithAdditionalPropertiesAny
-        content-type: application/json
+      request: ExtendedWithAdditionalPropertiesAny
       response:
         docs: Success
         type: ExtendedWithAdditionalPropertiesAny
@@ -576,9 +535,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: ExtendedWithAdditionalPropertiesTyped
-        content-type: application/json
+      request: ExtendedWithAdditionalPropertiesTyped
       response:
         docs: Success
         type: ExtendedWithAdditionalPropertiesTyped
@@ -596,9 +553,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: ExtendedWithAdditionalPropertiesRef
-        content-type: application/json
+      request: ExtendedWithAdditionalPropertiesRef
       response:
         docs: Success
         type: ExtendedWithAdditionalPropertiesRef

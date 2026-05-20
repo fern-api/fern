@@ -21,7 +21,8 @@ export class ShowCommand {
                 paths: {
                     base: cache.absoluteFilePath,
                     ir: cache.ir.absoluteFilePath,
-                    logs: cache.logs.absoluteFilePath
+                    logs: cache.logs.absoluteFilePath,
+                    docsPreview: cache.docsPreview.absoluteFilePath
                 },
                 stats: {
                     totalSize: stats.totalSize,
@@ -41,6 +42,11 @@ export class ShowCommand {
                         fileCount: stats.logs.fileCount,
                         totalSize: stats.logs.totalSize,
                         totalSizeFormatted: formatBytes(stats.logs.totalSize)
+                    },
+                    docsPreview: {
+                        bundleCount: stats.docsPreview.bundleCount,
+                        totalSize: stats.docsPreview.totalSize,
+                        totalSizeFormatted: formatBytes(stats.docsPreview.totalSize)
                     }
                 }
             };
@@ -50,15 +56,16 @@ export class ShowCommand {
 
         context.stdout.info("Cache Location");
         context.stdout.info("==============");
-        context.stdout.info(`Base:  ${cache.absoluteFilePath}`);
-        context.stdout.info(`IR:    ${cache.ir.absoluteFilePath}`);
-        context.stdout.info(`Logs:  ${cache.logs.absoluteFilePath}`);
+        context.stdout.info(`Base:         ${cache.absoluteFilePath}`);
+        context.stdout.info(`IR:           ${cache.ir.absoluteFilePath}`);
+        context.stdout.info(`Logs:         ${cache.logs.absoluteFilePath}`);
+        context.stdout.info(`Docs Preview: ${cache.docsPreview.absoluteFilePath}`);
         context.stdout.info("");
 
         context.stdout.info("Cache Statistics");
         context.stdout.info("================");
 
-        const isEmpty = stats.ir.entryCount === 0 && stats.logs.fileCount === 0;
+        const isEmpty = stats.ir.entryCount === 0 && stats.logs.fileCount === 0 && stats.docsPreview.bundleCount === 0;
         if (isEmpty) {
             context.stdout.info("Cache is empty");
             return;
@@ -91,6 +98,14 @@ export class ShowCommand {
         if (stats.logs.fileCount > 0) {
             context.stdout.info("Logs:");
             context.stdout.info(`  ${stats.logs.fileCount} files (${formatBytes(stats.logs.totalSize)})`);
+            context.stdout.info("");
+        }
+
+        if (stats.docsPreview.bundleCount > 0) {
+            context.stdout.info("Docs Preview:");
+            context.stdout.info(
+                `  ${stats.docsPreview.bundleCount} bundles (${formatBytes(stats.docsPreview.totalSize)})`
+            );
         }
     }
 }

@@ -32,10 +32,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/author",
-              "request": {
-                "body": "Author",
-                "content-type": "application/json",
-              },
+              "request": "Author",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -62,10 +59,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/node",
-              "request": {
-                "body": "Node",
-                "content-type": "application/json",
-              },
+              "request": "Node",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -92,10 +86,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/tree",
-              "request": {
-                "body": "TreeNode",
-                "content-type": "application/json",
-              },
+              "request": "TreeNode",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -252,9 +243,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: Node
-        content-type: application/json
+      request: Node
       response:
         docs: Success
         type: Node
@@ -270,9 +259,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: Author
-        content-type: application/json
+      request: Author
       response:
         docs: Success
         type: Author
@@ -291,9 +278,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: TreeNode
-        content-type: application/json
+      request: TreeNode
       response:
         docs: Success
         type: TreeNode

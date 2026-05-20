@@ -131,6 +131,7 @@ Generators pick up new generator-cli versions **lazily** — the next time a gen
 
 - `skipCommit` means replay already committed — GithubStep must NOT `commitAllChanges()` again
 - Force push required when updating existing PR with replay commits (replay rewrites branch history)
-- `baseBranchHead` is always on main's lineage (survives squash merges), unlike `previousGenerationSha` which may be on a dead branch
+- Divergent-merge recovery (squash-merge of a regen PR, force-push past a generation, lost-then-found generations) is owned entirely by `@fern-api/replay`'s derived scan boundary — `replayPrepare` no longer runs a precondition gauntlet to detect or sync it. See [ADR 0001](./docs/adr/0001-delegate-divergent-merge-recovery-to-replay.md).
+- The `[fern-generation-base]` tag is still written but no longer read by this version of generator-cli. It exists for backward compatibility with older deployed generator-cli versions whose bundled gauntlet still reads it; remove the write side once the catalog has rolled forward across all generators.
 - Pipeline continues on step failure — replay errors return null report to not fail generation. **Exception**: VerificationStep failure aborts the pipeline so GithubStep is skipped (broken SDK never gets a PR).
 - Generator name sanitization: `/` replaced with `--` for tag names and commit status context

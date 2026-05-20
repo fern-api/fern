@@ -1,0 +1,29 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/stream",
+                "method": "POST",
+                "identifier_override": "endpoint_completions.stream"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedServerSentEventsResumableClient } from \"@fern/server-sent-events-resumable\";\n\nconst client = new SeedServerSentEventsResumableClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.completions.stream({\n    query: \"foo\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n"
+            },
+            "example_identifier": "Stream completions (resumable)"
+        },
+        {
+            "id": {
+                "path": "/stream-non-resumable",
+                "method": "POST",
+                "identifier_override": "endpoint_completions.streamNonResumable"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedServerSentEventsResumableClient } from \"@fern/server-sent-events-resumable\";\n\nconst client = new SeedServerSentEventsResumableClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.completions.streamNonResumable({\n    query: \"bar\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n"
+            },
+            "example_identifier": "Stream completions (non-resumable)"
+        }
+    ],
+    "types": {}
+}
