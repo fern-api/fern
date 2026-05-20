@@ -22,8 +22,6 @@ export class ImdbClient {
     }
 
     /**
-     * @beta This endpoint is in pre-release and may change.
-     *
      * Add a movie to the database using the movies/* /... path.
      *
      * @param {SeedApi.CreateMovieRequest} request

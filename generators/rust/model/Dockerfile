@@ -24,6 +24,14 @@ ENV PATH=/usr/local/lib/rustfmt:$PATH \
     LD_LIBRARY_PATH=/usr/local/lib/rustfmt/lib
 RUN rustfmt --version
 
+# Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; node:24.15 vendors 5.0.5).
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    npm pack brace-expansion@5.0.6 && \
+    rm -rf brace-expansion && \
+    mkdir brace-expansion && \
+    tar -xzf brace-expansion-5.0.6.tgz --strip-components=1 -C brace-expansion/ && \
+    rm brace-expansion-5.0.6.tgz
+
 COPY generators/rust/model/dist /dist
 
 ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs", "rust-model"]

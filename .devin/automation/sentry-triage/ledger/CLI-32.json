@@ -1,0 +1,10 @@
+{
+  "title": "MDX expected closing br tag",
+  "disposition": "duplicate",
+  "rationale": "Same docs MDX/acorn parse family as CLI-2W.",
+  "fixSummary": "—",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15484",
+  "lastAnalyzed": "2026-05-04",
+  "duplicateOf": "CLI-2W",
+  "problemSignature": "Docs or preview path: MDX/acorn parse error while resolving user-authored docs content; showed as InternalError."
+}

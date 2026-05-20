@@ -1,0 +1,9 @@
+{
+  "title": "Filesystem / errno false positive",
+  "disposition": "shipped",
+  "rationale": "User/env errno (e.g. ENOENT) misclassified as InternalError.",
+  "fixSummary": "ErrnoException mapping in resolveErrorCode; USER_ENVIRONMENT_ERRNOS / NETWORK_ERRNOS.",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+  "lastAnalyzed": "2026-04-21",
+  "problemSignature": "Filesystem or syscall errno from user environment (e.g. missing file, permission) surfaced as InternalError instead of environment-style CLI error."
+}

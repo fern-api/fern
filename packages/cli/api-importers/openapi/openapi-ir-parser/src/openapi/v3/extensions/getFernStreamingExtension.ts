@@ -75,6 +75,10 @@ export function getFernStreamingExtension(
         };
     }
 
+    if (streaming["stream-condition"] == null) {
+        return undefined;
+    }
+
     return {
         type: "streamCondition",
         format: streaming.format ?? "json",

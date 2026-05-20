@@ -22,10 +22,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/test",
-              "request": {
-                "body": "OuterOneOf",
-                "content-type": "application/json",
-              },
+              "request": "OuterOneOf",
               "source": {
                 "openapi": "../openapi.yml",
               },
@@ -83,9 +80,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: OuterOneOf
-        content-type: application/json
+      request: OuterOneOf
       examples:
         - request:
             value: value

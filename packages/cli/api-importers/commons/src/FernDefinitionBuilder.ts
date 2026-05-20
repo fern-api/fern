@@ -40,6 +40,8 @@ export interface FernDefinitionBuilder {
 
     setBasePath(basePath: string): void;
 
+    setRootPathParameters(parameters: Record<string, RawSchemas.HttpPathParameterSchema>): void;
+
     setApiVersion(apiVersionScheme: unknown): void;
 
     getEnvironmentType(): "single" | "multi" | undefined;
@@ -121,6 +123,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     private rootApiFile: RawSchemas.RootApiFileSchema;
     private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
     private basePath: string | undefined = undefined;
+    private rootPathParameters: Record<string, RawSchemas.HttpPathParameterSchema> | undefined = undefined;
 
     public constructor(public readonly enableUniqueErrorsPerEndpoint: boolean) {
         this.root = new FernDefinitionDirectory();
@@ -197,6 +200,13 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
     public setBasePath(basePath: string): void {
         this.basePath = basePath;
+    }
+
+    public setRootPathParameters(parameters: Record<string, RawSchemas.HttpPathParameterSchema>): void {
+        if (Object.keys(parameters).length === 0) {
+            return;
+        }
+        this.rootPathParameters = parameters;
     }
 
     public setApiVersion(apiVersionScheme: unknown): void {
@@ -508,8 +518,14 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     public build(): FernDefinition {
         const definitionFiles = this.root.getAllFiles();
         const basePath = this.basePath;
-        if (basePath != null) {
-            // substitute package marker file
+        const rootPathParameters = this.rootPathParameters;
+        // Inline the base path into every endpoint path when it has no
+        // placeholders AND no root path parameters were declared. Otherwise
+        // preserve the base path at the root API file so endpoints can refer
+        // to root-level parameters.
+        const shouldInline = basePath != null && rootPathParameters == null && !basePath.includes("{");
+
+        if (basePath != null && shouldInline) {
             if (this.packageMarkerFile.service != null) {
                 this.packageMarkerFile.service = {
                     ...this.packageMarkerFile.service,
@@ -527,7 +543,6 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                 };
             }
 
-            // substitute definition files
             for (const file of Object.values(definitionFiles)) {
                 if (file.service != null) {
                     file.service = {
@@ -545,6 +560,11 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                         )
                     };
                 }
+            }
+        } else if (basePath != null) {
+            this.rootApiFile["base-path"] = basePath;
+            if (rootPathParameters != null) {
+                this.rootApiFile["path-parameters"] = rootPathParameters;
             }
         }
 

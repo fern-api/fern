@@ -8,10 +8,10 @@ import { addMergeCommand } from "./merge/index.js";
 import { addSplitCommand } from "./split/index.js";
 
 export function addApiCommand(cli: Argv<GlobalArgs>): void {
-    commandGroup(cli, "api", "Configure, compile, edit, and inspect your API specs", [
-        addCheckCommand,
-        addCompileCommand,
-        addMergeCommand,
-        addSplitCommand
-    ]);
+    commandGroup({
+        cli,
+        name: "api",
+        description: "Configure, compile, edit, and inspect your API specs",
+        subcommands: [addCheckCommand, addCompileCommand, addMergeCommand, addSplitCommand]
+    });
 }

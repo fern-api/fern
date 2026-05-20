@@ -1,0 +1,9 @@
+{
+  "title": "YAML bad nested page indentation",
+  "disposition": "shipped",
+  "rationale": "User-authored docs navigation YAML had malformed nested page indentation and previously surfaced as an InternalError before the navigation YAML boundary handled parser failures.",
+  "fixSummary": "Wrap product/version navigation yaml.load calls in getNavigationConfiguration/getVersionedNavigationConfiguration as CliError(ParseError).",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15937",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "YAMLException while parsing docs.yml or referenced docs navigation YAML; parser exception treated as InternalError."
+}

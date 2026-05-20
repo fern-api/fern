@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "a18446b4",
+            "id": {
+                "method": "POST",
+                "path": "/{apiVersion}/widgets",
+                "identifier_override": "endpoint_widgets.create"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.Widget;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .apiVersion(\"v1beta\")\n            .build();\n\n        client.widgets().create(\n            Widget\n                .builder()\n                .name(\"name\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.Widget;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .apiVersion(\"v1beta\")\n            .build();\n\n        client.widgets().create(\n            Widget\n                .builder()\n                .name(\"name\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

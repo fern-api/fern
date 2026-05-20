@@ -9,7 +9,9 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
 
 if typing.TYPE_CHECKING:
+    from .empty.client import AsyncEmptyClient, EmptyClient
     from .realtime.client import AsyncRealtimeClient, RealtimeClient
+    from .status.client import AsyncStatusClient, StatusClient
 
 
 class SeedWebsocket:
@@ -75,7 +77,17 @@ class SeedWebsocket:
             max_retries=_defaulted_max_retries,
             logging=logging,
         )
+        self._empty: typing.Optional[EmptyClient] = None
         self._realtime: typing.Optional[RealtimeClient] = None
+        self._status: typing.Optional[StatusClient] = None
+
+    @property
+    def empty(self):
+        if self._empty is None:
+            from .empty.client import EmptyClient  # noqa: E402
+
+            self._empty = EmptyClient(client_wrapper=self._client_wrapper)
+        return self._empty
 
     @property
     def realtime(self):
@@ -84,6 +96,14 @@ class SeedWebsocket:
 
             self._realtime = RealtimeClient(client_wrapper=self._client_wrapper)
         return self._realtime
+
+    @property
+    def status(self):
+        if self._status is None:
+            from .status.client import StatusClient  # noqa: E402
+
+            self._status = StatusClient(client_wrapper=self._client_wrapper)
+        return self._status
 
 
 def _make_default_async_client(
@@ -165,7 +185,17 @@ class AsyncSeedWebsocket:
             max_retries=_defaulted_max_retries,
             logging=logging,
         )
+        self._empty: typing.Optional[AsyncEmptyClient] = None
         self._realtime: typing.Optional[AsyncRealtimeClient] = None
+        self._status: typing.Optional[AsyncStatusClient] = None
+
+    @property
+    def empty(self):
+        if self._empty is None:
+            from .empty.client import AsyncEmptyClient  # noqa: E402
+
+            self._empty = AsyncEmptyClient(client_wrapper=self._client_wrapper)
+        return self._empty
 
     @property
     def realtime(self):
@@ -174,3 +204,11 @@ class AsyncSeedWebsocket:
 
             self._realtime = AsyncRealtimeClient(client_wrapper=self._client_wrapper)
         return self._realtime
+
+    @property
+    def status(self):
+        if self._status is None:
+            from .status.client import AsyncStatusClient  # noqa: E402
+
+            self._status = AsyncStatusClient(client_wrapper=self._client_wrapper)
+        return self._status

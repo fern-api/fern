@@ -1,0 +1,6 @@
+- summary: |
+    Fix property-level x-fern-audiences filtering breaking error type resolution when
+    enableUniqueErrorsPerEndpoint is true. Types referenced via object properties (e.g.
+    ErrorResponse → ErrorResponseError) are now correctly included during audience filtering,
+    resolving "Failed to find ErrorResponseError" errors in fern check and fern docs dev.
+  type: fix
