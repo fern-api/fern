@@ -566,22 +566,19 @@ export class EndpointSnippetGenerator extends WithGeneration {
         const args: ast.Literal[] = [];
 
         this.context.errors.scope(Scope.PathParameters);
-        // Separate endpoint-specific path params (required) from root-level path params
-        // (may have defaults from x-fern-base-path). Root-level params are placed after
-        // the request argument to match AbstractEndpointGenerator parameter ordering.
-        const endpointPathParameterFields: ast.ConstructorField[] = [];
-        const rootPathParameterFields: ast.ConstructorField[] = [];
         const endpointPathParameters = request.pathParameters ?? [];
         const rootPathParameters = this.context.ir.pathParameters ?? [];
-        if (endpointPathParameters.length > 0) {
-            endpointPathParameterFields.push(
-                ...this.getPathParameters({ namedParameters: endpointPathParameters, snippet })
-            );
-        }
-        if (rootPathParameters.length > 0) {
-            rootPathParameterFields.push(...this.getPathParameters({ namedParameters: rootPathParameters, snippet }));
-        }
-        const pathParameterFields = [...endpointPathParameterFields, ...rootPathParameterFields];
+        // Process all path parameters together so associateByWireValue sees the
+        // full set and doesn't flag endpoint params as unrecognized.
+        const allNamedParameters = [...rootPathParameters, ...endpointPathParameters];
+        const allPathParameterFields = this.getPathParameters({ namedParameters: allNamedParameters, snippet });
+        // When there are no endpoint-specific path parameters, root-level path
+        // parameters may have default values (e.g. from x-fern-base-path). Place
+        // them after the request argument to match AbstractEndpointGenerator parameter ordering.
+        const moveRootAfterRequest = endpointPathParameters.length === 0 && rootPathParameters.length > 0;
+        // Split the fields back into root vs endpoint groups based on count.
+        const rootPathParameterFields = allPathParameterFields.slice(0, rootPathParameters.length);
+        const endpointPathParameterFields = allPathParameterFields.slice(rootPathParameters.length);
         this.context.errors.unscope();
 
         // TODO: Add support for file properties.
@@ -595,7 +592,11 @@ export class EndpointSnippetGenerator extends WithGeneration {
                 inlinePathParameters: this.settings.shouldInlinePathParameters
             })
         ) {
-            args.push(...endpointPathParameterFields.map((field) => field.value));
+            if (moveRootAfterRequest) {
+                args.push(...endpointPathParameterFields.map((field) => field.value));
+            } else {
+                args.push(...allPathParameterFields.map((field) => field.value));
+            }
         }
         // For now, the C# SDK always requires the inlined request parameter.
         args.push(
@@ -606,13 +607,14 @@ export class EndpointSnippetGenerator extends WithGeneration {
                     request,
                     inlinePathParameters: this.settings.shouldInlinePathParameters
                 })
-                    ? pathParameterFields
+                    ? allPathParameterFields
                     : [],
                 filePropertyInfo
             })
         );
 
         if (
+            moveRootAfterRequest &&
             !this.context.includePathParametersInWrappedRequest({
                 request,
                 inlinePathParameters: this.settings.shouldInlinePathParameters
@@ -812,20 +814,23 @@ export class EndpointSnippetGenerator extends WithGeneration {
         const args: ast.Literal[] = [];
 
         this.context.errors.scope(Scope.PathParameters);
-        // Endpoint-specific path parameters are always required (no defaults).
         const endpointPathParameters = request.pathParameters ?? [];
-        // Root-level path parameters (e.g. from x-fern-base-path) may have default
-        // values, which makes them optional in the generated method signature. Place
-        // them after the body argument to match AbstractEndpointGenerator parameter ordering.
         const rootPathParameters = this.context.ir.pathParameters ?? [];
-        if (endpointPathParameters.length > 0) {
-            args.push(
-                ...this.getPathParameters({ namedParameters: endpointPathParameters, snippet }).map(
-                    (field) => field.value
-                )
-            );
-        }
+        // Process all path parameters together so associateByWireValue sees the
+        // full set and doesn't flag endpoint params as unrecognized.
+        const allNamedParameters = [...rootPathParameters, ...endpointPathParameters];
+        const allPathParamFields = this.getPathParameters({ namedParameters: allNamedParameters, snippet });
         this.context.errors.unscope();
+
+        // When there are no endpoint-specific path parameters, root-level path
+        // parameters may have default values (e.g. from x-fern-base-path). Place
+        // them after the body argument to match AbstractEndpointGenerator parameter ordering.
+        const moveRootAfterBody = endpointPathParameters.length === 0 && rootPathParameters.length > 0;
+        if (moveRootAfterBody) {
+            // No endpoint params, so allPathParamFields are all root — skip them for now
+        } else {
+            args.push(...allPathParamFields.map((field) => field.value));
+        }
 
         this.context.errors.scope(Scope.RequestBody);
         if (request.body != null) {
@@ -833,12 +838,8 @@ export class EndpointSnippetGenerator extends WithGeneration {
         }
         this.context.errors.unscope();
 
-        if (rootPathParameters.length > 0) {
-            this.context.errors.scope(Scope.PathParameters);
-            args.push(
-                ...this.getPathParameters({ namedParameters: rootPathParameters, snippet }).map((field) => field.value)
-            );
-            this.context.errors.unscope();
+        if (moveRootAfterBody) {
+            args.push(...allPathParamFields.map((field) => field.value));
         }
 
         return args;
