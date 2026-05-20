@@ -96,10 +96,10 @@ describe("collectRawSpecs", () => {
 
         expect(manifest.specs).toHaveLength(1);
         expect(manifest.specs[0]?.type).toBe("openapi");
-        expect(manifest.specs[0]?.specPath).toBe("/fern/specs/spec-0.json");
+        expect(manifest.specs[0]?.specPath).toBe("/fern/specs/openapi0.json");
         expect(manifest.specs[0]?.overridePaths).toBeUndefined();
 
-        const content = await readFile(path.join(outputDir, "spec-0.json"), "utf-8");
+        const content = await readFile(path.join(outputDir, "openapi0.json"), "utf-8");
         const parsed = JSON.parse(content);
         expect(parsed.openapi).toBe("3.0.0");
         expect(parsed.info.title).toBe("Test");
@@ -139,7 +139,7 @@ describe("collectRawSpecs", () => {
         expect(manifest.specs).toHaveLength(1);
         expect(manifest.specs[0]?.overridePaths).toBeUndefined();
 
-        const content = await readFile(path.join(outputDir, "spec-0.json"), "utf-8");
+        const content = await readFile(path.join(outputDir, "openapi0.json"), "utf-8");
         const parsed = JSON.parse(content);
         expect(parsed.info.description).toBe("Added by override");
         expect(parsed.info.title).toBe("Test");
@@ -200,7 +200,7 @@ describe("collectRawSpecs", () => {
 
         expect(manifest.specs).toHaveLength(1);
 
-        const content = await readFile(path.join(outputDir, "spec-0.json"), "utf-8");
+        const content = await readFile(path.join(outputDir, "openapi0.json"), "utf-8");
         const parsed = JSON.parse(content);
         // External $ref should be resolved/inlined
         expect(JSON.stringify(parsed)).toContain("name");
@@ -239,11 +239,11 @@ describe("collectRawSpecs", () => {
         });
 
         expect(manifest.specs).toHaveLength(2);
-        expect(manifest.specs[0]?.specPath).toBe("/fern/specs/spec-0.json");
-        expect(manifest.specs[1]?.specPath).toBe("/fern/specs/spec-1.json");
+        expect(manifest.specs[0]?.specPath).toBe("/fern/specs/openapi0.json");
+        expect(manifest.specs[1]?.specPath).toBe("/fern/specs/openapi1.json");
 
-        const content0 = JSON.parse(await readFile(path.join(outputDir, "spec-0.json"), "utf-8"));
-        const content1 = JSON.parse(await readFile(path.join(outputDir, "spec-1.json"), "utf-8"));
+        const content0 = JSON.parse(await readFile(path.join(outputDir, "openapi0.json"), "utf-8"));
+        const content1 = JSON.parse(await readFile(path.join(outputDir, "openapi1.json"), "utf-8"));
         expect(content0.info.title).toBe("V1");
         expect(content1.info.title).toBe("V2");
     });
@@ -275,9 +275,9 @@ describe("collectRawSpecs", () => {
 
         expect(manifest.specs).toHaveLength(1);
         expect(manifest.specs[0]?.type).toBe("protobuf");
-        expect(manifest.specs[0]?.specPath).toBe("/fern/specs/proto-0");
+        expect(manifest.specs[0]?.specPath).toBe("/fern/specs/protobuf0");
 
-        const copiedProto = await readFile(path.join(outputDir, "proto-0", "service", "api.proto"), "utf-8");
+        const copiedProto = await readFile(path.join(outputDir, "protobuf0", "service", "api.proto"), "utf-8");
         expect(copiedProto).toBe('syntax = "proto3";');
     });
 
@@ -310,7 +310,7 @@ describe("collectRawSpecs", () => {
         });
 
         expect(manifest.specs[0]?.overridePaths).toHaveLength(1);
-        expect(manifest.specs[0]?.overridePaths?.[0]).toContain("proto-0-override-0");
+        expect(manifest.specs[0]?.overridePaths?.[0]).toContain("protobuf0-override-0");
     });
 
     it("copies GraphQL spec as-is", async () => {
@@ -336,9 +336,9 @@ describe("collectRawSpecs", () => {
 
         expect(manifest.specs).toHaveLength(1);
         expect(manifest.specs[0]?.type).toBe("graphql");
-        expect(manifest.specs[0]?.specPath).toBe("/fern/specs/spec-0.graphql");
+        expect(manifest.specs[0]?.specPath).toBe("/fern/specs/graphql0.graphql");
 
-        const content = await readFile(path.join(outputDir, "spec-0.graphql"), "utf-8");
+        const content = await readFile(path.join(outputDir, "graphql0.graphql"), "utf-8");
         expect(content).toBe("type Query { hello: String }");
     });
 
@@ -369,7 +369,7 @@ describe("collectRawSpecs", () => {
         expect(manifest.specs[0]?.type).toBe("openrpc");
         expect(manifest.specs[0]?.overridePaths).toBeUndefined();
 
-        const content = await readFile(path.join(outputDir, "spec-0.json"), "utf-8");
+        const content = await readFile(path.join(outputDir, "openrpc0.json"), "utf-8");
         const parsed = JSON.parse(content);
         expect(parsed.openrpc).toBe("1.0.0");
         expect(parsed.info.description).toBe("Added by override");
@@ -424,11 +424,11 @@ describe("collectRawSpecs", () => {
 
         expect(manifest.specs).toHaveLength(3);
         expect(manifest.specs[0]?.type).toBe("openapi");
-        expect(manifest.specs[0]?.specPath).toBe("/fern/specs/spec-0.json");
+        expect(manifest.specs[0]?.specPath).toBe("/fern/specs/openapi0.json");
         expect(manifest.specs[1]?.type).toBe("protobuf");
-        expect(manifest.specs[1]?.specPath).toBe("/fern/specs/proto-1");
+        expect(manifest.specs[1]?.specPath).toBe("/fern/specs/protobuf0");
         expect(manifest.specs[2]?.type).toBe("graphql");
-        expect(manifest.specs[2]?.specPath).toBe("/fern/specs/spec-2.graphql");
+        expect(manifest.specs[2]?.specPath).toBe("/fern/specs/graphql0.graphql");
     });
 
     it("uses container paths in manifest entries", async () => {
@@ -493,7 +493,7 @@ describe("collectRawSpecs", () => {
 
         expect(manifest.specs[0]?.overridePaths).toBeUndefined();
 
-        const content = await readFile(path.join(outputDir, "spec-0.json"), "utf-8");
+        const content = await readFile(path.join(outputDir, "openapi0.json"), "utf-8");
         const parsed = JSON.parse(content);
         expect(parsed.info.description).toBe("From override 1");
         expect(parsed.info["x-custom"]).toBe("From override 2");
@@ -525,7 +525,7 @@ describe("collectRawSpecs", () => {
             context: createMockContext()
         });
 
-        const resolvedContent = await readFile(path.join(outputDir, "spec-0.json"), "utf-8");
+        const resolvedContent = await readFile(path.join(outputDir, "openapi0.json"), "utf-8");
         expect(resolvedContent).toBeTruthy();
 
         await expect(readFile(path.join(outputDir, "openapi.yaml"), "utf-8")).rejects.toThrow();
@@ -557,7 +557,7 @@ describe("collectRawSpecs", () => {
         });
 
         expect(manifest.specs[0]?.overridePaths).toHaveLength(1);
-        expect(manifest.specs[0]?.overridePaths?.[0]).toContain("graphql-0-override-0");
+        expect(manifest.specs[0]?.overridePaths?.[0]).toContain("graphql0-override-0");
     });
 
     it("filters out x-fern-ignore operations from resolved OpenAPI spec", async () => {
@@ -614,7 +614,7 @@ describe("collectRawSpecs", () => {
             context: createMockContext()
         });
 
-        const content = JSON.parse(await readFile(path.join(outputDir, "spec-0.json"), "utf-8"));
+        const content = JSON.parse(await readFile(path.join(outputDir, "openapi0.json"), "utf-8"));
         expect(content.paths["/users"]).toBeDefined();
         expect(content.paths["/users"].get).toBeDefined();
         expect(content.paths["/users"].post).toBeUndefined();
@@ -681,7 +681,7 @@ describe("collectRawSpecs", () => {
             context: createMockContext()
         });
 
-        const content = JSON.parse(await readFile(path.join(outputDir, "spec-0.json"), "utf-8"));
+        const content = JSON.parse(await readFile(path.join(outputDir, "openapi0.json"), "utf-8"));
         expect(content.paths["/public"]).toBeDefined();
         expect(content.paths["/public"].get).toBeDefined();
         expect(content.paths["/internal"]).toBeUndefined();
@@ -743,7 +743,7 @@ describe("collectRawSpecs", () => {
             context: createMockContext()
         });
 
-        const content = JSON.parse(await readFile(path.join(outputDir, "spec-0.json"), "utf-8"));
+        const content = JSON.parse(await readFile(path.join(outputDir, "openapi0.json"), "utf-8"));
         expect(content.paths["/public"]).toBeDefined();
         expect(content.paths["/internal"]).toBeDefined();
     });

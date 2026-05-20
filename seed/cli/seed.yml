@@ -1,4 +1,4 @@
-irVersion: v66
+irVersion: v67
 displayName: CLI
 image: fernapi/fern-cli
 changelogLocation: ../../generators/cli/versions.yml

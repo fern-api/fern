@@ -57,7 +57,8 @@ export async function runRemoteGenerationForGenerator({
     verify,
     noReplay,
     disableTelemetry,
-    loginCommand
+    loginCommand,
+    specsTarGzBuffer
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -106,6 +107,7 @@ export async function runRemoteGenerationForGenerator({
      * 'fern auth login' for CLI v2). Defaults to 'fern login'.
      */
     loginCommand?: string;
+    specsTarGzBuffer?: Buffer;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
 
@@ -340,7 +342,8 @@ export async function runRemoteGenerationForGenerator({
         autoMerge,
         skipIfNoDiff,
         verify,
-        loginCommand
+        loginCommand,
+        specsTarGzBuffer
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
 

@@ -13,7 +13,7 @@ export { NativeExecutionEnvironment } from "./NativeExecutionEnvironment.js";
 export * from "./ReusableContainerExecutionEnvironment.js";
 export { ReusableContainerExecutionEnvironment } from "./ReusableContainerExecutionEnvironment.js";
 export type { RawSpecsManifest, RawSpecsManifestEntry } from "./rawSpecs.js";
-export { collectRawSpecs, filterSpec } from "./rawSpecs.js";
+export { collectRawSpecs, createSpecsTarGzBuffer, filterSpec } from "./rawSpecs.js";
 export {
     runContainerizedGenerationForSeed,
     runNativeGenerationForSeed,
