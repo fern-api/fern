@@ -55,7 +55,14 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
     protected readonly pathItemParameters: (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ParameterObject)[];
     protected inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
-    constructor({ context, breadcrumbs, operation, method, path, pathItemParameters }: AbstractOperationConverter.Args) {
+    constructor({
+        context,
+        breadcrumbs,
+        operation,
+        method,
+        path,
+        pathItemParameters
+    }: AbstractOperationConverter.Args) {
         super({ context, breadcrumbs });
         this.operation = operation;
         this.method = method;
