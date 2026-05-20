@@ -1,0 +1,4 @@
+- summary: |
+    Move go.sum resolution to after customizations (replay patches, .fernignore)
+    are applied, ensuring the committed lockfile reflects the final go.mod state.
+  type: fix

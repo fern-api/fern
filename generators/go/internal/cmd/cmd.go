@@ -13,7 +13,6 @@ import (
 	"github.com/fern-api/fern-go/internal/coordinator"
 	"github.com/fern-api/fern-go/internal/generator"
 	v2 "github.com/fern-api/fern-go/internal/generator/v2"
-	"github.com/fern-api/fern-go/internal/goexec"
 	"github.com/fern-api/fern-go/internal/gospec"
 	"github.com/fern-api/fern-go/internal/writer"
 	generatorexec "github.com/fern-api/generator-exec-go"
@@ -175,7 +174,8 @@ func run(fn GeneratorFunc) (retErr error) {
 	if err != nil {
 		return err
 	}
-	if err := writeFiles(coordinator, config.Writer, config.Module, files); err != nil {
+	outputDir, err := writeFiles(coordinator, config.Writer, files)
+	if err != nil {
 		return err
 	}
 	
@@ -187,7 +187,16 @@ func run(fn GeneratorFunc) (retErr error) {
 			return err
 		}
 	}
-	
+
+	// Write .fern/lockfile.sh so the PostGenerationPipeline's LockfileStep
+	// can resolve go.sum AFTER customizations (replay patches, .fernignore)
+	// are applied.
+	if config.Module != nil {
+		if err := writeLockfileScript(outputDir); err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -264,19 +273,34 @@ func newConfig(configFilename string) (*Config, error) {
 func writeFiles(
 	coordinator *coordinator.Client,
 	writerConfig *writer.Config,
-	moduleConfig *generator.ModuleConfig,
 	files []*generator.File,
-) error {
+) (string, error) {
 	writer, err := writer.New(coordinator, writerConfig)
 	if err != nil {
-		return err
+		return "", err
 	}
 	if err := writer.WriteFiles(files); err != nil {
-		return err
+		return "", err
 	}
-	// If a module file was written, we still need to generate the go.sum.
-	if moduleConfig != nil {
-		return goexec.RunTidy(writer.Root())
+	return writer.Root(), nil
+}
+
+const lockfileScriptContents = `#!/bin/bash
+set -e
+go mod tidy
+`
+
+// writeLockfileScript writes .fern/lockfile.sh into the output directory so
+// the PostGenerationPipeline's LockfileStep can resolve go.sum after
+// customizations (replay patches, .fernignore) are applied.
+func writeLockfileScript(outputDir string) error {
+	fernDir := filepath.Join(outputDir, ".fern")
+	if err := os.MkdirAll(fernDir, 0o755); err != nil {
+		return fmt.Errorf("failed to create .fern directory: %w", err)
+	}
+	scriptPath := filepath.Join(fernDir, "lockfile.sh")
+	if err := os.WriteFile(scriptPath, []byte(lockfileScriptContents), 0o755); err != nil {
+		return fmt.Errorf("failed to write lockfile.sh: %w", err)
 	}
 	return nil
 }

@@ -36,7 +36,7 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         await file.write(this.absolutePathToOutputDirectory);
     }
 
-    public async persist({ tidy }: { tidy?: boolean } = {}): Promise<void> {
+    public async persist(_opts: { tidy?: boolean } = {}): Promise<void> {
         this.context.logger.debug(`Writing go files to ${this.absolutePathToOutputDirectory}`);
         await this.writeGoMod();
         await this.writeCoreFiles();
@@ -47,10 +47,10 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         });
         await this.writeRawFiles();
         await this.writeLicenseFile();
-        const isModule = this.getModuleConfig({ config: this.context.config }) != null;
-        if (tidy && isModule) {
-            await this.runGoModTidy();
-        }
+        // go mod tidy is intentionally NOT run here. Lockfile resolution
+        // (go.sum) is deferred to the PostGenerationPipeline's LockfileStep
+        // so it happens AFTER customizations (replay patches, .fernignore)
+        // are applied. See FER-10699.
         this.context.logger.debug(`Successfully wrote go files to ${this.absolutePathToOutputDirectory}`);
     }
 

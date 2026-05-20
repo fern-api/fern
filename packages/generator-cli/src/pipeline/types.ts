@@ -164,6 +164,7 @@ export interface PipelineResult {
         generationCommit?: GenerationCommitStepResult;
         replay?: ReplayStepResult;
         autoVersion?: AutoVersionStepResult;
+        lockfile?: LockfileStepResult;
         fernignore?: FernignoreStepResult;
         verify?: VerificationStepResult;
         github?: GithubStepResult;
@@ -223,6 +224,11 @@ export interface ReplayStepResult extends StepResult {
         }>;
     }>;
     warnings?: string[];
+}
+
+export interface LockfileStepResult extends StepResult {
+    /** True when no `.fern/lockfile.sh` was emitted by the generator — the step short-circuits silently. */
+    skipped: boolean;
 }
 
 export interface FernignoreStepResult extends StepResult {

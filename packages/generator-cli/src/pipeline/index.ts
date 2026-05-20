@@ -9,6 +9,7 @@ export type {
     FernignoreStepResult,
     GithubStepConfig,
     GithubStepResult,
+    LockfileStepResult,
     PipelineConfig,
     PipelineContext,
     PipelineResult,

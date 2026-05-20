@@ -6,6 +6,7 @@ import { AutoVersionStep } from "./steps/AutoVersionStep";
 import { BaseStep } from "./steps/BaseStep";
 import { GenerationCommitStep } from "./steps/GenerationCommitStep";
 import { GithubStep } from "./steps/GithubStep";
+import { LockfileStep } from "./steps/LockfileStep";
 import { ReplayStep } from "./steps/ReplayStep";
 import { VerificationStep } from "./steps/VerificationStep";
 import type {
@@ -13,6 +14,7 @@ import type {
     FernignoreStepResult,
     GenerationCommitStepResult,
     GithubStepResult,
+    LockfileStepResult,
     PipelineConfig,
     PipelineContext,
     PipelineResult,
@@ -85,6 +87,12 @@ export class PostGenerationPipeline {
             );
         }
 
+        // LockfileStep runs after replay (customizations applied) but before
+        // verification. Resolves dependency lockfiles (e.g. go.sum) so they
+        // reflect the final manifest state. No-ops when .fern/lockfile.sh is
+        // absent. See FER-10699.
+        this.steps.push(new LockfileStep(config.outputDir, this.logger));
+
         // Phase 2: FernignoreStep (not implemented yet)
         // if (config.fernignore?.enabled) {
         //   this.steps.push(new FernignoreStep(config.outputDir, this.logger));
@@ -152,6 +160,8 @@ export class PostGenerationPipeline {
                 } else if (step.name === "autoVersion") {
                     result.steps.autoVersion = stepResult as AutoVersionStepResult;
                     pipelineContext.previousStepResults.autoVersion = stepResult as AutoVersionStepResult;
+                } else if (step.name === "lockfile") {
+                    result.steps.lockfile = stepResult as LockfileStepResult;
                 } else if (step.name === "fernignore") {
                     result.steps.fernignore = stepResult as FernignoreStepResult;
                 } else if (step.name === "verify") {
