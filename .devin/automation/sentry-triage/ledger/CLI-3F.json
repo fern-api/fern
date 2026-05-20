@@ -1,0 +1,9 @@
+{
+  "title": "Failed to locate type",
+  "disposition": "keep_sentry",
+  "rationale": "Type resolution failed inside IR generation; needs product-level investigation instead of suppression.",
+  "fixSummary": "—",
+  "prOrIssue": "Keep in Sentry until product fix",
+  "lastAnalyzed": "2026-05-04",
+  "problemSignature": "IR generation failed to locate a referenced Fern type; possible reference/resolution product bug until validated."
+}
