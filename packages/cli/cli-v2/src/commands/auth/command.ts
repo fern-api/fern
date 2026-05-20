@@ -10,12 +10,17 @@ import { addTokenCommand } from "./token/index.js";
 import { addWhoamiCommand } from "./whoami/index.js";
 
 export function addAuthCommand(cli: Argv<GlobalArgs>): void {
-    commandGroup(cli, "auth", "Authenticate fern", [
-        addLoginCommand,
-        addLogoutCommand,
-        addSwitchCommand,
-        addStatusCommand,
-        addTokenCommand,
-        addWhoamiCommand
-    ]);
+    commandGroup({
+        cli,
+        name: "auth",
+        description: "Authenticate fern",
+        subcommands: [
+            addLoginCommand,
+            addLogoutCommand,
+            addSwitchCommand,
+            addStatusCommand,
+            addTokenCommand,
+            addWhoamiCommand
+        ]
+    });
 }

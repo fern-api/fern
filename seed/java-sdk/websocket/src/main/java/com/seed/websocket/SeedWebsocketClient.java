@@ -6,6 +6,7 @@ package com.seed.websocket;
 import com.seed.websocket.core.ClientOptions;
 import com.seed.websocket.core.Suppliers;
 import com.seed.websocket.resources.realtime.RealtimeClient;
+import com.seed.websocket.resources.status.StatusClient;
 import java.util.function.Supplier;
 
 public class SeedWebsocketClient {
@@ -13,13 +14,20 @@ public class SeedWebsocketClient {
 
     protected final Supplier<RealtimeClient> realtimeClient;
 
+    protected final Supplier<StatusClient> statusClient;
+
     public SeedWebsocketClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.realtimeClient = Suppliers.memoize(() -> new RealtimeClient(clientOptions));
+        this.statusClient = Suppliers.memoize(() -> new StatusClient(clientOptions));
     }
 
     public RealtimeClient realtime() {
         return this.realtimeClient.get();
+    }
+
+    public StatusClient status() {
+        return this.statusClient.get();
     }
 
     public static SeedWebsocketClientBuilder builder() {

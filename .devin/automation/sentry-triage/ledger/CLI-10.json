@@ -1,0 +1,9 @@
+{
+  "title": "Container aggregate / sdk generate",
+  "disposition": "shipped",
+  "rationale": "ContainerError + aggregate InternalError double-report; use TaskAbortSignal.",
+  "fixSummary": "ContainerError non-reportable; sdk generate uses TaskAbortSignal instead of aggregate CliError.",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+  "lastAnalyzed": "2026-04-21",
+  "problemSignature": "sdk generate or docs publish with Docker/container tasks: task failures double-reported as aggregate InternalError / ContainerError noise."
+}

@@ -1,0 +1,10 @@
+{
+  "title": "Schema validation / minified class names",
+  "disposition": "duplicate",
+  "rationale": "Same fix narrative as CLI-2Z; one PR covered both.",
+  "fixSummary": "—",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+  "lastAnalyzed": "2026-04-21",
+  "duplicateOf": "CLI-2Z",
+  "problemSignature": "Schema validation path: minified build broke constructor-name-based detection so parse/schema errors looked like InternalError."
+}

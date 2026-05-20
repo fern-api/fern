@@ -113,7 +113,6 @@ public partial class SeedApiClient : ISeedApiClient
                     Path = "test",
                     Body = request,
                     Headers = _headers,
-                    ContentType = "application/json",
                     Options = options,
                 },
                 cancellationToken

@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.3.0] - 2026-05-19
+
+- Feature: Add optional `hasWebSocketInTree` field to `Package`. When `true`, indicates
+  that the package or one of its nested subpackages contains a WebSocket channel. This
+  allows generators to wire WebSocket-only subpackages into the root client even when
+  the WebSocket channel lives on a nested sub-resource rather than the top-level
+  namespace package. Defaults to `undefined` for backward compatibility.
+
 ## [v67.2.0] - 2026-05-08
 
 - Feature: Add optional `resumable` field to `SseStreamChunk`. When `true`, signals

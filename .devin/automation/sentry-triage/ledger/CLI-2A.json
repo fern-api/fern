@@ -1,0 +1,9 @@
+{
+  "title": "YAML parse in OpenAPI load",
+  "disposition": "shipped",
+  "rationale": "Docs/workspace YAML parse failure was still able to bubble as InternalError from the docs.yml boundary.",
+  "fixSummary": "Wrap docs.yml yaml.load in loadRawDocsConfiguration as CliError(ParseError).",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-04-21",
+  "problemSignature": "Invalid YAML while loading a user OpenAPI spec (yaml.load path); parser exception treated as InternalError."
+}

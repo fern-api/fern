@@ -1102,7 +1102,8 @@
       ],
       "errors": [],
       "subpackages": [],
-      "hasEndpointsInTree": true
+      "hasEndpointsInTree": true,
+      "hasWebSocketInTree": false
     },
     "subpackage_petsV2": {
       "fernFilepath": {
@@ -1120,7 +1121,8 @@
       ],
       "errors": [],
       "subpackages": [],
-      "hasEndpointsInTree": true
+      "hasEndpointsInTree": true,
+      "hasWebSocketInTree": false
     }
   },
   "rootPackage": {
@@ -1134,7 +1136,8 @@
       "subpackage_petsV1",
       "subpackage_petsV2"
     ],
-    "hasEndpointsInTree": true
+    "hasEndpointsInTree": true,
+    "hasWebSocketInTree": false
   },
   "sdkConfig": {
     "isAuthMandatory": false,
