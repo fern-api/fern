@@ -1869,7 +1869,8 @@
     ],
     "subpackages": [],
     "webhooks": "webhooks_",
-    "hasEndpointsInTree": true
+    "hasEndpointsInTree": true,
+    "hasWebSocketInTree": false
   },
   "sdkConfig": {
     "isAuthMandatory": false,

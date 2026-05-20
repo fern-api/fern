@@ -683,6 +683,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_y": {
@@ -705,6 +706,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_imported/x": {
@@ -730,6 +732,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -750,6 +753,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {
@@ -767,4 +771,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `2290334`;
+exports[`dependencies > file dependencies 1`] = `2290453`;

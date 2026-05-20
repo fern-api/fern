@@ -1625,6 +1625,7 @@
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_level1/level2": {
@@ -1651,6 +1652,7 @@
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_level1/level2/types": {
@@ -1679,6 +1681,7 @@
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_level1/types": {
@@ -1705,6 +1708,7 @@
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -1724,6 +1728,7 @@
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": false,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {

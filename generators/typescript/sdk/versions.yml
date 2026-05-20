@@ -8,7 +8,7 @@
         and expat (CVE-2026-45186).
       type: chore
   createdAt: "2026-05-18"
-  irVersion: 66
+  irVersion: 67
 - version: 3.70.7
   changelogEntry:
     - summary: |

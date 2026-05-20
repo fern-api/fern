@@ -96,6 +96,7 @@
       "packagePath": [],
     },
     "hasEndpointsInTree": false,
+    "hasWebSocketInTree": undefined,
     "navigationConfig": undefined,
     "service": undefined,
     "subpackages": [
@@ -605,6 +606,7 @@
         "packagePath": [],
       },
       "hasEndpointsInTree": false,
+      "hasWebSocketInTree": undefined,
       "name": "users",
       "navigationConfig": undefined,
       "service": "service_users",

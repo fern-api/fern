@@ -2291,7 +2291,8 @@
       "types": [],
       "errors": [],
       "subpackages": [],
-      "hasEndpointsInTree": true
+      "hasEndpointsInTree": true,
+      "hasWebSocketInTree": false
     },
     "subpackage_users": {
       "fernFilepath": {
@@ -2306,7 +2307,8 @@
       "types": [],
       "errors": [],
       "subpackages": [],
-      "hasEndpointsInTree": true
+      "hasEndpointsInTree": true,
+      "hasWebSocketInTree": false
     }
   },
   "rootPackage": {
@@ -2328,7 +2330,8 @@
       "subpackage_organizationUsers",
       "subpackage_users"
     ],
-    "hasEndpointsInTree": true
+    "hasEndpointsInTree": true,
+    "hasWebSocketInTree": false
   },
   "sdkConfig": {
     "isAuthMandatory": false,

@@ -66,6 +66,7 @@
       "packagePath": [],
     },
     "hasEndpointsInTree": false,
+    "hasWebSocketInTree": undefined,
     "navigationConfig": undefined,
     "service": undefined,
     "subpackages": [
@@ -365,6 +366,7 @@
         "packagePath": [],
       },
       "hasEndpointsInTree": false,
+      "hasWebSocketInTree": undefined,
       "name": "commentsService",
       "navigationConfig": undefined,
       "service": "service_commentsService",

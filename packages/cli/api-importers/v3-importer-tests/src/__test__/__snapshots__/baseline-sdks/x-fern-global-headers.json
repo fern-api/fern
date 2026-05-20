@@ -1330,7 +1330,8 @@
       "types": [],
       "errors": [],
       "subpackages": [],
-      "hasEndpointsInTree": true
+      "hasEndpointsInTree": true,
+      "hasWebSocketInTree": false
     }
   },
   "rootPackage": {
@@ -1346,7 +1347,8 @@
     "subpackages": [
       "subpackage_user"
     ],
-    "hasEndpointsInTree": true
+    "hasEndpointsInTree": true,
+    "hasWebSocketInTree": false
   },
   "sdkConfig": {
     "isAuthMandatory": false,

@@ -831,6 +831,7 @@
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {
