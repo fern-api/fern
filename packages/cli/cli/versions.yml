@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.33.6
+  changelogEntry:
+    - summary: |
+        Classify missing readme endpoint references in generators.yml as configuration errors.
+      type: fix
+  createdAt: "2026-05-20"
+  irVersion: 66
 - version: 5.33.5
   changelogEntry:
     - summary: |
