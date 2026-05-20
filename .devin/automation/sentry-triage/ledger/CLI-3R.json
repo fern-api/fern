@@ -1,9 +1,9 @@
 {
   "title": "EPERM mkdir unhandled rejection",
-  "disposition": "keep_sentry",
-  "rationale": "EPERM from PosthogManager mkdir escapes normal error handling as unhandled rejection; reaches Sentry via onUnhandledRejectionIntegration. Needs boundary-level wrapping at the PosthogManager call site.",
-  "fixSummary": "—",
-  "prOrIssue": "Keep in Sentry until boundary-level fix",
+  "disposition": "shipped",
+  "rationale": "Posthog analytics ID persistence is optional user-environment state; UserPosthogManager now handles filesystem failures at the telemetry boundary instead of letting EPERM escape as an unhandled rejection.",
+  "fixSummary": "Fallback to an in-memory Posthog distinct ID when persisted ID storage cannot be read or written.",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15941",
   "lastAnalyzed": "2026-05-16",
   "problemSignature": "Unhandled rejection with EPERM errno from background telemetry bypassed resolveErrorCode and reached Sentry as raw exception."
 }

@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.10.2
+  changelogEntry:
+    - summary: |
+        Use `interface_exists` instead of `class_exists` when checking for
+        `GuzzleHttp\ClientInterface` in the retry client timeout logic.
+        `class_exists` always returns false for interfaces, so Guzzle timeout
+        support was never detected.
+      type: fix
+  createdAt: "2026-05-20"
+  irVersion: 66
 - version: 2.10.1
   changelogEntry:
     - summary: |

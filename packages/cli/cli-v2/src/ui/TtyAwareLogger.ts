@@ -44,6 +44,17 @@ export class TtyAwareLogger {
         this.stdout = stdout;
         this.stderr = stderr;
         this.isTTY = stdout.isTTY === true && !IS_CI;
+
+        // Downstream pipe readers can close early (`fern ... | head`), which
+        // emits EPIPE on stdout/stderr. Treat that as normal CLI I/O behavior.
+        for (const stream of [this.stdout, this.stderr]) {
+            stream.on("error", (error: Error) => {
+                if (isEpipeError(error)) {
+                    return;
+                }
+                throw error;
+            });
+        }
     }
 
     /**
@@ -160,4 +171,12 @@ export class TtyAwareLogger {
         this.lastPaint = paint;
         return paint;
     }
+}
+
+function isEpipeError(error: Error): boolean {
+    return hasErrnoCode(error) && error.code === "EPIPE";
+}
+
+function hasErrnoCode(error: Error): error is Error & { code: string } {
+    return "code" in error && typeof error.code === "string";
 }

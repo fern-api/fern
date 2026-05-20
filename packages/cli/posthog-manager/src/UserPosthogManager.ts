@@ -94,16 +94,24 @@ export class UserPosthogManager implements PosthogManager {
     private persistedDistinctId: string | undefined;
     private async getPersistedDistinctId(): Promise<string> {
         if (this.persistedDistinctId == null) {
+            const generatedDistinctId = uuidv4();
             const pathToFile = join(
                 AbsoluteFilePath.of(homedir()),
                 RelativeFilePath.of(LOCAL_STORAGE_FOLDER),
                 RelativeFilePath.of(DISTINCT_ID_FILENAME)
             );
-            if (!(await doesPathExist(pathToFile))) {
-                await mkdir(dirname(pathToFile), { recursive: true });
-                await writeFile(pathToFile, uuidv4());
+            try {
+                if (!(await doesPathExist(pathToFile))) {
+                    await mkdir(dirname(pathToFile), { recursive: true });
+                    await writeFile(pathToFile, generatedDistinctId);
+                    this.persistedDistinctId = generatedDistinctId;
+                } else {
+                    this.persistedDistinctId = (await readFile(pathToFile)).toString();
+                }
+            } catch {
+                // Analytics should never block CLI execution if the user's home directory is not writable.
+                this.persistedDistinctId = generatedDistinctId;
             }
-            this.persistedDistinctId = (await readFile(pathToFile)).toString();
         }
         return this.persistedDistinctId;
     }
