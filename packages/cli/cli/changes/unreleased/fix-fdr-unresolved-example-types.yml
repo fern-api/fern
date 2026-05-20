@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Prevent docs API conversion from failing when fallback example generation encounters unresolved type references.
+  type: fix

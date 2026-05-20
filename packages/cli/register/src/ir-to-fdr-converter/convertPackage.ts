@@ -28,7 +28,8 @@ export function convertPackage(
             : undefined;
 
     // Convert REST endpoints
-    const restEndpoints = service != null ? convertService(service, ir) : [];
+    const knownTypeIds = new Set([...Object.keys(ir.types), ...Object.keys(graphqlTypes ?? {})]);
+    const restEndpoints = service != null ? convertService(service, ir, knownTypeIds) : [];
 
     return {
         endpoints: restEndpoints,
@@ -94,7 +95,8 @@ function convertWebhookGroup(webhookGroup: Ir.webhooks.WebhookGroup): FdrCjsSdk.
 
 function convertService(
     irService: Ir.http.HttpService,
-    ir: Ir.ir.IntermediateRepresentation
+    ir: Ir.ir.IntermediateRepresentation,
+    knownTypeIds: ReadonlySet<string>
 ): FdrCjsSdk.api.v1.register.EndpointDefinition[] {
     const endpoints: FdrCjsSdk.api.v1.register.EndpointDefinition[] = [];
     for (const irEndpoint of irService.endpoints) {
@@ -293,9 +295,261 @@ function convertService(
             }),
             includeInApiExplorer: irEndpoint.apiPlayground
         };
-        endpoints.push(endpoint);
+        endpoints.push(withFallbackExamplesForUnresolvedTypeReferences(endpoint, knownTypeIds));
     }
     return endpoints;
+}
+
+export function withFallbackExamplesForUnresolvedTypeReferences(
+    endpoint: FdrCjsSdk.api.v1.register.EndpointDefinition,
+    knownTypeIds: ReadonlySet<string>
+): FdrCjsSdk.api.v1.register.EndpointDefinition {
+    const examples = [...endpoint.examples];
+    const existingErrorExampleStatusCodes = new Set(
+        examples.filter((example) => example.responseStatusCode >= 400).map((example) => example.responseStatusCode)
+    );
+    const hasSuccessExample = examples.some((example) => example.responseStatusCode < 400);
+    const baseHasUnresolvedTypeReferences = endpointBaseHasUnresolvedTypeReferences(endpoint, knownTypeIds);
+
+    if (
+        !hasSuccessExample &&
+        (baseHasUnresolvedTypeReferences ||
+            (endpoint.response != null &&
+                responseBodyHasUnresolvedTypeReferences(endpoint.response.type, knownTypeIds)))
+    ) {
+        examples.push(createFallbackEndpointExample(endpoint, endpoint.response?.statusCode ?? 200));
+    }
+
+    for (const errorDeclaration of endpoint.errorsV2 ?? []) {
+        if (
+            !existingErrorExampleStatusCodes.has(errorDeclaration.statusCode) &&
+            (baseHasUnresolvedTypeReferences ||
+                (errorDeclaration.type != null &&
+                    typeShapeHasUnresolvedTypeReferences(errorDeclaration.type, knownTypeIds)))
+        ) {
+            examples.push(createFallbackEndpointExample(endpoint, errorDeclaration.statusCode));
+        }
+    }
+
+    if (examples.length === endpoint.examples.length) {
+        return endpoint;
+    }
+    return { ...endpoint, examples };
+}
+
+function endpointBaseHasUnresolvedTypeReferences(
+    endpoint: FdrCjsSdk.api.v1.register.EndpointDefinition,
+    knownTypeIds: ReadonlySet<string>
+): boolean {
+    return (
+        endpoint.path.pathParameters.some((pathParameter) =>
+            typeReferenceHasUnresolvedTypeReferences(pathParameter.type, knownTypeIds)
+        ) ||
+        endpoint.queryParameters.some((queryParameter) =>
+            typeReferenceHasUnresolvedTypeReferences(queryParameter.type, knownTypeIds)
+        ) ||
+        endpoint.headers.some((header) => typeReferenceHasUnresolvedTypeReferences(header.type, knownTypeIds)) ||
+        (endpoint.request != null && requestBodyHasUnresolvedTypeReferences(endpoint.request.type, knownTypeIds))
+    );
+}
+
+function requestBodyHasUnresolvedTypeReferences(
+    request: FdrCjsSdk.api.v1.register.HttpRequestBodyShape,
+    knownTypeIds: ReadonlySet<string>
+): boolean {
+    switch (request.type) {
+        case "object":
+            return objectTypeHasUnresolvedTypeReferences(request, knownTypeIds);
+        case "reference":
+            return typeReferenceHasUnresolvedTypeReferences(request.value, knownTypeIds);
+        case "json":
+            return requestJsonBodyHasUnresolvedTypeReferences(request.shape, knownTypeIds);
+        case "fileUpload":
+            return (
+                request.value?.properties.some((property) =>
+                    formDataPropertyHasUnresolvedTypeReferences(property, knownTypeIds)
+                ) ?? false
+            );
+        case "formData":
+            return request.properties.some((property) =>
+                formDataPropertyHasUnresolvedTypeReferences(property, knownTypeIds)
+            );
+        case "bytes":
+            return false;
+        default:
+            assertNever(request);
+    }
+}
+
+function requestJsonBodyHasUnresolvedTypeReferences(
+    request: FdrCjsSdk.api.v1.register.JsonRequestBody["shape"],
+    knownTypeIds: ReadonlySet<string>
+): boolean {
+    switch (request.type) {
+        case "object":
+            return objectTypeHasUnresolvedTypeReferences(request, knownTypeIds);
+        case "reference":
+            return typeReferenceHasUnresolvedTypeReferences(request.value, knownTypeIds);
+        default:
+            assertNever(request);
+    }
+}
+
+function formDataPropertyHasUnresolvedTypeReferences(
+    property: FdrCjsSdk.api.v1.register.FormDataProperty,
+    knownTypeIds: ReadonlySet<string>
+): boolean {
+    switch (property.type) {
+        case "file":
+            return false;
+        case "bodyProperty":
+            return typeReferenceHasUnresolvedTypeReferences(property.valueType, knownTypeIds);
+        default:
+            assertNever(property);
+    }
+}
+
+function responseBodyHasUnresolvedTypeReferences(
+    response: FdrCjsSdk.api.v1.register.HttpResponseBodyShape,
+    knownTypeIds: ReadonlySet<string>
+): boolean {
+    switch (response.type) {
+        case "object":
+            return objectTypeHasUnresolvedTypeReferences(response, knownTypeIds);
+        case "reference":
+            return typeReferenceHasUnresolvedTypeReferences(response.value, knownTypeIds);
+        case "stream":
+            return responseBodyStreamShapeHasUnresolvedTypeReferences(response.shape, knownTypeIds);
+        case "streamCondition":
+            return (
+                responseBodyHasUnresolvedTypeReferences(response.response.shape, knownTypeIds) ||
+                responseBodyHasUnresolvedTypeReferences(response.streamResponse.shape, knownTypeIds)
+            );
+        case "fileDownload":
+        case "streamingText":
+            return false;
+        default:
+            assertNever(response);
+    }
+}
+
+function responseBodyStreamShapeHasUnresolvedTypeReferences(
+    shape: FdrCjsSdk.api.v1.register.StreamResponse["shape"],
+    knownTypeIds: ReadonlySet<string>
+): boolean {
+    switch (shape.type) {
+        case "object":
+            return objectTypeHasUnresolvedTypeReferences(shape, knownTypeIds);
+        case "reference":
+            return typeReferenceHasUnresolvedTypeReferences(shape.value, knownTypeIds);
+        default:
+            assertNever(shape);
+    }
+}
+
+function typeShapeHasUnresolvedTypeReferences(
+    shape: FdrCjsSdk.api.v1.register.TypeShape,
+    knownTypeIds: ReadonlySet<string>
+): boolean {
+    switch (shape.type) {
+        case "alias":
+            return typeReferenceHasUnresolvedTypeReferences(shape.value, knownTypeIds);
+        case "object":
+            return objectTypeHasUnresolvedTypeReferences(shape, knownTypeIds);
+        case "undiscriminatedUnion":
+            return shape.variants.some((variant) =>
+                typeReferenceHasUnresolvedTypeReferences(variant.type, knownTypeIds)
+            );
+        case "discriminatedUnion":
+            return shape.variants.some((variant) =>
+                objectTypeHasUnresolvedTypeReferences(variant.additionalProperties, knownTypeIds)
+            );
+        case "enum":
+            return false;
+        default:
+            assertNever(shape);
+    }
+}
+
+function objectTypeHasUnresolvedTypeReferences(
+    object: FdrCjsSdk.api.v1.register.ObjectType,
+    knownTypeIds: ReadonlySet<string>
+): boolean {
+    return (
+        object.extends.some((typeId) => !knownTypeIds.has(typeId)) ||
+        object.properties.some((property) =>
+            typeReferenceHasUnresolvedTypeReferences(property.valueType, knownTypeIds)
+        ) ||
+        (object.extraProperties != null &&
+            typeReferenceHasUnresolvedTypeReferences(object.extraProperties, knownTypeIds))
+    );
+}
+
+function typeReferenceHasUnresolvedTypeReferences(
+    reference: FdrCjsSdk.api.v1.register.TypeReference,
+    knownTypeIds: ReadonlySet<string>
+): boolean {
+    switch (reference.type) {
+        case "id":
+            return !knownTypeIds.has(reference.value);
+        case "optional":
+        case "nullable":
+        case "list":
+        case "set":
+            return typeReferenceHasUnresolvedTypeReferences(reference.itemType, knownTypeIds);
+        case "map":
+            return (
+                typeReferenceHasUnresolvedTypeReferences(reference.keyType, knownTypeIds) ||
+                typeReferenceHasUnresolvedTypeReferences(reference.valueType, knownTypeIds)
+            );
+        case "primitive":
+        case "literal":
+        case "unknown":
+            return false;
+        default:
+            assertNever(reference);
+    }
+}
+
+function createFallbackEndpointExample(
+    endpoint: FdrCjsSdk.api.v1.register.EndpointDefinition,
+    responseStatusCode: number
+): FdrCjsSdk.api.v1.register.ExampleEndpointCall {
+    const pathParameters = Object.fromEntries(
+        endpoint.path.pathParameters.map((pathParameter) => [pathParameter.key, `:${pathParameter.key}`])
+    );
+    return {
+        description: undefined,
+        name: undefined,
+        path: generatePathWithFallbackParameters(endpoint.path.parts, pathParameters),
+        pathParameters,
+        queryParameters: {},
+        headers: {},
+        requestBody: undefined,
+        requestBodyV3: undefined,
+        responseStatusCode,
+        responseBody: undefined,
+        responseBodyV3: undefined,
+        codeSamples: undefined
+    };
+}
+
+function generatePathWithFallbackParameters(
+    parts: FdrCjsSdk.api.v1.register.EndpointDefinition["path"]["parts"],
+    pathParameters: Record<string, string>
+): string {
+    return parts
+        .map((part) => {
+            switch (part.type) {
+                case "literal":
+                    return part.value;
+                case "pathParameter":
+                    return pathParameters[part.value] ?? `:${part.value}`;
+                default:
+                    assertNever(part);
+            }
+        })
+        .join("");
 }
 
 function convertWebSocketChannel(
