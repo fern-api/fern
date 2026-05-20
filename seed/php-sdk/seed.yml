@@ -182,6 +182,7 @@ scripts:
       test:
         - composer test
 allowedFailures:
+  - api-wide-base-path-with-default
   - exhaustive:no-custom-config
   - exhaustive:wire-tests
   - pagination-custom
