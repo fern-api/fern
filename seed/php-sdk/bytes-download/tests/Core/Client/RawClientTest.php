@@ -1133,7 +1133,8 @@ class RawClientTest extends TestCase
         $retryClient = new RetryDecoratingClient(
             $guzzleClient,
             maxRetries: 0,
-            sleepFunction: function (int $_microseconds): void {},
+            sleepFunction: function (int $_microseconds): void {
+            },
         );
 
         $requestFactory = \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
@@ -1198,7 +1199,8 @@ class RawClientTest extends TestCase
         $retryClient = new RetryDecoratingClient(
             $guzzleClient,
             maxRetries: 0,
-            sleepFunction: function (int $_microseconds): void {},
+            sleepFunction: function (int $_microseconds): void {
+            },
         );
 
         $requestFactory = \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
