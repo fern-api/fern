@@ -1,7 +1,7 @@
-import { getWireValue } from "@fern-api/base-generator";
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import type { FernIr } from "@fern-fern/ir-sdk";
-import { getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
+import { getParameterNameForRootPathParameter, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import type { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { getClientDefaultValue, getLiteralValueForHeader, typeContainsNullable } from "./endpoints/utils/index.js";
@@ -12,6 +12,9 @@ export declare namespace BaseClientTypeGenerator {
         generateIdempotentRequestOptions: boolean;
         ir: FernIr.IntermediateRepresentation;
         omitFernHeaders: boolean;
+        retainOriginalCasing: boolean;
+        parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+        caseConverter: CaseConverter;
     }
 }
 
@@ -22,11 +25,24 @@ export class BaseClientTypeGenerator {
     private readonly generateIdempotentRequestOptions: boolean;
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly omitFernHeaders: boolean;
+    private readonly retainOriginalCasing: boolean;
+    private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+    private readonly caseConverter: CaseConverter;
 
-    constructor({ generateIdempotentRequestOptions, ir, omitFernHeaders }: BaseClientTypeGenerator.Init) {
+    constructor({
+        generateIdempotentRequestOptions,
+        ir,
+        omitFernHeaders,
+        retainOriginalCasing,
+        parameterNaming,
+        caseConverter
+    }: BaseClientTypeGenerator.Init) {
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.ir = ir;
         this.omitFernHeaders = omitFernHeaders;
+        this.retainOriginalCasing = retainOriginalCasing;
+        this.parameterNaming = parameterNaming;
+        this.caseConverter = caseConverter;
     }
 
     public writeToFile(context: FileContext): void {
@@ -217,11 +233,13 @@ export type BaseClientOptions = {
         headers,`;
         }
 
+        const rootPathParamDefaults = this.getRootPathParameterDefaults();
+
         const functionCode = `
 export function normalizeClientOptions<T extends BaseClientOptions = BaseClientOptions>(
     ${OPTIONS_PARAMETER_NAME}: T
 ): NormalizedClientOptions<T> {${headersSection}    return {
-        ...options,
+        ...options,${rootPathParamDefaults}
         logging: ${getTextOfTsNode(
             context.coreUtilities.logging.createLogger._invoke(ts.factory.createIdentifier("options?.logging"))
         )},${headersReturn}
@@ -229,6 +247,40 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
 }`;
 
         context.sourceFile.addStatements(functionCode);
+    }
+
+    private getRootPathParameterDefaults(): string {
+        const lines: string[] = [];
+        for (const param of this.ir.pathParameters) {
+            if (param.location !== "ROOT" || param.clientDefault == null) {
+                continue;
+            }
+            const defaultValue = getClientDefaultValue(param.clientDefault);
+            if (defaultValue == null) {
+                continue;
+            }
+            const propertyKey = getPropertyKey(
+                getParameterNameForRootPathParameter({
+                    pathParameter: param,
+                    retainOriginalCasing: this.retainOriginalCasing,
+                    parameterNaming: this.parameterNaming,
+                    caseConverter: this.caseConverter
+                })
+            );
+            const literal =
+                typeof defaultValue === "string"
+                    ? JSON.stringify(defaultValue)
+                    : typeof defaultValue === "boolean"
+                      ? defaultValue
+                          ? "true"
+                          : "false"
+                      : JSON.stringify(defaultValue);
+            lines.push(`        ${propertyKey}: ${OPTIONS_PARAMETER_NAME}?.${propertyKey} ?? ${literal},`);
+        }
+        if (lines.length === 0) {
+            return "";
+        }
+        return "\n" + lines.join("\n");
     }
 
     private shouldGenerateAuthCode(): boolean {
