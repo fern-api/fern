@@ -1,5 +1,6 @@
 import { AuthScheme, FernIr, IntermediateRepresentation, Literal } from "@fern-api/ir-sdk";
 import { constructHttpPath, convertApiAuth, convertEnvironments } from "@fern-api/ir-utils";
+import { stripBasePathFromPaths } from "@fern-api/openapi-ir-parser";
 import {
     AbstractConverter,
     AbstractSpecConverter,
@@ -131,6 +132,20 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 },
                 explode: undefined
             });
+        }
+
+        if (parsed.pathsIncludeBasePath) {
+            const stripErrors = stripBasePathFromPaths({
+                openApi: this.context.spec,
+                basePath: parsed.path,
+                rootPathParameterNames: new Set(parsed.parameters.map((p) => p.name))
+            });
+            for (const message of stripErrors) {
+                this.context.errorCollector.collect({
+                    message,
+                    path: ["x-fern-base-path", "paths-include-base-path"]
+                });
+            }
         }
     }
 

@@ -7,6 +7,7 @@ servers:
   - url: https://api.acme.com
 x-fern-base-path:
   path: /{tenant}/{apiVersion}
+  paths-include-base-path: true
   parameters:
     tenant:
       type: string
@@ -15,9 +16,20 @@ x-fern-base-path:
       type: string
       default: v1beta
 paths:
-  /widgets:
+  /{tenant}/{apiVersion}/widgets:
     post:
       operationId: createWidget
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: apiVersion
+          in: path
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:

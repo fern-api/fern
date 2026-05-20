@@ -42,7 +42,7 @@ import { ERROR_NAMES } from "./converters/convertToHttpError.js";
 import { ExampleEndpointFactory } from "./converters/ExampleEndpointFactory.js";
 import { ConvertedOperation } from "./converters/operation/convertOperation.js";
 import { FernOpenAPIExtension } from "./extensions/fernExtensions.js";
-import { getFernBasePath } from "./extensions/getFernBasePath.js";
+import { getFernBasePath, stripBasePathFromPaths } from "./extensions/getFernBasePath.js";
 import { getFernGroups } from "./extensions/getFernGroups.js";
 import { getFernVersion } from "./extensions/getFernVersion.js";
 import { getGlobalHeaders } from "./extensions/getGlobalHeaders.js";
@@ -129,6 +129,18 @@ export function generateIr({
 
     if (context.filter.hasEndpoints()) {
         taskContext.logger.debug("Endpoint filter applied...");
+    }
+
+    const fernBasePathParsed = getFernBasePath(openApi);
+    if (fernBasePathParsed?.pathsIncludeBasePath) {
+        const stripErrors = stripBasePathFromPaths({
+            openApi,
+            basePath: fernBasePathParsed.basePath,
+            rootPathParameterNames: new Set(fernBasePathParsed.pathParameters.map((p) => p.name))
+        });
+        for (const message of stripErrors) {
+            taskContext.logger.warn(message);
+        }
     }
 
     Object.entries(openApi.paths ?? {}).forEach(([path, pathItem]) => {
