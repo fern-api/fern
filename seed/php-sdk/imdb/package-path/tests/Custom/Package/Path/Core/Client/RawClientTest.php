@@ -1086,6 +1086,7 @@ class RawClientTest extends TestCase
 
         $guzzleClient = new class ($expectedResponse) implements \Psr\Http\Client\ClientInterface, \GuzzleHttp\ClientInterface {
             private ResponseInterface $response;
+            /** @var array<string, mixed> */
             public array $lastOptions = [];
 
             public function __construct(ResponseInterface $response)
@@ -1093,22 +1094,26 @@ class RawClientTest extends TestCase
                 $this->response = $response;
             }
 
+            /** @param array<string, mixed> $options */
             public function send(\Psr\Http\Message\RequestInterface $request, array $options = []): ResponseInterface
             {
                 $this->lastOptions = $options;
                 return $this->response;
             }
 
+            /** @param array<string, mixed> $options */
             public function sendAsync(\Psr\Http\Message\RequestInterface $request, array $options = []): \GuzzleHttp\Promise\PromiseInterface
             {
                 throw new \RuntimeException('Not implemented');
             }
 
+            /** @param array<string, mixed> $options */
             public function request(string $method, $uri, array $options = []): ResponseInterface
             {
                 throw new \RuntimeException('Not implemented');
             }
 
+            /** @param array<string, mixed> $options */
             public function requestAsync(string $method, $uri, array $options = []): \GuzzleHttp\Promise\PromiseInterface
             {
                 throw new \RuntimeException('Not implemented');
@@ -1154,22 +1159,26 @@ class RawClientTest extends TestCase
                 $this->response = $response;
             }
 
+            /** @param array<string, mixed> $options */
             public function send(\Psr\Http\Message\RequestInterface $request, array $options = []): ResponseInterface
             {
                 $this->sendCalled = true;
                 return $this->response;
             }
 
+            /** @param array<string, mixed> $options */
             public function sendAsync(\Psr\Http\Message\RequestInterface $request, array $options = []): \GuzzleHttp\Promise\PromiseInterface
             {
                 throw new \RuntimeException('Not implemented');
             }
 
+            /** @param array<string, mixed> $options */
             public function request(string $method, $uri, array $options = []): ResponseInterface
             {
                 throw new \RuntimeException('Not implemented');
             }
 
+            /** @param array<string, mixed> $options */
             public function requestAsync(string $method, $uri, array $options = []): \GuzzleHttp\Promise\PromiseInterface
             {
                 throw new \RuntimeException('Not implemented');
