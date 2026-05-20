@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.14.0
+  changelogEntry:
+    - summary: |
+        Hoist root path parameters to the client constructor. They no longer
+        appear on endpoint method signatures; URL substitution reads them from
+        the client wrapper. Breaking change for SDKs whose Fern Definition
+        declares root-level `path-parameters`.
+      type: feat
+  createdAt: "2026-05-19"
+  irVersion: 67
 - version: 5.13.1
   changelogEntry:
     - summary: |

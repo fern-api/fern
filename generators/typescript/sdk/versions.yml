@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.71.0
+  changelogEntry:
+    - summary: |
+        Apply `client-default` to root path parameters at runtime. When omitted
+        at client construction, the configured default now lands in the URL
+        instead of `undefined`.
+      type: feat
+  createdAt: "2026-05-19"
+  irVersion: 67
 - version: 3.70.9
   changelogEntry:
     - summary: |
