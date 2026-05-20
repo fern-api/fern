@@ -1,0 +1,10 @@
+{
+  "title": "Filesystem / errno false positive",
+  "disposition": "duplicate",
+  "rationale": "Same fix narrative as CLI-2X; one PR covered both.",
+  "fixSummary": "—",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+  "lastAnalyzed": "2026-04-21",
+  "duplicateOf": "CLI-2X",
+  "problemSignature": "Filesystem or syscall errno from user environment (e.g. missing file, permission) surfaced as InternalError instead of environment-style CLI error."
+}

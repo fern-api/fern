@@ -1,0 +1,9 @@
+{
+  "title": "Undefined server name in IR-to-FDR conversion",
+  "disposition": "keep_sentry",
+  "rationale": "ir-to-fdr-converter encountered an undefined server name; this is a product/conversion bug in server URL mapping.",
+  "fixSummary": "—",
+  "prOrIssue": "Keep in Sentry until product fix",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "IR-to-FDR converter encountered undefined server name at endpoint; server URL mapping product bug."
+}

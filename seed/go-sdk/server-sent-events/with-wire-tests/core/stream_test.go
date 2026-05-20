@@ -905,3 +905,157 @@ func TestSseStreamReader_InjectDiscriminator(t *testing.T) {
 func intPtr(i int) *int {
 	return &i
 }
+
+func TestStream_WithReconnect_ResumesAfterMidStreamEOF(t *testing.T) {
+	// Server replies with two events on the first call, then closes the connection
+	// before sending the terminator. On the second call (the reconnect), it
+	// inspects Last-Event-ID and sends a third event followed by the terminator.
+	sentLastEventIDs := make(chan string, 4)
+	first := "id: 1\ndata: {\"content\":\"first\"}\n\n" +
+		"id: 2\ndata: {\"content\":\"second\"}\n\n"
+	second := "id: 3\ndata: {\"content\":\"third\"}\n\n" +
+		"data: [DONE]\n\n"
+
+	var calls int
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/event-stream")
+		w.WriteHeader(200)
+		select {
+		case sentLastEventIDs <- r.Header.Get("Last-Event-ID"):
+		default:
+		}
+		switch calls {
+		case 0:
+			_, _ = w.Write([]byte(first))
+		case 1:
+			_, _ = w.Write([]byte(second))
+		}
+		calls++
+	}))
+	defer server.Close()
+
+	resp, err := http.Get(server.URL)
+	require.NoError(t, err)
+
+	reconnect := func(ctx context.Context, lastEventID string) (*http.Response, error) {
+		req, err := http.NewRequestWithContext(ctx, http.MethodGet, server.URL, nil)
+		if err != nil {
+			return nil, err
+		}
+		if lastEventID != "" {
+			req.Header.Set("Last-Event-ID", lastEventID)
+		}
+		return http.DefaultClient.Do(req)
+	}
+
+	stream := NewStream[TestMessage](
+		context.Background(),
+		resp,
+		WithFormat(StreamFormatSSE),
+		WithTerminator("[DONE]"),
+		WithReconnect(reconnect, 3),
+	)
+	defer func() { _ = stream.Close() }()
+
+	var got []string
+	for {
+		msg, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+		require.NoError(t, err)
+		got = append(got, msg.Content)
+	}
+	assert.Equal(t, []string{"first", "second", "third"}, got)
+	close(sentLastEventIDs)
+	headers := make([]string, 0, 2)
+	for v := range sentLastEventIDs {
+		headers = append(headers, v)
+	}
+	require.Len(t, headers, 2)
+	assert.Equal(t, "", headers[0])  // initial request: no Last-Event-ID
+	assert.Equal(t, "2", headers[1]) // reconnect carries the most recent ID
+}
+
+func TestStream_WithReconnect_RespectsTerminator(t *testing.T) {
+	// First (and only) response includes the terminator. Reconnect must NOT fire.
+	body := "id: 1\ndata: {\"content\":\"only\"}\n\n" +
+		"data: [DONE]\n\n"
+	var calls int
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		calls++
+		w.Header().Set("Content-Type", "text/event-stream")
+		w.WriteHeader(200)
+		_, _ = w.Write([]byte(body))
+	}))
+	defer server.Close()
+
+	resp, err := http.Get(server.URL)
+	require.NoError(t, err)
+
+	reconnect := func(ctx context.Context, lastEventID string) (*http.Response, error) {
+		t.Fatalf("reconnect must not fire after natural termination; got lastEventID=%q", lastEventID)
+		return nil, nil
+	}
+	stream := NewStream[TestMessage](
+		context.Background(),
+		resp,
+		WithFormat(StreamFormatSSE),
+		WithTerminator("[DONE]"),
+		WithReconnect(reconnect, 3),
+	)
+	defer func() { _ = stream.Close() }()
+
+	msg, err := stream.Recv()
+	require.NoError(t, err)
+	assert.Equal(t, "only", msg.Content)
+	_, err = stream.Recv()
+	assert.ErrorIs(t, err, io.EOF)
+	assert.Equal(t, 1, calls)
+}
+
+func TestStream_WithReconnect_HonorsMaxAttempts(t *testing.T) {
+	// Server always closes mid-stream (no terminator). Reconnect should be
+	// attempted at most maxAttempts times, then EOF surfaces to the caller.
+	body := "id: 1\ndata: {\"content\":\"x\"}\n\n"
+	var calls int
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		calls++
+		w.Header().Set("Content-Type", "text/event-stream")
+		w.WriteHeader(200)
+		_, _ = w.Write([]byte(body))
+	}))
+	defer server.Close()
+
+	resp, err := http.Get(server.URL)
+	require.NoError(t, err)
+
+	reconnect := func(ctx context.Context, lastEventID string) (*http.Response, error) {
+		req, err := http.NewRequestWithContext(ctx, http.MethodGet, server.URL, nil)
+		if err != nil {
+			return nil, err
+		}
+		if lastEventID != "" {
+			req.Header.Set("Last-Event-ID", lastEventID)
+		}
+		return http.DefaultClient.Do(req)
+	}
+	stream := NewStream[TestMessage](
+		context.Background(),
+		resp,
+		WithFormat(StreamFormatSSE),
+		WithTerminator("[DONE]"),
+		WithReconnect(reconnect, 2),
+	)
+	defer func() { _ = stream.Close() }()
+
+	for {
+		_, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+		require.NoError(t, err)
+	}
+	// 1 initial call + 2 reconnects = 3 total
+	assert.Equal(t, 3, calls)
+}

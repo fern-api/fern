@@ -28,9 +28,12 @@ public partial class SeedWebsocketClient : ISeedWebsocketClient
         }
         _client = new RawClient(clientOptions);
         Empty = new EmptyClient(_client);
+        Status = new StatusClient(_client);
     }
 
     public IEmptyClient Empty { get; }
+
+    public IStatusClient Status { get; }
 
     public IRealtimeApi CreateRealtimeApi(RealtimeApi.Options options)
     {

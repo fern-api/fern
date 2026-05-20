@@ -234,6 +234,12 @@ fixtures:
     - outputFolder: with-wire-tests
       customConfig:
         enableWireTests: true
+  server-sent-events-resumable:
+    - outputFolder: .
+      customConfig:
+        packageName: sseresumable
+        module:
+          path: github.com/fern-api/sse-resumable-go
   openapi-request-body-ref:
     - outputFolder: no-custom-config
       customConfig: null

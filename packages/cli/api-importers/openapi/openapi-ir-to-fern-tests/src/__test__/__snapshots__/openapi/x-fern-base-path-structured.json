@@ -1,0 +1,394 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createInteractionStream": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "apiVersion": "v1beta",
+                    "tenant": "tenant",
+                  },
+                  "request": {
+                    "input": "input",
+                    "model": "model",
+                  },
+                  "response": {
+                    "body": {
+                      "id": "id",
+                      "output": "output",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/interactions/stream",
+              "request": "CreateInteractionStreamRequest",
+              "response": {
+                "docs": "",
+                "status-code": 200,
+                "type": "Interaction",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "createInteractionStream_stream": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "apiVersion": "v1beta",
+                    "tenant": "tenant",
+                  },
+                  "request": {
+                    "input": "input",
+                    "model": "model",
+                  },
+                  "response": {
+                    "stream": [
+                      {
+                        "data": {
+                          "delta": "delta",
+                        },
+                        "event": "",
+                      },
+                    ],
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/interactions/stream",
+              "request": "CreateInteractionStreamStreamRequest",
+              "response-stream": {
+                "docs": "",
+                "format": "sse",
+                "resumable": false,
+                "terminator": "[DONE]",
+                "type": "InteractionSseEvent",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "createWidget": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "apiVersion": "v1beta",
+                    "tenant": "tenant",
+                  },
+                  "request": {
+                    "name": "name",
+                  },
+                  "response": {
+                    "body": {
+                      "name": "name",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/widgets",
+              "request": "Widget",
+              "response": {
+                "docs": "",
+                "status-code": 200,
+                "type": "Widget",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "AgentInteractionRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "agent": "string",
+              "input": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "CreateInteractionStreamRequest": {
+            "base-properties": {
+              "stream": "literal<false>",
+            },
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "ModelInteractionRequest",
+              "AgentInteractionRequest",
+            ],
+          },
+          "CreateInteractionStreamStreamRequest": {
+            "base-properties": {
+              "stream": "literal<true>",
+            },
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "ModelInteractionRequest",
+              "AgentInteractionRequest",
+            ],
+          },
+          "Interaction": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+              "output": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "InteractionRequest": {
+            "base-properties": undefined,
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "ModelInteractionRequest",
+              "AgentInteractionRequest",
+            ],
+          },
+          "InteractionSseEvent": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "delta": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ModelInteractionRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "input": "string",
+              "model": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Widget": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "name": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createWidget:
+      path: /widgets
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request: Widget
+      response:
+        docs: ''
+        type: Widget
+        status-code: 200
+      examples:
+        - path-parameters:
+            tenant: tenant
+            apiVersion: v1beta
+          request:
+            name: name
+          response:
+            body:
+              name: name
+    createInteractionStream_stream:
+      path: /interactions/stream
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request: CreateInteractionStreamStreamRequest
+      response-stream:
+        docs: ''
+        type: InteractionSseEvent
+        format: sse
+        terminator: '[DONE]'
+        resumable: false
+      examples:
+        - path-parameters:
+            tenant: tenant
+            apiVersion: v1beta
+          request:
+            model: model
+            input: input
+          response:
+            stream:
+              - event: ''
+                data:
+                  delta: delta
+    createInteractionStream:
+      path: /interactions/stream
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request: CreateInteractionStreamRequest
+      response:
+        docs: ''
+        type: Interaction
+        status-code: 200
+      examples:
+        - path-parameters:
+            tenant: tenant
+            apiVersion: v1beta
+          request:
+            model: model
+            input: input
+          response:
+            body:
+              id: id
+              output: output
+  source:
+    openapi: ../openapi.yml
+types:
+  CreateInteractionStreamStreamRequest:
+    discriminated: false
+    base-properties:
+      stream: literal<true>
+    union:
+      - ModelInteractionRequest
+      - AgentInteractionRequest
+    source:
+      openapi: ../openapi.yml
+  CreateInteractionStreamRequest:
+    discriminated: false
+    base-properties:
+      stream: literal<false>
+    union:
+      - ModelInteractionRequest
+      - AgentInteractionRequest
+    source:
+      openapi: ../openapi.yml
+  Widget:
+    properties:
+      name: string
+    source:
+      openapi: ../openapi.yml
+  InteractionRequest:
+    discriminated: false
+    union:
+      - ModelInteractionRequest
+      - AgentInteractionRequest
+    source:
+      openapi: ../openapi.yml
+  ModelInteractionRequest:
+    properties:
+      model: string
+      input: string
+    source:
+      openapi: ../openapi.yml
+  AgentInteractionRequest:
+    properties:
+      agent: string
+      input: string
+    source:
+      openapi: ../openapi.yml
+  Interaction:
+    properties:
+      id: optional<string>
+      output: optional<string>
+    source:
+      openapi: ../openapi.yml
+  InteractionSseEvent:
+    properties:
+      delta: optional<string>
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "base-path": "/{tenant}/{apiVersion}",
+      "default-environment": "Default",
+      "display-name": "Acme API",
+      "environments": {
+        "Default": "https://api.acme.com",
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+      "path-parameters": {
+        "apiVersion": {
+          "client-default": "v1beta",
+          "type": "string",
+        },
+        "tenant": {
+          "docs": "The tenant slug.",
+          "type": "string",
+        },
+      },
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Acme API
+environments:
+  Default: https://api.acme.com
+default-environment: Default
+base-path: /{tenant}/{apiVersion}
+path-parameters:
+  tenant:
+    type: string
+    docs: The tenant slug.
+  apiVersion:
+    type: string
+    client-default: v1beta
+",
+  },
+}

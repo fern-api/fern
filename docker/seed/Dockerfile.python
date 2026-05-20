@@ -16,10 +16,11 @@ RUN apk add --no-cache curl && \
 FROM golang:1.26.3-alpine3.23 AS overlay-binaries
 ARG CONTAINERD_VERSION=2.3.0
 ARG RUNC_VERSION=1.3.5
-# moby v2.0.0-beta.12 (docker v29.5.0-rc.1) is past the v2.0.0-beta.8
-# upstream fix for CVE-2026-33997 / CVE-2026-34040.
-ARG MOBY_VERSION=29.5.0-rc.1
-ARG DOCKER_CLI_VERSION=29.5.0-rc.1
+# moby v29.5.1 fixes CVE-2026-41567, CVE-2026-41568, CVE-2026-42306
+# (GHSA-x86f-5xw2-fm2r, GHSA-vp62-88p7-qqf5, GHSA-rg2x-37c3-w2rh)
+# and includes the earlier CVE-2026-33997 / CVE-2026-34040 fixes.
+ARG MOBY_VERSION=29.5.1
+ARG DOCKER_CLI_VERSION=29.5.1
 ARG COMPOSE_VERSION=5.1.3
 ARG XNET_VERSION=0.53.0
 ARG OTEL_SDK_VERSION=1.43.0

@@ -32,8 +32,12 @@
     "test:update": "vitest --run -u"
   },
   "dependencies": {
+    "@fern-api/configuration": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/fdr-sdk": "catalog:",
+    "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
+    "chalk": "catalog:",
     "js-yaml": "catalog:"
   },
   "devDependencies": {

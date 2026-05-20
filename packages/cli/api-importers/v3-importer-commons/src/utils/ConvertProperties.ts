@@ -1,4 +1,4 @@
-import { ObjectProperty, TypeId, V2SchemaExamples } from "@fern-api/ir-sdk";
+import { ContainerType, ObjectProperty, TypeId, TypeReference, V2SchemaExamples } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { AbstractConverterContext } from "../AbstractConverterContext.js";
 import { ExampleConverter } from "../converters/ExampleConverter.js";
@@ -87,6 +87,7 @@ export function convertProperties({
                     referencedTypes.add(type);
                 });
             }
+            collectNamedTypeIdsFromTypeReference(convertedProperty.type, referencedTypes);
             for (const audience of convertedProperty.schema?.audiences ?? []) {
                 if (propertiesByAudience[audience] == null) {
                     propertiesByAudience[audience] = new Set<string>();
@@ -168,4 +169,41 @@ function maybeGetFernTypeNameExtension(
         context
     });
     return fernTypeNameConverter.convert();
+}
+
+function collectNamedTypeIdsFromTypeReference(typeReference: TypeReference, referencedTypes: Set<string>): void {
+    switch (typeReference.type) {
+        case "named":
+            referencedTypes.add(typeReference.typeId);
+            return;
+        case "primitive":
+        case "unknown":
+            return;
+        case "container":
+            collectNamedTypeIdsFromContainer(typeReference.container, referencedTypes);
+            return;
+    }
+}
+
+function collectNamedTypeIdsFromContainer(container: ContainerType, referencedTypes: Set<string>): void {
+    switch (container.type) {
+        case "list":
+            collectNamedTypeIdsFromTypeReference(container.list, referencedTypes);
+            return;
+        case "set":
+            collectNamedTypeIdsFromTypeReference(container.set, referencedTypes);
+            return;
+        case "optional":
+            collectNamedTypeIdsFromTypeReference(container.optional, referencedTypes);
+            return;
+        case "nullable":
+            collectNamedTypeIdsFromTypeReference(container.nullable, referencedTypes);
+            return;
+        case "map":
+            collectNamedTypeIdsFromTypeReference(container.keyType, referencedTypes);
+            collectNamedTypeIdsFromTypeReference(container.valueType, referencedTypes);
+            return;
+        case "literal":
+            return;
+    }
 }

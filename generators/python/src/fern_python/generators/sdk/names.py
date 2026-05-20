@@ -69,3 +69,15 @@ def get_variable_member_name(variable: ir_types.VariableDeclaration) -> str:
 
 def get_variable_getter_name(variable: ir_types.VariableDeclaration) -> str:
     return f"get_{resolve_name(variable.name).snake_case.safe_name}"
+
+
+def get_root_path_parameter_constructor_parameter_name(path_parameter: ir_types.PathParameter) -> str:
+    return resolve_name(path_parameter.name).snake_case.safe_name
+
+
+def get_root_path_parameter_member_name(path_parameter: ir_types.PathParameter) -> str:
+    return f"_{resolve_name(path_parameter.name).snake_case.safe_name}"
+
+
+def get_root_path_parameter_getter_name(path_parameter: ir_types.PathParameter) -> str:
+    return f"get_{resolve_name(path_parameter.name).snake_case.safe_name}"
