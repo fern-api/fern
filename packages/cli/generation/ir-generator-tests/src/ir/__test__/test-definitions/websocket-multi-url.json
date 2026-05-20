@@ -1187,6 +1187,7 @@
             "webhooks": null,
             "websocket": "channel_realtime",
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": true,
             "docs": null
         }
     },
@@ -1206,6 +1207,7 @@
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": false,
+        "hasWebSocketInTree": true,
         "docs": null
     },
     "sdkConfig": {

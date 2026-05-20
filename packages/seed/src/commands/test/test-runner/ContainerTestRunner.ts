@@ -153,7 +153,8 @@ export class ContainerTestRunner extends TestRunner {
         smartCasing,
         organization,
         absolutePathToFernConfig,
-        skipAutogenerationIfManualExamplesExist
+        skipAutogenerationIfManualExamplesExist,
+        rawApiSpecs
     }: TestRunner.DoRunArgs): Promise<void> {
         const generatorGroup: generatorsYml.GeneratorGroup = {
             groupName: "test",
@@ -196,6 +197,7 @@ export class ContainerTestRunner extends TestRunner {
             executionEnvironment: this.reusableContainer,
             ai: undefined,
             skipAutogenerationIfManualExamplesExist,
+            rawApiSpecs,
             verify: verifyEnabled,
             verifyRunner: this.runner,
             // Generator runs at :local but the validator image isn't built locally;

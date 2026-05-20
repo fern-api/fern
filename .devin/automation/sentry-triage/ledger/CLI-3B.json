@@ -1,0 +1,9 @@
+{
+  "title": "Null overlay in applyOverlays",
+  "disposition": "keep_sentry",
+  "rationale": "Null overlay TypeError indicates missing validation in workspace overlay handling.",
+  "fixSummary": "—",
+  "prOrIssue": "Keep in Sentry until product fix",
+  "lastAnalyzed": "2026-05-04",
+  "problemSignature": "Workspace overlay loading TypeError on null overlay; true validation/product bug until fixed."
+}

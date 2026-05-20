@@ -25,10 +25,7 @@
               "method": "PATCH",
               "pagination": undefined,
               "path": "/settings",
-              "request": {
-                "body": "Settings",
-                "content-type": "application/json",
-              },
+              "request": "Settings",
               "response": {
                 "docs": "OK",
                 "status-code": 200,
@@ -93,9 +90,7 @@
       method: PATCH
       source:
         openapi: ../openapi.yml
-      request:
-        body: Settings
-        content-type: application/json
+      request: Settings
       response:
         docs: OK
         type: Settings

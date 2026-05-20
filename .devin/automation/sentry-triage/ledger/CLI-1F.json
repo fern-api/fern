@@ -1,0 +1,10 @@
+{
+  "title": "YAML parse in OpenAPI load",
+  "disposition": "duplicate",
+  "rationale": "Same fix narrative as CLI-2E; one PR covered both.",
+  "fixSummary": "—",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+  "lastAnalyzed": "2026-04-21",
+  "duplicateOf": "CLI-2E",
+  "problemSignature": "Invalid YAML while loading a user OpenAPI spec (yaml.load path); parser exception treated as InternalError."
+}

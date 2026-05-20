@@ -27,6 +27,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
             &internal.CallerParams{
                 Client: options.HTTPClient,
                 MaxAttempts: options.MaxAttempts,
+                DisableRetries: options.DisableRetries,
             },
         ),
     }
@@ -65,6 +66,7 @@ func (r *RawClient) Send(
             Method: http.MethodPost,
             Headers: headers,
             MaxAttempts: options.MaxAttempts,
+            DisableRetries: options.DisableRetries,
             BodyProperties: options.BodyProperties,
             QueryParameters: options.QueryParameters,
             Client: options.HTTPClient,

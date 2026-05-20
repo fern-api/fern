@@ -12,6 +12,14 @@ export interface OpenApiIntermediateRepresentation {
     title: string | undefined;
     description: string | undefined;
     basePath: string | undefined;
+    /**
+     * Root-level path parameters declared by the structured form of
+     * `x-fern-base-path`. When present, these are emitted at the root of
+     * the generated Fern Definition (under `path-parameters`) and the
+     * base path is preserved on the root API file instead of being
+     * inlined onto every endpoint.
+     */
+    basePathParameters: FernOpenapiIr.PathParameter[] | undefined;
     servers: FernOpenapiIr.Server[];
     websocketServers: FernOpenapiIr.Server[];
     /** Top level group information populated through `x-fern-groups`. */

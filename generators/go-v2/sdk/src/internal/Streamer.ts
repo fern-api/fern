@@ -27,6 +27,7 @@ export class Streamer {
     public static CONSTRUCTOR_FUNC_NAME = "NewStreamer";
     public static STREAM_PARAMS_TYPE_NAME = "StreamParams";
     public static STREAM_METHOD_NAME = "Stream";
+    public static STREAM_WITH_RECONNECT_METHOD_NAME = "StreamWithReconnect";
 
     private context: SdkGeneratorContext;
 
@@ -93,6 +94,15 @@ export class Streamer {
                 )
             },
             {
+                name: "DisableRetries",
+                value: go.TypeInstantiation.reference(
+                    go.selector({
+                        on: args.optionsReference,
+                        selector: go.codeblock("DisableRetries")
+                    })
+                )
+            },
+            {
                 name: "BodyProperties",
                 value: go.TypeInstantiation.reference(
                     go.selector({
@@ -129,6 +139,29 @@ export class Streamer {
                 )
             }
         ];
+        const resumable = isResumableSseStream(args.streamingResponse);
+        if (resumable) {
+            arguments_.push(
+                {
+                    name: "MaxStreamReconnectAttempts",
+                    value: go.TypeInstantiation.reference(
+                        go.selector({
+                            on: args.optionsReference,
+                            selector: go.codeblock("MaxStreamReconnectAttempts")
+                        })
+                    )
+                },
+                {
+                    name: "DisableStreamReconnection",
+                    value: go.TypeInstantiation.reference(
+                        go.selector({
+                            on: args.optionsReference,
+                            selector: go.codeblock("DisableStreamReconnection")
+                        })
+                    )
+                }
+            );
+        }
         const prefix = this.getStreamPrefix(args.streamingResponse);
         if (prefix != null) {
             arguments_.push({
@@ -173,11 +206,12 @@ export class Streamer {
             name: "ErrorDecoder",
             value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([errorCodesReference]))
         });
+        const methodName = resumable ? Streamer.STREAM_WITH_RECONNECT_METHOD_NAME : Streamer.STREAM_METHOD_NAME;
         return go.codeblock((writer) => {
             writer.writeNode(
                 go.invokeMethod({
                     on: args.streamerVariable,
-                    method: Streamer.STREAM_METHOD_NAME,
+                    method: methodName,
                     arguments_: [
                         this.context.getContextParameterReference(),
                         go.TypeInstantiation.structPointer({
@@ -278,4 +312,8 @@ export class Streamer {
         }
         return go.TypeInstantiation.string(getWireValue(union.discriminant));
     }
+}
+
+export function isResumableSseStream(streamingResponse: FernIr.StreamingResponse): boolean {
+    return streamingResponse.type === "sse" && streamingResponse.resumable === true;
 }

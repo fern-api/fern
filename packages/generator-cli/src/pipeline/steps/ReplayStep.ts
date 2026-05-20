@@ -21,8 +21,7 @@ export class ReplayStep extends BaseStep {
         logger: PipelineLogger,
         private readonly config: ReplayStepConfig,
         private readonly cliVersion?: string,
-        private readonly generatorVersions?: Record<string, string>,
-        private readonly generatorName?: string
+        private readonly generatorVersions?: Record<string, string>
     ) {
         super(outputDir, logger);
     }
@@ -77,7 +76,6 @@ export class ReplayStep extends BaseStep {
                       cliVersion: this.cliVersion,
                       generatorVersions: this.generatorVersions,
                       stageOnly: this.config.stageOnly ?? false,
-                      generatorName: this.generatorName,
                       skipApplication: this.config.skipApplication,
                       logger: this.logger
                   });
@@ -93,7 +91,6 @@ export class ReplayStep extends BaseStep {
                 errorMessage: result.failureReason,
                 previousGenerationSha: result.previousGenerationSha ?? undefined,
                 currentGenerationSha: result.currentGenerationSha ?? undefined,
-                baseBranchHead: result.baseBranchHead ?? undefined,
                 autoBootstrapped: result.autoBootstrapped,
                 bootstrapAttempted: result.bootstrapAttempted,
                 flow: "normal-regeneration",
@@ -109,7 +106,6 @@ export class ReplayStep extends BaseStep {
                 success: true,
                 previousGenerationSha: result.previousGenerationSha ?? undefined,
                 currentGenerationSha: result.currentGenerationSha ?? undefined,
-                baseBranchHead: result.baseBranchHead ?? undefined,
                 autoBootstrapped: result.autoBootstrapped,
                 bootstrapAttempted: result.bootstrapAttempted,
                 flow: "first-generation",
@@ -125,7 +121,6 @@ export class ReplayStep extends BaseStep {
             success: true,
             previousGenerationSha: result.previousGenerationSha ?? undefined,
             currentGenerationSha: result.currentGenerationSha ?? undefined,
-            baseBranchHead: result.baseBranchHead ?? undefined,
             autoBootstrapped: result.autoBootstrapped,
             bootstrapAttempted: result.bootstrapAttempted,
             flow: report.flow,

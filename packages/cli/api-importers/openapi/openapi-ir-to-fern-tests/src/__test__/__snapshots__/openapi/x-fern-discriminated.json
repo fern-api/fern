@@ -30,10 +30,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/test",
-              "request": {
-                "body": "PostTestRequest",
-                "content-type": "application/json",
-              },
+              "request": "PostTestRequest",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -168,9 +165,7 @@ service:
       source:
         openapi: ../openapi.yml
       display-name: Test endpoint
-      request:
-        body: PostTestRequest
-        content-type: application/json
+      request: PostTestRequest
       response:
         docs: Success
         type: PostTestResponse

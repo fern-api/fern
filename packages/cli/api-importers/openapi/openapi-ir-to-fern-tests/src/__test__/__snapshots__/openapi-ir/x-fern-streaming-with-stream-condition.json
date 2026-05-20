@@ -405,6 +405,304 @@
         "file": "../openapi.yml",
         "type": "openapi"
       }
+    },
+    {
+      "summary": "Start an interaction",
+      "audiences": [],
+      "operationId": "createInteraction_stream",
+      "tags": [
+        "Interactions"
+      ],
+      "sdkName": {
+        "groupName": [],
+        "methodName": "interact_stream"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "InteractStreamRequest",
+      "request": {
+        "schema": {
+          "value": {
+            "description": "Parameters for creating an interaction (model OR agent).",
+            "generatedName": "InteractStreamRequest",
+            "commonProperties": [
+              {
+                "key": "stream_response",
+                "schema": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "generatedName": "InteractStreamRequestStreamResponse",
+                  "groupName": [],
+                  "type": "literal"
+                }
+              }
+            ],
+            "schemas": [
+              {
+                "generatedName": "InteractStreamRequestZero",
+                "schema": "ModelInteractionRequest",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              {
+                "generatedName": "InteractStreamRequestOne",
+                "schema": "AgentInteractionRequest",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              }
+            ],
+            "groupName": [],
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "undiscriminated"
+          },
+          "type": "oneOf"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "fullExamples": [],
+        "schema": {
+          "generatedName": "InteractStreamResponse",
+          "schema": "InteractionStreamedResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "streamingJson"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/v2/interactions",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "model": {
+                "value": {
+                  "value": "model",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "input": {
+                "value": {
+                  "value": "input",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "sse": false,
+            "events": [
+              {
+                "properties": {
+                  "delta": {
+                    "value": {
+                      "value": "delta",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Start an interaction",
+      "audiences": [],
+      "operationId": "createInteraction",
+      "tags": [
+        "Interactions"
+      ],
+      "sdkName": {
+        "groupName": [],
+        "methodName": "interact"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "InteractRequest",
+      "request": {
+        "schema": {
+          "value": {
+            "description": "Parameters for creating an interaction (model OR agent).",
+            "generatedName": "InteractRequest",
+            "commonProperties": [
+              {
+                "key": "stream_response",
+                "schema": {
+                  "value": {
+                    "value": false,
+                    "type": "boolean"
+                  },
+                  "generatedName": "InteractRequestStreamResponse",
+                  "groupName": [],
+                  "type": "literal"
+                }
+              }
+            ],
+            "schemas": [
+              {
+                "generatedName": "InteractRequestZero",
+                "schema": "ModelInteractionRequest",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              {
+                "generatedName": "InteractRequestOne",
+                "schema": "AgentInteractionRequest",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              }
+            ],
+            "groupName": [],
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "undiscriminated"
+          },
+          "type": "oneOf"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "schema": {
+          "generatedName": "InteractResponse",
+          "schema": "InteractionFullResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/v2/interactions",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "model": {
+                "value": {
+                  "value": "model",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "input": {
+                "value": {
+                  "value": "input",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "output": {
+                  "value": {
+                    "value": "output",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
     }
   ],
   "webhooks": [],
@@ -576,6 +874,208 @@
         "allOfPropertyConflicts": [],
         "description": "An individual event when the response is streamed.",
         "generatedName": "ChatStreamedResponse",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "InteractionRequest": {
+        "value": {
+          "description": "Parameters for creating an interaction (model OR agent).",
+          "generatedName": "InteractionRequest",
+          "schemas": [
+            {
+              "generatedName": "InteractionRequestZero",
+              "schema": "ModelInteractionRequest",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "InteractionRequestOne",
+              "schema": "AgentInteractionRequest",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "ModelInteractionRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "modelInteractionRequestModel",
+            "key": "model",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ModelInteractionRequestModel",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "modelInteractionRequestInput",
+            "key": "input",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ModelInteractionRequestInput",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ModelInteractionRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "AgentInteractionRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "agentInteractionRequestAgent",
+            "key": "agent",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "AgentInteractionRequestAgent",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "agentInteractionRequestInput",
+            "key": "input",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "AgentInteractionRequestInput",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "AgentInteractionRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "InteractionFullResponse": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "interactionFullResponseId",
+            "key": "id",
+            "schema": {
+              "generatedName": "InteractionFullResponseId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "InteractionFullResponseId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "interactionFullResponseOutput",
+            "key": "output",
+            "schema": {
+              "generatedName": "InteractionFullResponseOutput",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "InteractionFullResponseOutput",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "InteractionFullResponse",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "InteractionStreamedResponse": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "interactionStreamedResponseDelta",
+            "key": "delta",
+            "schema": {
+              "generatedName": "InteractionStreamedResponseDelta",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "InteractionStreamedResponseDelta",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "InteractionStreamedResponse",
         "groupName": [],
         "additionalProperties": false,
         "source": {

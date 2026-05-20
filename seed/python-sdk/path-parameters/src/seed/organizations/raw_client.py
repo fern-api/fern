@@ -20,13 +20,11 @@ class RawOrganizationsClient:
         self._client_wrapper = client_wrapper
 
     def get_organization(
-        self, tenant_id: str, organization_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, organization_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Organization]:
         """
         Parameters
         ----------
-        tenant_id : str
-
         organization_id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -37,7 +35,7 @@ class RawOrganizationsClient:
         HttpResponse[Organization]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(tenant_id)}/organizations/{encode_path_param(organization_id)}/",
+            f"{encode_path_param(self._client_wrapper._tenant_id)}/organizations/{encode_path_param(organization_id)}/",
             method="GET",
             request_options=request_options,
         )
@@ -61,18 +59,11 @@ class RawOrganizationsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_organization_user(
-        self,
-        tenant_id: str,
-        organization_id: str,
-        user_id: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, organization_id: str, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[User]:
         """
         Parameters
         ----------
-        tenant_id : str
-
         organization_id : str
 
         user_id : str
@@ -85,7 +76,7 @@ class RawOrganizationsClient:
         HttpResponse[User]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(tenant_id)}/organizations/{encode_path_param(organization_id)}/users/{encode_path_param(user_id)}",
+            f"{encode_path_param(self._client_wrapper._tenant_id)}/organizations/{encode_path_param(organization_id)}/users/{encode_path_param(user_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -110,7 +101,6 @@ class RawOrganizationsClient:
 
     def search_organizations(
         self,
-        tenant_id: str,
         organization_id: str,
         *,
         limit: typing.Optional[int] = None,
@@ -119,8 +109,6 @@ class RawOrganizationsClient:
         """
         Parameters
         ----------
-        tenant_id : str
-
         organization_id : str
 
         limit : typing.Optional[int]
@@ -133,7 +121,7 @@ class RawOrganizationsClient:
         HttpResponse[typing.List[Organization]]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(tenant_id)}/organizations/{encode_path_param(organization_id)}/search",
+            f"{encode_path_param(self._client_wrapper._tenant_id)}/organizations/{encode_path_param(organization_id)}/search",
             method="GET",
             params={
                 "limit": limit,
@@ -165,13 +153,11 @@ class AsyncRawOrganizationsClient:
         self._client_wrapper = client_wrapper
 
     async def get_organization(
-        self, tenant_id: str, organization_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, organization_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Organization]:
         """
         Parameters
         ----------
-        tenant_id : str
-
         organization_id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -182,7 +168,7 @@ class AsyncRawOrganizationsClient:
         AsyncHttpResponse[Organization]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(tenant_id)}/organizations/{encode_path_param(organization_id)}/",
+            f"{encode_path_param(self._client_wrapper._tenant_id)}/organizations/{encode_path_param(organization_id)}/",
             method="GET",
             request_options=request_options,
         )
@@ -206,18 +192,11 @@ class AsyncRawOrganizationsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_organization_user(
-        self,
-        tenant_id: str,
-        organization_id: str,
-        user_id: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, organization_id: str, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[User]:
         """
         Parameters
         ----------
-        tenant_id : str
-
         organization_id : str
 
         user_id : str
@@ -230,7 +209,7 @@ class AsyncRawOrganizationsClient:
         AsyncHttpResponse[User]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(tenant_id)}/organizations/{encode_path_param(organization_id)}/users/{encode_path_param(user_id)}",
+            f"{encode_path_param(self._client_wrapper._tenant_id)}/organizations/{encode_path_param(organization_id)}/users/{encode_path_param(user_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -255,7 +234,6 @@ class AsyncRawOrganizationsClient:
 
     async def search_organizations(
         self,
-        tenant_id: str,
         organization_id: str,
         *,
         limit: typing.Optional[int] = None,
@@ -264,8 +242,6 @@ class AsyncRawOrganizationsClient:
         """
         Parameters
         ----------
-        tenant_id : str
-
         organization_id : str
 
         limit : typing.Optional[int]
@@ -278,7 +254,7 @@ class AsyncRawOrganizationsClient:
         AsyncHttpResponse[typing.List[Organization]]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(tenant_id)}/organizations/{encode_path_param(organization_id)}/search",
+            f"{encode_path_param(self._client_wrapper._tenant_id)}/organizations/{encode_path_param(organization_id)}/search",
             method="GET",
             params={
                 "limit": limit,

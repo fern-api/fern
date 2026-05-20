@@ -9,12 +9,17 @@ import { addPreviewCommand } from "./preview/index.js";
 import { addUpdateCommand } from "./update/index.js";
 
 export function addSdkCommand(cli: Argv<GlobalArgs>): void {
-    commandGroup(cli, "sdk", "Configure and generate SDKs", [
-        addAddCommand,
-        addCheckCommand,
-        addGenerateCommand,
-        addListCommand,
-        addPreviewCommand,
-        addUpdateCommand
-    ]);
+    commandGroup({
+        cli,
+        name: "sdk",
+        description: "Configure and generate SDKs",
+        subcommands: [
+            addAddCommand,
+            addCheckCommand,
+            addGenerateCommand,
+            addListCommand,
+            addPreviewCommand,
+            addUpdateCommand
+        ]
+    });
 }
