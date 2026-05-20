@@ -1,0 +1,10 @@
+{
+  "title": "Generator version incompatible with CLI v4",
+  "disposition": "duplicate",
+  "rationale": "Same version/config family as CLI-31; current migration code throws VersionError for this path.",
+  "fixSummary": "—",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-04",
+  "duplicateOf": "CLI-31",
+  "problemSignature": "Invalid or incompatible generator version reached Sentry instead of VersionError/config guidance."
+}

@@ -1,0 +1,9 @@
+{
+  "title": "Failed to parse version: 0.x",
+  "disposition": "shipped",
+  "rationale": "Invalid version strings should be reported with explicit VersionError codes at callers/boundaries, not central name-based classification.",
+  "fixSummary": "Wrap dependency CLI version parsing with VersionError; existing generator-version callers already wrap invalid versions explicitly.",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-04",
+  "problemSignature": "Invalid generator or CLI version string (e.g. 0.x, 1.x, *) reached Sentry as plain Error instead of VersionError."
+}

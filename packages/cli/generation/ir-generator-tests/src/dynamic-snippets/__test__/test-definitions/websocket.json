@@ -1286,10 +1286,192 @@
             ],
             "extends": null,
             "additionalProperties": false
+        },
+        "type_status:StatusResponse": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "StatusResponse",
+                    "camelCase": {
+                        "unsafeName": "statusResponse",
+                        "safeName": "statusResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "status_response",
+                        "safeName": "status_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STATUS_RESPONSE",
+                        "safeName": "STATUS_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StatusResponse",
+                        "safeName": "StatusResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "status",
+                            "camelCase": {
+                                "unsafeName": "status",
+                                "safeName": "status"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "status",
+                                "safeName": "status"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STATUS",
+                                "safeName": "STATUS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Status",
+                                "safeName": "Status"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "status",
+                        "camelCase": {
+                            "unsafeName": "status",
+                            "safeName": "status"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "status",
+                            "safeName": "status"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STATUS",
+                            "safeName": "STATUS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Status",
+                            "safeName": "Status"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "status",
+                        "name": {
+                            "originalName": "status",
+                            "camelCase": {
+                                "unsafeName": "status",
+                                "safeName": "status"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "status",
+                                "safeName": "status"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STATUS",
+                                "safeName": "STATUS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Status",
+                                "safeName": "Status"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
         }
     },
     "headers": [],
-    "endpoints": {},
+    "endpoints": {
+        "endpoint_status.get_status": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "get_status",
+                    "camelCase": {
+                        "unsafeName": "getStatus",
+                        "safeName": "getStatus"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_status",
+                        "safeName": "get_status"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_STATUS",
+                        "safeName": "GET_STATUS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetStatus",
+                        "safeName": "GetStatus"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "status",
+                            "camelCase": {
+                                "unsafeName": "status",
+                                "safeName": "status"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "status",
+                                "safeName": "status"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STATUS",
+                                "safeName": "STATUS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Status",
+                                "safeName": "Status"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "status",
+                        "camelCase": {
+                            "unsafeName": "status",
+                            "safeName": "status"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "status",
+                            "safeName": "status"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STATUS",
+                            "safeName": "STATUS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Status",
+                            "safeName": "Status"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/status"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
     "pathParameters": [],
     "environments": null,
     "variables": null,

@@ -13,6 +13,7 @@ function createIR(opts?: {
     authSchemes?: FernIr.AuthScheme[];
     authRequirement?: FernIr.AuthSchemesRequirement;
     headers?: FernIr.HttpHeader[];
+    pathParameters?: FernIr.PathParameter[];
 }): FernIr.IntermediateRepresentation {
     const ir = createMinimalIR();
     if (opts?.authSchemes || opts?.authRequirement) {
@@ -25,7 +26,23 @@ function createIR(opts?: {
     if (opts?.headers) {
         ir.headers = opts.headers;
     }
+    if (opts?.pathParameters) {
+        ir.pathParameters = opts.pathParameters;
+    }
     return ir;
+}
+
+function createRootPathParameter(opts: { name: string; clientDefault?: FernIr.Literal }): FernIr.PathParameter {
+    return {
+        name: casingsGenerator.generateName(opts.name),
+        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+        location: "ROOT",
+        variable: undefined,
+        clientDefault: opts.clientDefault,
+        v2Examples: undefined,
+        explode: undefined,
+        docs: undefined
+    };
 }
 
 function createHeader(opts: {
@@ -199,13 +216,76 @@ function createGenerator(opts?: {
     return new BaseClientTypeGenerator({
         generateIdempotentRequestOptions: opts?.generateIdempotentRequestOptions ?? false,
         ir: opts?.ir ?? createIR(),
-        omitFernHeaders: opts?.omitFernHeaders ?? false
+        omitFernHeaders: opts?.omitFernHeaders ?? false,
+        retainOriginalCasing: false,
+        parameterNaming: "default",
+        caseConverter
     });
 }
 
 // ========================== Tests ==========================
 
 describe("BaseClientTypeGenerator", () => {
+    describe("root path parameter clientDefault substitution", () => {
+        it("does not emit substitution when no root path params have clientDefault", () => {
+            const ir = createIR({
+                pathParameters: [createRootPathParameter({ name: "apiVersion" })]
+            });
+            const gen = createGenerator({ ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunction = context._captured.statements.find((s: string) =>
+                s.includes("export function normalizeClientOptions")
+            );
+            expect(normalizeFunction).toBeDefined();
+            expect(normalizeFunction).not.toContain("apiVersion:");
+        });
+
+        it('emits `apiVersion: options?.apiVersion ?? "v1beta"` when clientDefault is set', () => {
+            const ir = createIR({
+                pathParameters: [
+                    createRootPathParameter({
+                        name: "apiVersion",
+                        clientDefault: FernIr.Literal.string("v1beta")
+                    })
+                ]
+            });
+            const gen = createGenerator({ ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunction = context._captured.statements.find((s: string) =>
+                s.includes("export function normalizeClientOptions")
+            );
+            expect(normalizeFunction).toBeDefined();
+            expect(normalizeFunction).toContain('apiVersion: options?.apiVersion ?? "v1beta"');
+        });
+
+        it("skips non-ROOT path parameters even when clientDefault is set", () => {
+            const ir = createIR({
+                pathParameters: [
+                    {
+                        ...createRootPathParameter({
+                            name: "userId",
+                            clientDefault: FernIr.Literal.string("me")
+                        }),
+                        location: "ENDPOINT"
+                    }
+                ]
+            });
+            const gen = createGenerator({ ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunction = context._captured.statements.find((s: string) =>
+                s.includes("export function normalizeClientOptions")
+            );
+            expect(normalizeFunction).toBeDefined();
+            expect(normalizeFunction).not.toContain("userId:");
+        });
+    });
+
     describe("OPTIONS_PARAMETER_NAME", () => {
         it("is 'options'", () => {
             expect(BaseClientTypeGenerator.OPTIONS_PARAMETER_NAME).toBe("options");
