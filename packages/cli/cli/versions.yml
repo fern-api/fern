@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.33.3
+  changelogEntry:
+    - summary: |
+        Swallow stdout/stderr EPIPE events in the cli-v2 terminal logger so Unix pipe closures do not report false-positive internal errors.
+      type: fix
+    - summary: |
+        Stop reporting invalid endpoint server references during IR-to-FDR conversion to Sentry.
+      type: fix
+    - summary: |
+        Prevent CLI telemetry from failing when the user's home directory cannot store Fern's analytics ID.
+      type: fix
+  createdAt: "2026-05-20"
+  irVersion: 66
 - version: 5.33.2
   changelogEntry:
     - summary: |
