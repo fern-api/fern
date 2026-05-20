@@ -659,6 +659,7 @@
       "packagePath": [],
     },
     "hasEndpointsInTree": false,
+    "hasWebSocketInTree": false,
     "navigationConfig": undefined,
     "service": undefined,
     "subpackages": [
@@ -704,6 +705,7 @@
         "packagePath": [],
       },
       "hasEndpointsInTree": false,
+      "hasWebSocketInTree": false,
       "name": "types",
       "navigationConfig": undefined,
       "service": undefined,

@@ -3051,7 +3051,8 @@
       "types": [],
       "errors": [],
       "subpackages": [],
-      "hasEndpointsInTree": true
+      "hasEndpointsInTree": true,
+      "hasWebSocketInTree": false
     },
     "subpackage_order": {
       "fernFilepath": {
@@ -3066,7 +3067,8 @@
       "types": [],
       "errors": [],
       "subpackages": [],
-      "hasEndpointsInTree": true
+      "hasEndpointsInTree": true,
+      "hasWebSocketInTree": false
     },
     "subpackage_petowners": {
       "fernFilepath": {
@@ -3086,7 +3088,8 @@
       "errors": [],
       "subpackages": [],
       "websocket": "channel_petowners",
-      "hasEndpointsInTree": false
+      "hasEndpointsInTree": false,
+      "hasWebSocketInTree": true
     }
   },
   "rootPackage": {
@@ -3111,7 +3114,8 @@
       "subpackage_order",
       "subpackage_petowners"
     ],
-    "hasEndpointsInTree": true
+    "hasEndpointsInTree": true,
+    "hasWebSocketInTree": true
   },
   "sdkConfig": {
     "isAuthMandatory": false,

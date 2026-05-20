@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.70.9
+  changelogEntry:
+    - summary: |
+        Use `hasWebSocketInTree` IR field to wire WebSocket sub-clients into the
+        root client, even when the WebSocket channel lives on a nested sub-resource
+        rather than the top-level namespace package.
+      type: fix
+  createdAt: "2026-05-20"
+  irVersion: 67
 - version: 3.70.8
   changelogEntry:
     - summary: |
@@ -8,7 +17,7 @@
         and expat (CVE-2026-45186).
       type: chore
   createdAt: "2026-05-18"
-  irVersion: 66
+  irVersion: 67
 - version: 3.70.7
   changelogEntry:
     - summary: |

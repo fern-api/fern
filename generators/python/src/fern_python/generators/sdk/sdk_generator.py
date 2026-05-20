@@ -323,16 +323,19 @@ class SdkGenerator(AbstractGenerator):
             project=project,
         )
 
-        # Generate test_aiohttp_autodetect.py test file
-        self._generate_aiohttp_test(
-            context=context,
-            project=project,
-        )
+        # Generate test_aiohttp_autodetect.py test file (skip when embedding —
+        # the host project owns its own tests/ directory).
+        if project.should_emit_scaffolding:
+            self._generate_aiohttp_test(
+                context=context,
+                project=project,
+            )
 
         for subpackage_id in ir.subpackages.keys():
             subpackage = ir.subpackages[subpackage_id]
+            has_websocket_in_tree = subpackage.has_web_socket_in_tree or subpackage.websocket is not None
             if subpackage.has_endpoints_in_tree or (
-                subpackage.websocket is not None and context.custom_config.should_generate_websocket_clients
+                has_websocket_in_tree and context.custom_config.should_generate_websocket_clients
             ):
                 channel_websocket = (
                     ir.websocket_channels[subpackage.websocket]
@@ -376,7 +379,10 @@ class SdkGenerator(AbstractGenerator):
 
         context.core_utilities.copy_to_project(project=project)
 
-        if not (generator_config.output.mode.get_as_union().type == "downloadFiles"):
+        if (
+            not (generator_config.output.mode.get_as_union().type == "downloadFiles")
+            and project.should_emit_scaffolding
+        ):
             as_is_copier.copy_to_project(project=project)
 
         test_fac = SnippetTestFactory(
@@ -999,7 +1005,7 @@ __version__ = metadata.version("{project._project_config.package_name}")
         snippets: Snippets,
         project: Project,
     ) -> None:
-        if context.generator_config.output.snippet_filepath is not None:
+        if context.generator_config.output.snippet_filepath is not None and project.should_emit_scaffolding:
             project.add_file(context.generator_config.output.snippet_filepath, snippets.json(indent=4))
 
     def _write_snippet_tests(

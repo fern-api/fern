@@ -6,9 +6,12 @@ import (
 	core "github.com/websocket/fern/core"
 	internal "github.com/websocket/fern/internal"
 	option "github.com/websocket/fern/option"
+	status "github.com/websocket/fern/status"
 )
 
 type Client struct {
+	Status *status.Client
+
 	options *core.RequestOptions
 	baseURL string
 	caller  *internal.Caller
@@ -17,6 +20,7 @@ type Client struct {
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
+		Status:  status.NewClient(options),
 		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
