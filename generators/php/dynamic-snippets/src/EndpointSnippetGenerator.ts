@@ -818,10 +818,17 @@ export class EndpointSnippetGenerator {
         const args: php.TypeLiteral[] = [];
 
         this.context.errors.scope(Scope.PathParameters);
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
-        if (pathParameters.length > 0) {
+        // Endpoint-specific path parameters are always required (no defaults).
+        const endpointPathParameters = request.pathParameters ?? [];
+        // Root-level path parameters (e.g. from x-fern-base-path) may have default
+        // values, which makes them optional in the generated method signature. Place
+        // them after the body argument to match Method.ts parameter ordering.
+        const rootPathParameters = this.context.ir.pathParameters ?? [];
+        if (endpointPathParameters.length > 0) {
             args.push(
-                ...this.getPathParameters({ namedParameters: pathParameters, snippet }).map((field) => field.value)
+                ...this.getPathParameters({ namedParameters: endpointPathParameters, snippet }).map(
+                    (field) => field.value
+                )
             );
         }
         this.context.errors.unscope();
@@ -831,6 +838,16 @@ export class EndpointSnippetGenerator {
             args.push(this.getBodyRequestArg({ body: request.body, value: snippet.requestBody }));
         }
         this.context.errors.unscope();
+
+        if (rootPathParameters.length > 0) {
+            this.context.errors.scope(Scope.PathParameters);
+            args.push(
+                ...this.getPathParameters({ namedParameters: rootPathParameters, snippet }).map(
+                    (field) => field.value
+                )
+            );
+            this.context.errors.unscope();
+        }
 
         return args;
     }
@@ -873,11 +890,24 @@ export class EndpointSnippetGenerator {
         const inlinePathParameters = this.context.customConfig?.inlinePathParameters ?? false;
 
         this.context.errors.scope(Scope.PathParameters);
-        const pathParameterFields: php.ConstructorField[] = [];
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
-        if (pathParameters.length > 0) {
-            pathParameterFields.push(...this.getPathParameters({ namedParameters: pathParameters, snippet }));
+        // Separate endpoint-specific path params (required) from root-level path params
+        // (may have defaults from x-fern-base-path). Root-level params are placed after
+        // the request argument to match Method.ts parameter ordering.
+        const endpointPathParameterFields: php.ConstructorField[] = [];
+        const rootPathParameterFields: php.ConstructorField[] = [];
+        const endpointPathParameters = request.pathParameters ?? [];
+        const rootPathParameters = this.context.ir.pathParameters ?? [];
+        if (endpointPathParameters.length > 0) {
+            endpointPathParameterFields.push(
+                ...this.getPathParameters({ namedParameters: endpointPathParameters, snippet })
+            );
         }
+        if (rootPathParameters.length > 0) {
+            rootPathParameterFields.push(
+                ...this.getPathParameters({ namedParameters: rootPathParameters, snippet })
+            );
+        }
+        const pathParameterFields = [...endpointPathParameterFields, ...rootPathParameterFields];
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.RequestBody);
@@ -885,7 +915,7 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         if (!this.context.includePathParametersInWrappedRequest({ request, inlinePathParameters })) {
-            args.push(...pathParameterFields.map((field) => field.value));
+            args.push(...endpointPathParameterFields.map((field) => field.value));
         }
 
         if (
@@ -909,6 +939,11 @@ export class EndpointSnippetGenerator {
                 })
             );
         }
+
+        if (!this.context.includePathParametersInWrappedRequest({ request, inlinePathParameters })) {
+            args.push(...rootPathParameterFields.map((field) => field.value));
+        }
+
         return args;
     }
 
