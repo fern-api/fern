@@ -12,7 +12,7 @@ describe("WidgetsClient", () => {
 
         server
             .mockEndpoint()
-            .post("/{apiVersion}/widgets")
+            .post("/apiVersion/widgets")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
