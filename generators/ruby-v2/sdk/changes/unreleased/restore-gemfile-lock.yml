@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Restore `Gemfile.lock` generation after `persist()` via `bundle lock`.
+    This was accidentally removed in the rubocop-at-emitter-time refactor
+    (PR #15202), causing generated Ruby SDKs to ship without a lockfile.
+  type: fix

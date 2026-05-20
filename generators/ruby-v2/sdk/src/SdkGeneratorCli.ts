@@ -1,6 +1,7 @@
 import { File, GeneratorError, GeneratorNotificationService } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { loggingExeca } from "@fern-api/logging-execa";
 import { AbstractRubyGeneratorCli } from "@fern-api/ruby-base";
 import { DynamicSnippetsGenerator } from "@fern-api/ruby-dynamic-snippets";
 import { generateModels } from "@fern-api/ruby-model";
@@ -146,6 +147,22 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         await this.generateWireTestFiles(context);
 
         await context.project.persist();
+
+        // Clear nix/devbox Ruby environment variables that may conflict with the
+        // project's bundled gems (e.g. RUBYLIB and GEM_PATH pointing to Ruby 3.4
+        // paths while running Ruby 3.3).
+        const rubyEnv = {
+            ...process.env,
+            RUBYLIB: undefined,
+            GEM_PATH: undefined,
+            GEM_HOME: undefined
+        };
+
+        await loggingExeca(context.logger, "bundle", ["lock"], {
+            cwd: context.project.absolutePathToOutputDirectory,
+            doNotPipeOutput: true,
+            env: rubyEnv
+        });
     }
 
     private generateRequests(context: SdkGeneratorContext, service: FernIr.HttpService, serviceId: string) {
