@@ -1,0 +1,18 @@
+- summary: |
+    Support structured `x-fern-base-path` with per-parameter declarations and defaults.
+    The OpenAPI extension now accepts an object form with `path` and `parameters`, where
+    each parameter can specify a `type`, `docs`, and `default`. Defaults flow through as
+    `client-default` on the generated Fern Definition's root `path-parameters`, so SDKs
+    treat the parameter as optional and substitute the default at runtime.
+
+    When the base path is parameterized, the OpenAPI importer now emits `base-path` and
+    `path-parameters` at the root of the generated `api.yml` instead of inlining the
+    base path onto every endpoint URL. Endpoints whose request body is the only remaining
+    field collapse to the `request: <SchemaName>` scalar shorthand.
+
+    Generator updates: TypeScript SDK substitutes the configured default for root path
+    parameters inside `normalizeClientOptions`, so omitting an optional value at client
+    construction produces the literal default in URLs (no more `undefined` in the path).
+    Python SDK hoists root path parameters from per-endpoint arguments to the client
+    constructor and routes URL substitution through the client wrapper.
+  type: feat
