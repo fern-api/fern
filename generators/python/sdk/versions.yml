@@ -2,10 +2,10 @@
 - version: 5.14.0
   changelogEntry:
     - summary: |
-        Hoist root path parameters to the client constructor. They no longer
-        appear on endpoint method signatures; URL substitution reads them from
-        the client wrapper. Breaking change for SDKs whose Fern Definition
-        declares root-level `path-parameters`.
+        Add support for the `x-fern-base-path` OpenAPI extension. Root path
+        parameters declared on the base path are hoisted to the client
+        constructor; endpoint methods no longer take them as arguments and
+        URL substitution reads them from the client wrapper.
       type: feat
   createdAt: "2026-05-19"
   irVersion: 67
