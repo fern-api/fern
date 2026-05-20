@@ -355,7 +355,7 @@ def parse_obj_as(type_: Type[T], object_: Any) -> T:
         dealiased_object = convert_and_respect_annotation_metadata(object_=object_, annotation=type_, direction="read")
     if IS_PYDANTIC_V2:
         adapter = _get_type_adapter(type_)
-        return adapter.validate_python(dealiased_object)
+        return adapter.validate_python(dealiased_object)  # type: ignore[no-any-return]
     return pydantic.parse_obj_as(type_, dealiased_object)
 
 
