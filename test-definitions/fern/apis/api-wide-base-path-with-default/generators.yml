@@ -2,6 +2,10 @@
 api:
   specs:
     - openapi: openapi.yml
+      settings:
+        example-generation:
+          request:
+            max-depth: 0
 groups:
   php-sdk:
     generators:
