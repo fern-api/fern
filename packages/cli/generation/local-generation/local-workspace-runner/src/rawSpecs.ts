@@ -58,13 +58,26 @@ export async function collectRawSpecs({
         return manifest;
     }
 
-    for (const [i, spec] of specs.entries()) {
+    const typeCounters: Record<string, number> = {};
+    function nextIndex(type: string): number {
+        const idx = typeCounters[type] ?? 0;
+        typeCounters[type] = idx + 1;
+        return idx;
+    }
+
+    for (const spec of specs) {
+        let specType: string;
+        if (spec.type === "openapi") {
+            specType = (await isAsyncAPISpec(spec.absoluteFilepath)) ? "asyncapi" : "openapi";
+        } else {
+            specType = spec.type;
+        }
         const entry = await resolveAndWriteSpec({
             spec,
             hostOutputDir,
             containerBaseDir,
             context,
-            index: i,
+            index: nextIndex(specType),
             audiences
         });
         manifest.specs.push(entry);

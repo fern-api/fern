@@ -424,9 +424,9 @@ describe("collectRawSpecs", () => {
         expect(manifest.specs[0]?.type).toBe("openapi");
         expect(manifest.specs[0]?.specPath).toBe("/fern/specs/openapi0.json");
         expect(manifest.specs[1]?.type).toBe("protobuf");
-        expect(manifest.specs[1]?.specPath).toBe("/fern/specs/protobuf1");
+        expect(manifest.specs[1]?.specPath).toBe("/fern/specs/protobuf0");
         expect(manifest.specs[2]?.type).toBe("graphql");
-        expect(manifest.specs[2]?.specPath).toBe("/fern/specs/graphql2.graphql");
+        expect(manifest.specs[2]?.specPath).toBe("/fern/specs/graphql0.graphql");
     });
 
     it("uses container paths in manifest entries", async () => {
