@@ -671,7 +671,18 @@ async function getVersionedNavigationConfiguration({
     const versionedNavbars: docsYml.VersionInfo[] = [];
     for (const version of versions) {
         const absoluteFilepathToVersionFile = resolve(absolutePathToFernFolder, version.path);
-        const versionContent = yaml.load((await readFile(absoluteFilepathToVersionFile)).toString());
+        let versionContent: unknown;
+        try {
+            versionContent = yaml.load((await readFile(absoluteFilepathToVersionFile)).toString());
+        } catch (error) {
+            if (error instanceof yaml.YAMLException) {
+                throw new CliError({
+                    message: `Failed to parse version file ${version.path}: ${error.message}`,
+                    code: CliError.Code.ParseError
+                });
+            }
+            throw error;
+        }
 
         // Sanitize null/undefined values before parsing
         const removedPaths: string[][] = [];
@@ -748,7 +759,18 @@ async function getNavigationConfiguration({
                 let navigation: docsYml.DocsNavigationConfiguration;
                 const absoluteFilepathToProductFile = resolve(absolutePathToFernFolder, product.path);
 
-                const content = yaml.load((await readFile(absoluteFilepathToProductFile)).toString());
+                let content: unknown;
+                try {
+                    content = yaml.load((await readFile(absoluteFilepathToProductFile)).toString());
+                } catch (error) {
+                    if (error instanceof yaml.YAMLException) {
+                        throw new CliError({
+                            message: `Failed to parse product file ${product.path}: ${error.message}`,
+                            code: CliError.Code.ParseError
+                        });
+                    }
+                    throw error;
+                }
 
                 // Sanitize null/undefined values before parsing
                 const removedPaths: string[][] = [];

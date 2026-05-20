@@ -114,7 +114,9 @@ const USER_ENVIRONMENT_ERRNOS: ReadonlySet<string> = new Set([
     "EMFILE",
     "ENFILE",
     "EBUSY",
-    "EADDRINUSE"
+    "EADDRINUSE",
+    "ENOTEMPTY",
+    "ENOMEM"
 ]);
 
 // `ErrnoException` codes from `node:net` / `node:dns` / `undici` that mean
@@ -136,7 +138,17 @@ function errnoCode(error: unknown): string | undefined {
         return undefined;
     }
     const code = (error as NodeJS.ErrnoException).code;
-    return typeof code === "string" ? code : undefined;
+    if (typeof code === "string") {
+        return code;
+    }
+    const cause = (error as { cause?: unknown }).cause;
+    if (cause instanceof Error) {
+        const causeCode = (cause as NodeJS.ErrnoException).code;
+        if (typeof causeCode === "string") {
+            return causeCode;
+        }
+    }
+    return undefined;
 }
 
 /**

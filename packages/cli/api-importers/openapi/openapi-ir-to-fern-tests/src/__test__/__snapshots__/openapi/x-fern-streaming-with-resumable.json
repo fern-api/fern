@@ -74,10 +74,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/completions/chat",
-              "request": {
-                "body": "root.CreateCompletionRequest",
-                "content-type": "application/json",
-              },
+              "request": "root.CreateCompletionRequest",
               "response-stream": {
                 "docs": "Success!",
                 "format": "sse",
@@ -112,10 +109,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/completions/chat-no-resume",
-              "request": {
-                "body": "root.CreateCompletionRequest",
-                "content-type": "application/json",
-              },
+              "request": "root.CreateCompletionRequest",
               "response-stream": {
                 "docs": "Success!",
                 "format": "sse",
@@ -147,9 +141,7 @@ service:
         config.
       source:
         openapi: ../openapi.yml
-      request:
-        body: root.CreateCompletionRequest
-        content-type: application/json
+      request: root.CreateCompletionRequest
       response-stream:
         docs: Success!
         type: root.CompletionChunk
@@ -169,9 +161,7 @@ service:
       docs: SSE endpoint that overrides the document-level default to opt out.
       source:
         openapi: ../openapi.yml
-      request:
-        body: root.CreateCompletionRequest
-        content-type: application/json
+      request: root.CreateCompletionRequest
       response-stream:
         docs: Success!
         type: root.CompletionChunk

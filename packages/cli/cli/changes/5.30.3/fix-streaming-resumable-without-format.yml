@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix a `TypeError: Cannot read properties of undefined (reading 'startsWith')`
+    crash in the OpenAPI parser when an operation's `x-fern-streaming` extension
+    sets only `resumable: true` (or otherwise omits both `format` and
+    `stream-condition`). The parser now returns `undefined` for that operation
+    instead of crashing.
+  type: fix

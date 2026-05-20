@@ -55,10 +55,7 @@
               "method": "PATCH",
               "pagination": undefined,
               "path": "/orgs/details",
-              "request": {
-                "body": "UpdateOrgDetailsRequest",
-                "content-type": "application/json",
-              },
+              "request": "UpdateOrgDetailsRequest",
               "response": {
                 "docs": "Updated organization details",
                 "status-code": 200,
@@ -153,9 +150,7 @@
       source:
         openapi: ../openapi.yml
       display-name: Update organization details
-      request:
-        body: UpdateOrgDetailsRequest
-        content-type: application/json
+      request: UpdateOrgDetailsRequest
       response:
         docs: Updated organization details
         type: UpdateOrgDetailsResponse

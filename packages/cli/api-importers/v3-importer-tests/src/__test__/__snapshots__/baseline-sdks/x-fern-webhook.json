@@ -685,7 +685,8 @@
       "errors": [],
       "subpackages": [],
       "webhooks": "webhooks_status",
-      "hasEndpointsInTree": false
+      "hasEndpointsInTree": false,
+      "hasWebSocketInTree": false
     },
     "subpackage_status2": {
       "fernFilepath": {
@@ -700,7 +701,8 @@
       "errors": [],
       "subpackages": [],
       "webhooks": "webhooks_status2",
-      "hasEndpointsInTree": false
+      "hasEndpointsInTree": false,
+      "hasWebSocketInTree": false
     }
   },
   "rootPackage": {
@@ -716,7 +718,8 @@
       "subpackage_status",
       "subpackage_status2"
     ],
-    "hasEndpointsInTree": false
+    "hasEndpointsInTree": false,
+    "hasWebSocketInTree": false
   },
   "sdkConfig": {
     "isAuthMandatory": true,

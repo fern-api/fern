@@ -10,17 +10,35 @@ COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm && \
     ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
+# Security update 2026-05-18: trixie's krb5 (1.21.3-5), curl (8.14.1),
+# and gnutls28 (3.8.9) are still vulnerable to CVE-2026-40355,
+# CVE-2026-40356 (krb5), CVE-2026-1965/4873/5545/6253/6429 (curl),
+# CVE-2026-3832 (gnutls28), and CVE-2026-45186 (expat). Pin sid as a
+# low-priority source and pull the fixed packages from there.
 RUN apt-get update \
     && apt-get -y --no-install-recommends dist-upgrade \
     && apt-get install -y --no-install-recommends ca-certificates curl git \
     && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/*
+RUN echo "Types: deb" > /etc/apt/sources.list.d/sid.sources \
+    && echo "URIs: http://deb.debian.org/debian" >> /etc/apt/sources.list.d/sid.sources \
+    && echo "Suites: sid" >> /etc/apt/sources.list.d/sid.sources \
+    && echo "Components: main" >> /etc/apt/sources.list.d/sid.sources \
+    && echo "Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg" >> /etc/apt/sources.list.d/sid.sources \
+    && echo 'Package: *\nPin: release n=sid\nPin-Priority: 100' > /etc/apt/preferences.d/sid-low \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends -t sid \
+       libkrb5-3 libkrb5support0 libk5crypto3 libgssapi-krb5-2 \
+       curl libcurl4t64 libgnutls30t64 \
+       libexpat1 \
+    && rm -f /etc/apt/sources.list.d/sid.sources /etc/apt/preferences.d/sid-low \
+    && rm -rf /var/lib/apt/lists/*
 RUN node --version
 RUN npm --version
 
 # Patch npm's bundled picomatch@4.0.3 -> 4.0.4 (GHSA-c2c7-rcm5-vvqj,
-# GHSA-3v7f-55p6-f55p) and brace-expansion@5.0.4 -> 5.0.5
-# (GHSA-f886-m6hf-6m8v) copied from the node stage.
+# GHSA-3v7f-55p6-f55p) and brace-expansion@5.0.4 -> 5.0.6
+# (GHSA-jxxr-4gwj-5jf2) copied from the node stage.
 RUN for dir in \
       /usr/local/lib/node_modules/npm/node_modules/picomatch \
       /usr/local/lib/node_modules/npm/node_modules/tinyglobby/node_modules/picomatch; do \
@@ -38,10 +56,10 @@ RUN for dir in \
       if [ -d "$dir" ]; then \
         rm -rf "$dir" && \
         cd "$(dirname "$dir")" && \
-        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.5.tgz -o brace-expansion-5.0.5.tgz && \
-        tar -xzf brace-expansion-5.0.5.tgz && \
+        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.6.tgz -o brace-expansion-5.0.6.tgz && \
+        tar -xzf brace-expansion-5.0.6.tgz && \
         mv package brace-expansion && \
-        rm brace-expansion-5.0.5.tgz; \
+        rm brace-expansion-5.0.6.tgz; \
       fi; \
     done
 

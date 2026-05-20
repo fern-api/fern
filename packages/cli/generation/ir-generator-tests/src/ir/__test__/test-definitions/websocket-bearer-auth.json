@@ -3043,6 +3043,7 @@
             "webhooks": null,
             "websocket": "channel_realtime-no-auth",
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": true,
             "docs": null
         },
         "subpackage_realtime": {
@@ -3071,6 +3072,7 @@
             "webhooks": null,
             "websocket": "channel_realtime",
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": true,
             "docs": null
         }
     },
@@ -3091,6 +3093,7 @@
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": false,
+        "hasWebSocketInTree": true,
         "docs": null
     },
     "sdkConfig": {

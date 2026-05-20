@@ -3445,6 +3445,7 @@
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_ast": {
@@ -3483,6 +3484,7 @@
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -3506,6 +3508,7 @@
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": false,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {

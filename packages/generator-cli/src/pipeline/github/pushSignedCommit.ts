@@ -34,7 +34,11 @@ export interface PushSignedCommitOptions {
     rebaseOnConflict?: boolean;
     /**
      * Override the commit author and committer identity.
-     * Defaults to the Fern bot identity (fern-api / fern-api[bot] noreply email).
+     *
+     * Omitted: `author` defaults to the Fern bot identity; `committer` is not sent, so
+     * GitHub fills it in from the authenticated installation and signs the commit.
+     * Set: forces both `author` and `committer` to the provided identity — suppresses
+     * auto-signing, but pins the committer for tooling that reads `git log --format=%cn`.
      */
     author?: CommitAuthor;
     logger: PipelineLogger;
@@ -77,18 +81,20 @@ export async function pushSignedCommit({
         tempRefPushed = true;
 
         for (let attempt = 0; attempt < MAX_CONCURRENT_PUSH_RETRIES; attempt++) {
-            const commitAuthor = {
-                name: author?.name ?? FERN_BOT_NAME,
-                email: author?.email ?? FERN_BOT_EMAIL
-            };
+            // GitHub's web-flow signer keys off `committer`, not `author`. Omitting `committer`
+            // lets GitHub fill it in from the authenticated signing-capable principal (App
+            // installation, OAuth — never a PAT) and stamp the "Verified" signature. Always
+            // sending `author` keeps PR/`git log` attribution stable across every auth flavour.
+            const resolvedAuthor = author ?? { name: FERN_BOT_NAME, email: FERN_BOT_EMAIL };
+            const committerField = author != null ? { committer: author } : {};
             const { data: signedCommit } = await octokit.git.createCommit({
                 owner,
                 repo,
                 message,
                 tree: treeSha,
                 parents,
-                author: commitAuthor,
-                committer: commitAuthor
+                author: resolvedAuthor,
+                ...committerField
             });
             const signedSha = signedCommit.sha;
 

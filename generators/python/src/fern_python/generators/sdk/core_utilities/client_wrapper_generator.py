@@ -736,6 +736,33 @@ class ClientWrapperGenerator:
                 )
             )
 
+        for root_path_parameter in self._context.ir.path_parameters:
+            if root_path_parameter.location != ir_types.PathParameterLocation.ROOT:
+                continue
+            path_param_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                root_path_parameter.value_type
+            )
+            constructor_parameter_name = names.get_root_path_parameter_constructor_parameter_name(root_path_parameter)
+            client_default_initializer = self._get_client_default_initializer(root_path_parameter.client_default)
+            if client_default_initializer is not None and not path_param_type_hint.is_optional:
+                path_param_type_hint = AST.TypeHint.optional(path_param_type_hint)
+            parameters.append(
+                ConstructorParameter(
+                    constructor_parameter_name=constructor_parameter_name,
+                    private_member_name=names.get_root_path_parameter_member_name(root_path_parameter),
+                    type_hint=path_param_type_hint,
+                    initializer=(
+                        client_default_initializer
+                        if client_default_initializer is not None
+                        else AST.Expression(
+                            f'{constructor_parameter_name}="YOUR_{resolve_name(root_path_parameter.name).screaming_snake_case.safe_name}"',
+                        )
+                    ),
+                    client_default=client_default_initializer,
+                    docs=root_path_parameter.docs,
+                )
+            )
+
         # TODO(dsinghvi): Support suppliers for global headers
         for header in self._context.ir.headers:
             type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(header.value_type)

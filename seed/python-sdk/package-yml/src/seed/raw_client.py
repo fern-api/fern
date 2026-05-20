@@ -21,13 +21,11 @@ class RawSeedPackageYml:
         self._client_wrapper = client_wrapper
 
     def echo(
-        self, id: str, *, name: str, size: int, request_options: typing.Optional[RequestOptions] = None
+        self, *, name: str, size: int, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[str]:
         """
         Parameters
         ----------
-        id : str
-
         name : str
 
         size : int
@@ -40,7 +38,7 @@ class RawSeedPackageYml:
         HttpResponse[str]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(id)}/",
+            f"{encode_path_param(self._client_wrapper._id)}/",
             method="POST",
             json={
                 "name": name,
@@ -74,13 +72,11 @@ class AsyncRawSeedPackageYml:
         self._client_wrapper = client_wrapper
 
     async def echo(
-        self, id: str, *, name: str, size: int, request_options: typing.Optional[RequestOptions] = None
+        self, *, name: str, size: int, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[str]:
         """
         Parameters
         ----------
-        id : str
-
         name : str
 
         size : int
@@ -93,7 +89,7 @@ class AsyncRawSeedPackageYml:
         AsyncHttpResponse[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(id)}/",
+            f"{encode_path_param(self._client_wrapper._id)}/",
             method="POST",
             json={
                 "name": name,

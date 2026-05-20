@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/status",
+                "method": "GET",
+                "identifier_override": "endpoint_status.get_status"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/websocket/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Status.GetStatus(\n\tcontext.TODO(),\n)\n"
+            }
+        }
+    ]
+}

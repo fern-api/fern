@@ -541,19 +541,23 @@ async function uploadDynamicIRForSdkGeneration({
 
     // Upload the dynamic IR to S3
     const dynamicIRJson = JSON.stringify(dynamicIR);
-    const uploadResponse = await fetch(uploadUrl, {
-        method: "PUT",
-        body: dynamicIRJson,
-        headers: {
-            "Content-Type": "application/octet-stream",
-            "Content-Length": dynamicIRJson.length.toString()
-        }
-    });
+    try {
+        const uploadResponse = await fetch(uploadUrl, {
+            method: "PUT",
+            body: dynamicIRJson,
+            headers: {
+                "Content-Type": "application/octet-stream",
+                "Content-Length": dynamicIRJson.length.toString()
+            }
+        });
 
-    if (uploadResponse.ok) {
-        context.logger.debug(`Uploaded dynamic IR for ${language}:${packageName} (${version})`);
-    } else {
-        context.logger.warn(`Failed to upload dynamic IR for ${language}: ${uploadResponse.status}`);
+        if (uploadResponse.ok) {
+            context.logger.debug(`Uploaded dynamic IR for ${language}:${packageName} (${version})`);
+        } else {
+            context.logger.warn(`Failed to upload dynamic IR for ${language}: ${uploadResponse.status}`);
+        }
+    } catch (error) {
+        context.logger.warn(`Network error uploading dynamic IR for ${language}: ${error}`);
     }
 }
 
