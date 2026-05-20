@@ -57,14 +57,16 @@ export function getFernBasePath(document: OpenAPIV3.Document): FernBasePathResul
     const pathParameters: PathParameter[] = [];
     for (const name of placeholders) {
         const entry = parametersMap[name];
-        const docs = typeof entry === "object" && entry != null && !Array.isArray(entry)
-            ? typeof (entry as Record<string, unknown>)["docs"] === "string"
-                ? ((entry as Record<string, unknown>)["docs"] as string)
-                : undefined
-            : undefined;
-        const clientDefault = typeof entry === "object" && entry != null && !Array.isArray(entry)
-            ? (entry as Record<string, unknown>)["default"]
-            : undefined;
+        const docs =
+            typeof entry === "object" && entry != null && !Array.isArray(entry)
+                ? typeof (entry as Record<string, unknown>)["docs"] === "string"
+                    ? ((entry as Record<string, unknown>)["docs"] as string)
+                    : undefined
+                : undefined;
+        const clientDefault =
+            typeof entry === "object" && entry != null && !Array.isArray(entry)
+                ? (entry as Record<string, unknown>)["default"]
+                : undefined;
         pathParameters.push({
             name,
             schema: Schema.primitive({
