@@ -1,0 +1,9 @@
+{
+  "title": "Missing translations directory validation",
+  "disposition": "shipped",
+  "rationale": "Missing translations directory is user docs configuration and was reported without a non-reportable code.",
+  "fixSummary": "Pass ValidationError when translation locale directories are missing.",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-04",
+  "problemSignature": "Docs translations configuration references a locale whose translations directory is missing; should be validation/config semantics, not InternalError."
+}

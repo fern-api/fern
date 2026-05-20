@@ -30,11 +30,11 @@ export class PostGenerationPipeline {
         let replayEnabled = config.replay?.enabled ?? false;
         let autoVersionEnabled = config.autoVersion?.enabled ?? false;
 
-        // Disallow push mode + replay: push mode force-pushes to the base branch,
-        // which is incompatible with replay's 3-way merge workflow.
-        if (replayEnabled && config.github?.mode === "push") {
+        // Disallow push/commit-and-release mode + replay: these modes push directly
+        // to the base branch, which is incompatible with replay's 3-way merge workflow.
+        if (replayEnabled && (config.github?.mode === "push" || config.github?.mode === "commit-and-release")) {
             this.logger.warn(
-                "Replay is not supported with GitHub push mode. Disabling replay to prevent force push to base branch."
+                `Replay is not supported with GitHub ${config.github.mode} mode. Disabling replay to prevent push to base branch.`
             );
             replayEnabled = false;
         }
@@ -64,8 +64,7 @@ export class PostGenerationPipeline {
                     this.logger,
                     { enabled: true, skipApplication: config.replay.skipApplication },
                     config.cliVersion,
-                    config.generatorVersions,
-                    config.generatorName
+                    config.generatorVersions
                 )
             );
         }
@@ -81,8 +80,7 @@ export class PostGenerationPipeline {
                     this.logger,
                     config.replay,
                     config.cliVersion,
-                    config.generatorVersions,
-                    config.generatorName
+                    config.generatorVersions
                 )
             );
         }

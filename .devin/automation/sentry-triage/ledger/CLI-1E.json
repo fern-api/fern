@@ -1,0 +1,10 @@
+{
+  "title": "YAML duplicated mapping key",
+  "disposition": "duplicate",
+  "rationale": "Same invalid user YAML parse family as CLI-2E.",
+  "fixSummary": "—",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+  "lastAnalyzed": "2026-05-04",
+  "duplicateOf": "CLI-2E",
+  "problemSignature": "Invalid YAML while loading user-authored config or OpenAPI spec; parser exception treated as InternalError."
+}

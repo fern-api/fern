@@ -14,5 +14,10 @@ module Seed
         }
       )
     end
+
+    # @return [Seed::Status::Client]
+    def status
+      @status ||= Seed::Status::Client.new(client: @raw_client)
+    end
   end
 end

@@ -91,6 +91,22 @@ describe("getFernStreamingExtension - resumable inheritance (Option A: silent fa
         expect(result?.type).toBe("streamCondition");
         expect(result?.resumable).toBe(true);
     });
+
+    it("returns undefined (no crash) when only resumable is set, with no format or stream-condition", () => {
+        const document = makeDocument();
+        const operation = makeOperation({ resumable: true });
+
+        expect(() => getFernStreamingExtension(document, operation)).not.toThrow();
+        expect(getFernStreamingExtension(document, operation)).toBeUndefined();
+    });
+
+    it("returns undefined (no crash) when stream-condition is missing and format is missing", () => {
+        const document = makeDocument();
+        const operation = makeOperation({ terminator: "[DONE]" });
+
+        expect(() => getFernStreamingExtension(document, operation)).not.toThrow();
+        expect(getFernStreamingExtension(document, operation)).toBeUndefined();
+    });
 });
 
 describe("getDocumentLevelResumable", () => {

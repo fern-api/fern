@@ -1,0 +1,9 @@
+{
+  "title": "Global theme fetch returned HTTP 403",
+  "disposition": "shipped",
+  "rationale": "Global theme lookup failures are auth/config/network conditions, not internal CLI defects.",
+  "fixSummary": "Pass ConfigError/NetworkError codes from stitchGlobalTheme failAndThrow sites.",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-04",
+  "problemSignature": "Docs global-theme fetch or asset download failure reported through failAndThrow without a non-reportable config/network code."
+}

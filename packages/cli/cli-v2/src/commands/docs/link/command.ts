@@ -4,5 +4,10 @@ import { commandGroup } from "../../_internal/commandGroup.js";
 import { addLinkCheckCommand } from "./check/index.js";
 
 export function addLinkCommand(cli: Argv<GlobalArgs>): void {
-    commandGroup(cli, "link", "Manage and validate links on live docs sites.", [addLinkCheckCommand]);
+    commandGroup({
+        cli,
+        name: "link",
+        description: "Manage and validate links on live docs sites.",
+        subcommands: [addLinkCheckCommand]
+    });
 }

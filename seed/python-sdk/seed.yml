@@ -1,4 +1,4 @@
-irVersion: v66
+irVersion: v67
 displayName: Python SDK
 image: fernapi/fern-python-sdk
 changelogLocation: ../../generators/python/sdk/versions.yml
@@ -291,6 +291,26 @@ fixtures:
     - customConfig:
         package_path: matryoshka/doll/structure
       outputFolder: package-path
+    - customConfig:
+        output_directory: project-root
+      outputFolder: output-directory-project-root
+    # source-root mode intentionally skips pyproject.toml/requirements.txt emission
+    # (it's designed for embedding into an existing project), so the build/test
+    # scripts — which run `poetry install` — have nothing to operate on. Skip them.
+    - customConfig:
+        output_directory: source-root
+      outputFolder: output-directory-source-root
+      skipScripts: true
+    - customConfig:
+        output_directory: source-root
+        package_path: my_org/my_sdk
+      outputFolder: output-directory-source-root-with-package-path
+      skipScripts: true
+    - customConfig:
+        output_directory: source-root
+        package_name: sub.dir
+      outputFolder: output-directory-source-root-no-package-root
+      skipScripts: true
     - customConfig:
         import_paths:
           - custom_integration

@@ -38,6 +38,7 @@
       "packagePath": [],
     },
     "hasEndpointsInTree": false,
+    "hasWebSocketInTree": undefined,
     "navigationConfig": undefined,
     "service": "service_",
     "subpackages": [],
@@ -731,7 +732,9 @@
         "name": "PaymentList",
         "typeId": "PaymentList",
       },
-      "referencedTypes": Set {},
+      "referencedTypes": Set {
+        "Payment",
+      },
       "shape": {
         "_visit": [Function],
         "extendedProperties": [],

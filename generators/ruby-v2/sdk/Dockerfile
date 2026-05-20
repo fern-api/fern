@@ -135,16 +135,16 @@ RUN for dir in \
       fi; \
     done
 
-# - brace-expansion 5.0.3 -> 5.0.5 (GHSA-f886-m6hf-6m8v: zero-step sequence hangs).
+# - brace-expansion 5.0.3 -> 5.0.6 (GHSA-jxxr-4gwj-5jf2: zero-step sequence hangs).
 RUN for dir in \
       /usr/lib/node_modules/npm/node_modules/brace-expansion; do \
       if [ -d "$dir" ]; then \
         rm -rf "$dir" && \
         cd "$(dirname "$dir")" && \
-        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.5.tgz -o brace-expansion-5.0.5.tgz && \
-        tar -xzf brace-expansion-5.0.5.tgz && \
+        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.6.tgz -o brace-expansion-5.0.6.tgz && \
+        tar -xzf brace-expansion-5.0.6.tgz && \
         mv package brace-expansion && \
-        rm brace-expansion-5.0.5.tgz; \
+        rm brace-expansion-5.0.6.tgz; \
       fi; \
     done
 

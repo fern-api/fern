@@ -4694,6 +4694,7 @@
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_realtime": {
@@ -4722,6 +4723,7 @@
             "webhooks": null,
             "websocket": "channel_realtime",
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": true,
             "docs": null
         }
     },
@@ -4742,6 +4744,7 @@
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": true,
         "docs": null
     },
     "sdkConfig": {

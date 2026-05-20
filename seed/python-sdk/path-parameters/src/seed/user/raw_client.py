@@ -21,14 +21,10 @@ class RawUserClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_user(
-        self, tenant_id: str, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[User]:
+    def get_user(self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[User]:
         """
         Parameters
         ----------
-        tenant_id : str
-
         user_id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -39,7 +35,7 @@ class RawUserClient:
         HttpResponse[User]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}",
+            f"{encode_path_param(self._client_wrapper._tenant_id)}/user/{encode_path_param(user_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -63,18 +59,11 @@ class RawUserClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create_user(
-        self,
-        tenant_id: str,
-        *,
-        name: str,
-        tags: typing.Sequence[str],
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, name: str, tags: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[User]:
         """
         Parameters
         ----------
-        tenant_id : str
-
         name : str
 
         tags : typing.Sequence[str]
@@ -87,7 +76,7 @@ class RawUserClient:
         HttpResponse[User]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(tenant_id)}/user/",
+            f"{encode_path_param(self._client_wrapper._tenant_id)}/user/",
             method="POST",
             json={
                 "name": name,
@@ -117,7 +106,6 @@ class RawUserClient:
 
     def update_user(
         self,
-        tenant_id: str,
         user_id: str,
         *,
         name: str,
@@ -127,8 +115,6 @@ class RawUserClient:
         """
         Parameters
         ----------
-        tenant_id : str
-
         user_id : str
 
         name : str
@@ -143,7 +129,7 @@ class RawUserClient:
         HttpResponse[User]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}",
+            f"{encode_path_param(self._client_wrapper._tenant_id)}/user/{encode_path_param(user_id)}",
             method="PATCH",
             json={
                 "name": name,
@@ -173,7 +159,6 @@ class RawUserClient:
 
     def search_users(
         self,
-        tenant_id: str,
         user_id: str,
         *,
         limit: typing.Optional[int] = None,
@@ -182,8 +167,6 @@ class RawUserClient:
         """
         Parameters
         ----------
-        tenant_id : str
-
         user_id : str
 
         limit : typing.Optional[int]
@@ -196,7 +179,7 @@ class RawUserClient:
         HttpResponse[typing.List[User]]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}/search",
+            f"{encode_path_param(self._client_wrapper._tenant_id)}/user/{encode_path_param(user_id)}/search",
             method="GET",
             params={
                 "limit": limit,
@@ -223,15 +206,13 @@ class RawUserClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_user_metadata(
-        self, tenant_id: str, user_id: str, version: int, *, request_options: typing.Optional[RequestOptions] = None
+        self, user_id: str, version: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[User]:
         """
         Test endpoint with path parameter that has a text prefix (v{version})
 
         Parameters
         ----------
-        tenant_id : str
-
         user_id : str
 
         version : int
@@ -244,7 +225,7 @@ class RawUserClient:
         HttpResponse[User]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}/metadata/v{encode_path_param(version)}",
+            f"{encode_path_param(self._client_wrapper._tenant_id)}/user/{encode_path_param(user_id)}/metadata/v{encode_path_param(version)}",
             method="GET",
             request_options=request_options,
         )
@@ -268,21 +249,13 @@ class RawUserClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_user_specifics(
-        self,
-        tenant_id: str,
-        user_id: str,
-        version: int,
-        thought: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, user_id: str, version: int, thought: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[User]:
         """
         Test endpoint with path parameters listed in different order than found in path
 
         Parameters
         ----------
-        tenant_id : str
-
         user_id : str
 
         version : int
@@ -297,7 +270,7 @@ class RawUserClient:
         HttpResponse[User]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}/specifics/{encode_path_param(version)}/{encode_path_param(thought)}",
+            f"{encode_path_param(self._client_wrapper._tenant_id)}/user/{encode_path_param(user_id)}/specifics/{encode_path_param(version)}/{encode_path_param(thought)}",
             method="GET",
             request_options=request_options,
         )
@@ -326,13 +299,11 @@ class AsyncRawUserClient:
         self._client_wrapper = client_wrapper
 
     async def get_user(
-        self, tenant_id: str, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[User]:
         """
         Parameters
         ----------
-        tenant_id : str
-
         user_id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -343,7 +314,7 @@ class AsyncRawUserClient:
         AsyncHttpResponse[User]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}",
+            f"{encode_path_param(self._client_wrapper._tenant_id)}/user/{encode_path_param(user_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -367,18 +338,11 @@ class AsyncRawUserClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create_user(
-        self,
-        tenant_id: str,
-        *,
-        name: str,
-        tags: typing.Sequence[str],
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, name: str, tags: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[User]:
         """
         Parameters
         ----------
-        tenant_id : str
-
         name : str
 
         tags : typing.Sequence[str]
@@ -391,7 +355,7 @@ class AsyncRawUserClient:
         AsyncHttpResponse[User]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(tenant_id)}/user/",
+            f"{encode_path_param(self._client_wrapper._tenant_id)}/user/",
             method="POST",
             json={
                 "name": name,
@@ -421,7 +385,6 @@ class AsyncRawUserClient:
 
     async def update_user(
         self,
-        tenant_id: str,
         user_id: str,
         *,
         name: str,
@@ -431,8 +394,6 @@ class AsyncRawUserClient:
         """
         Parameters
         ----------
-        tenant_id : str
-
         user_id : str
 
         name : str
@@ -447,7 +408,7 @@ class AsyncRawUserClient:
         AsyncHttpResponse[User]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}",
+            f"{encode_path_param(self._client_wrapper._tenant_id)}/user/{encode_path_param(user_id)}",
             method="PATCH",
             json={
                 "name": name,
@@ -477,7 +438,6 @@ class AsyncRawUserClient:
 
     async def search_users(
         self,
-        tenant_id: str,
         user_id: str,
         *,
         limit: typing.Optional[int] = None,
@@ -486,8 +446,6 @@ class AsyncRawUserClient:
         """
         Parameters
         ----------
-        tenant_id : str
-
         user_id : str
 
         limit : typing.Optional[int]
@@ -500,7 +458,7 @@ class AsyncRawUserClient:
         AsyncHttpResponse[typing.List[User]]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}/search",
+            f"{encode_path_param(self._client_wrapper._tenant_id)}/user/{encode_path_param(user_id)}/search",
             method="GET",
             params={
                 "limit": limit,
@@ -527,15 +485,13 @@ class AsyncRawUserClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_user_metadata(
-        self, tenant_id: str, user_id: str, version: int, *, request_options: typing.Optional[RequestOptions] = None
+        self, user_id: str, version: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[User]:
         """
         Test endpoint with path parameter that has a text prefix (v{version})
 
         Parameters
         ----------
-        tenant_id : str
-
         user_id : str
 
         version : int
@@ -548,7 +504,7 @@ class AsyncRawUserClient:
         AsyncHttpResponse[User]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}/metadata/v{encode_path_param(version)}",
+            f"{encode_path_param(self._client_wrapper._tenant_id)}/user/{encode_path_param(user_id)}/metadata/v{encode_path_param(version)}",
             method="GET",
             request_options=request_options,
         )
@@ -572,21 +528,13 @@ class AsyncRawUserClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_user_specifics(
-        self,
-        tenant_id: str,
-        user_id: str,
-        version: int,
-        thought: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, user_id: str, version: int, thought: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[User]:
         """
         Test endpoint with path parameters listed in different order than found in path
 
         Parameters
         ----------
-        tenant_id : str
-
         user_id : str
 
         version : int
@@ -601,7 +549,7 @@ class AsyncRawUserClient:
         AsyncHttpResponse[User]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}/specifics/{encode_path_param(version)}/{encode_path_param(thought)}",
+            f"{encode_path_param(self._client_wrapper._tenant_id)}/user/{encode_path_param(user_id)}/specifics/{encode_path_param(version)}/{encode_path_param(thought)}",
             method="GET",
             request_options=request_options,
         )
