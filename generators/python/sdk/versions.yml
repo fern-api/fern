@@ -2,19 +2,10 @@
 - version: 5.14.0
   changelogEntry:
     - summary: |
-        Hoist root path parameters to the client constructor. Root-level path
-        parameters (declared via the root API file's `path-parameters` or the
-        structured `x-fern-base-path` extension) now appear as keyword
-        arguments on `SeedXxx.__init__` and on the client wrapper, rather than
-        as per-endpoint arguments. When a root path parameter has a
-        `client-default`, the constructor argument is optional and defaults to
-        the literal value. Endpoint method signatures no longer include root
-        path parameters; URL substitution reads them from the client wrapper.
-
-        Breaking change for SDKs whose Fern Definition declares root-level
-        `path-parameters` — callers must now pass those values at construction
-        time rather than per endpoint call. Endpoint and service path
-        parameters remain unchanged.
+        Hoist root path parameters to the client constructor. They no longer
+        appear on endpoint method signatures; URL substitution reads them from
+        the client wrapper. Breaking change for SDKs whose Fern Definition
+        declares root-level `path-parameters`.
       type: feat
   createdAt: "2026-05-19"
   irVersion: 66

@@ -2,12 +2,9 @@
 - version: 3.70.9
   changelogEntry:
     - summary: |
-        Substitute the configured default for root path parameters inside
-        `normalizeClientOptions`. When a root-level path parameter declares a
-        `client-default` in the Fern Definition, omitting it at client
-        construction now produces the literal default value in generated URLs
-        instead of `undefined`. Mirrors the existing pattern for headers with
-        client defaults.
+        Apply `client-default` to root path parameters at runtime. When omitted
+        at client construction, the configured default now lands in the URL
+        instead of `undefined`.
       type: feat
   createdAt: "2026-05-19"
   irVersion: 66
