@@ -8,6 +8,7 @@ pub mod realtime_receive_event_3;
 pub mod realtime_transcript_event;
 pub mod realtime_flushed_event;
 pub mod realtime_error_event;
+pub mod status_status_response;
 
 pub use realtime_send_event::{SendEvent};
 pub use realtime_send_snake_case::{SendSnakeCase};
@@ -19,4 +20,5 @@ pub use realtime_receive_event_3::{ReceiveEvent3};
 pub use realtime_transcript_event::{TranscriptEvent};
 pub use realtime_flushed_event::{FlushedEvent};
 pub use realtime_error_event::{ErrorEvent};
+pub use status_status_response::{StatusResponse};
 
