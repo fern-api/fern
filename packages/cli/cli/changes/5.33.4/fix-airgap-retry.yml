@@ -1,0 +1,7 @@
+- summary: |
+    Add retry logic to the air-gap health check so that transient network
+    failures (DNS blips, momentary connectivity drops) no longer cause false
+    air-gapped mode detection. The check now retries up to 3 times with
+    backoff before declaring air-gapped mode. Also logs the underlying
+    error cause for better debugging.
+  type: fix

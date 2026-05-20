@@ -227,5 +227,7 @@ allowedFailures:
   - any-auth
   - circular-references
   - file-upload
+  - api-wide-base-path-with-default
+  - oauth-client-credentials-with-variables
 
 

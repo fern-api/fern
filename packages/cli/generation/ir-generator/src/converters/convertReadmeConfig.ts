@@ -60,8 +60,8 @@ class ReadmeEndpointCache {
         const endpoint = this.getEndpointForReadme(readmeEndpoint);
         if (endpoint == null) {
             throw new CliError({
-                message: `Endpoint not found for ${JSON.stringify(readmeEndpoint)}`,
-                code: CliError.Code.ResolutionError
+                message: `Endpoint not found in generators.yml readme config for ${formatReadmeEndpoint(readmeEndpoint)}`,
+                code: CliError.Code.ConfigError
             });
         }
         return endpoint;
@@ -129,4 +129,11 @@ function getReadmeEndpointObject({
         };
     }
     return endpoint;
+}
+
+function formatReadmeEndpoint(readmeEndpoint: generatorsYml.ReadmeEndpointSchema): string {
+    if (typeof readmeEndpoint === "string") {
+        return readmeEndpoint;
+    }
+    return JSON.stringify(readmeEndpoint);
 }
