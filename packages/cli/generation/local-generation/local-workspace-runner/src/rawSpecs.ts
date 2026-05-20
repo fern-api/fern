@@ -7,7 +7,7 @@ import {
 } from "@fern-api/api-workspace-commons";
 import { type Audiences } from "@fern-api/configuration";
 import { assertNever, mergeWithOverrides as coreMergeWithOverrides } from "@fern-api/core-utils";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loadAsyncAPI, loadOpenAPI } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { copyFile, cp, readFile, writeFile } from "fs/promises";
