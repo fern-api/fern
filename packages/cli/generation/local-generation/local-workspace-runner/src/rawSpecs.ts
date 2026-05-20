@@ -7,12 +7,16 @@ import {
 } from "@fern-api/api-workspace-commons";
 import { type Audiences } from "@fern-api/configuration";
 import { assertNever, mergeWithOverrides as coreMergeWithOverrides } from "@fern-api/core-utils";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { loadAsyncAPI, loadOpenAPI } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { copyFile, cp, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
+import * as tar from "tar";
+import tmp from "tmp-promise";
+
+import { SPECS_MANIFEST_FILENAME } from "./constants.js";
 
 export interface RawSpecsManifestEntry {
     type: "openapi" | "asyncapi" | "protobuf" | "openrpc" | "graphql";
@@ -398,4 +402,51 @@ function matchesAudiences(operation: unknown, selectedAudiences: Set<string>): b
 
 function hasOperations(pathItem: Record<string, unknown>): boolean {
     return Object.keys(pathItem).some((key) => HTTP_METHODS.has(key.toLowerCase()));
+}
+
+/**
+ * Collects raw API specs, writes them to a temporary directory alongside a
+ * manifest, and packages everything into a gzipped tar archive suitable for
+ * uploading to Fiddle's `startJob` endpoint.
+ */
+export async function createSpecsTarGzBuffer({
+    specs,
+    context,
+    audiences
+}: {
+    specs: Spec[];
+    context: TaskContext;
+    audiences?: Audiences;
+}): Promise<Buffer> {
+    const tmpDir = await tmp.dir({ unsafeCleanup: true });
+    try {
+        const manifest = await collectRawSpecs({
+            specs,
+            hostOutputDir: AbsoluteFilePath.of(tmpDir.path),
+            containerBaseDir: "/fern/specs",
+            context,
+            audiences
+        });
+
+        await writeFile(
+            join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of(SPECS_MANIFEST_FILENAME)),
+            JSON.stringify(manifest, undefined, 4)
+        );
+
+        const tarGzPath = join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of("specs.tar.gz"));
+        await tar.create(
+            {
+                gzip: true,
+                cwd: tmpDir.path,
+                file: tarGzPath,
+                portable: true,
+                filter: (entryPath: string) => entryPath !== "./specs.tar.gz"
+            },
+            ["."]
+        );
+
+        return await readFile(tarGzPath);
+    } finally {
+        await tmpDir.cleanup();
+    }
 }
