@@ -226,6 +226,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 const converter = new GraphQLConverter({
                     context,
                     filePath: spec.absoluteFilepath,
+                    namespace: spec.namespace,
                     examples
                 });
                 const result = await converter.convert();

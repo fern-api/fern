@@ -73,8 +73,7 @@ export class GraphQLConverter {
                 if (entry.operationType != null) {
                     const key = `${entry.operationType.toLowerCase()}:${entry.operation}`;
                     this.examplesByOperation.set(key, mapped);
-                }
-                if (!this.examplesByOperation.has(entry.operation)) {
+                } else {
                     this.examplesByOperation.set(entry.operation, mapped);
                 }
             }
