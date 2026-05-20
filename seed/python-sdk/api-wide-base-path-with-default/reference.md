@@ -20,6 +20,7 @@ client = SeedApi(
 )
 
 client.widgets.create(
+    api_version="v1beta",
     name="name",
 )
 
