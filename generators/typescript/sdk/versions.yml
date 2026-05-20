@@ -6,7 +6,7 @@
         at client construction, the configured default now lands in the URL
         instead of `undefined`.
       type: feat
-  createdAt: "2026-05-19"
+  createdAt: "2026-05-20"
   irVersion: 67
 - version: 3.70.9
   changelogEntry:
@@ -17,12 +17,6 @@
       type: fix
   createdAt: "2026-05-20"
   irVersion: 67
-        Apply `client-default` to root path parameters at runtime. When omitted
-        at client construction, the configured default now lands in the URL
-        instead of `undefined`.
-      type: feat
-  createdAt: "2026-05-19"
-  irVersion: 66
 - version: 3.70.8
   changelogEntry:
     - summary: |

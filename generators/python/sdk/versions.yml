@@ -7,7 +7,7 @@
         constructor; endpoint methods no longer take them as arguments and
         URL substitution reads them from the client wrapper.
       type: feat
-  createdAt: "2026-05-19"
+  createdAt: "2026-05-20"
   irVersion: 67
 - version: 5.13.1
   changelogEntry:
