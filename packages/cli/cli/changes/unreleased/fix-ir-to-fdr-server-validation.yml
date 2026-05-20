@@ -1,0 +1,3 @@
+- summary: |
+    Stop reporting invalid endpoint server references during IR-to-FDR conversion to Sentry.
+  type: fix
