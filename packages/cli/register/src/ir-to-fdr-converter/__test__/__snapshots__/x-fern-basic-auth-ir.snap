@@ -150,6 +150,7 @@
       "packagePath": [],
     },
     "hasEndpointsInTree": false,
+    "hasWebSocketInTree": undefined,
     "navigationConfig": undefined,
     "service": "service_",
     "subpackages": [],

@@ -564,17 +564,24 @@ export class DocsDefinitionResolver {
         this.taskContext.logger.debug("Replacing image paths and URLs in markdown...");
         const replaceStart = performance.now();
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
-            this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = replaceImagePathsAndUrls(
-                markdown,
-                this.collectedFileIds,
-                // convert slugs to full URL pathnames
-                markdownFilesToPathName,
-                {
-                    absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
-                    absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
-                },
-                this.taskContext
-            );
+            try {
+                this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = replaceImagePathsAndUrls(
+                    markdown,
+                    this.collectedFileIds,
+                    // convert slugs to full URL pathnames
+                    markdownFilesToPathName,
+                    {
+                        absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
+                        absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
+                    },
+                    this.taskContext
+                );
+            } catch (error) {
+                throw new CliError({
+                    message: `Failed to replace image paths in markdown file ${relativePath}: ${extractErrorMessage(error)}`,
+                    code: CliError.Code.ParseError
+                });
+            }
         }
         const replaceTime = performance.now() - replaceStart;
         this.taskContext.logger.debug(`Replaced image paths in ${replaceTime.toFixed(0)}ms`);

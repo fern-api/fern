@@ -38,6 +38,38 @@ paths:
             text/event-stream:
               schema:
                 $ref: "#/components/schemas/ChatStreamedResponse"
+  # Regression for an undiscriminated-union request body combined with
+  # x-fern-streaming + stream-condition. Prior to fixing the streaming
+  # converter, the body was silently dropped from both the streaming and
+  # non-streaming variants.
+  /v2/interactions:
+    post:
+      tags:
+        - Interactions
+      summary: Start an interaction
+      operationId: createInteraction
+      x-fern-streaming:
+        stream-condition: $request.stream_response
+        response:
+          $ref: "#/components/schemas/InteractionFullResponse"
+        response-stream:
+          $ref: "#/components/schemas/InteractionStreamedResponse"
+      x-fern-sdk-method-name: interact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InteractionRequest"
+      responses:
+        "200":
+          description: A response to an interaction request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InteractionFullResponse"
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/InteractionStreamedResponse"
 components:
   schemas:
     ChatRequest:
@@ -76,6 +108,44 @@ components:
           description: The chunk of the response.
           type: string
           example: "Hello, how can I help you today?"
+    InteractionRequest:
+      description: Parameters for creating an interaction (model OR agent).
+      x-fern-undiscriminated: true
+      oneOf:
+        - $ref: "#/components/schemas/ModelInteractionRequest"
+        - $ref: "#/components/schemas/AgentInteractionRequest"
+    ModelInteractionRequest:
+      type: object
+      required:
+        - model
+        - input
+      properties:
+        model:
+          type: string
+        input:
+          type: string
+    AgentInteractionRequest:
+      type: object
+      required:
+        - agent
+        - input
+      properties:
+        agent:
+          type: string
+        input:
+          type: string
+    InteractionFullResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        output:
+          type: string
+    InteractionStreamedResponse:
+      type: object
+      properties:
+        delta:
+          type: string
   parameters:
     RequestTimeout:
       in: header

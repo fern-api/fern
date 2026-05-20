@@ -21,7 +21,6 @@ async fn test_imdb_create_movie_with_wiremock() {
             &CreateMovieRequest {
                 title: "title".to_string(),
                 rating: 1.1,
-                ..Default::default()
             },
             None,
         )

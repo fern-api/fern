@@ -1,0 +1,87 @@
+{
+    "version": "1.0.0",
+    "types": {},
+    "headers": [
+        {
+            "name": {
+                "wireValue": "user-agent",
+                "name": {
+                    "originalName": "userAgent",
+                    "camelCase": {
+                        "unsafeName": "userAgent",
+                        "safeName": "userAgent"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "user_agent",
+                        "safeName": "user_agent"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "USER_AGENT",
+                        "safeName": "USER_AGENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UserAgent",
+                        "safeName": "UserAgent"
+                    }
+                }
+            },
+            "typeReference": {
+                "type": "literal",
+                "value": {
+                    "type": "string",
+                    "value": "my-sdk"
+                }
+            },
+            "propertyAccess": null,
+            "variable": null
+        }
+    ],
+    "endpoints": {
+        "endpoint_.ping": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "ping",
+                    "camelCase": {
+                        "unsafeName": "ping",
+                        "safeName": "ping"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "ping",
+                        "safeName": "ping"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PING",
+                        "safeName": "PING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Ping",
+                        "safeName": "Ping"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/ping"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}

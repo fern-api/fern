@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.70.8
+  changelogEntry:
+    - summary: |
+        Update OS packages in the TypeScript SDK generator container from Debian sid to fix
+        krb5 (CVE-2026-40355, CVE-2026-40356), curl (CVE-2026-1965, CVE-2026-4873,
+        CVE-2026-5545, CVE-2026-6253, CVE-2026-6429), gnutls28 (CVE-2026-3832),
+        and expat (CVE-2026-45186).
+      type: chore
+  createdAt: "2026-05-18"
+  irVersion: 67
+- version: 3.70.7
+  changelogEntry:
+    - summary: |
+        Dynamic snippets now render path-parameter arguments in IR (URL / SDK signature) order
+        rather than in the order they happen to appear in the input request, so generated
+        examples line up with the actual SDK method signature even when the spec lists path
+        parameters in a different order.
+      type: fix
+  createdAt: "2026-05-15"
+  irVersion: 66
 - version: 3.70.6
   changelogEntry:
     - summary: |

@@ -116,26 +116,21 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         values: FernIr.dynamic.Values;
         ignoreMissingParameters?: boolean;
     }): TypeInstance[] {
+        // Iterate `parameters` (IR / SDK signature order) rather than the input `values` object so
+        // that callers which rely on argument order — notably positional path parameters in
+        // generated snippets — produce output that matches the SDK signature. Input key order is
+        // not guaranteed to match the SDK order (e.g. it may be alphabetical from the source spec).
         const instances: TypeInstance[] = [];
-        for (const [key, value] of Object.entries(values)) {
+        const matchedWireValues = new Set<string>();
+        for (const parameter of parameters) {
+            const wireValue = parameter.name.wireValue;
+            const value = values[wireValue];
             if (value === undefined) {
                 continue;
             }
-            this.errors.scope(key);
+            matchedWireValues.add(wireValue);
+            this.errors.scope(wireValue);
             try {
-                const parameter = parameters.find((param) => param.name.wireValue === key);
-                if (parameter == null) {
-                    if (ignoreMissingParameters) {
-                        // Required for request payloads that include more information than
-                        // just the target parameters (e.g. union base properties).
-                        continue;
-                    }
-                    this.errors.add({
-                        severity: Severity.Critical,
-                        message: this.newParameterNotRecognizedError(key).message
-                    });
-                    continue;
-                }
                 instances.push({
                     name: parameter.name,
                     typeReference: parameter.typeReference,
@@ -143,6 +138,22 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
                 });
             } finally {
                 this.errors.unscope();
+            }
+        }
+        if (!ignoreMissingParameters) {
+            for (const [key, value] of Object.entries(values)) {
+                if (value === undefined || matchedWireValues.has(key)) {
+                    continue;
+                }
+                this.errors.scope(key);
+                try {
+                    this.errors.add({
+                        severity: Severity.Critical,
+                        message: this.newParameterNotRecognizedError(key).message
+                    });
+                } finally {
+                    this.errors.unscope();
+                }
             }
         }
         return instances;

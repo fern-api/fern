@@ -559,6 +559,7 @@ export abstract class AbstractSpecConverter<
             webhooks: undefined,
             websocket: undefined,
             hasEndpointsInTree: false,
+            hasWebSocketInTree: undefined,
             navigationConfig: undefined
         };
     }

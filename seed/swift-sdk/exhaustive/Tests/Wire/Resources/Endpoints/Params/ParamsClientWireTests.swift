@@ -136,7 +136,7 @@ import Exhaustive
         )
         let expectedResponse = "string"
         let response = try await client.endpoints.params.getWithBooleanPath(
-            param: true,
+            param: "true",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)

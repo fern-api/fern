@@ -43,7 +43,6 @@ export interface GenerationCommitStepResult extends StepResult {
     preparedReplay?: import("../replay/replay-run").PreparedReplay | null;
     previousGenerationSha?: string;
     currentGenerationSha?: string;
-    baseBranchHead?: string;
     /** Flow selected by the replay service during prepare. */
     flow?: "first-generation" | "no-patches" | "normal-regeneration" | "skip-application";
     /**
@@ -110,7 +109,7 @@ export interface GithubStepConfig {
     /** GitHub auth token */
     token: string;
     /** Output mode */
-    mode: "push" | "pull-request";
+    mode: "push" | "pull-request" | "commit-and-release";
     /** Target branch (base branch for PRs, push target for push mode) */
     branch?: string;
     /** Commit message for the generation */
@@ -152,6 +151,11 @@ export interface GithubStepConfig {
     runId?: string;
     /** GitHub API base URL for GitHub Enterprise (e.g. "https://github.intuit.com/api/v3"). Omit for github.com. */
     apiBaseUrl?: string;
+    /** Override the commit author/committer identity for API-created commits. Defaults to the Fern bot identity. */
+    author?: {
+        name: string;
+        email: string;
+    };
 }
 
 export interface PipelineResult {
@@ -209,7 +213,6 @@ export interface ReplayStepResult extends StepResult {
     patchesRefreshed?: number;
     previousGenerationSha?: string;
     currentGenerationSha?: string;
-    baseBranchHead?: string;
     unresolvedPatches?: Array<{
         patchId: string;
         patchMessage: string;
@@ -263,6 +266,8 @@ export interface GithubStepResult extends StepResult {
     skippedNoDiff?: boolean;
     /** True when automerge was enabled on the PR */
     autoMergeEnabled?: boolean;
+    /** URL of the GitHub release created in commit-and-release mode */
+    releaseUrl?: string;
 }
 
 export interface StepResult {

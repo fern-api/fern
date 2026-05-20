@@ -124,8 +124,8 @@ async function setupTwoGenerations(
 
 /**
  * A bare-bones PreparedReplay stand-in. AutoVersionStep reads `flow`,
- * `previousGenerationSha`, `currentGenerationSha`, and `baseBranchHead` only;
- * `_service` and `_preparation` are never dereferenced inside execute().
+ * `previousGenerationSha`, and `currentGenerationSha` only; `_service` and
+ * `_preparation` are never dereferenced inside execute().
  */
 function fakePreparedReplay(overrides: Partial<PreparedReplay>): PreparedReplay {
     return {
@@ -135,7 +135,8 @@ function fakePreparedReplay(overrides: Partial<PreparedReplay>): PreparedReplay 
         flow: overrides.flow ?? "normal-regeneration",
         previousGenerationSha: overrides.previousGenerationSha ?? null,
         currentGenerationSha: overrides.currentGenerationSha ?? "unused",
-        baseBranchHead: overrides.baseBranchHead ?? null
+        autoBootstrapped: overrides.autoBootstrapped ?? false,
+        bootstrapAttempted: overrides.bootstrapAttempted ?? false
     };
 }
 

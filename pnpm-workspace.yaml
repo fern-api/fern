@@ -68,7 +68,7 @@ catalog:
   "@bufbuild/protoplugin": 2.2.5
   "@fern-api/fai-sdk": 0.0.6-2ee1b7e28
   "@fern-api/fdr-sdk": 1.2.4-f661387fb2
-  "@fern-api/generator-cli": 0.9.22
+  "@fern-api/generator-cli": 0.9.32
   "@fern-api/ui-core-utils": 0.129.4-b6c699ad2
   "@fern-api/venus-api-sdk": 0.22.34
   "@fern-fern/docs-config": 0.0.80
@@ -256,7 +256,7 @@ catalog:
   vitest: 4.1.4
   watcher: ^2.3.1
   whatwg-mimetype: ^4.0.0
-  ws: ^8.20.0
+  ws: ^8.20.1
   xml2js: ^0.6.2
   yaml: ^2.8.3
   yauzl: ^3.2.1

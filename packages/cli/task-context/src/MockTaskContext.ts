@@ -28,6 +28,7 @@ export function createMockTaskContext({ logger = CONSOLE_LOGGER }: { logger?: Lo
         },
         captureException: () => {
             // no-op in mock context
+            return undefined;
         },
         getResult: () => TaskResult.Success,
         getLastFailureMessage: () => undefined,

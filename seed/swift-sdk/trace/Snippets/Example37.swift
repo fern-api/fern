@@ -9,7 +9,7 @@ private func main() async throws {
 
     _ = try await client.v2.v3.problem.getProblemVersion(
         problemId: "problemId",
-        problemVersion: 1
+        problemVersion: "1"
     )
 }
 

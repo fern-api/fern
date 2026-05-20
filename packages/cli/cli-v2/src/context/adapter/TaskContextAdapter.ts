@@ -1,11 +1,11 @@
 import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 import {
+    type CaptureExceptionOptions,
     type CliError,
     type CreateInteractiveTaskParams,
     type Finishable,
     type InteractiveTaskContext,
     type PosthogEvent,
-    resolveErrorCode,
     type Startable,
     TaskAbortSignal,
     type TaskContext,
@@ -79,9 +79,8 @@ export class TaskContextAdapter implements TaskContext {
         return this.lastFailureMessage;
     }
 
-    public captureException(error: unknown, code?: CliError.Code): void {
-        const errorCode = resolveErrorCode(error, code);
-        this.context.telemetry.captureException(error, { errorCode });
+    public captureException(error: unknown, options?: CaptureExceptionOptions): string | undefined {
+        return this.context.telemetry.captureException(error, options);
     }
 
     private getFullErrorMessage(message?: string, error?: unknown): string | undefined {

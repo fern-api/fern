@@ -689,6 +689,7 @@
             "webhooks": "webhooks_webhooks",
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -712,6 +713,7 @@
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": false,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {

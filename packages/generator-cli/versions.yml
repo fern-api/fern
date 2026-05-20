@@ -1,6 +1,58 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Restore GitHub web-flow signing on cloud-generated PRs. `pushSignedCommit`
+        still sends `author` (Fern bot attribution from 0.9.28) but no longer
+        sends `committer` by default — the signer keys off `committer`, so the
+        unconditional override added in 0.9.28 silently suppressed the "Verified"
+        badge on every cloud generation. Callers that need a pinned committer
+        can still opt in via `GithubStepConfig.author`.
+      type: fix
+  createdAt: "2026-05-19"
+  version: 0.9.32
+
+- changelogEntry:
+    - summary: |
+        Bump @fern-api/replay to 0.16.0 and remove the consumer-side divergent-merge
+        gauntlet. Squash-merge and force-push recovery are now handled inside the
+        replay engine via the derived scan boundary (`findPreviousGenerationFromHistory`
+        walks `git log HEAD --first-parent`), so generator-cli no longer needs to
+        resolve the `fern-generation-base` tag, compare tree distances, or call
+        `syncFromDivergentMerge` before invoking the replay. The tag is still written
+        for older deployed generator-cli versions whose bundled gauntlet still reads
+        it. Old lockfiles carrying the legacy `base_branch_head` field continue to
+        load and run; the field is no longer written.
+      type: chore
+  createdAt: "2026-05-18"
+  version: 0.9.31
+
+- changelogEntry:
+    - summary: |
+        Bump @fern-api/replay to 0.15.2.
+      type: chore
+  createdAt: "2026-05-17"
+  version: 0.9.30
+
+- changelogEntry:
+    - summary: |
+        Bump @fern-api/replay to 0.15.1.
+      type: chore
+  createdAt: "2026-05-17"
+  version: 0.9.29
+
+- changelogEntry:
+    - summary: |
+        Set explicit author and committer on API-created commits to the Fern bot
+        identity (`fern-api` / `115122769+fern-api[bot]@users.noreply.github.com`).
+        Previously, `octokit.git.createCommit()` defaulted to the authenticated user,
+        which for PAT-based authentication (e.g. GitHub Enterprise) attributed commits
+        to the PAT-owning service account instead of a stable bot identity.
+      type: fix
+  createdAt: "2026-05-06"
+  version: 0.9.28
+
+- changelogEntry:
+    - summary: |
         Fix `createReplayBranch` crashing with `fatal: <sha> is not a valid object`
         when the lockfile's `previousGenerationSha` is unreachable (squash-merged
         and deleted prior PR branch). Tag update is skipped with a warning; the

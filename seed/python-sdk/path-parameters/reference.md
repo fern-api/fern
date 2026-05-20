@@ -16,7 +16,6 @@
 from seed import SeedPathParameters
 
 client = SeedPathParameters(
-    tenant_id="tenant_id",
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -83,11 +82,11 @@ client.organizations.get_organization(
 from seed import SeedPathParameters
 
 client = SeedPathParameters(
-    tenant_id="tenant_id",
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.organizations.get_organization_user(
+    tenant_id="tenant_id",
     organization_id="organization_id",
     user_id="user_id",
 )
@@ -158,11 +157,11 @@ client.organizations.get_organization_user(
 from seed import SeedPathParameters
 
 client = SeedPathParameters(
-    tenant_id="tenant_id",
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.organizations.search_organizations(
+    tenant_id="tenant_id",
     organization_id="organization_id",
     limit=1,
 )
@@ -234,11 +233,11 @@ client.organizations.search_organizations(
 from seed import SeedPathParameters
 
 client = SeedPathParameters(
-    tenant_id="tenant_id",
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.user.get_user(
+    tenant_id="tenant_id",
     user_id="user_id",
 )
 
@@ -300,7 +299,6 @@ client.user.get_user(
 from seed import SeedPathParameters
 
 client = SeedPathParameters(
-    tenant_id="tenant_id",
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -371,11 +369,11 @@ client.user.create_user(
 from seed import SeedPathParameters
 
 client = SeedPathParameters(
-    tenant_id="tenant_id",
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.user.update_user(
+    tenant_id="tenant_id",
     user_id="user_id",
     name="name",
     tags=[
@@ -450,11 +448,11 @@ client.user.update_user(
 from seed import SeedPathParameters
 
 client = SeedPathParameters(
-    tenant_id="tenant_id",
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.user.search_users(
+    tenant_id="tenant_id",
     user_id="user_id",
     limit=1,
 )
@@ -539,11 +537,11 @@ Test endpoint with path parameter that has a text prefix (v{version})
 from seed import SeedPathParameters
 
 client = SeedPathParameters(
-    tenant_id="tenant_id",
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.user.get_user_metadata(
+    tenant_id="tenant_id",
     user_id="user_id",
     version=1,
 )
@@ -628,11 +626,11 @@ Test endpoint with path parameters listed in different order than found in path
 from seed import SeedPathParameters
 
 client = SeedPathParameters(
-    tenant_id="tenant_id",
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.user.get_user_specifics(
+    tenant_id="tenant_id",
     user_id="user_id",
     version=1,
     thought="thought",

@@ -96,13 +96,13 @@ client = SeedLiteral(
 )
 
 client.inlined.send(
+    query="What is the weather today",
     temperature=10.1,
     object_with_literal={
         "nested_literal": {
             "my_literal": "How super cool"
         }
     },
-    query="What is the weather today",
 )
 
 ```
