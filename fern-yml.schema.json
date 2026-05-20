@@ -3529,7 +3529,8 @@
                                 "type": "string",
                                 "enum": [
                                   "pr",
-                                  "push"
+                                  "push",
+                                  "release"
                                 ]
                               },
                               "branch": {
