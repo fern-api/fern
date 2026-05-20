@@ -310,6 +310,18 @@ def parse_sse_obj(sse: "ServerSentEvent", type_: Type[T]) -> T:
         return parse_obj_as(type_, sse_event)
 
 
+_type_adapter_cache: Dict[int, Any] = {}
+
+
+def _get_type_adapter(type_: Type[Any]) -> Any:
+    key = id(type_)
+    adapter = _type_adapter_cache.get(key)
+    if adapter is None:
+        adapter = pydantic.TypeAdapter(type_)  # type: ignore[attr-defined]
+        _type_adapter_cache[key] = adapter
+    return adapter
+
+
 def parse_obj_as(type_: Type[T], object_: Any) -> T:
     # convert_and_respect_annotation_metadata is required for TypedDict aliasing.
     #
@@ -342,7 +354,7 @@ def parse_obj_as(type_: Type[T], object_: Any) -> T:
     else:
         dealiased_object = convert_and_respect_annotation_metadata(object_=object_, annotation=type_, direction="read")
     if IS_PYDANTIC_V2:
-        adapter = pydantic.TypeAdapter(type_)  # type: ignore[attr-defined]
+        adapter = _get_type_adapter(type_)
         return adapter.validate_python(dealiased_object)
     return pydantic.parse_obj_as(type_, dealiased_object)
 
