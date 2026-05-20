@@ -549,7 +549,10 @@ export class SdkGenerator {
         this.baseClientTypeGenerator = new BaseClientTypeGenerator({
             ir: intermediateRepresentation,
             generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
-            omitFernHeaders: config.omitFernHeaders
+            omitFernHeaders: config.omitFernHeaders,
+            retainOriginalCasing: config.retainOriginalCasing,
+            parameterNaming: config.parameterNaming,
+            caseConverter: this.case
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation,
