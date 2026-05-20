@@ -49,7 +49,6 @@ public partial class SeedApiClient : ISeedApiClient
                     Path = "plants",
                     Body = request,
                     Headers = _headers,
-                    ContentType = "application/json",
                     Options = options,
                 },
                 cancellationToken

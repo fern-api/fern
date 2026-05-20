@@ -6,13 +6,13 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("WidgetsClient", () => {
     test("create", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, apiVersion: "apiVersion", environment: server.baseUrl });
+        const client = new SeedApiClient({ maxRetries: 0, apiVersion: "v1beta", environment: server.baseUrl });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = { name: "name" };
 
         server
             .mockEndpoint()
-            .post("/apiVersion/widgets")
+            .post("/v1beta/widgets")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)

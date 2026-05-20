@@ -41,6 +41,7 @@ client = SeedApi(
 )
 
 client.widgets.create(
+    api_version="v1beta",
     name="name",
 )
 ```
@@ -61,6 +62,7 @@ client = AsyncSeedApi(
 
 async def main() -> None:
     await client.widgets.create(
+        api_version="v1beta",
         name="name",
     )
 
