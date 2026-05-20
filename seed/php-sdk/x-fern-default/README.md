@@ -41,8 +41,8 @@ use Seed\Requests\TestGetRequest;
 
 $client = new SeedClient();
 $client->testGet(
-    'region',
     new TestGetRequest([]),
+    'region',
 );
 
 ```

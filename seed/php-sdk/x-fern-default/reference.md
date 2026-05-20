@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client-&gt;testGet($region, $request) -> ?TestGetResponse</code></summary>
+<details><summary><code>$client-&gt;testGet($request, $region) -> ?TestGetResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,8 +13,8 @@
 
 ```php
 $client->testGet(
-    'region',
     new TestGetRequest([]),
+    'region',
 );
 ```
 </dd>

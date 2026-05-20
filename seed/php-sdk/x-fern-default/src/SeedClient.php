@@ -69,8 +69,8 @@ class SeedClient
     }
 
     /**
-     * @param string $region
      * @param TestGetRequest $request
+     * @param string $region
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -83,7 +83,7 @@ class SeedClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function testGet(string $region = 'us-east-1', TestGetRequest $request = new TestGetRequest(), ?array $options = null): ?TestGetResponse
+    public function testGet(TestGetRequest $request = new TestGetRequest(), string $region = 'us-east-1', ?array $options = null): ?TestGetResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];

@@ -567,9 +567,13 @@ export class EndpointSnippetGenerator extends WithGeneration {
 
         this.context.errors.scope(Scope.PathParameters);
         const pathParameterFields: ast.ConstructorField[] = [];
+        const optionalPathParameterFields: ast.ConstructorField[] = [];
         const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
         if (pathParameters.length > 0) {
-            pathParameterFields.push(...this.getPathParameters({ namedParameters: pathParameters, snippet }));
+            const requiredParams = pathParameters.filter((p) => p.typeReference.type !== "optional");
+            const optionalParams = pathParameters.filter((p) => p.typeReference.type === "optional");
+            pathParameterFields.push(...this.getPathParameters({ namedParameters: requiredParams, snippet }));
+            optionalPathParameterFields.push(...this.getPathParameters({ namedParameters: optionalParams, snippet }));
         }
         this.context.errors.unscope();
 
@@ -578,28 +582,29 @@ export class EndpointSnippetGenerator extends WithGeneration {
         const filePropertyInfo = this.getFilePropertyInfo({ request, snippet });
         this.context.errors.unscope();
 
-        if (
-            !this.context.includePathParametersInWrappedRequest({
-                request,
-                inlinePathParameters: this.settings.shouldInlinePathParameters
-            })
-        ) {
+        const includeInWrapped = this.context.includePathParametersInWrappedRequest({
+            request,
+            inlinePathParameters: this.settings.shouldInlinePathParameters
+        });
+
+        if (!includeInWrapped) {
             args.push(...pathParameterFields.map((field) => field.value));
         }
         // For now, the C# SDK always requires the inlined request parameter.
+        const allPathFieldsForWrapped = includeInWrapped
+            ? [...pathParameterFields, ...optionalPathParameterFields]
+            : [];
         args.push(
             this.getInlinedRequestArg({
                 request,
                 snippet,
-                pathParameterFields: this.context.includePathParametersInWrappedRequest({
-                    request,
-                    inlinePathParameters: this.settings.shouldInlinePathParameters
-                })
-                    ? pathParameterFields
-                    : [],
+                pathParameterFields: allPathFieldsForWrapped,
                 filePropertyInfo
             })
         );
+        if (!includeInWrapped) {
+            args.push(...optionalPathParameterFields.map((field) => field.value));
+        }
         return args;
     }
 
@@ -791,9 +796,11 @@ export class EndpointSnippetGenerator extends WithGeneration {
         const args: ast.Literal[] = [];
         this.context.errors.scope(Scope.PathParameters);
         const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
-        if (pathParameters.length > 0) {
+        const requiredPathParams = pathParameters.filter((p) => p.typeReference.type !== "optional");
+        const optionalPathParams = pathParameters.filter((p) => p.typeReference.type === "optional");
+        if (requiredPathParams.length > 0) {
             args.push(
-                ...this.getPathParameters({ namedParameters: pathParameters, snippet }).map((field) => field.value)
+                ...this.getPathParameters({ namedParameters: requiredPathParams, snippet }).map((field) => field.value)
             );
         }
         this.context.errors.unscope();
@@ -803,6 +810,14 @@ export class EndpointSnippetGenerator extends WithGeneration {
             args.push(this.getBodyRequestArg({ body: request.body, value: snippet.requestBody }));
         }
         this.context.errors.unscope();
+
+        if (optionalPathParams.length > 0) {
+            this.context.errors.scope(Scope.PathParameters);
+            args.push(
+                ...this.getPathParameters({ namedParameters: optionalPathParams, snippet }).map((field) => field.value)
+            );
+            this.context.errors.unscope();
+        }
 
         return args;
     }

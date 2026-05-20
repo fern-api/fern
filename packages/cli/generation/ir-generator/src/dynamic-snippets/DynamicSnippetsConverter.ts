@@ -394,15 +394,21 @@ export class DynamicSnippetsConverter {
     }: {
         pathParameters: PathParameter[];
     }): DynamicSnippets.NamedParameter[] {
-        return pathParameters.map((pathParameter) => ({
-            name: {
-                name: this.inflateName(pathParameter.name),
-                wireValue: getOriginalName(pathParameter.name)
-            },
-            typeReference: this.convertTypeReference(pathParameter.valueType),
-            propertyAccess: undefined,
-            variable: pathParameter.variable
-        }));
+        return pathParameters.map((pathParameter) => {
+            let typeReference = this.convertTypeReference(pathParameter.valueType);
+            if (pathParameter.clientDefault != null) {
+                typeReference = DynamicSnippets.TypeReference.optional(typeReference);
+            }
+            return {
+                name: {
+                    name: this.inflateName(pathParameter.name),
+                    wireValue: getOriginalName(pathParameter.name)
+                },
+                typeReference,
+                propertyAccess: undefined,
+                variable: pathParameter.variable
+            };
+        });
     }
 
     private convertBodyPropertiesToParameters({
