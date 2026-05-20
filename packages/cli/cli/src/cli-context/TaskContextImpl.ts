@@ -3,7 +3,6 @@ import { addPrefixToString } from "@fern-api/core-utils";
 import { createLogger, LogLevel } from "@fern-api/logger";
 import {
     type CaptureExceptionOptions,
-    CliError,
     CreateInteractiveTaskParams,
     Finishable,
     InteractiveTaskContext,

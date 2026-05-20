@@ -1,7 +1,6 @@
 import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 import {
     type CaptureExceptionOptions,
-    type CliError,
     type CreateInteractiveTaskParams,
     type Finishable,
     type InteractiveTaskContext,

@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 
 import { AUTOMATION_EVENT_NAMES } from "../../../../telemetry/automationTelemetryEvent.js";
 import { GeneratorRunCollector } from "../GeneratorRunResult.js";
