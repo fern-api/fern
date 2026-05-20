@@ -988,10 +988,7 @@ types:
               "method": "POST",
               "pagination": undefined,
               "path": "/apps/v1/create",
-              "request": {
-                "body": "root.AppConfig",
-                "content-type": "application/json",
-              },
+              "request": "root.AppConfig",
               "response": {
                 "docs": "",
                 "status-code": 201,
@@ -1263,9 +1260,7 @@ service:
         - auth0: []
       source:
         openapi: ../openapi.json
-      request:
-        body: root.AppConfig
-        content-type: application/json
+      request: root.AppConfig
       response:
         docs: ''
         type: root.Application

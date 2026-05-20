@@ -9,20 +9,30 @@
           "auth": false,
           "base-path": "",
           "endpoints": {
-            "test": {
+            "createWidget": {
               "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
                   "request": {
-                    "value": "value",
+                    "name": "name",
+                  },
+                  "response": {
+                    "body": {
+                      "name": "name",
+                    },
                   },
                 },
               ],
               "method": "POST",
               "pagination": undefined,
-              "path": "/test",
-              "request": "OuterOneOf",
+              "path": "/widgets",
+              "request": "Widget",
+              "response": {
+                "docs": "",
+                "status-code": 200,
+                "type": "Widget",
+              },
               "source": {
                 "openapi": "../openapi.yml",
               },
@@ -33,41 +43,15 @@
           },
         },
         "types": {
-          "InnerOneOf": {
-            "base-properties": undefined,
-            "discriminated": false,
+          "Widget": {
             "docs": undefined,
-            "encoding": undefined,
             "inline": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-            "union": [
-              "InnerOneOfValue",
-            ],
-          },
-          "InnerOneOfValue": {
-            "docs": undefined,
-            "inline": true,
             "properties": {
-              "value": "string",
+              "name": "string",
             },
             "source": {
               "openapi": "../openapi.yml",
             },
-          },
-          "OuterOneOf": {
-            "base-properties": undefined,
-            "discriminated": false,
-            "docs": undefined,
-            "encoding": undefined,
-            "inline": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-            "union": [
-              "InnerOneOf",
-            ],
           },
         },
       },
@@ -75,34 +59,28 @@
   auth: false
   base-path: ''
   endpoints:
-    test:
-      path: /test
+    createWidget:
+      path: /widgets
       method: POST
       source:
         openapi: ../openapi.yml
-      request: OuterOneOf
+      request: Widget
+      response:
+        docs: ''
+        type: Widget
+        status-code: 200
       examples:
         - request:
-            value: value
+            name: name
+          response:
+            body:
+              name: name
   source:
     openapi: ../openapi.yml
 types:
-  OuterOneOf:
-    discriminated: false
-    union:
-      - InnerOneOf
-    source:
-      openapi: ../openapi.yml
-  InnerOneOfValue:
+  Widget:
     properties:
-      value: string
-    source:
-      openapi: ../openapi.yml
-    inline: true
-  InnerOneOf:
-    discriminated: false
-    union:
-      - InnerOneOfValue
+      name: string
     source:
       openapi: ../openapi.yml
 ",
@@ -111,17 +89,43 @@ types:
   "packageMarkers": {},
   "rootApiFile": {
     "contents": {
-      "display-name": "Preserve Single Schema OneOf Test",
+      "base-path": "/{tenant}/{apiVersion}",
+      "default-environment": "Default",
+      "display-name": "Acme API",
+      "environments": {
+        "Default": "https://api.acme.com",
+      },
       "error-discrimination": {
         "strategy": "status-code",
       },
       "name": "api",
+      "path-parameters": {
+        "apiVersion": {
+          "client-default": "v1beta",
+          "type": "string",
+        },
+        "tenant": {
+          "docs": "The tenant slug.",
+          "type": "string",
+        },
+      },
     },
     "defaultUrl": undefined,
     "rawContents": "name: api
 error-discrimination:
   strategy: status-code
-display-name: Preserve Single Schema OneOf Test
+display-name: Acme API
+environments:
+  Default: https://api.acme.com
+default-environment: Default
+base-path: /{tenant}/{apiVersion}
+path-parameters:
+  tenant:
+    type: string
+    docs: The tenant slug.
+  apiVersion:
+    type: string
+    client-default: v1beta
 ",
   },
 }

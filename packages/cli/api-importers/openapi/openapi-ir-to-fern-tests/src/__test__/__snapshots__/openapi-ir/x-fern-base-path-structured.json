@@ -1,0 +1,175 @@
+{
+  "title": "Acme API",
+  "description": "The Acme API.",
+  "basePath": "/{tenant}/{apiVersion}",
+  "basePathParameters": [
+    {
+      "name": "tenant",
+      "schema": {
+        "description": "The tenant slug.",
+        "schema": {
+          "type": "string"
+        },
+        "generatedName": "tenant",
+        "type": "primitive"
+      },
+      "description": "The tenant slug."
+    },
+    {
+      "name": "apiVersion",
+      "schema": {
+        "schema": {
+          "type": "string"
+        },
+        "generatedName": "apiVersion",
+        "type": "primitive"
+      },
+      "clientDefault": "v1beta"
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://api.acme.com"
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "createWidget",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateWidgetRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateWidgetRequest",
+          "schema": "Widget",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "schema": {
+          "generatedName": "CreateWidgetResponse",
+          "schema": "Widget",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/widgets",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "name": {
+                "value": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Widget": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "widgetName",
+            "key": "name",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "WidgetName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Widget",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
