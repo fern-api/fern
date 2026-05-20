@@ -1,4 +1,51 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.33.3
+  changelogEntry:
+    - summary: |
+        Swallow stdout/stderr EPIPE events in the cli-v2 terminal logger so Unix pipe closures do not report false-positive internal errors.
+      type: fix
+    - summary: |
+        Stop reporting invalid endpoint server references during IR-to-FDR conversion to Sentry.
+      type: fix
+    - summary: |
+        Prevent CLI telemetry from failing when the user's home directory cannot store Fern's analytics ID.
+      type: fix
+  createdAt: "2026-05-20"
+  irVersion: 66
+- version: 5.33.2
+  changelogEntry:
+    - summary: |
+        Validate that the Fern instance `url` and every `custom-domain` share the same basepath when
+        basepath-aware mode is enabled (`multi-source: true` or the deprecated
+        `experimental.basepath-aware: true`). Previously the check was skipped when the custom domain
+        was at the root, allowing publishes that would 404 after DNS cutover.
+      type: fix
+    - summary: |
+        Strip any `https://` or `http://` prefix from `custom-domain` entries in `docs.yml` before
+        they're sent to FDR or used for basepath comparisons. Including the protocol in the configured
+        value could interfere with basepath resolution during DNS cutover.
+      type: fix
+  createdAt: "2026-05-20"
+  irVersion: 66
+- version: 5.33.1
+  changelogEntry:
+    - summary: |
+        Publish a JSON Schema for `fern.yml` so YAML language servers can provide
+        autocomplete and validation in IDEs. Regenerate via `fern schema --output`
+        (or `pnpm fern-yml:jsonschema` in the monorepo).
+      type: chore
+  createdAt: "2026-05-20"
+  irVersion: 66
+- version: 5.33.0
+  changelogEntry:
+    - summary: |
+        Mount pre-processed API specs into generator Docker containers.
+        Specs are bundled, overrides merged, overlays applied, x-fern-ignore
+        operations filtered, and x-fern-audiences respected before outputting
+        compact JSON to generators. Add hidden `resolve-specs` command.
+      type: feat
+  createdAt: "2026-05-20"
+  irVersion: 66
 - version: 5.32.1
   changelogEntry:
     - summary: |

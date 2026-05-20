@@ -1,0 +1,9 @@
+{
+  "title": "Generator not found (generators.yml)",
+  "disposition": "shipped",
+  "rationale": "User references unknown generator image; should be ConfigError not InternalError.",
+  "fixSummary": "Upgrade helper reclassifies to ConfigError.",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+  "lastAnalyzed": "2026-04-21",
+  "problemSignature": "generators.yml references a generator image or version that is not found in FDR/registry; surfaced as InternalError instead of config error."
+}

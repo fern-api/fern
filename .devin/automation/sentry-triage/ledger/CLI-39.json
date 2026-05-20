@@ -1,0 +1,9 @@
+{
+  "title": "Failed to parse GitHub repository",
+  "disposition": "shipped",
+  "rationale": "Invalid GitHub repository strings in generators.yml are configuration errors and should be wrapped where generators.yml is converted.",
+  "fixSummary": "Wrap parseRepository failures in convertGeneratorsConfiguration as CliError(ConfigError); parseRepository still throws a plain Error.",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-04",
+  "problemSignature": "Invalid GitHub repository config string (missing owner/repo or empty path part) surfaced as InternalError instead of ConfigError."
+}

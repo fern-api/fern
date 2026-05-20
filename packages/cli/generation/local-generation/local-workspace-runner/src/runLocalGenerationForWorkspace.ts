@@ -37,6 +37,7 @@ import * as fs from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
+import { generatorWantsSpecs } from "./constants.js";
 import { getGeneratorOutputSubfolder } from "./getGeneratorOutputSubfolder.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 
@@ -394,7 +395,11 @@ export async function runLocalGenerationForWorkspace({
                     autoVersioningCache,
                     absolutePathToSpecRepo: dirname(workspace.absoluteFilePath),
                     skipFernignore,
-                    disableTelemetry
+                    disableTelemetry,
+                    rawApiSpecs:
+                        workspace instanceof OSSWorkspace && generatorWantsSpecs(generatorInvocation.name)
+                            ? workspace.allSpecs
+                            : undefined
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
