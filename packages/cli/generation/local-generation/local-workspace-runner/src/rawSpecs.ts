@@ -123,7 +123,7 @@ async function resolveOpenAPIOrAsyncAPI({
     audiences?: Audiences;
 }): Promise<RawSpecsManifestEntry> {
     const isAsync = await isAsyncAPISpec(spec.absoluteFilepath);
-    const filename = `spec-${index}.json`;
+    const filename = isAsync ? `asyncapi${index}.json` : `openapi${index}.json`;
 
     let resolved: object;
     if (isAsync) {
@@ -169,7 +169,7 @@ async function resolveOpenRPC({
     context: TaskContext;
     index: number;
 }): Promise<RawSpecsManifestEntry> {
-    const filename = `spec-${index}.json`;
+    const filename = `openrpc${index}.json`;
     const rawContent = await readFile(spec.absoluteFilepath, "utf-8");
 
     let parsed: object;
@@ -220,7 +220,7 @@ async function copyProtobuf({
     containerBaseDir: string;
     index: number;
 }): Promise<RawSpecsManifestEntry> {
-    const dirName = `proto-${index}`;
+    const dirName = `protobuf${index}`;
     const destDir = path.join(hostOutputDir, dirName);
     await cp(spec.absoluteFilepathToProtobufRoot, destDir, { recursive: true });
 
@@ -233,7 +233,7 @@ async function copyProtobuf({
     if (overrides.length > 0) {
         entry.overridePaths = [];
         for (const [i, override] of overrides.entries()) {
-            const overrideName = `proto-${index}-override-${i}${path.extname(override)}`;
+            const overrideName = `protobuf${index}-override-${i}${path.extname(override)}`;
             await copyFile(override, path.join(hostOutputDir, overrideName));
             entry.overridePaths.push(toContainerPath(overrideName, containerBaseDir));
         }
@@ -258,7 +258,7 @@ async function copyGraphQL({
     index: number;
 }): Promise<RawSpecsManifestEntry> {
     const ext = path.extname(spec.absoluteFilepath) || ".graphql";
-    const filename = `spec-${index}${ext}`;
+    const filename = `graphql${index}${ext}`;
     await copyFile(spec.absoluteFilepath, path.join(hostOutputDir, filename));
 
     const entry: RawSpecsManifestEntry = {
@@ -270,7 +270,7 @@ async function copyGraphQL({
     if (overrides.length > 0) {
         entry.overridePaths = [];
         for (const [i, override] of overrides.entries()) {
-            const overrideName = `graphql-${index}-override-${i}${path.extname(override)}`;
+            const overrideName = `graphql${index}-override-${i}${path.extname(override)}`;
             await copyFile(override, path.join(hostOutputDir, overrideName));
             entry.overridePaths.push(toContainerPath(overrideName, containerBaseDir));
         }
