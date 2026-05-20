@@ -14,6 +14,10 @@
               "docs": undefined,
               "examples": [
                 {
+                  "path-parameters": {
+                    "apiVersion": "v1beta",
+                    "tenant": "tenant",
+                  },
                   "request": {
                     "input": "input",
                     "model": "model",
@@ -44,6 +48,10 @@
               "docs": undefined,
               "examples": [
                 {
+                  "path-parameters": {
+                    "apiVersion": "v1beta",
+                    "tenant": "tenant",
+                  },
                   "request": {
                     "input": "input",
                     "model": "model",
@@ -80,6 +88,10 @@
               "docs": undefined,
               "examples": [
                 {
+                  "path-parameters": {
+                    "apiVersion": "v1beta",
+                    "tenant": "tenant",
+                  },
                   "request": {
                     "name": "name",
                   },
@@ -225,7 +237,10 @@
         type: Widget
         status-code: 200
       examples:
-        - request:
+        - path-parameters:
+            tenant: tenant
+            apiVersion: v1beta
+          request:
             name: name
           response:
             body:
@@ -243,7 +258,10 @@
         terminator: '[DONE]'
         resumable: false
       examples:
-        - request:
+        - path-parameters:
+            tenant: tenant
+            apiVersion: v1beta
+          request:
             model: model
             input: input
           response:
@@ -262,7 +280,10 @@
         type: Interaction
         status-code: 200
       examples:
-        - request:
+        - path-parameters:
+            tenant: tenant
+            apiVersion: v1beta
+          request:
             model: model
             input: input
           response:
