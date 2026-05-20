@@ -3,7 +3,8 @@ import {
     detectInvocationSource,
     FernWorkspace,
     getOriginGitCommit,
-    getOriginGitCommitIsDirty
+    getOriginGitCommitIsDirty,
+    type Spec
 } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
@@ -49,6 +50,12 @@ export declare namespace GenerationRunner {
          */
         verify?: boolean;
         /**
+         * Raw API spec files (OpenAPI, protobuf, etc.) to pre-process and mount
+         * into the generator container. When provided, specs are bundled, overrides
+         * merged, overlays applied, and the result is written as compact JSON.
+         */
+        rawApiSpecs?: Spec[];
+        /**
          * Container runtime to use when `verify` is true. Defaults to "docker".
          * Ignored when `verify` is false.
          */
@@ -85,6 +92,7 @@ export class GenerationRunner {
         inspect,
         skipFernignore,
         skipAutogenerationIfManualExamplesExist,
+        rawApiSpecs,
         verify,
         verifyRunner,
         verifyValidatorVersion
@@ -115,7 +123,8 @@ export class GenerationRunner {
                                 absolutePathToFernConfig,
                                 inspect,
                                 skipFernignore,
-                                skipAutogenerationIfManualExamplesExist
+                                skipAutogenerationIfManualExamplesExist,
+                                rawApiSpecs
                             });
 
                             interactiveTaskContext.logger.info(
@@ -178,7 +187,8 @@ export class GenerationRunner {
         absolutePathToFernConfig,
         inspect,
         skipFernignore,
-        skipAutogenerationIfManualExamplesExist
+        skipAutogenerationIfManualExamplesExist,
+        rawApiSpecs
     }: {
         generatorGroup: generatorsYml.GeneratorGroup;
         generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -191,6 +201,7 @@ export class GenerationRunner {
         inspect: boolean;
         skipFernignore?: boolean;
         skipAutogenerationIfManualExamplesExist?: boolean;
+        rawApiSpecs?: Spec[];
     }): Promise<{
         ir: IntermediateRepresentation;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
@@ -268,7 +279,8 @@ export class GenerationRunner {
             runner: undefined,
             ai: workspace.generatorsConfiguration?.ai,
             absolutePathToSpecRepo: undefined,
-            skipFernignore
+            skipFernignore,
+            rawApiSpecs
         });
     }
 }

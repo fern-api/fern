@@ -252,10 +252,10 @@ function addAiStatusCommand(cli: Argv<GlobalArgs>): void {
 }
 
 export function addAiCommand(cli: Argv<GlobalArgs>): void {
-    commandGroup(cli, "ai", "Manage AI settings (provider and credentials for AI-powered fixes)", [
-        addAiSetProviderCommand,
-        addAiSetKeyCommand,
-        addAiGetKeyCommand,
-        addAiStatusCommand
-    ]);
+    commandGroup({
+        cli,
+        name: "ai",
+        description: "Manage AI settings (provider and credentials for AI-powered fixes)",
+        subcommands: [addAiSetProviderCommand, addAiSetKeyCommand, addAiGetKeyCommand, addAiStatusCommand]
+    });
 }

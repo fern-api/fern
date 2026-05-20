@@ -2246,6 +2246,7 @@
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_webhooks": {
@@ -2268,6 +2269,7 @@
             "webhooks": "webhooks_webhooks",
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -2288,6 +2290,7 @@
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {

@@ -63,6 +63,10 @@ export function mergeIntermediateRepresentation(
             webhooks: ir1.rootPackage.webhooks ?? ir2.rootPackage.webhooks,
             websocket: ir1.rootPackage.websocket ?? ir2.rootPackage.websocket,
             hasEndpointsInTree: ir1.rootPackage.hasEndpointsInTree || ir2.rootPackage.hasEndpointsInTree,
+            hasWebSocketInTree:
+                (ir1.rootPackage.hasWebSocketInTree ?? false) ||
+                (ir2.rootPackage.hasWebSocketInTree ?? false) ||
+                undefined,
             navigationConfig: ir1.rootPackage.navigationConfig ?? ir2.rootPackage.navigationConfig,
             docs: ir1.rootPackage.docs ?? ir2.rootPackage.docs
         },
@@ -99,6 +103,10 @@ function mergeSubpackages(
                 displayName: subpackage.displayName,
                 fernFilepath: subpackage.fernFilepath,
                 hasEndpointsInTree: mergedSubpackages[subpackageId].hasEndpointsInTree || subpackage.hasEndpointsInTree,
+                hasWebSocketInTree:
+                    (mergedSubpackages[subpackageId].hasWebSocketInTree ?? false) ||
+                    (subpackage.hasWebSocketInTree ?? false) ||
+                    undefined,
                 navigationConfig: mergedSubpackages[subpackageId].navigationConfig ?? subpackage.navigationConfig,
                 docs: mergedSubpackages[subpackageId].docs ?? subpackage.docs,
                 service: mergedSubpackages[subpackageId].service ?? subpackage.service,

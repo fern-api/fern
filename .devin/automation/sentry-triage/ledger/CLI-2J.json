@@ -1,0 +1,9 @@
+{
+  "title": "Failed to load generator migrations",
+  "disposition": "shipped",
+  "rationale": "Migration loading failed because the user's local migration cache/npm environment could not create its cache directory.",
+  "fixSummary": "Wrap migration package install/load failures as CliError(EnvironmentError) while preserving true CliErrors.",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-05",
+  "problemSignature": "Generator migrations failed to load due local npm/cache/environment error; should be environment semantics."
+}

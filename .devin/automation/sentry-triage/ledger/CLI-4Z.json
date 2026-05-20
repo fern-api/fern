@@ -1,0 +1,9 @@
+{
+  "title": "ENOSPC file watcher unhandled rejection",
+  "disposition": "keep_sentry",
+  "rationale": "ENOSPC from file watcher escapes normal error handling as unhandled rejection; reaches Sentry via onUnhandledRejectionIntegration. Needs boundary-level wrapping at the file watcher call site.",
+  "fixSummary": "—",
+  "prOrIssue": "Keep in Sentry until boundary-level fix",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "Unhandled rejection with ENOSPC errno from file watcher bypassed resolveErrorCode and reached Sentry as raw exception."
+}

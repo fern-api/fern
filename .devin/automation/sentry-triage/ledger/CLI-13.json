@@ -1,0 +1,9 @@
+{
+  "title": "swagger2openapi conversion failure",
+  "disposition": "shipped",
+  "rationale": "User OpenAPI v2 spec conversion failure should be ParseError.",
+  "fixSummary": "convertOpenAPIV2ToV3 wraps swagger2openapi as CliError(ParseError).",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+  "lastAnalyzed": "2026-04-21",
+  "problemSignature": "User OpenAPI v2 document fails swagger2openapi conversion to v3; conversion error treated as InternalError."
+}

@@ -73,7 +73,15 @@ export class Caller {
         });
     }
 
-    public instantiate({ client, maxAttempts }: { client: go.AstNode; maxAttempts: go.AstNode }): go.AstNode {
+    public instantiate({
+        client,
+        maxAttempts,
+        disableRetries
+    }: {
+        client: go.AstNode;
+        maxAttempts: go.AstNode;
+        disableRetries: go.AstNode;
+    }): go.AstNode {
         return go.invokeFunc({
             func: this.getConstructorTypeReference(),
             arguments_: [
@@ -87,6 +95,10 @@ export class Caller {
                         {
                             name: "MaxAttempts",
                             value: go.TypeInstantiation.reference(maxAttempts)
+                        },
+                        {
+                            name: "DisableRetries",
+                            value: go.TypeInstantiation.reference(disableRetries)
                         }
                     ]
                 })
@@ -126,6 +138,15 @@ export class Caller {
                     go.selector({
                         on: args.optionsReference,
                         selector: go.codeblock("MaxAttempts")
+                    })
+                )
+            },
+            {
+                name: "DisableRetries",
+                value: go.TypeInstantiation.reference(
+                    go.selector({
+                        on: args.optionsReference,
+                        selector: go.codeblock("DisableRetries")
                     })
                 )
             },

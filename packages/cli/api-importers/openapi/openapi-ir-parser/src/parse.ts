@@ -50,6 +50,7 @@ export function parse({
         title: undefined,
         description: undefined,
         basePath: undefined,
+        basePathParameters: undefined,
         servers: [],
         websocketServers: [],
         tags: {
@@ -381,6 +382,7 @@ function merge(
             title: ir1.title ?? ir2.title,
             description: ir1.description ?? ir2.description,
             basePath: ir1.basePath ?? ir2.basePath,
+            basePathParameters: ir1.basePathParameters ?? ir2.basePathParameters,
             servers: [...ir1.servers, ...ir2.servers],
             websocketServers: [...ir1.websocketServers, ...ir2.websocketServers],
             tags: {
@@ -540,6 +542,7 @@ function merge(
             title: ir1.title ?? ir2.title,
             description: ir1.description ?? ir2.description,
             basePath: ir1.basePath ?? ir2.basePath,
+            basePathParameters: ir1.basePathParameters ?? ir2.basePathParameters,
             // Cast grouped servers to Server[] - buildEnvironments.ts handles the grouped structure
             // biome-ignore lint/suspicious/noExplicitAny: Required to preserve grouped server metadata through type system
             servers: mergedServers as any as Server[],
@@ -600,6 +603,7 @@ function merge(
         title: ir1.title ?? ir2.title,
         description: ir1.description ?? ir2.description,
         basePath: ir1.basePath ?? ir2.basePath,
+        basePathParameters: ir1.basePathParameters ?? ir2.basePathParameters,
         servers: [...ir1.servers, ...ir2.servers],
         websocketServers: [...ir1.websocketServers, ...ir2.websocketServers],
         tags: {

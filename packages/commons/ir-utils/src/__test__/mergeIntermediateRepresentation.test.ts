@@ -52,6 +52,7 @@ function makeMinimalIr(overrides: Partial<FernIr.IntermediateRepresentation> = {
             webhooks: undefined,
             websocket: undefined,
             hasEndpointsInTree: false,
+            hasWebSocketInTree: undefined,
             navigationConfig: undefined,
             docs: undefined
         },
