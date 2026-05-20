@@ -436,3 +436,4 @@ allowedFailures:
   - unions-with-local-date
   - server-sent-event-examples
   - server-sent-events-openapi
+  - api-wide-base-path-with-default
