@@ -219,8 +219,7 @@ class AbstractGenerator(ABC):
             publisher.run_ruff_check_fix("/fern/output", cwd="/")
             publisher.run_ruff_format("/fern/output", cwd="/")
         elif output_mode_union.type == "github":
-            # poetry.lock is resolved by the PostGenerationPipeline's LockfileStep
-            # AFTER customizations (replay patches, .fernignore) are applied.
+            publisher.run_poetry_lock()
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
         elif output_mode_union.type == "publish":
