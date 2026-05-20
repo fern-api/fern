@@ -10,10 +10,10 @@ public partial class Examples
         );
 
         await client.Widgets.CreateAsync(
-            "v1beta",
             new Widget {
                 Name = "name"
-            }
+            },
+            "v1beta"
         );
     }
 
