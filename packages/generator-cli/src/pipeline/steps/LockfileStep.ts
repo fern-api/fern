@@ -1,3 +1,4 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { execFileSync } from "child_process";
 import type { PipelineLogger } from "../PipelineLogger";
 import type { LockfileStepConfig, LockfileStepResult, PipelineContext } from "../types";
@@ -38,8 +39,7 @@ export class LockfileStep extends BaseStep {
             this.logger.info("Lockfile resolution completed successfully");
             return { executed: true, success: true, skipped: false };
         } catch (error) {
-            const stderr = error instanceof Error && "stderr" in error ? String((error as any).stderr) : "";
-            const message = `Lockfile resolution failed: ${stderr || (error instanceof Error ? error.message : String(error))}`;
+            const message = `Lockfile resolution failed: ${extractErrorMessage(error)}`;
             this.logger.error(message);
             return { executed: true, success: false, skipped: false, errorMessage: message };
         }
