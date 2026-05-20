@@ -189,7 +189,8 @@ export async function generateWorkspace({
                             specsComputed = true;
                             cachedSpecsTarGz = await createSpecsTarGzBuffer({
                                 specs: workspace.allSpecs,
-                                context: groupContext
+                                context: groupContext,
+                                audiences: group.audiences
                             });
                         }
                         return cachedSpecsTarGz;
