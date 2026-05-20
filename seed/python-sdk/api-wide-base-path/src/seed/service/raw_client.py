@@ -18,7 +18,6 @@ class RawServiceClient:
 
     def post(
         self,
-        path_param: str,
         service_param: str,
         endpoint_param: int,
         resource_param: str,
@@ -28,8 +27,6 @@ class RawServiceClient:
         """
         Parameters
         ----------
-        path_param : str
-
         service_param : str
 
         endpoint_param : int
@@ -44,7 +41,7 @@ class RawServiceClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"test/{encode_path_param(path_param)}/{encode_path_param(service_param)}/{encode_path_param(endpoint_param)}/{encode_path_param(resource_param)}",
+            f"test/{encode_path_param(self._client_wrapper._path_param)}/{encode_path_param(service_param)}/{encode_path_param(endpoint_param)}/{encode_path_param(resource_param)}",
             method="POST",
             request_options=request_options,
         )
@@ -67,7 +64,6 @@ class AsyncRawServiceClient:
 
     async def post(
         self,
-        path_param: str,
         service_param: str,
         endpoint_param: int,
         resource_param: str,
@@ -77,8 +73,6 @@ class AsyncRawServiceClient:
         """
         Parameters
         ----------
-        path_param : str
-
         service_param : str
 
         endpoint_param : int
@@ -93,7 +87,7 @@ class AsyncRawServiceClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"test/{encode_path_param(path_param)}/{encode_path_param(service_param)}/{encode_path_param(endpoint_param)}/{encode_path_param(resource_param)}",
+            f"test/{encode_path_param(self._client_wrapper._path_param)}/{encode_path_param(service_param)}/{encode_path_param(endpoint_param)}/{encode_path_param(resource_param)}",
             method="POST",
             request_options=request_options,
         )
