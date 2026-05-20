@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Bump @fern-api/replay to 0.16.1.
+      type: chore
+  createdAt: "2026-05-20"
+  version: 0.9.33
+
+- changelogEntry:
+    - summary: |
         Restore GitHub web-flow signing on cloud-generated PRs. `pushSignedCommit`
         still sends `author` (Fern bot attribution from 0.9.28) but no longer
         sends `committer` by default — the signer keys off `committer`, so the
