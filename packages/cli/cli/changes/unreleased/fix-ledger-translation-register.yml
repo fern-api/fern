@@ -1,0 +1,6 @@
+- summary: |
+    Include translations in docs-ledger register call so the server issues
+    presigned upload URLs for translation-unique blobs. Previously only base
+    locale content was sent to register, causing locale-specific pages with
+    different hashes to get no upload URL.
+  type: fix

@@ -282,29 +282,15 @@ export async function publishDocsViaLedger({
     }
 
     // ── Phase 2: Single register → upload → finish ─────────────────────
-    // Translations are passed inline to the finish call so the server
-    // persists base + all locale segments in a single request.
+    // Translations are passed inline to both register and finish so the
+    // server can issue presigned URLs for translation-unique blobs during
+    // register, and persist base + all locale segments during finish.
 
     const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers });
 
-    // Register — server computes deployment hash, returns presigned S3
-    // URLs for any blobs it doesn't already have in CAS.
-    context.logger.debug("[ledger] Registering deployment...");
-    const registerStart = performance.now();
-    const registerResult = await client.register(input);
-    const registerTime = performance.now() - registerStart;
-    context.logger.debug(
-        `[ledger] Registered in ${registerTime.toFixed(0)}ms — hash=${registerResult.deploymentHash}, missing=${registerResult.missingContent.length} blobs`
-    );
-
-    // Upload all blobs the server doesn't have yet (base + translations
-    // combined). In-memory blobs are checked first; file blobs are read
-    // lazily from disk via filePaths.
-    await uploadMissingBlobs(registerResult.missingContent, blobs, context, filePaths);
-
-    // Build the translations array for the finish call. Each entry
-    // carries only the content fields + locale — orgId/domain/basepath
-    // are inherited from the base input on the server side.
+    // Build the translations array before register so the server sees
+    // translation content refs and can issue presigned upload URLs for
+    // locale-specific blobs that don't share a hash with the base.
     const translations: TranslationEntry[] = builtTranslations.map((t) => ({
         locale: t.locale,
         root: t.input.root,
@@ -319,12 +305,30 @@ export async function publishDocsViaLedger({
         git: t.input.git
     }));
 
-    // Finish — server persists the base deployment + all translations
-    // in a single call.
-    const finishInput: DocsPublishInput = {
+    const registerInput: DocsPublishInput = {
         ...input,
         translations: translations.length > 0 ? translations : undefined
     };
+
+    // Register — server computes deployment hash, returns presigned S3
+    // URLs for any blobs it doesn't already have in CAS (base +
+    // translations combined).
+    context.logger.debug("[ledger] Registering deployment...");
+    const registerStart = performance.now();
+    const registerResult = await client.register(registerInput);
+    const registerTime = performance.now() - registerStart;
+    context.logger.debug(
+        `[ledger] Registered in ${registerTime.toFixed(0)}ms — hash=${registerResult.deploymentHash}, missing=${registerResult.missingContent.length} blobs`
+    );
+
+    // Upload all blobs the server doesn't have yet (base + translations
+    // combined). In-memory blobs are checked first; file blobs are read
+    // lazily from disk via filePaths.
+    await uploadMissingBlobs(registerResult.missingContent, blobs, context, filePaths);
+
+    // Finish — server persists the base deployment + all translations
+    // in a single call. Uses the same input shape as register.
+    const finishInput: DocsPublishInput = registerInput;
     context.logger.debug("[ledger] Finishing deployment...");
     const finishStart = performance.now();
     const finishResult = await client.finish(finishInput);
