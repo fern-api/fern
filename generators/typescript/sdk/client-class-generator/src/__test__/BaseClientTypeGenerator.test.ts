@@ -32,10 +32,7 @@ function createIR(opts?: {
     return ir;
 }
 
-function createRootPathParameter(opts: {
-    name: string;
-    clientDefault?: FernIr.Literal;
-}): FernIr.PathParameter {
+function createRootPathParameter(opts: { name: string; clientDefault?: FernIr.Literal }): FernIr.PathParameter {
     return {
         name: casingsGenerator.generateName(opts.name),
         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
@@ -245,7 +242,7 @@ describe("BaseClientTypeGenerator", () => {
             expect(normalizeFunction).not.toContain("apiVersion:");
         });
 
-        it("emits `apiVersion: options?.apiVersion ?? \"v1beta\"` when clientDefault is set", () => {
+        it('emits `apiVersion: options?.apiVersion ?? "v1beta"` when clientDefault is set', () => {
             const ir = createIR({
                 pathParameters: [
                     createRootPathParameter({
