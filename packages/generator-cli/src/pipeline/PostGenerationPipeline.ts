@@ -6,6 +6,7 @@ import { AutoVersionStep } from "./steps/AutoVersionStep";
 import { BaseStep } from "./steps/BaseStep";
 import { GenerationCommitStep } from "./steps/GenerationCommitStep";
 import { GithubStep } from "./steps/GithubStep";
+import { LockfileStep } from "./steps/LockfileStep";
 import { ReplayStep } from "./steps/ReplayStep";
 import { VerificationStep } from "./steps/VerificationStep";
 import type {
@@ -13,6 +14,7 @@ import type {
     FernignoreStepResult,
     GenerationCommitStepResult,
     GithubStepResult,
+    LockfileStepResult,
     PipelineConfig,
     PipelineContext,
     PipelineResult,
@@ -90,6 +92,10 @@ export class PostGenerationPipeline {
         //   this.steps.push(new FernignoreStep(config.outputDir, this.logger));
         // }
 
+        if (config.lockfile?.enabled && config.lockfile.command.length > 0) {
+            this.steps.push(new LockfileStep(config.outputDir, this.logger, config.lockfile));
+        }
+
         // VerificationStep runs after replay and before GithubStep so a failing
         // verify aborts the pipeline before we open a PR. Wired only when the
         // generator emitted `.fern/verify.sh` (no-ops otherwise).
@@ -154,6 +160,8 @@ export class PostGenerationPipeline {
                     pipelineContext.previousStepResults.autoVersion = stepResult as AutoVersionStepResult;
                 } else if (step.name === "fernignore") {
                     result.steps.fernignore = stepResult as FernignoreStepResult;
+                } else if (step.name === "lockfile") {
+                    result.steps.lockfile = stepResult as LockfileStepResult;
                 } else if (step.name === "verify") {
                     const verifyResult = stepResult as VerificationStepResult;
                     result.steps.verify = verifyResult;

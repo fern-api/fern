@@ -1,0 +1,5 @@
+- summary: |
+    Enable `LockfileStep` in the PostGenerationPipeline for Python generators
+    so `poetry.lock` is resolved after replay patches and `.fernignore`
+    customizations are applied.
+  type: feat

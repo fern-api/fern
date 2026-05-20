@@ -42,3 +42,18 @@ const GENERATORS_WANTING_SPECS: ReadonlySet<string> = new Set(["fernapi/fern-cli
 export function generatorWantsSpecs(generatorName: string): boolean {
     return GENERATORS_WANTING_SPECS.has(generatorName);
 }
+
+/**
+ * Python generators that use Poetry for dependency management. When running
+ * in GitHub output mode, their `poetry.lock` must be resolved AFTER the
+ * PostGenerationPipeline applies customizations (replay patches, .fernignore).
+ */
+const POETRY_GENERATORS: ReadonlySet<string> = new Set([
+    "fernapi/fern-python-sdk",
+    "fernapi/fern-fastapi-server",
+    "fernapi/fern-pydantic-model"
+]);
+
+export function generatorUsesPoetry(generatorName: string): boolean {
+    return POETRY_GENERATORS.has(generatorName);
+}

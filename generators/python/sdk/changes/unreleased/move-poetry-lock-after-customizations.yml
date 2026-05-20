@@ -1,0 +1,6 @@
+- summary: |
+    Move `poetry.lock` resolution for GitHub output mode to the
+    PostGenerationPipeline's LockfileStep so the lockfile reflects the
+    final `pyproject.toml` state after replay patches and `.fernignore`
+    customizations are applied.
+  type: fix

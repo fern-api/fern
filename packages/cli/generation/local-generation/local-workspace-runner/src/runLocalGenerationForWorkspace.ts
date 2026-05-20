@@ -37,7 +37,7 @@ import * as fs from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
-import { generatorWantsSpecs } from "./constants.js";
+import { generatorUsesPoetry, generatorWantsSpecs } from "./constants.js";
 import { getGeneratorOutputSubfolder } from "./getGeneratorOutputSubfolder.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 
@@ -425,6 +425,10 @@ export async function runLocalGenerationForWorkspace({
                             replay: githubPipelineEnabled
                                 ? { enabled: replay?.enabled === true, skipApplication: noReplay, stageOnly: false }
                                 : undefined,
+                            lockfile:
+                                githubPipelineEnabled && generatorUsesPoetry(generatorInvocation.name)
+                                    ? { enabled: true, command: ["poetry", "lock"] }
+                                    : undefined,
                             verify: { enabled: verify === true, runner },
                             github:
                                 githubPipelineEnabled && selfhostedGithubConfig != null
