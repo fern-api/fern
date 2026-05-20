@@ -213,7 +213,8 @@ export function buildEndpoint({
                     context,
                     fileContainingReference: declarationFile,
                     namespace: maybeEndpointNamespace,
-                    declarationDepth: 0
+                    declarationDepth: 0,
+                    variant: context.options.respectReadonlySchemas ? "read" : undefined
                 });
                 convertedEndpoint.response = {
                     docs: jsonResponse.description ?? undefined,
@@ -232,7 +233,8 @@ export function buildEndpoint({
                     context,
                     fileContainingReference: declarationFile,
                     namespace: maybeEndpointNamespace,
-                    declarationDepth: 0
+                    declarationDepth: 0,
+                    variant: context.options.respectReadonlySchemas ? "read" : undefined
                 });
                 convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
@@ -247,7 +249,8 @@ export function buildEndpoint({
                     context,
                     fileContainingReference: declarationFile,
                     namespace: maybeEndpointNamespace,
-                    declarationDepth: 0
+                    declarationDepth: 0,
+                    variant: context.options.respectReadonlySchemas ? "read" : undefined
                 });
                 convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,

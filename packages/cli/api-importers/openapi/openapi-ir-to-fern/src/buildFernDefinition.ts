@@ -168,6 +168,14 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
         context.builder.addAudience(EXTERNAL_AUDIENCE);
     }
 
+    // Compute reachability-based variant plan for readonly schema handling before building
+    // services so that endpoint response type references can use the correct Read variant.
+    if (context.options.respectReadonlySchemas) {
+        const reachability = computeSchemaReachability(context.ir);
+        const variantPlan = computeVariantPlan(context.ir, reachability);
+        context.setVariantPlan(variantPlan, reachability);
+    }
+
     const convertedServices = buildServices(context);
     const sdkGroups = convertedServices.sdkGroups;
 
@@ -188,13 +196,6 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
         context,
         schemaIdsToExcludeFromServices: convertedServices.schemaIdsToExclude
     });
-
-    // Compute reachability-based variant plan for readonly schema handling
-    if (context.options.respectReadonlySchemas) {
-        const reachability = computeSchemaReachability(context.ir);
-        const variantPlan = computeVariantPlan(context.ir, reachability);
-        context.setVariantPlan(variantPlan, reachability);
-    }
 
     // Build type declarations
     addSchemas({ schemas: context.ir.groupedSchemas.rootSchemas, schemaIdsToExclude, namespace: undefined, context });
