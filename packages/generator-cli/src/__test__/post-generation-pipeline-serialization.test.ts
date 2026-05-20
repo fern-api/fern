@@ -25,7 +25,6 @@ describe("PostGenerationPipeline serialization", () => {
             preparedReplay: circular as never,
             previousGenerationSha: "prev-sha",
             currentGenerationSha: "curr-sha",
-            baseBranchHead: "base-sha",
             flow: "normal-regeneration"
         } satisfies GenerationCommitStepResult;
 
@@ -45,7 +44,6 @@ describe("PostGenerationPipeline serialization", () => {
 
             expect(result.steps.generationCommit?.previousGenerationSha).toBe("prev-sha");
             expect(result.steps.generationCommit?.currentGenerationSha).toBe("curr-sha");
-            expect(result.steps.generationCommit?.baseBranchHead).toBe("base-sha");
             expect(result.steps.generationCommit?.flow).toBe("normal-regeneration");
             expect(result.steps.generationCommit?.preparedReplay).toBeUndefined();
         } finally {

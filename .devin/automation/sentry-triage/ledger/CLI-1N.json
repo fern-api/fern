@@ -1,0 +1,10 @@
+{
+  "title": "Container execution failed code 1",
+  "disposition": "duplicate",
+  "rationale": "Same container/task double-reporting family as CLI-10.",
+  "fixSummary": "—",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+  "lastAnalyzed": "2026-05-04",
+  "duplicateOf": "CLI-10",
+  "problemSignature": "sdk generate or docs publish with Docker/container tasks: task failures double-reported as aggregate InternalError / ContainerError noise."
+}

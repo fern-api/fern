@@ -478,7 +478,8 @@
       "errors": [],
       "subpackages": [],
       "websocket": "channel_testChannel",
-      "hasEndpointsInTree": false
+      "hasEndpointsInTree": false,
+      "hasWebSocketInTree": true
     },
     "subpackage_testChannel2": {
       "fernFilepath": {
@@ -493,7 +494,8 @@
       "errors": [],
       "subpackages": [],
       "websocket": "channel_testChannel2",
-      "hasEndpointsInTree": false
+      "hasEndpointsInTree": false,
+      "hasWebSocketInTree": true
     }
   },
   "rootPackage": {
@@ -508,7 +510,8 @@
       "subpackage_testChannel",
       "subpackage_testChannel2"
     ],
-    "hasEndpointsInTree": true
+    "hasEndpointsInTree": true,
+    "hasWebSocketInTree": true
   },
   "sdkConfig": {
     "isAuthMandatory": false,

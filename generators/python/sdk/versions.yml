@@ -1,4 +1,61 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.14.0
+  changelogEntry:
+    - summary: |
+        Add support for the `x-fern-base-path` OpenAPI extension. Root path
+        parameters declared on the base path are hoisted to the client
+        constructor; endpoint methods no longer take them as arguments and
+        URL substitution reads them from the client wrapper.
+      type: feat
+  createdAt: "2026-05-20"
+  irVersion: 67
+- version: 5.13.1
+  changelogEntry:
+    - summary: |
+        Use `hasWebSocketInTree` IR field to wire WebSocket sub-clients into the
+        root client, even when the WebSocket channel lives on a nested sub-resource
+        rather than the top-level namespace package.
+      type: fix
+  createdAt: "2026-05-20"
+  irVersion: 67
+- version: 5.13.0
+  changelogEntry:
+    - summary: |
+        Add `output_directory` custom config, mirroring the Java generator's flag.
+        `project-root` (default behavior when unset) preserves today's `src/<package>/...`
+        layout with full project scaffolding. `source-root` writes the source tree
+        directly without the `src/` prefix and skips project scaffolding
+        (`pyproject.toml`, `requirements.txt`, `README.md`, `py.typed`, LICENSE,
+        `.github/workflows`, `.gitignore`, `tests/` scaffolds, `CONTRIBUTING.md`,
+        `reference.md`) — designed for embedding generated code into an existing
+        Python project. Composes with `package_path`; combine with `package_name`
+        to drop the `<package>` wrapper entirely. The legacy `flat_layout` flag is
+        preserved as a deprecated alias with bit-exact behavior.
+      type: feat
+  createdAt: "2026-05-19"
+  irVersion: 67
+- version: 5.12.12
+  changelogEntry:
+    - summary: |
+        Fix `test_aiohttp_autodetect.py` and `_default_clients.py` to use the
+        configured `package_name` instead of the raw organization name. Previously,
+        when `package_name` in `generators.yml` differed from `organization` in
+        `fern.config.json`, the generated aiohttp test used incorrect import paths
+        and the pip install error message contained a hardcoded literal "package"
+        instead of the actual package name.
+      type: fix
+  createdAt: "2026-05-18"
+  irVersion: 67
+- version: 5.12.11
+  changelogEntry:
+    - summary: |
+        Update OS packages in the Python SDK generator container from Debian sid to fix
+        krb5 (CVE-2026-40355, CVE-2026-40356), curl (CVE-2026-1965, CVE-2026-4873,
+        CVE-2026-5545, CVE-2026-6253, CVE-2026-6429), gnutls28 (CVE-2026-3832),
+        and expat (CVE-2026-45186).
+      type: chore
+  createdAt: "2026-05-18"
+  irVersion: 66
 - version: 5.12.10
   changelogEntry:
     - summary: |

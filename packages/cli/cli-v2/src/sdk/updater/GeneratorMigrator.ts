@@ -20,7 +20,7 @@ export namespace GeneratorMigrator {
     export interface Config {
         /** Logger for migration feedback and debug output. */
         logger: Logger;
-        /** Cache directory for downloading migration packages (e.g. ~/.cache/fern/v1/migrations). */
+        /** Cache directory for downloading migration packages (e.g. ~/.fern/v1/migrations). */
         cachePath: AbsoluteFilePath;
     }
 

@@ -56,6 +56,7 @@
       "packagePath": [],
     },
     "hasEndpointsInTree": false,
+    "hasWebSocketInTree": undefined,
     "navigationConfig": undefined,
     "service": undefined,
     "subpackages": [
@@ -98,6 +99,7 @@
         "packagePath": [],
       },
       "hasEndpointsInTree": false,
+      "hasWebSocketInTree": undefined,
       "name": "plantOrders",
       "navigationConfig": undefined,
       "service": undefined,
@@ -118,6 +120,7 @@
         "packagePath": [],
       },
       "hasEndpointsInTree": false,
+      "hasWebSocketInTree": undefined,
       "name": "plantUpdates",
       "navigationConfig": undefined,
       "service": undefined,

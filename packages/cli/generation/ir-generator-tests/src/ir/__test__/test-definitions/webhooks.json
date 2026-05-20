@@ -1613,6 +1613,7 @@
         "webhooks": "webhooks_",
         "navigationConfig": null,
         "hasEndpointsInTree": false,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {

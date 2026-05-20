@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "d3eed189",
+            "id": {
+                "method": "GET",
+                "path": "/status",
+                "identifier_override": "endpoint_status.get_status"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.websocket.SeedWebsocketClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedWebsocketClient client = SeedWebsocketClient\n            .builder()\n            .build();\n\n        client.status().getStatus();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.websocket.SeedWebsocketClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedWebsocketClient client = SeedWebsocketClient\n            .builder()\n            .build();\n\n        client.status().getStatus();\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

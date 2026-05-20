@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.2.0
+  changelogEntry:
+    - summary: |
+        Add API spec pre-processing infrastructure: bundle external $refs,
+        merge overrides, apply overlays, and output compact JSON for embedding
+        in generated CLI.
+      type: feat
+  createdAt: "2026-05-20"
+  irVersion: 66
 - version: 0.1.0
   changelogEntry:
     - summary: |

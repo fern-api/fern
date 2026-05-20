@@ -1,3 +1,6 @@
 - summary: |
     Register the new `fernapi/fern-cli` generator in the CLI configuration.
   type: feat
+- summary: |
+    Pass raw API spec files (OAS, overrides, overlays, protobuf, etc.) to generators via Docker mount.
+  type: feat

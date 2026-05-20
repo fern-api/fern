@@ -904,6 +904,7 @@
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": "This service handles user authentication.\nUse DOMAIN\\username format for Windows authentication.\nOther escape sequences: \\n \\t \\r \\x00 \\u0000"
         }
     },
@@ -923,6 +924,7 @@
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {
