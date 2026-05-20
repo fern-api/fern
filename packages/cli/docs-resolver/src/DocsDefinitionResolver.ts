@@ -889,6 +889,13 @@ export class DocsDefinitionResolver {
             }),
             typographyV2: this.convertDocsTypographyConfiguration(),
             layout: this.parsedDocsConfig.layout,
+            feedback:
+                this.parsedDocsConfig.feedback != null
+                    ? {
+                          hideFeedback: this.parsedDocsConfig.feedback.hideFeedback,
+                          requireEmail: this.parsedDocsConfig.feedback.requireEmail
+                      }
+                    : undefined,
             settings: this.parsedDocsConfig.settings,
             css: this.parsedDocsConfig.css,
             js: this.convertJavascriptConfiguration(),

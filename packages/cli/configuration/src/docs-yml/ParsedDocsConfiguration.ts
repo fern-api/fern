@@ -40,6 +40,11 @@ export interface ParsedPageActionsConfig {
     };
 }
 
+export interface ParsedFeedbackConfig {
+    hideFeedback: boolean;
+    requireEmail: boolean;
+}
+
 // TODO(kafkas): Remove this when we upgrade the fdr-sdk to latest
 interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSettingsConfig, "language"> {
     language: string | undefined;
@@ -83,6 +88,7 @@ export interface ParsedDocsConfiguration {
     colors: CjsFdrSdk.docs.v1.write.ColorsConfigV3 | undefined;
     typography: TypographyConfig | undefined;
     layout: CjsFdrSdk.docs.v1.commons.DocsLayoutConfig | undefined;
+    feedback: ParsedFeedbackConfig | undefined;
     settings: ParsedDocsSettingsConfig | undefined;
     context7File: AbsoluteFilePath | undefined;
     llmsTxtFile: AbsoluteFilePath | undefined;

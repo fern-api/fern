@@ -43,6 +43,7 @@ export * from "./EditThisPageConfig.js";
 export * from "./EditThisPageLaunch.js";
 export * from "./ExperimentalConfig.js";
 export * from "./ExternalProduct.js";
+export * from "./FeedbackConfig.js";
 export * from "./FeatureFlag.js";
 export * from "./FeatureFlagConfiguration.js";
 export * from "./FolderConfiguration.js";

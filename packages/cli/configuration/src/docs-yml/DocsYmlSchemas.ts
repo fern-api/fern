@@ -306,6 +306,13 @@ export const LayoutConfig = z.object({
     "mobile-toc": z.boolean().optional()
 });
 
+// ===== Feedback =====
+
+export const FeedbackConfig = z.object({
+    "hide-feedback": z.boolean().optional(),
+    "require-email": z.boolean().optional()
+});
+
 // ===== Settings =====
 
 export const DocsSettingsConfig = z.object({
@@ -1010,6 +1017,7 @@ export const DocsConfiguration = z.object({
     colors: ColorsConfiguration.optional(),
     typography: DocsTypographyConfig.optional(),
     layout: LayoutConfig.optional(),
+    feedback: FeedbackConfig.optional(),
     settings: DocsSettingsConfig.optional(),
     theme: ThemeConfig.optional(),
     "global-theme": z.string().optional(),

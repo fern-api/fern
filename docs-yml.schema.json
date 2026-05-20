@@ -356,6 +356,16 @@
         }
       ]
     },
+    "feedback": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.FeedbackConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "settings": {
       "oneOf": [
         {
@@ -5955,6 +5965,35 @@
         "flat",
         "grouped"
       ]
+    },
+    "docs.FeedbackConfig": {
+      "type": "object",
+      "properties": {
+        "hide-feedback": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If `hide-feedback` is set to true, the feedback widget will not be rendered.\nIf either this property or `layout.hide-feedback` is true, feedback is hidden.\n\n@default: false"
+        },
+        "require-email": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If `require-email` is set to true, the email field in the feedback form will be required.\nUsers can still click submit, but an inline validation error will appear if the email is empty.\n\n@default: false"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Configuration for the feedback widget displayed on documentation pages."
     },
     "docs.DocsSettingsConfig": {
       "type": "object",

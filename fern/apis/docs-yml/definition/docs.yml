@@ -355,6 +355,7 @@ types:
       colors: optional<ColorsConfiguration>
       typography: optional<DocsTypographyConfig>
       layout: optional<LayoutConfig>
+      feedback: optional<FeedbackConfig>
       settings: optional<DocsSettingsConfig>
       theme: optional<ThemeConfig>
 
@@ -909,6 +910,25 @@ types:
         availability: in-development
         docs: |
           If `mobile-toc` is set to true, a sticky collapsible table of contents bar will be shown on mobile viewports for guide and overview layout pages.
+
+  FeedbackConfig:
+    docs: |
+      Configuration for the feedback widget displayed on documentation pages.
+    properties:
+      hide-feedback:
+        type: optional<boolean>
+        docs: |
+          If `hide-feedback` is set to true, the feedback widget will not be rendered.
+          If either this property or `layout.hide-feedback` is true, feedback is hidden.
+
+          @default: false
+      require-email:
+        type: optional<boolean>
+        docs: |
+          If `require-email` is set to true, the email field in the feedback form will be required.
+          Users can still click submit, but an inline validation error will appear if the email is empty.
+
+          @default: false
 
   DocsSettingsConfig:
     properties:
