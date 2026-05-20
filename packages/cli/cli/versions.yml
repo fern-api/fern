@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.33.2
+  changelogEntry:
+    - summary: |
+        Validate that the Fern instance `url` and every `custom-domain` share the same basepath when
+        basepath-aware mode is enabled (`multi-source: true` or the deprecated
+        `experimental.basepath-aware: true`). Previously the check was skipped when the custom domain
+        was at the root, allowing publishes that would 404 after DNS cutover.
+      type: fix
+    - summary: |
+        Strip any `https://` or `http://` prefix from `custom-domain` entries in `docs.yml` before
+        they're sent to FDR or used for basepath comparisons. Including the protocol in the configured
+        value could interfere with basepath resolution during DNS cutover.
+      type: fix
+  createdAt: "2026-05-20"
+  irVersion: 66
 - version: 5.33.1
   changelogEntry:
     - summary: |
