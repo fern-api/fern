@@ -1,0 +1,5 @@
+- summary: |
+    Fix generated wire tests using `.Ptr()` on enum path parameters.
+    Path parameters are always required value types, not pointers,
+    so the generated test code should use the enum value directly.
+  type: fix
