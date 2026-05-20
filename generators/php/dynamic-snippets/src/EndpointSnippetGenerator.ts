@@ -842,9 +842,7 @@ export class EndpointSnippetGenerator {
         if (rootPathParameters.length > 0) {
             this.context.errors.scope(Scope.PathParameters);
             args.push(
-                ...this.getPathParameters({ namedParameters: rootPathParameters, snippet }).map(
-                    (field) => field.value
-                )
+                ...this.getPathParameters({ namedParameters: rootPathParameters, snippet }).map((field) => field.value)
             );
             this.context.errors.unscope();
         }
@@ -903,9 +901,7 @@ export class EndpointSnippetGenerator {
             );
         }
         if (rootPathParameters.length > 0) {
-            rootPathParameterFields.push(
-                ...this.getPathParameters({ namedParameters: rootPathParameters, snippet })
-            );
+            rootPathParameterFields.push(...this.getPathParameters({ namedParameters: rootPathParameters, snippet }));
         }
         const pathParameterFields = [...endpointPathParameterFields, ...rootPathParameterFields];
         this.context.errors.unscope();
