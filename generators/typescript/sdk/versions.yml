@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.70.9
+  changelogEntry:
+    - summary: |
+        Substitute the configured default for root path parameters inside
+        `normalizeClientOptions`. When a root-level path parameter declares a
+        `client-default` in the Fern Definition, omitting it at client
+        construction now produces the literal default value in generated URLs
+        instead of `undefined`. Mirrors the existing pattern for headers with
+        client defaults.
+      type: feat
+  createdAt: "2026-05-19"
+  irVersion: 66
 - version: 3.70.8
   changelogEntry:
     - summary: |
