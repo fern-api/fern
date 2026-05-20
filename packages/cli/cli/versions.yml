@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.33.0
+  changelogEntry:
+    - summary: |
+        Mount pre-processed API specs into generator Docker containers.
+        Specs are bundled, overrides merged, overlays applied, x-fern-ignore
+        operations filtered, and x-fern-audiences respected before outputting
+        compact JSON to generators. Add hidden `resolve-specs` command.
+      type: feat
+  createdAt: "2026-05-20"
+  irVersion: 66
 - version: 5.32.1
   changelogEntry:
     - summary: |
