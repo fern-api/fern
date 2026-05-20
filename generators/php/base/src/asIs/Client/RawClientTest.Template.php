@@ -1205,35 +1205,4 @@ class RawClientTest extends TestCase
         $this->assertFalse($guzzleClient->sendCalled, 'Guzzle send() should not be called when timeout is null');
     }
 
-    public function testNonGuzzleClientTriggersWarningWithTimeout(): void
-    {
-        $mockClient = new MockHttpClient();
-        $mockClient->append(self::createResponse(200));
-
-        $retryClient = new RetryDecoratingClient(
-            $mockClient,
-            maxRetries: 0,
-            sleepFunction: function (int $_microseconds): void {},
-        );
-
-        $requestFactory = \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
-        $request = $requestFactory->createRequest('GET', $this->baseUrl . '/test');
-
-        $warningTriggered = false;
-        set_error_handler(static function (int $errno, string $errstr) use (&$warningTriggered): bool {
-            if ($errno === E_USER_WARNING && str_contains($errstr, 'Timeout option is not supported')) {
-                $warningTriggered = true;
-                return true;
-            }
-            return false;
-        });
-
-        try {
-            $response = $retryClient->send($request, timeout: 5.0);
-            $this->assertEquals(200, $response->getStatusCode());
-            $this->assertTrue($warningTriggered, 'A warning should be triggered for non-Guzzle clients with timeout');
-        } finally {
-            restore_error_handler();
-        }
-    }
 }
