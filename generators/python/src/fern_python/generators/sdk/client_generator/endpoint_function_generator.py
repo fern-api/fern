@@ -171,8 +171,11 @@ class EndpointFunctionGenerator:
             return
 
         # Consolidate the named parameters and path parameters in a single list.
+        # Root path parameters are hoisted to the client constructor, so exclude them here.
         parameters: List[AST.NamedFunctionParameter] = []
-        parameters = self._named_parameters_from_path_parameters(self._endpoint.all_path_parameters)
+        parameters = self._named_parameters_from_path_parameters(
+            filter_root_path_parameters(self._endpoint.all_path_parameters)
+        )
         parameters.extend(self._named_parameters_raw)
 
         for param in parameters:
@@ -333,7 +336,7 @@ class EndpointFunctionGenerator:
             docstring=self._get_docstring_for_endpoint(
                 endpoint=self._endpoint,
                 named_parameters=named_parameters,
-                path_parameters=self._endpoint.all_path_parameters,
+                path_parameters=filter_root_path_parameters(self._endpoint.all_path_parameters),
                 snippet=(
                     endpoint_snippets[0].snippet
                     if endpoint_snippets is not None and len(endpoint_snippets) > 0 and include_snippet
