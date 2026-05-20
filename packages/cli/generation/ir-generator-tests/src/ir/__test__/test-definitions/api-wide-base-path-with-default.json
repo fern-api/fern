@@ -228,10 +228,26 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "8c53d01f",
+                                "id": "a18446b4",
                                 "name": null,
-                                "url": "/apiVersion/widgets",
-                                "rootPathParameters": [],
+                                "url": "/v1beta/widgets",
+                                "rootPathParameters": [
+                                    {
+                                        "name": "apiVersion",
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "v1beta"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "v1beta"
+                                        }
+                                    }
+                                ],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],
                                 "endpointHeaders": [],
@@ -780,6 +796,7 @@
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -801,6 +818,7 @@
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {
