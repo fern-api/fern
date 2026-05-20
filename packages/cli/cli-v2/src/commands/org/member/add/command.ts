@@ -28,10 +28,10 @@ export class InviteMemberCommand {
 
         const venus = createVenusService({ token: token.value });
 
-        const orgLookup = await venus.organization.get(args.org);
+        const orgLookup = await venus.organization.get({ orgId: args.org });
         if (!orgLookup.ok) {
             orgLookup.error._visit({
-                unauthorizedError: () => {
+                unprocessableEntityError: () => {
                     context.stderr.error(`${Icons.error} You do not have access to organization "${args.org}".`);
                     throw new CliError({ code: CliError.Code.AuthError });
                 },
@@ -63,13 +63,7 @@ export class InviteMemberCommand {
         }
 
         response.error._visit({
-            unauthorizedError: () => {
-                context.stderr.error(
-                    `${Icons.error} You do not have permission to invite members to organization "${args.org}".`
-                );
-                throw new CliError({ code: CliError.Code.AuthError });
-            },
-            userIdDoesNotExistError: () => {
+            unprocessableEntityError: () => {
                 context.stderr.error(`${Icons.error} No user found with email "${args.email}".`);
                 throw CliError.notFound();
             },

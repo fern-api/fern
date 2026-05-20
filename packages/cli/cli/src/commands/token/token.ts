@@ -24,21 +24,9 @@ export async function generateToken({
         return;
     }
     response.error._visit({
-        organizationNotFoundError: () =>
+        unprocessableEntityError: () =>
             taskContext.failAndThrow(
                 `Failed to create token because the organization ${orgId} was not found. Please reach out to support@buildwithfern.com`,
-                undefined,
-                { code: CliError.Code.AuthError }
-            ),
-        unauthorizedError: () =>
-            taskContext.failAndThrow(
-                `Failed to create token because you are not in the ${orgId} organization. Please reach out to support@buildwithfern.com`,
-                undefined,
-                { code: CliError.Code.AuthError }
-            ),
-        missingOrgPermissionsError: () =>
-            taskContext.failAndThrow(
-                `Failed to create token because you do not have the required permissions in the ${orgId} organization. Please reach out to support@buildwithfern.com`,
                 undefined,
                 { code: CliError.Code.AuthError }
             ),

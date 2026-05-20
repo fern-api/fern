@@ -28,10 +28,10 @@ export class ListTokensCommand {
 
         const venus = createVenusService({ token: token.value });
 
-        const orgLookup = await venus.organization.get(args.org);
+        const orgLookup = await venus.organization.get({ orgId: args.org });
         if (!orgLookup.ok) {
             orgLookup.error._visit({
-                unauthorizedError: () => {
+                unprocessableEntityError: () => {
                     context.stderr.error(`${Icons.error} You do not have access to organization "${args.org}".`);
                     throw new CliError({ code: CliError.Code.AuthError });
                 },
@@ -46,16 +46,12 @@ export class ListTokensCommand {
 
         const response = await withSpinner({
             message: `Fetching tokens for organization "${args.org}"`,
-            operation: () => venus.apiKeys.getTokensForOrganization(auth0OrgId)
+            operation: () => venus.apiKeys.getTokensForOrganization({ organizationId: auth0OrgId })
         });
 
         if (!response.ok) {
             response.error._visit({
-                unauthorizedError: () => {
-                    context.stderr.error(`${Icons.error} You do not have access to organization "${args.org}".`);
-                    throw new CliError({ code: CliError.Code.AuthError });
-                },
-                organizationNotFoundError: () => {
+                unprocessableEntityError: () => {
                     context.stderr.error(`${Icons.error} Organization "${args.org}" was not found.`);
                     throw CliError.notFound();
                 },

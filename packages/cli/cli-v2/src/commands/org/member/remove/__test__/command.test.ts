@@ -58,7 +58,7 @@ describe("RemoveMemberCommand", () => {
         const context = createMockContext();
         await cmd.handle(context, { userId: "user123", org: "acme" } as RemoveMemberCommand.Args);
 
-        expect(mockGet).toHaveBeenCalledWith("acme");
+        expect(mockGet).toHaveBeenCalledWith({ orgId: "acme" });
         expect(mockRemoveUser).toHaveBeenCalledWith({
             userId: "user123",
             auth0OrgId: "org_abc123"
@@ -115,13 +115,13 @@ describe("RemoveMemberCommand", () => {
         expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("was not found"));
     });
 
-    it("should handle UnauthorizedError from removeUser", async () => {
+    it("should handle UnprocessableEntityError from removeUser", async () => {
         const { createVenusService } = await import("@fern-api/core");
         const mockGet = mockOrgLookupSuccess();
         const mockRemoveUser = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: { unauthorizedError: () => void }) => visitor.unauthorizedError()
+                _visit: (visitor: { unprocessableEntityError: () => void }) => visitor.unprocessableEntityError()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
@@ -134,17 +134,17 @@ describe("RemoveMemberCommand", () => {
         ).rejects.toThrow(CliError);
 
         expect(context.stderr.error).toHaveBeenCalledWith(
-            expect.stringContaining("do not have permission to remove members")
+            expect.stringContaining("was not found")
         );
     });
 
-    it("should handle UserIdDoesNotExistError", async () => {
+    it("should handle unknown error from removeUser", async () => {
         const { createVenusService } = await import("@fern-api/core");
         const mockGet = mockOrgLookupSuccess();
         const mockRemoveUser = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: { userIdDoesNotExistError: () => void }) => visitor.userIdDoesNotExistError()
+                _visit: (visitor: { _other: () => void }) => visitor._other()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
@@ -156,7 +156,7 @@ describe("RemoveMemberCommand", () => {
             cmd.handle(context, { userId: "user123", org: "acme" } as RemoveMemberCommand.Args)
         ).rejects.toThrow(CliError);
 
-        expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("was not found"));
+        expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("Failed to remove member"));
     });
 
     it("should handle unknown errors", async () => {

@@ -192,7 +192,7 @@ export async function runRemoteGenerationForGenerator({
 
     const venus = createVenusService({ token: token.value });
     if (!isAirGapped) {
-        const orgResponse = await venus.organization.get(projectConfig.organization);
+        const orgResponse = await venus.organization.get({ orgId: projectConfig.organization });
 
         if (orgResponse.ok) {
             if (orgResponse.body.isWhitelabled) {

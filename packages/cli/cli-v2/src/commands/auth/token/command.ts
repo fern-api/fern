@@ -39,24 +39,10 @@ export class TokenCommand {
         }
 
         response.error._visit({
-            organizationNotFoundError: () => {
+            unprocessableEntityError: () => {
                 process.stderr.write(`${Icons.error} Organization "${orgId}" was not found.\n`);
                 throw new CliError({
                     code: CliError.Code.ConfigError
-                });
-            },
-            unauthorizedError: () => {
-                process.stderr.write(`${Icons.error} You do not have access to organization "${orgId}".\n`);
-                throw new CliError({
-                    code: CliError.Code.AuthError
-                });
-            },
-            missingOrgPermissionsError: () => {
-                process.stderr.write(
-                    `${Icons.error} You do not have the required permissions in organization "${orgId}".\n`
-                );
-                throw new CliError({
-                    code: CliError.Code.AuthError
                 });
             },
             _other: () => {
