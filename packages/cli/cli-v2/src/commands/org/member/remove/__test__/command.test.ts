@@ -133,9 +133,7 @@ describe("RemoveMemberCommand", () => {
             cmd.handle(context, { userId: "user123", org: "acme" } as RemoveMemberCommand.Args)
         ).rejects.toThrow(CliError);
 
-        expect(context.stderr.error).toHaveBeenCalledWith(
-            expect.stringContaining("was not found")
-        );
+        expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("was not found"));
     });
 
     it("should handle unknown error from removeUser", async () => {

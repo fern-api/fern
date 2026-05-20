@@ -183,9 +183,7 @@ describe("ListTokensCommand", () => {
         const context = createMockContext();
         await expect(cmd.handle(context, { org: "acme" } as ListTokensCommand.Args)).rejects.toThrow(CliError);
 
-        expect(context.stderr.error).toHaveBeenCalledWith(
-            expect.stringContaining("was not found")
-        );
+        expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("was not found"));
     });
 
     it("should handle unknown errors", async () => {
