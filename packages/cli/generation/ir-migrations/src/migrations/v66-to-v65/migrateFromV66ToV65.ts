@@ -5,7 +5,11 @@ import { assertNever } from "@fern-api/core-utils";
 import { IrMigrationContext } from "../../IrMigrationContext.js";
 import { IrSerialization } from "../../ir-serialization/index.js";
 import { IrVersions } from "../../ir-versions/index.js";
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration.js";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration.js";
 
 export const V66_TO_V65_MIGRATION: IrMigration<
     IrVersions.V66.ir.IntermediateRepresentation,

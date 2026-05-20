@@ -3,7 +3,11 @@ import { CliError } from "@fern-api/task-context";
 import { mapValues } from "lodash-es";
 import { IrSerialization } from "../../ir-serialization/index.js";
 import { IrVersions } from "../../ir-versions/index.js";
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "../../types/IrMigration.js";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration
+} from "../../types/IrMigration.js";
 
 export const V63_TO_V62_MIGRATION: IrMigration<
     IrVersions.V63.ir.IntermediateRepresentation,
