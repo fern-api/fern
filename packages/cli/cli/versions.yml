@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.33.1
+  changelogEntry:
+    - summary: |
+        Publish a JSON Schema for `fern.yml` so YAML language servers can provide
+        autocomplete and validation in IDEs. Regenerate via `fern schema --output`
+        (or `pnpm fern-yml:jsonschema` in the monorepo).
+      type: chore
+  createdAt: "2026-05-20"
+  irVersion: 66
 - version: 5.33.0
   changelogEntry:
     - summary: |
