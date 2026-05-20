@@ -29,8 +29,12 @@ export abstract class AbstractEndpointGenerator {
         const { pathParameters, pathParameterReferences } = this.getAllPathParameters({ serviceId, endpoint });
         const request = getEndpointRequest({ context: this.context, endpoint, serviceId, service });
         const requestParameter = request != null ? this.getRequestParameter({ request }) : undefined;
+        const requiredPathParameters = pathParameters.filter((p) => p.initializer == null);
+        const optionalPathParameters = pathParameters.filter((p) => p.initializer != null);
         return {
-            baseParameters: [...pathParameters, requestParameter].filter((p): p is php.Parameter => p != null),
+            baseParameters: [...requiredPathParameters, requestParameter, ...optionalPathParameters].filter(
+                (p): p is php.Parameter => p != null
+            ),
             pathParameters,
             pathParameterReferences,
             request,

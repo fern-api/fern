@@ -1,0 +1,5 @@
+- summary: |
+    Fix argument ordering in generated test snippets when path parameters have default values.
+    Required path parameters now correctly appear before the request body, with optional
+    (defaulted) path parameters after it.
+  type: fix

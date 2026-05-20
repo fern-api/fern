@@ -293,15 +293,17 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         }
         const serviceFilePath = service.name.fernFilepath;
 
-        const args = this.getNonEndpointArguments({
+        const { required: requiredArgs, optional: optionalArgs } = this.getNonEndpointArguments({
             endpoint,
             example,
             parseDatetimes
         });
         const endpointRequestSnippet = this.getEndpointRequestSnippet(example, endpoint, serviceId, parseDatetimes);
+        const args: (ast.CodeBlock | ast.ClassInstantiation)[] = [...requiredArgs];
         if (endpointRequestSnippet != null) {
             args.push(endpointRequestSnippet);
         }
+        args.push(...optionalArgs);
         const on = this.csharp.codeblock((writer) => {
             writer.write(`${clientVariableName}`);
             for (const path of serviceFilePath.allParts) {
@@ -392,21 +394,31 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         endpoint: HttpEndpoint;
         example: ExampleEndpointCall;
         parseDatetimes: boolean;
-    }): (ast.CodeBlock | ast.ClassInstantiation)[] {
+    }): { required: (ast.CodeBlock | ast.ClassInstantiation)[]; optional: (ast.CodeBlock | ast.ClassInstantiation)[] } {
         if (!this.includePathParametersInEndpointSignature({ endpoint })) {
-            return [];
+            return { required: [], optional: [] };
         }
-        const pathParameters = [
+        const examplePathParameters = [
             ...example.rootPathParameters,
             ...example.servicePathParameters,
             ...example.endpointPathParameters
         ];
-        return pathParameters.map((pathParameter) =>
-            this.exampleGenerator.getSnippetForTypeReference({
-                exampleTypeReference: pathParameter.value,
+        const irPathParameters = endpoint.allPathParameters;
+        const required: (ast.CodeBlock | ast.ClassInstantiation)[] = [];
+        const optional: (ast.CodeBlock | ast.ClassInstantiation)[] = [];
+        for (let i = 0; i < examplePathParameters.length; i++) {
+            const snippet = this.exampleGenerator.getSnippetForTypeReference({
+                exampleTypeReference: examplePathParameters[i]!.value,
                 parseDatetimes
-            })
-        );
+            });
+            const irParam = irPathParameters[i];
+            if (irParam?.clientDefault != null) {
+                optional.push(snippet);
+            } else {
+                required.push(snippet);
+            }
+        }
+        return { required, optional };
     }
 
     private getJustRequestBodySnippet(

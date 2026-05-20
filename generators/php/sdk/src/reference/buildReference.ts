@@ -131,15 +131,8 @@ function getReferenceEndpointInvocationParameters({
 }): string {
     const parameters: string[] = [];
 
-    for (const param of endpointSignatureInfo.pathParameters) {
+    for (const param of endpointSignatureInfo.baseParameters) {
         const paramName = param.name.startsWith("$") ? param.name : `$${param.name}`;
-        parameters.push(paramName);
-    }
-
-    if (endpointSignatureInfo.requestParameter != null) {
-        const paramName = endpointSignatureInfo.requestParameter.name.startsWith("$")
-            ? endpointSignatureInfo.requestParameter.name
-            : `$${endpointSignatureInfo.requestParameter.name}`;
         parameters.push(paramName);
     }
 
@@ -285,15 +278,8 @@ function getEndpointSnippet({
 
     const params: string[] = [];
 
-    for (const param of endpointSignatureInfo.pathParameters) {
+    for (const param of endpointSignatureInfo.baseParameters) {
         const paramName = param.name.startsWith("$") ? param.name : `$${param.name}`;
-        params.push(paramName);
-    }
-
-    if (endpointSignatureInfo.requestParameter != null) {
-        const paramName = endpointSignatureInfo.requestParameter.name.startsWith("$")
-            ? endpointSignatureInfo.requestParameter.name
-            : `$${endpointSignatureInfo.requestParameter.name}`;
         params.push(paramName);
     }
 

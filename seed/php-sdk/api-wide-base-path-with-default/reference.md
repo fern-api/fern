@@ -1,6 +1,6 @@
 # Reference
 ## Widgets
-<details><summary><code>$client-&gt;widgets-&gt;create($apiVersion, $request) -> ?Widget</code></summary>
+<details><summary><code>$client-&gt;widgets-&gt;create($request, $apiVersion) -> ?Widget</code></summary>
 <dl>
 <dd>
 

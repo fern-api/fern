@@ -1741,15 +1741,17 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }): ast.MethodInvocation | undefined {
         const service = this.context.getHttpService(serviceId) ?? fail(`Service with id ${serviceId} not found`);
         const serviceFilePath = service.name.fernFilepath;
-        const args = this.getNonEndpointArguments({
+        const { required: requiredArgs, optional: optionalArgs } = this.getNonEndpointArguments({
             endpoint,
             example,
             parseDatetimes
         });
         const endpointRequestSnippet = this.getEndpointRequestSnippet(example, endpoint, serviceId, parseDatetimes);
+        const args: (ast.CodeBlock | ast.ClassInstantiation)[] = [...requiredArgs];
         if (endpointRequestSnippet != null) {
             args.push(endpointRequestSnippet);
         }
+        args.push(...optionalArgs);
         const on = this.csharp.codeblock((writer) => {
             writer.write(`${clientVariableName}`);
             for (const path of serviceFilePath.allParts) {

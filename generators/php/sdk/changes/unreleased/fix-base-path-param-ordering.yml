@@ -1,0 +1,5 @@
+- summary: |
+    Fix parameter ordering in generated SDK methods when path parameters have default values.
+    Required parameters now correctly appear before optional parameters, resolving a PHP 8.0+
+    deprecation error.
+  type: fix

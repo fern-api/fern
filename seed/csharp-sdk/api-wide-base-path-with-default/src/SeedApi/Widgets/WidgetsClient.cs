@@ -83,7 +83,7 @@ public partial class WidgetsClient : IWidgetsClient
     }
 
     /// <example><code>
-    /// await client.Widgets.CreateAsync("v1beta", new Widget { Name = "name" });
+    /// await client.Widgets.CreateAsync(new Widget { Name = "name" }, "v1beta");
     /// </code></example>
     public WithRawResponseTask<Widget> CreateAsync(
         Widget request,
