@@ -13,6 +13,8 @@ export interface OpenApiSettingsSchema extends GeneratorsYml.BaseApiSettingsSche
     "object-query-parameters"?: boolean;
     /** Enables exploring readonly schemas in OpenAPI specifications */
     "respect-readonly-schemas"?: boolean;
+    /** If true, endpoint response types will use the Read variant of schemas when respect-readonly-schemas is enabled. Defaults to false. */
+    "use-read-variant-for-responses"?: boolean;
     /** Enables respecting forward compatible enums in OpenAPI specifications. Defaults to false. */
     "respect-forward-compatible-enums"?: boolean;
     /** Enables using the `bytes` type for binary responsesin OpenAPI specifications. Defaults to a file stream. */

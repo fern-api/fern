@@ -33,7 +33,7 @@
               "response": {
                 "docs": "Webhook created successfully",
                 "status-code": 200,
-                "type": "Webhook",
+                "type": "WebhookRead",
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -70,7 +70,7 @@
               "response": {
                 "docs": "Webhook retrieved successfully",
                 "status-code": 200,
-                "type": "Webhook",
+                "type": "WebhookRead",
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -119,7 +119,7 @@
               "response": {
                 "docs": "Webhook updated successfully",
                 "status-code": 200,
-                "type": "Webhook",
+                "type": "WebhookRead",
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -198,7 +198,7 @@
       request: Webhook
       response:
         docs: Webhook created successfully
-        type: Webhook
+        type: WebhookRead
         status-code: 200
       examples:
         - request: {}
@@ -220,7 +220,7 @@
           id: string
       response:
         docs: Webhook retrieved successfully
-        type: Webhook
+        type: WebhookRead
         status-code: 200
       examples:
         - path-parameters:
@@ -249,7 +249,7 @@
         content-type: application/json
       response:
         docs: Webhook updated successfully
-        type: Webhook
+        type: WebhookRead
         status-code: 200
       examples:
         - path-parameters:

@@ -12,6 +12,7 @@ export declare namespace BaseOpenAPIWorkspace {
         objectQueryParameters: boolean | undefined;
         onlyIncludeReferencedSchemas: boolean | undefined;
         respectReadonlySchemas: boolean | undefined;
+        useReadVariantForResponses: boolean | undefined;
         respectNullableSchemas: boolean | undefined;
         wrapReferencesToNullableInOptional: boolean | undefined;
         coerceOptionalSchemasToNullable: boolean | undefined;
@@ -38,6 +39,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public readonly objectQueryParameters: boolean | undefined;
     public readonly onlyIncludeReferencedSchemas: boolean | undefined;
     public readonly respectReadonlySchemas: boolean | undefined;
+    public readonly useReadVariantForResponses: boolean | undefined;
     public readonly respectNullableSchemas: boolean | undefined;
     public readonly wrapReferencesToNullableInOptional: boolean | undefined;
     public readonly coerceOptionalSchemasToNullable: boolean | undefined;
@@ -62,6 +64,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.objectQueryParameters = args.objectQueryParameters;
         this.onlyIncludeReferencedSchemas = args.onlyIncludeReferencedSchemas;
         this.respectReadonlySchemas = args.respectReadonlySchemas;
+        this.useReadVariantForResponses = args.useReadVariantForResponses;
         this.respectNullableSchemas = args.respectNullableSchemas;
         this.wrapReferencesToNullableInOptional = args.wrapReferencesToNullableInOptional;
         this.coerceOptionalSchemasToNullable = args.coerceOptionalSchemasToNullable;

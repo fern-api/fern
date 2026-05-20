@@ -184,6 +184,7 @@ export class LegacyApiSpecAdapter {
 
             // OpenAPI-specific settings
             respectReadonlySchemas: settings.respectReadonlySchemas,
+            useReadVariantForResponses: settings.useReadVariantForResponses,
             onlyIncludeReferencedSchemas: settings.onlyIncludeReferencedSchemas,
             inlinePathParameters: settings.inlinePathParameters,
             shouldUseUndiscriminatedUnionsWithLiterals: settings.preferUndiscriminatedUnionsWithLiterals,
