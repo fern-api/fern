@@ -1,0 +1,42 @@
+openapi: 3.0.0
+info:
+  title: Acme API
+  version: "1.0"
+  description: The Acme API.
+servers:
+  - url: https://api.acme.com
+x-fern-base-path:
+  path: /{tenant}/{apiVersion}
+  parameters:
+    tenant:
+      type: string
+      docs: The tenant slug.
+    apiVersion:
+      type: string
+      default: v1beta
+paths:
+  /widgets:
+    post:
+      operationId: createWidget
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Widget"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Widget"
+components:
+  schemas:
+    Widget:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
