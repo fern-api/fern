@@ -74,6 +74,11 @@ RUN rm -f /opt/gradle/lib/plugins/bcpg-jdk18on-*.jar \
 # Security update 2026-05-04: add glibc/glibc-common/glibc-minimal-langpack
 # (CVE-2026-4046, iconv() assertion failure when converting IBM1390/IBM1399
 # inputs; fixed in glibc 2.34-231.amzn2023.0.4)
+# Security update 2026-05-18: add libgcrypt (CVE-2026-41989, heap-based
+# buffer overflow in gcry_pk_decrypt; fixed in 1.10.2-1.amzn2023.0.3),
+# krb5-libs (CVE-2026-40356 integer underflow OOB read, CVE-2026-40355
+# NULL pointer dereference in gss_accept_sec_context; fixed in
+# 1.21.3-7.amzn2023.0.1)
 RUN dnf --releasever=latest update -y \
     openssl-fips-provider-latest \
     openssl-libs \
@@ -96,7 +101,9 @@ RUN dnf --releasever=latest update -y \
     libnghttp2 \
     glibc \
     glibc-common \
-    glibc-minimal-langpack && \
+    glibc-minimal-langpack \
+    libgcrypt \
+    krb5-libs && \
     dnf remove -y git-lfs wget || true && \
     dnf clean all && \
     rm -rf /var/cache/dnf
@@ -129,17 +136,17 @@ RUN for dir in \
       fi; \
     done
 
-# Patch brace-expansion to 5.0.5 to fix GHSA-f886-m6hf-6m8v
+# Patch brace-expansion to 5.0.6 to fix GHSA-jxxr-4gwj-5jf2
 # (zero-step sequence DoS; bundled by npm 11.12.1 at 5.0.4).
 RUN for dir in \
       /usr/local/lib/node_modules/npm/node_modules/brace-expansion; do \
       if [ -d "$dir" ]; then \
         rm -rf "$dir" && \
         cd "$(dirname "$dir")" && \
-        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.5.tgz -o brace-expansion-5.0.5.tgz && \
-        tar -xzf brace-expansion-5.0.5.tgz && \
+        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.6.tgz -o brace-expansion-5.0.6.tgz && \
+        tar -xzf brace-expansion-5.0.6.tgz && \
         mv package brace-expansion && \
-        rm brace-expansion-5.0.5.tgz; \
+        rm brace-expansion-5.0.6.tgz; \
       fi; \
     done
 

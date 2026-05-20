@@ -1,0 +1,9 @@
+{
+  "title": "Mintlify import navigation is not iterable",
+  "disposition": "keep_sentry",
+  "rationale": "Importer TypeError indicates missing validation or compatibility handling in Mintlify import code.",
+  "fixSummary": "—",
+  "prOrIssue": "Keep in Sentry until product fix",
+  "lastAnalyzed": "2026-05-04",
+  "problemSignature": "Mintlify docs import TypeError while reading navigation; true importer robustness bug until fixed."
+}

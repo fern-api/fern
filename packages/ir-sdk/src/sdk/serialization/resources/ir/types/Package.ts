@@ -23,6 +23,7 @@ export const Package: core.serialization.ObjectSchema<serializers.Package.Raw, F
         websocket: WebSocketChannelId.optional(),
         subpackages: core.serialization.list(SubpackageId),
         hasEndpointsInTree: core.serialization.boolean(),
+        hasWebSocketInTree: core.serialization.boolean().optional(),
         navigationConfig: PackageNavigationConfig.optional(),
     })
     .extend(WithDocs);
@@ -37,6 +38,7 @@ export declare namespace Package {
         websocket?: WebSocketChannelId.Raw | null;
         subpackages: SubpackageId.Raw[];
         hasEndpointsInTree: boolean;
+        hasWebSocketInTree?: boolean | null;
         navigationConfig?: PackageNavigationConfig.Raw | null;
     }
 }

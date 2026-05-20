@@ -84,6 +84,7 @@ function createMinimalIR(overrides?: {
         title: undefined,
         description: undefined,
         basePath: undefined,
+        basePathParameters: undefined,
         servers: [],
         websocketServers: [],
         groups: {},
