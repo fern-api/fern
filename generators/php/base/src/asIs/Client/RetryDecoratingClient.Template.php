@@ -108,7 +108,7 @@ class RetryDecoratingClient implements ClientInterface
             return $this->client->sendRequest($request);
         }
 
-        if (class_exists('GuzzleHttp\ClientInterface')
+        if (interface_exists('GuzzleHttp\ClientInterface')
             && $this->client instanceof \GuzzleHttp\ClientInterface
         ) {
             return $this->client->send($request, ['timeout' => $timeout]);
