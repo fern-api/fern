@@ -407,8 +407,12 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         const required: (ast.CodeBlock | ast.ClassInstantiation)[] = [];
         const optional: (ast.CodeBlock | ast.ClassInstantiation)[] = [];
         for (let i = 0; i < examplePathParameters.length; i++) {
+            const exampleParam = examplePathParameters[i];
+            if (exampleParam == null) {
+                continue;
+            }
             const snippet = this.exampleGenerator.getSnippetForTypeReference({
-                exampleTypeReference: examplePathParameters[i]!.value,
+                exampleTypeReference: exampleParam.value,
                 parseDatetimes
             });
             const irParam = irPathParameters[i];
