@@ -1,0 +1,4 @@
+- summary: |
+    Fix method parameter ordering to place parameters with default values after
+    required parameters, resolving PHPStan deprecation errors in PHP 8.0+.
+  type: fix
