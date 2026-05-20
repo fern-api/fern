@@ -11,8 +11,8 @@ public partial class Examples
 
         await client.User.UpdateUserAsync(
             new UpdateUserRequest {
-                TenantId = "tenant_id",
                 UserId = "user_id",
+                TenantId = "tenant_id",
                 Body = new User {
                     Name = "name",
                     Tags = new List<string>(){

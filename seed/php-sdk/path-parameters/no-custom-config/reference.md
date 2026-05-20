@@ -239,7 +239,6 @@ $client->user->getUser(
 
 ```php
 $client->user->createUser(
-    'tenant_id',
     new User([
         'name' => 'name',
         'tags' => [
@@ -247,6 +246,7 @@ $client->user->createUser(
             'tags',
         ],
     ]),
+    'tenant_id',
 );
 ```
 </dd>

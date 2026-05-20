@@ -12,8 +12,8 @@ $client = new SeedClient(
 );
 $client->organizations->getOrganizationUser(
     new GetOrganizationUserRequest([
-        'tenantId' => 'tenant_id',
         'organizationId' => 'organization_id',
         'userId' => 'user_id',
+        'tenantId' => 'tenant_id',
     ]),
 );
