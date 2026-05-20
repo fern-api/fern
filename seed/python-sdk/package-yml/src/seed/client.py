@@ -25,6 +25,7 @@ class SeedPackageYml:
     base_url : str
         The base url to use for requests from the client.
 
+    id : str
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -48,6 +49,7 @@ class SeedPackageYml:
     from seed import SeedPackageYml
 
     client = SeedPackageYml(
+        id="YOUR_ID",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -56,6 +58,7 @@ class SeedPackageYml:
         self,
         *,
         base_url: str,
+        id: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -69,6 +72,7 @@ class SeedPackageYml:
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
+            id=id,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -93,12 +97,10 @@ class SeedPackageYml:
         """
         return self._raw_client
 
-    def echo(self, id: str, *, name: str, size: int, request_options: typing.Optional[RequestOptions] = None) -> str:
+    def echo(self, *, name: str, size: int, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------
-        id : str
-
         name : str
 
         size : int
@@ -115,6 +117,7 @@ class SeedPackageYml:
         from seed import SeedPackageYml
 
         client = SeedPackageYml(
+            id="YOUR_ID",
             base_url="https://yourhost.com/path/to/api",
         )
         client.echo(
@@ -122,7 +125,7 @@ class SeedPackageYml:
             size=20,
         )
         """
-        _response = self._raw_client.echo(id, name=name, size=size, request_options=request_options)
+        _response = self._raw_client.echo(name=name, size=size, request_options=request_options)
         return _response.data
 
     @property
@@ -161,6 +164,7 @@ class AsyncSeedPackageYml:
     base_url : str
         The base url to use for requests from the client.
 
+    id : str
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -184,6 +188,7 @@ class AsyncSeedPackageYml:
     from seed import AsyncSeedPackageYml
 
     client = AsyncSeedPackageYml(
+        id="YOUR_ID",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -192,6 +197,7 @@ class AsyncSeedPackageYml:
         self,
         *,
         base_url: str,
+        id: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -205,6 +211,7 @@ class AsyncSeedPackageYml:
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
+            id=id,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -227,14 +234,10 @@ class AsyncSeedPackageYml:
         """
         return self._raw_client
 
-    async def echo(
-        self, id: str, *, name: str, size: int, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    async def echo(self, *, name: str, size: int, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------
-        id : str
-
         name : str
 
         size : int
@@ -253,6 +256,7 @@ class AsyncSeedPackageYml:
         from seed import AsyncSeedPackageYml
 
         client = AsyncSeedPackageYml(
+            id="YOUR_ID",
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -266,7 +270,7 @@ class AsyncSeedPackageYml:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.echo(id, name=name, size=size, request_options=request_options)
+        _response = await self._raw_client.echo(name=name, size=size, request_options=request_options)
         return _response.data
 
     @property

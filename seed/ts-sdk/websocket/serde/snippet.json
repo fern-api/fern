@@ -1,4 +1,16 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/status",
+                "method": "GET",
+                "identifier_override": "endpoint_status.get_status"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedWebsocketClient } from \"@fern/websocket\";\n\nconst client = new SeedWebsocketClient({ environment: \"YOUR_BASE_URL\" });\nawait client.status.getStatus();\n"
+            }
+        }
+    ],
     "types": {}
 }

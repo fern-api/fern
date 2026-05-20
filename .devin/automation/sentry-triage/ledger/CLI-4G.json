@@ -1,0 +1,9 @@
+{
+  "title": "Endpoint not found in readme config",
+  "disposition": "keep_sentry",
+  "rationale": "Same readme config endpoint resolution family as CLI-4C.",
+  "fixSummary": "—",
+  "prOrIssue": "Keep in Sentry until product fix",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "IR generation readme config endpoint matcher failed to locate a matching endpoint; needs product investigation."
+}

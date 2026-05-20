@@ -74,7 +74,8 @@ export async function runPreviewServer({
     validateProject,
     context,
     port,
-    bundlePath
+    bundlePath,
+    cacheDir
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
@@ -82,6 +83,7 @@ export async function runPreviewServer({
     context: TaskContext;
     port: number;
     bundlePath?: string;
+    cacheDir?: AbsoluteFilePath;
 }): Promise<void> {
     if (bundlePath != null) {
         context.logger.info(`Using bundle from path: ${bundlePath}`);
@@ -94,9 +96,15 @@ export async function runPreviewServer({
                     code: CliError.Code.InternalError
                 });
             }
-            await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true, tryTar: false });
+            await downloadBundle({
+                bucketUrl: url,
+                logger: context.logger,
+                preferCached: true,
+                tryTar: false,
+                cacheDir
+            });
         } catch (err) {
-            const pathToBundle = getPathToBundleFolder({});
+            const pathToBundle = getPathToBundleFolder({ cacheDir });
             if (err instanceof Error) {
                 context.logger.debug(`Failed to download latest docs bundle: ${(err as Error).message}`);
             }
@@ -342,7 +350,7 @@ export async function runPreviewServer({
     }
 
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
-    const bundleRoot = bundlePath ? AbsoluteFilePath.of(path.resolve(bundlePath)) : getPathToBundleFolder({});
+    const bundleRoot = bundlePath ? AbsoluteFilePath.of(path.resolve(bundlePath)) : getPathToBundleFolder({ cacheDir });
 
     const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
         recursive: true,

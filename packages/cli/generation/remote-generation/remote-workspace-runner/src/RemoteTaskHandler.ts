@@ -424,15 +424,20 @@ function extractRepoUriFromGenerator(generatorInvocation: generatorsYml.Generato
 }
 
 /**
- * Returns whether the configured GitHub mode opens a PR or pushes directly.
+ * Returns the configured GitHub mode for telemetry reporting.
  * Defaults to `"push"` to match generator-cli's GithubStep default.
  */
 function extractGithubModeFromGenerator(
     generatorInvocation: generatorsYml.GeneratorInvocation
-): "pull-request" | "push" {
+): "pull-request" | "push" | "commit-and-release" {
     const github = generatorInvocation.raw?.github;
-    if (github != null && "mode" in github && github.mode === "pull-request") {
-        return "pull-request";
+    if (github != null && "mode" in github) {
+        if (github.mode === "pull-request") {
+            return "pull-request";
+        }
+        if (github.mode === "commit-and-release") {
+            return "commit-and-release";
+        }
     }
     return "push";
 }

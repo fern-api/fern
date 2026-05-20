@@ -146,6 +146,8 @@ types:
       - name: pullRequest
         value: pull-request
       - push
+      - name: commitAndRelease
+        value: commit-and-release
 
   GeneratorSnippetsSchema:
     properties:

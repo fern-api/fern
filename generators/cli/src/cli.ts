@@ -4,8 +4,9 @@ import {
     GeneratorUpdate,
     parseGeneratorConfig
 } from "@fern-api/base-generator";
-import { cp, mkdir } from "fs/promises";
-import path from "path";
+import { mkdir } from "fs/promises";
+import { analyzeSpecs, formatSpecAnalysis } from "./analyzeSpecs.js";
+import { copySpecs } from "./copySpecs.js";
 
 const pathToConfig = process.argv[process.argv.length - 1];
 if (pathToConfig == null) {
@@ -29,7 +30,18 @@ async function generate(configPath: string): Promise<void> {
             const outputDir = config.output.path;
             await mkdir(outputDir, { recursive: true });
 
-            await cp(path.join(__dirname, "sdk"), outputDir, { recursive: true });
+            // Analyze and print spec summary
+            const analysis = await analyzeSpecs();
+            if (analysis.totalSpecs > 0) {
+                // biome-ignore lint/suspicious/noConsole: generator CLI output
+                console.log(formatSpecAnalysis(analysis));
+            } else {
+                // biome-ignore lint/suspicious/noConsole: generator CLI output
+                console.log("No API specs were mounted.");
+            }
+
+            // Copy API spec files from the mounted directory to the output
+            await copySpecs(outputDir);
 
             await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful({})));
         } catch (e) {

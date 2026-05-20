@@ -9,6 +9,7 @@ export declare namespace ClearCommand {
         all?: boolean;
         ir?: boolean;
         logs?: boolean;
+        "docs-preview"?: boolean;
         "dry-run"?: boolean;
     }
 }
@@ -19,11 +20,12 @@ export class ClearCommand {
 
         const dryRun = args["dry-run"] ?? false;
 
-        // If --all is specified or neither --ir nor --logs is specified, clear everything.
-        const clearAll = args.all || (!args.ir && !args.logs);
+        // If --all is specified or no specific flag is given, clear everything.
+        const clearAll = args.all || (!args.ir && !args.logs && !args["docs-preview"]);
         const clearOptions = {
             ir: clearAll || args.ir,
             logs: clearAll || args.logs,
+            docsPreview: clearAll || args["docs-preview"],
             dryRun
         };
 
@@ -70,6 +72,11 @@ export function addClearCommand(cli: Argv<GlobalArgs>): void {
                 .option("logs", {
                     type: "boolean",
                     description: "Clear only log files",
+                    default: false
+                })
+                .option("docs-preview", {
+                    type: "boolean",
+                    description: "Clear only docs preview bundles",
                     default: false
                 })
                 .option("dry-run", {

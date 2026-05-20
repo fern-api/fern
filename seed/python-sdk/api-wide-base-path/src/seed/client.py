@@ -21,6 +21,7 @@ class SeedApiWideBasePath:
     base_url : str
         The base url to use for requests from the client.
 
+    path_param : str
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -44,6 +45,7 @@ class SeedApiWideBasePath:
     from seed import SeedApiWideBasePath
 
     client = SeedApiWideBasePath(
+        path_param="YOUR_PATH_PARAM",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -52,6 +54,7 @@ class SeedApiWideBasePath:
         self,
         *,
         base_url: str,
+        path_param: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -65,6 +68,7 @@ class SeedApiWideBasePath:
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
+            path_param=path_param,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -113,6 +117,7 @@ class AsyncSeedApiWideBasePath:
     base_url : str
         The base url to use for requests from the client.
 
+    path_param : str
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -136,6 +141,7 @@ class AsyncSeedApiWideBasePath:
     from seed import AsyncSeedApiWideBasePath
 
     client = AsyncSeedApiWideBasePath(
+        path_param="YOUR_PATH_PARAM",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -144,6 +150,7 @@ class AsyncSeedApiWideBasePath:
         self,
         *,
         base_url: str,
+        path_param: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -157,6 +164,7 @@ class AsyncSeedApiWideBasePath:
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
+            path_param=path_param,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
