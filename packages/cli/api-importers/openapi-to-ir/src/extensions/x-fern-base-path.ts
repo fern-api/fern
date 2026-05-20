@@ -15,6 +15,13 @@ export declare namespace FernBasePathExtension {
     export interface ParsedValue {
         path: string;
         parameters: ParsedParameter[];
+        /**
+         * When `true`, the OpenAPI importer expects every path in `paths:` to
+         * begin with the literal base-path prefix and strips it on import.
+         * Operation-level path parameter declarations for parameters that
+         * appear in the base path are also dropped to avoid stutter.
+         */
+        pathsIncludeBasePath: boolean;
     }
 }
 
@@ -54,7 +61,7 @@ export class FernBasePathExtension extends AbstractExtension<FernBasePathExtensi
         if (!this.validatePath(path)) {
             return undefined;
         }
-        return { path, parameters: [] };
+        return { path, parameters: [], pathsIncludeBasePath: false };
     }
 
     private parseStructured(obj: Record<string, unknown>): FernBasePathExtension.ParsedValue | undefined {
@@ -118,7 +125,9 @@ export class FernBasePathExtension extends AbstractExtension<FernBasePathExtensi
             });
         }
 
-        return { path, parameters };
+        const pathsIncludeBasePath = obj["paths-include-base-path"] === true;
+
+        return { path, parameters, pathsIncludeBasePath };
     }
 
     private validatePath(path: string): boolean {

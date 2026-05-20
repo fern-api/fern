@@ -4,16 +4,23 @@ info:
   version: ""
 x-fern-base-path:
   path: /{apiVersion}
+  paths-include-base-path: true
   parameters:
     apiVersion:
       type: string
       default: v1beta
 paths:
-  /widgets:
+  /{apiVersion}/widgets:
     post:
       operationId: widgets_create
       tags:
         - Widgets
+      parameters:
+        - name: apiVersion
+          in: path
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:

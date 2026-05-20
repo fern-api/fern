@@ -35,7 +35,7 @@ describe("FernBasePathExtension", () => {
 
     it("parses the string form (back-compat)", () => {
         const { extension } = makeExtension({ "x-fern-base-path": "/v1" });
-        expect(extension.convert()).toEqual({ path: "/v1", parameters: [] });
+        expect(extension.convert()).toEqual({ path: "/v1", parameters: [], pathsIncludeBasePath: false });
     });
 
     it("parses the structured form with parameters and defaults", () => {
@@ -53,8 +53,29 @@ describe("FernBasePathExtension", () => {
             parameters: [
                 { name: "tenant", type: "string", default: undefined, docs: "Tenant slug." },
                 { name: "apiVersion", type: "string", default: "v1beta", docs: undefined }
-            ]
+            ],
+            pathsIncludeBasePath: false
         });
+    });
+
+    it("parses `paths-include-base-path: true`", () => {
+        const { extension } = makeExtension({
+            "x-fern-base-path": {
+                path: "/{apiVersion}",
+                "paths-include-base-path": true,
+                parameters: { apiVersion: { default: "v1beta" } }
+            }
+        });
+        const result = extension.convert();
+        expect(result?.pathsIncludeBasePath).toBe(true);
+    });
+
+    it("defaults `paths-include-base-path` to false", () => {
+        const { extension } = makeExtension({
+            "x-fern-base-path": { path: "/{apiVersion}", parameters: { apiVersion: {} } }
+        });
+        const result = extension.convert();
+        expect(result?.pathsIncludeBasePath).toBe(false);
     });
 
     it("defaults parameter type to string when not specified", () => {

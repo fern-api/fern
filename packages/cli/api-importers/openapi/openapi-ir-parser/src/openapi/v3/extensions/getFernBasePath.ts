@@ -1,5 +1,5 @@
 import { PathParameter, PrimitiveSchemaValue, Schema } from "@fern-api/openapi-ir";
-import { OpenAPIV3 } from "openapi-types";
+import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { getExtension } from "../../../getExtension.js";
 import { FernOpenAPIExtension } from "./fernExtensions.js";
@@ -9,6 +9,12 @@ const PLACEHOLDER_REGEX = /\{([^}]+)\}/g;
 export interface FernBasePathResult {
     basePath: string;
     pathParameters: PathParameter[];
+    /**
+     * When `true`, every OpenAPI path is expected to begin with the literal
+     * base-path prefix; the importer strips that prefix and drops redundant
+     * operation-level path-parameter declarations.
+     */
+    pathsIncludeBasePath: boolean;
 }
 
 /**
@@ -30,7 +36,7 @@ export function getFernBasePath(document: OpenAPIV3.Document): FernBasePathResul
         if (!raw.startsWith("/")) {
             return undefined;
         }
-        return { basePath: raw, pathParameters: [] };
+        return { basePath: raw, pathParameters: [], pathsIncludeBasePath: false };
     }
     if (typeof raw !== "object" || Array.isArray(raw)) {
         return undefined;
@@ -86,7 +92,8 @@ export function getFernBasePath(document: OpenAPIV3.Document): FernBasePathResul
         });
     }
 
-    return { basePath: path, pathParameters };
+    const pathsIncludeBasePath = obj["paths-include-base-path"] === true;
+    return { basePath: path, pathParameters, pathsIncludeBasePath };
 }
 
 function extractPlaceholders(path: string): string[] {
@@ -99,4 +106,96 @@ function extractPlaceholders(path: string): string[] {
         }
     }
     return result;
+}
+
+/**
+ * When `paths-include-base-path: true` is set on `x-fern-base-path`, every
+ * path in `openApi.paths` must start with the literal base-path prefix. This
+ * helper strips that prefix from each path and removes any path-level or
+ * operation-level path-parameter declarations that match a root-level
+ * parameter, to avoid stutter.
+ *
+ * Returns a list of errors (paths that don't start with the prefix). On
+ * success, mutates `openApi.paths` in place.
+ */
+export function stripBasePathFromPaths({
+    openApi,
+    basePath,
+    rootPathParameterNames
+}: {
+    openApi: OpenAPIV3.Document | OpenAPIV3_1.Document;
+    basePath: string;
+    rootPathParameterNames: Set<string>;
+}): string[] {
+    if (openApi.paths == null) {
+        return [];
+    }
+    const trimmedBasePath = basePath.endsWith("/") ? basePath.slice(0, -1) : basePath;
+    const errors: string[] = [];
+    const newPaths: Record<string, OpenAPIV3.PathItemObject | undefined> = {};
+
+    for (const [path, pathItem] of Object.entries(openApi.paths)) {
+        if (pathItem == null) {
+            newPaths[path] = pathItem;
+            continue;
+        }
+        if (!path.startsWith(trimmedBasePath)) {
+            errors.push(`Expected path '${path}' to start with base path '${trimmedBasePath}'`);
+            newPaths[path] = pathItem;
+            continue;
+        }
+        const stripped = path.slice(trimmedBasePath.length) || "/";
+        const newPathItem: OpenAPIV3.PathItemObject = stripPathParametersFromPathItem({
+            pathItem,
+            rootPathParameterNames
+        });
+        newPaths[stripped] = newPathItem;
+    }
+
+    openApi.paths = newPaths;
+    return errors;
+}
+
+function stripPathParametersFromPathItem({
+    pathItem,
+    rootPathParameterNames
+}: {
+    pathItem: OpenAPIV3.PathItemObject;
+    rootPathParameterNames: Set<string>;
+}): OpenAPIV3.PathItemObject {
+    const result: OpenAPIV3.PathItemObject = { ...pathItem };
+    if (Array.isArray(result.parameters)) {
+        result.parameters = result.parameters.filter((p) => !isStrippablePathParameter(p, rootPathParameterNames));
+    }
+    const operationKeys: Array<"get" | "put" | "post" | "delete" | "options" | "head" | "patch" | "trace"> = [
+        "get",
+        "put",
+        "post",
+        "delete",
+        "options",
+        "head",
+        "patch",
+        "trace"
+    ];
+    for (const opKey of operationKeys) {
+        const op = result[opKey];
+        if (op == null || !Array.isArray(op.parameters)) {
+            continue;
+        }
+        result[opKey] = {
+            ...op,
+            parameters: op.parameters.filter((p) => !isStrippablePathParameter(p, rootPathParameterNames))
+        };
+    }
+    return result;
+}
+
+function isStrippablePathParameter(
+    parameter: OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject,
+    rootPathParameterNames: Set<string>
+): boolean {
+    if ("$ref" in parameter) {
+        return false;
+    }
+    return parameter.in === "path" && rootPathParameterNames.has(parameter.name);
 }
