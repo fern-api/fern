@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Prevent CLI telemetry from failing when the user's home directory cannot store Fern's analytics ID.
+  type: fix

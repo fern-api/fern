@@ -3,6 +3,7 @@ import { replaceEnvVariables } from "@fern-api/core-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
+import { stripCustomDomainProtocol, validateBasepathAlignment } from "./customDomainValidation.js";
 import { DocsPublishConflictError, publishDocs } from "./publishDocs.js";
 
 const PUBLISH_CONFLICT_RETRY_DELAYS_MS = [
@@ -105,19 +106,19 @@ export async function runRemoteGenerationForDocsWorkspace({
         return;
     }
 
-    // TODO: validate custom domains
-    const customDomains: string[] = [];
+    const customDomains = (
+        typeof maybeInstance.customDomain === "string"
+            ? [maybeInstance.customDomain]
+            : (maybeInstance.customDomain ?? [])
+    ).map(stripCustomDomainProtocol);
 
-    if (maybeInstance.customDomain != null) {
-        if (typeof maybeInstance.customDomain === "string") {
-            customDomains.push(maybeInstance.customDomain);
-        } else if (Array.isArray(maybeInstance.customDomain)) {
-            customDomains.push(...maybeInstance.customDomain);
-        }
-    }
+    // Basepath-aware mode requires the Fern instance url and every custom domain to share the
+    // same basepath, otherwise docs won't resolve once the customer cuts their DNS over to Fern.
+    const isBasepathAware =
+        maybeInstance.multiSource === true || docsWorkspace.config.experimental?.basepathAware === true;
 
-    if (maybeInstance.multiSource === true) {
-        validateMultiSourceBasepaths(maybeInstance.url, customDomains, context);
+    if (isBasepathAware) {
+        validateBasepathAlignment(maybeInstance.url, customDomains, context);
     }
 
     context.logger.info(`Starting docs publishing for ${preview ? "preview" : "production"}: ${maybeInstance.url}`);
@@ -193,28 +194,4 @@ export async function runRemoteGenerationForDocsWorkspace({
         context.logger.debug(`Docs publishing completed in ${publishTime.toFixed(0)}ms`);
     });
     return publishedUrl;
-}
-
-function getBasepath(domain: string): string {
-    try {
-        const url = domain.startsWith("https://") || domain.startsWith("http://") ? domain : `https://${domain}`;
-        return new URL(url).pathname;
-    } catch {
-        return "/";
-    }
-}
-
-function validateMultiSourceBasepaths(instanceUrl: string, customDomains: string[], context: TaskContext): void {
-    const urlBasepath = getBasepath(instanceUrl);
-    for (const customDomain of customDomains) {
-        const customDomainBasepath = getBasepath(customDomain);
-        if (customDomainBasepath !== "/" && urlBasepath !== customDomainBasepath) {
-            context.failAndThrow(
-                `When multi-source is enabled, the url and custom-domain must share the same basepath. ` +
-                    `Instance url '${instanceUrl}' has basepath '${urlBasepath}' but custom-domain '${customDomain}' has basepath '${customDomainBasepath}'.`,
-                undefined,
-                { code: CliError.Code.ConfigError }
-            );
-        }
-    }
 }

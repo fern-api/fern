@@ -1,0 +1,9 @@
+{
+  "title": "buf generate command failed",
+  "disposition": "shipped",
+  "rationale": "buf/protobuf generation is an external local tool boundary; command failures should be user-facing, not internal.",
+  "fixSummary": "Run buf commands with controlled exit-code handling and map failures to CliError(UserError).",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-05",
+  "problemSignature": "buf/protobuf subprocess failed during generation and was reported as InternalError; should be user/tool semantics."
+}

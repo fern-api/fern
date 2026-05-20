@@ -1,0 +1,10 @@
+{
+  "title": "docs.yml navbar-links schema validation failure",
+  "disposition": "duplicate",
+  "rationale": "Same schema validation/minified error-name family as CLI-2Z.",
+  "fixSummary": "—",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+  "lastAnalyzed": "2026-05-04",
+  "duplicateOf": "CLI-2Z",
+  "problemSignature": "Schema or configuration validation path for user-authored docs/config looked like InternalError instead of validation/config error."
+}

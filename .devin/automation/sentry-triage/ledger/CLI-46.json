@@ -1,0 +1,9 @@
+{
+  "title": "Filepath is not relative (Linux absolute path)",
+  "disposition": "keep_sentry",
+  "rationale": "Absolute path reached a relative-path invariant; same family as CLI-3J and CLI-18.",
+  "fixSummary": "—",
+  "prOrIssue": "Keep in Sentry until product fix",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "OpenAPI or workspace path conversion received an absolute path where a relative path was required; path boundary bug."
+}
