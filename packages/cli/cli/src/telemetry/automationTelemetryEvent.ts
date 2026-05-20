@@ -18,10 +18,11 @@ export const AUTOMATION_EVENT_NAMES = {
     GENERATION_STARTED: "generation_started",
     GENERATION_COMPLETED: "generation_completed",
     GENERATION_FAILED: "generation_failed",
+    GENERATOR_COMPLETED: "generator_completed",
+    GENERATOR_FAILED: "generator_failed",
+    GENERATOR_SKIPPED: "generator_skipped",
     VERIFICATION_FAILED: "verification_failed",
-    SDK_PR_CREATED: "sdk_pr_created",
-    UPGRADE_APPLIED: "upgrade_applied",
-    MAJOR_VERSION_BUMP: "major_version_bump"
+    UPGRADE_APPLIED: "upgrade_applied"
 } as const;
 
 export type AutomationEventName = (typeof AUTOMATION_EVENT_NAMES)[keyof typeof AUTOMATION_EVENT_NAMES];
@@ -34,10 +35,11 @@ const AUTOMATION_EVENT_FAILURE: Record<AutomationEventName, boolean> = {
     [AUTOMATION_EVENT_NAMES.GENERATION_STARTED]: false,
     [AUTOMATION_EVENT_NAMES.GENERATION_COMPLETED]: false,
     [AUTOMATION_EVENT_NAMES.GENERATION_FAILED]: true,
+    [AUTOMATION_EVENT_NAMES.GENERATOR_COMPLETED]: false,
+    [AUTOMATION_EVENT_NAMES.GENERATOR_FAILED]: true,
+    [AUTOMATION_EVENT_NAMES.GENERATOR_SKIPPED]: false,
     [AUTOMATION_EVENT_NAMES.VERIFICATION_FAILED]: true,
-    [AUTOMATION_EVENT_NAMES.SDK_PR_CREATED]: false,
-    [AUTOMATION_EVENT_NAMES.UPGRADE_APPLIED]: false,
-    [AUTOMATION_EVENT_NAMES.MAJOR_VERSION_BUMP]: false
+    [AUTOMATION_EVENT_NAMES.UPGRADE_APPLIED]: false
 };
 
 export function isFailureAutomationEventName(event: AutomationEventName): boolean {
@@ -93,6 +95,11 @@ export function toSentryTags(
         }
     }
 
+    function stringAttribute(attributes: Record<string, JsonValue> | undefined, key: string): string | undefined {
+        const value = attributes?.[key];
+        return typeof value === "string" ? value : undefined;
+    }
+
     const tags: Record<string, string> = {
         surface: "cli",
         automation_mode: "true"
@@ -104,6 +111,10 @@ export function toSentryTags(
     appendStringIfPresent(tags, "config_repo", context.config_repo);
     appendStringIfPresent(tags, "trigger", context.trigger);
     appendStringIfPresent(tags, "error_code", event.errorCode ?? "none");
+    appendStringIfPresent(tags, "generator_name", stringAttribute(event.attributes, "generator_name"));
+    appendStringIfPresent(tags, "group_name", stringAttribute(event.attributes, "group_name"));
+    appendStringIfPresent(tags, "api_name", stringAttribute(event.attributes, "api_name"));
+    appendStringIfPresent(tags, "failure_source", stringAttribute(event.attributes, "failure_source"));
     return tags;
 }
 

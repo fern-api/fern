@@ -1,6 +1,14 @@
 import { assertNever } from "@fern-api/core-utils";
-
 import type { GeneratorSkipReason, PublishTarget, RemoteGeneratorRunRecorder } from "@fern-api/remote-workspace-runner";
+import { resolveErrorCode } from "@fern-api/task-context";
+import type { AutomationTelemetryEmitOptions } from "../../../telemetry/AutomationTelemetryManager.js";
+import {
+    generatorCompletedAttributes,
+    generatorFailedAttributes,
+    generatorSkippedAttributes
+} from "../../../telemetry/automationTelemetryAttributes.js";
+import { isAutomationMode } from "../../../telemetry/automationTelemetryContext.js";
+import { AUTOMATION_EVENT_NAMES, type AutomationTelemetryEvent } from "../../../telemetry/automationTelemetryEvent.js";
 
 export type { GeneratorSkipReason, PublishTarget };
 
@@ -44,6 +52,10 @@ export interface GeneratorRunCounts {
     succeeded: number;
     failed: number;
     skipped: number;
+}
+
+export interface GeneratorRunCollectorOptions {
+    emitAutomationEvent?: (event: AutomationTelemetryEvent, options?: AutomationTelemetryEmitOptions) => void;
 }
 
 /** Single source of truth for aggregating status counts across results. */
@@ -117,6 +129,11 @@ export function buildGeneratorsYmlUrl(absolutePath: string | undefined, lineNumb
 
 export class GeneratorRunCollector implements RemoteGeneratorRunRecorder {
     readonly #results: GeneratorRunResult[] = [];
+    readonly #emitAutomationEvent: GeneratorRunCollectorOptions["emitAutomationEvent"];
+
+    public constructor(options?: GeneratorRunCollectorOptions) {
+        this.#emitAutomationEvent = options?.emitAutomationEvent;
+    }
 
     public recordSuccess(args: Parameters<RemoteGeneratorRunRecorder["recordSuccess"]>[0]): void {
         this.#results.push({
@@ -135,6 +152,19 @@ export class GeneratorRunCollector implements RemoteGeneratorRunRecorder {
             generatorsYmlUrl: buildGeneratorsYmlUrl(args.generatorsYmlAbsolutePath, args.generatorsYmlLineNumber),
             generatorsYmlWorkspaceRelativePath: resolveGithubWorkspaceRelativePath(args.generatorsYmlAbsolutePath),
             generatorsYmlLineNumber: args.generatorsYmlLineNumber ?? null
+        });
+        this.emitIfPresent({
+            event: AUTOMATION_EVENT_NAMES.GENERATOR_COMPLETED,
+            attributes: generatorCompletedAttributes({
+                generatorName: args.generatorName,
+                groupName: args.groupName,
+                apiName: args.apiName,
+                sdkRepoUrl: args.outputRepoUrl,
+                version: args.version,
+                pullRequestUrl: args.pullRequestUrl,
+                noChangesDetected: args.noChangesDetected,
+                publishTarget: args.publishTarget
+            })
         });
     }
 
@@ -156,6 +186,22 @@ export class GeneratorRunCollector implements RemoteGeneratorRunRecorder {
             generatorsYmlWorkspaceRelativePath: resolveGithubWorkspaceRelativePath(args.generatorsYmlAbsolutePath),
             generatorsYmlLineNumber: args.generatorsYmlLineNumber ?? null
         });
+        const failureSource = args.failureSource ?? "cli";
+        this.emitIfPresent(
+            {
+                event: AUTOMATION_EVENT_NAMES.GENERATOR_FAILED,
+                errorCode: resolveErrorCode(args.cliError),
+                attributes: generatorFailedAttributes({
+                    generatorName: args.generatorName,
+                    groupName: args.groupName,
+                    apiName: args.apiName,
+                    sdkRepoUrl: args.outputRepoUrl,
+                    errorMessage: args.errorMessage,
+                    failureSource
+                })
+            },
+            failureSource === "cli" ? { error: args.cliError } : undefined
+        );
     }
 
     public recordSkipped(args: Parameters<RemoteGeneratorRunRecorder["recordSkipped"]>[0]): void {
@@ -176,6 +222,16 @@ export class GeneratorRunCollector implements RemoteGeneratorRunRecorder {
             generatorsYmlWorkspaceRelativePath: resolveGithubWorkspaceRelativePath(args.generatorsYmlAbsolutePath),
             generatorsYmlLineNumber: args.generatorsYmlLineNumber ?? null
         });
+        this.emitIfPresent({
+            event: AUTOMATION_EVENT_NAMES.GENERATOR_SKIPPED,
+            attributes: generatorSkippedAttributes({
+                generatorName: args.generatorName,
+                groupName: args.groupName,
+                apiName: args.apiName,
+                sdkRepoUrl: args.outputRepoUrl,
+                skipReason: args.reason
+            })
+        });
     }
 
     public results(): readonly GeneratorRunResult[] {
@@ -188,5 +244,12 @@ export class GeneratorRunCollector implements RemoteGeneratorRunRecorder {
 
     public counts(): GeneratorRunCounts {
         return countResults(this.#results);
+    }
+
+    private emitIfPresent(event: AutomationTelemetryEvent, options?: AutomationTelemetryEmitOptions): void {
+        if (!isAutomationMode() || this.#emitAutomationEvent == null) {
+            return;
+        }
+        this.#emitAutomationEvent(event, options);
     }
 }

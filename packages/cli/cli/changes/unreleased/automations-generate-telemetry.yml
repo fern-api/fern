@@ -1,0 +1,5 @@
+- summary: |
+    Emit Tier 1 automation telemetry events for `fern automations generate`, including
+    per-generator success/failure/skip events and run-level lifecycle events. Per-generator
+    Fiddle failures no longer emit mislabeled run-level `generation_failed` Sentry events.
+  type: feat

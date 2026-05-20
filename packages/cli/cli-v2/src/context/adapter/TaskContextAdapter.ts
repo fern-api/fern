@@ -9,6 +9,7 @@ import {
     type Startable,
     TaskAbortSignal,
     type TaskContext,
+    TaskFailOptions,
     TaskResult
 } from "@fern-api/task-context";
 
@@ -56,12 +57,12 @@ export class TaskContextAdapter implements TaskContext {
         await run();
     }
 
-    public failAndThrow(message?: string, error?: unknown, options?: { code?: CliError.Code }): never {
+    public failAndThrow(message?: string, error?: unknown, options?: TaskFailOptions): never {
         this.failWithoutThrowing(message, error, options);
         throw new TaskAbortSignal();
     }
 
-    public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliError.Code }): void {
+    public failWithoutThrowing(message?: string, error?: unknown, options?: TaskFailOptions): void {
         this.result = TaskResult.Failure;
         if (error instanceof TaskAbortSignal) {
             return;
@@ -72,7 +73,9 @@ export class TaskContextAdapter implements TaskContext {
             this.logger.error(fullMessage);
         }
 
-        reportError(this.context, error, { ...options, message });
+        if (!options?.skipErrorReporting) {
+            reportError(this.context, error, { ...options, message });
+        }
     }
 
     public getLastFailureMessage(): string | undefined {

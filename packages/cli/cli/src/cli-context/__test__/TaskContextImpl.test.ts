@@ -42,6 +42,29 @@ function createInteractiveContext(): { subtask: InteractiveTaskContextImpl; getL
     return { subtask, getLogs: () => allLogs };
 }
 
+describe("TaskContextImpl.skipErrorReporting", () => {
+    it("marks the task failed without invoking reportError", () => {
+        const { context } = createContext();
+        context.failWithoutThrowing("cli failure", new Error("network"), { skipErrorReporting: true });
+        expect(context.getLastFailureMessage()).toBe("cli failure");
+        expect(context.getResult()).toBe(TaskResult.Failure);
+    });
+
+    it("failAndThrow with skipErrorReporting sets message and throws TaskAbortSignal", () => {
+        const { subtask } = createInteractiveContext();
+        subtask.start();
+        try {
+            subtask.failAndThrow("Fiddle container failed", undefined, {
+                skipErrorReporting: true
+            });
+        } catch (error) {
+            expect(error).toBeInstanceOf(TaskAbortSignal);
+        }
+        expect(subtask.getLastFailureMessage()).toBe("Fiddle container failed");
+        expect(subtask.getResult()).toBe(TaskResult.Failure);
+    });
+});
+
 describe("TaskContextImpl.getLastFailureMessage", () => {
     it("returns the message passed to failWithoutThrowing", () => {
         const { context } = createContext();

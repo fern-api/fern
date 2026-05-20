@@ -207,7 +207,10 @@ export class RemoteTaskHandler {
                 if (s3PreSignedReadUrl != null) {
                     logS3Url(s3PreSignedReadUrl);
                 }
-                this.context.failAndThrow(message, undefined, { code: CliError.Code.ContainerError });
+                this.context.failAndThrow(message, undefined, {
+                    code: CliError.Code.ContainerError,
+                    skipErrorReporting: true
+                });
             },
             finished: async (finishedStatus) => {
                 if (finishedStatus.s3PreSignedReadUrlV2 != null) {

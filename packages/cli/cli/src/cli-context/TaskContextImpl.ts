@@ -11,6 +11,7 @@ import {
     Startable,
     TaskAbortSignal,
     TaskContext,
+    TaskFailOptions,
     TaskResult
 } from "@fern-api/task-context";
 
@@ -107,13 +108,13 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
 
     public takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
 
-    public failAndThrow(message?: string, error?: unknown, options?: { code?: CliError.Code }): never {
+    public failAndThrow(message?: string, error?: unknown, options?: TaskFailOptions): never {
         this.failWithoutThrowing(message, error, options);
         this.finish();
         throw new TaskAbortSignal();
     }
 
-    public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliError.Code }): void {
+    public failWithoutThrowing(message?: string, error?: unknown, options?: TaskFailOptions): void {
         this.result = TaskResult.Failure;
         if (error instanceof TaskAbortSignal) {
             return;
@@ -122,7 +123,9 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
             this.lastFailureMessage = message;
         }
         logErrorMessage({ message, error, logger: this.logger });
-        reportError(this, error, { ...options, message });
+        if (!options?.skipErrorReporting) {
+            reportError(this, error, { ...options, message });
+        }
     }
 
     public getLastFailureMessage(): string | undefined {
