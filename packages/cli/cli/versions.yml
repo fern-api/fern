@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.31.0
+  changelogEntry:
+    - summary: |
+        Populate `hasWebSocketInTree` on IR Package/Subpackage types. When a
+        subpackage (or any of its nested children) contains a WebSocket channel,
+        this field is set to `true`, enabling generators to wire WebSocket-only
+        namespaces into the root client.
+      type: feat
+  createdAt: "2026-05-20"
+  irVersion: 66
 - version: 5.30.4
   changelogEntry:
     - summary: |
