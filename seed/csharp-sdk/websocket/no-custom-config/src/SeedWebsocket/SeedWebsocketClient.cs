@@ -26,5 +26,8 @@ public partial class SeedWebsocketClient : ISeedWebsocketClient
             }
         }
         _client = new RawClient(clientOptions);
+        Status = new StatusClient(_client);
     }
+
+    public IStatusClient Status { get; }
 }

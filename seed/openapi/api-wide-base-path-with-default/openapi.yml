@@ -1,0 +1,53 @@
+openapi: 3.1.0
+info:
+  title: api-wide-base-path-with-default
+  version: 0.0.0
+paths:
+  /{apiVersion}/widgets:
+    post:
+      operationId: widgets_create
+      tags:
+        - Widgets
+      parameters:
+        - name: apiVersion
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: v1beta
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Widget'
+              examples:
+                Example1:
+                  value:
+                    name: name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Widget'
+            examples:
+              Example1:
+                value:
+                  name: name
+components:
+  schemas:
+    Widget:
+      title: Widget
+      type: object
+      properties:
+        name:
+          type: string
+          examples:
+            - name
+      required:
+        - name
+  securitySchemes: {}

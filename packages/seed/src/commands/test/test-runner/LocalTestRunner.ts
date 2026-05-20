@@ -59,7 +59,8 @@ export class LocalTestRunner extends TestRunner {
             smartCasing,
             organization,
             absolutePathToFernConfig,
-            skipAutogenerationIfManualExamplesExist
+            skipAutogenerationIfManualExamplesExist,
+            rawApiSpecs
         } = args;
 
         const generatorGroup: generatorsYml.GeneratorGroup = {
@@ -102,6 +103,7 @@ export class LocalTestRunner extends TestRunner {
                 inspect,
                 ai: undefined,
                 skipAutogenerationIfManualExamplesExist,
+                rawApiSpecs,
                 verify: verifyEnabled,
                 // Generator runs at :local but the validator image isn't built locally;
                 // pull the published :latest validator. This mirrors what a customer's

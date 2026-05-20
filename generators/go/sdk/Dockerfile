@@ -7,7 +7,7 @@ RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github
 
 # Patch vulnerable packages bundled inside npm's node_modules that lag behind
 # upstream advisories (ip-address GHSA-v2v4-37r5-5v8g, brace-expansion
-# GHSA-f886-m6hf-6m8v, picomatch GHSA-3v7f-55p6-f55p / GHSA-c2c7-rcm5-vvqj).
+# GHSA-jxxr-4gwj-5jf2, picomatch GHSA-3v7f-55p6-f55p / GHSA-c2c7-rcm5-vvqj).
 # We replace them with the latest patched releases via `npm pack` so the
 # resulting layer does not ship known-vulnerable copies.
 RUN set -eux; \

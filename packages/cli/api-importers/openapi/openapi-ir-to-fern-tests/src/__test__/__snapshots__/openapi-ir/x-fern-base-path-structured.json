@@ -1,0 +1,661 @@
+{
+  "title": "Acme API",
+  "description": "The Acme API.",
+  "basePath": "/{tenant}/{apiVersion}",
+  "basePathParameters": [
+    {
+      "name": "tenant",
+      "schema": {
+        "description": "The tenant slug.",
+        "schema": {
+          "type": "string"
+        },
+        "generatedName": "tenant",
+        "type": "primitive"
+      },
+      "description": "The tenant slug."
+    },
+    {
+      "name": "apiVersion",
+      "schema": {
+        "schema": {
+          "type": "string"
+        },
+        "generatedName": "apiVersion",
+        "type": "primitive"
+      },
+      "clientDefault": "v1beta"
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://api.acme.com"
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "createWidget",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateWidgetRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateWidgetRequest",
+          "schema": "Widget",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "schema": {
+          "generatedName": "CreateWidgetResponse",
+          "schema": "Widget",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/widgets",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "name": {
+                "value": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "createInteractionStream_stream",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "requestNameOverride": "CreateInteractionStreamRequest",
+      "generatedRequestName": "CreateInteractionStreamStreamRequest",
+      "request": {
+        "schema": {
+          "value": {
+            "generatedName": "CreateInteractionStreamStreamRequest",
+            "commonProperties": [
+              {
+                "key": "stream",
+                "schema": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "generatedName": "CreateInteractionStreamStreamRequestStream",
+                  "groupName": [],
+                  "type": "literal"
+                }
+              }
+            ],
+            "schemas": [
+              {
+                "generatedName": "CreateInteractionStreamStreamRequestZero",
+                "schema": "ModelInteractionRequest",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              {
+                "generatedName": "CreateInteractionStreamStreamRequestOne",
+                "schema": "AgentInteractionRequest",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              }
+            ],
+            "groupName": [],
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "undiscriminated"
+          },
+          "type": "oneOf"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "terminator": "[DONE]",
+        "resumable": false,
+        "fullExamples": [],
+        "schema": {
+          "generatedName": "CreateInteractionStreamStreamResponse",
+          "schema": "InteractionSseEvent",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "streamingSse"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/interactions/stream",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "model": {
+                "value": {
+                  "value": "model",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "input": {
+                "value": {
+                  "value": "input",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "sse": true,
+            "events": [
+              {
+                "properties": {
+                  "delta": {
+                    "value": {
+                      "value": "delta",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "createInteractionStream",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateInteractionStreamRequest",
+      "request": {
+        "schema": {
+          "value": {
+            "generatedName": "CreateInteractionStreamRequest",
+            "commonProperties": [
+              {
+                "key": "stream",
+                "schema": {
+                  "value": {
+                    "value": false,
+                    "type": "boolean"
+                  },
+                  "generatedName": "CreateInteractionStreamRequestStream",
+                  "groupName": [],
+                  "type": "literal"
+                }
+              }
+            ],
+            "schemas": [
+              {
+                "generatedName": "CreateInteractionStreamRequestZero",
+                "schema": "ModelInteractionRequest",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              {
+                "generatedName": "CreateInteractionStreamRequestOne",
+                "schema": "AgentInteractionRequest",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              }
+            ],
+            "groupName": [],
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "undiscriminated"
+          },
+          "type": "oneOf"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "",
+        "schema": {
+          "generatedName": "CreateInteractionStreamResponse",
+          "schema": "Interaction",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/interactions/stream",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "model": {
+                "value": {
+                  "value": "model",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "input": {
+                "value": {
+                  "value": "input",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "output": {
+                  "value": {
+                    "value": "output",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Widget": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "widgetName",
+            "key": "name",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "WidgetName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Widget",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "InteractionRequest": {
+        "value": {
+          "generatedName": "InteractionRequest",
+          "schemas": [
+            {
+              "generatedName": "InteractionRequestZero",
+              "schema": "ModelInteractionRequest",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "generatedName": "InteractionRequestOne",
+              "schema": "AgentInteractionRequest",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "ModelInteractionRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "modelInteractionRequestModel",
+            "key": "model",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ModelInteractionRequestModel",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "modelInteractionRequestInput",
+            "key": "input",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ModelInteractionRequestInput",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ModelInteractionRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "AgentInteractionRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "agentInteractionRequestAgent",
+            "key": "agent",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "AgentInteractionRequestAgent",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "agentInteractionRequestInput",
+            "key": "input",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "AgentInteractionRequestInput",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "AgentInteractionRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Interaction": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "interactionId",
+            "key": "id",
+            "schema": {
+              "generatedName": "InteractionId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "InteractionId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "interactionOutput",
+            "key": "output",
+            "schema": {
+              "generatedName": "InteractionOutput",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "InteractionOutput",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Interaction",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "InteractionSseEvent": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "interactionSseEventDelta",
+            "key": "delta",
+            "schema": {
+              "generatedName": "InteractionSseEventDelta",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "InteractionSseEventDelta",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "InteractionSseEvent",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

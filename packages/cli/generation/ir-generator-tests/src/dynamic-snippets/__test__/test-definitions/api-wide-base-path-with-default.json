@@ -1,0 +1,192 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:Widget": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Widget",
+                    "camelCase": {
+                        "unsafeName": "widget",
+                        "safeName": "widget"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "widget",
+                        "safeName": "widget"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "WIDGET",
+                        "safeName": "WIDGET"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Widget",
+                        "safeName": "Widget"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "name",
+                        "name": {
+                            "originalName": "name",
+                            "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_widgets.create": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "create",
+                    "camelCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE",
+                        "safeName": "CREATE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Create",
+                        "safeName": "Create"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "widgets",
+                            "camelCase": {
+                                "unsafeName": "widgets",
+                                "safeName": "widgets"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "widgets",
+                                "safeName": "widgets"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "WIDGETS",
+                                "safeName": "WIDGETS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Widgets",
+                                "safeName": "Widgets"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "widgets",
+                        "camelCase": {
+                            "unsafeName": "widgets",
+                            "safeName": "widgets"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "widgets",
+                            "safeName": "widgets"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "WIDGETS",
+                            "safeName": "WIDGETS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Widgets",
+                            "safeName": "Widgets"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/{apiVersion}/widgets"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:Widget"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [
+        {
+            "name": {
+                "name": {
+                    "originalName": "apiVersion",
+                    "camelCase": {
+                        "unsafeName": "apiVersion",
+                        "safeName": "apiVersion"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "api_version",
+                        "safeName": "api_version"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "API_VERSION",
+                        "safeName": "API_VERSION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "APIVersion",
+                        "safeName": "APIVersion"
+                    }
+                },
+                "wireValue": "apiVersion"
+            },
+            "typeReference": {
+                "type": "primitive",
+                "value": "STRING"
+            },
+            "propertyAccess": null,
+            "variable": null
+        }
+    ],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}

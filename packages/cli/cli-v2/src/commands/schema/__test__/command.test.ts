@@ -1,7 +1,7 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 import { randomUUID } from "crypto";
-import { mkdir, rm } from "fs/promises";
+import { mkdir, readFile, rm } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
@@ -107,5 +107,21 @@ describe("fern schema", () => {
         await cmd.handle(context, { "log-level": "info", pretty: true });
 
         expect(getStderr()).toBe("");
+    });
+
+    it("writes the full schema to a file when --output is set", async () => {
+        const outputPath = join(testDir, "fern-yml.schema.json");
+        const { context, getStdout } = await createTestContextWithCapture({ cwd: testDir });
+        const cmd = new SchemaCommand();
+
+        await cmd.handle(context, { "log-level": "info", pretty: true, output: outputPath });
+
+        expect(getStdout()).toBe("");
+
+        const written = await readFile(outputPath, "utf-8");
+        const parsed = JSON.parse(written);
+        expect(parsed.type).toBe("object");
+        expect(parsed.properties.org).toBeDefined();
+        expect(written.endsWith("\n")).toBe(true);
     });
 });

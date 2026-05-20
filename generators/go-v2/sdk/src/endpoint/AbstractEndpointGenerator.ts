@@ -143,7 +143,7 @@ export abstract class AbstractEndpointGenerator {
     private getFileParameterFromProperty({
         property
     }: {
-        property: FernIr.FileUploadRequestProperty.File_;
+        property: FernIr.FileUploadRequestProperty.File;
     }): go.Parameter {
         const filePropertyType = property.value.type;
         switch (filePropertyType) {

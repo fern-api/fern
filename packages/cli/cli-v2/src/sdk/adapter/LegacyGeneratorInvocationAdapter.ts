@@ -83,6 +83,8 @@ export class LegacyGeneratorInvocationAdapter {
                 return generatorsYml.GithubSelfhostedMode.PullRequest;
             case "push":
                 return generatorsYml.GithubSelfhostedMode.Push;
+            case "release":
+                return generatorsYml.GithubSelfhostedMode.CommitAndRelease;
             default:
                 assertNever(mode);
         }
@@ -176,6 +178,16 @@ export class LegacyGeneratorInvocationAdapter {
             case "push":
                 return FernFiddle.remoteGen.OutputMode.githubV2(
                     FernFiddle.GithubOutputModeV2.push({
+                        owner: repository.owner,
+                        repo: repository.repo,
+                        branch: git.branch,
+                        license,
+                        publishInfo
+                    })
+                );
+            case "release":
+                return FernFiddle.remoteGen.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.commitAndRelease({
                         owner: repository.owner,
                         repo: repository.repo,
                         branch: git.branch,

@@ -52212,6 +52212,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "webhooks": null,
       "websocket": null,
       "hasEndpointsInTree": false,
+      "hasWebSocketInTree": null,
       "navigationConfig": null,
       "docs": null
     },
@@ -52232,6 +52233,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "webhooks": null,
       "websocket": null,
       "hasEndpointsInTree": false,
+      "hasWebSocketInTree": null,
       "navigationConfig": null,
       "docs": null
     },
@@ -52254,6 +52256,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "webhooks": null,
       "websocket": null,
       "hasEndpointsInTree": false,
+      "hasWebSocketInTree": null,
       "navigationConfig": null,
       "docs": null
     },
@@ -52274,6 +52277,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "webhooks": null,
       "websocket": null,
       "hasEndpointsInTree": false,
+      "hasWebSocketInTree": null,
       "navigationConfig": null,
       "docs": null
     }
@@ -52295,6 +52299,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
     "webhooks": null,
     "websocket": null,
     "hasEndpointsInTree": false,
+    "hasWebSocketInTree": null,
     "navigationConfig": null,
     "docs": null
   },
