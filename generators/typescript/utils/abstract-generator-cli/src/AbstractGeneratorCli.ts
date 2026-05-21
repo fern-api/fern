@@ -204,6 +204,11 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             packageManager: this.getPackageManager(customConfig)
                         });
                     });
+                    // Generate the lockfile eagerly so the Fiddle/remote path
+                    // (which does not run PostGenerationPipeline) still ships one.
+                    // When the local-gen pipeline IS active, LockfileStep will
+                    // regenerate it after Replay to pick up any manifest changes.
+                    await typescriptProject.generateLockfile(logger);
                     if (!(await typescriptProject.areCheckFixToolsAvailable(logger))) {
                         await typescriptProject.installCheckFixDependencies(logger);
                     }

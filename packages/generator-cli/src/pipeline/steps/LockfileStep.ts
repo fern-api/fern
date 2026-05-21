@@ -117,8 +117,8 @@ export class LockfileStep extends BaseStep {
                     lockfileCopied = true;
                     this.logger.info(`Copied regenerated ${candidate} back from container`);
                     break;
-                } catch {
-                    // Lockfile candidate doesn't exist in the container — try next.
+                } catch (error) {
+                    this.logger.debug(`Lockfile candidate ${candidate} not found in container: ${extractErrorMessage(error)}`);
                 }
             }
 
@@ -153,7 +153,8 @@ export class LockfileStep extends BaseStep {
                 cwd: this.outputDir,
                 stdio: "pipe"
             });
-        } catch {
+        } catch (error) {
+            this.logger.debug(`Not inside a git repository, skipping lockfile commit: ${extractErrorMessage(error)}`);
             return;
         }
 
@@ -165,8 +166,8 @@ export class LockfileStep extends BaseStep {
                         cwd: this.outputDir,
                         stdio: "pipe"
                     });
-                } catch {
-                    // File doesn't exist — skip.
+                } catch (error) {
+                    this.logger.debug(`Lockfile candidate ${candidate} not present on disk, skipping git add: ${extractErrorMessage(error)}`);
                 }
             }
             const diff = execFileSync("git", ["diff", "--cached", "--name-only"], {
