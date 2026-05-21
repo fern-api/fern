@@ -112,7 +112,7 @@ describe("RemoveMemberCommand", () => {
             cmd.handle(context, { userId: "user123", org: "acme" } as RemoveMemberCommand.Args)
         ).rejects.toThrow(CliError);
 
-        expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("was not found"));
+        expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("Failed to look up organization"));
     });
 
     it("should handle UnprocessableEntityError from removeUser", async () => {

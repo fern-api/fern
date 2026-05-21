@@ -116,9 +116,7 @@ describe("InviteMemberCommand", () => {
             cmd.handle(context, { email: "user@example.com", org: "acme" } as InviteMemberCommand.Args)
         ).rejects.toThrow(CliError);
 
-        expect(context.stderr.error).toHaveBeenCalledWith(
-            expect.stringContaining("do not have access to organization")
-        );
+        expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("was not found"));
     });
 
     it("should handle UnprocessableEntityError from inviteUser", async () => {

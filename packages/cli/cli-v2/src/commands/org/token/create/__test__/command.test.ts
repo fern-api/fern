@@ -118,7 +118,7 @@ describe("CreateTokenCommand", () => {
         const context = createMockContext();
         await expect(cmd.handle(context, { org: "acme" } as CreateTokenCommand.Args)).rejects.toThrow(CliError);
 
-        expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("was not found"));
+        expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("Failed to look up organization"));
     });
 
     it("should handle UnprocessableEntityError from apiKeys.create", async () => {

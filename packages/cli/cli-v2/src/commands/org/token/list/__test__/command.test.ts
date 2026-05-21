@@ -161,9 +161,7 @@ describe("ListTokensCommand", () => {
         const context = createMockContext();
         await expect(cmd.handle(context, { org: "acme" } as ListTokensCommand.Args)).rejects.toThrow(CliError);
 
-        expect(context.stderr.error).toHaveBeenCalledWith(
-            expect.stringContaining("do not have access to organization")
-        );
+        expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("was not found"));
     });
 
     it("should handle UnprocessableEntityError from getTokensForOrganization", async () => {

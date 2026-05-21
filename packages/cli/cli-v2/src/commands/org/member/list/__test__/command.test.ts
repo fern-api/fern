@@ -133,9 +133,7 @@ describe("ListMembersCommand", () => {
         const context = createMockContext();
         await expect(cmd.handle(context, { org: "acme" } as ListMembersCommand.Args)).rejects.toThrow(CliError);
 
-        expect(context.stderr.error).toHaveBeenCalledWith(
-            expect.stringContaining("do not have access to organization")
-        );
+        expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("was not found"));
     });
 
     it("should handle unknown errors", async () => {

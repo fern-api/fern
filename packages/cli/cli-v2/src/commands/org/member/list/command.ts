@@ -35,8 +35,8 @@ export class ListMembersCommand {
         if (!response.ok) {
             response.error._visit({
                 unprocessableEntityError: () => {
-                    context.stderr.error(`${Icons.error} You do not have access to organization "${args.org}".`);
-                    throw new CliError({ code: CliError.Code.AuthError });
+                    context.stderr.error(`${Icons.error} Organization "${args.org}" was not found.`);
+                    throw CliError.notFound();
                 },
                 _other: () => {
                     context.stderr.error(
