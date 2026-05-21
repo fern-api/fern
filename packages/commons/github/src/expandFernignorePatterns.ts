@@ -13,7 +13,10 @@ export function expandFernignorePatterns(fernignoreContent: string, candidatePat
 
 function matches(candidate: string, pattern: string): boolean {
     const normalized = pattern.endsWith("/") ? pattern.slice(0, -1) : pattern;
-    if (minimatch(candidate, normalized, { dot: true })) {
+    // `nonegate` makes `!` a literal character. Without it, minimatch would
+    // invert the result and a stray `!pattern` would silently preserve nearly
+    // every file — discarding generator output instead of customer code.
+    if (minimatch(candidate, normalized, { dot: true, nonegate: true })) {
         return true;
     }
     return candidate === normalized || candidate.startsWith(normalized + "/");
