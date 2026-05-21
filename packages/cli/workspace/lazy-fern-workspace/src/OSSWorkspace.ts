@@ -584,10 +584,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     // Only use override file's auth-schemes if generators.yml doesn't already define them
                     authSchemes: hasAuthSchemesInGenerators
                         ? undefined
-                        : (authFromOverrides["auth-schemes"] as Record<
-                              string,
-                              RawSchemas.AuthSchemeDeclarationSchema
-                          >)
+                        : (authFromOverrides["auth-schemes"] as Record<string, RawSchemas.AuthSchemeDeclarationSchema>)
                 };
             }
         }

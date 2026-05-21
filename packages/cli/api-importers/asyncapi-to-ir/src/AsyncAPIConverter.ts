@@ -167,10 +167,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
         if (this.context.authOverrides) {
             // When auth-schemes is present without auth, synthesize auth: { any: [...schemeNames] }
             let effectiveOverrides = this.context.authOverrides;
-            if (
-                this.context.authOverrides.auth == null &&
-                this.context.authOverrides["auth-schemes"] != null
-            ) {
+            if (this.context.authOverrides.auth == null && this.context.authOverrides["auth-schemes"] != null) {
                 const schemeNames = Object.keys(this.context.authOverrides["auth-schemes"]);
                 if (schemeNames.length > 0) {
                     effectiveOverrides = {
