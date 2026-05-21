@@ -58,7 +58,7 @@ describe("ListMembersCommand", () => {
         const context = createMockContext();
         await cmd.handle(context, { org: "acme" } as ListMembersCommand.Args);
 
-        expect(mockGet).toHaveBeenCalledWith("acme");
+        expect(mockGet).toHaveBeenCalledWith({ orgId: "acme" });
         expect(context.stdout.info).toHaveBeenCalledTimes(2);
     });
 
@@ -118,12 +118,12 @@ describe("ListMembersCommand", () => {
         );
     });
 
-    it("should handle UnauthorizedError", async () => {
+    it("should handle UnprocessableEntityError", async () => {
         const { createVenusService } = await import("@fern-api/core");
         const mockGet = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: { unauthorizedError: () => void }) => visitor.unauthorizedError()
+                _visit: (visitor: { unprocessableEntityError: () => void }) => visitor.unprocessableEntityError()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
@@ -133,9 +133,7 @@ describe("ListMembersCommand", () => {
         const context = createMockContext();
         await expect(cmd.handle(context, { org: "acme" } as ListMembersCommand.Args)).rejects.toThrow(CliError);
 
-        expect(context.stderr.error).toHaveBeenCalledWith(
-            expect.stringContaining("do not have access to organization")
-        );
+        expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("was not found"));
     });
 
     it("should handle unknown errors", async () => {

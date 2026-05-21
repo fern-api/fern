@@ -28,15 +28,15 @@ export class RemoveMemberCommand {
 
         const venus = createVenusService({ token: token.value });
 
-        const orgLookup = await venus.organization.get(args.org);
+        const orgLookup = await venus.organization.get({ orgId: args.org });
         if (!orgLookup.ok) {
             orgLookup.error._visit({
-                unauthorizedError: () => {
-                    context.stderr.error(`${Icons.error} You do not have access to organization "${args.org}".`);
-                    throw new CliError({ code: CliError.Code.AuthError });
+                unprocessableEntityError: () => {
+                    context.stderr.error(`${Icons.error} Organization "${args.org}" was not found.`);
+                    throw CliError.notFound();
                 },
                 _other: () => {
-                    context.stderr.error(`${Icons.error} Organization "${args.org}" was not found.`);
+                    context.stderr.error(`${Icons.error} Failed to look up organization "${args.org}".`);
                     throw CliError.notFound();
                 }
             });
@@ -64,13 +64,7 @@ export class RemoveMemberCommand {
         }
 
         response.error._visit({
-            unauthorizedError: () => {
-                context.stderr.error(
-                    `${Icons.error} You do not have permission to remove members from organization "${args.org}".`
-                );
-                throw new CliError({ code: CliError.Code.AuthError });
-            },
-            userIdDoesNotExistError: () => {
+            unprocessableEntityError: () => {
                 context.stderr.error(`${Icons.error} User "${userId}" was not found.`);
                 throw CliError.notFound();
             },

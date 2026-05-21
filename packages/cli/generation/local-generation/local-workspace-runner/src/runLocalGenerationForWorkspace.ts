@@ -202,7 +202,7 @@ export async function runLocalGenerationForWorkspace({
                     }
                 }
 
-                const organization = await venus.organization.get(projectConfig.organization);
+                const organization = await venus.organization.get({ orgId: projectConfig.organization });
 
                 if (generatorInvocation.absolutePathToLocalOutput == null && !organization.ok) {
                     interactiveTaskContext.failWithoutThrowing(

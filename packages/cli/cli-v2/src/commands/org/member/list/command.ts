@@ -29,14 +29,14 @@ export class ListMembersCommand {
 
         const response = await withSpinner({
             message: `Fetching members of organization "${args.org}"`,
-            operation: () => venus.organization.get(args.org)
+            operation: () => venus.organization.get({ orgId: args.org })
         });
 
         if (!response.ok) {
             response.error._visit({
-                unauthorizedError: () => {
-                    context.stderr.error(`${Icons.error} You do not have access to organization "${args.org}".`);
-                    throw new CliError({ code: CliError.Code.AuthError });
+                unprocessableEntityError: () => {
+                    context.stderr.error(`${Icons.error} Organization "${args.org}" was not found.`);
+                    throw CliError.notFound();
                 },
                 _other: () => {
                     context.stderr.error(

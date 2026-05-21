@@ -13,7 +13,7 @@ export async function createOrganizationIfDoesNotExist({
     context: TaskContext;
 }): Promise<boolean> {
     const venus = createVenusService({ token: token.value });
-    const getOrganizationResponse = await venus.organization.get(organization);
+    const getOrganizationResponse = await venus.organization.get({ orgId: organization });
 
     if (getOrganizationResponse.ok) {
         return false;
