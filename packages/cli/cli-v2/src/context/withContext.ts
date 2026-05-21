@@ -8,11 +8,6 @@ import { Context } from "./Context.js";
 import type { GlobalArgs } from "./GlobalArgs.js";
 import { loadDotenvFile } from "./loadDotenvFile.js";
 
-// It's standard to use 128 as the base exit code for signals.
-// https://en.wikipedia.org/wiki/Signal_(IPC)
-const SIGINT_EXIT_CODE = ExitCode.Sigint;
-const SIGTERM_EXIT_CODE = ExitCode.Sigterm;
-
 /**
  * Wraps a command handler with context creation and error handling.
  *
@@ -127,8 +122,8 @@ function setupSignalHandler(context: Context): void {
         context.printLogFilePath(process.stderr);
         process.exit(exitCode);
     };
-    process.on("SIGINT", () => onSignal(SIGINT_EXIT_CODE));
-    process.on("SIGTERM", () => onSignal(SIGTERM_EXIT_CODE));
+    process.on("SIGINT", () => onSignal(ExitCode.Sigint));
+    process.on("SIGTERM", () => onSignal(ExitCode.Sigterm));
 }
 
 /**

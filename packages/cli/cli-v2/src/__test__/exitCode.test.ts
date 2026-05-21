@@ -28,10 +28,10 @@ describe("exitCodeForCliErrorCode", () => {
         expect(exitCodeForCliErrorCode(CliError.Code.VersionError)).toBe(ExitCode.Config);
     });
 
-    it("maps network / container / environment errors to Generic (1)", () => {
-        expect(exitCodeForCliErrorCode(CliError.Code.NetworkError)).toBe(ExitCode.Generic);
-        expect(exitCodeForCliErrorCode(CliError.Code.ContainerError)).toBe(ExitCode.Generic);
-        expect(exitCodeForCliErrorCode(CliError.Code.EnvironmentError)).toBe(ExitCode.Generic);
+    it("maps network / container / environment errors to TempFail (75)", () => {
+        expect(exitCodeForCliErrorCode(CliError.Code.NetworkError)).toBe(ExitCode.TempFail);
+        expect(exitCodeForCliErrorCode(CliError.Code.ContainerError)).toBe(ExitCode.TempFail);
+        expect(exitCodeForCliErrorCode(CliError.Code.EnvironmentError)).toBe(ExitCode.TempFail);
     });
 
     it("maps internal errors to Software (70)", () => {
@@ -40,8 +40,14 @@ describe("exitCodeForCliErrorCode", () => {
 });
 
 describe("exitCodeForError", () => {
-    it("returns Sigint for TaskAbortSignal", () => {
-        expect(exitCodeForError(new TaskAbortSignal())).toBe(ExitCode.Sigint);
+    it("returns Generic for TaskAbortSignal with no code (multi-task failure, error already logged)", () => {
+        expect(exitCodeForError(new TaskAbortSignal())).toBe(ExitCode.Generic);
+    });
+
+    it("delegates to exitCodeForCliErrorCode for TaskAbortSignal with a code", () => {
+        expect(exitCodeForError(new TaskAbortSignal(CliError.Code.AuthError))).toBe(ExitCode.NoPerm);
+        expect(exitCodeForError(new TaskAbortSignal(CliError.Code.ValidationError))).toBe(ExitCode.DataErr);
+        expect(exitCodeForError(new TaskAbortSignal(CliError.Code.ConfigError))).toBe(ExitCode.Config);
     });
 
     it("delegates to exitCodeForCliErrorCode for CliError instances", () => {

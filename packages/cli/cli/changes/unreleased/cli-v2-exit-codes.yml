@@ -6,7 +6,7 @@
       - `INTERNAL_ERROR` → 70 (software)
       - `AUTH_ERROR` → 77 (no perm)
       - `CONFIG_ERROR` / `VERSION_ERROR` → 78 (config)
-      - `NETWORK_ERROR` / `CONTAINER_ERROR` / `ENVIRONMENT_ERROR` → 1 (generic)
+      - `NETWORK_ERROR` / `CONTAINER_ERROR` / `ENVIRONMENT_ERROR` → 75 (temp fail — transient, may succeed on retry)
       - SIGINT → 130, SIGTERM → 143
     Both the central error boundary and the shared yargs `.fail` handler go through the same mapping.
   type: feat

@@ -25,6 +25,12 @@ export const ExitCode = {
     NoInput: 66,
     /** Unhandled internal error / unexpected exception. */
     Software: 70,
+    /**
+     * Transient failure (network, container, environment).
+     * The operation failed for an external reason and may succeed on retry.
+     * Maps to EX_TEMPFAIL from sysexits.h.
+     */
+    TempFail: 75,
     /** Authentication or authorization failure. */
     NoPerm: 77,
     /** The CLI's configuration is invalid. */
@@ -40,16 +46,17 @@ export type ExitCode = (typeof ExitCode)[keyof typeof ExitCode];
 /**
  * Resolve the process exit code for a thrown error.
  *
- * - {@link TaskAbortSignal} → {@link ExitCode.Sigint} (treated as user
- *   cancellation; `setupSignalHandler` handles real SIGINT/SIGTERM
- *   separately).
+ * - {@link TaskAbortSignal} → mapped from `signal.code` if present (the
+ *   originating {@link CliError.Code} stored by `failAndThrow`), otherwise
+ *   {@link ExitCode.Generic}. Real SIGINT/SIGTERM are handled separately by
+ *   `setupSignalHandler` which calls `process.exit` directly.
  * - {@link CliError} → mapped from `error.code` via {@link exitCodeForCliErrorCode}.
  * - Anything else (`Error`, thrown strings, etc.) → {@link ExitCode.Software}
  *   so it's distinguishable from a real `CliError` whose code maps to 1.
  */
 export function exitCodeForError(error: unknown): ExitCode {
     if (error instanceof TaskAbortSignal) {
-        return ExitCode.Sigint;
+        return error.code != null ? exitCodeForCliErrorCode(error.code) : ExitCode.Generic;
     }
     if (error instanceof CliError) {
         return exitCodeForCliErrorCode(error.code);
@@ -84,7 +91,7 @@ export function exitCodeForCliErrorCode(code: CliError.Code): ExitCode {
         case CliError.Code.NetworkError:
         case CliError.Code.ContainerError:
         case CliError.Code.EnvironmentError:
-            return ExitCode.Generic;
+            return ExitCode.TempFail;
         case CliError.Code.InternalError:
             return ExitCode.Software;
         default:
