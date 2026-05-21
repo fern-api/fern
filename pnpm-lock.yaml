@@ -37,8 +37,8 @@ catalogs:
       specifier: 0.0.6-2ee1b7e28
       version: 0.0.6-2ee1b7e28
     '@fern-api/generator-cli':
-      specifier: 0.9.34
-      version: 0.9.34
+      specifier: 0.9.35
+      version: 0.9.35
     '@fern-api/venus-api-sdk':
       specifier: 0.22.34
       version: 0.22.34
@@ -630,7 +630,7 @@ importers:
         version: link:packages/configs
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.9.34
+        version: 0.9.35
       '@rolldown/binding-darwin-arm64':
         specifier: 'catalog:'
         version: 1.0.0
@@ -699,7 +699,7 @@ importers:
         version: link:../../packages/commons/fs-utils
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.9.34
+        version: 0.9.35
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../packages/ir-sdk
@@ -2466,7 +2466,7 @@ importers:
         version: link:../../../packages/commons/fs-utils
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.9.34
+        version: 0.9.35
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../packages/cli/logger
@@ -9489,8 +9489,8 @@ packages:
   '@fern-api/fdr-sdk@1.2.4-f661387fb2':
     resolution: {integrity: sha512-wlk1lTCIZ7biND4vQf8jvhUw9P/rBQ5pXASCrumv8R96up0B3DY6yiY1C4VmFyHmp/kPhcjzc5T9TvHZZxFdrA==}
 
-  '@fern-api/generator-cli@0.9.34':
-    resolution: {integrity: sha512-TaxOiakFHZPjP7zGSS7OK9eW3w5pTJ56W8yx7nJCUlTVGv4PiS5ORLBMb6OGBEXwpoKJiFv3oZ5dMTx9tAqkDw==}
+  '@fern-api/generator-cli@0.9.35':
+    resolution: {integrity: sha512-84+K5K4jquuqpMo3p2NDk/OJuiyZtRcQW5tlEYH3R9y7G5wX71qwAWM21qWqu6+vYfN1oZ+4fUcqgqp6tOhxVA==}
     hasBin: true
 
   '@fern-api/replay@0.16.2':
@@ -16426,7 +16426,7 @@ snapshots:
       - encoding
       - typescript
 
-  '@fern-api/generator-cli@0.9.34':
+  '@fern-api/generator-cli@0.9.35':
     dependencies:
       '@boundaryml/baml': 0.219.0
       '@fern-api/replay': 0.16.2
