@@ -2,6 +2,7 @@ import { CliError } from "@fern-api/task-context";
 import type { Argv } from "yargs";
 
 import type { GlobalArgs } from "../../context/GlobalArgs.js";
+import { exitCodeForError } from "../../errors/exitCode.js";
 import { renderError } from "../../errors/renderError.js";
 
 /**
@@ -31,9 +32,9 @@ export function makeYargsFailHandler({
             y.showHelp("error");
         }
         // Yargs runs `.fail` synchronously and we are outside our async
-        // `withContext` lifecycle, so we exit directly. Stick with 1 today
-        // to avoid behavior changes for downstream scripts; the exit-code
-        // mapping ships separately.
-        process.exit(1);
+        // `withContext` lifecycle, so we exit directly. Use the same
+        // exit-code mapping as the main error boundary so shell scripts
+        // can branch on USER_ERROR vs the rest.
+        process.exit(exitCodeForError(error));
     };
 }

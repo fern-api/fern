@@ -58,7 +58,7 @@ export class TaskContextAdapter implements TaskContext {
 
     public failAndThrow(message?: string, error?: unknown, options?: { code?: CliError.Code }): never {
         this.failWithoutThrowing(message, error, options);
-        throw new TaskAbortSignal();
+        throw new TaskAbortSignal(options?.code);
     }
 
     public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliError.Code }): void {

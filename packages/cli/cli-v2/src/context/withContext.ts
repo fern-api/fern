@@ -2,16 +2,11 @@ import { LogLevel } from "@fern-api/logger";
 import { CliError, resolveErrorCode, shouldReportToSentry, TaskAbortSignal } from "@fern-api/task-context";
 
 import chalk from "chalk";
+import { ExitCode, exitCodeForError } from "../errors/exitCode.js";
 import { renderError } from "../errors/renderError.js";
 import { Context } from "./Context.js";
 import type { GlobalArgs } from "./GlobalArgs.js";
 import { loadDotenvFile } from "./loadDotenvFile.js";
-
-// It's standard to use 128 as the base exit code for signals.
-// https://en.wikipedia.org/wiki/Signal_(IPC)
-const SIGNAL_EXIT_CODE_BASE = 128;
-const SIGINT_EXIT_CODE = SIGNAL_EXIT_CODE_BASE + 2;
-const SIGTERM_EXIT_CODE = SIGNAL_EXIT_CODE_BASE + 15;
 
 /**
  * Wraps a command handler with context creation and error handling.
@@ -35,13 +30,13 @@ export function withContext<T extends GlobalArgs>(
             });
             await context.telemetry.flush();
             context.finish();
-            await exitGracefully(0);
+            await exitGracefully(ExitCode.Success);
         } catch (error) {
             reportError(context, error);
             await context.telemetry.flush();
             handleError(context, error);
             context.finish();
-            await exitGracefully(1);
+            await exitGracefully(exitCodeForError(error));
         }
     };
 }
@@ -127,8 +122,8 @@ function setupSignalHandler(context: Context): void {
         context.printLogFilePath(process.stderr);
         process.exit(exitCode);
     };
-    process.on("SIGINT", () => onSignal(SIGINT_EXIT_CODE));
-    process.on("SIGTERM", () => onSignal(SIGTERM_EXIT_CODE));
+    process.on("SIGINT", () => onSignal(ExitCode.Sigint));
+    process.on("SIGTERM", () => onSignal(ExitCode.Sigterm));
 }
 
 /**

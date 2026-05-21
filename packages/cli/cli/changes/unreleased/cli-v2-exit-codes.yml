@@ -1,0 +1,12 @@
+- summary: |
+    Map `CliError.Code` to distinct sysexits-style process exit codes so shell scripts and CI pipelines can branch on failure type without parsing stderr:
+      - `USER_ERROR` → 2 (usage)
+      - `VALIDATION_ERROR` / `PARSE_ERROR` / `IR_CONVERSION_ERROR` / `REFERENCE_ERROR` → 65 (data err)
+      - `RESOLUTION_ERROR` → 66 (no input)
+      - `INTERNAL_ERROR` → 70 (software)
+      - `AUTH_ERROR` → 77 (no perm)
+      - `CONFIG_ERROR` / `VERSION_ERROR` → 78 (config)
+      - `NETWORK_ERROR` / `CONTAINER_ERROR` / `ENVIRONMENT_ERROR` → 75 (temp fail — transient, may succeed on retry)
+      - SIGINT → 130, SIGTERM → 143
+    Both the central error boundary and the shared yargs `.fail` handler go through the same mapping.
+  type: feat
