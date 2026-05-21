@@ -204,6 +204,8 @@ function titleForCode(code: CliError.Code, fallback: string): string {
             return "Version mismatch";
         case "USER_ERROR":
             return "Invalid usage";
+        case "INTERNAL_ERROR":
+            return "Internal error";
         default:
             return fallback;
     }

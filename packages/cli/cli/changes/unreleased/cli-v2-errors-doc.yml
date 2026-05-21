@@ -4,4 +4,4 @@
     envelope format, the `--debug` and `--json` modes, the sysexits-style
     exit-code mapping, every `CliError.Code` with its title, exit code, and
     typical cause, plus a "common failures and what to do" section.
-  type: chore
+  type: feat
