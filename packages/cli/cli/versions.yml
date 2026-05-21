@@ -1,4 +1,31 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.37.0
+  changelogEntry:
+    - summary: |
+        Propagate the per-spec `namespace:` declared in `generators.yml`
+        through the raw specs manifest mounted into generator containers.
+        `RawSpecsManifestEntry` now carries an optional `namespace` field
+        populated from `OpenAPISpec.namespace` (also `OpenRPCSpec.namespace`
+        and `GraphQLSpec.namespace`). Enables generators that opt into
+        `generatorWantsSpecs` to route multi-spec workspaces by their
+        workspace-declared namespace instead of inferring one from the
+        runner-assigned filename. The new `fernapi/fern-cli` generator
+        uses this to emit `.spec_under("<ns>", ...)` in the generated
+        `main.rs` when the user namespaces their specs.
+      type: feat
+    - summary: |
+        Skip copying zero-byte `snippet.json` stubs from the workspace
+        temp dir into the user's generated output. The local workspace
+        runner pre-creates an empty `snippet.json` file and bind-mounts
+        it into the generator container so the generator can optionally
+        write per-endpoint code samples. Generators that emit a CLI
+        binary (or any output without call-site snippets) leave it empty
+        — copying the empty stub left a confusing 0-byte `snippet.json`
+        in the user's output. The runner now stat's the tmp file and
+        skips the copy when it's empty.
+      type: fix
+  createdAt: "2026-05-21"
+  irVersion: 66
 - version: 5.36.1
   changelogEntry:
     - summary: |
