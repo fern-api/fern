@@ -2,7 +2,6 @@ import { extractErrorMessage } from "@fern-api/core-utils";
 import { execFileSync } from "child_process";
 import { existsSync } from "fs";
 import { join } from "path";
-import type { PipelineLogger } from "../PipelineLogger";
 import type { LockfileResolutionStepResult, PipelineContext } from "../types";
 import { BaseStep } from "./BaseStep";
 
@@ -20,10 +19,6 @@ const RESOLVE_LOCKFILE_RELATIVE_PATH = ".fern/resolve-lockfile.sh";
  */
 export class LockfileResolutionStep extends BaseStep {
     readonly name = "lockfileResolution";
-
-    constructor(outputDir: string, logger: PipelineLogger) {
-        super(outputDir, logger);
-    }
 
     async execute(_context: PipelineContext): Promise<LockfileResolutionStepResult> {
         const scriptPath = join(this.outputDir, RESOLVE_LOCKFILE_RELATIVE_PATH);
