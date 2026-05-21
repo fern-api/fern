@@ -65,4 +65,13 @@ describe("expandFernignorePatterns", () => {
 
         expect([...preserved].sort()).toEqual(["src/bar/b.py", "src/foo/a.py"].sort());
     });
+
+    it("treats a leading `!` as literal so minimatch does not silently invert the result", () => {
+        const fernignore = "!src/bar";
+        const tracked = ["src/foo/a.py", "src/bar/b.py"];
+
+        const preserved = expandFernignorePatterns(fernignore, tracked);
+
+        expect(preserved).toEqual([]);
+    });
 });
