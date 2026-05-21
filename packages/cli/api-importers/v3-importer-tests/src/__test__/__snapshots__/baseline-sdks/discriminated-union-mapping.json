@@ -248,7 +248,6 @@
               "typeId": "type_:SampleUnion",
               "type": "named"
             },
-            "contentType": "application/json",
             "type": "reference"
           },
           "sdkRequest": {

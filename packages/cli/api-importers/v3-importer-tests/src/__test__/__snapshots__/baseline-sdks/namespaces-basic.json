@@ -243,7 +243,6 @@
               "typeId": "type_petsV1:Pet",
               "type": "named"
             },
-            "contentType": "application/json",
             "type": "reference"
           },
           "sdkRequest": {
@@ -410,7 +409,6 @@
               "typeId": "type_petsV2:Pet",
               "type": "named"
             },
-            "contentType": "application/json",
             "type": "reference"
           },
           "sdkRequest": {
