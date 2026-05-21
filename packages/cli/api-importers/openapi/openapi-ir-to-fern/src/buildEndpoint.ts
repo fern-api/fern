@@ -532,17 +532,19 @@ function getRequest({
         const resolvedSchema =
             request.schema.type === "reference" ? context.getSchema(request.schema.schema, namespace) : request.schema;
 
-        // the request body is referenced if it is not an object or if other parts of the spec
-        // refer to the same type
+        // the request body is referenced if it is not an object, if other parts of the spec
+        // refer to the same type, or if the request body is optional (to preserve the named type
+        // and wrap it in optional<>)
         if (
             resolvedSchema?.type !== "object" ||
-            (maybeSchemaId != null && context.isResponseReachable(maybeSchemaId))
+            (maybeSchemaId != null && context.isResponseReachable(maybeSchemaId)) ||
+            (endpoint.requestBodyOptional === true && maybeSchemaId != null)
         ) {
             // When respectReadonlySchemas is enabled on a write endpoint, resolve schema
             // references to the write variant (without readOnly properties)
             const useWriteVariant = context.options.respectReadonlySchemas && isWriteMethod(endpoint.method);
             const variant: "read" | "write" | undefined = useWriteVariant ? "write" : undefined;
-            const requestTypeReference = buildTypeReference({
+            let requestTypeReference = buildTypeReference({
                 schema: request.schema,
                 fileContainingReference: declarationFile,
                 context,
@@ -550,6 +552,17 @@ function getRequest({
                 declarationDepth: 0,
                 variant
             });
+            if (endpoint.requestBodyOptional === true) {
+                if (typeof requestTypeReference === "string") {
+                    requestTypeReference = `optional<${requestTypeReference}>`;
+                } else if (
+                    typeof requestTypeReference === "object" &&
+                    requestTypeReference != null &&
+                    "type" in requestTypeReference
+                ) {
+                    requestTypeReference = { ...requestTypeReference, type: `optional<${requestTypeReference.type}>` };
+                }
+            }
             const requestValue: RawSchemas.HttpRequestSchema = {
                 body: requestTypeReference
             };

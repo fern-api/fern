@@ -36,6 +36,11 @@ export interface EndpointWithExample
     /** Populated by `x-request-name` on a path object. */
     requestNameOverride: string | undefined;
     request: FernOpenapiIr.RequestWithExample | undefined;
+    /**
+     * Whether the request body is optional. True when all properties on the
+     * request body object are optional or the object has no properties.
+     */
+    requestBodyOptional: boolean | undefined;
     response: FernOpenapiIr.ResponseWithExample | undefined;
     /**
      * Expected error status codes for this endpoint, and their corresponding schema and examples.

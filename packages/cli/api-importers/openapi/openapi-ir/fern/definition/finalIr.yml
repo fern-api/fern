@@ -341,6 +341,11 @@ types:
         docs: |
           Populated by `x-request-name` on a path object.
       request: optional<Request>
+      requestBodyOptional:
+        type: optional<boolean>
+        docs: |
+          Whether the request body is optional. True when all properties on the
+          request body object are optional or the object has no properties.
       response: optional<Response>
       errors:
         type: map<commons.StatusCode, HttpError>
