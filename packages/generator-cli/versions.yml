@@ -1,16 +1,7 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Expand `.fernignore` glob patterns before the generator wipe.
-        `getFernignoreFiles` previously matched each line literally via
-        `fileExists`, so a pattern like `src/foo/**` was checked as a file
-        literally named `**` and silently produced no matches — the wipe
-        then deleted the customer's files. Now patterns are run through
-        the same `minimatch` (with `dot: true`) that `@fern-api/replay`
-        uses, expanded against the HEAD-tracked file list, and passed
-        concrete paths to the existing `restoreFiles` step. Trailing-slash
-        (`src/foo/`), bare-directory (`src/foo`), extglob (`+(a|b)`), and
-        dotfile (`.github/**`) patterns are all honored.
+        Expand `.fernignore` glob patterns before the wipe so customers' fernignored files survive regen.
       type: fix
     - summary: |
         Bump @fern-api/replay to 0.16.2.
