@@ -84,7 +84,7 @@ export class Context {
         this.logs = new LogFileWriter(this.cache.logs.absoluteFilePath);
         this.ttyAwareLogger = ttyAwareLogger;
         this.telemetry = telemetry;
-        this.tokenService = new TokenService({ credential: new CredentialStore() });
+        this.tokenService = new TokenService({ credential: new CredentialStore(), headers: this.headers });
     }
 
     /**

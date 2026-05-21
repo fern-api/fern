@@ -28,6 +28,7 @@ function createMockContext(tokenType: "user" | "organization" = "user") {
     return {
         stdout: createMockLogger(),
         stderr: createMockLogger(),
+        headers: { "X-Request-Id": "test-request-id" },
         getTokenOrPrompt: vi.fn().mockResolvedValue({ type: tokenType, value: "test-token" })
     } as unknown as import("../../../../../context/Context.js").Context;
 }
@@ -62,6 +63,9 @@ describe("CreateTokenCommand", () => {
         const context = createMockContext();
         await cmd.handle(context, { org: "acme", description: "CI token" } as CreateTokenCommand.Args);
 
+        expect(createVenusService).toHaveBeenCalledWith(
+            expect.objectContaining({ headers: { "X-Request-Id": "test-request-id" } })
+        );
         expect(mockGet).toHaveBeenCalledWith("acme");
         expect(mockCreate).toHaveBeenCalledWith({
             organizationId: "org_abc123",
