@@ -7713,6 +7713,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../core-utils
+      minimatch:
+        specifier: '>=10.2.3'
+        version: 10.2.5
       octokit:
         specifier: ^4.1.4
         version: 4.1.4
@@ -7975,8 +7978,8 @@ importers:
         specifier: workspace:*
         version: link:../commons/logging-execa
       '@fern-api/replay':
-        specifier: 0.16.1
-        version: 0.16.1
+        specifier: 0.16.2
+        version: 0.16.2
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../cli/task-context
@@ -9492,6 +9495,11 @@ packages:
 
   '@fern-api/replay@0.16.1':
     resolution: {integrity: sha512-860fIHdRORH4Xg908oxBC6pduiujRdgsb8NguvHt+cQE2lHcEOqsHwUIjiWtmBW09h8Hpi9xf8nGdk6vtBpe+g==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  '@fern-api/replay@0.16.2':
+    resolution: {integrity: sha512-eUg5d5qay8C+3nin5dWCOLGji/HcmWsA9hQL1cISO+eH58dJjufGd92hxjsD02sw5eX0CuDzzq6LMuYVW2Swzg==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -16435,6 +16443,15 @@ snapshots:
       - supports-color
 
   '@fern-api/replay@0.16.1':
+    dependencies:
+      minimatch: 10.2.5
+      node-diff3: 3.2.0
+      simple-git: 3.36.0
+      yaml: 2.8.3
+    transitivePeerDependencies:
+      - supports-color
+
+  '@fern-api/replay@0.16.2':
     dependencies:
       minimatch: 10.2.5
       node-diff3: 3.2.0

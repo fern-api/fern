@@ -75,6 +75,12 @@ export class ClonedRepository {
         await this.git.raw([...args, ...(Array.isArray(files) ? files : [files])]);
     }
 
+    public async listTrackedFiles(): Promise<string[]> {
+        await this.git.cwd(this.clonePath);
+        const result = await this.git.raw(["ls-tree", "-r", "HEAD", "--name-only"]);
+        return result.split("\n").filter((line) => line.length > 0);
+    }
+
     public async restoreFilesFromCommit(commitSha: string, files: string | string[]): Promise<void> {
         await this.git.cwd(this.clonePath);
         const fileList = Array.isArray(files) ? files : [files];

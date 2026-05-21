@@ -1,5 +1,11 @@
 import { cwd, resolve } from "@fern-api/fs-utils";
-import { ClonedRepository, cloneRepository, getGithubApiBaseUrl, parseRepository } from "@fern-api/github";
+import {
+    ClonedRepository,
+    cloneRepository,
+    expandFernignorePatterns,
+    getGithubApiBaseUrl,
+    parseRepository
+} from "@fern-api/github";
 import { Octokit } from "@octokit/rest";
 
 import type { FernGeneratorCli } from "../configuration/sdk/index.js";
@@ -136,19 +142,8 @@ export class GitHub {
         if (fernignore === undefined) {
             return [];
         }
-        const fernignoreLines = fernignore.split("\n");
-        const fernignoreFiles: string[] = [];
-        for (const line of fernignoreLines) {
-            const trimmedLine = line.trim();
-            if (
-                !trimmedLine.startsWith("#") &&
-                trimmedLine.length > 0 &&
-                (await repository.fileExists({ relativeFilePath: trimmedLine }))
-            ) {
-                fernignoreFiles.push(trimmedLine);
-            }
-        }
-        return fernignoreFiles;
+        const tracked = await repository.listTrackedFiles();
+        return expandFernignorePatterns(fernignore, tracked);
     }
 
     private async restoreFiles(repository: ClonedRepository, files: string[]): Promise<void> {
