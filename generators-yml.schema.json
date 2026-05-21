@@ -2751,6 +2751,16 @@
             }
           ]
         },
+        "examples": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "name": {
           "oneOf": [
             {

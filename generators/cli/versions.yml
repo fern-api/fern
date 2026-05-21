@@ -7,7 +7,7 @@
         in generated CLI.
       type: feat
   createdAt: "2026-05-20"
-  irVersion: 66
+  irVersion: 67
 - version: 0.1.0
   changelogEntry:
     - summary: |

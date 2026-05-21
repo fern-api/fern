@@ -11,6 +11,7 @@ export const GraphQlSpecSchema: core.serialization.ObjectSchema<
     graphql: core.serialization.string(),
     origin: core.serialization.string().optional(),
     overrides: core.serialization.string().optional(),
+    examples: core.serialization.string().optional(),
     name: core.serialization.string().optional(),
 });
 
@@ -19,6 +20,7 @@ export declare namespace GraphQlSpecSchema {
         graphql: string;
         origin?: string | null;
         overrides?: string | null;
+        examples?: string | null;
         name?: string | null;
     }
 }

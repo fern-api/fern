@@ -121,10 +121,29 @@ export async function loadSingleNamespaceAPIWorkspace({
                     }
                 };
             }
+            const absoluteFilepathToExamples =
+                definition.schema.examples != null
+                    ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.examples))
+                    : undefined;
+            if (
+                definition.schema.examples != null &&
+                absoluteFilepathToExamples != null &&
+                !(await doesPathExist(absoluteFilepathToExamples))
+            ) {
+                return {
+                    didSucceed: false,
+                    failures: {
+                        [RelativeFilePath.of(definition.schema.examples)]: {
+                            type: WorkspaceLoaderFailureType.FILE_MISSING
+                        }
+                    }
+                };
+            }
             specs.push({
                 type: "graphql",
                 absoluteFilepath: absoluteFilepathToGraphQL,
                 absoluteFilepathToOverrides,
+                absoluteFilepathToExamples,
                 namespace
             });
             continue;
