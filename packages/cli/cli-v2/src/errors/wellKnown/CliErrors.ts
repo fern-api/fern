@@ -128,7 +128,7 @@ export const FernCliErrors = {
         return new CliError({
             message: `"${value}" is not a supported ${what}.`,
             code: CliError.Code.ConfigError,
-            hint: `Supported ${what}s: ${supported.join(", ")}.`
+            hint: `Supported ${what} values: ${supported.join(", ")}.`
         });
     },
 
@@ -137,8 +137,9 @@ export const FernCliErrors = {
      * downloads, registry calls, and other "we tried to read a URL" failures.
      */
     HttpFetchFailed({ url, status, statusText }: { url: string; status: number; statusText: string }): CliError {
+        const statusDescription = statusText.length > 0 ? ` ${statusText}` : "";
         return new CliError({
-            message: `Failed to fetch "${url}": HTTP ${status} ${statusText}.`,
+            message: `Failed to fetch "${url}": HTTP ${status}${statusDescription}.`,
             code: CliError.Code.NetworkError,
             hint: "Check your network connection and verify the URL is correct."
         });
@@ -180,4 +181,4 @@ export const FernCliErrors = {
             docsLink: "https://github.com/fern-api/fern/issues/new"
         });
     }
-} as const;
+};

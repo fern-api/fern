@@ -16,9 +16,8 @@ export class WhoamiCommand {
         const activeAccount = await context.tokenService.getActiveAccountInfo();
         if (activeAccount == null) {
             if (args.json) {
-                // JSON consumers expect the error envelope on stdout; mirror
-                // the human render to stderr via the error boundary.
                 context.stdout.info(JSON.stringify({ user: null, loggedIn: false }, null, 2));
+                return;
             }
             throw FernCliErrors.AuthRequired({ message: "You are not logged in to Fern." });
         }

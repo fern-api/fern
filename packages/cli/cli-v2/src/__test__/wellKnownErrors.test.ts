@@ -51,6 +51,7 @@ describe("FernCliErrors", () => {
         expect(err.message).toContain("--container-engine");
         expect(err.message).toContain("--local");
         expect(err.hint).toContain("--local");
+        expect(err.hint).toContain("--container-engine");
     });
 
     it("MissingRequiredFlags renders the flags as an indented bullet list", () => {
@@ -63,10 +64,11 @@ describe("FernCliErrors", () => {
         expect(err.hint).toContain("--help");
     });
 
-    it("FileNotFound surfaces the path the user passed", () => {
+    it("FileNotFound surfaces the path the user passed and provides a hint", () => {
         const err = FernCliErrors.FileNotFound({ path: "./openapi.yml" });
         expect(err.code).toBe(CliError.Code.ConfigError);
         expect(err.message).toContain("./openapi.yml");
+        expect(err.hint).toContain("typos");
     });
 
     it("UnsupportedValue lists the supported set in the hint", () => {
@@ -77,6 +79,7 @@ describe("FernCliErrors", () => {
         });
         expect(err.code).toBe(CliError.Code.ConfigError);
         expect(err.message).toContain("cobol");
+        expect(err.hint).toContain("language values");
         expect(err.hint).toContain("typescript");
         expect(err.hint).toContain("python");
         expect(err.hint).toContain("go");
@@ -92,6 +95,13 @@ describe("FernCliErrors", () => {
         expect(err.message).toContain("https://example.com/spec");
         expect(err.message).toContain("503");
         expect(err.message).toContain("Service Unavailable");
+    });
+
+    it("HttpFetchFailed omits status text when the server returns an empty reason phrase", () => {
+        const err = FernCliErrors.HttpFetchFailed({ url: "https://example.com/spec", status: 500, statusText: "" });
+        expect(err.message).toContain("500");
+        expect(err.message).not.toContain("500 .");
+        expect(err.message).toMatch(/HTTP 500\.$/);
     });
 
     it("EmptyStdin points the user at piping", () => {
