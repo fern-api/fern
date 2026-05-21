@@ -26,6 +26,9 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
     /** Enables exploring readonly schemas in OpenAPI specifications. */
     respectReadonlySchemas: z.boolean().optional(),
 
+    /** If true, endpoint response types will use the Read variant of schemas when respect-readonly-schemas is enabled. Defaults to false. */
+    useReadVariantForResponses: z.boolean().optional(),
+
     /** Enables respecting forward compatible enums in OpenAPI specifications. Defaults to false. */
     respectForwardCompatibleEnums: z.boolean().optional(),
 

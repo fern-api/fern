@@ -123,6 +123,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         super({
             ...superArgs,
             respectReadonlySchemas: collapseSpecBooleanSetting(specs, (s) => s?.respectReadonlySchemas),
+            useReadVariantForResponses: collapseSpecBooleanSetting(specs, (s) => s?.useReadVariantForResponses),
             respectNullableSchemas: collapseSpecBooleanSetting(specs, (s) => s?.respectNullableSchemas),
             wrapReferencesToNullableInOptional: collapseSpecBooleanSetting(
                 specs,
