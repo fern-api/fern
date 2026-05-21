@@ -270,6 +270,7 @@ export async function publishDocsViaLedger({
         basepath: basepath ?? "",
         customDomains: customDomains ?? [],
         previewId: previewId ?? null,
+        defaultLocale: baseLocale.locale,
         locales
     };
 
