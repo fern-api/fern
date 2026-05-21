@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.35.3
+  changelogEntry:
+    - summary: |
+        Treat missing type declarations during IR generation as user reference errors instead of reportable resolver failures.
+      type: fix
+  createdAt: "2026-05-21"
+  irVersion: 66
 - version: 5.35.2
   changelogEntry:
     - summary: |
