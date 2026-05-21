@@ -468,7 +468,7 @@ export function ${functionName}(server: MockServer): void {
     ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
     ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
     server
-        .mockEndpoint()
+        .mockEndpoint({ once: false })
         .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders
             .filter((h) => h.value.jsonExample != null)
             .map((h) => {
@@ -534,7 +534,7 @@ export function ${functionName}(server: MockServer): void {
     ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
     ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
     server
-        .mockEndpoint()
+        .mockEndpoint({ once: false })
         .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders
             .filter((h) => h.value.jsonExample != null)
             .map((h) => {
@@ -2420,7 +2420,10 @@ function isPaginationCursorMissingInExample({
         case "offset":
             cursorProperty = pagination.hasNextPage;
             if (cursorProperty == null) {
-                return false;
+                // Without an explicit hasNextPage property:
+                // - With step: SDK uses items.length >= step, which may fail with mock data
+                // - Without step: SDK uses items.length > 0, which works if there are items
+                return pagination.step != null;
             }
             break;
         case "uri":

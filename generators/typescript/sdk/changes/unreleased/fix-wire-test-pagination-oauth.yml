@@ -1,0 +1,6 @@
+- summary: |
+    Make auth mock endpoints reusable in wire tests so paginated endpoints
+    with OAuth or inferred auth can call getNextPage() without ECONNREFUSED.
+    Skip offset-pagination assertions when step is defined but hasNextPage is
+    not, since mock data may not satisfy the items >= step check.
+  type: fix

@@ -6,7 +6,7 @@ export function mockOAuthScheme(server: MockServer): void {
     const rawRequestBody = { client_id: "client_id", client_secret: "client_secret", grant_type: "client_credentials" };
     const rawResponseBody = { access_token: "access_token", expires_in: 1 };
     server
-        .mockEndpoint()
+        .mockEndpoint({ once: false })
         .post("/token")
         .jsonBody(rawRequestBody)
         .respondWith()

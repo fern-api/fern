@@ -262,13 +262,7 @@ describe("UsersClient", () => {
             ],
         };
 
-        server
-            .mockEndpoint({ once: false })
-            .get("/users")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const expected = rawResponseBody;
         const page = await client.users.listWithOffsetStepPagination({
@@ -278,9 +272,6 @@ describe("UsersClient", () => {
         });
 
         expect(expected.data).toEqual(page.data);
-        expect(page.hasNextPage()).toBe(true);
-        const nextPage = await page.getNextPage();
-        expect(expected.data).toEqual(nextPage.data);
     });
 
     test("listWithOffsetPaginationHasNextPage (1)", async () => {

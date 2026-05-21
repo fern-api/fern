@@ -5,7 +5,7 @@ import type { MockServer } from "../mock-server/MockServer";
 export function mockInferredAuthScheme(server: MockServer): void {
     const rawResponseBody = { access_token: "access_token", token_type: "token_type", expires_in: 1, scope: "scope" };
     server
-        .mockEndpoint()
+        .mockEndpoint({ once: false })
         .post("/token")
         .header("X-Api-Key", "api_key")
         .respondWith()
