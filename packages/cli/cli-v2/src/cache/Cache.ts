@@ -5,6 +5,7 @@ import { FernRcSchemaLoader } from "../config/fern-rc/FernRcSchemaLoader.js";
 import { DocsPreviewCache } from "./docs-preview/index.js";
 import { IrCache } from "./ir/index.js";
 import { LogsCache } from "./logs/index.js";
+import { VersionsCache } from "./versions/index.js";
 
 const CACHE_VERSION = "v1";
 
@@ -26,9 +27,14 @@ const CACHE_VERSION = "v1";
  * │   │   └── v62/
  * │   ├── logs/
  * │   ├── migrations/
- * │   └── docs-preview/
- * │       ├── app-preview/      # Next.js docs bundle
- * │       └── preview/          # Legacy docs bundle
+ * │   ├── docs-preview/
+ * │   │   ├── app-preview/      # Next.js docs bundle
+ * │   │   └── preview/          # Legacy docs bundle
+ * │   └── versions/             # CLI binaries installed via `fern update`
+ * │       ├── 1.2.3/
+ * │       │   └── fern
+ * │       └── 1.2.4/
+ * │           └── fern
  * └── tmp/                     # Atomic write staging
  * ```
  *
@@ -46,6 +52,8 @@ export declare namespace Cache {
         logs: LogsCache.Stats;
         /** Docs preview cache statistics */
         docsPreview: DocsPreviewCache.Stats;
+        /** Versions cache statistics */
+        versions: VersionsCache.Stats;
     }
 
     /** Options for clearing cache entries */
@@ -56,6 +64,11 @@ export declare namespace Cache {
         logs?: boolean;
         /** Clear docs preview bundles */
         docsPreview?: boolean;
+        /**
+         * Clear installed CLI binaries from the versions cache. Opt-in only;
+         * `clear()` will never touch versions unless this is explicitly true.
+         */
+        versions?: boolean;
         /** Preview what would be cleared without actually deleting */
         dryRun?: boolean;
     }
@@ -76,6 +89,7 @@ export class Cache {
     public readonly ir: IrCache;
     public readonly logs: LogsCache;
     public readonly docsPreview: DocsPreviewCache;
+    public readonly versions: VersionsCache;
 
     /** Directory for downloaded generator migration packages. */
     public readonly migrations: { absoluteFilePath: AbsoluteFilePath };
@@ -93,6 +107,9 @@ export class Cache {
         this.logs = new LogsCache({ absoluteFilePath: join(this.getVersionedPath(), RelativeFilePath.of("logs")) });
         this.docsPreview = new DocsPreviewCache({
             absoluteFilePath: join(this.getVersionedPath(), RelativeFilePath.of("docs-preview"))
+        });
+        this.versions = new VersionsCache({
+            absoluteFilePath: join(this.getVersionedPath(), RelativeFilePath.of("versions"))
         });
         this.migrations = {
             absoluteFilePath: join(this.getVersionedPath(), RelativeFilePath.of("migrations"))
@@ -124,17 +141,25 @@ export class Cache {
         const irStats = await this.ir.getStats();
         const logsStats = await this.logs.getStats();
         const docsPreviewStats = await this.docsPreview.getStats();
+        const versionsStats = await this.versions.getStats();
 
         return {
-            totalSize: irStats.totalSize + logsStats.totalSize + docsPreviewStats.totalSize,
+            totalSize: irStats.totalSize + logsStats.totalSize + docsPreviewStats.totalSize + versionsStats.totalSize,
             ir: irStats,
             logs: logsStats,
-            docsPreview: docsPreviewStats
+            docsPreview: docsPreviewStats,
+            versions: versionsStats
         };
     }
 
     /**
-     * Clear cache entries. If no specific subsystem is specified, clears everything.
+     * Clear cache entries.
+     *
+     * - When no specific category is opted in (`ir`, `logs`, `docsPreview`),
+     *   clears `ir`, `logs`, and `docsPreview` but NOT `versions` (binaries
+     *   installed via `fern update` must be opted in explicitly).
+     * - When any subset is specified, only those categories are cleared.
+     * - `versions` is always opt-in regardless of other flags.
      */
     public async clear(options?: Cache.ClearOptions): Promise<Cache.ClearResult> {
         const dryRun = options?.dryRun ?? false;
@@ -142,7 +167,8 @@ export class Cache {
         let deletedCount = 0;
         let freedSize = 0;
 
-        const hasSpecificFilter = options?.ir != null || options?.logs != null || options?.docsPreview != null;
+        const hasSpecificFilter =
+            options?.ir != null || options?.logs != null || options?.docsPreview != null || options?.versions != null;
 
         const clearIr = options?.ir ?? !hasSpecificFilter;
         if (clearIr) {
@@ -163,6 +189,13 @@ export class Cache {
             const docsPreviewResult = await this.docsPreview.clear(dryRun);
             deletedCount += docsPreviewResult.deletedCount;
             freedSize += docsPreviewResult.freedSize;
+        }
+
+        const clearVersions = options?.versions ?? false;
+        if (clearVersions) {
+            const versionsResult = await this.versions.clear(dryRun);
+            deletedCount += versionsResult.deletedCount;
+            freedSize += versionsResult.freedSize;
         }
 
         return { deletedCount, freedSize, dryRun };

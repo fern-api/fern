@@ -10,6 +10,7 @@ export declare namespace ClearCommand {
         ir?: boolean;
         logs?: boolean;
         "docs-preview"?: boolean;
+        versions?: boolean;
         "dry-run"?: boolean;
     }
 }
@@ -20,12 +21,17 @@ export class ClearCommand {
 
         const dryRun = args["dry-run"] ?? false;
 
-        // If --all is specified or no specific flag is given, clear everything.
-        const clearAll = args.all || (!args.ir && !args.logs && !args["docs-preview"]);
+        // Default (no flags) clears `ir`, `logs`, and `docs-preview` but never
+        // `versions`. --all is opt-in for the destructive
+        // everything-including-installed-CLIs path.
+        const anyExplicit =
+            args.ir === true || args.logs === true || args["docs-preview"] === true || args.versions === true;
+        const clearAll = args.all === true;
         const clearOptions = {
-            ir: clearAll || args.ir,
-            logs: clearAll || args.logs,
-            docsPreview: clearAll || args["docs-preview"],
+            ir: clearAll || (anyExplicit ? args.ir === true : true),
+            logs: clearAll || (anyExplicit ? args.logs === true : true),
+            docsPreview: clearAll || (anyExplicit ? args["docs-preview"] === true : true),
+            versions: clearAll || (anyExplicit ? args.versions === true : false),
             dryRun
         };
 
@@ -61,7 +67,7 @@ export function addClearCommand(cli: Argv<GlobalArgs>): void {
             yargs
                 .option("all", {
                     type: "boolean",
-                    description: "Clear all cache entries (default behavior)",
+                    description: "Clear all cache entries including installed CLI versions",
                     default: false
                 })
                 .option("ir", {
@@ -77,6 +83,11 @@ export function addClearCommand(cli: Argv<GlobalArgs>): void {
                 .option("docs-preview", {
                     type: "boolean",
                     description: "Clear only docs preview bundles",
+                    default: false
+                })
+                .option("versions", {
+                    type: "boolean",
+                    description: "Clear only installed CLI versions from the versions cache",
                     default: false
                 })
                 .option("dry-run", {
