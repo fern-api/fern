@@ -56,4 +56,13 @@ describe("expandFernignorePatterns", () => {
 
         expect(preserved).toEqual(["src/.hidden.py", "src/visible.py"]);
     });
+
+    it("expands extglob patterns through minimatch", () => {
+        const fernignore = "src/+(foo|bar)/**";
+        const tracked = ["src/foo/a.py", "src/bar/b.py", "src/baz/c.py"];
+
+        const preserved = expandFernignorePatterns(fernignore, tracked);
+
+        expect([...preserved].sort()).toEqual(["src/bar/b.py", "src/foo/a.py"].sort());
+    });
 });
