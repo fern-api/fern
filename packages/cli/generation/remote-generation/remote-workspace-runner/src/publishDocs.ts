@@ -29,6 +29,7 @@ import * as mime from "mime-types";
 import { basename } from "path";
 import terminalLink from "terminal-link";
 import { buildTranslatedDocsDefinition } from "./buildTranslatedDocsDefinition.js";
+import { createGzipFetch, gzipJsonBody } from "./compressedFetch.js";
 import { getDocsDeployMode } from "./docsDeployMode.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { measureImageSizes } from "./measureImageSizes.js";
@@ -209,10 +210,17 @@ export async function publishDocs({
         context.logger.info(`Docs deploy mode: ${deployMode}`);
     }
 
+    // Capture a gzip-compressing fetch into the oRPC client so all FDR
+    // requests with a body are transparently compressed.  LinkFetchClient
+    // snapshots globalThis.fetch at construction time, so we swap it in
+    // before building the client and restore immediately after.
+    const savedFetch = globalThis.fetch;
+    globalThis.fetch = createGzipFetch();
     const fdr = createFdrService({
         token: token.value,
         ...(Object.keys(headers).length > 0 && { headers })
     });
+    globalThis.fetch = savedFetch;
     const authConfig = { type: "public" as const };
 
     if (excludeApis) {
@@ -883,24 +891,28 @@ export async function publishDocs({
                         );
                         // Use a raw fetch instead of the oRPC client to send `docsDefinition`
                         // (the live server expects that field; the published fdr-sdk still uses `content`).
+                        const translationPayload = {
+                            domain: translationDomain,
+                            // Send customDomains in production so FDR fans the translation
+                            // S3 write out across every URL the docs are published to.
+                            // Skipped in preview because preview deploys to a single
+                            // ephemeral URL with no custom-domain mirrors.
+                            customDomains: preview ? [] : customDomains,
+                            orgId: organization,
+                            locale,
+                            docsDefinition: translatedDefinition
+                        };
+                        const compressed = await gzipJsonBody(translationPayload);
                         const translationResponse = await fetch(`${fdrOrigin}/v2/registry/docs/translations/register`, {
                             method: "POST",
                             headers: {
-                                "Content-Type": "application/json",
+                                ...compressed.headers,
                                 Authorization: `Bearer ${token.value}`,
                                 ...headers // Include telemetry headers (X-CLI-Version, X-CI-Source, etc.)
                             },
-                            body: JSON.stringify({
-                                domain: translationDomain,
-                                // Send customDomains in production so FDR fans the translation
-                                // S3 write out across every URL the docs are published to.
-                                // Skipped in preview because preview deploys to a single
-                                // ephemeral URL with no custom-domain mirrors.
-                                customDomains: preview ? [] : customDomains,
-                                orgId: organization,
-                                locale,
-                                docsDefinition: translatedDefinition
-                            })
+                            body: compressed.body,
+                            // @ts-expect-error duplex required for streaming request bodies in Node.js
+                            duplex: "half"
                         });
                         if (!translationResponse.ok) {
                             const body = await translationResponse.text();
