@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { CliError, TaskAbortSignal } from "@fern-api/task-context";
 import chalk from "chalk";
 
@@ -89,7 +90,7 @@ export function renderError(error: unknown, options: RenderErrorOptions = {}): s
     if (error instanceof SourcedValidationError) {
         return renderEnvelope({
             code: error.code,
-            title: titleForCode(error.code, "Validation failed"),
+            title: titleForCode(error.code),
             detail: formatIssues(error.issues),
             hint: error.hint,
             docsLink: error.docsLink,
@@ -101,7 +102,7 @@ export function renderError(error: unknown, options: RenderErrorOptions = {}): s
     if (error instanceof ValidationError) {
         return renderEnvelope({
             code: error.code,
-            title: titleForCode(error.code, "Validation failed"),
+            title: titleForCode(error.code),
             detail: formatViolations(error.violations.map(toFormattableViolation)),
             hint: error.hint,
             docsLink: error.docsLink,
@@ -125,7 +126,7 @@ export function renderError(error: unknown, options: RenderErrorOptions = {}): s
     if (error instanceof CliError) {
         return renderEnvelope({
             code: error.code,
-            title: firstLine(error.message) ?? titleForCode(error.code, "Command failed"),
+            title: firstLine(error.message) ?? titleForCode(error.code),
             detail: restAfterFirstLine(error.message),
             hint: error.hint,
             docsLink: error.docsLink,
@@ -227,7 +228,7 @@ function restAfterFirstLine(text: string | undefined): string | undefined {
     return rest.length > 0 ? rest : undefined;
 }
 
-function titleForCode(code: CliError.Code, fallback: string): string {
+function titleForCode(code: CliError.Code): string {
     switch (code) {
         case "VALIDATION_ERROR":
             return "Validation failed";
@@ -253,8 +254,10 @@ function titleForCode(code: CliError.Code, fallback: string): string {
             return "Version mismatch";
         case "USER_ERROR":
             return "Invalid usage";
+        case "INTERNAL_ERROR":
+            return "Internal error";
         default:
-            return fallback;
+            assertNever(code);
     }
 }
 
@@ -315,7 +318,7 @@ function buildErrorEnvelope(error: unknown, options: RenderErrorOptions): ErrorE
 
     if (error instanceof SourcedValidationError) {
         base.code = error.code;
-        base.message = error.message || titleForCode(error.code, "Validation failed");
+        base.message = error.message || titleForCode(error.code);
         if (error.hint != null) {
             base.hint = error.hint;
         }
@@ -334,7 +337,7 @@ function buildErrorEnvelope(error: unknown, options: RenderErrorOptions): ErrorE
         });
     } else if (error instanceof ValidationError) {
         base.code = error.code;
-        base.message = error.message || titleForCode(error.code, "Validation failed");
+        base.message = error.message || titleForCode(error.code);
         if (error.hint != null) {
             base.hint = error.hint;
         }
@@ -356,7 +359,7 @@ function buildErrorEnvelope(error: unknown, options: RenderErrorOptions): ErrorE
         });
     } else if (error instanceof CliError) {
         base.code = error.code;
-        base.message = error.message || titleForCode(error.code, "Command failed");
+        base.message = error.message || titleForCode(error.code);
         if (error.hint != null) {
             base.hint = error.hint;
         }
