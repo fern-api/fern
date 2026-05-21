@@ -1,0 +1,48 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/invoices",
+                "method": "GET",
+                "identifier_override": "endpoint_.listInvoices"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/cli-multi-spec/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.ListInvoices(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/invoices/{invoiceId}",
+                "method": "GET",
+                "identifier_override": "endpoint_.getInvoice"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/cli-multi-spec/fern\"\n\tfernclient \"github.com/cli-multi-spec/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.GetInvoice(\n\tcontext.TODO(),\n\t\u0026fern.GetInvoiceRequest{\n\t\tInvoiceID: \"invoiceId\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_.listUsers"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/cli-multi-spec/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.ListUsers(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_.getUser"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/cli-multi-spec/fern\"\n\tfernclient \"github.com/cli-multi-spec/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.GetUser(\n\tcontext.TODO(),\n\t\u0026fern.GetUserRequest{\n\t\tUserID: \"userId\",\n\t},\n)\n"
+            }
+        }
+    ]
+}
