@@ -3,7 +3,10 @@ import { minimatch } from "minimatch";
 const GLOB_CHARS = /[*?[\]{}!]/;
 
 export function expandFernignorePatterns(fernignoreContent: string, candidatePaths: string[]): string[] {
-    const patterns = fernignoreContent.split("\n");
+    const patterns = fernignoreContent
+        .split("\n")
+        .map((line) => line.trim())
+        .filter((line) => line.length > 0 && !line.startsWith("#"));
     return candidatePaths.filter((candidate) => patterns.some((pattern) => matches(candidate, pattern)));
 }
 
