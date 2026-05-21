@@ -12,19 +12,20 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 
 /**
- * Builds a map from pageId to slug from a navigation root node.
+ * Builds a map from pageId to all slugs for that page from a navigation root node.
  *
- * This mirrors how FDR's slug table stores page → URL mappings and should be
- * used by both the server (when populating the slug table on publish) and the
- * CLI (when building the local "after" state for the missing-redirects check).
+ * A single pageId can appear under multiple slugs when the same file is referenced
+ * across different versions or navigation sections. The returned Set per pageId
+ * captures all such slugs so that the missing-redirects check does not produce
+ * false positives for intentionally duplicated version content.
  *
  * Changelog entries are special-cased: they map to their parent changelog
  * node's slug rather than their own individual entry slug, because individual
  * changelog entries are rendered on the parent changelog page.
  */
-export function buildPageIdToSlugMap(root: FernNavigation.NavigationNode): Map<string, string> {
+export function buildPageIdToSlugMap(root: FernNavigation.NavigationNode): Map<string, Set<string>> {
     const collector = FernNavigation.NodeCollector.collect(root);
-    const pageIdToSlug = new Map<string, string>();
+    const pageIdToSlugs = new Map<string, Set<string>>();
     for (const entry of collector.getSlugMapWithParents().values()) {
         const { node, parents } = entry;
         if (!FernNavigation.isPage(node)) {
@@ -41,7 +42,12 @@ export function buildPageIdToSlugMap(root: FernNavigation.NavigationNode): Map<s
                 slug = changelogParent.canonicalSlug ?? changelogParent.slug;
             }
         }
-        pageIdToSlug.set(pageId, slug);
+        const existing = pageIdToSlugs.get(pageId);
+        if (existing != null) {
+            existing.add(slug);
+        } else {
+            pageIdToSlugs.set(pageId, new Set([slug]));
+        }
     }
-    return pageIdToSlug;
+    return pageIdToSlugs;
 }
