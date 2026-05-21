@@ -1,0 +1,5 @@
+- summary: |
+    Emit `.fern/resolve-lockfile.sh` for GitHub output mode so the
+    PostGenerationPipeline can re-resolve `poetry.lock` after replay
+    patches or `.fernignore`-preserved files modify `pyproject.toml`.
+  type: fix

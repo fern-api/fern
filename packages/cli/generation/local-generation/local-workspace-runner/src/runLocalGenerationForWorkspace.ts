@@ -425,6 +425,7 @@ export async function runLocalGenerationForWorkspace({
                             replay: githubPipelineEnabled
                                 ? { enabled: replay?.enabled === true, skipApplication: noReplay, stageOnly: false }
                                 : undefined,
+                            lockfileResolution: { enabled: true },
                             verify: { enabled: verify === true, runner },
                             github:
                                 githubPipelineEnabled && selfhostedGithubConfig != null

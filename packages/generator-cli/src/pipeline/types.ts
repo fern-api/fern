@@ -5,6 +5,7 @@ export interface PipelineConfig {
     replay?: ReplayStepConfig;
     autoVersion?: AutoVersionStepConfig;
     fernignore?: FernignoreStepConfig; // PHASE 2: not implemented yet
+    lockfileResolution?: LockfileResolutionStepConfig;
     verify?: VerifyStepConfig;
     github?: GithubStepConfig;
 
@@ -20,6 +21,7 @@ export interface PipelineContext {
         replay?: ReplayStepResult;
         autoVersion?: AutoVersionStepResult;
         fernignore?: FernignoreStepResult;
+        lockfileResolution?: LockfileResolutionStepResult;
         verify?: VerificationStepResult;
     };
 }
@@ -96,6 +98,10 @@ export interface FernignoreStepConfig {
     customContents?: string;
 }
 
+export interface LockfileResolutionStepConfig {
+    enabled: boolean;
+}
+
 export interface VerifyStepConfig {
     enabled: boolean;
     /** Container runtime to use. Defaults to "docker". */
@@ -165,6 +171,7 @@ export interface PipelineResult {
         replay?: ReplayStepResult;
         autoVersion?: AutoVersionStepResult;
         fernignore?: FernignoreStepResult;
+        lockfileResolution?: LockfileResolutionStepResult;
         verify?: VerificationStepResult;
         github?: GithubStepResult;
     };
@@ -223,6 +230,11 @@ export interface ReplayStepResult extends StepResult {
         }>;
     }>;
     warnings?: string[];
+}
+
+export interface LockfileResolutionStepResult extends StepResult {
+    /** True when no `.fern/resolve-lockfile.sh` was emitted by the generator — the step short-circuits silently. */
+    skipped: boolean;
 }
 
 export interface FernignoreStepResult extends StepResult {

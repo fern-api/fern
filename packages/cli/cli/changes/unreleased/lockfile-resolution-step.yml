@@ -1,0 +1,5 @@
+- summary: |
+    Add `LockfileResolutionStep` to `PostGenerationPipeline` that runs
+    `.fern/resolve-lockfile.sh` after ReplayStep, ensuring lockfiles
+    reflect any dependency changes introduced by replay patches.
+  type: fix

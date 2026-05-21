@@ -222,6 +222,7 @@ class AbstractGenerator(ABC):
             publisher.run_poetry_lock()
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
+            self._write_resolve_lockfile_script(generator_config)
         elif output_mode_union.type == "publish":
             publisher.run_poetry_lock()
             publisher.run_ruff_check_fix()
@@ -238,6 +239,27 @@ class AbstractGenerator(ABC):
     def _clean_organization_name(self, organization: str) -> str:
         # Replace non-alphanumeric characters with underscores
         return re.sub("[^a-zA-Z0-9]", "_", organization)
+
+    def _write_resolve_lockfile_script(self, generator_config: GeneratorConfig) -> None:
+        """Emit .fern/resolve-lockfile.sh so the PostGenerationPipeline can
+        re-resolve the lockfile after replay patches or .fernignore restoration
+        may have modified pyproject.toml."""
+        output_path = generator_config.output.path
+        fern_dir = os.path.join(output_path, ".fern")
+        os.makedirs(fern_dir, exist_ok=True)
+        script_path = os.path.join(fern_dir, "resolve-lockfile.sh")
+        with open(script_path, "w") as f:
+            f.write(
+                textwrap.dedent(
+                    """\
+                    #!/usr/bin/env bash
+                    set -euo pipefail
+                    cd "$(dirname "$0")/.."
+                    poetry lock --no-update
+                    """
+                )
+            )
+        os.chmod(script_path, 0o755)
 
     def _get_github_publish_config(
         self, generator_config: GeneratorConfig, output_mode: GithubOutputMode
