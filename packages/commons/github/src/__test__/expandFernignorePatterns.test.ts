@@ -38,4 +38,13 @@ describe("expandFernignorePatterns", () => {
 
         expect(preserved).toEqual(["src/foo/a.py"]);
     });
+
+    it("matches dotfiles when expanded by a glob", () => {
+        const fernignore = "src/**";
+        const tracked = ["src/.hidden.py", "src/visible.py"];
+
+        const preserved = expandFernignorePatterns(fernignore, tracked);
+
+        expect(preserved).toEqual(["src/.hidden.py", "src/visible.py"]);
+    });
 });
