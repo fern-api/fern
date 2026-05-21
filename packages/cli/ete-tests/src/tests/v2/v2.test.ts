@@ -67,7 +67,8 @@ describe("fern check", () => {
                 cwd: fixture.path,
                 expectError: true
             });
-            expect(result.exitCode).toBe(1);
+            // sysexits-style: validation failures exit with EX_DATAERR=65.
+            expect(result.exitCode).toBe(65);
             expect(result.stdout).toBe("");
             expect(result.stderr).toContain("fern.yml:1:6: org must be a string");
         } finally {
@@ -105,7 +106,8 @@ describe("fern check", () => {
                 cwd: fixture.path,
                 expectError: true
             });
-            expect(result.exitCode).toBe(1);
+            // sysexits-style: user-config failures (unknown API) exit with EX_CONFIG=78.
+            expect(result.exitCode).toBe(78);
             expect(result.stderr).toContain("API 'nonexistent' not found");
             expect(result.stderr).toContain("Available APIs:");
             expect(result.stderr).toContain("api");

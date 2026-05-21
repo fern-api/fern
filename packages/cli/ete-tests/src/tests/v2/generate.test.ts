@@ -62,7 +62,8 @@ describe("fern sdk generate", () => {
                 expectError: true,
                 timeout: 60_000
             });
-            expect(result.exitCode).toBe(1);
+            // sysexits-style: user-config failures exit with EX_CONFIG=78.
+            expect(result.exitCode).toBe(78);
         });
     });
 
