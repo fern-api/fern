@@ -6,6 +6,7 @@ import path from "path";
 import { Readable } from "stream";
 import { FETCH_API_SPEC_REQUEST_TIMEOUT_MS } from "../../constants.js";
 import type { Context } from "../../context/Context.js";
+import { FernCliErrors } from "../../errors/wellKnown/CliErrors.js";
 import { isStdioMarker, readInput, STDIO_MARKER } from "../../io/stdio.js";
 import type { ApiSpec, ApiSpecType } from "../config/ApiSpec.js";
 import { ApiSpecDetector } from "./ApiSpecDetector.js";
@@ -53,10 +54,7 @@ export class ApiSpecResolver {
     private async resolveStdin({ stdin }: { stdin?: Readable }): Promise<ApiSpecResolver.Result> {
         const content = await readInput(STDIO_MARKER, { stdin });
         if (content.trim().length === 0) {
-            throw new CliError({
-                message: 'No input received on stdin (--api "-").',
-                code: CliError.Code.ConfigError
-            });
+            throw FernCliErrors.EmptyStdin();
         }
         const extension = this.inferExtensionFromContent(content);
         const tempDir = await mkdtemp(path.join(tmpdir(), "fern-"));
@@ -95,10 +93,7 @@ export class ApiSpecResolver {
     private async resolveLocal({ reference }: { reference: string }): Promise<ApiSpecResolver.Result> {
         const absoluteFilePath = resolve(this.context.cwd, reference);
         if (!(await doesPathExist(absoluteFilePath))) {
-            throw new CliError({
-                message: `API spec file does not exist: ${reference}`,
-                code: CliError.Code.ConfigError
-            });
+            throw FernCliErrors.FileNotFound({ path: reference });
         }
 
         const content = await readFile(absoluteFilePath, "utf-8");
@@ -113,9 +108,10 @@ export class ApiSpecResolver {
     private async fetchContent({ url }: { url: string }): Promise<{ content: string; contentType: string }> {
         const response = await fetch(url, { signal: AbortSignal.timeout(FETCH_API_SPEC_REQUEST_TIMEOUT_MS) });
         if (!response.ok) {
-            throw new CliError({
-                message: `Failed to fetch "${url}": HTTP ${response.status} ${response.statusText}`,
-                code: CliError.Code.NetworkError
+            throw FernCliErrors.HttpFetchFailed({
+                url,
+                status: response.status,
+                statusText: response.statusText
             });
         }
         const contentType = response.headers.get("content-type") ?? "";

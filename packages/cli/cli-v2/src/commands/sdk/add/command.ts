@@ -10,6 +10,7 @@ import { FERN_YML_FILENAME } from "../../../config/fern-yml/constants.js";
 import { FernYmlEditor } from "../../../config/fern-yml/FernYmlEditor.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
+import { FernCliErrors } from "../../../errors/wellKnown/CliErrors.js";
 import { SdkChecker } from "../../../sdk/checker/SdkChecker.js";
 import { LANGUAGE_TO_DOCKER_IMAGE } from "../../../sdk/config/converter/constants.js";
 import { LANGUAGE_DISPLAY_NAMES, LANGUAGE_ORDER, LANGUAGES, type Language } from "../../../sdk/config/Language.js";
@@ -45,10 +46,7 @@ export class AddCommand {
 
         const fernYmlPath = workspace.absoluteFilePath;
         if (fernYmlPath == null) {
-            throw new CliError({
-                message: `No ${FERN_YML_FILENAME} found. Run 'fern init' to initialize a project.`,
-                code: CliError.Code.ConfigError
-            });
+            throw FernCliErrors.FernYmlNotFound({ cwd: context.cwd });
         }
 
         const sdkChecker = new SdkChecker({ context });
@@ -78,9 +76,8 @@ export class AddCommand {
         existingTargets: Target[];
     }): Promise<void> {
         if (args.target == null) {
-            throw new CliError({
-                message: `Missing required flags:\n\n  --target <language>    SDK language (e.g. typescript, python, go)`,
-                code: CliError.Code.ConfigError
+            throw FernCliErrors.MissingRequiredFlags({
+                missing: ["--target <language>    SDK language (e.g. typescript, python, go)"]
             });
         }
 
@@ -183,7 +180,8 @@ export class AddCommand {
         if (existingTargets.some((t) => t.name === language)) {
             throw new CliError({
                 message: `Target '${language}' already exists in ${FERN_YML_FILENAME}.`,
-                code: CliError.Code.ConfigError
+                code: CliError.Code.ConfigError,
+                hint: `Remove the existing '${language}' target before re-adding, or use \`fern sdk update\`.`
             });
         }
     }
@@ -251,10 +249,7 @@ export class AddCommand {
         if (LANGUAGES.includes(lang)) {
             return lang;
         }
-        throw new CliError({
-            message: `"${target}" is not a supported language. Supported: ${LANGUAGES.join(", ")}`,
-            code: CliError.Code.ConfigError
-        });
+        throw FernCliErrors.UnsupportedValue({ what: "language", value: target, supported: LANGUAGES });
     }
 }
 

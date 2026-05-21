@@ -17,6 +17,7 @@ import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { formatViolations } from "../../../errors/printViolations.js";
 import { SourcedValidationError } from "../../../errors/SourcedValidationError.js";
+import { FernCliErrors } from "../../../errors/wellKnown/CliErrors.js";
 import { isStdioMarker, StdioMarkerGuard } from "../../../io/stdio.js";
 import { SdkChecker } from "../../../sdk/checker/SdkChecker.js";
 import { LANGUAGES, type Language } from "../../../sdk/config/Language.js";
@@ -384,28 +385,20 @@ export class GenerateCommand {
         targets: Target[];
     }): void {
         if (args["container-engine"] != null && !args.local) {
-            throw new CliError({
-                message: "The --container-engine flag can only be used with --local",
-                code: CliError.Code.ConfigError
-            });
+            throw FernCliErrors.FlagRequires({ flag: "--container-engine", requires: "--local" });
         }
         if (args.group != null && args.target != null) {
-            throw new CliError({
-                message: "The --group and --target flags cannot be used together",
-                code: CliError.Code.ConfigError
-            });
+            throw FernCliErrors.FlagsMutex({ a: "--group", b: "--target" });
         }
         if (targets.length > 1 && args.output != null) {
             throw new CliError({
-                message: "The --output flag can only be used when generating a single target",
-                code: CliError.Code.ConfigError
+                message: "The --output flag can only be used when generating a single target.",
+                code: CliError.Code.ConfigError,
+                hint: "Narrow your selection with --group or --target, or omit --output to write per-target."
             });
         }
         if (args["skip-fernignore"] && args.fernignore != null) {
-            throw new CliError({
-                message: "The --skip-fernignore and --fernignore flags cannot be used together.",
-                code: CliError.Code.ConfigError
-            });
+            throw FernCliErrors.FlagsMutex({ a: "--skip-fernignore", b: "--fernignore" });
         }
         const issues: ValidationIssue[] = [];
         if (args.local) {
