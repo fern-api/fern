@@ -120,6 +120,12 @@ function createCliV2(argv?: string[]): Argv<GlobalArgs> {
             description: "Show full stack traces and error cause chains (also: FERN_DEBUG=1)",
             default: false
         })
+        .option("json", {
+            type: "boolean",
+            description:
+                "Render errors as JSON on stderr (for CI/agents). Commands that support --json for success output already accept this flag.",
+            default: false
+        })
         .option("env", {
             type: "string",
             description: "Path to a .env file to load environment variables from"
