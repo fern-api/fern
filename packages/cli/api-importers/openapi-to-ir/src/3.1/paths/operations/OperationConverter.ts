@@ -73,13 +73,14 @@ export class OperationConverter extends AbstractOperationConverter {
         operation,
         method,
         path,
+        pathItemParameters,
         idempotent,
         idToAuthScheme,
         topLevelServers,
         pathLevelServers,
         streamingExtension
     }: OperationConverter.Args) {
-        super({ context, breadcrumbs, operation, method, path });
+        super({ context, breadcrumbs, operation, method, path, pathItemParameters });
         this.idempotent = idempotent;
         this.idToAuthScheme = idToAuthScheme;
         this.topLevelServers = topLevelServers;
@@ -324,12 +325,13 @@ export class OperationConverter extends AbstractOperationConverter {
     }: {
         breadcrumbs: string[];
     }): Record<string, Set<string>> | undefined {
-        if (this.operation.parameters == null) {
+        const mergedParameters = this.mergeParameters(this.pathItemParameters, this.operation.parameters ?? []);
+        if (mergedParameters.length === 0) {
             return undefined;
         }
         const audiencesByQueryParameter: Record<string, Set<string>> = {};
         let foundAny = false;
-        for (const parameter of this.operation.parameters) {
+        for (const parameter of mergedParameters) {
             const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.ParameterObject>({
                 schemaOrReference: parameter,
                 breadcrumbs,
