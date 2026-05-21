@@ -36,6 +36,7 @@
       },
       "response": {
         "description": "Server-sent events stream",
+        "resumable": false,
         "fullExamples": [],
         "schema": {
           "generatedName": "SseStreamResponse",

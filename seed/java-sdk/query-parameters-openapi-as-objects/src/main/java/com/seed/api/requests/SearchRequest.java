@@ -5,9 +5,9 @@ package com.seed.api.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -107,17 +107,17 @@ public final class SearchRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonIgnore
+    @JsonProperty("userList")
     public Optional<List<User>> getUserList() {
         return userList;
     }
 
-    @JsonIgnore
+    @JsonProperty("excludeUser")
     public Optional<List<User>> getExcludeUser() {
         return excludeUser;
     }
 
-    @JsonIgnore
+    @JsonProperty("filter")
     public Optional<List<String>> getFilter() {
         return filter;
     }
@@ -125,7 +125,7 @@ public final class SearchRequest {
     /**
      * @return List of tags. Serialized as a comma-separated list.
      */
-    @JsonIgnore
+    @JsonProperty("tags")
     public Optional<List<String>> getTags() {
         return tags;
     }
@@ -133,72 +133,72 @@ public final class SearchRequest {
     /**
      * @return Optional list of tags. Serialized as a comma-separated list.
      */
-    @JsonIgnore
+    @JsonProperty("optionalTags")
     public Optional<List<String>> getOptionalTags() {
         return optionalTags;
     }
 
-    @JsonIgnore
+    @JsonProperty("limit")
     public int getLimit() {
         return limit;
     }
 
-    @JsonIgnore
+    @JsonProperty("id")
     public String getId() {
         return id;
     }
 
-    @JsonIgnore
+    @JsonProperty("date")
     public String getDate() {
         return date;
     }
 
-    @JsonIgnore
+    @JsonProperty("deadline")
     public OffsetDateTime getDeadline() {
         return deadline;
     }
 
-    @JsonIgnore
+    @JsonProperty("bytes")
     public String getBytes() {
         return bytes;
     }
 
-    @JsonIgnore
+    @JsonProperty("user")
     public User getUser() {
         return user;
     }
 
-    @JsonIgnore
+    @JsonProperty("optionalDeadline")
     public Optional<OffsetDateTime> getOptionalDeadline() {
         return optionalDeadline;
     }
 
-    @JsonIgnore
+    @JsonProperty("keyValue")
     public Optional<Map<String, String>> getKeyValue() {
         return keyValue;
     }
 
-    @JsonIgnore
+    @JsonProperty("optionalString")
     public Optional<String> getOptionalString() {
         return optionalString;
     }
 
-    @JsonIgnore
+    @JsonProperty("nestedUser")
     public Optional<NestedUser> getNestedUser() {
         return nestedUser;
     }
 
-    @JsonIgnore
+    @JsonProperty("optionalUser")
     public Optional<User> getOptionalUser() {
         return optionalUser;
     }
 
-    @JsonIgnore
+    @JsonProperty("neighbor")
     public Optional<SearchRequestNeighbor> getNeighbor() {
         return neighbor;
     }
 
-    @JsonIgnore
+    @JsonProperty("neighborRequired")
     public SearchRequestNeighborRequired getNeighborRequired() {
         return neighborRequired;
     }

@@ -24,7 +24,7 @@ function createMockContext(): TaskContext {
             throw new Error(message ?? "Task failed");
         },
         failWithoutThrowing: noop,
-        captureException: noop,
+        captureException: () => undefined,
         getResult: () => TaskResult.Success,
         getLastFailureMessage: () => undefined,
         addInteractiveTask: () => {
@@ -84,6 +84,7 @@ function createMinimalIR(overrides?: {
         title: undefined,
         description: undefined,
         basePath: undefined,
+        basePathParameters: undefined,
         servers: [],
         websocketServers: [],
         groups: {},

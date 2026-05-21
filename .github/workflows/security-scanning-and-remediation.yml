@@ -7,10 +7,12 @@ name: Create PRs to Remediate vulns
 #    - Fetches open Dependabot alerts from GitHub
 #    - Creates PRs for each alert with instructions for Devin AI
 #
-# 2. Grype Container Scan (create-grype-pr-{CONTAINER_NAME} jobs)
-#    - Builds the Docker container
-#    - Scans it with grype for OS and package vulnerabilities
-#    - Creates a PR if actionable vulnerabilities are found
+# 2. Grype Container Scans (matrix jobs)
+#    - create-grype-pr-generators: scans every published
+#      fernapi/fern-* generator image
+#    - create-grype-pr-seed: scans every fernapi/*-seed image
+#    - Each entry builds the container, scans it with grype, and
+#      creates a PR if actionable vulnerabilities are found.
 #
 # TOKEN REQUIREMENTS:
 # - FERN_GITHUB_TOKEN: PAT with `security_events` scope for Dependabot alerts
@@ -128,6 +130,21 @@ jobs:
             const repo = context.repo.repo;
             const baseBranch = 'main';
 
+            // Sanitize text from upstream advisories (GHSA, NVD) so that
+            // @-mentions embedded in third-party descriptions do not auto-tag
+            // unrelated GitHub users when rendered in PR bodies.
+            const ALLOWED_MENTIONS = new Set(['devin-ai-integration', 'davidkonigsberg']);
+            const sanitizeMentions = (text) => {
+              if (text == null) return text;
+              return String(text).replace(
+                /(^|[^A-Za-z0-9`])@([A-Za-z0-9](?:[A-Za-z0-9-]{0,38})?)/g,
+                (match, pre, handle) =>
+                  ALLOWED_MENTIONS.has(handle.toLowerCase())
+                    ? match
+                    : `${pre}\`@${handle}\``
+              );
+            };
+
             const alertsFile = process.env.ALERTS_FILE;
             const alerts = fs.existsSync(alertsFile)
               ? JSON.parse(fs.readFileSync(alertsFile, 'utf8'))
@@ -236,8 +253,8 @@ jobs:
               const patchedVersions = alert.security_vulnerability?.first_patched_version?.identifier || 'No patch available';
               const cveId = alert.security_advisory?.cve_id || 'N/A';
               const ghsaId = alert.security_advisory?.ghsa_id || 'N/A';
-              const summary = alert.security_advisory?.summary || 'No summary available';
-              const description = alert.security_advisory?.description || 'No description available';
+              const summary = sanitizeMentions(alert.security_advisory?.summary) || 'No summary available';
+              const description = sanitizeMentions(alert.security_advisory?.description) || 'No description available';
               const manifestPath = alert.dependency?.manifest_path || 'unknown';
 
               const branchName = `dependabot-alert-${alert.number}-devin`;
@@ -362,18 +379,74 @@ jobs:
 
   # ============================================================
   # GRYPE CONTAINER VULNERABILITY SCANS
-  # Builds the Docker containers and scans them with grype for
-  # OS-level and package vulnerabilities.
+  #
+  # Two matrix jobs scan every container we publish:
+  #   - create-grype-pr-generators: fernapi/fern-* generator images
+  #     (built via the seed `img` command, which uses each
+  #     generator's `publish.docker` / `test.docker` config to
+  #     run any required pre-build steps).
+  #   - create-grype-pr-seed: fernapi/*-seed images (built
+  #     directly from docker/seed/Dockerfile.<lang>).
+  #
+  # Each matrix entry runs in parallel with `fail-fast: false`
+  # so a single broken build does not stop the rest of the scans.
+  #
+  # Adding a new container: append a new entry to the relevant
+  # matrix list. `image` is the docker image name we scan, `seed`
+  # is the seed workspace name (folder under /seed), and
+  # `container` is the slug used in the resulting PR title and
+  # branch name.
   # ============================================================
 
-  create-grype-pr-java-sdk:
-    name: Run grype scan - java SDK
+  create-grype-pr-generators:
+    name: Run grype scan - ${{ matrix.generator.image }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: write
       pull-requests: write
-    timeout-minutes: 30
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        generator:
+          - image: fernapi/fern-csharp-sdk
+            seed: csharp-sdk
+            container: csharp-sdk
+          - image: fernapi/fern-go-sdk
+            seed: go-sdk
+            container: go-sdk
+          - image: fernapi/fern-java-sdk
+            seed: java-sdk
+            container: java-sdk
+          - image: fernapi/fern-openapi
+            seed: openapi
+            container: openapi
+          - image: fernapi/fern-php-sdk
+            seed: php-sdk
+            container: php-sdk
+          - image: fernapi/fern-pydantic-model-v2
+            seed: pydantic-v2
+            container: pydantic-model-v2
+          - image: fernapi/fern-python-sdk
+            seed: python-sdk
+            container: python-sdk
+          # Builds the fernapi/fern-ruby-sdk image (also tagged
+          # fernapi/fern-ruby-sdk-v2 via the seed config alias).
+          - image: fernapi/fern-ruby-sdk
+            seed: ruby-sdk-v2
+            container: ruby-sdk
+          - image: fernapi/fern-rust-sdk
+            seed: rust-sdk
+            container: rust-sdk
+          - image: fernapi/fern-swift-sdk
+            seed: swift-sdk
+            container: swift-sdk
+          # Builds the fernapi/fern-typescript-sdk image (also
+          # tagged fernapi/fern-typescript-node-sdk via alias).
+          - image: fernapi/fern-typescript-sdk
+            seed: ts-sdk
+            container: typescript-sdk
     steps:
       - uses: actions/checkout@v6
         with:
@@ -388,58 +461,171 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Build the Java SDK distribution tar (Gradle)
+      - name: Build seed CLI
+        run: pnpm seed:build
+
+      - name: Build generator container via seed img
         run: |
-          cd generators/java
           for attempt in 1 2 3; do
-            if ./gradlew :sdk:distTar; then
+            if node --enable-source-maps packages/seed/dist/cli.cjs img "${{ matrix.generator.seed }}" --tag 99.99.99 --log-level debug; then
               exit 0
             fi
-            echo "::warning::Gradle build attempt $attempt/3 failed. Retrying in 15 seconds..."
+            echo "::warning::seed img attempt $attempt/3 failed. Retrying in 15 seconds..."
             sleep 15
           done
-          echo "::error::Gradle build failed after 3 attempts"
+          echo "::error::seed img failed after 3 attempts"
           exit 1
 
-      - name: Build the Java v2 SDK CLI (TypeScript/Node)
-        run: pnpm turbo run dist:cli --filter @fern-api/java-sdk
-
-      - name: Build container
-        run: docker build -f generators/java/sdk/Dockerfile -t java-sdk:grype-scan .
+      - name: Resolve grype scan target
+        id: scan-target
+        env:
+          IMAGE: ${{ matrix.generator.image }}
+        run: |
+          # Generators with a `publish.docker` config are tagged :99.99.99.
+          # Generators that fall back to `test.docker.command` (e.g.
+          # pydantic-v2's `dockerTagLatest` script) tag :latest, so retag
+          # so the rest of the job can rely on a single tag.
+          if ! docker image inspect "$IMAGE:99.99.99" >/dev/null 2>&1; then
+            if docker image inspect "$IMAGE:latest" >/dev/null 2>&1; then
+              docker tag "$IMAGE:latest" "$IMAGE:99.99.99"
+            else
+              echo "::error::Neither $IMAGE:99.99.99 nor $IMAGE:latest exists in the local docker daemon"
+              docker image ls
+              exit 1
+            fi
+          fi
+          echo "image=$IMAGE:99.99.99" >> "$GITHUB_OUTPUT"
 
       - name: Push to ECR (to keep AWS scans up to date)
+        # Best-effort. Skipped on PR / unauthenticated runs and tolerant of
+        # missing repositories so a failure here doesn't block the scan.
+        continue-on-error: true
+        env:
+          ECR_REGISTRY: 985111089818.dkr.ecr.us-east-1.amazonaws.com
+          ECR_REPO: dev/${{ matrix.generator.container }}-generator
+          IMAGE: ${{ steps.scan-target.outputs.image }}
         run: |
           aws sts get-caller-identity
-          docker tag java-sdk:grype-scan 985111089818.dkr.ecr.us-east-1.amazonaws.com/dev/java-sdk-generator:latest-${{ github.sha }}
-          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 985111089818.dkr.ecr.us-east-1.amazonaws.com
-          docker push 985111089818.dkr.ecr.us-east-1.amazonaws.com/dev/java-sdk-generator:latest-${{ github.sha }}
+          aws ecr describe-repositories --repository-names "$ECR_REPO" --region us-east-1 >/dev/null 2>&1 \
+            || aws ecr create-repository --repository-name "$ECR_REPO" --region us-east-1
+          aws ecr get-login-password --region us-east-1 \
+            | docker login --username AWS --password-stdin "$ECR_REGISTRY"
+          docker tag "$IMAGE" "$ECR_REGISTRY/$ECR_REPO:latest-${{ github.sha }}"
+          docker push "$ECR_REGISTRY/$ECR_REPO:latest-${{ github.sha }}"
 
       - name: Install grype
         run: |
           curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
 
       - name: Run grype scan
-        run: |
-          grype docker:java-sdk:grype-scan -o json > grype-report.json
+        env:
+          IMAGE: ${{ steps.scan-target.outputs.image }}
+        run: grype "docker:$IMAGE" -o json > grype-report.json
 
       - name: Upload grype scan results
         uses: actions/upload-artifact@v6
         with:
-          name: grype-scan-results-java-sdk
+          name: grype-scan-results-${{ matrix.generator.container }}
           path: grype-report.json
           retention-days: 30
 
       # ============================================================
       # IGNORED CVEs CONFIGURATION
       # Add CVEs here that have been reviewed and accepted as risks.
-      # Format: One CVE ID per line in the ignored_cves input
+      # Format: One CVE ID per line in the ignored_cves input.
+      # If you need per-generator ignore lists, replace the empty
+      # string below with a lookup keyed off matrix.generator.container.
       # ============================================================
       - name: Process vulnerabilities and create PR
         # Skip PR creation for cron runs (scan_only=true) or when explicitly set
         if: ${{ github.event_name != 'schedule' && inputs.scan_only != true }}
         uses: ./.github/actions/process-grype-vulns
         with:
-          container_name: java-sdk
+          container_name: ${{ matrix.generator.container }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          slack_token: ${{ secrets.DEVIN_AI_PR_BOT_SLACK_TOKEN }}
+          ignored_cves: ""
+
+  create-grype-pr-seed:
+    name: Run grype scan - fernapi/${{ matrix.seed.lang }}-seed
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        seed:
+          - lang: csharp
+          - lang: java
+          - lang: go
+          - lang: python
+          - lang: php
+          - lang: ts
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: "arn:aws:iam::985111089818:role/github-ci"
+          aws-region: "us-east-1"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build container
+        env:
+          IMAGE: fernapi/${{ matrix.seed.lang }}-seed:grype-scan
+        run: |
+          docker build \
+            -f docker/seed/Dockerfile.${{ matrix.seed.lang }} \
+            -t "$IMAGE" \
+            .
+
+      - name: Push to ECR (to keep AWS scans up to date)
+        # Best-effort. Tolerant of missing repositories so a failure here
+        # doesn't block the scan.
+        continue-on-error: true
+        env:
+          ECR_REGISTRY: 985111089818.dkr.ecr.us-east-1.amazonaws.com
+          ECR_REPO: dev/${{ matrix.seed.lang }}-seed
+          IMAGE: fernapi/${{ matrix.seed.lang }}-seed:grype-scan
+        run: |
+          aws sts get-caller-identity
+          aws ecr describe-repositories --repository-names "$ECR_REPO" --region us-east-1 >/dev/null 2>&1 \
+            || aws ecr create-repository --repository-name "$ECR_REPO" --region us-east-1
+          aws ecr get-login-password --region us-east-1 \
+            | docker login --username AWS --password-stdin "$ECR_REGISTRY"
+          docker tag "$IMAGE" "$ECR_REGISTRY/$ECR_REPO:latest-${{ github.sha }}"
+          docker push "$ECR_REGISTRY/$ECR_REPO:latest-${{ github.sha }}"
+
+      - name: Install grype
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
+
+      - name: Run grype scan
+        env:
+          IMAGE: fernapi/${{ matrix.seed.lang }}-seed:grype-scan
+        run: grype "docker:$IMAGE" -o json > grype-report.json
+
+      - name: Upload grype scan results
+        uses: actions/upload-artifact@v6
+        with:
+          name: grype-scan-results-${{ matrix.seed.lang }}-seed
+          path: grype-report.json
+          retention-days: 30
+
+      - name: Process vulnerabilities and create PR
+        # Skip PR creation for cron runs (scan_only=true) or when explicitly set
+        if: ${{ github.event_name != 'schedule' && inputs.scan_only != true }}
+        uses: ./.github/actions/process-grype-vulns
+        with:
+          container_name: ${{ matrix.seed.lang }}-seed
           github_token: ${{ secrets.GITHUB_TOKEN }}
           slack_token: ${{ secrets.DEVIN_AI_PR_BOT_SLACK_TOKEN }}
           ignored_cves: ""

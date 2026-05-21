@@ -1,3 +1,4 @@
+export { buildReplayTelemetryProps } from "./buildReplayTelemetryProps.js";
 export { consolePipelineLogger, type PipelineLogger } from "./PipelineLogger";
 export { PostGenerationPipeline } from "./PostGenerationPipeline";
 export { formatReplayPrBody, logReplaySummary } from "./replay-summary";
@@ -13,5 +14,7 @@ export type {
     PipelineResult,
     ReplayStepConfig,
     ReplayStepResult,
-    StepResult
+    StepResult,
+    VerificationStepResult,
+    VerifyStepConfig
 } from "./types";

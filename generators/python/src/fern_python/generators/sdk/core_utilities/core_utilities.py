@@ -720,6 +720,7 @@ class CoreUtilities:
         base_headers: AST.Expression,
         base_timeout: AST.Expression,
         is_async: bool,
+        base_max_retries: Optional[AST.Expression] = None,
         async_base_headers: Optional[AST.Expression] = None,
         logging_config: Optional[AST.Expression] = None,
     ) -> AST.Expression:
@@ -730,7 +731,9 @@ class CoreUtilities:
         ]
         if base_url is not None:
             func_args.append(("base_url", base_url))
-        if self._default_max_retries != 2:
+        if base_max_retries is not None:
+            func_args.append(("base_max_retries", base_max_retries))
+        elif self._default_max_retries != 2:
             func_args.append(("base_max_retries", AST.Expression(str(self._default_max_retries))))
         if is_async and async_base_headers is not None:
             func_args.append(("async_base_headers", async_base_headers))

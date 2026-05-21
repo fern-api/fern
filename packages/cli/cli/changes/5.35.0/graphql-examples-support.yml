@@ -1,0 +1,5 @@
+- summary: |
+    Add support for user-provided examples in GraphQL specs. Users can now specify
+    an `examples` field in their GraphQL spec configuration pointing to a YAML file
+    containing named examples (with query, variables, and response) for each operation.
+  type: feat

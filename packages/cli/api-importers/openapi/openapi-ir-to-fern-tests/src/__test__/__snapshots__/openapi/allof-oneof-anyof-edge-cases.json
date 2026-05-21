@@ -31,10 +31,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/extended",
-              "request": {
-                "body": "Extended",
-                "content-type": "application/json",
-              },
+              "request": "Extended",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -58,10 +55,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/flexible",
-              "request": {
-                "body": "FlexibleValue",
-                "content-type": "application/json",
-              },
+              "request": "FlexibleValue",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -90,10 +84,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/pet",
-              "request": {
-                "body": "Pet",
-                "content-type": "application/json",
-              },
+              "request": "Pet",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -350,9 +341,20 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "executionContext": "optional<RuleExecutionContext>",
+              "executionContext": "optional<RuleConfigExecutionContext>",
               "name": "optional<string>",
             },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "RuleConfigExecutionContext": {
+            "enum": [
+              "prod",
+              "staging",
+              "dev",
+            ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -404,9 +406,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: Extended
-        content-type: application/json
+      request: Extended
       response:
         docs: Success
         type: Extended
@@ -426,9 +426,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: Pet
-        content-type: application/json
+      request: Pet
       response:
         docs: Success
         type: Pet
@@ -445,9 +443,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: FlexibleValue
-        content-type: application/json
+      request: FlexibleValue
       response:
         docs: Success
         type: FlexibleValue
@@ -588,10 +584,18 @@ types:
       - dev
     source:
       openapi: ../openapi.yml
+  RuleConfigExecutionContext:
+    enum:
+      - prod
+      - staging
+      - dev
+    inline: true
+    source:
+      openapi: ../openapi.yml
   RuleConfig:
     properties:
       name: optional<string>
-      executionContext: optional<RuleExecutionContext>
+      executionContext: optional<RuleConfigExecutionContext>
     source:
       openapi: ../openapi.yml
   PaginatedList:

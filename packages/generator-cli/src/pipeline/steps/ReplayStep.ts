@@ -21,8 +21,7 @@ export class ReplayStep extends BaseStep {
         logger: PipelineLogger,
         private readonly config: ReplayStepConfig,
         private readonly cliVersion?: string,
-        private readonly generatorVersions?: Record<string, string>,
-        private readonly generatorName?: string
+        private readonly generatorVersions?: Record<string, string>
     ) {
         super(outputDir, logger);
     }
@@ -41,6 +40,8 @@ export class ReplayStep extends BaseStep {
                 success: true,
                 replayCrashed: true,
                 errorMessage: generationCommit.errorMessage,
+                autoBootstrapped: false,
+                bootstrapAttempted: generationCommit.bootstrapAttempted === true,
                 flow: "normal-regeneration",
                 patchesDetected: 0,
                 patchesApplied: 0,
@@ -50,10 +51,13 @@ export class ReplayStep extends BaseStep {
 
         if (generationCommit != null && prepared == null) {
             // GenerationCommitStep ran successfully but replay isn't initialized
-            // (no lockfile). Legitimate first-generation flow.
+            // (no lockfile and bootstrap couldn't anchor on a prior generation).
+            // Legitimate first-generation flow.
             return {
                 executed: true,
                 success: true,
+                autoBootstrapped: false,
+                bootstrapAttempted: generationCommit.bootstrapAttempted === true,
                 flow: "first-generation",
                 patchesDetected: 0,
                 patchesApplied: 0,
@@ -72,7 +76,6 @@ export class ReplayStep extends BaseStep {
                       cliVersion: this.cliVersion,
                       generatorVersions: this.generatorVersions,
                       stageOnly: this.config.stageOnly ?? false,
-                      generatorName: this.generatorName,
                       skipApplication: this.config.skipApplication,
                       logger: this.logger
                   });
@@ -88,7 +91,8 @@ export class ReplayStep extends BaseStep {
                 errorMessage: result.failureReason,
                 previousGenerationSha: result.previousGenerationSha ?? undefined,
                 currentGenerationSha: result.currentGenerationSha ?? undefined,
-                baseBranchHead: result.baseBranchHead ?? undefined,
+                autoBootstrapped: result.autoBootstrapped,
+                bootstrapAttempted: result.bootstrapAttempted,
                 flow: "normal-regeneration",
                 patchesDetected: 0,
                 patchesApplied: 0,
@@ -102,7 +106,8 @@ export class ReplayStep extends BaseStep {
                 success: true,
                 previousGenerationSha: result.previousGenerationSha ?? undefined,
                 currentGenerationSha: result.currentGenerationSha ?? undefined,
-                baseBranchHead: result.baseBranchHead ?? undefined,
+                autoBootstrapped: result.autoBootstrapped,
+                bootstrapAttempted: result.bootstrapAttempted,
                 flow: "first-generation",
                 patchesDetected: 0,
                 patchesApplied: 0,
@@ -116,7 +121,8 @@ export class ReplayStep extends BaseStep {
             success: true,
             previousGenerationSha: result.previousGenerationSha ?? undefined,
             currentGenerationSha: result.currentGenerationSha ?? undefined,
-            baseBranchHead: result.baseBranchHead ?? undefined,
+            autoBootstrapped: result.autoBootstrapped,
+            bootstrapAttempted: result.bootstrapAttempted,
             flow: report.flow,
             patchesDetected: report.patchesDetected,
             patchesApplied: report.patchesApplied,
@@ -125,6 +131,11 @@ export class ReplayStep extends BaseStep {
             patchesRepointed: report.patchesRepointed,
             patchesContentRebased: report.patchesContentRebased,
             patchesKeptAsUserOwned: report.patchesKeptAsUserOwned,
+            patchesSkipped: report.patchesSkipped,
+            patchesPartiallyApplied: report.patchesPartiallyApplied,
+            patchesConflictResolved: report.patchesConflictResolved,
+            patchesReverted: report.patchesReverted,
+            patchesRefreshed: report.patchesRefreshed,
             unresolvedPatches: report.unresolvedPatches?.map((info) => ({
                 patchId: info.patchId,
                 patchMessage: info.patchMessage,

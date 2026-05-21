@@ -27,6 +27,8 @@ function successResult(overrides: Partial<GeneratorRunResult> = {}): GeneratorRu
         durationMs: 1234,
         sdkRepoUrl: "https://github.com/acme/sdk",
         generatorsYmlUrl: null,
+        generatorsYmlWorkspaceRelativePath: null,
+        generatorsYmlLineNumber: null,
         ...overrides
     };
 }

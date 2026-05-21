@@ -1,8 +1,10 @@
 import { FERN_BOT_EMAIL, FERN_BOT_NAME, LockfileManager, ReplayService } from "@fern-api/replay";
 import { execFileSync } from "child_process";
-import { mkdirSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 import tmp from "tmp-promise";
+import { vi } from "vitest";
+import type { PipelineLogger } from "../pipeline/PipelineLogger";
 import { replayRun } from "../replay/replay-run";
 
 // ---------------------------------------------------------------------------
@@ -84,7 +86,7 @@ async function setupRepoWithGeneration(): Promise<{ repoPath: string; cleanup: (
 // Test suites
 // ---------------------------------------------------------------------------
 
-describe("first generation - no lockfile", { tags: ["slow", "flaky"] }, () => {
+describe("first generation - no lockfile (auto-bootstrap)", { tags: ["slow", "flaky"] }, () => {
     let repoPath: string;
     let cleanup: () => Promise<void>;
 
@@ -112,14 +114,104 @@ describe("first generation - no lockfile", { tags: ["slow", "flaky"] }, () => {
         await cleanup?.();
     });
 
-    it("replayRun returns null report when no lockfile", async () => {
+    it("auto-bootstraps inline when no lockfile but a prior generation exists", async () => {
+        const result = await replayRun({ outputDir: repoPath, stageOnly: true });
+
+        // Bake-into-generate: bootstrap ran inline and replay proceeded normally.
+        expect(result.report).not.toBeNull();
+        expect(result.autoBootstrapped).toBe(true);
+
+        // Bootstrap wrote the lockfile and the replay-protection files.
+        expect(existsSync(join(repoPath, ".fern", "replay.lock"))).toBe(true);
+
+        const fernignore = readFileSync(join(repoPath, ".fernignore"), "utf-8");
+        expect(fernignore).toContain(".fern/replay.lock");
+        expect(fernignore).toContain(".fern/replay.yml");
+        expect(fernignore).toContain(".gitattributes");
+
+        const gitattributes = readFileSync(join(repoPath, ".gitattributes"), "utf-8");
+        expect(gitattributes).toContain(".fern/replay.lock linguist-generated=true");
+    });
+});
+
+describe("first generation - no lockfile, no prior generation commits", { tags: ["slow", "flaky"] }, () => {
+    let repoPath: string;
+    let cleanup: () => Promise<void>;
+
+    beforeAll(async () => {
+        const tmpDir = await tmp.dir({ unsafeCleanup: true });
+        repoPath = tmpDir.path;
+        cleanup = tmpDir.cleanup;
+
+        initRepo(repoPath);
+
+        // Only a user commit — no [fern-generated] commit for bootstrap to anchor on.
+        writeFileSync(join(repoPath, "README.md"), "# SDK\n");
+        commitAsUser(repoPath, "initial commit");
+    });
+
+    afterAll(async () => {
+        await cleanup?.();
+    });
+
+    it("returns null report when bootstrap finds no prior generation", async () => {
         const result = await replayRun({ outputDir: repoPath });
 
+        // bootstrap returned generationCommit:null → replayPrepare returns null →
+        // replayRun returns a null-report result. The next `fern generate` that
+        // creates a [fern-generated] commit will establish the baseline.
         expect(result.report).toBeNull();
+        expect(result.autoBootstrapped).toBe(false);
+        // bootstrapAttempted IS true: we entered the lockfile-missing branch and
+        // tried bootstrap, even though it couldn't anchor.
+        expect(result.bootstrapAttempted).toBe(true);
         expect(result.fernignoreUpdated).toBe(false);
         expect(result.previousGenerationSha).toBeNull();
         expect(result.currentGenerationSha).toBeNull();
-        expect(result.baseBranchHead).toBeNull();
+    });
+});
+
+describe("first generation - no lockfile, bootstrap throws", { tags: ["slow", "flaky"] }, () => {
+    let repoPath: string;
+    let cleanup: () => Promise<void>;
+
+    beforeAll(async () => {
+        const tmpDir = await tmp.dir({ unsafeCleanup: true });
+        repoPath = tmpDir.path;
+        cleanup = tmpDir.cleanup;
+
+        // Deliberately skip git init — bootstrap's `git log` will fail and throw.
+        // No .fern/replay.lock either, so the bootstrap branch is entered.
+    });
+
+    afterAll(async () => {
+        await cleanup?.();
+    });
+
+    it("logs warn, returns null cleanly, and cleans up any partial lockfile", async () => {
+        const mockLogger: PipelineLogger = {
+            debug: vi.fn(),
+            info: vi.fn(),
+            warn: vi.fn(),
+            error: vi.fn()
+        };
+
+        // Must NOT throw — generation never aborts on replay errors.
+        const result = await replayRun({ outputDir: repoPath, logger: mockLogger });
+
+        expect(result.report).toBeNull();
+        expect(result.autoBootstrapped).toBe(false);
+        expect(result.bootstrapAttempted).toBe(true);
+
+        // The catch path warned about the failure.
+        const warnCalls = (mockLogger.warn as ReturnType<typeof vi.fn>).mock.calls;
+        expect(warnCalls.length).toBeGreaterThan(0);
+        expect(warnCalls.some((call) => String(call[0]).includes("auto-bootstrap"))).toBe(true);
+
+        // Critical invariant: no half-initialized lockfile left on disk.
+        // If bootstrap wrote it before throwing, the catch block must clean up
+        // so the next run doesn't pick up a corrupted anchor.
+        expect(existsSync(join(repoPath, ".fern", "replay.lock"))).toBe(false);
     });
 });
 

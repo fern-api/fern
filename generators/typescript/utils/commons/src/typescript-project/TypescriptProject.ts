@@ -51,9 +51,9 @@ type COMMON_SCRIPTS = (typeof COMMON_SCRIPTS)[keyof typeof COMMON_SCRIPTS];
 const TOOL_VERSIONS = {
     BIOME: "2.4.10",
     PRETTIER: "3.8.1",
-    OXFMT: "0.42.0",
-    OXLINT: "1.57.0",
-    OXLINT_TSGOLINT: "0.17.4"
+    OXFMT: "0.48.0",
+    OXLINT: "1.63.0",
+    OXLINT_TSGOLINT: "0.22.1"
 } as const;
 
 export abstract class TypescriptProject {
@@ -432,7 +432,7 @@ export abstract class TypescriptProject {
 
     protected getCommonDevDependencies(): Record<string, string> {
         const deps: Record<string, string> = {
-            "@types/node": "^18.19.70",
+            "@types/node": "^20.0.0",
             typescript: "~5.9.3"
         };
         if (this.linter === "biome" || this.formatter === "biome") {

@@ -45,7 +45,8 @@ export async function loadOpenAPIFromUrl({ url, logger }: { url: string; logger:
 
 async function fetchOpenAPIFromUrl({ url, logger }: { url: string; logger: Logger }): Promise<string> {
     const response = await axios.get(url);
-    const contentType = response.headers["content-type"] ?? "";
+    const contentTypeHeader = response.headers["content-type"];
+    const contentType = typeof contentTypeHeader === "string" ? contentTypeHeader : "";
 
     if (contentType.includes("json") || url.endsWith(".json")) {
         return typeof response.data === "string" ? response.data : JSON.stringify(response.data, null, 2);

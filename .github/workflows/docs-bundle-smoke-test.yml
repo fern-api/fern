@@ -144,198 +144,109 @@ jobs:
 
       - name: Install Playwright
         if: steps.node-check.outputs.available == 'true'
+        timeout-minutes: 10
         shell: bash
         run: |
           cd docs-preview-smoke-test/playwright && npm install && npx playwright install chromium
 
-      # On Unix, background the server and wait for it to be ready, then run
-      # Playwright in a separate step.
-      - name: Start fern docs dev server (Unix)
-        if: steps.node-check.outputs.available == 'true' && runner.os != 'Windows'
-        shell: bash
-        run: |
-          cd docs-preview-smoke-test/fern
-          FERN_NO_VERSION_REDIRECTION=true fern docs dev \
-            > /tmp/fern-docs-dev.log 2>&1 &
-          FERN_PID=$!
-          echo "FERN_PID=$FERN_PID" >> $GITHUB_ENV
-
-          echo "Waiting for fern docs dev server to start (PID: $FERN_PID)..."
-          for i in $(seq 1 180); do
-            if grep -qi "ready on" /tmp/fern-docs-dev.log 2>/dev/null; then
-              echo "Server reported ready after ${i}s!"
-              break
-            fi
-
-            if ! kill -0 $FERN_PID 2>/dev/null; then
-              echo "fern docs dev process (PID: $FERN_PID) exited unexpectedly"
-              echo "--- Dev server logs (last 50 lines) ---"
-              tail -50 /tmp/fern-docs-dev.log
-              echo "--- End dev server logs ---"
-              exit 1
-            fi
-
-            if [ $i -eq 180 ]; then
-              echo "Timeout waiting for server to start after 180s"
-              echo "--- Dev server logs (last 50 lines) ---"
-              tail -50 /tmp/fern-docs-dev.log
-              echo "--- End dev server logs ---"
-              exit 1
-            fi
-
-            if [ $((i % 15)) -eq 0 ]; then
-              echo "Still waiting... (${i}s)"
-              tail -5 /tmp/fern-docs-dev.log 2>/dev/null || true
-            fi
-
-            sleep 1
-          done
-
-          # Wait for port 3000 to accept connections
-          echo "Waiting for server to return HTTP 200 on /sitemap.xml..."
-          for j in $(seq 1 30); do
-            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 http://localhost:3000/sitemap.xml 2>/dev/null || echo "000")
-            if [ "$HTTP_CODE" = "200" ]; then
-              echo "Server returning 200 on /sitemap.xml after ${j}s"
-              break
-            fi
-            if [ $j -eq 30 ]; then
-              echo "Server never returned 200 on /sitemap.xml after 30s (last HTTP $HTTP_CODE)"
-              echo "--- Dev server logs (last 100 lines) ---"
-              tail -100 /tmp/fern-docs-dev.log
-              echo "--- End dev server logs ---"
-              exit 1
-            fi
-            sleep 1
-          done
-
-          # Warm up SSR — first render may trigger compilation. Retry until 200.
-          echo "Warming up SSR on /welcome..."
-          for k in $(seq 1 60); do
-            HTTP_CODE=$(curl -s -o /tmp/warmup-response.html -w "%{http_code}" --max-time 10 http://localhost:3000/welcome 2>/dev/null || echo "000")
-            if [ "$HTTP_CODE" = "200" ]; then
-              echo "SSR warm-up succeeded after attempt ${k}"
-              break
-            fi
-            if [ $k -eq 60 ]; then
-              echo "SSR warm-up failed after 60 attempts (last HTTP $HTTP_CODE)"
-              echo "--- Response body (first 2000 chars) ---"
-              head -c 2000 /tmp/warmup-response.html 2>/dev/null || true
-              echo ""
-              echo "--- Dev server logs (last 100 lines) ---"
-              tail -100 /tmp/fern-docs-dev.log
-              echo "--- End dev server logs ---"
-              exit 1
-            fi
-            sleep 2
-          done
-
-      - name: Run Playwright smoke tests (Unix)
-        if: steps.node-check.outputs.available == 'true' && runner.os != 'Windows'
+      - name: Run smoke tests (with server restart on crash)
+        if: steps.node-check.outputs.available == 'true'
         uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
+        env:
+          FERN_NO_VERSION_REDIRECTION: "true"
         with:
           timeout_minutes: 15
-          max_attempts: 2
+          max_attempts: 3
           retry_wait_seconds: 10
           shell: bash
-          command: cd docs-preview-smoke-test/playwright && npx playwright test smoke.spec.ts --config playwright.config.ts
-
-      # On Windows, background processes (&) are killed when the parent bash
-      # step exits. We must start the server and run Playwright in the SAME
-      # step so the server stays alive for the duration of the tests.
-      - name: Start server and run Playwright smoke tests (Windows)
-        if: steps.node-check.outputs.available == 'true' && runner.os == 'Windows'
-        shell: bash
-        run: |
-          cd docs-preview-smoke-test/fern
-          FERN_NO_VERSION_REDIRECTION=true fern docs dev \
-            > /tmp/fern-docs-dev.log 2>&1 &
-          FERN_PID=$!
-          echo "FERN_PID=$FERN_PID" >> $GITHUB_ENV
-
-          echo "Waiting for fern docs dev server to start (PID: $FERN_PID)..."
-          for i in $(seq 1 180); do
-            if grep -qi "ready on" /tmp/fern-docs-dev.log 2>/dev/null; then
-              echo "Server reported ready after ${i}s!"
-              break
+          command: |
+            # Kill any leftover server from a previous attempt
+            if [ -f /tmp/fern-server.pid ]; then
+              OLD_PID=$(cat /tmp/fern-server.pid)
+              if kill -0 "$OLD_PID" 2>/dev/null; then
+                echo "Killing leftover server (PID $OLD_PID) from previous attempt..."
+                kill "$OLD_PID" 2>/dev/null || true
+                sleep 2
+              fi
+              rm -f /tmp/fern-server.pid
             fi
 
+            LOG_FILE="/tmp/fern-docs-dev.log"
+            rm -f "$LOG_FILE"
+
+            # Start the fern docs dev server
+            cd docs-preview-smoke-test/fern
+            fern docs dev > "$LOG_FILE" 2>&1 &
+            FERN_PID=$!
+            cd "$GITHUB_WORKSPACE"
+
+            # Wait for the server to be ready
+            for i in $(seq 1 180); do
+              if grep -qi "ready on" "$LOG_FILE" 2>/dev/null; then
+                echo "Server ready after ${i}s"
+                break
+              fi
+
+              if ! kill -0 $FERN_PID 2>/dev/null; then
+                echo "Server crashed during startup (known Node.js v24 Windows issue)"
+                cat "$LOG_FILE"
+                exit 1
+              fi
+
+              if [ $i -eq 180 ]; then
+                echo "Server start timed out after 180s"
+                cat "$LOG_FILE"
+                kill $FERN_PID 2>/dev/null || true
+                exit 1
+              fi
+
+              sleep 1
+            done
+
+            # Verify server is still alive before running tests
             if ! kill -0 $FERN_PID 2>/dev/null; then
-              echo "fern docs dev process (PID: $FERN_PID) exited unexpectedly"
-              echo "--- Dev server logs (last 50 lines) ---"
-              tail -50 /tmp/fern-docs-dev.log
-              echo "--- End dev server logs ---"
+              echo "Server died after reporting ready (known Node.js v24 Windows crash)"
+              cat "$LOG_FILE"
               exit 1
             fi
 
-            if [ $i -eq 180 ]; then
-              echo "Timeout waiting for server to start after 180s"
-              echo "--- Dev server logs (last 50 lines) ---"
-              tail -50 /tmp/fern-docs-dev.log
-              echo "--- End dev server logs ---"
-              exit 1
-            fi
+            # Store PID for cleanup
+            echo "$FERN_PID" > /tmp/fern-server.pid
 
-            if [ $((i % 15)) -eq 0 ]; then
-              echo "Still waiting... (${i}s)"
-              tail -5 /tmp/fern-docs-dev.log 2>/dev/null || true
-            fi
+            # Wait for HTTP 200 on /sitemap.xml
+            echo "Waiting for server to return HTTP 200 on /sitemap.xml..."
+            for j in $(seq 1 30); do
+              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 http://localhost:3000/sitemap.xml 2>/dev/null || echo "000")
+              if [ "$HTTP_CODE" = "200" ]; then
+                echo "Server returning 200 on /sitemap.xml after ${j}s"
+                break
+              fi
+              if [ $j -eq 30 ]; then
+                echo "Server never returned 200 on /sitemap.xml after 30s (last HTTP $HTTP_CODE)"
+                cat "$LOG_FILE"
+                exit 1
+              fi
+              sleep 1
+            done
 
-            sleep 1
-          done
+            # Warm up SSR — first render may trigger compilation
+            echo "Warming up SSR on /welcome..."
+            for k in $(seq 1 60); do
+              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 http://localhost:3000/welcome 2>/dev/null || echo "000")
+              if [ "$HTTP_CODE" = "200" ]; then
+                echo "SSR warm-up succeeded after attempt ${k}"
+                break
+              fi
+              if [ $k -eq 60 ]; then
+                echo "SSR warm-up failed after 60 attempts (last HTTP $HTTP_CODE)"
+                cat "$LOG_FILE"
+                exit 1
+              fi
+              sleep 2
+            done
 
-          # Wait for port 3000 to accept connections
-          echo "Waiting for server to return HTTP 200 on /sitemap.xml..."
-          for j in $(seq 1 30); do
-            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 http://localhost:3000/sitemap.xml 2>/dev/null || echo "000")
-            if [ "$HTTP_CODE" = "200" ]; then
-              echo "Server returning 200 on /sitemap.xml after ${j}s"
-              break
-            fi
-            if [ $j -eq 30 ]; then
-              echo "Server never returned 200 on /sitemap.xml after 30s (last HTTP $HTTP_CODE)"
-              echo "--- Dev server logs (last 100 lines) ---"
-              tail -100 /tmp/fern-docs-dev.log
-              echo "--- End dev server logs ---"
-              exit 1
-            fi
-            sleep 1
-          done
-
-          echo "Warming up SSR on /welcome..."
-          for k in $(seq 1 60); do
-            HTTP_CODE=$(curl -s -o /tmp/warmup-response.html -w "%{http_code}" --max-time 10 http://localhost:3000/welcome 2>/dev/null || echo "000")
-            if [ "$HTTP_CODE" = "200" ]; then
-              echo "SSR warm-up succeeded after attempt ${k}"
-              break
-            fi
-            if [ $k -eq 60 ]; then
-              echo "SSR warm-up failed after 60 attempts (last HTTP $HTTP_CODE)"
-              echo "--- Response body (first 2000 chars) ---"
-              head -c 2000 /tmp/warmup-response.html 2>/dev/null || true
-              echo ""
-              echo "--- Dev server logs (last 100 lines) ---"
-              tail -100 /tmp/fern-docs-dev.log
-              echo "--- End dev server logs ---"
-              exit 1
-            fi
-            sleep 2
-          done
-
-          echo "Running Playwright smoke tests..."
-          cd "$GITHUB_WORKSPACE/docs-preview-smoke-test/playwright"
-          for attempt in 1 2; do
-            if npx playwright test smoke.spec.ts --config playwright.config.ts; then
-              echo "Playwright passed on attempt ${attempt}"
-              break
-            fi
-            if [ $attempt -eq 2 ]; then
-              echo "Playwright failed after 2 attempts"
-              exit 1
-            fi
-            echo "Playwright failed on attempt ${attempt}, retrying after 10s..."
-            sleep 10
-          done
+            # Run Playwright tests
+            cd docs-preview-smoke-test/playwright && npx playwright test smoke.spec.ts --config playwright.config.ts
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v6
@@ -368,6 +279,6 @@ jobs:
         if: always() && steps.node-check.outputs.available == 'true'
         shell: bash
         run: |
-          if [ -n "$FERN_PID" ]; then
-            kill $FERN_PID 2>/dev/null || true
+          if [ -f /tmp/fern-server.pid ]; then
+            kill "$(cat /tmp/fern-server.pid)" 2>/dev/null || true
           fi

@@ -30,10 +30,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/animal",
-              "request": {
-                "body": "Animal",
-                "content-type": "application/json",
-              },
+              "request": "Animal",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -65,10 +62,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/payment",
-              "request": {
-                "body": "Payment",
-                "content-type": "application/json",
-              },
+              "request": "Payment",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -98,10 +92,7 @@
               "method": "POST",
               "pagination": undefined,
               "path": "/shape",
-              "request": {
-                "body": "Shape",
-                "content-type": "application/json",
-              },
+              "request": "Shape",
               "response": {
                 "docs": "Success",
                 "status-code": 200,
@@ -282,9 +273,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: Animal
-        content-type: application/json
+      request: Animal
       response:
         docs: Success
         type: Animal
@@ -303,9 +292,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: Shape
-        content-type: application/json
+      request: Shape
       response:
         docs: Success
         type: Shape
@@ -323,9 +310,7 @@
       method: POST
       source:
         openapi: ../openapi.yml
-      request:
-        body: Payment
-        content-type: application/json
+      request: Payment
       response:
         docs: Success
         type: Payment

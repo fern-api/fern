@@ -157,6 +157,7 @@ export class LegacyApiSpecAdapter {
             type: "graphql" as const,
             absoluteFilepath: spec.graphql,
             absoluteFilepathToOverrides: spec.overrides,
+            absoluteFilepathToExamples: spec.examples,
             namespace: spec.name
         };
     }
@@ -184,6 +185,7 @@ export class LegacyApiSpecAdapter {
 
             // OpenAPI-specific settings
             respectReadonlySchemas: settings.respectReadonlySchemas,
+            useReadVariantForResponses: settings.useReadVariantForResponses,
             onlyIncludeReferencedSchemas: settings.onlyIncludeReferencedSchemas,
             inlinePathParameters: settings.inlinePathParameters,
             shouldUseUndiscriminatedUnionsWithLiterals: settings.preferUndiscriminatedUnionsWithLiterals,

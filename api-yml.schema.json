@@ -88,7 +88,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Global Headers for the entire API"
     },
     "name": {
       "type": "string"
@@ -231,7 +232,8 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string"
+          "type": "string",
+          "description": "The variable name as it appears in the URL template"
         },
         "default": {
           "oneOf": [
@@ -241,7 +243,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The default value for this variable"
         },
         "values": {
           "oneOf": [
@@ -254,7 +257,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Allowed values for this variable (from enum)"
         }
       },
       "required": [
@@ -299,7 +303,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "A separate default URL to use when no variables are provided (from x-fern-default-url extension)"
         },
         "url-template": {
           "oneOf": [
@@ -309,7 +314,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The original URL template with variable placeholders (e.g., \"https://api.{region}.example.com\")"
         },
         "variables": {
           "oneOf": [
@@ -322,7 +328,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Server variables for URL templating"
         }
       },
       "required": [
@@ -373,7 +380,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "URL templates with variable placeholders for each base URL (e.g., \"https://api.{region}.example.com\")"
         },
         "default-urls": {
           "oneOf": [
@@ -386,7 +394,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Default URLs to use when no variables are provided (from x-fern-default-url extension)"
         },
         "variables": {
           "oneOf": [
@@ -402,7 +411,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Server variables for URL templating, keyed by base URL ID"
         }
       },
       "required": [
@@ -498,7 +508,8 @@
           ]
         },
         "endpoint-security": {
-          "$ref": "#/definitions/auth.EndpointSecuritySchemaDetails"
+          "$ref": "#/definitions/auth.EndpointSecuritySchemaDetails",
+          "description": "Indicates that authentication requirements are defined per-endpoint via the `security` field."
         }
       },
       "required": [
@@ -536,7 +547,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The property name for the client ID."
         },
         "client-secret": {
           "oneOf": [
@@ -546,7 +558,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The property name for the client secret."
         },
         "scopes": {
           "oneOf": [
@@ -556,7 +569,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The property name for the scopes."
         }
       },
       "additionalProperties": false
@@ -572,7 +586,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The property name for the access token."
         },
         "expires-in": {
           "oneOf": [
@@ -582,7 +597,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The property name for the expires in property."
         },
         "refresh-token": {
           "oneOf": [
@@ -592,7 +608,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The property name for the refresh token"
         }
       },
       "additionalProperties": false
@@ -601,7 +618,8 @@
       "type": "object",
       "properties": {
         "endpoint": {
-          "type": "string"
+          "type": "string",
+          "description": "The endpoint to get the access token, such as 'auth.get_token"
         },
         "request-properties": {
           "oneOf": [
@@ -633,7 +651,8 @@
       "type": "object",
       "properties": {
         "refresh-token": {
-          "type": "string"
+          "type": "string",
+          "description": "The property name for the refresh token."
         }
       },
       "required": [
@@ -652,7 +671,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The property name for the access token."
         },
         "expires-in": {
           "oneOf": [
@@ -662,7 +682,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The property name for the expires in property."
         },
         "refresh-token": {
           "oneOf": [
@@ -672,7 +693,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The property name for the refresh token."
         }
       },
       "additionalProperties": false
@@ -681,7 +703,8 @@
       "type": "object",
       "properties": {
         "endpoint": {
-          "type": "string"
+          "type": "string",
+          "description": "The endpoint to refresh the access token, such as 'auth.refresh_token"
         },
         "request-properties": {
           "oneOf": [
@@ -769,7 +792,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Sets the token header value prefix. Defaults to 'Bearer'"
         },
         "token-header": {
           "oneOf": [
@@ -779,7 +803,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Sets the token header key name. Defaults to 'Authorization'"
         },
         "get-token": {
           "$ref": "#/definitions/auth.OAuthGetTokenEndpointSchema"
@@ -846,7 +871,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Defaults to string"
         },
         "prefix": {
           "oneOf": [
@@ -866,7 +892,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The placeholder value to use in code snippets (e.g., \"YOUR_API_KEY\")."
         }
       },
       "required": [
@@ -905,7 +932,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "If true, the auth variable will be omitted from the SDK."
         },
         "placeholder": {
           "oneOf": [
@@ -915,7 +943,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The placeholder value to use in code snippets (e.g., \"YOUR_API_KEY\")."
         }
       },
       "additionalProperties": false
@@ -998,10 +1027,12 @@
       "type": "object",
       "properties": {
         "response-property": {
-          "type": "string"
+          "type": "string",
+          "description": "The property to retrieve the header value from the get token or refresh endpoint response."
         },
         "header-name": {
-          "type": "string"
+          "type": "string",
+          "description": "The header name to put the token in for any authenticated HTTP request."
         },
         "value-prefix": {
           "oneOf": [
@@ -1011,20 +1042,23 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Commonly used for setting the `Authorization` scheme, but could be used for other things."
         }
       },
       "required": [
         "response-property",
         "header-name"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "A header that will be set on HTTP requests when the inferred auth scheme is applied to an endpoint. These are not headers for the authorization endpoint."
     },
     "auth.InferredGetTokenEndpointSchemaObject": {
       "type": "object",
       "properties": {
         "endpoint": {
-          "type": "string"
+          "type": "string",
+          "description": "The endpoint to get the access token, such as 'auth.get_token'"
         },
         "expiry-response-property": {
           "oneOf": [
@@ -1034,7 +1068,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The property name for the expiry time in the response."
         },
         "authenticated-request-headers": {
           "oneOf": [
@@ -1047,7 +1082,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The headers that will be set on HTTP requests when the inferred auth scheme is applied to an endpoint."
         }
       },
       "required": [
@@ -1121,7 +1157,8 @@
       "type": "object",
       "properties": {
         "type": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the Protobuf type (e.g. google.protobuf.Struct)."
         }
       },
       "required": [
@@ -1727,13 +1764,16 @@
       "type": "object",
       "properties": {
         "cursor": {
-          "type": "string"
+          "type": "string",
+          "description": "The path to the request property for the cursor."
         },
         "next_cursor": {
-          "type": "string"
+          "type": "string",
+          "description": "The path to the response property for the next cursor."
         },
         "results": {
-          "type": "string"
+          "type": "string",
+          "description": "The path to the response property for the page elements."
         }
       },
       "required": [
@@ -1747,10 +1787,12 @@
       "type": "object",
       "properties": {
         "offset": {
-          "type": "string"
+          "type": "string",
+          "description": "The path to the request property for the page offset."
         },
         "results": {
-          "type": "string"
+          "type": "string",
+          "description": "The path to the response property for the page elements."
         },
         "step": {
           "oneOf": [
@@ -1760,7 +1802,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The path to the request property for the page step."
         },
         "has-next-page": {
           "oneOf": [
@@ -1770,7 +1813,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The path to the response property indicating next page presence."
         }
       },
       "required": [
@@ -1783,26 +1827,31 @@
       "type": "object",
       "properties": {
         "type": {
-          "const": "custom"
+          "const": "custom",
+          "description": "The type of pagination."
         },
         "results": {
-          "type": "string"
+          "type": "string",
+          "description": "The response property is used to determine the results response type\ngenerated in the endpoint."
         }
       },
       "required": [
         "type",
         "results"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Pagination where the SDK author is responsible for implementing the pagination\nlogic in the SDK."
     },
     "pagination.UriPaginationSchema": {
       "type": "object",
       "properties": {
         "next_uri": {
-          "type": "string"
+          "type": "string",
+          "description": "The path to the response property for the next URI."
         },
         "results": {
-          "type": "string"
+          "type": "string",
+          "description": "The path to the response property for the page elements."
         }
       },
       "required": [
@@ -1815,10 +1864,12 @@
       "type": "object",
       "properties": {
         "next_path": {
-          "type": "string"
+          "type": "string",
+          "description": "The path to the response property for the next path."
         },
         "results": {
-          "type": "string"
+          "type": "string",
+          "description": "The path to the response property for the page elements."
         }
       },
       "required": [
@@ -1899,7 +1950,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The name of the parameter used to represent the header"
         },
         "env": {
           "oneOf": [
@@ -1909,10 +1961,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The environment variable to read the header value from (if any)"
         },
         "value": {
-          "type": "string"
+          "type": "string",
+          "description": "The wire representation of the header (e.g. X-API-Version)"
         }
       },
       "required": [
@@ -2022,7 +2076,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The name of the parameter used to represent the header"
         },
         "env": {
           "oneOf": [
@@ -2032,10 +2087,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The environment variable to read the header value from (if any)"
         },
         "value": {
-          "type": "string"
+          "type": "string",
+          "description": "The wire representation of the header (e.g. X-API-Product)"
         }
       },
       "required": [

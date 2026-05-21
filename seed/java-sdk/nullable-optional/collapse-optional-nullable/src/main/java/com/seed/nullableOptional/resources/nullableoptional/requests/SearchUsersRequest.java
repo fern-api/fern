@@ -5,13 +5,14 @@ package com.seed.nullableOptional.resources.nullableoptional.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.nullableOptional.core.Nullable;
+import com.seed.nullableOptional.core.NullableNonemptyFilter;
 import com.seed.nullableOptional.core.ObjectMappers;
 import com.seed.nullableOptional.core.OptionalNullable;
 import java.util.HashMap;
@@ -46,12 +47,13 @@ public final class SearchUsersRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonIgnore
+    @JsonProperty("query")
     public String getQuery() {
         return query;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("department")
     public OptionalNullable<String> getDepartment() {
         if (department == null) {
             return OptionalNullable.absent();
@@ -59,16 +61,29 @@ public final class SearchUsersRequest {
         return department;
     }
 
-    @JsonIgnore
+    @JsonProperty("role")
     public Optional<String> getRole() {
         return role;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("isActive")
     public OptionalNullable<Boolean> getIsActive() {
         if (isActive == null) {
             return OptionalNullable.absent();
         }
+        return isActive;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("department")
+    private OptionalNullable<String> _getDepartment() {
+        return department;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("isActive")
+    private OptionalNullable<Boolean> _getIsActive() {
         return isActive;
     }
 

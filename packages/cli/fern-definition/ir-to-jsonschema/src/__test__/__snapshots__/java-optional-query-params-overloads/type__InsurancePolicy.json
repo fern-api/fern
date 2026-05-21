@@ -25,6 +25,7 @@
     "coverageAmount"
   ],
   "additionalProperties": false,
+  "description": "Insurance policy details",
   "definitions": {
     "PolicyType": {
       "type": "string",
@@ -33,7 +34,8 @@
         "AUTO",
         "HOME",
         "LIFE"
-      ]
+      ],
+      "description": "Type of insurance policy"
     }
   }
 }

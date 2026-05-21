@@ -134,6 +134,20 @@ describe("no-duplicate-overrides", () => {
         expect(violations).toEqual([]);
     }, 10_000);
 
+    it("x-fern-ignore - no conflict", async () => {
+        const violations = await getViolationsForRule({
+            rule: NoDuplicateOverridesRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("fern-ignore")
+            ),
+            cliVersion: "0.1.3-rc0"
+        });
+
+        expect(violations).toEqual([]);
+    }, 10_000);
+
     it("same namespace - conflict", async () => {
         const violations = await getViolationsForRule({
             rule: NoDuplicateOverridesRule,

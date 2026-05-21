@@ -46,11 +46,9 @@
     "@types/lodash-es": "catalog:",
     "@types/node": "catalog:",
     "@types/url-join": "4.0.1",
-    "@types/uuid": "^9.0.8",
     "lodash-es": "catalog:",
     "typescript": "catalog:",
     "url-join": "catalog:",
-    "uuid": "catalog:",
     "vitest": "catalog:"
   }
 }

@@ -1,2 +1,3 @@
-export * from "./baml_client/index.js";
-export * from "./configureBamlClient.js";
+export type { BamlClientInstance, BamlDependencies, ClientRegistryInstance } from "./loader.js";
+export { loadBamlDependencies } from "./loader.js";
+export * from "./types.js";

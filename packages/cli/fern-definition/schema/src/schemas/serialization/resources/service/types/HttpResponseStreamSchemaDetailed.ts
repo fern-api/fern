@@ -14,6 +14,7 @@ export const HttpResponseStreamSchemaDetailed: core.serialization.ObjectSchema<
         type: core.serialization.string(),
         format: StreamFormat.optional(),
         terminator: core.serialization.string().optional(),
+        resumable: core.serialization.boolean().optional(),
     })
     .extend(WithDocsSchema);
 
@@ -22,5 +23,6 @@ export declare namespace HttpResponseStreamSchemaDetailed {
         type: string;
         format?: StreamFormat.Raw | null;
         terminator?: string | null;
+        resumable?: boolean | null;
     }
 }

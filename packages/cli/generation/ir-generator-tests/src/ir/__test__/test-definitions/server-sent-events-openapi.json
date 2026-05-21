@@ -2850,7 +2850,7 @@
                             "inline": null
                         },
                         "docs": null,
-                        "contentType": "application/json",
+                        "contentType": null,
                         "v2Examples": null
                     },
                     "v2RequestBodies": null,
@@ -2899,6 +2899,7 @@
                                     "inline": null
                                 },
                                 "terminator": null,
+                                "resumable": false,
                                 "docs": "SSE stream with protocol-level discrimination and mixed data types",
                                 "v2Examples": null
                             }
@@ -3163,7 +3164,7 @@
                             "inline": null
                         },
                         "docs": null,
-                        "contentType": "application/json",
+                        "contentType": null,
                         "v2Examples": null
                     },
                     "v2RequestBodies": null,
@@ -3212,6 +3213,7 @@
                                     "inline": null
                                 },
                                 "terminator": null,
+                                "resumable": false,
                                 "docs": "SSE stream with protocol context and event field collision",
                                 "v2Examples": null
                             }
@@ -3476,7 +3478,7 @@
                             "inline": null
                         },
                         "docs": null,
-                        "contentType": "application/json",
+                        "contentType": null,
                         "v2Examples": null
                     },
                     "v2RequestBodies": null,
@@ -3525,6 +3527,7 @@
                                     "inline": null
                                 },
                                 "terminator": null,
+                                "resumable": false,
                                 "docs": "SSE stream with discriminator context set to data",
                                 "v2Examples": null
                             }
@@ -3875,7 +3878,7 @@
                             "inline": null
                         },
                         "docs": null,
-                        "contentType": "application/json",
+                        "contentType": null,
                         "v2Examples": null
                     },
                     "v2RequestBodies": null,
@@ -3924,6 +3927,7 @@
                                     "inline": null
                                 },
                                 "terminator": null,
+                                "resumable": false,
                                 "docs": "SSE stream with no discriminator context hint",
                                 "v2Examples": null
                             }
@@ -4274,7 +4278,7 @@
                             "inline": null
                         },
                         "docs": null,
-                        "contentType": "application/json",
+                        "contentType": null,
                         "v2Examples": null
                     },
                     "v2RequestBodies": null,
@@ -4323,6 +4327,7 @@
                                     "inline": null
                                 },
                                 "terminator": null,
+                                "resumable": false,
                                 "docs": "SSE stream with protocol context but flat allOf schemas",
                                 "v2Examples": null
                             }
@@ -4673,7 +4678,7 @@
                             "inline": null
                         },
                         "docs": null,
-                        "contentType": "application/json",
+                        "contentType": null,
                         "v2Examples": null
                     },
                     "v2RequestBodies": null,
@@ -4722,6 +4727,7 @@
                                     "inline": null
                                 },
                                 "terminator": null,
+                                "resumable": false,
                                 "docs": "SSE stream with data context but envelope+data schemas",
                                 "v2Examples": null
                             }
@@ -4986,7 +4992,7 @@
                             "inline": null
                         },
                         "docs": null,
-                        "contentType": "application/json",
+                        "contentType": null,
                         "v2Examples": null
                     },
                     "v2RequestBodies": null,
@@ -5035,6 +5041,7 @@
                                     "inline": null
                                 },
                                 "terminator": null,
+                                "resumable": false,
                                 "docs": "SSE stream following the OAS 3.2 spec example pattern",
                                 "v2Examples": null
                             }
@@ -9689,7 +9696,7 @@
                             "inline": null
                         },
                         "docs": null,
-                        "contentType": "application/json",
+                        "contentType": null,
                         "v2Examples": null
                     },
                     "v2RequestBodies": null,
@@ -11120,7 +11127,7 @@
                             "inline": null
                         },
                         "docs": null,
-                        "contentType": "application/json",
+                        "contentType": null,
                         "v2Examples": null
                     },
                     "v2RequestBodies": null,
@@ -11167,6 +11174,7 @@
                                     }
                                 },
                                 "terminator": null,
+                                "resumable": false,
                                 "docs": "SSE stream of completion chunks",
                                 "v2Examples": null
                             }
@@ -16743,6 +16751,7 @@
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {

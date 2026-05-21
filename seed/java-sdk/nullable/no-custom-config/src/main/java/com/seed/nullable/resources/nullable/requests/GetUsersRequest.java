@@ -8,10 +8,12 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.nullable.core.Nullable;
+import com.seed.nullable.core.NullableNonemptyFilter;
 import com.seed.nullable.core.ObjectMappers;
 import java.util.Collections;
 import java.util.HashMap;
@@ -50,12 +52,12 @@ public final class GetUsersRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonIgnore
+    @JsonProperty("usernames")
     public Optional<List<String>> getUsernames() {
         return usernames;
     }
 
-    @JsonIgnore
+    @JsonProperty("activated")
     public Optional<List<Boolean>> getActivated() {
         return activated;
     }
@@ -68,7 +70,7 @@ public final class GetUsersRequest {
         return tags;
     }
 
-    @JsonIgnore
+    @JsonProperty("avatar")
     public Optional<String> getAvatar() {
         return avatar;
     }
@@ -78,6 +80,18 @@ public final class GetUsersRequest {
         if (extra == null) {
             return Optional.empty();
         }
+        return extra;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("tags")
+    private Optional<List<String>> _getTags() {
+        return tags;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("extra")
+    private Optional<Boolean> _getExtra() {
         return extra;
     }
 

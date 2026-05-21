@@ -49,6 +49,7 @@
               "response-stream": {
                 "docs": "Server-sent events stream",
                 "format": "sse",
+                "resumable": false,
                 "terminator": undefined,
                 "type": "SseStreamEvent",
               },
@@ -172,6 +173,7 @@
         docs: Server-sent events stream
         type: SseStreamEvent
         format: sse
+        resumable: false
       examples:
         - request: {}
           response:

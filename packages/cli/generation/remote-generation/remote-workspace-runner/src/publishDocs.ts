@@ -180,7 +180,11 @@ export async function publishDocs({
     loginCommand?: string;
     multiSource?: boolean;
 }): Promise<string> {
-    const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
+    const fdrOrigin =
+        process.env.FERN_FDR_ORIGIN ??
+        process.env.OVERRIDE_FDR_ORIGIN ??
+        process.env.DEFAULT_FDR_ORIGIN ??
+        "https://registry.buildwithfern.com";
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
     if (isAirGapped) {
         context.logger.debug("Detected air-gapped environment - skipping external FDR service calls");
@@ -1245,9 +1249,15 @@ async function checkAndDownloadExistingSdkDynamicIRs({
     }
 
     try {
+        const snippetConfig = Object.fromEntries(
+            Object.entries(snippetConfigWithVersions).map(([lang, info]) => [
+                lang,
+                { packageName: info.packageName, version: info.version }
+            ])
+        );
         const response = await fdr.api.register.checkSdkDynamicIrExists({
             orgId: CjsFdrSdk.OrgId(organization),
-            snippetConfiguration: snippetConfigWithVersions
+            snippetConfiguration: snippetConfig
         });
 
         const existingDynamicIrs = response.existingDynamicIrs ?? {};
@@ -1652,19 +1662,23 @@ async function uploadDynamicIRs({
 
             if (dynamicIR) {
                 const jsonBody = JSON.stringify(dynamicIR);
-                const response = await fetch(source.uploadUrl, {
-                    method: "PUT",
-                    body: jsonBody,
-                    headers: {
-                        "Content-Type": "application/octet-stream",
-                        "Content-Length": Buffer.byteLength(jsonBody, "utf8").toString()
-                    }
-                });
+                try {
+                    const response = await fetch(source.uploadUrl, {
+                        method: "PUT",
+                        body: jsonBody,
+                        headers: {
+                            "Content-Type": "application/octet-stream",
+                            "Content-Length": Buffer.byteLength(jsonBody, "utf8").toString()
+                        }
+                    });
 
-                if (response.ok) {
-                    context.logger.debug(`Uploaded dynamic IR for ${apiId}:${language}`);
-                } else {
-                    context.logger.warn(`Failed to upload dynamic IR for ${apiId}:${language}`);
+                    if (response.ok) {
+                        context.logger.debug(`Uploaded dynamic IR for ${apiId}:${language}`);
+                    } else {
+                        context.logger.warn(`Failed to upload dynamic IR for ${apiId}:${language}`);
+                    }
+                } catch (error) {
+                    context.logger.warn(`Network error uploading dynamic IR for ${apiId}:${language}: ${error}`);
                 }
             } else {
                 context.logger.warn(`Could not find matching dynamic IR to upload for ${apiId}:${language}`);

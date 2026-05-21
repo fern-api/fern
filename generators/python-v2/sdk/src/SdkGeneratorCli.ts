@@ -9,8 +9,9 @@ import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import { buildReference } from "./reference/buildReference.js";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+import { type OutputDirectory, SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
+import { selectExamplesForSnippets } from "./utils/selectExamplesForSnippets.js";
 import { WireTestGenerator } from "./wire-tests/WireTestGenerator.js";
 
 export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
@@ -49,37 +50,41 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        await this.generateWireTestFiles(context);
+        // In source-root mode the user is embedding the source tree into an existing
+        // project, so README/reference/CONTRIBUTING/wire-test scaffolding doesn't apply.
+        const sourceRoot: OutputDirectory = "source-root";
+        if (context.customConfig.output_directory !== sourceRoot) {
+            await this.generateWireTestFiles(context);
 
-        // Generate snippets once, used by both README and reference
-        let endpointSnippets: Endpoint[] = [];
-        try {
-            endpointSnippets = this.generateSnippets({ context });
-        } catch (error) {
-            context.logger.debug(`Failed to generate snippets: ${extractErrorMessage(error)}`);
-        }
-
-        // Generate README.md
-        if (this.shouldGenerateReadme(context) && endpointSnippets.length > 0) {
+            let endpointSnippets: Endpoint[] = [];
             try {
-                await this.generateReadme({ context, endpointSnippets });
+                endpointSnippets = this.generateSnippets({ context });
             } catch (error) {
-                throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(error)}`);
+                context.logger.debug(`Failed to generate snippets: ${extractErrorMessage(error)}`);
             }
-        }
 
-        // Generate reference.md
-        try {
-            await this.generateReference({ context, endpointSnippets });
-        } catch (error) {
-            throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
-        }
+            if (this.shouldGenerateReadme(context) && endpointSnippets.length > 0) {
+                try {
+                    await this.generateReadme({ context, endpointSnippets });
+                } catch (error) {
+                    throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(error)}`);
+                }
+            }
 
-        if (!context.config.whitelabel) {
             try {
-                this.generateContributing({ context });
+                await this.generateReference({ context, endpointSnippets });
             } catch (error) {
-                throw GeneratorError.internalError(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(error)}`);
+                throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
+            }
+
+            if (!context.config.whitelabel) {
+                try {
+                    this.generateContributing({ context });
+                } catch (error) {
+                    throw GeneratorError.internalError(
+                        `Failed to generate CONTRIBUTING.md: ${extractErrorMessage(error)}`
+                    );
+                }
             }
         }
 
@@ -128,7 +133,7 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
 
         for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
             const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
-            for (const endpointExample of endpoint.examples ?? []) {
+            for (const endpointExample of selectExamplesForSnippets(endpoint.examples)) {
                 try {
                     const response = dynamicSnippetsGenerator.generateSync(endpointExample);
                     endpointSnippets.push({

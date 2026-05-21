@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add an opt-in `user-agent-name-from-package` custom config option. When set
+    to `true`, the generated client falls back to a
+    `<NuGetPackageId>/<version>` `User-Agent` header when no
+    `platformHeaders.userAgent` is set in the IR (e.g. for SDKs imported from
+    OpenAPI), matching the TypeScript generator's npm-package-name fallback.
+    Defaults to `false`, preserving the existing behavior of emitting no
+    `User-Agent` header in that case.
+  type: feat

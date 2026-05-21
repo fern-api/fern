@@ -13,8 +13,8 @@ $client = new SeedClient(
 );
 $client->streamXFernStreamingUnion(
     StreamXFernStreamingUnionRequest::message(false, new UnionStreamMessageVariant([
+        'streamResponse' => false,
         'prompt' => 'prompt',
         'message' => 'message',
-        'streamResponse' => false,
     ])),
 );

@@ -9,5 +9,6 @@
     "name"
   ],
   "additionalProperties": false,
+  "description": "A simple type with just a name.",
   "definitions": {}
 }

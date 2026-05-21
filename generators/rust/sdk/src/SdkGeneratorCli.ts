@@ -30,7 +30,7 @@ import { WebSocketChannelGenerator } from "./generators/WebSocketChannelGenerato
 import { ReferenceConfigAssembler } from "./reference/index.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
-import { convertDynamicEndpointSnippetRequest, convertIr } from "./utils/index.js";
+import { convertDynamicEndpointSnippetRequest, convertIr, selectExamplesForSnippets } from "./utils/index.js";
 import { WireTestGenerator } from "./wire-tests/index.js";
 
 const execAsync = promisify(exec);
@@ -870,7 +870,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
             const method = endpoint.location.method;
             const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
-            for (const endpointExample of endpoint.examples ?? []) {
+            for (const endpointExample of selectExamplesForSnippets(endpoint.examples)) {
                 const generatedSnippet = dynamicSnippetsGenerator.generateSync(
                     convertDynamicEndpointSnippetRequest(endpointExample)
                 );
@@ -965,9 +965,10 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         let firstExample: FernIr.dynamic.EndpointSnippetRequest | undefined;
 
         for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
-            if (endpoint.examples && endpoint.examples.length > 0) {
+            const selected = selectExamplesForSnippets(endpoint.examples);
+            if (selected.length > 0) {
                 firstEndpointId = endpointId;
-                firstExample = endpoint.examples[0];
+                firstExample = selected[0];
                 break;
             }
         }

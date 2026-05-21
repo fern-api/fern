@@ -12,6 +12,7 @@ The Seed Swift library provides convenient access to the Seed APIs from Swift.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Errors](#errors)
+- [Request Types](#request-types)
 - [Advanced](#advanced)
   - [Additional Headers](#additional-headers)
   - [Additional Query String Parameters](#additional-query-string-parameters)
@@ -53,7 +54,7 @@ import Api
 private func main() async throws {
     let client = ApiClient(token: "<token>")
 
-    _ = try await client.imdb.createMovie(request: CreateMovieRequest(
+    _ = try await client.imdb.createMovie(request: .init(
         title: "title",
         rating: 1.1
     ))
@@ -90,6 +91,18 @@ do {
 } catch {
     print("Unexpected error:", error)
 }
+```
+
+## Request Types
+
+The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
+
+```swift
+import Api
+
+let request = Requests.CreateMovieRequest(
+    ...
+)
 ```
 
 ## Advanced

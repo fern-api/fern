@@ -222,19 +222,6 @@
             }
         },
         {
-            "example_identifier": "df1aae31",
-            "id": {
-                "method": "POST",
-                "path": "/users/top-level-cursor",
-                "identifier_override": "endpoint_users.listWithTopLevelBodyCursorPagination"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersTopLevelBodyCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithTopLevelBodyCursorPagination(\n            ListUsersTopLevelBodyCursorPaginationRequest\n                .builder()\n                .cursor(\"cursor\")\n                .filter(\"filter\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersTopLevelBodyCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithTopLevelBodyCursorPagination(\n            ListUsersTopLevelBodyCursorPaginationRequest\n                .builder()\n                .cursor(\"cursor\")\n                .filter(\"filter\")\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
             "example_identifier": "da96568f",
             "id": {
                 "method": "GET",
@@ -310,19 +297,6 @@
                 "type": "java",
                 "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOffsetStepPagination(\n            ListUsersOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(10)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOffsetStepPagination(\n            ListUsersOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(10)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "939533a0",
-            "id": {
-                "method": "GET",
-                "path": "/users",
-                "identifier_override": "endpoint_users.listWithOffsetPaginationHasNextPage"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOffsetStepPagination(\n            ListUsersOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(1)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOffsetStepPagination(\n            ListUsersOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(1)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
@@ -405,19 +379,6 @@
         },
         {
             "example_identifier": "WithoutData",
-            "id": {
-                "method": "GET",
-                "path": "/users/optional-data",
-                "identifier_override": "endpoint_users.listWithOptionalData"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOptionalData(\n            ListUsersOptionalDataRequest\n                .builder()\n                .page(1)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOptionalData(\n            ListUsersOptionalDataRequest\n                .builder()\n                .page(1)\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "d616a3f8",
             "id": {
                 "method": "GET",
                 "path": "/users/optional-data",

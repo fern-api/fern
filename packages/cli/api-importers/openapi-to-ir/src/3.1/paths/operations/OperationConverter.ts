@@ -39,6 +39,8 @@ export declare namespace OperationConverter {
         audiences: string[];
         errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration>;
         servers?: OpenAPIV3_1.ServerObject[];
+        inlinedRequestPropertiesByAudience?: Record<string, Set<string>>;
+        queryParametersByAudience?: Record<string, Set<string>>;
     }
 
     export interface ConvertedResponseBody {
@@ -99,6 +101,10 @@ export class OperationConverter extends AbstractOperationConverter {
             breadcrumbs: [...this.breadcrumbs, "parameters"]
         });
 
+        const queryParametersByAudience = this.collectQueryParameterAudiences({
+            breadcrumbs: [...this.breadcrumbs, "parameters"]
+        });
+
         const convertedRequestBodies = this.convertRequestBody({
             breadcrumbs: [...this.breadcrumbs, "requestBody"],
             group,
@@ -109,6 +115,8 @@ export class OperationConverter extends AbstractOperationConverter {
         const requestBody = convertedRequestBodies != null ? convertedRequestBodies[0]?.requestBody : undefined;
         const streamRequestBody =
             convertedRequestBodies != null ? convertedRequestBodies[0]?.streamRequestBody : undefined;
+        const inlinedRequestPropertiesByAudience =
+            convertedRequestBodies != null ? convertedRequestBodies[0]?.inlinedPropertiesByAudience : undefined;
 
         const v2RequestBodies: V2HttpRequestBodies = {
             requestBodies: convertedRequestBodies?.map((body) => body.requestBody)
@@ -298,8 +306,51 @@ export class OperationConverter extends AbstractOperationConverter {
                       }
                     : undefined,
             inlinedTypes: this.inlinedTypes,
-            servers: this.filterOutTopLevelServers(this.operation.servers ?? this.pathLevelServers ?? [])
+            servers: this.filterOutTopLevelServers(this.operation.servers ?? this.pathLevelServers ?? []),
+            inlinedRequestPropertiesByAudience,
+            queryParametersByAudience
         };
+    }
+
+    /**
+     * Walks the operation's parameters and groups query parameter wire names by
+     * `x-fern-audiences`. Parameters without an audience tag are omitted (they
+     * are universal — see `computeExcludedKeys` in `IrGraph.build()`). Returns
+     * `undefined` when no query parameter declares any audience to avoid
+     * populating the IR filter graph with empty maps.
+     */
+    private collectQueryParameterAudiences({
+        breadcrumbs
+    }: {
+        breadcrumbs: string[];
+    }): Record<string, Set<string>> | undefined {
+        if (this.operation.parameters == null) {
+            return undefined;
+        }
+        const audiencesByQueryParameter: Record<string, Set<string>> = {};
+        let foundAny = false;
+        for (const parameter of this.operation.parameters) {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.ParameterObject>({
+                schemaOrReference: parameter,
+                breadcrumbs,
+                skipErrorCollector: true
+            });
+            if (resolved == null || resolved.in !== "query") {
+                continue;
+            }
+            const paramAudiences = this.context.getAudiences({ operation: resolved, breadcrumbs }) ?? [];
+            if (paramAudiences.length === 0) {
+                continue;
+            }
+            foundAny = true;
+            for (const audience of paramAudiences) {
+                if (audiencesByQueryParameter[audience] == null) {
+                    audiencesByQueryParameter[audience] = new Set<string>();
+                }
+                audiencesByQueryParameter[audience].add(resolved.name);
+            }
+        }
+        return foundAny ? audiencesByQueryParameter : undefined;
     }
 
     protected convertResponseBody({

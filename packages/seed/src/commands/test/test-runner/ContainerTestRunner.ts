@@ -10,6 +10,7 @@ import path from "path";
 
 import { runScript } from "../../../runScript.js";
 import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from "../../../utils/constants.js";
+import { generatorEmitsVerifyScript } from "../../../utils/generatorEmitsVerifyScript.js";
 import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation.js";
 import { getWorktreeSuffix } from "../../../utils/getWorktreeSuffix.js";
 import { ParsedDockerName, parseDockerOrThrow } from "../../../utils/parseDockerOrThrow.js";
@@ -152,7 +153,8 @@ export class ContainerTestRunner extends TestRunner {
         smartCasing,
         organization,
         absolutePathToFernConfig,
-        skipAutogenerationIfManualExamplesExist
+        skipAutogenerationIfManualExamplesExist,
+        rawApiSpecs
     }: TestRunner.DoRunArgs): Promise<void> {
         const generatorGroup: generatorsYml.GeneratorGroup = {
             groupName: "test",
@@ -175,6 +177,9 @@ export class ContainerTestRunner extends TestRunner {
                 })
             ]
         };
+        const generatorName = this.getParsedDockerImageName().name;
+        const verifyEnabled = generatorEmitsVerifyScript(generatorName);
+
         await runContainerizedGenerationForSeed({
             organization: organization ?? DUMMY_ORGANIZATION,
             absolutePathToFernConfig: absolutePathToFernConfig ?? absolutePathToFernDefinition,
@@ -191,7 +196,14 @@ export class ContainerTestRunner extends TestRunner {
             runner: this.runner,
             executionEnvironment: this.reusableContainer,
             ai: undefined,
-            skipAutogenerationIfManualExamplesExist
+            skipAutogenerationIfManualExamplesExist,
+            rawApiSpecs,
+            verify: verifyEnabled,
+            verifyRunner: this.runner,
+            // Generator runs at :local but the validator image isn't built locally;
+            // pull the published :latest validator. This mirrors what a customer's
+            // `fern generate --local --verify` would do against a published generator.
+            verifyValidatorVersion: verifyEnabled ? "latest" : undefined
         });
     }
 

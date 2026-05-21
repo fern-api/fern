@@ -130,9 +130,15 @@ export class ProtobufOpenAPIGenerator {
                     logger: this.context.logger,
                     stdout: "ignore",
                     stderr: "pipe",
+                    reject: false,
                     ...(envOverride != null ? { env: { ...process.env, ...envOverride } } : {})
                 });
-                await buf(["dep", "update"]);
+                const bufDepUpdateResult = await buf(["dep", "update"]);
+                if (bufDepUpdateResult.exitCode !== 0) {
+                    this.context.failAndThrow(bufDepUpdateResult.stderr, undefined, {
+                        code: CliError.Code.UserError
+                    });
+                }
             }
         }
 
@@ -164,13 +170,14 @@ export class ProtobufOpenAPIGenerator {
             logger: this.context.logger,
             stdout: "ignore",
             stderr: "pipe",
+            reject: false,
             ...(preparedDir.envOverride != null ? { env: { ...process.env, ...preparedDir.envOverride } } : {})
         });
 
         const bufGenerateResult = await buf(["generate", target.toString()]);
         if (bufGenerateResult.exitCode !== 0) {
             this.context.failAndThrow(bufGenerateResult.stderr, undefined, {
-                code: CliError.Code.IrConversionError
+                code: CliError.Code.UserError
             });
         }
 
@@ -271,6 +278,7 @@ export class ProtobufOpenAPIGenerator {
             logger: this.context.logger,
             stdout: "ignore",
             stderr: "pipe",
+            reject: false,
             ...(envOverride != null ? { env: { ...process.env, ...envOverride } } : {})
         });
 
@@ -296,7 +304,12 @@ export class ProtobufOpenAPIGenerator {
                     }
                 } else {
                     // Run buf dep update to populate the cache (needed at build time)
-                    await buf(["dep", "update"]);
+                    const bufDepUpdateResult = await buf(["dep", "update"]);
+                    if (bufDepUpdateResult.exitCode !== 0) {
+                        this.context.failAndThrow(bufDepUpdateResult.stderr, undefined, {
+                            code: CliError.Code.UserError
+                        });
+                    }
                 }
                 // Read buf.lock contents for caching
                 try {
@@ -309,7 +322,7 @@ export class ProtobufOpenAPIGenerator {
             const bufGenerateResult = await buf(["generate", target.toString()]);
             if (bufGenerateResult.exitCode !== 0) {
                 this.context.failAndThrow(bufGenerateResult.stderr, undefined, {
-                    code: CliError.Code.IrConversionError
+                    code: CliError.Code.UserError
                 });
             }
             if (cleanupBufLock) {

@@ -61,11 +61,11 @@
         "ts-loader": "^9.5.4",
         "vitest": "^4.1.1",
         "msw": "2.11.2",
-        "@types/node": "^18.19.70",
+        "@types/node": "^20.0.0",
         "typescript": "~5.9.3",
         "@biomejs/biome": "2.4.10",
-        "oxlint": "1.57.0",
-        "oxlint-tsgolint": "0.17.4"
+        "oxlint": "1.63.0",
+        "oxlint-tsgolint": "0.22.1"
     },
     "browser": {
         "fs": false,

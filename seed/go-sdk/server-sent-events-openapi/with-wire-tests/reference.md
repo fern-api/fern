@@ -813,11 +813,11 @@ Uses x-fern-streaming with stream-condition where the request body is a discrimi
 ```go
 request := &fern.StreamXFernStreamingUnionStreamRequest{
         Message: &fern.UnionStreamMessageVariant{
-            Prompt: "prompt",
-            Message: "message",
             StreamResponse: fern.Bool(
                 true,
             ),
+            Prompt: "prompt",
+            Message: "message",
         },
     }
 client.StreamXFernStreamingUnionStream(
@@ -880,11 +880,11 @@ Uses x-fern-streaming with stream-condition where the request body is a discrimi
 ```go
 request := &fern.StreamXFernStreamingUnionStreamRequest{
         Message: &fern.UnionStreamMessageVariant{
-            Prompt: "prompt",
-            Message: "message",
             StreamResponse: fern.Bool(
                 false,
             ),
+            Prompt: "prompt",
+            Message: "message",
         },
     }
 client.StreamXFernStreamingUnionStream(

@@ -1,0 +1,511 @@
+{
+  "title": "Readonly Endpoint Response API",
+  "description": "Tests that when a schema with readOnly properties is used as the direct response type of an endpoint (not just nested within another schema), the endpoint response type reference is correctly remapped to the Read variant.\n",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Create a webhook",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostWebhooksRequest",
+      "request": {
+        "schema": {
+          "generatedName": "PostWebhooksRequest",
+          "schema": "Webhook",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Webhook created successfully",
+        "schema": {
+          "generatedName": "PostWebhooksResponse",
+          "schema": "Webhook",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/webhooks",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "uri": {
+                  "value": {
+                    "value": "uri",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "created_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "state": {
+                  "value": "enabled",
+                  "type": "enum"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Get a webhook",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetWebhooksIdRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetWebhooksIdRequest",
+      "response": {
+        "description": "Webhook retrieved successfully",
+        "schema": {
+          "generatedName": "GetWebhooksIdResponse",
+          "schema": "Webhook",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/webhooks/{id}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "uri": {
+                  "value": {
+                    "value": "uri",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "created_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "state": {
+                  "value": "enabled",
+                  "type": "enum"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Update a webhook",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "PatchWebhooksIdRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PatchWebhooksIdRequest",
+      "request": {
+        "schema": {
+          "generatedName": "PatchWebhooksIdRequestBody",
+          "schema": "WebhookUpdate",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Webhook updated successfully",
+        "schema": {
+          "generatedName": "PatchWebhooksIdResponse",
+          "schema": "Webhook",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "PATCH",
+      "path": "/webhooks/{id}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "uri": {
+                  "value": {
+                    "value": "uri",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "created_at": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "state": {
+                  "value": "enabled",
+                  "type": "enum"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Webhook": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "webhookId",
+            "key": "id",
+            "schema": {
+              "generatedName": "WebhookId",
+              "description": "Output only. The ID of the webhook.",
+              "value": {
+                "description": "Output only. The ID of the webhook.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "WebhookId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "webhookUri",
+            "key": "uri",
+            "schema": {
+              "generatedName": "WebhookUri",
+              "description": "The URI to which webhook events will be sent.",
+              "value": {
+                "description": "The URI to which webhook events will be sent.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "WebhookUri",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "webhookCreatedAt",
+            "key": "created_at",
+            "schema": {
+              "generatedName": "WebhookCreatedAt",
+              "description": "Output only. When the webhook was created.",
+              "value": {
+                "description": "Output only. When the webhook was created.",
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "WebhookCreatedAt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "webhookState",
+            "key": "state",
+            "schema": {
+              "generatedName": "WebhookState",
+              "description": "Output only. The state of the webhook.",
+              "value": {
+                "description": "Output only. The state of the webhook.",
+                "generatedName": "WebhookState",
+                "values": [
+                  {
+                    "generatedName": "enabled",
+                    "value": "enabled",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "disabled",
+                    "value": "disabled",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Webhook",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "WebhookUpdate": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "webhookUpdateUri",
+            "key": "uri",
+            "schema": {
+              "generatedName": "WebhookUpdateUri",
+              "description": "The URI to which webhook events will be sent.",
+              "value": {
+                "description": "The URI to which webhook events will be sent.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "WebhookUpdateUri",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "WebhookUpdate",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

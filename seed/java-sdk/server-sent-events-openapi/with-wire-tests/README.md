@@ -67,7 +67,6 @@ public class Example {
         client.streamProtocolNoCollision(
             StreamRequest
                 .builder()
-                .query("query")
                 .build()
         );
     }

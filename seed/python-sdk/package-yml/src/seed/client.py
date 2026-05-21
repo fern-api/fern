@@ -25,11 +25,15 @@ class SeedPackageYml:
     base_url : str
         The base url to use for requests from the client.
 
+    id : str
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
+
+    max_retries : typing.Optional[int]
+        The default maximum number of retries for failed requests. Defaults to 2. Per-request `max_retries` in `request_options` takes precedence over this value.
 
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
@@ -45,6 +49,7 @@ class SeedPackageYml:
     from seed import SeedPackageYml
 
     client = SeedPackageYml(
+        id="YOUR_ID",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -53,8 +58,10 @@ class SeedPackageYml:
         self,
         *,
         base_url: str,
+        id: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
+        max_retries: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
@@ -62,8 +69,10 @@ class SeedPackageYml:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
+        _defaulted_max_retries = max_retries if max_retries is not None else 2
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
+            id=id,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -71,6 +80,7 @@ class SeedPackageYml:
             if follow_redirects is not None
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
+            max_retries=_defaulted_max_retries,
             logging=logging,
         )
         self._raw_client = RawSeedPackageYml(client_wrapper=self._client_wrapper)
@@ -87,12 +97,10 @@ class SeedPackageYml:
         """
         return self._raw_client
 
-    def echo(self, id: str, *, name: str, size: int, request_options: typing.Optional[RequestOptions] = None) -> str:
+    def echo(self, *, name: str, size: int, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------
-        id : str
-
         name : str
 
         size : int
@@ -109,6 +117,7 @@ class SeedPackageYml:
         from seed import SeedPackageYml
 
         client = SeedPackageYml(
+            id="YOUR_ID",
             base_url="https://yourhost.com/path/to/api",
         )
         client.echo(
@@ -116,7 +125,7 @@ class SeedPackageYml:
             size=20,
         )
         """
-        _response = self._raw_client.echo(id, name=name, size=size, request_options=request_options)
+        _response = self._raw_client.echo(name=name, size=size, request_options=request_options)
         return _response.data
 
     @property
@@ -155,11 +164,15 @@ class AsyncSeedPackageYml:
     base_url : str
         The base url to use for requests from the client.
 
+    id : str
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
+
+    max_retries : typing.Optional[int]
+        The default maximum number of retries for failed requests. Defaults to 2. Per-request `max_retries` in `request_options` takes precedence over this value.
 
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
@@ -175,6 +188,7 @@ class AsyncSeedPackageYml:
     from seed import AsyncSeedPackageYml
 
     client = AsyncSeedPackageYml(
+        id="YOUR_ID",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -183,8 +197,10 @@ class AsyncSeedPackageYml:
         self,
         *,
         base_url: str,
+        id: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
+        max_retries: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
@@ -192,13 +208,16 @@ class AsyncSeedPackageYml:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
+        _defaulted_max_retries = max_retries if max_retries is not None else 2
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
+            id=id,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
             else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
             timeout=_defaulted_timeout,
+            max_retries=_defaulted_max_retries,
             logging=logging,
         )
         self._raw_client = AsyncRawSeedPackageYml(client_wrapper=self._client_wrapper)
@@ -215,14 +234,10 @@ class AsyncSeedPackageYml:
         """
         return self._raw_client
 
-    async def echo(
-        self, id: str, *, name: str, size: int, request_options: typing.Optional[RequestOptions] = None
-    ) -> str:
+    async def echo(self, *, name: str, size: int, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------
-        id : str
-
         name : str
 
         size : int
@@ -241,6 +256,7 @@ class AsyncSeedPackageYml:
         from seed import AsyncSeedPackageYml
 
         client = AsyncSeedPackageYml(
+            id="YOUR_ID",
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -254,7 +270,7 @@ class AsyncSeedPackageYml:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.echo(id, name=name, size=size, request_options=request_options)
+        _response = await self._raw_client.echo(name=name, size=size, request_options=request_options)
         return _response.data
 
     @property

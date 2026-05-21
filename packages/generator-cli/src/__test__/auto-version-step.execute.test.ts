@@ -12,13 +12,16 @@ const mockConsolidateChangelog = vi.fn();
 const mockConfigureBamlClient = vi.fn(() => ({}));
 
 vi.mock("@fern-api/cli-ai", () => ({
-    b: {
-        withOptions: () => ({
-            AnalyzeSdkDiff: mockAnalyzeSdkDiff,
-            ConsolidateChangelog: mockConsolidateChangelog
-        })
-    },
-    configureBamlClient: mockConfigureBamlClient,
+    loadBamlDependencies: vi.fn().mockResolvedValue({
+        BamlClient: {
+            withOptions: () => ({
+                AnalyzeSdkDiff: mockAnalyzeSdkDiff,
+                ConsolidateChangelog: mockConsolidateChangelog
+            })
+        },
+        configureBamlClient: mockConfigureBamlClient,
+        ClientRegistry: class ClientRegistry {}
+    }),
     VersionBump: { MAJOR: "MAJOR", MINOR: "MINOR", PATCH: "PATCH", NO_CHANGE: "NO_CHANGE" }
 }));
 
@@ -121,8 +124,8 @@ async function setupTwoGenerations(
 
 /**
  * A bare-bones PreparedReplay stand-in. AutoVersionStep reads `flow`,
- * `previousGenerationSha`, `currentGenerationSha`, and `baseBranchHead` only;
- * `_service` and `_preparation` are never dereferenced inside execute().
+ * `previousGenerationSha`, and `currentGenerationSha` only; `_service` and
+ * `_preparation` are never dereferenced inside execute().
  */
 function fakePreparedReplay(overrides: Partial<PreparedReplay>): PreparedReplay {
     return {
@@ -132,7 +135,8 @@ function fakePreparedReplay(overrides: Partial<PreparedReplay>): PreparedReplay 
         flow: overrides.flow ?? "normal-regeneration",
         previousGenerationSha: overrides.previousGenerationSha ?? null,
         currentGenerationSha: overrides.currentGenerationSha ?? "unused",
-        baseBranchHead: overrides.baseBranchHead ?? null
+        autoBootstrapped: overrides.autoBootstrapped ?? false,
+        bootstrapAttempted: overrides.bootstrapAttempted ?? false
     };
 }
 
@@ -327,6 +331,227 @@ describe("AutoVersionStep.execute() — normal MINOR flow", () => {
         const head = gitExec(["log", "-1", "--format=%B"], repo.repoPath);
         expect(head).toContain("feat: add newFeature helper");
         expect(head).not.toContain("🌿 Generated with Fern");
+    });
+});
+
+describe("AutoVersionStep.execute() — pipeline baseVersion overrides diff extraction", () => {
+    let repo: TwoGenerations;
+
+    beforeEach(async () => {
+        mockAnalyzeSdkDiff.mockReset();
+        mockConsolidateChangelog.mockReset();
+        // Frameio repro: previous [fern-generated] had 3.2.4; customer manually
+        // bumped to 4.1.0 between gens, so fiddle passes baseVersion=4.1.0.
+        repo = await setupTwoGenerations({
+            previousVersion: "3.2.4",
+            featureFile: {
+                path: "src/newFeature.ts",
+                content: "export function newFeature(): number {\n    return 42;\n}\n"
+            }
+        });
+    });
+
+    afterEach(async () => {
+        await repo.cleanup();
+    });
+
+    it("bumps from baseVersion (4.1.0 → 4.2.0) instead of regressing to the diff value (3.2.4 → 3.2.5)", async () => {
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: "MINOR",
+            message: "feat: add newFeature helper",
+            changelog_entry: "### Added\n- newFeature()",
+            version_bump_reason: "New public API."
+        });
+
+        const step = new AutoVersionStep(repo.repoPath, makeLogger(), {
+            ...baseConfig,
+            baseVersion: "4.1.0"
+        });
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+
+        const result = await step.execute(makeContext(prepared));
+
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("4.1.0");
+        expect(result.version).toBe("4.2.0");
+        expect(result.versionBump).toBe("MINOR");
+
+        const pkg = JSON.parse(readFileSync(join(repo.repoPath, "package.json"), "utf-8")) as {
+            version: string;
+        };
+        expect(pkg.version).toBe("4.2.0");
+    });
+
+    it("falls back to diff extraction when baseVersion is omitted (preserves prior behavior)", async () => {
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: "PATCH",
+            message: "fix: minor",
+            changelog_entry: "",
+            version_bump_reason: "Internal."
+        });
+
+        const step = new AutoVersionStep(repo.repoPath, makeLogger(), baseConfig);
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+
+        const result = await step.execute(makeContext(prepared));
+
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("3.2.4");
+        expect(result.version).toBe("3.2.5");
+    });
+
+    it("ignores a malformed baseVersion and falls back to extraction (shell-injection guard)", async () => {
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: "PATCH",
+            message: "fix: minor",
+            changelog_entry: "",
+            version_bump_reason: "Internal."
+        });
+
+        const step = new AutoVersionStep(repo.repoPath, makeLogger(), {
+            ...baseConfig,
+            baseVersion: "4.1.0; rm -rf /"
+        });
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+
+        const result = await step.execute(makeContext(prepared));
+
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("3.2.4");
+        expect(result.version).toBe("3.2.5");
+    });
+});
+
+describe("AutoVersionStep.execute() — pre-release version handling", () => {
+    let repo: TwoGenerations;
+
+    beforeEach(async () => {
+        mockAnalyzeSdkDiff.mockReset();
+        mockConsolidateChangelog.mockReset();
+        repo = await setupTwoGenerations({
+            previousVersion: "0.0.1",
+            featureFile: {
+                path: "src/newFeature.ts",
+                content: "export function newFeature(): number {\n    return 42;\n}\n"
+            }
+        });
+    });
+
+    afterEach(async () => {
+        await repo.cleanup();
+    });
+
+    async function runWithBaseVersionAndBump(
+        baseVersion: string,
+        versionBump: "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE"
+    ) {
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: versionBump,
+            message: versionBump === "NO_CHANGE" ? "" : "feat: change",
+            changelog_entry: versionBump === "NO_CHANGE" ? "" : "### Added\n- change",
+            version_bump_reason: "test"
+        });
+        const step = new AutoVersionStep(repo.repoPath, makeLogger(), {
+            ...baseConfig,
+            baseVersion
+        });
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+        return step.execute(makeContext(prepared));
+    }
+
+    function packageJsonVersion(): string {
+        const pkg = JSON.parse(readFileSync(join(repo.repoPath, "package.json"), "utf-8")) as {
+            version: string;
+        };
+        return pkg.version;
+    }
+
+    it("PATCH on 4.0.0-beta.2 advances the prerelease counter (4.0.0-beta.3)", async () => {
+        const result = await runWithBaseVersionAndBump("4.0.0-beta.2", "PATCH");
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("4.0.0-beta.2");
+        expect(result.version).toBe("4.0.0-beta.3");
+        expect(packageJsonVersion()).toBe("4.0.0-beta.3");
+    });
+
+    it("MINOR on 4.0.0-beta.2 stays in the beta line (4.0.0-beta.3)", async () => {
+        const result = await runWithBaseVersionAndBump("4.0.0-beta.2", "MINOR");
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("4.0.0-beta.2");
+        expect(result.version).toBe("4.0.0-beta.3");
+        expect(packageJsonVersion()).toBe("4.0.0-beta.3");
+    });
+
+    it("MAJOR on 4.0.0-beta.2 stays in the beta line (4.0.0-beta.3) — promotion is never inferred", async () => {
+        const result = await runWithBaseVersionAndBump("4.0.0-beta.2", "MAJOR");
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("4.0.0-beta.2");
+        expect(result.version).toBe("4.0.0-beta.3");
+        expect(packageJsonVersion()).toBe("4.0.0-beta.3");
+    });
+
+    it("NO_CHANGE on 4.0.0-beta.2 preserves the version verbatim", async () => {
+        const result = await runWithBaseVersionAndBump("4.0.0-beta.2", "NO_CHANGE");
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("4.0.0-beta.2");
+        expect(result.version).toBe("4.0.0-beta.2");
+        expect(packageJsonVersion()).toBe("4.0.0-beta.2");
+    });
+
+    it("PATCH on 4.0.0-rc.0 advances rc counter (4.0.0-rc.1)", async () => {
+        const result = await runWithBaseVersionAndBump("4.0.0-rc.0", "PATCH");
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("4.0.0-rc.0");
+        expect(result.version).toBe("4.0.0-rc.1");
+        expect(packageJsonVersion()).toBe("4.0.0-rc.1");
+    });
+
+    it("PATCH on 4.0.0+build.123 drops build metadata and bumps patch (4.0.1)", async () => {
+        const result = await runWithBaseVersionAndBump("4.0.0+build.123", "PATCH");
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("4.0.0+build.123");
+        expect(result.version).toBe("4.0.1");
+        expect(packageJsonVersion()).toBe("4.0.1");
+    });
+
+    it("PATCH on 4.0.0-rc.2+build.5 drops build metadata and advances rc (4.0.0-rc.3)", async () => {
+        const result = await runWithBaseVersionAndBump("4.0.0-rc.2+build.5", "PATCH");
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("4.0.0-rc.2+build.5");
+        expect(result.version).toBe("4.0.0-rc.3");
+        expect(packageJsonVersion()).toBe("4.0.0-rc.3");
+    });
+
+    it("PATCH on 4.0.0-0 (numeric prerelease) advances the trailing counter (4.0.0-1)", async () => {
+        const result = await runWithBaseVersionAndBump("4.0.0-0", "PATCH");
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("4.0.0-0");
+        expect(result.version).toBe("4.0.0-1");
+        expect(packageJsonVersion()).toBe("4.0.0-1");
+    });
+
+    it("PATCH on 1.0.0-alpha.beta.1 (multi-segment prerelease) preserves all earlier segments (1.0.0-alpha.beta.2)", async () => {
+        const result = await runWithBaseVersionAndBump("1.0.0-alpha.beta.1", "PATCH");
+        expect(result.success).toBe(true);
+        expect(result.previousVersion).toBe("1.0.0-alpha.beta.1");
+        expect(result.version).toBe("1.0.0-alpha.beta.2");
+        expect(packageJsonVersion()).toBe("1.0.0-alpha.beta.2");
     });
 });
 

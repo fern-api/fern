@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump the typescript-sdk-cli and typescript-sdk-validator container base
+    images from `node:*-bookworm-slim` to `node:*-trixie-slim`. Trixie ships
+    patched versions of glibc, dpkg, nghttp2, libcap2, systemd, libgcrypt20,
+    krb5, curl, and expat that are not available on bookworm, so dist-upgrade
+    alone is a no-op for those AWS Inspector findings — the base-image bump
+    is what actually clears them.
+  type: chore

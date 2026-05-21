@@ -1,0 +1,3 @@
+- summary: |
+    Fix `fern check` to respect `x-fern-ignore` when validating duplicate SDK method names. Operations marked with `x-fern-ignore: true` are now excluded from the duplicate override check.
+  type: fix

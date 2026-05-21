@@ -59,6 +59,7 @@
             "!!**/*.{yaml,yml,mdx,md,proto,sh,ps1,bat,java,py,rb,php,cs,txt,svg,jpg,jpeg,png,zip,woff2,baml,snap,props,lock,gradle}",
             "!!**/*.schema.json",
             "!!**/asIs/**",
+            "!!generators/cli/sdk/**",
             "!!**/bin/**",
             "!!**/bin/**",
             "!!**/dist",

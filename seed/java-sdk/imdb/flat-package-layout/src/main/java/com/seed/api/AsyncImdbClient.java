@@ -6,6 +6,7 @@ package com.seed.api;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.types.CreateMovieRequest;
+import com.seed.api.types.GetMovieImdbRequest;
 import com.seed.api.types.Movie;
 import java.util.concurrent.CompletableFuture;
 
@@ -46,5 +47,14 @@ public class AsyncImdbClient {
 
     public CompletableFuture<Movie> getMovie(String movieId, RequestOptions requestOptions) {
         return this.rawClient.getMovie(movieId, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Movie> getMovie(String movieId, GetMovieImdbRequest request) {
+        return this.rawClient.getMovie(movieId, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Movie> getMovie(
+            String movieId, GetMovieImdbRequest request, RequestOptions requestOptions) {
+        return this.rawClient.getMovie(movieId, request, requestOptions).thenApply(response -> response.body());
     }
 }

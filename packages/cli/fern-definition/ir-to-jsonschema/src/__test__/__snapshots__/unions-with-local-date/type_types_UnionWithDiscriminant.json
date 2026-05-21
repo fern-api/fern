@@ -21,7 +21,8 @@
       },
       "required": [
         "_type"
-      ]
+      ],
+      "description": "This is a Foo field."
     },
     {
       "properties": {

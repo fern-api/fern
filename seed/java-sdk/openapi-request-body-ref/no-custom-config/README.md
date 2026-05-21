@@ -68,8 +68,6 @@ public class Example {
             CreateVendorRequest
                 .builder()
                 .name("name")
-                .idempotencyKey("idempotencyKey")
-                .address("address")
                 .build()
         );
     }

@@ -11,14 +11,18 @@ class BaseClientWrapper:
     def __init__(
         self,
         *,
+        tenant_id: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
+        max_retries: int = 2,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
+        self._tenant_id = tenant_id
         self._headers = headers
         self._base_url = base_url
         self._timeout = timeout
+        self._max_retries = max_retries
         self._logging = logging
 
     def get_headers(self) -> typing.Dict[str, str]:
@@ -44,23 +48,36 @@ class BaseClientWrapper:
     def get_timeout(self) -> typing.Optional[float]:
         return self._timeout
 
+    def get_max_retries(self) -> int:
+        return self._max_retries
+
 
 class SyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
+        tenant_id: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
+        max_retries: int = 2,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(headers=headers, base_url=base_url, timeout=timeout, logging=logging)
+        super().__init__(
+            tenant_id=tenant_id,
+            headers=headers,
+            base_url=base_url,
+            timeout=timeout,
+            max_retries=max_retries,
+            logging=logging,
+        )
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
             base_timeout=self.get_timeout,
             base_url=self.get_base_url,
+            base_max_retries=self.get_max_retries(),
             logging_config=self._logging,
         )
 
@@ -69,20 +86,30 @@ class AsyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
+        tenant_id: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
+        max_retries: int = 2,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(headers=headers, base_url=base_url, timeout=timeout, logging=logging)
+        super().__init__(
+            tenant_id=tenant_id,
+            headers=headers,
+            base_url=base_url,
+            timeout=timeout,
+            max_retries=max_retries,
+            logging=logging,
+        )
         self._async_token = async_token
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
             base_timeout=self.get_timeout,
             base_url=self.get_base_url,
+            base_max_retries=self.get_max_retries(),
             async_base_headers=self.async_get_headers,
             logging_config=self._logging,
         )

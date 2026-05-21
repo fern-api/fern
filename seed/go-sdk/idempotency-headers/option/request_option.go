@@ -72,9 +72,39 @@ func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
 	}
 }
 
+// WithMaxStreamReconnectAttempts caps the number of transparent mid-stream
+// reconnect attempts on streaming endpoints that support resumption. The
+// reconnect loop honors Last-Event-ID and any server-sent `retry:` directives.
+// Has no effect on endpoints that don't support resumption.
+func WithMaxStreamReconnectAttempts(attempts uint) *core.MaxStreamReconnectAttemptsOption {
+	return &core.MaxStreamReconnectAttemptsOption{
+		MaxStreamReconnectAttempts: attempts,
+	}
+}
+
+// WithoutStreamReconnection disables transparent mid-stream reconnection on
+// resumable SSE endpoints. Has no effect on non-resumable endpoints.
+func WithoutStreamReconnection() *core.WithoutStreamReconnectionOption {
+	return &core.WithoutStreamReconnectionOption{}
+}
+
+// WithoutRetries disables HTTP-level retry attempts for the request. Use this
+// instead of WithMaxAttempts(0), which falls through to the default of 2
+// attempts.
+func WithoutRetries() *core.WithoutRetriesOption {
+	return &core.WithoutRetriesOption{}
+}
+
 // WithToken sets the 'Authorization: Bearer <token>' request header.
 func WithToken(token string) *core.TokenOption {
 	return &core.TokenOption{
 		Token: token,
+	}
+}
+
+// WithTokenFunc sets a function that returns the 'Authorization: Bearer' token at request time.
+func WithTokenFunc(fn func() (string, error)) *core.TokenFuncOption {
+	return &core.TokenFuncOption{
+		TokenFunc: fn,
 	}
 }

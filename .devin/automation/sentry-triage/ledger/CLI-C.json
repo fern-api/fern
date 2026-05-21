@@ -1,0 +1,9 @@
+{
+  "title": "stream-json parser expected comma",
+  "disposition": "shipped",
+  "rationale": "The stream-json parser failure occurs while reading user-provided IR for diff; current code wraps it as ParseError at that boundary.",
+  "fixSummary": "diff command catches streamObjectFromFile failures and reports CliError(ParseError).",
+  "prOrIssue": "Already handled in current code; ledger corrected in this PR",
+  "lastAnalyzed": "2026-05-05",
+  "problemSignature": "stream-json parser failed on malformed user-provided IR input; should be parse semantics at diff boundary."
+}

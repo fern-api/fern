@@ -3,12 +3,12 @@
 import * as FernIr from "../../../../../index.js";
 
 export type FileUploadRequestBodyProperty =
-    | FernIr.dynamic.FileUploadRequestBodyProperty.File_
+    | FernIr.dynamic.FileUploadRequestBodyProperty.File
     | FernIr.dynamic.FileUploadRequestBodyProperty.FileArray
     | FernIr.dynamic.FileUploadRequestBodyProperty.BodyProperty;
 
 export namespace FileUploadRequestBodyProperty {
-    export interface File_ extends FernIr.dynamic.NameAndWireValue, _Utils {
+    export interface File extends FernIr.dynamic.NameAndWireValue, _Utils {
         type: "file";
     }
 
@@ -33,12 +33,12 @@ export namespace FileUploadRequestBodyProperty {
 }
 
 export const FileUploadRequestBodyProperty = {
-    file: (value: FernIr.dynamic.NameAndWireValue): FernIr.dynamic.FileUploadRequestBodyProperty.File_ => {
+    file: (value: FernIr.dynamic.NameAndWireValue): FernIr.dynamic.FileUploadRequestBodyProperty.File => {
         return {
             ...value,
             type: "file",
             _visit: function <_Result>(
-                this: FernIr.dynamic.FileUploadRequestBodyProperty.File_,
+                this: FernIr.dynamic.FileUploadRequestBodyProperty.File,
                 visitor: FernIr.dynamic.FileUploadRequestBodyProperty._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.FileUploadRequestBodyProperty._visit(this, visitor);

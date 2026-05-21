@@ -14,19 +14,6 @@
             }
         },
         {
-            "example_identifier": "d8492cb1",
-            "id": {
-                "method": "POST",
-                "path": "/",
-                "identifier_override": "endpoint_.echo"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.echo(\"string\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.echo(\"string\");\n    }\n}\n"
-            }
-        },
-        {
             "example_identifier": "40d77421",
             "id": {
                 "method": "POST",
@@ -53,19 +40,6 @@
             }
         },
         {
-            "example_identifier": "11d094a5",
-            "id": {
-                "method": "GET",
-                "path": "/file/notification/{notificationId}",
-                "identifier_override": "endpoint_file/notification/service.getException"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().notification().service().getException(\"notificationId\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().notification().service().getException(\"notificationId\");\n    }\n}\n"
-            }
-        },
-        {
             "example_identifier": "4683d279",
             "id": {
                 "method": "GET",
@@ -76,32 +50,6 @@
                 "type": "java",
                 "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            \"file.txt\",\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"0.0.2\")\n                .build()\n        );\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            \"file.txt\",\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"0.0.2\")\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "25180546",
-            "id": {
-                "method": "GET",
-                "path": "/file/{filename}",
-                "identifier_override": "endpoint_file/service.getFile"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            \"filename\",\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"X-File-API-Version\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            \"filename\",\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"X-File-API-Version\")\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "ea8d1023",
-            "id": {
-                "method": "GET",
-                "path": "/file/{filename}",
-                "identifier_override": "endpoint_file/service.getFile"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            \"filename\",\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"X-File-API-Version\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            \"filename\",\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"X-File-API-Version\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
@@ -131,33 +79,7 @@
             }
         },
         {
-            "example_identifier": "22df672c",
-            "id": {
-                "method": "GET",
-                "path": "/check/{id}",
-                "identifier_override": "endpoint_health/service.check"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.health().service().check(\"id\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.health().service().check(\"id\");\n    }\n}\n"
-            }
-        },
-        {
             "example_identifier": "Example0",
-            "id": {
-                "method": "GET",
-                "path": "/ping",
-                "identifier_override": "endpoint_health/service.ping"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.health().service().ping();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.health().service().ping();\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "14b143fa",
             "id": {
                 "method": "GET",
                 "path": "/ping",
@@ -183,19 +105,6 @@
             }
         },
         {
-            "example_identifier": "f7e4d576",
-            "id": {
-                "method": "GET",
-                "path": "/movie/{movieId}",
-                "identifier_override": "endpoint_service.getMovie"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().getMovie(\"movieId\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().getMovie(\"movieId\");\n    }\n}\n"
-            }
-        },
-        {
             "example_identifier": "1d327312",
             "id": {
                 "method": "POST",
@@ -209,19 +118,6 @@
             }
         },
         {
-            "example_identifier": "fe022a62",
-            "id": {
-                "method": "POST",
-                "path": "/movie",
-                "identifier_override": "endpoint_service.createMovie"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.types.types.Movie;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().createMovie(\n            Movie\n                .builder()\n                .id(\"id\")\n                .title(\"title\")\n                .from(\"from\")\n                .rating(1.1)\n                .tag(\"tag\")\n                .revenue(1000000L)\n                .prequel(\"prequel\")\n                .book(\"book\")\n                .metadata(\n                    new HashMap<String, Object>() {{\n                        put(\"metadata\", new \n                        HashMap<String, Object>() {{put(\"key\", \"value\");\n                        }});\n                    }}\n                )\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.types.types.Movie;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().createMovie(\n            Movie\n                .builder()\n                .id(\"id\")\n                .title(\"title\")\n                .from(\"from\")\n                .rating(1.1)\n                .tag(\"tag\")\n                .revenue(1000000L)\n                .prequel(\"prequel\")\n                .book(\"book\")\n                .metadata(\n                    new HashMap<String, Object>() {{\n                        put(\"metadata\", new \n                        HashMap<String, Object>() {{put(\"key\", \"value\");\n                        }});\n                    }}\n                )\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
             "example_identifier": "fd0a1a7a",
             "id": {
                 "method": "GET",
@@ -232,19 +128,6 @@
                 "type": "java",
                 "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.service.requests.GetMetadataRequest;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().getMetadata(\n            GetMetadataRequest\n                .builder()\n                .xApiVersion(\"0.0.1\")\n                .tag(\n                    Arrays.asList(\"development\")\n                )\n                .shallow(false)\n                .build()\n        );\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.service.requests.GetMetadataRequest;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().getMetadata(\n            GetMetadataRequest\n                .builder()\n                .xApiVersion(\"0.0.1\")\n                .tag(\n                    Arrays.asList(\"development\")\n                )\n                .shallow(false)\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "5a00eb3e",
-            "id": {
-                "method": "GET",
-                "path": "/metadata",
-                "identifier_override": "endpoint_service.getMetadata"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.service.requests.GetMetadataRequest;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().getMetadata(\n            GetMetadataRequest\n                .builder()\n                .xApiVersion(\"X-API-Version\")\n                .tag(\n                    Arrays.asList(\"tag\")\n                )\n                .shallow(true)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.service.requests.GetMetadataRequest;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().getMetadata(\n            GetMetadataRequest\n                .builder()\n                .xApiVersion(\"X-API-Version\")\n                .tag(\n                    Arrays.asList(\"tag\")\n                )\n                .shallow(true)\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
@@ -284,19 +167,6 @@
                 "type": "java",
                 "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.types.types.RefreshTokenRequest;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().refreshToken(\n            Optional.of(\n                RefreshTokenRequest\n                    .builder()\n                    .ttl(420)\n                    .build()\n            )\n        );\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.types.types.RefreshTokenRequest;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().refreshToken(\n            Optional.of(\n                RefreshTokenRequest\n                    .builder()\n                    .ttl(420)\n                    .build()\n            )\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "6a6ddb32",
-            "id": {
-                "method": "POST",
-                "path": "/refresh-token",
-                "identifier_override": "endpoint_service.refreshToken"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.types.types.RefreshTokenRequest;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().refreshToken(\n            Optional.of(\n                RefreshTokenRequest\n                    .builder()\n                    .ttl(1)\n                    .build()\n            )\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.types.types.RefreshTokenRequest;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().refreshToken(\n            Optional.of(\n                RefreshTokenRequest\n                    .builder()\n                    .ttl(1)\n                    .build()\n            )\n        );\n    }\n}\n"
             }
         }
     ],

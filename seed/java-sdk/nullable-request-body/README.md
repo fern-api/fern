@@ -57,7 +57,7 @@ package com.example.usage;
 
 import com.seed.api.SeedApiClient;
 import com.seed.api.resources.testgroup.requests.TestMethodNameTestGroupRequest;
-import com.seed.api.types.PlainObject;
+import java.util.Optional;
 
 public class Example {
     public static void main(String[] args) {
@@ -69,20 +69,8 @@ public class Example {
             "path_param",
             TestMethodNameTestGroupRequest
                 .builder()
-                .queryParamObject(
-                    PlainObject
-                        .builder()
-                        .id("id")
-                        .name("name")
-                        .build()
-                )
-                .queryParamInteger(1)
                 .body(
-                    PlainObject
-                        .builder()
-                        .id("id")
-                        .name("name")
-                        .build()
+                    Optional.empty()
                 )
                 .build()
         );

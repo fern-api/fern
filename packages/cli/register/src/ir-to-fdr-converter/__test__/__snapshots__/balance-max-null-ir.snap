@@ -56,6 +56,7 @@
       "packagePath": [],
     },
     "hasEndpointsInTree": false,
+    "hasWebSocketInTree": undefined,
     "navigationConfig": undefined,
     "service": "service_",
     "subpackages": [],
@@ -338,7 +339,9 @@
         "name": "FixedRate",
         "typeId": "FixedRate",
       },
-      "referencedTypes": Set {},
+      "referencedTypes": Set {
+        "RateTier",
+      },
       "shape": {
         "_visit": [Function],
         "extendedProperties": [],
@@ -422,6 +425,7 @@
       },
       "referencedTypes": Set {
         "RateResponseRateType",
+        "FixedRate",
       },
       "shape": {
         "_visit": [Function],

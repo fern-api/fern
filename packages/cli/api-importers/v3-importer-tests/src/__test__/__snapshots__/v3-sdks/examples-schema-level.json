@@ -1789,8 +1789,8 @@
                     "createTreeExample": {
                       "species": "Ferntacular",
                       "height": 25.4,
-                      "$ref": "#/components/examples/oakTree",
-                      "id": "string"
+                      "id": "string",
+                      "$ref": "#/components/examples/oakTree"
                     }
                   }
                 },
@@ -1828,8 +1828,8 @@
                     "value": {
                       "species": "Ferntacular",
                       "height": 25.4,
-                      "$ref": "#/components/examples/oakTree",
-                      "id": "string"
+                      "id": "string",
+                      "$ref": "#/components/examples/oakTree"
                     },
                     "type": "json"
                   }
@@ -1862,8 +1862,8 @@
                         "createTreeExample": {
                           "species": "Ferntacular",
                           "height": 25.4,
-                          "$ref": "#/components/examples/oakTree",
-                          "id": "string"
+                          "id": "string",
+                          "$ref": "#/components/examples/oakTree"
                         }
                       }
                     },
@@ -2328,8 +2328,8 @@
                     "getTreeExample": {
                       "species": "Ferntacular",
                       "height": 25.4,
-                      "$ref": "#/components/examples/oakTree",
-                      "id": "string"
+                      "id": "string",
+                      "$ref": "#/components/examples/oakTree"
                     }
                   }
                 },
@@ -2360,8 +2360,8 @@
                     "value": {
                       "species": "Ferntacular",
                       "height": 25.4,
-                      "$ref": "#/components/examples/oakTree",
-                      "id": "string"
+                      "id": "string",
+                      "$ref": "#/components/examples/oakTree"
                     },
                     "type": "json"
                   }
@@ -2394,8 +2394,8 @@
                         "getTreeExample": {
                           "species": "Ferntacular",
                           "height": 25.4,
-                          "$ref": "#/components/examples/oakTree",
-                          "id": "string"
+                          "id": "string",
+                          "$ref": "#/components/examples/oakTree"
                         }
                       }
                     },

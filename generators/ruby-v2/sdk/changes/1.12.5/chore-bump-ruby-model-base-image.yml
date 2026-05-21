@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump ruby-v2 model container Ruby base image to `ruby:3.3-alpine3.23` (matching
+    the ruby-v2 SDK container) and apply latest Alpine package security updates at
+    build time.
+  type: chore

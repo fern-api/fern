@@ -1,0 +1,4 @@
+- summary: |
+    Handle null OpenAPI overlay files as validation failures instead of allowing them
+    to throw internal TypeErrors during workspace loading.
+  type: fix

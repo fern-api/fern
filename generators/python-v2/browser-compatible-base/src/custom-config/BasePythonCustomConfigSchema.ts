@@ -22,6 +22,7 @@ export const BasePythonCustomConfigSchema = z.object({
     extra_dev_dependencies: z.record(z.string(), z.union([z.string(), BaseDependencyConfig])).optional(),
     extras: z.record(z.string(), z.array(z.string())).optional(),
     follow_redirects_by_default: z.boolean().optional(),
+    output_directory: z.enum(["project-root", "source-root"]).optional(),
     pyproject_python_version: z.string().optional(),
     pyproject_toml: z.string().optional(),
     should_generate_websocket_clients: z.boolean().optional(),
@@ -32,9 +33,11 @@ export const BasePythonCustomConfigSchema = z.object({
     // Deprecated.
     client_class_name: z.string().optional(),
     client_filename: z.string().optional(),
+    /** @deprecated Prefer `output_directory`. `flat_layout` only toggles the `src/` prefix and never skips project scaffolding. */
     flat_layout: z.boolean().optional(),
     include_legacy_wire_tests: z.boolean().optional(),
     inline_request_params: z.boolean().optional(),
+    flatten_union_request_bodies: z.boolean().optional(),
     use_api_name_in_package: z.boolean().optional()
 });
 

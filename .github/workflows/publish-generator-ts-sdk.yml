@@ -30,6 +30,23 @@ jobs:
         with:
           ref: main
           fetch-depth: 10
+
+      # Pre-flight: build the validator image locally (single-arch, no push)
+      # before publishing the generator. Docker Hub has no transactional
+      # multi-image publish, so this is the cheapest way to fail the job
+      # before `fernapi/fern-typescript-sdk:<version>` is pushed when the
+      # validator Dockerfile / warm-cache is broken. The actual multi-arch
+      # push happens after the generator publishes successfully below.
+      - name: Pre-flight build validator image (no push)
+        shell: bash
+        env:
+          DOCKER_BUILDKIT: 1
+        run: |
+          docker build \
+            -f generators/typescript/sdk/validator/Dockerfile \
+            -t fernapi/fern-typescript-sdk-validator:preflight \
+            .
+
       - name: automated publish
         if: ${{ github.event_name == 'push' }}
         uses: ./.github/actions/publish-generator
@@ -51,3 +68,39 @@ jobs:
           docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
           sentry-auth-token: ${{ secrets.FERN_SENTRY_AUTH_TOKEN }}
           sentry-dsn: ${{ secrets.SENTRY_DSN_TS_SDK }}
+
+      # Publish the paired validator image (`fernapi/fern-typescript-sdk-validator`)
+      # with the same version tag emitted into `.fern/verify.sh` by the SDK
+      # generator above. Buildx and the Docker Hub login from the
+      # publish-generator composite action above persist into these steps.
+      # The validator Dockerfile was already smoke-built in the pre-flight
+      # step above, so this push step is unlikely to fail for build reasons —
+      # it remains here to perform the actual multi-arch push to Docker Hub.
+      - name: Determine validator version
+        id: validator-version
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            VERSION="${{ inputs.version }}"
+          else
+            VERSION=$(grep -m1 "^- version:" generators/typescript/sdk/versions.yml | sed 's/- version: //' | tr -d '"' | tr -d "'")
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Validator image version: $VERSION"
+
+      - name: Build and publish validator image
+        if: ${{ steps.validator-version.outputs.version != '' }}
+        shell: bash
+        env:
+          DOCKER_BUILDKIT: 1
+          VERSION: ${{ steps.validator-version.outputs.version }}
+        run: |
+          docker buildx build \
+            --push \
+            --platform linux/amd64,linux/arm64 \
+            --cache-from type=gha \
+            --cache-to type=gha,mode=max \
+            -f generators/typescript/sdk/validator/Dockerfile \
+            -t fernapi/fern-typescript-sdk-validator:${VERSION} \
+            -t fernapi/fern-typescript-sdk-validator:latest \
+            .

@@ -11,9 +11,10 @@ import com.seed.api.core.RequestOptions;
 import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
-import com.seed.api.resources.imdb.errors.MovieDoesNotExistError;
-import com.seed.api.resources.imdb.types.CreateMovieRequest;
-import com.seed.api.resources.imdb.types.Movie;
+import com.seed.api.errors.NotFoundError;
+import com.seed.api.resources.imdb.requests.CreateMovieRequest;
+import com.seed.api.resources.imdb.requests.GetMovieImdbRequest;
+import com.seed.api.types.Movie;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
@@ -48,8 +49,7 @@ public class AsyncRawImdbClient {
             CreateMovieRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("movies")
-                .addPathSegments("create-movie");
+                .addPathSegments("movies/create-movie");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -102,10 +102,19 @@ public class AsyncRawImdbClient {
     }
 
     public CompletableFuture<SeedApiHttpResponse<Movie>> getMovie(String movieId) {
-        return getMovie(movieId, null);
+        return getMovie(movieId, GetMovieImdbRequest.builder().build());
     }
 
     public CompletableFuture<SeedApiHttpResponse<Movie>> getMovie(String movieId, RequestOptions requestOptions) {
+        return getMovie(movieId, GetMovieImdbRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<Movie>> getMovie(String movieId, GetMovieImdbRequest request) {
+        return getMovie(movieId, request, null);
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<Movie>> getMovie(
+            String movieId, GetMovieImdbRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("movies")
@@ -115,12 +124,12 @@ public class AsyncRawImdbClient {
                 httpUrl.addQueryParameter(_key, _value);
             });
         }
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -138,7 +147,7 @@ public class AsyncRawImdbClient {
                     }
                     try {
                         if (response.code() == 404) {
-                            future.completeExceptionally(new MovieDoesNotExistError(
+                            future.completeExceptionally(new NotFoundError(
                                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
                             return;
                         }

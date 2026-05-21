@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  specs:
+    - openapi: openapi.yml
+      settings:
+        example-generation:
+          request:
+            max-depth: 0
+groups:
+  php-sdk:
+    generators:
+      - name: fernapi/fern-php-sdk
+        version: latest
+        ir-version: v61
+        github:
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/php-sdk-tests
+          branch: api-wide-base-path-with-default
+  go-sdk:
+    generators:
+      - name: fernapi/fern-go-sdk
+        version: latest
+        ir-version: v61
+        github:
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/go-sdk-tests
+          branch: api-wide-base-path-with-default

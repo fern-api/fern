@@ -4,10 +4,10 @@
   "repository": "https://github.com/fern-api/fern",
   "author": "Birch Solutions, Inc.",
   "private": true,
-  "packageManager": "pnpm@10.33.0",
+  "packageManager": "pnpm@11.0.6",
   "engines": {
     "npm": "please-use-pnpm",
-    "pnpm": "^10.28.0",
+    "pnpm": "^11.0.0",
     "node": ">=20.0.0"
   },
   "scripts": {
@@ -60,7 +60,8 @@
     "generator-cli:generate": "pnpm fern:build && pnpm fern generate --api generator-cli --local && turbo run dist:cli --filter=@fern-api/generator-cli",
     "seed:build": "turbo run dist:cli --filter=@fern-api/seed-cli && echo 'Run node --enable-source-maps packages/seed/dist/cli.cjs'",
     "publish": "pnpm -r publish --access public --no-git-checks --loglevel=verbose",
-    "jsonschema": "pnpm definition-yml:jsonschema && pnpm api-yml:jsonschema && pnpm package-yml:jsonschema && pnpm docs-yml:jsonschema && pnpm generators-yml:jsonschema && pnpm versions-yml:jsonschema && pnpm products-yml:jsonschema && pnpm product-yml:jsonschema && pnpm version-yml:jsonschema",
+    "jsonschema": "pnpm definition-yml:jsonschema && pnpm api-yml:jsonschema && pnpm package-yml:jsonschema && pnpm docs-yml:jsonschema && pnpm generators-yml:jsonschema && pnpm versions-yml:jsonschema && pnpm products-yml:jsonschema && pnpm product-yml:jsonschema && pnpm version-yml:jsonschema && pnpm fern-yml:jsonschema",
+    "fern-yml:jsonschema": "pnpm fern beta schema --output fern-yml.schema.json",
     "definition-yml:jsonschema": "pnpm fern jsonschema fern.schema.json --api fern-definition --type file.DefinitionFileSchema && pnpm fern jsonschema packages/cli/workspace/lazy-fern-workspace/src/fern.schema.json --api fern-definition --type file.DefinitionFileSchema",
     "api-yml:jsonschema": "pnpm fern jsonschema api-yml.schema.json --api fern-definition --type file.RootApiFileSchema && pnpm fern jsonschema packages/cli/workspace/lazy-fern-workspace/src/api-yml.schema.json --api fern-definition --type file.RootApiFileSchema",
     "package-yml:jsonschema": "pnpm fern jsonschema package-yml.schema.json --api fern-definition --type file.PackageMarkerFileSchema && pnpm fern jsonschema packages/cli/workspace/lazy-fern-workspace/src/package-yml.schema.json --api fern-definition --type file.PackageMarkerFileSchema",
@@ -148,20 +149,6 @@
     "!packages/cli/cli/dist/dev",
     "!packages/cli/cli/dist/prod"
   ],
-  "pnpm": {
-    "overrides": {
-      "ajv": "8.18.0",
-      "node-fetch@2.x>whatwg-url": "^14.0.0",
-      "minimatch": ">=10.2.3",
-      "qs": "6.15.0",
-      "url-join": "^4.0.1",
-      "@fern-api/fdr-sdk": "1.2.0-1d73d2e141",
-      "form-data": "^4.0.4",
-      "@fern-api/ui-core-utils": "0.145.12-b50d999d1",
-      "vite": "^7.3.2",
-      "yauzl": "^3.2.1"
-    }
-  },
   "dependencies": {
     "js-yaml": "catalog:"
   }

@@ -26,8 +26,9 @@ func NewClient(options *core.RequestOptions) *Client {
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
@@ -52,12 +53,12 @@ func (c *Client) CreateMovie(
 
 func (c *Client) GetMovie(
 	ctx context.Context,
-	movieID inhereplease.MovieID,
+	request *inhereplease.GetMovieImdbRequest,
 	opts ...option.RequestOption,
 ) (*inhereplease.Movie, error) {
 	response, err := c.WithRawResponse.GetMovie(
 		ctx,
-		movieID,
+		request,
 		opts...,
 	)
 	if err != nil {

@@ -16,10 +16,18 @@
   "definitions": {
     "types.MigrationStatus": {
       "type": "string",
-      "enum": [
-        "RUNNING",
-        "FAILED",
-        "FINISHED"
+      "oneOf": [
+        {
+          "const": "RUNNING",
+          "description": "The migration is running."
+        },
+        {
+          "const": "FAILED",
+          "description": "The migration failed."
+        },
+        {
+          "const": "FINISHED"
+        }
       ]
     }
   }

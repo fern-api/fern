@@ -291,13 +291,15 @@ export async function sdkPreview({
                         shouldLogS3Url: false,
                         token,
                         whitelabel: workspace.generatorsConfiguration?.whitelabel,
+                        replay: workspace.generatorsConfiguration?.replay,
                         mode: undefined as "pull-request" | undefined,
                         fernignorePath: undefined as string | undefined,
                         skipFernignore: false,
                         dynamicIrOnly: false,
                         validateWorkspace: true,
                         retryRateLimited: false,
-                        requireEnvVars: false
+                        requireEnvVars: false,
+                        verify: false
                     };
 
                     // Job 1: Publish preview package to registry.

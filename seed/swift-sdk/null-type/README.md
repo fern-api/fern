@@ -54,10 +54,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client.conversations.outboundCall(request: .init(
-        toPhoneNumber: "to_phone_number",
-        dryRun: true
-    ))
+    _ = try await client.conversations.outboundCall(request: .init(toPhoneNumber: "to_phone_number"))
 }
 
 try await main()

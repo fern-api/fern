@@ -45,7 +45,15 @@ client.imdb.create_movie(
 <dl>
 <dd>
 
-**request:** `Seed::Imdb::Types::CreateMovieRequest` 
+**title:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rating:** `Integer` 
     
 </dd>
 </dl>
@@ -65,7 +73,7 @@ client.imdb.create_movie(
 </dl>
 </details>
 
-<details><summary><code>client.imdb.<a href="/lib/seed/imdb/client.rb">get_movie</a>(movie_id) -> Seed::Imdb::Types::Movie</code></summary>
+<details><summary><code>client.imdb.<a href="/lib/seed/imdb/client.rb">get_movie</a>(movie_id) -> Seed::Types::Movie</code></summary>
 <dl>
 <dd>
 
