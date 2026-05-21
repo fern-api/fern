@@ -1,7 +1,8 @@
 import { minimatch } from "minimatch";
 
-const GLOB_CHARS = /[*?[\]{}!]/;
-
+// Negation (`!pattern`) is NOT honored — every entry is treated as include-only.
+// `.fernignore` is a flat list of paths to protect; gitignore-style re-inclusion
+// isn't part of the contract.
 export function expandFernignorePatterns(fernignoreContent: string, candidatePaths: string[]): string[] {
     const patterns = fernignoreContent
         .split("\n")
@@ -11,8 +12,9 @@ export function expandFernignorePatterns(fernignoreContent: string, candidatePat
 }
 
 function matches(candidate: string, pattern: string): boolean {
-    if (!GLOB_CHARS.test(pattern)) {
-        return candidate === pattern || candidate.startsWith(pattern + "/");
+    const normalized = pattern.endsWith("/") ? pattern.slice(0, -1) : pattern;
+    if (minimatch(candidate, normalized, { dot: true })) {
+        return true;
     }
-    return minimatch(candidate, pattern, { dot: true });
+    return candidate === normalized || candidate.startsWith(normalized + "/");
 }

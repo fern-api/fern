@@ -30,6 +30,15 @@ describe("expandFernignorePatterns", () => {
         expect(preserved).toEqual(["src/foo/a.py", "src/foo/nested/b.py"]);
     });
 
+    it("treats a trailing-slash directory path the same as a bare directory", () => {
+        const fernignore = "src/foo/";
+        const tracked = ["src/foo/a.py", "src/foo/nested/b.py", "src/bar/c.py"];
+
+        const preserved = expandFernignorePatterns(fernignore, tracked);
+
+        expect([...preserved].sort()).toEqual(["src/foo/a.py", "src/foo/nested/b.py"].sort());
+    });
+
     it("trims whitespace and ignores comments and blank lines", () => {
         const fernignore = ["# leading comment", "", "  src/foo/**  ", "   ", "# trailing comment"].join("\n");
         const tracked = ["src/foo/a.py", "src/bar/b.py"];
