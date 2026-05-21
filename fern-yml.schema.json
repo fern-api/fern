@@ -3876,6 +3876,9 @@
                       "respectReadonlySchemas": {
                         "type": "boolean"
                       },
+                      "useReadVariantForResponses": {
+                        "type": "boolean"
+                      },
                       "respectForwardCompatibleEnums": {
                         "type": "boolean"
                       },
@@ -4442,6 +4445,9 @@
                           "type": "boolean"
                         },
                         "respectReadonlySchemas": {
+                          "type": "boolean"
+                        },
+                        "useReadVariantForResponses": {
                           "type": "boolean"
                         },
                         "respectForwardCompatibleEnums": {
