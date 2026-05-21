@@ -3,21 +3,6 @@ import chalk from "chalk";
 
 import type { ValidationViolation } from "./ValidationViolation.js";
 
-/**
- * Shape of a single line emitted by violation printing.
- *
- * Commands that need to render their own violation lists (e.g. `fern beta check`,
- * `fern beta sdk generate`) should call {@link formatViolations}/{@link formatIssues}
- * rather than rolling their own loop, so the format stays consistent with what
- * the top-level error boundary prints when the same error escapes a handler.
- */
-export interface FormatViolationOptions {
-    /** Optional line number, 1-based. */
-    line?: number;
-    /** Optional column number, 1-based. */
-    column?: number;
-}
-
 export interface FormattableViolation {
     displayRelativeFilepath: string;
     line?: number;
