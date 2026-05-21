@@ -1,0 +1,151 @@
+openapi: 3.1.0
+info:
+  title: Users API
+  version: 0.0.0
+paths:
+  /users:
+    get:
+      operationId: listUsers
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    - id: id
+                      email: email
+                      name: name
+      summary: List users
+  /users/{userId}:
+    get:
+      operationId: getUser
+      tags:
+        - ''
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: userId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    email: email
+                    name: name
+      summary: Fetch a single user
+  /invoices:
+    get:
+      operationId: listInvoices
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice'
+              examples:
+                Example1:
+                  value:
+                    - id: id
+                      amountCents: 1000000
+                      currency: USD
+      summary: List invoices
+  /invoices/{invoiceId}:
+    get:
+      operationId: getInvoice
+      tags:
+        - ''
+      parameters:
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: invoiceId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    amountCents: 1000000
+                    currency: USD
+      summary: Fetch a single invoice
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+            - id
+        email:
+          type: string
+          format: email
+          examples:
+            - email
+        name:
+          type:
+            - string
+            - 'null'
+      required:
+        - id
+        - email
+    Invoice:
+      title: Invoice
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+            - id
+        amountCents:
+          type: integer
+          format: int64
+          examples:
+            - 1000000
+        currency:
+          type:
+            - string
+            - 'null'
+      required:
+        - id
+        - amountCents
+  securitySchemes: {}
+servers:
+  - url: https://users.example.com/v1
+    description: Default
