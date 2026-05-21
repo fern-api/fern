@@ -37,12 +37,12 @@ export class LockfileResolutionStep extends BaseStep {
 
             this.logger.debug(`Lockfile resolution output: ${result.toString().trim()}`);
 
+            this.commitIfChanged();
+
             return { executed: true, success: true, skipped: false };
         } catch (error) {
             const message = `Lockfile resolution failed: ${extractErrorMessage(error)}`;
             this.logger.warn(message);
-            // Non-fatal: generation can proceed with the pre-replay lockfile.
-            // The lockfile may be stale but the SDK is still usable.
             return {
                 executed: true,
                 success: true,
@@ -50,5 +50,36 @@ export class LockfileResolutionStep extends BaseStep {
                 errorMessage: message
             };
         }
+    }
+
+    /**
+     * Stage and commit lockfile changes so they are included when GithubStep
+     * pushes — even when `skipCommit` is true (replay already committed).
+     * No-ops when the working tree is clean.
+     */
+    private commitIfChanged(): void {
+        const hasChanges =
+            execFileSync("git", ["status", "--porcelain"], {
+                cwd: this.outputDir,
+                encoding: "utf-8",
+                stdio: "pipe"
+            }).trim().length > 0;
+
+        if (!hasChanges) {
+            this.logger.debug("Lockfile unchanged — nothing to commit.");
+            return;
+        }
+
+        execFileSync("git", ["add", "-A"], {
+            cwd: this.outputDir,
+            stdio: "pipe"
+        });
+
+        execFileSync("git", ["commit", "-m", "[fern-lockfile] Re-resolve lockfile"], {
+            cwd: this.outputDir,
+            stdio: "pipe"
+        });
+
+        this.logger.info("Committed lockfile changes as [fern-lockfile].");
     }
 }
