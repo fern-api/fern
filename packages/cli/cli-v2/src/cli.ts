@@ -19,6 +19,7 @@ import { addReplayCommand } from "./commands/replay/index.js";
 import { addSchemaCommand } from "./commands/schema/index.js";
 import { addSdkCommand } from "./commands/sdk/index.js";
 import { addTelemetryCommand } from "./commands/telemetry/index.js";
+import { addUpdateCommand } from "./commands/update/index.js";
 import { isCompletionMode } from "./completion.js";
 import { GlobalArgs } from "./context/GlobalArgs.js";
 import { Version } from "./version.js";
@@ -142,6 +143,7 @@ function createCliV2(argv?: string[]): Argv<GlobalArgs> {
     addSchemaCommand(cli);
     addSdkCommand(cli);
     addTelemetryCommand(cli);
+    addUpdateCommand(cli);
 
     return cli;
 }

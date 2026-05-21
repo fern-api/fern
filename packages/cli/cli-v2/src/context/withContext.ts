@@ -3,6 +3,7 @@ import { CliError, resolveErrorCode, shouldReportToSentry, TaskAbortSignal } fro
 
 import chalk from "chalk";
 import { renderError } from "../errors/renderError.js";
+import { maybeNag as maybeNagForUpgrade } from "../update/UpgradeNagger.js";
 import { Context } from "./Context.js";
 import type { GlobalArgs } from "./GlobalArgs.js";
 import { loadDotenvFile } from "./loadDotenvFile.js";
@@ -33,6 +34,7 @@ export function withContext<T extends GlobalArgs>(
                 status: "success",
                 durationMs: Date.now() - context.createdAt
             });
+            await maybeNagForUpgrade(context);
             await context.telemetry.flush();
             context.finish();
             await exitGracefully(0);
