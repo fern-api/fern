@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import type { Argv } from "yargs";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
+import { makeYargsFailHandler } from "./commands/_internal/yargsFailHandler.js";
 import { addApiCommand } from "./commands/api/index.js";
 import { addAuthCommand } from "./commands/auth/index.js";
 import { addCacheCommand } from "./commands/cache/index.js";
@@ -114,6 +115,11 @@ function createCliV2(argv?: string[]): Argv<GlobalArgs> {
             choices: ["debug", "info", "warn", "error"] as const,
             default: "info"
         })
+        .option("debug", {
+            type: "boolean",
+            description: "Show full stack traces and error cause chains (also: FERN_DEBUG=1)",
+            default: false
+        })
         .option("env", {
             type: "string",
             description: "Path to a .env file to load environment variables from"
@@ -122,17 +128,7 @@ function createCliV2(argv?: string[]): Argv<GlobalArgs> {
         .strict()
         .demandCommand()
         .recommendCommands()
-        .fail((msg, err, y) => {
-            if (err != null) {
-                process.stderr.write(`${err.message}\n`);
-                process.exit(1);
-            }
-            if (msg != null) {
-                process.stderr.write(`Error: ${msg}\n\n`);
-            }
-            y.showHelp();
-            process.exit(1);
-        });
+        .fail(makeYargsFailHandler({ showHelp: true }));
 
     addApiCommand(cli);
     addAuthCommand(cli);

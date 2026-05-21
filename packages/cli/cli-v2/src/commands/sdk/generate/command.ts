@@ -5,7 +5,6 @@ import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { CliError, TaskAbortSignal } from "@fern-api/task-context";
 import { ValidationIssue } from "@fern-api/yaml-loader";
-import chalk from "chalk";
 import { readdir } from "fs/promises";
 import inquirer from "inquirer";
 import yaml from "js-yaml";
@@ -16,6 +15,7 @@ import { ApiSpecResolver } from "../../../api/resolver/ApiSpecResolver.js";
 import { GENERATE_COMMAND_TIMEOUT_MS } from "../../../constants.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
+import { formatViolations } from "../../../errors/printViolations.js";
 import { SourcedValidationError } from "../../../errors/SourcedValidationError.js";
 import { isStdioMarker, StdioMarkerGuard } from "../../../io/stdio.js";
 import { SdkChecker } from "../../../sdk/checker/SdkChecker.js";
@@ -218,10 +218,9 @@ export class GenerateCommand {
             apiNames: apisToCheck
         });
         if (checkResult.violations.length > 0) {
-            for (const v of checkResult.violations) {
-                process.stderr.write(
-                    `${chalk.red(`${v.displayRelativeFilepath}:${v.line}:${v.column}: ${v.message}`)}\n`
-                );
+            const formatted = formatViolations(checkResult.violations);
+            if (formatted.length > 0) {
+                process.stderr.write(`${formatted}\n`);
             }
         }
 
@@ -230,10 +229,9 @@ export class GenerateCommand {
             const sdkChecker = new SdkChecker({ context });
             const sdkCheckResult = await sdkChecker.check({ workspace });
             if (sdkCheckResult.violations.length > 0) {
-                for (const v of sdkCheckResult.violations) {
-                    process.stderr.write(
-                        `${chalk.red(`${v.displayRelativeFilepath}:${v.line}:${v.column}: ${v.message}`)}\n`
-                    );
+                const formatted = formatViolations(sdkCheckResult.violations);
+                if (formatted.length > 0) {
+                    process.stderr.write(`${formatted}\n`);
                 }
             }
             if (sdkCheckResult.errorCount > 0) {

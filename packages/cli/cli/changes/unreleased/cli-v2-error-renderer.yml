@@ -1,0 +1,13 @@
+- summary: |
+    Unify CLI error rendering. All `cli-v2` failures now print the same
+    Rust-style envelope on stderr (`error[CODE]: <title>` with optional
+    `hint:` and `see:` lines), the per-run debug log path is shown on every
+    failure, and the duplicated yargs `.fail` handlers route through the
+    same renderer. Also fixes `fern auth whoami` / `fern auth status` /
+    keyring failures printing to stdout instead of stderr.
+  type: feat
+- summary: |
+    Add a top-level `--debug` flag (and `FERN_DEBUG=1` env var) that
+    renders the full stack trace and `error.cause` chain on failure for
+    any error class. Implies `--log-level debug`.
+  type: feat

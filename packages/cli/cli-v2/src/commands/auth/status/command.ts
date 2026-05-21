@@ -27,9 +27,11 @@ export class StatusCommand {
             if (args.json) {
                 context.stdout.info(JSON.stringify({ accounts: [], activeAccount: null }, null, 2));
             } else {
-                context.stdout.warn(`${chalk.yellow("⚠")} You are not logged in to Fern.`);
-                context.stdout.info("");
-                context.stdout.info(chalk.dim("  To log in, run: fern auth login"));
+                // Route non-JSON "not logged in" output through stderr so we
+                // don't pollute stdout pipes (e.g. `fern auth status | jq`).
+                context.stderr.warn(`${chalk.yellow("⚠")} You are not logged in to Fern.`);
+                context.stderr.info("");
+                context.stderr.info(chalk.dim("  To log in, run: fern auth login"));
             }
             return;
         }

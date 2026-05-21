@@ -1,8 +1,23 @@
 export class CliError extends Error {
     public readonly code: CliError.Code;
     public readonly docsLink?: string;
+    /**
+     * Optional actionable hint shown to the user underneath the error message
+     * (rendered as a `hint:` line, like rustc/cargo). Keep short and imperative.
+     */
+    public readonly hint?: string;
 
-    constructor({ message, code, docsLink }: { code: CliError.Code; message?: string; docsLink?: string }) {
+    constructor({
+        message,
+        code,
+        docsLink,
+        hint
+    }: {
+        code: CliError.Code;
+        message?: string;
+        docsLink?: string;
+        hint?: string;
+    }) {
         super(message);
 
         Object.setPrototypeOf(this, new.target.prototype);
@@ -13,22 +28,22 @@ export class CliError extends Error {
 
         this.code = code;
         this.docsLink = docsLink;
+        this.hint = hint;
     }
 
     public static authRequired(message?: string): CliError {
         return new CliError({
-            message:
-                message ??
-                "Authentication required. Please run 'fern login' or set the FERN_TOKEN environment variable.",
-            code: CliError.Code.AuthError
+            message: message ?? "Authentication required.",
+            code: CliError.Code.AuthError,
+            hint: "Run `fern auth login`, or set the FERN_TOKEN environment variable."
         });
     }
 
     public static unauthorized(message?: string): CliError {
         return new CliError({
-            message:
-                message ?? "Unauthorized. Please run 'fern auth login' or set the FERN_TOKEN environment variable.",
-            code: CliError.Code.AuthError
+            message: message ?? "Unauthorized.",
+            code: CliError.Code.AuthError,
+            hint: "Run `fern auth login`, or set the FERN_TOKEN environment variable."
         });
     }
 

@@ -10,6 +10,7 @@ import { DocsChecker } from "../../docs/checker/DocsChecker.js";
 import { applyMdxFixes } from "../../docs/fixer/applyMdxFixes.js";
 import { DocsFixer } from "../../docs/fixer/DocsFixer.js";
 import { offerAiFixes } from "../../docs/fixer/offerAiFixes.js";
+import { formatViolations } from "../../errors/printViolations.js";
 import { SdkChecker } from "../../sdk/checker/SdkChecker.js";
 import { SdkFixer } from "../../sdk/fixer/SdkFixer.js";
 import { Icons } from "../../ui/format.js";
@@ -172,9 +173,9 @@ export class CheckCommand {
             severity: string;
         }>
     ): void {
-        for (const v of violations) {
-            const color = v.severity === "warning" ? chalk.yellow : chalk.red;
-            process.stderr.write(`${color(`${v.displayRelativeFilepath}:${v.line}:${v.column}: ${v.message}`)}\n`);
+        const formatted = formatViolations(violations);
+        if (formatted.length > 0) {
+            process.stderr.write(`${formatted}\n`);
         }
     }
 
