@@ -1120,7 +1120,6 @@
               "typeId": "type_:User",
               "type": "named"
             },
-            "contentType": "application/json",
             "type": "reference"
           },
           "sdkRequest": {

@@ -878,3 +878,132 @@ describe("filterSpec", () => {
         expect(paths2?.["/endpoint"]).toBeUndefined();
     });
 });
+
+/**
+ * Coverage for the per-entry `namespace` field added to
+ * `RawSpecsManifestEntry`. Downstream generators (initially
+ * `fernapi/fern-cli`) rely on this field to route multi-spec
+ * workspaces by their `generators.yml`-declared namespace rather than
+ * inferring one from the runner-assigned filename.
+ */
+describe("collectRawSpecs (namespace propagation)", () => {
+    let tmpDir: tmp.DirectoryResult;
+    let sourceDir: string;
+
+    beforeEach(async () => {
+        tmpDir = await tmp.dir({ unsafeCleanup: true });
+        sourceDir = path.join(tmpDir.path, "source");
+        await mkdir(path.join(sourceDir, "api"), { recursive: true });
+    });
+
+    afterEach(async () => {
+        await rm(tmpDir.path, { recursive: true, force: true });
+    });
+
+    it("propagates an OpenAPI spec's namespace into the manifest entry", async () => {
+        const specFile = path.join(sourceDir, "api", "openapi.yaml");
+        await writeFile(specFile, MINIMAL_OPENAPI);
+
+        const outputDir = path.join(tmpDir.path, "output");
+        await mkdir(outputDir, { recursive: true });
+
+        const manifest = await collectRawSpecs({
+            specs: [
+                {
+                    type: "openapi",
+                    absoluteFilepath: AbsoluteFilePath.of(specFile),
+                    absoluteFilepathToOverrides: undefined,
+                    absoluteFilepathToOverlays: undefined,
+                    namespace: "v2",
+                    source: {
+                        type: "openapi",
+                        file: AbsoluteFilePath.of(specFile),
+                        relativePathToDependency: undefined
+                    }
+                }
+            ],
+            hostOutputDir: AbsoluteFilePath.of(outputDir),
+            containerBaseDir: "/fern/specs",
+            context: createMockContext()
+        });
+
+        expect(manifest.specs).toHaveLength(1);
+        expect(manifest.specs[0]?.namespace).toBe("v2");
+    });
+
+    it("leaves namespace undefined when the spec was declared at the workspace root", async () => {
+        const specFile = path.join(sourceDir, "api", "openapi.yaml");
+        await writeFile(specFile, MINIMAL_OPENAPI);
+
+        const outputDir = path.join(tmpDir.path, "output");
+        await mkdir(outputDir, { recursive: true });
+
+        const manifest = await collectRawSpecs({
+            specs: [
+                {
+                    type: "openapi",
+                    absoluteFilepath: AbsoluteFilePath.of(specFile),
+                    absoluteFilepathToOverrides: undefined,
+                    absoluteFilepathToOverlays: undefined,
+                    source: {
+                        type: "openapi",
+                        file: AbsoluteFilePath.of(specFile),
+                        relativePathToDependency: undefined
+                    }
+                }
+            ],
+            hostOutputDir: AbsoluteFilePath.of(outputDir),
+            containerBaseDir: "/fern/specs",
+            context: createMockContext()
+        });
+
+        expect(manifest.specs).toHaveLength(1);
+        expect(manifest.specs[0]?.namespace).toBeUndefined();
+    });
+
+    it("keeps each spec's namespace independent in a multi-spec workspace", async () => {
+        const usersFile = path.join(sourceDir, "api", "users.yaml");
+        const billingFile = path.join(sourceDir, "api", "billing.yaml");
+        await writeFile(usersFile, MINIMAL_OPENAPI);
+        await writeFile(billingFile, MINIMAL_OPENAPI);
+
+        const outputDir = path.join(tmpDir.path, "output");
+        await mkdir(outputDir, { recursive: true });
+
+        const manifest = await collectRawSpecs({
+            specs: [
+                {
+                    type: "openapi",
+                    absoluteFilepath: AbsoluteFilePath.of(usersFile),
+                    absoluteFilepathToOverrides: undefined,
+                    absoluteFilepathToOverlays: undefined,
+                    namespace: "users",
+                    source: {
+                        type: "openapi",
+                        file: AbsoluteFilePath.of(usersFile),
+                        relativePathToDependency: undefined
+                    }
+                },
+                {
+                    type: "openapi",
+                    absoluteFilepath: AbsoluteFilePath.of(billingFile),
+                    absoluteFilepathToOverrides: undefined,
+                    absoluteFilepathToOverlays: undefined,
+                    // No namespace on this entry — mixed workspaces are valid.
+                    source: {
+                        type: "openapi",
+                        file: AbsoluteFilePath.of(billingFile),
+                        relativePathToDependency: undefined
+                    }
+                }
+            ],
+            hostOutputDir: AbsoluteFilePath.of(outputDir),
+            containerBaseDir: "/fern/specs",
+            context: createMockContext()
+        });
+
+        expect(manifest.specs).toHaveLength(2);
+        expect(manifest.specs[0]?.namespace).toBe("users");
+        expect(manifest.specs[1]?.namespace).toBeUndefined();
+    });
+});

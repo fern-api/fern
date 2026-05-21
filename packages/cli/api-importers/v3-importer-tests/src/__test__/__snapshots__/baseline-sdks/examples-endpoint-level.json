@@ -484,7 +484,6 @@
               "typeId": "type_:TreeCreate",
               "type": "named"
             },
-            "contentType": "application/json",
             "type": "reference"
           },
           "sdkRequest": {
