@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.42.1
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet generation for enum path parameters. Path parameters inlined as
+        struct fields on a wrapped request now use the enum value directly (e.g.
+        `Action: prelude.ActionAllow`) instead of `.Ptr()`, which produced a typecheck error
+        when the struct field is a non-pointer required enum. Path parameters passed as
+        positional function arguments continue to use `.Ptr()` when the SDK signature takes
+        a pointer.
+      type: fix
+  createdAt: "2026-05-20"
+  irVersion: 66
 - version: 1.42.0
   changelogEntry:
     - summary: |

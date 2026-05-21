@@ -38,5 +38,6 @@ export interface GraphQLSpec {
     type: "graphql";
     absoluteFilepath: AbsoluteFilePath;
     absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
+    absoluteFilepathToExamples: AbsoluteFilePath | undefined;
     namespace?: string;
 }

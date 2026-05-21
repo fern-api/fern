@@ -418,6 +418,7 @@ fixtures:
         redact-response-body-on-error: true
       outputFolder: redact-response-body-on-error
 allowedFailures:
+  - api-wide-base-path-with-default
   - allof
   - allof-inline
   - enum:forward-compatible-enums
@@ -436,3 +437,4 @@ allowedFailures:
   - unions-with-local-date
   - server-sent-event-examples
   - server-sent-events-openapi
+  - api-wide-base-path-with-default

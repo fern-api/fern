@@ -20,7 +20,7 @@ import {
 } from "@fern-api/docs-markdown-utils";
 import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, listFiles, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
-import { GraphQLConverter } from "@fern-api/graphql-to-fdr";
+import { GraphQLConverter, type GraphQlOperationExamplesInput } from "@fern-api/graphql-to-fdr";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { getSnakeCaseUnsafe } from "@fern-api/ir-utils";
@@ -1718,10 +1718,12 @@ export class DocsDefinitionResolver {
         const graphqlSpecs = workspace.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
         for (const spec of graphqlSpecs) {
             try {
+                const examples = await this.loadGraphQlExamples(spec.absoluteFilepathToExamples);
                 const converter = new GraphQLConverter({
                     context: this.taskContext,
                     filePath: spec.absoluteFilepath,
-                    namespace: spec.namespace
+                    namespace: spec.namespace,
+                    examples
                 });
                 const graphqlResult = await converter.convert();
 
@@ -1742,6 +1744,81 @@ export class DocsDefinitionResolver {
         }
 
         return { operations: graphqlOperations, types: graphqlTypes, namespacesByOperationId };
+    }
+
+    private async loadGraphQlExamples(
+        absoluteFilepathToExamples: AbsoluteFilePath | undefined
+    ): Promise<GraphQlOperationExamplesInput[] | undefined> {
+        if (absoluteFilepathToExamples == null) {
+            return undefined;
+        }
+        try {
+            const contents = (await readFile(absoluteFilepathToExamples)).toString();
+            const parsed = jsYaml.load(contents);
+            if (!Array.isArray(parsed)) {
+                return undefined;
+            }
+            for (const entry of parsed) {
+                if (typeof entry !== "object" || entry == null) {
+                    this.taskContext.logger.warn(
+                        `Skipping invalid entry in GraphQL examples file ${absoluteFilepathToExamples}: expected object`
+                    );
+                    continue;
+                }
+                if (typeof entry.operation !== "string") {
+                    this.taskContext.logger.warn(
+                        `Skipping entry in GraphQL examples file ${absoluteFilepathToExamples}: missing or invalid 'operation' field`
+                    );
+                    continue;
+                }
+                if (!Array.isArray(entry.examples)) {
+                    this.taskContext.logger.warn(
+                        `Skipping entry for operation '${entry.operation}' in ${absoluteFilepathToExamples}: 'examples' must be an array`
+                    );
+                    continue;
+                }
+            }
+            const validEntries = parsed
+                .filter(
+                    (entry): entry is { operation: string; operationType?: string; examples: unknown[] } =>
+                        typeof entry === "object" &&
+                        entry != null &&
+                        typeof entry.operation === "string" &&
+                        Array.isArray(entry.examples)
+                )
+                .map((entry) => {
+                    const validExamples = entry.examples.filter((ex: unknown) => {
+                        if (
+                            typeof ex !== "object" ||
+                            ex == null ||
+                            typeof (ex as Record<string, unknown>).query !== "string"
+                        ) {
+                            this.taskContext.logger.warn(
+                                `Skipping malformed example for operation '${entry.operation}' in ${absoluteFilepathToExamples}: missing or invalid 'query' field`
+                            );
+                            return false;
+                        }
+                        return true;
+                    });
+                    if (entry.operationType != null) {
+                        const lower = entry.operationType.toLowerCase();
+                        if (lower !== "query" && lower !== "mutation" && lower !== "subscription") {
+                            this.taskContext.logger.warn(
+                                `Invalid operationType '${entry.operationType}' for operation '${entry.operation}' in ${absoluteFilepathToExamples}: must be 'query', 'mutation', or 'subscription'`
+                            );
+                        }
+                    }
+                    return { ...entry, examples: validExamples } as GraphQlOperationExamplesInput;
+                })
+                .filter((entry) => entry.examples.length > 0);
+            return validEntries.length > 0 ? validEntries : undefined;
+        } catch (error) {
+            this.taskContext.logger.error(
+                `Failed to load GraphQL examples from ${absoluteFilepathToExamples}:`,
+                String(error)
+            );
+            return undefined;
+        }
     }
 
     /**

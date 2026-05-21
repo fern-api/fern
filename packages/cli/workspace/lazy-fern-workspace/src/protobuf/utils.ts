@@ -51,29 +51,47 @@ export async function detectAirGappedMode(url: string, logger: Logger, timeoutMs
 async function performAirGapDetection(url: string, logger: Logger, timeoutMs: number): Promise<boolean> {
     logger.debug(`Detecting air-gapped mode by checking connectivity to ${url}`);
 
-    try {
-        const res = await fetch(url, {
-            method: "GET",
-            signal: AbortSignal.timeout(timeoutMs)
-        });
-        // Cancel the body to release the socket back to the pool cleanly.
-        // Without this, the unconsumed "OK" bytes stay on the keep-alive socket
-        // and corrupt the next request's HTTP framing in Node.js / undici.
-        await res.body?.cancel().catch(() => undefined);
+    const maxAttempts = 3;
+    let lastErrorMessage: string | undefined;
 
-        airGapDetectionResult = false;
-        logger.debug("Network check succeeded - not in air-gapped mode");
-        return false;
-    } catch (error) {
-        const errorMessage = extractErrorMessage(error);
-        if (isNetworkError(errorMessage)) {
-            airGapDetectionResult = true;
-            logger.debug(`Network check failed - entering air-gapped mode: ${errorMessage}`);
-            return true;
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+        try {
+            const res = await fetch(url, {
+                method: "GET",
+                signal: AbortSignal.timeout(timeoutMs)
+            });
+            // Cancel the body to release the socket back to the pool cleanly.
+            // Without this, the unconsumed "OK" bytes stay on the keep-alive socket
+            // and corrupt the next request's HTTP framing in Node.js / undici.
+            await res.body?.cancel().catch(() => undefined);
+
+            airGapDetectionResult = false;
+            logger.debug("Network check succeeded - not in air-gapped mode");
+            return false;
+        } catch (error) {
+            const errorMessage = extractErrorMessage(error);
+            const causeMessage =
+                error instanceof Error && error.cause ? ` (cause: ${extractErrorMessage(error.cause)})` : "";
+            lastErrorMessage = `${errorMessage}${causeMessage}`;
+
+            if (!isNetworkError(errorMessage)) {
+                airGapDetectionResult = false;
+                return false;
+            }
+
+            if (attempt < maxAttempts) {
+                const delayMs = attempt * 500;
+                logger.debug(
+                    `Network check attempt ${attempt}/${maxAttempts} failed: ${lastErrorMessage} — retrying in ${delayMs}ms`
+                );
+                await new Promise((resolve) => setTimeout(resolve, delayMs));
+            }
         }
-        airGapDetectionResult = false;
-        return false;
     }
+
+    airGapDetectionResult = true;
+    logger.debug(`Network check failed after ${maxAttempts} attempts - entering air-gapped mode: ${lastErrorMessage}`);
+    return true;
 }
 
 /**
