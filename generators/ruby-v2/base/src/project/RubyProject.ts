@@ -1,5 +1,6 @@
 import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
+import { loggingExeca } from "@fern-api/logging-execa";
 import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import dedent from "dedent";
@@ -111,6 +112,46 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await this.createRuboCopFile();
         await this.createGithubCiWorkflow();
         await this.createGitignore();
+        await this.generateGemfileLock();
+    }
+
+    private async generateGemfileLock(): Promise<void> {
+        this.context.logger.debug("Running bundle lock to generate Gemfile.lock");
+        try {
+            await loggingExeca(
+                this.context.logger,
+                "bundle",
+                [
+                    "lock",
+                    "--add-platform",
+                    "ruby",
+                    "--add-platform",
+                    "x86_64-linux",
+                    "--add-platform",
+                    "aarch64-linux",
+                    "--add-platform",
+                    "arm64-darwin",
+                    "--add-platform",
+                    "x86_64-darwin"
+                ],
+                {
+                    doNotPipeOutput: true,
+                    cwd: this.absolutePathToOutputDirectory,
+                    env: {
+                        ...process.env,
+                        BUNDLE_GEMFILE: undefined,
+                        GEM_HOME: undefined,
+                        GEM_PATH: undefined
+                    }
+                }
+            );
+            this.context.logger.debug("Generated Gemfile.lock successfully");
+        } catch (error) {
+            this.context.logger.warn(
+                `Failed to generate Gemfile.lock: ${error instanceof Error ? error.message : String(error)}. ` +
+                    "The generated SDK will not include a lockfile. Run 'bundle install' manually to create one."
+            );
+        }
     }
 
     private async createGemspecfile(): Promise<void> {

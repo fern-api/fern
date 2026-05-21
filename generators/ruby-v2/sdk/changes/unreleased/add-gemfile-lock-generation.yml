@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generate Gemfile.lock during SDK generation by running `bundle lock` after
+    all project files (including Gemfile.custom and custom.gemspec.rb) have been
+    written. This ensures the lockfile includes all transitive dependencies and
+    lists common platforms (ruby, x86_64-linux, aarch64-linux, arm64-darwin,
+    x86_64-darwin), preventing CI failures from missing gems after regeneration.
+  type: fix
