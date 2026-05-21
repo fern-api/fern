@@ -13,9 +13,8 @@ import type { TaskContext } from "@fern-api/task-context";
 import { createHash } from "crypto";
 import { readFile } from "fs/promises";
 
-import { compressedLedgerPost } from "./compressedLedgerFetch.js";
-
 import { buildTranslatedDocsDefinition } from "./buildTranslatedDocsDefinition.js";
+import { compressedLedgerPost } from "./compressedLedgerFetch.js";
 import { mapDocsConfigToLedgerConfig } from "./mapDocsConfigToLedgerConfig.js";
 import { asyncPool } from "./utils/asyncPool.js";
 
