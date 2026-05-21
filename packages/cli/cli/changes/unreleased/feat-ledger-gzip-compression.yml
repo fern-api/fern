@@ -1,0 +1,4 @@
+- summary: |
+    Gzip-compress docs-ledger register and finish request bodies to reduce
+    transfer time for large multi-locale deployments.
+  type: feat
