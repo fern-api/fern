@@ -5,13 +5,16 @@
 // and copySpecs writes a fresh main.rs from scratch alongside the
 // mounted spec(s) at codegen time.
 //
-// Embedding the lib-test fixture (rather than a separate copy in this
-// folder) keeps the SDK source free of duplicate placeholder specs.
+// Uses `rich.json` (33 KB) rather than the slimmer `openapi.json` —
+// the integration tests rely on the rich fixture's specific paths,
+// groups, and x-fern-* extensions. `rich.json` is also in SDK_IGNORE
+// so it never reaches user output; users only get the tiny
+// `openapi.json` (≈ 1 KB) used by the lib-level overlay tests.
 use fern_cli_sdk::openapi::CliApp;
 
 fn main() {
     CliApp::new("openapi-fixture")
-        .spec(include_str!("../../src/openapi/__fixtures__/openapi.json"))
+        .spec(include_str!("../../src/openapi/__fixtures__/rich.json"))
         .auth_scheme_env("bearer", "OPENAPI_FIXTURE_API_KEY")
         .run()
 }

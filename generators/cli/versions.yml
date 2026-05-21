@@ -1,4 +1,48 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.3.0
+  changelogEntry:
+    - summary: |
+        End-to-end Rust CLI generation. The generator copies the bundled
+        Rust SDK template into the user's output (recursive copy with a
+        curated `SDK_IGNORE`) and writes `cli/<binary>/main.rs` from
+        scratch alongside each mounted OpenAPI spec.
+
+        Binary identity is derived from one of:
+          - `customConfig.binaryName` in generators.yml
+          - else the spec's `info.title` (kebab-cased) for single-spec
+            workspaces
+          - else a clear error (multi-spec without override).
+        Patched into `Cargo.toml`'s `[[bin]] name`/`path`, the
+        `CliApp::new(...)` arg, and the env-var prefix for auth
+        credentials.
+
+        Auth detection: each declared `components.securitySchemes`
+        entry the SDK can lower (`http: bearer`, `oauth2`,
+        `apiKey: header`, `http: basic`) emits the matching
+        `.auth_scheme_env(...)` / `.auth_basic_scheme(...)` call
+        against `<BIN>_<SCHEME>_<KIND>` env vars. Unsupported schemes
+        (apiKey in query/cookie, openIdConnect, mTLS) are silently
+        skipped to match the SDK's supported surface.
+
+        Multi-spec routing: specs without a `namespace:` in
+        `generators.yml` emit `.spec(include_str!(...))` so they merge
+        flat at the root of the command tree; specs with a namespace
+        emit `.spec_under("<ns>", include_str!(...))` so each surfaces
+        under its own sub-command. Mixed workspaces work.
+
+        Workspaces that mount no OpenAPI specs (e.g. Fern definitions)
+        skip cleanly with a log message — the output dir stays
+        untouched rather than receiving a half-wired template.
+
+        Operational: Sentry instrumentation matches the other
+        generators (no-op without `SENTRY_DSN` or with
+        `FERN_DISABLE_TELEMETRY=true`). Shipped lib test fixture
+        trimmed from 33 KB to 1.5 KB; the rich fixture remains in
+        source for template-author tests but is excluded from user
+        output via SDK_IGNORE.
+      type: feat
+  createdAt: "2026-05-21"
+  irVersion: 67
 - version: 0.2.0
   changelogEntry:
     - summary: |

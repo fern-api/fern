@@ -4,9 +4,7 @@
 use fern_cli_sdk::openapi::CliApp;
 
 fn main() {
-    CliApp::new("openapi-fixture")
+    CliApp::new("query-parameters-api")
         .spec(include_str!("openapi0.json"))
-        .spec(include_str!("openapi1.json"))
-        .auth_scheme_env("bearer", "OPENAPI_FIXTURE_API_KEY")
         .run()
 }

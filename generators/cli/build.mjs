@@ -30,7 +30,15 @@ const SDK_IGNORE = [
     // Template-author dev bin. `copySpecs` writes the whole folder
     // (main.rs + every mounted spec) from scratch at codegen time, so
     // none of the source-side files in here belong in user output.
-    "cli/openapi-fixture/**"
+    "cli/openapi-fixture/**",
+
+    // Rich (33 KB) test fixture used only by the template's own dev
+    // bin and `cli_integration.rs` / `openapi_fixture_wire.rs` (also
+    // ignored above). User output ships only the slimmer
+    // `__fixtures__/openapi.json` (≈ 1 KB) referenced by the
+    // lib-level overlay tests in src/openapi/overlay.rs and
+    // tests/lib_api.rs.
+    "src/openapi/__fixtures__/rich.json"
 ];
 
 await buildGenerator(getDirname(import.meta.url), {

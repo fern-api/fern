@@ -25,6 +25,11 @@ paths:
                 items:
                   $ref: "#/components/schemas/UserV2"
 components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-Api-Key
   schemas:
     UserV2:
       type: object

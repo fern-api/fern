@@ -1,5 +1,7 @@
 import { cp, mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
+import { type DetectedAuthBinding, detectAuthBindings } from "./detectAuth.js";
+import type { SpecCache } from "./specCache.js";
 
 export interface RawSpecsManifestEntry {
     type: "openapi" | "asyncapi" | "protobuf" | "openrpc" | "graphql";
@@ -17,45 +19,6 @@ export interface RawSpecsManifest {
 export const SPECS_DIRECTORY = "/fern/specs";
 export const SPECS_MANIFEST_FILENAME = "specs-manifest.json";
 
-/**
- * Directory in the generated output that holds the bundled CLI binary's
- * source. The SDK template's source has its own placeholder version of
- * this dir for the template author's tests, but `cli/openapi-fixture/**`
- * is in the generator's SDK_IGNORE — the user output never receives any
- * of those source-side files. `copySpecs` creates the whole folder from
- * scratch alongside the mounted spec(s).
- */
-export const FIXTURE_DIR = path.join("cli", "openapi-fixture");
-
-const BINARY_NAME = "openapi-fixture";
-const AUTH_ENV_VAR = "OPENAPI_FIXTURE_API_KEY";
-
-/**
- * Write every mounted OpenAPI spec into the bundled CLI binary's folder
- * and generate a fresh `main.rs` that embeds each spec with `include_str!`.
- *
- * The OpenAPI generator pipeline (`generatorWantsSpecs("fernapi/fern-cli")`)
- * always mounts at least one spec for any OpenAPI-backed workspace, so
- * `copySpecs` is responsible for both:
- *   - writing each spec file (`openapi0.json`, `openapi1.json`, …)
- *   - writing `cli/openapi-fixture/main.rs` from scratch
- *
- * Behavior:
- *   - Specs without a `namespace:` in `generators.yml` → emit
- *     `.spec(include_str!(...))` per spec so they merge flat at the root
- *     of the command tree.
- *   - Specs with a `namespace:` in `generators.yml` → emit
- *     `.spec_under("<namespace>", include_str!(...))` per spec so each
- *     surfaces under its own sub-command. Mixed workspaces work too:
- *     non-namespaced entries get `.spec(...)`, namespaced ones get
- *     `.spec_under(...)`.
- *
- * When no openapi specs are mounted (Fern-definition workspaces, or
- * non-OpenAPI manifests), this is a no-op — the user's output will be
- * missing `cli/openapi-fixture/` and the resulting Cargo `[[bin]]` will
- * fail to build, which is the intended fail-loud behavior until the
- * generator learns to handle Fern definitions.
- */
 /**
  * Returns the parsed mounted-specs manifest, or `null` when no specs were
  * mounted (e.g. a Fern-definition workspace). Lets the caller decide
@@ -78,7 +41,34 @@ export async function hasOpenApiSpecs(specsDir?: string): Promise<boolean> {
     return manifest != null && manifest.specs.some((entry) => entry.type === "openapi");
 }
 
-export async function copySpecs(outputDir: string, specsDir?: string): Promise<void> {
+/**
+ * Write every mounted OpenAPI spec into the generated CLI's bin folder
+ * (`cli/<binaryName>/`) and emit a fresh `main.rs` that embeds each spec
+ * via `include_str!`. The folder is named after the binary so the
+ * patched `Cargo.toml`'s `[[bin]] path = "cli/<binaryName>/main.rs"`
+ * resolves.
+ *
+ * Behavior:
+ *   - Specs without a `namespace:` in `generators.yml` → emit
+ *     `.spec(include_str!(...))` per spec so they merge flat at the root
+ *     of the command tree.
+ *   - Specs with a `namespace:` in `generators.yml` → emit
+ *     `.spec_under("<namespace>", include_str!(...))` per spec so each
+ *     surfaces under its own sub-command. Mixed workspaces work too:
+ *     non-namespaced entries get `.spec(...)`, namespaced ones get
+ *     `.spec_under(...)`.
+ *
+ * No-op when no OpenAPI specs are mounted; cli.ts's gate should have
+ * skipped the call before reaching this point.
+ */
+export async function copySpecs(args: {
+    outputDir: string;
+    binaryName: string;
+    specsDir?: string;
+    /** Optional shared parsed-spec cache; one-off when omitted. */
+    specCache?: SpecCache;
+}): Promise<void> {
+    const { outputDir, binaryName, specsDir, specCache } = args;
     const manifest = await readSpecsManifest(specsDir);
     if (manifest == null) {
         return;
@@ -89,17 +79,18 @@ export async function copySpecs(outputDir: string, specsDir?: string): Promise<v
         return;
     }
 
-    const fixtureDir = path.join(outputDir, FIXTURE_DIR);
-    await mkdir(fixtureDir, { recursive: true });
+    const binDir = path.join(outputDir, "cli", binaryName);
+    await mkdir(binDir, { recursive: true });
 
     const entries: SpecEntry[] = [];
     for (const spec of openapiSpecs) {
         const destFilename = path.basename(spec.specPath);
-        await cp(spec.specPath, path.join(fixtureDir, destFilename), { force: true });
+        await cp(spec.specPath, path.join(binDir, destFilename), { force: true });
         entries.push({ destFilename, namespace: spec.namespace });
     }
 
-    await writeFile(path.join(fixtureDir, "main.rs"), renderMainRs(entries));
+    const authBindings = await detectAuthBindings({ openapiSpecs, binaryName, specCache });
+    await writeFile(path.join(binDir, "main.rs"), renderMainRs({ binaryName, entries, authBindings }));
 }
 
 interface SpecEntry {
@@ -107,16 +98,19 @@ interface SpecEntry {
     namespace: string | undefined;
 }
 
-function renderMainRs(entries: SpecEntry[]): string {
+function renderMainRs(args: { binaryName: string; entries: SpecEntry[]; authBindings: DetectedAuthBinding[] }): string {
+    const { binaryName, entries, authBindings } = args;
+    const needsCredentialSourceImport = authBindings.some((b) => b.needsCredentialSourceImport);
+
     const lines: string[] = [
         "// Auto-generated by @fern-api/cli-generator's copySpecs step.",
         "// Edit the SDK template / generator if you need to change the shape.",
-        "",
-        "use fern_cli_sdk::openapi::CliApp;",
-        "",
-        "fn main() {",
-        `    CliApp::new("${BINARY_NAME}")`
+        ""
     ];
+    if (needsCredentialSourceImport) {
+        lines.push("use fern_cli_sdk::auth::AuthCredentialSource;");
+    }
+    lines.push("use fern_cli_sdk::openapi::CliApp;", "", "fn main() {", `    CliApp::new("${binaryName}")`);
 
     for (const entry of entries) {
         const include = `include_str!("${entry.destFilename}")`;
@@ -126,7 +120,9 @@ function renderMainRs(entries: SpecEntry[]): string {
             lines.push(`        .spec(${include})`);
         }
     }
-    lines.push(`        .auth_scheme_env("bearer", "${AUTH_ENV_VAR}")`);
+    for (const binding of authBindings) {
+        lines.push(`        ${binding.rustCall}`);
+    }
     lines.push("        .run()");
     lines.push("}");
     lines.push("");

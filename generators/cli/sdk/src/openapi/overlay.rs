@@ -1887,48 +1887,12 @@ actions:
         );
     }
 
-    #[test]
-    fn test_overlay_on_fixture_spec_builds_cli_app() {
-        use crate::openapi::CliApp;
-
-        let spec = include_str!("__fixtures__/openapi.json");
-        let overlay = r#"
-overlay: "1.0.0"
-info:
-  title: fixture-overlay
-  version: "1.0.0"
-actions:
-  - target: "$.paths['/files/{file_id}/thumbnail']"
-    remove: true
-"#;
-
-        let app = CliApp::new("overlay-fixture")
-            .spec(spec)
-            .overlay(overlay);
-        let doc = app.build_doc().unwrap();
-
-        // files and folders groups should still exist
-        assert!(doc.resources.contains_key("files"), "files group missing");
-        assert!(doc.resources.contains_key("folders"), "folders group missing");
-        assert!(doc.resources.contains_key("users"), "users group missing");
-
-        // getThumbnail should be gone from the files resource
-        let files = &doc.resources["files"];
-        assert!(
-            !files.methods.contains_key("getThumbnail"),
-            "getThumbnail should be removed: {:?}",
-            files.methods.keys().collect::<Vec<_>>()
-        );
-        // Other file operations should still exist
-        assert!(
-            files.methods.contains_key("get"),
-            "get should remain: {:?}",
-            files.methods.keys().collect::<Vec<_>>()
-        );
-        assert!(
-            files.methods.contains_key("update"),
-            "update should remain: {:?}",
-            files.methods.keys().collect::<Vec<_>>()
-        );
-    }
+    // (Previously: an integration smoke that exercised the rich
+    // template fixture's groups/methods after overlay. Coverage moved
+    // to `tests/cli_integration.rs` + `tests/openapi_fixture_wire.rs`
+    // — both of which exec the openapi-fixture bin against the rich
+    // fixture and assert deeper than this lib test ever could. The
+    // remaining `test_overlay_on_fixture_spec` above already covers
+    // the overlay→merge→build_doc lib path against the tiny shipped
+    // fixture.)
 }

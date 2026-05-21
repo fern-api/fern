@@ -20,6 +20,10 @@ paths:
                 items:
                   $ref: "#/components/schemas/UserV1"
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
   schemas:
     UserV1:
       type: object

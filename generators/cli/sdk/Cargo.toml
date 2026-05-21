@@ -1,3 +1,10 @@
+# `name`, `repository`, `homepage`, `authors`, and `keywords` are Fern's —
+# they identify the SDK template's source on crates.io. The fern-cli
+# generator does NOT rewrite this block when producing your CLI; only the
+# [[bin]] entry below is templated. If you want to publish *your* CLI as
+# its own crate on crates.io, edit this block to your org's metadata.
+# The [lib] name (`fern_cli_sdk`) is the import path every `use
+# fern_cli_sdk::...` site in src/ depends on — do NOT rename it.
 [package]
 name = "fern-cli-sdk"
 version = "0.18.1"
@@ -15,10 +22,15 @@ categories = ["command-line-utilities", "web-programming"]
 name = "fern_cli_sdk"
 path = "src/lib.rs"
 
+# Rewritten by the fern-cli generator's `patchCargoToml` step — both the
+# `name` and `path` are replaced with the derived binary name so users
+# get `cargo install`-able binaries named after their API rather than
+# the template's literal "openapi-fixture".
 [[bin]]
 name = "openapi-fixture"
 path = "cli/openapi-fixture/main.rs"
 
+# Internal tool used by the SDK template itself — not the user's CLI.
 [[bin]]
 name = "strip-schema"
 path = "src/bin/strip_schema.rs"

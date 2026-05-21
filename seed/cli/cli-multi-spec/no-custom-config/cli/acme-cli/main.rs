@@ -4,8 +4,8 @@
 use fern_cli_sdk::openapi::CliApp;
 
 fn main() {
-    CliApp::new("openapi-fixture")
+    CliApp::new("acme-cli")
         .spec(include_str!("openapi0.json"))
-        .auth_scheme_env("bearer", "OPENAPI_FIXTURE_API_KEY")
+        .spec(include_str!("openapi1.json"))
         .run()
 }
