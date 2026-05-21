@@ -1,0 +1,5 @@
+- summary: |
+    Gzip-compress v2 docs publish request bodies (register, finish, API
+    registration, translation registration) to reduce transfer time for
+    large deployments.
+  type: feat
