@@ -165,8 +165,23 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
 
     private convertSecuritySchemes(): void {
         if (this.context.authOverrides) {
+            // When auth-schemes is present without auth, synthesize auth: { any: [...schemeNames] }
+            let effectiveOverrides = this.context.authOverrides;
+            if (
+                this.context.authOverrides.auth == null &&
+                this.context.authOverrides["auth-schemes"] != null
+            ) {
+                const schemeNames = Object.keys(this.context.authOverrides["auth-schemes"]);
+                if (schemeNames.length > 0) {
+                    effectiveOverrides = {
+                        ...this.context.authOverrides,
+                        auth: { any: schemeNames }
+                    };
+                }
+            }
+
             const overrideAuth = convertApiAuth({
-                rawApiFileSchema: this.context.authOverrides,
+                rawApiFileSchema: effectiveOverrides,
                 casingsGenerator: this.context.casingsGenerator
             });
 

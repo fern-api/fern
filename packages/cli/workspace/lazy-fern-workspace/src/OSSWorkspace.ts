@@ -570,23 +570,24 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             return this.createWorkspaceWithSpecsOverride({ context }, specsOverride, settings);
         }
 
-        // If auth is not in generators.yml and not in settings, try to read it from the spec's overrides files
+        // If auth is not in generators.yml and not in settings, try to read it from the spec's overrides files.
+        // When only auth-schemes is in generators.yml (no auth key), still check override files for auth.
         let effectiveSettings = settings;
-        if (
-            this.generatorsConfiguration?.api?.auth == null &&
-            this.generatorsConfiguration?.api?.["auth-schemes"] == null &&
-            settings?.auth == null
-        ) {
+        if (this.generatorsConfiguration?.api?.auth == null && settings?.auth == null) {
             const specs = await this.getOpenAPISpecsCached({ context });
             const authFromOverrides = await getAuthFromOverrideFiles(specs);
             if (authFromOverrides != null) {
+                const hasAuthSchemesInGenerators = this.generatorsConfiguration?.api?.["auth-schemes"] != null;
                 effectiveSettings = {
                     ...settings,
                     auth: authFromOverrides.auth as RawSchemas.ApiAuthSchema,
-                    authSchemes: authFromOverrides["auth-schemes"] as Record<
-                        string,
-                        RawSchemas.AuthSchemeDeclarationSchema
-                    >
+                    // Only use override file's auth-schemes if generators.yml doesn't already define them
+                    authSchemes: hasAuthSchemesInGenerators
+                        ? undefined
+                        : (authFromOverrides["auth-schemes"] as Record<
+                              string,
+                              RawSchemas.AuthSchemeDeclarationSchema
+                          >)
                 };
             }
         }
