@@ -3716,10 +3716,7 @@ service:
               "method": "POST",
               "pagination": undefined,
               "path": "/lemur/v3/generate/action-items",
-              "request": {
-                "body": "root.LemurActionItemsParameters",
-                "content-type": "application/json",
-              },
+              "request": "root.LemurActionItemsParameters",
               "response": {
                 "docs": "LeMUR action items response",
                 "status-code": 200,
@@ -4069,9 +4066,7 @@ service:
       source:
         openapi: ../openapi.yml
       display-name: Extract action items from one or more meeting transcripts.
-      request:
-        body: root.LemurActionItemsParameters
-        content-type: application/json
+      request: root.LemurActionItemsParameters
       response:
         docs: LeMUR action items response
         type: root.LemurActionItemsResponse

@@ -1071,4 +1071,145 @@ class RawClientTest extends TestCase
         $stream = $streamFactory->createStream('hello');
         $this->assertEquals('hello', (string) $stream);
     }
+
+    public function testInterfaceExistsDetectsGuzzle(): void
+    {
+        $this->assertTrue(
+            interface_exists('GuzzleHttp\ClientInterface'),
+            'interface_exists should detect GuzzleHttp\ClientInterface when Guzzle is installed',
+        );
+    }
+
+    public function testTimeoutForwardsToGuzzleSend(): void
+    {
+        $expectedResponse = self::createResponse(200);
+
+        $guzzleClient = new class ($expectedResponse) implements \Psr\Http\Client\ClientInterface, \GuzzleHttp\ClientInterface {
+            private ResponseInterface $response;
+            /** @var array<string, mixed> */
+            public array $lastOptions = [];
+
+            public function __construct(ResponseInterface $response)
+            {
+                $this->response = $response;
+            }
+
+            /** @param array<string, mixed> $options */
+            public function send(\Psr\Http\Message\RequestInterface $request, array $options = []): ResponseInterface
+            {
+                $this->lastOptions = $options;
+                return $this->response;
+            }
+
+            /** @param array<string, mixed> $options */
+            public function sendAsync(\Psr\Http\Message\RequestInterface $request, array $options = []): \GuzzleHttp\Promise\PromiseInterface
+            {
+                throw new \RuntimeException('Not implemented');
+            }
+
+            /** @param array<string, mixed> $options */
+            public function request(string $method, $uri, array $options = []): ResponseInterface
+            {
+                throw new \RuntimeException('Not implemented');
+            }
+
+            /** @param array<string, mixed> $options */
+            public function requestAsync(string $method, $uri, array $options = []): \GuzzleHttp\Promise\PromiseInterface
+            {
+                throw new \RuntimeException('Not implemented');
+            }
+
+            public function getConfig(?string $option = null)
+            {
+                return null;
+            }
+
+            public function sendRequest(\Psr\Http\Message\RequestInterface $request): ResponseInterface
+            {
+                return $this->response;
+            }
+        };
+
+        $retryClient = new RetryDecoratingClient(
+            $guzzleClient,
+            maxRetries: 0,
+            sleepFunction: function (int $_microseconds): void {
+            },
+        );
+
+        $requestFactory = \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
+        $request = $requestFactory->createRequest('GET', $this->baseUrl . '/test');
+
+        $response = $retryClient->send($request, timeout: 5.0);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertArrayHasKey('timeout', $guzzleClient->lastOptions);
+        $this->assertEquals(5.0, $guzzleClient->lastOptions['timeout']);
+    }
+
+    public function testNoTimeoutDoesNotCallGuzzleSend(): void
+    {
+        $expectedResponse = self::createResponse(200);
+
+        $guzzleClient = new class ($expectedResponse) implements \Psr\Http\Client\ClientInterface, \GuzzleHttp\ClientInterface {
+            private ResponseInterface $response;
+            public bool $sendCalled = false;
+
+            public function __construct(ResponseInterface $response)
+            {
+                $this->response = $response;
+            }
+
+            /** @param array<string, mixed> $options */
+            public function send(\Psr\Http\Message\RequestInterface $request, array $options = []): ResponseInterface
+            {
+                $this->sendCalled = true;
+                return $this->response;
+            }
+
+            /** @param array<string, mixed> $options */
+            public function sendAsync(\Psr\Http\Message\RequestInterface $request, array $options = []): \GuzzleHttp\Promise\PromiseInterface
+            {
+                throw new \RuntimeException('Not implemented');
+            }
+
+            /** @param array<string, mixed> $options */
+            public function request(string $method, $uri, array $options = []): ResponseInterface
+            {
+                throw new \RuntimeException('Not implemented');
+            }
+
+            /** @param array<string, mixed> $options */
+            public function requestAsync(string $method, $uri, array $options = []): \GuzzleHttp\Promise\PromiseInterface
+            {
+                throw new \RuntimeException('Not implemented');
+            }
+
+            public function getConfig(?string $option = null)
+            {
+                return null;
+            }
+
+            public function sendRequest(\Psr\Http\Message\RequestInterface $request): ResponseInterface
+            {
+                return $this->response;
+            }
+        };
+
+        $retryClient = new RetryDecoratingClient(
+            $guzzleClient,
+            maxRetries: 0,
+            sleepFunction: function (int $_microseconds): void {
+            },
+        );
+
+        $requestFactory = \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
+        $request = $requestFactory->createRequest('GET', $this->baseUrl . '/test');
+
+        $response = $retryClient->send($request, timeout: null);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertFalse($guzzleClient->sendCalled, 'Guzzle send() should not be called when timeout is null');
+    }
+
 }

@@ -1,4 +1,108 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.42.1
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet generation for enum path parameters. Path parameters inlined as
+        struct fields on a wrapped request now use the enum value directly (e.g.
+        `Action: prelude.ActionAllow`) instead of `.Ptr()`, which produced a typecheck error
+        when the struct field is a non-pointer required enum. Path parameters passed as
+        positional function arguments continue to use `.Ptr()` when the SDK signature takes
+        a pointer.
+      type: fix
+  createdAt: "2026-05-20"
+  irVersion: 66
+- version: 1.42.0
+  changelogEntry:
+    - summary: |
+        Add streaming reconnect options on every Go SDK request:
+        `option.WithMaxStreamReconnectAttempts(uint)`, `option.WithoutStreamReconnection()`,
+        and `option.WithoutRetries()`.
+
+        For SSE endpoints whose Fern definition sets `response-stream.resumable: true`
+        (or whose OpenAPI sets `x-fern-streaming.resumable: true`), the generated
+        streaming methods now reconnect transparently on mid-stream connection drops
+        using SSE `Last-Event-ID` semantics, honoring server-sent `retry:` directives
+        and capped by `MaxStreamReconnectAttempts` (default 5).
+
+        No behavior change for endpoints that do not opt into `resumable: true`. The
+        new option constructors are emitted unconditionally and have no effect on
+        those endpoints.
+      type: feat
+  createdAt: "2026-05-18"
+  irVersion: 66
+- version: 1.41.4
+  changelogEntry:
+    - summary: |
+        Dynamic snippets now render path-parameter arguments in IR (URL / SDK signature) order
+        rather than in the order they happen to appear in the input request, so generated
+        examples line up with the actual SDK method signature even when the spec lists path
+        parameters in a different order.
+      type: fix
+  createdAt: "2026-05-15"
+  irVersion: 66
+- version: 1.41.3
+  changelogEntry:
+    - summary: |
+        Patch `/usr/local/go/src/go.mod`, `vendor/modules.txt`, and `go.sum` in
+        the go-sdk + go-model containers so they declare `golang.org/x/net
+        v0.53.0`. Go 1.26.3 already ships the CVE-2026-33814 fix in its bundled
+        `h2_bundle.go` (the HTTP/2 SETTINGS_MAX_FRAME_SIZE validation moved to
+        the top of `ForeachSetting`), but the stdlib SBOM still pins the
+        pre-fix x/net pseudo-version `v0.47.1-0.20260417*`. Bumping the SBOM
+        metadata to v0.53.0 makes grype reflect the patched code instead of
+        flagging the toolchain as vulnerable.
+      type: chore
+  createdAt: "2026-05-14"
+  irVersion: 66
+- version: 1.41.2
+  changelogEntry:
+    - summary: |
+        Stop launching WireMock with `--global-response-templating` in generated
+        wire-test `docker-compose.test.yml`. Response examples containing literal
+        `{{...}}` are now served verbatim instead of being passed through
+        WireMock's Handlebars transformer, which would fail to resolve them as
+        helpers and return 500.
+      type: fix
+  createdAt: "2026-05-13"
+  irVersion: 66
+- version: 1.41.1
+  changelogEntry:
+    - summary: |
+        Patch Go SDK + Go model generator container CVEs flagged in the AWS ECR /
+        grype scan. Bump the Go base image to `golang:1.26.3-alpine3.23`, refresh
+        `apk upgrade`, and patch npm's bundled `picomatch@4.0.3 -> 4.0.4` and
+        `brace-expansion@5.0.4 -> 5.0.5` via tarball replacement so the published
+        image no longer ships the vulnerable bundled JS dependencies that grype
+        flags. Also drop the `internal/testdata/**` test fixtures and clear the
+        `/go/pkg/mod` + `/root/.cache/go-build` build caches from the runtime
+        image so grype no longer scans them as a source of stale `yaml.v3` and
+        `golang.org/x/net` pseudo-versions that are not actually linked into
+        `/fern-go-sdk`.
+      type: chore
+  createdAt: "2026-05-12"
+  irVersion: 66
+- version: 1.41.0
+  changelogEntry:
+    - summary: |
+        Add a `With<AuthToken>Func` option for bearer auth that accepts a `func() (string, error)` callable.
+        The callable is evaluated at request time when no static token is set, matching the callable
+        auth behavior available in the Python and TypeScript SDK generators.
+      type: feat
+  createdAt: "2026-05-11"
+  irVersion: 66
+- version: 1.40.4
+  changelogEntry:
+    - summary: |
+        Bump the Go SDK and Go model generator containers' Node base image from
+        `node:22.22-alpine3.23` to `node:24.15-alpine3.23`. Aligns the generators
+        with the rest of the Fern generator containers on a single Node major
+        version (Node 24) and picks up Node 24's CVE patches. The existing
+        `npm pack <pkg>@latest` loop that swaps in patched `ip-address`,
+        `brace-expansion`, and `picomatch` is retained because `npm pack @latest`
+        continues to resolve the same fixed releases on Node 24.
+      type: chore
+  createdAt: "2026-05-11"
+  irVersion: 66
 - version: 1.40.3
   changelogEntry:
     - summary: |

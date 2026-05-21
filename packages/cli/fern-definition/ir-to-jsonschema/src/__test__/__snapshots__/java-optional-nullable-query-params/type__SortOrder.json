@@ -4,5 +4,6 @@
     "ASC",
     "DESC"
   ],
+  "description": "Sort order enum",
   "definitions": {}
 }

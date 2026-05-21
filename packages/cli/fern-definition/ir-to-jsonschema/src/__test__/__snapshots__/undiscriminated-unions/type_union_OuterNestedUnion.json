@@ -7,6 +7,7 @@
       "$ref": "#/definitions/union.WrapperObject"
     }
   ],
+  "description": "Outer union where one variant is an object containing a nested union field.\nTests that the deserializer correctly handles transitive union deserialization.",
   "definitions": {
     "union.LeafTypeA": {
       "type": "object",
@@ -44,7 +45,8 @@
         {
           "$ref": "#/definitions/union.LeafTypeB"
         }
-      ]
+      ],
+      "description": "Inner union with two object variants that have disjoint required keys.\nTests that required-key guards work correctly inside nested union contexts."
     },
     "union.WrapperObject": {
       "type": "object",

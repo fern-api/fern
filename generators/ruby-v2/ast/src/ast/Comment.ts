@@ -21,7 +21,7 @@ export class Comment extends AstNode {
     }
 
     public write(writer: Writer): void {
-        if (this.docs != null) {
+        if (this.docs?.trim()) {
             this.docs.split("\n").forEach((line) => {
                 const wrappedLines = this.wrapLine(line, writer);
                 wrappedLines.forEach((wrappedLine) => {

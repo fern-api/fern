@@ -51,6 +51,7 @@
     "buildingId"
   ],
   "additionalProperties": false,
+  "description": "Nested object for testing",
   "definitions": {
     "nullable-optional.NullableUserId": {
       "oneOf": [
@@ -60,7 +61,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "An alias for a nullable user ID"
     },
     "nullable-optional.OptionalUserId": {
       "oneOf": [
@@ -70,7 +72,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "An alias for an optional user ID"
     }
   }
 }

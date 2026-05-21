@@ -549,7 +549,10 @@ export class SdkGenerator {
         this.baseClientTypeGenerator = new BaseClientTypeGenerator({
             ir: intermediateRepresentation,
             generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
-            omitFernHeaders: config.omitFernHeaders
+            omitFernHeaders: config.omitFernHeaders,
+            retainOriginalCasing: config.retainOriginalCasing,
+            parameterNaming: config.parameterNaming,
+            caseConverter: this.case
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation,
@@ -1159,7 +1162,9 @@ export class SdkGenerator {
         this.context.logger.debug("Generating service declarations...");
         for (const packageId of this.getAllPackageIds()) {
             const package_ = this.packageResolver.resolvePackage(packageId);
-            if (!package_.hasEndpointsInTree && (!this.generateWebSocketClients || package_.websocket == null)) {
+            const hasWebSocketInTree =
+                (package_ as { hasWebSocketInTree?: boolean }).hasWebSocketInTree ?? package_.websocket != null;
+            if (!package_.hasEndpointsInTree && (!this.generateWebSocketClients || !hasWebSocketInTree)) {
                 continue;
             }
             this.withSourceFile({
@@ -2121,8 +2126,9 @@ export class SdkGenerator {
 
             const package_ = this.packageResolver.resolvePackage(packageId);
 
-            const hasClient =
-                package_.hasEndpointsInTree || (this.generateWebSocketClients && package_.websocket != null);
+            const hasWebSocketInTree =
+                (package_ as { hasWebSocketInTree?: boolean }).hasWebSocketInTree ?? package_.websocket != null;
+            const hasClient = package_.hasEndpointsInTree || (this.generateWebSocketClients && hasWebSocketInTree);
 
             if (!hasClient && package_.subpackages.length === 0) {
                 continue;
@@ -2160,8 +2166,10 @@ export class SdkGenerator {
 
             const package_ = this.packageResolver.resolvePackage(packageId);
 
+            const hasWebSocketInTreeForExports =
+                (package_ as { hasWebSocketInTree?: boolean }).hasWebSocketInTree ?? package_.websocket != null;
             const hasClient =
-                package_.hasEndpointsInTree || (this.generateWebSocketClients && package_.websocket != null);
+                package_.hasEndpointsInTree || (this.generateWebSocketClients && hasWebSocketInTreeForExports);
 
             const clientFilepath = this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId);
             const clientClassName = this.sdkClientClassDeclarationReferencer.getExportedName(packageId);

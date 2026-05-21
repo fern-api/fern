@@ -1,3 +1,4 @@
+import os
 import sys
 from typing import Literal, Optional, Sequence, Tuple, Union, cast
 
@@ -24,6 +25,7 @@ from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import AST, Project
 from fern_python.codegen.filepath import Filepath
 from fern_python.codegen.module_manager import ModuleExport
+from fern_python.codegen.project import ProjectConfig
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model.pydantic_model_generator import PydanticModelGenerator
 from fern_python.generators.sdk import as_is_copier
@@ -88,6 +90,20 @@ class SdkGenerator(AbstractGenerator):
             )
             if custom_config.use_api_name_in_package
             else (cleaned_org_name,)
+        )
+
+    def _get_relative_path_for_project(
+        self,
+        *,
+        generator_config: GeneratorConfig,
+        ir: ir_types.IntermediateRepresentation,
+        project_config: Optional[ProjectConfig],
+    ) -> str:
+        return os.path.join(
+            *self.get_relative_path_to_project_for_publish(
+                generator_config=generator_config,
+                ir=ir,
+            )
         )
 
     def run(
@@ -307,16 +323,19 @@ class SdkGenerator(AbstractGenerator):
             project=project,
         )
 
-        # Generate test_aiohttp_autodetect.py test file
-        self._generate_aiohttp_test(
-            context=context,
-            project=project,
-        )
+        # Generate test_aiohttp_autodetect.py test file (skip when embedding —
+        # the host project owns its own tests/ directory).
+        if project.should_emit_scaffolding:
+            self._generate_aiohttp_test(
+                context=context,
+                project=project,
+            )
 
         for subpackage_id in ir.subpackages.keys():
             subpackage = ir.subpackages[subpackage_id]
+            has_websocket_in_tree = subpackage.has_web_socket_in_tree or subpackage.websocket is not None
             if subpackage.has_endpoints_in_tree or (
-                subpackage.websocket is not None and context.custom_config.should_generate_websocket_clients
+                has_websocket_in_tree and context.custom_config.should_generate_websocket_clients
             ):
                 channel_websocket = (
                     ir.websocket_channels[subpackage.websocket]
@@ -360,7 +379,10 @@ class SdkGenerator(AbstractGenerator):
 
         context.core_utilities.copy_to_project(project=project)
 
-        if not (generator_config.output.mode.get_as_union().type == "downloadFiles"):
+        if (
+            not (generator_config.output.mode.get_as_union().type == "downloadFiles")
+            and project.should_emit_scaffolding
+        ):
             as_is_copier.copy_to_project(project=project)
 
         test_fac = SnippetTestFactory(
@@ -902,7 +924,15 @@ def pytest_collection_modifyitems(config: pytest.Config, items: list) -> None:
         context: SdkGeneratorContext,
         project: Project,
     ) -> None:
-        package_name = project._project_config.package_name if project._project_config is not None else "package"
+        if project._project_config is not None:
+            package_name = project._project_config.package_name
+        else:
+            package_name = ".".join(
+                self.get_relative_path_to_project_for_publish(
+                    generator_config=context.generator_config,
+                    ir=context.ir,
+                )
+            )
         filepath = Filepath(
             directories=(),
             file=Filepath.FilepathPart(module_name="_default_clients"),
@@ -975,7 +1005,7 @@ __version__ = metadata.version("{project._project_config.package_name}")
         snippets: Snippets,
         project: Project,
     ) -> None:
-        if context.generator_config.output.snippet_filepath is not None:
+        if context.generator_config.output.snippet_filepath is not None and project.should_emit_scaffolding:
             project.add_file(context.generator_config.output.snippet_filepath, snippets.json(indent=4))
 
     def _write_snippet_tests(

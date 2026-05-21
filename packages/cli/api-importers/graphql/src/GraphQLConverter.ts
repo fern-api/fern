@@ -24,6 +24,20 @@ export interface GraphQLConverterResult {
     types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition>;
 }
 
+export interface GraphQlExampleInput {
+    name?: string;
+    description?: string;
+    query: string;
+    variables?: Record<string, unknown>;
+    response?: unknown;
+}
+
+export interface GraphQlOperationExamplesInput {
+    operation: string;
+    operationType?: "query" | "mutation" | "subscription";
+    examples: GraphQlExampleInput[];
+}
+
 export class GraphQLConverter {
     private schema: GraphQLSchema | undefined;
     private context: TaskContext;
@@ -31,15 +45,39 @@ export class GraphQLConverter {
     private namespace: string | undefined;
     private processingTypes: Set<string> = new Set();
     private types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
+    private examplesByOperation: Map<string, FdrAPI.api.v1.register.GraphQlExample[]> = new Map();
 
     constructor({
         context,
         filePath,
-        namespace
-    }: { context: TaskContext; filePath: AbsoluteFilePath; namespace?: string }) {
+        namespace,
+        examples
+    }: {
+        context: TaskContext;
+        filePath: AbsoluteFilePath;
+        namespace?: string;
+        examples?: GraphQlOperationExamplesInput[];
+    }) {
         this.context = context;
         this.filePath = filePath;
         this.namespace = namespace;
+        if (examples != null) {
+            for (const entry of examples) {
+                const mapped = entry.examples.map((ex) => ({
+                    name: ex.name ?? undefined,
+                    description: ex.description ?? undefined,
+                    query: ex.query,
+                    variables: ex.variables ?? undefined,
+                    response: ex.response ?? undefined
+                }));
+                if (entry.operationType != null) {
+                    const key = `${entry.operationType.toLowerCase()}:${entry.operation}`;
+                    this.examplesByOperation.set(key, mapped);
+                } else {
+                    this.examplesByOperation.set(entry.operation, mapped);
+                }
+            }
+        }
     }
 
     private isBuiltInScalar(typeName: string): boolean {
@@ -249,6 +287,9 @@ export class GraphQLConverter {
         operationType: FdrAPI.api.v1.register.GraphQlOperationType
     ): FdrAPI.api.v1.register.GraphQlOperation {
         const args = field.args.map((arg) => this.convertArgument(arg));
+        const examples =
+            this.examplesByOperation.get(`${operationType.toLowerCase()}:${name}`) ??
+            this.examplesByOperation.get(name);
 
         return {
             id: this.getNamespacedOperationId(`${operationType.toLowerCase()}_${name}`),
@@ -259,7 +300,7 @@ export class GraphQLConverter {
             availability: undefined,
             arguments: args.length > 0 ? args : undefined,
             returnType: this.convertOutputType(field.type),
-            examples: undefined,
+            examples: examples != null && examples.length > 0 ? examples : undefined,
             snippets: undefined
         };
     }

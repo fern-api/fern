@@ -1,4 +1,75 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.8.10
+  changelogEntry:
+    - summary: |
+        Update krb5-libs in the Java SDK generator container to fix
+        CVE-2026-40356 (integer underflow OOB read) and CVE-2026-40355
+        (NULL pointer dereference) in MIT Kerberos 5.
+      type: chore
+  createdAt: "2026-05-18"
+  irVersion: 66
+- version: 4.8.9
+  changelogEntry:
+    - summary: |
+        Fix CVE-2026-41989: update libgcrypt in Docker image to patch heap-based
+        buffer overflow in gcry_pk_decrypt.
+      type: chore
+  createdAt: "2026-05-18"
+  irVersion: 66
+- version: 4.8.8
+  changelogEntry:
+    - summary: |
+        Dynamic snippets now render path-parameter arguments in IR (URL / SDK signature) order
+        rather than in the order they happen to appear in the input request, so generated
+        examples line up with the actual SDK method signature even when the spec lists path
+        parameters in a different order. Also fixes spurious "not recognized" errors that
+        were raised for endpoint-level path parameters when both top-level and endpoint-level
+        path parameters were supplied.
+      type: fix
+  createdAt: "2026-05-15"
+  irVersion: 66
+- version: 4.8.7
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union deserialization when one member has all-optional fields.
+        Previously, an all-optional object variant (e.g. `PayMethodCloud`) could greedily
+        consume a payload intended for a more specific variant with required fields (e.g.
+        `Check` requiring `achHolder`), because Jackson's `@JsonIgnoreProperties(ignoreUnknown=true)`
+        silently accepts any JSON object when all fields are optional. The deserializer now
+        emits guarded members (those with at least one required field) before unguarded
+        (all-optional) members, ensuring the more specific match wins.
+      type: fix
+  createdAt: "2026-05-12"
+  irVersion: 66
+- version: 4.8.6
+  changelogEntry:
+    - summary: |
+        Patch Java SDK generator container CVEs flagged in the AWS ECR / grype
+        scan. Patch npm's bundled `brace-expansion@5.0.4 -> 5.0.5` (GHSA-f886-m6hf-6m8v)
+        via tarball replacement so the published image no longer ships the vulnerable
+        bundled JS dependency that grype flags on `dev/java-sdk-generator`.
+      type: chore
+  createdAt: "2026-05-12"
+  irVersion: 66
+- version: 4.8.5
+  changelogEntry:
+    - summary: |
+        Bump the Java SDK generator container's Node base image from
+        `node:24.14.1-bookworm` to `node:24.15-trixie`. Aligns the generator
+        with the rest of the Fern generator containers on a single Node patch
+        minor (floating `24.15`) and a single Debian release (trixie). Trixie ships
+        patched versions of glibc, dpkg, nghttp2, libcap2, systemd, libgcrypt20,
+        krb5, curl, and expat that are not available on bookworm, clearing the
+        AWS Inspector findings that dist-upgrade alone could not. The non-slim
+        variant is intentional because the Node-stage patch steps shell out to
+        `curl` and `tar`. The bundled npm 11.12.1 in `node:24.15` already ships
+        patched `glob@13.0.6`, `minimatch@10.2.4`, `tar@7.5.11`, and
+        `brace-expansion@5.0.4`, so those tarball-replacement patch steps are
+        removed. The `ip-address` and `picomatch` patches are retained because the
+        bundled versions (10.1.0 and 4.0.3 respectively) are still vulnerable.
+      type: chore
+  createdAt: "2026-05-11"
+  irVersion: 66
 - version: 4.8.4
   changelogEntry:
     - summary: |

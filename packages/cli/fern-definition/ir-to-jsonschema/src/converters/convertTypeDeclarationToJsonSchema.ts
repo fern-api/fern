@@ -20,6 +20,14 @@ export function convertTypeDeclarationToJsonSchema({
     typeDeclaration,
     context
 }: convertTypeDeclarationToJsonSchema.Args): JSONSchema4 {
+    const schema = convertShape({ typeDeclaration, context });
+    if (typeDeclaration.docs != null && schema.description == null) {
+        schema.description = typeDeclaration.docs;
+    }
+    return schema;
+}
+
+function convertShape({ typeDeclaration, context }: convertTypeDeclarationToJsonSchema.Args): JSONSchema4 {
     switch (typeDeclaration.shape.type) {
         case "object":
             return convertObjectToJsonSchema({ object: typeDeclaration.shape, context });

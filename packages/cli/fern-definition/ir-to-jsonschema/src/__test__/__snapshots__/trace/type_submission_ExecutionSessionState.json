@@ -12,7 +12,8 @@
       ]
     },
     "sessionId": {
-      "type": "string"
+      "type": "string",
+      "description": "The auto-generated session id. Formatted as a uuid."
     },
     "isWarmInstance": {
       "type": "boolean"

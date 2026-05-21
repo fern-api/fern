@@ -1,12 +1,14 @@
 import { Log, logErrorMessage, TtyAwareLogger } from "@fern-api/cli-logger";
 import { createLogger, LOG_LEVELS, LogLevel } from "@fern-api/logger";
-import { getPosthogManager, PosthogManager } from "@fern-api/posthog-manager";
+import { getPosthogManager, type PosthogManager } from "@fern-api/posthog-manager";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import {
+    type CaptureExceptionOptions,
     CliError,
     Finishable,
-    PosthogEvent,
+    type PosthogAutomationEvent,
+    type PosthogEvent,
     Startable,
     TaskAbortSignal,
     TaskContext,
@@ -17,6 +19,11 @@ import { Workspace } from "@fern-api/workspace-loader";
 import { input, select } from "@inquirer/prompts";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
+import {
+    type AutomationTelemetryEmitOptions,
+    AutomationTelemetryManager
+} from "../telemetry/AutomationTelemetryManager.js";
+import type { AutomationTelemetryEvent } from "../telemetry/automationTelemetryEvent.js";
 import { reportError } from "../telemetry/reportError.js";
 import { SentryClient } from "../telemetry/SentryClient.js";
 import { CliEnvironment } from "./CliEnvironment.js";
@@ -42,6 +49,7 @@ export class CliContext {
     public readonly environment: CliEnvironment;
     private readonly sentryClient: SentryClient;
     private readonly posthogManager: PosthogManager;
+    private readonly automationTelemetryManager: AutomationTelemetryManager;
 
     private didSucceed = true;
 
@@ -82,7 +90,15 @@ export class CliContext {
             packageVersion,
             cliName
         };
-        this.sentryClient = new SentryClient({ release: `cli@${this.environment.packageVersion}` });
+        this.sentryClient = new SentryClient({
+            release: `cli@${this.environment.packageVersion}`,
+            telemetry: {
+                cliName: this.environment.cliName,
+                packageVersion: this.environment.packageVersion,
+                isLocal: this.isLocal
+            }
+        });
+        this.automationTelemetryManager = new AutomationTelemetryManager(this);
     }
 
     private getPackageName() {
@@ -173,6 +189,7 @@ export class CliContext {
             // Silently swallow – analytics should never block the CLI
         }
         await this.sentryClient.flush();
+        await this.automationTelemetryManager.flush();
         this.exitProgram({ code });
     }
 
@@ -222,6 +239,7 @@ export class CliContext {
     private project: Project | undefined;
     public registerProject(project: Project): void {
         this.project = project;
+        this.automationTelemetryManager.setOrganization(project.config.organization);
     }
 
     public runTask<T>(run: (context: TaskContext) => T | Promise<T>): Promise<T> {
@@ -271,8 +289,21 @@ export class CliContext {
         }
     }
 
-    public captureException(error: unknown, code?: CliError.Code): void {
-        this.sentryClient.captureException(error, code);
+    public instrumentPostHogAutomationEvent(event: PosthogAutomationEvent): void {
+        if (!this.isLocal) {
+            this.posthogManager.sendAutomationEvent(event);
+        }
+    }
+
+    public captureException(error: unknown, options?: CaptureExceptionOptions): string | undefined {
+        return this.sentryClient.captureException(error, options);
+    }
+
+    public emitAutomationTelemetryEvent(
+        event: AutomationTelemetryEvent,
+        options?: AutomationTelemetryEmitOptions
+    ): void {
+        this.automationTelemetryManager.emit(event, options);
     }
 
     public readonly logger = createLogger((level, ...args) => this.log(level, ...args));
@@ -316,9 +347,8 @@ export class CliContext {
                 this.instrumentPostHogEvent(event);
             },
             shouldBufferLogs: false,
-            captureException: (error, code) => {
-                this.sentryClient.captureException(error, code);
-            }
+            captureException: (error, options) => this.sentryClient.captureException(error, options),
+            emitAutomationTelemetryEvent: (event, options) => this.emitAutomationTelemetryEvent(event, options)
         };
     }
 

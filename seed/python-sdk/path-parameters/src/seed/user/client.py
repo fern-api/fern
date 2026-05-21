@@ -26,14 +26,10 @@ class UserClient:
         """
         return self._raw_client
 
-    def get_user(
-        self, tenant_id: str, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> User:
+    def get_user(self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> User:
         """
         Parameters
         ----------
-        tenant_id : str
-
         user_id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -48,28 +44,22 @@ class UserClient:
         from seed import SeedPathParameters
 
         client = SeedPathParameters(
+            tenant_id="YOUR_TENANT_ID",
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.get_user(
             user_id="user_id",
         )
         """
-        _response = self._raw_client.get_user(tenant_id, user_id, request_options=request_options)
+        _response = self._raw_client.get_user(user_id, request_options=request_options)
         return _response.data
 
     def create_user(
-        self,
-        tenant_id: str,
-        *,
-        name: str,
-        tags: typing.Sequence[str],
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, name: str, tags: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
     ) -> User:
         """
         Parameters
         ----------
-        tenant_id : str
-
         name : str
 
         tags : typing.Sequence[str]
@@ -86,6 +76,7 @@ class UserClient:
         from seed import SeedPathParameters
 
         client = SeedPathParameters(
+            tenant_id="YOUR_TENANT_ID",
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.create_user(
@@ -93,12 +84,11 @@ class UserClient:
             tags=["tags", "tags"],
         )
         """
-        _response = self._raw_client.create_user(tenant_id, name=name, tags=tags, request_options=request_options)
+        _response = self._raw_client.create_user(name=name, tags=tags, request_options=request_options)
         return _response.data
 
     def update_user(
         self,
-        tenant_id: str,
         user_id: str,
         *,
         name: str,
@@ -108,8 +98,6 @@ class UserClient:
         """
         Parameters
         ----------
-        tenant_id : str
-
         user_id : str
 
         name : str
@@ -128,6 +116,7 @@ class UserClient:
         from seed import SeedPathParameters
 
         client = SeedPathParameters(
+            tenant_id="YOUR_TENANT_ID",
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.update_user(
@@ -136,14 +125,11 @@ class UserClient:
             tags=["tags", "tags"],
         )
         """
-        _response = self._raw_client.update_user(
-            tenant_id, user_id, name=name, tags=tags, request_options=request_options
-        )
+        _response = self._raw_client.update_user(user_id, name=name, tags=tags, request_options=request_options)
         return _response.data
 
     def search_users(
         self,
-        tenant_id: str,
         user_id: str,
         *,
         limit: typing.Optional[int] = None,
@@ -152,8 +138,6 @@ class UserClient:
         """
         Parameters
         ----------
-        tenant_id : str
-
         user_id : str
 
         limit : typing.Optional[int]
@@ -170,6 +154,7 @@ class UserClient:
         from seed import SeedPathParameters
 
         client = SeedPathParameters(
+            tenant_id="YOUR_TENANT_ID",
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.search_users(
@@ -177,19 +162,17 @@ class UserClient:
             limit=1,
         )
         """
-        _response = self._raw_client.search_users(tenant_id, user_id, limit=limit, request_options=request_options)
+        _response = self._raw_client.search_users(user_id, limit=limit, request_options=request_options)
         return _response.data
 
     def get_user_metadata(
-        self, tenant_id: str, user_id: str, version: int, *, request_options: typing.Optional[RequestOptions] = None
+        self, user_id: str, version: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> User:
         """
         Test endpoint with path parameter that has a text prefix (v{version})
 
         Parameters
         ----------
-        tenant_id : str
-
         user_id : str
 
         version : int
@@ -206,6 +189,7 @@ class UserClient:
         from seed import SeedPathParameters
 
         client = SeedPathParameters(
+            tenant_id="YOUR_TENANT_ID",
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.get_user_metadata(
@@ -213,25 +197,17 @@ class UserClient:
             version=1,
         )
         """
-        _response = self._raw_client.get_user_metadata(tenant_id, user_id, version, request_options=request_options)
+        _response = self._raw_client.get_user_metadata(user_id, version, request_options=request_options)
         return _response.data
 
     def get_user_specifics(
-        self,
-        tenant_id: str,
-        user_id: str,
-        version: int,
-        thought: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, user_id: str, version: int, thought: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> User:
         """
         Test endpoint with path parameters listed in different order than found in path
 
         Parameters
         ----------
-        tenant_id : str
-
         user_id : str
 
         version : int
@@ -250,6 +226,7 @@ class UserClient:
         from seed import SeedPathParameters
 
         client = SeedPathParameters(
+            tenant_id="YOUR_TENANT_ID",
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.get_user_specifics(
@@ -258,9 +235,7 @@ class UserClient:
             thought="thought",
         )
         """
-        _response = self._raw_client.get_user_specifics(
-            tenant_id, user_id, version, thought, request_options=request_options
-        )
+        _response = self._raw_client.get_user_specifics(user_id, version, thought, request_options=request_options)
         return _response.data
 
 
@@ -279,14 +254,10 @@ class AsyncUserClient:
         """
         return self._raw_client
 
-    async def get_user(
-        self, tenant_id: str, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> User:
+    async def get_user(self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> User:
         """
         Parameters
         ----------
-        tenant_id : str
-
         user_id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -303,6 +274,7 @@ class AsyncUserClient:
         from seed import AsyncSeedPathParameters
 
         client = AsyncSeedPathParameters(
+            tenant_id="YOUR_TENANT_ID",
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -315,22 +287,15 @@ class AsyncUserClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_user(tenant_id, user_id, request_options=request_options)
+        _response = await self._raw_client.get_user(user_id, request_options=request_options)
         return _response.data
 
     async def create_user(
-        self,
-        tenant_id: str,
-        *,
-        name: str,
-        tags: typing.Sequence[str],
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, name: str, tags: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
     ) -> User:
         """
         Parameters
         ----------
-        tenant_id : str
-
         name : str
 
         tags : typing.Sequence[str]
@@ -349,6 +314,7 @@ class AsyncUserClient:
         from seed import AsyncSeedPathParameters
 
         client = AsyncSeedPathParameters(
+            tenant_id="YOUR_TENANT_ID",
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -362,12 +328,11 @@ class AsyncUserClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create_user(tenant_id, name=name, tags=tags, request_options=request_options)
+        _response = await self._raw_client.create_user(name=name, tags=tags, request_options=request_options)
         return _response.data
 
     async def update_user(
         self,
-        tenant_id: str,
         user_id: str,
         *,
         name: str,
@@ -377,8 +342,6 @@ class AsyncUserClient:
         """
         Parameters
         ----------
-        tenant_id : str
-
         user_id : str
 
         name : str
@@ -399,6 +362,7 @@ class AsyncUserClient:
         from seed import AsyncSeedPathParameters
 
         client = AsyncSeedPathParameters(
+            tenant_id="YOUR_TENANT_ID",
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -413,14 +377,11 @@ class AsyncUserClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.update_user(
-            tenant_id, user_id, name=name, tags=tags, request_options=request_options
-        )
+        _response = await self._raw_client.update_user(user_id, name=name, tags=tags, request_options=request_options)
         return _response.data
 
     async def search_users(
         self,
-        tenant_id: str,
         user_id: str,
         *,
         limit: typing.Optional[int] = None,
@@ -429,8 +390,6 @@ class AsyncUserClient:
         """
         Parameters
         ----------
-        tenant_id : str
-
         user_id : str
 
         limit : typing.Optional[int]
@@ -449,6 +408,7 @@ class AsyncUserClient:
         from seed import AsyncSeedPathParameters
 
         client = AsyncSeedPathParameters(
+            tenant_id="YOUR_TENANT_ID",
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -462,21 +422,17 @@ class AsyncUserClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.search_users(
-            tenant_id, user_id, limit=limit, request_options=request_options
-        )
+        _response = await self._raw_client.search_users(user_id, limit=limit, request_options=request_options)
         return _response.data
 
     async def get_user_metadata(
-        self, tenant_id: str, user_id: str, version: int, *, request_options: typing.Optional[RequestOptions] = None
+        self, user_id: str, version: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> User:
         """
         Test endpoint with path parameter that has a text prefix (v{version})
 
         Parameters
         ----------
-        tenant_id : str
-
         user_id : str
 
         version : int
@@ -495,6 +451,7 @@ class AsyncUserClient:
         from seed import AsyncSeedPathParameters
 
         client = AsyncSeedPathParameters(
+            tenant_id="YOUR_TENANT_ID",
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -508,27 +465,17 @@ class AsyncUserClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_user_metadata(
-            tenant_id, user_id, version, request_options=request_options
-        )
+        _response = await self._raw_client.get_user_metadata(user_id, version, request_options=request_options)
         return _response.data
 
     async def get_user_specifics(
-        self,
-        tenant_id: str,
-        user_id: str,
-        version: int,
-        thought: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, user_id: str, version: int, thought: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> User:
         """
         Test endpoint with path parameters listed in different order than found in path
 
         Parameters
         ----------
-        tenant_id : str
-
         user_id : str
 
         version : int
@@ -549,6 +496,7 @@ class AsyncUserClient:
         from seed import AsyncSeedPathParameters
 
         client = AsyncSeedPathParameters(
+            tenant_id="YOUR_TENANT_ID",
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -564,6 +512,6 @@ class AsyncUserClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get_user_specifics(
-            tenant_id, user_id, version, thought, request_options=request_options
+            user_id, version, thought, request_options=request_options
         )
         return _response.data

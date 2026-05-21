@@ -128,7 +128,9 @@ export function reportError(
     const capturable = error ?? new CliError({ message: options?.message ?? "", code });
     if (shouldReportToSentry(code)) {
         context.telemetry.captureException(capturable, {
-            errorCode: code
+            tags: {
+                "error.code": code
+            }
         });
     }
     context.telemetry.sendLifecycleEvent({

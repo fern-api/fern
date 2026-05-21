@@ -13,5 +13,6 @@
     "client_secret"
   ],
   "additionalProperties": false,
+  "description": "The request body for getting an OAuth token.",
   "definitions": {}
 }

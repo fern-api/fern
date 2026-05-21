@@ -4,8 +4,9 @@ pub use crate::prelude::*;
 pub struct RuleCreateRequest {
     #[serde(default)]
     pub name: String,
+    /// Execution context for the rule, excluding the prod environment.
     #[serde(rename = "executionContext")]
-    pub execution_context: RuleExecutionContext,
+    pub execution_context: RuleCreateRequestExecutionContext,
 }
 
 impl RuleCreateRequest {
@@ -18,7 +19,7 @@ impl RuleCreateRequest {
 #[non_exhaustive]
 pub struct RuleCreateRequestBuilder {
     name: Option<String>,
-    execution_context: Option<RuleExecutionContext>,
+    execution_context: Option<RuleCreateRequestExecutionContext>,
 }
 
 impl RuleCreateRequestBuilder {
@@ -27,7 +28,7 @@ impl RuleCreateRequestBuilder {
         self
     }
 
-    pub fn execution_context(mut self, value: RuleExecutionContext) -> Self {
+    pub fn execution_context(mut self, value: RuleCreateRequestExecutionContext) -> Self {
         self.execution_context = Some(value);
         self
     }

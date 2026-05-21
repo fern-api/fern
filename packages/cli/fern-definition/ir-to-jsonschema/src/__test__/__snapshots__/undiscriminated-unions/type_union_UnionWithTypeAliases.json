@@ -10,12 +10,15 @@
       "$ref": "#/definitions/union.Name"
     }
   ],
+  "description": "Union with multiple named type aliases that all resolve to the same C# type (string).\nWithout the fix, this would generate duplicate implicit operators:\n  public static implicit operator UnionWithTypeAliases(string value) => ...\n  public static implicit operator UnionWithTypeAliases(string value) => ...\n  public static implicit operator UnionWithTypeAliases(string value) => ...\ncausing CS0557 compiler error.",
   "definitions": {
     "union.UserId": {
-      "type": "string"
+      "type": "string",
+      "description": "A user identifier (alias for string)"
     },
     "union.Name": {
-      "type": "string"
+      "type": "string",
+      "description": "A name (alias for string)"
     }
   }
 }

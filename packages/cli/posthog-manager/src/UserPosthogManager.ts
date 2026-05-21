@@ -2,7 +2,7 @@ import { FernUserToken, getUserIdFromToken } from "@fern-api/auth";
 import { getRunIdProperties } from "@fern-api/cli-telemetry";
 import { createVenusService } from "@fern-api/core";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { PosthogEvent } from "@fern-api/task-context";
+import type { PosthogAutomationEvent, PosthogEvent } from "@fern-api/task-context";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { homedir } from "os";
 import { dirname } from "path";
@@ -50,6 +50,14 @@ export class UserPosthogManager implements PosthogManager {
         });
     }
 
+    public sendAutomationEvent(event: PosthogAutomationEvent): void {
+        this.posthog.capture({
+            distinctId: event.distinctId,
+            event: event.event,
+            properties: event.properties
+        });
+    }
+
     public async flush(): Promise<void> {
         try {
             await Promise.race([this.posthog.flush(), new Promise<void>((resolve) => setTimeout(resolve, 3000))]);
@@ -86,16 +94,24 @@ export class UserPosthogManager implements PosthogManager {
     private persistedDistinctId: string | undefined;
     private async getPersistedDistinctId(): Promise<string> {
         if (this.persistedDistinctId == null) {
+            const generatedDistinctId = uuidv4();
             const pathToFile = join(
                 AbsoluteFilePath.of(homedir()),
                 RelativeFilePath.of(LOCAL_STORAGE_FOLDER),
                 RelativeFilePath.of(DISTINCT_ID_FILENAME)
             );
-            if (!(await doesPathExist(pathToFile))) {
-                await mkdir(dirname(pathToFile), { recursive: true });
-                await writeFile(pathToFile, uuidv4());
+            try {
+                if (!(await doesPathExist(pathToFile))) {
+                    await mkdir(dirname(pathToFile), { recursive: true });
+                    await writeFile(pathToFile, generatedDistinctId);
+                    this.persistedDistinctId = generatedDistinctId;
+                } else {
+                    this.persistedDistinctId = (await readFile(pathToFile)).toString();
+                }
+            } catch {
+                // Analytics should never block CLI execution if the user's home directory is not writable.
+                this.persistedDistinctId = generatedDistinctId;
             }
-            this.persistedDistinctId = (await readFile(pathToFile)).toString();
         }
         return this.persistedDistinctId;
     }

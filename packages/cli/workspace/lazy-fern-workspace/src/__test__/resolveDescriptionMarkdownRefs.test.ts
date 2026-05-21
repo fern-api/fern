@@ -25,7 +25,7 @@ function createContextWithWarn(): { context: TaskContext; warn: ReturnType<typeo
             throw new Error(message ?? "Task failed");
         },
         failWithoutThrowing: noop,
-        captureException: noop,
+        captureException: () => undefined,
         getResult: () => TaskResult.Success,
         getLastFailureMessage: () => undefined,
         addInteractiveTask: () => {

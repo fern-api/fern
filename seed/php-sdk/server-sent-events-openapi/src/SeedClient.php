@@ -5,12 +5,22 @@ namespace Seed;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Types\StreamRequest;
+use Seed\Core\Client\SseStream;
+use Seed\Types\StreamProtocolNoCollisionResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
+use Seed\Types\StreamProtocolCollisionResponse;
+use Seed\Types\StreamDataContextResponse;
+use Seed\Types\StreamNoContextResponse;
+use Seed\Types\StreamProtocolWithFlatSchemaResponse;
+use Seed\Types\StreamDataContextWithEnvelopeSchemaResponse;
+use Seed\Types\Event;
 use Seed\Requests\StreamXFernStreamingConditionStreamRequest;
+use Seed\Core\Client\JsonStream;
+use Seed\Types\CompletionStreamChunk;
 use Seed\Requests\StreamXFernStreamingConditionRequest;
 use Seed\Types\CompletionFullResponse;
 use JsonException;
@@ -23,6 +33,7 @@ use Seed\Types\UnionStreamRequestBase;
 use Seed\Types\ValidateUnionRequestResponse;
 use Seed\Requests\StreamXFernStreamingNullableConditionStreamRequest;
 use Seed\Requests\StreamXFernStreamingNullableConditionRequest;
+use Seed\Core\Json\JsonDecoder;
 
 class SeedClient
 {
@@ -85,10 +96,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
+     * @return SseStream<StreamProtocolNoCollisionResponse>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function streamProtocolNoCollision(StreamRequest $request, ?array $options = null): void
+    public function streamProtocolNoCollision(StreamRequest $request, ?array $options = null): SseStream
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -102,6 +114,9 @@ class SeedClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return new SseStream(response: $response, deserializer: fn (string $data) => StreamProtocolNoCollisionResponse::fromJson($data), terminator: null);
+            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -124,10 +139,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
+     * @return SseStream<StreamProtocolCollisionResponse>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function streamProtocolCollision(StreamRequest $request, ?array $options = null): void
+    public function streamProtocolCollision(StreamRequest $request, ?array $options = null): SseStream
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -141,6 +157,9 @@ class SeedClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return new SseStream(response: $response, deserializer: fn (string $data) => StreamProtocolCollisionResponse::fromJson($data), terminator: null);
+            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -163,10 +182,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
+     * @return SseStream<StreamDataContextResponse>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function streamDataContext(StreamRequest $request, ?array $options = null): void
+    public function streamDataContext(StreamRequest $request, ?array $options = null): SseStream
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -180,6 +200,9 @@ class SeedClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return new SseStream(response: $response, deserializer: fn (string $data) => StreamDataContextResponse::fromJson($data), terminator: null);
+            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -202,10 +225,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
+     * @return SseStream<StreamNoContextResponse>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function streamNoContext(StreamRequest $request, ?array $options = null): void
+    public function streamNoContext(StreamRequest $request, ?array $options = null): SseStream
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -219,6 +243,9 @@ class SeedClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return new SseStream(response: $response, deserializer: fn (string $data) => StreamNoContextResponse::fromJson($data), terminator: null);
+            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -241,10 +268,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
+     * @return SseStream<StreamProtocolWithFlatSchemaResponse>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function streamProtocolWithFlatSchema(StreamRequest $request, ?array $options = null): void
+    public function streamProtocolWithFlatSchema(StreamRequest $request, ?array $options = null): SseStream
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -258,6 +286,9 @@ class SeedClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return new SseStream(response: $response, deserializer: fn (string $data) => StreamProtocolWithFlatSchemaResponse::fromJson($data), terminator: null);
+            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -280,10 +311,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
+     * @return SseStream<StreamDataContextWithEnvelopeSchemaResponse>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function streamDataContextWithEnvelopeSchema(StreamRequest $request, ?array $options = null): void
+    public function streamDataContextWithEnvelopeSchema(StreamRequest $request, ?array $options = null): SseStream
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -297,6 +329,9 @@ class SeedClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return new SseStream(response: $response, deserializer: fn (string $data) => StreamDataContextWithEnvelopeSchemaResponse::fromJson($data), terminator: null);
+            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -319,10 +354,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
+     * @return SseStream<Event>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function streamOasSpecNative(StreamRequest $request, ?array $options = null): void
+    public function streamOasSpecNative(StreamRequest $request, ?array $options = null): SseStream
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -336,6 +372,9 @@ class SeedClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return new SseStream(response: $response, deserializer: fn (string $data) => Event::fromJson($data), terminator: null);
+            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -358,10 +397,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
+     * @return JsonStream<CompletionStreamChunk>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function streamXFernStreamingConditionStream(StreamXFernStreamingConditionStreamRequest $request, ?array $options = null): void
+    public function streamXFernStreamingConditionStream(StreamXFernStreamingConditionStreamRequest $request, ?array $options = null): JsonStream
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -375,6 +415,9 @@ class SeedClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return new JsonStream(response: $response, deserializer: fn (string $data) => CompletionStreamChunk::fromJson($data), terminator: null);
+            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -446,10 +489,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
+     * @return JsonStream<CompletionStreamChunk>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function streamXFernStreamingSharedSchemaStream(StreamXFernStreamingSharedSchemaStreamRequest $request, ?array $options = null): void
+    public function streamXFernStreamingSharedSchemaStream(StreamXFernStreamingSharedSchemaStreamRequest $request, ?array $options = null): JsonStream
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -463,6 +507,9 @@ class SeedClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return new JsonStream(response: $response, deserializer: fn (string $data) => CompletionStreamChunk::fromJson($data), terminator: null);
+            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -583,10 +630,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
+     * @return JsonStream<CompletionStreamChunk>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function streamXFernStreamingUnionStream(StreamXFernStreamingUnionStreamRequest $request, ?array $options = null): void
+    public function streamXFernStreamingUnionStream(StreamXFernStreamingUnionStreamRequest $request, ?array $options = null): JsonStream
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -600,6 +648,9 @@ class SeedClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return new JsonStream(response: $response, deserializer: fn (string $data) => CompletionStreamChunk::fromJson($data), terminator: null);
+            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -720,10 +771,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
+     * @return JsonStream<CompletionStreamChunk>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function streamXFernStreamingNullableConditionStream(StreamXFernStreamingNullableConditionStreamRequest $request, ?array $options = null): void
+    public function streamXFernStreamingNullableConditionStream(StreamXFernStreamingNullableConditionStreamRequest $request, ?array $options = null): JsonStream
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -737,6 +789,9 @@ class SeedClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return new JsonStream(response: $response, deserializer: fn (string $data) => CompletionStreamChunk::fromJson($data), terminator: null);
+            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -808,10 +863,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
+     * @return SseStream<string>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function streamXFernStreamingSseOnly(StreamRequest $request, ?array $options = null): void
+    public function streamXFernStreamingSseOnly(StreamRequest $request, ?array $options = null): SseStream
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -825,6 +881,9 @@ class SeedClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return new SseStream(response: $response, deserializer: fn (string $data) => JsonDecoder::decodeString($data), terminator: null);
+            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }

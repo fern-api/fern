@@ -8,7 +8,7 @@ private func main() async throws {
     )
 
     _ = try await client.playlist.updatePlaylist(
-        serviceParam: 1,
+        serviceParam: "1",
         playlistId: "playlistId",
         request: UpdatePlaylistRequest(
             name: "name",

@@ -58,6 +58,7 @@
     "@fern-api/docs-preview": "workspace:*",
     "@fern-api/docs-resolver": "workspace:*",
     "@fern-api/docs-validator": "workspace:*",
+    "@fern-api/fdr-sdk": "catalog:",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/fern-definition-validator": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
@@ -67,6 +68,7 @@
     "@fern-api/ir-migrations": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/lazy-fern-workspace": "workspace:*",
+    "@fern-api/library-docs-generator": "workspace:*",
     "@fern-api/local-workspace-runner": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
@@ -84,14 +86,15 @@
     "@fern-fern/fiddle-sdk": "catalog:",
     "@fern-fern/generators-sdk": "catalog:",
     "@sentry/node": "^10.45.0",
+    "@types/cli-progress": "catalog:",
     "@types/inquirer": "catalog:",
     "@types/is-ci": "catalog:",
     "@types/js-yaml": "catalog:",
     "@types/jsonwebtoken": "catalog:",
+    "@types/mime-types": "catalog:",
     "@types/node": "catalog:",
     "@types/semver": "catalog:",
     "@types/uuid": "^9.0.7",
-    "@types/mime-types": "catalog:",
     "@types/yargs": "^17.0.28",
     "ansi-escapes": "catalog:",
     "chalk": "catalog:",
@@ -114,6 +117,7 @@
     "yargs": "^17.4.1"
   },
   "dependencies": {
+    "cli-progress": "catalog:",
     "dotenv": "^16.0.0",
     "tmp-promise": "catalog:"
   }

@@ -9,6 +9,7 @@
     "documentedUnknownType"
   ],
   "additionalProperties": false,
+  "description": "Tests that unknown types are able to preserve their type names.",
   "definitions": {
     "types.object.DocumentedUnknownType": {
       "type": [
@@ -18,7 +19,8 @@
         "object",
         "array",
         "null"
-      ]
+      ],
+      "description": "Tests that unknown types are able to preserve their docstrings."
     }
   }
 }

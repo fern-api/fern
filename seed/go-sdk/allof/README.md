@@ -40,7 +40,7 @@ func do() {
     client := client.NewClient()
     request := &fern.RuleCreateRequest{
         Name: "name",
-        ExecutionContext: fern.RuleExecutionContextProd,
+        ExecutionContext: fern.RuleCreateRequestExecutionContextProd,
     }
     client.CreateRule(
         context.TODO(),

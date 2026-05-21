@@ -13,10 +13,11 @@ packages:
 
 # Supply chain security settings
 # See: https://pnpm.io/settings
-onlyBuiltDependencies:
-  - "@sentry/cli"
-  - esbuild
-  - puppeteer
+allowBuilds:
+  '@scarf/scarf': false
+  "@sentry/cli": true
+  esbuild: true
+  puppeteer: true
 
 # Require packages to be published for at least 1 day before they can be installed.
 # This mitigates supply chain attacks like the axios compromise (March 2026) where
@@ -67,12 +68,12 @@ catalog:
   "@bufbuild/protoplugin": 2.2.5
   "@fern-api/fai-sdk": 0.0.6-2ee1b7e28
   "@fern-api/fdr-sdk": 1.2.4-f661387fb2
-  "@fern-api/generator-cli": 0.9.22
+  "@fern-api/generator-cli": 0.9.35
   "@fern-api/ui-core-utils": 0.129.4-b6c699ad2
   "@fern-api/venus-api-sdk": 0.22.34
   "@fern-fern/docs-config": 0.0.80
   "@fern-fern/fdr-test-sdk": ^0.0.5297
-  "@fern-fern/fiddle-sdk": 1.0.3
+  "@fern-fern/fiddle-sdk": 1.1.0
   "@fern-fern/generator-exec-sdk": ^0.0.1167
   "@fern-fern/generators-sdk": 0.114.0-5745f9e74
   "@fern-fern/ir-v53-sdk": 1.0.1
@@ -242,7 +243,7 @@ catalog:
   tsdown: 0.22.0
   tsup: ^8.5.1
   tsx: ^4.21.0
-  turbo: ^2.9.9
+  turbo: ^2.9.14
   typescript: 5.9.3
   ua-parser-js: ^1.0.37
   undici: ^6.24.0
@@ -255,9 +256,21 @@ catalog:
   vitest: 4.1.4
   watcher: ^2.3.1
   whatwg-mimetype: ^4.0.0
-  ws: ^8.20.0
+  ws: ^8.20.1
   xml2js: ^0.6.2
   yaml: ^2.8.3
   yauzl: ^3.2.1
   yazl: ^3.3.1
   zod: ^3.22.3
+overrides:
+  ajv: 8.18.0
+  cross-spawn: ^7.0.6
+  node-fetch@2.x>whatwg-url: ^14.0.0
+  minimatch: '>=10.2.3'
+  qs: 6.15.0
+  url-join: ^4.0.1
+  '@fern-api/fdr-sdk': 1.2.4-f661387fb2
+  form-data: ^4.0.4
+  '@fern-api/ui-core-utils': 0.145.12-b50d999d1
+  vite: ^7.3.2
+  yauzl: ^3.2.1

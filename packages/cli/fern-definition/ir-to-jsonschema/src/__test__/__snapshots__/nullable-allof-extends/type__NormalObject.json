@@ -13,5 +13,6 @@
     }
   },
   "additionalProperties": false,
+  "description": "A standard object with no nullable issues.",
   "definitions": {}
 }

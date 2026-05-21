@@ -13,6 +13,7 @@
 
 ```ruby
 client.echo(
+  id: "id-ksfd9c1",
   name: "Hello world!",
   size: 20
 )
@@ -72,7 +73,10 @@ client.echo(
 <dd>
 
 ```ruby
-client.service.nop(nested_id: "id-219xca8")
+client.service.nop(
+  id: "id-a2ijs82",
+  nested_id: "id-219xca8"
+)
 ```
 </dd>
 </dl>

@@ -16,6 +16,7 @@ on:
       - "generators/rust/sdk/changes/**"
       - "generators/swift/sdk/changes/**"
       - "generators/typescript/sdk/changes/**"
+      - "generators/cli/changes/**"
   workflow_dispatch:
     inputs:
       software:
@@ -36,6 +37,7 @@ on:
           - rust
           - swift
           - typescript
+          - cli-generator
 
 # Prevent concurrent release runs to avoid git conflicts.
 # NOTE: cancel-in-progress: false protects the running job, but GitHub still

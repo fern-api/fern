@@ -1,0 +1,31 @@
+irVersion: v67
+displayName: CLI
+image: fernapi/fern-cli
+changelogLocation: ../../generators/cli/versions.yml
+
+publish:
+  preBuildCommands:
+    - pnpm turbo run dist:cli --filter @fern-api/cli-generator
+  docker:
+    file: ./generators/cli/Dockerfile
+    image: fernapi/fern-cli
+    context: ./generators/cli
+
+test:
+  docker:
+    image: fernapi/fern-cli:latest
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/cli-generator
+  local:
+    workingDirectory: generators/cli
+    buildCommand:
+      - pnpm turbo run dist:cli --filter @fern-api/cli-generator
+    runCommand: node --enable-source-maps dist/cli.cjs {CONFIG_PATH}
+
+generatorType: SDK
+defaultOutputMode: local_files
+defaultCustomConfig: {}
+
+fixtures:
+  simple-api:
+    - customConfig: null
+      outputFolder: no-custom-config

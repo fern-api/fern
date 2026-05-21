@@ -50,7 +50,15 @@ client.Imdb.CreateMovie(
 <dl>
 <dd>
 
-**request:** `*testPackageName.CreateMovieRequest` 
+**title:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rating:** `float64` 
     
 </dd>
 </dl>
@@ -75,9 +83,12 @@ client.Imdb.CreateMovie(
 <dd>
 
 ```go
+request := &testPackageName.GetMovieImdbRequest{
+        MovieID: "movieId",
+    }
 client.Imdb.GetMovie(
         context.TODO(),
-        "movieId",
+        request,
     )
 }
 ```

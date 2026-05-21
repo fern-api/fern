@@ -53,6 +53,7 @@
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-migrations": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
+    "js-yaml": "catalog:",
     "@fern-api/java-dynamic-snippets": "workspace:*",
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/logger": "workspace:*",
@@ -72,11 +73,14 @@
     "chalk": "catalog:",
     "decompress": "catalog:",
     "semver": "^7.6.3",
+    "tar": "catalog:",
     "tmp-promise": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@types/decompress": "catalog:",
+    "@types/js-yaml": "catalog:",
+    "@types/tar": "catalog:",
     "@types/node": "catalog:",
     "@types/semver": "catalog:",
     "typescript": "catalog:",

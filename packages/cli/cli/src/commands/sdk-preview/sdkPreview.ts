@@ -298,7 +298,8 @@ export async function sdkPreview({
                         dynamicIrOnly: false,
                         validateWorkspace: true,
                         retryRateLimited: false,
-                        requireEnvVars: false
+                        requireEnvVars: false,
+                        verify: false
                     };
 
                     // Job 1: Publish preview package to registry.

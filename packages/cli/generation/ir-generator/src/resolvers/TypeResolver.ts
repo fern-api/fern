@@ -59,7 +59,7 @@ export class TypeResolverImpl implements TypeResolver {
             throw new CliError({
                 message:
                     "Cannot find declaration of type: " + referenceToNamedType + " in file " + file.relativeFilepath,
-                code: CliError.Code.ResolutionError
+                code: CliError.Code.ReferenceError
             });
         }
         return declaration;

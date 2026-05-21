@@ -2,7 +2,20 @@ openapi: 3.1.0
 info:
   title: websocket
   version: 0.0.0
-paths: {}
+paths:
+  /status:
+    get:
+      operationId: status_get_status
+      tags:
+        - Status
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
 components:
   schemas:
     SendEvent:
@@ -114,4 +127,12 @@ components:
       required:
         - errorCode
         - errorMessage
+    StatusResponse:
+      title: StatusResponse
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
   securitySchemes: {}

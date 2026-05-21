@@ -8,6 +8,8 @@ export const SNIPPET_FILENAME = "snippet.json";
 export const SNIPPET_TEMPLATES_FILENAME = "snippet-templates.json";
 export const GENERATORS_DIRECTORY_NAME = "generators";
 export const SOURCES_DIRECTORY_NAME = "sources";
+export const SPECS_DIRECTORY_NAME = "specs";
+export const SPECS_MANIFEST_FILENAME = "specs-manifest.json";
 
 export const DOCKER_CODEGEN_OUTPUT_DIRECTORY = path.join(DOCKER_FERN_DIRECTORY, CODEGEN_OUTPUT_DIRECTORY_NAME);
 export const DOCKER_GENERATOR_CONFIG_PATH = path.join(DOCKER_FERN_DIRECTORY, GENERATOR_CONFIG_FILENAME);
@@ -26,4 +28,17 @@ export const CONTAINER_PATH_TO_SNIPPET_TEMPLATES = DOCKER_PATH_TO_SNIPPET_TEMPLA
 export const CONTAINER_GENERATORS_DIRECTORY = DOCKER_GENERATORS_DIRECTORY;
 export const CONTAINER_SOURCES_DIRECTORY = DOCKER_SOURCES_DIRECTORY;
 
+export const DOCKER_SPECS_DIRECTORY = path.join(DOCKER_FERN_DIRECTORY, SPECS_DIRECTORY_NAME);
+export const CONTAINER_SPECS_DIRECTORY = DOCKER_SPECS_DIRECTORY;
+
 export const DEFAULT_NODE_DEBUG_PORT = "9229";
+
+/**
+ * Generators that receive pre-processed raw API spec files mounted into their
+ * Docker container. Add new generator names here as they opt in.
+ */
+const GENERATORS_WANTING_SPECS: ReadonlySet<string> = new Set(["fernapi/fern-cli"]);
+
+export function generatorWantsSpecs(generatorName: string): boolean {
+    return GENERATORS_WANTING_SPECS.has(generatorName);
+}

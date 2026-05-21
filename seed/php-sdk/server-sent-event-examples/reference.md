@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>$client-&gt;completions-&gt;stream($request)</code></summary>
+<details><summary><code>$client-&gt;completions-&gt;stream($request) -> SseStream</code></summary>
 <dl>
 <dd>
 
@@ -44,7 +44,7 @@ $client->completions->stream(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;completions-&gt;streamEvents($request)</code></summary>
+<details><summary><code>$client-&gt;completions-&gt;streamEvents($request) -> SseStream</code></summary>
 <dl>
 <dd>
 
@@ -88,7 +88,7 @@ $client->completions->streamEvents(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;completions-&gt;streamEventsDiscriminantInData($request)</code></summary>
+<details><summary><code>$client-&gt;completions-&gt;streamEventsDiscriminantInData($request) -> SseStream</code></summary>
 <dl>
 <dd>
 
@@ -132,7 +132,7 @@ $client->completions->streamEventsDiscriminantInData(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;completions-&gt;streamEventsContextProtocol($request)</code></summary>
+<details><summary><code>$client-&gt;completions-&gt;streamEventsContextProtocol($request) -> SseStream</code></summary>
 <dl>
 <dd>
 

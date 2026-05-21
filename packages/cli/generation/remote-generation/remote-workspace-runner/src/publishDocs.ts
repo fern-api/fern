@@ -1600,19 +1600,23 @@ async function uploadDynamicIRs({
 
             if (dynamicIR) {
                 const jsonBody = JSON.stringify(dynamicIR);
-                const response = await fetch(source.uploadUrl, {
-                    method: "PUT",
-                    body: jsonBody,
-                    headers: {
-                        "Content-Type": "application/octet-stream",
-                        "Content-Length": Buffer.byteLength(jsonBody, "utf8").toString()
-                    }
-                });
+                try {
+                    const response = await fetch(source.uploadUrl, {
+                        method: "PUT",
+                        body: jsonBody,
+                        headers: {
+                            "Content-Type": "application/octet-stream",
+                            "Content-Length": Buffer.byteLength(jsonBody, "utf8").toString()
+                        }
+                    });
 
-                if (response.ok) {
-                    context.logger.debug(`Uploaded dynamic IR for ${apiId}:${language}`);
-                } else {
-                    context.logger.warn(`Failed to upload dynamic IR for ${apiId}:${language}`);
+                    if (response.ok) {
+                        context.logger.debug(`Uploaded dynamic IR for ${apiId}:${language}`);
+                    } else {
+                        context.logger.warn(`Failed to upload dynamic IR for ${apiId}:${language}`);
+                    }
+                } catch (error) {
+                    context.logger.warn(`Network error uploading dynamic IR for ${apiId}:${language}: ${error}`);
                 }
             } else {
                 context.logger.warn(`Could not find matching dynamic IR to upload for ${apiId}:${language}`);

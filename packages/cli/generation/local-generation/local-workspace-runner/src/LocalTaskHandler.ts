@@ -721,7 +721,14 @@ export class LocalTaskHandler {
 
         this.context.logger.debug(`Using AI service: ${this.ai.provider} with model ${this.ai.model}`);
         const { configureBamlClient } = await loadBamlDependencies();
-        return configureBamlClient(this.ai);
+        try {
+            return configureBamlClient(this.ai);
+        } catch (error) {
+            throw new CliError({
+                message: `Invalid AI service configuration: ${extractErrorMessage(error)}`,
+                code: CliError.Code.ConfigError
+            });
+        }
     }
 
     private addFernBranding(message: string): string {
@@ -930,11 +937,18 @@ export class LocalTaskHandler {
     }
 
     private async runGitCommand(options: string[], cwd: AbsoluteFilePath): Promise<string> {
-        const response = await loggingExeca(this.context.logger, "git", options, {
-            cwd,
-            doNotPipeOutput: true
-        });
-        return response.stdout;
+        try {
+            const response = await loggingExeca(this.context.logger, "git", options, {
+                cwd,
+                doNotPipeOutput: true
+            });
+            return response.stdout;
+        } catch (error) {
+            throw new CliError({
+                message: `Git command failed in generated output directory: ${extractErrorMessage(error)}`,
+                code: CliError.Code.UserError
+            });
+        }
     }
 
     private async runThrowawayGitCommand(options: string[], cwd: AbsoluteFilePath): Promise<string> {

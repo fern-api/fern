@@ -1,4 +1,4 @@
-//! API client and types for the Api
+//! API client and types for the api
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.

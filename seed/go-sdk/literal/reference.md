@@ -78,6 +78,7 @@ client.Headers.Send(
 
 ```go
 request := &fern.SendLiteralsInlinedRequest{
+        Query: "What is the weather today",
         Temperature: fern.Float64(
             10.1,
         ),
@@ -90,7 +91,6 @@ request := &fern.SendLiteralsInlinedRequest{
         ObjectWithLiteral: &fern.ATopLevelLiteral{
             NestedLiteral: &fern.ANestedLiteral{},
         },
-        Query: "What is the weather today",
     }
 client.Inlined.Send(
         context.TODO(),
@@ -363,10 +363,10 @@ client.Query.Send(
 
 ```go
 request := &fern.SendRequest{
+        Query: "What is the weather today",
         Context: fern.SomeLiteral(
             "You're super wise",
         ),
-        Query: "What is the weather today",
         ContainerObject: &fern.ContainerObject{
             NestedObjects: []*fern.NestedObjectWithLiterals{
                 &fern.NestedObjectWithLiterals{

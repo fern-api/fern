@@ -681,7 +681,6 @@ function buildUrl({
     file,
     service,
     endpoint,
-    example,
     pathParams
 }: {
     file: FernFileContext;
@@ -691,18 +690,26 @@ function buildUrl({
     pathParams: Pick<ExampleEndpointCall, "rootPathParameters" | "endpointPathParameters" | "servicePathParameters">;
 }): string {
     let url = urlJoin(file.rootApiFile["base-path"] ?? "", service["base-path"], endpoint.path);
-    if (example["path-parameters"] != null) {
-        for (const parameter of [
-            ...pathParams.endpointPathParameters,
-            ...pathParams.servicePathParameters,
-            ...pathParams.rootPathParameters
-        ]) {
-            url = url.replaceAll(
-                `{${getOriginalName(parameter.name)}}`,
-                encodeURIComponent(`${parameter.value.jsonExample}`)
-            );
-        }
+
+    // First pass: substitute any placeholders the user supplied an example value for.
+    for (const parameter of [
+        ...pathParams.endpointPathParameters,
+        ...pathParams.servicePathParameters,
+        ...pathParams.rootPathParameters
+    ]) {
+        url = url.replaceAll(
+            `{${getOriginalName(parameter.name)}}`,
+            encodeURIComponent(`${parameter.value.jsonExample}`)
+        );
     }
+
+    // Second pass: any placeholder still in the URL came from a declaration the
+    // user didn't cover in this example (e.g. a root path parameter declared via
+    // the root API file but omitted from the per-endpoint example). Substitute
+    // with the parameter name itself so the URL matches what generators emit
+    // for the constructor block, which uses `ir.pathParameters` directly.
+    url = url.replace(/\{([^}]+)\}/g, (_, name) => encodeURIComponent(name));
+
     // urlJoin has some bugs where it may miss forward slash concatting https://github.com/jfromaniello/url-join/issues/42
     url = url.replaceAll("//", "/");
     // for backwards compatibility we always make sure that the url stats with a slash

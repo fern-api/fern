@@ -1,0 +1,49 @@
+# Generators are registered within seed.yml, once their tests are passing
+name: Publish CLI Generator
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "generators/cli/versions.yml"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "The version of the generator to publish."
+        required: true
+        type: string
+
+permissions: # Required for OIDC
+  id-token: write
+  contents: read
+
+env:
+  DO_NOT_TRACK: "1"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo at current ref
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 10
+      - name: automated publish
+        if: ${{ github.event_name == 'push' }}
+        uses: ./.github/actions/publish-generator
+        with:
+          generator-name: "cli"
+          version-file: "generators/cli/versions.yml"
+          fern-token: ${{ secrets.FERN_TOKEN }}
+          docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+      - name: manual publish
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        uses: ./.github/actions/publish-generator
+        with:
+          generator-name: "cli"
+          version: ${{ inputs.version }}
+          manual-trigger: "true"
+          fern-token: ${{ secrets.FERN_TOKEN }}
+          docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}

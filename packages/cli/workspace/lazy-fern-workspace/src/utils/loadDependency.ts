@@ -1,7 +1,7 @@
 import { FernDefinition, FernWorkspace } from "@fern-api/api-workspace-commons";
 import { dependenciesYml } from "@fern-api/configuration-loader";
 import { createFiddleService } from "@fern-api/core";
-import { assertNever, noop, visitObject } from "@fern-api/core-utils";
+import { assertNever, extractErrorMessage, noop, visitObject } from "@fern-api/core-utils";
 import { RootApiFileSchema, YAML_SCHEMA_VERSION } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { parseVersion } from "@fern-api/semver-utils";
@@ -222,8 +222,21 @@ async function validateVersionedDependencyAndGetDefinition({
 
         const parsedYamlVersionOfDependency =
             response.body.yamlSchemaVersion != null ? parseInt(response.body.yamlSchemaVersion) : undefined;
-        const parsedCliVersion = parseVersion(cliVersion);
-        const parsedCliVersionOfDependency = parseVersion(response.body.cliVersion);
+        let parsedCliVersion: ReturnType<typeof parseVersion>;
+        let parsedCliVersionOfDependency: ReturnType<typeof parseVersion>;
+        try {
+            parsedCliVersion = parseVersion(cliVersion);
+            parsedCliVersionOfDependency = parseVersion(response.body.cliVersion);
+        } catch (error) {
+            context.failWithoutThrowing(
+                `Failed to parse dependency CLI version: ${extractErrorMessage(error)}`,
+                undefined,
+                {
+                    code: CliError.Code.VersionError
+                }
+            );
+            return undefined;
+        }
 
         // ensure dependency is on the same YAML_SCHEMA_VERSION
         if (parsedYamlVersionOfDependency != null) {

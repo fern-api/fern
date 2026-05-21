@@ -61,6 +61,21 @@ runs:
         script: |
           const fs = require('fs');
           const containerName = process.env.CONTAINER_NAME;
+
+          // Sanitize text from upstream vulnerability databases (NVD, GHSA)
+          // so that @-mentions in descriptions do not auto-tag unrelated
+          // GitHub users when rendered in PR bodies.
+          const ALLOWED_MENTIONS = new Set(['devin-ai-integration', 'davidkonigsberg']);
+          const sanitizeMentions = (text) => {
+            if (text == null) return text;
+            return String(text).replace(
+              /(^|[^A-Za-z0-9`])@([A-Za-z0-9](?:[A-Za-z0-9-]{0,38})?)/g,
+              (match, pre, handle) =>
+                ALLOWED_MENTIONS.has(handle.toLowerCase())
+                  ? match
+                  : `${pre}\`@${handle}\``
+            );
+          };
           const devinPrompt = process.env.DEVIN_PROMPT;
           const slackToken = process.env.SLACK_TOKEN;
           const slackChannelId = 'C0A23CZEFNF';
@@ -151,7 +166,7 @@ runs:
               packageName,
               packageVersion,
               packageType,
-              description: vuln.description || 'No description available',
+              description: sanitizeMentions(vuln.description) || 'No description available',
               fixVersions,
               dataSource: vuln.dataSource || '',
             });

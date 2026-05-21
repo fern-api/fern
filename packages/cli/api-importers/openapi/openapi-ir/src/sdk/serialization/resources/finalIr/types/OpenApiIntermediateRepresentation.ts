@@ -11,6 +11,7 @@ import { Endpoint } from "./Endpoint.js";
 import { GlobalHeader } from "./GlobalHeader.js";
 import { GlobalSecurity } from "./GlobalSecurity.js";
 import { IdempotencyHeader } from "./IdempotencyHeader.js";
+import { PathParameter } from "./PathParameter.js";
 import { PrimitiveSchema } from "./PrimitiveSchema.js";
 import { Schemas } from "./Schemas.js";
 import { SdkGroupInfo } from "./SdkGroupInfo.js";
@@ -26,6 +27,7 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
     title: core.serialization.string().optional(),
     description: core.serialization.string().optional(),
     basePath: core.serialization.string().optional(),
+    basePathParameters: core.serialization.list(PathParameter).optional(),
     servers: core.serialization.list(Server),
     websocketServers: core.serialization.list(Server),
     groups: core.serialization.record(core.serialization.string(), SdkGroupInfo),
@@ -49,6 +51,7 @@ export declare namespace OpenApiIntermediateRepresentation {
         title?: string | null;
         description?: string | null;
         basePath?: string | null;
+        basePathParameters?: PathParameter.Raw[] | null;
         servers: Server.Raw[];
         websocketServers: Server.Raw[];
         groups: Record<string, SdkGroupInfo.Raw>;
