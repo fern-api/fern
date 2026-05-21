@@ -20,4 +20,13 @@ describe("expandFernignorePatterns", () => {
 
         expect(preserved).toEqual(["LICENSE"]);
     });
+
+    it("treats a bare directory path as a prefix so its contents are preserved", () => {
+        const fernignore = "src/foo";
+        const tracked = ["src/foo/a.py", "src/foo/nested/b.py", "src/bar/c.py"];
+
+        const preserved = expandFernignorePatterns(fernignore, tracked);
+
+        expect(preserved).toEqual(["src/foo/a.py", "src/foo/nested/b.py"]);
+    });
 });
