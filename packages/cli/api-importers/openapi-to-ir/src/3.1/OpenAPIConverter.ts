@@ -152,9 +152,23 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
     private convertSecuritySchemes(): void {
         const openApiSchemes = this.convertOpenApiSecuritySchemes();
         if (this.context.authOverrides) {
-            const descriptions = new Map(openApiSchemes.map((scheme) => [scheme.key, scheme.docs]));
-            this.convertAuthOverrides(descriptions, this.context.authOverrides);
-            return;
+            if (this.context.authOverrides.auth != null) {
+                const descriptions = new Map(openApiSchemes.map((scheme) => [scheme.key, scheme.docs]));
+                this.convertAuthOverrides(descriptions, this.context.authOverrides);
+                return;
+            }
+
+            if (this.context.authOverrides["auth-schemes"] != null) {
+                const schemeNames = Object.keys(this.context.authOverrides["auth-schemes"]);
+                if (schemeNames.length > 0) {
+                    const descriptions = new Map(openApiSchemes.map((scheme) => [scheme.key, scheme.docs]));
+                    this.convertAuthOverrides(descriptions, {
+                        ...this.context.authOverrides,
+                        auth: { any: schemeNames }
+                    });
+                    return;
+                }
+            }
         }
 
         if (openApiSchemes.length > 0) {
@@ -393,7 +407,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
     }
 
     private overrideOpenApiAuthWithGeneratorsAuth(): void {
-        if (!this.context.authOverrides?.["auth-schemes"]) {
+        if (!this.context.authOverrides?.auth || !this.context.authOverrides?.["auth-schemes"]) {
             return;
         }
 

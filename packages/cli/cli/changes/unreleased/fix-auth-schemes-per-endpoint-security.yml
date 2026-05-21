@@ -1,0 +1,6 @@
+- summary: |
+    Fix auth-schemes without explicit auth key to preserve per-endpoint security
+    from OpenAPI specs instead of merging all schemes into a single global group.
+    This ensures OAuth client-credentials and bearer auth schemes render as
+    distinct options in the API playground for dual-auth endpoints.
+  type: fix

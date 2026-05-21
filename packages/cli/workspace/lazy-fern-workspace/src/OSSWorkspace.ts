@@ -317,7 +317,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         const documents = await this.loader.loadDocuments({ context, specs });
 
         let authOverrides: RawSchemas.WithAuthSchema | undefined =
-            this.generatorsConfiguration?.api?.auth != null ? { ...this.generatorsConfiguration?.api } : undefined;
+            this.generatorsConfiguration?.api?.auth != null ||
+            this.generatorsConfiguration?.api?.["auth-schemes"] != null
+                ? { ...this.generatorsConfiguration?.api }
+                : undefined;
 
         // Fallback: read auth/auth-schemes from the spec's overrides file if not in generators.yml
         if (authOverrides == null) {
@@ -569,7 +572,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
         // If auth is not in generators.yml and not in settings, try to read it from the spec's overrides files
         let effectiveSettings = settings;
-        if (this.generatorsConfiguration?.api?.auth == null && settings?.auth == null) {
+        if (
+            this.generatorsConfiguration?.api?.auth == null &&
+            this.generatorsConfiguration?.api?.["auth-schemes"] == null &&
+            settings?.auth == null
+        ) {
             const specs = await this.getOpenAPISpecsCached({ context });
             const authFromOverrides = await getAuthFromOverrideFiles(specs);
             if (authFromOverrides != null) {
@@ -847,7 +854,7 @@ async function getAuthFromOverrideFiles(specs: Spec[]): Promise<RawSchemas.WithA
             try {
                 const contents = (await readFile(overridePath)).toString();
                 const parsed = yaml.load(contents) as Record<string, unknown> | null | undefined;
-                if (parsed != null && parsed["auth"] != null) {
+                if (parsed != null && (parsed["auth"] != null || parsed["auth-schemes"] != null)) {
                     return {
                         auth: parsed["auth"] as RawSchemas.WithAuthSchema["auth"],
                         ...(parsed["auth-schemes"] != null
