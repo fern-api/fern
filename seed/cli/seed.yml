@@ -3,6 +3,14 @@ displayName: CLI
 image: fernapi/fern-cli
 changelogLocation: ../../generators/cli/versions.yml
 
+buildScripts:
+  compileScript:
+    commands:
+      - cargo build --locked --all-features --tests
+  testScript:
+    commands:
+      - cargo test --locked --all-features
+
 publish:
   preBuildCommands:
     - pnpm turbo run dist:cli --filter @fern-api/cli-generator
@@ -21,11 +29,45 @@ test:
       - pnpm turbo run dist:cli --filter @fern-api/cli-generator
     runCommand: node --enable-source-maps dist/cli.cjs {CONFIG_PATH}
 
+scripts:
+  - image: fernapi/cli-seed
+    commands:
+      build:
+        - cargo build --locked --all-features --tests
+      test:
+        - cargo test --locked --all-features
+
+# Intentionally no `language:` field — setting it would make the
+# local-workspace-runner emit per-language dynamic-snippet tests
+# (`dynamic-snippets/example*.<ext>`) for every fixture. The CLI
+# generator produces a CLI binary, not call-site snippets, so we leave
+# `generatorInvocation.language` null and the runner skips the step.
 generatorType: SDK
 defaultOutputMode: local_files
 defaultCustomConfig: {}
 
 fixtures:
+  # Fern-definition workspace (no raw OpenAPI specs mounted). Exercises
+  # the generator's "skip cleanly" path — it logs and exits without
+  # touching the output dir.
   simple-api:
+    - customConfig: null
+      outputFolder: no-custom-config
+  # Single-spec OpenAPI workspace. Exercises the common case: one mounted
+  # spec is written into `cli/openapi-fixture/openapi0.json` with a
+  # codegen'd `main.rs` referencing it via `.spec(...)`.
+  query-parameters-openapi:
+    - customConfig: null
+      outputFolder: no-custom-config
+  # Multi-spec fixture — declares two OpenAPI specs with NO namespaces, so
+  # `copySpecs` emits a flat `.spec(...).spec(...)` chain in `main.rs`
+  # (the specs merge at the root of the command tree).
+  cli-multi-spec:
+    - customConfig: null
+      outputFolder: no-custom-config
+  # Multi-spec fixture WITH per-spec `namespace:` declarations, so
+  # `copySpecs` emits `.spec_under("<ns>", ...)` for each (the specs
+  # surface as distinct sub-commands).
+  cli-multi-spec-namespaced:
     - customConfig: null
       outputFolder: no-custom-config

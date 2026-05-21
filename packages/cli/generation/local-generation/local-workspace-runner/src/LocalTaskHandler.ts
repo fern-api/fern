@@ -21,7 +21,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { CliError, TaskContext } from "@fern-api/task-context";
 
 import decompress from "decompress";
-import { cp, readdir, readFile, rm } from "fs/promises";
+import { cp, readdir, readFile, rm, stat } from "fs/promises";
 import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
@@ -900,6 +900,18 @@ export class LocalTaskHandler {
         absolutePathToTmpSnippetJSON: AbsoluteFilePath;
         absolutePathToLocalSnippetJSON: AbsoluteFilePath;
     }): Promise<void> {
+        // The tmp snippet.json is pre-created empty by `runGenerator` and
+        // bind-mounted into the generator container so the generator can
+        // optionally write per-endpoint code samples to it. Generators that
+        // emit a CLI binary (or any output that has no concept of call-site
+        // snippets) leave the file untouched. Copying that empty stub into
+        // the user's output just leaves a confusing zero-byte artifact, so
+        // skip it.
+        const tmpStat = await stat(absolutePathToTmpSnippetJSON);
+        if (tmpStat.size === 0) {
+            this.context.logger.debug(`Skipping empty snippet.json copy from ${absolutePathToTmpSnippetJSON}`);
+            return;
+        }
         this.context.logger.debug(`Copying generated snippets to ${absolutePathToLocalSnippetJSON}`);
         await cp(absolutePathToTmpSnippetJSON, absolutePathToLocalSnippetJSON);
     }

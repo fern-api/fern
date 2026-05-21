@@ -1,82 +1,134 @@
-import { cp, lstat, mkdir, readFile, writeFile } from "fs/promises";
+import { cp, mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
 
 export interface RawSpecsManifestEntry {
     type: "openapi" | "asyncapi" | "protobuf" | "openrpc" | "graphql";
     specPath: string;
     overridePaths?: string[];
+    /** Namespace the user declared in `generators.yml` for this spec, if any. */
+    namespace?: string;
 }
 
 export interface RawSpecsManifest {
     specs: RawSpecsManifestEntry[];
 }
 
+/** Where the local-workspace-runner mounts raw API specs inside the container. */
 export const SPECS_DIRECTORY = "/fern/specs";
 export const SPECS_MANIFEST_FILENAME = "specs-manifest.json";
 
-export async function copySpecs(outputDir: string, rawSpecsDir?: string): Promise<void> {
-    const specsDir = rawSpecsDir ?? SPECS_DIRECTORY;
-    const manifestPath = path.join(specsDir, SPECS_MANIFEST_FILENAME);
-    let manifestContent: string;
+/**
+ * Directory in the generated output that holds the bundled CLI binary's
+ * source. The SDK template's source has its own placeholder version of
+ * this dir for the template author's tests, but `cli/openapi-fixture/**`
+ * is in the generator's SDK_IGNORE — the user output never receives any
+ * of those source-side files. `copySpecs` creates the whole folder from
+ * scratch alongside the mounted spec(s).
+ */
+export const FIXTURE_DIR = path.join("cli", "openapi-fixture");
+
+const BINARY_NAME = "openapi-fixture";
+const AUTH_ENV_VAR = "OPENAPI_FIXTURE_API_KEY";
+
+/**
+ * Write every mounted OpenAPI spec into the bundled CLI binary's folder
+ * and generate a fresh `main.rs` that embeds each spec with `include_str!`.
+ *
+ * The OpenAPI generator pipeline (`generatorWantsSpecs("fernapi/fern-cli")`)
+ * always mounts at least one spec for any OpenAPI-backed workspace, so
+ * `copySpecs` is responsible for both:
+ *   - writing each spec file (`openapi0.json`, `openapi1.json`, …)
+ *   - writing `cli/openapi-fixture/main.rs` from scratch
+ *
+ * Behavior:
+ *   - Specs without a `namespace:` in `generators.yml` → emit
+ *     `.spec(include_str!(...))` per spec so they merge flat at the root
+ *     of the command tree.
+ *   - Specs with a `namespace:` in `generators.yml` → emit
+ *     `.spec_under("<namespace>", include_str!(...))` per spec so each
+ *     surfaces under its own sub-command. Mixed workspaces work too:
+ *     non-namespaced entries get `.spec(...)`, namespaced ones get
+ *     `.spec_under(...)`.
+ *
+ * When no openapi specs are mounted (Fern-definition workspaces, or
+ * non-OpenAPI manifests), this is a no-op — the user's output will be
+ * missing `cli/openapi-fixture/` and the resulting Cargo `[[bin]]` will
+ * fail to build, which is the intended fail-loud behavior until the
+ * generator learns to handle Fern definitions.
+ */
+/**
+ * Returns the parsed mounted-specs manifest, or `null` when no specs were
+ * mounted (e.g. a Fern-definition workspace). Lets the caller decide
+ * whether to short-circuit the entire generation step before any files
+ * get written.
+ */
+export async function readSpecsManifest(specsDir?: string): Promise<RawSpecsManifest | null> {
+    const dir = specsDir ?? SPECS_DIRECTORY;
     try {
-        manifestContent = await readFile(manifestPath, "utf-8");
+        const content = await readFile(path.join(dir, SPECS_MANIFEST_FILENAME), "utf-8");
+        return JSON.parse(content) as RawSpecsManifest;
     } catch {
-        // No manifest means no raw specs were mounted
-        return;
+        return null;
     }
-
-    const manifest: RawSpecsManifest = JSON.parse(manifestContent);
-    if (manifest.specs.length === 0) {
-        return;
-    }
-
-    const specsOutputDir = path.join(outputDir, "specs");
-    await mkdir(specsOutputDir, { recursive: true });
-
-    const copiedManifest: RawSpecsManifest = { specs: [] };
-
-    for (const entry of manifest.specs) {
-        const copiedEntry: RawSpecsManifestEntry = {
-            type: entry.type,
-            specPath: await copySpecFile(entry.specPath, specsOutputDir, specsDir)
-        };
-
-        if (entry.overridePaths != null && entry.overridePaths.length > 0) {
-            copiedEntry.overridePaths = [];
-            for (const overridePath of entry.overridePaths) {
-                copiedEntry.overridePaths.push(await copySpecFile(overridePath, specsOutputDir, specsDir));
-            }
-        }
-
-        copiedManifest.specs.push(copiedEntry);
-    }
-
-    await writeFile(path.join(specsOutputDir, SPECS_MANIFEST_FILENAME), JSON.stringify(copiedManifest, undefined, 4));
 }
 
-export async function copySpecFile(containerPath: string, specsOutputDir: string, specsDir?: string): Promise<string> {
-    const baseDir = specsDir ?? SPECS_DIRECTORY;
-    const relativePath = containerPath.startsWith(baseDir + "/")
-        ? containerPath.slice(baseDir.length + 1)
-        : path.basename(containerPath);
+/** Returns true iff at least one OpenAPI spec is mounted. */
+export async function hasOpenApiSpecs(specsDir?: string): Promise<boolean> {
+    const manifest = await readSpecsManifest(specsDir);
+    return manifest != null && manifest.specs.some((entry) => entry.type === "openapi");
+}
 
-    const destPath = path.join(specsOutputDir, relativePath);
-    let isDir = false;
-    try {
-        const stat = await lstat(containerPath);
-        isDir = stat.isDirectory();
-    } catch (err: unknown) {
-        if (err != null && typeof err === "object" && "code" in err && err.code === "ENOENT") {
-            throw new Error(`Spec file not found at mount path: ${containerPath}`);
+export async function copySpecs(outputDir: string, specsDir?: string): Promise<void> {
+    const manifest = await readSpecsManifest(specsDir);
+    if (manifest == null) {
+        return;
+    }
+
+    const openapiSpecs = manifest.specs.filter((entry) => entry.type === "openapi");
+    if (openapiSpecs.length === 0) {
+        return;
+    }
+
+    const fixtureDir = path.join(outputDir, FIXTURE_DIR);
+    await mkdir(fixtureDir, { recursive: true });
+
+    const entries: SpecEntry[] = [];
+    for (const spec of openapiSpecs) {
+        const destFilename = path.basename(spec.specPath);
+        await cp(spec.specPath, path.join(fixtureDir, destFilename), { force: true });
+        entries.push({ destFilename, namespace: spec.namespace });
+    }
+
+    await writeFile(path.join(fixtureDir, "main.rs"), renderMainRs(entries));
+}
+
+interface SpecEntry {
+    destFilename: string;
+    namespace: string | undefined;
+}
+
+function renderMainRs(entries: SpecEntry[]): string {
+    const lines: string[] = [
+        "// Auto-generated by @fern-api/cli-generator's copySpecs step.",
+        "// Edit the SDK template / generator if you need to change the shape.",
+        "",
+        "use fern_cli_sdk::openapi::CliApp;",
+        "",
+        "fn main() {",
+        `    CliApp::new("${BINARY_NAME}")`
+    ];
+
+    for (const entry of entries) {
+        const include = `include_str!("${entry.destFilename}")`;
+        if (entry.namespace != null && entry.namespace !== "") {
+            lines.push(`        .spec_under("${entry.namespace}", ${include})`);
+        } else {
+            lines.push(`        .spec(${include})`);
         }
-        throw err;
     }
-    if (isDir) {
-        await cp(containerPath, destPath, { recursive: true });
-    } else {
-        await mkdir(path.dirname(destPath), { recursive: true });
-        await cp(containerPath, destPath);
-    }
-
-    return relativePath;
+    lines.push(`        .auth_scheme_env("bearer", "${AUTH_ENV_VAR}")`);
+    lines.push("        .run()");
+    lines.push("}");
+    lines.push("");
+    return lines.join("\n");
 }

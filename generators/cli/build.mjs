@@ -1,5 +1,38 @@
 import { buildGenerator, getDirname } from "@fern-api/configs/build-utils.mjs";
 
+// Glob patterns (minimatch syntax, relative to ./sdk) of files we don't want
+// shipped inside the generator image. The remaining tree is what gets copied
+// verbatim into the user's output directory at runtime.
+const SDK_IGNORE = [
+    // Build output + macOS metadata that occasionally re-appears under
+    // version control if the SDK is opened in Finder.
+    "**/.DS_Store",
+    "target/**",
+
+    // SDK developers may rely on a `.gitignore` tailored to template-side
+    // dev. The generated CLI gets its own `.gitignore` at codegen time.
+    ".gitignore",
+
+    // Internal planning / design docs (not for shipped CLI consumers).
+    "docs/**",
+
+    // Integration tests that exec the openapi-fixture bin and assert
+    // against the placeholder spec's specific content. `copySpecs`
+    // writes a fresh main.rs alongside the user's mounted spec(s), so
+    // these tests are coupled to the SDK template's dev fixture and
+    // not meaningful in the user's generated output. The generic
+    // library tests (auth, websocket, tls, lib_api against the
+    // internal __fixtures__ spec) still ship.
+    "tests/cli_integration.rs",
+    "tests/openapi_fixture_wire.rs",
+    "tests/fixtures/**",
+
+    // Template-author dev bin. `copySpecs` writes the whole folder
+    // (main.rs + every mounted spec) from scratch at codegen time, so
+    // none of the source-side files in here belong in user output.
+    "cli/openapi-fixture/**"
+];
+
 await buildGenerator(getDirname(import.meta.url), {
-    copy: { from: "./sdk", to: "./dist/sdk" }
+    copy: { from: "./sdk", to: "./dist/sdk", ignore: SDK_IGNORE }
 });

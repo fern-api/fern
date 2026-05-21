@@ -1,0 +1,1302 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Fixture API",
+    "version": "1.0",
+    "description": "Minimal targeted spec for integration testing. Not a real API."
+  },
+  "servers": [
+    {
+      "url": "https://api.fixture.example/v1"
+    }
+  ],
+  "x-fern-idempotency-headers": [
+    {
+      "header": "Idempotency-Key",
+      "name": "idempotency_key"
+    },
+    {
+      "header": "X-Trace-Id",
+      "name": "trace_id"
+    }
+  ],
+  "x-fern-sdk-variables": {
+    "gardenId": {
+      "type": "string",
+      "description": "The garden tenant identifier used to scope all zone operations."
+    }
+  },
+  "x-fern-global-headers": [
+    {
+      "header": "X-API-Stage",
+      "name": "apiStage",
+      "optional": false,
+      "env": "FIXTURE_API_STAGE",
+      "default": "production"
+    },
+    {
+      "header": "X-Tenant-Id",
+      "name": "tenantId",
+      "optional": true
+    }
+  ],
+  "x-fern-groups": {
+    "users": {
+      "summary": "Users Operations",
+      "description": "Manage users — list, fetch, and mutate account records."
+    },
+    "files": {
+      "summary": "Files Operations"
+    }
+  },
+  "paths": {
+    "/users/me": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "users"
+        ],
+        "x-fern-sdk-method-name": "getCurrent",
+        "operationId": "users_getCurrent",
+        "summary": "Get current user",
+        "responses": {
+          "200": {
+            "description": "Current user object"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "users"
+        ],
+        "x-fern-sdk-method-name": "list",
+        "operationId": "users_list",
+        "summary": "List users",
+        "x-fern-retries": {
+          "max_attempts": 3,
+          "base_delay_ms": 1,
+          "factor": 1,
+          "jitter": 0
+        },
+        "parameters": [
+          {
+            "name": "filter_term",
+            "in": "query",
+            "x-fern-parameter-name": "searchQuery",
+            "description": "Free-text user filter. Renamed via x-fern-parameter-name.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_type",
+            "in": "query",
+            "description": "Filter users by membership type.",
+            "x-fern-default": "all",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "all",
+                "managed",
+                "external"
+              ],
+              "x-fern-enum": {
+                "all": {
+                  "name": "All",
+                  "description": "Every user, including external collaborators."
+                },
+                "managed": {
+                  "name": "Managed",
+                  "description": "Users your enterprise manages."
+                },
+                "external": {
+                  "name": "External",
+                  "description": "External collaborators only."
+                }
+              }
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 25
+            }
+          },
+          {
+            "name": "X-Fern-Version",
+            "in": "header",
+            "x-fern-parameter-name": "apiVersion",
+            "description": "API version pin. Renamed via x-fern-parameter-name.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated user list"
+          }
+        }
+      },
+      "post": {
+        "x-fern-sdk-group-name": [
+          "users"
+        ],
+        "x-fern-sdk-method-name": "create",
+        "operationId": "users_create",
+        "summary": "Create a user",
+        "x-fern-retries": {
+          "max_attempts": 3,
+          "base_delay_ms": 1,
+          "factor": 1,
+          "jitter": 0
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created user"
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "users"
+        ],
+        "x-fern-sdk-method-name": "get",
+        "operationId": "users_get",
+        "summary": "Get a user by ID",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "legacy_flag",
+            "in": "query",
+            "description": "Old flag retained server-side but hidden from the CLI surface.",
+            "x-fern-ignore": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User object"
+          }
+        }
+      },
+      "delete": {
+        "x-fern-sdk-group-name": [
+          "users"
+        ],
+        "x-fern-sdk-method-name": "hardDelete",
+        "operationId": "users_hardDelete",
+        "summary": "(Hidden) Hard-delete a user.",
+        "x-fern-ignore": true,
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted"
+          }
+        }
+      }
+    },
+    "/files/upload": {
+      "post": {
+        "x-fern-sdk-group-name": [
+          "files"
+        ],
+        "x-fern-sdk-method-name": "upload",
+        "operationId": "files_upload",
+        "summary": "Upload a binary file",
+        "description": "Exercises the binary-body code path. The CLI exposes a `--file` flag\nfor `<PATH>`, `@<PATH>`, and `-` (stdin). Used by the wire test that\nverifies disk paths emit `Content-Length` and stdin emits\n`Transfer-Encoding: chunked`.\n",
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Upload accepted"
+          }
+        }
+      }
+    },
+    "/files/{file_id}": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "files"
+        ],
+        "x-fern-sdk-method-name": "get",
+        "operationId": "files_get",
+        "summary": "Get a file by ID",
+        "parameters": [
+          {
+            "name": "file_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File object"
+          }
+        }
+      },
+      "put": {
+        "x-fern-sdk-group-name": [
+          "files"
+        ],
+        "x-fern-sdk-method-name": "update",
+        "operationId": "files_update",
+        "summary": "Update a file",
+        "parameters": [
+          {
+            "name": "file_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated file"
+          }
+        }
+      },
+      "delete": {
+        "x-fern-sdk-group-name": [
+          "files"
+        ],
+        "x-fern-sdk-method-name": "delete",
+        "operationId": "files_delete",
+        "summary": "Delete a file",
+        "parameters": [
+          {
+            "name": "file_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted"
+          }
+        }
+      }
+    },
+    "/files/{file_id}/copy": {
+      "post": {
+        "x-fern-sdk-group-name": [
+          "files"
+        ],
+        "x-fern-sdk-method-name": "copy",
+        "operationId": "files_copy",
+        "summary": "Copy a file",
+        "parameters": [
+          {
+            "name": "file_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "parent": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Copied file"
+          }
+        }
+      }
+    },
+    "/files/{file_id}/thumbnail": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "files"
+        ],
+        "x-fern-sdk-method-name": "getThumbnail",
+        "operationId": "files_getThumbnail",
+        "summary": "Get a file thumbnail",
+        "parameters": [
+          {
+            "name": "file_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thumbnail image"
+          }
+        }
+      }
+    },
+    "/folders": {
+      "post": {
+        "x-fern-sdk-group-name": [
+          "folders"
+        ],
+        "x-fern-sdk-method-name": "create",
+        "operationId": "folders_create",
+        "summary": "Create a folder",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "parent": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created folder"
+          }
+        }
+      }
+    },
+    "/folders/{folder_id}": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "folders"
+        ],
+        "x-fern-sdk-method-name": "get",
+        "operationId": "folders_get",
+        "summary": "Get a folder by ID",
+        "parameters": [
+          {
+            "name": "folder_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Folder object"
+          }
+        }
+      },
+      "put": {
+        "x-fern-sdk-group-name": [
+          "folders"
+        ],
+        "x-fern-sdk-method-name": "update",
+        "operationId": "folders_update",
+        "summary": "Update a folder",
+        "parameters": [
+          {
+            "name": "folder_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated folder"
+          }
+        }
+      },
+      "delete": {
+        "x-fern-sdk-group-name": [
+          "folders"
+        ],
+        "x-fern-sdk-method-name": "delete",
+        "operationId": "folders_delete",
+        "summary": "Delete a folder",
+        "parameters": [
+          {
+            "name": "folder_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted"
+          }
+        }
+      }
+    },
+    "/folders/{folder_id}/items": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "folders"
+        ],
+        "x-fern-sdk-method-name": "listItems",
+        "operationId": "folders_listItems",
+        "summary": "List items in a folder",
+        "parameters": [
+          {
+            "name": "folder_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Folder item list"
+          }
+        }
+      }
+    },
+    "/folders/{folder_id}/copy": {
+      "post": {
+        "x-fern-sdk-group-name": [
+          "folders"
+        ],
+        "x-fern-sdk-method-name": "copy",
+        "operationId": "folders_copy",
+        "summary": "Copy a folder",
+        "parameters": [
+          {
+            "name": "folder_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Copied folder"
+          }
+        }
+      }
+    },
+    "/events": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "events"
+        ],
+        "x-fern-sdk-method-name": "list",
+        "operationId": "events_list",
+        "summary": "List paginated events",
+        "x-fern-pagination": {
+          "cursor": "$request.next_marker",
+          "next_cursor": "$response.next_marker",
+          "results": "$response.entries"
+        },
+        "parameters": [
+          {
+            "name": "next_marker",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated event list"
+          }
+        }
+      }
+    },
+    "/audit": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "audit"
+        ],
+        "x-fern-sdk-method-name": "list",
+        "operationId": "audit_list",
+        "summary": "List audit entries (offset-paginated)",
+        "x-fern-pagination": {
+          "offset": "$request.offset",
+          "results": "$response.entries",
+          "step": "$request.limit"
+        },
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated audit list"
+          }
+        }
+      }
+    },
+    "/payments": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "payments"
+        ],
+        "x-fern-sdk-method-name": "list",
+        "operationId": "payments_list",
+        "summary": "List payments (non-idempotent)",
+        "responses": {
+          "200": {
+            "description": "Paginated payment list"
+          }
+        }
+      },
+      "post": {
+        "x-fern-sdk-group-name": [
+          "payments"
+        ],
+        "x-fern-sdk-method-name": "create",
+        "operationId": "payments_create",
+        "summary": "Create a payment (idempotent)",
+        "x-fern-idempotent": true,
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "currency": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created payment"
+          }
+        }
+      }
+    },
+    "/experiments/beta": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "experiments"
+        ],
+        "x-fern-sdk-method-name": "beta-op",
+        "x-fern-availability": "beta",
+        "operationId": "experiments_beta",
+        "summary": "Beta operation",
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/experiments/pre-release": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "experiments"
+        ],
+        "x-fern-sdk-method-name": "pre-release-op",
+        "x-fern-availability": "pre-release",
+        "operationId": "experiments_preRelease",
+        "summary": "Pre-release operation",
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/experiments/ga": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "experiments"
+        ],
+        "x-fern-sdk-method-name": "ga-op",
+        "x-fern-availability": "ga",
+        "operationId": "experiments_ga",
+        "summary": "Generally-available operation (alias) — should NOT carry a badge",
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/experiments/deprecated": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "experiments"
+        ],
+        "x-fern-sdk-method-name": "deprecated-op",
+        "x-fern-availability": "deprecated",
+        "operationId": "experiments_deprecated",
+        "summary": "Deprecated operation — still callable",
+        "parameters": [
+          {
+            "name": "legacy_flag",
+            "in": "query",
+            "description": "A flag that itself is marked beta to verify per-parameter badges.",
+            "x-fern-availability": "beta",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/experiments/openapi-deprecated": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "experiments"
+        ],
+        "x-fern-sdk-method-name": "openapi-deprecated-op",
+        "deprecated": true,
+        "operationId": "experiments_openapiDeprecated",
+        "summary": "Op marked deprecated with OpenAPI's standard flag (no extension)",
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/search": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "search"
+        ],
+        "x-fern-sdk-method-name": "query",
+        "operationId": "search_query",
+        "summary": "Search with deep object filter",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results"
+          }
+        }
+      }
+    },
+    "/reports": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "reports"
+        ],
+        "x-fern-sdk-method-name": "list",
+        "operationId": "reports_list",
+        "summary": "List reports (envelope-wrapped)",
+        "x-fern-sdk-return-value": "data",
+        "responses": {
+          "200": {
+            "description": "Envelope with data + meta",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "name"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "integer"
+                        },
+                        "page": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/stats": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "reports"
+        ],
+        "x-fern-sdk-method-name": "getStats",
+        "operationId": "reports_getStats",
+        "summary": "Read a nested return value",
+        "x-fern-sdk-return-value": "result.payload",
+        "responses": {
+          "200": {
+            "description": "Two-level wrapper response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "result"
+                  ],
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "payload": {
+                          "type": "object",
+                          "properties": {
+                            "value": {
+                              "type": "integer"
+                            },
+                            "unit": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "server_time": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/paged": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "reports"
+        ],
+        "x-fern-sdk-method-name": "listPaged",
+        "operationId": "reports_listPaged",
+        "summary": "Cursor-paginated reports with envelope extraction",
+        "x-fern-sdk-return-value": "data",
+        "x-fern-pagination": {
+          "cursor": "$request.cursor",
+          "next_cursor": "$response.next",
+          "results": "$response.data"
+        },
+        "parameters": [
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Page of reports plus an envelope-level cursor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "name"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "next": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gardens/{gardenId}/zones": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "zones"
+        ],
+        "x-fern-sdk-method-name": "list",
+        "operationId": "zones_list",
+        "summary": "List zones in a garden (variable-bound path param).",
+        "parameters": [
+          {
+            "name": "gardenId",
+            "in": "path",
+            "required": true,
+            "x-fern-sdk-variable": "gardenId",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/audiences/public-only": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "audiences"
+        ],
+        "x-fern-sdk-method-name": "public-only",
+        "operationId": "audiences_public_only",
+        "summary": "Op tagged with x-fern-audiences=[public].",
+        "x-fern-audiences": [
+          "public"
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/audiences/internal-only": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "audiences"
+        ],
+        "x-fern-sdk-method-name": "internal-only",
+        "operationId": "audiences_internal_only",
+        "summary": "Op tagged with x-fern-audiences=[internal].",
+        "x-fern-audiences": [
+          "internal"
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/audiences/untagged": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "audiences"
+        ],
+        "x-fern-sdk-method-name": "untagged",
+        "operationId": "audiences_untagged",
+        "summary": "Op with no x-fern-audiences extension.",
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/audiences/multi-tagged": {
+      "get": {
+        "x-fern-sdk-group-name": [
+          "audiences"
+        ],
+        "x-fern-sdk-method-name": "multi-tagged",
+        "operationId": "audiences_multi_tagged",
+        "summary": "Op tagged with x-fern-audiences=[public, internal].",
+        "x-fern-audiences": [
+          "public",
+          "internal"
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/things": {
+      "post": {
+        "x-fern-sdk-group-name": [
+          "things"
+        ],
+        "x-fern-sdk-method-name": "create",
+        "operationId": "things_create",
+        "summary": "Create a thing",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "count": {
+                    "type": "integer"
+                  },
+                  "is_active": {
+                    "type": "boolean"
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "metadata": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created thing"
+          }
+        }
+      }
+    },
+    "/persons": {
+      "post": {
+        "x-fern-sdk-group-name": [
+          "persons"
+        ],
+        "x-fern-sdk-method-name": "create",
+        "operationId": "persons_create",
+        "summary": "Create a person (nested body)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "object",
+                    "properties": {
+                      "first": {
+                        "type": "string"
+                      },
+                      "last": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "role": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created person"
+          }
+        }
+      }
+    },
+    "/articles": {
+      "post": {
+        "x-fern-sdk-group-name": [
+          "articles"
+        ],
+        "x-fern-sdk-method-name": "create",
+        "operationId": "articles_create",
+        "summary": "Create an article (array body field)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "tag": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created article"
+          }
+        }
+      }
+    },
+    "/widgets": {
+      "post": {
+        "x-fern-sdk-group-name": [
+          "widgets"
+        ],
+        "x-fern-sdk-method-name": "create",
+        "operationId": "widgets_create",
+        "summary": "Create a widget ($ref body)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewWidget"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created widget"
+          }
+        }
+      }
+    },
+    "/orders": {
+      "post": {
+        "x-fern-sdk-group-name": [
+          "orders"
+        ],
+        "x-fern-sdk-method-name": "create",
+        "operationId": "orders_create",
+        "summary": "Create an order ($ref property within inline schema)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "note": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "$ref": "#/components/schemas/Address"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created order"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "NewWidget": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "integer"
+          }
+        }
+      },
+      "Address": {
+        "type": "object",
+        "properties": {
+          "city": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

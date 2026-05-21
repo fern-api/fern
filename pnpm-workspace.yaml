@@ -17,6 +17,7 @@ allowBuilds:
   '@scarf/scarf': false
   "@sentry/cli": true
   esbuild: true
+  lefthook: set this to true or false
   puppeteer: true
 
 # Require packages to be published for at least 1 day before they can be installed.

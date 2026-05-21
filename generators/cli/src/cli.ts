@@ -5,8 +5,8 @@ import {
     parseGeneratorConfig
 } from "@fern-api/base-generator";
 import { mkdir } from "fs/promises";
-import { analyzeSpecs, formatSpecAnalysis } from "./analyzeSpecs.js";
-import { copySpecs } from "./copySpecs.js";
+import { copySdk } from "./copySdk.js";
+import { copySpecs, hasOpenApiSpecs } from "./copySpecs.js";
 
 const pathToConfig = process.argv[process.argv.length - 1];
 if (pathToConfig == null) {
@@ -27,20 +27,30 @@ async function generate(configPath: string): Promise<void> {
                 })
             );
 
+            // Fern-definition workspaces (and any other input without
+            // mounted OpenAPI specs) can't drive the bundled CLI binary,
+            // so exit cleanly without touching the output dir. Generating
+            // a half-wired SDK template would just leave the user with a
+            // Cargo workspace that can't compile.
+            if (!(await hasOpenApiSpecs())) {
+                // biome-ignore lint/suspicious/noConsole: generator CLI output
+                console.log("No OpenAPI specs mounted — skipping CLI generation.");
+                await generatorLoggingClient.sendUpdate(
+                    GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful({}))
+                );
+                return;
+            }
+
             const outputDir = config.output.path;
             await mkdir(outputDir, { recursive: true });
 
-            // Analyze and print spec summary
-            const analysis = await analyzeSpecs();
-            if (analysis.totalSpecs > 0) {
-                // biome-ignore lint/suspicious/noConsole: generator CLI output
-                console.log(formatSpecAnalysis(analysis));
-            } else {
-                // biome-ignore lint/suspicious/noConsole: generator CLI output
-                console.log("No API specs were mounted.");
-            }
+            // Copy the bundled Rust SDK template into the user's output dir.
+            // The template lives at /dist/sdk inside the Docker image
+            // (build.mjs copies ./sdk there at generator-build time).
+            await copySdk(outputDir);
 
-            // Copy API spec files from the mounted directory to the output
+            // Write each mounted OpenAPI spec into `cli/openapi-fixture/`
+            // and emit a fresh main.rs that embeds them via include_str!.
             await copySpecs(outputDir);
 
             await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful({})));
