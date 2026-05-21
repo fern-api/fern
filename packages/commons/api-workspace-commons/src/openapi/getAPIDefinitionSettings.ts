@@ -40,6 +40,7 @@ const FIELD_MAPPINGS: Partial<MappableFields> = {
     coerceEnumsToLiterals: "coerceEnumsToLiterals",
     objectQueryParameters: "objectQueryParameters",
     respectReadonlySchemas: "respectReadonlySchemas",
+    useReadVariantForResponses: "useReadVariantForResponses",
     respectNullableSchemas: "respectNullableSchemas",
     onlyIncludeReferencedSchemas: "onlyIncludeReferencedSchemas",
     inlinePathParameters: "inlinePathParameters",

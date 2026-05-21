@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.14.2
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.35, which disables minimatch negation
+        on `.fernignore` patterns so a stray `!pattern` no longer silently inverts
+        the match and discards generator output.
+      type: fix
+  createdAt: "2026-05-21"
+  irVersion: 67
+- version: 5.14.1
+  changelogEntry:
+    - summary: |
+        Fix SSE streaming performance regression by caching `pydantic.TypeAdapter` instances
+        in `parse_obj_as()`. Previously, a new TypeAdapter was constructed on every call, which
+        is extremely expensive for discriminated union types. This caused ~8x slowdown in SSE
+        event parsing introduced in v4.51.0 (`parse_sse_obj`).
+      type: fix
+  createdAt: "2026-05-20"
+  irVersion: 67
 - version: 5.14.0
   changelogEntry:
     - summary: |

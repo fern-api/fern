@@ -510,7 +510,7 @@ function convertIrEnvironments({
                         if (endpointBaseUrl == null) {
                             throw new CliError({
                                 message: `Encountered undefined server name "${baseUrlId}" at endpoint ${endpoint.method.toUpperCase()} ${endpoint.path}. Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${baseUrlId}`,
-                                code: CliError.Code.IrConversionError
+                                code: CliError.Code.ValidationError
                             });
                         }
                         return {
@@ -536,7 +536,7 @@ function convertIrEnvironments({
                 if (endpointBaseUrl == null) {
                     throw new CliError({
                         message: `Encountered undefined server name "${endpointBaseUrlId}" at endpoint ${endpoint.method.toUpperCase()} ${endpoint.path.head}. Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${endpointBaseUrlId}`,
-                        code: CliError.Code.IrConversionError
+                        code: CliError.Code.ValidationError
                     });
                 }
                 return {

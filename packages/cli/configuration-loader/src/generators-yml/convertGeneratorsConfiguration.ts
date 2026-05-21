@@ -29,6 +29,7 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     coerceEnumsToLiterals: undefined,
     objectQueryParameters: undefined,
     respectReadonlySchemas: undefined,
+    useReadVariantForResponses: undefined,
     respectNullableSchemas: undefined,
     inlinePathParameters: undefined,
     useBytesForBinaryResponse: undefined,
@@ -135,6 +136,7 @@ function parseOpenApiDefinitionSettingsSchema(
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
         objectQueryParameters: settings?.["object-query-parameters"],
         respectReadonlySchemas: settings?.["respect-readonly-schemas"],
+        useReadVariantForResponses: settings?.["use-read-variant-for-responses"],
         inlinePathParameters: settings?.["inline-path-parameters"],
         filter: settings?.filter,
         exampleGeneration: settings?.["example-generation"],
@@ -464,7 +466,8 @@ async function parseApiConfigurationV2Schema({
             definitionLocation = {
                 schema: {
                     type: "graphql",
-                    path: spec.graphql
+                    path: spec.graphql,
+                    examples: spec.examples
                 },
                 origin: spec.origin,
                 overrides: spec.overrides,
