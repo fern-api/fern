@@ -12,6 +12,51 @@ export interface RenderErrorOptions {
      * Enables stack/cause-chain rendering for all error classes.
      */
     debug?: boolean;
+    /**
+     * When true, return a JSON envelope string instead of the human-readable
+     * Rust-style block. The envelope shape is {@link ErrorEnvelope}.
+     */
+    json?: boolean;
+    /**
+     * Absolute path to the debug log file for the current run. Surfaced in
+     * the JSON envelope as `logFile` so CI/agents can attach it to issue
+     * reports. Ignored in human mode (the log path is printed separately by
+     * `Context.printLogFilePath`).
+     */
+    logFile?: string;
+}
+
+/**
+ * Structured error envelope for `--json` mode.
+ *
+ * This is the public contract for CI/agents. Every field is optional except
+ * `ok` (always `false`) and `message`. Callers should **not** assume new
+ * fields won't be added — forward-compatible consumers should ignore unknown
+ * keys.
+ */
+export interface ErrorEnvelope {
+    ok: false;
+    code: CliError.Code | null;
+    message: string;
+    hint?: string;
+    docsLink?: string;
+    violations?: ErrorEnvelopeViolation[];
+    logFile?: string;
+    debug?: ErrorEnvelopeDebug;
+}
+
+export interface ErrorEnvelopeViolation {
+    severity: string;
+    message: string;
+    file?: string;
+    line?: number;
+    column?: number;
+    nodePath?: string;
+}
+
+export interface ErrorEnvelopeDebug {
+    stack?: string;
+    causes?: string[];
 }
 
 /**
@@ -35,6 +80,10 @@ export interface RenderErrorOptions {
 export function renderError(error: unknown, options: RenderErrorOptions = {}): string | null {
     if (error instanceof TaskAbortSignal) {
         return null;
+    }
+
+    if (options.json === true) {
+        return JSON.stringify(buildErrorEnvelope(error, options), null, 2);
     }
 
     if (error instanceof SourcedValidationError) {
@@ -251,4 +300,104 @@ function collectDebugLines(error: Error): string[] {
         depth += 1;
     }
     return out;
+}
+
+// ---------------------------------------------------------------------------
+// JSON envelope builder (--json mode)
+// ---------------------------------------------------------------------------
+
+function buildErrorEnvelope(error: unknown, options: RenderErrorOptions): ErrorEnvelope {
+    const base: ErrorEnvelope = {
+        ok: false,
+        code: null,
+        message: "An unknown error occurred"
+    };
+
+    if (error instanceof SourcedValidationError) {
+        base.code = error.code;
+        base.message = error.message || titleForCode(error.code, "Validation failed");
+        if (error.hint != null) {
+            base.hint = error.hint;
+        }
+        if (error.docsLink != null) {
+            base.docsLink = error.docsLink;
+        }
+        base.violations = error.issues.map((issue) => {
+            const v: ErrorEnvelopeViolation = {
+                severity: "error",
+                message: issue.message,
+                file: String(issue.location.relativeFilePath),
+                line: issue.location.line,
+                column: issue.location.column
+            };
+            return v;
+        });
+    } else if (error instanceof ValidationError) {
+        base.code = error.code;
+        base.message = error.message || titleForCode(error.code, "Validation failed");
+        if (error.hint != null) {
+            base.hint = error.hint;
+        }
+        if (error.docsLink != null) {
+            base.docsLink = error.docsLink;
+        }
+        base.violations = error.violations.map((violation) => {
+            const v: ErrorEnvelopeViolation = {
+                severity: violation.severity,
+                message: violation.message,
+                file: violation.relativeFilepath
+            };
+            if (violation.nodePath.length > 0) {
+                v.nodePath = violation.nodePath
+                    .map((seg) => (typeof seg === "string" ? seg : `${seg.key}[${seg.arrayIndex ?? ""}]`))
+                    .join(".");
+            }
+            return v;
+        });
+    } else if (error instanceof CliError) {
+        base.code = error.code;
+        base.message = error.message || titleForCode(error.code, "Command failed");
+        if (error.hint != null) {
+            base.hint = error.hint;
+        }
+        if (error.docsLink != null) {
+            base.docsLink = error.docsLink;
+        }
+    } else if (error instanceof Error) {
+        base.message = error.message || "An unexpected error occurred";
+    } else {
+        base.message = stringifyUnknown(error);
+    }
+
+    if (options.logFile != null) {
+        base.logFile = options.logFile;
+    }
+
+    if (options.debug === true && error instanceof Error) {
+        const debugInfo: ErrorEnvelopeDebug = {};
+        if (error.stack != null) {
+            debugInfo.stack = error.stack;
+        }
+        const causes: string[] = [];
+        let cause: unknown = (error as { cause?: unknown }).cause;
+        let depth = 0;
+        while (cause != null && depth < 5) {
+            if (cause instanceof Error) {
+                causes.push(`${cause.name}: ${cause.message}`);
+                cause = (cause as { cause?: unknown }).cause;
+            } else {
+                causes.push(stringifyUnknown(cause));
+                cause = undefined;
+            }
+            depth += 1;
+        }
+        if (causes.length > 0) {
+            debugInfo.causes = causes;
+        }
+        if (debugInfo.stack != null || debugInfo.causes != null) {
+            base.debug = debugInfo;
+        }
+    }
+
+    return base;
 }

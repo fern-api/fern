@@ -1,0 +1,10 @@
+- summary: |
+    Add `--json` global flag to cli-v2 that renders errors as a structured JSON
+    envelope on stderr for CI pipelines and agents. The envelope contains
+    `{ ok: false, code, message, hint, docsLink, violations, logFile, debug }`,
+    where violations include `file`/`line`/`column` for sourced YAML errors.
+    `--debug --json` adds a `debug.stack` and `debug.causes` block.
+    Commands that already declared a local `--json` flag for success output
+    continue to work; the global flag guarantees the error path is
+    JSON-parseable regardless of which command failed.
+  type: feat

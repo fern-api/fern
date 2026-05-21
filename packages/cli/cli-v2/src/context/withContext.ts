@@ -39,7 +39,7 @@ export function withContext<T extends GlobalArgs>(
         } catch (error) {
             reportError(context, error);
             await context.telemetry.flush();
-            handleError(context, error);
+            handleError(context, error, { json: args.json === true });
             context.finish();
             await exitGracefully(1);
         }
@@ -79,16 +79,21 @@ function isFernDebugEnv(): boolean {
  * on the most common failure path (we previously only did this on
  * SIGINT and `TaskGroup` failures).
  */
-function handleError(context: Context, error: unknown): void {
+function handleError(context: Context, error: unknown, options: { json: boolean }): void {
     if (error instanceof TaskAbortSignal) {
         return;
     }
     const debug = context.logLevel === LogLevel.Debug;
-    const rendered = renderError(error, { debug });
+    const logFile = options.json && !context.logs.empty() ? context.logs.absoluteFilePath : undefined;
+    const rendered = renderError(error, { debug, json: options.json, logFile });
     if (rendered != null) {
         process.stderr.write(`${rendered}\n`);
     }
-    context.printLogFilePath(process.stderr);
+    // Skip the dim log-file hint in JSON mode — it would corrupt the
+    // JSON envelope. The path is embedded inside the envelope as `logFile`.
+    if (!options.json) {
+        context.printLogFilePath(process.stderr);
+    }
 }
 
 /**

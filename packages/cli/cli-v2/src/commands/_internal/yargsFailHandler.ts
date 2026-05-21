@@ -22,11 +22,14 @@ export function makeYargsFailHandler({
 }): (msg: string | null, err: Error | null, y: Argv<GlobalArgs>) => void {
     return (msg, err, y) => {
         const error = err ?? new CliError({ code: CliError.Code.UserError, message: msg ?? "Invalid usage." });
-        const rendered = renderError(error);
+        const json = isJsonFlagInArgv();
+        const rendered = renderError(error, { json });
         if (rendered != null) {
             process.stderr.write(`${rendered}\n`);
         }
-        if (showHelp) {
+        // In JSON mode we suppress the human help block so the envelope on
+        // stderr is the only thing a caller has to parse.
+        if (showHelp && !json) {
             process.stderr.write("\n");
             y.showHelp("error");
         }
@@ -36,4 +39,25 @@ export function makeYargsFailHandler({
         // mapping ships separately.
         process.exit(1);
     };
+}
+
+/**
+ * Inspects `process.argv` for a `--json` (or `--json=true`) flag. We can't
+ * rely on yargs-parsed args here because `.fail` is called for usage errors
+ * that happen during parsing.
+ */
+function isJsonFlagInArgv(): boolean {
+    for (const arg of process.argv.slice(2)) {
+        if (arg === "--json") {
+            return true;
+        }
+        if (arg === "--no-json") {
+            return false;
+        }
+        if (arg.startsWith("--json=")) {
+            const value = arg.slice("--json=".length).toLowerCase();
+            return value === "true" || value === "1" || value === "yes";
+        }
+    }
+    return false;
 }
