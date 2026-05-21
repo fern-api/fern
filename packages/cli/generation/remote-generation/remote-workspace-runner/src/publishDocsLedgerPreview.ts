@@ -88,7 +88,7 @@ export async function publishDocsViaLedgerPreview({
 
     // ── Phase 2: Single register → upload → finish ─────────────────────
 
-    const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers, fetch: createGzipFetch(context) });
+    const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers, fetch: createGzipFetch() });
 
     context.logger.debug("[ledger-preview] Registering preview deployment...");
     const registerStart = performance.now();

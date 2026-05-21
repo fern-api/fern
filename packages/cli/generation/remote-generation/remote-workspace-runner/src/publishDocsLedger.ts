@@ -261,7 +261,7 @@ export async function publishDocsViaLedger({
     // entry and translations follow. The server processes all locales
     // through the same pipeline.
 
-    const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers, fetch: createGzipFetch(context) });
+    const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers, fetch: createGzipFetch() });
 
     const locales: LocaleEntry[] = [baseLocale, ...builtTranslations.map((t) => t.localeEntry)];
 
