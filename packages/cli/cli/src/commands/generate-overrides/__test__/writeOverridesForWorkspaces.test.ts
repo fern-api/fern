@@ -61,6 +61,7 @@ function createMinimalEndpoint(overrides: {
         generatedRequestName: "Request",
         requestNameOverride: undefined,
         request: undefined,
+        requestBodyOptional: undefined,
         response: undefined,
         errors: {},
         servers: [],
