@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.35.0
+  changelogEntry:
+    - summary: |
+        Add support for user-provided examples in GraphQL specs. Users can now specify
+        an `examples` field in their GraphQL spec configuration pointing to a YAML file
+        containing named examples (with query, variables, and response) for each operation.
+      type: feat
+  createdAt: "2026-05-21"
+  irVersion: 66
 - version: 5.34.0
   changelogEntry:
     - summary: |
