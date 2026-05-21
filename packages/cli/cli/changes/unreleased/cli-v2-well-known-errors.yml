@@ -1,0 +1,17 @@
+- summary: |
+    Add a registry of well-known cli-v2 errors at
+    `packages/cli/cli-v2/src/errors/wellKnown/CliErrors.ts`.
+
+    Each entry is a tiny factory that returns a `CliError` with a fixed
+    code, a templated message, an actionable hint, and (where appropriate)
+    a docs link — modeled on `MdxErrorCode` for the rest of the CLI
+    surface. Adding a new well-known failure is a 5-line PR there
+    (template + test + call-site swap) and every consumer gets identical
+    UX automatically.
+
+    Initial templates: `AuthRequired`, `Unauthorized`, `FernYmlNotFound`,
+    `FlagsMutex`, `FlagRequires`, `MissingRequiredFlags`, `FileNotFound`,
+    `UnsupportedValue`, `HttpFetchFailed`, `EmptyStdin`, `ValidationFailed`,
+    `InternalError`. Migrates representative call sites in `sdk generate`,
+    `sdk add`, `auth whoami`, and `ApiSpecResolver` to use them.
+  type: feat

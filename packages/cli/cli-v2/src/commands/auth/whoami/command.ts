@@ -1,8 +1,8 @@
-import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import type { Argv } from "yargs";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
+import { FernCliErrors } from "../../../errors/wellKnown/CliErrors.js";
 import { command } from "../../_internal/command.js";
 
 export declare namespace WhoamiCommand {
@@ -16,15 +16,10 @@ export class WhoamiCommand {
         const activeAccount = await context.tokenService.getActiveAccountInfo();
         if (activeAccount == null) {
             if (args.json) {
-                // JSON consumers expect the error envelope on stdout; mirror
-                // the human render to stderr via the error boundary.
                 context.stdout.info(JSON.stringify({ user: null, loggedIn: false }, null, 2));
+                return;
             }
-            throw new CliError({
-                code: CliError.Code.AuthError,
-                message: "You are not logged in to Fern.",
-                hint: "Run `fern auth login`, or set the FERN_TOKEN environment variable."
-            });
+            throw FernCliErrors.AuthRequired({ message: "You are not logged in to Fern." });
         }
 
         if (args.json) {
