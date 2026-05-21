@@ -326,6 +326,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         if (authOverrides == null) {
             authOverrides = await getAuthFromOverrideFiles(specs);
         }
+
         const environmentOverrides =
             this.generatorsConfiguration?.api?.environments != null
                 ? { ...this.generatorsConfiguration?.api }
