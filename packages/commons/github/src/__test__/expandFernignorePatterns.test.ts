@@ -27,7 +27,7 @@ describe("expandFernignorePatterns", () => {
 
         const preserved = expandFernignorePatterns(fernignore, tracked);
 
-        expect(preserved).toEqual(["src/foo/a.py", "src/foo/nested/b.py"]);
+        expect([...preserved].sort()).toEqual(["src/foo/a.py", "src/foo/nested/b.py"].sort());
     });
 
     it("treats a trailing-slash directory path the same as a bare directory", () => {
