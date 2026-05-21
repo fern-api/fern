@@ -28,9 +28,9 @@ export class LockfileResolutionStep extends BaseStep {
 
         this.logger.info("Re-resolving lockfile after customization steps...");
 
-        const statusBefore = this.gitStatusSnapshot();
-
         try {
+            const statusBefore = this.gitStatusSnapshot();
+
             const result = execFileSync("bash", [scriptPath], {
                 cwd: this.outputDir,
                 timeout: 120_000,
