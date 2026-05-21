@@ -13,7 +13,7 @@ import { createHash } from "crypto";
 import { readFile } from "fs/promises";
 
 import { buildTranslatedDocsDefinition } from "./buildTranslatedDocsDefinition.js";
-import { createGzipFetch } from "./compressedLedgerFetch.js";
+import { createGzipFetch } from "./compressedFetch.js";
 import { mapDocsConfigToLedgerConfig } from "./mapDocsConfigToLedgerConfig.js";
 import { asyncPool } from "./utils/asyncPool.js";
 

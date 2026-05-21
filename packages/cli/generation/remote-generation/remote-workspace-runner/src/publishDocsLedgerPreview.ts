@@ -10,7 +10,7 @@ import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { TaskContext } from "@fern-api/task-context";
 
 import { buildTranslatedDocsDefinition } from "./buildTranslatedDocsDefinition.js";
-import { createGzipFetch } from "./compressedLedgerFetch.js";
+import { createGzipFetch } from "./compressedFetch.js";
 import { buildLedgerInput, uploadMissingBlobs } from "./publishDocsLedger.js";
 
 type DocsDefinition = DocsV1Write.DocsDefinition;
