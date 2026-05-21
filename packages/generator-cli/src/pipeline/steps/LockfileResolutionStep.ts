@@ -28,6 +28,8 @@ export class LockfileResolutionStep extends BaseStep {
 
         this.logger.info("Re-resolving lockfile after customization steps...");
 
+        const statusBefore = this.gitStatusSnapshot();
+
         try {
             const result = execFileSync("bash", [scriptPath], {
                 cwd: this.outputDir,
@@ -37,7 +39,7 @@ export class LockfileResolutionStep extends BaseStep {
 
             this.logger.debug(`Lockfile resolution output: ${result.toString().trim()}`);
 
-            this.commitIfChanged();
+            this.commitNewChanges(statusBefore);
 
             return { executed: true, success: true, skipped: false };
         } catch (error) {
@@ -52,34 +54,51 @@ export class LockfileResolutionStep extends BaseStep {
         }
     }
 
-    /**
-     * Stage and commit lockfile changes so they are included when GithubStep
-     * pushes — even when `skipCommit` is true (replay already committed).
-     * No-ops when the working tree is clean.
-     */
-    private commitIfChanged(): void {
-        const hasChanges =
-            execFileSync("git", ["status", "--porcelain"], {
-                cwd: this.outputDir,
-                encoding: "utf-8",
-                stdio: "pipe"
-            }).trim().length > 0;
+    private gitStatusSnapshot(): Set<string> {
+        const output = execFileSync("git", ["status", "--porcelain"], {
+            cwd: this.outputDir,
+            encoding: "utf-8",
+            stdio: "pipe"
+        }).trim();
+        return new Set(output ? output.split("\n") : []);
+    }
 
-        if (!hasChanges) {
+    /**
+     * Stage and commit only the files that changed as a result of running the
+     * lockfile script, not pre-existing uncommitted files. Compares a before/after
+     * snapshot of `git status --porcelain` and only stages new or modified entries.
+     */
+    private commitNewChanges(statusBefore: Set<string>): void {
+        const statusAfter = this.gitStatusSnapshot();
+
+        const newEntries: string[] = [];
+        for (const entry of statusAfter) {
+            if (!statusBefore.has(entry)) {
+                // porcelain format: "XY path" — extract the path after the 3-char prefix
+                const filePath = entry.slice(3);
+                if (filePath.length > 0) {
+                    newEntries.push(filePath);
+                }
+            }
+        }
+
+        if (newEntries.length === 0) {
             this.logger.debug("Lockfile unchanged — nothing to commit.");
             return;
         }
 
-        execFileSync("git", ["add", "-A"], {
-            cwd: this.outputDir,
-            stdio: "pipe"
-        });
+        for (const filePath of newEntries) {
+            execFileSync("git", ["add", "--", filePath], {
+                cwd: this.outputDir,
+                stdio: "pipe"
+            });
+        }
 
         execFileSync("git", ["commit", "-m", "[fern-lockfile] Re-resolve lockfile"], {
             cwd: this.outputDir,
             stdio: "pipe"
         });
 
-        this.logger.info("Committed lockfile changes as [fern-lockfile].");
+        this.logger.info(`Committed lockfile changes as [fern-lockfile]: ${newEntries.join(", ")}`);
     }
 }
