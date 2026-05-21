@@ -202,6 +202,48 @@ describe("new WireMock().convertToWireMock", () => {
     });
 });
 
+describe("WireMock query param datetime normalization", () => {
+    // Regression test for nullable<datetime> query params: the WireMock stub matcher
+    // must include millisecond precision (e.g. "2024-01-15T09:30:00.000Z") so that it
+    // matches what generated SDK runtimes actually send. Optional<datetime> already
+    // worked; nullable<datetime> previously fell through to the raw jsonExample.
+    function buildDatetimeExample(wrapper: "optional" | "nullable" | "none"): FernIr.ExampleTypeReference {
+        const datetimePrimitive = FernIr.TypeReference.primitive({
+            v1: FernIr.PrimitiveTypeV1.DateTime,
+            v2: undefined
+        });
+        const inner: FernIr.ExampleTypeReference = {
+            jsonExample: "2024-01-15T09:30:00Z",
+            shape: FernIr.ExampleTypeReferenceShape.primitive(
+                FernIr.ExamplePrimitive.datetime({
+                    datetime: new Date("2024-01-15T09:30:00Z"),
+                    raw: "2024-01-15T09:30:00Z"
+                })
+            )
+        };
+        if (wrapper === "none") {
+            return inner;
+        }
+        return {
+            jsonExample: "2024-01-15T09:30:00Z",
+            shape: FernIr.ExampleTypeReferenceShape.container(
+                wrapper === "optional"
+                    ? FernIr.ExampleContainer.optional({ optional: inner, valueType: datetimePrimitive })
+                    : FernIr.ExampleContainer.nullable({ nullable: inner, valueType: datetimePrimitive })
+            )
+        };
+    }
+
+    it.each([
+        ["bare datetime", "none" as const],
+        ["optional<datetime>", "optional" as const],
+        ["nullable<datetime>", "nullable" as const]
+    ])("normalizes %s query param to millisecond precision", (_label, wrapper) => {
+        const example = buildDatetimeExample(wrapper);
+        expect(new WireMock().exampleToQueryOrHeaderValue({ value: example })).toBe("2024-01-15T09:30:00.000Z");
+    });
+});
+
 // Helper function to build URL path template from IR endpoint (matches convertTonew WireMock().ts logic)
 function buildUrlPathTemplateFromIR(endpoint: FernIr.HttpEndpoint): string {
     // Use fullPath to include the service basePath
