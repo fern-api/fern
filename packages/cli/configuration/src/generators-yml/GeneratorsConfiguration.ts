@@ -137,6 +137,7 @@ export interface OpenRPCDefinitionSchema {
 export interface GraphQLDefinitionSchema {
     type: "graphql";
     path: string;
+    examples: string | undefined;
 }
 
 /**

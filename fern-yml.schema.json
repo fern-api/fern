@@ -4221,6 +4221,9 @@
                       }
                     ]
                   },
+                  "examples": {
+                    "type": "string"
+                  },
                   "name": {
                     "type": "string"
                   }
@@ -4788,6 +4791,9 @@
                           }
                         }
                       ]
+                    },
+                    "examples": {
+                      "type": "string"
                     },
                     "name": {
                       "type": "string"

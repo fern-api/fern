@@ -464,7 +464,8 @@ async function parseApiConfigurationV2Schema({
             definitionLocation = {
                 schema: {
                     type: "graphql",
-                    path: spec.graphql
+                    path: spec.graphql,
+                    examples: spec.examples
                 },
                 origin: spec.origin,
                 overrides: spec.overrides,

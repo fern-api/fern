@@ -17,6 +17,7 @@ import { extractErrorMessage, isNonNullish } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
+import type { GraphQlOperationExamplesInput } from "@fern-api/graphql-to-fdr";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
@@ -221,9 +222,12 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
         for (const spec of graphqlSpecs) {
             try {
+                const examples = await loadGraphQlExamples(spec.absoluteFilepathToExamples, context);
                 const converter = new GraphQLConverter({
                     context,
-                    filePath: spec.absoluteFilepath
+                    filePath: spec.absoluteFilepath,
+                    namespace: spec.namespace,
+                    examples
                 });
                 const result = await converter.convert();
 
@@ -717,7 +721,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         : spec.absoluteFilepathToOverrides != null
                           ? [spec.absoluteFilepathToOverrides]
                           : [];
-                    return [mainPath, ...overridePaths];
+                    const examplesPath = spec.type === "graphql" ? spec.absoluteFilepathToExamples : undefined;
+                    return [mainPath, ...overridePaths, ...(examplesPath != null ? [examplesPath] : [])];
                 })
                 .filter(isNonNullish)
         ];
@@ -746,6 +751,82 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
             return acc;
         }, result);
+    }
+}
+
+async function loadGraphQlExamples(
+    absoluteFilepathToExamples: AbsoluteFilePath | undefined,
+    context: TaskContext
+): Promise<GraphQlOperationExamplesInput[] | undefined> {
+    if (absoluteFilepathToExamples == null) {
+        return undefined;
+    }
+    try {
+        const contents = (await readFile(absoluteFilepathToExamples)).toString();
+        const parsed = yaml.load(contents);
+        if (!Array.isArray(parsed)) {
+            return undefined;
+        }
+        for (const entry of parsed) {
+            if (typeof entry !== "object" || entry == null) {
+                context.logger.warn(
+                    `Skipping invalid entry in GraphQL examples file ${absoluteFilepathToExamples}: expected object`
+                );
+                continue;
+            }
+            if (typeof entry.operation !== "string") {
+                context.logger.warn(
+                    `Skipping entry in GraphQL examples file ${absoluteFilepathToExamples}: missing or invalid 'operation' field`
+                );
+                continue;
+            }
+            if (!Array.isArray(entry.examples)) {
+                context.logger.warn(
+                    `Skipping entry for operation '${entry.operation}' in ${absoluteFilepathToExamples}: 'examples' must be an array`
+                );
+                continue;
+            }
+        }
+        const validEntries = parsed
+            .filter(
+                (entry): entry is { operation: string; operationType?: string; examples: unknown[] } =>
+                    typeof entry === "object" &&
+                    entry != null &&
+                    typeof entry.operation === "string" &&
+                    Array.isArray(entry.examples)
+            )
+            .map((entry) => {
+                const validExamples = entry.examples.filter((ex: unknown) => {
+                    if (
+                        typeof ex !== "object" ||
+                        ex == null ||
+                        typeof (ex as Record<string, unknown>).query !== "string"
+                    ) {
+                        context.logger.warn(
+                            `Skipping malformed example for operation '${entry.operation}' in ${absoluteFilepathToExamples}: missing or invalid 'query' field`
+                        );
+                        return false;
+                    }
+                    return true;
+                });
+                if (entry.operationType != null) {
+                    const lower = entry.operationType.toLowerCase();
+                    if (lower !== "query" && lower !== "mutation" && lower !== "subscription") {
+                        context.logger.warn(
+                            `Invalid operationType '${entry.operationType}' for operation '${entry.operation}' in ${absoluteFilepathToExamples}: must be 'query', 'mutation', or 'subscription'`
+                        );
+                    }
+                }
+                return { ...entry, examples: validExamples } as GraphQlOperationExamplesInput;
+            })
+            .filter((entry) => entry.examples.length > 0);
+        return validEntries.length > 0 ? validEntries : undefined;
+    } catch (error) {
+        context.logger.error(
+            `Failed to load GraphQL examples from ${absoluteFilepathToExamples}:`,
+            extractErrorMessage(error)
+        );
+        return undefined;
     }
 }
 

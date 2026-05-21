@@ -325,7 +325,8 @@ describe("collectRawSpecs", () => {
                 {
                     type: "graphql",
                     absoluteFilepath: AbsoluteFilePath.of(graphqlFile),
-                    absoluteFilepathToOverrides: undefined
+                    absoluteFilepathToOverrides: undefined,
+                    absoluteFilepathToExamples: undefined
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
@@ -412,7 +413,8 @@ describe("collectRawSpecs", () => {
                 {
                     type: "graphql",
                     absoluteFilepath: AbsoluteFilePath.of(graphqlFile),
-                    absoluteFilepathToOverrides: undefined
+                    absoluteFilepathToOverrides: undefined,
+                    absoluteFilepathToExamples: undefined
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),
@@ -545,7 +547,8 @@ describe("collectRawSpecs", () => {
                 {
                     type: "graphql",
                     absoluteFilepath: AbsoluteFilePath.of(graphqlFile),
-                    absoluteFilepathToOverrides: AbsoluteFilePath.of(overrideFile)
+                    absoluteFilepathToOverrides: AbsoluteFilePath.of(overrideFile),
+                    absoluteFilepathToExamples: undefined
                 }
             ],
             hostOutputDir: AbsoluteFilePath.of(outputDir),

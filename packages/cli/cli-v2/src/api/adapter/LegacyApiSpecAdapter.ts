@@ -157,6 +157,7 @@ export class LegacyApiSpecAdapter {
             type: "graphql" as const,
             absoluteFilepath: spec.graphql,
             absoluteFilepathToOverrides: spec.overrides,
+            absoluteFilepathToExamples: spec.examples,
             namespace: spec.name
         };
     }
