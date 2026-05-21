@@ -1,0 +1,6 @@
+- summary: |
+    Move lockfile generation from the generator's github output-mode handler
+    to a new LockfileStep in the PostGenerationPipeline, ensuring the lockfile
+    reflects the final package.json after Replay patches, .fernignore
+    preservation, and manifest customizations.
+  type: fix

@@ -5,6 +5,7 @@ export interface PipelineConfig {
     replay?: ReplayStepConfig;
     autoVersion?: AutoVersionStepConfig;
     fernignore?: FernignoreStepConfig; // PHASE 2: not implemented yet
+    lockfile?: LockfileStepConfig;
     verify?: VerifyStepConfig;
     github?: GithubStepConfig;
 
@@ -20,6 +21,7 @@ export interface PipelineContext {
         replay?: ReplayStepResult;
         autoVersion?: AutoVersionStepResult;
         fernignore?: FernignoreStepResult;
+        lockfile?: LockfileStepResult;
         verify?: VerificationStepResult;
     };
 }
@@ -96,6 +98,12 @@ export interface FernignoreStepConfig {
     customContents?: string;
 }
 
+export interface LockfileStepConfig {
+    enabled: boolean;
+    /** Container runtime to use. Defaults to "docker". */
+    runner?: "docker" | "podman";
+}
+
 export interface VerifyStepConfig {
     enabled: boolean;
     /** Container runtime to use. Defaults to "docker". */
@@ -165,6 +173,7 @@ export interface PipelineResult {
         replay?: ReplayStepResult;
         autoVersion?: AutoVersionStepResult;
         fernignore?: FernignoreStepResult;
+        lockfile?: LockfileStepResult;
         verify?: VerificationStepResult;
         github?: GithubStepResult;
     };
@@ -227,6 +236,11 @@ export interface ReplayStepResult extends StepResult {
 
 export interface FernignoreStepResult extends StepResult {
     pathsPreserved?: string[];
+}
+
+export interface LockfileStepResult extends StepResult {
+    /** True when no `.fern/regenerate-lockfile.sh` was emitted by the generator — the step short-circuits silently. */
+    skipped: boolean;
 }
 
 export interface VerificationStepResult extends StepResult {

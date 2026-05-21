@@ -1,0 +1,4 @@
+- summary: |
+    Wire LockfileStep in the PostGenerationPipeline so the package-manager
+    lockfile is regenerated after Replay and .fernignore are applied.
+  type: fix

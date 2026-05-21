@@ -25,6 +25,7 @@ import { GeneratorContext } from "@fern-typescript/contexts";
 import { publishPackage } from "./publishPackage.js";
 import { writeGenerationMetadata } from "./writeGenerationMetadata.js";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows.js";
+import { writeLockfileScript } from "./writeLockfileScript.js";
 import { writeVerifyScript } from "./writeVerifyScript.js";
 
 const OUTPUT_ZIP_FILENAME = "output.zip";
@@ -152,6 +153,10 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     pathToProject,
                     packageManager: typescriptProject.getPackageManager()
                 });
+                await writeLockfileScript({
+                    pathToProject,
+                    packageManager: typescriptProject.getPackageManager()
+                });
             });
 
             // Run npm pkg fix to normalize package.json (enabled by default)
@@ -199,7 +204,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             packageManager: this.getPackageManager(customConfig)
                         });
                     });
-                    await typescriptProject.generateLockfile(logger);
                     if (!(await typescriptProject.areCheckFixToolsAvailable(logger))) {
                         await typescriptProject.installCheckFixDependencies(logger);
                     }
