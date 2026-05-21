@@ -1,12 +1,11 @@
 import { type DocsDefinitionResolver } from "@fern-api/docs-resolver";
 import type { APIV1Write, DocsV1Write } from "@fern-api/fdr-sdk";
 import {
+    createDocsLedgerClient,
     type DocsPublishGitInput,
     type DocsPublishInput,
     type FileManifestEntry,
-    type FinishResponse,
-    type LocaleEntry,
-    type RegisterResponse
+    type LocaleEntry
 } from "@fern-api/fdr-sdk/orpc-client";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { TaskContext } from "@fern-api/task-context";
@@ -14,7 +13,7 @@ import { createHash } from "crypto";
 import { readFile } from "fs/promises";
 
 import { buildTranslatedDocsDefinition } from "./buildTranslatedDocsDefinition.js";
-import { compressedLedgerPost } from "./compressedLedgerFetch.js";
+import { createGzipFetch } from "./compressedLedgerFetch.js";
 import { mapDocsConfigToLedgerConfig } from "./mapDocsConfigToLedgerConfig.js";
 import { asyncPool } from "./utils/asyncPool.js";
 
@@ -262,7 +261,7 @@ export async function publishDocsViaLedger({
     // entry and translations follow. The server processes all locales
     // through the same pipeline.
 
-    const ledgerBaseUrl = `${fdrOrigin.replace(/\/+$/, "")}/docs-ledger`;
+    const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers, fetch: createGzipFetch(context) });
 
     const locales: LocaleEntry[] = [baseLocale, ...builtTranslations.map((t) => t.localeEntry)];
 
@@ -278,17 +277,9 @@ export async function publishDocsViaLedger({
 
     // Register — server computes deployment hash, returns presigned S3
     // URLs for any blobs it doesn't already have in CAS (all locales).
-    // Request body is gzip-compressed to reduce transfer time for large
-    // multi-locale deployments.
     context.logger.debug("[ledger] Registering deployment...");
     const registerStart = performance.now();
-    const registerResult = await compressedLedgerPost<RegisterResponse>({
-        url: `${ledgerBaseUrl}/register`,
-        body: publishInput,
-        token,
-        headers,
-        context
-    });
+    const registerResult = await client.register(publishInput);
     const registerTime = performance.now() - registerStart;
     context.logger.debug(
         `[ledger] Registered in ${registerTime.toFixed(0)}ms — hash=${registerResult.deploymentHash}, missing=${registerResult.missingContent.length} blobs`
@@ -301,13 +292,7 @@ export async function publishDocsViaLedger({
     // a single atomic transaction. Same input shape as register.
     context.logger.debug("[ledger] Finishing deployment...");
     const finishStart = performance.now();
-    const finishResult = await compressedLedgerPost<FinishResponse>({
-        url: `${ledgerBaseUrl}/register/finish`,
-        body: publishInput,
-        token,
-        headers,
-        context
-    });
+    const finishResult = await client.finish(publishInput);
     const finishTime = performance.now() - finishStart;
     context.logger.debug(
         `[ledger] Finished in ${finishTime.toFixed(0)}ms — deploymentId=${finishResult.deploymentId}, reused=${finishResult.reusedDeployment}`

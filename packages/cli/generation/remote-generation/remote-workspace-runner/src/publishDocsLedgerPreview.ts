@@ -1,17 +1,16 @@
 import type { DocsDefinitionResolver } from "@fern-api/docs-resolver";
 import type { APIV1Write, DocsV1Write } from "@fern-api/fdr-sdk";
 import {
+    createDocsLedgerClient,
     type DocsPublishGitInput,
     type FileManifestEntry,
-    type FinishResponse,
-    type LedgerPreviewRegisterResponse,
     type LocaleEntry
 } from "@fern-api/fdr-sdk/orpc-client";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { TaskContext } from "@fern-api/task-context";
 
 import { buildTranslatedDocsDefinition } from "./buildTranslatedDocsDefinition.js";
-import { compressedLedgerPost } from "./compressedLedgerFetch.js";
+import { createGzipFetch } from "./compressedLedgerFetch.js";
 import { buildLedgerInput, uploadMissingBlobs } from "./publishDocsLedger.js";
 
 type DocsDefinition = DocsV1Write.DocsDefinition;
@@ -89,31 +88,25 @@ export async function publishDocsViaLedgerPreview({
 
     // ── Phase 2: Single register → upload → finish ─────────────────────
 
-    const ledgerBaseUrl = `${fdrOrigin.replace(/\/+$/, "")}/docs-ledger`;
+    const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers, fetch: createGzipFetch(context) });
 
     context.logger.debug("[ledger-preview] Registering preview deployment...");
     const registerStart = performance.now();
-    const registerResult = await compressedLedgerPost<LedgerPreviewRegisterResponse>({
-        url: `${ledgerBaseUrl}/preview/init`,
-        body: {
-            orgId: organization,
-            previewId: previewId ?? null,
-            basePath: basePath ?? "",
-            root: baseLocale.root,
-            pages: baseLocale.pages,
-            apiManifest: baseLocale.apiManifest,
-            config: baseLocale.config,
-            fileManifest: baseLocale.fileManifest,
-            jsFiles: baseLocale.jsFiles,
-            redirects: baseLocale.redirects,
-            locale: baseLocale.locale,
-            version: baseLocale.version,
-            repo: baseLocale.repo,
-            git
-        },
-        token,
-        headers,
-        context
+    const registerResult = await client.previewRegister({
+        orgId: organization,
+        previewId: previewId ?? null,
+        basePath: basePath ?? "",
+        root: baseLocale.root,
+        pages: baseLocale.pages,
+        apiManifest: baseLocale.apiManifest,
+        config: baseLocale.config,
+        fileManifest: baseLocale.fileManifest,
+        jsFiles: baseLocale.jsFiles,
+        redirects: baseLocale.redirects,
+        locale: baseLocale.locale,
+        version: baseLocale.version,
+        repo: baseLocale.repo,
+        git
     });
     const registerTime = performance.now() - registerStart;
     context.logger.debug(
@@ -151,19 +144,13 @@ export async function publishDocsViaLedgerPreview({
     // in a single call.
     context.logger.debug("[ledger-preview] Finishing preview deployment...");
     const finishStart = performance.now();
-    const finishResult = await compressedLedgerPost<FinishResponse>({
-        url: `${ledgerBaseUrl}/register/finish`,
-        body: {
-            orgId: organization,
-            domain: registerResult.domain,
-            basepath: registerResult.basepath,
-            customDomains: [],
-            previewId: registerResult.previewId,
-            locales
-        },
-        token,
-        headers,
-        context
+    const finishResult = await client.finish({
+        orgId: organization,
+        domain: registerResult.domain,
+        basepath: registerResult.basepath,
+        customDomains: [],
+        previewId: registerResult.previewId,
+        locales
     });
     const finishTime = performance.now() - finishStart;
     context.logger.debug(
