@@ -36,17 +36,13 @@ function makeDocsDefinition({
 describe("buildLedgerInput", () => {
     it("hashes page content and creates blob refs", () => {
         const markdown = "# Hello World";
-        const { input, blobs } = buildLedgerInput({
+        const { localeEntry, blobs } = buildLedgerInput({
             docsDefinition: makeDocsDefinition({ pages: { "page-1": { markdown } } }),
-            organization: "acme",
-            domain: "docs.acme.com",
-            basepath: undefined,
-            previewId: undefined,
             apiDefinitions: new Map()
         });
 
         const expectedHash = sha256(markdown);
-        expect(input.pages["page-1"]).toEqual({
+        expect(localeEntry.pages["page-1"]).toEqual({
             hash: expectedHash,
             contentType: "text/markdown",
             contentLength: Buffer.byteLength(markdown, "utf-8")
@@ -56,36 +52,28 @@ describe("buildLedgerInput", () => {
 
     it("skips null/undefined pages", () => {
         const pages = { "page-1": null } as unknown as Record<string, { markdown: string }>;
-        const { input } = buildLedgerInput({
+        const { localeEntry } = buildLedgerInput({
             docsDefinition: makeDocsDefinition({ pages }),
-            organization: "acme",
-            domain: "docs.acme.com",
-            basepath: undefined,
-            previewId: undefined,
             apiDefinitions: new Map()
         });
 
-        expect(Object.keys(input.pages)).toHaveLength(0);
+        expect(Object.keys(localeEntry.pages)).toHaveLength(0);
     });
 
     it("maps a minimal DocsConfig to a LedgerConfig shape (mostly empty fields)", () => {
-        const { input } = buildLedgerInput({
+        const { localeEntry } = buildLedgerInput({
             docsDefinition: makeDocsDefinition(),
-            organization: "acme",
-            domain: "docs.acme.com",
-            basepath: undefined,
-            previewId: undefined,
             apiDefinitions: new Map()
         });
 
         // With only `root` set on the source DocsConfig every LedgerConfig
-        // field is `undefined` — but `input.config` itself is the populated
+        // field is `undefined` — but `localeEntry.config` itself is the populated
         // ledger object (not `undefined`), unlike the prior workaround.
-        expect(input.config).toBeDefined();
-        expect(input.config?.title).toBeUndefined();
-        expect(input.config?.colorsV3).toBeUndefined();
-        expect(input.config?.metadata).toBeUndefined();
-        expect(input.config?.redirects).toBeUndefined();
+        expect(localeEntry.config).toBeDefined();
+        expect(localeEntry.config?.title).toBeUndefined();
+        expect(localeEntry.config?.colorsV3).toBeUndefined();
+        expect(localeEntry.config?.metadata).toBeUndefined();
+        expect(localeEntry.config?.redirects).toBeUndefined();
     });
 
     it("translates a DocsConfig logo FileId into a LedgerConfig ImageRef using fileManifest dimensions", () => {
@@ -114,19 +102,15 @@ describe("buildLedgerInput", () => {
             }
         };
 
-        const { input } = buildLedgerInput({
+        const { localeEntry } = buildLedgerInput({
             docsDefinition,
-            organization: "acme",
-            domain: "docs.acme.com",
-            basepath: undefined,
-            previewId: undefined,
             apiDefinitions: new Map(),
             fileManifest,
             // Identity map: fileId === sanitizedPath in the current FDR flow.
             fileIdToPath: new Map([["assets/logo.png", "assets/logo.png"]])
         });
 
-        expect(input.config?.colorsV3).toEqual({
+        expect(localeEntry.config?.colorsV3).toEqual({
             type: "dark",
             accentPrimary: { r: 1, g: 2, b: 3 },
             logo: { path: "assets/logo.png", width: 320, height: 160 }
@@ -156,19 +140,15 @@ describe("buildLedgerInput", () => {
             }
         };
 
-        const { input } = buildLedgerInput({
+        const { localeEntry } = buildLedgerInput({
             docsDefinition,
-            organization: "acme",
-            domain: "docs.acme.com",
-            basepath: undefined,
-            previewId: undefined,
             apiDefinitions: new Map(),
             fileManifest,
             fileIdToPath: new Map([["assets/unmeasured.svg", "assets/unmeasured.svg"]])
         });
 
         // Logo absent rather than emitted with placeholder dimensions.
-        expect(input.config?.colorsV3).toEqual({
+        expect(localeEntry.config?.colorsV3).toEqual({
             type: "light",
             accentPrimary: { r: 4, g: 5, b: 6 },
             logo: undefined,
@@ -181,48 +161,22 @@ describe("buildLedgerInput", () => {
         });
     });
 
-    it("passes through org, domain, basepath, previewId", () => {
-        const { input } = buildLedgerInput({
+    it("defaults locale to en", () => {
+        const { localeEntry } = buildLedgerInput({
             docsDefinition: makeDocsDefinition(),
-            organization: "acme",
-            domain: "docs.acme.com",
-            basepath: "/v2",
-            previewId: "pr-42",
             apiDefinitions: new Map()
         });
 
-        expect(input.orgId).toBe("acme");
-        expect(input.domain).toBe("docs.acme.com");
-        expect(input.basepath).toBe("/v2");
-        expect(input.previewId).toBe("pr-42");
-    });
-
-    it("defaults basepath to empty string, previewId to null, and locale to en", () => {
-        const { input } = buildLedgerInput({
-            docsDefinition: makeDocsDefinition(),
-            organization: "acme",
-            domain: "docs.acme.com",
-            basepath: undefined,
-            previewId: undefined,
-            apiDefinitions: new Map()
-        });
-
-        expect(input.basepath).toBe("");
-        expect(input.previewId).toBeNull();
-        expect(input.locale).toBe("en");
+        expect(localeEntry.locale).toBe("en");
     });
 
     it("uses config.root for the root field", () => {
-        const { input } = buildLedgerInput({
+        const { localeEntry } = buildLedgerInput({
             docsDefinition: makeDocsDefinition({ root: MINIMAL_ROOT }),
-            organization: "acme",
-            domain: "docs.acme.com",
-            basepath: undefined,
-            previewId: undefined,
             apiDefinitions: new Map()
         });
 
-        expect(input.root).toEqual(MINIMAL_ROOT);
+        expect(localeEntry.root).toEqual(MINIMAL_ROOT);
     });
 
     it("deduplicates pages with identical content", () => {
@@ -234,10 +188,6 @@ describe("buildLedgerInput", () => {
                     "page-b": { markdown }
                 }
             }),
-            organization: "acme",
-            domain: "docs.acme.com",
-            basepath: undefined,
-            previewId: undefined,
             apiDefinitions: new Map()
         });
 
@@ -253,16 +203,12 @@ describe("buildLedgerInput", () => {
     });
 
     it("sets apiManifest to null when apiDefinitions is empty", () => {
-        const { input } = buildLedgerInput({
+        const { localeEntry } = buildLedgerInput({
             docsDefinition: makeDocsDefinition(),
-            organization: "acme",
-            domain: "docs.acme.com",
-            basepath: undefined,
-            previewId: undefined,
             apiDefinitions: new Map()
         });
 
-        expect(input.apiManifest).toBeNull();
+        expect(localeEntry.apiManifest).toBeNull();
     });
 
     it("apiManifest blob hash is stable across Map insertion order (determinism guard)", () => {
@@ -296,20 +242,12 @@ describe("buildLedgerInput", () => {
         reverse.set("api-def-b", minimalApiDefinition);
         reverse.set("api-def-a", minimalApiDefinition);
 
-        const { input: inForward } = buildLedgerInput({
+        const { localeEntry: inForward } = buildLedgerInput({
             docsDefinition: makeDocsDefinition(),
-            organization: "acme",
-            domain: "docs.acme.com",
-            basepath: undefined,
-            previewId: undefined,
             apiDefinitions: forward
         });
-        const { input: inReverse } = buildLedgerInput({
+        const { localeEntry: inReverse } = buildLedgerInput({
             docsDefinition: makeDocsDefinition(),
-            organization: "acme",
-            domain: "docs.acme.com",
-            basepath: undefined,
-            previewId: undefined,
             apiDefinitions: reverse
         });
 
@@ -336,21 +274,17 @@ describe("buildLedgerInput", () => {
         const apiDefinitions = new Map<string, APIV1Write.ApiDefinition>();
         apiDefinitions.set("api-def-1", minimalApiDefinition);
 
-        const { input, blobs } = buildLedgerInput({
+        const { localeEntry, blobs } = buildLedgerInput({
             docsDefinition: makeDocsDefinition(),
-            organization: "acme",
-            domain: "docs.acme.com",
-            basepath: undefined,
-            previewId: undefined,
             apiDefinitions
         });
 
-        expect(input.apiManifest).not.toBeNull();
-        expect(input.apiManifest?.contentType).toBe("application/json");
-        expect(input.apiManifest?.contentLength).toBeGreaterThan(0);
+        expect(localeEntry.apiManifest).not.toBeNull();
+        expect(localeEntry.apiManifest?.contentType).toBe("application/json");
+        expect(localeEntry.apiManifest?.contentLength).toBeGreaterThan(0);
 
         // The blob should exist in the blob map.
-        const manifestBuf = blobs.get(input.apiManifest?.hash ?? "");
+        const manifestBuf = blobs.get(localeEntry.apiManifest?.hash ?? "");
         expect(manifestBuf).toBeDefined();
 
         // Round-trip: the blob content should deserialize to match the input map.
@@ -386,18 +320,14 @@ describe("buildLedgerInput", () => {
             "docs/notes.txt": docEntry
         };
 
-        const { input, blobs } = buildLedgerInput({
+        const { localeEntry, blobs } = buildLedgerInput({
             docsDefinition: makeDocsDefinition(),
-            organization: "acme",
-            domain: "docs.acme.com",
-            basepath: undefined,
-            previewId: undefined,
             apiDefinitions: new Map(),
             fileManifest
         });
 
         // fileManifest round-trips unchanged.
-        expect(input.fileManifest).toEqual(fileManifest);
+        expect(localeEntry.fileManifest).toEqual(fileManifest);
 
         // File blobs are NOT in the blob map — they are loaded lazily during
         // the upload step via filePaths (hash → absolute path).
@@ -406,16 +336,12 @@ describe("buildLedgerInput", () => {
     });
 
     it("legacy behaviour: omitting fileManifest still works", () => {
-        const { input, blobs } = buildLedgerInput({
+        const { localeEntry, blobs } = buildLedgerInput({
             docsDefinition: makeDocsDefinition({ pages: { "page-1": { markdown: "# hi" } } }),
-            organization: "acme",
-            domain: "docs.acme.com",
-            basepath: undefined,
-            previewId: undefined,
             apiDefinitions: new Map()
         });
 
-        expect(input.fileManifest).toBeUndefined();
+        expect(localeEntry.fileManifest).toBeUndefined();
         // Blob map still contains the page + config blobs.
         expect(blobs.size).toBeGreaterThan(0);
     });
@@ -428,30 +354,22 @@ describe("buildLedgerInput", () => {
             branch: "main",
             commitSha: "abc123"
         };
-        const { input } = buildLedgerInput({
+        const { localeEntry } = buildLedgerInput({
             docsDefinition: makeDocsDefinition(),
-            organization: "acme",
-            domain: "docs.acme.com",
-            basepath: undefined,
-            previewId: undefined,
             git,
             apiDefinitions: new Map()
         });
 
-        expect(input.git).toEqual(git);
+        expect(localeEntry.git).toEqual(git);
     });
 
     it("omits git from DocsPublishInput when not provided", () => {
-        const { input } = buildLedgerInput({
+        const { localeEntry } = buildLedgerInput({
             docsDefinition: makeDocsDefinition(),
-            organization: "acme",
-            domain: "docs.acme.com",
-            basepath: undefined,
-            previewId: undefined,
             apiDefinitions: new Map()
         });
 
-        expect(input.git).toBeUndefined();
+        expect(localeEntry.git).toBeUndefined();
     });
 
     it("forwards git without commitSha when commitSha is omitted", () => {
@@ -459,47 +377,13 @@ describe("buildLedgerInput", () => {
             repoUrl: "https://gitlab.com/acme/docs",
             branch: "feature/x"
         };
-        const { input } = buildLedgerInput({
+        const { localeEntry } = buildLedgerInput({
             docsDefinition: makeDocsDefinition(),
-            organization: "acme",
-            domain: "docs.acme.com",
-            basepath: undefined,
-            previewId: undefined,
             git,
             apiDefinitions: new Map()
         });
 
-        expect(input.git).toEqual(git);
-        expect(input.git?.commitSha).toBeUndefined();
-    });
-
-    // ── ADR 0009: customDomains ───────────────────────────────────────
-
-    it("forwards customDomains into DocsPublishInput", () => {
-        const customDomains = ["docs.acme.com", "alt.acme.com/v2"];
-        const { input } = buildLedgerInput({
-            docsDefinition: makeDocsDefinition(),
-            organization: "acme",
-            domain: "acme.docs.buildwithfern.com",
-            basepath: undefined,
-            previewId: undefined,
-            customDomains,
-            apiDefinitions: new Map()
-        });
-
-        expect(input.customDomains).toEqual(customDomains);
-    });
-
-    it("defaults customDomains to [] when omitted", () => {
-        const { input } = buildLedgerInput({
-            docsDefinition: makeDocsDefinition(),
-            organization: "acme",
-            domain: "docs.acme.com",
-            basepath: undefined,
-            previewId: undefined,
-            apiDefinitions: new Map()
-        });
-
-        expect(input.customDomains).toEqual([]);
+        expect(localeEntry.git).toEqual(git);
+        expect(localeEntry.git?.commitSha).toBeUndefined();
     });
 });

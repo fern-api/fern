@@ -4,7 +4,7 @@ import {
     createDocsLedgerClient,
     type DocsPublishGitInput,
     type FileManifestEntry,
-    type TranslationEntry
+    type LocaleEntry
 } from "@fern-api/fdr-sdk/orpc-client";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { TaskContext } from "@fern-api/task-context";
@@ -71,13 +71,8 @@ export async function publishDocsViaLedgerPreview({
     // sync buildLedgerInput for translations is deferred until after
     // previewRegister because we need the server-assigned domain.
 
-    const { input, blobs } = buildLedgerInput({
+    const { localeEntry: baseLocale, blobs } = buildLedgerInput({
         docsDefinition,
-        organization,
-        domain: "",
-        basepath: basePath,
-        previewId,
-        customDomains: [],
         git,
         apiDefinitions,
         fileManifest,
@@ -100,16 +95,16 @@ export async function publishDocsViaLedgerPreview({
         orgId: organization,
         previewId: previewId ?? null,
         basePath: basePath ?? "",
-        root: input.root,
-        pages: input.pages,
-        apiManifest: input.apiManifest,
-        config: input.config,
-        fileManifest: input.fileManifest,
-        jsFiles: input.jsFiles,
-        redirects: input.redirects,
-        locale: input.locale,
-        version: input.version,
-        repo: input.repo,
+        root: baseLocale.root,
+        pages: baseLocale.pages,
+        apiManifest: baseLocale.apiManifest,
+        config: baseLocale.config,
+        fileManifest: baseLocale.fileManifest,
+        jsFiles: baseLocale.jsFiles,
+        redirects: baseLocale.redirects,
+        locale: baseLocale.locale,
+        version: baseLocale.version,
+        repo: baseLocale.repo,
         git
     });
     const registerTime = performance.now() - registerStart;
@@ -121,19 +116,15 @@ export async function publishDocsViaLedgerPreview({
     // Build translation ledger inputs now that we have the server domain.
     // This is a cheap sync operation (serialization only).
     const translationInputs = builtTranslationDefs.map((t) => {
-        const { input: translationInput, blobs: translationBlobs } = buildLedgerInput({
+        const { localeEntry, blobs: translationBlobs } = buildLedgerInput({
             docsDefinition: t.translatedDefinition,
-            organization,
-            domain: registerResult.domain,
-            basepath: registerResult.basepath,
-            previewId: registerResult.previewId,
             git,
             apiDefinitions,
             fileManifest,
             fileIdToPath,
             locale: t.locale
         });
-        return { ...t, input: translationInput, blobs: translationBlobs };
+        return { ...t, localeEntry, blobs: translationBlobs };
     });
 
     // Merge all translation blobs into the base pool for the upload phase.
@@ -145,32 +136,20 @@ export async function publishDocsViaLedgerPreview({
 
     await uploadMissingBlobs(registerResult.missingContent, blobs, context, filePaths);
 
-    // Build the translations array for the finish call.
-    const translations: TranslationEntry[] = translationInputs.map((t) => ({
-        locale: t.locale,
-        root: t.input.root,
-        pages: t.input.pages,
-        apiManifest: t.input.apiManifest,
-        config: t.input.config,
-        fileManifest: t.input.fileManifest,
-        jsFiles: t.input.jsFiles,
-        redirects: t.input.redirects,
-        version: t.input.version,
-        repo: t.input.repo,
-        git: t.input.git
-    }));
+    // Build the unified locales array for the finish call.
+    const locales: LocaleEntry[] = [baseLocale, ...translationInputs.map((t) => t.localeEntry)];
 
-    // Finish — server persists the preview deployment + all translations
+    // Finish — server persists the preview deployment + all locale segments
     // in a single call.
     context.logger.debug("[ledger-preview] Finishing preview deployment...");
     const finishStart = performance.now();
     const finishResult = await client.finish({
-        ...input,
+        orgId: organization,
         domain: registerResult.domain,
         basepath: registerResult.basepath,
         customDomains: [],
         previewId: registerResult.previewId,
-        translations: translations.length > 0 ? translations : undefined
+        locales
     });
     const finishTime = performance.now() - finishStart;
     context.logger.debug(

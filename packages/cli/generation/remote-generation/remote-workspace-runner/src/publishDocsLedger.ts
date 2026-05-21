@@ -5,7 +5,7 @@ import {
     type DocsPublishGitInput,
     type DocsPublishInput,
     type FileManifestEntry,
-    type TranslationEntry
+    type LocaleEntry
 } from "@fern-api/fdr-sdk/orpc-client";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { TaskContext } from "@fern-api/task-context";
@@ -76,11 +76,6 @@ function jsonBlobRef(value: unknown): { ref: BlobRef; hash: string; buf: Buffer 
  */
 export function buildLedgerInput({
     docsDefinition,
-    organization,
-    domain,
-    basepath,
-    previewId,
-    customDomains,
     git,
     apiDefinitions,
     fileManifest,
@@ -88,11 +83,6 @@ export function buildLedgerInput({
     locale = "en"
 }: {
     docsDefinition: DocsDefinition;
-    organization: string;
-    domain: string;
-    basepath: string | undefined;
-    previewId: string | undefined;
-    customDomains?: string[];
     git?: DocsPublishGitInput;
     apiDefinitions: Map<string, APIV1Write.ApiDefinition>;
     fileManifest?: Record<string, FileManifestEntry>;
@@ -106,11 +96,11 @@ export function buildLedgerInput({
     fileIdToPath?: Map<string, string>;
     /** Locale to stamp on segments. Defaults to "en". */
     locale?: string;
-}): { input: DocsPublishInput; blobs: Map<string, Buffer> } {
+}): { localeEntry: LocaleEntry; blobs: Map<string, Buffer> } {
     const blobs = new Map<string, Buffer>();
 
     // Pages: hash each page's markdown content.
-    const pages: DocsPublishInput["pages"] = {};
+    const pages: LocaleEntry["pages"] = {};
     for (const [pageId, page] of Object.entries(docsDefinition.pages)) {
         if (page == null) {
             continue;
@@ -164,12 +154,7 @@ export function buildLedgerInput({
         jsFilesRef = jsFilesBlob.ref;
     }
 
-    const input: DocsPublishInput = {
-        orgId: organization,
-        domain,
-        basepath: basepath ?? "",
-        customDomains: customDomains ?? [],
-        previewId: previewId ?? null,
+    const localeEntry: LocaleEntry = {
         root: docsDefinition.config.root ?? docsDefinition.config.navigation,
         pages,
         config: ledgerConfig,
@@ -181,7 +166,7 @@ export function buildLedgerInput({
         git
     };
 
-    return { input, blobs };
+    return { localeEntry, blobs };
 }
 
 export interface LedgerPublishResult {
@@ -244,24 +229,16 @@ export async function publishDocsViaLedger({
     // If any locale fails to build, the entire publish aborts before any
     // network calls are made.
 
-    const { input, blobs } = buildLedgerInput({
+    const { localeEntry: baseLocale, blobs } = buildLedgerInput({
         docsDefinition,
-        organization,
-        domain,
-        basepath,
-        previewId,
-        customDomains,
         git,
         apiDefinitions,
         fileManifest,
         fileIdToPath
     });
 
-    const translationInputs = buildAllTranslationInputs({
+    const builtTranslations = await buildAllTranslationInputs({
         docsDefinition,
-        organization,
-        domain,
-        basepath,
         git,
         apiDefinitions,
         fileManifest,
@@ -269,9 +246,6 @@ export async function publishDocsViaLedger({
         resolver,
         context
     });
-
-    // Wait for all translation builds to complete (fail-fast).
-    const builtTranslations = await translationInputs;
 
     // Merge all translation blobs into the base blob pool so the single
     // upload phase covers everything.
@@ -282,56 +256,41 @@ export async function publishDocsViaLedger({
     }
 
     // ── Phase 2: Single register → upload → finish ─────────────────────
-    // Translations are passed inline to both register and finish so the
-    // server can issue presigned URLs for translation-unique blobs during
-    // register, and persist base + all locale segments during finish.
+    // Build a unified locales[] array where the base locale is the first
+    // entry and translations follow. The server processes all locales
+    // through the same pipeline.
 
     const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers });
 
-    // Build the translations array before register so the server sees
-    // translation content refs and can issue presigned upload URLs for
-    // locale-specific blobs that don't share a hash with the base.
-    const translations: TranslationEntry[] = builtTranslations.map((t) => ({
-        locale: t.locale,
-        root: t.input.root,
-        pages: t.input.pages,
-        apiManifest: t.input.apiManifest,
-        config: t.input.config,
-        fileManifest: t.input.fileManifest,
-        jsFiles: t.input.jsFiles,
-        redirects: t.input.redirects,
-        version: t.input.version,
-        repo: t.input.repo,
-        git: t.input.git
-    }));
+    const locales: LocaleEntry[] = [baseLocale, ...builtTranslations.map((t) => t.localeEntry)];
 
-    const registerInput: DocsPublishInput = {
-        ...input,
-        translations: translations.length > 0 ? translations : undefined
+    const publishInput: DocsPublishInput = {
+        orgId: organization,
+        domain,
+        basepath: basepath ?? "",
+        customDomains: customDomains ?? [],
+        previewId: previewId ?? null,
+        locales
     };
 
     // Register — server computes deployment hash, returns presigned S3
-    // URLs for any blobs it doesn't already have in CAS (base +
-    // translations combined).
+    // URLs for any blobs it doesn't already have in CAS (all locales).
     context.logger.debug("[ledger] Registering deployment...");
     const registerStart = performance.now();
-    const registerResult = await client.register(registerInput);
+    const registerResult = await client.register(publishInput);
     const registerTime = performance.now() - registerStart;
     context.logger.debug(
         `[ledger] Registered in ${registerTime.toFixed(0)}ms — hash=${registerResult.deploymentHash}, missing=${registerResult.missingContent.length} blobs`
     );
 
-    // Upload all blobs the server doesn't have yet (base + translations
-    // combined). In-memory blobs are checked first; file blobs are read
-    // lazily from disk via filePaths.
+    // Upload all blobs the server doesn't have yet (all locales combined).
     await uploadMissingBlobs(registerResult.missingContent, blobs, context, filePaths);
 
-    // Finish — server persists the base deployment + all translations
-    // in a single call. Uses the same input shape as register.
-    const finishInput: DocsPublishInput = registerInput;
+    // Finish — server persists the deployment + all locale segments in
+    // a single atomic transaction. Same input shape as register.
     context.logger.debug("[ledger] Finishing deployment...");
     const finishStart = performance.now();
-    const finishResult = await client.finish(finishInput);
+    const finishResult = await client.finish(publishInput);
     const finishTime = performance.now() - finishStart;
     context.logger.debug(
         `[ledger] Finished in ${finishTime.toFixed(0)}ms — deploymentId=${finishResult.deploymentId}, reused=${finishResult.reusedDeployment}`
@@ -464,7 +423,7 @@ interface BuiltTranslation {
     locale: string;
     localePages: Record<string, string>;
     translatedDefinition: DocsDefinition;
-    input: DocsPublishInput;
+    localeEntry: LocaleEntry;
     blobs: Map<string, Buffer>;
 }
 
@@ -477,9 +436,6 @@ interface BuiltTranslation {
  */
 async function buildAllTranslationInputs({
     docsDefinition,
-    organization,
-    domain,
-    basepath,
     git,
     apiDefinitions,
     fileManifest,
@@ -488,9 +444,6 @@ async function buildAllTranslationInputs({
     context
 }: {
     docsDefinition: DocsDefinition;
-    organization: string;
-    domain: string;
-    basepath: string | undefined;
     git?: DocsPublishGitInput;
     apiDefinitions: Map<string, APIV1Write.ApiDefinition>;
     fileManifest?: Record<string, FileManifestEntry>;
@@ -523,12 +476,8 @@ async function buildAllTranslationInputs({
                 context
             });
 
-            const { input, blobs } = buildLedgerInput({
+            const { localeEntry, blobs } = buildLedgerInput({
                 docsDefinition: translatedDefinition,
-                organization,
-                domain,
-                basepath,
-                previewId: undefined,
                 git,
                 apiDefinitions,
                 fileManifest,
@@ -536,7 +485,7 @@ async function buildAllTranslationInputs({
                 locale
             });
 
-            return { locale, localePages, translatedDefinition, input, blobs };
+            return { locale, localePages, translatedDefinition, localeEntry, blobs };
         })
     );
 }
