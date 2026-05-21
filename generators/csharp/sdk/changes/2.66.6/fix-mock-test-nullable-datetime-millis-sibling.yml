@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `MockServerTestGenerator` now normalizes nullable date-time query and header parameters to millisecond precision, matching the fix previously applied to `MockEndpointGenerator`. Without this, mock-server tests for nullable date-time fields emitted matchers like `"2024-01-15T09:30:00Z"` while the SDK actually sent `"2024-01-15T09:30:00.000Z"`.
+  type: fix

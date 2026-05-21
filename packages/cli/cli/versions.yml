@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.35.5
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/venus-api-sdk from 0.22.34 to 4.0.0, fixing a bug where
+        Authorization headers were silently dropped on org GET endpoints.
+      type: chore
+  createdAt: "2026-05-21"
+  irVersion: 66
+- version: 5.35.4
+  changelogEntry:
+    - summary: |
+        Report response property references on non-object responses as definition reference errors instead of internal errors.
+      type: fix
+  createdAt: "2026-05-21"
+  irVersion: 66
 - version: 5.35.3
   changelogEntry:
     - summary: |

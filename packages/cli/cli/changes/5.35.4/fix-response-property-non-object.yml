@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Report response property references on non-object responses as definition reference errors instead of internal errors.
+  type: fix
