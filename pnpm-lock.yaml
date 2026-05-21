@@ -7713,6 +7713,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../core-utils
+      minimatch:
+        specifier: '>=10.2.3'
+        version: 10.2.5
       octokit:
         specifier: ^4.1.4
         version: 4.1.4
