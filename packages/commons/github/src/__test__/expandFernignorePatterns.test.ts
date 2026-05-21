@@ -11,4 +11,13 @@ describe("expandFernignorePatterns", () => {
 
         expect(preserved).toEqual(["src/foo/keep.py", "src/foo/nested/also.py"]);
     });
+
+    it("matches a literal file path", () => {
+        const fernignore = "LICENSE";
+        const tracked = ["LICENSE", "README.md", "src/index.ts"];
+
+        const preserved = expandFernignorePatterns(fernignore, tracked);
+
+        expect(preserved).toEqual(["LICENSE"]);
+    });
 });
