@@ -502,6 +502,7 @@
         },
         "type": "json"
       },
+      "requestBodyOptional": true,
       "response": {
         "description": "OK",
         "schema": {
@@ -610,6 +611,7 @@
         },
         "type": "json"
       },
+      "requestBodyOptional": true,
       "response": {
         "description": "OK",
         "schema": {
@@ -719,6 +721,7 @@
         },
         "type": "json"
       },
+      "requestBodyOptional": true,
       "response": {
         "description": "OK",
         "schema": {
@@ -828,6 +831,7 @@
         },
         "type": "json"
       },
+      "requestBodyOptional": true,
       "response": {
         "description": "OK",
         "schema": {
@@ -937,6 +941,7 @@
         },
         "type": "json"
       },
+      "requestBodyOptional": true,
       "response": {
         "description": "OK",
         "schema": {
@@ -1046,6 +1051,7 @@
         },
         "type": "json"
       },
+      "requestBodyOptional": true,
       "response": {
         "description": "OK",
         "schema": {

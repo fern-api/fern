@@ -112,6 +112,7 @@
         "sdkMethodName": "uploadJsonDocument",
         "type": "json"
       },
+      "requestBodyOptional": true,
       "response": {
         "description": "Successful response",
         "schema": {

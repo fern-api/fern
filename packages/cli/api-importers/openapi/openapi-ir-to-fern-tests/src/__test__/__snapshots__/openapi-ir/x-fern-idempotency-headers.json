@@ -64,6 +64,7 @@
         },
         "type": "json"
       },
+      "requestBodyOptional": true,
       "response": {
         "description": "Success!",
         "schema": {

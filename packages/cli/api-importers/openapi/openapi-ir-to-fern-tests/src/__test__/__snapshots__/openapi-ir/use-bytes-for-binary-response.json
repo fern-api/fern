@@ -60,6 +60,7 @@
         },
         "type": "json"
       },
+      "requestBodyOptional": true,
       "response": {
         "description": "",
         "source": {
@@ -133,6 +134,7 @@
         },
         "type": "json"
       },
+      "requestBodyOptional": true,
       "response": {
         "description": "",
         "source": {

@@ -311,6 +311,7 @@
         },
         "type": "json"
       },
+      "requestBodyOptional": true,
       "response": {
         "description": "Product created",
         "schema": {

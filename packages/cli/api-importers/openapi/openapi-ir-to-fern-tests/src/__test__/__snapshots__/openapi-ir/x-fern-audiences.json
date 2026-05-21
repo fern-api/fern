@@ -93,6 +93,7 @@
         },
         "type": "json"
       },
+      "requestBodyOptional": true,
       "errors": {},
       "servers": [],
       "authed": false,
