@@ -50,7 +50,7 @@ describe("RevokeTokenCommand", () => {
         const context = createMockContext();
         await cmd.handle(context, { tokenId: "tok_123" } as RevokeTokenCommand.Args);
 
-        expect(mockRevoke).toHaveBeenCalledWith({ tokenId: "tok_123" });
+        expect(mockRevoke).toHaveBeenCalledWith("tok_123");
         expect(context.stderr.info).toHaveBeenCalledWith(expect.stringContaining("has been revoked"));
     });
 
@@ -80,12 +80,30 @@ describe("RevokeTokenCommand", () => {
         );
     });
 
-    it("should handle UnprocessableEntityError", async () => {
+    it("should handle UnauthorizedError", async () => {
         const { createVenusService } = await import("@fern-api/core");
         const mockRevoke = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: { unprocessableEntityError: () => void }) => visitor.unprocessableEntityError()
+                _visit: (visitor: { unauthorizedError: () => void }) => visitor.unauthorizedError()
+            }
+        });
+        vi.mocked(createVenusService).mockReturnValue({
+            apiKeys: { revokeTokenById: mockRevoke }
+        } as unknown as ReturnType<typeof createVenusService>);
+
+        const context = createMockContext();
+        await expect(cmd.handle(context, { tokenId: "tok_123" } as RevokeTokenCommand.Args)).rejects.toThrow(CliError);
+
+        expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("not authorized to revoke"));
+    });
+
+    it("should handle TokenNotFoundError", async () => {
+        const { createVenusService } = await import("@fern-api/core");
+        const mockRevoke = vi.fn().mockResolvedValue({
+            ok: false,
+            error: {
+                _visit: (visitor: { tokenNotFoundError: () => void }) => visitor.tokenNotFoundError()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
