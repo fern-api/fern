@@ -1,5 +1,5 @@
 # Stage 1: Node.js
-FROM node:24.15-alpine3.23 AS node
+FROM node:24.16-alpine3.23 AS node
 
 FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine
 
