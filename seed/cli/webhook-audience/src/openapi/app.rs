@@ -983,36 +983,6 @@ impl CliApp {
         self
     }
 
-    /// Username-only Basic auth — the username source must resolve; the
-    /// password is sent as `""`. Used by APIs that accept an API key as the
-    /// HTTP Basic username (e.g. `password.omit: true` in Fern config).
-    pub fn auth_basic_scheme_username_only(
-        mut self,
-        scheme_name: &str,
-        username: AuthCredentialSource,
-    ) -> Self {
-        self.auth_bindings.push((
-            scheme_name.to_string(),
-            SchemeBinding::BasicUsernameOnly(username),
-        ));
-        self
-    }
-
-    /// Password-only Basic auth — the password source must resolve; the
-    /// username is sent as `""`. Used by APIs that accept a token in the
-    /// password field of HTTP Basic (e.g. `username.omit: true` in Fern config).
-    pub fn auth_basic_scheme_password_only(
-        mut self,
-        scheme_name: &str,
-        password: AuthCredentialSource,
-    ) -> Self {
-        self.auth_bindings.push((
-            scheme_name.to_string(),
-            SchemeBinding::BasicPasswordOnly(password),
-        ));
-        self
-    }
-
     /// Plug in a fully-custom [`AuthProvider`][crate::auth::AuthProvider] for
     /// a scheme name. Useful when the spec uses a scheme the SDK doesn't
     /// model out-of-the-box (mTLS-derived headers, request signing, OAuth2

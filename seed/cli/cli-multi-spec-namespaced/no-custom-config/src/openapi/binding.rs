@@ -143,26 +143,6 @@ impl OpenApiBinding {
         self
     }
 
-    /// Username-only Basic auth (empty password).
-    pub fn auth_basic_scheme_username_only(
-        mut self,
-        scheme_name: &str,
-        username: AuthCredentialSource,
-    ) -> Self {
-        self.inner = self.inner.auth_basic_scheme_username_only(scheme_name, username);
-        self
-    }
-
-    /// Password-only Basic auth (empty username).
-    pub fn auth_basic_scheme_password_only(
-        mut self,
-        scheme_name: &str,
-        password: AuthCredentialSource,
-    ) -> Self {
-        self.inner = self.inner.auth_basic_scheme_password_only(scheme_name, password);
-        self
-    }
-
     /// Register a server variable for URL template substitution.
     pub fn server_var(
         mut self,

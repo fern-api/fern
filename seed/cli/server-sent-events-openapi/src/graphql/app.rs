@@ -102,32 +102,6 @@ impl CliApp {
         self
     }
 
-    /// Username-only Basic auth (empty password).
-    pub fn auth_basic_scheme_username_only(
-        mut self,
-        scheme_name: &str,
-        username: AuthCredentialSource,
-    ) -> Self {
-        self.auth_bindings.push((
-            scheme_name.to_string(),
-            SchemeBinding::BasicUsernameOnly(username),
-        ));
-        self
-    }
-
-    /// Password-only Basic auth (empty username).
-    pub fn auth_basic_scheme_password_only(
-        mut self,
-        scheme_name: &str,
-        password: AuthCredentialSource,
-    ) -> Self {
-        self.auth_bindings.push((
-            scheme_name.to_string(),
-            SchemeBinding::BasicPasswordOnly(password),
-        ));
-        self
-    }
-
     /// Plug in a fully-custom [`AuthProvider`][crate::auth::AuthProvider] for
     /// a scheme name. Wraps the provider in [`Arc`] internally; use
     /// [`auth_provider_shared`](Self::auth_provider_shared) if you already

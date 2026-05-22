@@ -26,9 +26,9 @@ export interface DetectedAuthBinding {
  *   - `header` → `.auth(ApiKeyAuth::new("<key>").env("<env>"))`
  *   - `basic` (both halves bound) → `.auth_basic_scheme(...)`
  *   - `basic` with `passwordOmit: true` →
- *     `.auth_basic_scheme_username_only("<key>", AuthCredentialSource::from_env(...))`
+ *     `.auth_provider("<key>", BasicAuthProvider::username_only(...))`
  *   - `basic` with `usernameOmit: true` → symmetric
- *     `.auth_basic_scheme_password_only(...)`
+ *     `.auth_provider("<key>", BasicAuthProvider::password_only(...))`
  *   - `basic` with both omitted → skipped (nothing to bind)
  *   - `oauth` / `inferred` / unknown → skipped (the SDK currently has no
  *     runtime provider for these)
@@ -86,17 +86,17 @@ function bindingForScheme(scheme: FernIr.AuthScheme, envPrefix: string): Detecte
             if (basic.passwordOmit) {
                 return {
                     schemeName: basic.key,
-                    rustCall: `.auth_basic_scheme_username_only("${basic.key}", AuthCredentialSource::from_env("${usernameEnv}"))`,
+                    rustCall: `.auth_provider("${basic.key}", BasicAuthProvider::username_only("${basic.key}", AuthCredentialSource::from_env("${usernameEnv}")))`,
                     placement: "binding",
-                    authTypeImport: "AuthCredentialSource"
+                    authTypeImport: "AuthCredentialSource, BasicAuthProvider"
                 };
             }
             if (basic.usernameOmit) {
                 return {
                     schemeName: basic.key,
-                    rustCall: `.auth_basic_scheme_password_only("${basic.key}", AuthCredentialSource::from_env("${passwordEnv}"))`,
+                    rustCall: `.auth_provider("${basic.key}", BasicAuthProvider::password_only("${basic.key}", AuthCredentialSource::from_env("${passwordEnv}")))`,
                     placement: "binding",
-                    authTypeImport: "AuthCredentialSource"
+                    authTypeImport: "AuthCredentialSource, BasicAuthProvider"
                 };
             }
             return {

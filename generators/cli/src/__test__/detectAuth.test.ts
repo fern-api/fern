@@ -111,25 +111,25 @@ describe("detectAuthBindings", () => {
         expect(bindings[0]?.authTypeImport).toBe("AuthCredentialSource");
     });
 
-    it("basic auth with passwordOmit (Close pattern): emits the SDK's username-only builder", () => {
+    it("basic auth with passwordOmit (Close pattern): emits auth_provider with BasicAuthProvider::username_only", () => {
         const bindings = detectAuthBindings({
             auth: auth(basic({ key: "ApiKeyAuth", usernameEnvVar: "CLOSE_API_KEY", passwordOmit: true })),
             binaryName: "close"
         });
         expect(bindings[0]?.rustCall).toBe(
-            '.auth_basic_scheme_username_only("ApiKeyAuth", AuthCredentialSource::from_env("CLOSE_API_KEY"))'
+            '.auth_provider("ApiKeyAuth", BasicAuthProvider::username_only("ApiKeyAuth", AuthCredentialSource::from_env("CLOSE_API_KEY")))'
         );
         expect(bindings[0]?.placement).toBe("binding");
-        expect(bindings[0]?.authTypeImport).toBe("AuthCredentialSource");
+        expect(bindings[0]?.authTypeImport).toBe("AuthCredentialSource, BasicAuthProvider");
     });
 
-    it("basic auth with usernameOmit: emits the SDK's password-only builder", () => {
+    it("basic auth with usernameOmit: emits auth_provider with BasicAuthProvider::password_only", () => {
         const bindings = detectAuthBindings({
             auth: auth(basic({ key: "BasicAuth", usernameOmit: true, passwordEnvVar: "ACME_PASS" })),
             binaryName: "acme"
         });
         expect(bindings[0]?.rustCall).toBe(
-            '.auth_basic_scheme_password_only("BasicAuth", AuthCredentialSource::from_env("ACME_PASS"))'
+            '.auth_provider("BasicAuth", BasicAuthProvider::password_only("BasicAuth", AuthCredentialSource::from_env("ACME_PASS")))'
         );
     });
 
@@ -162,7 +162,7 @@ describe("detectAuthBindings", () => {
             binaryName: "close"
         });
         expect(bindings).toHaveLength(2);
-        expect(bindings[0]?.rustCall).toContain('.auth_basic_scheme_username_only("ApiKeyAuth"');
+        expect(bindings[0]?.rustCall).toContain('.auth_provider("ApiKeyAuth", BasicAuthProvider::username_only(');
         expect(bindings[0]?.placement).toBe("binding");
         expect(bindings[1]?.rustCall).toBe('.auth(BearerAuth::new("OAuth2").env("CLOSE_TOKEN"))');
         expect(bindings[1]?.placement).toBe("root");

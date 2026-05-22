@@ -238,18 +238,6 @@ fn describe_binding_source(binding: &SchemeBinding) -> String {
                 describe_credential_source(password),
             )
         }
-        SchemeBinding::BasicUsernameOnly(src) => {
-            format!(
-                "HTTP basic (username only) — username: {}",
-                describe_credential_source(src),
-            )
-        }
-        SchemeBinding::BasicPasswordOnly(src) => {
-            format!(
-                "HTTP basic (password only) — password: {}",
-                describe_credential_source(src),
-            )
-        }
         SchemeBinding::Custom(_) => "custom auth provider".to_string(),
     }
 }
@@ -284,9 +272,6 @@ fn collect_env_vars_from_binding(binding: &SchemeBinding, out: &mut Vec<String>)
         SchemeBinding::Basic { username, password } => {
             collect_env_vars_from_source(username, out);
             collect_env_vars_from_source(password, out);
-        }
-        SchemeBinding::BasicUsernameOnly(src) | SchemeBinding::BasicPasswordOnly(src) => {
-            collect_env_vars_from_source(src, out);
         }
         SchemeBinding::Custom(_) => {}
     }

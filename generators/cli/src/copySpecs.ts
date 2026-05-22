@@ -104,14 +104,11 @@ function renderMainRs(args: { binaryName: string; entries: SpecEntry[]; authBind
     // Collect needed imports
     const imports: string[] = ["use fern_cli_sdk::app::CliApp;", "use fern_cli_sdk::openapi::OpenApiBinding;"];
     const authTypeImports = new Set<string>();
-    for (const binding of rootAuthBindings) {
+    for (const binding of [...rootAuthBindings, ...bindingAuthBindings]) {
         if (binding.authTypeImport != null) {
-            authTypeImports.add(binding.authTypeImport);
-        }
-    }
-    for (const binding of bindingAuthBindings) {
-        if (binding.authTypeImport != null) {
-            authTypeImports.add(binding.authTypeImport);
+            for (const imp of binding.authTypeImport.split(",")) {
+                authTypeImports.add(imp.trim());
+            }
         }
     }
     if (authTypeImports.size > 0) {

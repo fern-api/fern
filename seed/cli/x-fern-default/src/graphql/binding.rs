@@ -71,24 +71,6 @@ impl GraphqlBinding {
         self
     }
 
-    pub fn auth_basic_scheme_username_only(
-        mut self,
-        scheme_name: &str,
-        username: AuthCredentialSource,
-    ) -> Self {
-        self.inner = self.inner.auth_basic_scheme_username_only(scheme_name, username);
-        self
-    }
-
-    pub fn auth_basic_scheme_password_only(
-        mut self,
-        scheme_name: &str,
-        password: AuthCredentialSource,
-    ) -> Self {
-        self.inner = self.inner.auth_basic_scheme_password_only(scheme_name, password);
-        self
-    }
-
     pub fn auth_provider(
         mut self,
         scheme_name: &str,

@@ -203,26 +203,6 @@ impl BasicAuth {
     }
 }
 
-impl BasicAuth {
-    /// Username-only variant — password is sent as `""`. Useful for APIs
-    /// that accept an API key as the HTTP Basic username.
-    pub fn username_only(name: impl Into<String>, source: AuthCredentialSource) -> BasicAuthUsernameOnly {
-        BasicAuthUsernameOnly {
-            name: name.into(),
-            source,
-        }
-    }
-
-    /// Password-only variant — username is sent as `""`. Useful for APIs
-    /// that accept a token in the password field of HTTP Basic.
-    pub fn password_only(name: impl Into<String>, source: AuthCredentialSource) -> BasicAuthPasswordOnly {
-        BasicAuthPasswordOnly {
-            name: name.into(),
-            source,
-        }
-    }
-}
-
 impl AuthSchemeBuilder for BasicAuth {
     fn into_binding(self) -> (String, SchemeBinding) {
         (
@@ -232,70 +212,6 @@ impl AuthSchemeBuilder for BasicAuth {
                 password: self.password,
             },
         )
-    }
-}
-
-// ---------------------------------------------------------------------------
-// BasicAuthUsernameOnly — HTTP Basic with empty password
-// ---------------------------------------------------------------------------
-
-/// Builder for username-only HTTP Basic auth. Created via
-/// [`BasicAuth::username_only`].
-#[derive(Debug, Clone)]
-pub struct BasicAuthUsernameOnly {
-    name: String,
-    source: AuthCredentialSource,
-}
-
-impl BasicAuthUsernameOnly {
-    /// Read the username from an environment variable.
-    pub fn env(mut self, var_name: impl Into<String>) -> Self {
-        self.source = AuthCredentialSource::from_env(var_name);
-        self
-    }
-
-    /// Use a custom credential source.
-    pub fn source(mut self, source: AuthCredentialSource) -> Self {
-        self.source = source;
-        self
-    }
-}
-
-impl AuthSchemeBuilder for BasicAuthUsernameOnly {
-    fn into_binding(self) -> (String, SchemeBinding) {
-        (self.name, SchemeBinding::BasicUsernameOnly(self.source))
-    }
-}
-
-// ---------------------------------------------------------------------------
-// BasicAuthPasswordOnly — HTTP Basic with empty username
-// ---------------------------------------------------------------------------
-
-/// Builder for password-only HTTP Basic auth. Created via
-/// [`BasicAuth::password_only`].
-#[derive(Debug, Clone)]
-pub struct BasicAuthPasswordOnly {
-    name: String,
-    source: AuthCredentialSource,
-}
-
-impl BasicAuthPasswordOnly {
-    /// Read the password from an environment variable.
-    pub fn env(mut self, var_name: impl Into<String>) -> Self {
-        self.source = AuthCredentialSource::from_env(var_name);
-        self
-    }
-
-    /// Use a custom credential source.
-    pub fn source(mut self, source: AuthCredentialSource) -> Self {
-        self.source = source;
-        self
-    }
-}
-
-impl AuthSchemeBuilder for BasicAuthPasswordOnly {
-    fn into_binding(self) -> (String, SchemeBinding) {
-        (self.name, SchemeBinding::BasicPasswordOnly(self.source))
     }
 }
 
@@ -500,19 +416,4 @@ mod tests {
         assert!(matches!(binding, SchemeBinding::Token(AuthCredentialSource::Missing)));
     }
 
-    #[test]
-    fn basic_auth_username_only_builds_correct_binding() {
-        let (name, binding) = BasicAuth::username_only("ApiKeyAuth", AuthCredentialSource::from_env("CLOSE_API_KEY"))
-            .into_binding();
-        assert_eq!(name, "ApiKeyAuth");
-        assert!(matches!(binding, SchemeBinding::BasicUsernameOnly(AuthCredentialSource::Env(ref e)) if e == "CLOSE_API_KEY"));
-    }
-
-    #[test]
-    fn basic_auth_password_only_builds_correct_binding() {
-        let (name, binding) = BasicAuth::password_only("basic", AuthCredentialSource::from_env("API_SECRET"))
-            .into_binding();
-        assert_eq!(name, "basic");
-        assert!(matches!(binding, SchemeBinding::BasicPasswordOnly(AuthCredentialSource::Env(ref e)) if e == "API_SECRET"));
-    }
 }
