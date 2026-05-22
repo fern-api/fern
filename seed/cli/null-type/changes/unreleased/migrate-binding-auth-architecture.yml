@@ -1,0 +1,2 @@
+- summary: Migrate to new binding and auth architecture with typed auth builders (BearerAuth, ApiKeyAuth) and CliApp + OpenApiBinding composition
+  type: feat

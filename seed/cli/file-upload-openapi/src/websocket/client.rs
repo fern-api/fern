@@ -8,7 +8,6 @@ use std::sync::Arc;
 use std::time::Duration;
 
 use futures_util::{SinkExt, StreamExt};
-use secrecy::ExposeSecret;
 use serde_json::Value;
 use tokio::io::{AsyncBufReadExt, BufReader};
 use tokio::sync::mpsc;
@@ -16,7 +15,6 @@ use tokio_tungstenite::tungstenite::client::IntoClientRequest;
 use tokio_tungstenite::tungstenite::http::HeaderValue;
 use tokio_tungstenite::tungstenite::protocol::{frame::coding::CloseCode, CloseFrame, Message};
 
-use crate::auth::AuthCredentialSource;
 use crate::error::CliError;
 use crate::formatter::OutputPipeline;
 use crate::http::HttpConfig;
@@ -33,8 +31,8 @@ use super::error::{classify_close_frame, map_handshake_error, map_stream_error};
 /// Returning `None` lets the inbound flow through to
 /// [`OutputPipeline::emit`].
 ///
-/// Ship via [`elevenlabs_convai_ping_pong`] for the canonical ElevenLabs
-/// shape; write your own closure for Deepgram / AssemblyAI / OpenAI.
+/// Write your own closure for app-level ping/pong or any other
+/// inbound-frame responder pattern your API requires.
 ///
 /// # Stateful autoresponders
 ///
@@ -80,14 +78,13 @@ pub struct WsConfig {
     /// is non-JSON.
     pub stdin_validate_json: bool,
     /// JSON keys to recursively elide from each inbound frame before
-    /// emitting. Use `vec!["audio_base_64".into()]` for ElevenLabs to
-    /// strip the base64 audio blobs that would otherwise flood a terminal.
+    /// emitting. Use to strip base64 audio blobs that would otherwise
+    /// flood a terminal.
     pub strip_audio_keys: Vec<String>,
     /// Hint string woven into mid-stream / abnormal-close error messages.
-    /// The default points at the ElevenLabs missed-pong pattern; override
-    /// when wiring an API with a different common failure mode (e.g.
-    /// Deepgram: "check KeepAlive cadence and audio format/encoding";
-    /// OpenAI Realtime: "session may have hit the 30-minute cap").
+    /// Defaults to a generic "check auth, network, keepalive/timeout"
+    /// nudge; override when wiring an API with a more specific common
+    /// failure mode.
     pub abnormal_close_hint: String,
 }
 
@@ -108,122 +105,6 @@ impl WsConfig {
         }
     }
 
-    // -------- Per-API constructors -----------------------------------------
-    //
-    // These bake in the right auth shape, autoresponder, audio-strip keys,
-    // and abnormal-close hint for each supported API. They're plain
-    // convenience — every field stays `pub`, so power users can
-    // post-mutate. Adding a constructor for a new API costs ~10 lines.
-
-    /// Config preset for ElevenLabs conversational AI
-    /// (`wss://api.elevenlabs.io/v1/convai/conversation?agent_id=...`).
-    ///
-    /// Bakes in:
-    /// - `xi-api-key: <api_key>` header auth
-    /// - the canonical app-level ping/pong [`elevenlabs_convai_ping_pong`]
-    ///   autoresponder
-    /// - `strip_audio_keys = ["audio_base_64"]` (terminal-friendly)
-    /// - the ElevenLabs-flavoured `abnormal_close_hint`
-    pub fn elevenlabs_convai(
-        url: impl Into<String>,
-        api_key: AuthCredentialSource,
-    ) -> Self {
-        let mut cfg = WsConfig::new(url);
-        cfg.auth = WsAuth::Header("xi-api-key".into(), api_key);
-        cfg.auto_responder = Some(elevenlabs_convai_ping_pong());
-        cfg.strip_audio_keys = vec!["audio_base_64".into()];
-        cfg.abnormal_close_hint = super::error::ELEVENLABS_CLOSE_HINT.to_string();
-        cfg
-    }
-
-    /// Config preset for ElevenLabs TTS stream-input
-    /// (`wss://api.elevenlabs.io/v1/text-to-speech/{voice_id}/stream-input?...`).
-    ///
-    /// Bakes in:
-    /// - `WsAuth::FirstMessage("xi_api_key", ...)` — merged into the BOS frame
-    /// - `strip_audio_keys = ["audio"]` (TTS-shaped audio field)
-    /// - the ElevenLabs-flavoured `abnormal_close_hint`
-    pub fn elevenlabs_tts(url: impl Into<String>, api_key: AuthCredentialSource) -> Self {
-        let mut cfg = WsConfig::new(url);
-        cfg.auth = WsAuth::FirstMessage("xi_api_key".into(), api_key);
-        cfg.strip_audio_keys = vec!["audio".into()];
-        cfg.abnormal_close_hint = super::error::ELEVENLABS_CLOSE_HINT.to_string();
-        cfg
-    }
-
-    /// Config preset for OpenAI Realtime
-    /// (`wss://api.openai.com/v1/realtime?model=...`).
-    ///
-    /// Bakes in:
-    /// - both required headers: `Authorization: Bearer <api_key>` AND
-    ///   `OpenAI-Beta: realtime=v1` (via [`WsAuth::Headers`])
-    /// - `strip_audio_keys = ["delta"]` — base64 audio lives under
-    ///   `response.audio.delta` and `response.audio.done`
-    /// - the OpenAI-Realtime-flavoured `abnormal_close_hint` (calls out
-    ///   the 30-minute session cap as the most common abnormal close)
-    pub fn openai_realtime(
-        url: impl Into<String>,
-        api_key: AuthCredentialSource,
-    ) -> Self {
-        let mut cfg = WsConfig::new(url);
-        cfg.auth = WsAuth::Headers(vec![
-            (
-                "Authorization".into(),
-                // Prefix-prepending closure: WsAuth::bearer's helper
-                // lives in auth.rs but we recreate the moral equivalent
-                // here so the constructor is a single-call surface.
-                AuthCredentialSource::closure(move || {
-                    api_key.resolve().map(|s| {
-                        format!("Bearer {}", s.expose_secret())
-                    })
-                }),
-            ),
-            (
-                "OpenAI-Beta".into(),
-                AuthCredentialSource::literal("realtime=v1"),
-            ),
-        ]);
-        cfg.strip_audio_keys = vec!["delta".into()];
-        cfg.abnormal_close_hint = super::error::OPENAI_REALTIME_CLOSE_HINT.to_string();
-        cfg
-    }
-
-    /// Config preset for Deepgram realtime listen
-    /// (`wss://api.deepgram.com/v1/listen?encoding=...&sample_rate=...`).
-    ///
-    /// Bakes in:
-    /// - `Authorization: Token <api_key>` (via [`WsAuth::token`])
-    /// - the Deepgram-flavoured `abnormal_close_hint`
-    ///
-    /// Customers using this preset typically drive `send_binary(...)`
-    /// from their own audio-capture loop (cpal mic, file reader) and
-    /// send `{"type":"KeepAlive"}` text frames on a 3-8s timer.
-    pub fn deepgram_listen(
-        url: impl Into<String>,
-        api_key: AuthCredentialSource,
-    ) -> Self {
-        let mut cfg = WsConfig::new(url);
-        cfg.auth = WsAuth::token(api_key);
-        cfg.abnormal_close_hint = super::error::DEEPGRAM_CLOSE_HINT.to_string();
-        cfg
-    }
-
-    /// Config preset for AssemblyAI v3 Universal-Streaming
-    /// (`wss://streaming.assemblyai.com/v3/ws?sample_rate=...&format_turns=...`).
-    ///
-    /// Bakes in:
-    /// - `Authorization: <api_key>` (raw — NO `Bearer ` / `Token ` prefix,
-    ///   per AssemblyAI's v3 spec)
-    /// - the AssemblyAI-flavoured `abnormal_close_hint`
-    pub fn assemblyai_v3(
-        url: impl Into<String>,
-        api_key: AuthCredentialSource,
-    ) -> Self {
-        let mut cfg = WsConfig::new(url);
-        cfg.auth = WsAuth::Header("Authorization".into(), api_key);
-        cfg.abnormal_close_hint = super::error::ASSEMBLYAI_CLOSE_HINT.to_string();
-        cfg
-    }
 }
 
 /// A connected WS client ready to send and receive frames.
@@ -345,11 +226,11 @@ impl WebSocketClient {
 
     /// Send raw bytes as a WS binary frame.
     ///
-    /// Required by APIs that ship PCM audio on the wire (Deepgram realtime,
-    /// AssemblyAI v3 Universal-Streaming). Customers typically call this
-    /// from their own audio-capture loop (`cpal` mic, file reader, etc.)
-    /// rather than from the stdin path — stdin forwarding stays JSON-text
-    /// only in v1 (see ADR-0002 follow-ups).
+    /// Required by APIs that ship PCM audio (or any other binary payload)
+    /// on the wire. Callers typically drive this from their own
+    /// audio-capture loop (`cpal` mic, file reader, etc.) rather than from
+    /// the stdin path — stdin forwarding stays JSON-text only in v1
+    /// (see ADR-0002 follow-ups).
     ///
     /// # `WsAuth::FirstMessage` interaction
     ///
@@ -402,9 +283,9 @@ impl WebSocketClient {
         let abnormal_hint = config.abnormal_close_hint.clone();
         // Keep the first-send bookkeeping live across the loop so the
         // stdin branch can honor `WsAuth::FirstMessage` — without this,
-        // a customer combining `stdin_input = true` with `FirstMessage`
+        // a caller combining `stdin_input = true` with `FirstMessage`
         // auth would have the auth field silently dropped from the first
-        // outbound frame. (Bug surfaced by Devin Review on PR #53.)
+        // outbound frame.
         let mut first_send_done = first_send_done;
 
         // Bounded channel: stdin reader → recv loop. Bound is 64; when
@@ -613,12 +494,10 @@ async fn handle_inbound(
             FrameDisposition::Continue
         }
         Some(Ok(Message::Binary(b))) => {
-            // v1: inbound binary frames are not emitted to stdout
-            // (ElevenLabs / OpenAI use JSON text; Deepgram / AssemblyAI
-            // send JSON inbound and only accept binary outbound). Warn
-            // visibly so a customer hitting an API that *does* stream
-            // binary back (some Deepgram protobuf configs, some OpenAI
-            // tool-call audio paths) knows their stream produced
+            // v1: inbound binary frames are not emitted to stdout (most
+            // streaming APIs send JSON inbound and only accept binary
+            // outbound). Warn visibly so callers hitting an API that
+            // *does* stream binary back know their stream produced
             // unprintable bytes — silence would look like a hung pipe.
             eprintln!(
                 "warning: dropped {}-byte inbound WebSocket binary frame \
@@ -751,74 +630,9 @@ fn truncate(s: &str, max: usize) -> String {
     }
 }
 
-/// Canonical ElevenLabs convai/TTS ping/pong autoresponder.
-///
-/// Matches inbound frames of the shape
-/// `{"type":"ping","ping_event":{"event_id":<int>}}` and replies with
-/// `{"type":"pong","event_id":<same int>}`. Other inbound frames are
-/// passed through to the output pipeline.
-///
-/// Spec'd at `fern/apis/convai/asyncapi.yml:162-175`. Required: missing
-/// pong replies trip a 20-second inactivity timeout server-side.
-pub fn elevenlabs_convai_ping_pong() -> AutoResponder {
-    Arc::new(|frame: &Value| -> Option<Value> {
-        if frame.get("type").and_then(|v| v.as_str()) != Some("ping") {
-            return None;
-        }
-        // ElevenLabs spec: `/ping_event/event_id` is an integer. If we
-        // see a ping without it, *warn loudly* — falling through to
-        // emit-and-no-pong would silently let the 20-second server
-        // inactivity timeout fire, producing a misleading "missed
-        // ping/pong" abnormal-close error whose root cause is a parser
-        // miss, not a missing reply.
-        match frame.pointer("/ping_event/event_id").and_then(|v| v.as_i64()) {
-            Some(event_id) => Some(serde_json::json!({
-                "type": "pong",
-                "event_id": event_id,
-            })),
-            None => {
-                eprintln!(
-                    "warning: ElevenLabs ping frame has no integer \
-                     `ping_event.event_id` — cannot construct a valid \
-                     pong; frame will be emitted instead. If the API \
-                     changed the ping shape, write a custom AutoResponder."
-                );
-                None
-            }
-        }
-    })
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn elevenlabs_preset_matches_canonical_ping() {
-        let responder = elevenlabs_convai_ping_pong();
-        let ping = serde_json::json!({
-            "type": "ping",
-            "ping_event": {"event_id": 12345, "ping_ms": 50},
-        });
-        let pong = responder(&ping).expect("ping should be matched");
-        assert_eq!(pong, serde_json::json!({"type": "pong", "event_id": 12345}));
-    }
-
-    #[test]
-    fn elevenlabs_preset_ignores_non_ping() {
-        let responder = elevenlabs_convai_ping_pong();
-        let other = serde_json::json!({"type": "agent_response", "text": "hello"});
-        assert!(responder(&other).is_none());
-    }
-
-    #[test]
-    fn elevenlabs_preset_returns_none_when_event_id_missing() {
-        let responder = elevenlabs_convai_ping_pong();
-        let malformed = serde_json::json!({"type": "ping"});
-        // Without an event_id we can't construct a meaningful pong; fall
-        // through to the emit path rather than send garbage.
-        assert!(responder(&malformed).is_none());
-    }
 
     #[test]
     fn strip_keys_removes_top_level_and_nested() {

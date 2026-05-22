@@ -57,15 +57,15 @@ const QUERY_VALUE: &AsciiSet = &CONTROLS
 /// not silent.
 pub enum WsAuth {
     /// Append the credential as a query parameter on the connect URL.
-    /// Example: ElevenLabs `tts/stream-input?authorization=<bearer>`.
+    /// Example: `wss://api.example.com/stream?authorization=<bearer>`.
     QueryParam(String, AuthCredentialSource),
     /// Send the credential as an HTTP header on the WS upgrade request.
-    /// Example: standard `xi-api-key: <key>` on ElevenLabs convai.
+    /// Example: a standard `X-Api-Key: <key>` header.
     ///
     /// # Header-value prefixes (footgun)
     ///
     /// The source's resolved value becomes the *entire* header value.
-    /// Deepgram requires `Authorization: Token <key>` — the literal word
+    /// Some APIs require `Authorization: Token <key>` — the literal word
     /// `Token` is part of the value, NOT a scheme the library prepends.
     /// **Prefer the convenience constructors [`WsAuth::bearer`] /
     /// [`WsAuth::token`]** rather than baking the prefix into a literal
@@ -73,35 +73,34 @@ pub enum WsAuth {
     /// to misspell.
     Header(String, AuthCredentialSource),
     /// Send multiple HTTP headers on the WS upgrade request. Use when the
-    /// API requires more than one header on the handshake — for example,
-    /// OpenAI Realtime needs both `Authorization: Bearer <key>` AND
-    /// `OpenAI-Beta: realtime=v1`. Each pair is validated against the
-    /// WS-protocol reserved-header deny-list and each source must
-    /// resolve to a non-empty value.
+    /// API requires more than one header on the handshake (e.g. an auth
+    /// header plus an API-version header). Each pair is validated
+    /// against the WS-protocol reserved-header deny-list and each source
+    /// must resolve to a non-empty value.
     Headers(Vec<(String, AuthCredentialSource)>),
     /// Merge the credential into the *first* outbound JSON frame as the
-    /// named field. Example: ElevenLabs TTS `stream-input` requires
-    /// `{"xi_api_key": "<key>", ...}` as the first text frame.
+    /// named field. Useful for APIs that authenticate via a "configure
+    /// session" message on the first text frame.
     FirstMessage(String, AuthCredentialSource),
-    /// No auth (anonymous connection, or auth handled by the customer
+    /// No auth (anonymous connection, or auth handled by the caller
     /// outside this module).
     None,
 }
 
 impl WsAuth {
     /// `Authorization: Bearer <value>` convenience. Prepends the literal
-    /// `Bearer ` to the resolved credential, so customers cannot
-    /// accidentally double-prefix or omit it. Use for OpenAI Realtime
-    /// and any RFC-6750 bearer-token API.
+    /// `Bearer ` to the resolved credential so callers cannot
+    /// accidentally double-prefix or omit it. Use for any RFC-6750
+    /// bearer-token API.
     pub fn bearer(source: AuthCredentialSource) -> Self {
         WsAuth::Header("Authorization".into(), prefix_source(source, "Bearer "))
     }
 
     /// `Authorization: Token <value>` convenience. Prepends the literal
-    /// `Token ` to the resolved credential. Use for Deepgram realtime —
-    /// Deepgram treats the word `Token` as part of the value, not a
-    /// scheme tungstenite prepends, so customers that miss this footgun
-    /// get a confusing 401 from the upgrade.
+    /// `Token ` to the resolved credential. Use for APIs that treat the
+    /// word `Token` as part of the value (not a scheme tungstenite
+    /// prepends) — callers that miss this footgun get a confusing 401
+    /// from the upgrade.
     pub fn token(source: AuthCredentialSource) -> Self {
         WsAuth::Header("Authorization".into(), prefix_source(source, "Token "))
     }
@@ -407,16 +406,16 @@ mod tests {
 
     #[test]
     fn headers_variant_emits_all_pairs_in_order() {
-        let mut url = "wss://api.openai.com/v1/realtime?model=gpt-4o".to_string();
+        let mut url = "wss://api.example.com/v1/realtime?model=test".to_string();
         let mut headers = Vec::new();
         WsAuth::Headers(vec![
             (
                 "Authorization".into(),
-                literal("Bearer sk-openai-test"),
+                literal("Bearer sk-test"),
             ),
             (
-                "OpenAI-Beta".into(),
-                literal("realtime=v1"),
+                "X-Api-Version".into(),
+                literal("v1"),
             ),
         ])
         .apply_to_url_and_headers(&mut url, &mut headers)
@@ -424,12 +423,12 @@ mod tests {
         assert_eq!(
             headers,
             vec![
-                ("Authorization".to_string(), "Bearer sk-openai-test".to_string()),
-                ("OpenAI-Beta".to_string(), "realtime=v1".to_string()),
+                ("Authorization".to_string(), "Bearer sk-test".to_string()),
+                ("X-Api-Version".to_string(), "v1".to_string()),
             ]
         );
         // URL is unchanged.
-        assert_eq!(url, "wss://api.openai.com/v1/realtime?model=gpt-4o");
+        assert_eq!(url, "wss://api.example.com/v1/realtime?model=test");
     }
 
     #[test]
@@ -451,31 +450,31 @@ mod tests {
         let mut headers = Vec::new();
         let err = WsAuth::Headers(vec![
             ("Authorization".into(), literal("Bearer xyz")),
-            ("OpenAI-Beta".into(), literal("")),
+            ("X-Api-Version".into(), literal("")),
         ])
         .apply_to_url_and_headers(&mut url, &mut headers)
         .expect_err("missing cred should error");
         assert!(matches!(err, CliError::Auth(_)));
         // Auth-error message names the missing header.
-        assert!(err.to_string().contains("OpenAI-Beta"));
+        assert!(err.to_string().contains("X-Api-Version"));
     }
 
     #[test]
     fn bearer_helper_prepends_literal_bearer_space() {
-        let mut url = "wss://api.openai.com/v1/realtime".to_string();
+        let mut url = "wss://api.example.com/v1/realtime".to_string();
         let mut headers = Vec::new();
-        WsAuth::bearer(literal("sk-openai-test"))
+        WsAuth::bearer(literal("sk-test"))
             .apply_to_url_and_headers(&mut url, &mut headers)
             .unwrap();
         assert_eq!(
             headers,
-            vec![("Authorization".to_string(), "Bearer sk-openai-test".to_string())]
+            vec![("Authorization".to_string(), "Bearer sk-test".to_string())]
         );
     }
 
     #[test]
     fn token_helper_prepends_literal_token_space() {
-        let mut url = "wss://api.deepgram.com/v1/listen".to_string();
+        let mut url = "wss://api.example.com/v1/listen".to_string();
         let mut headers = Vec::new();
         WsAuth::token(literal("dg_secret"))
             .apply_to_url_and_headers(&mut url, &mut headers)

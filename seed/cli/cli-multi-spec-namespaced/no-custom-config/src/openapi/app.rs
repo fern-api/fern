@@ -30,7 +30,7 @@ fn split_prefix(prefix: &str) -> Vec<String> {
 /// **Stutter elision:** at the leaf, if `incoming` contains a top-level
 /// resource whose name matches the leaf namespace, that resource's methods
 /// and sub-resources are *hoisted* into the namespace itself — eliminating
-/// the `bigcommerce v3 customers customers get` repetition that would
+/// the `myapi v3 customers customers get` repetition that would
 /// otherwise occur when a spec's primary domain matches the namespace name.
 /// Other top-level resources from the spec become children of the
 /// namespace as usual.
@@ -204,7 +204,7 @@ fn merge_schemas(
     acc: &mut HashMap<String, JsonSchema>,
     incoming: HashMap<String, JsonSchema>,
 ) -> Result<(), CliError> {
-    // Multi-spec setups like BigCommerce's Management API share common schema
+    // Multi-spec setups share common schema
     // names (`ErrorResponse`, `Pagination`, `Meta`) across many specs that are
     // authored from the same template — collisions are the norm, not a bug.
     // First write wins; schemas are only used for best-effort request-body
@@ -482,16 +482,16 @@ pub(crate) struct SpecEntry {
 }
 
 /// A server-URL template variable like `{store_hash}` in
-/// `https://api.bigcommerce.com/stores/{store_hash}/v3`. Resolved at runtime
+/// `https://api.example.com/stores/{store_hash}/v3`. Resolved at runtime
 /// from a CLI flag (`--<name>`), an env var, or a built-in default — first
 /// match wins.
 #[derive(Clone)]
 pub(crate) struct ServerVar {
     /// OpenAPI variable name as it appears in the URL template (`store_hash`).
     name: String,
-    /// Env var consulted when the flag isn't passed (e.g. `BIGCOMMERCE_STORE_HASH`).
+    /// Env var consulted when the flag isn't passed (e.g. `MYAPI_STORE_HASH`).
     env_var: Option<String>,
-    /// Fallback default (for variables that have one — most BigCommerce-style
+    /// Fallback default (for variables that have one — most
     /// store identifiers don't).
     default: Option<String>,
     /// One-line `--help` string.
@@ -636,7 +636,7 @@ impl CliApp {
     ///   4. Otherwise, errors with a helpful message
     ///
     /// Used for multi-tenant APIs where every URL is parameterized — the
-    /// canonical example is BigCommerce's `{store_hash}`. Variables
+    /// canonical example is a `{store_hash}` placeholder. Variables
     /// referenced in `servers[].url` but not registered here remain literal
     /// in the URL (and the request will fail at send time), so registering
     /// them is effectively required.
@@ -769,7 +769,7 @@ impl CliApp {
     /// deep-merged onto the spec before parsing.
     ///
     /// ```ignore
-    /// CliApp::new("bigcommerce")
+    /// CliApp::new("myapi")
     ///     .specs_under_named_with_overrides("v3", [
     ///         ("customers",
     ///          include_str!("specs/management/customers.v3.yml"),
@@ -1489,7 +1489,7 @@ impl AppContext {
     ///
     /// Like [`execute`](Self::execute) but captures the response instead of
     /// printing it, and accepts a `binary_body_path` for operations with a
-    /// binary request body (e.g. AssemblyAI's `/v2/upload`). Designed for
+    /// binary request body (e.g. a file upload endpoint). Designed for
     /// custom commands that chain multiple API calls.
     pub fn invoke(
         &self,
@@ -2577,17 +2577,6 @@ mod tests {
         assert!(result.is_empty());
     }
 
-    #[test]
-    fn test_load_spec_via_cli_app() {
-        let yaml = include_str!("../../cli/box/openapi.yaml");
-        let app = CliApp::new("box").spec(yaml);
-        assert_eq!(app.name, "box");
-        // Verify the spec can be parsed via build_doc
-        let doc = app.build_doc().unwrap();
-        assert_eq!(doc.name, "box");
-        assert!(doc.resources.len() >= 14);
-    }
-
     // ------------------------------------------------------------------
     // CliApp::idempotency_header_env — generator-side env-var wiring for
     // FER-9852, implemented in cli-sdk for FER-9864 P1. Verifies the
@@ -2938,7 +2927,7 @@ paths:
     #[test]
     fn test_merge_schemas_first_write_wins_on_duplicate() {
         // Multi-spec setups commonly share schema names (`ErrorResponse`,
-        // `Pagination`). Strict-error policy made BigCommerce-style use
+        // `Pagination`). Strict-error policy made multi-spec use
         // unworkable; first-write-wins lets specs share without manual
         // de-duplication.
         let mut acc = HashMap::new();
@@ -3024,7 +3013,7 @@ paths:
     #[test]
     fn test_spec_under_merges_multiple_specs_into_same_prefix() {
         // Two specs sharing a prefix should merge under it (not error).
-        // Prevents BigCommerce-style use cases where many v2 specs all need
+        // Prevents use cases where many v2 specs all need
         // to live under a single `v2` namespace.
         let spec_a = r#"
 openapi: "3.0.0"
@@ -3152,13 +3141,13 @@ paths:
     fn test_substitute_url_vars_replaces_known_and_leaves_unknown() {
         let mut subs = HashMap::new();
         subs.insert("store_hash".to_string(), "abc123".to_string());
-        let url = "https://api.bigcommerce.com/stores/{store_hash}/v3/customers/{customer_id}";
+        let url = "https://api.example.com/stores/{store_hash}/v3/customers/{customer_id}";
         let out = substitute_url_vars(url, &subs);
         // Known var substituted, unknown left literal so the failure mode is
         // visible in dry-run output and downstream error messages.
         assert_eq!(
             out,
-            "https://api.bigcommerce.com/stores/abc123/v3/customers/{customer_id}"
+            "https://api.example.com/stores/abc123/v3/customers/{customer_id}"
         );
     }
 

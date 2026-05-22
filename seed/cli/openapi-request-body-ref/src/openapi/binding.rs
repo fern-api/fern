@@ -312,8 +312,8 @@ impl Binding for OpenApiBinding {
         if !missing.is_empty() {
             missing.sort();
             // Warn rather than fail — multi-spec binaries may intentionally
-            // bind only a subset of schemes (e.g. Twilio binds basic auth
-            // but not the IAM OAuth2 schemes).
+            // bind only a subset of schemes (e.g. basic auth
+            // but not the OAuth2 schemes).
             tracing::warn!(
                 "Spec declares security scheme(s) [{}] with no .auth() binding. \
                  Those endpoints will run unauthenticated.",

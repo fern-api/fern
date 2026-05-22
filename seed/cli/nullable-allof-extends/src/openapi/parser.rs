@@ -17,7 +17,7 @@ use crate::openapi::discovery::{
 use crate::error::CliError;
 
 /// Deserialize `x-fern-sdk-group-name` as either a string scalar or a list of
-/// strings. The Fern extension allows both forms; specs like AssemblyAI's use
+/// strings. The Fern extension allows both forms; some specs use
 /// the scalar form while internal fixtures use the list form for nesting.
 fn deserialize_group_name<'de, D>(deserializer: D) -> Result<Option<Vec<String>>, D::Error>
 where
@@ -741,7 +741,7 @@ struct OpenApiSchemaObject {
     ///   - OpenAPI 3.1 array of values: `examples: [a, b]`
     ///   - OpenAPI 3.0 MediaType-style map: `examples: { name: { value: ... } }`
     ///     (technically out-of-spec at the schema level, but several
-    ///     real-world specs — e.g. BigCommerce — embed this form)
+    ///     real-world specs embed this form)
     ///   - Single value
     ///
     /// Downstream code is free to interpret the value based on its shape.
@@ -3070,7 +3070,7 @@ mod tests {
 
     #[test]
     fn test_strip_tag_prefix_no_strip_when_no_overlap() {
-        // BigCommerce-style: op `getCustomers` doesn't start with tag tokens.
+        // When op `getCustomers` doesn't start with tag tokens.
         assert_eq!(strip_tag_prefix("getCustomers", "Customers"), "getCustomers");
     }
 
@@ -3095,7 +3095,7 @@ paths:
 
     #[test]
     fn test_method_name_keeps_operation_id_when_no_tag_overlap() {
-        // BigCommerce-shape: operationId doesn't start with tag → method
+        // When operationId doesn't start with tag → method
         // stays as full kebab'd operationId. Matches Fern's behavior.
         let yaml = r#"
 openapi: "3.0.0"
@@ -3196,7 +3196,7 @@ paths:
 
     #[test]
     fn test_group_name_accepts_scalar_string() {
-        // AssemblyAI and other Fern specs write `x-fern-sdk-group-name: transcripts`
+        // Some Fern specs write `x-fern-sdk-group-name: transcripts`
         // as a bare string; the parser should accept it as a single-element list.
         let yaml = r#"
 openapi: "3.0.0"
@@ -4368,69 +4368,6 @@ paths:
         // Users operation has no server override — falls back to spec-level
         let users = doc.resources["users"].methods["list"].clone();
         assert_eq!(users.root_url, "https://api.example.com");
-    }
-
-    #[test]
-    fn test_box_upload_operations_use_upload_server() {
-        let yaml = include_str!("../../cli/box/openapi.yaml");
-        let doc = load_openapi_spec(yaml, "box").unwrap();
-        // At least one resource must have methods that route to upload.box.com
-        let upload_methods: Vec<_> = doc.resources.values()
-            .flat_map(|r| r.methods.values())
-            .filter(|m| m.root_url.contains("upload.box.com"))
-            .collect();
-        assert!(
-            !upload_methods.is_empty(),
-            "expected at least one method routing to upload.box.com, found none"
-        );
-    }
-
-    #[test]
-    fn test_load_box_spec() {
-        let yaml = include_str!("../../cli/box/openapi.yaml");
-        let doc = load_openapi_spec(yaml, "box").unwrap();
-        assert_eq!(doc.name, "box");
-        assert_eq!(doc.root_url, "https://api.box.com/2.0");
-
-        // Box spec has 73 top-level resource groups: 72 with x-fern-sdk-group-name,
-        // plus one ("metadata taxonomies") surfaced by the tag-based fallback.
-        assert_eq!(doc.resources.len(), 73);
-
-        // Check specific groups exist
-        assert!(doc.resources.contains_key("files"));
-        assert!(doc.resources.contains_key("folders"));
-        assert!(doc.resources.contains_key("users"));
-        assert!(doc.resources.contains_key("collaborations"));
-
-        // Check users has 6 methods
-        let users = &doc.resources["users"];
-        assert_eq!(users.methods.len(), 6);
-        assert!(users.methods.contains_key("get"));
-        assert!(users.methods.contains_key("list"));
-        assert!(users.methods.contains_key("create"));
-        assert!(users.methods.contains_key("getCurrent"));
-
-        // Check a method's HTTP method and path
-        let get_user = &users.methods["get"];
-        assert_eq!(get_user.http_method, "GET");
-        assert_eq!(get_user.path, "/users/{user_id}");
-
-        // Check parameters
-        assert!(get_user.parameters.contains_key("user_id"));
-        let user_id_param = &get_user.parameters["user_id"];
-        assert_eq!(user_id_param.location.as_deref(), Some("path"));
-        assert!(user_id_param.required);
-    }
-
-    #[test]
-    fn test_load_bigcommerce_spec() {
-        // BigCommerce ships per-domain specs (vendored from docs-v2). Pick a
-        // representative one to verify the parser handles them — the CLI binary
-        // wires up all 36 of them via `spec_under` namespaces.
-        let yaml = include_str!("../../cli/bigcommerce/specs/management/customers.v3.yml");
-        let doc = load_openapi_spec(yaml, "bigcommerce").unwrap();
-        assert_eq!(doc.name, "bigcommerce");
-        assert!(doc.root_url.contains("api.bigcommerce.com"));
     }
 
     // ------------------------------------------------------------------
@@ -6149,56 +6086,6 @@ paths:
         assert!(!map.contains_key("remove"), "null inside object array element should be removed");
     }
 
-    // -- Verification: from_str vs from_value round-trip --------------------
-
-    /// Compare `load_openapi_spec` (from_str → Value → from_value) against
-    /// each real spec to ensure the round-trip path doesn't lose or corrupt
-    /// any operations, resources, or schemas.
-    #[test]
-    fn test_roundtrip_bigcommerce_customers_v3() {
-        let yaml = include_str!("../../cli/bigcommerce/specs/management/customers.v3.yml");
-        let doc = load_openapi_spec(yaml, "bigcommerce").unwrap();
-        assert!(!doc.resources.is_empty(), "customers.v3 should have resources");
-        assert!(!doc.schemas.is_empty(), "customers.v3 should have schemas");
-    }
-
-    #[test]
-    fn test_roundtrip_bigcommerce_orders_v2() {
-        let yaml = include_str!("../../cli/bigcommerce/specs/management/orders.v2.yml");
-        let doc = load_openapi_spec(yaml, "bigcommerce").unwrap();
-        assert!(!doc.resources.is_empty(), "orders.v2 should have resources");
-    }
-
-    #[test]
-    fn test_roundtrip_box_spec() {
-        let yaml = include_str!("../../cli/box/openapi.yaml");
-        let doc = load_openapi_spec(yaml, "box").unwrap();
-        assert!(!doc.resources.is_empty(), "box should have resources");
-        assert!(!doc.schemas.is_empty(), "box should have schemas");
-    }
-
-    /// Verify the from_str → from_value path produces identical results to
-    /// what the old direct from_str path would have produced. We compare
-    /// resource keys and method counts to ensure no operations are lost.
-    #[test]
-    fn test_roundtrip_consistency_all_bigcommerce_specs() {
-        let specs: &[(&str, &str)] = &[
-            ("customers.v3", include_str!("../../cli/bigcommerce/specs/management/customers.v3.yml")),
-            ("orders.v3", include_str!("../../cli/bigcommerce/specs/management/orders.v3.yml")),
-            ("orders.v2", include_str!("../../cli/bigcommerce/specs/management/orders.v2.yml")),
-            ("checkouts.v3", include_str!("../../cli/bigcommerce/specs/management/checkouts.v3.yml")),
-            ("channels.v3", include_str!("../../cli/bigcommerce/specs/management/channels.v3.yml")),
-            ("carts.v3", include_str!("../../cli/bigcommerce/specs/management/carts.v3.yml")),
-            ("shipping.v3", include_str!("../../cli/bigcommerce/specs/management/shipping.v3.yml")),
-        ];
-        for (name, yaml) in specs {
-            let doc = load_openapi_spec(yaml, "bigcommerce");
-            assert!(doc.is_ok(), "spec {name} should parse without error: {:?}", doc.err());
-            let doc = doc.unwrap();
-            assert!(!doc.resources.is_empty(), "spec {name} should have resources");
-        }
-    }
-
     // -- Verification: allowNullKeys covers all Fern CLI keys ---------------
 
     #[test]
@@ -6247,39 +6134,6 @@ paths:
         let merged = deep_merge_yaml(base, serde_yaml::Value::Mapping(serde_yaml::Mapping::new()));
         let item = &merged["x-code-samples"].as_sequence().unwrap()[0];
         assert!(item["source"].is_null(), "null under x-code-samples should be preserved");
-    }
-
-    // -- Verification: real overrides e2e -----------------------------------
-
-    #[test]
-    fn test_real_overrides_e2e_bigcommerce_customers_v3() {
-        let base_yaml = include_str!("../../cli/bigcommerce/specs/management/customers.v3.yml");
-        let overrides_yaml = r#"
-paths:
-  /customers:
-    get:
-      x-fern-sdk-group-name: [customers]
-      x-fern-sdk-method-name: list
-    post:
-      x-fern-sdk-group-name: [customers]
-      x-fern-sdk-method-name: create
-  /customers/{customerId}:
-    put:
-      x-fern-sdk-group-name: [customers]
-      x-fern-sdk-method-name: update
-    delete:
-      x-fern-sdk-group-name: [customers]
-      x-fern-sdk-method-name: delete
-"#;
-        let base: serde_yaml::Value = serde_yaml::from_str(base_yaml).unwrap();
-        let ovr: serde_yaml::Value = serde_yaml::from_str(overrides_yaml).unwrap();
-        let merged = deep_merge_yaml(base, ovr);
-        let doc = load_openapi_spec_from_value(merged, "bigcommerce").unwrap();
-        let customers = &doc.resources["customers"];
-        assert!(customers.methods.contains_key("list"), "override should create 'list' method");
-        assert!(customers.methods.contains_key("create"), "override should create 'create' method");
-        assert!(customers.methods.contains_key("update"), "override should create 'update' method");
-        assert!(customers.methods.contains_key("delete"), "override should create 'delete' method");
     }
 
     // -- Verification: all_objects heuristic --------------------------------
@@ -8192,31 +8046,6 @@ paths:
             vec!["public".to_string(), "public".to_string()],
         );
     }
-    // -- Real-world OpenAPI 3.1 specs (parse sweep) ----------------------
-    //
-    // These fixtures are real customer/prospect specs that declare
-    // `openapi: 3.1.0`. They sweep the new 3.1 surface area (type arrays,
-    // numeric exclusive bounds, const, composition, webhooks, schema-level
-    // examples) against actual wire shapes rather than synthetic snippets.
-
-    #[test]
-    fn test_real_31_devin_spec_parses() {
-        let yaml = include_str!("../../cli/devin/openapi.yaml");
-        load_openapi_spec(yaml, "devin").expect("devin 3.1 spec should parse");
-    }
-
-    #[test]
-    fn test_real_31_paid_spec_parses() {
-        let yaml = include_str!("../../cli/paid/specs/openapi.yml");
-        load_openapi_spec(yaml, "paid").expect("paid 3.1 spec should parse");
-    }
-
-    #[test]
-    fn test_real_31_assemblyai_spec_parses() {
-        let yaml = include_str!("../../cli/assemblyai/specs/openapi.yml");
-        load_openapi_spec(yaml, "assemblyai").expect("assemblyai 3.1 spec should parse");
-    }
-
     // -- JSON Schema composition (oneOf / anyOf / allOf) -----------------
 
     #[test]
@@ -8335,7 +8164,7 @@ paths:
 
     #[test]
     fn test_examples_lax_30_map_form() {
-        // BigCommerce-style schema-level `examples` map (out-of-spec for
+        // Schema-level `examples` map (out-of-spec for
         // OpenAPI 3.0 at the schema level, but real-world specs use it).
         // The parser must round-trip without erroring.
         let obj: OpenApiSchemaObject = serde_yaml::from_str(

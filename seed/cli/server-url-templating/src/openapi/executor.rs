@@ -6081,8 +6081,8 @@ mod tests {
     #[test]
     fn test_build_url_method_root_url_overrides_doc_root_url() {
         // Per-operation server override: method.root_url must win over doc.root_url.
-        // If this is broken, requests route to the wrong host (e.g. Box uploads
-        // go to api.box.com instead of upload.box.com).
+        // If this is broken, requests route to the wrong host (e.g. uploads
+        // go to api.example.com instead of upload.example.com).
         let doc = RestDescription {
             root_url: "https://api.example.com/".to_string(),
             service_path: "v1/".to_string(),
