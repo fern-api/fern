@@ -1,5 +1,5 @@
 import { generatorsYml, loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, resolveConfiguredFilepath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
 import { CliError } from "@fern-api/task-context";
@@ -381,7 +381,10 @@ async function getAndFetchFromAPIDefinitionLocation({
         return;
     }
     if (apiLocation.origin != null) {
-        const filePath = join(workspacePath, RelativeFilePath.of(apiLocation.schema.path));
+        const filePath = resolveConfiguredFilepath({
+            absolutePathToWorkspace: workspacePath,
+            configuredFilepath: apiLocation.schema.path
+        });
 
         if (apiLocation.schema.type === "graphql") {
             cliContext.logger.info(`GraphQL schema origin found, fetching schema from ${apiLocation.origin}`);

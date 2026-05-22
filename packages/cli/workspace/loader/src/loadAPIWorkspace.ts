@@ -12,7 +12,8 @@ import {
     isPathEmpty,
     join,
     RelativeFilePath,
-    relativePathForDisplay
+    relativePathForDisplay,
+    resolveConfiguredFilepath
 } from "@fern-api/fs-utils";
 import {
     ConjureWorkspace,
@@ -24,19 +25,6 @@ import {
 import { TaskContext } from "@fern-api/task-context";
 import path from "path";
 import { loadAPIChangelog } from "./loadAPIChangelog.js";
-
-function resolveConfiguredFilepath({
-    absolutePathToWorkspace,
-    configuredFilepath
-}: {
-    absolutePathToWorkspace: AbsoluteFilePath;
-    configuredFilepath: string;
-}): AbsoluteFilePath {
-    if (path.isAbsolute(configuredFilepath)) {
-        return AbsoluteFilePath.of(configuredFilepath);
-    }
-    return join(absolutePathToWorkspace, RelativeFilePath.of(configuredFilepath));
-}
 
 function getFailureFilepath({
     absolutePathToWorkspace,

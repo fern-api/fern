@@ -30,6 +30,7 @@ export { isAbsoluteFilePath, relativeOrOriginalPath } from "./relativeOrOriginal
 export { relativePathForDisplay } from "./relativePathForDisplay.js";
 export { relativize } from "./relativize.js";
 export { resolve } from "./resolve.js";
+export { resolveConfiguredFilepath } from "./resolveConfiguredFilepath.js";
 export { splitPath } from "./splitPath.js";
 export { streamObjectFromFile } from "./streamObjectFromFile.js";
 export { streamObjectToFile } from "./streamObjectToFile.js";
