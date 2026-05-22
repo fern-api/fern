@@ -1,0 +1,8 @@
+- summary: |
+    Generated discriminated unions no longer emit a `fromJson()` override. The base
+    `JsonSerializableType::fromJson` now uses late static binding (`static::jsonDeserialize`)
+    so subclasses' typed `jsonDeserialize` overrides dispatch correctly. This eliminates ~50
+    lines of duplicated code per union and resolves a PHPStan strict failure where the union
+    override's `$decodedJson` was narrowed to `array<array-key, mixed>` instead of
+    `array<string, mixed>`.
+  type: fix

@@ -106,7 +106,8 @@ abstract class JsonSerializableType implements \JsonSerializable
             throw new JsonException("Unexpected non-array decoded type: " . gettype($decodedJson));
         }
         /** @var array<string, mixed> $decodedJson */
-        return self::jsonDeserialize($decodedJson);
+        // static:: (not self::) so subclasses' typed jsonDeserialize overrides are dispatched via late static binding.
+        return static::jsonDeserialize($decodedJson);
     }
 
     /**
