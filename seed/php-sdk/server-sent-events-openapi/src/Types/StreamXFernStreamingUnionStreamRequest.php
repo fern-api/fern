@@ -5,7 +5,6 @@ namespace Seed\Types;
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Exception;
-use Seed\Core\Json\JsonDecoder;
 
 /**
  * A discriminated union request matching the Vectara pattern (FER-9556). Each variant inherits stream_response from UnionStreamRequestBase via allOf. The importer pins stream_response to Literal[True/False] at this union level, but the allOf inheritance re-introduces it as boolean in each variant, causing the type conflict.
@@ -217,18 +216,6 @@ class StreamXFernStreamingUnionStreamRequest extends JsonSerializableType
         }
 
         return $result;
-    }
-
-    /**
-     * @param string $json
-     */
-    public static function fromJson(string $json): static
-    {
-        $decodedJson = JsonDecoder::decode($json);
-        if (!is_array($decodedJson)) {
-            throw new Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
-        }
-        return self::jsonDeserialize($decodedJson);
     }
 
     /**
