@@ -1,5 +1,5 @@
 import { isOpenAPIV2 } from "@fern-api/api-workspace-commons";
-import { relative } from "@fern-api/fs-utils";
+import { relativePathForDisplay } from "@fern-api/fs-utils";
 import { convertOpenAPIV2ToV3 } from "@fern-api/lazy-fern-workspace";
 
 import { Rule } from "../../Rule.js";
@@ -32,7 +32,7 @@ export const NoConflictingParameterNamesRule: Rule = {
             }
 
             const apiToValidate = isOpenAPIV2(openAPI) ? await convertOpenAPIV2ToV3(openAPI) : openAPI;
-            const relativeFilepath = relative(workspace.absoluteFilePath, spec.source.file);
+            const relativeFilepath = relativePathForDisplay(workspace.absoluteFilePath, spec.source.file);
 
             for (const [path, pathItem] of Object.entries(
                 ((apiToValidate as Record<string, unknown>).paths as Record<string, unknown>) ?? {}

@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Allow absolute API spec, override, and overlay paths in generators.yml.
+  type: feat

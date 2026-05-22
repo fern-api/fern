@@ -26,8 +26,11 @@ export {
 } from "./osPathConverter.js";
 export { RelativeFilePath } from "./RelativeFilePath.js";
 export { relative } from "./relative.js";
+export { isAbsoluteFilePath, relativeOrOriginalPath } from "./relativeOrOriginalPath.js";
+export { relativePathForDisplay } from "./relativePathForDisplay.js";
 export { relativize } from "./relativize.js";
 export { resolve } from "./resolve.js";
+export { resolveConfiguredFilepath, resolveConfiguredFilepaths } from "./resolveConfiguredFilepath.js";
 export { splitPath } from "./splitPath.js";
 export { streamObjectFromFile } from "./streamObjectFromFile.js";
 export { streamObjectToFile } from "./streamObjectToFile.js";
