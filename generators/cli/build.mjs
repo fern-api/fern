@@ -64,7 +64,11 @@ const SDK_IGNORE = [
     "tests/auth_routing_wire.rs",
     "tests/extension_surface_behavior.rs",
     "tests/lib_api.rs",
-    "tests/tls_env_vars.rs"
+    "tests/tls_env_vars.rs",
+
+    // Changelog entries for the SDK template itself — not relevant to
+    // customer output.
+    "changes/**"
 ];
 
 await buildGenerator(getDirname(import.meta.url), {
