@@ -196,8 +196,8 @@ describe("runPipeline", () => {
         expect(main).toContain(
             '.auth_basic_scheme_username_only("ApiKeyAuth", AuthCredentialSource::from_env("CLOSE_API_KEY"))'
         );
-        expect(main).toContain('.auth_scheme_env("OAuth2", "CLOSE_TOKEN")');
-        expect(main).toContain("use fern_cli_sdk::auth::AuthCredentialSource;");
+        expect(main).toContain('.auth(BearerAuth::new("OAuth2").env("CLOSE_TOKEN"))');
+        expect(main).toContain("use fern_cli_sdk::auth::{AuthCredentialSource, BearerAuth};");
     });
 
     it("no customConfig.binaryName + no IR apiDisplayName surfaces a clear error before any disk write", async () => {

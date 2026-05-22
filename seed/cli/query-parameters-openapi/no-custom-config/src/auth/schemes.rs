@@ -121,7 +121,7 @@ impl BasicAuthProvider {
     }
 
     /// Username-only Basic auth (empty password). Common for APIs that
-    /// accept an API key as the HTTP Basic username.
+    /// accept an API key as the HTTP Basic username (e.g. Close CRM).
     pub fn username_only(
         name: impl Into<String>,
         username: AuthCredentialSource,
@@ -203,13 +203,13 @@ impl AuthProvider for BasicAuthProvider {
 // HeaderAuthProvider — raw or bearer-prefixed token in a named header.
 // ---------------------------------------------------------------------------
 
-/// Send the token verbatim in a named header. Used by APIs that pass the
-/// raw token in `Authorization` (no `Bearer ` prefix) and any custom
+/// Send the token verbatim in a named header. Used by APIs like Linear
+/// (`Authorization: <api_key>` with no `Bearer ` prefix) and any custom
 /// `X-Api-Key` style scheme.
 ///
 /// If `bearer_prefix` is true, the value is prefixed with `Bearer ` —
 /// equivalent to a [`BearerAuthProvider`] but on a non-`Authorization`
-/// header.
+/// header (the Square pattern).
 #[derive(Debug, Clone)]
 pub struct HeaderAuthProvider {
     name: String,

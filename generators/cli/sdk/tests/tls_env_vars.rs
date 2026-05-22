@@ -1,14 +1,14 @@
 //! Integration test for the SDK's TLS env var contract.
 //!
-//! Verifies that `<NAME>_CA_BUNDLE`, `<NAME>_INSECURE`, `SSL_CERT_FILE`,
-//! etc. actually change the TLS trust outcome of the HTTP client built
-//! by [`fern_cli_sdk::http::HttpConfig::build_client`].
+//! Verifies that `BIGCOMMERCE_CA_BUNDLE`, `BIGCOMMERCE_INSECURE`,
+//! `SSL_CERT_FILE`, etc. actually change the TLS trust outcome of the
+//! HTTP client built by [`fern_cli_sdk::http::HttpConfig::build_client`].
 //!
 //! Approach: spin up a local HTTPS server with a brand-new self-signed cert
 //! that is never trusted by the system, then exercise the client against it
 //! under different env-var configurations. This isolates the test from
-//! whatever's in the developer's keychain (live tests against real APIs
-//! can't be trusted to verify env-var behavior in isolation).
+//! whatever's in the developer's keychain (the reason live tests against
+//! BigCommerce can't be trusted to verify env-var behavior in isolation).
 //!
 //! Requirements: `python3` and `openssl` on PATH (both standard on dev/CI
 //! machines). The test will skip itself with a printed warning if either is

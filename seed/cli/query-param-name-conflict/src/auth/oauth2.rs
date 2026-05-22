@@ -101,7 +101,7 @@ struct CachedToken {
 /// The file is a JSON object keyed by token_url:
 /// ```json
 /// {
-///   "https://identity.example.com/connect/token": {
+///   "https://identity.xero.com/connect/token": {
 ///     "access_token": "...",
 ///     "refresh_token": "...",
 ///     "expires_at": 1715550000
@@ -492,7 +492,7 @@ impl OAuth2TokenProvider {
     }
 
     /// Enable on-disk token persistence. `cli_name` is the binary name
-    /// (e.g., `"myapi"`) — tokens are stored under the platform config dir.
+    /// (e.g., `"xero"`) — tokens are stored under the platform config dir.
     pub fn with_cache(mut self, cli_name: &str) -> Self {
         self.cache = TokenCache::for_cli(cli_name);
         self

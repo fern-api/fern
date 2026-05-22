@@ -5,21 +5,26 @@
 //! to build the command hierarchy.
 
 // Public API — building blocks
+pub mod app;
+pub mod arg_source;
 pub mod auth;
+pub mod binding;
 pub mod cli_args;
 pub mod completions;
-pub mod custom_commands;
+pub(crate) mod custom_commands;
 pub mod http;
 pub mod error;
 pub mod formatter;
 pub mod graphql;
+pub mod hooks;
 pub mod man;
 pub mod openapi;
+pub mod stability;
 pub mod validate;
 pub mod websocket;
 
-// Convenience re-exports for OAuth2 types
-pub use auth::{OAuth2Grant, OAuth2TokenProvider, TokenCache};
+// Convenience re-exports for auth types
+pub use auth::{ApiKeyAuth, BasicAuth, BearerAuth, OAuth2Auth, OAuth2Grant, OAuth2TokenProvider, TokenCache};
 
 // Internal modules
 pub(crate) mod early_intercept;

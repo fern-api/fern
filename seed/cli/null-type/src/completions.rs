@@ -12,7 +12,7 @@ use clap_complete::{generate, Shell};
 /// interception before normal API dispatch — avoiding collision with an
 /// API resource that might also be named `completion`.
 ///
-/// Skips `--flag value` pairs so `myapi --base-url completion files` is
+/// Skips `--flag value` pairs so `box --base-url completion files` is
 /// not mistaken for a completion request (`completion` there is the
 /// value of `--base-url`, not a subcommand). Boolean flags like
 /// `--dry-run` are recognised and do NOT consume the next token.
@@ -20,18 +20,24 @@ pub fn wants_completion(args: &[String]) -> bool {
     crate::early_intercept::first_positional_is(args, "completion")
 }
 
-/// Generate a shell completion script for `cmd` and write it to stdout.
+/// Generate a shell completion script for `cmd` and write it to `writer`.
 ///
-/// `bin_name` is the name the user types to invoke the CLI (e.g. `"myapi"`).
+/// `bin_name` is the name the user types to invoke the CLI (e.g. `"box"`).
 /// The caller is responsible for building a `Command` that mirrors the full
 /// CLI surface (subcommands, flags, etc.) so the generated script is complete.
 ///
-/// Returns an IO error if writing to stdout fails.
-pub fn generate_completion(shell: Shell, cmd: &mut Command, bin_name: &str) -> std::io::Result<()> {
+/// Returns an IO error if writing fails.
+pub fn generate_completion_to(shell: Shell, cmd: &mut Command, bin_name: &str, writer: &mut dyn std::io::Write) -> std::io::Result<()> {
     let mut buf = Vec::new();
     generate(shell, cmd, bin_name, &mut buf);
-    use std::io::Write;
-    std::io::stdout().write_all(&buf)
+    writer.write_all(&buf)
+}
+
+/// Generate a shell completion script for `cmd` and write it to stdout.
+///
+/// Thin wrapper around [`generate_completion_to`] that targets `stdout`.
+pub fn generate_completion(shell: Shell, cmd: &mut Command, bin_name: &str) -> std::io::Result<()> {
+    generate_completion_to(shell, cmd, bin_name, &mut std::io::stdout())
 }
 
 /// Parse a shell name string into a [`Shell`] enum variant.
@@ -84,27 +90,27 @@ mod tests {
 
     #[test]
     fn wants_completion_detects_subcommand() {
-        assert!(wants_completion(&args(&["myapi", "completion", "bash"])));
-        assert!(wants_completion(&args(&["myapi", "completion", "zsh"])));
+        assert!(wants_completion(&args(&["box", "completion", "bash"])));
+        assert!(wants_completion(&args(&["box", "completion", "zsh"])));
     }
 
     #[test]
     fn wants_completion_false_for_normal_commands() {
-        assert!(!wants_completion(&args(&["myapi", "files", "get"])));
-        assert!(!wants_completion(&args(&["myapi", "--help"])));
+        assert!(!wants_completion(&args(&["box", "files", "get"])));
+        assert!(!wants_completion(&args(&["box", "--help"])));
     }
 
     #[test]
     fn wants_completion_false_when_nested() {
         assert!(!wants_completion(&args(&[
-            "myapi", "files", "completion", "bash"
+            "box", "files", "completion", "bash"
         ])));
     }
 
     #[test]
     fn wants_completion_false_when_flag_value() {
         assert!(!wants_completion(&args(&[
-            "myapi",
+            "box",
             "--base-url",
             "completion",
             "files",
@@ -114,7 +120,7 @@ mod tests {
     #[test]
     fn wants_completion_true_after_eq_flag() {
         assert!(wants_completion(&args(&[
-            "myapi",
+            "box",
             "--base-url=http://localhost",
             "completion",
             "bash",
@@ -126,7 +132,7 @@ mod tests {
         // --dry-run is a boolean flag (SetTrue) and must NOT consume the
         // next token; "completion" is the subcommand, not the flag's value.
         assert!(wants_completion(&args(&[
-            "myapi",
+            "box",
             "--dry-run",
             "completion",
             "bash",
@@ -136,7 +142,7 @@ mod tests {
     #[test]
     fn wants_completion_with_multiple_boolean_flags() {
         assert!(wants_completion(&args(&[
-            "myapi",
+            "box",
             "--dry-run",
             "--no-retry",
             "completion",

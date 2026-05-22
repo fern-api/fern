@@ -18,6 +18,7 @@ const BUILTIN_FLAG_NAMES: &[&str] = &[
     "page-all",
     "page-limit",
     "page-delay",
+    "quiet",
     "help",
 ];
 
@@ -51,6 +52,14 @@ pub fn build_cli(doc: &RestDescription) -> Command {
                 .long("base-url")
                 .help("Override the API base URL (e.g. for testing against a mock server)")
                 .value_name("URL")
+                .global(true),
+        )
+        .arg(
+            clap::Arg::new("quiet")
+                .long("quiet")
+                .short('q')
+                .help("Suppress stdout output on success (errors still go to stderr)")
+                .action(clap::ArgAction::SetTrue)
                 .global(true),
         );
 
@@ -102,8 +111,8 @@ fn build_resource_command(name: &str, resource: &RestResource) -> Option<Command
             .arg(
                 Arg::new("json")
                     .long("json")
-                    .help("JSON string for the request body")
-                    .value_name("JSON"),
+                    .help("JSON string for the request body (use `-` to read from stdin)")
+                    .value_name("JSON|-"),
             );
 
         // Pagination flags

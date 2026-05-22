@@ -19,7 +19,7 @@ pub(crate) const BOOLEAN_FLAGS: &[&str] = &[
 
 /// Returns `true` when `args` contains `target` as the first positional
 /// token (i.e. the subcommand position). Skips `--flag value` pairs so
-/// `myapi --base-url <target> files` is not mistaken for the subcommand.
+/// `box --base-url <target> files` is not mistaken for the subcommand.
 /// Boolean flags like `--dry-run` are recognised and do NOT consume the
 /// next token.
 pub(crate) fn first_positional_is(args: &[String], target: &str) -> bool {
@@ -96,19 +96,19 @@ mod tests {
 
     #[test]
     fn first_positional_basic() {
-        assert!(first_positional_is(&args(&["myapi", "completion", "bash"]), "completion"));
-        assert!(first_positional_is(&args(&["myapi", "man"]), "man"));
+        assert!(first_positional_is(&args(&["box", "completion", "bash"]), "completion"));
+        assert!(first_positional_is(&args(&["box", "man"]), "man"));
     }
 
     #[test]
     fn first_positional_false_for_other_subcommand() {
-        assert!(!first_positional_is(&args(&["myapi", "files", "get"]), "completion"));
+        assert!(!first_positional_is(&args(&["box", "files", "get"]), "completion"));
     }
 
     #[test]
     fn first_positional_false_when_flag_value() {
         assert!(!first_positional_is(
-            &args(&["myapi", "--base-url", "man", "files"]),
+            &args(&["box", "--base-url", "man", "files"]),
             "man",
         ));
     }
@@ -116,7 +116,7 @@ mod tests {
     #[test]
     fn first_positional_true_after_eq_flag() {
         assert!(first_positional_is(
-            &args(&["myapi", "--base-url=http://localhost", "man"]),
+            &args(&["box", "--base-url=http://localhost", "man"]),
             "man",
         ));
     }
@@ -124,7 +124,7 @@ mod tests {
     #[test]
     fn first_positional_true_after_boolean_flag() {
         assert!(first_positional_is(
-            &args(&["myapi", "--dry-run", "completion", "bash"]),
+            &args(&["box", "--dry-run", "completion", "bash"]),
             "completion",
         ));
     }
@@ -132,7 +132,7 @@ mod tests {
     #[test]
     fn first_positional_true_after_multiple_boolean_flags() {
         assert!(first_positional_is(
-            &args(&["myapi", "--dry-run", "--no-retry", "man"]),
+            &args(&["box", "--dry-run", "--no-retry", "man"]),
             "man",
         ));
     }
@@ -144,7 +144,7 @@ mod tests {
         // `--base-url` is value-taking, so "X" is its argument, not a
         // positional. "completion" is positional #0, "bash" is positional #1.
         assert_eq!(
-            nth_positional(&args(&["myapi", "--base-url", "X", "completion", "bash"]), 1),
+            nth_positional(&args(&["box", "--base-url", "X", "completion", "bash"]), 1),
             Some("bash"),
         );
     }
@@ -154,7 +154,7 @@ mod tests {
         // `--dry-run` is boolean, so "completion" is positional #0 and
         // "bash" is positional #1.
         assert_eq!(
-            nth_positional(&args(&["myapi", "--dry-run", "completion", "bash"]), 1),
+            nth_positional(&args(&["box", "--dry-run", "completion", "bash"]), 1),
             Some("bash"),
         );
     }
@@ -162,7 +162,7 @@ mod tests {
     #[test]
     fn nth_positional_out_of_range() {
         assert_eq!(
-            nth_positional(&args(&["myapi", "completion", "bash"]), 5),
+            nth_positional(&args(&["box", "completion", "bash"]), 5),
             None,
         );
     }
@@ -170,7 +170,7 @@ mod tests {
     #[test]
     fn nth_positional_zeroth() {
         assert_eq!(
-            nth_positional(&args(&["myapi", "completion", "bash"]), 0),
+            nth_positional(&args(&["box", "completion", "bash"]), 0),
             Some("completion"),
         );
     }
@@ -178,7 +178,7 @@ mod tests {
     #[test]
     fn nth_positional_eq_flag() {
         assert_eq!(
-            nth_positional(&args(&["myapi", "--base-url=http://localhost", "completion", "bash"]), 1),
+            nth_positional(&args(&["box", "--base-url=http://localhost", "completion", "bash"]), 1),
             Some("bash"),
         );
     }

@@ -98,6 +98,7 @@ pub(crate) const BUILTIN_FLAG_NAMES: &[&str] = &[
     "no-extract",
     "no-retry",
     "no-stream",
+    "quiet",
     "help",
 ];
 
@@ -150,6 +151,14 @@ pub fn build_cli(doc: &RestDescription) -> Command {
                 .long("base-url")
                 .help("Override the API base URL (e.g. for testing against a mock server)")
                 .value_name("URL")
+                .global(true),
+        )
+        .arg(
+            clap::Arg::new("quiet")
+                .long("quiet")
+                .short('q')
+                .help("Suppress stdout output on success (errors still go to stderr)")
+                .action(clap::ArgAction::SetTrue)
                 .global(true),
         );
 
@@ -296,8 +305,8 @@ fn build_resource_command(
             method_cmd = method_cmd.arg(
                 Arg::new("json")
                     .long("json")
-                    .help("JSON request body")
-                    .value_name("JSON"),
+                    .help("JSON request body (use `-` to read from stdin; auto-detected, errors if no data piped)")
+                    .value_name("JSON|-"),
             );
         }
 

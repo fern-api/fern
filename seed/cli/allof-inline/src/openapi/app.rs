@@ -8,11 +8,8 @@
 use std::collections::HashMap;
 
 use crate::auth::{AuthCredentialSource, AuthStrategy, DynAuthProvider, SchemeBinding};
-use crate::cli_args;
-use crate::custom_commands::CustomCommandRegistry;
-use crate::error::{print_error_json, CliError};
+use crate::error::CliError;
 use crate::formatter;
-use crate::openapi::commands;
 use crate::openapi::discovery::{JsonSchema, RestDescription, RestMethod, RestResource};
 use crate::openapi::executor;
 
@@ -33,7 +30,7 @@ fn split_prefix(prefix: &str) -> Vec<String> {
 /// **Stutter elision:** at the leaf, if `incoming` contains a top-level
 /// resource whose name matches the leaf namespace, that resource's methods
 /// and sub-resources are *hoisted* into the namespace itself — eliminating
-/// the `myapi v3 customers customers get` repetition that would
+/// the `bigcommerce v3 customers customers get` repetition that would
 /// otherwise occur when a spec's primary domain matches the namespace name.
 /// Other top-level resources from the spec become children of the
 /// namespace as usual.
@@ -207,9 +204,9 @@ fn merge_schemas(
     acc: &mut HashMap<String, JsonSchema>,
     incoming: HashMap<String, JsonSchema>,
 ) -> Result<(), CliError> {
-    // Multi-spec setups commonly share schema names (`ErrorResponse`,
-    // `Pagination`, `Meta`) across many specs authored from the same
-    // template — collisions are the norm, not a bug.
+    // Multi-spec setups like BigCommerce's Management API share common schema
+    // names (`ErrorResponse`, `Pagination`, `Meta`) across many specs that are
+    // authored from the same template — collisions are the norm, not a bug.
     // First write wins; schemas are only used for best-effort request-body
     // validation, so a worst-case mismatch surfaces as a client-side
     // validation warning, not silent corruption. A future structural-equality
@@ -467,175 +464,6 @@ pub(crate) fn compose_root_after_help_sections(
     sections.join("\n")
 }
 
-/// Result of [`register_global_flags_with_help`] — carries both the
-/// augmented command and the optional `Global headers:` help section
-/// so callers can compose the root after-help footer.
-struct RegisterGlobalFlagsResult {
-    cmd: clap::Command,
-    global_headers_section: Option<String>,
-}
-
-/// Register all global flags (server variables, SDK variables, global
-/// headers, auth CLI args) onto `cmd`. Returns the augmented command.
-/// Used by the completion path where the help-section text is not needed.
-fn register_global_flags(
-    cmd: clap::Command,
-    server_vars: &[ServerVar],
-    doc: &RestDescription,
-    auth_bindings: &[(String, crate::auth::SchemeBinding)],
-) -> clap::Command {
-    register_global_flags_with_help(cmd, server_vars, doc, auth_bindings).cmd
-}
-
-/// Register all global flags and return both the command and the
-/// optional `Global headers:` section for the root help footer. The
-/// normal path uses this variant to compose the after-help text.
-fn register_global_flags_with_help(
-    mut cmd: clap::Command,
-    server_vars: &[ServerVar],
-    doc: &RestDescription,
-    auth_bindings: &[(String, crate::auth::SchemeBinding)],
-) -> RegisterGlobalFlagsResult {
-    for var in server_vars {
-        let kebab = var.name.replace('_', "-");
-        let help_text = var
-            .description
-            .clone()
-            .unwrap_or_else(|| {
-                format!("Value for the {{{}}} URL template variable", var.name)
-            });
-        let mut arg = clap::Arg::new(var.name.clone())
-            .long(kebab)
-            .global(true)
-            .value_name(var.name.to_uppercase())
-            .help(help_text);
-        if let Some(env) = &var.env_var {
-            arg = arg.env(env.clone());
-        }
-        if let Some(default) = &var.default {
-            arg = arg.default_value(default.clone());
-        }
-        cmd = cmd.arg(arg);
-    }
-
-    for var in &doc.sdk_variables {
-        let kebab = crate::text::to_kebab_flag(&var.name);
-        if sdk_variable_collides_with_builtin(&kebab) {
-            tracing::warn!(
-                "x-fern-sdk-variables entry '{}' would register --{} which \
-                 collides with a built-in flag; skipping. Rename the \
-                 variable in the spec to avoid the collision.",
-                var.name,
-                kebab,
-            );
-            continue;
-        }
-        let env_name = crate::text::to_screaming_snake(&var.name);
-        let help_text = var.description.clone().unwrap_or_else(|| {
-            format!(
-                "Value for the SDK variable '{}' (substituted into path templates)",
-                var.name
-            )
-        });
-        let arg = clap::Arg::new(var.name.clone())
-            .long(kebab)
-            .global(true)
-            .value_name(env_name.clone())
-            .help(help_text)
-            .env(env_name);
-        cmd = cmd.arg(arg);
-    }
-
-    use std::collections::HashSet;
-    let mut registered_kebabs: HashSet<String> = HashSet::new();
-    let mut global_header_help_pairs: Vec<(String, String)> = Vec::new();
-    for h in &doc.global_headers {
-        let kebab = global_header_flag_name(h);
-        if global_header_flag_collides_with_builtin(&kebab) {
-            tracing::warn!(
-                "x-fern-global-headers entry '{}' would register --{} which \
-                 collides with a built-in flag; skipping. Rename via \
-                 `name:` in the spec to avoid the collision.",
-                h.header,
-                kebab,
-            );
-            continue;
-        }
-        if !registered_kebabs.insert(kebab.clone()) {
-            tracing::warn!(
-                "x-fern-global-headers entry '{}' would register --{} which \
-                 duplicates an earlier global-header flag; skipping.",
-                h.header,
-                kebab,
-            );
-            continue;
-        }
-        let value_name = crate::text::to_screaming_snake(&kebab);
-        let mut help_lines: Vec<String> =
-            vec![format!("Global header `{}` (sent on every request).", h.header)];
-        if let Some(env) = &h.env {
-            help_lines.push(format!("Env: {env}."));
-        }
-        if let Some(def) = &h.default {
-            help_lines.push(format!("Default: {def}."));
-        } else if !h.optional {
-            help_lines.push("Required.".to_string());
-        }
-        let help_text = help_lines.join(" ");
-        let prefix = format!("--{kebab} <{value_name}>");
-        global_header_help_pairs.push((prefix, help_text.clone()));
-        let mut arg = clap::Arg::new(global_header_arg_id(h))
-            .long(kebab)
-            .global(true)
-            .hide(true)
-            .value_name(value_name)
-            .help(help_text);
-        if let Some(env) = &h.env {
-            arg = arg.env(env.clone());
-        }
-        if let Some(def) = &h.default {
-            arg = arg.default_value(def.clone());
-        }
-        cmd = cmd.arg(arg);
-    }
-    let global_headers_section: Option<String> = if global_header_help_pairs.is_empty() {
-        None
-    } else {
-        let prefix_width = global_header_help_pairs
-            .iter()
-            .map(|(p, _)| p.chars().count())
-            .max()
-            .unwrap_or(0);
-        let rows: Vec<String> = global_header_help_pairs
-            .iter()
-            .map(|(prefix, help)| {
-                let pad = prefix_width.saturating_sub(prefix.chars().count());
-                format!("  {prefix}{:pad$}  {help}", "", pad = pad)
-            })
-            .collect();
-        Some(format!("Global headers:\n{}", rows.join("\n")))
-    };
-
-    for arg_name in crate::auth::collect_binding_cli_args(auth_bindings) {
-        cmd = cmd.arg(
-            clap::Arg::new(arg_name.clone())
-                .long(arg_name.clone())
-                .global(true)
-                .value_name(arg_name.to_uppercase().replace('-', "_"))
-                .help(format!("Credential value for auth source `{arg_name}`")),
-        );
-    }
-
-    RegisterGlobalFlagsResult { cmd, global_headers_section }
-}
-
-/// A custom command handler function.
-///
-/// Receives the parsed [`clap::ArgMatches`] for the subcommand and an
-/// [`AppContext`] that provides access to the spec, auth token, and
-/// executor.
-pub type HandlerFn = crate::custom_commands::HandlerFn<AppContext>;
-
 /// Internal entry describing one OpenAPI spec to be merged.
 pub(crate) struct SpecEntry {
     yaml: String,
@@ -654,17 +482,17 @@ pub(crate) struct SpecEntry {
 }
 
 /// A server-URL template variable like `{store_hash}` in
-/// `https://api.example.com/stores/{store_hash}/v3`. Resolved at runtime
+/// `https://api.bigcommerce.com/stores/{store_hash}/v3`. Resolved at runtime
 /// from a CLI flag (`--<name>`), an env var, or a built-in default — first
 /// match wins.
 #[derive(Clone)]
 pub(crate) struct ServerVar {
     /// OpenAPI variable name as it appears in the URL template (`store_hash`).
     name: String,
-    /// Env var consulted when the flag isn't passed (e.g. `MYAPI_STORE_HASH`).
+    /// Env var consulted when the flag isn't passed (e.g. `BIGCOMMERCE_STORE_HASH`).
     env_var: Option<String>,
-    /// Fallback default (for variables that have one — tenant/store
-    /// identifiers typically don't).
+    /// Fallback default (for variables that have one — most BigCommerce-style
+    /// store identifiers don't).
     default: Option<String>,
     /// One-line `--help` string.
     description: Option<String>,
@@ -681,7 +509,7 @@ pub struct CliApp {
     /// [`auth_provider`](Self::auth_provider). The constructed provider is
     /// built from these (lowered against the spec's
     /// `components.securitySchemes`).
-    auth_bindings: Vec<(String, SchemeBinding)>,
+    pub(crate) auth_bindings: Vec<(String, SchemeBinding)>,
     /// Override for how bindings compose. Defaults to [`AuthStrategy::Auto`]
     /// — the spec drives the choice. Generators that already know the
     /// API's auth model can pin a specific strategy.
@@ -689,14 +517,13 @@ pub struct CliApp {
     /// Trust roots parsed at builder-call time. Storing parsed certs (not
     /// raw bytes) means the validation error message lives in one place
     /// — at the call site of `extra_root_cert`, where it's most useful.
-    extra_root_certs: Vec<reqwest::Certificate>,
+    pub(crate) extra_root_certs: Vec<reqwest::Certificate>,
     /// Raw PEM bytes for each trust root added via `extra_root_cert`, kept
     /// alongside the parsed `extra_root_certs` above. Threaded through to
     /// `HttpConfig::with_parsed_root_certs` so transport-neutral callers
     /// (`HttpConfig::resolve`) can hand PEM to non-reqwest TLS connectors
     /// (e.g. `tokio-tungstenite`).
-    extra_root_certs_pem: Vec<Vec<u8>>,
-    pub(crate) custom_commands: CustomCommandRegistry<AppContext>,
+    pub(crate) extra_root_certs_pem: Vec<Vec<u8>>,
     pub(crate) server_vars: Vec<ServerVar>,
     /// Generator-supplied environment-variable overrides for spec-root
     /// idempotency headers (parsed from `x-fern-idempotency-headers`).
@@ -714,9 +541,10 @@ pub struct CliApp {
     /// exposed as a CLI flag, mirroring fern's intent that audience
     /// selection is a build-time decision baked into the generated SDK
     /// (`packages/cli/api-importers/openapi/openapi-ir-parser/src/openapi/v3/generateIr.ts:117-143`).
-    audiences: Vec<String>,
+    pub(crate) audiences: Vec<String>,
 }
 
+#[allow(dead_code)] // Methods available for binding wrappers to delegate to.
 impl CliApp {
     /// Create a new CLI application with the given binary name.
     pub fn new(name: &str) -> Self {
@@ -729,7 +557,6 @@ impl CliApp {
             auth_strategy: AuthStrategy::Auto,
             extra_root_certs: Vec::new(),
             extra_root_certs_pem: Vec::new(),
-            custom_commands: CustomCommandRegistry::new(),
             server_vars: Vec::new(),
             idempotency_header_envs: HashMap::new(),
             audiences: Vec::new(),
@@ -755,7 +582,7 @@ impl CliApp {
     ///
     /// ```ignore
     /// CliApp::new("my-public-api")
-    ///     .spec(include_str!("openapi.json"))
+    ///     .spec(include_str!("openapi.yaml"))
     ///     .audiences(["public"])
     ///     .run();
     /// ```
@@ -784,7 +611,7 @@ impl CliApp {
     ///
     /// ```ignore
     /// CliApp::new("api")
-    ///     .spec(include_str!("openapi.json"))
+    ///     .spec(include_str!("openapi.yaml"))
     ///     .idempotency_header_env("Idempotency-Key", "API_IDEMPOTENCY_KEY")
     ///     .run();
     /// ```
@@ -808,8 +635,8 @@ impl CliApp {
     ///   3. The built-in default (if any)
     ///   4. Otherwise, errors with a helpful message
     ///
-    /// Used for multi-tenant APIs where every URL is parameterized
-    /// (e.g. `https://api.example.com/stores/{store_hash}/v3`). Variables
+    /// Used for multi-tenant APIs where every URL is parameterized — the
+    /// canonical example is BigCommerce's `{store_hash}`. Variables
     /// referenced in `servers[].url` but not registered here remain literal
     /// in the URL (and the request will fail at send time), so registering
     /// them is effectively required.
@@ -942,7 +769,7 @@ impl CliApp {
     /// deep-merged onto the spec before parsing.
     ///
     /// ```ignore
-    /// CliApp::new("myapi")
+    /// CliApp::new("bigcommerce")
     ///     .specs_under_named_with_overrides("v3", [
     ///         ("customers",
     ///          include_str!("specs/management/customers.v3.yml"),
@@ -988,7 +815,7 @@ impl CliApp {
     /// use fern_cli_sdk::openapi::CliApp;
     ///
     /// CliApp::new("my-api")
-    ///     .spec(include_str!("openapi.json"))
+    ///     .spec(include_str!("openapi.yaml"))
     ///     .overlay(include_str!("overlay.yaml"))
     ///     .auth_scheme_env("bearerAuth", "MY_API_TOKEN")
     ///     .run()
@@ -1093,7 +920,7 @@ impl CliApp {
     ///
     /// ```ignore
     /// CliApp::new("api")
-    ///     .spec(include_str!("openapi.json"))
+    ///     .spec(include_str!("openapi.yaml"))
     ///     .auth_scheme_env("bearerAuth", "API_TOKEN")
     ///     .run();
     /// ```
@@ -1205,40 +1032,6 @@ impl CliApp {
         self
     }
 
-    /// Register a custom top-level subcommand with its handler function.
-    ///
-    /// Equivalent to [`command_under`](Self::command_under) with an empty path.
-    pub fn command(mut self, cmd: clap::Command, handler: HandlerFn) -> Self {
-        self.custom_commands.register(cmd, handler);
-        self
-    }
-
-    /// Register a custom subcommand under an existing path in the spec-derived
-    /// command tree. Useful for adding a new leaf alongside spec-generated
-    /// commands (e.g. grafting `webhooks verify` next to a spec-generated
-    /// `webhooks list` and `webhooks create`).
-    ///
-    /// - `path` — the parent path the command should be grafted under. An
-    ///   empty path registers the command at the top level. Intermediate
-    ///   parents that do not yet exist are auto-created.
-    /// - `cmd` — the leaf [`clap::Command`]. Its name becomes the final
-    ///   segment of the path.
-    /// - `handler` — invoked with the [`clap::ArgMatches`] for the leaf and
-    ///   the [`AppContext`].
-    ///
-    /// If a subcommand with the same leaf name already exists at the target
-    /// path (e.g. from the OpenAPI spec), it is **replaced** by `cmd` —
-    /// custom commands take precedence on leaf collisions.
-    pub fn command_under<S: AsRef<str>>(
-        mut self,
-        path: &[S],
-        cmd: clap::Command,
-        handler: HandlerFn,
-    ) -> Self {
-        self.custom_commands.register_under(path, cmd, handler);
-        self
-    }
-
     /// Register an extra trust root that this CLI will accept on top of the
     /// system's default roots. `pem` must be a PEM-encoded certificate (or
     /// concatenated PEM bundle), typically loaded with `include_bytes!`.
@@ -1250,7 +1043,7 @@ impl CliApp {
     /// ```ignore
     /// # // ignored: needs a real PEM file at the include path.
     /// CliApp::new("internal-tool")
-    ///     .spec(include_str!("openapi.json"))
+    ///     .spec(include_str!("openapi.yaml"))
     ///     .extra_root_cert(include_bytes!("../certs/corp-ca.pem"))
     ///     .run()
     /// ```
@@ -1269,371 +1062,208 @@ impl CliApp {
         self
     }
 
-    /// Run the CLI application. This is the main entry point.
-    ///
-    /// Builds a tokio runtime internally so the caller's `main()` does not
-    /// need to be async.
-    pub fn run(self) {
-        // Reset SIGPIPE to default so piped output (e.g. `| head`) doesn't
-        // panic. Must happen before any I/O.
-        crate::reset_sigpipe();
-
-        // Load .env file if present (silently ignored if missing)
-        let _ = dotenvy::dotenv();
-
-        // Initialize structured logging (no-op if env vars are unset)
-        crate::init_logging(&self.name);
-
-        let rt = tokio::runtime::Runtime::new().expect("Failed to create tokio runtime");
-        if let Err(err) = rt.block_on(self.run_async()) {
-            print_error_json(&err);
-            std::process::exit(err.exit_code());
-        }
-    }
-
-    /// The async implementation of the CLI run loop.
-    async fn run_async(mut self) -> Result<(), CliError> {
-        let args: Vec<String> = std::env::args().collect();
-
-        // Handle --version early (before loading spec)
-        if args.iter().any(|a| cli_args::is_version_flag(a)) {
-            println!("{} {}", self.name, env!("CARGO_PKG_VERSION"));
-            return Ok(());
-        }
-
-        // Build the HTTP config once per run. Holds the binary name (used to
-        // scope env-var lookups) and any compile-time trust roots. The roots
-        // were already validated at builder time; we just thread the parsed
-        // certs through.
-        let http_config = crate::http::HttpConfig::new(&self.name)?
-            .with_parsed_root_certs(
-                self.extra_root_certs.iter().cloned(),
-                self.extra_root_certs_pem.iter().cloned(),
-            );
-
-        // Load and merge all API specs
-        let mut doc = self.build_doc()?;
-
-        // Apply the audience filter *before* anything else inspects
-        // `doc`. The filter physically removes operations whose
-        // `x-fern-audiences` doesn't intersect the binary's preset
-        // audience set, so excluded operations never appear in:
-        //   - the JSON help output below (`render_json_help`),
-        //   - the clap command tree (`build_cli`),
-        //   - `--help` for any subcommand,
-        //   - completions / introspection.
-        //
-        // Mirrors fern-api/fern's "drop from IR" semantics
-        // (`openapi-ir-parser/src/openapi/v3/generateIr.ts:117-143`).
-        // The audience list is configured by the binary's `main.rs` via
-        // [`Self::audiences`] — a compile-time preset, not a runtime
-        // flag. An empty preset is a no-op (every operation included).
-        commands::filter_doc_by_audiences(&mut doc, &self.audiences);
-
-        // Intercept --help --format json before clap parses, to emit machine-readable output
-        if cli_args::wants_json_help(&args) {
-            let path = cli_args::extract_subcommand_path(&args);
-            return crate::openapi::help::render_json_help(&doc, &path);
-        }
-
-        // Intercept `<cli> completion <shell>` early — before normal API
-        // dispatch — so a spec resource named "completion" doesn't collide.
-        // Builds the full command tree (including global flags) so the
-        // generated script covers the entire CLI surface.
-        if crate::completions::wants_completion(&args) {
-            // Extract the shell name: positional #1 (since `completion`
-            // is positional #0), applying the same BOOLEAN_FLAGS-aware
-            // skip logic so `--base-url <URL>` doesn't leak as the shell.
-            let raw_shell_arg: Option<&str> =
-                crate::early_intercept::nth_positional(&args, 1);
-
-            let base = self
-                .custom_commands
-                .graft_into(commands::build_cli(&doc))
-                .subcommand(crate::completions::completion_command())
-                .subcommand(crate::man::man_command());
-
-            match raw_shell_arg {
-                Some(s) => match crate::completions::parse_shell(s) {
-                    Some(shell) => {
-                        let mut full_cmd = register_global_flags(
-                            base,
-                            &self.server_vars,
-                            &doc,
-                            &self.auth_bindings,
-                        );
-                        crate::completions::generate_completion(
-                            shell,
-                            &mut full_cmd,
-                            &self.name,
-                        )
-                        .map_err(|e| CliError::Other(e.into()))?;
-                        return Ok(());
-                    }
-                    None => {
-                        return Err(CliError::Validation(format!(
-                            "invalid shell: '{s}'. Expected one of: bash, zsh, fish, powershell, elvish"
-                        )));
-                    }
-                },
-                None => {
-                    // No shell argument — print friendly help and exit 0.
-                    let mut full_cmd = register_global_flags(
-                        base,
-                        &self.server_vars,
-                        &doc,
-                        &self.auth_bindings,
-                    );
-                    if let Some(sub) = full_cmd.find_subcommand_mut("completion") {
-                        sub.print_help().ok();
-                    }
-                    return Ok(());
-                }
-            }
-        }
-
-        // Intercept `<cli> man` early — same pattern as completion above.
-        // If `--help` / `-h` appears after `man`, fall through to normal
-        // clap dispatch so the subcommand help (with EXAMPLES) is shown
-        // instead of generating the man page.
-        if crate::man::wants_man(&args) {
-            let has_help = args.iter().skip(1).skip_while(|a| a.as_str() != "man").skip(1)
-                .any(|a| a == "--help" || a == "-h");
-            let base = self
-                .custom_commands
-                .graft_into(commands::build_cli(&doc))
-                .subcommand(crate::completions::completion_command())
-                .subcommand(crate::man::man_command());
-            let mut full_cmd =
-                register_global_flags(base, &self.server_vars, &doc, &self.auth_bindings);
-            if has_help {
-                if let Some(sub) = full_cmd.find_subcommand_mut("man") {
-                    sub.print_help().ok();
-                }
-                return Ok(());
-            }
-            crate::man::generate_man(full_cmd, &self.name)
-                .map_err(|e| CliError::Other(e.into()))?;
-            return Ok(());
-        }
-
-        // Build the dynamic command tree, then graft custom commands into
-        // it. Empty path → top-level. On leaf-name collision with a
-        // spec-generated command, custom wins. The `completion` and `man`
-        // subcommands are also registered here so they appear in `--help`.
-        let base = self
-            .custom_commands
-            .graft_into(commands::build_cli(&doc))
-            .subcommand(crate::completions::completion_command())
-            .subcommand(crate::man::man_command());
-
-        let RegisterGlobalFlagsResult { cmd: mut cli, global_headers_section } =
-            register_global_flags_with_help(base, &self.server_vars, &doc, &self.auth_bindings);
-
+    /// Decorate a clap `Command` with server-variable flags, SDK-variable
+    /// flags, global-header flags, and the composed help footer.
+    /// Called from `OpenApiBinding::build_command()` to replicate what the
+    /// old `run_async` pipeline used to do inline.
+    pub(crate) fn decorate_command(
+        &self,
+        doc: &RestDescription,
+        mut cli: clap::Command,
+    ) -> clap::Command {
         let auth_section = crate::auth::render_auth_help_section(&self.auth_bindings);
+
+        // Server-variable flags (e.g. `--store-hash` for {store_hash}).
+        for var in &self.server_vars {
+            let kebab = var.name.replace('_', "-");
+            let help_text = var
+                .description
+                .clone()
+                .unwrap_or_else(|| {
+                    format!("Value for the {{{}}} URL template variable", var.name)
+                });
+            let mut arg = clap::Arg::new(var.name.clone())
+                .long(kebab)
+                .global(true)
+                .value_name(var.name.to_uppercase())
+                .help(help_text);
+            if let Some(env) = &var.env_var {
+                arg = arg.env(env.clone());
+            }
+            if let Some(default) = &var.default {
+                arg = arg.default_value(default.clone());
+            }
+            cli = cli.arg(arg);
+        }
+
+        // SDK-variable flags (`x-fern-sdk-variables`).
+        for var in &doc.sdk_variables {
+            let kebab = crate::text::to_kebab_flag(&var.name);
+            if sdk_variable_collides_with_builtin(&kebab) {
+                tracing::warn!(
+                    variable = %var.name,
+                    flag = %kebab,
+                    "SDK variable flag collides with built-in; skipping"
+                );
+                continue;
+            }
+            let screaming = crate::text::to_screaming_snake(&var.name);
+            let mut arg = clap::Arg::new(var.name.clone())
+                .long(kebab)
+                .global(true)
+                .value_name(screaming.clone())
+                .env(screaming);
+            if let Some(desc) = &var.description {
+                arg = arg.help(desc.clone());
+            }
+            cli = cli.arg(arg);
+        }
+
+        // Global-header flags (`x-fern-global-headers`).
+        use std::collections::HashSet;
+        let mut registered_kebabs: HashSet<String> = HashSet::new();
+        let mut global_header_help_pairs: Vec<(String, String)> = Vec::new();
+        for h in &doc.global_headers {
+            let kebab = global_header_flag_name(h);
+            if global_header_flag_collides_with_builtin(&kebab) {
+                tracing::warn!(
+                    header = %h.header,
+                    flag = %kebab,
+                    "Global-header flag collides with built-in; skipping"
+                );
+                continue;
+            }
+            if !registered_kebabs.insert(kebab.clone()) {
+                tracing::warn!(
+                    header = %h.header,
+                    flag = %kebab,
+                    "Duplicate global-header flag; skipping"
+                );
+                continue;
+            }
+            let arg_id = global_header_arg_id(h);
+            let value_name = crate::text::to_screaming_snake(&kebab);
+            let mut help_lines: Vec<String> =
+                vec![format!("Global header `{}` (sent on every request).", h.header)];
+            if let Some(env) = &h.env {
+                help_lines.push(format!("Env: {env}."));
+            }
+            if let Some(def) = &h.default {
+                help_lines.push(format!("Default: {def}."));
+            } else if !h.optional {
+                help_lines.push("Required.".to_string());
+            }
+            let help_text = help_lines.join(" ");
+            let prefix = format!("--{kebab} <{value_name}>");
+            global_header_help_pairs.push((prefix, help_text.clone()));
+            let mut arg = clap::Arg::new(arg_id)
+                .long(kebab)
+                .global(true)
+                .hide(true)
+                .value_name(value_name)
+                .help(help_text);
+            if let Some(env) = &h.env {
+                arg = arg.env(env.clone());
+            }
+            if let Some(def) = &h.default {
+                arg = arg.default_value(def.clone());
+            }
+            cli = cli.arg(arg);
+        }
+
+        // Compose the root --help footer. Preserves the section order
+        // from the old run_async path: global headers → auth → env vars.
+        let existing_after_help = cli.get_after_help().map(|s| s.to_string());
+        let global_headers_section: Option<String> = if global_header_help_pairs.is_empty() {
+            None
+        } else {
+            let prefix_width = global_header_help_pairs
+                .iter()
+                .map(|(p, _)| p.chars().count())
+                .max()
+                .unwrap_or(0);
+            let rows: Vec<String> = global_header_help_pairs
+                .iter()
+                .map(|(prefix, help)| {
+                    let pad = prefix_width.saturating_sub(prefix.chars().count());
+                    format!("  {prefix}{:pad$}  {help}", "", pad = pad)
+                })
+                .collect();
+            Some(format!("Global headers:\n{}", rows.join("\n")))
+        };
+        let env_footer = super::commands::after_help_footer(&doc.name);
+        let base_footer = match existing_after_help {
+            Some(ref s) if !s.is_empty() => format!("{s}\n{env_footer}"),
+            _ => env_footer,
+        };
         cli = cli.after_help(compose_root_after_help_sections(
             global_headers_section.as_deref(),
             auth_section.as_deref(),
-            &commands::after_help_footer(&doc.name),
+            &base_footer,
         ));
 
-        // Parse args. clap raises a special `DisplayHelp*` "error" both for
-        // explicit `--help` and for the implicit help from
-        // `arg_required_else_help` — neither is a real failure, so print to
-        // stdout and exit 0 instead of wrapping in a validation error JSON.
-        let matches = cli.try_get_matches_from(&args).map_err(|e| {
-            if e.kind() == clap::error::ErrorKind::DisplayHelp
-                || e.kind() == clap::error::ErrorKind::DisplayHelpOnMissingArgumentOrSubcommand
-                || e.kind() == clap::error::ErrorKind::DisplayVersion
-            {
-                print!("{e}");
-                std::process::exit(0);
-            }
-            CliError::Validation(e.to_string())
-        })?;
+        cli
+    }
 
-        // Finalize auth bindings against the parsed matches. After this,
-        // any `AuthCredentialSource::Cli(name)` in the bindings is replaced
-        // with a closure reading from the matches — so `build_auth_provider`
-        // (called below for both custom-command dispatch and regular
-        // execution) sees a fully resolvable provider.
-        if !self.auth_bindings.is_empty() {
-            let matches_arc = std::sync::Arc::new(matches.clone());
-            self.auth_bindings = crate::auth::finalize_bindings(
-                std::mem::take(&mut self.auth_bindings),
-                &matches_arc,
-            );
-        }
-
-        // Substitute server variables in root_urls. Clap pulls from --flag
-        // first, then the registered env var (via .env()), then the default,
-        // so a single get_one lookup covers the full priority chain.
-        if !self.server_vars.is_empty() {
-            let mut substitutions: std::collections::HashMap<String, String> =
-                std::collections::HashMap::new();
-            for var in &self.server_vars {
-                if let Some(value) = matches.get_one::<String>(&var.name) {
-                    substitutions.insert(var.name.clone(), value.clone());
-                }
-            }
-            apply_server_var_substitutions(&mut doc, &substitutions);
-        }
-
-        // Dispatch to a custom command if one was invoked.
-        if !self.custom_commands.is_empty() {
-            let auth_provider = self.build_auth_provider(&doc);
-            // Resolve global headers once for custom-command handlers.
-            // Required-header validation is deferred until execute/invoke
-            // is called, because the per-op override check needs to know
-            // the operation. Here we only collect CLI/env/default values.
-            let resolved_global_headers: Vec<(String, String)> = doc
-                .global_headers
-                .iter()
-                .filter_map(|h| resolve_global_header_value(&matches, h).map(|v| (h.header.clone(), v)))
-                .collect();
-            let ctx = AppContext {
-                doc: doc.clone(),
-                auth_provider,
-                http_config: http_config.clone(),
-                global_headers: resolved_global_headers,
-            };
-            if let Some(result) = self.custom_commands.dispatch(&matches, &ctx) {
-                return result;
+    /// Resolve server variable values from clap matches and substitute
+    /// them into the doc's URLs.
+    pub(crate) fn apply_server_vars(
+        &self,
+        doc: &mut RestDescription,
+        matches: &clap::ArgMatches,
+    ) {
+        let mut subs = std::collections::HashMap::new();
+        for var in &self.server_vars {
+            if let Some(val) = matches.get_one::<String>(&var.name) {
+                subs.insert(var.name.clone(), val.clone());
             }
         }
+        apply_server_var_substitutions(doc, &subs);
+    }
 
-        // Build the output pipeline (format + color + later: --fields/--jq/--template).
-        let pipeline = formatter::OutputPipeline::from_matches(&matches)
-            .map_err(|e| CliError::Validation(e.to_string()))?;
+    /// Handle the `generate-skills` subcommand: validate the output
+    /// path, emit SKILL.md files, and report to stderr.
+    pub(crate) fn handle_generate_skills(
+        &self,
+        output_dir: Option<&str>,
+        doc: &RestDescription,
+    ) -> Result<(), CliError> {
+        let out_dir = output_dir.unwrap_or("skills").to_string();
+        let resolved = crate::validate::validate_safe_output_dir(&out_dir)?;
 
-        // Walk the subcommand tree to find the target method
-        let (method, matched_args) = resolve_method_from_matches(&doc, &matches)?;
+        let files =
+            crate::openapi::skill_emitter::generate_skills(doc, &self.name, &self.auth_bindings);
 
-        let params_override = matched_args
-            .get_one::<String>("params")
-            .map(|s| s.as_str());
-        let params = collect_params_from_flags(matched_args, method, params_override)?;
-        let params_json_string = serde_json::to_string(&params)
-            .map_err(|e| CliError::Validation(format!("Failed to serialize params: {e}")))?;
-        let params_json: Option<&str> = if params.is_empty() {
-            None
-        } else {
-            Some(&params_json_string)
-        };
-        // Resolve the configured `x-fern-global-headers` (CLI > env >
-        // default) and check that required ones have a value, deferring
-        // to per-op overrides where the operation declares a header
-        // parameter with the same wire-name. Built once per invocation
-        // and stamped on every outgoing request inside the executor.
-        let global_header_overrides =
-            build_global_header_overrides(matched_args, &doc, method, &params)?;
-        let body_json = matched_args
-            .try_get_one::<String>("json")
-            .ok()
-            .flatten()
-            .map(|s| s.as_str());
-        // The binary-body flag name is per-operation (driven by
-        // `x-fern-parameter-name` or the schema's `format: binary` default).
-        // Look it up only for methods that declare one. The raw value is
-        // parsed by the executor into one of three forms — plain path,
-        // `@<path>`, or `-` for stdin — so we only reject control characters
-        // here (and only on the path-bearing forms).
-        let binary_body_path = method
-            .binary_request_body
-            .as_ref()
-            .and_then(|b| {
-                matched_args
-                    .try_get_one::<String>(&b.flag_name)
-                    .ok()
-                    .flatten()
-                    .map(|s| (b.flag_name.clone(), s.as_str()))
-            });
-        if let Some((ref flag, p)) = binary_body_path {
-            let stripped = p.strip_prefix('@').unwrap_or(p);
-            if stripped != "-" {
-                crate::output::reject_dangerous_chars(stripped, &format!("--{flag}"))?;
+        for (rel_path, content) in &files {
+            let full_path = resolved.join(rel_path);
+            if let Some(parent) = full_path.parent() {
+                std::fs::create_dir_all(parent).map_err(|e| {
+                    CliError::Validation(format!(
+                        "Failed to create directory {}: {e}",
+                        parent.display()
+                    ))
+                })?;
             }
+            std::fs::write(&full_path, content).map_err(|e| {
+                CliError::Validation(format!(
+                    "Failed to write {}: {e}",
+                    full_path.display()
+                ))
+            })?;
         }
-        let binary_body_path = binary_body_path.as_ref().map(|(_, p)| *p);
-        let output_path = matched_args
-            .get_one::<String>("output")
-            .map(|s| s.as_str());
 
-        // Validate file paths against traversal
-        let output_path_buf = if let Some(p) = output_path {
-            Some(crate::validate::validate_safe_file_path(p, "--output")?)
-        } else {
-            None
-        };
-        let output_path = output_path_buf.as_deref().and_then(|p| p.to_str());
-
-        let dry_run = matched_args.get_flag("dry-run");
-
-        // Build pagination config with API-specific token names
-        let pagination = build_pagination_config(matched_args, &doc);
-
-        // Build the auth provider once, from the registered bindings
-        // lowered against the spec's `components.securitySchemes`.
-        let auth_provider = self.build_auth_provider(&doc);
-
-        // --base-url flag wins; otherwise {NAME}_BASE_URL env var.
-        let base_url_override_owned = cli_args::resolve_base_url_override(&matches, &self.name)?;
-        let base_url_override = base_url_override_owned.as_deref();
-
-        // Honor `x-fern-sdk-return-value` extraction unless the caller
-        // passes `--no-extract`. The flag is a debugging escape hatch
-        // that prints the full response body; matches the upstream
-        // behavior of falling back to the raw response when the SDK
-        // can't (or shouldn't) project to the named property.
-        let no_extract = matched_args.get_flag("no-extract");
-
-        // Honor `--no-retry` as a debug-only opt-out. When set, the
-        // executor skips the retry wrapper regardless of the operation's
-        // `x-fern-retries` policy — including transient network errors —
-        // so failures surface immediately. Aligns with the open design
-        // question called out in the FER-9864 PR description.
-        let no_retry = matched_args.get_flag("no-retry");
-
-        // `--no-stream` is only registered on operations with
-        // `x-fern-streaming` (see `build_method_command`). Use
-        // `try_get_one` so the flag-absent case is a clean false
-        // rather than a panic on unknown-arg lookup.
-        let no_stream = matched_args
-            .try_get_one::<bool>("no-stream")
-            .ok()
-            .flatten()
-            .copied()
-            .unwrap_or(false);
-
-        // Execute
-        executor::execute_method(
-            &doc,
-            method,
-            params_json,
-            body_json,
-            &auth_provider,
-            output_path,
-            None, // no upload
-            binary_body_path,
-            dry_run,
-            &pagination,
-            &pipeline,
-            false,
-            base_url_override,
-            &http_config,
-            no_extract,
-            no_retry,
-            no_stream,
-            &global_header_overrides,
-        )
-        .await
-        .map(|_| ())
+        eprintln!(
+            "Wrote {} skill file(s) to {}/",
+            files.len(),
+            resolved.display()
+        );
+        Ok(())
     }
 
     /// Construct the [`DynAuthProvider`] used for this run from the
     /// registered bindings. With no bindings, returns a `NoAuthProvider`
     /// — the CLI runs unauthenticated.
-    fn build_auth_provider(&self, doc: &RestDescription) -> DynAuthProvider {
+    pub(crate) fn build_auth_provider(&self, doc: &RestDescription) -> DynAuthProvider {
         let has_per_endpoint = doc.resources.values().any(resource_has_per_endpoint_security);
         crate::auth::build_provider_with_strategy(
             &self.auth_bindings,
@@ -1642,24 +1272,88 @@ impl CliApp {
             has_per_endpoint,
         )
     }
+
+    /// Build an auth provider from externally-finalized bindings.
+    /// Used by `OpenApiBinding::dispatch` after CLI-bound auth sources
+    /// have been resolved against the parsed clap matches.
+    pub(crate) fn build_auth_provider_from_finalized(
+        &self,
+        finalized: &[(String, crate::auth::SchemeBinding)],
+        doc: &RestDescription,
+    ) -> DynAuthProvider {
+        let has_per_endpoint = doc.resources.values().any(resource_has_per_endpoint_security);
+        crate::auth::build_provider_with_strategy(
+            finalized,
+            &doc.security_schemes,
+            self.auth_strategy,
+            has_per_endpoint,
+        )
+    }
+}
+
+/// One binding's worth of prepared state inside an [`AppContext`].
+///
+/// When a CLI registers multiple `OpenApiBinding`s, each contributes one
+/// entry. Method lookups and execution are routed to the entry whose
+/// spec owns the target method.
+pub(crate) struct BindingEntry {
+    pub(crate) doc: RestDescription,
+    pub(crate) auth_provider: DynAuthProvider,
+    pub(crate) http_config: crate::http::HttpConfig,
+    pub(crate) global_headers: Vec<(String, String)>,
 }
 
 /// Runtime context passed to custom command handlers.
 ///
-/// Provides access to the loaded API spec, the constructed auth provider,
-/// and a convenience method for executing API methods.
+/// Provides access to the loaded API spec(s), the constructed auth
+/// provider(s), and convenience methods for executing API methods.
+///
+/// When multiple `OpenApiBinding`s are registered on the same `CliApp`,
+/// `AppContext` holds all of their specs. Method lookups and
+/// `execute()`/`invoke()` calls are automatically routed to the binding
+/// that owns the target method — callers do not need to know which
+/// binding a method came from.
 pub struct AppContext {
-    doc: RestDescription,
-    auth_provider: DynAuthProvider,
-    http_config: crate::http::HttpConfig,
-    /// Resolved `x-fern-global-headers` for this CLI invocation
-    /// (CLI flag > env var > default, computed up front in `run_async`).
-    /// Per-op overrides are applied at the call site of `execute_method`
-    /// — see [`AppContext::extra_headers_for`].
-    global_headers: Vec<(String, String)>,
+    entries: Vec<BindingEntry>,
+    /// Whether `--quiet` was passed on the command line. Threaded into
+    /// `OutputPipeline` by [`AppContext::execute`] so custom commands
+    /// honor the flag.
+    quiet: bool,
 }
 
 impl AppContext {
+    pub(crate) fn new(
+        doc: RestDescription,
+        auth_provider: DynAuthProvider,
+        http_config: crate::http::HttpConfig,
+        global_headers: Vec<(String, String)>,
+    ) -> Self {
+        Self {
+            entries: vec![BindingEntry { doc, auth_provider, http_config, global_headers }],
+            quiet: false,
+        }
+    }
+
+    pub(crate) fn with_quiet(mut self, quiet: bool) -> Self {
+        self.quiet = quiet;
+        self
+    }
+
+    /// Add another binding's prepared state to this context.
+    pub(crate) fn add_entry(&mut self, entry: BindingEntry) {
+        self.entries.push(entry);
+    }
+
+    /// Find which entry owns `method` by pointer identity.
+    fn entry_for_method(&self, method: &RestMethod) -> &BindingEntry {
+        for entry in &self.entries {
+            if resource_tree_contains_method(&entry.doc.resources, method) {
+                return entry;
+            }
+        }
+        &self.entries[0]
+    }
+
     /// Compute the per-op `extra_headers` slice from the pre-resolved
     /// global headers, suppressing entries whose wire-name is also
     /// supplied as a per-op `header` parameter via `params_json`
@@ -1673,8 +1367,19 @@ impl AppContext {
     /// per-op value takes its place on the wire). This mirrors
     /// `build_global_header_overrides` on the built-in command path so
     /// custom-command handlers get the same validation error shape.
+    #[cfg(test)]
     fn extra_headers_for(
         &self,
+        method: &RestMethod,
+        params_json: Option<&str>,
+    ) -> Result<Vec<(String, String)>, CliError> {
+        let entry = self.entry_for_method(method);
+        self.extra_headers_for_entry(entry, method, params_json)
+    }
+
+    fn extra_headers_for_entry(
+        &self,
+        entry: &BindingEntry,
         method: &RestMethod,
         params_json: Option<&str>,
     ) -> Result<Vec<(String, String)>, CliError> {
@@ -1687,12 +1392,12 @@ impl AppContext {
         // the lookup table by lowercased wire-name so a custom-command
         // handler that resolved `x-api-stage` still satisfies the spec's
         // declared `X-API-Stage` global.
-        let resolved_by_wire: std::collections::HashMap<String, &str> = self
+        let resolved_by_wire: std::collections::HashMap<String, &str> = entry
             .global_headers
             .iter()
             .map(|(n, v)| (n.to_ascii_lowercase(), v.as_str()))
             .collect();
-        finalize_global_header_overrides(&self.doc.global_headers, method, &params, |h| {
+        finalize_global_header_overrides(&entry.doc.global_headers, method, &params, |h| {
             resolved_by_wire
                 .get(&h.header.to_ascii_lowercase())
                 .map(|v| (*v).to_string())
@@ -1700,7 +1405,7 @@ impl AppContext {
     }
 
     /// Execute an API method by name, using the same executor as built-in
-    /// commands.
+    /// commands. Automatically routes to the binding that owns `method`.
     pub fn execute(
         &self,
         method: &RestMethod,
@@ -1708,16 +1413,17 @@ impl AppContext {
         body_json: Option<&str>,
         output_format: &formatter::OutputFormat,
     ) -> Result<(), CliError> {
+        let entry = self.entry_for_method(method);
         let pagination = executor::PaginationConfig {
             page_all: false,
             page_limit: 10,
             page_delay_ms: 100,
-            token_query_param: self
+            token_query_param: entry
                 .doc
                 .pagination_token_query_param
                 .clone()
                 .unwrap_or_else(|| "pageToken".to_string()),
-            token_response_path: self
+            token_response_path: entry
                 .doc
                 .pagination_token_response_path
                 .clone()
@@ -1727,8 +1433,9 @@ impl AppContext {
         let pipeline = formatter::OutputPipeline {
             format: output_format.clone(),
             color_mode: formatter::ColorMode::default(),
+            quiet: self.quiet,
         };
-        let extra_headers = self.extra_headers_for(method, params_json)?;
+        let extra_headers = self.extra_headers_for_entry(entry, method, params_json)?;
 
         // Custom commands dispatch from inside `run_async`, which is itself
         // driven by a tokio runtime. Naively calling `block_on` from a sync
@@ -1736,11 +1443,11 @@ impl AppContext {
         // `block_in_place` parks the current worker so `block_on` is legal.
         tokio::task::block_in_place(|| {
             tokio::runtime::Handle::current().block_on(executor::execute_method(
-                &self.doc,
+                &entry.doc,
                 method,
                 params_json,
                 body_json,
-                &self.auth_provider,
+                &entry.auth_provider,
                 None,
                 None,
                 None,
@@ -1749,7 +1456,7 @@ impl AppContext {
                 &pipeline,
                 false,
                 None,
-                &self.http_config,
+                &entry.http_config,
                 // TODO(mcp/programmatic): programmatic callers always
                 // honor `x-fern-sdk-return-value` (matches typed-SDK
                 // semantics). If/when an MCP-tool surface wraps this
@@ -1782,7 +1489,7 @@ impl AppContext {
     ///
     /// Like [`execute`](Self::execute) but captures the response instead of
     /// printing it, and accepts a `binary_body_path` for operations with a
-    /// binary request body (e.g. a multipart file upload). Designed for
+    /// binary request body (e.g. AssemblyAI's `/v2/upload`). Designed for
     /// custom commands that chain multiple API calls.
     pub fn invoke(
         &self,
@@ -1791,32 +1498,33 @@ impl AppContext {
         body_json: Option<&str>,
         binary_body_path: Option<&str>,
     ) -> Result<serde_json::Value, CliError> {
+        let entry = self.entry_for_method(method);
         let pagination = executor::PaginationConfig {
             page_all: false,
             page_limit: 10,
             page_delay_ms: 100,
-            token_query_param: self
+            token_query_param: entry
                 .doc
                 .pagination_token_query_param
                 .clone()
                 .unwrap_or_else(|| "pageToken".to_string()),
-            token_response_path: self
+            token_response_path: entry
                 .doc
                 .pagination_token_response_path
                 .clone()
                 .unwrap_or_else(|| "nextPageToken".to_string()),
         };
 
-        let extra_headers = self.extra_headers_for(method, params_json)?;
+        let extra_headers = self.extra_headers_for_entry(entry, method, params_json)?;
         // See note in `execute` — `block_in_place` is required because the
         // handler runs inside the outer tokio runtime.
         let value = tokio::task::block_in_place(|| {
             tokio::runtime::Handle::current().block_on(executor::execute_method(
-                &self.doc,
+                &entry.doc,
                 method,
                 params_json,
                 body_json,
-                &self.auth_provider,
+                &entry.auth_provider,
                 None,
                 None,
                 binary_body_path,
@@ -1825,7 +1533,7 @@ impl AppContext {
                 &formatter::OutputPipeline::default(),
                 true, // capture_output
                 None,
-                &self.http_config,
+                &entry.http_config,
                 // See TODO in `execute` above — same trade-off applies
                 // here: chained custom commands expect the
                 // spec-promised subvalue, not the raw envelope.
@@ -1853,8 +1561,42 @@ impl AppContext {
     }
 
     /// Returns a reference to the loaded API spec.
+    ///
+    /// When multiple `OpenApiBinding`s are registered, this returns the
+    /// first binding's spec. Use [`find_method`](Self::find_method) to
+    /// search across all bindings.
     pub fn spec(&self) -> &RestDescription {
-        &self.doc
+        &self.entries[0].doc
+    }
+
+    /// Returns references to all loaded API specs.
+    ///
+    /// Each entry corresponds to one `OpenApiBinding` registered on the
+    /// `CliApp`. For single-binding CLIs the slice has exactly one element.
+    pub fn specs(&self) -> Vec<&RestDescription> {
+        self.entries.iter().map(|e| &e.doc).collect()
+    }
+
+    /// Search all registered specs for a method at `resource.method_name`.
+    ///
+    /// This is the recommended way to look up methods in a multi-binding
+    /// CLI — it searches across all bindings and returns the first match.
+    pub fn find_method(
+        &self,
+        resource: &str,
+        method_name: &str,
+    ) -> Result<&RestMethod, CliError> {
+        for entry in &self.entries {
+            if let Some(r) = entry.doc.resources.get(resource) {
+                if let Some(m) = r.methods.get(method_name) {
+                    return Ok(m);
+                }
+            }
+        }
+        Err(CliError::Validation(format!(
+            "no method '{method_name}' found in resource '{resource}' across {} binding(s)",
+            self.entries.len(),
+        )))
     }
 
     /// Returns a reference to the HTTP/TLS configuration for this CLI run.
@@ -1871,9 +1613,30 @@ impl AppContext {
     /// [`AuthCredentialSource`](crate::auth::AuthCredentialSource) directly
     /// at the call site. See `docs/adr/0001-auth-provider-no-cred-extraction.md`.
     pub fn http_config(&self) -> &crate::http::HttpConfig {
-        &self.http_config
+        &self.entries[0].http_config
     }
 
+}
+
+/// Recursively check whether any method in the resource tree is the
+/// same object (pointer-equal) as `target`. Used by
+/// [`AppContext::entry_for_method`] to route `execute()`/`invoke()`
+/// to the correct binding's auth and HTTP config.
+fn resource_tree_contains_method(
+    resources: &std::collections::HashMap<String, RestResource>,
+    target: &RestMethod,
+) -> bool {
+    for resource in resources.values() {
+        for m in resource.methods.values() {
+            if std::ptr::eq(m, target) {
+                return true;
+            }
+        }
+        if resource_tree_contains_method(&resource.resources, target) {
+            return true;
+        }
+    }
+    false
 }
 
 /// Walk a resource (and its sub-resources) for any method that declares
@@ -2308,35 +2071,6 @@ mod tests {
     }
 
     #[test]
-    fn test_cli_app_custom_command() {
-        fn handler(
-            _matches: &clap::ArgMatches,
-            _ctx: &AppContext,
-        ) -> Result<(), CliError> {
-            Ok(())
-        }
-
-        let app = CliApp::new("test")
-            .spec("openapi: 3.0.0\ninfo:\n  title: Test\n  version: '1.0'\npaths: {}")
-            .command(clap::Command::new("custom"), handler);
-
-        assert_eq!(app.custom_commands.len(), 1);
-        assert!(app.custom_commands.entries()[0].0.is_empty());
-        assert_eq!(app.custom_commands.entries()[0].1.get_name(), "custom");
-    }
-
-    #[test]
-    fn test_cli_app_command_under_records_path() {
-        fn handler(_m: &clap::ArgMatches, _c: &AppContext) -> Result<(), CliError> { Ok(()) }
-        let app = CliApp::new("test")
-            .spec("openapi: 3.0.0\ninfo:\n  title: T\n  version: '1.0'\npaths: {}")
-            .command_under(&["webhooks"], clap::Command::new("verify"), handler);
-        assert_eq!(app.custom_commands.len(), 1);
-        assert_eq!(app.custom_commands.entries()[0].0, vec!["webhooks".to_string()]);
-        assert_eq!(app.custom_commands.entries()[0].1.get_name(), "verify");
-    }
-
-    #[test]
     fn test_resolve_method_from_matches_basic() {
         let mut resources = std::collections::HashMap::new();
         let mut files_res = crate::openapi::discovery::RestResource::default();
@@ -2430,15 +2164,15 @@ mod tests {
             }],
             ..Default::default()
         };
-        let ctx = AppContext {
+        let ctx = AppContext::new(
             doc,
-            auth_provider: crate::auth::no_auth_provider(),
-            http_config: crate::http::HttpConfig::new("test").unwrap(),
+            crate::auth::no_auth_provider(),
+            crate::http::HttpConfig::new("test").unwrap(),
             // Note: the custom-command path's filter_map silently
             // dropped this required header. With the fix,
             // extra_headers_for surfaces a validation error.
-            global_headers: Vec::new(),
-        };
+            Vec::new(),
+        );
         let method = RestMethod::default();
         let err = ctx.extra_headers_for(&method, None).unwrap_err();
         let msg = format!("{err}");
@@ -2469,12 +2203,12 @@ mod tests {
             }],
             ..Default::default()
         };
-        let ctx = AppContext {
+        let ctx = AppContext::new(
             doc,
-            auth_provider: crate::auth::no_auth_provider(),
-            http_config: crate::http::HttpConfig::new("test").unwrap(),
-            global_headers: Vec::new(),
-        };
+            crate::auth::no_auth_provider(),
+            crate::http::HttpConfig::new("test").unwrap(),
+            Vec::new(),
+        );
         let mut parameters: HashMap<String, MethodParameter> = HashMap::new();
         parameters.insert(
             "X-API-Stage".into(),
@@ -2512,12 +2246,12 @@ mod tests {
             }],
             ..Default::default()
         };
-        let ctx = AppContext {
+        let ctx = AppContext::new(
             doc,
-            auth_provider: crate::auth::no_auth_provider(),
-            http_config: crate::http::HttpConfig::new("test").unwrap(),
-            global_headers: Vec::new(),
-        };
+            crate::auth::no_auth_provider(),
+            crate::http::HttpConfig::new("test").unwrap(),
+            Vec::new(),
+        );
         let method = RestMethod::default();
         let headers = ctx.extra_headers_for(&method, None).expect("optional ok");
         assert!(headers.is_empty(), "optional with no value: {headers:?}");
@@ -2599,12 +2333,12 @@ mod tests {
             parameters,
             ..Default::default()
         };
-        let ctx = AppContext {
+        let ctx = AppContext::new(
             doc,
-            auth_provider: crate::auth::no_auth_provider(),
-            http_config: crate::http::HttpConfig::new("test").unwrap(),
-            global_headers: Vec::new(),
-        };
+            crate::auth::no_auth_provider(),
+            crate::http::HttpConfig::new("test").unwrap(),
+            Vec::new(),
+        );
         // User supplied the per-op param under a third casing — the
         // override should still kick in, satisfying the required check
         // without a CLI flag / env value.
@@ -2698,13 +2432,84 @@ mod tests {
             name: "test".to_string(),
             ..Default::default()
         };
-        let ctx = AppContext {
+        let ctx = AppContext::new(
             doc,
+            crate::auth::no_auth_provider(),
+            crate::http::HttpConfig::new("test").unwrap(),
+            Vec::new(),
+        );
+        assert_eq!(ctx.spec().name, "test");
+    }
+
+    #[test]
+    fn test_find_method_across_entries() {
+        use std::collections::HashMap;
+
+        let mut res_a = HashMap::new();
+        let mut methods_a = HashMap::new();
+        methods_a.insert("upload".to_string(), RestMethod {
+            id: Some("files.upload".to_string()),
+            ..Default::default()
+        });
+        res_a.insert("files".to_string(), RestResource {
+            methods: methods_a,
+            ..Default::default()
+        });
+
+        let mut res_b = HashMap::new();
+        let mut methods_b = HashMap::new();
+        methods_b.insert("list".to_string(), RestMethod {
+            id: Some("users.list".to_string()),
+            ..Default::default()
+        });
+        res_b.insert("users".to_string(), RestResource {
+            methods: methods_b,
+            ..Default::default()
+        });
+
+        let doc_a = RestDescription {
+            name: "spec-a".to_string(),
+            resources: res_a,
+            ..Default::default()
+        };
+        let doc_b = RestDescription {
+            name: "spec-b".to_string(),
+            resources: res_b,
+            ..Default::default()
+        };
+
+        let mut ctx = AppContext::new(
+            doc_a,
+            crate::auth::no_auth_provider(),
+            crate::http::HttpConfig::new("test").unwrap(),
+            Vec::new(),
+        );
+        ctx.add_entry(BindingEntry {
+            doc: doc_b,
             auth_provider: crate::auth::no_auth_provider(),
             http_config: crate::http::HttpConfig::new("test").unwrap(),
             global_headers: Vec::new(),
-        };
-        assert_eq!(ctx.spec().name, "test");
+        });
+
+        // find_method should find methods from either entry.
+        let m1 = ctx.find_method("files", "upload").expect("should find files.upload");
+        assert_eq!(m1.id.as_deref(), Some("files.upload"));
+
+        let m2 = ctx.find_method("users", "list").expect("should find users.list");
+        assert_eq!(m2.id.as_deref(), Some("users.list"));
+
+        // entry_for_method routes to the correct entry.
+        let entry1 = ctx.entry_for_method(m1);
+        assert_eq!(entry1.doc.name, "spec-a");
+
+        let entry2 = ctx.entry_for_method(m2);
+        assert_eq!(entry2.doc.name, "spec-b");
+
+        // Missing method returns error.
+        assert!(ctx.find_method("orders", "get").is_err());
+
+        // specs() returns both.
+        assert_eq!(ctx.specs().len(), 2);
     }
 
     #[test]
@@ -2770,6 +2575,17 @@ mod tests {
         let matches = cmd.get_matches_from(vec!["test"]);
         let result = collect_params_from_flags(&matches, &method, None).unwrap();
         assert!(result.is_empty());
+    }
+
+    #[test]
+    fn test_load_spec_via_cli_app() {
+        let yaml = include_str!("../../cli/box/openapi.yaml");
+        let app = CliApp::new("box").spec(yaml);
+        assert_eq!(app.name, "box");
+        // Verify the spec can be parsed via build_doc
+        let doc = app.build_doc().unwrap();
+        assert_eq!(doc.name, "box");
+        assert!(doc.resources.len() >= 14);
     }
 
     // ------------------------------------------------------------------
@@ -3122,7 +2938,7 @@ paths:
     #[test]
     fn test_merge_schemas_first_write_wins_on_duplicate() {
         // Multi-spec setups commonly share schema names (`ErrorResponse`,
-        // `Pagination`). A strict-error policy makes such setups
+        // `Pagination`). Strict-error policy made BigCommerce-style use
         // unworkable; first-write-wins lets specs share without manual
         // de-duplication.
         let mut acc = HashMap::new();
@@ -3208,8 +3024,8 @@ paths:
     #[test]
     fn test_spec_under_merges_multiple_specs_into_same_prefix() {
         // Two specs sharing a prefix should merge under it (not error).
-        // Supports use cases where many specs all need to live under a
-        // single namespace (e.g. a versioned `v2` group).
+        // Prevents BigCommerce-style use cases where many v2 specs all need
+        // to live under a single `v2` namespace.
         let spec_a = r#"
 openapi: "3.0.0"
 info: { title: "A", version: "1.0" }
@@ -3336,13 +3152,13 @@ paths:
     fn test_substitute_url_vars_replaces_known_and_leaves_unknown() {
         let mut subs = HashMap::new();
         subs.insert("store_hash".to_string(), "abc123".to_string());
-        let url = "https://api.example.com/stores/{store_hash}/v3/customers/{customer_id}";
+        let url = "https://api.bigcommerce.com/stores/{store_hash}/v3/customers/{customer_id}";
         let out = substitute_url_vars(url, &subs);
         // Known var substituted, unknown left literal so the failure mode is
         // visible in dry-run output and downstream error messages.
         assert_eq!(
             out,
-            "https://api.example.com/stores/abc123/v3/customers/{customer_id}"
+            "https://api.bigcommerce.com/stores/abc123/v3/customers/{customer_id}"
         );
     }
 

@@ -50,7 +50,7 @@ use crate::error::CliError;
 /// and threads it through to the executor.
 #[derive(Clone, Debug)]
 pub struct HttpConfig {
-    /// CLI binary name (e.g. `"myapi"`). Cheap to clone via `Arc`.
+    /// CLI binary name (e.g. `"bigcommerce"`). Cheap to clone via `Arc`.
     name: Arc<str>,
     /// Env-var prefix derived once from `name`: uppercase + `-` → `_`. Cached
     /// so the transform isn't recomputed on every `build_client` call (and
@@ -161,13 +161,13 @@ impl HttpConfig {
         self
     }
 
-    /// CLI binary name (e.g. `"myapi"`).
+    /// CLI binary name (e.g. `"bigcommerce"`).
     pub fn name(&self) -> &str {
         &self.name
     }
 
     /// Env-var prefix derived from the binary name (uppercase, `-` → `_`).
-    /// `MYAPI`, `OTHER_API`, etc. Use this when constructing scoped env vars
+    /// `BIGCOMMERCE`, `BOX`, etc. Use this when constructing scoped env vars
     /// so the transform stays consistent across the codebase.
     pub fn env_prefix(&self) -> &str {
         &self.prefix
@@ -424,8 +424,8 @@ fn is_first_emission(name: &str, kind: &str) -> bool {
 // Env-var helpers
 // ----------------------------------------------------------------------------
 
-/// Format a scoped env-var name. `scoped("MYAPI", "_CA_BUNDLE")` →
-/// `"MYAPI_CA_BUNDLE"`.
+/// Format a scoped env-var name. `scoped("BIGCOMMERCE", "_CA_BUNDLE")` →
+/// `"BIGCOMMERCE_CA_BUNDLE"`.
 fn scoped(prefix: &str, suffix: &str) -> String {
     format!("{prefix}{suffix}")
 }
@@ -531,7 +531,7 @@ mod tests {
     #[test]
     #[serial_test::serial]
     fn build_client_succeeds_with_clean_env() {
-        let cfg = HttpConfig::new("myapi").unwrap();
+        let cfg = HttpConfig::new("bigcommerce").unwrap();
         assert!(cfg.build_client().is_ok());
     }
 
@@ -674,8 +674,8 @@ mod tests {
 
     #[test]
     fn scoped_helper_concatenates_prefix_and_suffix() {
-        assert_eq!(scoped("MYAPI", "_CA_BUNDLE"), "MYAPI_CA_BUNDLE");
-        assert_eq!(scoped("OTHER", "_INSECURE"), "OTHER_INSECURE");
+        assert_eq!(scoped("BIGCOMMERCE", "_CA_BUNDLE"), "BIGCOMMERCE_CA_BUNDLE");
+        assert_eq!(scoped("BOX", "_INSECURE"), "BOX_INSECURE");
     }
 
     // ----- resolve() — transport-neutral view ---------------------------------

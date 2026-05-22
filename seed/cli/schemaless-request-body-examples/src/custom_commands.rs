@@ -1,101 +1,9 @@
-//! Protocol-agnostic registry for custom CLI subcommands grafted onto a
-//! spec-derived command tree.
+//! Helpers for grafting custom CLI subcommands onto a spec-derived
+//! command tree and walking parsed `ArgMatches` to dispatch them.
 //!
-//! Both the OpenAPI and GraphQL `CliApp` builders let consumers register
-//! handlers for subcommands that live alongside spec-generated commands
-//! (e.g. a `webhooks verify` leaf next to spec-generated `webhooks list`).
-//! The grafting and dispatch logic is identical across protocols — only
-//! the per-handler context type differs — so it lives here, generic over
-//! the context type `C`.
-
-use crate::error::CliError;
-
-/// A custom command handler function.
-///
-/// Receives the parsed [`clap::ArgMatches`] for the subcommand and the
-/// per-protocol context `C` (typically the protocol's `AppContext`).
-pub type HandlerFn<C> = fn(&clap::ArgMatches, &C) -> Result<(), CliError>;
-
-/// A registered custom command: parent path, leaf [`clap::Command`], and
-/// its handler.
-type Entry<C> = (Vec<String>, clap::Command, HandlerFn<C>);
-
-/// Registry of custom subcommands keyed by their parent path in the
-/// spec-derived command tree. Empty path = top-level.
-pub struct CustomCommandRegistry<C> {
-    entries: Vec<Entry<C>>,
-}
-
-impl<C> CustomCommandRegistry<C> {
-    pub fn new() -> Self {
-        Self { entries: Vec::new() }
-    }
-
-    /// Register a top-level custom subcommand.
-    pub fn register(&mut self, cmd: clap::Command, handler: HandlerFn<C>) {
-        self.register_under::<&str>(&[], cmd, handler);
-    }
-
-    /// Register a custom subcommand under `path`. Empty path = top-level.
-    pub fn register_under<S: AsRef<str>>(
-        &mut self,
-        path: &[S],
-        cmd: clap::Command,
-        handler: HandlerFn<C>,
-    ) {
-        let owned: Vec<String> = path.iter().map(|s| s.as_ref().to_string()).collect();
-        self.entries.push((owned, cmd, handler));
-    }
-
-    /// Graft every registered command into `cli`, returning the augmented
-    /// command tree. Custom commands replace spec-generated leaves on
-    /// name collisions.
-    pub fn graft_into(&self, mut cli: clap::Command) -> clap::Command {
-        for (path, cmd, _) in &self.entries {
-            cli = graft_subcommand(cli, path, cmd.clone());
-        }
-        cli
-    }
-
-    /// Walk the parsed `matches` tree along each registered command's
-    /// path. If one matches, invoke its handler with `ctx` and return
-    /// `Some(handler_result)`. Returns `None` if no custom command was
-    /// invoked.
-    pub fn dispatch(
-        &self,
-        matches: &clap::ArgMatches,
-        ctx: &C,
-    ) -> Option<Result<(), CliError>> {
-        for (path, cmd, handler) in &self.entries {
-            if let Some(target) = walk_matches_to_custom(matches, path, cmd.get_name()) {
-                return Some(handler(target, ctx));
-            }
-        }
-        None
-    }
-
-    pub fn len(&self) -> usize {
-        self.entries.len()
-    }
-
-    pub fn is_empty(&self) -> bool {
-        self.entries.is_empty()
-    }
-
-    /// Crate-internal accessor used by unit tests in the protocol modules
-    /// to verify registration shape.
-    #[cfg(test)]
-    #[doc(hidden)]
-    pub(crate) fn entries(&self) -> &[Entry<C>] {
-        &self.entries
-    }
-}
-
-impl<C> Default for CustomCommandRegistry<C> {
-    fn default() -> Self {
-        Self::new()
-    }
-}
+//! Used by `app::CliApp::command()` / `command_under()` at the root
+//! level. The free functions `graft_subcommand` and
+//! `walk_matches_to_custom` are the public (crate-internal) API.
 
 /// Graft a custom `clap::Command` into an existing command tree under
 /// `parent_path`. The leaf name is `cmd.get_name()`.
@@ -160,6 +68,68 @@ pub fn walk_matches_to_custom<'a>(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::error::CliError;
+
+    // ── Registry (test-only) ────────────────────────────────────────
+    //
+    // `CustomCommandRegistry<C>` was the old per-binding custom command
+    // system. Root `CliApp::command()` replaced it, but the struct is
+    // still useful for testing `graft_subcommand` / `walk_matches_to_custom`.
+
+    type HandlerFn<C> = fn(&clap::ArgMatches, &C) -> Result<(), CliError>;
+    type Entry<C> = (Vec<String>, clap::Command, HandlerFn<C>);
+
+    struct CustomCommandRegistry<C> {
+        entries: Vec<Entry<C>>,
+    }
+
+    impl<C> CustomCommandRegistry<C> {
+        fn new() -> Self {
+            Self { entries: Vec::new() }
+        }
+
+        fn register(&mut self, cmd: clap::Command, handler: HandlerFn<C>) {
+            self.register_under::<&str>(&[], cmd, handler);
+        }
+
+        fn register_under<S: AsRef<str>>(
+            &mut self,
+            path: &[S],
+            cmd: clap::Command,
+            handler: HandlerFn<C>,
+        ) {
+            let owned: Vec<String> = path.iter().map(|s| s.as_ref().to_string()).collect();
+            self.entries.push((owned, cmd, handler));
+        }
+
+        fn graft_into(&self, mut cli: clap::Command) -> clap::Command {
+            for (path, cmd, _) in &self.entries {
+                cli = graft_subcommand(cli, path, cmd.clone());
+            }
+            cli
+        }
+
+        fn dispatch(
+            &self,
+            matches: &clap::ArgMatches,
+            ctx: &C,
+        ) -> Option<Result<(), CliError>> {
+            for (path, cmd, handler) in &self.entries {
+                if let Some(target) = walk_matches_to_custom(matches, path, cmd.get_name()) {
+                    return Some(handler(target, ctx));
+                }
+            }
+            None
+        }
+
+        fn len(&self) -> usize {
+            self.entries.len()
+        }
+
+        fn entries(&self) -> &[Entry<C>] {
+            &self.entries
+        }
+    }
 
     struct DummyCtx;
 

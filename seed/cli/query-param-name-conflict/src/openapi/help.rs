@@ -1,6 +1,6 @@
 //! JSON help output — renders `--help --format json` as a machine-readable
 //! schema. When an agent passes both `--help` (or `-h`) and `--format json`,
-//! `app.rs` intercepts before clap parses and calls [`render_json_help`].
+//! the pipeline intercepts before clap parses and calls [`render_json_help`].
 
 use serde_json::{json, Map, Value};
 
@@ -8,7 +8,17 @@ use crate::error::CliError;
 use crate::openapi::discovery::{RestDescription, RestMethod, RestResource};
 
 /// Renders JSON help for the given subcommand path and prints it to stdout.
-pub fn render_json_help(doc: &RestDescription, path: &[String]) -> Result<(), CliError> {
+#[cfg(test)]
+pub(crate) fn render_json_help(doc: &RestDescription, path: &[String]) -> Result<(), CliError> {
+    write_json_help(doc, path, &mut std::io::stdout())
+}
+
+/// Writer-parameterized variant of [`render_json_help`].
+pub(crate) fn write_json_help(
+    doc: &RestDescription,
+    path: &[String],
+    out: &mut dyn std::io::Write,
+) -> Result<(), CliError> {
     let output = match path.len() {
         0 => list_all_operations(doc),
         1 => list_resource_operations(doc, &path[0])?,
@@ -27,11 +37,13 @@ pub fn render_json_help(doc: &RestDescription, path: &[String]) -> Result<(), Cl
         }
     };
 
-    println!(
+    writeln!(
+        out,
         "{}",
         serde_json::to_string_pretty(&output)
             .map_err(|e| CliError::Validation(format!("Failed to serialize help: {e}")))?
-    );
+    )
+    .map_err(|e| CliError::Other(e.into()))?;
     Ok(())
 }
 

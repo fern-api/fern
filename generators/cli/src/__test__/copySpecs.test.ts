@@ -94,7 +94,7 @@ describe("copySpecs", () => {
         await expect(access(path.join(outputDir, BIN_DIR))).rejects.toThrow();
     });
 
-    it("single openapi spec, no auth bindings → writes spec + emits single-.spec() main.rs", async () => {
+    it("single openapi spec, no auth bindings → writes spec + emits OpenApiBinding main.rs", async () => {
         const specsDir = path.join(tmpDir, "specs");
         await mkdir(specsDir, { recursive: true });
         await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0","info":{"title":"users"}}');
@@ -114,12 +114,11 @@ describe("copySpecs", () => {
         );
         const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
         expect(main).toContain(`CliApp::new("${BIN}")`);
+        expect(main).toContain("OpenApiBinding::new()");
         expect(main).toContain('.spec(include_str!("openapi0.json"))');
-        // No bindings supplied → no auth calls + no AuthCredentialSource import.
-        expect(main).not.toContain(".auth_scheme_env");
-        expect(main).not.toContain(".auth_basic_scheme");
-        expect(main).not.toContain("AuthCredentialSource");
         expect(main).not.toContain(".spec_under");
+        expect(main).toContain("use fern_cli_sdk::app::CliApp;");
+        expect(main).toContain("use fern_cli_sdk::openapi::OpenApiBinding;");
     });
 
     it("multi-spec without namespace → emits .spec(...) per entry so they merge flat at the root", async () => {
@@ -202,7 +201,7 @@ describe("copySpecs", () => {
         expect(main).toContain('.spec_under("admin", include_str!("openapi1.json"))');
     });
 
-    it("threads supplied auth bindings into main.rs, in supplied order", async () => {
+    it("threads root auth bindings above binding and binding-level auth into OpenApiBinding", async () => {
         const specsDir = path.join(tmpDir, "specs");
         await mkdir(specsDir, { recursive: true });
         await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
@@ -219,36 +218,36 @@ describe("copySpecs", () => {
             {
                 schemeName: "ApiKeyAuth",
                 rustCall:
-                    '.auth_basic_scheme("ApiKeyAuth", ' +
-                    'AuthCredentialSource::from_env("CLOSE_API_KEY"), ' +
-                    'AuthCredentialSource::literal(""))',
-                needsCredentialSourceImport: true
+                    '.auth_basic_scheme_username_only("ApiKeyAuth", ' +
+                    'AuthCredentialSource::from_env("CLOSE_API_KEY"))',
+                placement: "binding",
+                authTypeImport: "AuthCredentialSource"
             },
             {
                 schemeName: "OAuth2",
-                rustCall: '.auth_scheme_env("OAuth2", "CLOSE_TOKEN")',
-                needsCredentialSourceImport: false
+                rustCall: '.auth(BearerAuth::new("OAuth2").env("CLOSE_TOKEN"))',
+                placement: "root",
+                authTypeImport: "BearerAuth"
             }
         ];
         await copySpecs({ outputDir, binaryName: "close", authBindings: bindings, specsDir });
 
         const main = await readFile(path.join(outputDir, "cli", "close", "main.rs"), "utf-8");
-        // Import for AuthCredentialSource is emitted because at least one
-        // binding sets needsCredentialSourceImport, and it sits above the
-        // CliApp import for stable ordering.
-        const credImportIdx = main.indexOf("use fern_cli_sdk::auth::AuthCredentialSource;");
-        const cliImportIdx = main.indexOf("use fern_cli_sdk::openapi::CliApp;");
-        expect(credImportIdx).toBeGreaterThanOrEqual(0);
-        expect(cliImportIdx).toBeGreaterThan(credImportIdx);
+        // Auth type imports are emitted
+        expect(main).toContain("use fern_cli_sdk::auth::{AuthCredentialSource, BearerAuth};");
 
-        // Bindings appear inline in the builder chain in the order supplied.
-        const basicIdx = main.indexOf('.auth_basic_scheme("ApiKeyAuth"');
-        const bearerIdx = main.indexOf('.auth_scheme_env("OAuth2", "CLOSE_TOKEN")');
-        expect(basicIdx).toBeGreaterThan(0);
-        expect(bearerIdx).toBeGreaterThan(basicIdx);
+        // Root auth (BearerAuth) appears before the .binding() call
+        const rootAuthIdx = main.indexOf('.auth(BearerAuth::new("OAuth2")');
+        const bindingIdx = main.indexOf(".binding(");
+        expect(rootAuthIdx).toBeGreaterThan(0);
+        expect(bindingIdx).toBeGreaterThan(rootAuthIdx);
+
+        // Binding-level auth appears inside the OpenApiBinding chain
+        const basicIdx = main.indexOf('.auth_basic_scheme_username_only("ApiKeyAuth"');
+        expect(basicIdx).toBeGreaterThan(bindingIdx);
     });
 
-    it("only emits AuthCredentialSource import when at least one binding needs it", async () => {
+    it("only emits auth type imports when at least one binding uses them", async () => {
         const specsDir = path.join(tmpDir, "specs");
         await mkdir(specsDir, { recursive: true });
         await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
@@ -267,15 +266,17 @@ describe("copySpecs", () => {
             authBindings: [
                 {
                     schemeName: "Bearer",
-                    rustCall: '.auth_scheme_env("Bearer", "ACME_TOKEN")',
-                    needsCredentialSourceImport: false
+                    rustCall: '.auth(BearerAuth::new("Bearer").env("ACME_TOKEN"))',
+                    placement: "root",
+                    authTypeImport: "BearerAuth"
                 }
             ],
             specsDir
         });
 
         const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
-        expect(main).toContain('.auth_scheme_env("Bearer", "ACME_TOKEN")');
+        expect(main).toContain('.auth(BearerAuth::new("Bearer").env("ACME_TOKEN"))');
+        expect(main).toContain("use fern_cli_sdk::auth::{BearerAuth};");
         expect(main).not.toContain("AuthCredentialSource");
     });
 });

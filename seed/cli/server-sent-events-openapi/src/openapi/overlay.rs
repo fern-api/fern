@@ -1832,7 +1832,7 @@ actions:
 
     #[test]
     fn test_overlay_on_fixture_spec() {
-        let spec = include_str!("__fixtures__/openapi.json");
+        let spec = include_str!("../../cli/openapi-fixture/openapi.yaml");
         let overlay = r#"
 overlay: "1.0.0"
 info:
@@ -1891,7 +1891,7 @@ actions:
     fn test_overlay_on_fixture_spec_builds_cli_app() {
         use crate::openapi::CliApp;
 
-        let spec = include_str!("__fixtures__/openapi.json");
+        let spec = include_str!("../../cli/openapi-fixture/openapi.yaml");
         let overlay = r#"
 overlay: "1.0.0"
 info:

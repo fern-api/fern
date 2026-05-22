@@ -52,7 +52,19 @@ const SDK_IGNORE = [
     // spec stripping behavior — not relevant to customer output.
     // Paired with the [[bin]] strip-schema entry removal in
     // patchCargoToml.
-    "src/bin/strip_schema.rs"
+    "src/bin/strip_schema.rs",
+
+    // Build script used by the cli-sdk template for generating test
+    // constants from spec files. Not needed in customer output.
+    "build.rs",
+
+    // Template-only test files that reference the openapi-fixture spec
+    // or internal test infrastructure not shipped to customers.
+    "tests/common/**",
+    "tests/auth_routing_wire.rs",
+    "tests/extension_surface_behavior.rs",
+    "tests/lib_api.rs",
+    "tests/tls_env_vars.rs"
 ];
 
 await buildGenerator(getDirname(import.meta.url), {

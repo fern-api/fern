@@ -6,20 +6,10 @@
 //! API programmatically.
 
 use crate::auth::{AuthCredentialSource, AuthStrategy, DynAuthProvider, SchemeBinding};
-use crate::cli_args;
-use crate::custom_commands::CustomCommandRegistry;
-use crate::error::{print_error_json, CliError};
+use crate::error::CliError;
 use crate::formatter;
-use crate::graphql::commands;
 use crate::graphql::discovery::{GraphQLSchema as RestDescription, GraphQLOperation as RestMethod};
 use crate::graphql::executor;
-
-/// A custom command handler function.
-///
-/// Receives the parsed [`clap::ArgMatches`] for the subcommand and an
-/// [`AppContext`] that provides access to the spec, auth token, and
-/// executor.
-pub type HandlerFn = crate::custom_commands::HandlerFn<AppContext>;
 
 /// Builder for a schema-driven CLI application (GraphQL).
 pub struct CliApp {
@@ -31,20 +21,20 @@ pub struct CliApp {
     /// constructed provider is `Any` by default — generators can flip
     /// [`auth_strategy`](Self::auth_strategy) to `All` for APIs that
     /// require multiple schemes simultaneously.
-    auth_bindings: Vec<(String, SchemeBinding)>,
+    pub(crate) auth_bindings: Vec<(String, SchemeBinding)>,
     auth_strategy: AuthStrategy,
     /// Trust roots parsed at builder-call time. Storing parsed certs (not
     /// raw bytes) means the validation error message lives in one place
     /// — at the call site of `extra_root_cert`, where it's most useful.
-    extra_root_certs: Vec<reqwest::Certificate>,
+    pub(crate) extra_root_certs: Vec<reqwest::Certificate>,
     /// Raw PEM bytes for each trust root added via `extra_root_cert`, kept
     /// alongside the parsed `extra_root_certs` above. Threaded through to
     /// `HttpConfig::with_parsed_root_certs` so transport-neutral callers
     /// (`HttpConfig::resolve`) can hand PEM to non-reqwest TLS connectors.
-    extra_root_certs_pem: Vec<Vec<u8>>,
-    pub(crate) custom_commands: CustomCommandRegistry<AppContext>,
+    pub(crate) extra_root_certs_pem: Vec<Vec<u8>>,
 }
 
+#[allow(dead_code)] // Methods available for binding wrappers to delegate to.
 impl CliApp {
     /// Create a new CLI application with the given binary name.
     pub fn new(name: &str) -> Self {
@@ -56,7 +46,6 @@ impl CliApp {
             auth_strategy: AuthStrategy::Auto,
             extra_root_certs: Vec::new(),
             extra_root_certs_pem: Vec::new(),
-            custom_commands: CustomCommandRegistry::new(),
         }
     }
 
@@ -147,39 +136,6 @@ impl CliApp {
         self
     }
 
-    /// Register a custom top-level subcommand with its handler function.
-    ///
-    /// Equivalent to [`command_under`](Self::command_under) with an empty path.
-    pub fn command(mut self, cmd: clap::Command, handler: HandlerFn) -> Self {
-        self.custom_commands.register(cmd, handler);
-        self
-    }
-
-    /// Register a custom subcommand under an existing path in the spec-derived
-    /// command tree. Useful for adding a new leaf alongside spec-generated
-    /// commands.
-    ///
-    /// - `path` — the parent path the command should be grafted under. An
-    ///   empty path registers the command at the top level. Intermediate
-    ///   parents that do not yet exist are auto-created.
-    /// - `cmd` — the leaf [`clap::Command`]. Its name becomes the final
-    ///   segment of the path.
-    /// - `handler` — invoked with the [`clap::ArgMatches`] for the leaf and
-    ///   the [`AppContext`].
-    ///
-    /// If a subcommand with the same leaf name already exists at the target
-    /// path (e.g. from the GraphQL schema), it is **replaced** by `cmd` —
-    /// custom commands take precedence on leaf collisions.
-    pub fn command_under<S: AsRef<str>>(
-        mut self,
-        path: &[S],
-        cmd: clap::Command,
-        handler: HandlerFn,
-    ) -> Self {
-        self.custom_commands.register_under(path, cmd, handler);
-        self
-    }
-
     /// Register an extra trust root that this CLI will accept on top of the
     /// system's default roots. `pem` must be a PEM-encoded certificate (or
     /// concatenated PEM bundle), typically loaded with `include_bytes!`.
@@ -211,243 +167,29 @@ impl CliApp {
         self
     }
 
-    /// Run the CLI application. This is the main entry point.
-    ///
-    /// Builds a tokio runtime internally so the caller's `main()` does not
-    /// need to be async.
-    pub fn run(self) {
-        // Reset SIGPIPE to default so piped output (e.g. `| head`) doesn't
-        // panic. Must happen before any I/O.
-        crate::reset_sigpipe();
-
-        // Load .env file if present (silently ignored if missing)
-        let _ = dotenvy::dotenv();
-
-        // Initialize structured logging (no-op if env vars are unset)
-        crate::init_logging(&self.name);
-
-        let rt = tokio::runtime::Runtime::new().expect("Failed to create tokio runtime");
-        if let Err(err) = rt.block_on(self.run_async()) {
-            print_error_json(&err);
-            std::process::exit(err.exit_code());
+    /// Decorate a clap `Command` with the auth help section.
+    /// Called from `GraphqlBinding::build_command()`.
+    pub(crate) fn decorate_command(&self, mut cli: clap::Command) -> clap::Command {
+        let existing_after_help = cli.get_after_help().map(|s| s.to_string());
+        let auth_section = crate::auth::render_auth_help_section(&self.auth_bindings);
+        if existing_after_help.is_some() || auth_section.is_some() {
+            let mut sections: Vec<&str> = Vec::with_capacity(2);
+            if let Some(ref s) = existing_after_help {
+                sections.push(s);
+            }
+            if let Some(ref s) = auth_section {
+                sections.push(s);
+            }
+            cli = cli.after_help(sections.join("\n\n"));
         }
-    }
-
-    /// Build the full CLI command tree including spec-derived subcommands,
-    /// custom commands, `completion`, `man`, and auth-bound global flags.
-    ///
-    /// Called from the `wants_completion` / `wants_man` early-intercept
-    /// blocks AND the normal-dispatch path so all three see the same tree.
-    fn build_full_cli(
-        &self,
-        doc: &crate::graphql::discovery::GraphQLSchema,
-    ) -> clap::Command {
-        let mut cli = self
-            .custom_commands
-            .graft_into(commands::build_cli(doc))
-            .subcommand(crate::completions::completion_command())
-            .subcommand(crate::man::man_command());
-
-        // Register CLI-arg-bound credential sources as global flags.
-        for arg_name in crate::auth::collect_binding_cli_args(&self.auth_bindings) {
-            cli = cli.arg(
-                clap::Arg::new(arg_name.clone())
-                    .long(arg_name.clone())
-                    .global(true)
-                    .value_name(arg_name.to_uppercase().replace('-', "_"))
-                    .help(format!("Credential value for auth source `{arg_name}`")),
-            );
-        }
-
         cli
     }
 
-    /// The async implementation of the CLI run loop.
-    async fn run_async(mut self) -> Result<(), CliError> {
-        let args: Vec<String> = std::env::args().collect();
-
-        // Handle --version early (before loading spec)
-        if args.iter().any(|a| cli_args::is_version_flag(a)) {
-            println!("{} {}", self.name, env!("CARGO_PKG_VERSION"));
-            return Ok(());
-        }
-
-        // Build the HTTP config once per run. Holds the binary name (used to
-        // scope env-var lookups) and any compile-time trust roots. The roots
-        // were already validated at builder time; we just thread the parsed
-        // certs through.
-        let http_config = crate::http::HttpConfig::new(&self.name)?
-            .with_parsed_root_certs(
-                self.extra_root_certs.iter().cloned(),
-                self.extra_root_certs_pem.iter().cloned(),
-            );
-
-        // Load the GraphQL schema
-        let json = self.spec_json.as_deref().ok_or_else(|| {
-            CliError::Discovery("No spec provided. Call .spec() on CliApp.".to_string())
-        })?;
-        let endpoint = self.endpoint_url.as_deref().ok_or_else(|| {
-            CliError::Discovery("No endpoint provided. Call .endpoint() on CliApp.".to_string())
-        })?;
-        let doc = crate::graphql::load_graphql_schema(json, &self.name, endpoint)?;
-
-        // Intercept --help --format json before clap parses, to emit machine-readable output
-        if cli_args::wants_json_help(&args) {
-            let path = cli_args::extract_subcommand_path(&args);
-            return crate::graphql::help::render_json_help(&doc, &path);
-        }
-
-        // Intercept `<cli> completion <shell>` early — before normal API
-        // dispatch — so a spec resource named "completion" doesn't collide.
-        // Builds the full command tree (including global flags) so the
-        // generated script covers the entire CLI surface.
-        if crate::completions::wants_completion(&args) {
-            let raw_shell_arg: Option<&str> =
-                crate::early_intercept::nth_positional(&args, 1);
-
-            match raw_shell_arg {
-                Some(s) => match crate::completions::parse_shell(s) {
-                    Some(shell) => {
-                        let mut full_cmd = self.build_full_cli(&doc);
-                        crate::completions::generate_completion(
-                            shell,
-                            &mut full_cmd,
-                            &self.name,
-                        )
-                        .map_err(|e| CliError::Other(e.into()))?;
-                        return Ok(());
-                    }
-                    None => {
-                        return Err(CliError::Validation(format!(
-                            "invalid shell: '{s}'. Expected one of: bash, zsh, fish, powershell, elvish"
-                        )));
-                    }
-                },
-                None => {
-                    let mut full_cmd = self.build_full_cli(&doc);
-                    if let Some(sub) = full_cmd.find_subcommand_mut("completion") {
-                        sub.print_help().ok();
-                    }
-                    return Ok(());
-                }
-            }
-        }
-
-        // Intercept `<cli> man` early — same pattern as completion above.
-        // If `--help` / `-h` appears after `man`, fall through to normal
-        // clap dispatch so the subcommand help (with EXAMPLES) is shown
-        // instead of generating the man page.
-        if crate::man::wants_man(&args) {
-            let has_help = args.iter().skip(1).skip_while(|a| a.as_str() != "man").skip(1)
-                .any(|a| a == "--help" || a == "-h");
-            let mut full_cmd = self.build_full_cli(&doc);
-            if has_help {
-                if let Some(sub) = full_cmd.find_subcommand_mut("man") {
-                    sub.print_help().ok();
-                }
-                return Ok(());
-            }
-            crate::man::generate_man(full_cmd, &self.name)
-                .map_err(|e| CliError::Other(e.into()))?;
-            return Ok(());
-        }
-
-        // Build the full command tree (same tree the intercept blocks use)
-        // for normal dispatch. `completion` and `man` subcommands are
-        // included so they appear in `--help`.
-        let cli = self.build_full_cli(&doc);
-
-        // Parse args (clap handles --help automatically via arg_required_else_help)
-        let matches = cli.try_get_matches_from(&args).map_err(|e| {
-            if e.kind() == clap::error::ErrorKind::DisplayHelp
-                || e.kind() == clap::error::ErrorKind::DisplayHelpOnMissingArgumentOrSubcommand
-                || e.kind() == clap::error::ErrorKind::DisplayVersion
-            {
-                print!("{e}");
-                std::process::exit(0);
-            }
-            CliError::Validation(e.to_string())
-        })?;
-
-        // Finalize auth bindings against the parsed matches.
-        if !self.auth_bindings.is_empty() {
-            let matches_arc = std::sync::Arc::new(matches.clone());
-            self.auth_bindings = crate::auth::finalize_bindings(
-                std::mem::take(&mut self.auth_bindings),
-                &matches_arc,
-            );
-        }
-
-        // Dispatch to a custom command if one was invoked.
-        if !self.custom_commands.is_empty() {
-            let auth_provider = self.build_auth_provider();
-            let ctx = AppContext {
-                doc: doc.clone(),
-                auth_provider,
-                http_config: http_config.clone(),
-            };
-            if let Some(result) = self.custom_commands.dispatch(&matches, &ctx) {
-                return result;
-            }
-        }
-
-        // Build the output pipeline (format + color + later: --fields/--jq/--template).
-        let pipeline = formatter::OutputPipeline::from_matches(&matches)
-            .map_err(|e| CliError::Validation(e.to_string()))?;
-
-        // Walk the subcommand tree to find the target method
-        let (method, matched_args) = resolve_method_from_matches(&doc, &matches)?;
-
-        let params_override = matched_args
-            .get_one::<String>("params")
-            .map(|s| s.as_str());
-        let params = collect_params_from_flags(matched_args, method, params_override)?;
-        let params_json_string = serde_json::to_string(&params)
-            .map_err(|e| CliError::Validation(format!("Failed to serialize params: {e}")))?;
-        let params_json: Option<&str> = if params.is_empty() {
-            None
-        } else {
-            Some(&params_json_string)
-        };
-        let body_json = matched_args
-            .try_get_one::<String>("json")
-            .ok()
-            .flatten()
-            .map(|s| s.as_str());
-
-        let dry_run = matched_args.get_flag("dry-run");
-
-        // Build pagination config
-        let pagination = build_pagination_config(matched_args);
-
-        let auth_provider = self.build_auth_provider();
-
-        // --base-url flag wins; otherwise {NAME}_BASE_URL env var.
-        let base_url_override_owned = cli_args::resolve_base_url_override(&matches, &self.name)?;
-        let base_url_override = base_url_override_owned.as_deref();
-
-        // Execute
-        executor::execute_method(
-            &doc,
-            method,
-            params_json,
-            body_json,
-            &auth_provider,
-            dry_run,
-            &pagination,
-            &pipeline,
-            false,
-            base_url_override,
-            &http_config,
-        )
-        .await
-        .map(|_| ())
-    }
 
     /// Construct the [`DynAuthProvider`] used for this run from the
     /// registered bindings. GraphQL has no spec-declared schemes; with no
     /// bindings, returns a `NoAuthProvider`.
-    fn build_auth_provider(&self) -> DynAuthProvider {
+    pub(crate) fn build_auth_provider(&self) -> DynAuthProvider {
         crate::auth::build_provider_with_strategy(
             &self.auth_bindings,
             &std::collections::HashMap::new(),
@@ -455,21 +197,76 @@ impl CliApp {
             false,
         )
     }
+
+    /// Build an auth provider from externally-finalized bindings.
+    /// Used by `GraphqlBinding::dispatch` after CLI-bound auth sources
+    /// have been resolved against the parsed clap matches.
+    pub(crate) fn build_auth_provider_from_finalized(
+        &self,
+        finalized: &[(String, crate::auth::SchemeBinding)],
+    ) -> DynAuthProvider {
+        crate::auth::build_provider_with_strategy(
+            finalized,
+            &std::collections::HashMap::new(),
+            self.auth_strategy,
+            false,
+        )
+    }
+}
+
+/// One binding's worth of prepared state inside an [`AppContext`].
+pub(crate) struct BindingEntry {
+    pub(crate) doc: RestDescription,
+    pub(crate) auth_provider: DynAuthProvider,
+    pub(crate) http_config: crate::http::HttpConfig,
 }
 
 /// Runtime context passed to custom command handlers.
 ///
-/// Provides access to the loaded API spec and the constructed auth
-/// provider.
+/// Provides access to the loaded API spec(s) and the constructed auth
+/// provider(s). When multiple `GraphqlBinding`s are registered,
+/// method lookups and execution are automatically routed to the
+/// binding that owns the target method.
 pub struct AppContext {
-    doc: RestDescription,
-    auth_provider: DynAuthProvider,
-    http_config: crate::http::HttpConfig,
+    entries: Vec<BindingEntry>,
+    /// Whether `--quiet` was passed on the command line.
+    quiet: bool,
 }
 
 impl AppContext {
+    pub(crate) fn new(
+        doc: RestDescription,
+        auth_provider: DynAuthProvider,
+        http_config: crate::http::HttpConfig,
+    ) -> Self {
+        Self {
+            entries: vec![BindingEntry { doc, auth_provider, http_config }],
+            quiet: false,
+        }
+    }
+
+    pub(crate) fn with_quiet(mut self, quiet: bool) -> Self {
+        self.quiet = quiet;
+        self
+    }
+
+    /// Add another binding's prepared state to this context.
+    pub(crate) fn add_entry(&mut self, entry: BindingEntry) {
+        self.entries.push(entry);
+    }
+
+    /// Find which entry owns `method` by pointer identity.
+    fn entry_for_method(&self, method: &RestMethod) -> &BindingEntry {
+        for entry in &self.entries {
+            if resource_tree_contains_method(&entry.doc.resources, method) {
+                return entry;
+            }
+        }
+        &self.entries[0]
+    }
+
     /// Execute an API method by name, using the same executor as built-in
-    /// commands.
+    /// commands. Automatically routes to the binding that owns `method`.
     pub fn execute(
         &self,
         method: &RestMethod,
@@ -477,32 +274,62 @@ impl AppContext {
         body_json: Option<&str>,
         output_format: &formatter::OutputFormat,
     ) -> Result<(), CliError> {
+        let entry = self.entry_for_method(method);
         let pagination = executor::PaginationConfig::default();
         let pipeline = formatter::OutputPipeline {
             format: output_format.clone(),
             color_mode: formatter::ColorMode::default(),
+            quiet: self.quiet,
         };
 
         tokio::runtime::Handle::current()
             .block_on(executor::execute_method(
-                &self.doc,
+                &entry.doc,
                 method,
                 params_json,
                 body_json,
-                &self.auth_provider,
+                &entry.auth_provider,
                 false,
                 &pagination,
                 &pipeline,
                 false,
                 None,
-                &self.http_config,
+                &entry.http_config,
             ))
             .map(|_| ())
     }
 
     /// Returns a reference to the loaded API spec.
+    ///
+    /// When multiple `GraphqlBinding`s are registered, this returns the
+    /// first binding's spec. Use [`find_method`](Self::find_method) to
+    /// search across all bindings.
     pub fn spec(&self) -> &RestDescription {
-        &self.doc
+        &self.entries[0].doc
+    }
+
+    /// Returns references to all loaded API specs.
+    pub fn specs(&self) -> Vec<&RestDescription> {
+        self.entries.iter().map(|e| &e.doc).collect()
+    }
+
+    /// Search all registered specs for a method at `resource.method_name`.
+    pub fn find_method(
+        &self,
+        resource: &str,
+        method_name: &str,
+    ) -> Result<&RestMethod, CliError> {
+        for entry in &self.entries {
+            if let Some(r) = entry.doc.resources.get(resource) {
+                if let Some(m) = r.methods.get(method_name) {
+                    return Ok(m);
+                }
+            }
+        }
+        Err(CliError::Validation(format!(
+            "no method '{method_name}' found in resource '{resource}' across {} binding(s)",
+            self.entries.len(),
+        )))
     }
 
     /// Returns a reference to the HTTP/TLS configuration for this CLI run.
@@ -510,8 +337,27 @@ impl AppContext {
     /// See [`crate::openapi::AppContext::http_config`] for the design
     /// rationale and how non-reqwest transports consume this.
     pub fn http_config(&self) -> &crate::http::HttpConfig {
-        &self.http_config
+        &self.entries[0].http_config
     }
+}
+
+/// Recursively check whether any method in the resource tree is
+/// pointer-equal to `target`.
+fn resource_tree_contains_method(
+    resources: &std::collections::HashMap<String, crate::graphql::discovery::GraphQLResource>,
+    target: &RestMethod,
+) -> bool {
+    for resource in resources.values() {
+        for m in resource.methods.values() {
+            if std::ptr::eq(m, target) {
+                return true;
+            }
+        }
+        if resource_tree_contains_method(&resource.resources, target) {
+            return true;
+        }
+    }
+    false
 }
 
 /// Recursively walks clap ArgMatches to find the leaf method and its matches.
@@ -565,7 +411,7 @@ pub fn resolve_method_from_matches<'a>(
 
 /// Collect individual flag values into a params map.
 /// Values from --params JSON override individual flags.
-fn collect_params_from_flags(
+pub(crate) fn collect_params_from_flags(
     matched_args: &clap::ArgMatches,
     method: &crate::graphql::discovery::GraphQLOperation,
     params_override: Option<&str>,
@@ -592,7 +438,7 @@ fn collect_params_from_flags(
     Ok(params)
 }
 
-fn build_pagination_config(matches: &clap::ArgMatches) -> executor::PaginationConfig {
+pub(crate) fn build_pagination_config(matches: &clap::ArgMatches) -> executor::PaginationConfig {
     executor::PaginationConfig {
         page_all: matches.get_flag("page-all"),
         page_limit: matches
@@ -633,32 +479,4 @@ mod tests {
         assert_eq!(app.endpoint_url.as_deref(), Some("https://example.com/graphql"));
     }
 
-    #[test]
-    fn test_graphql_cli_app_custom_command_top_level() {
-        fn handler(_m: &clap::ArgMatches, _c: &AppContext) -> Result<(), CliError> {
-            Ok(())
-        }
-        let app = CliApp::new("test")
-            .spec("{}")
-            .command(clap::Command::new("custom"), handler);
-        assert_eq!(app.custom_commands.len(), 1);
-        assert!(app.custom_commands.entries()[0].0.is_empty());
-        assert_eq!(app.custom_commands.entries()[0].1.get_name(), "custom");
-    }
-
-    #[test]
-    fn test_graphql_cli_app_command_under_records_path() {
-        fn handler(_m: &clap::ArgMatches, _c: &AppContext) -> Result<(), CliError> {
-            Ok(())
-        }
-        let app = CliApp::new("test")
-            .spec("{}")
-            .command_under(&["webhooks"], clap::Command::new("verify"), handler);
-        assert_eq!(app.custom_commands.len(), 1);
-        assert_eq!(
-            app.custom_commands.entries()[0].0,
-            vec!["webhooks".to_string()]
-        );
-        assert_eq!(app.custom_commands.entries()[0].1.get_name(), "verify");
-    }
 }

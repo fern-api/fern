@@ -971,4 +971,21 @@ mod tests {
         );
     }
 
+    #[test]
+    fn test_load_linear_schema() {
+        let json = include_str!("../../cli/linear/schema.json");
+        let doc = load_graphql_schema(json, "linear", "https://api.linear.app/graphql").unwrap();
+        assert_eq!(doc.name, "linear");
+
+        let issue = doc.resources.get("issue").expect("issue resource missing");
+        assert!(issue.methods.contains_key("get"), "missing issue.get");
+        assert!(issue.methods.contains_key("list"), "missing issue.list");
+        assert!(issue.methods.contains_key("create"), "missing issue.create");
+
+        assert!(
+            doc.resources.len() > 20,
+            "expected >20 resources, got {}",
+            doc.resources.len()
+        );
+    }
 }

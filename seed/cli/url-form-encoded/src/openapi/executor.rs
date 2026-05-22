@@ -16,8 +16,8 @@ use tokio::io::AsyncWriteExt;
 use crate::auth::{handle_error_response, DynAuthProvider, EndpointAuthMetadata};
 use crate::error::CliError;
 use crate::openapi::discovery::{
-    MethodParameter, PaginationConfig as EndpointPagination, RestDescription, RestMethod,
-    RetriesConfig, StreamingConfig,
+    BodyEncoding, MethodParameter, PaginationConfig as EndpointPagination, RestDescription,
+    RestMethod, RetriesConfig, StreamingConfig,
 };
 
 /// Resolved source for a binary request body (octet-stream uploads etc.).
@@ -366,6 +366,11 @@ fn parse_and_validate_inputs(
 
     for (param_name, param_def) in &method.parameters {
         if param_def.required && !params.contains_key(param_name) {
+            // When --json is provided, body-located required params are satisfied
+            // by the JSON payload — skip their individual-flag validation.
+            if param_def.location.as_deref() == Some("body") && body_json.is_some() {
+                continue;
+            }
             let hint = missing_param_hint(param_def, param_name);
             return Err(CliError::Validation(format!(
                 "Required parameter '{param_name}' is missing. {hint}"
@@ -689,14 +694,12 @@ async fn build_http_request(
                 }
             }
         } else if let Some(ref body_val) = input.body {
-            request = request.header("Content-Type", "application/json");
-            request = request.json(body_val);
+            request = encode_request_body(request, body_val, &method.body_encoding);
         } else if matches!(method.http_method.as_str(), "POST" | "PUT" | "PATCH") {
             request = request.header("Content-Length", "0");
         }
     } else if let Some(ref body_val) = input.body {
-        request = request.header("Content-Type", "application/json");
-        request = request.json(body_val);
+        request = encode_request_body(request, body_val, &method.body_encoding);
     }
 
     Ok(request)
@@ -1017,11 +1020,8 @@ async fn handle_json_response(
                 return Ok(true);
             }
         }
-    } else {
-        // Not valid JSON, output as-is
-        if !capture_output && !body_text.is_empty() {
-            println!("{body_text}");
-        }
+    } else if !capture_output && !pipeline.quiet && !body_text.is_empty() {
+        println!("{body_text}");
     }
 
     Ok(false)
@@ -1508,6 +1508,11 @@ pub async fn execute_method(
     };
 
     if dry_run {
+        let content_type_header = if input.body.is_some() {
+            method.body_encoding.content_type()
+        } else {
+            ""
+        };
         let mut dry_run_info = json!({
             "dry_run": true,
             "url": input.full_url,
@@ -1517,6 +1522,14 @@ pub async fn execute_method(
             "body": input.body,
             "is_multipart_upload": input.is_upload,
         });
+        if !content_type_header.is_empty() {
+            dry_run_info["content_type"] = json!(content_type_header);
+        }
+        if method.body_encoding.is_form() {
+            if let Some(ref body_val) = input.body {
+                dry_run_info["form_encoded_body"] = json!(encode_form_body(body_val));
+            }
+        }
         if let Some(raw) = binary_body_path {
             let (content_type, flag_name) = method
                 .binary_request_body
@@ -2445,6 +2458,69 @@ fn set_nested_value(obj: &mut Map<String, Value>, path: &str, value: Value) {
                 set_nested_value(nested_map, tail, value);
             }
         }
+    }
+}
+
+/// Apply the appropriate body encoding to the request based on the
+/// [`BodyEncoding`] variant. Sets the `Content-Type` header and body payload.
+fn encode_request_body(
+    request: reqwest::RequestBuilder,
+    body: &Value,
+    encoding: &BodyEncoding,
+) -> reqwest::RequestBuilder {
+    match encoding {
+        BodyEncoding::Json => request
+            .header("Content-Type", encoding.content_type())
+            .json(body),
+        BodyEncoding::FormUrlEncoded => {
+            let encoded = encode_form_body(body);
+            request
+                .header("Content-Type", encoding.content_type())
+                .body(encoded)
+        }
+    }
+}
+
+/// Encode a JSON `Value` (expected to be an Object) into a
+/// `application/x-www-form-urlencoded` string. Top-level keys are
+/// emitted as-is; arrays repeat the key (e.g. `tag=a&tag=b`).
+/// Nested objects and arrays-of-objects are JSON-encoded as the value
+/// — no dot-notation or bracket expansion — so the encoding stays
+/// predictable for servers that treat `.` as a literal character.
+/// Non-object top-level values are serialized as a single
+/// `body=<value>` pair.
+fn encode_form_body(val: &Value) -> String {
+    let mut pairs: Vec<(String, String)> = Vec::new();
+    if let Value::Object(map) = val {
+        collect_form_pairs(map, &mut pairs);
+    } else {
+        pairs.push(("body".to_string(), value_to_form_str(val)));
+    }
+    form_urlencoded::Serializer::new(String::new())
+        .extend_pairs(pairs)
+        .finish()
+}
+
+fn collect_form_pairs(map: &Map<String, Value>, out: &mut Vec<(String, String)>) {
+    for (key, value) in map {
+        match value {
+            Value::Array(items) => {
+                for item in items {
+                    out.push((key.clone(), value_to_form_str(item)));
+                }
+            }
+            _ => out.push((key.clone(), value_to_form_str(value))),
+        }
+    }
+}
+
+fn value_to_form_str(val: &Value) -> String {
+    match val {
+        Value::String(s) => s.clone(),
+        Value::Null => String::new(),
+        Value::Bool(b) => b.to_string(),
+        Value::Number(n) => n.to_string(),
+        other => other.to_string(),
     }
 }
 
@@ -6005,8 +6081,8 @@ mod tests {
     #[test]
     fn test_build_url_method_root_url_overrides_doc_root_url() {
         // Per-operation server override: method.root_url must win over doc.root_url.
-        // If this is broken, requests route to the wrong host (e.g. upload
-        // endpoints land on the general API host instead of the upload host).
+        // If this is broken, requests route to the wrong host (e.g. Box uploads
+        // go to api.box.com instead of upload.box.com).
         let doc = RestDescription {
             root_url: "https://api.example.com/".to_string(),
             service_path: "v1/".to_string(),

@@ -213,6 +213,52 @@ pub struct SdkVariable {
     pub description: Option<String>,
 }
 
+/// How the request body should be serialized on the wire.
+///
+/// Determines the `Content-Type` header and payload encoding strategy.
+/// Modeled as an enum so future body formats (multipart/form-data, etc.)
+/// can be added as variants without boolean proliferation.
+///
+/// ## OpenAPI form encoding options (future work)
+///
+/// For `FormUrlEncoded`, the OAS 3.x `encoding` map supports per-property
+/// overrides: `style` (form | spaceDelimited | pipeDelimited | deepObject),
+/// `explode` (true | false), `contentType`, and `allowReserved`. These are
+/// not yet parsed or acted upon — the current implementation uses the
+/// defaults (`style: form`, `explode: true`) which produce repeated keys
+/// for arrays (e.g. `tag=a&tag=b`). When a real consumer needs non-default
+/// serialization, these fields should be added to the `FormUrlEncoded`
+/// variant as a `HashMap<String, PropertyEncoding>`.
+#[derive(Debug, Clone, Default, PartialEq, Eq, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum BodyEncoding {
+    /// `application/json` — the default encoding for request bodies.
+    #[default]
+    Json,
+    /// `application/x-www-form-urlencoded` — flat key=value pairs.
+    ///
+    /// Current behavior: top-level keys emitted as-is, arrays repeat the
+    /// key (`tag=a&tag=b`), nested objects are JSON-encoded as values.
+    FormUrlEncoded,
+    // Future variants:
+    // MultipartFormData { encoding: HashMap<String, PropertyEncoding> },
+}
+
+impl BodyEncoding {
+    /// The `Content-Type` header value for this encoding.
+    pub fn content_type(&self) -> &'static str {
+        match self {
+            Self::Json => "application/json",
+            Self::FormUrlEncoded => "application/x-www-form-urlencoded",
+        }
+    }
+
+    /// Returns `true` when the encoding is form-urlencoded.
+    pub fn is_form(&self) -> bool {
+        matches!(self, Self::FormUrlEncoded)
+    }
+}
+
 /// Lifecycle/availability of an operation or parameter, sourced from the
 /// `x-fern-availability` extension on the OpenAPI element. Mirrors the
 /// canonical Fern values documented at
@@ -526,6 +572,12 @@ pub struct RestMethod {
     /// type.
     #[serde(default)]
     pub binary_request_body: Option<BinaryRequestBody>,
+    /// How the request body should be serialized on the wire.
+    ///
+    /// Defaults to `BodyEncoding::Json`. The executor reads this to decide
+    /// the `Content-Type` header and encoding strategy.
+    #[serde(default)]
+    pub body_encoding: BodyEncoding,
     /// Lowered OpenAPI security requirements: OR of ANDs.
     ///
     /// - `None` — operation didn't declare `security` and there was no
@@ -951,6 +1003,11 @@ pub struct JsonSchema {
     pub id: Option<String>,
     #[serde(rename = "type")]
     pub schema_type: Option<String>,
+    /// Surfaces both OpenAPI 3.0 `nullable: true` and OpenAPI 3.1
+    /// `type: [..., "null"]` uniformly. Lowered by the parser, not the
+    /// derived deserializer.
+    #[serde(default)]
+    pub nullable: bool,
     pub description: Option<String>,
     #[serde(default)]
     pub properties: HashMap<String, JsonSchemaProperty>,
@@ -959,6 +1016,16 @@ pub struct JsonSchema {
     pub items: Option<Box<JsonSchemaProperty>>,
     #[serde(default)]
     pub required: Vec<String>,
+    /// JSON Schema composition branches at the component-schema root. Mirrors
+    /// the same fields on [`JsonSchemaProperty`] so a top-level union like
+    /// `Auth0Role: { oneOf: [...] }` is captured, not just composition nested
+    /// inside a property. Not yet consumed by command generation.
+    #[serde(default)]
+    pub one_of: Vec<JsonSchemaProperty>,
+    #[serde(default)]
+    pub any_of: Vec<JsonSchemaProperty>,
+    #[serde(default)]
+    pub all_of: Vec<JsonSchemaProperty>,
     pub additional_properties: Option<Box<JsonSchemaProperty>>,
 }
 
@@ -968,6 +1035,9 @@ pub struct JsonSchema {
 pub struct JsonSchemaProperty {
     #[serde(rename = "type")]
     pub prop_type: Option<String>,
+    /// See [`JsonSchema::nullable`].
+    #[serde(default)]
+    pub nullable: bool,
     pub description: Option<String>,
     #[serde(rename = "$ref")]
     pub schema_ref: Option<String>,
@@ -980,6 +1050,34 @@ pub struct JsonSchemaProperty {
     pub default: Option<String>,
     #[serde(rename = "enum")]
     pub enum_values: Option<Vec<String>>,
+    /// Inclusive numeric lower bound. Lowered by the parser so the OpenAPI
+    /// 3.0 / 3.1 `exclusiveMinimum` divergence is resolved before reaching
+    /// the IR.
+    pub minimum: Option<f64>,
+    /// Inclusive numeric upper bound. See `minimum` above.
+    pub maximum: Option<f64>,
+    /// Strict numeric lower bound. Lowered uniformly from both OpenAPI 3.0
+    /// (`exclusiveMinimum: true` with paired `minimum`) and 3.1
+    /// (`exclusiveMinimum: <number>`).
+    pub exclusive_minimum: Option<f64>,
+    /// Strict numeric upper bound. See `exclusive_minimum` above.
+    pub exclusive_maximum: Option<f64>,
+    /// Single example value (OpenAPI 3.0 `example` or 3.1 fallback).
+    pub example: Option<serde_yaml::Value>,
+    /// `examples` block, captured as raw YAML. Real-world specs use this
+    /// field in three different shapes (3.1 array, lax-3.0 map keyed by
+    /// example name, single value); the parser preserves all three.
+    pub examples: Option<serde_yaml::Value>,
+    /// JSON Schema composition branches. Lowered by the parser from
+    /// `oneOf`. Empty when the source had no `oneOf` block.
+    #[serde(default)]
+    pub one_of: Vec<JsonSchemaProperty>,
+    /// JSON Schema composition: `anyOf`.
+    #[serde(default)]
+    pub any_of: Vec<JsonSchemaProperty>,
+    /// JSON Schema composition: `allOf`.
+    #[serde(default)]
+    pub all_of: Vec<JsonSchemaProperty>,
     pub additional_properties: Option<Box<JsonSchemaProperty>>,
 }
 

@@ -8,7 +8,17 @@ use crate::error::CliError;
 use crate::graphql::discovery::{GraphQLOperation, GraphQLResource, GraphQLSchema};
 
 /// Renders JSON help for the given subcommand path and prints it to stdout.
+#[cfg(test)]
 pub fn render_json_help(doc: &GraphQLSchema, path: &[String]) -> Result<(), CliError> {
+    write_json_help(doc, path, &mut std::io::stdout())
+}
+
+/// Writer-parameterized variant of [`render_json_help`].
+pub fn write_json_help(
+    doc: &GraphQLSchema,
+    path: &[String],
+    out: &mut dyn std::io::Write,
+) -> Result<(), CliError> {
     let output = match path.len() {
         0 => list_all_operations(doc),
         1 => list_resource_operations(doc, &path[0])?,
@@ -27,11 +37,13 @@ pub fn render_json_help(doc: &GraphQLSchema, path: &[String]) -> Result<(), CliE
         }
     };
 
-    println!(
+    writeln!(
+        out,
         "{}",
         serde_json::to_string_pretty(&output)
             .map_err(|e| CliError::Validation(format!("Failed to serialize help: {e}")))?
-    );
+    )
+    .map_err(|e| CliError::Other(e.into()))?;
     Ok(())
 }
 

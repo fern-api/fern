@@ -41,38 +41,38 @@ pub enum FormatError {
 pub struct OutputPipeline {
     pub format: OutputFormat,
     pub color_mode: ColorMode,
+    /// When true, suppress all stdout output. Errors still flow to stderr.
+    pub quiet: bool,
 }
 
 impl OutputPipeline {
     /// Build a pipeline from parsed CLI matches.
     ///
-    /// Unknown `--format` values emit a warning on stderr and fall back to
-    /// JSON, matching the prior behavior at `src/openapi/app.rs`.
+    /// Returns `Err(FormatError::UnknownFormat)` for unrecognised
+    /// `--format` values. Callers should map this into their error type
+    /// (e.g. `CliError::Validation`).
     pub fn from_matches(matches: &clap::ArgMatches) -> Result<Self, FormatError> {
         let format = match matches.get_one::<String>("format") {
-            Some(s) => match OutputFormat::parse(s) {
-                Ok(fmt) => fmt,
-                Err(unknown) => {
-                    eprintln!(
-                        "warning: unknown output format '{unknown}'; falling back to json"
-                    );
-                    OutputFormat::Json
-                }
-            },
+            Some(s) => OutputFormat::parse(s)
+                .map_err(FormatError::UnknownFormat)?,
             None => OutputFormat::default(),
         };
+        let quiet = matches
+            .try_get_one::<bool>("quiet")
+            .ok()
+            .flatten()
+            .copied()
+            .unwrap_or(false);
         Ok(Self {
             format,
             color_mode: ColorMode::Auto,
+            quiet,
         })
     }
 
     /// Render `value` to `out`, appending a trailing newline.
     ///
-    /// When `paginated` is true the compact NDJSON form is used (one JSON
-    /// object per line); otherwise the pretty form is used. `is_first_page`
-    /// controls per-format first-page concerns (CSV headers, YAML separators,
-    /// table headers — see `format_value_paginated`).
+    /// When `quiet` is set, this is a no-op — the value is silently discarded.
     pub fn emit<W: std::io::Write>(
         &self,
         out: &mut W,
@@ -80,6 +80,9 @@ impl OutputPipeline {
         paginated: bool,
         is_first_page: bool,
     ) -> Result<(), FormatError> {
+        if self.quiet {
+            return Ok(());
+        }
         let rendered = if paginated {
             format_value_paginated(value, &self.format, is_first_page)
         } else {
@@ -881,10 +884,13 @@ mod tests {
     }
 
     #[test]
-    fn pipeline_from_matches_falls_back_to_json_on_unknown_format() {
+    fn pipeline_from_matches_rejects_unknown_format() {
         let matches = matches_for(&["test", "--format", "garbage"]);
-        let pipeline = OutputPipeline::from_matches(&matches).unwrap();
-        assert_eq!(pipeline.format, OutputFormat::Json);
+        let err = OutputPipeline::from_matches(&matches).unwrap_err();
+        assert!(
+            matches!(err, FormatError::UnknownFormat(ref s) if s == "garbage"),
+            "expected UnknownFormat, got: {err:?}",
+        );
     }
 
     #[test]
@@ -892,6 +898,7 @@ mod tests {
         let pipeline = OutputPipeline {
             format: OutputFormat::Json,
             color_mode: ColorMode::Never,
+            quiet: false,
         };
         let val = json!({"name": "test", "n": 1});
         let mut buf: Vec<u8> = Vec::new();
@@ -908,6 +915,7 @@ mod tests {
         let pipeline = OutputPipeline {
             format: OutputFormat::Json,
             color_mode: ColorMode::Never,
+            quiet: false,
         };
         let val = json!({"name": "test", "n": 1});
         let mut buf: Vec<u8> = Vec::new();
@@ -919,5 +927,18 @@ mod tests {
         assert!(!body.contains('\n'), "expected single-line NDJSON, got: {s}");
         assert!(!body.contains("  "), "expected no indentation, got: {s}");
         assert!(body.contains("\"name\":\"test\""), "expected compact JSON, got: {s}");
+    }
+
+    #[test]
+    fn pipeline_emit_quiet_suppresses_output() {
+        let pipeline = OutputPipeline {
+            format: OutputFormat::Json,
+            color_mode: ColorMode::Never,
+            quiet: true,
+        };
+        let val = json!({"name": "test"});
+        let mut buf: Vec<u8> = Vec::new();
+        pipeline.emit(&mut buf, &val, false, true).unwrap();
+        assert!(buf.is_empty(), "quiet mode should suppress all output");
     }
 }

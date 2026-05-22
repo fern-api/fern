@@ -39,6 +39,7 @@ pub mod credential;
 pub mod error;
 pub mod oauth2;
 pub mod provider;
+pub mod root_builder;
 pub mod schemes;
 
 #[cfg(test)]
@@ -56,4 +57,5 @@ pub use provider::{
     no_auth_provider, AuthProvider, DynAuthProvider, EndpointAuthMetadata, NoAuthProvider,
 };
 pub use oauth2::{OAuth2Grant, OAuth2TokenProvider, TokenCache};
+pub use root_builder::{ApiKeyAuth, AuthSchemeBuilder, BasicAuth, BearerAuth, OAuth2Auth};
 pub use schemes::{BasicAuthProvider, BearerAuthProvider, HeaderAuthProvider};
