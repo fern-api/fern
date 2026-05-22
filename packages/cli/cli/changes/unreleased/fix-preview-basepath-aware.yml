@@ -1,0 +1,6 @@
+- summary: |
+    Fix multi-source preview publishing: pass `basepathAware` to `finishDocsRegister` for
+    preview publishes so that each workspace writes to its own basepath in S3 and registers
+    basepath routes in Edge Config. Previously, preview publishes excluded this flag, causing
+    all multi-source workspaces to overwrite each other at the root path.
+  type: fix

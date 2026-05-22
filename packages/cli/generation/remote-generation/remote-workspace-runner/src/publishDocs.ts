@@ -639,7 +639,7 @@ export async function publishDocs({
                 docsRegistrationId,
                 docsDefinition,
                 excludeApis,
-                ...(isBasepathAware && !preview && { basepathAware: true })
+                ...(isBasepathAware && { basepathAware: true })
             });
         } catch (error) {
             return context.failAndThrow("Failed to publish docs to " + domain, error, {
