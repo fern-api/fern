@@ -1,0 +1,6 @@
+- summary: |
+    Fix `fern docs link check` progress bars to be fully compatible with
+    batched requests: fire progress callbacks on completion events, track
+    high-water marks to prevent bar regression, and guard against duplicate
+    non-TTY messages.
+  type: fix
