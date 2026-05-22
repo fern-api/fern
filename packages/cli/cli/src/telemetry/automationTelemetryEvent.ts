@@ -21,6 +21,11 @@ export const AUTOMATION_EVENT_NAMES = {
     GENERATOR_COMPLETED: "generator_completed",
     GENERATOR_FAILED: "generator_failed",
     GENERATOR_SKIPPED: "generator_skipped",
+    PREVIEW_STARTED: "preview_started",
+    PREVIEW_GROUP_COMPLETED: "preview_group_completed",
+    PREVIEW_GROUP_FAILED: "preview_group_failed",
+    PREVIEW_COMPLETED: "preview_completed",
+    PREVIEW_FAILED: "preview_failed",
     VERIFICATION_FAILED: "verification_failed",
     UPGRADE_APPLIED: "upgrade_applied"
 } as const;
@@ -38,6 +43,11 @@ const AUTOMATION_EVENT_FAILURE: Record<AutomationEventName, boolean> = {
     [AUTOMATION_EVENT_NAMES.GENERATOR_COMPLETED]: false,
     [AUTOMATION_EVENT_NAMES.GENERATOR_FAILED]: true,
     [AUTOMATION_EVENT_NAMES.GENERATOR_SKIPPED]: false,
+    [AUTOMATION_EVENT_NAMES.PREVIEW_STARTED]: false,
+    [AUTOMATION_EVENT_NAMES.PREVIEW_GROUP_COMPLETED]: false,
+    [AUTOMATION_EVENT_NAMES.PREVIEW_GROUP_FAILED]: true,
+    [AUTOMATION_EVENT_NAMES.PREVIEW_COMPLETED]: false,
+    [AUTOMATION_EVENT_NAMES.PREVIEW_FAILED]: true,
     [AUTOMATION_EVENT_NAMES.VERIFICATION_FAILED]: true,
     [AUTOMATION_EVENT_NAMES.UPGRADE_APPLIED]: false
 };
@@ -171,7 +181,7 @@ export function failureEventNameForCommand(argv: readonly string[]): AutomationE
         return AUTOMATION_EVENT_NAMES.GENERATION_FAILED;
     }
     if (/\bautomations\s+preview\b/.test(joined)) {
-        return AUTOMATION_EVENT_NAMES.VERIFICATION_FAILED;
+        return AUTOMATION_EVENT_NAMES.PREVIEW_FAILED;
     }
     // Default for any other automation path - leg 3 still routes a Slack
     // message via the automation event API, so a sensible fallback matters.

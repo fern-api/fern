@@ -4,7 +4,10 @@ import {
     deriveGeneratorCompletedOutcome,
     generationRunAttributes,
     generatorCompletedAttributes,
-    generatorFailedAttributes
+    generatorFailedAttributes,
+    previewGroupCompletedAttributes,
+    previewGroupFailedAttributes,
+    previewRunAttributes
 } from "../automationTelemetryAttributes.js";
 
 describe("automationTelemetryAttributes", () => {
@@ -87,6 +90,50 @@ describe("automationTelemetryAttributes", () => {
             succeeded: 2,
             failed: 1,
             skipped: 1
+        });
+    });
+
+    it("builds preview_group_completed attributes", () => {
+        expect(
+            previewGroupCompletedAttributes({
+                groupName: "ts-sdk",
+                apiName: "api",
+                generatorName: "fernapi/fern-typescript-sdk",
+                previewCount: 2,
+                pushDiffEnabled: true,
+                hasDiffUrl: false
+            })
+        ).toMatchObject({
+            group_name: "ts-sdk",
+            api_name: "api",
+            generator_name: "fernapi/fern-typescript-sdk",
+            preview_count: 2,
+            push_diff_enabled: true,
+            has_diff_url: false
+        });
+    });
+
+    it("builds preview_group_failed attributes with failure_source", () => {
+        expect(
+            previewGroupFailedAttributes({
+                groupName: "ts-sdk",
+                apiName: undefined,
+                generatorName: "fernapi/fern-typescript-sdk",
+                errorMessage: "boom",
+                failureSource: "container"
+            })
+        ).toEqual({
+            group_name: "ts-sdk",
+            generator_name: "fernapi/fern-typescript-sdk",
+            error_message: "boom",
+            failure_source: "container"
+        });
+    });
+
+    it("builds preview_completed run aggregates", () => {
+        expect(previewRunAttributes({ succeeded: 1, failed: 2 })).toEqual({
+            succeeded: 1,
+            failed: 2
         });
     });
 });

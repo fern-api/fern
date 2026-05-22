@@ -1,0 +1,4 @@
+- summary: |
+    Emit automation telemetry for `fern automations preview`, including
+    per-group success/failure events and run-level lifecycle events.
+  type: feat

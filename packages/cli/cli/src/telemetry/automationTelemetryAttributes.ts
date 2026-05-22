@@ -1,6 +1,7 @@
 import type { PublishTarget } from "@fern-api/remote-workspace-runner";
 
 import type { GeneratorRunCounts } from "../commands/automations/generate/GeneratorRunResult.js";
+import type { PreviewRunCounts } from "../commands/automations/preview/PreviewRunResult.js";
 import type { JsonValue } from "./automationTelemetryEvent.js";
 
 export type GeneratorFailureSource = "container" | "cli";
@@ -91,5 +92,54 @@ export function generationRunAttributes(counts: GeneratorRunCounts): Record<stri
         succeeded: counts.succeeded,
         failed: counts.failed,
         skipped: counts.skipped
+    };
+}
+
+export function previewGroupIdentityAttributes(args: {
+    groupName: string;
+    apiName: string | undefined;
+    generatorName: string;
+}): Record<string, JsonValue> {
+    return {
+        group_name: args.groupName,
+        generator_name: args.generatorName,
+        ...(args.apiName != null ? { api_name: args.apiName } : {})
+    };
+}
+
+export function previewGroupCompletedAttributes(args: {
+    groupName: string;
+    apiName: string | undefined;
+    generatorName: string;
+    previewCount: number;
+    pushDiffEnabled: boolean;
+    hasDiffUrl: boolean;
+}): Record<string, JsonValue> {
+    return {
+        ...previewGroupIdentityAttributes(args),
+        preview_count: args.previewCount,
+        push_diff_enabled: args.pushDiffEnabled,
+        has_diff_url: args.hasDiffUrl
+    };
+}
+
+export function previewGroupFailedAttributes(args: {
+    groupName: string;
+    apiName: string | undefined;
+    generatorName: string;
+    errorMessage: string;
+    failureSource: GeneratorFailureSource;
+}): Record<string, JsonValue> {
+    return {
+        ...previewGroupIdentityAttributes(args),
+        error_message: args.errorMessage,
+        failure_source: args.failureSource
+    };
+}
+
+export function previewRunAttributes(counts: PreviewRunCounts): Record<string, JsonValue> {
+    return {
+        succeeded: counts.succeeded,
+        failed: counts.failed
     };
 }

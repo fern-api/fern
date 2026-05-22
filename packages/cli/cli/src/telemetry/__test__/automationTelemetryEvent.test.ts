@@ -23,6 +23,19 @@ describe("automationTelemetryEvent", () => {
         );
     });
 
+    it("maps automations preview argv to preview_failed", () => {
+        expect(failureEventNameForCommand(["node", "fern", "automations", "preview"])).toBe(
+            AUTOMATION_EVENT_NAMES.PREVIEW_FAILED
+        );
+    });
+
+    it("marks preview failure events for Sentry gating", () => {
+        expect(isFailureAutomationEventName(AUTOMATION_EVENT_NAMES.PREVIEW_GROUP_FAILED)).toBe(true);
+        expect(isFailureAutomationEventName(AUTOMATION_EVENT_NAMES.PREVIEW_FAILED)).toBe(true);
+        expect(isFailureAutomationEventName(AUTOMATION_EVENT_NAMES.PREVIEW_GROUP_COMPLETED)).toBe(false);
+        expect(isFailureAutomationEventName(AUTOMATION_EVENT_NAMES.PREVIEW_STARTED)).toBe(false);
+    });
+
     it("includes generator identity tags in Sentry tags", () => {
         expect(
             toSentryTags(

@@ -9,7 +9,7 @@ import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-ap
 import { getGeneratorOutputSubfolder, runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { askToLogin } from "@fern-api/login";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
-import { CliError } from "@fern-api/task-context";
+import { CliError, resolveErrorCode, TaskAbortSignal, type TaskContext } from "@fern-api/task-context";
 import fs from "fs/promises";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
@@ -26,6 +26,8 @@ import {
     PREVIEW_REGISTRY_URL
 } from "./overrideOutputForPreview.js";
 import { toPreviewPackageName } from "./toPreviewPackageName.js";
+
+type PreviewFailureSource = "container" | "cli";
 
 export interface SdkPreviewSuccess {
     status: "success";
@@ -45,6 +47,7 @@ export interface SdkPreviewError {
     status: "error";
     message: string;
     code?: CliError.Code;
+    failureSource?: PreviewFailureSource;
 }
 
 export type SdkPreviewResult = SdkPreviewSuccess | SdkPreviewError;
@@ -56,6 +59,65 @@ export type SdkPreviewResult = SdkPreviewSuccess | SdkPreviewError;
  */
 function isRegistryUrl(value: string): boolean {
     return value.startsWith("https://") || value.startsWith("http://");
+}
+
+async function runPreviewWorkspaceTask({
+    cliContext,
+    workspace,
+    abortFailureSource,
+    run
+}: {
+    cliContext: CliContext;
+    workspace: Parameters<CliContext["runTaskForWorkspace"]>[0];
+    abortFailureSource: PreviewFailureSource;
+    run: (context: TaskContext) => Promise<void>;
+}): Promise<SdkPreviewError | undefined> {
+    let capturedFailure: SdkPreviewError | undefined;
+
+    try {
+        await cliContext.runTaskForWorkspace(workspace, async (context) => {
+            try {
+                await run(context);
+            } catch (error) {
+                if (error instanceof TaskAbortSignal) {
+                    capturedFailure = {
+                        status: "error",
+                        message: context.getLastFailureMessage() ?? "Preview generation failed",
+                        code: abortFailureSource === "container" ? CliError.Code.ContainerError : undefined,
+                        failureSource: abortFailureSource
+                    };
+                } else {
+                    capturedFailure = {
+                        status: "error",
+                        message: error instanceof Error ? error.message : String(error),
+                        code: resolveErrorCode(error),
+                        failureSource: "cli"
+                    };
+                }
+                throw error;
+            }
+        });
+    } catch (error) {
+        if (error instanceof TaskAbortSignal && capturedFailure != null) {
+            return capturedFailure;
+        }
+        if (error instanceof TaskAbortSignal) {
+            return {
+                status: "error",
+                message: "Preview generation failed",
+                code: abortFailureSource === "container" ? CliError.Code.ContainerError : undefined,
+                failureSource: abortFailureSource
+            };
+        }
+        return {
+            status: "error",
+            message: error instanceof Error ? error.message : String(error),
+            code: resolveErrorCode(error),
+            failureSource: "cli"
+        };
+    }
+
+    return undefined;
 }
 
 export async function sdkPreview({
@@ -86,7 +148,8 @@ export async function sdkPreview({
         if (pushDiff && local) {
             return {
                 status: "error",
-                message: "--push-diff requires remote generation and cannot be combined with --local."
+                message: "--push-diff requires remote generation and cannot be combined with --local.",
+                failureSource: "cli"
             };
         }
 
@@ -98,7 +161,8 @@ export async function sdkPreview({
             return {
                 status: "error",
                 message: "Authentication required. Run 'fern login' or set FERN_TOKEN.",
-                code: CliError.Code.AuthError
+                code: CliError.Code.AuthError,
+                failureSource: "cli"
             };
         }
 
@@ -183,7 +247,8 @@ export async function sdkPreview({
                 return {
                     status: "error",
                     message: `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}`,
-                    code: CliError.Code.ConfigError
+                    code: CliError.Code.ConfigError,
+                    failureSource: "cli"
                 };
             }
 
@@ -192,7 +257,8 @@ export async function sdkPreview({
                 return {
                     status: "error",
                     message: `Group '${groupNameOrDefault}' does not exist in ${GENERATORS_CONFIGURATION_FILENAME}`,
-                    code: CliError.Code.ConfigError
+                    code: CliError.Code.ConfigError,
+                    failureSource: "cli"
                 };
             }
 
@@ -204,7 +270,8 @@ export async function sdkPreview({
                 return {
                     status: "error",
                     message: `Generator '${generatorFilter}' not found in group '${groupNameOrDefault}' in ${GENERATORS_CONFIGURATION_FILENAME}`,
-                    code: CliError.Code.ConfigError
+                    code: CliError.Code.ConfigError,
+                    failureSource: "cli"
                 };
             }
 
@@ -223,7 +290,8 @@ export async function sdkPreview({
                     message:
                         `No supported generators found in group '${groupNameOrDefault}'. ` +
                         `SDK preview currently only supports TypeScript/npm generators.`,
-                    code: CliError.Code.ConfigError
+                    code: CliError.Code.ConfigError,
+                    failureSource: "cli"
                 };
             }
 
@@ -235,7 +303,8 @@ export async function sdkPreview({
                         message:
                             `Could not determine package name for generator '${generator.name}'. ` +
                             `Ensure 'output.package-name' is set in ${GENERATORS_CONFIGURATION_FILENAME}.`,
-                        code: CliError.Code.ConfigError
+                        code: CliError.Code.ConfigError,
+                        failureSource: "cli"
                     };
                 }
 
@@ -303,18 +372,26 @@ export async function sdkPreview({
                     };
 
                     // Job 1: Publish preview package to registry.
-                    await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                        await runRemoteGenerationForAPIWorkspace({
-                            ...commonRemoteArgs,
-                            context,
-                            generatorGroup: publishGroup,
-                            version: previewVersion,
-                            absolutePathToPreview: absolutePathToOutput,
-                            isPreview: true,
-                            fiddlePreview: false,
-                            pushPreviewBranch: false
-                        });
+                    const publishFailure = await runPreviewWorkspaceTask({
+                        cliContext,
+                        workspace,
+                        abortFailureSource: "container",
+                        run: async (context) => {
+                            await runRemoteGenerationForAPIWorkspace({
+                                ...commonRemoteArgs,
+                                context,
+                                generatorGroup: publishGroup,
+                                version: previewVersion,
+                                absolutePathToPreview: absolutePathToOutput,
+                                isPreview: true,
+                                fiddlePreview: false,
+                                pushPreviewBranch: false
+                            });
+                        }
                     });
+                    if (publishFailure != null) {
+                        return publishFailure;
+                    }
 
                     // Job 2: Push clean diff branch with original package metadata.
                     // Uses fiddlePreview=true so Fiddle sets dryRun=true, which prevents
@@ -324,45 +401,61 @@ export async function sdkPreview({
                     if (shouldRunTwoJobs) {
                         const diffGroup = overrideGroupOutputForDiffBranch({ group: singleGeneratorGroup });
                         if (diffGroup.generators.length > 0) {
-                            await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                                await runRemoteGenerationForAPIWorkspace({
-                                    ...commonRemoteArgs,
-                                    context,
-                                    generatorGroup: diffGroup,
-                                    version: previewVersion,
-                                    absolutePathToPreview: undefined,
-                                    isPreview: true,
-                                    fiddlePreview: true,
-                                    pushPreviewBranch: true
-                                });
+                            const diffFailure = await runPreviewWorkspaceTask({
+                                cliContext,
+                                workspace,
+                                abortFailureSource: "container",
+                                run: async (context) => {
+                                    await runRemoteGenerationForAPIWorkspace({
+                                        ...commonRemoteArgs,
+                                        context,
+                                        generatorGroup: diffGroup,
+                                        version: previewVersion,
+                                        absolutePathToPreview: undefined,
+                                        isPreview: true,
+                                        fiddlePreview: true,
+                                        pushPreviewBranch: true
+                                    });
+                                }
                             });
+                            if (diffFailure != null) {
+                                return diffFailure;
+                            }
                         }
                     }
                 } else {
                     // Local generation via Docker — used when --local flag is provided.
                     // Docker must be installed. When absolutePathToOutput is set, generated
                     // files are also written to disk.
-                    await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                        await runLocalGenerationForWorkspace({
-                            token,
-                            projectConfig: project.config,
-                            workspace,
-                            generatorGroup: publishGroup,
-                            version: previewVersion,
-                            keepDocker: false,
-                            context,
-                            absolutePathToPreview: absolutePathToOutput,
-                            runner: undefined,
-                            inspect: false,
-                            ai: workspace.generatorsConfiguration?.ai,
-                            replay: undefined,
-                            noReplay: true,
-                            validateWorkspace: true,
-                            publishToRegistry,
-                            isPreview: true,
-                            disableTelemetry: isTelemetryDisabled()
-                        });
+                    const localFailure = await runPreviewWorkspaceTask({
+                        cliContext,
+                        workspace,
+                        abortFailureSource: "container",
+                        run: async (context) => {
+                            await runLocalGenerationForWorkspace({
+                                token,
+                                projectConfig: project.config,
+                                workspace,
+                                generatorGroup: publishGroup,
+                                version: previewVersion,
+                                keepDocker: false,
+                                context,
+                                absolutePathToPreview: absolutePathToOutput,
+                                runner: undefined,
+                                inspect: false,
+                                ai: workspace.generatorsConfiguration?.ai,
+                                replay: undefined,
+                                noReplay: true,
+                                validateWorkspace: true,
+                                publishToRegistry,
+                                isPreview: true,
+                                disableTelemetry: isTelemetryDisabled()
+                            });
+                        }
                     });
+                    if (localFailure != null) {
+                        return localFailure;
+                    }
                 }
 
                 // The generator writes to <output>/<subfolder>/ (e.g. fern-typescript-sdk/).
@@ -409,7 +502,8 @@ export async function sdkPreview({
     } catch (error) {
         return {
             status: "error",
-            message: error instanceof Error ? error.message : String(error)
+            message: error instanceof Error ? error.message : String(error),
+            failureSource: "cli"
         };
     }
 

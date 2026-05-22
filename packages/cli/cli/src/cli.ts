@@ -55,7 +55,7 @@ import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from ".
 import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2.js";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces.js";
 import { executeAutomationsGenerate } from "./commands/automations/generate/executeAutomationsGenerate.js";
-import { listPreviewGroups } from "./commands/automations/listPreviewGroups.js";
+import { executeAutomationsPreview } from "./commands/automations/preview/executeAutomationsPreview.js";
 import { executeAutomationsUpgrade } from "./commands/automations/upgrade/executeAutomationsUpgrade.js";
 import { diff } from "./commands/diff/diff.js";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
@@ -87,7 +87,7 @@ import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.j
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
 import { resolveSpecsForWorkspaces } from "./commands/resolve-specs/resolveSpecsForWorkspaces.js";
 import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
-import type { SdkPreviewResult, SdkPreviewSuccess } from "./commands/sdk-preview/sdkPreview.js";
+import type { SdkPreviewResult } from "./commands/sdk-preview/sdkPreview.js";
 import { sdkPreview } from "./commands/sdk-preview/sdkPreview.js";
 import { selfUpdate } from "./commands/self-update/selfUpdate.js";
 import { testOutput } from "./commands/test/testOutput.js";
@@ -2617,15 +2617,6 @@ function addAutomationsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
  *     env:
  *       FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
  */
-interface AutomationsPreviewGroupResult {
-    groupName: string;
-    apiName: string | null;
-    status: "success" | "error";
-    org?: string;
-    previews?: SdkPreviewSuccess["previews"];
-    error?: string;
-}
-
 function addAutomationsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "preview",
@@ -2654,94 +2645,14 @@ function addAutomationsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: C
                 command: "fern automations preview"
             });
 
-            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                commandLineApiWorkspace: undefined,
-                defaultToAllApiWorkspaces: true
+            await executeAutomationsPreview({
+                cliContext,
+                options: {
+                    group: argv.group,
+                    json: argv.json,
+                    pushDiff: argv["push-diff"]
+                }
             });
-
-            const groups = listPreviewGroups({
-                workspaces: project.apiWorkspaces,
-                groupFilter: argv.group
-            });
-
-            if (groups.length === 0) {
-                if (argv.json) {
-                    process.stdout.write(JSON.stringify({ results: [] }, null, 2) + "\n");
-                } else {
-                    cliContext.logger.info("No eligible generator groups found for preview.");
-                }
-                return;
-            }
-
-            cliContext.logger.info(
-                `Found ${groups.length} previewable group(s): ${groups.map((g) => g.groupName).join(", ")}`
-            );
-
-            const results: AutomationsPreviewGroupResult[] = [];
-
-            for (const group of groups) {
-                const apiLabel = group.apiName != null ? ` (api: ${group.apiName})` : "";
-                cliContext.logger.info(`Running preview for ${group.groupName}${apiLabel}...`);
-
-                try {
-                    const result = await sdkPreview({
-                        cliContext,
-                        groupName: group.groupName,
-                        generatorFilter: undefined,
-                        apiName: group.apiName ?? undefined,
-                        output: undefined,
-                        local: false,
-                        pushDiff: argv["push-diff"]
-                    });
-
-                    if (result.status === "success") {
-                        results.push({
-                            groupName: group.groupName,
-                            apiName: group.apiName,
-                            status: "success",
-                            org: result.org,
-                            previews: result.previews
-                        });
-                    } else {
-                        results.push({
-                            groupName: group.groupName,
-                            apiName: group.apiName,
-                            status: "error",
-                            error: result.message
-                        });
-                    }
-                } catch (error) {
-                    const message = error instanceof Error ? error.message : String(error);
-                    cliContext.logger.warn(`Preview failed for group '${group.groupName}': ${message}`);
-                    results.push({
-                        groupName: group.groupName,
-                        apiName: group.apiName,
-                        status: "error",
-                        error: message
-                    });
-                }
-            }
-
-            if (argv.json) {
-                process.stdout.write(JSON.stringify({ results }, null, 2) + "\n");
-            } else {
-                for (const groupResult of results) {
-                    if (groupResult.status === "success" && groupResult.previews != null) {
-                        for (const preview of groupResult.previews) {
-                            if (preview.install) {
-                                cliContext.logger.info(`${groupResult.groupName}: ${preview.install}`);
-                            }
-                        }
-                    } else if (groupResult.status === "error") {
-                        cliContext.logger.warn(`${groupResult.groupName}: ${groupResult.error}`);
-                    }
-                }
-            }
-
-            const hasErrors = results.some((r) => r.status === "error");
-            if (hasErrors) {
-                process.exitCode = 1;
-            }
         }
     );
 }
