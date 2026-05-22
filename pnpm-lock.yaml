@@ -4926,6 +4926,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
+      '@types/pngjs':
+        specifier: 'catalog:'
+        version: 6.0.5
       '@types/semver':
         specifier: 'catalog:'
         version: 7.7.1
@@ -4968,9 +4971,15 @@ importers:
       ora:
         specifier: 'catalog:'
         version: 7.0.1
+      pngjs:
+        specifier: 'catalog:'
+        version: 7.0.0
       posthog-node:
         specifier: ^5.28.6
         version: 5.29.1(rxjs@7.8.2)
+      puppeteer:
+        specifier: 'catalog:'
+        version: 24.40.0(typescript@5.9.3)
       semver:
         specifier: ^7.6.2
         version: 7.7.4
