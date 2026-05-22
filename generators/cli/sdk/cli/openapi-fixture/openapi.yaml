@@ -1,0 +1,1052 @@
+openapi: 3.0.2
+info:
+  title: Fixture API
+  version: "1.0"
+  description: Minimal targeted spec for integration testing. Not a real API.
+servers:
+  - url: https://api.fixture.example/v1
+
+# Spec-root idempotency headers. Materialized as CLI flags on every
+# operation marked `x-fern-idempotent: true` below; never surfaced on
+# non-idempotent siblings. Exercises FER-9864 P1.
+x-fern-idempotency-headers:
+  - header: Idempotency-Key
+    name: idempotency_key
+  # Second entry where `name` kebabs to something different from the
+  # wire header. Exercises the `flag_name_override` pathway —
+  # `--trace-id` surfaces the param while `X-Trace-Id` is sent on the
+  # wire.
+  - header: X-Trace-Id
+    name: trace_id
+
+# Constructor-style globals for the fixture CLI. Each declaration becomes a
+# global root flag (e.g. `--garden-id` / `$GARDEN_ID`) and is substituted
+# into the path template of any operation whose path parameter binds to it
+# via `x-fern-sdk-variable`. Exercised by the `sdk_variables` wire tests.
+x-fern-sdk-variables:
+  gardenId:
+    type: string
+    description: The garden tenant identifier used to scope all zone operations.
+
+# Spec-root global headers — stamped on every outgoing request. Each
+# entry becomes a global CLI flag (e.g. `--api-stage`) with the
+# resolution chain `CLI flag > env var > default`. Exercises FER-9864 P2.
+x-fern-global-headers:
+  # Required header with a kebab rename and an env-var fallback.
+  # `--api-stage` (or `$FIXTURE_API_STAGE`) surfaces it; the outgoing
+  # request carries `X-API-Stage: <value>`. Picked to be distinct from
+  # any per-op flag (the spec already aliases `X-Fern-Version` →
+  # `--api-version` on `users list` via `x-fern-parameter-name`).
+  - header: X-API-Stage
+    name: apiStage
+    optional: false
+    env: FIXTURE_API_STAGE
+    default: "production"
+  # Optional header with an SDK-style rename, no env, no default —
+  # exercises the `name:` kebab path so the CLI surface is the cleaner
+  # `--tenant-id` instead of the `x-`-prefixed wire form. Sent only when
+  # the user passes the flag explicitly. The no-`name:` fallback path
+  # (which would yield `--x-tenant-id`) is covered separately by unit
+  # tests against `global_header_flag_name`.
+  - header: X-Tenant-Id
+    name: tenantId
+    optional: true
+
+# Document-root `x-fern-groups` block — decorates `x-fern-sdk-group-name`
+# groups with human-friendly metadata that the CLI surfaces in `--help`.
+# Mirrors fern's openapi-ir-parser `XFernGroupsSchema` (a record of
+# `{ summary?, description? }`). Exercises FER-9864 P3 end-to-end:
+# each entry's `summary` replaces the legacy `Operations on '<name>'`
+# label on the group's clap subcommand, and `description` populates
+# the subcommand's long help. The integration tests under
+# `tests/cli_integration.rs` rely on this block; only a subset of the
+# fixture's groups is annotated so the "missing-metadata fallback"
+# path is also covered (e.g. `events` has no entry here, so its
+# subcommand keeps the default label).
+x-fern-groups:
+  users:
+    summary: Users Operations
+    description: Manage users — list, fetch, and mutate account records.
+  files:
+    summary: Files Operations
+    # Intentionally no `description`: covers the summary-only path
+    # (about set, long_about absent).
+
+paths:
+  # --- users ---
+
+  /users/me:
+    get:
+      x-fern-sdk-group-name:
+        - users
+      x-fern-sdk-method-name: getCurrent
+      operationId: users_getCurrent
+      summary: Get current user
+      responses:
+        "200":
+          description: Current user object
+
+  /users:
+    get:
+      x-fern-sdk-group-name:
+        - users
+      x-fern-sdk-method-name: list
+      operationId: users_list
+      summary: List users
+      # Per-op `x-fern-retries`. `base_delay_ms: 1` keeps the wire
+      # tests fast (real APIs would use the 500ms default). Exercises
+      # FER-9864 P2: GET ops retry on 5xx by default.
+      x-fern-retries:
+        max_attempts: 3
+        base_delay_ms: 1
+        factor: 1.0
+        jitter: 0.0
+      parameters:
+        # `filter_term` is the original wire name; the CLI surface exposes
+        # it as `--search-query` via `x-fern-parameter-name`. The outgoing
+        # request must still use `filter_term` in the query string. This
+        # is the canonical Fern aliasing example for query parameters.
+        - name: filter_term
+          in: query
+          x-fern-parameter-name: searchQuery
+          description: Free-text user filter. Renamed via x-fern-parameter-name.
+          schema:
+            type: string
+        # `user_type` exercises `x-fern-default` (extension form). When the
+        # caller omits `--user-type`, the CLI must send `user_type=all` in the
+        # outgoing query string and surface the default in `--help`.
+        - name: user_type
+          in: query
+          description: Filter users by membership type.
+          x-fern-default: all
+          schema:
+            type: string
+            enum: [all, managed, external]
+            x-fern-enum:
+              all:
+                name: All
+                description: Every user, including external collaborators.
+              managed:
+                name: Managed
+                description: Users your enterprise manages.
+              external:
+                name: External
+                description: External collaborators only.
+        # `limit` exercises the standard OpenAPI `default:` keyword. The
+        # extension is absent, so the schema default is treated as a
+        # documentation hint — it shows up in `--help` but the CLI does
+        # not send it on the wire (the API server applies its own default).
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 25
+        # A header parameter exercising the alias on the wire-header form.
+        # On the CLI it must be `--api-version` (kebab of `apiVersion`);
+        # on the wire it must be the original `X-Fern-Version` header.
+        # Mirrors the FER-9864 canonical example. We use `apiVersion`
+        # rather than the bare `version` alias to avoid colliding with
+        # the binary's built-in `--version` flag.
+        - name: X-Fern-Version
+          in: header
+          x-fern-parameter-name: apiVersion
+          description: API version pin. Renamed via x-fern-parameter-name.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Paginated user list
+    post:
+      x-fern-sdk-group-name:
+        - users
+      x-fern-sdk-method-name: create
+      operationId: users_create
+      summary: Create a user
+      # Per-op `x-fern-retries` on a non-idempotent POST. The retry
+      # policy MUST refuse to retry transient failures here — the
+      # server may have already processed the request. Exercises the
+      # per-method policy from FER-9864 P2: only ops marked
+      # `x-fern-idempotent` retry POST/PATCH.
+      x-fern-retries:
+        max_attempts: 3
+        base_delay_ms: 1
+        factor: 1.0
+        jitter: 0.0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "201":
+          description: Created user
+
+  /users/{user_id}:
+    get:
+      x-fern-sdk-group-name:
+        - users
+      x-fern-sdk-method-name: get
+      operationId: users_get
+      summary: Get a user by ID
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: legacy_flag
+          in: query
+          description: Old flag retained server-side but hidden from the CLI surface.
+          x-fern-ignore: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: User object
+    delete:
+      x-fern-sdk-group-name:
+        - users
+      x-fern-sdk-method-name: hardDelete
+      operationId: users_hardDelete
+      summary: (Hidden) Hard-delete a user.
+      x-fern-ignore: true
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted
+
+  # --- files ---
+
+  /files/upload:
+    post:
+      x-fern-sdk-group-name:
+        - files
+      x-fern-sdk-method-name: upload
+      operationId: files_upload
+      summary: Upload a binary file
+      description: |
+        Exercises the binary-body code path. The CLI exposes a `--file` flag
+        for `<PATH>`, `@<PATH>`, and `-` (stdin). Used by the wire test that
+        verifies disk paths emit `Content-Length` and stdin emits
+        `Transfer-Encoding: chunked`.
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        "200":
+          description: Upload accepted
+
+  /files/{file_id}:
+    get:
+      x-fern-sdk-group-name:
+        - files
+      x-fern-sdk-method-name: get
+      operationId: files_get
+      summary: Get a file by ID
+      parameters:
+        - name: file_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: File object
+    put:
+      x-fern-sdk-group-name:
+        - files
+      x-fern-sdk-method-name: update
+      operationId: files_update
+      summary: Update a file
+      parameters:
+        - name: file_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "200":
+          description: Updated file
+    delete:
+      x-fern-sdk-group-name:
+        - files
+      x-fern-sdk-method-name: delete
+      operationId: files_delete
+      summary: Delete a file
+      parameters:
+        - name: file_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted
+
+  /files/{file_id}/copy:
+    post:
+      x-fern-sdk-group-name:
+        - files
+      x-fern-sdk-method-name: copy
+      operationId: files_copy
+      summary: Copy a file
+      parameters:
+        - name: file_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parent:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+      responses:
+        "201":
+          description: Copied file
+
+  /files/{file_id}/thumbnail:
+    get:
+      x-fern-sdk-group-name:
+        - files
+      x-fern-sdk-method-name: getThumbnail
+      operationId: files_getThumbnail
+      summary: Get a file thumbnail
+      parameters:
+        - name: file_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Thumbnail image
+
+  # --- folders ---
+
+  /folders:
+    post:
+      x-fern-sdk-group-name:
+        - folders
+      x-fern-sdk-method-name: create
+      operationId: folders_create
+      summary: Create a folder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                parent:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+      responses:
+        "201":
+          description: Created folder
+
+  /folders/{folder_id}:
+    get:
+      x-fern-sdk-group-name:
+        - folders
+      x-fern-sdk-method-name: get
+      operationId: folders_get
+      summary: Get a folder by ID
+      parameters:
+        - name: folder_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Folder object
+    put:
+      x-fern-sdk-group-name:
+        - folders
+      x-fern-sdk-method-name: update
+      operationId: folders_update
+      summary: Update a folder
+      parameters:
+        - name: folder_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "200":
+          description: Updated folder
+    delete:
+      x-fern-sdk-group-name:
+        - folders
+      x-fern-sdk-method-name: delete
+      operationId: folders_delete
+      summary: Delete a folder
+      parameters:
+        - name: folder_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted
+
+  /folders/{folder_id}/items:
+    get:
+      x-fern-sdk-group-name:
+        - folders
+      x-fern-sdk-method-name: listItems
+      operationId: folders_listItems
+      summary: List items in a folder
+      parameters:
+        - name: folder_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Folder item list
+
+  /folders/{folder_id}/copy:
+    post:
+      x-fern-sdk-group-name:
+        - folders
+      x-fern-sdk-method-name: copy
+      operationId: folders_copy
+      summary: Copy a folder
+      parameters:
+        - name: folder_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "201":
+          description: Copied folder
+
+  # --- events: exercises explicit per-operation `x-fern-pagination`
+  # so the executor uses the per-op config rather than the heuristic.
+  /events:
+    get:
+      x-fern-sdk-group-name:
+        - events
+      x-fern-sdk-method-name: list
+      operationId: events_list
+      summary: List paginated events
+      x-fern-pagination:
+        cursor: $request.next_marker
+        next_cursor: $response.next_marker
+        results: $response.entries
+      parameters:
+        - name: next_marker
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Paginated event list
+
+  # --- audit: exercises offset-form `x-fern-pagination` with a
+  # `step: $request.limit` reference. The executor must advance the
+  # outgoing `offset` query param by the caller's `--limit` value, not
+  # by the number of results returned on the page.
+  /audit:
+    get:
+      x-fern-sdk-group-name:
+        - audit
+      x-fern-sdk-method-name: list
+      operationId: audit_list
+      summary: List audit entries (offset-paginated)
+      x-fern-pagination:
+        offset: $request.offset
+        results: $response.entries
+        step: $request.limit
+      parameters:
+        - name: offset
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Paginated audit list
+
+  # --- idempotency ---
+  # Both endpoints share a path and a group. The idempotent `create` op
+  # surfaces an `--idempotency-key` flag (synthesized from the spec-root
+  # `x-fern-idempotency-headers` list) and sends `Idempotency-Key` on
+  # the wire; the non-idempotent `list` sibling does not.
+
+  /payments:
+    get:
+      x-fern-sdk-group-name:
+        - payments
+      x-fern-sdk-method-name: list
+      operationId: payments_list
+      summary: List payments (non-idempotent)
+      responses:
+        "200":
+          description: Paginated payment list
+    post:
+      x-fern-sdk-group-name:
+        - payments
+      x-fern-sdk-method-name: create
+      operationId: payments_create
+      summary: Create a payment (idempotent)
+      x-fern-idempotent: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: integer
+                currency:
+                  type: string
+      responses:
+        "201":
+          description: Created payment
+
+  # --- availability badges ---
+  # Endpoints under /experiments exercise x-fern-availability + the standard
+  # OpenAPI deprecated:true fallback. Help output should attach the matching
+  # [BETA] / [PRE-RELEASE] / [DEPRECATED] badge to the command summary.
+
+  /experiments/beta:
+    get:
+      x-fern-sdk-group-name:
+        - experiments
+      x-fern-sdk-method-name: beta-op
+      x-fern-availability: beta
+      operationId: experiments_beta
+      summary: Beta operation
+      responses:
+        "200":
+          description: ok
+
+  /experiments/pre-release:
+    get:
+      x-fern-sdk-group-name:
+        - experiments
+      x-fern-sdk-method-name: pre-release-op
+      x-fern-availability: pre-release
+      operationId: experiments_preRelease
+      summary: Pre-release operation
+      responses:
+        "200":
+          description: ok
+
+  /experiments/ga:
+    get:
+      x-fern-sdk-group-name:
+        - experiments
+      x-fern-sdk-method-name: ga-op
+      x-fern-availability: ga
+      operationId: experiments_ga
+      summary: Generally-available operation (alias) — should NOT carry a badge
+      responses:
+        "200":
+          description: ok
+
+  /experiments/deprecated:
+    get:
+      x-fern-sdk-group-name:
+        - experiments
+      x-fern-sdk-method-name: deprecated-op
+      x-fern-availability: deprecated
+      operationId: experiments_deprecated
+      summary: Deprecated operation — still callable
+      parameters:
+        - name: legacy_flag
+          in: query
+          description: A flag that itself is marked beta to verify per-parameter badges.
+          x-fern-availability: beta
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ok
+
+  /experiments/openapi-deprecated:
+    get:
+      x-fern-sdk-group-name:
+        - experiments
+      x-fern-sdk-method-name: openapi-deprecated-op
+      deprecated: true
+      operationId: experiments_openapiDeprecated
+      summary: Op marked deprecated with OpenAPI's standard flag (no extension)
+      responses:
+        "200":
+          description: ok
+
+  # --- search ---
+
+  /search:
+    get:
+      x-fern-sdk-group-name:
+        - search
+      x-fern-sdk-method-name: query
+      operationId: search_query
+      summary: Search with deep object filter
+      parameters:
+        - name: filter
+          in: query
+          style: deepObject
+          explode: true
+          schema:
+            type: object
+      responses:
+        "200":
+          description: Search results
+
+  # --- reports: exercises `x-fern-sdk-return-value`. The server returns a
+  # wrapper envelope `{ data: [...], meta: {...} }`; the CLI should
+  # surface only `data` by default and the full envelope under
+  # `--no-extract`. Nested path lookup is covered by `getStats`, which
+  # extracts `result.payload` from a two-level wrapper. `listPaged`
+  # composes the extension with `x-fern-pagination` so each page's
+  # extracted subvalue is emitted while continuation still reads the
+  # envelope-level `next` cursor (a field outside the extracted
+  # subvalue, exactly the case the pagination + return-value contract
+  # has to handle).
+  /reports:
+    get:
+      x-fern-sdk-group-name:
+        - reports
+      x-fern-sdk-method-name: list
+      operationId: reports_list
+      summary: List reports (envelope-wrapped)
+      x-fern-sdk-return-value: data
+      responses:
+        "200":
+          description: Envelope with data + meta
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, meta]
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      required: [id, name]
+                      properties:
+                        id: { type: string }
+                        name: { type: string }
+                  meta:
+                    type: object
+                    properties:
+                      total: { type: integer }
+                      page: { type: integer }
+
+  /reports/stats:
+    get:
+      x-fern-sdk-group-name:
+        - reports
+      x-fern-sdk-method-name: getStats
+      operationId: reports_getStats
+      summary: Read a nested return value
+      x-fern-sdk-return-value: result.payload
+      responses:
+        "200":
+          description: Two-level wrapper response
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [result]
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      payload:
+                        type: object
+                        properties:
+                          value: { type: integer }
+                          unit: { type: string }
+                  meta:
+                    type: object
+                    properties:
+                      server_time: { type: string }
+
+  /reports/paged:
+    get:
+      x-fern-sdk-group-name:
+        - reports
+      x-fern-sdk-method-name: listPaged
+      operationId: reports_listPaged
+      summary: Cursor-paginated reports with envelope extraction
+      x-fern-sdk-return-value: data
+      x-fern-pagination:
+        cursor: $request.cursor
+        next_cursor: $response.next
+        results: $response.data
+      parameters:
+        - name: cursor
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Page of reports plus an envelope-level cursor
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      required: [id, name]
+                      properties:
+                        id: { type: string }
+                        name: { type: string }
+                  next:
+                    type: string
+
+  # Exercises `x-fern-sdk-variable`: the `gardenId` path parameter binds to
+  # the global `gardenId` variable declared at the spec root, so the CLI
+  # exposes `--garden-id` / $GARDEN_ID instead of a per-op flag.
+  /gardens/{gardenId}/zones:
+    get:
+      x-fern-sdk-group-name:
+        - zones
+      x-fern-sdk-method-name: list
+      operationId: zones_list
+      summary: List zones in a garden (variable-bound path param).
+      parameters:
+        - name: gardenId
+          in: path
+          required: true
+          x-fern-sdk-variable: gardenId
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ok
+
+  # x-fern-audiences fixtures (FER-9864 P2). Operations under a
+  # dedicated `audiences` group so the integration test surface stays
+  # self-contained. Mirrors fern's importer expectation that audiences
+  # are an array of strings on operation objects
+  # (`packages/cli/api-importers/openapi/openapi-ir-parser/src/openapi/v3/converters/operation/convertHttpOperation.ts:330`).
+  /audiences/public-only:
+    get:
+      x-fern-sdk-group-name:
+        - audiences
+      x-fern-sdk-method-name: public-only
+      operationId: audiences_public_only
+      summary: Op tagged with x-fern-audiences=[public].
+      x-fern-audiences:
+        - public
+      responses:
+        "200":
+          description: ok
+
+  /audiences/internal-only:
+    get:
+      x-fern-sdk-group-name:
+        - audiences
+      x-fern-sdk-method-name: internal-only
+      operationId: audiences_internal_only
+      summary: Op tagged with x-fern-audiences=[internal].
+      x-fern-audiences:
+        - internal
+      responses:
+        "200":
+          description: ok
+
+  /audiences/untagged:
+    get:
+      x-fern-sdk-group-name:
+        - audiences
+      x-fern-sdk-method-name: untagged
+      operationId: audiences_untagged
+      summary: Op with no x-fern-audiences extension.
+      responses:
+        "200":
+          description: ok
+
+  /audiences/multi-tagged:
+    get:
+      x-fern-sdk-group-name:
+        - audiences
+      x-fern-sdk-method-name: multi-tagged
+      operationId: audiences_multi_tagged
+      summary: Op tagged with x-fern-audiences=[public, internal].
+      x-fern-audiences:
+        - public
+        - internal
+      responses:
+        "200":
+          description: ok
+
+  # --- things ---
+  # An endpoint with a body schema covering every type the executor coerces.
+  # Used by `tests/openapi_fixture_wire.rs` to verify per-field body flags.
+  /things:
+    post:
+      x-fern-sdk-group-name:
+        - things
+      x-fern-sdk-method-name: create
+      operationId: things_create
+      summary: Create a thing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                count:
+                  type: integer
+                is_active:
+                  type: boolean
+                tags:
+                  type: array
+                  items:
+                    type: string
+                metadata:
+                  type: object
+      responses:
+        "201":
+          description: Created thing
+
+  # --- persons ---
+  # Endpoint with a nested object body (depth 1). Exercises flatten_body_params
+  # so --name.first / --name.last reconstruct {"name":{"first":"...","last":"..."}}.
+  /persons:
+    post:
+      x-fern-sdk-group-name:
+        - persons
+      x-fern-sdk-method-name: create
+      operationId: persons_create
+      summary: Create a person (nested body)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: object
+                  properties:
+                    first:
+                      type: string
+                    last:
+                      type: string
+                role:
+                  type: string
+      responses:
+        "201":
+          description: Created person
+
+  # --- articles ---
+  # Endpoint with an array body field. Exercises repeated:true so
+  # --tag admin --tag reviewer accumulates into ["admin","reviewer"].
+  /articles:
+    post:
+      x-fern-sdk-group-name:
+        - articles
+      x-fern-sdk-method-name: create
+      operationId: articles_create
+      summary: Create an article (array body field)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                tag:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        "201":
+          description: Created article
+
+  # --- widgets ---
+  # Endpoint with a $ref request body — exercises $ref resolution in
+  # flatten_body_params so the NewWidget schema properties are flattened.
+  /widgets:
+    post:
+      x-fern-sdk-group-name:
+        - widgets
+      x-fern-sdk-method-name: create
+      operationId: widgets_create
+      summary: Create a widget ($ref body)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewWidget'
+      responses:
+        "201":
+          description: Created widget
+
+  # --- orders ---
+  # Endpoint with an inline body schema that contains a $ref property.
+  # Exercises $ref resolution within flatten_body_params_prefix so
+  # --address.city / --address.zip reconstruct {"address":{"city":"...","zip":"..."}}.
+  /orders:
+    post:
+      x-fern-sdk-group-name:
+        - orders
+      x-fern-sdk-method-name: create
+      operationId: orders_create
+      summary: Create an order ($ref property within inline schema)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                note:
+                  type: string
+                address:
+                  $ref: '#/components/schemas/Address'
+      responses:
+        "201":
+          description: Created order
+
+  # --- messages (form-urlencoded) ---
+
+  /messages:
+    post:
+      x-fern-sdk-group-name:
+        - messages
+      x-fern-sdk-method-name: send
+      operationId: messages_send
+      summary: Send a message (form-urlencoded body)
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - To
+                - From
+                - Body
+              properties:
+                To:
+                  type: string
+                From:
+                  type: string
+                Body:
+                  type: string
+                Priority:
+                  type: integer
+                MediaUrl:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        "201":
+          description: Message sent
+
+  /messages/ref-body:
+    post:
+      x-fern-sdk-group-name:
+        - messages
+      x-fern-sdk-method-name: sendRef
+      operationId: messages_sendRef
+      summary: Send a message (form-urlencoded with $ref schema)
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MessageRequest'
+      responses:
+        "201":
+          description: Message sent
+
+components:
+  schemas:
+    NewWidget:
+      type: object
+      properties:
+        label:
+          type: string
+        priority:
+          type: integer
+    Address:
+      type: object
+      properties:
+        city:
+          type: string
+        zip:
+          type: string
+    MessageRequest:
+      type: object
+      required:
+        - To
+        - Body
+      properties:
+        To:
+          type: string
+        From:
+          type: string
+        Body:
+          type: string

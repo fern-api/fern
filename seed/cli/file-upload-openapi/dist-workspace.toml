@@ -14,12 +14,8 @@ ci = "github"
 precise-builds = true
 # The installers to generate for each app
 installers = ["shell", "powershell", "npm"]
-# A namespace to use when publishing this package to the npm registry
-npm-scope = "@fern-api"
 # Whether to enable GitHub Attestations
 github-attestations = true
-# The npm package should have this name
-npm-package = "cli-sdk"
 # Target platforms to build apps for (Rust target-triple syntax)
 targets = ["aarch64-apple-darwin", "aarch64-unknown-linux-gnu", "aarch64-unknown-linux-musl", "x86_64-apple-darwin", "x86_64-unknown-linux-gnu", "x86_64-unknown-linux-musl", "x86_64-pc-windows-msvc"]
 # Which actions to run on pull requests

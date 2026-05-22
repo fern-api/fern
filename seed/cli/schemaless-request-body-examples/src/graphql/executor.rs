@@ -182,7 +182,7 @@ async fn handle_json_response(
                 .emit(&mut out, &json_val, false, true)
                 .context("Failed to write output")?;
         }
-    } else if !capture_output && !body_text.is_empty() {
+    } else if !capture_output && !pipeline.quiet && !body_text.is_empty() {
         println!("{body_text}");
     }
     Ok(())

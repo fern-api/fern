@@ -19,7 +19,7 @@ pub fn wants_man(args: &[String]) -> bool {
 
 /// Generate a roff-formatted man page for `cmd` and write it to `writer`.
 ///
-/// `bin_name` is the name the user types to invoke the CLI (e.g. `"myapi"`).
+/// `bin_name` is the name the user types to invoke the CLI (e.g. `"box"`).
 /// The caller is responsible for building a `Command` that mirrors the full
 /// CLI surface (subcommands, flags, etc.) so the generated page is complete.
 ///
@@ -65,24 +65,24 @@ mod tests {
 
     #[test]
     fn wants_man_basic() {
-        assert!(wants_man(&args(&["myapi", "man"])));
+        assert!(wants_man(&args(&["box", "man"])));
     }
 
     #[test]
     fn wants_man_false_when_flag_value() {
-        assert!(!wants_man(&args(&["myapi", "--base-url", "man"])));
+        assert!(!wants_man(&args(&["box", "--base-url", "man"])));
     }
 
     #[test]
     fn wants_man_with_boolean_flag() {
-        assert!(wants_man(&args(&["myapi", "--dry-run", "man"])));
+        assert!(wants_man(&args(&["box", "--dry-run", "man"])));
     }
 
     #[test]
     fn generate_man_produces_roff() {
-        let cmd = Command::new("myapi").about("test");
+        let cmd = Command::new("box").about("test");
         let mut buf = Vec::new();
-        generate_man_to(cmd, "myapi", &mut buf).expect("generate_man_to should succeed");
+        generate_man_to(cmd, "box", &mut buf).expect("generate_man_to should succeed");
         let output = String::from_utf8(buf).expect("man page should be valid UTF-8");
         assert!(
             output.contains(".TH"),
@@ -90,7 +90,7 @@ mod tests {
             &output[..output.len().min(200)]
         );
         assert!(
-            output.contains("myapi"),
+            output.contains("box"),
             "man page should contain the binary name"
         );
         assert!(

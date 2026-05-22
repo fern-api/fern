@@ -857,4 +857,5 @@ mod tests {
         let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(header(r, "x-custom").as_deref(), Some("c"));
     }
+
 }

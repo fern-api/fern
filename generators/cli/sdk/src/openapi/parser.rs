@@ -9,7 +9,7 @@ use serde::{Deserialize, Deserializer};
 
 use crate::text::to_kebab_flag;
 use crate::openapi::discovery::{
-    Availability, BinaryRequestBody, GlobalHeader, IdempotencyHeader, JsonSchema,
+    Availability, BinaryRequestBody, BodyEncoding, GlobalHeader, IdempotencyHeader, JsonSchema,
     JsonSchemaProperty, MethodParameter, PaginationConfig, RestDescription, RestMethod,
     RestResource, RetriesConfig, SchemaRef, SdkGroupInfo, SdkVariable, SecurityScheme,
     StreamingConfig,
@@ -17,8 +17,8 @@ use crate::openapi::discovery::{
 use crate::error::CliError;
 
 /// Deserialize `x-fern-sdk-group-name` as either a string scalar or a list of
-/// strings. The Fern extension allows both forms; some specs use the scalar
-/// form while internal fixtures use the list form for nesting.
+/// strings. The Fern extension allows both forms; some specs use
+/// the scalar form while internal fixtures use the list form for nesting.
 fn deserialize_group_name<'de, D>(deserializer: D) -> Result<Option<Vec<String>>, D::Error>
 where
     D: Deserializer<'de>,
@@ -158,6 +158,13 @@ struct OpenApiSpec {
     servers: Vec<OpenApiServer>,
     #[serde(default)]
     paths: HashMap<String, OpenApiPathItem>,
+    /// OpenAPI 3.1 top-level `webhooks` block. Webhooks describe operations
+    /// the *server* sends to the user (inbound from the CLI's perspective),
+    /// so they are captured but intentionally not lowered into CLI
+    /// subcommands. Any component schemas they reference remain reachable
+    /// via `components.schemas` regardless.
+    #[serde(default)]
+    webhooks: HashMap<String, OpenApiPathItem>,
     components: Option<OpenApiComponents>,
     /// Spec-level default security. Each entry is an alternative; within an
     /// entry the keys are scheme names (their values are the requested
@@ -574,13 +581,125 @@ struct OpenApiMediaType {
     schema: Option<OpenApiSchemaObject>,
 }
 
+/// Captures the OpenAPI `type` field across the 3.0 string form
+/// (`type: string`) and the 3.1 array form (`type: ["string", "null"]`).
+/// `null_in_array` records whether `"null"` was present so nullability
+/// can be reconstructed at access time.
+#[derive(Debug, Default)]
+struct TypeField {
+    schema_type: Option<String>,
+    null_in_array: bool,
+}
+
+impl<'de> Deserialize<'de> for TypeField {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        use serde::de;
+
+        struct TypeFieldVisitor;
+
+        impl<'de> de::Visitor<'de> for TypeFieldVisitor {
+            type Value = TypeField;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+                formatter.write_str("a string or array of strings")
+            }
+
+            fn visit_str<E: de::Error>(self, v: &str) -> Result<Self::Value, E> {
+                Ok(TypeField { schema_type: Some(v.to_string()), null_in_array: false })
+            }
+
+            fn visit_string<E: de::Error>(self, v: String) -> Result<Self::Value, E> {
+                Ok(TypeField { schema_type: Some(v), null_in_array: false })
+            }
+
+            fn visit_seq<A: de::SeqAccess<'de>>(self, mut seq: A) -> Result<Self::Value, A::Error> {
+                let mut types: Vec<String> = Vec::new();
+                while let Some(t) = seq.next_element::<String>()? {
+                    types.push(t);
+                }
+                let null_in_array = types.iter().any(|t| t == "null");
+                let schema_type = types.into_iter().find(|t| t != "null");
+                Ok(TypeField { schema_type, null_in_array })
+            }
+
+            fn visit_none<E: de::Error>(self) -> Result<Self::Value, E> {
+                Ok(TypeField::default())
+            }
+
+            fn visit_unit<E: de::Error>(self) -> Result<Self::Value, E> {
+                Ok(TypeField::default())
+            }
+        }
+
+        deserializer.deserialize_any(TypeFieldVisitor)
+    }
+}
+
+/// `exclusiveMinimum` / `exclusiveMaximum` switched semantics between
+/// OpenAPI 3.0 (boolean: modifies the sibling `minimum`/`maximum`) and 3.1
+/// (numeric: the bound itself). This enum preserves the wire form so the
+/// accessors above can resolve to a single numeric bound consistently.
+#[derive(Debug, Clone, Copy)]
+enum ExclusiveBound {
+    Flag(bool),
+    Value(f64),
+}
+
+impl<'de> Deserialize<'de> for ExclusiveBound {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        use serde::de;
+
+        struct ExclusiveBoundVisitor;
+
+        impl<'de> de::Visitor<'de> for ExclusiveBoundVisitor {
+            type Value = ExclusiveBound;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+                formatter.write_str("a boolean (OpenAPI 3.0) or a number (OpenAPI 3.1)")
+            }
+
+            fn visit_bool<E: de::Error>(self, v: bool) -> Result<Self::Value, E> {
+                Ok(ExclusiveBound::Flag(v))
+            }
+
+            fn visit_i64<E: de::Error>(self, v: i64) -> Result<Self::Value, E> {
+                Ok(ExclusiveBound::Value(v as f64))
+            }
+
+            fn visit_u64<E: de::Error>(self, v: u64) -> Result<Self::Value, E> {
+                Ok(ExclusiveBound::Value(v as f64))
+            }
+
+            fn visit_f64<E: de::Error>(self, v: f64) -> Result<Self::Value, E> {
+                Ok(ExclusiveBound::Value(v))
+            }
+        }
+
+        deserializer.deserialize_any(ExclusiveBoundVisitor)
+    }
+}
+
 #[derive(Debug, Deserialize, Default)]
 #[serde(rename_all = "camelCase")]
 struct OpenApiSchemaObject {
     #[serde(rename = "$ref")]
     schema_ref: Option<String>,
-    #[serde(rename = "type", default, deserialize_with = "deserialize_type_field")]
-    schema_type: Option<String>,
+    /// Captures the wire `type` field in both its 3.0 string form and 3.1
+    /// array form. Use `schema_type()` / `is_nullable()` instead of reading
+    /// directly — those accessors fold in the explicit `nullable` field.
+    #[serde(rename = "type", default)]
+    type_field: TypeField,
+    /// OpenAPI 3.0 explicit `nullable: true`. Removed in 3.1 (which expresses
+    /// the same idea via `"null"` in a type array). Both forms are surfaced
+    /// uniformly through `is_nullable()`.
+    #[serde(default)]
+    nullable: bool,
     description: Option<String>,
     #[serde(default)]
     properties: HashMap<String, OpenApiSchemaObject>,
@@ -589,6 +708,58 @@ struct OpenApiSchemaObject {
     required: Vec<String>,
     #[serde(rename = "enum", default, deserialize_with = "deserialize_enum_values")]
     enum_values: Option<Vec<String>>,
+    /// OpenAPI 3.1 / JSON Schema 2020-12 `const`: a schema that matches a
+    /// single literal value. Lowered into a one-element `enum_values` by
+    /// `convert_schema_property` so existing enum-aware code paths handle
+    /// it without further changes.
+    #[serde(rename = "const", default)]
+    const_value: Option<serde_yaml::Value>,
+    /// JSON Schema inclusive numeric lower bound. In OpenAPI 3.0 the
+    /// boolean `exclusiveMinimum: true` re-interprets this as an exclusive
+    /// bound; in 3.1 the two fields are independent. Use the
+    /// `inclusive_min` / `exclusive_min` accessors to resolve correctly.
+    #[serde(default)]
+    minimum: Option<f64>,
+    /// JSON Schema inclusive numeric upper bound. See `minimum` above for
+    /// 3.0 vs 3.1 interaction notes.
+    #[serde(default)]
+    maximum: Option<f64>,
+    /// `exclusiveMinimum` in either OpenAPI 3.0 boolean form or 3.1
+    /// numeric form. Resolved via `exclusive_min()`.
+    #[serde(default)]
+    exclusive_minimum: Option<ExclusiveBound>,
+    /// `exclusiveMaximum` in either OpenAPI 3.0 boolean form or 3.1
+    /// numeric form. Resolved via `exclusive_max()`.
+    #[serde(default)]
+    exclusive_maximum: Option<ExclusiveBound>,
+    /// OpenAPI 3.0 / 3.1 single `example` value. Captured for documentation
+    /// surfacing; not used by request execution.
+    #[serde(default)]
+    example: Option<serde_yaml::Value>,
+    /// `examples` block, captured as raw YAML so that all three real-world
+    /// shapes load successfully:
+    ///   - OpenAPI 3.1 array of values: `examples: [a, b]`
+    ///   - OpenAPI 3.0 MediaType-style map: `examples: { name: { value: ... } }`
+    ///     (technically out-of-spec at the schema level, but several
+    ///     real-world specs embed this form)
+    ///   - Single value
+    ///
+    /// Downstream code is free to interpret the value based on its shape.
+    #[serde(default)]
+    examples: Option<serde_yaml::Value>,
+    /// JSON Schema composition: value must match exactly one branch.
+    /// Heavily used in 3.1 specs (where nullability via type arrays plus
+    /// composition replaces the 3.0 `nullable` flag for complex unions),
+    /// and also present in 3.0.
+    #[serde(default)]
+    one_of: Vec<OpenApiSchemaObject>,
+    /// JSON Schema composition: value must match at least one branch.
+    #[serde(default)]
+    any_of: Vec<OpenApiSchemaObject>,
+    /// JSON Schema composition: value must match every branch (typically
+    /// used for inheritance / mixin patterns).
+    #[serde(default)]
+    all_of: Vec<OpenApiSchemaObject>,
     format: Option<String>,
     #[serde(default)]
     read_only: bool,
@@ -597,6 +768,59 @@ struct OpenApiSchemaObject {
         deserialize_with = "deserialize_additional_properties"
     )]
     additional_properties: Option<Box<OpenApiSchemaObject>>,
+}
+
+impl OpenApiSchemaObject {
+    /// The OpenAPI `type` value with any `"null"` array entry stripped.
+    /// Returns `None` when no type was given or when the type array
+    /// contained only `"null"`.
+    fn schema_type(&self) -> Option<&str> {
+        self.type_field.schema_type.as_deref()
+    }
+
+    /// True when the schema is nullable per OpenAPI 3.0 (`nullable: true`)
+    /// or OpenAPI 3.1 (`"null"` in the type array).
+    fn is_nullable(&self) -> bool {
+        self.nullable || self.type_field.null_in_array
+    }
+
+    /// Inclusive minimum, after applying the OpenAPI 3.0 rule that
+    /// `exclusiveMinimum: true` re-interprets `minimum` as exclusive.
+    fn inclusive_min(&self) -> Option<f64> {
+        match self.exclusive_minimum {
+            Some(ExclusiveBound::Flag(true)) => None,
+            _ => self.minimum,
+        }
+    }
+
+    /// Inclusive maximum, with the same 3.0 re-interpretation rule applied.
+    fn inclusive_max(&self) -> Option<f64> {
+        match self.exclusive_maximum {
+            Some(ExclusiveBound::Flag(true)) => None,
+            _ => self.maximum,
+        }
+    }
+
+    /// Exclusive lower bound resolved across both OpenAPI 3.0
+    /// (boolean flag paired with `minimum`) and 3.1 (numeric form) wire
+    /// shapes.
+    fn exclusive_min(&self) -> Option<f64> {
+        match self.exclusive_minimum {
+            Some(ExclusiveBound::Value(n)) => Some(n),
+            Some(ExclusiveBound::Flag(true)) => self.minimum,
+            _ => None,
+        }
+    }
+
+    /// Exclusive upper bound resolved across both wire shapes; see
+    /// `exclusive_min` for details.
+    fn exclusive_max(&self) -> Option<f64> {
+        match self.exclusive_maximum {
+            Some(ExclusiveBound::Value(n)) => Some(n),
+            Some(ExclusiveBound::Flag(true)) => self.maximum,
+            _ => None,
+        }
+    }
 }
 
 /// Deserialize an OpenAPI `enum` field whose items may be strings, integers, or
@@ -619,13 +843,7 @@ where
         fn visit_seq<A: de::SeqAccess<'de>>(self, mut seq: A) -> Result<Self::Value, A::Error> {
             let mut values = Vec::new();
             while let Some(v) = seq.next_element::<serde_yaml::Value>()? {
-                let s = match &v {
-                    serde_yaml::Value::String(s) => s.clone(),
-                    serde_yaml::Value::Number(n) => n.to_string(),
-                    serde_yaml::Value::Bool(b) => b.to_string(),
-                    other => format!("{other:?}"),
-                };
-                values.push(s);
+                values.push(yaml_scalar_to_string(&v));
             }
             Ok(Some(values))
         }
@@ -1500,6 +1718,50 @@ fn strip_tag_prefix(operation_id: &str, tag: &str) -> String {
 // Schema conversion helpers
 // ---------------------------------------------------------------------------
 
+/// Resolve effective enum values for a schema, combining the OpenAPI `enum`
+/// field with the OpenAPI 3.1 / JSON Schema 2020-12 `const` keyword. A
+/// present `const` is lowered into a one-element enum so existing
+/// enum-aware code paths (CLI flag value validation, help rendering) pick
+/// it up without further changes. An explicit `enum` wins over `const`
+/// when both are present.
+fn effective_enum_values(obj: &OpenApiSchemaObject) -> Option<Vec<String>> {
+    if let Some(values) = &obj.enum_values {
+        return Some(values.clone());
+    }
+    let const_value = obj.const_value.as_ref()?;
+    Some(vec![yaml_scalar_to_string(const_value)])
+}
+
+/// Lower an `oneOf` / `anyOf` / `allOf` array of OpenAPI schemas into the
+/// IR's `JsonSchemaProperty` form. Used by both `convert_schema_object`
+/// (component-schema root) and `convert_schema_property` (nested property).
+fn convert_composition_branches(branches: &[OpenApiSchemaObject]) -> Vec<JsonSchemaProperty> {
+    branches.iter().map(convert_schema_property).collect()
+}
+
+/// If `obj` has an OpenAPI 3.1 / JSON Schema 2020-12 `const`, return the
+/// const as a typed JSON value to install as the CLI flag's client-side
+/// default. Pairs with the const→single-element enum lowering in
+/// `effective_enum_values`: the flag accepts exactly the const value (or
+/// rejects everything else via the enum parser), and becomes optional
+/// because omitting it auto-injects the const at request time.
+fn const_default_value(obj: &OpenApiSchemaObject) -> Option<serde_json::Value> {
+    yaml_value_to_json(obj.const_value.as_ref()?)
+}
+
+/// Coerce a YAML scalar (string, number, boolean) to its string form for
+/// downstream use in CLI flag enumerations. Non-scalars fall back to the
+/// Debug rendering — callers only invoke this on values that should be
+/// scalar by spec, so the fallback is a diagnostic, not a feature.
+fn yaml_scalar_to_string(v: &serde_yaml::Value) -> String {
+    match v {
+        serde_yaml::Value::String(s) => s.clone(),
+        serde_yaml::Value::Number(n) => n.to_string(),
+        serde_yaml::Value::Bool(b) => b.to_string(),
+        other => format!("{other:?}"),
+    }
+}
+
 fn convert_schema_object(obj: &OpenApiSchemaObject) -> JsonSchema {
     if let Some(ref_path) = &obj.schema_ref {
         let name = strip_ref_prefix(ref_path);
@@ -1517,12 +1779,16 @@ fn convert_schema_object(obj: &OpenApiSchemaObject) -> JsonSchema {
 
     JsonSchema {
         id: None,
-        schema_type: obj.schema_type.clone(),
+        schema_type: obj.schema_type().map(str::to_string),
+        nullable: obj.is_nullable(),
         description: obj.description.clone(),
         properties,
         schema_ref: None,
         items: obj.items.as_ref().map(|i| Box::new(convert_schema_property(i))),
         required: obj.required.clone(),
+        one_of: convert_composition_branches(&obj.one_of),
+        any_of: convert_composition_branches(&obj.any_of),
+        all_of: convert_composition_branches(&obj.all_of),
         additional_properties: obj
             .additional_properties
             .as_ref()
@@ -1546,7 +1812,8 @@ fn convert_schema_property(obj: &OpenApiSchemaObject) -> JsonSchemaProperty {
         .collect();
 
     JsonSchemaProperty {
-        prop_type: obj.schema_type.clone(),
+        prop_type: obj.schema_type().map(str::to_string),
+        nullable: obj.is_nullable(),
         description: obj.description.clone(),
         schema_ref: None,
         format: obj.format.clone(),
@@ -1554,7 +1821,16 @@ fn convert_schema_property(obj: &OpenApiSchemaObject) -> JsonSchemaProperty {
         properties,
         read_only: obj.read_only,
         default: None,
-        enum_values: obj.enum_values.clone(),
+        enum_values: effective_enum_values(obj),
+        minimum: obj.inclusive_min(),
+        maximum: obj.inclusive_max(),
+        exclusive_minimum: obj.exclusive_min(),
+        exclusive_maximum: obj.exclusive_max(),
+        example: obj.example.clone(),
+        examples: obj.examples.clone(),
+        one_of: convert_composition_branches(&obj.one_of),
+        any_of: convert_composition_branches(&obj.any_of),
+        all_of: convert_composition_branches(&obj.all_of),
         additional_properties: obj
             .additional_properties
             .as_ref()
@@ -2005,6 +2281,17 @@ pub fn load_openapi_spec_from_value(
         })
         .unwrap_or_default();
 
+    // OpenAPI 3.1 `webhooks` describe inbound operations (server → user),
+    // so we capture them at parse time but do not lower them into CLI
+    // subcommands. A non-empty block is surfaced at debug level so users
+    // can see why a spec with only webhooks produces no commands.
+    if !spec.webhooks.is_empty() {
+        tracing::debug!(
+            "Spec declares {} webhook(s); webhooks are inbound and not lowered to CLI subcommands.",
+            spec.webhooks.len(),
+        );
+    }
+
     // Lower components.securitySchemes to discovery types
     let security_schemes: HashMap<String, SecurityScheme> = spec
         .components
@@ -2240,7 +2527,7 @@ pub fn load_openapi_spec_from_value(
 
             // Handle request body — also harvests body-located parameters so
             // the command builder can render per-field flags alongside `--json`.
-            let (request, binary_request_body, body_params) = extract_request_body(
+            let (request, binary_request_body, body_encoding, body_params) = extract_request_body(
                 &operation.request_body,
                 operation.operation_id.as_deref().unwrap_or("unknown"),
                 &mut doc.schemas,
@@ -2366,6 +2653,7 @@ pub fn load_openapi_spec_from_value(
                 root_url: method_root_url,
                 servers: method_servers,
                 binary_request_body,
+                body_encoding,
                 security_requirements,
                 pagination,
                 availability,
@@ -2433,10 +2721,11 @@ fn insert_method_into_resources(
 /// the only way to supply them.
 const MAX_BODY_DEPTH: u8 = 3;
 
-/// Returns `(json_schema, binary_body, body_params)`:
+/// Returns `(json_schema, binary_body, body_encoding, body_params)`:
 /// - `json_schema`: a SchemaRef for the JSON request body (if `application/json` is declared).
 /// - `binary_body`: metadata when the operation expects a raw binary body
 ///   (any non-JSON / non-form media type).
+/// - `body_encoding`: how the request body should be serialized on the wire.
 /// - `body_params`: per-field flag map; when the body is an inline object schema,
 ///   each property up to MAX_BODY_DEPTH is exposed as a body-located [`MethodParameter`]
 ///   with dotted keys for nested fields. `$ref` bodies are resolved from
@@ -2446,12 +2735,12 @@ fn extract_request_body(
     operation_id: &str,
     schemas: &mut HashMap<String, JsonSchema>,
     component_schemas: &HashMap<String, OpenApiSchemaObject>,
-) -> (Option<SchemaRef>, Option<BinaryRequestBody>, HashMap<String, MethodParameter>) {
+) -> (Option<SchemaRef>, Option<BinaryRequestBody>, BodyEncoding, HashMap<String, MethodParameter>) {
     let Some(body) = request_body.as_ref() else {
-        return (None, None, HashMap::new());
+        return (None, None, BodyEncoding::Json, HashMap::new());
     };
     let Some(content) = body.content.as_ref() else {
-        return (None, None, HashMap::new());
+        return (None, None, BodyEncoding::Json, HashMap::new());
     };
 
     if let Some(media) = content.get("application/json") {
@@ -2469,6 +2758,7 @@ fn extract_request_body(
                         ..Default::default()
                     }),
                     None,
+                    BodyEncoding::Json,
                     body_params,
                 );
             }
@@ -2485,19 +2775,57 @@ fn extract_request_body(
                     ..Default::default()
                 }),
                 None,
+                BodyEncoding::Json,
                 body_params,
             );
         }
     }
 
-    // No JSON body declared — look for a binary content type. Form bodies
-    // (`application/x-www-form-urlencoded`, `multipart/form-data`) need their
-    // own flag UX and are explicitly excluded here.
+    // No JSON body declared — check for form-urlencoded body next.
+    if let Some(media) = content.get("application/x-www-form-urlencoded") {
+        if let Some(schema_obj) = media.schema.as_ref() {
+            if let Some(ref_path) = &schema_obj.schema_ref {
+                let name = strip_ref_prefix(ref_path);
+                let body_params = component_schemas
+                    .get(&name)
+                    .map(|resolved| flatten_body_params(resolved, component_schemas, 0))
+                    .unwrap_or_default();
+                return (
+                    Some(SchemaRef {
+                        schema_ref: Some(name),
+                        ..Default::default()
+                    }),
+                    None,
+                    BodyEncoding::FormUrlEncoded,
+                    body_params,
+                );
+            }
+
+            let body_params = flatten_body_params(schema_obj, component_schemas, 0);
+
+            let synthetic_name = format!("{operation_id}_request");
+            let converted = convert_schema_object(schema_obj);
+            schemas.insert(synthetic_name.clone(), converted);
+
+            return (
+                Some(SchemaRef {
+                    schema_ref: Some(synthetic_name),
+                    ..Default::default()
+                }),
+                None,
+                BodyEncoding::FormUrlEncoded,
+                body_params,
+            );
+        }
+    }
+
+    // No JSON or form body — look for a binary content type. `multipart/form-data`
+    // is explicitly excluded (separate future work).
     let Some((content_type, media)) = content.iter().find(|(ct, _)| {
         let ct = ct.as_str();
         ct != "application/x-www-form-urlencoded" && ct != "multipart/form-data"
     }) else {
-        return (None, None, HashMap::new());
+        return (None, None, BodyEncoding::Json, HashMap::new());
     };
 
     let is_binary_format = media
@@ -2525,6 +2853,7 @@ fn extract_request_body(
             content_type: content_type.clone(),
             flag_name,
         }),
+        BodyEncoding::Json,
         HashMap::new(),
     )
 }
@@ -2549,7 +2878,7 @@ fn flatten_body_params_prefix(
     prefix: &str,
 ) -> HashMap<String, MethodParameter> {
     let mut out = HashMap::new();
-    if depth >= MAX_BODY_DEPTH || schema.schema_type.as_deref() != Some("object") {
+    if depth >= MAX_BODY_DEPTH || schema.schema_type() != Some("object") {
         return out;
     }
     let required: std::collections::HashSet<&str> =
@@ -2568,7 +2897,7 @@ fn flatten_body_params_prefix(
         if let Some(ref_path) = &prop.schema_ref {
             let ref_name = strip_ref_prefix(ref_path);
             if let Some(resolved) = component_schemas.get(&ref_name) {
-                if resolved.schema_type.as_deref() == Some("object") {
+                if resolved.schema_type() == Some("object") {
                     let nested = flatten_body_params_prefix(resolved, component_schemas, depth + 1, &full_key);
                     if !nested.is_empty() {
                         out.extend(nested);
@@ -2576,20 +2905,26 @@ fn flatten_body_params_prefix(
                     }
                 }
                 // Non-object ref or depth limit reached (empty recursion) — emit with resolved type.
-                let is_array = resolved.schema_type.as_deref() == Some("array");
+                let is_array = resolved.schema_type() == Some("array");
+                let const_default = const_default_value(resolved);
                 out.insert(
                     full_key,
                     MethodParameter {
                         param_type: if is_array {
                             Some("string".to_string())
                         } else {
-                            resolved.schema_type.clone()
+                            resolved.schema_type().map(str::to_string)
                         },
                         description: prop.description.clone().or_else(|| resolved.description.clone()),
                         location: Some("body".to_string()),
-                        required: required.contains(name.as_str()),
+                        // A `const` makes the field effectively optional: the
+                        // value is fixed, so we auto-inject it via default_value
+                        // when omitted. Spec's `required:` only matters when the
+                        // user could meaningfully choose to omit a value.
+                        required: required.contains(name.as_str()) && const_default.is_none(),
                         format: resolved.format.clone(),
-                        enum_values: resolved.enum_values.clone(),
+                        enum_values: effective_enum_values(resolved),
+                        default_value: const_default,
                         repeated: is_array,
                         ..Default::default()
                     },
@@ -2599,7 +2934,7 @@ fn flatten_body_params_prefix(
             continue;
         }
 
-        let prop_type = prop.schema_type.as_deref();
+        let prop_type = prop.schema_type();
 
         // Nested object: recurse to emit dot-notation flags. If nothing comes
         // back (no sub-properties or depth limit hit), fall through to the default insert below.
@@ -2612,19 +2947,21 @@ fn flatten_body_params_prefix(
         }
 
         let is_array = prop_type == Some("array");
+        let const_default = const_default_value(prop);
         out.insert(
             full_key,
             MethodParameter {
                 param_type: if is_array {
                     Some("string".to_string())
                 } else {
-                    prop.schema_type.clone()
+                    prop_type.map(str::to_string)
                 },
                 description: prop.description.clone(),
                 location: Some("body".to_string()),
-                required: required.contains(name.as_str()),
+                required: required.contains(name.as_str()) && const_default.is_none(),
                 format: prop.format.clone(),
-                enum_values: prop.enum_values.clone(),
+                enum_values: effective_enum_values(prop),
+                default_value: const_default,
                 repeated: is_array,
                 ..Default::default()
             },
@@ -2640,6 +2977,7 @@ fn flatten_body_params_prefix(
 #[cfg(test)]
 mod tests {
     use super::*;
+
 
     #[test]
     fn test_camel_to_kebab() {
@@ -2732,7 +3070,7 @@ mod tests {
 
     #[test]
     fn test_strip_tag_prefix_no_strip_when_no_overlap() {
-        // When op `getCustomers` doesn't start with tag tokens, keep verbatim.
+        // When op `getCustomers` doesn't start with tag tokens.
         assert_eq!(strip_tag_prefix("getCustomers", "Customers"), "getCustomers");
     }
 
@@ -2757,8 +3095,8 @@ paths:
 
     #[test]
     fn test_method_name_keeps_operation_id_when_no_tag_overlap() {
-        // operationId doesn't start with tag → method stays as full kebab'd
-        // operationId. Matches Fern's behavior.
+        // When operationId doesn't start with tag → method
+        // stays as full kebab'd operationId. Matches Fern's behavior.
         let yaml = r#"
 openapi: "3.0.0"
 info: { title: T, version: "1.0" }
@@ -2858,8 +3196,8 @@ paths:
 
     #[test]
     fn test_group_name_accepts_scalar_string() {
-        // Some Fern specs write `x-fern-sdk-group-name: transcripts` as a bare
-        // string; the parser should accept it as a single-element list.
+        // Some Fern specs write `x-fern-sdk-group-name: transcripts`
+        // as a bare string; the parser should accept it as a single-element list.
         let yaml = r#"
 openapi: "3.0.0"
 info: { title: T, version: "1.0" }
@@ -7706,6 +8044,549 @@ paths:
         assert_eq!(
             m.audiences,
             vec!["public".to_string(), "public".to_string()],
+        );
+    }
+    // -- JSON Schema composition (oneOf / anyOf / allOf) -----------------
+
+    #[test]
+    fn test_composition_one_of_captures_branches() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            oneOf:
+              - type: string
+              - type: integer
+            "#,
+        )
+        .unwrap();
+        let prop = convert_schema_property(&obj);
+        assert_eq!(prop.one_of.len(), 2);
+        assert_eq!(prop.one_of[0].prop_type.as_deref(), Some("string"));
+        assert_eq!(prop.one_of[1].prop_type.as_deref(), Some("integer"));
+    }
+
+    #[test]
+    fn test_composition_any_of_and_all_of() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r##"
+            allOf:
+              - $ref: "#/components/schemas/Base"
+              - type: object
+                properties:
+                  extra:
+                    type: string
+            anyOf:
+              - type: number
+              - type: string
+            "##,
+        )
+        .unwrap();
+        let prop = convert_schema_property(&obj);
+        assert_eq!(prop.all_of.len(), 2);
+        assert_eq!(prop.all_of[0].schema_ref.as_deref(), Some("Base"));
+        assert_eq!(prop.any_of.len(), 2);
+        assert_eq!(prop.any_of[0].prop_type.as_deref(), Some("number"));
+    }
+
+    #[test]
+    fn test_composition_at_parent_json_schema_level() {
+        // Component-schema roots can themselves be a oneOf/anyOf/allOf (heavy
+        // pattern in Auth0's spec). The IR's parent JsonSchema must capture
+        // these, not just the property-level variants.
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r##"
+            allOf:
+              - $ref: "#/components/schemas/Base"
+              - type: object
+                properties:
+                  extra:
+                    type: string
+            "##,
+        )
+        .unwrap();
+        let s = convert_schema_object(&obj);
+        assert_eq!(s.all_of.len(), 2);
+        assert_eq!(s.all_of[0].schema_ref.as_deref(), Some("Base"));
+        assert_eq!(s.all_of[1].prop_type.as_deref(), Some("object"));
+    }
+
+    #[test]
+    fn test_composition_nullable_via_oneof_with_null_type() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            oneOf:
+              - type: string
+              - type: "null"
+            "#,
+        )
+        .unwrap();
+        let prop = convert_schema_property(&obj);
+        assert_eq!(prop.one_of.len(), 2);
+        assert_eq!(prop.one_of[1].prop_type.as_deref(), Some("null"));
+    }
+
+    // -- OpenAPI 3.0/3.1 examples ----------------------------------------
+
+    #[test]
+    fn test_example_30_single() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: string
+            example: "hello"
+            "#,
+        )
+        .unwrap();
+        let prop = convert_schema_property(&obj);
+        assert_eq!(
+            prop.example,
+            Some(serde_yaml::Value::String("hello".to_string())),
+        );
+        assert!(prop.examples.is_none());
+    }
+
+    #[test]
+    fn test_examples_31_list() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: string
+            examples:
+              - "alpha"
+              - "beta"
+            "#,
+        )
+        .unwrap();
+        let prop = convert_schema_property(&obj);
+        let seq = prop.examples.as_ref().and_then(|v| v.as_sequence()).unwrap();
+        assert_eq!(seq.len(), 2);
+        assert_eq!(seq[0], serde_yaml::Value::String("alpha".to_string()));
+        assert_eq!(seq[1], serde_yaml::Value::String("beta".to_string()));
+        assert!(prop.example.is_none());
+    }
+
+    #[test]
+    fn test_examples_lax_30_map_form() {
+        // Schema-level `examples` map (out-of-spec for
+        // OpenAPI 3.0 at the schema level, but real-world specs use it).
+        // The parser must round-trip without erroring.
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: array
+            examples:
+              Response:
+                value:
+                  - red
+                  - green
+            "#,
+        )
+        .unwrap();
+        let prop = convert_schema_property(&obj);
+        let map = prop.examples.as_ref().and_then(|v| v.as_mapping()).unwrap();
+        assert!(map.contains_key(serde_yaml::Value::String("Response".to_string())));
+    }
+
+    // -- OpenAPI 3.0/3.1 numeric bounds ----------------------------------
+
+    #[test]
+    fn test_bounds_30_inclusive() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: integer
+            minimum: 0
+            maximum: 100
+            "#,
+        )
+        .unwrap();
+        let prop = convert_schema_property(&obj);
+        assert_eq!(prop.minimum, Some(0.0));
+        assert_eq!(prop.maximum, Some(100.0));
+        assert_eq!(prop.exclusive_minimum, None);
+        assert_eq!(prop.exclusive_maximum, None);
+    }
+
+    #[test]
+    fn test_bounds_30_exclusive_flag_promotes_minimum() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: integer
+            minimum: 5
+            exclusiveMinimum: true
+            "#,
+        )
+        .unwrap();
+        let prop = convert_schema_property(&obj);
+        assert_eq!(prop.minimum, None, "minimum becomes exclusive in 3.0 flag form");
+        assert_eq!(prop.exclusive_minimum, Some(5.0));
+    }
+
+    #[test]
+    fn test_bounds_31_numeric_form() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: integer
+            exclusiveMinimum: 5
+            exclusiveMaximum: 99.5
+            "#,
+        )
+        .unwrap();
+        let prop = convert_schema_property(&obj);
+        assert_eq!(prop.minimum, None);
+        assert_eq!(prop.exclusive_minimum, Some(5.0));
+        assert_eq!(prop.exclusive_maximum, Some(99.5));
+    }
+
+    #[test]
+    fn test_bounds_30_and_31_produce_same_ir_for_strict_minimum() {
+        let obj_30: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: integer
+            minimum: 5
+            exclusiveMinimum: true
+            "#,
+        )
+        .unwrap();
+        let obj_31: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: integer
+            exclusiveMinimum: 5
+            "#,
+        )
+        .unwrap();
+        let p30 = convert_schema_property(&obj_30);
+        let p31 = convert_schema_property(&obj_31);
+        assert_eq!(p30.minimum, p31.minimum);
+        assert_eq!(p30.exclusive_minimum, p31.exclusive_minimum);
+    }
+
+    #[test]
+    fn test_bounds_30_exclusive_maximum_flag_promotes_maximum() {
+        // Symmetric to test_bounds_30_exclusive_flag_promotes_minimum — locks
+        // exclusiveMaximum's 3.0 boolean form against the same code path.
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: integer
+            maximum: 99
+            exclusiveMaximum: true
+            "#,
+        )
+        .unwrap();
+        let prop = convert_schema_property(&obj);
+        assert_eq!(prop.maximum, None, "maximum becomes exclusive in 3.0 flag form");
+        assert_eq!(prop.exclusive_maximum, Some(99.0));
+    }
+
+    #[test]
+    fn test_bounds_30_exclusive_false_keeps_inclusive() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: integer
+            minimum: 5
+            exclusiveMinimum: false
+            "#,
+        )
+        .unwrap();
+        let prop = convert_schema_property(&obj);
+        assert_eq!(prop.minimum, Some(5.0));
+        assert_eq!(prop.exclusive_minimum, None);
+    }
+
+    // -- OpenAPI 3.1 const ------------------------------------------------
+
+    #[test]
+    fn test_const_lowers_to_single_element_enum() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: string
+            const: webhook.user.created
+            "#,
+        )
+        .unwrap();
+        let prop = convert_schema_property(&obj);
+        assert_eq!(
+            prop.enum_values.as_deref(),
+            Some(&["webhook.user.created".to_string()][..]),
+        );
+    }
+
+    #[test]
+    fn test_const_numeric_value() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: integer
+            const: 42
+            "#,
+        )
+        .unwrap();
+        let prop = convert_schema_property(&obj);
+        assert_eq!(prop.enum_values.as_deref(), Some(&["42".to_string()][..]));
+    }
+
+    #[test]
+    fn test_const_lowered_through_flatten_body_params_inline() {
+        // Inline-property branch: `const` reaches the generated CLI flag as
+        // (a) a single-value enum constraint, (b) a client-side default
+        // that auto-injects on omission, and (c) optional even if the
+        // parent's required: list names it.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            required: [status]
+            properties:
+              status:
+                type: string
+                const: active
+            "#,
+        )
+        .unwrap();
+        let component_schemas = HashMap::new();
+        let params = flatten_body_params(&schema, &component_schemas, 0);
+        let status = params.get("status").expect("status flag should be emitted");
+        assert_eq!(status.enum_values.as_deref(), Some(&["active".to_string()][..]));
+        assert_eq!(status.default_value, Some(serde_json::Value::String("active".into())));
+        assert!(!status.required, "const-bearing flag must be optional");
+    }
+
+    #[test]
+    fn test_const_lowered_through_flatten_body_params_via_ref() {
+        // $ref-resolution branch: same three properties hold when the const
+        // lives on a $ref-resolved component schema.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r##"
+            type: object
+            required: [role]
+            properties:
+              role:
+                $ref: "#/components/schemas/Role"
+            "##,
+        )
+        .unwrap();
+        let role_schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: string
+            const: admin
+            "#,
+        )
+        .unwrap();
+        let mut component_schemas = HashMap::new();
+        component_schemas.insert("Role".to_string(), role_schema);
+        let params = flatten_body_params(&schema, &component_schemas, 0);
+        let role = params.get("role").expect("role flag should be emitted");
+        assert_eq!(role.enum_values.as_deref(), Some(&["admin".to_string()][..]));
+        assert_eq!(role.default_value, Some(serde_json::Value::String("admin".into())));
+        assert!(!role.required, "const-bearing $ref'd flag must be optional");
+    }
+
+    #[test]
+    fn test_const_numeric_default_keeps_wire_type() {
+        // A numeric const lands on the wire as a JSON number, not a string —
+        // critical for body fields whose const is meaningful as a literal
+        // type rather than a label.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              version:
+                type: integer
+                const: 2
+            "#,
+        )
+        .unwrap();
+        let params = flatten_body_params(&schema, &HashMap::new(), 0);
+        let version = params.get("version").unwrap();
+        assert_eq!(
+            version.default_value,
+            Some(serde_json::Value::Number(serde_json::Number::from(2))),
+            "numeric const must default to JSON number",
+        );
+    }
+
+    #[test]
+    fn test_const_does_not_override_explicit_enum() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: string
+            enum: [a, b]
+            const: c
+            "#,
+        )
+        .unwrap();
+        let prop = convert_schema_property(&obj);
+        assert_eq!(
+            prop.enum_values.as_deref(),
+            Some(&["a".to_string(), "b".to_string()][..]),
+        );
+    }
+
+    // -- OpenAPI 3.1 webhooks ---------------------------------------------
+
+    #[test]
+    fn test_webhooks_block_parses_and_is_ignored_for_commands() {
+        let yaml = r##"
+openapi: "3.1.0"
+info:
+  title: Webhook-only spec
+  version: "1.0.0"
+paths: {}
+webhooks:
+  userCreated:
+    post:
+      operationId: handleUserCreated
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id: { type: string }
+"##;
+        let value: serde_yaml::Value = serde_yaml::from_str(yaml).unwrap();
+        let desc = load_openapi_spec_from_value(value, "test-cli").expect("spec should parse");
+        // Component schema is still reachable via discovery.
+        assert!(desc.schemas.contains_key("User"));
+        // No CLI methods generated.
+        let total_methods: usize = desc.resources.values().map(|r| r.methods.len()).sum();
+        assert_eq!(total_methods, 0, "webhook ops must not become subcommands");
+    }
+
+    // -- OpenAPI 3.1 nullability ------------------------------------------
+
+    #[test]
+    fn test_nullable_30_explicit_field() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: string
+            nullable: true
+            "#,
+        )
+        .unwrap();
+        assert_eq!(obj.schema_type(), Some("string"));
+        assert!(obj.is_nullable());
+        let prop = convert_schema_property(&obj);
+        assert!(prop.nullable);
+        assert_eq!(prop.prop_type.as_deref(), Some("string"));
+    }
+
+    #[test]
+    fn test_nullable_31_type_array_with_null() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: ["string", "null"]
+            "#,
+        )
+        .unwrap();
+        assert_eq!(obj.schema_type(), Some("string"));
+        assert!(obj.is_nullable());
+        let prop = convert_schema_property(&obj);
+        assert!(prop.nullable);
+        assert_eq!(prop.prop_type.as_deref(), Some("string"));
+    }
+
+    #[test]
+    fn test_nullable_31_type_array_null_first() {
+        // Order shouldn't matter — `find` picks first non-null, presence of
+        // "null" anywhere flips nullability on.
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: ["null", "integer"]
+            "#,
+        )
+        .unwrap();
+        assert_eq!(obj.schema_type(), Some("integer"));
+        assert!(obj.is_nullable());
+    }
+
+    #[test]
+    fn test_nullable_31_type_array_only_null() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: ["null"]
+            "#,
+        )
+        .unwrap();
+        assert_eq!(obj.schema_type(), None);
+        assert!(obj.is_nullable());
+    }
+
+    #[test]
+    fn test_nullable_30_regression_plain_type() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: string
+            "#,
+        )
+        .unwrap();
+        assert_eq!(obj.schema_type(), Some("string"));
+        assert!(!obj.is_nullable());
+        let prop = convert_schema_property(&obj);
+        assert!(!prop.nullable);
+    }
+
+    #[test]
+    fn test_nullable_at_parent_json_schema_level() {
+        // The parent JsonSchema (returned by convert_schema_object) carries
+        // its own nullable flag — covers the case where a top-level
+        // request/response body schema is itself nullable rather than just
+        // having nullable properties.
+        let obj_30: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            nullable: true
+            "#,
+        )
+        .unwrap();
+        let obj_31: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: ["object", "null"]
+            "#,
+        )
+        .unwrap();
+        let s_30 = convert_schema_object(&obj_30);
+        let s_31 = convert_schema_object(&obj_31);
+        assert!(s_30.nullable);
+        assert!(s_31.nullable);
+        assert_eq!(s_30.schema_type.as_deref(), Some("object"));
+        assert_eq!(s_31.schema_type.as_deref(), Some("object"));
+    }
+
+    #[test]
+    fn test_nullable_schema_object_lowering() {
+        let obj_30: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              email:
+                type: string
+                nullable: true
+            "#,
+        )
+        .unwrap();
+        let obj_31: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              email:
+                type: ["string", "null"]
+            "#,
+        )
+        .unwrap();
+        let lowered_30 = convert_schema_object(&obj_30);
+        let lowered_31 = convert_schema_object(&obj_31);
+        assert_eq!(lowered_30.schema_type.as_deref(), Some("object"));
+        assert_eq!(lowered_31.schema_type.as_deref(), Some("object"));
+        assert!(lowered_30.properties["email"].nullable);
+        assert!(lowered_31.properties["email"].nullable);
+        assert_eq!(
+            lowered_30.properties["email"].prop_type.as_deref(),
+            Some("string"),
+        );
+        assert_eq!(
+            lowered_31.properties["email"].prop_type.as_deref(),
+            Some("string"),
         );
     }
 }

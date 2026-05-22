@@ -6,7 +6,6 @@ description = "CLI generator — dynamic command surface from OpenAPI and GraphQ
 license = "Apache-2.0"
 repository = "https://github.com/fern-api/cli-sdk"
 homepage = "https://github.com/fern-api/cli-sdk"
-readme = "README.md"
 authors = ["Fern <hey@buildwithfern.com>"]
 keywords = ["cli", "openapi", "graphql", "fern", "codegen"]
 categories = ["command-line-utilities", "web-programming"]
@@ -16,12 +15,8 @@ name = "fern_cli_sdk"
 path = "src/lib.rs"
 
 [[bin]]
-name = "openapi-fixture"
-path = "cli/openapi-fixture/main.rs"
-
-[[bin]]
-name = "strip-schema"
-path = "src/bin/strip_schema.rs"
+name = "server-sent-events-openapi"
+path = "cli/server-sent-events-openapi/main.rs"
 
 [features]
 # TLS backend selection.
@@ -69,14 +64,19 @@ tokio-util = { version = "0.7", features = ["io"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
 tracing-appender = "0.2"
+form_urlencoded = "1"
 
 [package.metadata.dist]
-dist = false
+dist = true
 
 # The profile that 'cargo dist' will build with
 [profile.dist]
 inherits = "release"
 lto = "thin"
+
+[build-dependencies]
+serde = "1"
+serde_yaml = "0.9.34"
 
 [dev-dependencies]
 serial_test = "3.4.0"

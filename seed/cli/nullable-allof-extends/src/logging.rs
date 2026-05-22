@@ -81,7 +81,7 @@ mod tests {
     #[test]
     fn test_env_prefix() {
         assert_eq!(env_prefix("test-cli"), "TEST_CLI");
-        assert_eq!(env_prefix("myapi"), "MYAPI");
+        assert_eq!(env_prefix("box"), "BOX");
         assert_eq!(env_prefix("my-long-name"), "MY_LONG_NAME");
     }
 

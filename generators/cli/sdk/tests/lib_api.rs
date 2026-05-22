@@ -4,12 +4,22 @@
 
 #[test]
 fn test_cli_app_builder_chain() {
-    let app = fern_cli_sdk::openapi::CliApp::new("test")
-        .spec(include_str!("../src/openapi/__fixtures__/openapi.json"))
-        .auth_scheme_env("bearer", "TEST_TOKEN")
+    fn custom_handler(
+        _args: &clap::ArgMatches,
+        _ctx: &fern_cli_sdk::openapi::AppContext,
+    ) -> Result<(), fern_cli_sdk::error::CliError> {
+        Ok(())
+    }
+
+    let app = fern_cli_sdk::app::CliApp::new("test")
+        .binding(
+            fern_cli_sdk::openapi::OpenApiBinding::new()
+                .spec(include_str!("../cli/openapi-fixture/openapi.yaml"))
+                .auth_scheme_env("bearer", "TEST_TOKEN"),
+        )
         .command(
             clap::Command::new("custom").about("A custom command"),
-            |_args, _ctx| Ok(()),
+            fern_cli_sdk::openapi::OpenApiBinding::handler(custom_handler),
         );
 
     // Builder chain completes without panic — the app is ready to run
@@ -21,8 +31,8 @@ fn test_cli_app_builder_chain() {
 #[test]
 fn test_building_blocks_accessible() {
     // Verify all public modules are importable and types are usable
-    let spec = include_str!("../src/openapi/__fixtures__/openapi.json");
-    let doc = fern_cli_sdk::openapi::load_openapi_spec(spec, "test").unwrap();
+    let yaml = include_str!("../cli/openapi-fixture/openapi.yaml");
+    let doc = fern_cli_sdk::openapi::load_openapi_spec(yaml, "test").unwrap();
     let cmd = fern_cli_sdk::openapi::commands::build_cli(&doc);
 
     assert!(cmd.find_subcommand("users").is_some());

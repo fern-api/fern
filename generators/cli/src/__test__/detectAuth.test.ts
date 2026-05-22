@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { detectAuthBindings } from "../detectAuth.js";
 
 /**
- * Coverage for the IR → `auth_scheme*` mapping. The IR SDK's
+ * Coverage for the IR → auth binding mapping. The IR SDK's
  * `AuthScheme` constructors install the `_visit` method `detectAuth`
  * relies on, so we always go through them — never hand-assemble raw
  * `{ type: "bearer", ... }` objects.
@@ -66,8 +66,9 @@ describe("detectAuthBindings", () => {
             binaryName: "acme"
         });
         expect(bindings).toHaveLength(1);
-        expect(bindings[0]?.rustCall).toBe('.auth_scheme_env("OAuth2", "ACME_OAUTH_TOKEN")');
-        expect(bindings[0]?.needsCredentialSourceImport).toBe(false);
+        expect(bindings[0]?.rustCall).toBe('.auth(BearerAuth::new("OAuth2").env("ACME_OAUTH_TOKEN"))');
+        expect(bindings[0]?.placement).toBe("root");
+        expect(bindings[0]?.authTypeImport).toBe("BearerAuth");
     });
 
     it("bearer without tokenEnvVar falls back to <BIN>_TOKEN (clean, no scheme noise)", () => {
@@ -75,7 +76,7 @@ describe("detectAuthBindings", () => {
             auth: auth(bearer({ key: "OAuth2" })),
             binaryName: "close"
         });
-        expect(bindings[0]?.rustCall).toBe('.auth_scheme_env("OAuth2", "CLOSE_TOKEN")');
+        expect(bindings[0]?.rustCall).toBe('.auth(BearerAuth::new("OAuth2").env("CLOSE_TOKEN"))');
     });
 
     it("header scheme with headerEnvVar uses the IR value", () => {
@@ -83,7 +84,9 @@ describe("detectAuthBindings", () => {
             auth: auth(header({ key: "ApiKey", headerEnvVar: "CLOSE_API_KEY" })),
             binaryName: "close"
         });
-        expect(bindings[0]?.rustCall).toBe('.auth_scheme_env("ApiKey", "CLOSE_API_KEY")');
+        expect(bindings[0]?.rustCall).toBe('.auth(ApiKeyAuth::new("ApiKey").env("CLOSE_API_KEY"))');
+        expect(bindings[0]?.placement).toBe("root");
+        expect(bindings[0]?.authTypeImport).toBe("ApiKeyAuth");
     });
 
     it("header scheme without headerEnvVar falls back to <BIN>_API_KEY", () => {
@@ -91,7 +94,7 @@ describe("detectAuthBindings", () => {
             auth: auth(header({ key: "ApiKey" })),
             binaryName: "close"
         });
-        expect(bindings[0]?.rustCall).toBe('.auth_scheme_env("ApiKey", "CLOSE_API_KEY")');
+        expect(bindings[0]?.rustCall).toBe('.auth(ApiKeyAuth::new("ApiKey").env("CLOSE_API_KEY"))');
     });
 
     it("basic auth: IR usernameEnvVar + passwordEnvVar drive both sources", () => {
@@ -104,31 +107,29 @@ describe("detectAuthBindings", () => {
                 'AuthCredentialSource::from_env("CLOSE_USER"), ' +
                 'AuthCredentialSource::from_env("CLOSE_PASS"))'
         );
-        expect(bindings[0]?.needsCredentialSourceImport).toBe(true);
+        expect(bindings[0]?.placement).toBe("binding");
+        expect(bindings[0]?.authTypeImport).toBe("AuthCredentialSource");
     });
 
-    it("basic auth with passwordOmit (Close pattern): emits the SDK's username-only builder", () => {
-        // The username-only builder lowers to BasicAuthProvider::username_only, whose
-        // has_credentials() check only inspects the username — fixes the silent-drop
-        // bug from the earlier `auth_basic_scheme(..., literal(""))` shape, where the
-        // empty literal resolves to None and trips Full mode's "both must resolve" gate.
+    it("basic auth with passwordOmit (Close pattern): emits auth_provider with BasicAuthProvider::username_only", () => {
         const bindings = detectAuthBindings({
             auth: auth(basic({ key: "ApiKeyAuth", usernameEnvVar: "CLOSE_API_KEY", passwordOmit: true })),
             binaryName: "close"
         });
         expect(bindings[0]?.rustCall).toBe(
-            '.auth_basic_scheme_username_only("ApiKeyAuth", AuthCredentialSource::from_env("CLOSE_API_KEY"))'
+            '.auth_provider("ApiKeyAuth", BasicAuthProvider::username_only("ApiKeyAuth", AuthCredentialSource::from_env("CLOSE_API_KEY")))'
         );
-        expect(bindings[0]?.needsCredentialSourceImport).toBe(true);
+        expect(bindings[0]?.placement).toBe("binding");
+        expect(bindings[0]?.authTypeImport).toBe("AuthCredentialSource, BasicAuthProvider");
     });
 
-    it("basic auth with usernameOmit: emits the SDK's password-only builder", () => {
+    it("basic auth with usernameOmit: emits auth_provider with BasicAuthProvider::password_only", () => {
         const bindings = detectAuthBindings({
             auth: auth(basic({ key: "BasicAuth", usernameOmit: true, passwordEnvVar: "ACME_PASS" })),
             binaryName: "acme"
         });
         expect(bindings[0]?.rustCall).toBe(
-            '.auth_basic_scheme_password_only("BasicAuth", AuthCredentialSource::from_env("ACME_PASS"))'
+            '.auth_provider("BasicAuth", BasicAuthProvider::password_only("BasicAuth", AuthCredentialSource::from_env("ACME_PASS")))'
         );
     });
 
@@ -161,8 +162,10 @@ describe("detectAuthBindings", () => {
             binaryName: "close"
         });
         expect(bindings).toHaveLength(2);
-        expect(bindings[0]?.rustCall).toContain('.auth_basic_scheme_username_only("ApiKeyAuth"');
-        expect(bindings[1]?.rustCall).toBe('.auth_scheme_env("OAuth2", "CLOSE_TOKEN")');
+        expect(bindings[0]?.rustCall).toContain('.auth_provider("ApiKeyAuth", BasicAuthProvider::username_only(');
+        expect(bindings[0]?.placement).toBe("binding");
+        expect(bindings[1]?.rustCall).toBe('.auth(BearerAuth::new("OAuth2").env("CLOSE_TOKEN"))');
+        expect(bindings[1]?.placement).toBe("root");
     });
 
     // `oauth: () => null` and `inferred: () => null` branches are
