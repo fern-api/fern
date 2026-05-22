@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.37.1
+  changelogEntry:
+    - summary: |
+        Prevent login from reporting missing browser opener tools as internal errors.
+        Upgrade `open` to v11 so spawn failures reject the returned promise, and handle
+        them inline in redirect, device-code, and logout flows.
+      type: fix
+  createdAt: "2026-05-22"
+  irVersion: 66
 - version: 5.37.0
   changelogEntry:
     - summary: |
