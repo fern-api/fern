@@ -1,0 +1,3 @@
+- summary: |
+    Add a phpdoc `@var array<string, mixed>` cast to the generated union `fromJson()` method so that PHPStan strict analysis accepts the call to `jsonDeserialize()`.
+  type: fix

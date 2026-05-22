@@ -233,6 +233,7 @@ class UnionWithSameNumberTypes extends JsonSerializableType
         if (!is_array($decodedJson)) {
             throw new Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
         }
+        /** @var array<string, mixed> $decodedJson */
         return self::jsonDeserialize($decodedJson);
     }
 

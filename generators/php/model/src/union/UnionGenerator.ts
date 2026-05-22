@@ -987,6 +987,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                     })
                 );
                 writer.endControlFlow();
+                writer.writeLine("/** @var array<string, mixed> $decodedJson */");
                 writer.write("return ");
                 writer.writeNodeStatement(
                     php.invokeMethod({
