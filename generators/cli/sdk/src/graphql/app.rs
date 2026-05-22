@@ -113,6 +113,38 @@ impl CliApp {
         self
     }
 
+    /// Username-only basic auth (password sent as `""`). See
+    /// [`OpenApiCliApp::auth_basic_scheme_username_only`][a] for rationale.
+    ///
+    /// [a]: crate::openapi::CliApp::auth_basic_scheme_username_only
+    pub fn auth_basic_scheme_username_only(
+        mut self,
+        scheme_name: &str,
+        username: AuthCredentialSource,
+    ) -> Self {
+        self.auth_bindings.push((
+            scheme_name.to_string(),
+            SchemeBinding::BasicUsernameOnly(username),
+        ));
+        self
+    }
+
+    /// Password-only basic auth (username sent as `""`). See
+    /// [`OpenApiCliApp::auth_basic_scheme_password_only`][a] for rationale.
+    ///
+    /// [a]: crate::openapi::CliApp::auth_basic_scheme_password_only
+    pub fn auth_basic_scheme_password_only(
+        mut self,
+        scheme_name: &str,
+        password: AuthCredentialSource,
+    ) -> Self {
+        self.auth_bindings.push((
+            scheme_name.to_string(),
+            SchemeBinding::BasicPasswordOnly(password),
+        ));
+        self
+    }
+
     /// Plug in a fully-custom [`AuthProvider`][crate::auth::AuthProvider] for
     /// a scheme name. Wraps the provider in [`Arc`] internally; use
     /// [`auth_provider_shared`](Self::auth_provider_shared) if you already

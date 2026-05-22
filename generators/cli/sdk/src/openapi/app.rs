@@ -1156,6 +1156,46 @@ impl CliApp {
         self
     }
 
+    /// Bind a single source to the *username* half of an `http: basic`
+    /// scheme; password goes out as the empty string. Use for APIs that
+    /// expect the credential in the basic-auth username slot (Close,
+    /// Stripe-with-key-as-username, etc.).
+    ///
+    /// Equivalent to [`auth_basic_scheme`] with the password set to an
+    /// always-resolving zero-length source, but distinct because the
+    /// SDK's `has_credentials()` check only looks at the username here —
+    /// callers don't need to invent a sentinel for the unused half.
+    ///
+    /// [`auth_basic_scheme`]: Self::auth_basic_scheme
+    pub fn auth_basic_scheme_username_only(
+        mut self,
+        scheme_name: &str,
+        username: AuthCredentialSource,
+    ) -> Self {
+        self.auth_bindings.push((
+            scheme_name.to_string(),
+            SchemeBinding::BasicUsernameOnly(username),
+        ));
+        self
+    }
+
+    /// Symmetric counterpart to [`auth_basic_scheme_username_only`] — bind
+    /// a single source to the basic-auth password while the username goes
+    /// out empty. Used by APIs that put the token in the password slot.
+    ///
+    /// [`auth_basic_scheme_username_only`]: Self::auth_basic_scheme_username_only
+    pub fn auth_basic_scheme_password_only(
+        mut self,
+        scheme_name: &str,
+        password: AuthCredentialSource,
+    ) -> Self {
+        self.auth_bindings.push((
+            scheme_name.to_string(),
+            SchemeBinding::BasicPasswordOnly(password),
+        ));
+        self
+    }
+
     /// Plug in a fully-custom [`AuthProvider`][crate::auth::AuthProvider] for
     /// a scheme name. Useful when the spec uses a scheme the SDK doesn't
     /// model out-of-the-box (mTLS-derived headers, request signing, OAuth2
@@ -2304,6 +2344,28 @@ mod tests {
         assert!(matches!(
             app.auth_bindings[0].1,
             SchemeBinding::Basic { .. },
+        ));
+    }
+
+    #[test]
+    fn test_auth_basic_scheme_username_only_records_specialized_binding() {
+        let app = CliApp::new("t")
+            .spec("openapi: 3.0.0\ninfo:\n  title: T\n  version: '1.0'\npaths: {}")
+            .auth_basic_scheme_username_only("basic", AuthCredentialSource::from_env("KEY"));
+        assert!(matches!(
+            app.auth_bindings[0].1,
+            SchemeBinding::BasicUsernameOnly(_),
+        ));
+    }
+
+    #[test]
+    fn test_auth_basic_scheme_password_only_records_specialized_binding() {
+        let app = CliApp::new("t")
+            .spec("openapi: 3.0.0\ninfo:\n  title: T\n  version: '1.0'\npaths: {}")
+            .auth_basic_scheme_password_only("basic", AuthCredentialSource::from_env("KEY"));
+        assert!(matches!(
+            app.auth_bindings[0].1,
+            SchemeBinding::BasicPasswordOnly(_),
         ));
     }
 

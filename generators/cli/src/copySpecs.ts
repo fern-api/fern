@@ -1,7 +1,6 @@
 import { cp, mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
-import { type DetectedAuthBinding, detectAuthBindings } from "./detectAuth.js";
-import type { SpecCache } from "./specCache.js";
+import type { DetectedAuthBinding } from "./detectAuth.js";
 
 export interface RawSpecsManifestEntry {
     type: "openapi" | "asyncapi" | "protobuf" | "openrpc" | "graphql";
@@ -44,31 +43,29 @@ export async function hasOpenApiSpecs(specsDir?: string): Promise<boolean> {
 /**
  * Write every mounted OpenAPI spec into the generated CLI's bin folder
  * (`cli/<binaryName>/`) and emit a fresh `main.rs` that embeds each spec
- * via `include_str!`. The folder is named after the binary so the
- * patched `Cargo.toml`'s `[[bin]] path = "cli/<binaryName>/main.rs"`
- * resolves.
+ * via `include_str!` and wires the auth bindings supplied by the caller
+ * (which read them from the Fern IR). The folder is named after the
+ * binary so the patched `Cargo.toml`'s `[[bin]] path =
+ * "cli/<binaryName>/main.rs"` resolves.
  *
- * Behavior:
+ * Behavior for spec namespacing:
  *   - Specs without a `namespace:` in `generators.yml` → emit
  *     `.spec(include_str!(...))` per spec so they merge flat at the root
  *     of the command tree.
  *   - Specs with a `namespace:` in `generators.yml` → emit
  *     `.spec_under("<namespace>", include_str!(...))` per spec so each
- *     surfaces under its own sub-command. Mixed workspaces work too:
- *     non-namespaced entries get `.spec(...)`, namespaced ones get
- *     `.spec_under(...)`.
+ *     surfaces under its own sub-command. Mixed workspaces work too.
  *
- * No-op when no OpenAPI specs are mounted; cli.ts's gate should have
- * skipped the call before reaching this point.
+ * No-op when no OpenAPI specs are mounted; the orchestrator's gate
+ * should have skipped before reaching this point.
  */
 export async function copySpecs(args: {
     outputDir: string;
     binaryName: string;
+    authBindings: DetectedAuthBinding[];
     specsDir?: string;
-    /** Optional shared parsed-spec cache; one-off when omitted. */
-    specCache?: SpecCache;
 }): Promise<void> {
-    const { outputDir, binaryName, specsDir, specCache } = args;
+    const { outputDir, binaryName, authBindings, specsDir } = args;
     const manifest = await readSpecsManifest(specsDir);
     if (manifest == null) {
         return;
@@ -89,7 +86,6 @@ export async function copySpecs(args: {
         entries.push({ destFilename, namespace: spec.namespace });
     }
 
-    const authBindings = await detectAuthBindings({ openapiSpecs, binaryName, specCache });
     await writeFile(path.join(binDir, "main.rs"), renderMainRs({ binaryName, entries, authBindings }));
 }
 

@@ -3,6 +3,7 @@ import os from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { copySpecs, hasOpenApiSpecs, type RawSpecsManifest } from "../copySpecs.js";
+import type { DetectedAuthBinding } from "../detectAuth.js";
 
 const BIN = "acme";
 const BIN_DIR = path.join("cli", BIN);
@@ -65,7 +66,12 @@ describe("copySpecs", () => {
         const outputDir = path.join(tmpDir, "out");
         await mkdir(outputDir, { recursive: true });
 
-        await copySpecs({ outputDir, binaryName: BIN, specsDir: path.join(tmpDir, "missing-specs") });
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            specsDir: path.join(tmpDir, "missing-specs")
+        });
 
         await expect(access(path.join(outputDir, BIN_DIR))).rejects.toThrow();
     });
@@ -83,12 +89,12 @@ describe("copySpecs", () => {
         const outputDir = path.join(tmpDir, "out");
         await mkdir(outputDir, { recursive: true });
 
-        await copySpecs({ outputDir, binaryName: BIN, specsDir });
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], specsDir });
 
         await expect(access(path.join(outputDir, BIN_DIR))).rejects.toThrow();
     });
 
-    it("single openapi spec → writes spec + emits single-.spec() main.rs from scratch", async () => {
+    it("single openapi spec, no auth bindings → writes spec + emits single-.spec() main.rs", async () => {
         const specsDir = path.join(tmpDir, "specs");
         await mkdir(specsDir, { recursive: true });
         await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0","info":{"title":"users"}}');
@@ -101,7 +107,7 @@ describe("copySpecs", () => {
         const outputDir = path.join(tmpDir, "out");
         await mkdir(outputDir, { recursive: true });
 
-        await copySpecs({ outputDir, binaryName: BIN, specsDir });
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], specsDir });
 
         expect(await readFile(path.join(outputDir, BIN_DIR, "openapi0.json"), "utf-8")).toBe(
             '{"openapi":"3.0.0","info":{"title":"users"}}'
@@ -109,8 +115,10 @@ describe("copySpecs", () => {
         const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
         expect(main).toContain(`CliApp::new("${BIN}")`);
         expect(main).toContain('.spec(include_str!("openapi0.json"))');
-        // Spec has no securitySchemes → no auth_scheme_env call emitted.
+        // No bindings supplied → no auth calls + no AuthCredentialSource import.
         expect(main).not.toContain(".auth_scheme_env");
+        expect(main).not.toContain(".auth_basic_scheme");
+        expect(main).not.toContain("AuthCredentialSource");
         expect(main).not.toContain(".spec_under");
     });
 
@@ -131,7 +139,7 @@ describe("copySpecs", () => {
         const outputDir = path.join(tmpDir, "out");
         await mkdir(outputDir, { recursive: true });
 
-        await copySpecs({ outputDir, binaryName: BIN, specsDir });
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], specsDir });
 
         expect(await readFile(path.join(outputDir, BIN_DIR, "openapi0.json"), "utf-8")).toBe(
             '{"openapi":"3.0.0","info":{"title":"users"}}'
@@ -162,7 +170,7 @@ describe("copySpecs", () => {
         const outputDir = path.join(tmpDir, "out");
         await mkdir(outputDir, { recursive: true });
 
-        await copySpecs({ outputDir, binaryName: BIN, specsDir });
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], specsDir });
 
         const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
         expect(main).toContain('.spec_under("v1", include_str!("openapi0.json"))');
@@ -187,23 +195,17 @@ describe("copySpecs", () => {
         const outputDir = path.join(tmpDir, "out");
         await mkdir(outputDir, { recursive: true });
 
-        await copySpecs({ outputDir, binaryName: BIN, specsDir });
+        await copySpecs({ outputDir, binaryName: BIN, authBindings: [], specsDir });
 
         const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
         expect(main).toContain('.spec(include_str!("openapi0.json"))');
         expect(main).toContain('.spec_under("admin", include_str!("openapi1.json"))');
     });
 
-    it("env-var prefix derives from binaryName when the spec declares a bearer scheme", async () => {
+    it("threads supplied auth bindings into main.rs, in supplied order", async () => {
         const specsDir = path.join(tmpDir, "specs");
         await mkdir(specsDir, { recursive: true });
-        await writeFile(
-            path.join(specsDir, "openapi0.json"),
-            JSON.stringify({
-                openapi: "3.0.0",
-                components: { securitySchemes: { bearerAuth: { type: "http", scheme: "bearer" } } }
-            })
-        );
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
         await writeFile(
             path.join(specsDir, "specs-manifest.json"),
             JSON.stringify({
@@ -213,25 +215,43 @@ describe("copySpecs", () => {
         const outputDir = path.join(tmpDir, "out");
         await mkdir(outputDir, { recursive: true });
 
-        await copySpecs({ outputDir, binaryName: "query-params-api", specsDir });
+        const bindings: DetectedAuthBinding[] = [
+            {
+                schemeName: "ApiKeyAuth",
+                rustCall:
+                    '.auth_basic_scheme("ApiKeyAuth", ' +
+                    'AuthCredentialSource::from_env("CLOSE_API_KEY"), ' +
+                    'AuthCredentialSource::literal(""))',
+                needsCredentialSourceImport: true
+            },
+            {
+                schemeName: "OAuth2",
+                rustCall: '.auth_scheme_env("OAuth2", "CLOSE_TOKEN")',
+                needsCredentialSourceImport: false
+            }
+        ];
+        await copySpecs({ outputDir, binaryName: "close", authBindings: bindings, specsDir });
 
-        const main = await readFile(path.join(outputDir, "cli", "query-params-api", "main.rs"), "utf-8");
-        expect(main).toContain('CliApp::new("query-params-api")');
-        expect(main).toContain('.auth_scheme_env("bearerAuth", "QUERY_PARAMS_API_BEARER_AUTH_TOKEN")');
-        // Bearer doesn't need the AuthCredentialSource import; only basic does.
-        expect(main).not.toContain("use fern_cli_sdk::auth::AuthCredentialSource");
+        const main = await readFile(path.join(outputDir, "cli", "close", "main.rs"), "utf-8");
+        // Import for AuthCredentialSource is emitted because at least one
+        // binding sets needsCredentialSourceImport, and it sits above the
+        // CliApp import for stable ordering.
+        const credImportIdx = main.indexOf("use fern_cli_sdk::auth::AuthCredentialSource;");
+        const cliImportIdx = main.indexOf("use fern_cli_sdk::openapi::CliApp;");
+        expect(credImportIdx).toBeGreaterThanOrEqual(0);
+        expect(cliImportIdx).toBeGreaterThan(credImportIdx);
+
+        // Bindings appear inline in the builder chain in the order supplied.
+        const basicIdx = main.indexOf('.auth_basic_scheme("ApiKeyAuth"');
+        const bearerIdx = main.indexOf('.auth_scheme_env("OAuth2", "CLOSE_TOKEN")');
+        expect(basicIdx).toBeGreaterThan(0);
+        expect(bearerIdx).toBeGreaterThan(basicIdx);
     });
 
-    it("basic auth scheme emits the AuthCredentialSource import + .auth_basic_scheme call", async () => {
+    it("only emits AuthCredentialSource import when at least one binding needs it", async () => {
         const specsDir = path.join(tmpDir, "specs");
         await mkdir(specsDir, { recursive: true });
-        await writeFile(
-            path.join(specsDir, "openapi0.json"),
-            JSON.stringify({
-                openapi: "3.0.0",
-                components: { securitySchemes: { basicAuth: { type: "http", scheme: "basic" } } }
-            })
-        );
+        await writeFile(path.join(specsDir, "openapi0.json"), '{"openapi":"3.0.0"}');
         await writeFile(
             path.join(specsDir, "specs-manifest.json"),
             JSON.stringify({
@@ -241,16 +261,21 @@ describe("copySpecs", () => {
         const outputDir = path.join(tmpDir, "out");
         await mkdir(outputDir, { recursive: true });
 
-        await copySpecs({ outputDir, binaryName: BIN, specsDir });
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [
+                {
+                    schemeName: "Bearer",
+                    rustCall: '.auth_scheme_env("Bearer", "ACME_TOKEN")',
+                    needsCredentialSourceImport: false
+                }
+            ],
+            specsDir
+        });
 
         const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
-        // Import appears at the top, ahead of the CliApp import.
-        expect(main).toContain("use fern_cli_sdk::auth::AuthCredentialSource;");
-        expect(main).toContain("use fern_cli_sdk::openapi::CliApp;");
-        expect(main).toContain(
-            '.auth_basic_scheme("basicAuth", ' +
-                'AuthCredentialSource::from_env("ACME_BASIC_AUTH_USERNAME"), ' +
-                'AuthCredentialSource::from_env("ACME_BASIC_AUTH_PASSWORD"))'
-        );
+        expect(main).toContain('.auth_scheme_env("Bearer", "ACME_TOKEN")');
+        expect(main).not.toContain("AuthCredentialSource");
     });
 });
