@@ -16,7 +16,16 @@ import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { extractErrorMessage, isNonNullish } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    cwd,
+    dirname,
+    join,
+    RelativeFilePath,
+    relativize,
+    resolveConfiguredFilepath,
+    resolveConfiguredFilepaths
+} from "@fern-api/fs-utils";
 import type { GraphQlOperationExamplesInput } from "@fern-api/graphql-to-fdr";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
@@ -29,11 +38,11 @@ import {
 } from "@fern-api/openapi-to-ir";
 import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
 import { CliError, TaskContext } from "@fern-api/task-context";
-
 import { ErrorCollector } from "@fern-api/v3-importer-commons";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { OpenAPIV3_1 } from "openapi-types";
+import path from "path";
 import { v4 as uuidv4 } from "uuid";
 import { loadOpenRpc } from "./loaders/index.js";
 import { OpenAPILoader } from "./loaders/OpenAPILoader.js";
@@ -71,17 +80,6 @@ function collapseSpecBooleanSetting(
     // If at least one spec explicitly defines the setting, treat undefined as neutral.
     // Only return false if a spec explicitly sets it to false.
     return values.every((v) => v == null || v === true);
-}
-
-function toRelativePath(raw: string, field: string): RelativeFilePath {
-    try {
-        return RelativeFilePath.of(raw);
-    } catch {
-        throw new CliError({
-            message: `"${field}: ${raw}" must be a relative path, not an absolute one.`,
-            code: CliError.Code.ConfigError
-        });
-    }
 }
 
 function convertRemoveDiscriminantsFromSchemas(
@@ -342,10 +340,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         const errorCollectors: ErrorCollector[] = [];
 
         for (const document of documents) {
-            const absoluteFilepathToSpec = join(
-                this.absoluteFilePath,
-                RelativeFilePath.of(document.source?.file ?? "")
-            );
+            const sourceFile = document.source?.file;
+            const absoluteFilepathToSpec =
+                sourceFile != null && path.isAbsolute(sourceFile)
+                    ? AbsoluteFilePath.of(sourceFile)
+                    : join(this.absoluteFilePath, RelativeFilePath.of(sourceFile ?? ""));
             const relativeFilepathToSpec = relativize(cwd(), absoluteFilepathToSpec);
 
             const errorCollector = new ErrorCollector({ logger: context.logger, relativeFilepathToSpec });
@@ -652,33 +651,29 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
         for (const spec of specsOverride) {
             if (generatorsYml.isOpenApiSpecSchema(spec)) {
-                const absoluteFilepath = join(this.absoluteFilePath, toRelativePath(spec.openapi, "openapi"));
+                const absoluteFilepath = resolveConfiguredFilepath({
+                    absolutePathToWorkspace: this.absoluteFilePath,
+                    configuredFilepath: spec.openapi
+                });
                 // Handle both single override path and array of override paths
                 let absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
-                const specOverridePaths: AbsoluteFilePath[] = [];
 
-                // Add spec-level overrides
                 if (spec.overrides != null) {
-                    if (Array.isArray(spec.overrides)) {
-                        specOverridePaths.push(
-                            ...spec.overrides.map((override) =>
-                                join(this.absoluteFilePath, toRelativePath(override, "overrides"))
-                            )
-                        );
-                    } else {
-                        specOverridePaths.push(
-                            join(this.absoluteFilePath, toRelativePath(spec.overrides, "overrides"))
-                        );
-                    }
-                }
-
-                // Set the final overrides array
-                if (specOverridePaths.length > 0) {
-                    absoluteFilepathToOverrides =
-                        specOverridePaths.length === 1 ? specOverridePaths[0] : specOverridePaths;
+                    const resolvedOverrides = resolveConfiguredFilepaths({
+                        absolutePathToWorkspace: this.absoluteFilePath,
+                        configuredFilepaths: spec.overrides
+                    });
+                    absoluteFilepathToOverrides = Array.isArray(resolvedOverrides)
+                        ? resolvedOverrides.length === 1
+                            ? resolvedOverrides[0]
+                            : resolvedOverrides
+                        : resolvedOverrides;
                 }
                 const absoluteFilepathToOverlays = spec.overlays
-                    ? join(this.absoluteFilePath, toRelativePath(spec.overlays, "overlays"))
+                    ? resolveConfiguredFilepath({
+                          absolutePathToWorkspace: this.absoluteFilePath,
+                          configuredFilepath: spec.overlays
+                      })
                     : undefined;
 
                 // Create a minimal OpenAPI spec with default settings
