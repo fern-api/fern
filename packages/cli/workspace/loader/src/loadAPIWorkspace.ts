@@ -13,7 +13,8 @@ import {
     join,
     RelativeFilePath,
     relativePathForDisplay,
-    resolveConfiguredFilepath
+    resolveConfiguredFilepath,
+    resolveConfiguredFilepaths
 } from "@fern-api/fs-utils";
 import {
     ConjureWorkspace,
@@ -51,20 +52,19 @@ export async function loadSingleNamespaceAPIWorkspace({
     const specs: Spec[] = [];
 
     for (const definition of definitions) {
-        // Handle both single override path and array of override paths
-        let absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
-        if (definition.overrides != null) {
-            if (Array.isArray(definition.overrides)) {
-                absoluteFilepathToOverrides = definition.overrides.map((override) =>
-                    join(absolutePathToWorkspace, RelativeFilePath.of(override))
-                );
-            } else {
-                absoluteFilepathToOverrides = join(absolutePathToWorkspace, RelativeFilePath.of(definition.overrides));
-            }
-        }
+        const absoluteFilepathToOverrides =
+            definition.overrides != null
+                ? resolveConfiguredFilepaths({
+                      absolutePathToWorkspace,
+                      configuredFilepaths: definition.overrides
+                  })
+                : undefined;
         const absoluteFilepathToOverlays =
             definition.overlays != null
-                ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overlays))
+                ? resolveConfiguredFilepath({
+                      absolutePathToWorkspace,
+                      configuredFilepath: definition.overlays
+                  })
                 : undefined;
         if (definition.schema.type === "protobuf") {
             const relativeFilepathToProtobufRoot = RelativeFilePath.of(definition.schema.root);
@@ -200,7 +200,10 @@ export async function loadSingleNamespaceAPIWorkspace({
                     return {
                         didSucceed: false,
                         failures: {
-                            [RelativeFilePath.of(relativeOverridePath)]: {
+                            [getFailureFilepath({
+                                absolutePathToWorkspace,
+                                configuredFilepath: relativeOverridePath
+                            })]: {
                                 type: WorkspaceLoaderFailureType.FILE_MISSING
                             }
                         }
@@ -216,7 +219,7 @@ export async function loadSingleNamespaceAPIWorkspace({
             return {
                 didSucceed: false,
                 failures: {
-                    [RelativeFilePath.of(definition.overlays)]: {
+                    [getFailureFilepath({ absolutePathToWorkspace, configuredFilepath: definition.overlays })]: {
                         type: WorkspaceLoaderFailureType.FILE_MISSING
                     }
                 }

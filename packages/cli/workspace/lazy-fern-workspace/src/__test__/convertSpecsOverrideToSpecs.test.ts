@@ -1,6 +1,7 @@
 import { Spec } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import assert from "assert";
 import { join } from "path";
 
 import { OSSWorkspace } from "../OSSWorkspace.js";
@@ -115,5 +116,24 @@ describe("convertSpecsOverrideToSpecs", () => {
 
         expect(specs[0]?.absoluteFilepathToOverrides).toBeUndefined();
         expect(specs[1]?.absoluteFilepathToOverrides).toBe(join(baseDir, "o.yml"));
+    });
+
+    it("accepts absolute openapi, override, and overlay paths", async () => {
+        const specs = await workspace.callConvertSpecsOverrideToSpecs([
+            {
+                openapi: "/external/api.yml",
+                overrides: ["/external/o1.yml", "/external/o2.yml"],
+                overlays: "/external/overlay.yml"
+            }
+        ]);
+
+        expect(specs).toHaveLength(1);
+        const spec = specs[0];
+        assert(spec != null);
+        expect(spec.type).toBe("openapi");
+        assert(spec.type === "openapi");
+        expect(spec.absoluteFilepath).toBe("/external/api.yml");
+        expect(spec.absoluteFilepathToOverrides).toEqual(["/external/o1.yml", "/external/o2.yml"]);
+        expect(spec.absoluteFilepathToOverlays).toBe("/external/overlay.yml");
     });
 });

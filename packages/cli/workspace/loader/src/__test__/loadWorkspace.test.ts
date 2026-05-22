@@ -102,6 +102,38 @@ describe("loadWorkspace", () => {
         assert(spec.type === "openapi");
         expect(spec.absoluteFilepath).toBe(absolutePathToOpenApi);
     });
+
+    it("open api with absolute override and overlay paths", async () => {
+        const absolutePathToFixtures = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
+        const absolutePathToOpenApi = join(absolutePathToFixtures, RelativeFilePath.of("openapi.yml"));
+
+        const specs = await loadSingleNamespaceAPIWorkspace({
+            absolutePathToWorkspace: absolutePathToFixtures,
+            namespace: undefined,
+            definitions: [
+                {
+                    schema: {
+                        type: "oss",
+                        path: "openapi.yml"
+                    },
+                    origin: undefined,
+                    overrides: absolutePathToOpenApi,
+                    overlays: absolutePathToOpenApi,
+                    audiences: [],
+                    settings: undefined
+                }
+            ]
+        });
+
+        expect(Array.isArray(specs)).toBe(true);
+        assert(Array.isArray(specs));
+        const spec = specs[0];
+        assert(spec != null);
+        expect(spec.type).toBe("openapi");
+        assert(spec.type === "openapi");
+        expect(spec.absoluteFilepathToOverrides).toBe(absolutePathToOpenApi);
+        expect(spec.absoluteFilepathToOverlays).toBe(absolutePathToOpenApi);
+    });
 });
 
 describe("loadWorkspace MISCONFIGURED_DIRECTORY", () => {

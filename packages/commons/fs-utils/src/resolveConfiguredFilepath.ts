@@ -16,3 +16,18 @@ export function resolveConfiguredFilepath({
     }
     return join(absolutePathToWorkspace, RelativeFilePath.of(configuredFilepath));
 }
+
+export function resolveConfiguredFilepaths({
+    absolutePathToWorkspace,
+    configuredFilepaths
+}: {
+    absolutePathToWorkspace: AbsoluteFilePath;
+    configuredFilepaths: string | string[];
+}): AbsoluteFilePath | AbsoluteFilePath[] {
+    if (Array.isArray(configuredFilepaths)) {
+        return configuredFilepaths.map((configuredFilepath) =>
+            resolveConfiguredFilepath({ absolutePathToWorkspace, configuredFilepath })
+        );
+    }
+    return resolveConfiguredFilepath({ absolutePathToWorkspace, configuredFilepath: configuredFilepaths });
+}
