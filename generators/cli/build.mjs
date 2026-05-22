@@ -38,7 +38,21 @@ const SDK_IGNORE = [
     // `__fixtures__/openapi.json` (≈ 1 KB) referenced by the
     // lib-level overlay tests in src/openapi/overlay.rs and
     // tests/lib_api.rs.
-    "src/openapi/__fixtures__/rich.json"
+    "src/openapi/__fixtures__/rich.json",
+
+    // Fern's own CI workflows for the SDK template repo — ci.yml runs
+    // clippy + tests on the template itself, release.yml ships
+    // cargo-dist tags. Neither is meaningful inside a customer's repo
+    // and shipping them creates confusing CI runs against the wrong
+    // branding. Customers wire up their own CI; we just keep our
+    // hands off `.github/`.
+    ".github/**",
+
+    // Internal helper bin used by the SDK template's CI to verify
+    // spec stripping behavior — not relevant to customer output.
+    // Paired with the [[bin]] strip-schema entry removal in
+    // patchCargoToml.
+    "src/bin/strip_schema.rs"
 ];
 
 await buildGenerator(getDirname(import.meta.url), {

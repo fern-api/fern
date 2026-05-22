@@ -1,6 +1,5 @@
-import type { RawSpecsManifestEntry } from "./copySpecs.js";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { toEnvVarPrefix } from "./identity.js";
-import { SpecCache } from "./specCache.js";
 
 /**
  * One auth binding to emit in the generated `main.rs`. The `rustCall`
@@ -9,7 +8,7 @@ import { SpecCache } from "./specCache.js";
  * just splices these into the `CliApp::new(...)` builder.
  */
 export interface DetectedAuthBinding {
-    /** Scheme name as declared in the spec's `components.securitySchemes`. */
+    /** Scheme name as declared in `generators.yml`'s `auth-schemes` (the IR's `key`). */
     schemeName: string;
     /** Literal Rust method-chain call, minus the leading whitespace. */
     rustCall: string;
@@ -18,59 +17,42 @@ export interface DetectedAuthBinding {
 }
 
 /**
- * Walk every mounted OpenAPI spec's `components.securitySchemes` and
- * emit a binding for each scheme the SDK's `auth_scheme*` API supports:
+ * Visit each scheme in the IR's `auth.schemes` and emit a binding
+ * for the variants the SDK's `auth_scheme*` API supports:
  *
- *   - `http: bearer`        → `.auth_scheme_env("<name>", "<ENV>_TOKEN")`
- *   - `oauth2`              → `.auth_scheme_env("<name>", "<ENV>_TOKEN")`
- *   - `apiKey, in: header`  → `.auth_scheme_env("<name>", "<ENV>_API_KEY")`
- *   - `http: basic`         → `.auth_basic_scheme("<name>", AuthCredentialSource::from_env("<ENV>_USERNAME"),
- *                                                          AuthCredentialSource::from_env("<ENV>_PASSWORD"))`
+ *   - `bearer` → `.auth_scheme_env("<key>", "<env>_TOKEN")`
+ *   - `header` → `.auth_scheme_env("<key>", "<env>_API_KEY")`
+ *   - `basic` (both halves bound) → `.auth_basic_scheme(...)`
+ *   - `basic` with `passwordOmit: true` →
+ *     `.auth_basic_scheme_username_only("<key>", from_env(<usernameEnv>))`
+ *     — the Close API's "API key in basic-auth username slot" pattern.
+ *     Goes through the SDK's dedicated username-only path because the
+ *     equivalent `auth_basic_scheme(..., literal(""))` would silently
+ *     drop the binding: `Literal("")` resolves to `None`, which trips
+ *     `BasicAuthMode::Full`'s "both must resolve" check.
+ *   - `basic` with `usernameOmit: true` → symmetric
+ *     `.auth_basic_scheme_password_only(...)`
+ *   - `basic` with both omitted → skipped (nothing to bind)
+ *   - `oauth` / `inferred` / unknown → skipped (the SDK currently has no
+ *     runtime provider for these; visiting them via `_other` keeps the
+ *     union forward-compatible)
  *
- * Everything else (apiKey in query/cookie, openIdConnect, mTLS, request
- * signing) is skipped — the SDK's `provider_for_binding` would refuse
- * those today, and the generator should match its supported surface.
- *
- * Multi-spec workspaces: the SDK merges `securitySchemes` across all
- * mounted specs (first-wins on a name collision). This function mirrors
- * that behavior so the emitted main.rs binds every reachable scheme.
- *
- * Returns an empty list when no spec declares any scheme — in which
- * case `renderMainRs` will omit the `.auth_scheme*(...)` calls entirely
- * and the resulting CLI ships without an auth provider (the SDK's
- * `passthrough` mode).
+ * Env-var names come from the IR first (`usernameEnvVar`,
+ * `passwordEnvVar`, `tokenEnvVar`, `headerEnvVar` — these resolve from
+ * `generators.yml`'s `auth-schemes`). When the IR doesn't pin one, we
+ * fall back to `<BIN>_<KIND>` so the customer gets a clean, predictable
+ * name (`CLOSE_TOKEN`) rather than a noisy `<BIN>_<SCHEME>_<KIND>`.
  */
-export async function detectAuthBindings(args: {
-    openapiSpecs: RawSpecsManifestEntry[];
+export function detectAuthBindings(args: {
+    auth: { schemes: FernIr.AuthScheme[] };
     binaryName: string;
-    /** Optional parsed-spec cache; one-off when omitted. */
-    specCache?: SpecCache;
-}): Promise<DetectedAuthBinding[]> {
-    const { openapiSpecs, binaryName } = args;
-    const cache = args.specCache ?? new SpecCache();
-    const merged = new Map<string, SecuritySchemeJson>();
-    for (const entry of openapiSpecs) {
-        const schemes = await readSecuritySchemes(entry.specPath, cache);
-        for (const [name, scheme] of schemes) {
-            if (!merged.has(name)) {
-                merged.set(name, scheme);
-            }
-        }
-    }
-
-    // Always include the scheme name in the env-var prefix, even when
-    // there's only one scheme. Counter-intuitively this is the *stable*
-    // choice: if users later add a second spec/scheme, single-scheme
-    // workspaces would otherwise silently rename `<BIN>_TOKEN` to
-    // `<BIN>_<SCHEME>_TOKEN`, and their existing env-var setups would
-    // break with no warning. Keeping `<SCHEME>_` in the name from day
-    // one makes the contract additive.
-    const bindings: DetectedAuthBinding[] = [];
+}): DetectedAuthBinding[] {
+    const { auth, binaryName } = args;
     const envPrefix = toEnvVarPrefix(binaryName);
 
-    for (const [schemeName, scheme] of merged) {
-        const envBase = `${envPrefix}_${toEnvVarPrefix(schemeName)}`;
-        const binding = bindingFor(schemeName, scheme, envBase);
+    const bindings: DetectedAuthBinding[] = [];
+    for (const scheme of auth.schemes) {
+        const binding = bindingForScheme(scheme, envPrefix);
         if (binding != null) {
             bindings.push(binding);
         }
@@ -78,57 +60,63 @@ export async function detectAuthBindings(args: {
     return bindings;
 }
 
-interface SecuritySchemeJson {
-    type?: string;
-    scheme?: string;
-    in?: string;
-    name?: string;
-}
+function bindingForScheme(scheme: FernIr.AuthScheme, envPrefix: string): DetectedAuthBinding | null {
+    return scheme._visit<DetectedAuthBinding | null>({
+        bearer: (bearer) => {
+            const env = bearer.tokenEnvVar ?? `${envPrefix}_TOKEN`;
+            return {
+                schemeName: bearer.key,
+                rustCall: `.auth_scheme_env("${bearer.key}", "${env}")`,
+                needsCredentialSourceImport: false
+            };
+        },
+        header: (header) => {
+            const env = header.headerEnvVar ?? `${envPrefix}_API_KEY`;
+            return {
+                schemeName: header.key,
+                rustCall: `.auth_scheme_env("${header.key}", "${env}")`,
+                needsCredentialSourceImport: false
+            };
+        },
+        basic: (basic) => {
+            const usernameEnv = basic.usernameEnvVar ?? `${envPrefix}_USERNAME`;
+            const passwordEnv = basic.passwordEnvVar ?? `${envPrefix}_PASSWORD`;
 
-async function readSecuritySchemes(specPath: string, cache: SpecCache): Promise<Array<[string, SecuritySchemeJson]>> {
-    const parsed = await cache.read(specPath);
-    const schemes = parsed?.components?.securitySchemes;
-    if (schemes == null) {
-        return [];
-    }
-    return Object.entries(schemes) as Array<[string, SecuritySchemeJson]>;
-}
-
-function bindingFor(schemeName: string, scheme: SecuritySchemeJson, envBase: string): DetectedAuthBinding | null {
-    if (scheme.type === "http" && scheme.scheme === "bearer") {
-        return {
-            schemeName,
-            rustCall: `.auth_scheme_env("${schemeName}", "${envBase}_TOKEN")`,
-            needsCredentialSourceImport: false
-        };
-    }
-    if (scheme.type === "oauth2") {
-        return {
-            schemeName,
-            rustCall: `.auth_scheme_env("${schemeName}", "${envBase}_TOKEN")`,
-            needsCredentialSourceImport: false
-        };
-    }
-    if (scheme.type === "apiKey" && scheme.in === "header") {
-        return {
-            schemeName,
-            rustCall: `.auth_scheme_env("${schemeName}", "${envBase}_API_KEY")`,
-            needsCredentialSourceImport: false
-        };
-    }
-    if (scheme.type === "http" && scheme.scheme === "basic") {
-        return {
-            schemeName,
-            rustCall:
-                `.auth_basic_scheme("${schemeName}", ` +
-                `AuthCredentialSource::from_env("${envBase}_USERNAME"), ` +
-                `AuthCredentialSource::from_env("${envBase}_PASSWORD"))`,
-            needsCredentialSourceImport: true
-        };
-    }
-
-    // apiKey in query/cookie, openIdConnect, mTLS, and anything else —
-    // unsupported by the SDK's auth_scheme* API. Skip silently; the
-    // CLI's `passthrough` mode handles unbound schemes at runtime.
-    return null;
+            // Both halves omitted → no credential source to bind.
+            if (basic.usernameOmit && basic.passwordOmit) {
+                return null;
+            }
+            // password omitted → API key in the username slot. Use the
+            // SDK's specialised builder so `has_credentials()` checks
+            // only the username; the equivalent
+            // `auth_basic_scheme(..., literal(""))` would resolve to
+            // `None` and drop the binding silently.
+            if (basic.passwordOmit) {
+                return {
+                    schemeName: basic.key,
+                    rustCall: `.auth_basic_scheme_username_only("${basic.key}", AuthCredentialSource::from_env("${usernameEnv}"))`,
+                    needsCredentialSourceImport: true
+                };
+            }
+            if (basic.usernameOmit) {
+                return {
+                    schemeName: basic.key,
+                    rustCall: `.auth_basic_scheme_password_only("${basic.key}", AuthCredentialSource::from_env("${passwordEnv}"))`,
+                    needsCredentialSourceImport: true
+                };
+            }
+            return {
+                schemeName: basic.key,
+                rustCall: `.auth_basic_scheme("${basic.key}", AuthCredentialSource::from_env("${usernameEnv}"), AuthCredentialSource::from_env("${passwordEnv}"))`,
+                needsCredentialSourceImport: true
+            };
+        },
+        // The SDK doesn't yet have a runtime provider for OAuth client
+        // credentials or inferred auth — skip rather than emit a call
+        // the user couldn't satisfy.
+        oauth: () => null,
+        inferred: () => null,
+        // Future IR auth variants we don't know about yet.
+        _other: () => null
+    });
 }

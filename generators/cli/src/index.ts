@@ -11,6 +11,7 @@ export {
 export { type FernCliCustomConfig, getCustomConfig } from "./customConfig.js";
 export { type DetectedAuthBinding, detectAuthBindings } from "./detectAuth.js";
 export { deriveBinaryName, TEMPLATE_BINARY_NAME, toEnvVarPrefix, toKebabCase } from "./identity.js";
+export { type IrSummary, readIrSummary } from "./ir.js";
 export { applyCargoTomlPatch, patchCargoToml } from "./patchCargoToml.js";
+export { applyDistWorkspacePatch, patchDistWorkspaceToml } from "./patchDistWorkspace.js";
 export { type PipelineOutcome, runPipeline } from "./runPipeline.js";
-export { type ParsedSpec, SpecCache } from "./specCache.js";

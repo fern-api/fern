@@ -37,17 +37,50 @@ describe("applyCargoTomlPatch", () => {
         expect(patched).toContain('name = "fern_cli_sdk"');
     });
 
-    it("leaves the strip-schema [[bin]] entry untouched — internal tool, not the user's CLI", () => {
+    it("strips the strip-schema [[bin]] block — Fern-internal CI helper, paired with src/bin/strip_schema.rs in SDK_IGNORE", () => {
         const patched = applyCargoTomlPatch(TEMPLATE_CARGO_TOML, "acme-cli");
-        expect(patched).toContain('name = "strip-schema"');
-        expect(patched).toContain('path = "src/bin/strip_schema.rs"');
+        expect(patched).not.toContain('name = "strip-schema"');
+        expect(patched).not.toContain('path = "src/bin/strip_schema.rs"');
     });
 
-    it("substitutes literally — preserves all other lines verbatim", () => {
+    it("strips the template-author comment about Fern's package metadata", () => {
+        // The comment block at the top of the file is meant for SDK
+        // template authors, not customers.
+        const patched = applyCargoTomlPatch(TEMPLATE_CARGO_TOML, "acme-cli");
+        expect(patched).not.toContain("The fern-cli generator does NOT rewrite this block");
+        expect(patched).not.toContain("identify the SDK template's source on crates.io");
+    });
+
+    it("strips the template-author comment above the [[bin]] block", () => {
+        const patched = applyCargoTomlPatch(TEMPLATE_CARGO_TOML, "acme-cli");
+        expect(patched).not.toContain("Rewritten by the fern-cli generator's `patchCargoToml` step");
+    });
+
+    it('drops `readme = "README.md"` — no README ships in user output and the missing file breaks cargo package', () => {
+        const patched = applyCargoTomlPatch(TEMPLATE_CARGO_TOML, "acme-cli");
+        expect(patched).not.toContain('readme = "README.md"');
+    });
+
+    it("flips [package.metadata.dist] dist = false to true so cargo-dist will package the user's CLI", () => {
+        const patched = applyCargoTomlPatch(TEMPLATE_CARGO_TOML, "acme-cli");
+        expect(patched).not.toContain("dist = false");
+        expect(patched).toContain(`[package.metadata.dist]
+dist = true`);
+    });
+
+    it("preserves dependency versions, the [features] block, and [profile.dist]", () => {
         const patched = applyCargoTomlPatch(TEMPLATE_CARGO_TOML, "acme-cli");
         expect(patched).toContain('version = "0.18.1"');
         expect(patched).toContain('repository = "https://github.com/fern-api/cli-sdk"');
         expect(patched).toContain('anyhow = "1"');
+        expect(patched).toContain('default = ["native-tls"]');
+        expect(patched).toContain("[profile.dist]");
+    });
+
+    it("throws with a clear pointer when an anchor is missing — guards against silent template drift", () => {
+        expect(() => applyCargoTomlPatch('[package]\nname = "unrelated"\n', "acme-cli")).toThrow(
+            /patchCargoToml anchor missing/
+        );
     });
 });
 
@@ -70,13 +103,16 @@ describe("patchCargoToml (filesystem)", () => {
         const result = await readFile(path.join(tmpDir, "Cargo.toml"), "utf-8");
         expect(result).toContain('name = "acme-cli"');
         expect(result).toContain('path = "cli/acme-cli/main.rs"');
+        expect(result).toContain("dist = true");
+        expect(result).not.toContain('readme = "README.md"');
+        expect(result).not.toContain('name = "strip-schema"');
     });
 
-    it("throws when none of the template anchors are present — guards against silent no-ops", async () => {
+    it("throws when none of the template anchors are present", async () => {
         await writeFile(path.join(tmpDir, "Cargo.toml"), '[package]\nname = "unrelated"\n');
 
         await expect(patchCargoToml({ outputDir: tmpDir, binaryName: "acme-cli" })).rejects.toThrow(
-            /did not match the expected template/
+            /anchor missing|did not match/
         );
     });
 });

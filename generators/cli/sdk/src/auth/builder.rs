@@ -48,6 +48,17 @@ pub enum SchemeBinding {
         username: AuthCredentialSource,
         password: AuthCredentialSource,
     },
+    /// Single-value source bound to the *username* half of http basic;
+    /// the password is sent as the empty string. Common for APIs that
+    /// accept an API key in the basic-auth username slot. Lowers to
+    /// [`BasicAuthProvider::username_only`], whose `has_credentials()`
+    /// only requires the username to resolve.
+    BasicUsernameOnly(AuthCredentialSource),
+    /// Single-value source bound to the *password* half of http basic;
+    /// the username is sent as the empty string. Symmetric counterpart
+    /// to [`SchemeBinding::BasicUsernameOnly`]. Lowers to
+    /// [`BasicAuthProvider::password_only`].
+    BasicPasswordOnly(AuthCredentialSource),
     /// Caller built their own provider. Used as-is. Bypasses the
     /// spec→provider lowering, so the binding's `name` is purely a routing
     /// key into [`RoutingAuthProvider`].
@@ -59,6 +70,8 @@ impl std::fmt::Debug for SchemeBinding {
         match self {
             SchemeBinding::Token(s) => f.debug_tuple("Token").field(s).finish(),
             SchemeBinding::Basic { .. } => f.write_str("Basic { .. }"),
+            SchemeBinding::BasicUsernameOnly(_) => f.write_str("BasicUsernameOnly { .. }"),
+            SchemeBinding::BasicPasswordOnly(_) => f.write_str("BasicPasswordOnly { .. }"),
             SchemeBinding::Custom(p) => write!(f, "Custom({})", p.name()),
         }
     }
@@ -77,6 +90,9 @@ impl SchemeBinding {
                 out.extend(password.cli_args());
                 out
             }
+            SchemeBinding::BasicUsernameOnly(src) | SchemeBinding::BasicPasswordOnly(src) => {
+                src.cli_args()
+            }
             SchemeBinding::Custom(_) => Vec::new(),
         }
     }
@@ -92,6 +108,12 @@ impl SchemeBinding {
                 username: username.finalize(matches),
                 password: password.finalize(matches),
             },
+            SchemeBinding::BasicUsernameOnly(src) => {
+                SchemeBinding::BasicUsernameOnly(src.finalize(matches))
+            }
+            SchemeBinding::BasicPasswordOnly(src) => {
+                SchemeBinding::BasicPasswordOnly(src.finalize(matches))
+            }
             SchemeBinding::Custom(p) => SchemeBinding::Custom(p),
         }
     }
@@ -143,6 +165,18 @@ fn describe_binding_sources(binding: &SchemeBinding) -> String {
                 "basic auth · username: {} · password: {}",
                 describe_credential_source(username),
                 describe_credential_source(password),
+            )
+        }
+        SchemeBinding::BasicUsernameOnly(src) => {
+            format!(
+                "basic auth (username only) · username: {}",
+                describe_credential_source(src),
+            )
+        }
+        SchemeBinding::BasicPasswordOnly(src) => {
+            format!(
+                "basic auth (password only) · password: {}",
+                describe_credential_source(src),
             )
         }
         SchemeBinding::Custom(_) => "custom auth provider".to_string(),
@@ -259,6 +293,32 @@ fn provider_for_binding(
                 tracing::warn!(
                     scheme = scheme_name,
                     "auth_basic_scheme: scheme is not HTTP Basic; binding ignored",
+                );
+                None
+            }
+        },
+        SchemeBinding::BasicUsernameOnly(src) => match declared {
+            Some(S::HttpBasic) | None => Some(Arc::new(BasicAuthProvider::username_only(
+                scheme_name,
+                src.clone(),
+            ))),
+            _ => {
+                tracing::warn!(
+                    scheme = scheme_name,
+                    "auth_basic_scheme_username_only: scheme is not HTTP Basic; binding ignored",
+                );
+                None
+            }
+        },
+        SchemeBinding::BasicPasswordOnly(src) => match declared {
+            Some(S::HttpBasic) | None => Some(Arc::new(BasicAuthProvider::password_only(
+                scheme_name,
+                src.clone(),
+            ))),
+            _ => {
+                tracing::warn!(
+                    scheme = scheme_name,
+                    "auth_basic_scheme_password_only: scheme is not HTTP Basic; binding ignored",
                 );
                 None
             }
@@ -500,6 +560,60 @@ mod tests {
             auth_header(r).as_deref(),
             Some("Basic YWxpY2U6aHVudGVyMg=="),
         );
+    }
+
+    #[tokio::test]
+    async fn basic_username_only_binding_sends_authorization_with_empty_password() {
+        // The Close pattern: API key in the username slot, password
+        // unused. Previously expressed as `Basic { from_env, literal("") }`,
+        // which silently dropped the header because `literal("")` resolves
+        // to `None`. The specialized binding lowers to
+        // `BasicAuthProvider::username_only`, which only requires the
+        // username to resolve.
+        let doc = doc_with_schemes(&[(
+            "basic",
+            crate::openapi::discovery::SecurityScheme::HttpBasic,
+        )]);
+        let bindings = vec![(
+            "basic".to_string(),
+            SchemeBinding::BasicUsernameOnly(AuthCredentialSource::literal("api_key_123")),
+        )];
+        let p = build_provider_from_doc(&doc, &bindings);
+        assert!(p.has_credentials());
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
+        // base64("api_key_123:") = "YXBpX2tleV8xMjM6"
+        assert_eq!(auth_header(r).as_deref(), Some("Basic YXBpX2tleV8xMjM6"));
+    }
+
+    #[tokio::test]
+    async fn basic_password_only_binding_sends_authorization_with_empty_username() {
+        let doc = doc_with_schemes(&[(
+            "basic",
+            crate::openapi::discovery::SecurityScheme::HttpBasic,
+        )]);
+        let bindings = vec![(
+            "basic".to_string(),
+            SchemeBinding::BasicPasswordOnly(AuthCredentialSource::literal("the_secret")),
+        )];
+        let p = build_provider_from_doc(&doc, &bindings);
+        assert!(p.has_credentials());
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
+        // base64(":the_secret") = "OnRoZV9zZWNyZXQ="
+        assert_eq!(auth_header(r).as_deref(), Some("Basic OnRoZV9zZWNyZXQ="));
+    }
+
+    #[test]
+    fn basic_username_only_against_non_basic_scheme_is_skipped() {
+        let doc = doc_with_schemes(&[(
+            "bearerAuth",
+            crate::openapi::discovery::SecurityScheme::HttpBearer,
+        )]);
+        let bindings = vec![(
+            "bearerAuth".to_string(),
+            SchemeBinding::BasicUsernameOnly(AuthCredentialSource::literal("oops")),
+        )];
+        let p = build_provider_from_doc(&doc, &bindings);
+        assert!(!p.has_credentials());
     }
 
     #[test]

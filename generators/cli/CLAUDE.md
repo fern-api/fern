@@ -7,36 +7,51 @@ verbatim into the output and emit a thin `main.rs` that wires the
 user's OpenAPI spec into the library's `CliApp` builder.
 
 Different in spirit from the other generators in this tree: there is no
-IR pass, no AST builder, no per-endpoint code generation. The only
-codegen is `cli/<binaryName>/main.rs` (~10 lines) and a small
-substitution in `Cargo.toml`. Everything else is a verbatim copy of
-[`./sdk/`](./sdk/), which is a hand-authored Rust library.
+AST builder, no per-endpoint code generation. The only codegen is
+`cli/<binaryName>/main.rs` (~10 lines) and a small substitution in
+`Cargo.toml`. Everything else is a verbatim copy of [`./sdk/`](./sdk/),
+which is a hand-authored Rust library.
+
+**Source of truth: the Fern IR.** The mounted `ir.json` is authoritative
+for the user's API identity (`apiDisplayName`) and auth scheme metadata
+(`auth.schemes` with resolved `usernameEnvVar`, `tokenEnvVar`, etc.,
+exactly as the user declared them in `generators.yml`'s `auth-schemes`
+block). The raw OpenAPI specs under `/fern/specs/` are only used for one
+thing: the literal bytes baked into `main.rs` via `include_str!`. We do
+**not** walk `info.title` or `components.securitySchemes` — those are
+either redundant with or strictly less rich than the IR.
+
+We deserialize through `@fern-fern/ir-sdk`'s `IrSerialization`, so
+downstream code consumes typed `FernIr.IntermediateRepresentation` /
+`FernIr.AuthScheme` values directly (with `_visit` for exhaustive
+dispatch). No hand-rolled IR types live in this generator.
 
 ## Architecture
 
 ```
-                          /fern/specs/specs-manifest.json
-                          (mounted by local-workspace-runner)
-                                         │
-                                         ▼
-                           ┌─────────────────────────────┐
-   parseGeneratorConfig ──►│        cli.ts (entry)       │◄── getCustomConfig
-                           └──────────────┬──────────────┘
-                                          ▼
-                           ┌─────────────────────────────┐
-                           │    runPipeline (testable)   │
-                           └──────────────┬──────────────┘
-                                          │
-        ┌─────────────────────────────────┼─────────────────────────────────┐
-        ▼                                 ▼                                 ▼
-   hasOpenApiSpecs              deriveBinaryName              copySdk / patchCargoToml / copySpecs
-   (early skip)             (customConfig.binaryName            ▲          ▲             ▲
-                              > spec info.title                 │          │             │
-                              > clear error)                    │          │             │
-                                                                │          │             │
-                                                          /dist/sdk      anchors      detectAuthBindings
-                                                         (image-baked)   ["openapi-    (securitySchemes)
-                                                                          fixture"]
+   /fern/ir.json               /fern/specs/specs-manifest.json
+   (Fern IR — authoritative)   (raw specs — bytes only)
+        │                                   │
+        ▼                                   ▼
+   ┌────────────────────────────────────────────────┐
+   │              cli.ts (entry)                    │◄── getCustomConfig
+   └──────────────────────┬─────────────────────────┘
+                          ▼
+   ┌────────────────────────────────────────────────┐
+   │            runPipeline (testable)              │
+   └──────────────────────┬─────────────────────────┘
+                          │
+   hasOpenApiSpecs ──► readIrSummary(ir.json) ──► deriveBinaryName ──► detectAuthBindings
+   (early skip)                                   (customConfig         (from ir.auth.schemes:
+                                                   .binaryName          tokenEnvVar /
+                                                   > ir.apiDisplayName  usernameEnvVar /
+                                                   > clear error)       passwordOmit / …)
+                          │
+                          ▼
+                copySdk → patchCargoToml → patchDistWorkspaceToml → copySpecs
+                (image-baked sdk template)                          (writes spec bytes +
+                                                                     renders main.rs from
+                                                                     authBindings)
 ```
 
 The order in `runPipeline` is locked in by
@@ -65,13 +80,14 @@ the path the patched Cargo.toml references).
 |------|------|
 | [`src/cli.ts`](src/cli.ts) | Process entry: parses config, wraps `runPipeline` with `GeneratorNotificationService` updates. Thin. |
 | [`src/runPipeline.ts`](src/runPipeline.ts) | The codegen orchestration. Pure-ish — takes paths + config, returns outcome. The seam for unit tests. |
+| [`src/ir.ts`](src/ir.ts) | `readIrSummary` — runs the IR JSON through `@fern-fern/ir-sdk`'s `IrSerialization.IntermediateRepresentation.parse` and returns the two slices the generator touches: `apiDisplayName` and the typed `FernIr.AuthScheme[]`. |
 | [`src/copySdk.ts`](src/copySdk.ts) | Recursive copy of `/dist/sdk/` → `outputDir`. |
-| [`src/copySpecs.ts`](src/copySpecs.ts) | Reads `/fern/specs/specs-manifest.json`, copies each spec into `cli/<binaryName>/`, emits `main.rs`. |
-| [`src/patchCargoToml.ts`](src/patchCargoToml.ts) | Two literal string replacements against the shipped `Cargo.toml`. Throws if no anchors matched. |
-| [`src/identity.ts`](src/identity.ts) | `deriveBinaryName`, `toKebabCase`, `toEnvVarPrefix`. The single source of truth for "what is this CLI called". |
+| [`src/copySpecs.ts`](src/copySpecs.ts) | Reads `/fern/specs/specs-manifest.json`, copies each spec into `cli/<binaryName>/`, emits `main.rs` from a supplied list of auth bindings. |
+| [`src/patchCargoToml.ts`](src/patchCargoToml.ts) | Literal string replacements against the shipped `Cargo.toml`. Throws if no anchors matched. |
+| [`src/patchDistWorkspace.ts`](src/patchDistWorkspace.ts) | Strips Fern-specific cargo-dist metadata (npm-scope, npm-package) from the shipped `dist-workspace.toml`. |
+| [`src/identity.ts`](src/identity.ts) | `deriveBinaryName`, `toKebabCase`, `toEnvVarPrefix`. Resolves `customConfig.binaryName ?? ir.apiDisplayName`. |
 | [`src/customConfig.ts`](src/customConfig.ts) | Type + boundary validator for `generators.yml`'s `config:` block. Only `binaryName` for now. |
-| [`src/detectAuth.ts`](src/detectAuth.ts) | Walks `components.securitySchemes` across mounted specs; emits one `.auth_scheme_env(...)` / `.auth_basic_scheme(...)` per supported scheme. |
-| [`src/specCache.ts`](src/specCache.ts) | One-pipeline-scoped parsed-spec cache. Avoids re-reading + re-parsing each mounted spec when `deriveBinaryName` and `detectAuth` both want it. |
+| [`src/detectAuth.ts`](src/detectAuth.ts) | Visits the IR's `auth.schemes` (via `FernIr.AuthScheme._visit`) and emits one `.auth_scheme_env(...)` / `.auth_basic_scheme(...)` per supported scheme. Synchronous — no disk reads. |
 | [`build.mjs`](build.mjs) | Bundles `src/cli.ts` → `dist/cli.cjs`, copies `./sdk/` → `./dist/sdk/` with `SDK_IGNORE` (template dev files that shouldn't ship). |
 | [`Dockerfile`](Dockerfile) | Bakes `dist/` into the generator image. Entrypoint reads `/fern/config.json`. |
 | [`./sdk/`](./sdk/) | Hand-authored Rust SDK — the bulk of the CLI's runtime behavior. Edit this when you need to extend what `CliApp` can do. |
@@ -81,41 +97,40 @@ the path the patched Cargo.toml references).
 The generator derives the user's binary name from one of:
 
 1. `customConfig.binaryName` if set in `generators.yml`
-2. else the spec's `info.title`, kebab-cased — single-spec only
+2. else the IR's `apiDisplayName` (Fern's canonical name for the
+   workspace), kebab-cased
 3. else fail with a clear error
 
-Multi-spec workspaces **must** set `customConfig.binaryName` — there's
-no sensible auto-derivation from multiple titles. The error tells the
-user exactly which field to add.
-
-The derived name flows through three places:
+The derived name flows through:
 - `Cargo.toml`'s `[[bin]] name = "<binaryName>"` and `[[bin]] path =
   "cli/<binaryName>/main.rs"` (via `patchCargoToml`)
 - The directory `cli/<binaryName>/` (via `copySpecs`)
 - The `CliApp::new("<binaryName>")` call in `main.rs` (via
   `renderMainRs`)
-- Env-var prefix `<BINARYNAME>_<SCHEMENAME>_<KIND>` (via
-  `toEnvVarPrefix` + `detectAuth`)
+- Env-var fallback prefix `<BIN>_TOKEN` / `<BIN>_API_KEY` /
+  `<BIN>_USERNAME` / `<BIN>_PASSWORD` when the IR doesn't pin one
+  (via `toEnvVarPrefix` + `detectAuth`)
 
 ## Auth detection
 
-Each scheme in `components.securitySchemes` (unioned across multi-spec
-workspaces, first-wins per the SDK's
-[`merge_security_schemes`](sdk/src/openapi/app.rs)) emits one binding
-**only if the SDK's `provider_for_binding` supports it**:
+Each scheme in the IR's `auth.schemes` is visited via
+`FernIr.AuthScheme._visit` and produces a binding **only if the SDK's
+`provider_for_binding` supports it**:
 
-| Spec scheme | Emitted call |
-|------|------|
-| `http: bearer` | `.auth_scheme_env("<n>", "<BIN>_<SCHEME>_TOKEN")` |
-| `oauth2` | `.auth_scheme_env("<n>", "<BIN>_<SCHEME>_TOKEN")` |
-| `apiKey: header` | `.auth_scheme_env("<n>", "<BIN>_<SCHEME>_API_KEY")` |
-| `http: basic` | `.auth_basic_scheme(...)` with `AuthCredentialSource::from_env(_USERNAME)` + `_PASSWORD` |
-| Anything else | Skipped silently (matches SDK behavior) |
+| IR variant | Emitted call | Env var source |
+|---|---|---|
+| `bearer` | `.auth_scheme_env("<key>", "<env>")` | `scheme.tokenEnvVar` ?? `<BIN>_TOKEN` |
+| `header` | `.auth_scheme_env("<key>", "<env>")` | `scheme.headerEnvVar` ?? `<BIN>_API_KEY` |
+| `basic` | `.auth_basic_scheme("<key>", <user>, <pass>)` | `scheme.{username,password}EnvVar` ?? `<BIN>_{USERNAME,PASSWORD}`; `*Omit: true` becomes `AuthCredentialSource::literal("")` |
+| `oauth`, `inferred`, `_other` | Skipped — the SDK has no runtime provider yet | — |
 
-Env-var names **always include the scheme name**, even for single-scheme
-workspaces. This is deliberate: it means adding a second spec with a
-second scheme later doesn't silently rename existing env vars from
-`<BIN>_TOKEN` to `<BIN>_<SCHEME>_TOKEN` and break user setups.
+Env-var names come from the IR first because that's where the user's
+`generators.yml`-declared values end up after Fern resolves them. The
+fallbacks intentionally do **not** mangle in the scheme name (no more
+`<BIN>_<SCHEME>_TOKEN`) — for the common single-scheme case that
+produces a clean `CLOSE_API_KEY` / `ACME_TOKEN`. If a user with multiple
+schemes wants per-scheme isolation, they pin env vars explicitly in
+`auth-schemes`.
 
 ## Develop / test
 
@@ -193,9 +208,10 @@ otherwise refuse to start when the dep tree drifts.
   throw with actionable messages rather than producing half-formed
   output. The pipeline doesn't write files until the binary name is
   resolved.
-- **One `SpecCache` per pipeline run**: parsed JSON for each mounted
-  spec is held only for the duration of one `runPipeline` call. Fresh
-  cache on the next invocation.
+- **IR is read once per pipeline run**: `readIrSummary` parses
+  `/fern/ir.json` into a narrow typed summary that flows through
+  `deriveBinaryName` and `detectAuthBindings`. We don't re-read the IR
+  or the raw specs anywhere else in the pipeline.
 - **Generated `main.rs` is regenerated each run**: never edit it
   manually; your changes will be wiped on the next `fern generate`.
   Use the `customize/` extension surface (planned — see

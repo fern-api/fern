@@ -1,6 +1,5 @@
-import type { RawSpecsManifestEntry } from "./copySpecs.js";
 import type { FernCliCustomConfig } from "./customConfig.js";
-import { SpecCache } from "./specCache.js";
+import type { IrSummary } from "./ir.js";
 
 /**
  * The name shipped by the SDK template — used as the literal token to
@@ -12,59 +11,33 @@ import { SpecCache } from "./specCache.js";
 export const TEMPLATE_BINARY_NAME = "openapi-fixture";
 
 /**
- * Resolve the binary name for the generated CLI:
+ * Resolve the binary name for the generated CLI from one of:
  *
- *   - `customConfig.binaryName` if set (kebab-cased)
- *   - else, for a single-spec workspace, the spec's `info.title`
- *     (kebab-cased)
- *   - else (multi-spec without an override) → throw a clear error
+ *   1. `customConfig.binaryName` if set in `generators.yml`
+ *   2. else, the IR's `apiDisplayName` (kebab-cased) — Fern's
+ *      canonical name for the workspace's API
+ *   3. else throw a clear error
  *
- * The function reads the bundled spec file referenced by the manifest
- * entry, so the caller hands in only the manifest, not the bundled spec
- * bytes.
+ * Lives in the IR rather than the raw spec because `apiDisplayName`
+ * comes from `generators.yml` / Fern definitions, not from OpenAPI's
+ * `info.title`. The OpenAPI-only fallback path is intentionally
+ * absent — workspaces without an IR shouldn't reach this code path.
  */
-export async function deriveBinaryName(args: {
-    customConfig: FernCliCustomConfig;
-    openapiSpecs: RawSpecsManifestEntry[];
-    /**
-     * Optional parsed-spec cache. Falls back to a one-off cache when
-     * omitted; callers running multiple consumers over the same specs
-     * (the production pipeline does) should pass their shared cache.
-     */
-    specCache?: SpecCache;
-}): Promise<string> {
-    const { customConfig, openapiSpecs } = args;
-    const cache = args.specCache ?? new SpecCache();
+export function deriveBinaryName(args: { customConfig: FernCliCustomConfig; ir: IrSummary }): string {
+    const { customConfig, ir } = args;
 
     if (customConfig.binaryName != null && customConfig.binaryName.trim() !== "") {
         return asValidBinaryName(customConfig.binaryName, "`customConfig.binaryName`");
     }
 
-    if (openapiSpecs.length === 0) {
-        throw new Error(
-            "deriveBinaryName called with no OpenAPI specs; the generator should have skipped before reaching this point."
-        );
+    if (ir.apiDisplayName !== undefined && ir.apiDisplayName.trim() !== "") {
+        return asValidBinaryName(ir.apiDisplayName, "IR `apiDisplayName`");
     }
 
-    if (openapiSpecs.length > 1) {
-        throw new Error(
-            "Multi-spec workspaces must set `customConfig.binaryName` in generators.yml — " +
-                "the generator can't infer a single binary name from multiple OpenAPI specs."
-        );
-    }
-
-    const [only] = openapiSpecs;
-    if (only == null) {
-        throw new Error("Unreachable: openapiSpecs.length === 1 but no entry at index 0.");
-    }
-    const title = await readSpecInfoTitle(only.specPath, cache);
-    if (title == null || title.trim() === "") {
-        throw new Error(
-            `Cannot derive a binary name: the mounted spec at ${only.specPath} has no \`info.title\`. ` +
-                "Set `customConfig.binaryName` in generators.yml, or add an `info.title` to the spec."
-        );
-    }
-    return asValidBinaryName(title, `spec \`info.title\` at ${only.specPath}`);
+    throw new Error(
+        "Cannot derive a binary name: `customConfig.binaryName` is unset and the IR has no `apiDisplayName`. " +
+            "Set `customConfig.binaryName` in generators.yml to a kebab-case identifier."
+    );
 }
 
 /**
@@ -84,17 +57,6 @@ function asValidBinaryName(raw: string, source: string): string {
         );
     }
     return kebab;
-}
-
-/**
- * Read just the `info.title` field from a bundled OpenAPI spec via the
- * shared cache. Returns `null` when the file can't be parsed or
- * `info.title` is missing.
- */
-async function readSpecInfoTitle(specPath: string, cache: SpecCache): Promise<string | null> {
-    const parsed = await cache.read(specPath);
-    const title = parsed?.info?.title;
-    return typeof title === "string" ? title : null;
 }
 
 /**
