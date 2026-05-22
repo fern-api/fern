@@ -11,7 +11,7 @@ import { formatDefinitionFile } from "@fern-api/fern-definition-formatter";
 import { RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
-import { copyFile, mkdir, writeFile } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 
@@ -59,19 +59,18 @@ export async function createOpenAPIWorkspace({
         await mkdir(directoryOfWorkspace);
     }
     const relativeOpenAPIFilePath = getRelativeOpenAPIFilePathForWorkspace({ directoryOfWorkspace, openAPIFilePath });
-    const openAPIFilePathForConfig =
-        relativeOpenAPIFilePath ??
-        (await copyOpenAPIFileIntoWorkspace({
-            directoryOfWorkspace,
-            openAPIFilePath,
-            context
-        }));
+    if (relativeOpenAPIFilePath == null) {
+        throw new CliError({
+            message: `The OpenAPI spec must be on the same drive as the new Fern workspace. Move ${openAPIFilePath} into ${directoryOfWorkspace}, or initialize the workspace on the same drive as the spec.`,
+            code: CliError.Code.ConfigError
+        });
+    }
     await writeGeneratorsConfiguration({
         filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
         cliVersion,
         context,
         apiConfiguration: {
-            specs: [{ openapi: openAPIFilePathForConfig }]
+            specs: [{ openapi: relativeOpenAPIFilePath }]
         }
     });
 }
@@ -90,24 +89,6 @@ export function getRelativeOpenAPIFilePathForWorkspace({
         return undefined;
     }
     return RelativeFilePath.of(relativeOpenAPIFilePath);
-}
-
-async function copyOpenAPIFileIntoWorkspace({
-    directoryOfWorkspace,
-    openAPIFilePath,
-    context
-}: {
-    directoryOfWorkspace: AbsoluteFilePath;
-    openAPIFilePath: AbsoluteFilePath;
-    context: TaskContext;
-}): Promise<RelativeFilePath> {
-    const filename = RelativeFilePath.of(path.basename(openAPIFilePath));
-    const destination = join(directoryOfWorkspace, filename);
-    context.logger.warn(
-        `The OpenAPI spec is on a different drive than the new Fern workspace, so Fern copied it into the workspace as ${filename}.`
-    );
-    await copyFile(openAPIFilePath, destination);
-    return filename;
 }
 
 export async function createDefaultOpenAPIWorkspace({
