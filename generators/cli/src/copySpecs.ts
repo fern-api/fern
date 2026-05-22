@@ -102,10 +102,7 @@ function renderMainRs(args: { binaryName: string; entries: SpecEntry[]; authBind
     const bindingAuthBindings = authBindings.filter((b) => b.placement === "binding");
 
     // Collect needed imports
-    const imports: string[] = [
-        "use fern_cli_sdk::app::CliApp;",
-        "use fern_cli_sdk::openapi::OpenApiBinding;"
-    ];
+    const imports: string[] = ["use fern_cli_sdk::app::CliApp;", "use fern_cli_sdk::openapi::OpenApiBinding;"];
     const authTypeImports = new Set<string>();
     for (const binding of rootAuthBindings) {
         if (binding.authTypeImport != null) {
