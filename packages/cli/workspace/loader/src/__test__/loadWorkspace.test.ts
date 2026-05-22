@@ -6,7 +6,7 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import assert from "assert";
 
 import { handleFailedWorkspaceParserResult } from "../handleFailedWorkspaceParserResult.js";
-import { loadAPIWorkspace } from "../loadAPIWorkspace.js";
+import { loadAPIWorkspace, loadSingleNamespaceAPIWorkspace } from "../loadAPIWorkspace.js";
 
 function createCapturingLogger(): Logger & { errors: string[]; debugs: string[] } {
     const errors: string[] = [];
@@ -70,6 +70,38 @@ describe("loadWorkspace", () => {
         });
         expect(workspace.didSucceed).toBe(true);
         assert(workspace.didSucceed);
+    });
+
+    it("rejects open api with absolute spec path", async () => {
+        const absolutePathToFixtures = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
+        const absolutePathToOpenApi = join(absolutePathToFixtures, RelativeFilePath.of("openapi.yml"));
+
+        const result = await loadSingleNamespaceAPIWorkspace({
+            absolutePathToWorkspace: absolutePathToFixtures,
+            namespace: undefined,
+            definitions: [
+                {
+                    schema: {
+                        type: "oss",
+                        path: absolutePathToOpenApi
+                    },
+                    origin: undefined,
+                    overrides: undefined,
+                    overlays: undefined,
+                    audiences: [],
+                    settings: undefined
+                }
+            ]
+        });
+
+        expect(Array.isArray(result)).toBe(false);
+        assert(!Array.isArray(result));
+        expect(result.didSucceed).toBe(false);
+        assert(!result.didSucceed);
+        expect(result.failures[RelativeFilePath.of("generators.yml")]).toEqual({
+            type: WorkspaceLoaderFailureType.ABSOLUTE_FILEPATH,
+            filepath: absolutePathToOpenApi
+        });
     });
 });
 
