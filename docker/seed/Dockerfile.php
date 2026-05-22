@@ -54,9 +54,11 @@ RUN git clone --depth 1 --branch v${RUNC_VERSION} https://github.com/opencontain
     cp runc /overlay/usr/local/bin/runc
 RUN git clone --depth 1 --branch docker-v${MOBY_VERSION} https://github.com/moby/moby.git /src/moby && \
     cd /src/moby && \
-    # Force patched x/net (CVE-2026-33814), otel SDK + OTLP HTTP exporters
-    # (CVE-2026-39882, CVE-2026-39883) before vendoring dockerd/docker-proxy.
+    # Force patched x/net (CVE-2026-33814), containerd (GHSA-fqw6-gf59-qr4w),
+    # otel SDK + OTLP HTTP exporters (CVE-2026-39882, CVE-2026-39883)
+    # before vendoring dockerd/docker-proxy.
     go get golang.org/x/net@v${XNET_VERSION} \
+           github.com/containerd/containerd/v2@v${CONTAINERD_VERSION} \
            go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel/trace@v${OTEL_SDK_VERSION} \
