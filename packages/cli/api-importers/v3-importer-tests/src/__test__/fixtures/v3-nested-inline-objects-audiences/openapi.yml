@@ -1,0 +1,129 @@
+openapi: 3.0.3
+info:
+  title: Nested object audience-filtering regression fixture
+  version: 1.0.0
+  description: |
+    Regression coverage for the bug where, when `x-fern-audiences` filtering is
+    active, transitively-referenced named types resolve to `any` in the docs
+    site because `IrGraph.addReferencedTypes` only walked one level of
+    descendants. Each schema below exercises a slightly different shape of the
+    dependency chain so we catch deeper regressions.
+servers:
+  - url: https://api.example.com
+paths:
+  # Customer-reported shape: outer schema has a property whose type is a sibling
+  # component, and that sibling has its own inline-object properties. Before the
+  # fix, the inline child types under the sibling were dropped during audience
+  # filtering and the docs site rendered them as `any`.
+  /items:
+    get:
+      operationId: getItem
+      x-fern-audiences: ["public"]
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemResponse"
+  # Deeper chain: ItemResponse → ItemResponseBody → ItemResponseObject → inline
+  # children. A single-level walk would only reach ItemResponseBody.
+  /items/deep:
+    get:
+      operationId: getItemDeep
+      x-fern-audiences: ["public"]
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeepItemResponse"
+  # List of $ref'd objects: exercises the container (list/array) path on the
+  # transitive walk.
+  /lists:
+    get:
+      operationId: getList
+      x-fern-audiences: ["public"]
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListResponse"
+components:
+  schemas:
+    ItemResponse:
+      type: object
+      properties:
+        object:
+          $ref: "#/components/schemas/ItemResponseObject"
+    ItemResponseObject:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: ["item"]
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+              description: The name of the item.
+            price_cents:
+              type: integer
+              description: The price in cents.
+            internal_field:
+              type: string
+              description: Internal-only field; scrubbed from the public audience.
+              x-fern-audiences: ["internal"]
+    DeepItemResponse:
+      type: object
+      properties:
+        body:
+          $ref: "#/components/schemas/DeepItemResponseBody"
+    DeepItemResponseBody:
+      type: object
+      properties:
+        object:
+          $ref: "#/components/schemas/DeepItemResponseObject"
+    DeepItemResponseObject:
+      type: object
+      properties:
+        kind:
+          type: string
+          enum: ["deep-item"]
+        payload:
+          type: object
+          properties:
+            uuid:
+              type: string
+              format: uuid
+            label:
+              type: string
+    ListResponse:
+      type: object
+      properties:
+        kind:
+          type: string
+          enum: ["list"]
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ListResponseItem"
+    ListResponseItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        meta:
+          type: object
+          properties:
+            tag:
+              type: string
+              enum: ["alpha", "beta"]
