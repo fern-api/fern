@@ -208,7 +208,7 @@ catalog:
   node-fetch: 2.7.0
   number-to-words: 1.2.4
   object-hash: ^3.0.0
-  open: ^8.4.0
+  open: ^11.0.0
   ora: ^7.0.1
   package-json-type: ^1.0.3
   path-to-regexp: 6.3.0

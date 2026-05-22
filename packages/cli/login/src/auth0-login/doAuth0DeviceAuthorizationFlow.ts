@@ -51,7 +51,11 @@ export async function doAuth0DeviceAuthorizationFlow({
         context.failAndThrow("Failed to authenticate", deviceCodeResponse.data, { code: CliError.Code.AuthError });
     }
 
-    await open(deviceCodeResponse.data.verification_uri_complete);
+    try {
+        await open(deviceCodeResponse.data.verification_uri_complete);
+    } catch {
+        // URL and login code are printed below.
+    }
 
     context.logger.info(
         [

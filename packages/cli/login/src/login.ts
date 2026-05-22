@@ -55,6 +55,7 @@ export async function getTokenFromAuth0(
             email
         });
         return await doAuth0LoginFlow({
+            context,
             auth0Domain: AUTH0_DOMAIN,
             auth0ClientId: AUTH0_CLIENT_ID,
             audience: VENUS_AUDIENCE,
@@ -64,6 +65,7 @@ export async function getTokenFromAuth0(
 
     try {
         return await doAuth0LoginFlow({
+            context,
             auth0Domain: AUTH0_DOMAIN,
             auth0ClientId: AUTH0_CLIENT_ID,
             audience: VENUS_AUDIENCE,
