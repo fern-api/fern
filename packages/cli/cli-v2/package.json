@@ -108,9 +108,7 @@
     "json-stream-stringify": "catalog:",
     "jsonwebtoken": "catalog:",
     "ora": "catalog:",
-    "pngjs": "catalog:",
     "posthog-node": "^5.28.6",
-    "puppeteer": "catalog:",
     "semver": "^7.6.2",
     "tsup": "catalog:",
     "typescript": "catalog:",
@@ -122,6 +120,8 @@
   "dependencies": {
     "cli-progress": "catalog:",
     "dotenv": "^16.0.0",
+    "pngjs": "catalog:",
+    "puppeteer": "catalog:",
     "tmp-promise": "catalog:"
   }
 }

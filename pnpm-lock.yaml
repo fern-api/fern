@@ -4769,6 +4769,12 @@ importers:
       dotenv:
         specifier: ^16.0.0
         version: 16.6.1
+      pngjs:
+        specifier: 'catalog:'
+        version: 7.0.0
+      puppeteer:
+        specifier: 'catalog:'
+        version: 24.40.0(typescript@5.9.3)
       tmp-promise:
         specifier: 'catalog:'
         version: 3.0.3
@@ -4971,15 +4977,9 @@ importers:
       ora:
         specifier: 'catalog:'
         version: 7.0.1
-      pngjs:
-        specifier: 'catalog:'
-        version: 7.0.0
       posthog-node:
         specifier: ^5.28.6
         version: 5.29.1(rxjs@7.8.2)
-      puppeteer:
-        specifier: 'catalog:'
-        version: 24.40.0(typescript@5.9.3)
       semver:
         specifier: ^7.6.2
         version: 7.7.4

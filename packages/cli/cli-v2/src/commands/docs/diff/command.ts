@@ -1,6 +1,6 @@
 import type { FernToken } from "@fern-api/auth";
 import { AbsoluteFilePath, cwd, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { askToLogin } from "@fern-api/login";
+import type { Logger } from "@fern-api/logger";
 import type { Project } from "@fern-api/project-loader";
 import { CliError } from "@fern-api/task-context";
 
@@ -8,7 +8,6 @@ import { mkdir, readFile, writeFile } from "fs/promises";
 import { PNG } from "pngjs";
 import { type Browser, launch } from "puppeteer";
 import type { Argv } from "yargs";
-import { TaskContextAdapter } from "../../../context/adapter/TaskContextAdapter.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { LegacyProjectAdapter } from "../../../docs/adapter/LegacyProjectAdapter.js";
@@ -53,7 +52,6 @@ interface DiffRegionResult {
 
 interface ProductionUrlInfo {
     baseUrl: string;
-    basePath: string | null;
 }
 
 // ── Args & Command ───────────────────────────────────────────────────────────
@@ -84,11 +82,26 @@ export class DiffCommand {
             context,
             project,
             previewUrl: args["preview-url"],
-            files: args.files ?? [],
+            files: args.files,
             outputDir: args.output
         });
 
         context.stdout.info(JSON.stringify(result, null, 2));
+    }
+
+    private getToken(context: Context): Promise<FernToken> {
+        const isRunningOnSelfHosted = process.env["FERN_FDR_ORIGIN"] != null;
+        if (isRunningOnSelfHosted) {
+            const fernToken = process.env["FERN_TOKEN"];
+            if (fernToken == null) {
+                throw new CliError({
+                    message: "No organization token found. Please set the FERN_TOKEN environment variable.",
+                    code: CliError.Code.AuthError
+                });
+            }
+            return Promise.resolve({ type: "organization", value: fernToken });
+        }
+        return context.getTokenOrPrompt();
     }
 
     private async runDiff({
@@ -112,29 +125,12 @@ export class DiffCommand {
             });
         }
 
-        const taskContext = new TaskContextAdapter({ context });
-        const token: FernToken | null = await askToLogin(taskContext);
-
-        if (token == null) {
-            throw new CliError({
-                message: "Failed to authenticate. Please run 'fern login' first.",
-                code: CliError.Code.AuthError
-            });
-        }
-
-        const fernToken = process.env.FERN_TOKEN ?? token.value;
+        const token = await this.getToken(context);
+        const fernToken = token.value;
         const productionUrlInfo = getProductionUrlInfo(docsWorkspace.config);
 
-        let normalizedPreviewUrl = previewUrl;
-        if (normalizedPreviewUrl.startsWith("https://")) {
-            normalizedPreviewUrl = normalizedPreviewUrl.slice(8);
-        } else if (normalizedPreviewUrl.startsWith("http://")) {
-            normalizedPreviewUrl = normalizedPreviewUrl.slice(7);
-        }
-        const slashIndex = normalizedPreviewUrl.indexOf("/");
-        if (slashIndex !== -1) {
-            normalizedPreviewUrl = normalizedPreviewUrl.slice(0, slashIndex);
-        }
+        const previewUrlWithScheme = previewUrl.startsWith("http") ? previewUrl : `https://${previewUrl}`;
+        const normalizedPreviewUrl = new URL(previewUrlWithScheme).host;
 
         context.stderr.info(`Resolving slugs for ${files.length} file(s)...`);
         const slugResponse = await getSlugForFiles({
@@ -189,14 +185,16 @@ export class DiffCommand {
                     browser,
                     url: productionUrl,
                     outputPath: beforePath,
-                    token: fernToken
+                    token: fernToken,
+                    logger: context.stderr
                 });
 
                 const afterExists = await captureScreenshot({
                     browser,
                     url: previewPageUrl,
                     outputPath: afterPath,
-                    token: fernToken
+                    token: fernToken,
+                    logger: context.stderr
                 });
 
                 if (!afterExists) {
@@ -312,19 +310,36 @@ async function getSlugForFiles({
         });
     }
 
-    return (await response.json()) as GetSlugForFileResponse;
+    const body: unknown = await response.json();
+    if (!isGetSlugForFileResponse(body)) {
+        throw new CliError({
+            message: "Received unexpected response shape from slug API",
+            code: CliError.Code.InternalError
+        });
+    }
+    return body;
+}
+
+function isGetSlugForFileResponse(value: unknown): value is GetSlugForFileResponse {
+    if (typeof value !== "object" || value == null) {
+        return false;
+    }
+    const candidate = value as Record<string, unknown>;
+    return Array.isArray(candidate["mappings"]) && typeof candidate["authed"] === "boolean";
 }
 
 async function captureScreenshot({
     browser,
     url,
     outputPath,
-    token
+    token,
+    logger
 }: {
     browser: Browser;
     url: string;
     outputPath: string;
     token?: string;
+    logger: Logger;
 }): Promise<boolean> {
     const page = await browser.newPage();
 
@@ -352,13 +367,15 @@ async function captureScreenshot({
         }
 
         await page.screenshot({
+            // Puppeteer's type requires the path to match `${string}.png`
             path: outputPath as `${string}.png`,
             fullPage: true
         });
 
         await page.close();
         return true;
-    } catch {
+    } catch (error) {
+        logger.debug(`Failed to capture screenshot for ${url}: ${String(error)}`);
         await page.close();
         return false;
     }
@@ -631,7 +648,7 @@ async function generateComparisons({
 
         const croppedBefore = cropPng(resizedBefore, boundingBox);
         const croppedAfter = cropPng(resizedAfter, boundingBox);
-        const sideBySide = createSideBySideComparison(croppedBefore, croppedAfter, 20, true);
+        const sideBySide = createSideBySideComparison(croppedBefore, croppedAfter);
 
         const outPath = `${base}-region-${i + 1}.png`;
         const pngBuffer = PNG.sync.write(sideBySide);
@@ -664,10 +681,12 @@ function getProductionUrlInfo(docsConfig: {
 
     try {
         const url = new URL(normalizedUrl);
-        const basePath = url.pathname !== "/" ? url.pathname.replace(/\/$/, "") : null;
-        const baseUrl = `${url.protocol}//${url.host}`;
-        return { baseUrl, basePath };
-    } catch {
-        return { baseUrl: normalizedUrl, basePath: null };
+        return { baseUrl: `${url.protocol}//${url.host}` };
+    } catch (error) {
+        if (error instanceof TypeError) {
+            // new URL() throws TypeError for invalid URL strings; fall back to using the raw value
+            return { baseUrl: normalizedUrl };
+        }
+        throw error;
     }
 }
