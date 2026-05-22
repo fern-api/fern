@@ -1,27 +1,10 @@
+import { docsYml } from "@fern-api/configuration";
 import { isURL } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 import { copyFile, mkdir, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
-
-const THEME_ELIGIBLE_KEYS = new Set([
-    "logo",
-    "favicon",
-    "colors",
-    "typography",
-    "layout",
-    "navbar-links",
-    "footer-links",
-    "background-image",
-    "theme",
-    "css",
-    "js",
-    "header",
-    "footer",
-    "metadata",
-    "settings"
-]);
 
 export class ThemeExporter {
     public constructor(private readonly docsWorkspace: DocsWorkspace) {}
@@ -39,7 +22,7 @@ export class ThemeExporter {
         const raw = yaml.load(await readFile(docsYmlPath, "utf-8")) as Record<string, unknown>;
         const themeConfig: Record<string, unknown> = {};
         for (const [k, v] of Object.entries(raw)) {
-            if (THEME_ELIGIBLE_KEYS.has(k)) {
+            if (docsYml.THEME_ELIGIBLE_YAML_KEYS.has(k)) {
                 themeConfig[k] = v;
             }
         }
