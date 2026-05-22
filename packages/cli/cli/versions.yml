@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.37.2
+  changelogEntry:
+    - summary: |
+        Report absolute OpenAPI spec paths as user-facing workspace configuration errors.
+      type: fix
+    - summary: |
+        Include `settings` in theme export so that `fern docs theme export` captures the settings configuration from docs.yml.
+      type: fix
+  createdAt: "2026-05-22"
+  irVersion: 66
 - version: 5.37.1
   changelogEntry:
     - summary: |
