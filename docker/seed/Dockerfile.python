@@ -12,9 +12,9 @@ RUN apk add --no-cache curl && \
 # CVEs (CVE-2026-33811, CVE-2026-33814, CVE-2026-39820, CVE-2026-39836,
 # CVE-2026-42499). Rebuilding under GOTOOLCHAIN=go1.26.3 swaps the embedded
 # stdlib without changing functionality. The containerd/runc rebuild also
-# picks up the grpc / otel / go-jose bumps from the v2.3.0 release line.
+# picks up the grpc / otel / go-jose bumps from the v2.3.x release line.
 FROM golang:1.26.3-alpine3.23 AS overlay-binaries
-ARG CONTAINERD_VERSION=2.3.0
+ARG CONTAINERD_VERSION=2.3.1
 ARG RUNC_VERSION=1.3.5
 # moby v29.5.2 includes fixes for CVE-2026-33997, CVE-2026-34040,
 # CVE-2026-41567, CVE-2026-41568, CVE-2026-42306 and later patches.
