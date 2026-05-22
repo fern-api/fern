@@ -214,35 +214,7 @@ export function deepMergeGlobalWins(
     return result;
 }
 
-// "global" — the theme value always wins; local docs.yml cannot override it.
-// "local"  — the local docs.yml value wins when present; theme is the fallback.
-type ThemeFieldPolicy = "global" | "local";
-
-// Controls, per eligible key, whether the global theme takes precedence or the
-// local docs.yml can override. Add new theme-eligible keys here.
-// Keys use the camelCase form that DocsConfiguration uses internally.
-const THEME_FIELD_POLICIES: Readonly<Record<string, ThemeFieldPolicy>> = {
-    logo: "global",
-    favicon: "global",
-    backgroundImage: "global",
-    colors: "global",
-    typography: "global",
-    layout: "global",
-    settings: "global",
-    theme: "global",
-    integrations: "global",
-    css: "global",
-    js: "global",
-    header: "global",
-    footer: "global",
-    navbarLinks: "global",
-    footerLinks: "global",
-    aiSearch: "global",
-    announcement: "global",
-    metadata: "global"
-};
-
-const THEME_ELIGIBLE_KEYS = Object.keys(THEME_FIELD_POLICIES) as ReadonlyArray<keyof RawDocsConfig>;
+const { THEME_ELIGIBLE_FIELDS, THEME_FIELD_POLICIES } = docsYml;
 
 function kebabToCamel(str: string): string {
     return str.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
@@ -276,7 +248,7 @@ export function mergeThemeOverride(local: RawDocsConfig, themeOverride: Record<s
     const normalized = normalizeThemeKeys(themeOverride);
     const localRecord = local as unknown as Record<string, unknown>;
     const merged: Record<string, unknown> = { ...localRecord };
-    for (const key of THEME_ELIGIBLE_KEYS) {
+    for (const key of THEME_ELIGIBLE_FIELDS) {
         const themeValue = normalized[key];
         const localValue = localRecord[key];
         const policy = THEME_FIELD_POLICIES[key] ?? "global";

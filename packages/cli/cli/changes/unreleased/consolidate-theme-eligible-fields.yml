@@ -1,0 +1,5 @@
+- summary: |
+    Centralize theme-eligible docs.yml field definitions in @fern-api/configuration
+    so theme export, upload, and global theme stitching reference the same source
+    of truth.
+  type: patch
