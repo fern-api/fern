@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.37.6
+  changelogEntry:
+    - summary: |
+        Centralize theme-eligible docs.yml field definitions in @fern-api/configuration
+        so theme export, upload, and global theme stitching reference the same source
+        of truth.
+      type: chore
+  createdAt: "2026-05-22"
+  irVersion: 66
 - version: 5.37.5
   changelogEntry:
     - summary: |
