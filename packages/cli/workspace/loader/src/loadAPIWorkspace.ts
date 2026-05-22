@@ -6,7 +6,14 @@ import {
     loadGeneratorsConfiguration,
     OPENAPI_DIRECTORY
 } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, doesPathExist, isPathEmpty, join, RelativeFilePath } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    doesPathExist,
+    isPathEmpty,
+    join,
+    RelativeFilePath,
+    relativePathForDisplay
+} from "@fern-api/fs-utils";
 import {
     ConjureWorkspace,
     LazyFernWorkspace,
@@ -17,6 +24,32 @@ import {
 import { TaskContext } from "@fern-api/task-context";
 import path from "path";
 import { loadAPIChangelog } from "./loadAPIChangelog.js";
+
+function resolveConfiguredFilepath({
+    absolutePathToWorkspace,
+    configuredFilepath
+}: {
+    absolutePathToWorkspace: AbsoluteFilePath;
+    configuredFilepath: string;
+}): AbsoluteFilePath {
+    if (path.isAbsolute(configuredFilepath)) {
+        return AbsoluteFilePath.of(configuredFilepath);
+    }
+    return join(absolutePathToWorkspace, RelativeFilePath.of(configuredFilepath));
+}
+
+function getFailureFilepath({
+    absolutePathToWorkspace,
+    configuredFilepath
+}: {
+    absolutePathToWorkspace: AbsoluteFilePath;
+    configuredFilepath: string;
+}): RelativeFilePath {
+    if (path.isAbsolute(configuredFilepath)) {
+        return relativePathForDisplay(absolutePathToWorkspace, AbsoluteFilePath.of(configuredFilepath));
+    }
+    return RelativeFilePath.of(configuredFilepath);
+}
 
 export async function loadSingleNamespaceAPIWorkspace({
     absolutePathToWorkspace,
@@ -149,25 +182,15 @@ export async function loadSingleNamespaceAPIWorkspace({
             continue;
         }
 
-        if (path.isAbsolute(definition.schema.path)) {
-            return {
-                didSucceed: false,
-                failures: {
-                    [RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)]: {
-                        type: WorkspaceLoaderFailureType.ABSOLUTE_FILEPATH,
-                        filepath: definition.schema.path
-                    }
-                }
-            };
-        }
-
-        const relativeFilepath = RelativeFilePath.of(definition.schema.path);
-        const absoluteFilepath = join(absolutePathToWorkspace, relativeFilepath);
+        const absoluteFilepath = resolveConfiguredFilepath({
+            absolutePathToWorkspace,
+            configuredFilepath: definition.schema.path
+        });
         if (!(await doesPathExist(absoluteFilepath))) {
             return {
                 didSucceed: false,
                 failures: {
-                    [relativeFilepath]: {
+                    [getFailureFilepath({ absolutePathToWorkspace, configuredFilepath: definition.schema.path })]: {
                         type: WorkspaceLoaderFailureType.FILE_MISSING
                     }
                 }

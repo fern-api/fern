@@ -52,11 +52,6 @@ function handleWorkspaceParserFailureForFile({
         case WorkspaceLoaderFailureType.FILE_MISSING:
             logger.error("Missing file: " + relativeFilepath);
             break;
-        case WorkspaceLoaderFailureType.ABSOLUTE_FILEPATH:
-            logger.error(
-                `OpenAPI spec paths must be relative to the Fern workspace. Found absolute path: ${failure.filepath}`
-            );
-            break;
         case WorkspaceLoaderFailureType.FILE_PARSE:
             if (failure.error instanceof YAMLException) {
                 logger.error(

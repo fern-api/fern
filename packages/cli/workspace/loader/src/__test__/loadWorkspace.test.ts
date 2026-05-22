@@ -72,11 +72,11 @@ describe("loadWorkspace", () => {
         assert(workspace.didSucceed);
     });
 
-    it("rejects open api with absolute spec path", async () => {
+    it("open api with absolute spec path", async () => {
         const absolutePathToFixtures = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
         const absolutePathToOpenApi = join(absolutePathToFixtures, RelativeFilePath.of("openapi.yml"));
 
-        const result = await loadSingleNamespaceAPIWorkspace({
+        const specs = await loadSingleNamespaceAPIWorkspace({
             absolutePathToWorkspace: absolutePathToFixtures,
             namespace: undefined,
             definitions: [
@@ -94,14 +94,13 @@ describe("loadWorkspace", () => {
             ]
         });
 
-        expect(Array.isArray(result)).toBe(false);
-        assert(!Array.isArray(result));
-        expect(result.didSucceed).toBe(false);
-        assert(!result.didSucceed);
-        expect(result.failures[RelativeFilePath.of("generators.yml")]).toEqual({
-            type: WorkspaceLoaderFailureType.ABSOLUTE_FILEPATH,
-            filepath: absolutePathToOpenApi
-        });
+        expect(Array.isArray(specs)).toBe(true);
+        assert(Array.isArray(specs));
+        const spec = specs[0];
+        assert(spec != null);
+        expect(spec.type).toBe("openapi");
+        assert(spec.type === "openapi");
+        expect(spec.absoluteFilepath).toBe(absolutePathToOpenApi);
     });
 });
 

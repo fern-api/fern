@@ -29,11 +29,11 @@ import {
 } from "@fern-api/openapi-to-ir";
 import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
 import { CliError, TaskContext } from "@fern-api/task-context";
-
 import { ErrorCollector } from "@fern-api/v3-importer-commons";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { OpenAPIV3_1 } from "openapi-types";
+import path from "path";
 import { v4 as uuidv4 } from "uuid";
 import { loadOpenRpc } from "./loaders/index.js";
 import { OpenAPILoader } from "./loaders/OpenAPILoader.js";
@@ -342,10 +342,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         const errorCollectors: ErrorCollector[] = [];
 
         for (const document of documents) {
-            const absoluteFilepathToSpec = join(
-                this.absoluteFilePath,
-                RelativeFilePath.of(document.source?.file ?? "")
-            );
+            const sourceFile = document.source?.file;
+            const absoluteFilepathToSpec =
+                sourceFile != null && path.isAbsolute(sourceFile)
+                    ? AbsoluteFilePath.of(sourceFile)
+                    : join(this.absoluteFilePath, RelativeFilePath.of(sourceFile ?? ""));
             const relativeFilepathToSpec = relativize(cwd(), absoluteFilepathToSpec);
 
             const errorCollector = new ErrorCollector({ logger: context.logger, relativeFilepathToSpec });

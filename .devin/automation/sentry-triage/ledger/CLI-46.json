@@ -1,8 +1,8 @@
 {
   "title": "Filepath is not relative (Linux absolute path)",
   "disposition": "shipped",
-  "rationale": "Absolute OpenAPI spec paths are user configuration values and now fail at the workspace-loading boundary as a non-reportable config error instead of reaching RelativeFilePath.of.",
-  "fixSummary": "Reject absolute OpenAPI spec paths during workspace loading with a user-facing config error.",
+  "rationale": "Absolute OpenAPI spec paths are valid user configuration values and are now resolved at the workspace-loading boundary instead of tripping RelativeFilePath.of invariants.",
+  "fixSummary": "Resolve absolute OpenAPI spec paths directly during workspace loading.",
   "prOrIssue": "https://github.com/fern-api/fern/pull/15953",
   "lastAnalyzed": "2026-05-16",
   "problemSignature": "OpenAPI or workspace path conversion received an absolute path where a relative path was required; path boundary bug."
