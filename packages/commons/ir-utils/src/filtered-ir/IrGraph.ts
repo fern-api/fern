@@ -576,32 +576,45 @@ export class IrGraph {
         return this.schemaIdToGraphTypeId.get(id) ?? id;
     }
 
+    /**
+     * BFS the type-dependency graph and add every transitively-reachable type
+     * to `types`. The walk must be recursive: an outer type's `allDescendants`
+     * may only list its direct dependencies (e.g. when a property uses `$ref`
+     * to another component schema, the outer type's referencedTypes contains
+     * the ref target but not the target's own inline-object descendants), so a
+     * single-level pass would silently drop deeper named types and they would
+     * later render as `any` in the docs.
+     */
     private addReferencedTypes(types: Set<TypeId>, typesToAdd: Set<TypeId>): void {
-        for (const typeId of typesToAdd) {
-            if (types.has(typeId)) {
+        const queue: TypeId[] = [...typesToAdd];
+
+        while (queue.length > 0) {
+            const typeId = queue.pop();
+            if (typeId == null || types.has(typeId)) {
                 continue;
             }
             types.add(typeId);
             const typeNode = this.getTypeNode(typeId);
 
+            const enqueueDescendant = (descendantTypeId: TypeId): void => {
+                const resolved = this.resolveTypeId(descendantTypeId);
+                if (!types.has(resolved)) {
+                    queue.push(resolved);
+                }
+            };
+
             if (this.audiences.type === "filtered") {
                 for (const audienceId of this.audiences.audiences) {
                     const descendantsForAudience = typeNode.descendantsByAudience[audienceId];
                     if (descendantsForAudience != null) {
-                        descendantsForAudience.forEach((descendantTypeId) => {
-                            types.add(this.resolveTypeId(descendantTypeId));
-                        });
+                        descendantsForAudience.forEach(enqueueDescendant);
                     } else {
-                        typeNode.allDescendants.forEach((descendantTypeId) => {
-                            types.add(this.resolveTypeId(descendantTypeId));
-                        });
+                        typeNode.allDescendants.forEach(enqueueDescendant);
                         break;
                     }
                 }
             } else {
-                typeNode.allDescendants.forEach((descendantTypeId) => {
-                    types.add(this.resolveTypeId(descendantTypeId));
-                });
+                typeNode.allDescendants.forEach(enqueueDescendant);
             }
         }
     }
