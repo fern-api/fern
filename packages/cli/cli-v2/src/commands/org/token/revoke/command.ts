@@ -31,7 +31,7 @@ export class RevokeTokenCommand {
 
         const response = await withSpinner({
             message: `Revoking token "${tokenId}"`,
-            operation: () => venus.apiKeys.revokeTokenById({ tokenId })
+            operation: () => venus.apiKeys.revokeTokenById(tokenId)
         });
 
         if (response.ok) {
@@ -44,7 +44,11 @@ export class RevokeTokenCommand {
         }
 
         response.error._visit({
-            unprocessableEntityError: () => {
+            unauthorizedError: () => {
+                context.stderr.error(`${Icons.error} You are not authorized to revoke this token.`);
+                throw new CliError({ code: CliError.Code.AuthError });
+            },
+            tokenNotFoundError: () => {
                 context.stderr.error(`${Icons.error} Token "${tokenId}" was not found.`);
                 throw CliError.notFound();
             },

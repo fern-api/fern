@@ -28,15 +28,15 @@ export class InviteMemberCommand {
 
         const venus = createVenusService({ token: token.value });
 
-        const orgLookup = await venus.organization.get({ orgId: args.org });
+        const orgLookup = await venus.organization.get(args.org);
         if (!orgLookup.ok) {
             orgLookup.error._visit({
-                unprocessableEntityError: () => {
-                    context.stderr.error(`${Icons.error} Organization "${args.org}" was not found.`);
-                    throw CliError.notFound();
+                unauthorizedError: () => {
+                    context.stderr.error(`${Icons.error} You do not have access to organization "${args.org}".`);
+                    throw new CliError({ code: CliError.Code.AuthError });
                 },
                 _other: () => {
-                    context.stderr.error(`${Icons.error} Failed to look up organization "${args.org}".`);
+                    context.stderr.error(`${Icons.error} Organization "${args.org}" was not found.`);
                     throw CliError.notFound();
                 }
             });
@@ -63,7 +63,13 @@ export class InviteMemberCommand {
         }
 
         response.error._visit({
-            unprocessableEntityError: () => {
+            unauthorizedError: () => {
+                context.stderr.error(
+                    `${Icons.error} You do not have permission to invite members to organization "${args.org}".`
+                );
+                throw new CliError({ code: CliError.Code.AuthError });
+            },
+            userIdDoesNotExistError: () => {
                 context.stderr.error(`${Icons.error} No user found with email "${args.email}".`);
                 throw CliError.notFound();
             },

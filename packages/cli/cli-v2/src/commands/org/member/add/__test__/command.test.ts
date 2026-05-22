@@ -58,7 +58,7 @@ describe("InviteMemberCommand", () => {
         const context = createMockContext();
         await cmd.handle(context, { email: "user@example.com", org: "acme" } as InviteMemberCommand.Args);
 
-        expect(mockGet).toHaveBeenCalledWith({ orgId: "acme" });
+        expect(mockGet).toHaveBeenCalledWith("acme");
         expect(mockInviteUser).toHaveBeenCalledWith({
             emailAddress: "user@example.com",
             auth0OrgId: "org_abc123"
@@ -104,7 +104,7 @@ describe("InviteMemberCommand", () => {
         const mockGet = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: { unprocessableEntityError: () => void }) => visitor.unprocessableEntityError()
+                _visit: (visitor: { unauthorizedError: () => void }) => visitor.unauthorizedError()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
@@ -116,16 +116,39 @@ describe("InviteMemberCommand", () => {
             cmd.handle(context, { email: "user@example.com", org: "acme" } as InviteMemberCommand.Args)
         ).rejects.toThrow(CliError);
 
-        expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("was not found"));
+        expect(context.stderr.error).toHaveBeenCalledWith(
+            expect.stringContaining("do not have access to organization")
+        );
     });
 
-    it("should handle UnprocessableEntityError from inviteUser", async () => {
+    it("should handle UnauthorizedError from inviteUser", async () => {
         const { createVenusService } = await import("@fern-api/core");
         const mockGet = mockOrgLookupSuccess();
         const mockInviteUser = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: { unprocessableEntityError: () => void }) => visitor.unprocessableEntityError()
+                _visit: (visitor: { unauthorizedError: () => void }) => visitor.unauthorizedError()
+            }
+        });
+        vi.mocked(createVenusService).mockReturnValue({
+            organization: { get: mockGet, inviteUser: mockInviteUser }
+        } as unknown as ReturnType<typeof createVenusService>);
+
+        const context = createMockContext();
+        await expect(
+            cmd.handle(context, { email: "user@example.com", org: "acme" } as InviteMemberCommand.Args)
+        ).rejects.toThrow(CliError);
+
+        expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("do not have permission to invite"));
+    });
+
+    it("should handle UserIdDoesNotExistError", async () => {
+        const { createVenusService } = await import("@fern-api/core");
+        const mockGet = mockOrgLookupSuccess();
+        const mockInviteUser = vi.fn().mockResolvedValue({
+            ok: false,
+            error: {
+                _visit: (visitor: { userIdDoesNotExistError: () => void }) => visitor.userIdDoesNotExistError()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
@@ -138,27 +161,6 @@ describe("InviteMemberCommand", () => {
         ).rejects.toThrow(CliError);
 
         expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("No user found with email"));
-    });
-
-    it("should handle unknown error from inviteUser", async () => {
-        const { createVenusService } = await import("@fern-api/core");
-        const mockGet = mockOrgLookupSuccess();
-        const mockInviteUser = vi.fn().mockResolvedValue({
-            ok: false,
-            error: {
-                _visit: (visitor: { _other: () => void }) => visitor._other()
-            }
-        });
-        vi.mocked(createVenusService).mockReturnValue({
-            organization: { get: mockGet, inviteUser: mockInviteUser }
-        } as unknown as ReturnType<typeof createVenusService>);
-
-        const context = createMockContext();
-        await expect(
-            cmd.handle(context, { email: "user@example.com", org: "acme" } as InviteMemberCommand.Args)
-        ).rejects.toThrow(CliError);
-
-        expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("Failed to invite member"));
     });
 
     it("should handle unknown errors", async () => {

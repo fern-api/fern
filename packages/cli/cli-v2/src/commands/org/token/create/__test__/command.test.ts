@@ -62,7 +62,7 @@ describe("CreateTokenCommand", () => {
         const context = createMockContext();
         await cmd.handle(context, { org: "acme", description: "CI token" } as CreateTokenCommand.Args);
 
-        expect(mockGet).toHaveBeenCalledWith({ orgId: "acme" });
+        expect(mockGet).toHaveBeenCalledWith("acme");
         expect(mockCreate).toHaveBeenCalledWith({
             organizationId: "org_abc123",
             description: "CI token"
@@ -118,16 +118,38 @@ describe("CreateTokenCommand", () => {
         const context = createMockContext();
         await expect(cmd.handle(context, { org: "acme" } as CreateTokenCommand.Args)).rejects.toThrow(CliError);
 
-        expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("Failed to look up organization"));
+        expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("was not found"));
     });
 
-    it("should handle UnprocessableEntityError from apiKeys.create", async () => {
+    it("should handle UnauthorizedError from apiKeys.create", async () => {
         const { createVenusService } = await import("@fern-api/core");
         const mockGet = mockOrgLookupSuccess();
         const mockCreate = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: { unprocessableEntityError: () => void }) => visitor.unprocessableEntityError()
+                _visit: (visitor: { unauthorizedError: () => void }) => visitor.unauthorizedError()
+            }
+        });
+        vi.mocked(createVenusService).mockReturnValue({
+            organization: { get: mockGet },
+            apiKeys: { create: mockCreate }
+        } as unknown as ReturnType<typeof createVenusService>);
+
+        const context = createMockContext();
+        await expect(cmd.handle(context, { org: "acme" } as CreateTokenCommand.Args)).rejects.toThrow(CliError);
+
+        expect(context.stderr.error).toHaveBeenCalledWith(
+            expect.stringContaining("do not have access to organization")
+        );
+    });
+
+    it("should handle OrganizationNotFoundError", async () => {
+        const { createVenusService } = await import("@fern-api/core");
+        const mockGet = mockOrgLookupSuccess();
+        const mockCreate = vi.fn().mockResolvedValue({
+            ok: false,
+            error: {
+                _visit: (visitor: { organizationNotFoundError: () => void }) => visitor.organizationNotFoundError()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
