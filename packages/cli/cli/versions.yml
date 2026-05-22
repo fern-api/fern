@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.37.8
+  changelogEntry:
+    - summary: |
+        Fix FDR generator version lookup for Ruby SDK to use the correct registry ID
+        (`ruby-sdk-v2`) instead of the stale legacy ID (`ruby-sdk`). This ensures
+        `fern generator upgrade` and IR version resolution return the actual latest
+        Ruby SDK generator version.
+      type: fix
+  createdAt: "2026-05-22"
+  irVersion: 66
 - version: 5.37.7
   changelogEntry:
     - summary: |
