@@ -4,7 +4,6 @@ import { Octokit } from "@octokit/rest";
 import { access, writeFile } from "fs/promises";
 import { join } from "path";
 import { createReplayBranch } from "../github/createReplayBranch";
-import { findExistingUpdatablePR } from "../github/findExistingUpdatablePR";
 import { parseCommitMessageForPR } from "../github/parseCommitMessage";
 import { pushSignedCommit } from "../github/pushSignedCommit";
 import type { PipelineLogger } from "../PipelineLogger";
@@ -107,34 +106,12 @@ export class GithubStep extends BaseStep {
         const octokit = this.createOctokit();
         const { owner, repo, remote } = parseRepository(this.config.uri);
 
-        let prBranch: string;
-        let isUpdatingExistingPR = false;
         let generationBaseSha: string | undefined;
-        let existingPR: Awaited<ReturnType<typeof findExistingUpdatablePR>> | undefined;
-
-        if (!this.config.automationMode) {
-            existingPR = await findExistingUpdatablePR(octokit, owner, repo, baseBranch, this.logger);
-        }
-
-        if (existingPR != null) {
-            this.logger.info(
-                `Found existing updatable PR #${existingPR.number}, will update branch ${existingPR.headBranch}`
-            );
-            prBranch = existingPR.headBranch;
-            isUpdatingExistingPR = true;
-        } else {
-            this.logger.debug(
-                this.config.automationMode
-                    ? `Automation mode: creating new branch ${newPrBranch}`
-                    : `No existing updatable PR found, creating new branch ${newPrBranch}`
-            );
-            prBranch = newPrBranch;
-        }
+        const prBranch = newPrBranch;
+        this.logger.debug(`Creating new branch ${prBranch}`);
 
         const branchAction = resolveBranchAction({
-            automationMode: this.config.automationMode === true,
-            skipCommit,
-            existingPR
+            skipCommit
         });
         switch (branchAction) {
             case "replay-branch":
@@ -152,9 +129,6 @@ export class GithubStep extends BaseStep {
                 break;
             case "create-from-head":
                 await repository.createBranchFromHead(prBranch);
-                break;
-            case "checkout-remote":
-                await repository.checkoutRemoteBranch(prBranch);
                 break;
             default: {
                 const _exhaustive: never = branchAction;
@@ -184,21 +158,17 @@ export class GithubStep extends BaseStep {
 
         const result: GithubStepResult = {
             executed: true,
-            success: true,
-            updatedExistingPr: isUpdatingExistingPR
+            success: true
         };
 
         if (!this.config.previewMode) {
-            // Create a signed commit via the GitHub API. Using the App installation token causes
-            // GitHub to sign the commit with the App's key. `force=true` when updating an existing
-            // fern-bot/* PR branch (bot-owned, pipeline-owned) — same safety posture as forcePush().
             await pushSignedCommit({
                 repository,
                 octokit,
                 owner,
                 repo,
                 branch: prBranch,
-                force: isUpdatingExistingPR,
+                force: false,
                 author: this.config.author,
                 logger: this.logger
             });
@@ -238,68 +208,49 @@ export class GithubStep extends BaseStep {
         let enrichedBody = replaySection != null ? prBody + "\n\n---\n\n" + replaySection : prBody;
         enrichedBody = enrichPrBodyForAutomation(enrichedBody, this.config, resolved);
 
-        if (isUpdatingExistingPR && existingPR != null) {
-            this.logger.info(`Updated existing pull request: ${existingPR.htmlUrl}`);
-            result.prUrl = existingPR.htmlUrl;
-            result.prNumber = existingPR.number;
+        const head = `${owner}:${prBranch}`;
 
-            try {
-                await octokit.pulls.update({
-                    owner,
-                    repo,
-                    pull_number: existingPR.number,
-                    title: prTitle,
-                    body: enrichedBody
-                });
-                this.logger.debug(`Updated PR #${existingPR.number} title and body`);
-            } catch (error) {
-                this.logger.debug(`Failed to update PR title/body: ${extractErrorMessage(error)}`);
+        try {
+            const { data: pullRequest } = await octokit.pulls.create({
+                owner,
+                repo,
+                title: prTitle,
+                body: enrichedBody,
+                head,
+                base: baseBranch
+            });
+
+            this.logger.info(`Created pull request: ${pullRequest.html_url}`);
+            result.prUrl = pullRequest.html_url;
+            result.prNumber = pullRequest.number;
+
+            // In automation mode, enable GitHub automerge on non-breaking PRs.
+            // Uses the built-in octokit.graphql() from @octokit/core (no extra dependency).
+            // The SDK repo's own branch protection rules govern whether the PR actually merges.
+            if (shouldEnableAutomerge(this.config, resolved) && pullRequest.node_id) {
+                try {
+                    await octokit.graphql(
+                        `mutation($pullRequestId: ID!) {
+                            enablePullRequestAutoMerge(input: {
+                                pullRequestId: $pullRequestId,
+                                mergeMethod: SQUASH
+                            }) { clientMutationId }
+                        }`,
+                        { pullRequestId: pullRequest.node_id }
+                    );
+                    this.logger.info(`Enabled automerge on PR #${pullRequest.number}`);
+                    result.autoMergeEnabled = true;
+                } catch (autoMergeError) {
+                    // Automerge may not be available (repo settings, branch protection, permissions)
+                    this.logger.warn(`Could not enable automerge: ${extractErrorMessage(autoMergeError)}`);
+                }
             }
-        } else {
-            const head = `${owner}:${prBranch}`;
-
-            try {
-                const { data: pullRequest } = await octokit.pulls.create({
-                    owner,
-                    repo,
-                    title: prTitle,
-                    body: enrichedBody,
-                    head,
-                    base: baseBranch
-                });
-
-                this.logger.info(`Created pull request: ${pullRequest.html_url}`);
-                result.prUrl = pullRequest.html_url;
-                result.prNumber = pullRequest.number;
-
-                // In automation mode, enable GitHub automerge on non-breaking PRs.
-                // Uses the built-in octokit.graphql() from @octokit/core (no extra dependency).
-                // The SDK repo's own branch protection rules govern whether the PR actually merges.
-                if (shouldEnableAutomerge(this.config, resolved) && pullRequest.node_id) {
-                    try {
-                        await octokit.graphql(
-                            `mutation($pullRequestId: ID!) {
-                                enablePullRequestAutoMerge(input: {
-                                    pullRequestId: $pullRequestId,
-                                    mergeMethod: SQUASH
-                                }) { clientMutationId }
-                            }`,
-                            { pullRequestId: pullRequest.node_id }
-                        );
-                        this.logger.info(`Enabled automerge on PR #${pullRequest.number}`);
-                        result.autoMergeEnabled = true;
-                    } catch (autoMergeError) {
-                        // Automerge may not be available (repo settings, branch protection, permissions)
-                        this.logger.warn(`Could not enable automerge: ${extractErrorMessage(autoMergeError)}`);
-                    }
-                }
-            } catch (error) {
-                const message = extractErrorMessage(error);
-                if (message.includes("A pull request already exists for")) {
-                    this.logger.warn(`A pull request already exists for ${head}`);
-                } else {
-                    throw error;
-                }
+        } catch (error) {
+            const message = extractErrorMessage(error);
+            if (message.includes("A pull request already exists for")) {
+                this.logger.warn(`A pull request already exists for ${head}`);
+            } else {
+                throw error;
             }
         }
 
@@ -615,27 +566,13 @@ export function shouldPushGenerationBaseTag(replayResult: ReplayStepResult | und
 
 /**
  * Determines which git branch operation to perform for pull-request mode.
- * New branches must use "create" (git checkout -b), existing remote branches use "checkout-remote".
  * When replay already committed (skipCommit), branch creation is handled by createReplayBranch instead.
+ * Otherwise always creates a new branch from HEAD.
  * Exported for testing.
  */
-export function resolveBranchAction({
-    automationMode,
-    skipCommit,
-    existingPR
-}: {
-    automationMode: boolean;
-    skipCommit: boolean;
-    existingPR: { headBranch: string } | null | undefined;
-}): "create-from-head" | "checkout-remote" | "replay-branch" {
+export function resolveBranchAction({ skipCommit }: { skipCommit: boolean }): "create-from-head" | "replay-branch" {
     if (skipCommit) {
         return "replay-branch";
-    }
-    if (automationMode) {
-        return "create-from-head";
-    }
-    if (existingPR != null) {
-        return "checkout-remote";
     }
     return "create-from-head";
 }
