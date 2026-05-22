@@ -1,5 +1,5 @@
 import { isOpenAPIV2 } from "@fern-api/api-workspace-commons";
-import { relativePathForDisplay } from "@fern-api/fs-utils";
+import { relative } from "@fern-api/fs-utils";
 import { convertOpenAPIV2ToV3 } from "@fern-api/lazy-fern-workspace";
 
 import { Rule } from "../../Rule.js";
@@ -37,7 +37,7 @@ export const NoDuplicateAuthHeaderParametersRule: Rule = {
                 continue;
             }
 
-            const relativeFilepath = relativePathForDisplay(workspace.absoluteFilePath, spec.source.file);
+            const relativeFilepath = relative(workspace.absoluteFilePath, spec.source.file);
 
             for (const [path, pathItem] of Object.entries(apiToValidate.paths ?? {})) {
                 if (pathItem == null) {

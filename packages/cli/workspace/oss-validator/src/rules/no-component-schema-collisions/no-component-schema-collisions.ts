@@ -1,5 +1,5 @@
 import { isOpenAPIV2 } from "@fern-api/api-workspace-commons";
-import { relativePathForDisplay } from "@fern-api/fs-utils";
+import { relative } from "@fern-api/fs-utils";
 import { convertOpenAPIV2ToV3 } from "@fern-api/lazy-fern-workspace";
 
 import { Rule } from "../../Rule";
@@ -36,7 +36,7 @@ export const NoComponentSchemaCollisionsRule: Rule = {
                 continue;
             }
 
-            const relativeFilepath = relativePathForDisplay(workspace.absoluteFilePath, spec.source.file);
+            const relativeFilepath = relative(workspace.absoluteFilePath, spec.source.file);
 
             // For OpenAPI v2, convert to v3 first
             const apiToValidate = isOpenAPIV2(document) ? await convertOpenAPIV2ToV3(document) : document;

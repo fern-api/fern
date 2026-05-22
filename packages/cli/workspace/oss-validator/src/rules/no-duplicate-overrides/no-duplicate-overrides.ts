@@ -1,5 +1,5 @@
 import { isOpenAPIV2 } from "@fern-api/api-workspace-commons";
-import { relativePathForDisplay } from "@fern-api/fs-utils";
+import { relative } from "@fern-api/fs-utils";
 import { convertOpenAPIV2ToV3 } from "@fern-api/lazy-fern-workspace";
 
 import { Rule } from "../../Rule.js";
@@ -61,10 +61,7 @@ export const NoDuplicateOverridesRule: Rule = {
                                     violations.push({
                                         name: "no-duplicate-overrides",
                                         severity: "fatal",
-                                        relativeFilepath: relativePathForDisplay(
-                                            workspace.absoluteFilePath,
-                                            spec.source.file
-                                        ),
+                                        relativeFilepath: relative(workspace.absoluteFilePath, spec.source.file),
                                         nodePath: ["paths", path, method],
                                         message: `SDK method ${displayGroup}.${sdkMethodName} already exists (x-fern-sdk-group-name: ${sdkGroupName}, x-fern-sdk-method-name: ${sdkMethodName})`
                                     });

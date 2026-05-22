@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Resolve absolute OpenAPI spec paths during workspace loading instead of rejecting them.
+    Report absolute OpenAPI spec paths as user-facing workspace configuration errors.
   type: fix

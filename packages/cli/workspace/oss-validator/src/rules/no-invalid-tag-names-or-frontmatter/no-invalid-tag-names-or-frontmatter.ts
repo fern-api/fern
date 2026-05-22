@@ -1,5 +1,5 @@
 import { isOpenAPIV2 } from "@fern-api/api-workspace-commons";
-import { relativePathForDisplay } from "@fern-api/fs-utils";
+import { relative } from "@fern-api/fs-utils";
 import { convertOpenAPIV2ToV3 } from "@fern-api/lazy-fern-workspace";
 
 import { Rule } from "../../Rule.js";
@@ -34,7 +34,7 @@ export const NoInvalidTagNamesOrFrontmatterRule: Rule = {
             }
 
             const apiToValidate = isOpenAPIV2(openAPI) ? await convertOpenAPIV2ToV3(openAPI) : openAPI;
-            const relativeFilepath = relativePathForDisplay(workspace.absoluteFilePath, spec.source.file);
+            const relativeFilepath = relative(workspace.absoluteFilePath, spec.source.file);
 
             // biome-ignore lint/suspicious/noExplicitAny: OpenAPI document type
             const apiDoc = apiToValidate as Record<string, any>;

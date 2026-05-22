@@ -1,5 +1,5 @@
 import { isOpenAPIV2, isOpenAPIV3, OpenAPISpec } from "@fern-api/api-workspace-commons";
-import { AbsoluteFilePath, isAbsoluteFilePath, join, relativeOrOriginalPath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, relative } from "@fern-api/fs-utils";
 import { Source as OpenApiIrSource } from "@fern-api/openapi-ir";
 import { Document, getParseOptions } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
@@ -36,14 +36,14 @@ export class OpenAPILoader {
     }): Promise<Document | undefined> {
         try {
             const contents = (await readFile(spec.absoluteFilepath)).toString();
-            let sourceFilepath = relativeOrOriginalPath(this.absoluteFilePath, spec.source.file);
-            if (spec.source.relativePathToDependency != null && !isAbsoluteFilePath(sourceFilepath)) {
-                sourceFilepath = join(spec.source.relativePathToDependency, sourceFilepath);
+            let sourceRelativePath = relative(this.absoluteFilePath, spec.source.file);
+            if (spec.source.relativePathToDependency != null) {
+                sourceRelativePath = join(spec.source.relativePathToDependency, sourceRelativePath);
             }
             const source =
                 spec.source.type === "protobuf"
-                    ? OpenApiIrSource.protobuf({ file: sourceFilepath })
-                    : OpenApiIrSource.openapi({ file: sourceFilepath });
+                    ? OpenApiIrSource.protobuf({ file: sourceRelativePath })
+                    : OpenApiIrSource.openapi({ file: sourceRelativePath });
 
             if (contents.includes("openapi") || contents.includes("swagger")) {
                 try {
