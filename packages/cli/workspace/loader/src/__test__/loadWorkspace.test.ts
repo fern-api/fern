@@ -1,9 +1,12 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath, relativePathForDisplay } from "@fern-api/fs-utils";
 import { WorkspaceLoaderFailureType } from "@fern-api/lazy-fern-workspace";
 import { Logger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 import assert from "assert";
+import { mkdtemp, writeFile } from "fs/promises";
+import { tmpdir } from "os";
+import { join as pathJoin } from "path";
 
 import { handleFailedWorkspaceParserResult } from "../handleFailedWorkspaceParserResult.js";
 import { loadAPIWorkspace, loadSingleNamespaceAPIWorkspace } from "../loadAPIWorkspace.js";
@@ -133,6 +136,111 @@ describe("loadWorkspace", () => {
         assert(spec.type === "openapi");
         expect(spec.absoluteFilepathToOverrides).toBe(absolutePathToOpenApi);
         expect(spec.absoluteFilepathToOverlays).toBe(absolutePathToOpenApi);
+    });
+
+    it("open rpc with absolute spec path", async () => {
+        const absolutePathToFixtures = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
+        const absolutePathToOpenRpc = join(absolutePathToFixtures, RelativeFilePath.of("openapi.yml"));
+
+        const specs = await loadSingleNamespaceAPIWorkspace({
+            absolutePathToWorkspace: absolutePathToFixtures,
+            namespace: undefined,
+            definitions: [
+                {
+                    schema: {
+                        type: "openrpc",
+                        path: absolutePathToOpenRpc
+                    },
+                    origin: undefined,
+                    overrides: undefined,
+                    overlays: undefined,
+                    audiences: [],
+                    settings: undefined
+                }
+            ]
+        });
+
+        expect(Array.isArray(specs)).toBe(true);
+        assert(Array.isArray(specs));
+        const spec = specs[0];
+        assert(spec != null);
+        expect(spec.type).toBe("openrpc");
+        assert(spec.type === "openrpc");
+        expect(spec.absoluteFilepath).toBe(absolutePathToOpenRpc);
+    });
+
+    it("graphql with absolute schema and examples paths", async () => {
+        const absolutePathToFixtures = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
+        const absolutePathToGraphQL = join(absolutePathToFixtures, RelativeFilePath.of("openapi.yml"));
+
+        const specs = await loadSingleNamespaceAPIWorkspace({
+            absolutePathToWorkspace: absolutePathToFixtures,
+            namespace: undefined,
+            definitions: [
+                {
+                    schema: {
+                        type: "graphql",
+                        path: absolutePathToGraphQL,
+                        examples: absolutePathToGraphQL
+                    },
+                    origin: undefined,
+                    overrides: undefined,
+                    overlays: undefined,
+                    audiences: [],
+                    settings: undefined
+                }
+            ]
+        });
+
+        expect(Array.isArray(specs)).toBe(true);
+        assert(Array.isArray(specs));
+        const spec = specs[0];
+        assert(spec != null);
+        expect(spec.type).toBe("graphql");
+        assert(spec.type === "graphql");
+        expect(spec.absoluteFilepath).toBe(absolutePathToGraphQL);
+        expect(spec.absoluteFilepathToExamples).toBe(absolutePathToGraphQL);
+    });
+
+    it("protobuf with absolute root and target paths", async () => {
+        const absolutePathToFixtures = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
+        const absolutePathToProtobufRoot = AbsoluteFilePath.of(await mkdtemp(pathJoin(tmpdir(), "fern-proto-root-")));
+        const absolutePathToProtobufTarget = AbsoluteFilePath.of(pathJoin(absolutePathToProtobufRoot, "service.proto"));
+        await writeFile(absolutePathToProtobufTarget, 'syntax = "proto3";\n');
+
+        const specs = await loadSingleNamespaceAPIWorkspace({
+            absolutePathToWorkspace: absolutePathToFixtures,
+            namespace: undefined,
+            definitions: [
+                {
+                    schema: {
+                        type: "protobuf",
+                        root: absolutePathToProtobufRoot,
+                        target: absolutePathToProtobufTarget,
+                        dependencies: [],
+                        localGeneration: true,
+                        fromOpenAPI: false
+                    },
+                    origin: undefined,
+                    overrides: undefined,
+                    overlays: undefined,
+                    audiences: [],
+                    settings: undefined
+                }
+            ]
+        });
+
+        expect(Array.isArray(specs)).toBe(true);
+        assert(Array.isArray(specs));
+        const spec = specs[0];
+        assert(spec != null);
+        expect(spec.type).toBe("protobuf");
+        assert(spec.type === "protobuf");
+        expect(spec.absoluteFilepathToProtobufRoot).toBe(absolutePathToProtobufRoot);
+        expect(spec.absoluteFilepathToProtobufTarget).toBe(absolutePathToProtobufTarget);
+        expect(spec.relativeFilepathToProtobufRoot).toBe(
+            relativePathForDisplay(absolutePathToFixtures, absolutePathToProtobufRoot)
+        );
     });
 });
 
