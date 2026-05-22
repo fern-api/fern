@@ -1,0 +1,5 @@
+- summary: |
+    When a bearer auth scheme with a token env var coexists with OAuth client credentials,
+    the generated `token` parameter now accepts `str | Callable` and defaults to
+    `os.getenv("<TOKEN_ENV_VAR>")` instead of `None`.
+  type: feat

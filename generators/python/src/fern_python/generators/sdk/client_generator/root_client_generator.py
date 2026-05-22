@@ -688,15 +688,37 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     ),
                 )
                 # Add the token parameter for direct token authentication
+                # Check if a bearer auth scheme defines a token env var
+                bearer_token_env_var = self._get_bearer_token_env_var()
+                if bearer_token_env_var is not None:
+                    # Accept str or Callable with os.getenv() default
+                    token_type_hint = AST.TypeHint.optional(
+                        AST.TypeHint.union(
+                            AST.TypeHint.str_(),
+                            AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_()),
+                        )
+                    )
+                    token_initializer = AST.Expression(
+                        AST.FunctionInvocation(
+                            function_definition=AST.Reference(
+                                import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                                qualified_name_excluding_import=("getenv",),
+                            ),
+                            args=[AST.Expression(f'"{bearer_token_env_var}"')],
+                        )
+                    )
+                else:
+                    token_type_hint = AST.TypeHint.optional(
+                        AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_())
+                    )
+                    token_initializer = AST.Expression("None")
                 parameters.append(
                     RootClientConstructorParameter(
                         constructor_parameter_name=self.TOKEN_PARAMETER_NAME,
-                        type_hint=AST.TypeHint.optional(
-                            AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_())
-                        ),
-                        initializer=AST.Expression("None"),
+                        type_hint=token_type_hint,
+                        initializer=token_initializer,
                         docs=(
-                            "Authenticate by providing a callable that returns a pre-generated bearer token. "
+                            "Authenticate by providing a bearer token (string) or a callable that returns one. "
                             "In this mode, OAuth client credentials are not required."
                         ),
                     ),
@@ -931,16 +953,43 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         oauth_params = base_params + [client_id_param, client_secret_param]
         oauth_signature = AST.FunctionSignature(named_parameters=oauth_params)
 
-        # Overload 2: Direct token (token required)
-        token_params = base_params + [
-            AST.NamedFunctionParameter(
+        # Overload 2: Direct token (token required, or optional if env var configured)
+        bearer_token_env_var = self._get_bearer_token_env_var()
+        if bearer_token_env_var is not None:
+            token_overload_type = AST.TypeHint.union(
+                AST.TypeHint.str_(),
+                AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_()),
+            )
+            token_overload_param = AST.NamedFunctionParameter(
+                name=self.TOKEN_PARAMETER_NAME,
+                type_hint=AST.TypeHint.optional(token_overload_type),
+                initializer=AST.Expression(
+                    AST.FunctionInvocation(
+                        function_definition=AST.Reference(
+                            import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                            qualified_name_excluding_import=("getenv",),
+                        ),
+                        args=[AST.Expression(f'"{bearer_token_env_var}"')],
+                    )
+                ),
+            )
+        else:
+            token_overload_param = AST.NamedFunctionParameter(
                 name=self.TOKEN_PARAMETER_NAME,
                 type_hint=AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_()),
-            ),
-        ]
+            )
+        token_params = base_params + [token_overload_param]
         token_signature = AST.FunctionSignature(named_parameters=token_params)
 
         return [oauth_signature, token_signature]
+
+    def _get_bearer_token_env_var(self) -> Optional[str]:
+        """Return the token env var from a bearer auth scheme, if one exists alongside OAuth."""
+        for scheme in self._context.ir.auth.schemes:
+            scheme_as_union = scheme.get_as_union()
+            if scheme_as_union.type == "bearer" and scheme_as_union.token_env_var is not None:
+                return scheme_as_union.token_env_var
+        return None
 
     def _get_non_oauth_constructor_parameters(self, *, is_async: bool) -> List[AST.NamedFunctionParameter]:
         """Get constructor parameters excluding OAuth-specific ones (client_id, client_secret, token)."""

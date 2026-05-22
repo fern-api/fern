@@ -52,7 +52,7 @@ class SeedOauthClientCredentialsEnvironmentVariables:
         The base url to use for requests from the client.
 
     token : typing.Callable[[], str]
-        Authenticate by providing a callable that returns a pre-generated bearer token. In this mode, OAuth client credentials are not required.
+        Authenticate by providing a bearer token (string) or a callable that returns one. In this mode, OAuth client credentials are not required.
 
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
@@ -270,7 +270,7 @@ class AsyncSeedOauthClientCredentialsEnvironmentVariables:
         The base url to use for requests from the client.
 
     token : typing.Callable[[], str]
-        Authenticate by providing a callable that returns a pre-generated bearer token. In this mode, OAuth client credentials are not required.
+        Authenticate by providing a bearer token (string) or a callable that returns one. In this mode, OAuth client credentials are not required.
 
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
