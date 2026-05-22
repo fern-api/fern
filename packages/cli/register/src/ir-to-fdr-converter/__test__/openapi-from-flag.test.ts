@@ -3366,4 +3366,64 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         expect(ir).toBeDefined();
         expect(ir.services).toBeDefined();
     });
+
+    it("should handle audience-filtered types referenced by endpoints without crashing", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/audience-filtered-missing-type")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "audience-filtered-missing-type"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        // Use selective audiences so that untagged schemas are excluded from IR.
+        // Previously, this caused "Failed to find ChatMessageV2" during FDR
+        // example generation because the type was dropped by audience filtering
+        // while endpoint references to it remained.
+        const ir = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "select", audiences: ["public"] },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        expect(ir).toBeDefined();
+        expect(ir.services).toBeDefined();
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        expect(fdrApiDefinition).toBeDefined();
+        expect(fdrApiDefinition.types).toBeDefined();
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+    });
 });
