@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.37.5
+  changelogEntry:
+    - summary: |
+        Handle docs preview file watcher startup failures as local environment errors.
+      type: fix
+  createdAt: "2026-05-22"
+  irVersion: 66
 - version: 5.37.4
   changelogEntry:
     - summary: |
