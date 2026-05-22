@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.37.4
+  changelogEntry:
+    - summary: |
+        Revert the @fern-api/venus-api-sdk bump from 5.35.5 (0.22.34 -> 4.0.0).
+      type: chore
+  createdAt: "2026-05-22"
+  irVersion: 66
 - version: 5.37.3
   changelogEntry:
     - summary: |
