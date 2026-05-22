@@ -2,7 +2,7 @@ import type { PublishTarget } from "./publishTarget.js";
 
 export type { PublishTarget };
 
-export type GeneratorFailureSource = "fiddle" | "cli";
+export type GeneratorFailureSource = "container" | "cli";
 
 /**
  * Why a generator was not executed in automation fan-out mode.

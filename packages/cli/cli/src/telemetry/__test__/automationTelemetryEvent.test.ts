@@ -33,7 +33,7 @@ describe("automationTelemetryEvent", () => {
                         generator_name: "fernapi/fern-python-sdk",
                         group_name: "python-sdk",
                         api_name: "api",
-                        failure_source: "fiddle"
+                        failure_source: "container"
                     }
                 },
                 {
@@ -55,7 +55,7 @@ describe("automationTelemetryEvent", () => {
             generator_name: "fernapi/fern-python-sdk",
             group_name: "python-sdk",
             api_name: "api",
-            failure_source: "fiddle"
+            failure_source: "container"
         });
     });
 });

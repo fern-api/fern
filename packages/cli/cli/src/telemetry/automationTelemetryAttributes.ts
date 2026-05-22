@@ -3,7 +3,7 @@ import type { PublishTarget } from "@fern-api/remote-workspace-runner";
 import type { GeneratorRunCounts } from "../commands/automations/generate/GeneratorRunResult.js";
 import type { JsonValue } from "./automationTelemetryEvent.js";
 
-export type GeneratorFailureSource = "fiddle" | "cli";
+export type GeneratorFailureSource = "container" | "cli";
 
 export type GeneratorCompletedOutcome = "pr_created" | "no_diff" | "published" | "pushed";
 

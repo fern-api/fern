@@ -412,7 +412,7 @@ async function generateOne({
                 generatorName: generatorInvocation.name,
                 errorMessage: interactiveTaskContext.getLastFailureMessage() ?? "Generator failed",
                 durationMs: Date.now() - startedAt,
-                failureSource: "fiddle",
+                failureSource: "container",
                 outputRepoUrl: getOutputRepoUrl(generatorInvocation),
                 generatorsYmlAbsolutePath,
                 generatorsYmlLineNumber: lineNumber

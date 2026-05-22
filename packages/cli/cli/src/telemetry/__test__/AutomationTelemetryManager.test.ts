@@ -5,7 +5,7 @@ import { AutomationTelemetryManager } from "../AutomationTelemetryManager.js";
 import { AUTOMATION_EVENT_NAMES } from "../automationTelemetryEvent.js";
 
 describe("AutomationTelemetryManager", () => {
-    it("skips CLI Sentry when failure_source is fiddle", () => {
+    it("skips CLI Sentry when failure_source is container", () => {
         const captureException = vi.fn();
         const manager = new AutomationTelemetryManager({
             instrumentPostHogAutomationEvent: vi.fn(),
@@ -16,7 +16,7 @@ describe("AutomationTelemetryManager", () => {
             event: AUTOMATION_EVENT_NAMES.GENERATOR_FAILED,
             errorCode: CliError.Code.ContainerError,
             attributes: {
-                failure_source: "fiddle",
+                failure_source: "container",
                 error_message: "Generator failed in container"
             }
         });
