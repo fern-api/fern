@@ -1,6 +1,6 @@
 # Bundled npm globals are removed below so npm's JS dependencies cannot be
 # flagged or invoked at runtime — this image only runs the bundled CLI via node.
-FROM node:24.15-trixie-slim
+FROM node:24.16-trixie-slim
 # Security update 2026-05-18: trixie's krb5 (1.21.3-5), curl (8.14.1),
 # and gnutls28 (3.8.9) are still vulnerable to CVE-2026-40355,
 # CVE-2026-40356 (krb5), CVE-2026-1965/4873/5545/6253/6429 (curl),
