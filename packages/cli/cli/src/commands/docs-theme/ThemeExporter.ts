@@ -19,7 +19,8 @@ const THEME_ELIGIBLE_KEYS = new Set([
     "js",
     "header",
     "footer",
-    "metadata"
+    "metadata",
+    "settings"
 ]);
 
 export class ThemeExporter {
